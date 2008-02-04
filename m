@@ -1,91 +1,67 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: rebase -i and --whitespace, was Re: [PATCH] git-rebase.sh: Update USAGE string (No. 1)
-Date: Mon, 4 Feb 2008 16:42:50 +0100
-Message-ID: <200802041642.52088.jnareb@gmail.com>
-References: <m3lk6161jo.fsf@localhost.localdomain> <200802041113.m14BDLMl004301@mi1.bluebottle.com> <alpine.LSU.1.00.0802041505230.7372@racer.site>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [RFC,PATCH] Make git prune remove temporary packs that look like
+ write failures
+Date: Mon, 04 Feb 2008 11:06:39 -0500 (EST)
+Message-ID: <alpine.LFD.1.00.0802041105170.2732@xanadu.home>
+References: <e1dab3980802040610s27a54a9due3b42db5f59c0cd5@mail.gmail.com>
+ <alpine.LSU.1.00.0802041512140.7372@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?q?=E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=81=AA=E3=81=93?=
-	 =?utf-8?q?_?= <nanako3@bluebottle.com>,
-	Jari Aalto <jari.aalto@cante.net>, git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: David Tweed <david.tweed@gmail.com>,
+	gi mailing list <git@vger.kernel.org>
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Feb 04 16:43:52 2008
+X-From: git-owner@vger.kernel.org Mon Feb 04 17:08:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JM3U2-0007tG-NQ
-	for gcvg-git-2@gmane.org; Mon, 04 Feb 2008 16:43:47 +0100
+	id 1JM3r0-0008VJ-36
+	for gcvg-git-2@gmane.org; Mon, 04 Feb 2008 17:07:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752288AbYBDPnF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 4 Feb 2008 10:43:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751716AbYBDPnF
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Feb 2008 10:43:05 -0500
-Received: from wa-out-1112.google.com ([209.85.146.176]:38156 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751862AbYBDPnC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Feb 2008 10:43:02 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so3000667wah.23
-        for <git@vger.kernel.org>; Mon, 04 Feb 2008 07:43:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=pAZri5kl06+gXk+3KaF0pEj9m5n/f6xuDlHZlATtgew=;
-        b=E64RDw4woyyzyAzdo2TigGISlRpkSV/0qu0XVEOg9AH9fHx2U6/YFYwKR+0/YrAheEonuPMjhiAbKRV5sRwBq/J8/3sFqHYqTuRpGqCZAFGw4nqZyqZv2ioB+pfGI4QOYY/4Oa1jEof14iYLrPq/TGD/d1O1k9kh3x+xkPc31c0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=Ri3b+OV4vb4aRMF8cqbl7ySYKrCLNF+EwkE3cHVGMPZXEt/3ljttrwUahwpAWgkWRixA/8lqocO4hXvIY9blrT6dCyVyhgyaSvf8eYWCar1sYnv9QojXSgh5MvY6X8vrv7+pL2CjkUOH9n9cgF0rYmYBDsvAe19/UC8aj0HHNDE=
-Received: by 10.114.106.1 with SMTP id e1mr300422wac.95.1202139781192;
-        Mon, 04 Feb 2008 07:43:01 -0800 (PST)
-Received: from ?192.168.1.11? ( [83.8.221.201])
-        by mx.google.com with ESMTPS id i3sm20151136nfh.28.2008.02.04.07.42.58
-        (version=SSLv3 cipher=OTHER);
-        Mon, 04 Feb 2008 07:42:59 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <alpine.LSU.1.00.0802041505230.7372@racer.site>
-Content-Disposition: inline
+	id S1755827AbYBDQGl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Feb 2008 11:06:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755107AbYBDQGl
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Feb 2008 11:06:41 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:8358 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753496AbYBDQGk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Feb 2008 11:06:40 -0500
+Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR005.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0JVQ007QC22XZTC0@VL-MO-MR005.ip.videotron.ca> for
+ git@vger.kernel.org; Mon, 04 Feb 2008 11:06:33 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <alpine.LSU.1.00.0802041512140.7372@racer.site>
+User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72518>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72519>
 
-W poniedzia=C5=82ek 4. lutego 2008 16:06, Johannes Schindelin napisa=C5=
-=82:
-> On Mon, 4 Feb 2008, =E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=81=
-=AA=E3=81=93 wrote:
->=20
-> > I tried to run "git rebase --interactive --whitespace=3Dstrip" but =
-it does=20
-> > not seem to strip blank characters at the end of my lines.  Did I f=
-ind a=20
-> > bug?
->=20
-> Yes.  Interactive rebase never bothered with --whitespace options, si=
-nce=20
-> it works purely with cherry-pick (the --merge option to non-interacti=
-ve=20
-> rebase).  Therefore, the operation is not patch based, and does not c=
-all=20
-> git-apply at all (which would handle the whitespace).
+On Mon, 4 Feb 2008, Johannes Schindelin wrote:
 
-So it means that synopsis should, instead of current (pre-patch)
+> Hi,
+> 
+> On Mon, 4 Feb 2008, David Tweed wrote:
+> 
+> > +                       if(c>0 && c<4096 && stat(name, &status) == 0
+> > +                          && status.st_mtime < now - 600){
+> 
+> Please have spaces after the "if" and before the "{" (just imitate the 
+> style of the rest of the file).
+> 
+> Also, 10 minutes grace period for any ongoing fetch or repack seems a bit 
+> arbitrary.  Maybe default to 10 minutes, and introduce 
+> prune.packGracePeriod?
+> 
+> (Which reminds me that it might be useful to add a 
+> prune.looseObjectsGracePeriod to avoid having to type --expire= all the 
+> time?)
 
-'git-rebase' [-i | --interactive] [-v | --verbose] [-m | --merge]
-        [-C<n>] [ --whitespace=3D<option>] [-p | --preserve-merges]
-        [--onto <newbase>] <upstream> [<branch>]
+Please use the same parameter for both.  There is no need to have 
+separate settings.
 
-should read
 
-'git-rebase' [-v | --verbose]  [-p | --preserve-merges]
-        [{-i | --interactive} | [-C<n>] [ --whitespace=3D<option>] [-m =
-| --merge]]
-        [--onto <newbase>] <upstream> [<branch>]
-
-or perhaps even separated into interactive / non-interactive merge?
-
---=20
-Jakub Narebski
-Poland
+Nicolas
