@@ -1,56 +1,65 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: [PATCH] git-rebase.sh: Change .dotest directory to .git-dotest
-Date: Tue, 5 Feb 2008 16:23:21 +0100
-Organization: glandium.org
-Message-ID: <20080205152320.GA19370@glandium.org>
-References: <ve53xwob.fsf@blue.sea.net>
+From: Paolo Bonzini <bonzini@gnu.org>
+Subject: Re: [PATCH-v2 4/4] git-commit: add a prepare-commit-msg hook
+Date: Tue, 05 Feb 2008 16:26:42 +0100
+Message-ID: <47A88032.107@gnu.org>
+References: <1202205704-10024-1-git-send-email-bonzini@gnu.org> <1202205704-10024-4-git-send-email-bonzini@gnu.org> <alpine.LSU.1.00.0802051500190.8543@racer.site> <47A87DDC.5030708@gnu.org> <alpine.LSU.1.00.0802051520520.8543@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Jari Aalto <jari.aalto@cante.net>
-X-From: git-owner@vger.kernel.org Tue Feb 05 16:24:15 2008
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Feb 05 16:27:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JMPeO-0007MC-Qw
-	for gcvg-git-2@gmane.org; Tue, 05 Feb 2008 16:23:57 +0100
+	id 1JMPi7-0000I8-1P
+	for gcvg-git-2@gmane.org; Tue, 05 Feb 2008 16:27:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751278AbYBEPXZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Feb 2008 10:23:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751154AbYBEPXY
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Feb 2008 10:23:24 -0500
-Received: from smtp28.orange.fr ([80.12.242.99]:23367 "EHLO smtp28.orange.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751267AbYBEPXY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Feb 2008 10:23:24 -0500
-Received: from me-wanadoo.net (localhost [127.0.0.1])
-	by mwinf2802.orange.fr (SMTP Server) with ESMTP id A9BEF80000FF
-	for <git@vger.kernel.org>; Tue,  5 Feb 2008 16:23:22 +0100 (CET)
-Received: from vaio.glandium.org (APuteaux-153-1-42-109.w82-124.abo.wanadoo.fr [82.124.6.109])
-	by mwinf2802.orange.fr (SMTP Server) with ESMTP id 8CD9180000E1;
-	Tue,  5 Feb 2008 16:23:22 +0100 (CET)
-X-ME-UUID: 20080205152322576.8CD9180000E1@mwinf2802.orange.fr
-Received: from mh by vaio.glandium.org with local (Exim 4.63)
-	(envelope-from <mh@glandium.org>)
-	id 1JMPdp-000531-Nv; Tue, 05 Feb 2008 16:23:21 +0100
-Content-Disposition: inline
-In-Reply-To: <ve53xwob.fsf@blue.sea.net>
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: mh@glandium.org
-X-SA-Exim-Scanned: No (on vaio.glandium.org); SAEximRunCond expanded to false
+	id S1754200AbYBEP0t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Feb 2008 10:26:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753335AbYBEP0t
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Feb 2008 10:26:49 -0500
+Received: from wa-out-1112.google.com ([209.85.146.183]:28718 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751182AbYBEP0s (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Feb 2008 10:26:48 -0500
+Received: by wa-out-1112.google.com with SMTP id v27so3545078wah.23
+        for <git@vger.kernel.org>; Tue, 05 Feb 2008 07:26:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:x-enigmail-version:content-type:content-transfer-encoding:sender;
+        bh=Ux2JAILod4cTjkc8tnJpC0MXVU4JB9WvhW/3yAO1hYY=;
+        b=gK1UBIn6rn9efX4trpBofh8PxWetX7LvJnD1XUjtQru6tqjkwpe9+XngIIekQ2siHr02oZffa/4xto9C8ea5VrSj9DYVoQYat6+u+FIEXmfM8oaonKV87SeOVPgB93P9YQSx8Z71/KAYeovLw++wuYqawI5Mv3Lj+ssmgCpdNEk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:x-enigmail-version:content-type:content-transfer-encoding:sender;
+        b=HIiPXa/LZGS4cAqB9NBdqejk1tT3QoF5lP4asJ9P+298h0IZz2zs1P1z/mPm468MVg3ZFyHVPfQzxizO90BmpkzB9p4w2e+8wI17raTRfdQIv3zMjWb+ciOGzH25VvXuoRPcEnAc2YHoTCutnLueYW23NSME7YoZFJ76Me+Ghs4=
+Received: by 10.114.159.1 with SMTP id h1mr2025262wae.122.1202225205762;
+        Tue, 05 Feb 2008 07:26:45 -0800 (PST)
+Received: from scientist-2.local ( [195.176.178.209])
+        by mx.google.com with ESMTPS id j10sm7480823mue.14.2008.02.05.07.26.44
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 05 Feb 2008 07:26:45 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.9 (Macintosh/20071031)
+In-Reply-To: <alpine.LSU.1.00.0802051520520.8543@racer.site>
+X-Enigmail-Version: 0.95.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72670>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72671>
 
-On Tue, Feb 05, 2008 at 05:14:28PM +0200, Jari Aalto <jari.aalto@cante.net> wrote:
-> Change git specific doings into namespace .git*. Define new variable
-> WORKDIR, which points to working directory .git-dotest.
-> 
-Shouldn't this just go in the .git/ directory ?
 
-Mike
+> I might be missing something
+
+No, you are not.
+
+> but should this not be solved by having the 
+> prepare-commit-msg exit 0?  I mean, it is conceivable that such a bad 
+> error occurs in the hook that the commit should be stopped then and there.
+
+So you say, don't suppress the hook with --no-verify *and* exit if the 
+hook returns 1, even if --no-verify is given.  That's fine by me.
+
+Paolo
