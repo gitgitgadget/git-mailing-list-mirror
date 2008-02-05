@@ -1,63 +1,89 @@
-From: Sean <seanlkml@sympatico.ca>
-Subject: Re: git-tag HEAD
-Date: Mon, 4 Feb 2008 23:30:10 -0500
-Message-ID: <BAYC1-PASMTP15D0374A5A075B79E17284AE2C0@CEZ.ICE>
-References: <dfb262380802042024p49bfb0c3v689946dba350ac01@mail.gmail.com>
+From: Bruno Cesar Ribas <ribas@c3sl.ufpr.br>
+Subject: Re: [PATCH] gitweb: Use config file or file for repository owner's
+	name.
+Date: Tue, 5 Feb 2008 02:41:21 -0200
+Message-ID: <20080205044121.GA13263@c3sl.ufpr.br>
+References: <1201670898-15076-1-git-send-email-ribas@c3sl.ufpr.br> <7vwsprj0sv.fsf@gitster.siamese.dyndns.org> <20080131023629.GB7778@c3sl.ufpr.br> <7vsl0eg16c.fsf@gitster.siamese.dyndns.org> <7vabmmg0cb.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: "Ramagudi Naziir" <naziirr@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 05 05:31:06 2008
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 05 05:42:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JMFSZ-0007uz-9V
-	for gcvg-git-2@gmane.org; Tue, 05 Feb 2008 05:31:03 +0100
+	id 1JMFdF-0001fj-ED
+	for gcvg-git-2@gmane.org; Tue, 05 Feb 2008 05:42:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752792AbYBEEaJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Feb 2008 23:30:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752772AbYBEEaJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Feb 2008 23:30:09 -0500
-Received: from bay0-omc2-s6.bay0.hotmail.com ([65.54.246.142]:41496 "EHLO
-	bay0-omc2-s6.bay0.hotmail.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752629AbYBEEaI (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 4 Feb 2008 23:30:08 -0500
-Received: from BAYC1-PASMTP15 ([65.54.191.189]) by bay0-omc2-s6.bay0.hotmail.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 4 Feb 2008 20:30:07 -0800
-X-Originating-IP: [74.15.79.252]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([74.15.79.252]) by BAYC1-PASMTP15.CEZ.ICE over TLS secured channel with Microsoft SMTPSVC(6.0.3790.2668);
-	 Mon, 4 Feb 2008 20:30:07 -0800
-Received: from guru.attic.local ([10.10.10.28])
-	by linux1.attic.local with smtp (Exim 4.43)
-	id 1JMGNY-0004wP-LE; Tue, 05 Feb 2008 00:29:56 -0500
-In-Reply-To: <dfb262380802042024p49bfb0c3v689946dba350ac01@mail.gmail.com>
-X-Mailer: Sylpheed 2.4.8 (GTK+ 2.12.7; i686-pc-linux-gnu)
-X-OriginalArrivalTime: 05 Feb 2008 04:30:07.0516 (UTC) FILETIME=[C95AADC0:01C867AF]
+	id S1752908AbYBEEld (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Feb 2008 23:41:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752872AbYBEEld
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Feb 2008 23:41:33 -0500
+Received: from mx.inf.ufpr.br ([200.17.202.3]:39783 "EHLO urquell.c3sl.ufpr.br"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752772AbYBEElc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Feb 2008 23:41:32 -0500
+Received: from localhost (unknown [189.1.136.222])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	(Authenticated sender: ribas)
+	by urquell.c3sl.ufpr.br (Postfix) with ESMTP id 56739700003EA;
+	Tue,  5 Feb 2008 02:41:30 -0200 (BRST)
+Content-Disposition: inline
+In-Reply-To: <7vabmmg0cb.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72622>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72623>
 
-On Tue, 5 Feb 2008 06:24:00 +0200
-"Ramagudi Naziir" <naziirr@gmail.com> wrote:
+On Wed, Jan 30, 2008 at 07:06:44PM -0800, Junio C Hamano wrote:
+> If the config reading interface is too slow (somebody has to
+> bench it on a large set of repositories), maybe we would need to
+
+I made a simple bench as follows.
+
+dd= 'dd if=/dev/zero of=/home/bruno/dds/$i bs=1M count=400000'
+Machine: 4*opteron 2.8GHz
+     32GB ram
+     14*750GB RAID0 sata2 /home
+     
+Generated a 1000 projects [ too much?! git.debian.org has 668]
+For each test a 'echo 2 > /proc/sys/vm/drop_caches' was done before running
+it.
+
+command: time gitweb.cgi > /dev/null
+
+-----------------  -----------------  ------------  -----------------
+With Project List   NO Project List      LoadAvg     description way
+-----------------  -----------------  ------------  -----------------
+->0*dd             ->0*dd
+   1m0.851s           1m18.651s        0.78  0.70     description file
+   1m1.511s           0m55.051s        0.83  0.35     gitweb.description
+               
+->2*dd             ->2*dd
+   21m0.899s          17m19.706s       8.21  6.48     description file
+   16m29.455s         13m36.602s       5.90  5.95     gitweb.description
+                   
+->4*dd             ->4*dd
+   23m6.781s          26m51.544s       10.81 12       description file
+   20m57.249s         26m32.704s       11.50 12.55    gitweb.description
 
 
-> I accidently executed the command "git-tag HEAD" in one of my git repositories.
-> 
-> Now every command I invoke, i.e. "git-log", begins with the warning:
-> 
-> "warning: refname 'HEAD' is ambiguous"
-> 
-> How can I fix this situation ? can I undo what I did ?
-> 
+My test was simple =) But we can get some conclusions on it.
+Running a git-config -z -l for each git repository is not a problem, as we
+obtain same speed on tests (only loosing on very high IO's) [maybe i should
+run with 8*dd or 80...].
 
-Just delete the tag...
+After that, having a gitweb.owner might not be a problem as we parse all
+config file once.
 
-$ git tag -d HEAD
-
-HTH,
-Sean
+Running the "git-for-each-ref" is the big killer [waaaw =P]. We could store
+timestamp at gitweb.lastchange, which is updated by a hook?! Or store it in
+some way[ i will bench with if stored].
+-- 
+Bruno Ribas - ribas@c3sl.ufpr.br
+http://web.inf.ufpr.br/ribas
+C3SL: http://www.c3sl.ufpr.br 
