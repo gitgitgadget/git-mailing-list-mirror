@@ -1,79 +1,70 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Add platform-independent .git "symlink"
-Date: Tue, 5 Feb 2008 12:57:54 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802051256080.8543@racer.site>
-References: <8c5c35580802020959v613b9e32v321e97f93f2af761@mail.gmail.com> <1201975757-13771-1-git-send-email-hjemli@gmail.com> <alpine.LSU.1.00.0802021815510.7372@racer.site> <alpine.LSU.1.00.0802021825220.7372@racer.site> <47A78104.9050909@nrlssc.navy.mil>
- <alpine.LSU.1.00.0802042128170.8543@racer.site> <47A78CF9.6040001@nrlssc.navy.mil> <alpine.LSU.1.00.0802042218280.8543@racer.site> <47A79541.6070900@nrlssc.navy.mil> <alpine.LSU.1.00.0802050047340.8543@racer.site> <47A7CD29.40306@nrlssc.navy.mil>
+From: Jean-Luc Herren <jlh@gmx.ch>
+Subject: Re: [PATCH] git-cvsimport: Detect cvs without support for server
+ mode
+Date: Tue, 05 Feb 2008 14:03:51 +0100
+Message-ID: <47A85EB7.2070105@gmx.ch>
+References: <47A5DD98.6000606@gmx.ch>	<200802031908.28115.robin.rosenberg.lists@dewire.com>	<47A72EE5.2080904@gmx.ch> <7vsl07epo5.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Lars Hjemli <hjemli@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Tue Feb 05 13:59:12 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 05 14:04:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JMNOJ-0007ec-C7
-	for gcvg-git-2@gmane.org; Tue, 05 Feb 2008 13:59:11 +0100
+	id 1JMNTP-0000tn-8l
+	for gcvg-git-2@gmane.org; Tue, 05 Feb 2008 14:04:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751035AbYBEM6h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Feb 2008 07:58:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751017AbYBEM6h
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Feb 2008 07:58:37 -0500
-Received: from mail.gmx.net ([213.165.64.20]:36575 "HELO mail.gmx.net"
+	id S1751340AbYBENDz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Feb 2008 08:03:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751271AbYBENDz
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Feb 2008 08:03:55 -0500
+Received: from mail.gmx.net ([213.165.64.20]:58095 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750989AbYBEM6h (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Feb 2008 07:58:37 -0500
-Received: (qmail invoked by alias); 05 Feb 2008 12:58:34 -0000
-Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
-  by mail.gmx.net (mp026) with SMTP; 05 Feb 2008 13:58:34 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19FZn1YIddFmiFaxCUy9HwlcUvkE5uW+0T/3KbNh0
-	kH0Ok1Qu7/KTWt
-X-X-Sender: gene099@racer.site
-In-Reply-To: <47A7CD29.40306@nrlssc.navy.mil>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+	id S1751154AbYBENDy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Feb 2008 08:03:54 -0500
+Received: (qmail invoked by alias); 05 Feb 2008 13:03:52 -0000
+Received: from 192-47.79-83.cust.bluewin.ch (EHLO [192.168.123.202]) [83.79.47.192]
+  by mail.gmx.net (mp031) with SMTP; 05 Feb 2008 14:03:52 +0100
+X-Authenticated: #14737133
+X-Provags-ID: V01U2FsdGVkX192VsUd9z92NlazugMWvoqSjE8v21zjfQt5NWoz0s
+	EkXewBCPXUxrSN
+User-Agent: Thunderbird 2.0.0.9 (X11/20071118)
+In-Reply-To: <7vsl07epo5.fsf@gitster.siamese.dyndns.org>
+X-Enigmail-Version: 0.95.5
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72651>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72652>
 
-Hi,
+Junio C Hamano wrote:
+> If we do not have cvs with server support, is there a fallback
+> method we can still use to run cvsps?
 
-On Mon, 4 Feb 2008, Brandon Casey wrote:
+I have no idea, I haven't looked at cvsps closely enough.
 
-> Johannes Schindelin wrote:
+> Jean-Luc Herren <jlh@gmx.ch> writes:
+>> diff --git a/t/t9600-cvsimport.sh b/t/t9600-cvsimport.sh
+>> index 7706430..d8cbfd0 100755
+>> --- a/t/t9600-cvsimport.sh
+>> +++ b/t/t9600-cvsimport.sh
+>> @@ -10,6 +10,13 @@ then
+>>  	exit
+>>  fi
+>>  
+>> +if echo -n | cvs server 2>&1 | grep 'Unknown command' > /dev/null
+>> +then
+>> +	say 'skipping cvsimport tests, cvs has support for server mode'
+>> +	test_done
+>> +	exit
+>> +fi
 > 
-> > On Mon, 4 Feb 2008, Brandon Casey wrote:
-> > 
-> >> If your statement above is rephrased to "I _want_ the original 
-> >> repository to know that it has conjoined siblings.", then we have a 
-> >> new repository type:
-> >>
-> >> 	4) conjoined repository (it has multiple sibling repositories each
-> >> 	   with their own working directory, but they all share and modify the
-> >> 	   same .git directory)
-> > 
-> > No.  The repository does not even need a working directory (in which case 
-> > we call it "bare").
-> 
-> The additional term "bare" that is used with such a repository without a 
-> working directory implies to me that this is a "special" or "uncommon" 
-> repository configuration.
+> Do you mean "has to support server" or "does not have support for"?
 
-By the same reasoning, a "good day" would be a "special" or "uncommon" 
-day.
+I meant to say "cvs has no support for server mode", but I think
+"doesn't have support for" is better.
 
-> So I hope you excuse me for referring to the result of git-clone as a 
-> repository. I'll try to think of something else to call it (above I used 
-> repo/workdir).
-
-But that's what I am saying: a git-clone clones a repository.  If you 
-happen to clone without the "--bare" option, it will additionally create a 
-working directory.
-
-Hth,
-Dscho
+jlh
