@@ -1,144 +1,94 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: [EGIT PATCH 1/2] Fix git sort order compare bug
-Date: Wed,  6 Feb 2008 00:46:05 +0100
-Message-ID: <1202255166-4581-2-git-send-email-robin.rosenberg@dewire.com>
-References: <1202255166-4581-1-git-send-email-robin.rosenberg@dewire.com>
-Cc: "Roger C. Soares" <rogersoares@intelinet.com.br>,
-	Dave Watson <dwatson@mimvista.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Robin Rosenberg <robin.rosenberg@dewire.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 06 00:46:51 2008
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [RFH] revision limiting sometimes ignored
+Date: Tue, 5 Feb 2008 15:59:43 -0800 (PST)
+Message-ID: <alpine.LFD.1.00.0802051539570.2967@woody.linux-foundation.org>
+References: <20080202122135.GA5783@code-monkey.de> <20080203030054.GA18654@coredump.intra.peff.net> <20080203043310.GA5984@coredump.intra.peff.net> <alpine.LFD.1.00.0802040922480.3034@hp.linux-foundation.org> <7vr6fsk08w.fsf@gitster.siamese.dyndns.org>
+ <alpine.LFD.1.00.0802041146060.3034@hp.linux-foundation.org> <alpine.LFD.1.00.0802041223080.3034@hp.linux-foundation.org> <7vir13g9hx.fsf@gitster.siamese.dyndns.org> <alpine.LFD.1.00.0802051300050.3110@woody.linux-foundation.org>
+ <alpine.LSU.1.00.0802052228280.8543@racer.site>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Git Mailing List <git@vger.kernel.org>,
+	Tilman Sauerbeck <tilman@code-monkey.de>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Feb 06 01:00:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JMXV0-0004GL-75
-	for gcvg-git-2@gmane.org; Wed, 06 Feb 2008 00:46:46 +0100
+	id 1JMXic-0008D1-NL
+	for gcvg-git-2@gmane.org; Wed, 06 Feb 2008 01:00:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760492AbYBEXqP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Feb 2008 18:46:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760602AbYBEXqN
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Feb 2008 18:46:13 -0500
-Received: from [83.140.172.130] ([83.140.172.130]:29926 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1760423AbYBEXqL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Feb 2008 18:46:11 -0500
+	id S1757610AbYBFAAR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Feb 2008 19:00:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758224AbYBFAAQ
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Feb 2008 19:00:16 -0500
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:51916 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757088AbYBFAAP (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 5 Feb 2008 19:00:15 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m15NxmkX002061
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 5 Feb 2008 15:59:49 -0800
 Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 27E3E800686;
-	Wed,  6 Feb 2008 00:46:10 +0100 (CET)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id V8+90X+xTVoH; Wed,  6 Feb 2008 00:46:08 +0100 (CET)
-Received: from lathund.dewire.com (unknown [10.9.0.3])
-	by dewire.com (Postfix) with ESMTP id 364E180068A;
-	Wed,  6 Feb 2008 00:46:08 +0100 (CET)
-Received: by lathund.dewire.com (Postfix, from userid 500)
-	id 2C4C128023; Wed,  6 Feb 2008 00:46:05 +0100 (CET)
-X-Mailer: git-send-email 1.5.4.rc4.25.g81cc
-In-Reply-To: <1202255166-4581-1-git-send-email-robin.rosenberg@dewire.com>
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m15Nxh04016351;
+	Tue, 5 Feb 2008 15:59:43 -0800
+In-Reply-To: <alpine.LSU.1.00.0802052228280.8543@racer.site>
+User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+X-Spam-Status: No, hits=-3.214 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72725>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72726>
 
-Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
----
- .../tst/org/spearce/jgit/lib/T0002_Tree.java       |   44 ++++++++++++++++++++
- .../src/org/spearce/jgit/lib/Tree.java             |   10 ++++-
- 2 files changed, 52 insertions(+), 2 deletions(-)
 
-diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/lib/T0002_Tree.java b/org.spearce.jgit.test/tst/org/spearce/jgit/lib/T0002_Tree.java
-index 24b368f..7c7f6c0 100644
---- a/org.spearce.jgit.test/tst/org/spearce/jgit/lib/T0002_Tree.java
-+++ b/org.spearce.jgit.test/tst/org/spearce/jgit/lib/T0002_Tree.java
-@@ -17,6 +17,7 @@
- package org.spearce.jgit.lib;
- 
- import java.io.IOException;
-+import java.io.UnsupportedEncodingException;
- import java.util.ArrayList;
- import java.util.List;
- 
-@@ -24,6 +25,49 @@ public class T0002_Tree extends RepositoryTestCase {
- 	private static final ObjectId SOME_FAKE_ID = new ObjectId(
- 			"0123456789abcdef0123456789abcdef01234567");
- 
-+	private int compareNamesUsingSpecialCompare(String a,String b) throws UnsupportedEncodingException {
-+		char lasta = '\0';
-+		byte[] abytes;
-+		if (a.length() > 0 && a.charAt(a.length()-1) == '/') {
-+			lasta = '/';
-+			a = a.substring(0, a.length() - 1);
-+		}
-+		abytes = a.getBytes("ISO-8859-1");
-+		char lastb = '\0';
-+		byte[] bbytes;
-+		if (b.length() > 0 && b.charAt(b.length()-1) == '/') {
-+			lastb = '/';
-+			b = b.substring(0, b.length() - 1);
-+		}
-+		bbytes = b.getBytes("ISO-8859-1");
-+		return Tree.compareNames(abytes, bbytes, lasta, lastb);
-+	}
-+
-+	public void test000_sort_01() throws UnsupportedEncodingException {
-+		assertEquals(0, compareNamesUsingSpecialCompare("a","a"));
-+	}
-+	public void test000_sort_02() throws UnsupportedEncodingException {
-+		assertEquals(-1, compareNamesUsingSpecialCompare("a","b"));
-+		assertEquals(1, compareNamesUsingSpecialCompare("b","a"));
-+	}
-+	public void test000_sort_03() throws UnsupportedEncodingException {
-+		assertEquals(1, compareNamesUsingSpecialCompare("a:","a"));
-+		assertEquals(1, compareNamesUsingSpecialCompare("a/","a"));
-+		assertEquals(-1, compareNamesUsingSpecialCompare("a","a/"));
-+		assertEquals(-1, compareNamesUsingSpecialCompare("a","a:"));
-+		assertEquals(1, compareNamesUsingSpecialCompare("a:","a/"));
-+		assertEquals(-1, compareNamesUsingSpecialCompare("a/","a:"));
-+	}
-+	public void test000_sort_04() throws UnsupportedEncodingException {
-+		assertEquals(-1, compareNamesUsingSpecialCompare("a.a","a/a"));
-+		assertEquals(1, compareNamesUsingSpecialCompare("a/a","a.a"));
-+	}
-+	public void test000_sort_05() throws UnsupportedEncodingException {
-+		assertEquals(-1, compareNamesUsingSpecialCompare("a.","a/"));
-+		assertEquals(1, compareNamesUsingSpecialCompare("a/","a."));
-+
-+	}
-+
- 	public void test001_createEmpty() throws IOException {
- 		final Tree t = new Tree(db);
- 		assertTrue("isLoaded", t.isLoaded());
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/Tree.java b/org.spearce.jgit/src/org/spearce/jgit/lib/Tree.java
-index ab83917..5d8e0e0 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/lib/Tree.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/lib/Tree.java
-@@ -65,7 +65,10 @@ public class Tree extends TreeEntry implements Treeish {
- 			else if (aj > lastb)
- 				return 1;
- 			else
--				return 0;
-+				if (j == a.length - 1)
-+					return 0;
-+				else
-+					return -1;
- 		}
- 		if (k < nameEnd) {
- 			int bk = nameUTF8[k] & 0xff;
-@@ -74,7 +77,10 @@ public class Tree extends TreeEntry implements Treeish {
- 			else if (lasta > bk)
- 				return 1;
- 			else
--				return 0;
-+				if (k == nameEnd - 1)
-+					return 0;
-+				else
-+					return 1;
- 		}
- 		if (lasta < lastb)
- 			return -1;
--- 
-1.5.4.rc4.25.g81cc
+
+On Tue, 5 Feb 2008, Johannes Schindelin wrote:
+> > 
+> >  - make commit warn if any parent commit date is in the future from the 
+> >    current commit date (allow a *small* fudge factor here, say 5 minutes).
+> 
+> 5 minutes seems a little narrow to me.  I think we can even go with 86400 
+> seconds.
+
+Well, notice how I said *warn*. Not abort the commit. Not stop. Just make 
+people very aware of the fact that clocks are skewed.
+
+In the case that actually triggered this whole discussion, the problem 
+seems to sadly have been in the original CVS tree (or whatever it was 
+imported from): the project started in 2006, had lots of regular commits 
+up to October 2007, and then suddenly it had a commit that had a date in 
+2002!
+
+[ For those interested in looking at this, the broken commit in that 
+  Tilman's repo was commit 3a7340af2bd57488f832d7070b0ce96c4baa6b54, which 
+  is from October 2002, and which is surrounded by commits from October 
+  2007, so somebody was literally off by five years ]
+
+In other words, the repo really was pretty broken, and the git behaviour 
+came from that breakage.
+
+One way to work around this kind of thing is to flag broken dates, and 
+yes, we can probably find most of these kinds of random breakages (in the 
+case of the broken repo, we had the parent of the broken commit already 
+parsed, we could have seen that the date was bogus).
+
+But yeah, I have to also admit that exactly *because* the bug came from 
+some import from somewhere else, the date requirement cannot work - I 
+don't want to change even obviously bogus data from an external import.
+
+I don't see a good way to find the breakage efficiently and generally, 
+though. In the particular case that this hit us, it's visible because the 
+breakage is entirely local (ie you can see the broken commit  by just 
+looking directly at its parents), but even if you have just *two* commits 
+that are broken in succession, the breakage is no longer locally obvious 
+at the later one.
+
+Nasty.
+
+			Linus
