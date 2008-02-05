@@ -1,94 +1,129 @@
-From: Tim Stoakes <tim@stoakes.net>
-Subject: [PATCH] git-stash: alias 'list' to 'ls' and 'clear' to 'rm'
-Date: Tue,  5 Feb 2008 21:08:19 +1030
-Message-ID: <1202207899-28578-1-git-send-email-tim@stoakes.net>
-Cc: gitster@pobox.com, Tim Stoakes <tim@stoakes.net>
+From: Paolo Bonzini <bonzini@gnu.org>
+Subject: [PATCH-v2 1/4] git-commit: support variable number of hook arguments
+Date: Tue,  5 Feb 2008 11:01:44 +0100
+Message-ID: <1202205704-10024-1-git-send-email-bonzini@gnu.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 05 11:44:50 2008
+X-From: git-owner@vger.kernel.org Tue Feb 05 11:52:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JMLIH-0001eC-Bw
-	for gcvg-git-2@gmane.org; Tue, 05 Feb 2008 11:44:49 +0100
+	id 1JMLPE-0003nW-Co
+	for gcvg-git-2@gmane.org; Tue, 05 Feb 2008 11:52:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756022AbYBEKoP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Feb 2008 05:44:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755671AbYBEKoO
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Feb 2008 05:44:14 -0500
-Received: from hosted02.westnet.com.au ([203.10.1.213]:51162 "EHLO
-	hosted02.westnet.com.au" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755888AbYBEKoN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Feb 2008 05:44:13 -0500
-X-Greylist: delayed 348 seconds by postgrey-1.27 at vger.kernel.org; Tue, 05 Feb 2008 05:44:13 EST
-Received: from hosted02.westnet.com.au (hosted02.westnet.com.au [127.0.0.1])
-	by hosted02.westnet.com.au (Postfix) with SMTP id 2C7504A8C1;
-	Tue,  5 Feb 2008 19:38:23 +0900 (WST)
-Received: from mail.stoakes.net (dsl-202-173-137-105.sa.westnet.com.au [202.173.137.105])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by hosted02.westnet.com.au (Postfix) with ESMTP id 7FE754969D;
-	Tue,  5 Feb 2008 19:38:20 +0900 (WST)
-Received: from noodle.stoakes.net (unknown [192.168.20.209])
-	by mail.stoakes.net (Postfix) with ESMTP id 4EDED28C034;
-	Tue,  5 Feb 2008 21:08:19 +1030 (CST)
-Received: by noodle.stoakes.net (Postfix, from userid 1000)
-	id 625107F1FF; Tue,  5 Feb 2008 21:08:19 +1030 (CST)
-X-Mailer: git-send-email 1.5.4
-X-PMX-Branch: TNG-Outgoing
+	id S1756214AbYBEKvZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Feb 2008 05:51:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756203AbYBEKvZ
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Feb 2008 05:51:25 -0500
+Received: from fencepost.gnu.org ([140.186.70.10]:36287 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753789AbYBEKvY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Feb 2008 05:51:24 -0500
+Received: from bonzini by fencepost.gnu.org with local (Exim 4.67)
+	(envelope-from <bonzini@gnu.org>)
+	id 1JMLOd-0001xQ-Cc
+	for git@vger.kernel.org; Tue, 05 Feb 2008 05:51:23 -0500
+X-Mailer: git-send-email 1.5.4.1138.g882bc-dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72643>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72644>
 
-Signed-off-by: Tim Stoakes <tim@stoakes.net>
+This is a preparatory patch to allow using run_hook for the
+prepare-commit-msg hook.
 ---
- Documentation/git-stash.txt |    2 ++
- git-stash.sh                |    4 ++--
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ builtin-commit.c |   61 +++++++++++++++++++++++++++++++-----------------------
+ 1 files changed, 35 insertions(+), 26 deletions(-)
 
-diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
-index cd0dc1b..fc5866f 100644
---- a/Documentation/git-stash.txt
-+++ b/Documentation/git-stash.txt
-@@ -44,6 +44,7 @@ save [<message>]::
- 	the description along with the stashed state.
+	Compared to the previous submission, this one includes the
+	range check.
+
+diff --git a/builtin-commit.c b/builtin-commit.c
+index 2ffca40..405c8b5 100644
+--- a/builtin-commit.c
++++ b/builtin-commit.c
+@@ -343,6 +343,40 @@ static int run_status(FILE *fp, const char *index_file, const char *prefix, int
+ 	return s.commitable;
+ }
  
- list::
-+ls::
++static int run_hook(const char *index_file, const char *name, ...)
++{
++	struct child_process hook;
++	const char *argv[10], *env[2];
++	char index[PATH_MAX];
++	va_list args;
++	int i;
++
++	va_start(args, name);
++	argv[0] = git_path("hooks/%s", name);
++	i = 0;
++	do {
++		if (++i >= ARRAY_SIZE(argv))
++			die ("run_hook(): too many arguments");
++		argv[i] = va_arg(args, const char *);
++	} while (argv[i]);
++	va_end(args);
++
++	snprintf(index, sizeof(index), "GIT_INDEX_FILE=%s", index_file);
++	env[0] = index;
++	env[1] = NULL;
++
++	if (access(argv[0], X_OK) < 0)
++		return 0;
++
++	memset(&hook, 0, sizeof(hook));
++	hook.argv = argv;
++	hook.no_stdin = 1;
++	hook.stdout_to_stderr = 1;
++	hook.env = env;
++
++	return run_command(&hook);
++}
++
+ static const char sign_off_header[] = "Signed-off-by: ";
  
- 	List the stashes that you currently have.  Each 'stash' is listed
- 	with its name (e.g. `stash@\{0}` is the latest stash, `stash@\{1}` is
-@@ -79,6 +80,7 @@ have conflicts (which are stored in the index, where you therefore can no
- longer apply the changes as they were originally).
+ static int prepare_log_message(const char *index_file, const char *prefix)
+@@ -677,31 +711,6 @@ int cmd_status(int argc, const char **argv, const char *prefix)
+ 	return commitable ? 0 : 1;
+ }
  
- clear::
-+rm::
- 	Remove all the stashed states. Note that those states will then
- 	be subject to pruning, and may be difficult or impossible to recover.
- 
-diff --git a/git-stash.sh b/git-stash.sh
-index b00f888..8884950 100755
---- a/git-stash.sh
-+++ b/git-stash.sh
-@@ -198,7 +198,7 @@ apply_stash () {
- 
- # Main command set
- case "$1" in
--list)
-+list | ls)
- 	shift
- 	if test $# = 0
- 	then
-@@ -219,7 +219,7 @@ apply)
- 	shift
- 	apply_stash "$@"
- 	;;
--clear)
-+clear | rm)
- 	shift
- 	clear_stash "$@"
- 	;;
+-static int run_hook(const char *index_file, const char *name, const char *arg)
+-{
+-	struct child_process hook;
+-	const char *argv[3], *env[2];
+-	char index[PATH_MAX];
+-
+-	argv[0] = git_path("hooks/%s", name);
+-	argv[1] = arg;
+-	argv[2] = NULL;
+-	snprintf(index, sizeof(index), "GIT_INDEX_FILE=%s", index_file);
+-	env[0] = index;
+-	env[1] = NULL;
+-
+-	if (access(argv[0], X_OK) < 0)
+-		return 0;
+-
+-	memset(&hook, 0, sizeof(hook));
+-	hook.argv = argv;
+-	hook.no_stdin = 1;
+-	hook.stdout_to_stderr = 1;
+-	hook.env = env;
+-
+-	return run_command(&hook);
+-}
+-
+ static void print_summary(const char *prefix, const unsigned char *sha1)
+ {
+ 	struct rev_info rev;
+@@ -876,7 +885,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+ 		launch_editor(git_path(commit_editmsg), NULL, env);
+ 	}
+ 	if (!no_verify &&
+-	    run_hook(index_file, "commit-msg", git_path(commit_editmsg))) {
++	    run_hook(index_file, "commit-msg", git_path(commit_editmsg), NULL)) {
+ 		rollback_index_files();
+ 		exit(1);
+ 	}
 -- 
-1.5.4
+1.5.3.4.910.gc5122-dirty
