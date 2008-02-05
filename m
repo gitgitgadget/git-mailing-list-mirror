@@ -1,72 +1,62 @@
-From: Jari Aalto <jari.aalto@cante.net>
-Subject: Re: [PATCH] git-rebase.sh: Change .dotest directory to .git-dotest
-Date: Tue, 05 Feb 2008 23:25:42 +0200
-Organization: Private
-Message-ID: <prvbxfhl.fsf@blue.sea.net>
-References: <ve53xwob.fsf@blue.sea.net>
-	<alpine.LSU.1.00.0802051524580.8543@racer.site>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: [BUG] Rebase, squash, and conflicts
+Date: Tue, 5 Feb 2008 16:27:56 -0500 (EST)
+Message-ID: <alpine.LNX.1.00.0802051618190.13593@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 05 22:27:12 2008
+X-From: git-owner@vger.kernel.org Tue Feb 05 22:28:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JMVJw-00056O-4S
-	for gcvg-git-2@gmane.org; Tue, 05 Feb 2008 22:27:12 +0100
+	id 1JMVLD-0005Ys-VN
+	for gcvg-git-2@gmane.org; Tue, 05 Feb 2008 22:28:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758866AbYBEV0j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Feb 2008 16:26:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758806AbYBEV0j
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Feb 2008 16:26:39 -0500
-Received: from main.gmane.org ([80.91.229.2]:60723 "EHLO ciao.gmane.org"
+	id S1759751AbYBEV17 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Feb 2008 16:27:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759668AbYBEV16
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Feb 2008 16:27:58 -0500
+Received: from iabervon.org ([66.92.72.58]:39127 "EHLO iabervon.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758088AbYBEV0i (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Feb 2008 16:26:38 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1JMVJF-00057F-Az
-	for git@vger.kernel.org; Tue, 05 Feb 2008 21:26:29 +0000
-Received: from a91-155-178-181.elisa-laajakaista.fi ([91.155.178.181])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 05 Feb 2008 21:26:29 +0000
-Received: from jari.aalto by a91-155-178-181.elisa-laajakaista.fi with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 05 Feb 2008 21:26:29 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: a91-155-178-181.elisa-laajakaista.fi
-User-Agent: Gnus/5.110007 (No Gnus v0.7) Emacs/22.1 (windows-nt)
-Cancel-Lock: sha1:JXjB7DHXFOANwCev6XdOlBDTCN4=
+	id S1758769AbYBEV15 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Feb 2008 16:27:57 -0500
+Received: (qmail 13357 invoked by uid 1000); 5 Feb 2008 21:27:56 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 5 Feb 2008 21:27:56 -0000
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72701>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72702>
 
-* Tue 2008-02-05 Johannes Schindelin <Johannes.Schindelin@gmx.de>
->
-> If at all, it should be in .git/rebase/
+I think there's a bug in the squash behavior for git rebase -i. Say you've 
+got the following history:
 
-Much better.
+aaaaa introduce an API
+bbbbb use the API in new code
+ccccc some unrelated review
+ddddd fix the API due to review
 
-> we have a different directory already for interactive rebase and rebase 
-> -m, .git/.dotest-merge/ (which could have been a better name, too).
+And you do the following rebase:
 
-Yes, that should go to .git too.
+pick aaaaa introduce an API
+squash ddddd fix the API due to review
+pick bbbbb use the API in new code
+pick ccccc some unrelated review
+pick ddddd fix the API due to review
 
-> But the consensus was that there might be scripts relying on the name of 
-> the directory
+(the last line being because some of the changes don't apply between a and 
+b, so we want to duplicate the commit later, and probably squash it into 
+b, but that's not part of this bug report)
 
-Who would use or rely on the internal workings of git-rebase? The will
-not be any considerable amount of those. I'm confident that those people
-have enough expertise to change their scripts.
+You get a conflict on the second item, which you expected. But when you 
+resolve it, it squashes 3/5 into 2/5, not 2/5 into 1/5. I think this is 
+because rebase --continue isn't noticing that it's a squash that needed 
+help. It seems to work fine to do this in two steps (pick instead of 
+squash, followed by another rebase that does the squash when it's 
+unconflicted), as a workaround.
 
-The current situation is plain ugly and git shouldn't stomp on any other
-dir than .git
-
-Jari
-
--- 
-Welcome to FOSS revolution: we fix and modify until it shines
+	-Daniel
+*This .sig left intentionally blank*
