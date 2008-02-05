@@ -1,96 +1,112 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: [PATCH] Fix misuse of prefix_path()
-Date: Tue, 05 Feb 2008 09:17:33 +0100
-Message-ID: <47A81B9D.3090209@viscovery.net>
-References: <7v3as9mce7.fsf@gitster.siamese.dyndns.org> <1202123606.47a6f3567ebb9@webmail.eunet.at>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] git-svn: improve repository URL matching when following parents
+Date: Tue, 5 Feb 2008 00:53:42 -0800
+Message-ID: <20080205085342.GD15141@hand.yhbt.net>
+References: <20080129091858.GA4569@soma>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 05 09:18:15 2008
+X-From: git-owner@vger.kernel.org Tue Feb 05 09:54:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JMJ0Q-0003wS-4U
-	for gcvg-git-2@gmane.org; Tue, 05 Feb 2008 09:18:14 +0100
+	id 1JMJZK-0004Ps-TE
+	for gcvg-git-2@gmane.org; Tue, 05 Feb 2008 09:54:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755665AbYBEIRk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Feb 2008 03:17:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754255AbYBEIRk
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Feb 2008 03:17:40 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:50265 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754172AbYBEIRj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Feb 2008 03:17:39 -0500
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1JMIzT-0001if-PL; Tue, 05 Feb 2008 09:17:16 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 0B49169F; Tue,  5 Feb 2008 09:17:34 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <1202123606.47a6f3567ebb9@webmail.eunet.at>
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1755489AbYBEIxp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Feb 2008 03:53:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755452AbYBEIxp
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Feb 2008 03:53:45 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:37562 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755324AbYBEIxo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Feb 2008 03:53:44 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with ESMTP id CA69C2DC08B;
+	Tue,  5 Feb 2008 00:53:42 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20080129091858.GA4569@soma>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72632>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72633>
 
-From: Johannes Sixt <johannes.sixt@telecom.at>
+Eric Wong <normalperson@yhbt.net> wrote:
+> Warning!  This patch isn't heavily-tested against remote
+> servers, it only helped me limp by on a server I was having
+> trouble with tonight.  I was barely awake when working on this
+> and have been living in a different timezone for more than a
+> week, so don't trust it too much unless you're already having
+> difficulty with some servers.
 
-When DEFAULT_GIT_TEMPLATE_DIR is specified as a relative path,
-init-db made it relative to exec_path using prefix_path(), which
-is wrong.  prefix_path() is about a file inside the work tree.
-There was a similar misuse in config.c that takes relative
-ETC_GITCONFIG path. Noticed by Junio C Hamano.
+Warning lifted, please apply to master.
 
-We concatenate the paths manually. (prefix_filename() won't do
-because it expects a prefix with a trailing '/'.)
+> This way we can avoid the spawning of a new SVN::Ra session by
+> reusing the existing one.
+> 
+> The most problematic issue is that some svn servers disallow
+> too many connections from a single IP, so this will allow
+> git-svn to fetch from those repositories with a higher success
+> rate by using fewer connections.
+> 
+> This sometimes showed up as a new (and redundant)
+> [svn-remote "$parent_refname"] entry in $GIT_DIR/svn/.metadata.
+> 
+> Signed-off-by: Eric Wong <normalperson@yhbt.net>
+> ---
+> 
+>  Note: there are still cases where git-svn can open more than
+>  one connection to the SVN server, which can make some SVN
+>  setups/administrators unhappy.  Unfortunately, I'm pretty sure
+>  I won't have time to properly fix all of these in the next few
+>  days.
 
-Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
----
- builtin-init-db.c |    6 +++---
- config.c          |    6 +++---
- 2 files changed, 6 insertions(+), 6 deletions(-)
+It may be a while before I have time to fix this.  If anybody else is
+willing to step up, please do.
 
-diff --git a/builtin-init-db.c b/builtin-init-db.c
-index e1393b8..5d7cdda 100644
---- a/builtin-init-db.c
-+++ b/builtin-init-db.c
-@@ -141,9 +141,9 @@ static void copy_templates(const char *git_dir, int len, const char *template_di
- 		 */
- 		template_dir = DEFAULT_GIT_TEMPLATE_DIR;
- 		if (!is_absolute_path(template_dir)) {
--			const char *exec_path = git_exec_path();
--			template_dir = prefix_path(exec_path, strlen(exec_path),
--						   template_dir);
-+			struct strbuf d = STRBUF_INIT;
-+			strbuf_addf(&d, "%s/%s", git_exec_path(), template_dir);
-+			template_dir = strbuf_detach(&d, NULL);
- 		}
- 	}
- 	strcpy(template_path, template_dir);
-diff --git a/config.c b/config.c
-index 526a3f4..498259e 100644
---- a/config.c
-+++ b/config.c
-@@ -484,9 +484,9 @@ const char *git_etc_gitconfig(void)
- 		system_wide = ETC_GITCONFIG;
- 		if (!is_absolute_path(system_wide)) {
- 			/* interpret path relative to exec-dir */
--			const char *exec_path = git_exec_path();
--			system_wide = prefix_path(exec_path, strlen(exec_path),
--						system_wide);
-+			struct strbuf d = STRBUF_INIT;
-+			strbuf_addf(&d, "%s/%s", git_exec_path(), system_wide);
-+			system_wide = strbuf_detach(&d, NULL);
- 		}
- 	}
- 	return system_wide;
+Some notes:
+
+Most of this is related to svn:// (and possibly svn+ssh://) sessions,
+and definitely doesn't apply to file:// servers.
+
+I couldn't find an explicit way to close the socket using the SVN API.
+However, the socket does seem to get closed when the refcount of the
+SVN::Ra object hits zero.
+
+It seems only one SVN::Ra can be active at a time.  Even though it's
+possible to hold multiple sockets open to an SVN server within the same
+process (with svn://), the SVN library code doesn't work well with
+multiple sessions active.
+
+>  For now, if you get "connection closed unexpectedly" messages
+>  while fetching (and following parents), just restart git-svn
+>  and it'll pick up where it left off.
+> 
+>  git-svn.perl |    7 ++++++-
+>  1 files changed, 6 insertions(+), 1 deletions(-)
+> 
+> diff --git a/git-svn.perl b/git-svn.perl
+> index 75e97cc..7ba8c8f 100755
+> --- a/git-svn.perl
+> +++ b/git-svn.perl
+> @@ -2226,7 +2226,12 @@ sub find_parent_branch {
+>  		# just grow a tail if we're not unique enough :x
+>  		$ref_id .= '-' while find_ref($ref_id);
+>  		print STDERR "Initializing parent: $ref_id\n";
+> -		$gs = Git::SVN->init($new_url, '', $ref_id, $ref_id, 1);
+> +		my ($u, $p) = ($new_url, '');
+> +		if ($u =~ s#^\Q$url\E(/|$)##) {
+> +			$p = $u;
+> +			$u = $url;
+> +		}
+> +		$gs = Git::SVN->init($u, $p, $self->{repo_id}, $ref_id, 1);
+>  	}
+>  	my ($r0, $parent) = $gs->find_rev_before($r, 1);
+>  	if (!defined $r0 || !defined $parent) {
+
 -- 
-1.5.4.rc5.842.ge7ba5
+Eric Wong
