@@ -1,62 +1,99 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: [BUG] Rebase, squash, and conflicts
-Date: Tue, 5 Feb 2008 16:27:56 -0500 (EST)
-Message-ID: <alpine.LNX.1.00.0802051618190.13593@iabervon.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH] git-rebase.sh: Change .dotest directory to .git-dotest
+Date: Tue, 5 Feb 2008 13:49:18 -0800 (PST)
+Message-ID: <alpine.LFD.1.00.0802051334070.3110@woody.linux-foundation.org>
+References: <ve53xwob.fsf@blue.sea.net> <alpine.LSU.1.00.0802051524580.8543@racer.site> <prvbxfhl.fsf@blue.sea.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 05 22:28:34 2008
+Cc: git@vger.kernel.org
+To: Jari Aalto <jari.aalto@cante.net>
+X-From: git-owner@vger.kernel.org Tue Feb 05 22:50:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JMVLD-0005Ys-VN
-	for gcvg-git-2@gmane.org; Tue, 05 Feb 2008 22:28:32 +0100
+	id 1JMVgg-0005PR-Df
+	for gcvg-git-2@gmane.org; Tue, 05 Feb 2008 22:50:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759751AbYBEV17 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Feb 2008 16:27:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759668AbYBEV16
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Feb 2008 16:27:58 -0500
-Received: from iabervon.org ([66.92.72.58]:39127 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758769AbYBEV15 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Feb 2008 16:27:57 -0500
-Received: (qmail 13357 invoked by uid 1000); 5 Feb 2008 21:27:56 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 5 Feb 2008 21:27:56 -0000
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1759603AbYBEVuM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Feb 2008 16:50:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759513AbYBEVuM
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Feb 2008 16:50:12 -0500
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:37794 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1759644AbYBEVuJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 5 Feb 2008 16:50:09 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m15LnIwi026243
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 5 Feb 2008 13:49:20 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m15LnICA010063;
+	Tue, 5 Feb 2008 13:49:18 -0800
+In-Reply-To: <prvbxfhl.fsf@blue.sea.net>
+User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+X-Spam-Status: No, hits=-4.714 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72702>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72703>
 
-I think there's a bug in the squash behavior for git rebase -i. Say you've 
-got the following history:
 
-aaaaa introduce an API
-bbbbb use the API in new code
-ccccc some unrelated review
-ddddd fix the API due to review
 
-And you do the following rebase:
+On Tue, 5 Feb 2008, Jari Aalto wrote:
+> 
+> The current situation is plain ugly and git shouldn't stomp on any other
+> dir than .git
 
-pick aaaaa introduce an API
-squash ddddd fix the API due to review
-pick bbbbb use the API in new code
-pick ccccc some unrelated review
-pick ddddd fix the API due to review
+I do agree.
 
-(the last line being because some of the changes don't apply between a and 
-b, so we want to duplicate the commit later, and probably squash it into 
-b, but that's not part of this bug report)
+The whole (and _only_) reason for the directory being called ".dotest" is 
+literally totally silly and historical:
 
-You get a conflict on the second item, which you expected. But when you 
-resolve it, it squashes 3/5 into 2/5, not 2/5 into 1/5. I think this is 
-because rebase --continue isn't noticing that it's a squash that needed 
-help. It seems to work fine to do this in two steps (pick instead of 
-squash, followed by another rebase that does the squash when it's 
-unconflicted), as a workaround.
+ - I long since wrote my own stupid scripts around BK (and called 
+   my set of scripts around BK "bktools")
 
-	-Daniel
-*This .sig left intentionally blank*
+ - that script set included a script to extract the patch and description 
+   from a mailbox.
+
+ - that script was called "dotest", because it started out as a testing 
+   script, and I never re-named it. And while my bktools set had other 
+   scripts in it, that was the one I used _every_single_day_, so "dotest" 
+   is not only always in my shell history, it's also hardcoded in my 
+   brainstem.
+
+ - BitMover eventually merged an improved version of my mbox applicator 
+   scripts into bitkeeper, making much of it pointless, but I kept the 
+   name around as a shell macro, because it was what I was used to (I 
+   think it basically expanded into something like "bk import -temail" or 
+   something)
+
+ - when I started git, I *rewrote* those old bktools for git, and created 
+   a new "git-tools" directory. And yes, the script that actually tied all 
+   the mail splitting and application together was *still* called 
+   "dotest", because it was still what I used.
+
+ - again, time passes, and again, my helper scripts end up migrating into 
+   the actual SCM, now called "git applymbox" (and then later "git am"), 
+   but yet *again*, I cannot teach myself to call it anything sane, so my 
+   .bashrc file still contains
+
+	alias dotest='git-am --utf8'
+
+   and I still write "dotest" when I apply emails. Even though it hasn't 
+   been about "testing" for the last five years or so, and it's how I do 
+   all my work.
+
+So the temporary directory that contains all the temp-files for my 
+"dotest" script (which was external to git) - it's called ".dotest". Of 
+course.
+
+It all makes perfect sense. Or rather, it made sense way back when. I 
+agree that it's just totally insane these days, and ".dotest/" should be 
+renamed to something like ".git/split/" or something.
+
+		Linus
