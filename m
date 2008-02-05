@@ -1,73 +1,70 @@
-From: Paolo Bonzini <bonzini@gnu.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [PATCH-v2 4/4] git-commit: add a prepare-commit-msg hook
-Date: Tue, 05 Feb 2008 16:16:44 +0100
-Message-ID: <47A87DDC.5030708@gnu.org>
-References: <1202205704-10024-1-git-send-email-bonzini@gnu.org> <1202205704-10024-4-git-send-email-bonzini@gnu.org> <alpine.LSU.1.00.0802051500190.8543@racer.site>
+Date: Tue, 5 Feb 2008 15:21:45 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0802051520520.8543@racer.site>
+References: <1202205704-10024-1-git-send-email-bonzini@gnu.org> <1202205704-10024-4-git-send-email-bonzini@gnu.org> <alpine.LSU.1.00.0802051500190.8543@racer.site> <47A87DDC.5030708@gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Feb 05 16:17:51 2008
+To: Paolo Bonzini <bonzini@gnu.org>
+X-From: git-owner@vger.kernel.org Tue Feb 05 16:23:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JMPYT-0004iA-DT
-	for gcvg-git-2@gmane.org; Tue, 05 Feb 2008 16:17:49 +0100
+	id 1JMPdU-0006zJ-A5
+	for gcvg-git-2@gmane.org; Tue, 05 Feb 2008 16:23:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753471AbYBEPQv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Feb 2008 10:16:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753465AbYBEPQv
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Feb 2008 10:16:51 -0500
-Received: from wa-out-1112.google.com ([209.85.146.176]:63956 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753424AbYBEPQu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Feb 2008 10:16:50 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so3541074wah.23
-        for <git@vger.kernel.org>; Tue, 05 Feb 2008 07:16:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:x-enigmail-version:content-type:content-transfer-encoding:sender;
-        bh=R1OAcMWHniOVcUmad6CZBaMPpiXOhLK5P/qWKuJYUlg=;
-        b=aejE1RBEqrfb012RSJlqzXtF5PQ/FyT7Dp6RsHw42ZhJ1tL2HiVUHRl2+fQxo3QpoSjJKN564Usr4C2x+O9EPBIpN+8753T0OX92pitRrb2DgQ45fekMYjwWAGRODsa8feSln+kpsY8fwqWpqLGzfhkwBmfmqcrVeKFuM5y8Jv4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:x-enigmail-version:content-type:content-transfer-encoding:sender;
-        b=qgvz8jKknXygM0gXR33oX54pgroXF7dh7zlad3IGqqVWH9V+6ZmIGcGPEBUYNOdGdpo6bdwO+TywI+1m+9zbe7nK9l3KOKuXjZmq2SyqFwOhAGvcCLNnzgqW0OGpUtJkR2R1SIC2Vqoh6YKY1/5h94s9DnVoDrGIbYwMLHL0sXM=
-Received: by 10.114.78.1 with SMTP id a1mr8529690wab.14.1202224608129;
-        Tue, 05 Feb 2008 07:16:48 -0800 (PST)
-Received: from scientist-2.local ( [195.176.178.209])
-        by mx.google.com with ESMTPS id s10sm7481794mue.15.2008.02.05.07.16.46
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 05 Feb 2008 07:16:47 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.9 (Macintosh/20071031)
-In-Reply-To: <alpine.LSU.1.00.0802051500190.8543@racer.site>
-X-Enigmail-Version: 0.95.6
+	id S1751120AbYBEPW1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Feb 2008 10:22:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751192AbYBEPW1
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Feb 2008 10:22:27 -0500
+Received: from mail.gmx.net ([213.165.64.20]:39852 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750898AbYBEPW0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Feb 2008 10:22:26 -0500
+Received: (qmail invoked by alias); 05 Feb 2008 15:22:24 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp014) with SMTP; 05 Feb 2008 16:22:24 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/9bOMJz1T9KF8+gNvZbDpDEVLmU7NycrR/tN5Mgf
+	yM6ceBUVvjbQeR
+X-X-Sender: gene099@racer.site
+In-Reply-To: <47A87DDC.5030708@gnu.org>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72668>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72669>
 
-Johannes Schindelin wrote:
-> Hi,
+Hi,
+
+On Tue, 5 Feb 2008, Paolo Bonzini wrote:
+
+> Johannes Schindelin wrote:
 > 
-> On Tue, 5 Feb 2008, Paolo Bonzini wrote:
+> > On Tue, 5 Feb 2008, Paolo Bonzini wrote:
+> > 
+> > > The hook is not suppressed by the --no-verify option, and the exit 
+> > > status is ignored by git.
+> > 
+> > Umm.  Should the exit status really be ignored?  What _use_ would it 
+> > be then?
 > 
->> The hook is not suppressed by the --no-verify option, and the
->> exit status is ignored by git.
+> None; in the previous version I used an exit status of 1 to kill the 
+> commit. But since this hook, unlike others, is meant to prepare things 
+> for the user, the hook itself was not suppressed by --no-verify, only 
+> checking the exit status.  Junio thought it was a mess, so I now 
+> completely ignore the exit status.
 > 
-> Umm.  Should the exit status really be ignored?  What _use_ would it be 
-> then?
+> I just wrote the above sentence because prepare-commit-msg is the only 
+> git-commit hook whose exit status is ignored.
 
-None; in the previous version I used an exit status of 1 to kill the 
-commit.  But since this hook, unlike others, is meant to prepare things 
-for the user, the hook itself was not suppressed by --no-verify, only 
-checking the exit status.  Junio thought it was a mess, so I now 
-completely ignore the exit status.
+I might be missing something, but should this not be solved by having the 
+prepare-commit-msg exit 0?  I mean, it is conceivable that such a bad 
+error occurs in the hook that the commit should be stopped then and there.
 
-I just wrote the above sentence because prepare-commit-msg is the only 
-git-commit hook whose exit status is ignored.
-
-Paolo
+Ciao,
+Dscho
