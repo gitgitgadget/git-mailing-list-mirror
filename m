@@ -1,148 +1,108 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] Introduce the config variable pack.packSizeLimit
-Date: Tue, 5 Feb 2008 14:25:04 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802051423530.8543@racer.site>
+From: Bruno Cesar Ribas <ribas@c3sl.ufpr.br>
+Subject: Re: [PATCH] gitweb: Use config file or file for repository owner's
+	name.
+Date: Tue, 5 Feb 2008 12:28:10 -0200
+Message-ID: <20080205142809.GA6226@c3sl.ufpr.br>
+References: <1201670898-15076-1-git-send-email-ribas@c3sl.ufpr.br> <7vwsprj0sv.fsf@gitster.siamese.dyndns.org> <20080131023629.GB7778@c3sl.ufpr.br> <7vsl0eg16c.fsf@gitster.siamese.dyndns.org> <7vabmmg0cb.fsf@gitster.siamese.dyndns.org> <20080205044121.GA13263@c3sl.ufpr.br> <m34pcn67nu.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org, gitster@pobox.com, torarvid@gmail.com
-X-From: git-owner@vger.kernel.org Tue Feb 05 15:26:23 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 05 15:29:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JMOkd-0002zG-Fo
-	for gcvg-git-2@gmane.org; Tue, 05 Feb 2008 15:26:19 +0100
+	id 1JMOnK-0003ta-EY
+	for gcvg-git-2@gmane.org; Tue, 05 Feb 2008 15:29:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751476AbYBEOZr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Feb 2008 09:25:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751446AbYBEOZq
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Feb 2008 09:25:46 -0500
-Received: from mail.gmx.net ([213.165.64.20]:46780 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750874AbYBEOZq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Feb 2008 09:25:46 -0500
-Received: (qmail invoked by alias); 05 Feb 2008 14:25:44 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp021) with SMTP; 05 Feb 2008 15:25:44 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18LI9Vt5xALo1YlQsXPxF8AKiVTGbwvIxrYEvKtjA
-	oYyFdun/mS5Iha
-X-X-Sender: gene099@racer.site
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1752294AbYBEO2d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Feb 2008 09:28:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752257AbYBEO2d
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Feb 2008 09:28:33 -0500
+Received: from mx.inf.ufpr.br ([200.17.202.3]:44150 "EHLO urquell.c3sl.ufpr.br"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751921AbYBEO2c (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Feb 2008 09:28:32 -0500
+Received: from localhost (unknown [189.1.136.222])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	(Authenticated sender: ribas)
+	by urquell.c3sl.ufpr.br (Postfix) with ESMTP id 114CD700003C6;
+	Tue,  5 Feb 2008 12:28:26 -0200 (BRST)
+Content-Disposition: inline
+In-Reply-To: <m34pcn67nu.fsf@localhost.localdomain>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72660>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72661>
 
+On Tue, Feb 05, 2008 at 02:04:51AM -0800, Jakub Narebski wrote:
+> Bruno Cesar Ribas <ribas@c3sl.ufpr.br> writes:
+> 
+> > On Wed, Jan 30, 2008 at 07:06:44PM -0800, Junio C Hamano wrote:
+> > > If the config reading interface is too slow (somebody has to
+> > > bench it on a large set of repositories), maybe we would need to
+> > 
+> > I made a simple bench as follows.
+> > 
+> > dd= 'dd if=/dev/zero of=/home/bruno/dds/$i bs=1M count=400000'
+> 
+> This was to provide load, and check how it works under load, isn't it?
 
-"git pack-objects" has the option --max-pack-size to limit the file
-size of the packs to a certain amount of bytes.  On platforms where
-the pack file size is limited by filesystem constraints, it is easy
-to forget this option, and this option does not exist for "git gc"
-to begin with.
+Yes, it was to provide high disk IO. Running a test with system 100%idle is
+not satisfatory because time is almost satisfatory.
+> 
+> > Machine: 4*opteron 2.8GHz
+> >      32GB ram
+> >      14*750GB RAID0 sata2 /home
+> >      
+> > Generated a 1000 projects [ too much?! git.debian.org has 668]
+> > For each test a 'echo 2 > /proc/sys/vm/drop_caches' was done before running
+> > it.
+> > 
+> > command: time gitweb.cgi > /dev/null
+> 
+> Didn't you mean
+> 
+>   time GATEWAY_INTERFACE="CGI/1.1" HTTP_ACCEPT="*/*" \
+>        REQUEST_METHOD="GET" QUERY_STRING="" gitweb.cgi
+> 
+> here (or some wrapper thereof)?
 
-So introduce a config variable to set the default maximum, but make
-this overrideable by the command line.
+I thought so, but running it without any arguments generated a clean project
+list page.
 
-Suggested by Tor Arvid Lund.
+> 
+> I wonder what would ApacheBench show... 
+> 
+> Note also that there are operating systems (MS Windows, MacOS X) where
+> fork is much slower than on Linux.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- Documentation/config.txt           |    6 ++++++
- Documentation/git-pack-objects.txt |    3 ++-
- builtin-pack-objects.c             |   10 +++++++++-
- t/t5300-pack-object.sh             |    6 ++++++
- 4 files changed, 23 insertions(+), 2 deletions(-)
+Problem is wunning it with MsWindows an MacOS (happily I removed it from my
+macbook)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 4e222f1..3e10feb 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -766,6 +766,12 @@ pack.indexVersion::
- 	whenever the corresponding pack is larger than 2 GB.  Otherwise
- 	the default is 1.
- 
-+pack.packSizeLimit:
-+	The default maximum size of a pack.  This setting only affects
-+	packing to a file, i.e. the git:// protocol is unaffected.  It
-+	can be overridden by the `\--max-pack-size` option of
-+	linkgit:git-repack[1].
-+
- pull.octopus::
- 	The default merge strategy to use when pulling multiple branches
- 	at once.
-diff --git a/Documentation/git-pack-objects.txt b/Documentation/git-pack-objects.txt
-index 74cc7c1..8353be1 100644
---- a/Documentation/git-pack-objects.txt
-+++ b/Documentation/git-pack-objects.txt
-@@ -99,7 +99,8 @@ base-name::
- --max-pack-size=<n>::
- 	Maximum size of each output packfile, expressed in MiB.
- 	If specified,  multiple packfiles may be created.
--	The default is unlimited.
-+	The default is unlimited, unless the config variable
-+	`pack.packSizeLimit` is set.
- 
- --incremental::
- 	This flag causes an object already in a pack ignored
-diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
-index d3efeff..692a761 100644
---- a/builtin-pack-objects.c
-+++ b/builtin-pack-objects.c
-@@ -68,7 +68,7 @@ static int allow_ofs_delta;
- static const char *base_name;
- static int progress = 1;
- static int window = 10;
--static uint32_t pack_size_limit;
-+static uint32_t pack_size_limit, pack_size_limit_cfg;
- static int depth = 50;
- static int delta_search_threads = 1;
- static int pack_to_stdout;
-@@ -1867,6 +1867,10 @@ static int git_pack_config(const char *k, const char *v)
- 			die("bad pack.indexversion=%d", pack_idx_default_version);
- 		return 0;
- 	}
-+	if (!strcmp(k, "pack.packsizelimit")) {
-+		pack_size_limit_cfg = git_config_ulong(k, v);
-+		return 0;
-+	}
- 	return git_default_config(k, v);
- }
- 
-@@ -2096,6 +2100,7 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 		}
- 		if (!prefixcmp(arg, "--max-pack-size=")) {
- 			char *end;
-+			pack_size_limit_cfg = 0;
- 			pack_size_limit = strtoul(arg+16, &end, 0) * 1024 * 1024;
- 			if (!arg[16] || *end)
- 				usage(pack_usage);
-@@ -2220,6 +2225,9 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 	if (pack_to_stdout != !base_name)
- 		usage(pack_usage);
- 
-+	if (!pack_to_stdout && !pack_size_limit)
-+		pack_size_limit = pack_size_limit_cfg;
-+
- 	if (pack_to_stdout && pack_size_limit)
- 		die("--max-pack-size cannot be used to build a pack for transfer.");
- 
-diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
-index 4f350dd..cd3c149 100755
---- a/t/t5300-pack-object.sh
-+++ b/t/t5300-pack-object.sh
-@@ -268,4 +268,10 @@ test_expect_success \
-     'make sure index-pack detects the SHA1 collision' \
-     '! git-index-pack -o bad.idx test-3.pack'
- 
-+test_expect_success \
-+    'honor pack.packSizeLimit' \
-+    'git config pack.packSizeLimit 200 &&
-+     packname_4=$(git pack-objects test-4 <obj-list) &&
-+     test 3 = $(ls test-4-*.pack | wc -l)'
-+
- test_done
+Running an ApacheBench should be unde high disk IO AND multiple requests at
+once.
+
+It could be done under linux, but what concerns me more is the generation of
+ONE page without apache. And that using gitweb.descripton (and probably
+gitweb.owner) is better than using single-lined-isolated-files.
+
+> 
+> 
+> -- 
+> Jakub Narebski
+> Poland
+> ShadeHawk on #git
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+
 -- 
-1.5.4.1178.gd491a5
+Bruno Ribas - ribas@c3sl.ufpr.br
+http://web.inf.ufpr.br/ribas
+C3SL: http://www.c3sl.ufpr.br 
