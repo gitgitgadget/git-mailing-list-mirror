@@ -1,50 +1,75 @@
-From: "Roger C. Soares" <rogersoares@intelinet.com.br>
-Subject: [EGIT RFC] Git Repository Exploring
-Date: Tue, 05 Feb 2008 13:43:26 -0200
-Message-ID: <47A8841E.7050009@intelinet.com.br>
+From: Chris Larson <clarson@kergoth.com>
+Subject: [PATCH] Fix bug in parse_color that prevented the user from changing
+ the background colors.
+Date: Tue, 05 Feb 2008 10:34:34 -0700
+Message-ID: <47A89E2A.9010905@kergoth.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Robin Rosenberg <robin.rosenberg@dewire.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 05 16:45:09 2008
+X-From: git-owner@vger.kernel.org Tue Feb 05 18:35:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JMPye-0006Ua-Ck
-	for gcvg-git-2@gmane.org; Tue, 05 Feb 2008 16:44:52 +0100
+	id 1JMRhW-00079O-OZ
+	for gcvg-git-2@gmane.org; Tue, 05 Feb 2008 18:35:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758194AbYBEPmM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Feb 2008 10:42:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758203AbYBEPmL
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Feb 2008 10:42:11 -0500
-Received: from cvxbsd.convex.com.br ([200.152.177.10]:1738 "HELO
-	cvxbsd.convex.com.br" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1758179AbYBEPmJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Feb 2008 10:42:09 -0500
-Received: (qmail 91045 invoked by uid 0); 5 Feb 2008 13:45:33 -0200
-Received: from rogersoares@intelinet.com.br by cvxbsd.convex.com.br by uid 82 with qmail-scanner-1.20rc3 
- (uvscan: v4.3.20/v4817.  Clear:RC:1:. 
- Processed in 0.099259 secs); 05 Feb 2008 15:45:33 -0000
-Received: from unknown (HELO ?200.152.180.33?) (200.152.180.33)
-  by cvxbsd.convex.com.br with SMTP; 5 Feb 2008 15:45:33 -0000
-User-Agent: Thunderbird 1.5.0.12 (X11/20071129)
+	id S1753533AbYBERel (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Feb 2008 12:34:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752934AbYBERel
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Feb 2008 12:34:41 -0500
+Received: from hs-out-0708.google.com ([64.233.178.240]:2078 "EHLO
+	hs-out-2122.google.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752778AbYBERej (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Feb 2008 12:34:39 -0500
+Received: by hs-out-2122.google.com with SMTP id 54so2225432hsz.5
+        for <git@vger.kernel.org>; Tue, 05 Feb 2008 09:34:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:subject:content-type:content-transfer-encoding:sender;
+        bh=401UPS6NhgEmW1o58qB+Eh0rKUJ/lD1AdC/+/yLZRJg=;
+        b=ba478VnUjAXItdhQmSVToQsK0uPKzCh478DWUH0EW04qANGynEynnbkbEQL6s6kxnS+6Z7ObogYFipV/MokJTfaIEriuspVsMySCxUb8m9qghDUwe4KunVV+Ryu0XsTZEObXt5XVpUwlNPUF3cVFf5LIOdZwyp5haAdRmyQ28nk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:subject:content-type:content-transfer-encoding:sender;
+        b=oz+K1jzdXGjlXsVkEDSRIooNBIiNux5MJ/SC8SmGifAA+GR8bdUJ0+shsI2XRFBORNEVf4fJJyYcLcN4FPlB+X6AjaSNMCjfVYTkwg3QKCAsDGbenxB6YqoD2sHc5lMB2Y4lTHTOOCnyzWhBqWQnVVxfhAHhUp0le/HOUk3YywY=
+Received: by 10.101.71.16 with SMTP id y16mr18422382ank.50.1202232878890;
+        Tue, 05 Feb 2008 09:34:38 -0800 (PST)
+Received: from ?0.0.0.0? ( [63.81.120.158])
+        by mx.google.com with ESMTPS id b29sm18980761ana.19.2008.02.05.09.34.35
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 05 Feb 2008 09:34:38 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72674>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72675>
 
-My first contact with egit was with the version that comes with fedora. 
-I tried to "checkout" a git project in many ways but none seemed to 
-work. Only a week later I read somewhere on the web that I had to import 
-an already cloned repo into eclipse and then go to Team -> Share Project.
+The comments in color.c indicate that the syntax for the color options 
+in the
+git config is [fg [bg]] [attr], however the implementation fails if 
+strtol is
+unable to convert the string in its entirety into an integer.
 
-So, to make it easier for new users coming from cvs or svn, my current 
-idea is to add a Git Repository Exploring Perspective and as soon as 
-possible give an warning that clone isn't there yet and how the user 
-should proceed.  Would it be ok?
+Signed-off-by: Chris Larson <clarson@kergoth.com>
+---
+ color.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-[]s,
-Roger.
+diff --git a/color.c b/color.c
+index 7f66c29..62518fa 100644
+--- a/color.c
++++ b/color.c
+@@ -17,7 +17,7 @@ static int parse_color(const char *name, int len)
+             return i - 1;
+     }
+     i = strtol(name, &end, 10);
+-    if (*name && !*end && i >= -1 && i <= 255)
++    if (*name && i >= -1 && i <= 255)
+         return i;
+     return -2;
+ }
+-- 
+1.5.4.29.g43ce-dirty
