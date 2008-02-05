@@ -1,68 +1,138 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git-daemon breakage in 1.5.4
-Date: Tue, 05 Feb 2008 12:02:36 -0800
-Message-ID: <7vr6fr9noj.fsf@gitster.siamese.dyndns.org>
-References: <BE051395-F4E1-428B-89B3-5D01BEA42C71@wincent.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] prune: heed --expire for stale packs, add a test
+Date: Tue, 5 Feb 2008 20:06:41 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0802052005200.8543@racer.site>
+References: <Pine.GSO.4.63.0802051844220.15867@suma3> <alpine.LFD.1.00.0802051357420.2732@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git mailing list <git@vger.kernel.org>, srp@srparish.net
-To: Wincent Colaiuta <win@wincent.com>
-X-From: git-owner@vger.kernel.org Tue Feb 05 21:06:01 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: David Steven Tweed <d.s.tweed@reading.ac.uk>, git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Tue Feb 05 21:08:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JMU1J-0006Xh-0G
-	for gcvg-git-2@gmane.org; Tue, 05 Feb 2008 21:03:53 +0100
+	id 1JMU5V-0008CJ-EV
+	for gcvg-git-2@gmane.org; Tue, 05 Feb 2008 21:08:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758843AbYBEUDA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Feb 2008 15:03:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759880AbYBEUC7
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Feb 2008 15:02:59 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:59884 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759871AbYBEUC6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Feb 2008 15:02:58 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id D12C16418;
-	Tue,  5 Feb 2008 15:02:56 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id DDEE86414;
-	Tue,  5 Feb 2008 15:02:47 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1760522AbYBEUHZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Feb 2008 15:07:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759996AbYBEUHZ
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Feb 2008 15:07:25 -0500
+Received: from mail.gmx.net ([213.165.64.20]:44774 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1759988AbYBEUHW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Feb 2008 15:07:22 -0500
+Received: (qmail invoked by alias); 05 Feb 2008 20:07:20 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp047) with SMTP; 05 Feb 2008 21:07:20 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/fyU48N2zf9aPspEagHc7NtHFBeHqyMHHaMoCi46
+	0TQSdrr6GLZ8c9
+X-X-Sender: gene099@racer.site
+In-Reply-To: <alpine.LFD.1.00.0802051357420.2732@xanadu.home>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72686>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72687>
 
-Wincent Colaiuta <win@wincent.com> writes:
 
-> I just noticed that my copy of git-daemon running from xinetd on Red
-> Hat Enterprise Linux 3 has been broken since upgrading to 1.5.4.
->
-> On the client side this is what you see ("git clone" used in the
-> example but you get the same issue with "git ls-remote"):
->
->   git clone git://git.wincent.com/wikitext.git
->   Initialized empty Git repository in /tmp/wikitext/.git/
->   fatal: The remote end hung up unexpectedly
->   fetch-pack from 'git://git.wincent.com/wikitext.git' failed.
->
-> Nothing printed to the logs on the server side: it simply hangs up. By
-> connecting via telnet I've confirmed that git-daemon is running and
-> does accept the initial connection.
->
-> The verdict according to "git bisect" is that
-> 511707d42b3b3e57d9623493092590546ffeae80 is first bad commit:
->
-> commit 511707d42b3b3e57d9623493092590546ffeae80
-> Author: Scott R Parish <srp@srparish.net>
-> Date:   Sun Oct 28 04:17:20 2007 -0700
->
->     use only the $PATH for exec'ing git commands
+Follow the same logic as for loose objects when removing stale packs: they
+might be in use (for example when fetching, or repacking in a cron job),
+so give the user a chance to say (via --expire) what is considered too
+young an age to die for stale packs.
 
-Perhaps you did not install git on the PATH processes launched
-by your inetd implementation would use?
+Also add a simple test to verify that the stale packs are actually
+expired.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+
+
+	On Tue, 5 Feb 2008, Nicolas Pitre wrote:
+
+	> On Tue, 5 Feb 2008, David Steven Tweed wrote:
+	> 
+	> > @@ -115,5 +139,6 @@ int cmd_prune(int argc, const char **argv, 
+	> > const char *prefix)
+	> > 
+	> >  	sync();
+	> >  	prune_packed_objects(show_only);
+	> > +	remove_temporary_files();
+	> 
+	> Maybe you could implement the "show_only" mode for 
+	> remove_temporary_files() as well?  Otherwise the -n option would 
+	> not be respected.
+	> 
+	> Also you should consider honoring the --expire option as well.
+
+	How about this on top of David's patch?
+
+ builtin-prune.c  |    9 ++++++++-
+ t/t5304-prune.sh |   32 ++++++++++++++++++++++++++++++++
+ 2 files changed, 40 insertions(+), 1 deletions(-)
+ create mode 100644 t/t5304-prune.sh
+
+diff --git a/builtin-prune.c b/builtin-prune.c
+index 9152984..d5a3b60 100644
+--- a/builtin-prune.c
++++ b/builtin-prune.c
+@@ -100,7 +100,14 @@ static void remove_temporary_files(void)
+ 		if (strncmp(de->d_name, "tmp_", 4) == 0) {
+ 			char name[4096];
+ 			sprintf(name, "%s/%s", dirname, de->d_name);
+-			printf("Removing abandoned pack %s\n", name);
++			if (expire) {
++				struct stat st;
++				if (stat(name, &st) || st.st_mtime >= expire)
++					continue;
++			}
++			printf("Removing stale pack %s\n", name);
++			if (show_only)
++				continue;
+ 			unlink(name);
+ 		}
+ 	}
+diff --git a/t/t5304-prune.sh b/t/t5304-prune.sh
+new file mode 100644
+index 0000000..6560af7
+--- /dev/null
++++ b/t/t5304-prune.sh
+@@ -0,0 +1,32 @@
++#!/bin/sh
++#
++# Copyright (c) 2008 Johannes E. Schindelin
++#
++
++test_description='prune'
++. ./test-lib.sh
++
++test_expect_success setup '
++
++	: > file &&
++	git add file &&
++	test_tick &&
++	git commit -m initial &&
++	git gc
++
++'
++
++test_expect_success 'prune stale packs' '
++
++	orig_pack=$(echo .git/objects/pack/*.pack) &&
++	: > .git/objects/tmp_1.pack &&
++	: > .git/objects/tmp_2.pack &&
++	test-chmtime -86501 .git/objects/tmp_1.pack &&
++	git prune --expire 1.day &&
++	test -f $orig_pack &&
++	test -f .git/objects/tmp_2.pack &&
++	! test -f .git/objects/tmp_1.pack
++
++'
++
++test_done
+-- 
+1.5.4.1230.g4ecf8
