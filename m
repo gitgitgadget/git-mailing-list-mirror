@@ -1,76 +1,57 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] git-rebase.sh: Unchain the git-COMMAND into git
- COMMAND
-Date: Tue, 5 Feb 2008 14:10:40 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802051407540.8543@racer.site>
-References: <3as81nbn.fsf@blue.sea.net> <alpine.LSU.1.00.0802042050480.8543@racer.site> <8x1zzemr.fsf@blue.sea.net>
+From: bdowning@lavos.net (Brian Downing)
+Subject: Re: [PATCH] compat: Add simplified merge sort implementation from glibc
+Date: Tue, 5 Feb 2008 08:11:39 -0600
+Message-ID: <20080205141139.GN26392@lavos.net>
+References: <20080204024644.GM26392@lavos.net> <1202209509-13760-1-git-send-email-bdowning@lavos.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Jari Aalto <jari.aalto@cante.net>
-X-From: git-owner@vger.kernel.org Tue Feb 05 15:12:01 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, msysgit@googlegroups.com,
+	Edgar Toernig <froese@gmx.de>,
+	Steffen Prohaska <prohaska@zib.de>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 05 15:12:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JMOWi-0006nt-3h
-	for gcvg-git-2@gmane.org; Tue, 05 Feb 2008 15:11:56 +0100
+	id 1JMOX2-0006tb-Ai
+	for gcvg-git-2@gmane.org; Tue, 05 Feb 2008 15:12:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752458AbYBEOLW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Feb 2008 09:11:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752083AbYBEOLW
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Feb 2008 09:11:22 -0500
-Received: from mail.gmx.net ([213.165.64.20]:59724 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752061AbYBEOLV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Feb 2008 09:11:21 -0500
-Received: (qmail invoked by alias); 05 Feb 2008 14:11:20 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp054) with SMTP; 05 Feb 2008 15:11:20 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+u/kEZBy6u+vt5FOULGVTZ/AiUFw9z9IX0TFQl1m
-	aEW09emTP/vUQP
-X-X-Sender: gene099@racer.site
-In-Reply-To: <8x1zzemr.fsf@blue.sea.net>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1752112AbYBEOLm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Feb 2008 09:11:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752083AbYBEOLm
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Feb 2008 09:11:42 -0500
+Received: from mxsf04.insightbb.com ([74.128.0.74]:5033 "EHLO
+	mxsf04.insightbb.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752023AbYBEOLl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Feb 2008 09:11:41 -0500
+X-IronPort-AV: E=Sophos;i="4.25,308,1199682000"; 
+   d="scan'208";a="215332726"
+Received: from unknown (HELO asav02.insightbb.com) ([172.31.249.124])
+  by mxsf04.insightbb.com with ESMTP; 05 Feb 2008 09:11:40 -0500
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Ah4FAEj9p0dKhvkY/2dsb2JhbACBWKt9
+X-IronPort-AV: E=Sophos;i="4.25,308,1199682000"; 
+   d="scan'208";a="198943913"
+Received: from 74-134-249-24.dhcp.insightbb.com (HELO mail.lavos.net) ([74.134.249.24])
+  by asav02.insightbb.com with ESMTP; 05 Feb 2008 09:11:40 -0500
+Received: by mail.lavos.net (Postfix, from userid 1000)
+	id D7B4A309F21; Tue,  5 Feb 2008 08:11:39 -0600 (CST)
+Content-Disposition: inline
+In-Reply-To: <1202209509-13760-1-git-send-email-bdowning@lavos.net>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72657>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72658>
 
-Hi,
+I didn't notice that the previous patch made it into pu.  The only other
+changes to this patch was changing the makefile variable name from
+"NEED_QUICK_QSORT" to "INTERNAL_QSORT", and some changes to the commit
+message.
 
-On Tue, 5 Feb 2008, Jari Aalto wrote:
+I am fine with either version going in.
 
-> * Mon 2008-02-04 Johannes Schindelin <Johannes.Schindelin@gmx.de>
-> * Message-Id: alpine.LSU.1.00.0802042050480.8543@racer.site
-> > Hi,
-> >
-> > On Mon, 4 Feb 2008, Jari Aalto wrote:
-> >
-> >> -Example:       git-rebase master~1 topic
-> >> +Example:       git rebase master~1 topic
-> >
-> > From 36e5e70e0f40cf7ca4351b8159d68f8560a2805f(Start deprecating 
-> > "git-command" in favor of "git command"):
-> >
-> >     (For non-builtins, the "git xyzzy" format implies an extra execve(), so
-> >     this script leaves those alone).
-> 
-> Please elaborate. I'm not sure I understand. If the git-<command> syntax
-> is being phased out, it should be consistent decision accross the tools.
-
-If you call "git xyz", but git-xyz is a script, you will exec the git 
-wrapper first, which will then exec git-xyz.  That is an unnecessary exec.
-
-Since the places you touched are already in a git script (i.e. it was 
-already called with PATH extended to git's libexec/ directory, if there is 
-one), we can avoid that extra exec.
-
-The git-<command> syntax _is_ phased out, but in several steps.  Let's not 
-do the third step before the first, otherwise we'll trip.
-
-Ciao,
-Dscho
+-bcd
