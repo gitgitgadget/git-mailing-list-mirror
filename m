@@ -1,100 +1,97 @@
-From: "Mike Ralphson" <mike.ralphson-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
-Subject: Re: [PATCH] compat: Add simplified merge sort
- implementation from glibc
-Date: Tue, 5 Feb 2008 10:19:32 +0000
-Message-ID: <e2b179460802050219h58f086fer77792e3f06d74ff4@mail.gmail.com>
-References: <20080203011130.GK26392@lavos.net> <alpine.LSU.1.00.0802030231080.7372@racer.site> <20080203045033.GL26392@lavos.net>
-Reply-To: mike.ralphson-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: What's cooking in git.git (topics)
+Date: Tue, 05 Feb 2008 02:24:19 -0800 (PST)
+Message-ID: <m3zluf4s6r.fsf@localhost.localdomain>
+References: <7v7ihmuwzi.fsf@gitster.siamese.dyndns.org>
+	<7vodavd9qw.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Johannes Schindelin" <Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org>,  "Junio C Hamano" <gitster-e+AXbWqSrlAAvxtiuMwx3w@public.gmane.org>,  "Steffen Prohaska" <prohaska-wjoc1KHpMeg@public.gmane.org>, git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org,  msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-To: "Brian Downing" <bdowning-oU/tDdhfGLReoWH0uzbU5w@public.gmane.org>
-X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Tue Feb 05 11:20:06 2008
-Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from wa-out-0708.google.com ([209.85.146.242])
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 05 11:25:08 2008
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JMKuL-0002zg-Bj
-	for gcvm-msysgit@m.gmane.org; Tue, 05 Feb 2008 11:20:05 +0100
-Received: by wa-out-0708.google.com with SMTP id n36so3896795wag.21
-        for <gcvm-msysgit@m.gmane.org>; Tue, 05 Feb 2008 02:19:37 -0800 (PST)
+	id 1JMKzC-0004YK-2V
+	for gcvg-git-2@gmane.org; Tue, 05 Feb 2008 11:25:06 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1756927AbYBEKY1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Feb 2008 05:24:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756932AbYBEKY0
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Feb 2008 05:24:26 -0500
+Received: from ug-out-1314.google.com ([66.249.92.175]:56062 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753566AbYBEKYZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Feb 2008 05:24:25 -0500
+Received: by ug-out-1314.google.com with SMTP id z38so141383ugc.16
+        for <git@vger.kernel.org>; Tue, 05 Feb 2008 02:24:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:received:x-sender:x-apparently-to:received:received:received-spf:authentication-results:received:dkim-signature:domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
-        bh=/+FdrcWJTpjB1DXcS2R4gLq5AkLFC9QbqbeRslOtFwk=;
-        b=06sJ7fV9Yixqqw/q4CoFiNH00vt86fkoRWigrNhgbyAF9Q+eSfrpCX+lTyGgZMF/tsEw/ght8UyNVeyTaqT2R/FyoExPUL4wozIZcZuLx6HtwCGh4g//bNFvio0YCDdsxSbMBe4hur/aAXMsMz0VyE61mWLf9c5H73KJ0B2K8gY=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
+        bh=ow5vGA8QJFzvBahyjnFBM2KQIkzzrri96l668w6cRq8=;
+        b=bc2VG3OJ1S5RxtndYf+mRkxghh7wlvWJB1vLNt7ZepEg46RDncV2lCtlGUjCYNLSQmd64cUX5WgKOq9v2TTgTj9HsLPKz83E0ddfoRhDI87BAEe+/50FMyih15srUqyNijFd1Mbact5qgzP1oXeeDrxlLJxfkbpeMTtPcVjY6i4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-sender:x-apparently-to:received-spf:authentication-results:dkim-signature:domainkey-signature:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
-        b=Ru5qQQpXPyCLZY+argKmcWVz/RD/rEZBAkSaAbS7xVq9GbAn31LCnC+2rDpyZeegdt7ERIQfG1s49H9nnub9RHMdHtKHm0BCMAKqkdtY37KZvaLORsuaVqRZ3ZcI77bjVgn7s3iI8M7Vb5YBNDyB1dOd1/we8Z+3hS5xZWwBf3Y=
-Received: by 10.115.109.1 with SMTP id l1mr644142wam.28.1202206774085;
-        Tue, 05 Feb 2008 02:19:34 -0800 (PST)
-Received: by 10.106.243.37 with SMTP id q37gr1614prh;
-	Tue, 05 Feb 2008 02:19:34 -0800 (PST)
-X-Sender: mike.ralphson-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org
-X-Apparently-To: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-Received: by 10.35.126.2 with SMTP id d2mr21284933pyn.1.1202206773781; Tue, 05 Feb 2008 02:19:33 -0800 (PST)
-Received: from rv-out-0910.google.com (rv-out-0910.google.com [209.85.198.191]) by mx.google.com with ESMTP id v63si1802419pyh.2.2008.02.05.02.19.32; Tue, 05 Feb 2008 02:19:33 -0800 (PST)
-Received-SPF: pass (google.com: domain of mike.ralphson-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org designates 209.85.198.191 as permitted sender) client-ip=209.85.198.191;
-Authentication-Results: mx.google.com; spf=pass (google.com: domain of mike.ralphson-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org designates 209.85.198.191 as permitted sender) smtp.mail=mike.ralphson-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org; dkim=pass (test mode) header.i=@gmail.com
-Received: by rv-out-0910.google.com with SMTP id b22so1491286rvf.21 for <msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>; Tue, 05 Feb 2008 02:19:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=gamma; h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references; bh=/51IKYrlIYJwCf/9iLCmZsqcxR3S49Afrbzzyh3r340=; b=RHpH99MQFeB+OKyDOURQAAktLf22RyBKUdfEzb3O+rfTPxagWVKvYKSO/2EZ9c6ce/jOoSOTxngJAm/fb1jkXqJuuqtiHlemtk4JRhpUDRXR5o/7+nmwwLnJQdLV06tpDtrctPugGb2AGyH6jfjJdnS+1BU5xYgh8hjA2tRtmuM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=gmail.com; s=gamma; h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references; b=L4ZbO1APLVs2Zk0LVOhklOK57CQmVB6LVZhWty3DNlDghOncfrQFW3VdoU3p26sdVKnx5AgM+fwYdJLBalLA9q9CEXrbqgZwNYT9TfzTpwNt3pkpqJgOtPAWaFsrov++Ami2Ziio8E8v9RBgwtBHOBovKbrbMBobV2CGFNp3UhA=
-Received: by 10.141.107.13 with SMTP id j13mr5499579rvm.276.1202206772586; Tue, 05 Feb 2008 02:19:32 -0800 (PST)
-Received: by 10.140.208.2 with HTTP; Tue, 5 Feb 2008 02:19:32 -0800 (PST)
-In-Reply-To: <20080203045033.GL26392-oU/tDdhfGLReoWH0uzbU5w@public.gmane.org>
-Content-Disposition: inline
-Sender: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
+        b=NvSYjir0RD1BlT7PV7AfmHtXPkuWZbfP+OH7UMBFBmYRlWba6gLQlJVYqYlkq/9q6q0SZYP/DOv8Iub/t5WgkQvKe2Ewkdl02JBzUcY5zVd/9dq1RKeKT4jg32TvcyBWFRB8lfNsBUntVsycjwXR9LzjABDn/ftx1GUaUDxmU+U=
+Received: by 10.67.122.12 with SMTP id z12mr1122984ugm.18.1202207061826;
+        Tue, 05 Feb 2008 02:24:21 -0800 (PST)
+Received: from localhost.localdomain ( [83.8.224.128])
+        by mx.google.com with ESMTPS id 25sm814798ugn.23.2008.02.05.02.24.18
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 05 Feb 2008 02:24:19 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m15AOEeL004993;
+	Tue, 5 Feb 2008 11:24:14 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m15AOC4B004990;
+	Tue, 5 Feb 2008 11:24:12 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@fuw.edu.pl using -f
+In-Reply-To: <7vodavd9qw.fsf@gitster.siamese.dyndns.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Google-Loop: groups
-Mailing-List: list msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org;
-	contact msysgit-owner-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-List-Id: <msysgit.googlegroups.com>
-List-Post: <mailto:msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Help: <mailto:msysgit-help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
-	<mailto:msysgit-unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72641>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72642>
 
+Junio C Hamano <gitster@pobox.com> writes:
 
-On Feb 3, 2008 4:50 AM, Brian Downing <bdowning-oU/tDdhfGLReoWH0uzbU5w@public.gmane.org> wrote:
-> On Sun, Feb 03, 2008 at 02:37:27AM +0000, Johannes Schindelin wrote:
-> > I should add that this is a stripped-down version of glibc's sort() (yes,
-> > the GPL of glibc allows that we rip it, for all you license wieners out
-> > there).
-> >
-> > AFAIR the discussion about the different implementations of a sort
-> > algorithm boiled down to one particular implementation being quicker than
-> > what this patch has, but with dubious licensing, and the glibc
-> > implementation without the modifications present in this patch being
-> > slower.
-> >
-> > So I would like this to go in, evidently, if only as a starting point for
-> > people to play with sorting algorithms, to find the one which is optimal
-> > for our general use (we have quite some uses where we put in _almost_
-> > sorted data, which seems to be the worst-case for many sorting
-> > algorithms).
->
-> If this is what I am thinking of, the sort of dubious licensing was
-> faster than glibc's quicksort.  This patch, however, is simplified from
-> glibc's mergesort (which is what glibc uses for the qsort() call except
-> for very large arrays), and was determined to be faster than both.
->
-> See:
->
-> http://groups.google.com/group/msysgit/browse_frm/thread/3c2eb564b9d0a994
->
-> and the links from that thread for more information.
+> * jc/submittingpatches (Sun Feb 3 17:02:28 2008 -0800) 3 commits
+>  + Documentation/SubmittingPatches: What's Acked-by and Tested-by?
+>  + Documentation/SubmittingPatches: discuss first then submit
+>  + Documentation/SubmittingPatches: Instruct how to use [PATCH]
+>    Subject header
+> 
+> These I think are sensible but they did not see much discussion,
+> so they are parked here for now.
 
-Tested-by: Mike Ralphson <mike.ralphson-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+In those series I think the middle patch could be improved. I guess
+that need for brevity overcame need for being explicit. I don't know
+if patches meant for discussion are to be send to mailing list only,
+or if the patches meant for submissions are to be sent to git mailing
+list _and_ maintainer (and is it an error to send them only to the
+list) from this description.
 
-Many thanks Brian, I held off from submitting your patch to git.git
-because of the 1.5.4 freeze. I'll retest my other candidate qsort
-implementations and report back. For now this makes git look good on
-AIX. It would be good to have feedback from users of older versions of
-Solaris too.
+The rest patches are IMHO very good improvement.
+ 
+> ----------------------------------------------------------------
+> [Will merge to 'master' after 1.5.4.1]
+> 
+> * ph/describe-match (Mon Dec 24 12:18:22 2007 +0100) 2 commits
+>  + git-name-rev: add a --(no-)undefined option.
+>  + git-describe: Add a --match option to limit considered tags.
 
-Once the final patch is in, I'll drop some queued AIX Makefile patches on top.
+I'd really like that.
+ 
 
-Cheers, Mike
+IIRC there was also patch which did '~' expansion in paths provided
+via options to git, but 1.) is was buggy, 2.) it dealt only with
+excludefile, and not for example with --git-dir and --work-dir
+arguments, 3.) it was not resend for furrther discussion.
+
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
