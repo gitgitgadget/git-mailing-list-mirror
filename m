@@ -1,244 +1,131 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 9/9] Build in checkout
-Date: Tue, 5 Feb 2008 02:14:35 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802050143050.8543@racer.site>
-References: <alpine.LNX.1.00.0802041336060.13593@iabervon.org>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: [PATCH] Add platform-independent .git "symlink"
+Date: Mon, 04 Feb 2008 20:42:49 -0600
+Message-ID: <47A7CD29.40306@nrlssc.navy.mil>
+References: <8c5c35580802020959v613b9e32v321e97f93f2af761@mail.gmail.com> <1201975757-13771-1-git-send-email-hjemli@gmail.com> <alpine.LSU.1.00.0802021815510.7372@racer.site> <alpine.LSU.1.00.0802021825220.7372@racer.site> <47A78104.9050909@nrlssc.navy.mil> <alpine.LSU.1.00.0802042128170.8543@racer.site> <47A78CF9.6040001@nrlssc.navy.mil> <alpine.LSU.1.00.0802042218280.8543@racer.site> <47A79541.6070900@nrlssc.navy.mil> <alpine.LSU.1.00.0802050047340.8543@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Tue Feb 05 03:16:32 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Lars Hjemli <hjemli@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Feb 05 03:43:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JMDMK-0005rl-Pb
-	for gcvg-git-2@gmane.org; Tue, 05 Feb 2008 03:16:29 +0100
+	id 1JMDmc-0003sX-MO
+	for gcvg-git-2@gmane.org; Tue, 05 Feb 2008 03:43:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755485AbYBECPU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Feb 2008 21:15:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756049AbYBECPT
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Feb 2008 21:15:19 -0500
-Received: from mail.gmx.net ([213.165.64.20]:33057 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754428AbYBECPR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Feb 2008 21:15:17 -0500
-Received: (qmail invoked by alias); 05 Feb 2008 02:15:14 -0000
-Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
-  by mail.gmx.net (mp008) with SMTP; 05 Feb 2008 03:15:14 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX194X2cKuVt4i+itZyx5aknFYZbu2cOKzw0zS7/zzc
-	no16WeTsugnSI5
-X-X-Sender: gene099@racer.site
-In-Reply-To: <alpine.LNX.1.00.0802041336060.13593@iabervon.org>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1750796AbYBECnF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Feb 2008 21:43:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750772AbYBECnD
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Feb 2008 21:43:03 -0500
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:44991 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750764AbYBECnB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Feb 2008 21:43:01 -0500
+Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
+	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id m152gonL016137;
+	Mon, 4 Feb 2008 20:42:50 -0600
+Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 4 Feb 2008 20:42:50 -0600
+User-Agent: Thunderbird 2.0.0.9 (X11/20071031)
+In-Reply-To: <alpine.LSU.1.00.0802050047340.8543@racer.site>
+X-OriginalArrivalTime: 05 Feb 2008 02:42:50.0049 (UTC) FILETIME=[CC532B10:01C867A0]
+X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-5.0.0.1023-15706001
+X-TM-AS-Result: : Yes--12.842900-0-31-1
+X-TM-AS-Category-Info: : 31:0.000000
+X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNTY3LTcwMDA3NS0xMzkw?=
+	=?us-ascii?B?MTAtNzAzNzg4LTcwNjE1OS03MDcxMTktMTA1NzAwLTcwNzQxNi03?=
+	=?us-ascii?B?MDU5NjktNzAxODM3LTcwMjcyNi03MDE2MTgtNzAzNzEyLTcwMjM1?=
+	=?us-ascii?B?OC03MDUzODgtNzA1MjExLTcwMTc0Ny0xMDU2NDAtNzA0NDI1LTcx?=
+	=?us-ascii?B?MTk1My0xMDUwNDAtNzAxNDU1LTcwODE3OS03MDc0NTEtNzAxNDM3?=
+	=?us-ascii?B?LTcwMjAyMC03MDEwMDUtNzAyMDQ0LTcwMDY5My03MDk4MDMtNzA3?=
+	=?us-ascii?B?Nzg4LTcxMDIwNy03MDQ0MTAtNzAxMjQ5LTcwNTUwOC0xMzk1MDQt?=
+	=?us-ascii?B?NzA2NDU0LTcxMTQzMi03MDIwNjctNzA1MTY3LTcwMTA5OS03MDA3?=
+	=?us-ascii?B?NTYtNzA1NjgzLTcwMDg0OS03MDE5MzctNzAzMTU3LTcwOTgyMy03?=
+	=?us-ascii?B?MDMyNjctNzA2ODkxLTcwMjE4Ny03MDE3MzgtMTM2MDcwLTE0ODAz?=
+	=?us-ascii?B?OS0xNDgwNTEtMjAwNDM=?=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72613>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72614>
 
-Hi,
+Johannes Schindelin wrote:
+> Hi,
+> 
+> On Mon, 4 Feb 2008, Brandon Casey wrote:
+> 
+>> When we talk about clones we are not always talking about a strict 
+>> "full" clone.
+> 
+> Here, sir, we disagree.  I tend to like the fact that a clone is a clone 
+> is a clone.  Which BTW is the reason why I do not like requests to "clone" 
+> only one branch: this is not a clone.
 
-On Mon, 4 Feb 2008, Daniel Barkalow wrote:
+It seems the git-clone utility has been extended to create more than just
+clones in that case.
 
-> diff --git a/builtin-checkout.c b/builtin-checkout.c
-> new file mode 100644
-> index 0000000..2950d5c
-> --- /dev/null
-> +++ b/builtin-checkout.c
-> @@ -0,0 +1,478 @@
-> +#include "cache.h"
-> +#include "builtin.h"
-> +#include "parse-options.h"
-> +#include "refs.h"
-> +#include "commit.h"
-> +#include "tree.h"
-> +#include "tree-walk.h"
-> +#include "unpack-trees.h"
-> +#include "dir.h"
-> +#include "run-command.h"
-> +#include "merge-recursive.h"
-> +#include "diff.h"
-> +#include "revision.h"
-> +
-> +static const char * const checkout_usage[] = {
-> +	"git checkout [options] <branch>",
-> +	"git checkout [options] [<branch>] -- <file>...",
-> +	NULL,
-> +};
-> +
-> +static int post_checkout_hook(struct commit *old, struct commit *new,
-> +			      int changed)
-> +{
-> +	struct child_process proc;
-> +	const char *name = git_path("hooks/post-checkout");
-> +	const char *argv[5];
-> +
-> +	if (access(name, X_OK) < 0)
-> +		return 0;
-> +
-> +	memset(&proc, 0, sizeof(proc));
-> +	argv[0] = name;
-> +	argv[1] = xstrdup(sha1_to_hex(old->object.sha1));
-> +	argv[2] = xstrdup(sha1_to_hex(new->object.sha1));
-> +	argv[3] = changed ? "1" : "0";
-> +	argv[4] = NULL;
-> +	proc.argv = argv;
-> +	proc.no_stdin = 1;
-> +	proc.stdout_to_stderr = 1;
-> +	return run_command(&proc);
-> +}
+My use of the term "clone" with respect to git, is to refer to the product
+of the git-clone utility. With that in mind, git-clone produces all of the
+repo/work-dir combinations I described.
 
-Would this not be helped by the patch of Paolo in 
-http://article.gmane.org/gmane.comp.version-control.git/72495?
+The strict (or precise) definition of "clone" seems like a subset of the
+more generic "create new repository/workdir from existing repository". The
+different options then allow you to control how the new repo/workdir is
+structured.
 
-We would only need to move the function into run-command.[ch]...
+We don't currently have a generic "create new repository/workdir from
+existing repository" command. So people have been using git-clone to
+create new repository/workdir's and calling the result clones, even
+though they could have produced the same result by running some sequence
+of mkdir, git init, and git pull.
 
-> +static int cache_unmerged(void)
-> +{
-> +	int i;
-> +	for (i = 0; i < active_nr; i++) {
-> +		if (ce_stage(active_cache[i]))
-> +			return 1;
-> +	}
-> +	return 0;
-> +}
+>> If your statement above is rephrased to "I _want_ the original 
+>> repository to know that it has conjoined siblings.", then we have a new 
+>> repository type:
+>>
+>> 	4) conjoined repository (it has multiple sibling repositories each
+>> 	   with their own working directory, but they all share and modify the
+>> 	   same .git directory)
+> 
+> No.  The repository does not even need a working directory (in which case 
+> we call it "bare").
 
-AFAICT we have this function in merge-recursive.c (unmerged_index()) and 
-builtin-reset.c (unmerged_files()) already.  Maybe it is time to 
-consolidate them into one function in read-cache.c?
+The additional term "bare" that is used with such a repository without a
+working directory implies to me that this is a "special" or "uncommon"
+repository configuration.
 
-> +
-> +static int update_some(const unsigned char *sha1, const char *base, int baselen,
+I think in many places in the documentation and it seems in common use on
+the mailing list, the contents of the directory created by git-clone is
+informally referred to as the repository. This is even though most people
+understand that the precise definition of repository is the .git directory
+and the rest of the contents are the working directory.
 
-Heh, nice function name ;-)
+So I hope you excuse me for referring to the result of git-clone as a
+repository. I'll try to think of something else to call it (above I used
+repo/workdir).
 
-> +		       const char *pathname, unsigned mode, int stage)
-> +{
-> +	if (S_ISGITLINK(mode)) {
-> +		return 0;
-> +	} else if (S_ISDIR(mode)) {
-> +		return READ_TREE_RECURSIVE;
-> +	}
+None of that changes my opinion that a descent model for the user interface
+is to have two high-level commands that create repo/workdir's.
 
-You could lose the curly brackets and the "else", for readability.
+     git-init: creates a new repo/workdir from scratch.
+    git-clone: creates a new repo/workdir from an existing repository.
 
-> +	int len = baselen + strlen(pathname);
-> +	struct cache_entry *ce = xcalloc(1, cache_entry_size(len));
+Or the opinion that git-clone is a closer operation to creating a new working
+directory and associating it with a repository than either git-branch or
+git-checkout, which in normal usage (i.e. _not_ setting GIT_DIR or using
+--git-dir) operate within a working directory.
 
-These variables need to be declared before the code (the if()s) starts.
+With that, I think I have described my thinking well enough, so I won't continue
+any more unless you really ask a question.
 
-> +	hashcpy(ce->sha1, sha1);
-> +	memcpy(ce->name, base, baselen);
-> +	memcpy(ce->name + baselen, pathname, len - baselen);
-> +	ce->ce_flags = create_ce_flags(len, 0);
-> +	ce->ce_mode = create_ce_mode(mode);
-> +	add_cache_entry(ce, ADD_CACHE_OK_TO_ADD | ADD_CACHE_OK_TO_REPLACE);
-> +	return 0;
-> +}
-> +
-> +static int read_tree_some(struct tree *tree, const char **pathspec)
+>  Up until now, it _can_ have _one_ working directory.  
+> With my plans, it can have more than one.
 
-I have a hunch that you could share code with builtin-reset.c, namely 
-call function read_from_tree() here.
+I'm looking forward to your plans, since I find the git-new-workdir script very
+useful.
 
-> +static int remove_merge_head(void)
-> +{
-> +	unlink(git_path("MERGE_HEAD"));
-> +	return 0;
-> +}
-
-Please make this either void, or return what the unlink() returns.
-
-> +static void show_local_changes(struct object *head)
-> +{
-> +	struct rev_info rev;
-> +	// I think we want full paths, even if we're in a subdirectory.
-
-Please avoid C++-style comments.
-
-> +	init_revisions(&rev, NULL);
-> +	rev.abbrev = 0;
-> +	rev.diffopt.output_format |= DIFF_FORMAT_NAME_STATUS;
-> +	add_pending_object(&rev, head, NULL);
-> +	run_diff_index(&rev, 0);
-> +}
-> +
-> +static void describe_detached_head(char *msg, struct commit *commit)
-> +{
-> +	struct strbuf sb;
-> +	strbuf_init(&sb, 0);
-> +	parse_commit(commit);
-> +	pretty_print_commit(CMIT_FMT_ONELINE, commit, &sb, 0, "", "", 0, 0);
-> +	fprintf(stderr, "%s %s... %s\n", msg,
-> +		find_unique_abbrev(commit->object.sha1, DEFAULT_ABBREV), sb.buf);
-
-I am tempted to suggest
-
-	pretty_print_commit(get_commit_format("format:%h... %s"), <...>);
-
-here...
-
-> +static int reset_to_new(struct tree *tree, int quiet)
-
-Again, I think that this would benefit from code sharing with 
-builtin-reset.  It can be a bit tricky to avoid writing files when they 
-are already up-to-date...
-
-> +struct checkout_opts {
-> +	int quiet;
-> +	int merge;
-> +	int force;
-> +
-> +	char *new_branch;
-> +	int new_branch_log;
-> +	int track;
-> +	int no_track;
-> +};
-> +
-> +struct branch_info {
-> +	const char *name; /* The short name used */
-> +	const char *path; /* The full name of a real branch */
-> +	struct commit *commit; /* The named commit */
-> +};
-> +
-> +static void setup_branch_path(struct branch_info *branch)
-> +{
-> +	char *path = xmalloc(strlen(branch->name) +
-> +			     strlen("refs/heads/") + 1);
-> +	sprintf(path, "refs/heads/%s", branch->name);
-> +	branch->path = path;
-
-Looks like a perfect candidate for strbuf to me.
-
-> +static void update_refs_for_switch(struct checkout_opts *opts,
-> +				   struct branch_info *old,
-> +				   struct branch_info *new)
-> +{
-> +	char *msg;
-> +	const char *old_desc;
-> +	if (opts->new_branch) {
-> +		create_branch(opts->new_branch, new->name, 0,
-> +			      opts->new_branch_log, opts->track);
-> +		new->name = opts->new_branch;
-> +		setup_branch_path(new);
-> +	}
-> +
-> +	msg = malloc(1024);
-> +	old_desc = old->name;
-> +	if (!old_desc)
-> +		old_desc = sha1_to_hex(old->commit->object.sha1);
-> +	snprintf(msg, 1024, "checkout: moving from %s to %s",
-> +		 old_desc, new->name);
-
-Again, a perfect candidate for strbuf.
-
-Unfortunately, I am a bit too tired to go on (especially for finding 
-common ground between builtin-reset and read_tree_some(), 
-checkout_paths(), reset_to_new(), and reset_clean_to_new()).  Hopefully 
-I'll find time to look at it tomorrow...
-
-Ciao,
-Dscho
+-brandon
