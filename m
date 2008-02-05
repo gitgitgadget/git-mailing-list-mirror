@@ -1,112 +1,88 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] git-svn: improve repository URL matching when following parents
-Date: Tue, 5 Feb 2008 00:53:42 -0800
-Message-ID: <20080205085342.GD15141@hand.yhbt.net>
-References: <20080129091858.GA4569@soma>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-cvsimport: Detect cvs without support for server mode
+Date: Tue, 05 Feb 2008 01:08:26 -0800
+Message-ID: <7vsl07epo5.fsf@gitster.siamese.dyndns.org>
+References: <47A5DD98.6000606@gmx.ch>
+	<200802031908.28115.robin.rosenberg.lists@dewire.com>
+	<47A72EE5.2080904@gmx.ch>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 05 09:54:19 2008
+Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
+	git@vger.kernel.org
+To: Jean-Luc Herren <jlh@gmx.ch>
+X-From: git-owner@vger.kernel.org Tue Feb 05 10:09:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JMJZK-0004Ps-TE
-	for gcvg-git-2@gmane.org; Tue, 05 Feb 2008 09:54:19 +0100
+	id 1JMJo9-0008Pj-Gs
+	for gcvg-git-2@gmane.org; Tue, 05 Feb 2008 10:09:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755489AbYBEIxp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Feb 2008 03:53:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755452AbYBEIxp
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Feb 2008 03:53:45 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:37562 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755324AbYBEIxo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Feb 2008 03:53:44 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id CA69C2DC08B;
-	Tue,  5 Feb 2008 00:53:42 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20080129091858.GA4569@soma>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1750740AbYBEJIl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Feb 2008 04:08:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751173AbYBEJIk
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Feb 2008 04:08:40 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:48137 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750733AbYBEJIi (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Feb 2008 04:08:38 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 6AA223117;
+	Tue,  5 Feb 2008 04:08:36 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 9780B3116;
+	Tue,  5 Feb 2008 04:08:28 -0500 (EST)
+In-Reply-To: <47A72EE5.2080904@gmx.ch> (Jean-Luc Herren's message of "Mon, 04
+	Feb 2008 16:27:33 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72633>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72634>
 
-Eric Wong <normalperson@yhbt.net> wrote:
-> Warning!  This patch isn't heavily-tested against remote
-> servers, it only helped me limp by on a server I was having
-> trouble with tonight.  I was barely awake when working on this
-> and have been living in a different timezone for more than a
-> week, so don't trust it too much unless you're already having
-> difficulty with some servers.
+Jean-Luc Herren <jlh@gmx.ch> writes:
 
-Warning lifted, please apply to master.
+> Note that if cvs misses the server subcommand, it will spit out
+> the list of available commands to stderr, which is not useful in
+> this situation.  It seemed to me that redirecting stderr to
+> /dev/null is a bad idea, as cvs (when it works properly) might
+> potentially print out useful informations to stderr.  Maybe
+> someone has an idea about how to eliminate the help message
+> properly.
+> ...
+> @@ -340,7 +343,11 @@ sub conn {
+>  	$self->{'socketo'}->write("valid-requests\n");
+>  	$self->{'socketo'}->flush();
+>  
+> -	chomp(my $rep=$self->readline());
+> +	my $rep=$self->readline();
+> +	if (!defined $rep) {
+> +		die $ownserver ? "'cvs server' failed; make sure you have a cvs with server support" : "Remote end hung up unexpectedly";
+> +	}
+> +	chomp $rep;
 
-> This way we can avoid the spawning of a new SVN::Ra session by
-> reusing the existing one.
-> 
-> The most problematic issue is that some svn servers disallow
-> too many connections from a single IP, so this will allow
-> git-svn to fetch from those repositories with a higher success
-> rate by using fewer connections.
-> 
-> This sometimes showed up as a new (and redundant)
-> [svn-remote "$parent_refname"] entry in $GIT_DIR/svn/.metadata.
-> 
-> Signed-off-by: Eric Wong <normalperson@yhbt.net>
-> ---
-> 
->  Note: there are still cases where git-svn can open more than
->  one connection to the SVN server, which can make some SVN
->  setups/administrators unhappy.  Unfortunately, I'm pretty sure
->  I won't have time to properly fix all of these in the next few
->  days.
+I guess this is probably the best we can do without bending
+backwards too much.
 
-It may be a while before I have time to fix this.  If anybody else is
-willing to step up, please do.
+If we do not have cvs with server support, is there a fallback
+method we can still use to run cvsps?
 
-Some notes:
+> diff --git a/t/t9600-cvsimport.sh b/t/t9600-cvsimport.sh
+> index 7706430..d8cbfd0 100755
+> --- a/t/t9600-cvsimport.sh
+> +++ b/t/t9600-cvsimport.sh
+> @@ -10,6 +10,13 @@ then
+>  	exit
+>  fi
+>  
+> +if echo -n | cvs server 2>&1 | grep 'Unknown command' > /dev/null
+> +then
+> +	say 'skipping cvsimport tests, cvs has support for server mode'
+> +	test_done
+> +	exit
+> +fi
 
-Most of this is related to svn:// (and possibly svn+ssh://) sessions,
-and definitely doesn't apply to file:// servers.
-
-I couldn't find an explicit way to close the socket using the SVN API.
-However, the socket does seem to get closed when the refcount of the
-SVN::Ra object hits zero.
-
-It seems only one SVN::Ra can be active at a time.  Even though it's
-possible to hold multiple sockets open to an SVN server within the same
-process (with svn://), the SVN library code doesn't work well with
-multiple sessions active.
-
->  For now, if you get "connection closed unexpectedly" messages
->  while fetching (and following parents), just restart git-svn
->  and it'll pick up where it left off.
-> 
->  git-svn.perl |    7 ++++++-
->  1 files changed, 6 insertions(+), 1 deletions(-)
-> 
-> diff --git a/git-svn.perl b/git-svn.perl
-> index 75e97cc..7ba8c8f 100755
-> --- a/git-svn.perl
-> +++ b/git-svn.perl
-> @@ -2226,7 +2226,12 @@ sub find_parent_branch {
->  		# just grow a tail if we're not unique enough :x
->  		$ref_id .= '-' while find_ref($ref_id);
->  		print STDERR "Initializing parent: $ref_id\n";
-> -		$gs = Git::SVN->init($new_url, '', $ref_id, $ref_id, 1);
-> +		my ($u, $p) = ($new_url, '');
-> +		if ($u =~ s#^\Q$url\E(/|$)##) {
-> +			$p = $u;
-> +			$u = $url;
-> +		}
-> +		$gs = Git::SVN->init($u, $p, $self->{repo_id}, $ref_id, 1);
->  	}
->  	my ($r0, $parent) = $gs->find_rev_before($r, 1);
->  	if (!defined $r0 || !defined $parent) {
-
--- 
-Eric Wong
+Do you mean "has to support server" or "does not have support for"?
