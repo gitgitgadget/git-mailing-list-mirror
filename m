@@ -1,57 +1,69 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 3/9] Send unpack-trees debugging output to stderr
-Date: Tue, 5 Feb 2008 01:20:43 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802050117410.8543@racer.site>
-References: <alpine.LNX.1.00.0802041335430.13593@iabervon.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: man pages are littered with .ft C and others
+Date: Tue, 5 Feb 2008 02:21:20 +0100
+Message-ID: <200802050221.21647.jnareb@gmail.com>
+References: <alpine.DEB.1.00.0802021055180.21831@an.sumeria> <20080204220120.GA23798@diku.dk> <200802050026.22262.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Tue Feb 05 02:21:57 2008
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, Adam Flott <adam@npjh.com>,
+	git@vger.kernel.org
+To: Jonas Fonseca <fonseca@diku.dk>
+X-From: git-owner@vger.kernel.org Tue Feb 05 02:22:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JMCVY-0001w7-3t
-	for gcvg-git-2@gmane.org; Tue, 05 Feb 2008 02:21:56 +0100
+	id 1JMCVj-00020E-2J
+	for gcvg-git-2@gmane.org; Tue, 05 Feb 2008 02:22:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756595AbYBEBVX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Feb 2008 20:21:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754726AbYBEBVX
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Feb 2008 20:21:23 -0500
-Received: from mail.gmx.net ([213.165.64.20]:32926 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754759AbYBEBVX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Feb 2008 20:21:23 -0500
-Received: (qmail invoked by alias); 05 Feb 2008 01:21:20 -0000
-Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
-  by mail.gmx.net (mp011) with SMTP; 05 Feb 2008 02:21:20 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18O175XL3UOV/eWrqo62hnRBDuJ6MCpPZRMpBKE+h
-	TnSKU7Da1a/lsi
-X-X-Sender: gene099@racer.site
-In-Reply-To: <alpine.LNX.1.00.0802041335430.13593@iabervon.org>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1757501AbYBEBVd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Feb 2008 20:21:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757268AbYBEBVd
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Feb 2008 20:21:33 -0500
+Received: from fg-out-1718.google.com ([72.14.220.154]:49578 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754726AbYBEBVc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Feb 2008 20:21:32 -0500
+Received: by fg-out-1718.google.com with SMTP id e21so2087944fga.17
+        for <git@vger.kernel.org>; Mon, 04 Feb 2008 17:21:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        bh=XhPFEEyiADDQEI9r1vOMw+Juh1YjPlTcjTS8QQZiB7E=;
+        b=thju2MjxMxpq6zw+aXg71MoQqUlQo6gP+ER1+Nazt78//bfAM/2JLoQB2e0sw0qoKo9JUjyHFnZUscEgiA2Dm18ksxvGXsj77+YS08PdJ51Mq5sBbFsGsr6j2fgJ2/sdCNaT/jQMJCCnkSlHsalxidxnI6yDIuEghQcdRaFHrAI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=XNGxLb1JrdhMwLlWtW/SXrwCm41lmfk26d6tCJ504dxWGOo7Z6r7t9yvgvbCQFEkjqAsdUjFgpc3iOOvvLIbjWr0R/uhXSZEypszsPNHykbf5Gh2Io2Hs+TD2fPJHImbQxoQxU01PedbtLAo1PRNcE0H9BHnTa7PJCwPIKCDtWg=
+Received: by 10.82.175.17 with SMTP id x17mr1080273bue.12.1202174490576;
+        Mon, 04 Feb 2008 17:21:30 -0800 (PST)
+Received: from ?192.168.1.11? ( [83.8.221.201])
+        by mx.google.com with ESMTPS id b33sm3114465ika.5.2008.02.04.17.21.27
+        (version=SSLv3 cipher=OTHER);
+        Mon, 04 Feb 2008 17:21:28 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <200802050026.22262.jnareb@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72606>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72607>
 
-Hi,
+Jakub Narebski wrote:
 
-On Mon, 4 Feb 2008, Daniel Barkalow wrote:
+> I have applied this patch, and it makes manpages worse, not better.
+> I use DocBook XSL version 1.68.1
 
->  #if DBRT_DEBUG > 1
->  		if (first)
-> -			printf("index %s\n", first);
-> +			fprintf(stderr, "index %s\n", first);
->  #endif
+Sorry, I must have had run "make doc" without "make clean" first.
+Of course patch doesn't change anything for pre 1.72, and marked
+as such.
 
-This code path is only affected when DBRT_DEBUG is defined ("Daniel 
-Barkalow's Roasted Tomatoes"?).  So technically, I do not really see why 
-this is part of this patch series...
+One again, I'm sory for the confusion.
 
-Ciao,
-Dscho
+The old .ft C... .ft error remains.
+-- 
+Jakub Narebski
+Poland
