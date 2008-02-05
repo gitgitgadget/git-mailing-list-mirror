@@ -1,81 +1,79 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: [PATCH] git-stash: alias 'list' to 'ls' and 'clear' to 'rm'
-Date: Tue, 5 Feb 2008 13:12:06 +0100
-Message-ID: <773F09A7-0871-4950-BDE4-D54E822C8203@wincent.com>
-References: <1202207899-28578-1-git-send-email-tim@stoakes.net> <D512F3C0-3354-40BB-BD8D-8B3A85196825@wincent.com> <20080205112000.GD29545@mail.stoakes.net>
-Mime-Version: 1.0 (Apple Message framework v915)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Tim Stoakes <tim@stoakes.net>
-X-From: git-owner@vger.kernel.org Tue Feb 05 13:13:25 2008
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Add platform-independent .git "symlink"
+Date: Tue, 5 Feb 2008 12:57:54 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0802051256080.8543@racer.site>
+References: <8c5c35580802020959v613b9e32v321e97f93f2af761@mail.gmail.com> <1201975757-13771-1-git-send-email-hjemli@gmail.com> <alpine.LSU.1.00.0802021815510.7372@racer.site> <alpine.LSU.1.00.0802021825220.7372@racer.site> <47A78104.9050909@nrlssc.navy.mil>
+ <alpine.LSU.1.00.0802042128170.8543@racer.site> <47A78CF9.6040001@nrlssc.navy.mil> <alpine.LSU.1.00.0802042218280.8543@racer.site> <47A79541.6070900@nrlssc.navy.mil> <alpine.LSU.1.00.0802050047340.8543@racer.site> <47A7CD29.40306@nrlssc.navy.mil>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Lars Hjemli <hjemli@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org
+To: Brandon Casey <casey@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Tue Feb 05 13:59:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JMMfz-0001qC-LH
-	for gcvg-git-2@gmane.org; Tue, 05 Feb 2008 13:13:24 +0100
+	id 1JMNOJ-0007ec-C7
+	for gcvg-git-2@gmane.org; Tue, 05 Feb 2008 13:59:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753442AbYBEMMa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 5 Feb 2008 07:12:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751681AbYBEMM3
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Feb 2008 07:12:29 -0500
-Received: from wincent.com ([72.3.236.74]:57766 "EHLO s69819.wincent.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753046AbYBEMM2 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 5 Feb 2008 07:12:28 -0500
-Received: from cuzco.lan (localhost [127.0.0.1])
-	(authenticated bits=0)
-	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id m15CC75u008555;
-	Tue, 5 Feb 2008 06:12:08 -0600
-In-Reply-To: <20080205112000.GD29545@mail.stoakes.net>
-X-Mailer: Apple Mail (2.915)
+	id S1751035AbYBEM6h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Feb 2008 07:58:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751017AbYBEM6h
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Feb 2008 07:58:37 -0500
+Received: from mail.gmx.net ([213.165.64.20]:36575 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750989AbYBEM6h (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Feb 2008 07:58:37 -0500
+Received: (qmail invoked by alias); 05 Feb 2008 12:58:34 -0000
+Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
+  by mail.gmx.net (mp026) with SMTP; 05 Feb 2008 13:58:34 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19FZn1YIddFmiFaxCUy9HwlcUvkE5uW+0T/3KbNh0
+	kH0Ok1Qu7/KTWt
+X-X-Sender: gene099@racer.site
+In-Reply-To: <47A7CD29.40306@nrlssc.navy.mil>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72650>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72651>
 
-El 5/2/2008, a las 12:20, Tim Stoakes escribi=F3:
+Hi,
 
-> Wincent Colaiuta(win@wincent.com)@050208-12:06:
->> El 5/2/2008, a las 11:38, Tim Stoakes escribi?:
->>
->>> clear::
->>> +rm::
->>> 	Remove all the stashed states. Note that those states will then
->>> 	be subject to pruning, and may be difficult or impossible to =20
->>> recover.
->>
->> Isn't "rm" a bit misleading here? Seeing as the clear subcommand =20
->> really
->> does an "rm -rf".
->
-> $ git stash clear foo
-> git stash clear with parameters is unimplemented
->
-> It appears that 'clear' is intended to behave like 'rm', however, it
-> isn't implemented yet.
+On Mon, 4 Feb 2008, Brandon Casey wrote:
 
-No, I don't think it was ever _intended_ to behave like rm. It does =20
-pretty much what the man page says, clears all stashed states and that =
-=20
-was always its intention.
+> Johannes Schindelin wrote:
+> 
+> > On Mon, 4 Feb 2008, Brandon Casey wrote:
+> > 
+> >> If your statement above is rephrased to "I _want_ the original 
+> >> repository to know that it has conjoined siblings.", then we have a 
+> >> new repository type:
+> >>
+> >> 	4) conjoined repository (it has multiple sibling repositories each
+> >> 	   with their own working directory, but they all share and modify the
+> >> 	   same .git directory)
+> > 
+> > No.  The repository does not even need a working directory (in which case 
+> > we call it "bare").
+> 
+> The additional term "bare" that is used with such a repository without a 
+> working directory implies to me that this is a "special" or "uncommon" 
+> repository configuration.
 
-But lots of people have said that they'd like to be able to pop only =20
-to topmost stash off the stack, or delete a specific stash, and some =20
-have reported being caught by surprise and clearing all stashes when =20
-they only wanted to delete one of them. There were patch(es) to the =20
-mailing list a while back teaching "git reflog" to delete specific =20
-entries, and seeing as "git stash" is built on top of reflogs the idea =
-=20
-was that if someone wants to implement a subcommand for deleting =20
-specific stashes (or a push/pop kind of thing) then the reflog stuff =20
-would enable that. I think the refog patch(es) was/were from Dscho. I =20
-can't remember who/if has followed up with push/pop/delete patches for =
-=20
-"git stash".
+By the same reasoning, a "good day" would be a "special" or "uncommon" 
+day.
 
-Cheers,
-Wincent
+> So I hope you excuse me for referring to the result of git-clone as a 
+> repository. I'll try to think of something else to call it (above I used 
+> repo/workdir).
+
+But that's what I am saying: a git-clone clones a repository.  If you 
+happen to clone without the "--bare" option, it will additionally create a 
+working directory.
+
+Hth,
+Dscho
