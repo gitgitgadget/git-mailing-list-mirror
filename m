@@ -1,85 +1,50 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: git-daemon breakage in 1.5.4
-Date: Tue, 5 Feb 2008 16:39:00 +0100
-Message-ID: <BE051395-F4E1-428B-89B3-5D01BEA42C71@wincent.com>
-Mime-Version: 1.0 (Apple Message framework v915)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+From: "Roger C. Soares" <rogersoares@intelinet.com.br>
+Subject: [EGIT RFC] Git Repository Exploring
+Date: Tue, 05 Feb 2008 13:43:26 -0200
+Message-ID: <47A8841E.7050009@intelinet.com.br>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: srp@srparish.net
-To: git mailing list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Feb 05 16:39:49 2008
+Cc: Robin Rosenberg <robin.rosenberg@dewire.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 05 16:45:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JMPtb-0004f3-W5
-	for gcvg-git-2@gmane.org; Tue, 05 Feb 2008 16:39:40 +0100
+	id 1JMPye-0006Ua-Ck
+	for gcvg-git-2@gmane.org; Tue, 05 Feb 2008 16:44:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751870AbYBEPjG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Feb 2008 10:39:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751837AbYBEPjF
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Feb 2008 10:39:05 -0500
-Received: from wincent.com ([72.3.236.74]:58232 "EHLO s69819.wincent.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751627AbYBEPjE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Feb 2008 10:39:04 -0500
-Received: from cuzco.lan (localhost [127.0.0.1])
-	(authenticated bits=0)
-	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id m15Fd1ff013276;
-	Tue, 5 Feb 2008 09:39:02 -0600
-X-Mailer: Apple Mail (2.915)
+	id S1758194AbYBEPmM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Feb 2008 10:42:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758203AbYBEPmL
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Feb 2008 10:42:11 -0500
+Received: from cvxbsd.convex.com.br ([200.152.177.10]:1738 "HELO
+	cvxbsd.convex.com.br" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1758179AbYBEPmJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Feb 2008 10:42:09 -0500
+Received: (qmail 91045 invoked by uid 0); 5 Feb 2008 13:45:33 -0200
+Received: from rogersoares@intelinet.com.br by cvxbsd.convex.com.br by uid 82 with qmail-scanner-1.20rc3 
+ (uvscan: v4.3.20/v4817.  Clear:RC:1:. 
+ Processed in 0.099259 secs); 05 Feb 2008 15:45:33 -0000
+Received: from unknown (HELO ?200.152.180.33?) (200.152.180.33)
+  by cvxbsd.convex.com.br with SMTP; 5 Feb 2008 15:45:33 -0000
+User-Agent: Thunderbird 1.5.0.12 (X11/20071129)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72673>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72674>
 
-I just noticed that my copy of git-daemon running from xinetd on Red  
-Hat Enterprise Linux 3 has been broken since upgrading to 1.5.4.
+My first contact with egit was with the version that comes with fedora. 
+I tried to "checkout" a git project in many ways but none seemed to 
+work. Only a week later I read somewhere on the web that I had to import 
+an already cloned repo into eclipse and then go to Team -> Share Project.
 
-On the client side this is what you see ("git clone" used in the  
-example but you get the same issue with "git ls-remote"):
+So, to make it easier for new users coming from cvs or svn, my current 
+idea is to add a Git Repository Exploring Perspective and as soon as 
+possible give an warning that clone isn't there yet and how the user 
+should proceed.  Would it be ok?
 
-   git clone git://git.wincent.com/wikitext.git
-   Initialized empty Git repository in /tmp/wikitext/.git/
-   fatal: The remote end hung up unexpectedly
-   fetch-pack from 'git://git.wincent.com/wikitext.git' failed.
-
-Nothing printed to the logs on the server side: it simply hangs up. By  
-connecting via telnet I've confirmed that git-daemon is running and  
-does accept the initial connection.
-
-The verdict according to "git bisect" is that  
-511707d42b3b3e57d9623493092590546ffeae80 is first bad commit:
-
-commit 511707d42b3b3e57d9623493092590546ffeae80
-Author: Scott R Parish <srp@srparish.net>
-Date:   Sun Oct 28 04:17:20 2007 -0700
-
-     use only the $PATH for exec'ing git commands
-
-     We need to correctly set up $PATH for non-c based git commands.
-     Since we already do this, we can just use that $PATH and execvp,
-     instead of looping over the paths with execve.
-
-     This patch adds a setup_path() function to exec_cmd.c, which sets
-     the $PATH order correctly for our search order. execv_git_cmd() is
-     stripped down to setting up argv and calling execvp(). git.c's
-     main() only only needs to call setup_path().
-
-     Signed-off-by: Scott R Parish <srp@srparish.net>
-     Signed-off-by: Junio C Hamano <gitster@pobox.com>
-
-:100644 100644 33b17a6b45699e73a9b58f0ff02135eae913b47d  
-2d0a75851284392aa8ae44bc486df6a034d0af13 M	exec_cmd.c
-:100644 100644 da99287552b5d3eafc495f998a936df81ee3f8b9  
-a892355c8212298130fb3925c6cba352ed6999b6 M	exec_cmd.h
-:100644 100644 c7cabf5f348118f318d7c3abe55853b576869a98  
-4e10581101c26444da5c7c44a80219b11607705b M	git.c
-
-Does that look like it might be the issue? Anyone familiar with that  
-part of the code care to comment? Any other info I can provide that  
-might shed light on the problem?
-
-Cheers,
-Wincent
+[]s,
+Roger.
