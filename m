@@ -1,46 +1,59 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Fix misuse of prefix_path()
-Date: Tue, 05 Feb 2008 01:45:01 -0800
-Message-ID: <7v3as7d9eq.fsf@gitster.siamese.dyndns.org>
-References: <7v3as9mce7.fsf@gitster.siamese.dyndns.org>
-	<1202123606.47a6f3567ebb9@webmail.eunet.at>
-	<47A81B9D.3090209@viscovery.net>
+Subject: Re: man pages are littered with .ft C and others
+Date: Tue, 05 Feb 2008 01:59:50 -0800
+Message-ID: <7vy79zbu5l.fsf@gitster.siamese.dyndns.org>
+References: <alpine.DEB.1.00.0802021055180.21831@an.sumeria>
+	<m34pcr6vnm.fsf@localhost.localdomain>
+	<7vejbuxwpu.fsf@gitster.siamese.dyndns.org>
+	<200802031139.48752.jnareb@gmail.com> <20080204220120.GA23798@diku.dk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Tue Feb 05 10:45:51 2008
+Cc: Jakub Narebski <jnareb@gmail.com>, Adam Flott <adam@npjh.com>,
+	git@vger.kernel.org
+To: Jonas Fonseca <fonseca@diku.dk>
+X-From: git-owner@vger.kernel.org Tue Feb 05 11:00:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JMKNC-0001ZH-Ro
-	for gcvg-git-2@gmane.org; Tue, 05 Feb 2008 10:45:51 +0100
+	id 1JMKbV-00060a-26
+	for gcvg-git-2@gmane.org; Tue, 05 Feb 2008 11:00:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753819AbYBEJpR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Feb 2008 04:45:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753695AbYBEJpQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Feb 2008 04:45:16 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:50099 "EHLO
+	id S1754367AbYBEKAF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Feb 2008 05:00:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754381AbYBEKAE
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Feb 2008 05:00:04 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:50814 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753819AbYBEJpP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Feb 2008 04:45:15 -0500
+	with ESMTP id S1754360AbYBEKAC (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Feb 2008 05:00:02 -0500
 Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 336654805;
-	Tue,  5 Feb 2008 04:45:14 -0500 (EST)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 2AF6D4F08;
+	Tue,  5 Feb 2008 05:00:00 -0500 (EST)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id C8D2F4804;
-	Tue,  5 Feb 2008 04:45:10 -0500 (EST)
-In-Reply-To: <47A81B9D.3090209@viscovery.net> (Johannes Sixt's message of
-	"Tue, 05 Feb 2008 09:17:33 +0100")
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 884194F02;
+	Tue,  5 Feb 2008 04:59:53 -0500 (EST)
+In-Reply-To: <20080204220120.GA23798@diku.dk> (Jonas Fonseca's message of
+	"Mon, 4 Feb 2008 23:01:20 +0100")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72638>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72639>
 
-Sorry, I pushed out the previous one by mistake.  Will apply
-this as a fix-up.
+Jonas Fonseca <fonseca@diku.dk> writes:
+
+> I was able to solve this problem with this patch, which adds a XSL file
+> used specifically for DOCBOOK_XSL_172=YesPlease and where dots and
+> backslashes are escaped properly so they won't be substituted to the
+> wrong thing further down the "DocBook XSL pipeline". Doing the escaping
+> in the existing callout.xsl breaks v1.70.1. Hopefully v1.73 will end
+> this part of the manpage nightmare.
+
+I checked this with 1.71, 1.69 and 1.72 (with DOCBOOK_XSL_172).
+It seems not to regress.
+
+Applied to 'master'.  Thanks.
