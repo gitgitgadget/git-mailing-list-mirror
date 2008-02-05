@@ -1,75 +1,82 @@
-From: Timo Hirvonen <tihirvon@gmail.com>
-Subject: [PATCH] Fix parsing numeric color values
-Date: Tue, 5 Feb 2008 21:18:21 +0200
-Message-ID: <20080205211821.e4a15194.tihirvon@gmail.com>
-References: <47A89E2A.9010905@kergoth.com>
-	<20080205203940.1dcff0ce.tihirvon@gmail.com>
-	<b6ebd0a50802051045t4949df68u7e405ea618403a31@mail.gmail.com>
-	<20080205205856.76a7cd45.tihirvon@gmail.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH 1/2] Reduce the number of connects when fetching
+Date: Tue, 5 Feb 2008 14:20:21 -0500 (EST)
+Message-ID: <alpine.LNX.1.00.0802051417140.13593@iabervon.org>
+References: <alpine.LNX.1.00.0802041323450.13593@iabervon.org> <7v8x20gkue.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: "Chris Larson" <clarson@kergoth.com>, git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 05 20:19:48 2008
+X-From: git-owner@vger.kernel.org Tue Feb 05 20:20:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JMTKc-0005zq-5B
-	for gcvg-git-2@gmane.org; Tue, 05 Feb 2008 20:19:46 +0100
+	id 1JMTLl-0006Qb-Ml
+	for gcvg-git-2@gmane.org; Tue, 05 Feb 2008 20:20:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758763AbYBETSd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Feb 2008 14:18:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758255AbYBETSd
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Feb 2008 14:18:33 -0500
-Received: from wr-out-0506.google.com ([64.233.184.235]:55861 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757250AbYBETSc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Feb 2008 14:18:32 -0500
-Received: by wr-out-0506.google.com with SMTP id c48so2239624wra.23
-        for <git@vger.kernel.org>; Tue, 05 Feb 2008 11:18:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer:mime-version:content-type:content-transfer-encoding;
-        bh=eB+IjekKrymGbDtCVIUtflS5qTxijOPYepWhGezKjZk=;
-        b=M3c2yywBuUn6f/FmCHpLqJhPC8dd00jGr7/MuIvnOFcz0qEV6oLUH4uH1/kJWOrYlTYNhgLwXiUrDf9sGI677YiGZ5geUR86fTo1EIv/rHytUuM/RDn5FgmsK7PqsVXw3Ol7+DFhBwF/9Cg0HIldB2wIy40jfQk6UJiROiVbsH0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer:mime-version:content-type:content-transfer-encoding;
-        b=q/SNnRcFL0khrZmoC9Wkl7RdFWr4eyCdTEtAJQBoppbJTkjtuGFuP5K/DLS27vd+OIw1SoPZEbudS5T5FHHuW+00wZcHNiQybx8A1V614uuJr637ETOceADgdM0+xUpGIFd2JhUR/t9kymwBPFsb9WTFlvTC6+IlLMBsUDWF7wI=
-Received: by 10.114.89.1 with SMTP id m1mr2965513wab.77.1202239108113;
-        Tue, 05 Feb 2008 11:18:28 -0800 (PST)
-Received: from garlic.home.net ( [85.23.16.168])
-        by mx.google.com with ESMTPS id 1sm24072604nfv.3.2008.02.05.11.18.26
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 05 Feb 2008 11:18:27 -0800 (PST)
-In-Reply-To: <20080205205856.76a7cd45.tihirvon@gmail.com>
-X-Mailer: Sylpheed 2.4.8 (GTK+ 2.12.5; x86_64-unknown-linux-gnu)
+	id S1754786AbYBETUY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Feb 2008 14:20:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752934AbYBETUY
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Feb 2008 14:20:24 -0500
+Received: from iabervon.org ([66.92.72.58]:56188 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751451AbYBETUX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Feb 2008 14:20:23 -0500
+Received: (qmail 4294 invoked by uid 1000); 5 Feb 2008 19:20:21 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 5 Feb 2008 19:20:21 -0000
+In-Reply-To: <7v8x20gkue.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72680>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72681>
 
-Fix bug reported by Chris Larson <clarson@kergoth.com>.  Numeric color
-only worked if it was at end of line.
----
- color.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+On Mon, 4 Feb 2008, Junio C Hamano wrote:
 
-diff --git a/color.c b/color.c
-index 7f66c29..3c999c3 100644
---- a/color.c
-+++ b/color.c
-@@ -17,7 +17,7 @@ static int parse_color(const char *name, int len)
- 			return i - 1;
- 	}
- 	i = strtol(name, &end, 10);
--	if (*name && !*end && i >= -1 && i <= 255)
-+	if (*name && (!*end || isspace(*end)) && i >= -1 && i <= 255)
- 		return i;
- 	return -2;
- }
--- 
-1.5.4.1134.ge34cf-dirty
+> Daniel Barkalow <barkalow@iabervon.org> writes:
+> 
+> > This shares the connection between getting the remote ref list and
+> > getting objects in the first batch. (A second connection is still used
+> > to follow tags)
+> > ---
+> 
+> No signoff.
+
+I think I must have switched from signing off my emails to signing off my 
+commits some time since last october.
+
+Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
+
+> > There's a bug here, fixed in the next patch, but it's just cosmetic (we 
+> > hang up on the remote end unexpectedly if we turn out not to need 
+> > anything), and I think reorganizing changes to not do that makes the 
+> > changes harder to follow.
+> 
+> > @@ -706,9 +703,34 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
+> >  	if (!dest)
+> >  		usage(fetch_pack_usage);
+> >  
+> > -	ref = fetch_pack(&args, dest, nr_heads, heads, NULL);
+> > +	int fd[2];
+> > +	struct child_process *conn = git_connect(fd, (char *)dest, args.uploadpack,
+> > +                          args.verbose ? CONNECT_VERBOSE : 0);
+> 
+> Decl after statement.
+> 
+> But other than that, good job.  I did not realize it would be
+> doable this cleanly.
+
+I designed the transport structure to permit it, and the protocol was 
+originally designed to work that way, so it should be easy... the hard 
+part is getting rid of a second connection for fetching new tags, but 
+that's a relatively unusual situation anyway.
+
+> Will squash all three and queue for 'next'.
+
+Great. I assume you'll fix my C99-ism, as well?
+
+	-Daniel
+*This .sig left intentionally blank*
