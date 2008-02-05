@@ -1,65 +1,83 @@
-From: Jari Aalto <jari.aalto@cante.net>
-Subject: Re: git-fetch in 1.5.4 fails versus 1.5.3.8
-Date: Tue, 05 Feb 2008 17:01:52 +0200
-Organization: Private
-Message-ID: <zlufxx9b.fsf@blue.sea.net>
-References: <pan.2008.02.04.18.25.26@progsoc.org>
-	<20080205050741.GA4624@coredump.intra.peff.net>
+From: "Roger C. Soares" <rogersoares@intelinet.com.br>
+Subject: Re: [EGIT PATCH Series] Cleanups and javadocs
+Date: Tue, 05 Feb 2008 13:09:26 -0200
+Message-ID: <47A87C26.2070307@intelinet.com.br>
+References: <1202170534-15788-1-git-send-email-robin.rosenberg@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 05 16:03:54 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Dave Watson <dwatson@mimvista.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Tue Feb 05 16:08:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JMPKw-0007t4-D2
-	for gcvg-git-2@gmane.org; Tue, 05 Feb 2008 16:03:50 +0100
+	id 1JMPPd-0001CD-4H
+	for gcvg-git-2@gmane.org; Tue, 05 Feb 2008 16:08:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751275AbYBEPCv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Feb 2008 10:02:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751278AbYBEPCv
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Feb 2008 10:02:51 -0500
-Received: from main.gmane.org ([80.91.229.2]:41604 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751247AbYBEPCu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Feb 2008 10:02:50 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1JMPJt-0002Z6-Pe
-	for git@vger.kernel.org; Tue, 05 Feb 2008 15:02:45 +0000
-Received: from a91-155-178-181.elisa-laajakaista.fi ([91.155.178.181])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 05 Feb 2008 15:02:45 +0000
-Received: from jari.aalto by a91-155-178-181.elisa-laajakaista.fi with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 05 Feb 2008 15:02:45 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: a91-155-178-181.elisa-laajakaista.fi
-User-Agent: Gnus/5.110007 (No Gnus v0.7) Emacs/22.1 (windows-nt)
-Cancel-Lock: sha1:D8h5OpionrvDADfVDoHaT92arRc=
+	id S1751361AbYBEPIM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Feb 2008 10:08:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751350AbYBEPIL
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Feb 2008 10:08:11 -0500
+Received: from cvxbsd.convex.com.br ([200.152.177.10]:1748 "HELO
+	cvxbsd.convex.com.br" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1751189AbYBEPIK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Feb 2008 10:08:10 -0500
+Received: (qmail 76123 invoked by uid 0); 5 Feb 2008 13:11:34 -0200
+Received: from rogersoares@intelinet.com.br by cvxbsd.convex.com.br by uid 82 with qmail-scanner-1.20rc3 
+ (uvscan: v4.3.20/v4817.  Clear:RC:1:. 
+ Processed in 0.238207 secs); 05 Feb 2008 15:11:34 -0000
+Received: from unknown (HELO ?200.152.180.33?) (200.152.180.33)
+  by cvxbsd.convex.com.br with SMTP; 5 Feb 2008 15:11:34 -0000
+User-Agent: Thunderbird 1.5.0.12 (X11/20071129)
+In-Reply-To: <1202170534-15788-1-git-send-email-robin.rosenberg@dewire.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72664>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72665>
 
-* Tue 2008-02-05 Jeff King <peff@peff.net> gmane.comp.version-control.git
-* Message-Id: 20080205050741.GA4624@coredump.intra.peff.net
-> On Mon, Feb 04, 2008 at 06:25:25PM +0000, Anand Kumria wrote:
-> That being said, there seems to be some difference between 1.5.3.8 and
-> 1.5.4 that made us care more about SSL certs (though I note that the
-> SSL_VERIFYPEER curl knob has been set since pre-1.0). Have you tried
-> setting GIT_SSL_NO_VERIFY?
 
-Confirmed. The "git push" returned failure, but when compiled with this
-options, it works ok.
+Robin Rosenberg escreveu:
+> Here is a number of small enhancements that reduce the number of warnings
+> displayed and raises the standard on comments. We now get javadoc comments
+> on all public and protected methods which hopefully will make it slighly
+> easier to get on the train for those interested in helping out with Egit/Jgit.
+>
+> Disabling the else-warning is probably fairly uncontroversial. Disabling some
+> warning about boxing/unboxing of integers might be as might be requiring
+> javadoc comments.
+>
+>   
+Hi Robin,
 
-    $ uname -a
-    SunOS 5.9 Generic_118558-35 sun4u sparc SUNW,Serverblade1
+[2, 3, 5 and 6] - looks fine to me.
 
-Jari
+[1] - What about something like "nothing to be done here" and/or 
+"implementing interface method"?
 
--- 
-Welcome to FOSS revolution: we fix and modify until it shines
+[4] - Some typos:
++     * Construct an GitStorage instance corresponding to
++     * Construct a GitTag object with a give name.
++     * with some filtering applied. The filter could reduces the number of
++     * commitgs returned or just mark some versions as interesting.
++     *            true if all revisions are returned and interesting 
+revisiosn.
++ * An class for changing a ref and possibly index and workdir too.
++     * Construct a {@link CheckpointJob} for the specified resource maping
++     * Drop the Eclipse project from our assocation of 
+projects/repositories
+
+And
++    /**
++     * Maps the commit id of this object and
++     *
++     * @return the {@link Commit} object this {@link IFileRevision} 
+refers to
++     */
+and what?
+
+[]s,
+Roger.
