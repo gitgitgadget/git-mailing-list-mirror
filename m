@@ -1,68 +1,70 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [RFH] revision limiting sometimes ignored
-Date: Wed, 6 Feb 2008 11:26:50 -0800 (PST)
-Message-ID: <alpine.LFD.1.00.0802061124550.2967@woody.linux-foundation.org>
-References: <20080203030054.GA18654@coredump.intra.peff.net> <20080203043310.GA5984@coredump.intra.peff.net> <alpine.LFD.1.00.0802040922480.3034@hp.linux-foundation.org> <7vr6fsk08w.fsf@gitster.siamese.dyndns.org> <alpine.LFD.1.00.0802041146060.3034@hp.linux-foundation.org>
- <alpine.LFD.1.00.0802041223080.3034@hp.linux-foundation.org> <7vir13g9hx.fsf@gitster.siamese.dyndns.org> <alpine.LFD.1.00.0802051300050.3110@woody.linux-foundation.org> <alpine.LSU.1.00.0802052228280.8543@racer.site> <alpine.LFD.1.00.0802051539570.2967@woody.linux-foundation.org>
- <20080206164303.GA1255@code-monkey.de>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH] Make git prune remove temporary packs that look like write
+ failures
+Date: Wed, 06 Feb 2008 14:31:47 -0500 (EST)
+Message-ID: <alpine.LFD.1.00.0802061420510.2732@xanadu.home>
+References: <Pine.GSO.4.63.0802051844220.15867@suma3>
+ <alpine.LFD.1.00.0802051357420.2732@xanadu.home>
+ <e1dab3980802061110p2c1dad1ep8a46eeda93839bb9@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Tilman Sauerbeck <tilman@code-monkey.de>
-X-From: git-owner@vger.kernel.org Wed Feb 06 20:28:03 2008
+Content-Transfer-Encoding: 7BIT
+Cc: David Steven Tweed <d.s.tweed@reading.ac.uk>, git@vger.kernel.org,
+	Johannes.Schindelin@gmx.de
+To: David Tweed <david.tweed@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 06 20:32:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JMpwB-0002Rh-4C
-	for gcvg-git-2@gmane.org; Wed, 06 Feb 2008 20:28:03 +0100
+	id 1JMq0M-00045y-CW
+	for gcvg-git-2@gmane.org; Wed, 06 Feb 2008 20:32:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752711AbYBFT1a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Feb 2008 14:27:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753192AbYBFT13
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Feb 2008 14:27:29 -0500
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:40396 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752301AbYBFT13 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 6 Feb 2008 14:27:29 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m16JQrGI011119
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 6 Feb 2008 11:26:59 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m16JQoqi026390;
-	Wed, 6 Feb 2008 11:26:50 -0800
-In-Reply-To: <20080206164303.GA1255@code-monkey.de>
+	id S1751873AbYBFTbt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Feb 2008 14:31:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753761AbYBFTbt
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Feb 2008 14:31:49 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:49082 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751031AbYBFTbs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Feb 2008 14:31:48 -0500
+Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR004.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0JVU00I1W0WZOZ80@VL-MO-MR004.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 06 Feb 2008 14:31:47 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <e1dab3980802061110p2c1dad1ep8a46eeda93839bb9@mail.gmail.com>
 User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
-X-Spam-Status: No, hits=-3.215 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72829>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72830>
+
+On Wed, 6 Feb 2008, David Tweed wrote:
+
+> I guess the -n ought to be honoured. However, unless I'm missing
+> something, the case of expiring objects is different. The primary
+> reason is that objects can get orphaned by "semantic" decisions
+> (delete this branch, rewind, etc) so they contain valid content that
+> you might want to later rescue (using low-level command like git cat
+> if necessary).
+
+You can also get loose unconnected objects when fetching and the number 
+of objects is lower than the transfer.unpackLimit value.
+
+> In contrast, the only way to get a temporary pack when
+> the repository is quiescent is resulting from a _write error_ and thus
+> is a corrupt entity which it would take a great deal of work to
+> extract any valid data from.
+
+Or when a fetch is in progress, just like the case above, but with the 
+number of objects greater than transfer.unpackLimit.
+
+This is uncommon to have a prune occurring at the same time as a fetch, 
+but the --expire argument is there if for example you do a prune from a 
+cron job but still want to be safe by giving a grace period to garbage 
+files which might not be so after all.
 
 
-
-On Wed, 6 Feb 2008, Tilman Sauerbeck wrote:
-> 
-> I'm not sure whether this repository was import from another SCM, but I
-> doubt it. I'm fairly sure that 3a7340af2bd57488f832d7070b0ce96c4baa6b54
-> was created using git commit though. I guess the committer's clock just
-> was a little late at that point.
-
-Heh. I thought it was imported from the outside because the commit log 
-looks so damn nasty. I'm used to projects with good and readable logs, so 
-I associate "native" git repos with logs that actually explain what's 
-going on.
-
-But yeah, it looks like your repo is a perfectly native git repo, it just 
-has really sucky log messages. I guess you can create crap logs in any 
-SCM, even if the system is written to encourage good logs ;)
-
-		Linus
+Nicolas
