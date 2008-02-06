@@ -1,74 +1,99 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-rebase.sh: Use POSIX/Susv command substitution instead of backticks
-Date: Tue, 05 Feb 2008 16:59:06 -0800
-Message-ID: <7vhcgm7vdx.fsf@gitster.siamese.dyndns.org>
-References: <lk5zxdix.fsf@blue.sea.net>
-	<alpine.LSU.1.00.0802052226340.8543@racer.site>
-	<abmfxbg3.fsf@blue.sea.net>
-	<alpine.LSU.1.00.0802052305080.8543@racer.site>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: rebase -i and --whitespace, was Re: [PATCH] git-rebase.sh: Update
+ USAGE string (No. 1)
+Date: Wed, 6 Feb 2008 01:00:29 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0802060058550.8543@racer.site>
+References: <m3lk6161jo.fsf@localhost.localdomain> <200802041113.m14BDLMl004301@mi1.bluebottle.com> <alpine.LSU.1.00.0802041505230.7372@racer.site> <200802041642.52088.jnareb@gmail.com> <7vir137yvx.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jari Aalto <jari.aalto@cante.net>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Feb 06 02:00:47 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	=?ISO-2022-JP?Q?=1B$B$7$i$$$7$J$J$3=1B=28J?= 
+	<nanako3@bluebottle.com>, Jari Aalto <jari.aalto@cante.net>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 06 02:01:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JMYeX-0007xw-Qa
-	for gcvg-git-2@gmane.org; Wed, 06 Feb 2008 02:00:42 +0100
+	id 1JMYfX-0008HX-Tj
+	for gcvg-git-2@gmane.org; Wed, 06 Feb 2008 02:01:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756774AbYBFA7b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Feb 2008 19:59:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760682AbYBFA7b
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Feb 2008 19:59:31 -0500
-Received: from rune.pobox.com ([208.210.124.79]:42698 "EHLO rune.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756774AbYBFA7a (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Feb 2008 19:59:30 -0500
-Received: from rune (localhost [127.0.0.1])
-	by rune.pobox.com (Postfix) with ESMTP id DBE78193DBF;
-	Tue,  5 Feb 2008 19:59:50 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 2D761193D8D;
-	Tue,  5 Feb 2008 19:59:45 -0500 (EST)
-In-Reply-To: <alpine.LSU.1.00.0802052305080.8543@racer.site> (Johannes
-	Schindelin's message of "Tue, 5 Feb 2008 23:06:48 +0000 (GMT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1758656AbYBFBBM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Feb 2008 20:01:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757774AbYBFBBL
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Feb 2008 20:01:11 -0500
+Received: from mail.gmx.net ([213.165.64.20]:33044 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1757397AbYBFBBK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Feb 2008 20:01:10 -0500
+Received: (qmail invoked by alias); 06 Feb 2008 01:01:09 -0000
+Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
+  by mail.gmx.net (mp034) with SMTP; 06 Feb 2008 02:01:09 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+LWKwMeGiLSJEaTVAOcpajxlAkdNpE0VJvk1iHBH
+	xFH8FjNUR130J/
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7vir137yvx.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72737>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72738>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hi,
 
-> And then you have to do it for all scripts in one go.  Mind you, it is not 
-> really complicated: just one call to perl.
+On Tue, 5 Feb 2008, Junio C Hamano wrote:
 
-Please do not do this.  If other people have pending changes,
-"cleanup for clean-up's sake" would create conflicts for no good
-reason.
+> Jakub Narebski <jnareb@gmail.com> writes:
+> 
+> > So it means that synopsis should, instead of current (pre-patch)
+> >
+> > 'git-rebase' [-i | --interactive] [-v | --verbose] [-m | --merge]
+> >         [-C<n>] [ --whitespace=<option>] [-p | --preserve-merges]
+> >         [--onto <newbase>] <upstream> [<branch>]
+> >
+> > should read
+> >
+> > 'git-rebase' [-v | --verbose]  [-p | --preserve-merges]
+> >         [{-i | --interactive} | [-C<n>] [ --whitespace=<option>] [-m | --merge]]
+> >         [--onto <newbase>] <upstream> [<branch>]
+> >
+> > or perhaps even separated into interactive / non-interactive merge?
+> 
+> I think the reality is:
+> 
+>  * -i ignores the lack of -m (i.e. do not use the slow "merge");
+> 
+>  * Rebase with -m cannot use -C<n> and --whitespace (hence -i
+>    because it forces -m);
+> 
+>  * -p is only meaningful when using -m;
 
-There are only two cases such a clean-up patch is good:
+Even worse, AFAIR -p only works with -i.
 
- (1) When the maintainer is not yet accepting any patches after
-     a release-freeze and there is no pending patches from the
-     community, and/or if you can convince people with pending
-     patches to rebase on top of the clean-up because the
-     current codebase is so unmaintainably bad, then a
-     whole-tree clean-up patch should go in before anything
-     else, forcing everybody to rebase on top of it;
+> Three possible courses of actions are:
+> 
+>  (1) fix merge codepath (this is involved --- we would need to
+>      teach xdl_merge() to honor --whitespace={warn|error|fix}
+>      and -C<n>); or
+> 
+>  (2) fix -i so that it does not force -m; or
+> 
+>  (3) adjust the description to reality.
+> 
+> Obviously the easiest would be to document the behaviour as-is,
+> but I suspect (2) would be the best practical solution if we
+> wanted to have any improvement compared to the current
+> situation.
 
- (2) If you will be working on the code in an area, you may want
-     to have the first one in the series a "pure clean-up and
-     nothing else" of the whole area, and then build your real
-     changes on top.  You still need to coordinate with people
-     whose patches may get hit by your clean-ups, but you have
-     to do this anyway because you will have conflicts from your
-     "real changes".
+Granted.  A long time ago, I started making a builtin from rebase/am, but 
+I got sidetracked pretty early.
 
-Any other "clean-up patch" would result in a not-so-appreciated
-code churn.  Please don't encourage it.
+However, I think that (2) and builtinification are pretty related, and can 
+be done in one go.
+
+Ciao,
+Dscho
