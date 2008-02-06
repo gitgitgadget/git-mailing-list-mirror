@@ -1,127 +1,74 @@
-From: Peter Oberndorfer <kumbayo84@arcor.de>
-Subject: Re: [PATCH 4/4] Add a --cover-letter option to format-patch
-Date: Wed, 6 Feb 2008 19:21:58 +0100
-Message-ID: <200802061921.58282.kumbayo84@arcor.de>
-References: <alpine.LNX.1.00.0802061141410.13593@iabervon.org>
+From: "David Tweed" <david.tweed@gmail.com>
+Subject: Re: [PATCH] Make git prune remove temporary packs that look like write failures
+Date: Wed, 6 Feb 2008 18:59:15 +0000
+Message-ID: <e1dab3980802061059m5bf9c291s892da586248e229c@mail.gmail.com>
+References: <Pine.GSO.4.63.0802051844220.15867@suma3>
+	 <alpine.LFD.1.00.0802051357420.2732@xanadu.home>
+	 <47A9E4F9.8050100@nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Wed Feb 06 19:23:10 2008
+Cc: "Nicolas Pitre" <nico@cam.org>,
+	"David Steven Tweed" <d.s.tweed@reading.ac.uk>,
+	git@vger.kernel.org, Johannes.Schindelin@gmx.de
+To: "Brandon Casey" <casey@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Wed Feb 06 20:00:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JMovI-00029L-M8
-	for gcvg-git-2@gmane.org; Wed, 06 Feb 2008 19:23:05 +0100
+	id 1JMpVB-00084B-00
+	for gcvg-git-2@gmane.org; Wed, 06 Feb 2008 20:00:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752829AbYBFSWb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Feb 2008 13:22:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752179AbYBFSWb
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Feb 2008 13:22:31 -0500
-Received: from mail-in-17.arcor-online.net ([151.189.21.57]:51318 "EHLO
-	mail-in-17.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751505AbYBFSW3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 6 Feb 2008 13:22:29 -0500
-Received: from mail-in-14-z2.arcor-online.net (mail-in-14-z2.arcor-online.net [151.189.8.31])
-	by mail-in-17.arcor-online.net (Postfix) with ESMTP id 687102BBB2B;
-	Wed,  6 Feb 2008 19:22:28 +0100 (CET)
-Received: from mail-in-09.arcor-online.net (mail-in-09.arcor-online.net [151.189.21.49])
-	by mail-in-14-z2.arcor-online.net (Postfix) with ESMTP id 4DA90100C2;
-	Wed,  6 Feb 2008 19:22:28 +0100 (CET)
-Received: from fnoheim52.netpark.at (fnoheim52.netpark.at [83.68.151.52])
-	(Authenticated sender: kumbayo84@arcor.de)
-	by mail-in-09.arcor-online.net (Postfix) with ESMTP id D9F2834A6BB;
-	Wed,  6 Feb 2008 19:22:27 +0100 (CET)
-User-Agent: KMail/1.9.7
-In-Reply-To: <alpine.LNX.1.00.0802061141410.13593@iabervon.org>
+	id S1754269AbYBFS7V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Feb 2008 13:59:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754360AbYBFS7U
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Feb 2008 13:59:20 -0500
+Received: from ti-out-0910.google.com ([209.85.142.188]:14217 "EHLO
+	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752363AbYBFS7T (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Feb 2008 13:59:19 -0500
+Received: by ti-out-0910.google.com with SMTP id 28so298885tif.23
+        for <git@vger.kernel.org>; Wed, 06 Feb 2008 10:59:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=nVSzYhIKLxIXzhUPuq6diD+5cST9NqfSg3i8R4seVGM=;
+        b=gC/RSUuowZ3wHskdjjaQJ3OcEQD9/rr2Bk7zwBhercZWtHvMOsAzgLhAHy8p37HwPW9zniXz3JzmL35Lhv8UqHn6sJloVnNqTKl12qKuLD33QPk+kjHN4RBN5HWPm8loogM/PhRYVRE3RVK1NWwt42SN7EJeHbAnxTEoTt/EiQM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=a61RzejAK1WtmiUV0xThylPPkM6pIc0843G0chMouXzGe8tOxKeCPjR+J7pSVbsbd0S16raHnDB3A6NKBbx3XXM0xRjTljh3NAZ6/L1lw87aZFxeRXnAlhHD0r12ELcFAB7oG/GbLWzN55BFAXoyDHK4YU1HcwJ+1GvLKNA/qN4=
+Received: by 10.150.191.10 with SMTP id o10mr4353888ybf.59.1202324355272;
+        Wed, 06 Feb 2008 10:59:15 -0800 (PST)
+Received: by 10.150.149.2 with HTTP; Wed, 6 Feb 2008 10:59:15 -0800 (PST)
+In-Reply-To: <47A9E4F9.8050100@nrlssc.navy.mil>
 Content-Disposition: inline
-X-Virus-Scanned: ClamAV 0.92/5711/Wed Feb  6 12:22:58 2008 on mail-in-09.arcor-online.net
-X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72824>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72825>
 
-On Mittwoch 06 Februar 2008, Daniel Barkalow wrote:
-> If --cover-letter is provided, generate a cover letter message before
-> the patches, numbered 0.
-> 
-> Original patch thanks to Johannes Schindelin
-> 
-> Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
-> ---
-> +static int reopen_stdout(const char *oneline, int nr, int total)
->  {
->  	char filename[PATH_MAX];
-> -	char *sol;
->  	int len = 0;
->  	int suffix_len = strlen(fmt_patch_suffix) + 1;
->  
->  	if (output_directory) {
-> -		if (strlen(output_directory) >=
-> +		len = snprintf(filename, sizeof(filename), "%s",
-> +				output_directory);
-> +		if (len >=
->  		    sizeof(filename) - FORMAT_PATCH_NAME_MAX - suffix_len)
->  			return error("name of output directory is too long");
-> -		strlcpy(filename, output_directory, sizeof(filename) - suffix_len);
-> -		len = strlen(filename);
->  		if (filename[len - 1] != '/')
->  			filename[len++] = '/';
->  	}
->  
-*snip*
-> +	if (!filename)
-> +		len += sprintf(filename + len, "%d", nr);
-maybe this should be !oneline instead?
-> +	else {
-> +		len += sprintf(filename + len, "%04d-", nr);
-> +		len += snprintf(filename + len, sizeof(filename) - len - 1
-> +				- suffix_len, "%s", oneline);
->  		strcpy(filename + len, fmt_patch_suffix);
->  	}
+On Feb 6, 2008 4:48 PM, Brandon Casey <casey@nrlssc.navy.mil> wrote:
+> I also suggest taking a look at the functions in builtin-prune-packed.c to see
+> how similar functions are implemented there.
+>
+> Use strlcpy instead of sprintf.
+> Use prefixcmp instead of strncmp.
+> Use same messages as prune_dir() for show_only path and unlink failure.
+> You could also check the opendir call and print a suitable message on failure.
 
-> +static void make_cover_letter(struct rev_info *rev,
-> +		int use_stdout, int numbered, int numbered_files,
-> +			      struct commit *origin, struct commit *head)
-> +{
-> +	const char *committer;
-> +	const char *origin_sha1, *head_sha1;
-> +	const char *argv[7];
-> +	const char *subject_start = NULL;
-> +	const char *body = "*** SUBJECT HERE ***\n\n\n*** BLURB HERE ***\n";
-I don't know git policy but maybe use
-const char body[] = "*** SUBJECT HERE ***\n\n\n*** BLURB HERE ***\n";
-since you don't change the pointer.
-(or remove the variable)
-> +	const char *msg;
-> +	const char *extra_headers = rev->extra_headers;
-> +	struct strbuf sb;
-> +	const char *encoding = "utf-8";
-same here
-> +
-> +	if (rev->commit_format != CMIT_FMT_EMAIL)
-> +		die("Cover letter needs email format");
+All the other path creation in builtin-prune.c is using sprintf; is
+doing 3 strlcpy's much better? (I backed off from using snprintf when
+the other element in the if that tested it vanished; I probably ought
+to put that back.) I'll use prefixcmp and check the opendir call
+(although if get_object_directory() doesn't return something sensible
+presumably bigger problems are in the mix.)
 
-It might be useful to split the reopen_stdout/get_oneline_for_filename
-into a separate patch.
-
-When i tried to do this --cover-letter function i went the way to create a 
-empty fake commit and let log_tree_commit do all the formating stuff for me.
-But i don't know if which way is preferred...
-
-Does you patch set up a reply to chain,
-so patches are in reply to cover letter?
-I remember battling a bit to set it up reasonably.
-
-Greetings Peter
-Who tried to create this --cover-letter function
-but gave up silently when his patch mails never reached the ML :-(
-
-I don't know if my patches are of any use (do not apply cleanly anymore, 
-reading cover letter message from a file does not honor encoding in any way)
-But i can send them to you if you want...
+-- 
+cheers, dave tweed__________________________
+david.tweed@gmail.com
+Rm 124, School of Systems Engineering, University of Reading.
+"while having code so boring anyone can maintain it, use Python." --
+attempted insult seen on slashdot
