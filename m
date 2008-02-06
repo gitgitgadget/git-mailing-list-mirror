@@ -1,56 +1,73 @@
 From: Gerrit Pape <pape@smarden.org>
-Subject: [PATCH] INSTALL: git-merge no longer uses cpio
-Date: Wed, 6 Feb 2008 07:03:53 +0000
-Message-ID: <20080206070353.6559.qmail@2b033f98573ecd.315fe32.mid.smarden.org>
+Subject: [PATCH] gitk: properly deal with tag names containing / (slash)
+Date: Wed, 6 Feb 2008 07:06:08 +0000
+Message-ID: <20080206070608.6881.qmail@096465580ae94c.315fe32.mid.smarden.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 06 08:04:17 2008
+Content-Type: text/plain; charset=unknown-8bit
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org, Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Wed Feb 06 08:06:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JMeKH-0004dj-4T
-	for gcvg-git-2@gmane.org; Wed, 06 Feb 2008 08:04:09 +0100
+	id 1JMeMR-00057m-Po
+	for gcvg-git-2@gmane.org; Wed, 06 Feb 2008 08:06:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754856AbYBFHDg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Feb 2008 02:03:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754303AbYBFHDg
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Feb 2008 02:03:36 -0500
-Received: from a.ns.smarden.org ([212.42.242.37]:44786 "HELO a.mx.smarden.org"
+	id S1755382AbYBFHFv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Feb 2008 02:05:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754972AbYBFHFv
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Feb 2008 02:05:51 -0500
+Received: from a.ns.smarden.org ([212.42.242.37]:44794 "HELO a.mx.smarden.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753761AbYBFHDg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Feb 2008 02:03:36 -0500
-Received: (qmail 6560 invoked by uid 1000); 6 Feb 2008 07:03:53 -0000
+	id S1755231AbYBFHFt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Feb 2008 02:05:49 -0500
+Received: (qmail 6882 invoked by uid 1000); 6 Feb 2008 07:06:08 -0000
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72760>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72761>
 
-Since a64d7784e830b3140e7d0f2b45cb3d8fafb84cca git merge doesn't use cpio
-anymore, adapt the documentation.
+When creating a tag through gitk, and the tag name includes a slash (or
+slashes), gitk errors out in a popup window.  This patch makes gitk cre=
+ate
+the necessary subdirectory(s) to successfully create the tag, and also
+catches an error if a directory with the tag name to be created already
+exists.
+
+The problem was reported by Fr=E9d=E9ric Bri=E8re through
+ http://bugs.debian.org/464104
 
 Signed-off-by: Gerrit Pape <pape@smarden.org>
 ---
- INSTALL |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+ gitk-git/gitk |   11 +++++++++--
+ 1 files changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/INSTALL b/INSTALL
-index f1eb404..6f3bcb4 100644
---- a/INSTALL
-+++ b/INSTALL
-@@ -79,8 +79,8 @@ Issues of note:
- 	- "perl" and POSIX-compliant shells are needed to use most of
- 	  the barebone Porcelainish scripts.
- 
--	- "cpio" is used by git-merge for saving and restoring the index,
--	  and by git-clone when doing a local (possibly hardlinked) clone.
-+	- "cpio" is used by git-clone when doing a local (possibly
-+	  hardlinked) clone.
- 
-  - Some platform specific issues are dealt with Makefile rules,
-    but depending on your specific installation, you may not
--- 
+diff --git a/gitk-git/gitk b/gitk-git/gitk
+index 5560e4d..56a8792 100644
+--- a/gitk-git/gitk
++++ b/gitk-git/gitk
+@@ -6136,9 +6136,16 @@ proc domktag {} {
+ 	error_popup [mc "Tag \"%s\" already exists" $tag]
+ 	return
+     }
++    set dir [gitdir]
++    set fname [file join $dir "refs/tags" $tag]
++    if {[file isdirectory $fname]} {
++	error_popup [mc "A directory with the name \"%s\" exists in \"refs/ta=
+gs\"" $tag]
++	return
++    }
+     if {[catch {
+-	set dir [gitdir]
+-	set fname [file join $dir "refs/tags" $tag]
++	if {[file dirname $tag] !=3D "."} {
++	    file mkdir [file dirname $fname]
++	}
+ 	set f [open $fname w]
+ 	puts $f $id
+ 	close $f
+--=20
 1.5.4
