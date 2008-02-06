@@ -1,118 +1,93 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFH] revision limiting sometimes ignored
-Date: Tue, 05 Feb 2008 17:51:32 -0800
-Message-ID: <7v7ihi7syj.fsf@gitster.siamese.dyndns.org>
-References: <20080202122135.GA5783@code-monkey.de>
-	<20080203030054.GA18654@coredump.intra.peff.net>
-	<20080203043310.GA5984@coredump.intra.peff.net>
-	<alpine.LFD.1.00.0802040922480.3034@hp.linux-foundation.org>
-	<7vr6fsk08w.fsf@gitster.siamese.dyndns.org>
-	<alpine.LFD.1.00.0802041146060.3034@hp.linux-foundation.org>
-	<alpine.LFD.1.00.0802041223080.3034@hp.linux-foundation.org>
-	<7vir13g9hx.fsf@gitster.siamese.dyndns.org>
-	<alpine.LFD.1.00.0802051300050.3110@woody.linux-foundation.org>
-	<alpine.LSU.1.00.0802052228280.8543@racer.site>
+Subject: Re: [PATCH] git-rebase.sh: Use POSIX/Susv command substitution instead of backticks
+Date: Tue, 05 Feb 2008 18:03:43 -0800
+Message-ID: <7vve526dts.fsf@gitster.siamese.dyndns.org>
+References: <lk5zxdix.fsf@blue.sea.net>
+	<alpine.LSU.1.00.0802052226340.8543@racer.site>
+	<abmfxbg3.fsf@blue.sea.net>
+	<alpine.LSU.1.00.0802052305080.8543@racer.site>
+	<7vhcgm7vdx.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Jeff King <peff@peff.net>, git@vger.kernel.org
+Cc: Jari Aalto <jari.aalto@cante.net>, git@vger.kernel.org
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Feb 06 02:52:53 2008
+X-From: git-owner@vger.kernel.org Wed Feb 06 03:04:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JMZT2-0003dl-9I
-	for gcvg-git-2@gmane.org; Wed, 06 Feb 2008 02:52:52 +0100
+	id 1JMZeQ-00065d-64
+	for gcvg-git-2@gmane.org; Wed, 06 Feb 2008 03:04:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759701AbYBFBwA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Feb 2008 20:52:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759431AbYBFBv7
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Feb 2008 20:51:59 -0500
-Received: from rune.pobox.com ([208.210.124.79]:44827 "EHLO rune.pobox.com"
+	id S1760097AbYBFCEF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Feb 2008 21:04:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759972AbYBFCED
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Feb 2008 21:04:03 -0500
+Received: from rune.pobox.com ([208.210.124.79]:45289 "EHLO rune.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759645AbYBFBv6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Feb 2008 20:51:58 -0500
+	id S1759830AbYBFCEB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Feb 2008 21:04:01 -0500
 Received: from rune (localhost [127.0.0.1])
-	by rune.pobox.com (Postfix) with ESMTP id C5F82193F81;
-	Tue,  5 Feb 2008 20:52:18 -0500 (EST)
+	by rune.pobox.com (Postfix) with ESMTP id 8CB89193D43;
+	Tue,  5 Feb 2008 21:04:20 -0500 (EST)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 5F633193FD2;
-	Tue,  5 Feb 2008 20:52:11 -0500 (EST)
-In-Reply-To: <alpine.LSU.1.00.0802052228280.8543@racer.site> (Johannes
-	Schindelin's message of "Tue, 5 Feb 2008 22:34:42 +0000 (GMT)")
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id B4241193D11;
+	Tue,  5 Feb 2008 21:04:15 -0500 (EST)
+In-Reply-To: <7vhcgm7vdx.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Tue, 05 Feb 2008 16:59:06 -0800")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72745>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72746>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> In our case, this would mean that the revision walker should realise that 
-> a child whose date is not older than its parent commit must be wrong.  And 
-> just take the parent's date instead (but maybe only for the purpose of 
-> limiting).
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>
+>> And then you have to do it for all scripts in one go.  Mind you, it is not 
+>> really complicated: just one call to perl.
+>
+> Please do not do this.  If other people have pending changes,
+> "cleanup for clean-up's sake" would create conflicts for no good
+> reason.
+>
+> There are only two cases such a clean-up patch is good:
+>
+>  (1) When the maintainer is not yet accepting any patches after
+>      a release-freeze and there is no pending patches from the
+>      community, and/or if you can convince people with pending
+>      patches to rebase on top of the clean-up because the
+>      current codebase is so unmaintainably bad, then a
+>      whole-tree clean-up patch should go in before anything
+>      else, forcing everybody to rebase on top of it;
+>
+>  (2) If you will be working on the code in an area, you may want
+>      to have the first one in the series a "pure clean-up and
+>      nothing else" of the whole area, and then build your real
+>      changes on top.  You still need to coordinate with people
+>      whose patches may get hit by your clean-ups, but you have
+>      to do this anyway because you will have conflicts from your
+>      "real changes".
+>
+> Any other "clean-up patch" would result in a not-so-appreciated
+> code churn.  Please don't encourage it.
 
-No.
+Just to make sure Jari does not get a wrong idea,
 
-	1---2---3---4
+My "Please don't" is meant against Johannes's "Do it all if you
+do it".
 
-Timestamps are 2 < 3 < 4 < 1 and you ask:
+If Jari did the patch as the first step of making real changes
+to "git rebase" (making -i not forcing -m, perhaps), it is the
+right thing to have a clean-up patch as a preparatory step,
+before starting the real work in later patches in the series.
+And such a clean-up patch should not inflict useless code churn
+on other commands.
 
-	$ git rev-list 1 ^4
-
-We push 1 and ^4 in "list".  We pick 1 and push it out to
-"newlist" (possible results, but the hope is they may later be
-marked as UNINTERESTING as we traverse the remaining one still
-on "list").  We pick ^4, mark 3 as UNINTERESTING and push ^3
-into "list", and realize there is nobody that is still positive
-(i.e. without UNINTERESTING bit).  We have "clever" optimization
-that stops in such a case.
-
-Nowhere in this sequence we can notice that "A child whose date
-is not older than its parent".  We do not even get to commit 2
-during the traversal.
-
-In order to notice the problem, you need to make sure we will
-see the link between 1 and 2 (i.e. the fact that 1 has a child
-that is older than itself).  That would take traversing "all the
-way down".
-
-The "all the way down" is not quite correct, though.  If we have
-other commits, like this:
-
-              B---C
-             /
-     ---0---A---1---2---3---4
-
-where timestamps are 0 < A < B < C < 2 < 3 < 4 < 1, and if you
-ask:
-
-	$ git rev-list 1 ^4 ^A
-	$ git rev-list 1 ^4 ^B
-	$ git rev-list 1 ^4 ^C
-
-we will have a similar issue.  We do not have to go down the
-potentially long history beyond A.  But we at least need to
-traverse down to the merge base of negatives in "list" and
-positives in "newlist" when "list" becomes all UNINTERESTING (in
-this case, traverse all paths as if we are trying to find out
-the merge-base between 1 and 3.  That traversal will see 2 and
-we will see your clock skew).
-
-But the point is that the condition you mentioned cannot be
-found out unless you traverse to 2, and at that point you have
-traversed enough already.
-
-As Linus earlier said, the question really is: for positive
-commits in "newlist", have we not missed any its UNINTERESTING
-descendants?
-
-For a toy-scale graph, a parallel merge-base traversal like what
-show-branch does may work, but for a real workload, newlist
-would contain literally hundreds of commits, so using unaltered
-"merge-base" algorithm is probably not an option either.
+So a single patch only to git-rebase is acceptable if that is
+what Jari is planning to do: preparatory clean-up before
+bringing a real improvement in.
