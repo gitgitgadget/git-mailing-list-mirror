@@ -1,75 +1,99 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH WIP] git-stash: add new 'drop' subcommand
-Date: Wed, 6 Feb 2008 23:53:37 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802062333080.8543@racer.site>
-References: <alpine.LSU.1.00.0802051401000.8543@racer.site> <47A9DE06.9050307@nrlssc.navy.mil>
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: [TIG RFC] Cleaning up tig's option handling
+Date: Thu, 7 Feb 2008 00:57:34 +0100
+Message-ID: <20080206235734.GA9969@diku.dk>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Wincent Colaiuta <win@wincent.com>, Tim Stoakes <tim@stoakes.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Thu Feb 07 00:55:18 2008
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 07 00:58:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JMu6i-0002wA-Rr
-	for gcvg-git-2@gmane.org; Thu, 07 Feb 2008 00:55:13 +0100
+	id 1JMuAB-00042k-I3
+	for gcvg-git-2@gmane.org; Thu, 07 Feb 2008 00:58:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764124AbYBFXy0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Feb 2008 18:54:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764088AbYBFXy0
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Feb 2008 18:54:26 -0500
-Received: from mail.gmx.net ([213.165.64.20]:53934 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1764065AbYBFXyX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Feb 2008 18:54:23 -0500
-Received: (qmail invoked by alias); 06 Feb 2008 23:54:21 -0000
-Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
-  by mail.gmx.net (mp053) with SMTP; 07 Feb 2008 00:54:21 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19BlD8HMJZBXOiUl3JwJ+GlLkaxSla0nzkhiK9AqV
-	sBS46jKbf7i8wN
-X-X-Sender: gene099@racer.site
-In-Reply-To: <47A9DE06.9050307@nrlssc.navy.mil>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1764893AbYBFX5l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Feb 2008 18:57:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764886AbYBFX5k
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Feb 2008 18:57:40 -0500
+Received: from mgw2.diku.dk ([130.225.96.92]:54497 "EHLO mgw2.diku.dk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1764876AbYBFX5i (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Feb 2008 18:57:38 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by mgw2.diku.dk (Postfix) with ESMTP id 97A1C19BB76
+	for <git@vger.kernel.org>; Thu,  7 Feb 2008 00:57:36 +0100 (CET)
+Received: from mgw2.diku.dk ([127.0.0.1])
+ by localhost (mgw2.diku.dk [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 13939-10 for <git@vger.kernel.org>; Thu,  7 Feb 2008 00:57:34 +0100 (CET)
+Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
+	by mgw2.diku.dk (Postfix) with ESMTP id D948419BAFC
+	for <git@vger.kernel.org>; Thu,  7 Feb 2008 00:57:34 +0100 (CET)
+Received: from tyr.diku.dk (tyr.diku.dk [130.225.96.226])
+	by nhugin.diku.dk (Postfix) with ESMTP id 9901A6DFBF1
+	for <git@vger.kernel.org>; Thu,  7 Feb 2008 00:56:05 +0100 (CET)
+Received: by tyr.diku.dk (Postfix, from userid 3873)
+	id BD0195B8001; Thu,  7 Feb 2008 00:57:34 +0100 (CET)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-Virus-Scanned: amavisd-new at diku.dk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72878>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72879>
 
-Hi,
+Hello,
 
-On Wed, 6 Feb 2008, Brandon Casey wrote:
+In my own usage of tig, I increasingly use git-log options like -S and
+--all and rarely use any of the "native" tig options or subcommands.
+The only exception is the option for entering the status view, which I
+have even configured a hotkey for in my editor (reducing most commit
+preparations to a simple combination of pressing 't', 'u', '.' with the
+help of tig's yet unreleased command aliases :). Anyway, the above usage
+pattern leads to weird looking command lines when multiple "--"s are
+needed, e.g.:
 
-> This allows a single stash entry to be deleted. It takes an optional 
-> argument which is a stash reflog entry. If no arguments are supplied, it 
-> drops the most recent stash entry.
+	$ tig -- --all ^release -- tig.c
 
-Just to repeat my opinion: "drop" is not useful.  I think 'git stash pop 
-"$1"' = 'git stash apply "$1" && git stash drop "$1"' would be a sane 
-interface.
+I would like to ask tig users out there on how to best proceed with
+cleaning up the option handling so that tig will act more like gitk.
+Besides making command lines more visually appealing, out-sourcing the
+option handling to git-rev-parse will also make it easier to add
+refreshing of the main view (similar to F5 in gitk) in the future.
 
-And this means that a multiple drop would become uninteresting.
+My plan is to obsolete most of the options over the course of the next
+(few) release(s) keeping only the options for help and version
+information. This should be fairly harmless I hope. Remaining is the
+question of what to do with the subcommands and the option for the
+status view. Having optional subcommands for tig has the problem that it
+may ending up conflicting with local branch or file names causing
+dreadful ambiguity. On the other hand, given git-log's and git-diff's
+vast amount of options, it won't conflict with any and it might be more
+natural to say `tig show <rev>` and `tig status` than `tig --show` and
+`tig --status`.
 
-As for your reflog delete with multiple arguments... Right.  This needs a 
-change in the callback data cmd_reflog_expire_cb, recno needs to become a 
-pointer to an int, instead of an int.  Then, cmd_delete() has to allocate 
-argc + 1 int values, setting the last to -1.  It has to shift the recno 
-pointer in the loop to the respective next element of this allocated 
-array.  The values need to be sorted after the loop in ascending order.  
-Then, in a loop from the last to the second entry, the _difference_ 
-array[i] - array[i-1] has to be stored in array[i].  Also, recno has to be 
-reset to the first element in the array.  Then, expire_reflog_ent() has to 
-be changed to check "recno && *recno >= 0", and if "--*(cb->cmd->recno) == 
-0", it not only has to prune, but before that increment cb->cmd->recno, so 
-it points to the next element of the array.
+Below is the list of subcommands and options:
+---------------------------------------------
+tig 0.9.1-19-gc509eed (Dec 13 2007)
 
-Also, I think that "reflog delete" should probably just realise when it 
-deleted the last element, and update the ref with the new last element (or 
-delete it if none is left).
+Usage: tig [options]
+   or: tig [options] [--] [git log options]
+   or: tig [options] log  [git log options]
+   or: tig [options] diff [git diff options]
+   or: tig [options] show [git show options]
+   or: tig [options] <    [git command output]
 
-Ciao,
-Dscho
+Options:
+  -l                          Start up in log view
+  -d                          Start up in diff view
+  -S                          Start up in status view
+  -n[I], --line-number[=I]    Show line numbers with given interval
+  -b[N], --tab-size[=N]       Set number of spaces for tab expansion
+  --                          Mark end of tig options
+  -v, --version               Show version and exit
+  -h, --help                  Show help message and exit
+
+-- 
+Jonas Fonseca
