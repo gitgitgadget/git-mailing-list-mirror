@@ -1,60 +1,113 @@
-From: "Peter Harris" <git@peter.is-a-geek.org>
-Subject: Re: what does @NNN in git-svn branch names mean?
-Date: Wed, 6 Feb 2008 11:37:09 -0500
-Message-ID: <eaa105840802060837r200ed5f9l7104aa7257793af8@mail.gmail.com>
-References: <20080206162905.GA29432@diana.vm.bytemark.co.uk>
+From: Tilman Sauerbeck <tilman@code-monkey.de>
+Subject: Re: [RFH] revision limiting sometimes ignored
+Date: Wed, 6 Feb 2008 17:43:04 +0100
+Message-ID: <20080206164303.GA1255@code-monkey.de>
+References: <20080203030054.GA18654@coredump.intra.peff.net> <20080203043310.GA5984@coredump.intra.peff.net> <alpine.LFD.1.00.0802040922480.3034@hp.linux-foundation.org> <7vr6fsk08w.fsf@gitster.siamese.dyndns.org> <alpine.LFD.1.00.0802041146060.3034@hp.linux-foundation.org> <alpine.LFD.1.00.0802041223080.3034@hp.linux-foundation.org> <7vir13g9hx.fsf@gitster.siamese.dyndns.org> <alpine.LFD.1.00.0802051300050.3110@woody.linux-foundation.org> <alpine.LSU.1.00.0802052228280.8543@racer.site> <alpine.LFD.1.00.0802051539570.2967@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Eric Wong" <normalperson@yhbt.net>, git@vger.kernel.org
-To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Wed Feb 06 17:38:03 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="opJtzjQTFsWo+cga"
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Feb 06 17:43:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JMnHN-0001Ev-Et
-	for gcvg-git-2@gmane.org; Wed, 06 Feb 2008 17:37:45 +0100
+	id 1JMnNG-0003mh-AM
+	for gcvg-git-2@gmane.org; Wed, 06 Feb 2008 17:43:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752830AbYBFQhP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Feb 2008 11:37:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752833AbYBFQhP
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Feb 2008 11:37:15 -0500
-Received: from nf-out-0910.google.com ([64.233.182.190]:17052 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752723AbYBFQhN convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 6 Feb 2008 11:37:13 -0500
-Received: by nf-out-0910.google.com with SMTP id g13so745989nfb.21
-        for <git@vger.kernel.org>; Wed, 06 Feb 2008 08:37:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        bh=/fEqtZvlGIhsTSy/o4ybsXZ8XBVCoFF22PHL28utQXo=;
-        b=a7ui49V5SHCzvSQSuIzX/iwhngHm0UXP91M+30A1vSuro0yzAc4WHQY9Kq2dukv51G0KpUxLtdbGdFhQangiepqQXkKqf5w6bpYWhv7WfoWoviYnAjWWjqYCLIAbE+hvF1XbpSwvCPft9w6wLWvuG6Pq+FL4O3Y+E7NZuJk6XeU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=ZsE4IY3cZIBKagocKTps1EhrJfktVK5Sux45ya1NUZxOqp87Yff1eR5YKarVi5GCfuSsU6OPDvK4P0V2eQwrdT12MHWRlKR6cm0hjmFWZGKbMX6BXMvqV+6Ms5NTorUyOfOZkTVOS1S870agK2vFWIKEDSBmbUBbosPUK1kySVo=
-Received: by 10.78.139.14 with SMTP id m14mr18069592hud.25.1202315829313;
-        Wed, 06 Feb 2008 08:37:09 -0800 (PST)
-Received: by 10.78.203.14 with HTTP; Wed, 6 Feb 2008 08:37:09 -0800 (PST)
-In-Reply-To: <20080206162905.GA29432@diana.vm.bytemark.co.uk>
+	id S1755448AbYBFQnO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Feb 2008 11:43:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752779AbYBFQnN
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Feb 2008 11:43:13 -0500
+Received: from code-monkey.de ([88.198.45.137]:42805 "EHLO code-monkey.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752602AbYBFQnL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Feb 2008 11:43:11 -0500
+Received: from brimstone (dialin-145-254-162-092.pools.arcor-ip.net [145.254.162.92])
+	by code-monkey.de (Postfix) with ESMTP id 822E13F24D;
+	Wed,  6 Feb 2008 17:43:09 +0100 (CET)
+Mail-Followup-To: Linus Torvalds <torvalds@linux-foundation.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Git Mailing List <git@vger.kernel.org>
 Content-Disposition: inline
-X-Google-Sender-Auth: 32a58aed84e02bd0
+In-Reply-To: <alpine.LFD.1.00.0802051539570.2967@woody.linux-foundation.org>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72811>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72812>
 
-On Feb 6, 2008 11:29 AM, Karl Hasselstr=F6m <kha@treskal.com> wrote:
-> What does it mean when git-svn creates branches with an @ sign and a
-> Subversion revision number in them? The documentation doesn't say
-> (and, this being perl, grepping for "@" in git-svn.perl is of little
-> use!). I'll be happy to write something up if you'll clue me in.
 
-It looks like this happens when a branch is deleted and recreated. The
-old branch "foo" is renamed to "foo@lastrev", and the new branch "foo"
-tracks the current state.
+--opJtzjQTFsWo+cga
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Peter Harris
+Linus Torvalds [2008-02-05 15:59]:
+
+Hi guys,
+thanks for looking into this.
+
+> On Tue, 5 Feb 2008, Johannes Schindelin wrote:
+> > >=20
+> > >  - make commit warn if any parent commit date is in the future from t=
+he=20
+> > >    current commit date (allow a *small* fudge factor here, say 5 minu=
+tes).
+> >=20
+> > 5 minutes seems a little narrow to me.  I think we can even go with 864=
+00=20
+> > seconds.
+>=20
+> Well, notice how I said *warn*. Not abort the commit. Not stop. Just make=
+=20
+> people very aware of the fact that clocks are skewed.
+>=20
+> In the case that actually triggered this whole discussion, the problem=20
+> seems to sadly have been in the original CVS tree (or whatever it was=20
+> imported from): the project started in 2006, had lots of regular commits=
+=20
+> up to October 2007, and then suddenly it had a commit that had a date in=
+=20
+> 2002!
+>=20
+> [ For those interested in looking at this, the broken commit in that=20
+>   Tilman's repo was commit 3a7340af2bd57488f832d7070b0ce96c4baa6b54, whic=
+h=20
+>   is from October 2002, and which is surrounded by commits from October=
+=20
+>   2007, so somebody was literally off by five years ]
+
+I'm not sure whether this repository was import from another SCM, but I
+doubt it. I'm fairly sure that 3a7340af2bd57488f832d7070b0ce96c4baa6b54
+was created using git commit though. I guess the committer's clock just
+was a little late at that point.
+
+Regards,
+Tilman
+
+--=20
+A: Because it messes up the order in which people normally read text.
+Q: Why is top-posting such a bad thing?
+A: Top-posting.
+Q: What is the most annoying thing on usenet and in e-mail?
+
+--opJtzjQTFsWo+cga
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.8 (GNU/Linux)
+
+iEYEARECAAYFAkep45cACgkQ6tx5H15YdGIX7gCglhr6nSAJ7E0fQfSdZLEGqgo0
+FxMAoJhKUZBeKxJ4f7wxFdLADTbZPWFo
+=vH6D
+-----END PGP SIGNATURE-----
+
+--opJtzjQTFsWo+cga--
