@@ -1,82 +1,90 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Make tests independent of global config files
-Date: Wed, 6 Feb 2008 03:38:17 -0500
-Message-ID: <20080206083817.GA19710@coredump.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/4 v2] Add tests for .git file
+Date: Wed, 06 Feb 2008 00:40:20 -0800
+Message-ID: <7v7ihi32bv.fsf@gitster.siamese.dyndns.org>
+References: <7vfxw66a0s.fsf@gitster.siamese.dyndns.org>
+	<1202284583-24478-1-git-send-email-hjemli@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Feb 06 09:38:52 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Lars Hjemli <hjemli@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 06 09:41:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JMfnw-0004Eb-67
-	for gcvg-git-2@gmane.org; Wed, 06 Feb 2008 09:38:52 +0100
+	id 1JMfq2-0004qH-Fk
+	for gcvg-git-2@gmane.org; Wed, 06 Feb 2008 09:41:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759277AbYBFIiU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Feb 2008 03:38:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759247AbYBFIiU
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Feb 2008 03:38:20 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2704 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758482AbYBFIiT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Feb 2008 03:38:19 -0500
-Received: (qmail 27145 invoked by uid 111); 6 Feb 2008 08:38:18 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 06 Feb 2008 03:38:18 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 06 Feb 2008 03:38:17 -0500
-Content-Disposition: inline
+	id S1759247AbYBFIka (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Feb 2008 03:40:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759181AbYBFIka
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Feb 2008 03:40:30 -0500
+Received: from rune.pobox.com ([208.210.124.79]:58894 "EHLO rune.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757114AbYBFIka (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Feb 2008 03:40:30 -0500
+Received: from rune (localhost [127.0.0.1])
+	by rune.pobox.com (Postfix) with ESMTP id 37A461941A6;
+	Wed,  6 Feb 2008 03:40:51 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 09A0D194169;
+	Wed,  6 Feb 2008 03:40:44 -0500 (EST)
+In-Reply-To: <1202284583-24478-1-git-send-email-hjemli@gmail.com> (Lars
+	Hjemli's message of "Wed, 6 Feb 2008 08:56:23 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72771>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72772>
 
-On Thu, Feb 15, 2007 at 11:43:56AM +0100, Johannes Schindelin wrote:
+Lars Hjemli <hjemli@gmail.com> writes:
 
-> This was done by setting $HOME to somewhere bogus. A better method is
-> to reuse $GIT_CONFIG, which was invented for ignoring the global
-> config file explicitely.
-> 
-> Technically, setting GIT_CONFIG=.git/config could be wrong, but it
-> passes all the tests, and we can keep the tests that way.
+> Verify that the basic plumbing works when .git is a file pointing at
+> the real git directory.
+>
+> Signed-off-by: Lars Hjemli <hjemli@gmail.com>
+> ---
+>
+> This updated patch replaces cut with sed and tries to do proper quoting.
+>
+>
+>  t/t0002-gitfile.sh |   74 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+>  1 files changed, 74 insertions(+), 0 deletions(-)
+>  create mode 100755 t/t0002-gitfile.sh
+>
+> diff --git a/t/t0002-gitfile.sh b/t/t0002-gitfile.sh
+> new file mode 100755
+> index 0000000..7f8ee2f
+> --- /dev/null
+> +++ b/t/t0002-gitfile.sh
+> @@ -0,0 +1,74 @@
+> +#!/bin/sh
+> +
+> +test_description='.git file
+> +
+> +Verify that plumbing commands work when .git is a file
+> +'
+> +. ./test-lib.sh
+> +
+> +objpath() {
+> +    echo $1 | sed -re 's|(..)(.+)|\1/\2|'
+> +}
 
-[Yes, this is a reply to an ancient message, but your "could be wrong"
-turned out to be true.]
+"sed -r"???  Please limit ourselves to the basics.
 
-I ran across a bug in the test suite today, and it is caused by this
-change. The problem is that setting GIT_CONFIG=.git/config means that if
-we change directories, then we may silently fail to read the config
-file. Oops.
+> +test_expect_success 'check commit-tree' '
+> +	SHA=$(echo "commit bar" | git commit-tree $SHA) &&
+> +	objck $SHA
+> +'
+> +
+> +test_expect_success 'check rev-list' '
+> +	echo $SHA >"$REAL/HEAD" &&
+> +	test "$SHA" = "$(git rev-list HEAD)"
+> +'
 
-In particular, this is covering up an incorrect test in t1500. One of
-the things it does is more or less this:
-
-  cd .git && git rev-parse --is-bare-repository
-
-and expects it to say "true". The test passes. All fine and dandy,
-except that it _isn't_ a bare repository, and if you run the test by
-hand, it returns "false."
-
-The problem is that it's looking for .git/.git/config and doesn't find
-it, meaning that it never sees the "core.bare = false" setting, and
-makes a guess from its location inside the git dir.
-
-We could set GIT_CONFIG=$(pwd)/.git/config, but then that fails if the
-test creates other repos.
-
-We could go back to setting HOME to something bogus, but then we have no
-way to suppress the reading of /etc/gitconfig (the only way to do so, I
-think, is to set GIT_CONFIG).
-
-So I think we are stuck adding in some environment magic to suppress the
-reading of ETC_GITCONFIG, and doing something like:
-
-unset GIT_CONFIG
-GIT_ETC_CONFIG=$(pwd)/.git/nonexistant
-GIT_LOCAL_CONFIG=$(pwd)/.git/nonexistant
-
-Thoughts?
-
--Peff
+Nicely done.
