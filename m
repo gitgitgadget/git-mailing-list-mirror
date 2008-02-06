@@ -1,75 +1,101 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: Make use of the $git_dir variable at sub git_get_project_url_list
-Date: Wed, 06 Feb 2008 11:37:51 -0800 (PST)
-Message-ID: <m3ve51511t.fsf@localhost.localdomain>
-References: <1202318112-8223-1-git-send-email-ribas@c3sl.ufpr.br>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: [PATCH] Make git prune remove temporary packs that look like
+ write failures
+Date: Wed, 06 Feb 2008 13:41:20 -0600
+Message-ID: <47AA0D60.60504@nrlssc.navy.mil>
+References: <Pine.GSO.4.63.0802051844220.15867@suma3>	 <alpine.LFD.1.00.0802051357420.2732@xanadu.home>	 <47A9E4F9.8050100@nrlssc.navy.mil> <e1dab3980802061059m5bf9c291s892da586248e229c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Bruno Ribas <ribas@c3sl.ufpr.br>
-X-From: git-owner@vger.kernel.org Wed Feb 06 20:38:31 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Nicolas Pitre <nico@cam.org>,
+	David Steven Tweed <d.s.tweed@reading.ac.uk>,
+	git@vger.kernel.org, Johannes.Schindelin@gmx.de
+To: David Tweed <david.tweed@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 06 20:43:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JMq6J-0006TF-6J
-	for gcvg-git-2@gmane.org; Wed, 06 Feb 2008 20:38:31 +0100
+	id 1JMqAc-0008Dn-4J
+	for gcvg-git-2@gmane.org; Wed, 06 Feb 2008 20:42:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754625AbYBFTh5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Feb 2008 14:37:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754442AbYBFTh5
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Feb 2008 14:37:57 -0500
-Received: from hs-out-0708.google.com ([64.233.178.251]:21346 "EHLO
-	hs-out-2122.google.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751824AbYBFTh4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Feb 2008 14:37:56 -0500
-Received: by hs-out-2122.google.com with SMTP id 54so2515979hsz.5
-        for <git@vger.kernel.org>; Wed, 06 Feb 2008 11:37:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
-        bh=QZwdaqpkNfNX/1WK+oNh/cqMRi7h5wLn+iq7FYzRNRw=;
-        b=iYE8RiJU6rqoRIIEHmeSpyhmGmkVAihjS19LXL+ZmVoedgZj+zrF/J8M6oD/uuCUD2KXj+iBKxtOLfB8DZxCGibAM455+tl0QOml2Ho2iJTuJ8pOGboLeKcvNeaeJJ9gdpHSWGirDSLmmLhGGCnSbVrlFsR16D2S/eQqKa/R2MM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
-        b=fr9VL24UzWWrIzAazFi9DuaTz/kj8gdoRa3GTfHBEwl+WK3jx/55DgIUROcdxKbEHQbgRZxS8Ak9Av4loQg/T3BIEnea+4gpA8GKoWoMD5ISlQFhy/nqACMxWq5UDW3uh8KpTB+/HtNTVyUq7Gizv6ejLKxSLn13Jz6KRchNRnc=
-Received: by 10.78.100.1 with SMTP id x1mr18478684hub.45.1202326672845;
-        Wed, 06 Feb 2008 11:37:52 -0800 (PST)
-Received: from localhost.localdomain ( [83.8.239.145])
-        by mx.google.com with ESMTPS id z33sm7892092ikz.0.2008.02.06.11.37.50
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 06 Feb 2008 11:37:51 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m16JbXpj014959;
-	Wed, 6 Feb 2008 20:37:33 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m16JbJOI014955;
-	Wed, 6 Feb 2008 20:37:19 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@fuw.edu.pl using -f
-In-Reply-To: <1202318112-8223-1-git-send-email-ribas@c3sl.ufpr.br>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1758805AbYBFTmB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Feb 2008 14:42:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758786AbYBFTmB
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Feb 2008 14:42:01 -0500
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:47896 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758735AbYBFTl7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Feb 2008 14:41:59 -0500
+Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
+	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id m16JfKvD013586;
+	Wed, 6 Feb 2008 13:41:21 -0600
+Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
+	 Wed, 6 Feb 2008 13:41:20 -0600
+User-Agent: Thunderbird 2.0.0.9 (X11/20071031)
+In-Reply-To: <e1dab3980802061059m5bf9c291s892da586248e229c@mail.gmail.com>
+X-OriginalArrivalTime: 06 Feb 2008 19:41:20.0932 (UTC) FILETIME=[3FA9A640:01C868F8]
+X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-5.0.0.1023-15706001
+X-TM-AS-Result: : Yes--11.283200-0-31-1
+X-TM-AS-Category-Info: : 31:0.000000
+X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNTY3LTE1MDYzOS03MDAw?=
+	=?us-ascii?B?NzUtMTM5MDEwLTcwMDE2MC03MDQyNTctNzA4NTU4LTcwODE3OS03?=
+	=?us-ascii?B?MDIzNzYtNzA5NTg0LTcwMjM1OC0xMzk2MjktNzAxNDU1LTEwNTI1?=
+	=?us-ascii?B?MC03MDA2OTMtNzAwNDc2LTcwOTA2NS03MDM3ODgtNzAxMjAyLTcw?=
+	=?us-ascii?B?NjEwOS0xMTMyMjgtNzAwNjI0LTcwOTI1MS03MDI5MDEtNzAzNzMx?=
+	=?us-ascii?B?LTE4ODAxOS0xODgxOTktNzAzMTc5LTcxMDc5OS0xNDgwMzktMTQ4?=
+	=?us-ascii?B?MDUxLTIwMDQy?=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72831>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72832>
 
-Bruno Ribas <ribas@c3sl.ufpr.br> writes:
+David Tweed wrote:
+> On Feb 6, 2008 4:48 PM, Brandon Casey <casey@nrlssc.navy.mil> wrote:
+>> I also suggest taking a look at the functions in builtin-prune-packed.c to see
+>> how similar functions are implemented there.
+>>
+>> Use strlcpy instead of sprintf.
+>> Use prefixcmp instead of strncmp.
+>> Use same messages as prune_dir() for show_only path and unlink failure.
+>> You could also check the opendir call and print a suitable message on failure.
+> 
+> All the other path creation in builtin-prune.c is using sprintf; is
+> doing 3 strlcpy's much better? (I backed off from using snprintf when
+> the other element in the if that tested it vanished; I probably ought
+> to put that back.)
 
-> @@ -1620,7 +1620,7 @@ sub git_get_project_url_list {
->  	my $path = shift;
->  
->  	$git_dir = "$projectroot/$path";
-> -	open my $fd, "$projectroot/$path/cloneurl"
-> +	open my $fd, "$git_dir/cloneurl"
->  		or return wantarray ?
->  		@{ config_to_multi(git_get_project_config('url')) } :
->  		   config_to_multi(git_get_project_config('url'));
+They use sprintf for the "%02x" part, but they use memcpy to copy the return
+of get_object_directory() into a fixed string and then append onto that,
+rather than repeatedly writing the same string over and over. Ok, there is one
+instance in builtin-prune.c that repeatedly writes path, but builtin-prune-packed.c
+does the memcpy thing.
 
-Good catch (although it wasn't actually a bug).
+Something like:
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+	char pathname[PATH_MAX];
+	...
+
+	/* check length of dirname not too long */
+
+	memcpy(pathname, dirname, len);
+
+	if (len && pathname[len-1] != '/')
+		pathname[len++] = '/';
+
+	...
+
+	while ((de = readdir(dir)...) {
+		if (!prefixcmp(...
+			if (strlcpy(pathname + len, de->d_name, PATH_MAX - len)
+			    >= PATH_MAX - len) {
+				warning("too long path encountered: %s%s",
+					pathname, de->d_name);
+				continue;
+			}
+
+			...
+
+
+-brandon
