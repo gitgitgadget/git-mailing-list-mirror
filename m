@@ -1,95 +1,73 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 2/2] fix config reading in tests
-Date: Wed, 6 Feb 2008 05:11:53 -0500
-Message-ID: <20080206101153.GB1123@coredump.intra.peff.net>
-References: <20080206092753.GA32264@coredump.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 06 11:12:27 2008
+From: Wincent Colaiuta <win@wincent.com>
+Subject: Re: git-daemon breakage in 1.5.4
+Date: Wed, 6 Feb 2008 11:12:23 +0100
+Message-ID: <27E0A387-5A6B-4577-AAF4-ACE65A24E306@wincent.com>
+References: <BE051395-F4E1-428B-89B3-5D01BEA42C71@wincent.com> <7vr6fr9noj.fsf@gitster.siamese.dyndns.org> <C8E50E14-B50F-4385-A581-B69262E8E6A5@wincent.com> <47A98092.2070509@viscovery.net>
+Mime-Version: 1.0 (Apple Message framework v915)
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed	delsp=yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	git mailing list <git@vger.kernel.org>, srp@srparish.netq
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Wed Feb 06 11:13:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JMhGV-000816-1M
-	for gcvg-git-2@gmane.org; Wed, 06 Feb 2008 11:12:27 +0100
+	id 1JMhHE-0008Hf-To
+	for gcvg-git-2@gmane.org; Wed, 06 Feb 2008 11:13:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761066AbYBFKL5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Feb 2008 05:11:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760946AbYBFKL4
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Feb 2008 05:11:56 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2728 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1761036AbYBFKLz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Feb 2008 05:11:55 -0500
-Received: (qmail 27765 invoked by uid 111); 6 Feb 2008 10:11:54 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 06 Feb 2008 05:11:54 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 06 Feb 2008 05:11:53 -0500
-Content-Disposition: inline
-In-Reply-To: <20080206092753.GA32264@coredump.intra.peff.net>
+	id S1761148AbYBFKMl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Feb 2008 05:12:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761142AbYBFKMk
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Feb 2008 05:12:40 -0500
+Received: from wincent.com ([72.3.236.74]:60485 "EHLO s69819.wincent.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1761124AbYBFKMk convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 6 Feb 2008 05:12:40 -0500
+Received: from cuzco.lan (localhost [127.0.0.1])
+	(authenticated bits=0)
+	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id m16ACOb6018118;
+	Wed, 6 Feb 2008 04:12:26 -0600
+In-Reply-To: <47A98092.2070509@viscovery.net>
+X-Mailer: Apple Mail (2.915)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72789>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72790>
 
-Previously, we set the GIT_CONFIG environment variable in
-our tests so that only that file was read. However, setting
-it to a static value is not correct, since we are not
-necessarily always in the same directory; instead, we want
-the usual git config file lookup to happen.
+El 6/2/2008, a las 10:40, Johannes Sixt escribi=F3:
 
-To do this, we stop setting GIT_CONFIG, which means that we
-must now suppress the reading of the system-wide and user
-configs.
+>> This fails with the "remote end hung up unexpectedly" error:
+>>
+>>  # /usr/local/bin/git-daemon --inetd --base-path=3D/blah -- /blah
+>
+> If you run this from the command line, you can't expect it to do =20
+> anything
+> useful: It communicates with the client via stdin and stdout.
 
-This exposes an incorrect test in t1500, which is also
-fixed (the incorrect test worked because we were failing to
-read the core.bare value from the config file, since the
-GIT_CONFIG variable was pointing us to the wrong file).
+Strangely, it worked with 1.5.3.8. But I just tried to reproduce it =20
+and now I can't, so there must have been some error in my procedure. =20
+Doh. The bizarre thing is that in preparing these emails I tested it =20
+at least twice, which means I must have made the exact same mistake at =
+=20
+least twice...
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- t/t1500-rev-parse.sh |    4 ++--
- t/test-lib.sh        |    7 +++++--
- 2 files changed, 7 insertions(+), 4 deletions(-)
+> Which makes me think that you xinetd doesn't pass a PATH to git-daemo=
+n
+> that includes /usr/local/bin. Add this to your /etc/xinetd.d/git:
+>
+>    env =3D PATH=3D/bin:/usr/bin:/usr/local/bin
+>
+> (not tested).
 
-diff --git a/t/t1500-rev-parse.sh b/t/t1500-rev-parse.sh
-index e474b3f..38a2bf0 100755
---- a/t/t1500-rev-parse.sh
-+++ b/t/t1500-rev-parse.sh
-@@ -33,9 +33,9 @@ test_rev_parse() {
- test_rev_parse toplevel false false true ''
- 
- cd .git || exit 1
--test_rev_parse .git/ true true false ''
-+test_rev_parse .git/ false true false ''
- cd objects || exit 1
--test_rev_parse .git/objects/ true true false ''
-+test_rev_parse .git/objects/ false true false ''
- cd ../.. || exit 1
- 
- mkdir -p sub/dir || exit 1
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index da47bd7..83889c4 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -324,8 +324,11 @@ test_done () {
- PATH=$(pwd)/..:$PATH
- GIT_EXEC_PATH=$(pwd)/..
- GIT_TEMPLATE_DIR=$(pwd)/../templates/blt
--GIT_CONFIG=.git/config
--export PATH GIT_EXEC_PATH GIT_TEMPLATE_DIR GIT_CONFIG
-+unset GIT_CONFIG
-+unset GIT_CONFIG_LOCAL
-+GIT_CONFIG_NOSYSTEM=1
-+GIT_CONFIG_NOGLOBAL=1
-+export PATH GIT_EXEC_PATH GIT_TEMPLATE_DIR GIT_CONFIG_NOSYSTEM GIT_CONFIG_NOGLOBAL
- 
- GITPERLLIB=$(pwd)/../perl/blib/lib:$(pwd)/../perl/blib/arch/auto/Git
- export GITPERLLIB
--- 
-1.5.4.25.g251c56-dirty
+That works. Thanks.
+
+It's an acceptable workaround (the other is installing /usr instead =20
+of /usr/local). Seeing as it worked in 1.5.3.8, does this qualify as =20
+breakage, or should we not worry about it?
+
+Cheers,
+Wincent
