@@ -1,73 +1,88 @@
-From: Gerrit Pape <pape@smarden.org>
-Subject: [PATCH] gitk: properly deal with tag names containing / (slash)
-Date: Wed, 6 Feb 2008 07:06:08 +0000
-Message-ID: <20080206070608.6881.qmail@096465580ae94c.315fe32.mid.smarden.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [EGIT PATCH 2/6] Cleanup unboxing/boxing
+Date: Wed, 6 Feb 2008 02:06:31 -0500
+Message-ID: <20080206070631.GM24004@spearce.org>
+References: <1202170534-15788-1-git-send-email-robin.rosenberg@dewire.com> <1202170534-15788-2-git-send-email-robin.rosenberg@dewire.com> <1202170534-15788-3-git-send-email-robin.rosenberg@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=unknown-8bit
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org, Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Wed Feb 06 08:06:30 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org,
+	"Roger C. Soares" <rogersoares@intelinet.com.br>,
+	Dave Watson <dwatson@mimvista.com>
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Wed Feb 06 08:07:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JMeMR-00057m-Po
-	for gcvg-git-2@gmane.org; Wed, 06 Feb 2008 08:06:24 +0100
+	id 1JMeNP-0005Kx-E0
+	for gcvg-git-2@gmane.org; Wed, 06 Feb 2008 08:07:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755382AbYBFHFv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Feb 2008 02:05:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754972AbYBFHFv
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Feb 2008 02:05:51 -0500
-Received: from a.ns.smarden.org ([212.42.242.37]:44794 "HELO a.mx.smarden.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755231AbYBFHFt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Feb 2008 02:05:49 -0500
-Received: (qmail 6882 invoked by uid 1000); 6 Feb 2008 07:06:08 -0000
+	id S1755585AbYBFHGv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Feb 2008 02:06:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755410AbYBFHGv
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Feb 2008 02:06:51 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:33279 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755515AbYBFHGu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Feb 2008 02:06:50 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1JMeMa-0006nr-QL; Wed, 06 Feb 2008 02:06:32 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 3BAB320FBAE; Wed,  6 Feb 2008 02:06:31 -0500 (EST)
 Content-Disposition: inline
+In-Reply-To: <1202170534-15788-3-git-send-email-robin.rosenberg@dewire.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72761>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72762>
 
-When creating a tag through gitk, and the tag name includes a slash (or
-slashes), gitk errors out in a popup window.  This patch makes gitk cre=
-ate
-the necessary subdirectory(s) to successfully create the tag, and also
-catches an error if a directory with the tag name to be created already
-exists.
+Robin Rosenberg <robin.rosenberg@dewire.com> wrote:
+> These operation are relatively expensive in general so it is good to make them
+> visible, but when they are needed a lot we just want to do without explicit conversion
+> so we ignore the warning there.
+> @@ -207,7 +207,7 @@ public class GitResourceDecorator extends LabelProvider implements
+>  					return Boolean.FALSE;
+>  				}
+>  
+> -				return mapped.isResourceChanged(rsrc);
+> +				return new Boolean(mapped.isResourceChanged(rsrc));
+>  			}
+>  			return null; // not mapped
+>  		} catch (CoreException e) {
 
-The problem was reported by Fr=E9d=E9ric Bri=E8re through
- http://bugs.debian.org/464104
+Oooooooow.  That hurts.
 
-Signed-off-by: Gerrit Pape <pape@smarden.org>
----
- gitk-git/gitk |   11 +++++++++--
- 1 files changed, 9 insertions(+), 2 deletions(-)
+Use Boolean.valueOf(boolean) instead of new Boolean.  It recycles
+the cached Boolean.TRUE and Boolean.FALSE and thus avoids creating
+garbage that the GC needs to reclaim later.
 
-diff --git a/gitk-git/gitk b/gitk-git/gitk
-index 5560e4d..56a8792 100644
---- a/gitk-git/gitk
-+++ b/gitk-git/gitk
-@@ -6136,9 +6136,16 @@ proc domktag {} {
- 	error_popup [mc "Tag \"%s\" already exists" $tag]
- 	return
-     }
-+    set dir [gitdir]
-+    set fname [file join $dir "refs/tags" $tag]
-+    if {[file isdirectory $fname]} {
-+	error_popup [mc "A directory with the name \"%s\" exists in \"refs/ta=
-gs\"" $tag]
-+	return
-+    }
-     if {[catch {
--	set dir [gitdir]
--	set fname [file join $dir "refs/tags" $tag]
-+	if {[file dirname $tag] !=3D "."} {
-+	    file mkdir [file dirname $fname]
-+	}
- 	set f [open $fname w]
- 	puts $f $id
- 	close $f
---=20
-1.5.4
+> @@ -358,7 +358,7 @@ public class GitResourceDecorator extends LabelProvider implements
+>  		try {
+>  			Integer dirty = (Integer) rsrc.getSessionProperty(GITFOLDERDIRTYSTATEPROPERTY);
+>  			if (dirty == null) {
+> -				rsrc.setSessionProperty(GITFOLDERDIRTYSTATEPROPERTY, flag);
+> +				rsrc.setSessionProperty(GITFOLDERDIRTYSTATEPROPERTY, new Integer(flag));
+>  				Activator.trace("SETTING:"+rsrc.getFullPath().toOSString()+" => "+flag);
+>  				orState(rsrc.getParent(), flag);
+>  				Display.getDefault().asyncExec(new Runnable() {
+
+Use Integer.valueOf(int).  Post Java 5 implementations of the J2SE
+are required to cache values between -128 and 127 (inclusive).
+
+Actually, when the Java compiler autoboxes values it does so through
+these static valueOf methods, which were mostly introduced as part
+of the Java 5 API updates.  For small common values its cached and
+will thus avoid garbage generation, for less common values it goes
+back to allocating the object.
+
+-- 
+Shawn.
