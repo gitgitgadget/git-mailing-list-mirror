@@ -1,74 +1,179 @@
-From: Jan-David Quesel <jdq@gmx.net>
-Subject: Bug-Report git-svn Empty Repository
-Date: Wed, 6 Feb 2008 11:30:40 +0100
-Organization: Carl von Ossitzky =?iso-8859-1?Q?Universit?=
-	=?iso-8859-1?Q?=E4t?= Oldenburg
-Message-ID: <20080206103037.GD14130@mort.hrz.uni-oldenburg.de>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="jL2BoiuKMElzg3CS"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 06 12:09:09 2008
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Re: [PATCH] [v8] safecrlf: Add mechanism to warn about irreversible crlf conversions
+Date: Wed, 6 Feb 2008 12:23:42 +0100
+Message-ID: <885376AD-510D-4E8E-8DCF-87073AC0F88F@zib.de>
+References: <86F2B863-6FE8-407E-B535-3F49782DA5F9@zib.de> <12021001351967-git-send-email-prohaska@zib.de> <7vbq6u32mq.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v753)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 06 12:23:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JMi5t-0007lZ-2e
-	for gcvg-git-2@gmane.org; Wed, 06 Feb 2008 12:05:50 +0100
+	id 1JMiNT-00065m-Sz
+	for gcvg-git-2@gmane.org; Wed, 06 Feb 2008 12:23:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751075AbYBFLFA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Feb 2008 06:05:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750897AbYBFLFA
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Feb 2008 06:05:00 -0500
-Received: from arbi.Informatik.Uni-Oldenburg.DE ([134.106.1.7]:57169 "EHLO
-	arbi.Informatik.Uni-Oldenburg.DE" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750726AbYBFLE7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 6 Feb 2008 06:04:59 -0500
-X-Greylist: delayed 2057 seconds by postgrey-1.27 at vger.kernel.org; Wed, 06 Feb 2008 06:04:59 EST
-Received: from taifun.Informatik.Uni-Oldenburg.DE ([134.106.11.36])
-	by arbi.Informatik.Uni-Oldenburg.DE (Exim 3.36)
-	id 1JMhY8-0003jg-00; Wed, 06 Feb 2008 11:30:40 +0100
-Received: from withoutHELO (noIP)
-	by taifun.Informatik.Uni-Oldenburg.DE (Exim 4.66)
-	id 1JMhY8-0003CQ-0n; Wed, 06 Feb 2008 11:30:40 +0100
-Content-Disposition: inline
-X-OS: Linux mort 2.6.23-gentoo-r3 x86_64
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1753447AbYBFLXL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Feb 2008 06:23:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753407AbYBFLXK
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Feb 2008 06:23:10 -0500
+Received: from mailer.zib.de ([130.73.108.11]:41344 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753406AbYBFLXI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Feb 2008 06:23:08 -0500
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id m16BMiWY011547;
+	Wed, 6 Feb 2008 12:22:44 +0100 (CET)
+Received: from [130.73.68.185] (cougar.zib.de [130.73.68.185])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m16BMhN1024540
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Wed, 6 Feb 2008 12:22:44 +0100 (MET)
+In-Reply-To: <7vbq6u32mq.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.753)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72799>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72800>
 
 
---jL2BoiuKMElzg3CS
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+On Feb 6, 2008, at 9:33 AM, Junio C Hamano wrote:
 
-hi,
+> Steffen Prohaska <prohaska@zib.de> writes:
+>
+>> This repaces v7 of the patch and includes the following changes
+>>  - Commit message defends safecrlf=warn default.
+>>  - refactored to lines max 84 chars long.
+>>
+>>     Steffen
+>>
+>> ---- snip ---
+>>
+>> CRLF conversion bears a slight chance of corrupting data.
+>> ...
+>
+> Is this meant for application?
 
-I just tried to replay a stack of patches into a fresh svn
-repository. The repository was created in an empty state
-(revision 0). It could be checkout out fine using git-svn, but
-trying to do git svn dcommit or git svn rebase fails, as $url
-does not get initialized in git-svn:410, I think extract_metadata
-fails.
+Yes, this is the best I have and I personally test it in practice.
+It works for me, although I recognized that I tend to miss warnings
+sometimes, for example during "git commit -a".  The reason is that
+the warnings are printed, but the editor for the commit message
+pops up right afterwards.  With "git add" this is not a problem.
 
-I'm using "git-svn version 1.5.4 (svn 1.4.5)".
+More feedback by others would be helpful.  So yes, the patch
+should be applied.
 
-regards,
-Jan
+But you have quite a few comments below; so I'll send an update.
 
---jL2BoiuKMElzg3CS
-Content-Type: application/pgp-signature
-Content-Disposition: inline
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.7 (GNU/Linux)
 
-iD8DBQFHqYxNzWWUYNynIPERAgq6AJ9MW8yrkezA9WkUSCgOjWrv6dS4HACgtQyj
-6HGiDlwxQbjzFznuQ8LQFZM=
-=4iO7
------END PGP SIGNATURE-----
+> If so please do not do "^---- snip ---".  More than three dashes
+> at the beginning of line discards everything after that from the
+> commit log message so "git am -i" becomes very cumbersome.  And
+> that is the reason you often see "-- >8 --" scissors mark from
+> me (notice two dashes, not three).
 
---jL2BoiuKMElzg3CS--
+Ahh.. ok, I thought any number of dashes unequal 3 would work.
+I'll use your mark in the future.
+
+
+>
+>> autocrlf=true will convert CRLF to LF during commit and LF to
+>> CRLF during checkout.  A file that contains a mixture of LF and
+>> CRLF before the commit cannot be recreated by git.  For text
+>> files this does not really matter because we do not care about
+>> the line endings anyway; ...
+>
+> That is a wrong explanation.  It is not that we do not _care_.
+>
+> Far from it.  With autocrlf, we _deeply_ care about the line
+> endings of text files to be canonical with LF in the repository
+> data, and canonical with platform convention in the work tree
+> data.  A file with mixed LF and CRLF have _wrong_ line endings
+> in the work tree data, hence it actively gets _corrected_.
+>
+> So it is not _anyway_.  It is what we _want to happen_.
+
+Hmm, yes, I agree with your reasoning.  We do care and we only
+want LF.  Maybe I had Dscho's arguments in mind when I wrote
+this paragraph.  He often claims that git users on Unix do care
+about every single bit of the files, which means including the
+"wrong" line endings.  But I don't think this is true. I think
+we don't mind that autocrlf=true modifies the line endings in
+a way that they cannot be exactly restored.  We don't mind
+because we do not care about the exact line endings.  We only
+need to know that the line ends, not if it ends in CRLF or LF.
+
+[ comments about commit message that I'll include in the update. ]
+
+
+>
+>> diff --git a/convert.c b/convert.c
+>> index 80f114b..94c70f4 100644
+>> --- a/convert.c
+>> +++ b/convert.c
+>> @@ -85,8 +85,36 @@ static int is_binary(unsigned long size, struct  
+>> text_stat *stats)
+>>  	return 0;
+>>  }
+>>
+>> +static void check_safe_crlf(const char* path, int action,
+>> +                            struct text_stat* stats, enum  
+>> safe_crlf checksafe)
+>
+> Asterisk comes near the variable name not type: "const char *path".
+
+I know that but I tend to forget because I follow a different rule
+all day ;)  Will fix.
+
+
+>> +{
+>> +	if (action == CRLF_INPUT || auto_crlf <= 0) {
+>> +		/*
+>> +		 * CRLFs would not be restored by checkout:
+>> +		 * check if we'd remove CRLFs
+>> +		 */
+>> +		if (stats->crlf) {
+>> +			if (checksafe == SAFE_CRLF_WARN)
+>> +				warning("CRLF will be replaced by LF in %s.", path);
+>> +			else
+>> +				die("CRLF would be replaced by LF in %s.", path);
+>
+> What happens when checksafe == SAFE_CRLF_FALSE, I had to wonder,
+> until looking at the caller.
+>
+> 			else /* i.e. SAFE_CRLF_FAIL */
+>
+> would have been easier to follow.
+
+I'll add a comment and will move the "if (!checksafe)" from the  
+caller to
+the beginning of check_safe_crlf().
+
+
+>> diff --git a/sha1_file.c b/sha1_file.c
+>> index 66a4e00..4179949 100644
+>> --- a/sha1_file.c
+>> +++ b/sha1_file.c
+>> @@ -2358,7 +2358,8 @@ int index_fd(unsigned char *sha1, int fd,  
+>> struct stat *st, int write_object,
+>>  	if ((type == OBJ_BLOB) && S_ISREG(st->st_mode)) {
+>>  		struct strbuf nbuf;
+>>  		strbuf_init(&nbuf, 0);
+>> -		if (convert_to_git(path, buf, size, &nbuf)) {
+>> +		if (convert_to_git(path, buf, size, &nbuf,
+>> +		                   write_object ? safe_crlf : 0)) {
+>>  			munmap(buf, size);
+>>  			buf = strbuf_detach(&nbuf, &size);
+>>  			re_allocated = 1;
+>
+> Very nicely done ;-).
+
+thanks.
+
+	Steffen
