@@ -1,78 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] gitk: properly deal with tag names containing / (slash)
-Date: Tue, 05 Feb 2008 23:34:50 -0800
-Message-ID: <7vtzkm35d1.fsf@gitster.siamese.dyndns.org>
-References: <20080206070608.6881.qmail@096465580ae94c.315fe32.mid.smarden.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] prune: heed --expire for stale packs, add a test
+Date: Wed, 6 Feb 2008 07:41:45 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0802060741380.8543@racer.site>
+References: <Pine.GSO.4.63.0802051844220.15867@suma3> <alpine.LFD.1.00.0802051357420.2732@xanadu.home> <alpine.LSU.1.00.0802052005200.8543@racer.site> <alpine.LFD.1.00.0802051512370.2732@xanadu.home> <7v7ihi64xm.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Paul Mackerras <paulus@samba.org>
-To: Gerrit Pape <pape@smarden.org>
-X-From: git-owner@vger.kernel.org Wed Feb 06 08:35:38 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Nicolas Pitre <nico@cam.org>,
+	David Steven Tweed <d.s.tweed@reading.ac.uk>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 06 08:43:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JMeoe-0004RF-5U
-	for gcvg-git-2@gmane.org; Wed, 06 Feb 2008 08:35:32 +0100
+	id 1JMevt-0006Mm-9X
+	for gcvg-git-2@gmane.org; Wed, 06 Feb 2008 08:43:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759638AbYBFHe7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Feb 2008 02:34:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759567AbYBFHe7
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Feb 2008 02:34:59 -0500
-Received: from rune.pobox.com ([208.210.124.79]:56635 "EHLO rune.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759424AbYBFHe6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Feb 2008 02:34:58 -0500
-Received: from rune (localhost [127.0.0.1])
-	by rune.pobox.com (Postfix) with ESMTP id 668241940A1;
-	Wed,  6 Feb 2008 02:35:19 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id A145819407A;
-	Wed,  6 Feb 2008 02:35:14 -0500 (EST)
-In-Reply-To: <20080206070608.6881.qmail@096465580ae94c.315fe32.mid.smarden.org>
-	(Gerrit Pape's message of "Wed, 6 Feb 2008 07:06:08 +0000")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1760069AbYBFHm3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Feb 2008 02:42:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760067AbYBFHm3
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Feb 2008 02:42:29 -0500
+Received: from mail.gmx.net ([213.165.64.20]:39774 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1760044AbYBFHm2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Feb 2008 02:42:28 -0500
+Received: (qmail invoked by alias); 06 Feb 2008 07:42:26 -0000
+Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
+  by mail.gmx.net (mp021) with SMTP; 06 Feb 2008 08:42:26 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX184KpgKqXM4+uWyO0K5DaXz9uvvqkg9vbHzL7DTUg
+	oDVojK3yt+0N3g
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7v7ihi64xm.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72764>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72765>
 
-Gerrit Pape <pape@smarden.org> writes:
+Hi,
 
-> When creating a tag through gitk, and the tag name includes a slash (or
-> slashes), gitk errors out in a popup window.  This patch makes gitk create
-> the necessary subdirectory(s) to successfully create the tag, and also
-> catches an error if a directory with the tag name to be created already
-> exists.
-> ...
-> diff --git a/gitk-git/gitk b/gitk-git/gitk
-> index 5560e4d..56a8792 100644
-> --- a/gitk-git/gitk
-> +++ b/gitk-git/gitk
-> @@ -6136,9 +6136,16 @@ proc domktag {} {
->  	error_popup [mc "Tag \"%s\" already exists" $tag]
->  	return
->      }
-> +    set dir [gitdir]
-> +    set fname [file join $dir "refs/tags" $tag]
-> +    if {[file isdirectory $fname]} {
-> +	error_popup [mc "A directory with the name \"%s\" exists in \"refs/tags\"" $tag]
-> +	return
-> +    }
->      if {[catch {
-> -	set dir [gitdir]
-> -	set fname [file join $dir "refs/tags" $tag]
-> +	if {[file dirname $tag] != "."} {
-> +	    file mkdir [file dirname $fname]
-> +	}
+On Tue, 5 Feb 2008, Junio C Hamano wrote:
 
-That's wrong.  If your refs are packed and you have an existing
-tag 'foo', you should error out on a request to create 'foo/bar'
-(and vice versa --- existing foo/bar should prevent foo from
-being created).
+> Nicolas Pitre <nico@cam.org> writes:
+> 
+> > On Tue, 5 Feb 2008, Johannes Schindelin wrote:
+> >
+> >> Follow the same logic as for loose objects when removing stale packs: they
+> >> might be in use (for example when fetching, or repacking in a cron job),
+> >> so give the user a chance to say (via --expire) what is considered too
+> >> young an age to die for stale packs.
+> >> 
+> >> Also add a simple test to verify that the stale packs are actually
+> >> expired.
+> >> 
+> >> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> >
+> > Acked-by: Nicolas Pitre <nico@cam.org>
+> >
+> > Nicolas
+> 
+> They are not "stale packs", but temporary files that wanted to
+> become pack but did not succeed.  Perhaps "stale temporary
+> packs"?
+> 
+> Shouldn't we do something similar to objects/pack/pack-*.temp
+> files and objects/??/*.temp that http walker leaves?
 
-You should be calling out "git tag" instead of futzing with
-files under gitdir by hand.
+Yep.
+
+Ciao,
+Dscho
