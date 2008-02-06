@@ -1,69 +1,127 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [RFH] revision limiting sometimes ignored
-Date: Wed, 06 Feb 2008 12:48:55 -0500 (EST)
-Message-ID: <alpine.LFD.1.00.0802061248280.2732@xanadu.home>
-References: <20080203030054.GA18654@coredump.intra.peff.net>
- <20080203043310.GA5984@coredump.intra.peff.net>
- <alpine.LFD.1.00.0802040922480.3034@hp.linux-foundation.org>
- <7vr6fsk08w.fsf@gitster.siamese.dyndns.org>
- <alpine.LFD.1.00.0802041146060.3034@hp.linux-foundation.org>
- <alpine.LFD.1.00.0802041223080.3034@hp.linux-foundation.org>
- <7vir13g9hx.fsf@gitster.siamese.dyndns.org>
- <alpine.LFD.1.00.0802051300050.3110@woody.linux-foundation.org>
- <alpine.LSU.1.00.0802052228280.8543@racer.site>
- <alpine.LFD.1.00.0802051539570.2967@woody.linux-foundation.org>
- <20080206164303.GA1255@code-monkey.de>
- <alpine.LFD.1.00.0802061220590.2732@xanadu.home>
- <alpine.LFD.1.00.0802060942020.2967@woody.linux-foundation.org>
+From: Peter Oberndorfer <kumbayo84@arcor.de>
+Subject: Re: [PATCH 4/4] Add a --cover-letter option to format-patch
+Date: Wed, 6 Feb 2008 19:21:58 +0100
+Message-ID: <200802061921.58282.kumbayo84@arcor.de>
+References: <alpine.LNX.1.00.0802061141410.13593@iabervon.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Tilman Sauerbeck <tilman@code-monkey.de>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Feb 06 18:50:12 2008
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Wed Feb 06 19:23:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JMoPJ-0005lo-Jk
-	for gcvg-git-2@gmane.org; Wed, 06 Feb 2008 18:50:02 +0100
+	id 1JMovI-00029L-M8
+	for gcvg-git-2@gmane.org; Wed, 06 Feb 2008 19:23:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754391AbYBFRtF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Feb 2008 12:49:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754403AbYBFRtE
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Feb 2008 12:49:04 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:21634 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754377AbYBFRtB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Feb 2008 12:49:01 -0500
-Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR005.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JVT00M0UW5COD10@VL-MO-MR005.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 06 Feb 2008 12:48:49 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <alpine.LFD.1.00.0802060942020.2967@woody.linux-foundation.org>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+	id S1752829AbYBFSWb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Feb 2008 13:22:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752179AbYBFSWb
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Feb 2008 13:22:31 -0500
+Received: from mail-in-17.arcor-online.net ([151.189.21.57]:51318 "EHLO
+	mail-in-17.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751505AbYBFSW3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 6 Feb 2008 13:22:29 -0500
+Received: from mail-in-14-z2.arcor-online.net (mail-in-14-z2.arcor-online.net [151.189.8.31])
+	by mail-in-17.arcor-online.net (Postfix) with ESMTP id 687102BBB2B;
+	Wed,  6 Feb 2008 19:22:28 +0100 (CET)
+Received: from mail-in-09.arcor-online.net (mail-in-09.arcor-online.net [151.189.21.49])
+	by mail-in-14-z2.arcor-online.net (Postfix) with ESMTP id 4DA90100C2;
+	Wed,  6 Feb 2008 19:22:28 +0100 (CET)
+Received: from fnoheim52.netpark.at (fnoheim52.netpark.at [83.68.151.52])
+	(Authenticated sender: kumbayo84@arcor.de)
+	by mail-in-09.arcor-online.net (Postfix) with ESMTP id D9F2834A6BB;
+	Wed,  6 Feb 2008 19:22:27 +0100 (CET)
+User-Agent: KMail/1.9.7
+In-Reply-To: <alpine.LNX.1.00.0802061141410.13593@iabervon.org>
+Content-Disposition: inline
+X-Virus-Scanned: ClamAV 0.92/5711/Wed Feb  6 12:22:58 2008 on mail-in-09.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72823>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72824>
 
-On Wed, 6 Feb 2008, Linus Torvalds wrote:
-
+On Mittwoch 06 Februar 2008, Daniel Barkalow wrote:
+> If --cover-letter is provided, generate a cover letter message before
+> the patches, numbered 0.
 > 
+> Original patch thanks to Johannes Schindelin
 > 
-> On Wed, 6 Feb 2008, Nicolas Pitre wrote:
-> > 
-> > Anyway, the author's date are not necessarily monotonic.
-> 
-> Git never even looks at the author date. Only the commit date matters.
+> Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
+> ---
+> +static int reopen_stdout(const char *oneline, int nr, int total)
+>  {
+>  	char filename[PATH_MAX];
+> -	char *sol;
+>  	int len = 0;
+>  	int suffix_len = strlen(fmt_patch_suffix) + 1;
+>  
+>  	if (output_directory) {
+> -		if (strlen(output_directory) >=
+> +		len = snprintf(filename, sizeof(filename), "%s",
+> +				output_directory);
+> +		if (len >=
+>  		    sizeof(filename) - FORMAT_PATCH_NAME_MAX - suffix_len)
+>  			return error("name of output directory is too long");
+> -		strlcpy(filename, output_directory, sizeof(filename) - suffix_len);
+> -		len = strlen(filename);
+>  		if (filename[len - 1] != '/')
+>  			filename[len++] = '/';
+>  	}
+>  
+*snip*
+> +	if (!filename)
+> +		len += sprintf(filename + len, "%d", nr);
+maybe this should be !oneline instead?
+> +	else {
+> +		len += sprintf(filename + len, "%04d-", nr);
+> +		len += snprintf(filename + len, sizeof(filename) - len - 1
+> +				- suffix_len, "%s", oneline);
+>  		strcpy(filename + len, fmt_patch_suffix);
+>  	}
 
-OK good.
+> +static void make_cover_letter(struct rev_info *rev,
+> +		int use_stdout, int numbered, int numbered_files,
+> +			      struct commit *origin, struct commit *head)
+> +{
+> +	const char *committer;
+> +	const char *origin_sha1, *head_sha1;
+> +	const char *argv[7];
+> +	const char *subject_start = NULL;
+> +	const char *body = "*** SUBJECT HERE ***\n\n\n*** BLURB HERE ***\n";
+I don't know git policy but maybe use
+const char body[] = "*** SUBJECT HERE ***\n\n\n*** BLURB HERE ***\n";
+since you don't change the pointer.
+(or remove the variable)
+> +	const char *msg;
+> +	const char *extra_headers = rev->extra_headers;
+> +	struct strbuf sb;
+> +	const char *encoding = "utf-8";
+same here
+> +
+> +	if (rev->commit_format != CMIT_FMT_EMAIL)
+> +		die("Cover letter needs email format");
 
+It might be useful to split the reopen_stdout/get_oneline_for_filename
+into a separate patch.
 
-Nicolas
+When i tried to do this --cover-letter function i went the way to create a 
+empty fake commit and let log_tree_commit do all the formating stuff for me.
+But i don't know if which way is preferred...
+
+Does you patch set up a reply to chain,
+so patches are in reply to cover letter?
+I remember battling a bit to set it up reasonably.
+
+Greetings Peter
+Who tried to create this --cover-letter function
+but gave up silently when his patch mails never reached the ML :-(
+
+I don't know if my patches are of any use (do not apply cleanly anymore, 
+reading cover letter message from a file does not honor encoding in any way)
+But i can send them to you if you want...
