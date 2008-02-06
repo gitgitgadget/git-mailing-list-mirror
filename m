@@ -1,224 +1,120 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH 4/4] Add a --cover-letter option to format-patch
-Date: Wed, 6 Feb 2008 17:18:28 -0500 (EST)
-Message-ID: <alpine.LNX.1.00.0802061608200.13593@iabervon.org>
-References: <alpine.LNX.1.00.0802061141410.13593@iabervon.org> <7vy79xvncu.fsf@gitster.siamese.dyndns.org>
+From: MALET Jean-Luc <jeanluc.malet@gmail.com>
+Subject: [BUG] DOS filetype and pre_commit hook
+Date: Wed, 06 Feb 2008 23:22:50 +0100
+Message-ID: <47AA333A.8040403@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 06 23:19:19 2008
+Content-Type: multipart/mixed;
+ boundary="------------060503050506070607050008"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 06 23:23:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JMsbr-0002w0-Rz
-	for gcvg-git-2@gmane.org; Wed, 06 Feb 2008 23:19:16 +0100
+	id 1JMsg0-0004Pe-Pg
+	for gcvg-git-2@gmane.org; Wed, 06 Feb 2008 23:23:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757247AbYBFWSb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Feb 2008 17:18:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757124AbYBFWSb
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Feb 2008 17:18:31 -0500
-Received: from iabervon.org ([66.92.72.58]:52721 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756012AbYBFWSa (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Feb 2008 17:18:30 -0500
-Received: (qmail 19192 invoked by uid 1000); 6 Feb 2008 22:18:28 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 6 Feb 2008 22:18:28 -0000
-In-Reply-To: <7vy79xvncu.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1756249AbYBFWW7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Feb 2008 17:22:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755844AbYBFWW7
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Feb 2008 17:22:59 -0500
+Received: from nf-out-0910.google.com ([64.233.182.191]:5328 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752680AbYBFWW6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Feb 2008 17:22:58 -0500
+Received: by nf-out-0910.google.com with SMTP id g13so812346nfb.21
+        for <git@vger.kernel.org>; Wed, 06 Feb 2008 14:22:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:subject:content-type;
+        bh=xM/IMZW/SCNH+06M8MmE8/E1LEHJ/VEYGS2gIsWNx3o=;
+        b=R1JhJLnEyL+nPny+lI6lcfE+M9yjgK8uTzgrs4SJ8Af+njQOhZjhvJuccZVQnIXI9aox8uDyeg81Pfckna5R1Ybgv64U00N+HPuM0MTkqrFSDx/EhIFV/2habOwVSB5LyLSJR/KUFnOhJIaMhwRHp2p+5xdFsHXj8PE/5Yp9QsE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:subject:content-type;
+        b=Pp7+ZjWZfC1WS1CSx8aajTnOpQ0rD9qR/qhTkxwZsu86Nv1LNXJtNvkx5NgU31doVsbE9AjdXMYEIv66ue7+9OyRo3f3zIhUh/MV/QAeV60x1lh6t84xar3iA/s2fSin7BOudbCxQB0cq83kvyyqpxhu3rg1WMBaGtE7y0xyuuw=
+Received: by 10.86.26.11 with SMTP id 11mr9629510fgz.74.1202336574804;
+        Wed, 06 Feb 2008 14:22:54 -0800 (PST)
+Received: from jlmport.sorcerer ( [84.97.115.36])
+        by mx.google.com with ESMTPS id d4sm10726850fga.2.2008.02.06.14.22.52
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 06 Feb 2008 14:22:53 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.9 (X11/20071120)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72863>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72864>
 
-On Wed, 6 Feb 2008, Junio C Hamano wrote:
+This is a multi-part message in MIME format.
+--------------060503050506070607050008
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-> Daniel Barkalow <barkalow@iabervon.org> writes:
-> 
-> > diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
-> > index 651efe6..7ec01a0 100644
-> > --- a/Documentation/git-format-patch.txt
-> > +++ b/Documentation/git-format-patch.txt
-> > @@ -17,6 +17,7 @@ SYNOPSIS
-> >                     [--in-reply-to=Message-Id] [--suffix=.<sfx>]
-> >                     [--ignore-if-in-upstream]
-> >                     [--subject-prefix=Subject-Prefix]
-> > +                   [--cover-letter]
-> >  		   [ <since> | <revision range> ]
-> >  
-> >  DESCRIPTION
-> > @@ -139,6 +140,11 @@ include::diff-options.txt[]
-> >  	Instead of using `.patch` as the suffix for generated
-> >  	filenames, use specified suffix.  A common alternative is
-> >  	`--suffix=.txt`.
-> > +
-> > +--cover-letter::
-> > +	Generate a cover letter template.  You still have to fill in
-> > +	a description, but the shortlog and the diffstat will be
-> > +	generated for you.
-> >  +
-> >  Note that you would need to include the leading dot `.` if you
-> >  want a filename like `0001-description-of-my-change.patch`, and
-> 
-> Huh?  Leading dot?  The insertion is one paragraph too low or high.
+I use git for tracking change on the project I'm working on and the 
+sourcecode is in dos text encoding (<CR><LF>)
+when I commit I have to use the --no-verify option because the perl part 
+of the hook (btw isn't it possible to have git not depend on perl?) 
+don't use the right regexp to track if there is trailing whitespace
+the corresponding regex to be used with grep is :
+grep -E '^\+.*[[:blank:]]+[[:space:]]$'
 
-Uh, right. :)
+because <CR> is matched by [[:space:]] and then a line like :
 
-> > diff --git a/builtin-log.c b/builtin-log.c
-> > index 1f74d66..c6e3f91 100644
-> > --- a/builtin-log.c
-> > +++ b/builtin-log.c
-> > @@ -453,74 +454,77 @@ static int git_format_config(...
-> > ...
-> >  static FILE *realstdout = NULL;
-> >  static const char *output_directory = NULL;
-> >  
-> > +static int reopen_stdout(const char *oneline, int nr, int total)
-> >  {
-> >  	char filename[PATH_MAX];
-> >  	int len = 0;
-> >  	int suffix_len = strlen(fmt_patch_suffix) + 1;
-> >  
-> >  	if (output_directory) {
-> > +		len = snprintf(filename, sizeof(filename), "%s",
-> > +				output_directory);
-> > +		if (len >=
-> >  		    sizeof(filename) - FORMAT_PATCH_NAME_MAX - suffix_len)
-> >  			return error("name of output directory is too long");
-> >  		if (filename[len - 1] != '/')
-> >  			filename[len++] = '/';
-> >  	}
-> >  
-> > +	if (!filename)
-> > +		len += sprintf(filename + len, "%d", nr);
-> 
-> How can this trigger?  Do you mean "oneline"?
+no trailing whitespace<CR><LF>
 
-Yes.
+will trigger a trailing whitespace event
 
-> I can understand that you do not want to pass numbered_files
-> variable separately to the function, but then there should be a
-> comment at the beginning of this function that says "oneline is
-> NULL under numbered_files mode, the caller is responsible for
-> ensuring that".
+See the attached file that correct the issue
 
-I think the code is clearer than the option. It doesn't append the first 
-line of the commit if you don't call it with the first line of the commit. 
-How the user causes this to happen is a matter for cmd_format_patch to 
-determine.
+Best Regards,
+JLM
 
-> > +	else {
-> > +		len += sprintf(filename + len, "%04d-", nr);
-> > +		len += snprintf(filename + len, sizeof(filename) - len - 1
-> > +				- suffix_len, "%s", oneline);
-> >  		strcpy(filename + len, fmt_patch_suffix);
-> >  	}
-> >  
-> > @@ -591,6 +595,74 @@ static void gen_message_id(struct rev_info *info, char *base)
-> > +	/*
-> > +	 * We can only do diffstat with a unique reference point, and
-> > +	 * log is a bit tricky, so just skip it.
-> > +	 */
-> > +	if (!origin)
-> > +		return;
-> 
-> Maybe we would want to leave a note in the output to tell your
-> users that we punted here.
+-- 
+KISS! (Keep It Simple, Stupid!)
+(garde le simple, imbécile!)
+"mais qu'est-ce que tu m'as pondu comme usine à gaz? fait des choses 
+simples et qui marchent, espèce d'imbécile!"
 
-I think that if you're in this situation, you pretty much aren't expecting 
-anything here, and it would be a bit annoying to stick a note into the 
-email that the user then has to remove.
+--------------060503050506070607050008
+Content-Type: application/octet-stream;
+ name="pre-commit"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment;
+ filename="pre-commit"
 
-> > +	argv[0] = "shortlog";
-> > +	argv[1] = head_sha1;
-> > +	argv[2] = "--not";
-> > +	argv[3] = origin_sha1;
-> > +	argv[4] = NULL;
-> > +	fflush(stdout);
-> > +	run_command_v_opt(argv, RUN_GIT_CMD);
-> > +
-> > +	argv[0] = "diff";
-> > +	argv[1] = "--stat";
-> > +	argv[2] = "--summary";
-> > +	argv[3] = head_sha1;
-> > +	argv[4] = "--not";
-> > +	argv[5] = origin_sha1;
-> > +	argv[6] = NULL;
-> > +	fflush(stdout);
-> > +	run_command_v_opt(argv, RUN_GIT_CMD);
-> 
-> Makes me wonder if we already have enough infrastructure to do
-> this without spawning two new processes.  Not complaining, but
-> just wondering.
-
-I don't know. They're both things that have a tendancy to interfere with 
-other things, I think. You'd probably know better than me. If you think 
-it's likely to work, I can try...
-
-> > @@ -776,6 +852,20 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
-> >  		 * get_revision() to do the usual traversal.
-> >  		 */
-> >  	}
-> > +	if (cover_letter) {
-> > +		/* remember the range */
-> > +		int i;
-> > +		for (i = 0; i < rev.pending.nr; i++) {
-> > +			struct object *o = rev.pending.objects[i].item;
-> > +			if (o->flags & UNINTERESTING)
-> > +				origin = (struct commit *)o;
-> > +			else
-> > +				head = (struct commit *)o;
-> > +		}
-> 
-> What if you have more than one origin or head?  Perhaps the
-> punting logic should be modified to make sure we only have one
-> negative and one positive and nothing else?
-
-I think the command line parsing logic prevents us from getting more than 
-one head in cmd_format_patch. We can have any number of negatives, with 0 
-being the interesting case ("git format-patch -3"). I may have failed to 
-consider more than one negative (which would be okay, but should again 
-skip the diffstat and, for now, the shortlog).
-
-> > +		/* We can't generate a cover letter without any patches */
-> > +		if (!head)
-> > +			return 0;
-> > +	}
-> 
-> That's true, but with or without cover letter we won't have
-> anything to format if we do not have any positive commit.
-
-If we don't have a cover letter and don't have any positive commit, we can 
-perfectly happily output what was asked of us (i.e., nothing). If we're 
-asked for a cover letter, we fail, because we can't generate it.
-
-> > @@ -802,9 +892,18 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
-> >  		numbered = 1;
-> >  	if (numbered)
-> >  		rev.total = total + start_number - 1;
-> > -	rev.add_signoff = add_signoff;
-> >  	if (in_reply_to)
-> >  		rev.ref_message_id = clean_message_id(in_reply_to);
-> > +	if (cover_letter) {
-> > +		if (thread) {
-> > +			gen_message_id(&rev, "cover");
-> > +		}
-> > +		make_cover_letter(&rev, use_stdout, numbered, numbered_files,
-> > +				  origin, head);
-> > +		total++;
-> > +		start_number--;
-> > +	}
-> > +	rev.add_signoff = add_signoff;
-> 
-> Nice attention to the detail, moving add_signoff after the cover
-> letter.
-
-I think I actually added the cover letter before the sign-off, and then 
-moved in_reply_to above the cover letter, and diff just decided to show it 
-this way. But yes, the cover letter shouldn't be signed off.
-
-	-Daniel
-*This .sig left intentionally blank*
+IyEvYmluL3NoCiMKIyBBbiBleGFtcGxlIGhvb2sgc2NyaXB0IHRvIHZlcmlmeSB3aGF0IGlz
+IGFib3V0IHRvIGJlIGNvbW1pdHRlZC4KIyBDYWxsZWQgYnkgZ2l0LWNvbW1pdCB3aXRoIG5v
+IGFyZ3VtZW50cy4gIFRoZSBob29rIHNob3VsZAojIGV4aXQgd2l0aCBub24temVybyBzdGF0
+dXMgYWZ0ZXIgaXNzdWluZyBhbiBhcHByb3ByaWF0ZSBtZXNzYWdlIGlmCiMgaXQgd2FudHMg
+dG8gc3RvcCB0aGUgY29tbWl0LgojCiMgVG8gZW5hYmxlIHRoaXMgaG9vaywgbWFrZSB0aGlz
+IGZpbGUgZXhlY3V0YWJsZS4KCiMgVGhpcyBpcyBzbGlnaHRseSBtb2RpZmllZCBmcm9tIEFu
+ZHJldyBNb3J0b24ncyBQZXJmZWN0IFBhdGNoLgojIExpbmVzIHlvdSBpbnRyb2R1Y2Ugc2hv
+dWxkIG5vdCBoYXZlIHRyYWlsaW5nIHdoaXRlc3BhY2UuCiMgQWxzbyBjaGVjayBmb3IgYW4g
+aW5kZW50YXRpb24gdGhhdCBoYXMgU1AgYmVmb3JlIGEgVEFCLgoKb3V0cHV0X2ZhaWxpbmdf
+bGluZSgpIHsKCXdoaWxlIFsgJCMgLWd0IDAgXTsgZG8KCQlsaW5lbm89JHsxLzoqL30KCQls
+aW5lbm89JCgoJHtsaW5lbm99LTUpKQoJCWxpbmU9JHsxLyorL30KCQllY2hvICIke2xpbmVu
+b30gOiAke2xpbmV9IgoJCXNoaWZ0Cglkb25lCn0KCmlmIGdpdC1yZXYtcGFyc2UgLS12ZXJp
+ZnkgSEVBRCAyPi9kZXYvbnVsbAp0aGVuCglPTERJRlM9JHtJRlN9CglJRlM9JCdcbicKCWVy
+cm9yPTAKCUZJTEVfTElTVD0kKGdpdC1kaWZmLWluZGV4IC0tbmFtZS1vbmx5ICAtTSAtLWNh
+Y2hlZCAgSEVBRCAtLSkKCWZvciBmaWxlIGluICR7RklMRV9MSVNUfTsgZG8KCQlsaW5lX2Nv
+dW50PSQod2MgLWwgJHtmaWxlfSkKCQlsaW5lX2NvdW50PSR7bGluZV9jb3VudC8gKi99CgkJ
+dHJhaWxpbmc9JChnaXQtZGlmZiAtcCAtLXVuaWZpZWQ9JHtsaW5lX2NvdW50fSAtLWNhY2hl
+ZCBIRUFEIC0tICR7ZmlsZX0gfCBncmVwIC1FbiAnXlwrLipbWzpibGFuazpdXStbWzpzcGFj
+ZTpdXSQnKQoJCWJhZGluZGVudD0kKGdpdC1kaWZmIC1wIC0tdW5pZmllZD0ke2xpbmVfY291
+bnR9IC0tY2FjaGVkIEhFQUQgLS0gJHtmaWxlfSB8IGdyZXAgLUVuICdeXCtbIF0qCScpCgkJ
+YmFkbGluZT0kKGdpdC1kaWZmIC1wIC0tdW5pZmllZD0ke2xpbmVfY291bnR9IC0tY2FjaGVk
+IEhFQUQgLS0gJHtmaWxlfSB8IGdyZXAgLUVuICdeXCsoPzpbPD49XSl7N30nKQoJCWlmIFsg
+LW4gIiR7dHJhaWxpbmd9IiBdIHx8IFsgLW4gIiR7YmFkaW5kZW50fSIgXSB8fCBbIC1uICIk
+e2JhZGxpbmV9IiBdOyB0aGVuCgkJCWVjaG8KCQkJZWNobyAiLS0tLS0tIEZBSUxFRCBQUkUg
+Q09NTUlUIENIRUNLIC0tLS0tIgoJCQllY2hvIFlvdSBoYXZlIHNvbWUgc3VzcGljaW91cyBw
+YXRjaCBsaW5lczoKCQkJZWNobyAke2ZpbGV9IDogdHJhaWxpbmcgd2hpdGVzcGFjZQoJCQlv
+dXRwdXRfZmFpbGluZ19saW5lICR7dHJhaWxpbmd9CgkJCWVjaG8gJHtmaWxlfSA6IGluZGVu
+dCBTUCBmb2xsb3dlZCBieSBhIFRBQgoJCQlvdXRwdXRfZmFpbGluZ19saW5lICR7YmFkaW5k
+ZW50fQoJCQllY2hvICR7ZmlsZX0gOiB1bnJlc29sdmVkIG1lcmdlIGNvbmZsaWN0CgkJCW91
+dHB1dF9mYWlsaW5nX2xpbmUgJHtiYWRsaW5lfQoJCQllY2hvICItLS0tLS0gRkFJTEVEIFBS
+RSBDT01NSVQgQ0hFQ0sgLS0tLS0iCgkJCWVycm9yPTEKCQlmaQoJZG9uZQogICBleGl0ICR7
+ZXJyb3J9CmVsc2UKCSMgTkVFRFNXT1JLOiB3ZSBzaG91bGQgcHJvZHVjZSBhIGRpZmYgd2l0
+aCBhbiBlbXB0eSB0cmVlIGhlcmUKCSMgaWYgd2Ugd2FudCB0byBkbyB0aGUgc2FtZSB2ZXJp
+ZmljYXRpb24gZm9yIHRoZSBpbml0aWFsIGltcG9ydC4KCToKZmkKCg==
+--------------060503050506070607050008--
