@@ -1,70 +1,75 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] Make git prune remove temporary packs that look like write
- failures
-Date: Wed, 06 Feb 2008 14:31:47 -0500 (EST)
-Message-ID: <alpine.LFD.1.00.0802061420510.2732@xanadu.home>
-References: <Pine.GSO.4.63.0802051844220.15867@suma3>
- <alpine.LFD.1.00.0802051357420.2732@xanadu.home>
- <e1dab3980802061110p2c1dad1ep8a46eeda93839bb9@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: Make use of the $git_dir variable at sub git_get_project_url_list
+Date: Wed, 06 Feb 2008 11:37:51 -0800 (PST)
+Message-ID: <m3ve51511t.fsf@localhost.localdomain>
+References: <1202318112-8223-1-git-send-email-ribas@c3sl.ufpr.br>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: David Steven Tweed <d.s.tweed@reading.ac.uk>, git@vger.kernel.org,
-	Johannes.Schindelin@gmx.de
-To: David Tweed <david.tweed@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 06 20:32:24 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Bruno Ribas <ribas@c3sl.ufpr.br>
+X-From: git-owner@vger.kernel.org Wed Feb 06 20:38:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JMq0M-00045y-CW
-	for gcvg-git-2@gmane.org; Wed, 06 Feb 2008 20:32:22 +0100
+	id 1JMq6J-0006TF-6J
+	for gcvg-git-2@gmane.org; Wed, 06 Feb 2008 20:38:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751873AbYBFTbt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Feb 2008 14:31:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753761AbYBFTbt
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Feb 2008 14:31:49 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:49082 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751031AbYBFTbs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Feb 2008 14:31:48 -0500
-Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR004.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JVU00I1W0WZOZ80@VL-MO-MR004.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 06 Feb 2008 14:31:47 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <e1dab3980802061110p2c1dad1ep8a46eeda93839bb9@mail.gmail.com>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+	id S1754625AbYBFTh5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Feb 2008 14:37:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754442AbYBFTh5
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Feb 2008 14:37:57 -0500
+Received: from hs-out-0708.google.com ([64.233.178.251]:21346 "EHLO
+	hs-out-2122.google.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751824AbYBFTh4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Feb 2008 14:37:56 -0500
+Received: by hs-out-2122.google.com with SMTP id 54so2515979hsz.5
+        for <git@vger.kernel.org>; Wed, 06 Feb 2008 11:37:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
+        bh=QZwdaqpkNfNX/1WK+oNh/cqMRi7h5wLn+iq7FYzRNRw=;
+        b=iYE8RiJU6rqoRIIEHmeSpyhmGmkVAihjS19LXL+ZmVoedgZj+zrF/J8M6oD/uuCUD2KXj+iBKxtOLfB8DZxCGibAM455+tl0QOml2Ho2iJTuJ8pOGboLeKcvNeaeJJ9gdpHSWGirDSLmmLhGGCnSbVrlFsR16D2S/eQqKa/R2MM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
+        b=fr9VL24UzWWrIzAazFi9DuaTz/kj8gdoRa3GTfHBEwl+WK3jx/55DgIUROcdxKbEHQbgRZxS8Ak9Av4loQg/T3BIEnea+4gpA8GKoWoMD5ISlQFhy/nqACMxWq5UDW3uh8KpTB+/HtNTVyUq7Gizv6ejLKxSLn13Jz6KRchNRnc=
+Received: by 10.78.100.1 with SMTP id x1mr18478684hub.45.1202326672845;
+        Wed, 06 Feb 2008 11:37:52 -0800 (PST)
+Received: from localhost.localdomain ( [83.8.239.145])
+        by mx.google.com with ESMTPS id z33sm7892092ikz.0.2008.02.06.11.37.50
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 06 Feb 2008 11:37:51 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m16JbXpj014959;
+	Wed, 6 Feb 2008 20:37:33 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m16JbJOI014955;
+	Wed, 6 Feb 2008 20:37:19 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@fuw.edu.pl using -f
+In-Reply-To: <1202318112-8223-1-git-send-email-ribas@c3sl.ufpr.br>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72830>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72831>
 
-On Wed, 6 Feb 2008, David Tweed wrote:
+Bruno Ribas <ribas@c3sl.ufpr.br> writes:
 
-> I guess the -n ought to be honoured. However, unless I'm missing
-> something, the case of expiring objects is different. The primary
-> reason is that objects can get orphaned by "semantic" decisions
-> (delete this branch, rewind, etc) so they contain valid content that
-> you might want to later rescue (using low-level command like git cat
-> if necessary).
+> @@ -1620,7 +1620,7 @@ sub git_get_project_url_list {
+>  	my $path = shift;
+>  
+>  	$git_dir = "$projectroot/$path";
+> -	open my $fd, "$projectroot/$path/cloneurl"
+> +	open my $fd, "$git_dir/cloneurl"
+>  		or return wantarray ?
+>  		@{ config_to_multi(git_get_project_config('url')) } :
+>  		   config_to_multi(git_get_project_config('url'));
 
-You can also get loose unconnected objects when fetching and the number 
-of objects is lower than the transfer.unpackLimit value.
+Good catch (although it wasn't actually a bug).
 
-> In contrast, the only way to get a temporary pack when
-> the repository is quiescent is resulting from a _write error_ and thus
-> is a corrupt entity which it would take a great deal of work to
-> extract any valid data from.
-
-Or when a fetch is in progress, just like the case above, but with the 
-number of objects greater than transfer.unpackLimit.
-
-This is uncommon to have a prune occurring at the same time as a fetch, 
-but the --expire argument is there if for example you do a prune from a 
-cron job but still want to be safe by giving a grace period to garbage 
-files which might not be so after all.
-
-
-Nicolas
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
