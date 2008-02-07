@@ -1,60 +1,80 @@
-From: Frank Lichtenheld <frank@lichtenheld.de>
-Subject: Re: git-fetch in 1.5.4 fails versus 1.5.3.8
-Date: Thu, 7 Feb 2008 15:23:22 +0100
-Message-ID: <20080207142322.GC18497@mail-vs.djpig.de>
-References: <pan.2008.02.04.18.25.26@progsoc.org> <20080205050741.GA4624@coredump.intra.peff.net> <pan.2008.02.06.21.56.35@progsoc.org> <20080207042332.GA7632@sigill.intra.peff.net> <pan.2008.02.07.10.15.05@progsoc.org>
+From: David Kastrup <dak-mXXj517/zsQ@public.gmane.org>
+Subject: Re: [ANNOUNCE] GIT 1.5.4
+Date: Thu, 07 Feb 2008 15:29:49 +0100
+Message-ID: <86tzkksuua.fsf@lola.quinscape.zz>
+References: <7vmyqk563z.fsf@gitster.siamese.dyndns.org> <CFB8A272-863C-4758-91F7-E9669D70A200@zib.de> <20080207123108.GA12009@bit.office.eurotux.com> <alpine.LSU.1.00.0802071255110.8543@racer.site> <86k5lguce2.fsf@lola.quinscape.zz> <8763x07thd.fsf@graviton.dyn.troilus.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Anand Kumria <wildfire@progsoc.org>
-X-From: git-owner@vger.kernel.org Thu Feb 07 15:24:07 2008
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Cc: git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
+To: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Thu Feb 07 15:30:56 2008
+Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from ag-out-0910.google.com ([72.14.246.186])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JN7fa-0005Hv-Rd
-	for gcvg-git-2@gmane.org; Thu, 07 Feb 2008 15:24:07 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754648AbYBGOXd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Feb 2008 09:23:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754845AbYBGOXc
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Feb 2008 09:23:32 -0500
-Received: from pauli.djpig.de ([78.46.38.139]:34674 "EHLO pauli.djpig.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753164AbYBGOXc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Feb 2008 09:23:32 -0500
-X-Greylist: delayed 793 seconds by postgrey-1.27 at vger.kernel.org; Thu, 07 Feb 2008 09:23:32 EST
-Received: from localhost (localhost [127.0.0.1])
-	by pauli.djpig.de (Postfix) with ESMTP id 173DE90072;
-	Thu,  7 Feb 2008 15:23:31 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at pauli.djpig.de
-Received: from pauli.djpig.de ([127.0.0.1])
-	by localhost (pauli.djpig.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id w+n2t9H3Nunz; Thu,  7 Feb 2008 15:23:23 +0100 (CET)
-Received: from mail-vs.djpig.de (mail-vs.djpig.de [78.47.136.189])
-	by pauli.djpig.de (Postfix) with ESMTP id 125FA9006C;
-	Thu,  7 Feb 2008 15:23:22 +0100 (CET)
-Received: from djpig by mail-vs.djpig.de with local (Exim 4.63)
-	(envelope-from <djpig@mail-vs.djpig.de>)
-	id 1JN7es-0007IG-9n; Thu, 07 Feb 2008 15:23:22 +0100
-Content-Disposition: inline
-In-Reply-To: <pan.2008.02.07.10.15.05@progsoc.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-Sender: git-owner@vger.kernel.org
+	id 1JN7m4-0007VF-Mh
+	for gcvm-msysgit@m.gmane.org; Thu, 07 Feb 2008 15:30:50 +0100
+Received: by ag-out-0910.google.com with SMTP id 32so5694729agc.3
+        for <gcvm-msysgit@m.gmane.org>; Thu, 07 Feb 2008 06:30:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:received:x-sender:x-apparently-to:received:received:received-spf:authentication-results:received:received:received:x-injected-via-gmane:to:from:subject:date:lines:message-id:references:mime-version:content-type:x-complaints-to:x-gmane-nntp-posting-host:user-agent:cancel-lock:cc:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
+        bh=enxInPL2boWU/ot6uvjEhyh0Q+8x9h5aU6POA3F1oU8=;
+        b=rGQf6pv6PGWMdZDIKN3P5pZcydhB4L5wrWa2mMk7pJH3YIW6JzHTE/UvqvpEibJCMZiKjT5L0wZv9chUAqIZW6PIg4hE1+6CpqPctxH7hFZYSyHmslaSFfQx4n5efoFaxjWVPsfYXIP7BDRa2qNm3e57767aP2YE3hiSwXnWFws=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlegroups.com; s=beta;
+        h=x-sender:x-apparently-to:received-spf:authentication-results:x-injected-via-gmane:to:from:subject:date:lines:message-id:references:mime-version:content-type:x-complaints-to:x-gmane-nntp-posting-host:user-agent:cancel-lock:cc:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
+        b=4uYGLZJD63osZMzfBE2Q++Ysjq1LQvYZ5E5vnkpmg4fPWwu0Jf2EE50s7Y9XK424i4FRxT9vbDK6UrsitWAdXmQ4wBvvCoOxhFYS0SWr9TPYlQXkRVjFq+bEuCL8KXNEmyM9khlPnv4vLTG9MRHEbfOATunwY5Pth8pAGBMQjso=
+Received: by 10.143.28.7 with SMTP id f7mr212259wfj.22.1202394601479;
+        Thu, 07 Feb 2008 06:30:01 -0800 (PST)
+Received: by 10.107.134.19 with SMTP id l19gr1643prn;
+	Thu, 07 Feb 2008 06:30:01 -0800 (PST)
+X-Sender: gcvm-msysgit@m.gmane.org
+X-Apparently-To: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+Received: by 10.35.13.4 with SMTP id q4mr25065245pyi.7.1202394601146; Thu, 07 Feb 2008 06:30:01 -0800 (PST)
+Received: from ciao.gmane.org (main.gmane.org [80.91.229.2]) by mx.google.com with ESMTP id v63si6655316pyh.2.2008.02.07.06.30.00; Thu, 07 Feb 2008 06:30:01 -0800 (PST)
+Received-SPF: pass (google.com: domain of gcvm-msysgit@m.gmane.org designates 80.91.229.2 as permitted sender) client-ip=80.91.229.2;
+Authentication-Results: mx.google.com; spf=pass (google.com: domain of gcvm-msysgit@m.gmane.org designates 80.91.229.2 as permitted sender) smtp.mail=gcvm-msysgit@m.gmane.org
+Received: from list by ciao.gmane.org with local (Exim 4.43) id 1JN7lG-0005sz-Me for msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org; Thu, 07 Feb 2008 14:29:58 +0000
+Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219]) by main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>; Thu, 07 Feb 2008 14:29:58 +0000
+Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>; Thu, 07 Feb 2008 14:29:58 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet-dbVV3NMTNubNLxjTenLetw@public.gmane.org
+X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.50 (gnu/linux)
+Cancel-Lock: sha1:W9L9AG/lYpctiwUSMZ0R1rGrKrk=
+Sender: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72948>
+X-Google-Loop: groups
+Mailing-List: list msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org;
+	contact msysgit-owner-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+List-Id: <msysgit.googlegroups.com>
+List-Post: <mailto:msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Help: <mailto:msysgit-help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
+	<mailto:msysgit-unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72949>
 
-On Thu, Feb 07, 2008 at 10:15:02AM +0000, Anand Kumria wrote:
-> Gerrit - since I seem to be able to reproduce this fairly easily - would
-> it be useful to you to have me do anything to track this down. Or will you
-> switch the Debian build to openssl?
 
-Since git has no OpenSSL link exception the resulting binary wouldn't be
-distributable AFAIK.
+Michael Poole <mdpoole-IZmAEv5cUt1AfugRpC6u6w@public.gmane.org> writes:
 
-Gruesse,
+> British courts, for instance, have held that copying a program into
+> RAM for the purposes of executing it is a right reserved under
+> copyright law.  In the US, 17 USC 117(c) and (d) were added after a
+> court held (in MAI Sys. Corp. v. Peak Computer) that a computer repair
+> company violated copyright of software that automatically started on a
+> computer it was asked to repair -- by simply allowing the computer to
+> boot and execute that program automatically.
+>
+> As the GPL itself notes, you are not required to accept it, but
+> nothing else grants you the right to perform actions reserved to
+> copyright holders with respect to the work.
+
+I think that most countries will grant some right to the purchaser of a
+physical copy of copyrighted material.  For example, I doubt there are
+countries where it is prohibited to read a book you have bought (via a
+channel authorized by the copyright holder) when it contains no explicit
+license granting you the right to read it.
+
 -- 
-Frank Lichtenheld <frank@lichtenheld.de>
-www: http://www.djpig.de/
+David Kastrup
