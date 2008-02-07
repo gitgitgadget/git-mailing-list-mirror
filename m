@@ -1,65 +1,66 @@
-From: Stefan Monnier <monnier@iro.umontreal.ca>
-Subject: Re: List of files aded/removed/modified by "git-checkout"
-Date: Thu, 07 Feb 2008 08:41:29 -0500
-Message-ID: <jwvfxw4ga0s.fsf-monnier+inbox@gnu.org>
-References: <jwvodatkbdm.fsf-monnier+gmane.comp.version-control.git@gnu.org>
-	<7vve51qva3.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 07 14:52:27 2008
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+From: Steffen Prohaska <prohaska-wjoc1KHpMeg@public.gmane.org>
+Subject: Re: [ANNOUNCE] GIT 1.5.4
+Date: Thu, 7 Feb 2008 14:53:30 +0100
+Message-ID: <08627A28-85DE-4E58-9DBA-9463A0D1DC1C@zib.de>
+References: <7vmyqk563z.fsf@gitster.siamese.dyndns.org> <CFB8A272-863C-4758-91F7-E9669D70A200@zib.de> <20080207123108.GA12009@bit.office.eurotux.com> <alpine.LSU.1.00.0802071255110.8543@racer.site> <20080207130715.GA14000@bit.office.eurotux.com> <alpine.LSU.1.00.0802071324460.8543@racer.site>
+Reply-To: prohaska-wjoc1KHpMeg@public.gmane.org
+Mime-Version: 1.0 (Apple Message framework v753)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Luciano Rocha <luciano-YWehAnL2kLNBDgjK7y7TUQ@public.gmane.org>, Git Mailing List <git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>, msysGit <msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>, Junio C Hamano <gitster-e+AXbWqSrlAAvxtiuMwx3w@public.gmane.org>
+To: Johannes Schindelin <Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org>
+X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Thu Feb 07 14:53:10 2008
+Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from wa-out-0708.google.com ([209.85.146.245])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JN7Ab-0001p0-Li
-	for gcvg-git-2@gmane.org; Thu, 07 Feb 2008 14:52:06 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758895AbYBGNvb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Feb 2008 08:51:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758330AbYBGNva
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Feb 2008 08:51:30 -0500
-Received: from ironport2-out.pppoe.ca ([206.248.154.182]:33457 "EHLO
-	ironport2-out.pppoe.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757859AbYBGNv3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Feb 2008 08:51:29 -0500
-X-Greylist: delayed 598 seconds by postgrey-1.27 at vger.kernel.org; Thu, 07 Feb 2008 08:51:29 EST
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Ao8CALOZqkfO+K8J/2dsb2JhbACsU3s
-X-IronPort-AV: E=Sophos;i="4.25,316,1199682000"; 
-   d="scan'208";a="13816904"
-Received: from smtp.pppoe.ca ([65.39.196.238])
-  by ironport2-out.pppoe.ca with ESMTP; 07 Feb 2008 08:41:30 -0500
-Received: from pastel.home ([206.248.175.9])
-        by smtp.pppoe.ca (Internet Mail Server v1.0) with ESMTP id NPW75029;
-        Thu, 07 Feb 2008 08:41:29 -0500
-Received: by pastel.home (Postfix, from userid 20848)
-	id 2E1758568; Thu,  7 Feb 2008 08:41:29 -0500 (EST)
-In-Reply-To: <7vve51qva3.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Wed, 06 Feb 2008 19:51:00 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.50 (gnu/linux)
-Sender: git-owner@vger.kernel.org
+	id 1JN7Be-0002CY-5a
+	for gcvm-msysgit@m.gmane.org; Thu, 07 Feb 2008 14:53:10 +0100
+Received: by wa-out-0708.google.com with SMTP id n36so6365484wag.21
+        for <gcvm-msysgit@m.gmane.org>; Thu, 07 Feb 2008 05:52:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:received:x-sender:x-apparently-to:received:received:received-spf:authentication-results:received:received:in-reply-to:references:mime-version:content-type:message-id:cc:content-transfer-encoding:from:subject:date:to:x-mailer:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
+        bh=xCdTiaW3IlnphzpGqMqjuTkSRgg8dnSv5AV7x2FicL4=;
+        b=R39kF737BswB+m4YZM9rDg/paLY61Y/30d1ZDLYMG9daXtcAHnjafH3beKVquyJcS6kEwOm67DRyqSr6UVC76yAgm9jzokiKs8z+TKhHAUlSJNjhXVL+sOZGFHvTpVjbTkT9RmbpbA4sJtU+5HwD1VVYsfsUdZQ5GhdZPNdjPP0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlegroups.com; s=beta;
+        h=x-sender:x-apparently-to:received-spf:authentication-results:in-reply-to:references:mime-version:content-type:message-id:cc:content-transfer-encoding:from:subject:date:to:x-mailer:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
+        b=X0o61TkKvRzggL0LqwDQmoZY7i+DFrXwaiGoPVoKAEpybmhK5I8zw0l4NE94HoOtjYuhbE7I5tOPTRu603kfIEJ111/vAY/fRuOQfTXAtLUTqzySGcltqbEBHeEtUqLqVWyd8IFhLJcHV2YjfsXYPgXT4B0apf7OBucb3zjSXbY=
+Received: by 10.115.48.12 with SMTP id a12mr804166wak.10.1202392357545;
+        Thu, 07 Feb 2008 05:52:37 -0800 (PST)
+Received: by 10.107.168.22 with SMTP id v22gr1641pro;
+	Thu, 07 Feb 2008 05:52:37 -0800 (PST)
+X-Sender: prohaska-wjoc1KHpMeg@public.gmane.org
+X-Apparently-To: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+Received: by 10.35.13.4 with SMTP id q4mr25012494pyi.7.1202392357270; Thu, 07 Feb 2008 05:52:37 -0800 (PST)
+Received: from mailer.zib.de (mailer.zib.de [130.73.108.11]) by mx.google.com with ESMTP id z53si6578551pyg.1.2008.02.07.05.52.36; Thu, 07 Feb 2008 05:52:37 -0800 (PST)
+Received-SPF: pass (google.com: best guess record for domain of prohaska-wjoc1KHpMeg@public.gmane.org designates 130.73.108.11 as permitted sender) client-ip=130.73.108.11;
+Authentication-Results: mx.google.com; spf=pass (google.com: best guess record for domain of prohaska-wjoc1KHpMeg@public.gmane.org designates 130.73.108.11 as permitted sender) smtp.mail=prohaska-wjoc1KHpMeg@public.gmane.org
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31]) by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id m17DqQrZ010760; Thu, 7 Feb 2008 14:52:27 +0100 (CET)
+Received: from [130.73.68.185] (cougar.zib.de [130.73.68.185]) (authenticated bits=0) by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m17DofXw024857 (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO); Thu, 7 Feb 2008 14:52:26 +0100 (MET)
+In-Reply-To: <alpine.LSU.1.00.0802071324460.8543-OGWIkrnhIhzN0uC3ymp8PA@public.gmane.org>
+X-Mailer: Apple Mail (2.753)
+Sender: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72945>
-
->> Whenever I do a git-checkout to switch between branches, I'm
->> disappointed by the absence of a "-v" option which would list the
->> operations performed.
->> 
->> How can I get this information?
-
-> I'd be mightily annoyed with it myself, though, as I switch
-> between 'master', 'next', 'pu' and 'maint' pretty often.
-
-Why would such a "-v" option bother you?  Nobody forces you to use it.
-
-> Have something like this in .git/hooks/post-checkout and make it
-> executable, perhaps?  Modify the options to suit your taste.
-
-That doesn't really cut it: I'd like to use it in a git frontend.
+X-Google-Loop: groups
+Mailing-List: list msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org;
+	contact msysgit-owner-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+List-Id: <msysgit.googlegroups.com>
+List-Post: <mailto:msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Help: <mailto:msysgit-help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
+	<mailto:msysgit-unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72946>
 
 
-        Stefan
+
+On Feb 7, 2008, at 2:28 PM, Johannes Schindelin wrote:
+
+> The Git installer of msysGit will always show the GPL, and have the  
+> user
+> accept it.
+
+I agree.
+
+	Steffen
