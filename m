@@ -1,72 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Bug in git rebase -i where <upstream> is "HEAD" in 1.5.4?
-Date: Thu, 07 Feb 2008 15:32:44 -0800
-Message-ID: <7vlk5wmjfn.fsf@gitster.siamese.dyndns.org>
-References: <D94A5309-3EB0-46FA-9114-D11376585DBB@apple.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Using thunderbird to post/apply patches?
+Date: Thu, 7 Feb 2008 23:34:06 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0802072333120.11591@racer.site>
+References: <46a038f90802071521n674b61c2t5e4d4c740375b951@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Adam Roben <aroben@apple.com>
-X-From: git-owner@vger.kernel.org Fri Feb 08 00:33:56 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Martin Langhoff <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 08 00:34:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNGFX-0003gX-9l
-	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 00:33:47 +0100
+	id 1JNGGO-0003yy-KN
+	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 00:34:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760998AbYBGXdF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Feb 2008 18:33:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758283AbYBGXdE
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Feb 2008 18:33:04 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:33279 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760998AbYBGXdD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Feb 2008 18:33:03 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 7AE645B15;
-	Thu,  7 Feb 2008 18:33:01 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id C9DF95B13;
-	Thu,  7 Feb 2008 18:32:56 -0500 (EST)
-In-Reply-To: <D94A5309-3EB0-46FA-9114-D11376585DBB@apple.com> (Adam Roben's
-	message of "Thu, 07 Feb 2008 16:47:27 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932396AbYBGXeE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Feb 2008 18:34:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761185AbYBGXeB
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Feb 2008 18:34:01 -0500
+Received: from mail.gmx.net ([213.165.64.20]:48740 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1758504AbYBGXeA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Feb 2008 18:34:00 -0500
+Received: (qmail invoked by alias); 07 Feb 2008 23:33:57 -0000
+Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
+  by mail.gmx.net (mp057) with SMTP; 08 Feb 2008 00:33:57 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19bFxRLSPRbx6N/bZQzr8kK82LDK+iNkr4IsX+aaY
+	EA5FCSetfsOLiX
+X-X-Sender: gene099@racer.site
+In-Reply-To: <46a038f90802071521n674b61c2t5e4d4c740375b951@mail.gmail.com>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73018>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73019>
 
-Adam Roben <aroben@apple.com> writes:
+Hi,
 
->    I've discovered a difference in behavior between `git rebase` and
-> `git rebase -i`, and I believe the behavior exhibited by `git rebase -
-> i` is incorrect and should be changed to match `git rebase`. The
-> behavior difference occurs when running the command in the form:
->
-> git rebase [-i] <upstream> <branch>
->
->    If <upstream> is "HEAD", `git rebase` seems to perform these
-> (correct) steps:
->
-> A=$(git rev-parse HEAD)
-> git checkout <branch>
-> git rebase $A
+On Fri, 8 Feb 2008, Martin Langhoff wrote:
 
-Yes, I remember writing that side carefully, taking exactly this
-issue into account.
+> Is there anyone using thunderbird/mozilla to post patches with 
+> additional email commentary like Junio and Linus do? Are there good 
+> tricks for this? Or otherwise a similar MUA that does things right?
+> 
+> The 2 workflows I am after are...
+> 
+>  - Load up a patch created with git-format-patch into my email editor
+> to add some commentary before sending. Should not munge the patch
+> itself!
 
->    However, `git rebase -i` seems to perform these (incorrect) steps:
+The "Thunderbird" section in Documentation/SubmittingPatches should help 
+here.
 
-Yeah, I see that interactive side is sloppier.  In
-git-rebase--interactive.sh, if you move
+>  - Feed an email I am reading to git-apply-mbox so that if it's
+> reasonably formatted as a patch it will do the right thing and apply
+> it.
 
-        HEAD=$(git rev-parse --verify HEAD) || die "No HEAD?"
-        UPSTREAM=$(git rev-parse --verify "$1") || die "Invalid base"
+Recently, git-am learnt to apply mails in maildir format.  Thunderbird 
+uses maildir format internally, if I am not mistaken.
 
-around l.481 up so that they come before if test !  -z "$2",
-you would be Ok, although I didn't test it.
+Hth,
+Dscho
