@@ -1,70 +1,58 @@
-From: "Jay Soffian" <jaysoffian+git@gmail.com>
-Subject: Re: [PATCH] allow setting GIT_WORK_TREE to "no work tree"
-Date: Thu, 7 Feb 2008 02:13:39 -0500
-Message-ID: <76718490802062313jdbd0e84xc9f36d703bb86c44@mail.gmail.com>
-References: <20080206102608.GA1007@coredump.intra.peff.net>
-	 <47A98F07.4000402@viscovery.net>
-	 <20080206110131.GA4167@coredump.intra.peff.net>
-	 <7v4pclvmae.fsf@gitster.siamese.dyndns.org>
-	 <7vwsphu7gr.fsf@gitster.siamese.dyndns.org>
-	 <20080207051317.GA32296@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+From: Sami Maisniemi <sami@maisniemi.net>
+Subject: Compiling Git in Mac OS X Leopard
+Date: Thu, 7 Feb 2008 09:09:39 +0200
+Message-ID: <E9380AA8-2E38-4733-9940-FFD51BB84700@maisniemi.net>
+Mime-Version: 1.0 (Apple Message framework v915)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Johannes Sixt" <j.sixt@viscovery.net>, git@vger.kernel.org,
-	"Lars Hjemli" <hjemli@gmail.com>
-To: "Jeff King" <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Feb 07 08:14:15 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 07 08:19:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JN0xb-0003Gv-Ck
-	for gcvg-git-2@gmane.org; Thu, 07 Feb 2008 08:14:15 +0100
+	id 1JN12D-0004ek-6v
+	for gcvg-git-2@gmane.org; Thu, 07 Feb 2008 08:19:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753430AbYBGHNm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Feb 2008 02:13:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753438AbYBGHNl
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Feb 2008 02:13:41 -0500
-Received: from wa-out-1112.google.com ([209.85.146.178]:52269 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752971AbYBGHNk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Feb 2008 02:13:40 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so928892wah.23
-        for <git@vger.kernel.org>; Wed, 06 Feb 2008 23:13:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        bh=b0laWu7cx1nSAMENPPJqEwAsWyzPLRTkoEQG/G2CO6A=;
-        b=W0fo5qa0PTLk5fSXUphu1zHAWVFW8z/Zlyq6p/UJeAaRJVkhD1Zo/W8b9W42JOOTSoyaaJfcYIG04+MaBJlk2u229L1Grlcw6mY0lnhfhuGLa4jXaB/cVkfX0XcXOy9DcVgqTpyUKnO2r+TFAC1SxTgKKc9c0A55wedVK3MX6so=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=lRtM0VFRJM+jScu8cyQNJyW1XhS6w1Jp0kJuLYoRnU9V0FrLXb1DRlBSXugFhJDs6dccDM6R0VqdS1lv8gYV3gkQeD1cuNDXZVEMEOTlU+SCjAHYpiJ66Bp5hStrVd2WBF08KolgFty6DxIkvkcgsTE9Xz1CpVwu+KXz4hebFnA=
-Received: by 10.114.121.1 with SMTP id t1mr5707213wac.67.1202368419979;
-        Wed, 06 Feb 2008 23:13:39 -0800 (PST)
-Received: by 10.114.255.11 with HTTP; Wed, 6 Feb 2008 23:13:39 -0800 (PST)
-In-Reply-To: <20080207051317.GA32296@sigill.intra.peff.net>
-Content-Disposition: inline
-X-Google-Sender-Auth: 7bd07496278b392c
+	id S1756097AbYBGHS1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Feb 2008 02:18:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755595AbYBGHS1
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Feb 2008 02:18:27 -0500
+Received: from emh07.mail.saunalahti.fi ([62.142.5.117]:45391 "EHLO
+	emh07.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754909AbYBGHS0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Feb 2008 02:18:26 -0500
+X-Greylist: delayed 522 seconds by postgrey-1.27 at vger.kernel.org; Thu, 07 Feb 2008 02:18:26 EST
+Received: from saunalahti-vams (vs3-12.mail.saunalahti.fi [62.142.5.96])
+	by emh07-2.mail.saunalahti.fi (Postfix) with SMTP id 6685918D278
+	for <git@vger.kernel.org>; Thu,  7 Feb 2008 09:09:40 +0200 (EET)
+Received: from emh01.mail.saunalahti.fi ([62.142.5.107])
+	by vs3-12.mail.saunalahti.fi ([62.142.5.96])
+	with SMTP (gateway) id A063F148E7C; Thu, 07 Feb 2008 09:09:40 +0200
+Received: from [192.168.255.2] (a88-114-125-230.elisa-laajakaista.fi [88.114.125.230])
+	by emh01.mail.saunalahti.fi (Postfix) with ESMTP id 5BB344BC24
+	for <git@vger.kernel.org>; Thu,  7 Feb 2008 09:09:39 +0200 (EET)
+X-Mailer: Apple Mail (2.915)
+X-Antivirus: VAMS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72901>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72902>
 
-On Feb 7, 2008 12:13 AM, Jeff King <peff@peff.net> wrote:
->
-> On Wed, Feb 06, 2008 at 12:59:32PM -0800, Junio C Hamano wrote:
-> >
-> > I was tempted to suggest GIT_WORK_TREE=/dev/null because that is
-> > what "diff" uses to mark "this does not even exist", but that
-> > feels dirty.
->
-> It feels dirty to me, too. I would rather choose something that doesn't
-> even look like a path. I think GIT_WORK_TREE=" " is too ugly, too.
+Hi,
 
-Is using something like "__GIT_WORK_TREE_NOT_SET__" that terrible?
+I tried to compile Git in Mac OS X Leopard, because I was unable to  
+find any precompiled binaries. However, the compilation was aborted  
+due to the following error:
 
-j.
+msgfmt --statistics --tcl po/de.po -l de -d po/
+make[1]: msgfmt: Command not found
+make[1]: *** [po/de.msg] Error 127
+make: *** [all] Error 2
+
+It seems that the makefile uses an application called msgfmt that is  
+not available in Mac OS X Leopard. What is application msgfmt and why  
+it is required? Is there any kind of workaround available?
+
+Regards Sami Maisniemi
