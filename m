@@ -1,79 +1,50 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: git-tag HEAD
-Date: Thu, 7 Feb 2008 13:13:24 +0100
-Message-ID: <20080207121324.GL25954@genesis.frugalware.org>
-References: <dfb262380802042024p49bfb0c3v689946dba350ac01@mail.gmail.com> <BAYC1-PASMTP15D0374A5A075B79E17284AE2C0@CEZ.ICE> <dfb262380802042112s324cc7dfx452a540e6bc54473@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: git-fetch in 1.5.4 fails versus 1.5.3.8
+Date: Thu, 7 Feb 2008 07:28:42 -0500
+Message-ID: <20080207122842.GA17184@coredump.intra.peff.net>
+References: <pan.2008.02.04.18.25.26@progsoc.org> <20080205050741.GA4624@coredump.intra.peff.net> <pan.2008.02.06.21.56.35@progsoc.org> <20080207042332.GA7632@sigill.intra.peff.net> <pan.2008.02.07.10.15.05@progsoc.org> <20080207110601.GA8488@coredump.intra.peff.net> <20080207121042.GA10210@glandium.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="81JctsDUVPekGcy+"
-Cc: Sean <seanlkml@sympatico.ca>, git@vger.kernel.org
-To: Ramagudi Naziir <naziirr@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 07 13:14:12 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Anand Kumria <wildfire@progsoc.org>, git@vger.kernel.org
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Thu Feb 07 13:29:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JN5dr-0002MX-S8
-	for gcvg-git-2@gmane.org; Thu, 07 Feb 2008 13:14:12 +0100
+	id 1JN5sV-0007aa-Op
+	for gcvg-git-2@gmane.org; Thu, 07 Feb 2008 13:29:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754156AbYBGMNj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Feb 2008 07:13:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753750AbYBGMNj
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Feb 2008 07:13:39 -0500
-Received: from mx2.mail.elte.hu ([157.181.151.9]:45613 "EHLO mx2.mail.elte.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753427AbYBGMNi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Feb 2008 07:13:38 -0500
-Received: from frugalware.elte.hu ([157.181.177.34] helo=genesis.frugalware.org)
-	by mx2.mail.elte.hu with esmtp (Exim)
-	id 1JN5dC-0001ID-Dr
-	from <vmiklos@frugalware.org>; Thu, 07 Feb 2008 13:13:36 +0100
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 0967311901AA; Thu,  7 Feb 2008 13:13:24 +0100 (CET)
+	id S1755775AbYBGM2q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Feb 2008 07:28:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755769AbYBGM2q
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Feb 2008 07:28:46 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3191 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755021AbYBGM2q (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Feb 2008 07:28:46 -0500
+Received: (qmail 13130 invoked by uid 111); 7 Feb 2008 12:28:44 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Thu, 07 Feb 2008 07:28:44 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 07 Feb 2008 07:28:42 -0500
 Content-Disposition: inline
-In-Reply-To: <dfb262380802042112s324cc7dfx452a540e6bc54473@mail.gmail.com>
-User-Agent: Mutt/1.5.16 (2007-06-09)
-X-ELTE-VirusStatus: clean
-X-ELTE-SpamScore: 1.0
-X-ELTE-SpamLevel: s
-X-ELTE-SpamCheck: no
-X-ELTE-SpamVersion: ELTE 2.0 
-X-ELTE-SpamCheck-Details: score=1.0 required=5.9 tests=BAYES_50 autolearn=no SpamAssassin version=3.2.3
-	1.0 BAYES_50               BODY: Bayesian spam probability is 40 to 60%
-	[score: 0.4995]
+In-Reply-To: <20080207121042.GA10210@glandium.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72925>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72926>
 
+On Thu, Feb 07, 2008 at 01:10:43PM +0100, Mike Hommey wrote:
 
---81JctsDUVPekGcy+
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> > It would be nice if we could generate a minimal test case that
+> > demonstrates the problem, but I can't seem to reproduce it with a
+> > smaller program. If we could, then we could probably get advice from
+> > curl and/or gnutls people.
+> 
+> Did you try to run with the GIT_SSL_NO_VERIFY environment variable set ?
 
-On Tue, Feb 05, 2008 at 07:12:39AM +0200, Ramagudi Naziir <naziirr@gmail.co=
-m> wrote:
-> > $ git tag -d HEAD
->=20
-> Is it exactly the same as "rm .git/refs/tags/HEAD" ?
+Yes (I even suggested this earlier in the thread). It returns a
+different error from gnutls (see Anand's earlier response).
 
-nope, as that won't create a reflog entry and won't work with packed
-refs. at least i think so :)
-
-- VMiklos
-
---81JctsDUVPekGcy+
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (GNU/Linux)
-
-iD8DBQFHqvXke81tAgORUJYRAhiuAJ9dRibmWuuvctzdSA/q0DYnl8EUiACglq7G
-Ov1obHlkRQZikuXgTKGvC+s=
-=ulOy
------END PGP SIGNATURE-----
-
---81JctsDUVPekGcy+--
+-Peff
