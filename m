@@ -1,61 +1,96 @@
-From: Sergei Organov <osv@javad.com>
-Subject: Re: [PATCH] git.el: automatically revert emacs buffers
-Date: Thu, 07 Feb 2008 16:03:53 +0300
-Message-ID: <87tzkk2a12.fsf@osv.gnss.ru>
-References: <874pcnh4ej.fsf@osv.gnss.ru> <87ir10q5yy.fsf@wine.dyndns.org>
+From: Luciano Rocha <luciano@eurotux.com>
+Subject: Re: [msysGit] Re: [ANNOUNCE] GIT 1.5.4
+Date: Thu, 7 Feb 2008 13:07:15 +0000
+Message-ID: <20080207130715.GA14000@bit.office.eurotux.com>
+References: <7vmyqk563z.fsf@gitster.siamese.dyndns.org> <CFB8A272-863C-4758-91F7-E9669D70A200@zib.de> <20080207123108.GA12009@bit.office.eurotux.com> <alpine.LSU.1.00.0802071255110.8543@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Alexandre Julliard <julliard@winehq.org>
-X-From: git-owner@vger.kernel.org Thu Feb 07 14:06:05 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="AqsLC8rIMeq19msA"
+Cc: Steffen Prohaska <prohaska@zib.de>,
+	Git Mailing List <git@vger.kernel.org>,
+	msysGit <msysgit@googlegroups.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Feb 07 14:08:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JN6Qq-0002fS-M4
-	for gcvg-git-2@gmane.org; Thu, 07 Feb 2008 14:04:49 +0100
+	id 1JN6Ts-0003jz-6X
+	for gcvg-git-2@gmane.org; Thu, 07 Feb 2008 14:07:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754736AbYBGNEQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Feb 2008 08:04:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751318AbYBGNEQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Feb 2008 08:04:16 -0500
-Received: from javad.com ([216.122.176.236]:4577 "EHLO javad.com"
+	id S1754783AbYBGNHX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Feb 2008 08:07:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754792AbYBGNHX
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Feb 2008 08:07:23 -0500
+Received: from os.eurotux.com ([216.75.63.6]:55432 "EHLO os.eurotux.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753489AbYBGNEP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Feb 2008 08:04:15 -0500
-Received: from osv ([87.236.81.130])
-	by javad.com (8.11.6/8.11.0) with ESMTP id m17D41d37227;
-	Thu, 7 Feb 2008 13:04:01 GMT
-	(envelope-from s.organov@javad.com)
-Received: from osv by osv with local (Exim 4.63)
-	(envelope-from <s.organov@javad.com>)
-	id 1JN6Px-0001kx-Cp; Thu, 07 Feb 2008 16:03:53 +0300
-In-Reply-To: <87ir10q5yy.fsf@wine.dyndns.org> (Alexandre Julliard's message of "Thu\, 07 Feb 2008 13\:57\:41 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+	id S1754442AbYBGNHW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Feb 2008 08:07:22 -0500
+Received: (qmail 876 invoked from network); 7 Feb 2008 13:07:20 -0000
+Received: from nc.eurotux.com (HELO bit.office.eurotux.com) (luciano@81.84.255.161)
+  by os.eurotux.com with AES256-SHA encrypted SMTP; 7 Feb 2008 13:07:20 -0000
+Content-Disposition: inline
+In-Reply-To: <alpine.LSU.1.00.0802071255110.8543@racer.site>
+User-Agent: Mutt/1.5.14 (2007-03-31)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72936>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72937>
 
-Alexandre Julliard <julliard@winehq.org> writes:
-> Sergei Organov <osv@javad.com> writes:
->
->> If new custom variable git-auto-revert is 't', after git-revert-file,
->> revert corresponding emacs buffers from reverted files provided the
->> buffers were not changed. This is how pcl-cvs behaves.
->>
->> * git-auto-revert: new customizable variable.
->> * git-revert-some-buffers: new function.
->> * git-revert-file: call git-revert-some-buffers.
->
-> I had implemented this a bit differently in the patch series I just
-> sent, I did it the VC way by also checking for modified buffers and
-> refusing to revert their corresponding files. I didn't add a custom
-> variable for it though, so I'll merge that part of your patch.
 
-I don't think the custom variable is necessary. I added it only because
-PCL-CVS had it, even though I didn't ever customize it in PCL-CVS. So
-please feel free to drop my patch entirely.
+--AqsLC8rIMeq19msA
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
--- Sergei Organov.
+On Thu, Feb 07, 2008 at 12:55:58PM +0000, Johannes Schindelin wrote:
+> Hi,
+>=20
+> On Thu, 7 Feb 2008, Luciano Rocha wrote:
+>=20
+> > On Sat, Feb 02, 2008 at 11:42:11PM +0100, Steffen Prohaska wrote:
+> > >=20
+> > >  On Feb 2, 2008, at 5:34 AM, Junio C Hamano wrote:
+> > >=20
+> > > > The latest feature release GIT 1.5.4 is available at the usual
+> > > > places:
+> > >=20
+> > >  The msysgit setup is available at:
+> > >=20
+> > >    http://code.google.com/p/msysgit/downloads/
+> > >=20
+> >=20
+> > Why do I have to accept the GPL to install msysgit?
+>=20
+> Because that's the only license you have to use git.
+
+Again, GPL governs distribution, not use.
+
+> Get over it, or use another SCM,
+
+I like and use GPL, but I won't force my users to accept the GPL in
+order to use programs released under it.
+
+> Dscho "who hates license wars"
+
+I'm not battling over licenses.
+
+--=20
+Luciano Rocha <luciano@eurotux.com>
+Eurotux Inform=E1tica, S.A. <http://www.eurotux.com/>
+
+--AqsLC8rIMeq19msA
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (GNU/Linux)
+
+iD8DBQFHqwKDinSul6a7oB8RAkPdAKCgqlRerE/0yaKdSmJ0po3RsBaEhwCfVbye
+kVKUC61UXeCG77+emk5aw4c=
+=Ejiz
+-----END PGP SIGNATURE-----
+
+--AqsLC8rIMeq19msA--
