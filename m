@@ -1,155 +1,207 @@
 From: Alexandre Julliard <julliard@winehq.org>
-Subject: [PATCH 1/4] git.el: Support for showing unknown/ignored directories.
-Date: Thu, 07 Feb 2008 13:50:19 +0100
-Message-ID: <87zludorqs.fsf@wine.dyndns.org>
+Subject: [PATCH 4/4] git.el: Better handling of subprocess errors.
+Date: Thu, 07 Feb 2008 13:51:34 +0100
+Message-ID: <87myqdorop.fsf@wine.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 07 13:51:24 2008
+X-From: git-owner@vger.kernel.org Thu Feb 07 13:52:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JN6Db-0006UB-67
-	for gcvg-git-2@gmane.org; Thu, 07 Feb 2008 13:51:07 +0100
+	id 1JN6FE-00073P-Bo
+	for gcvg-git-2@gmane.org; Thu, 07 Feb 2008 13:52:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932149AbYBGMug (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Feb 2008 07:50:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932140AbYBGMuf
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Feb 2008 07:50:35 -0500
-Received: from mail.codeweavers.com ([216.251.189.131]:60798 "EHLO
+	id S1757791AbYBGMvv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Feb 2008 07:51:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751453AbYBGMvu
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Feb 2008 07:51:50 -0500
+Received: from mail.codeweavers.com ([216.251.189.131]:60871 "EHLO
 	mail.codeweavers.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932119AbYBGMua (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Feb 2008 07:50:30 -0500
+	with ESMTP id S1761340AbYBGMvs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Feb 2008 07:51:48 -0500
 Received: from adsl-84-227-175-174.adslplus.ch ([84.227.175.174] helo=wine.dyndns.org)
 	by mail.codeweavers.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
 	(Exim 4.63)
 	(envelope-from <julliard@winehq.org>)
-	id 1JN6Cr-0006rp-V6
-	for git@vger.kernel.org; Thu, 07 Feb 2008 06:50:28 -0600
+	id 1JN6E4-0006tB-Pb
+	for git@vger.kernel.org; Thu, 07 Feb 2008 06:51:47 -0600
 Received: by wine.dyndns.org (Postfix, from userid 1000)
-	id 7ACAD1E7141; Thu,  7 Feb 2008 13:50:19 +0100 (CET)
+	id 5461B1E7141; Thu,  7 Feb 2008 13:51:34 +0100 (CET)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.50 (gnu/linux)
 X-Spam-Score: -2.9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72930>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72931>
 
-Instead of recursing into directories that only contain unknown files,
-display only the directory itself. Its contents can be expanded with
-git-find-file (bound to C-m).
+Where possible, capture the output of the git command and display it
+if the command fails.
 
 Signed-off-by: Alexandre Julliard <julliard@winehq.org>
 ---
- contrib/emacs/git.el |   38 +++++++++++++++++++++++++++++---------
- 1 files changed, 29 insertions(+), 9 deletions(-)
+ contrib/emacs/git.el |   88 +++++++++++++++++++++++++++++---------------------
+ 1 files changed, 51 insertions(+), 37 deletions(-)
 
 diff --git a/contrib/emacs/git.el b/contrib/emacs/git.el
-index d8a0638..58d72a5 100644
+index e1058b9..a8bf0ef 100644
 --- a/contrib/emacs/git.el
 +++ b/contrib/emacs/git.el
-@@ -558,12 +558,15 @@ and returns the process output as a string."
- 		     (?\100 "   (type change file -> subproject)")
- 		     (?\120 "   (type change symlink -> subproject)")
- 		     (t "   (subproject)")))
-+                  (?\110 nil)  ;; directory (internal, not a real git state)
- 		  (?\000  ;; deleted or unknown
- 		   (case old-type
- 		     (?\120 "   (symlink)")
- 		     (?\160 "   (subproject)")))
- 		  (t (format "   (unknown type %o)" new-type)))))
--    (if str (propertize str 'face 'git-status-face) "")))
-+    (cond (str (propertize str 'face 'git-status-face))
-+          ((eq new-type ?\110) "/")
-+          (t ""))))
+@@ -35,7 +35,6 @@
+ ;;
+ ;; TODO
+ ;;  - portability to XEmacs
+-;;  - better handling of subprocess errors
+ ;;  - diff against other branch
+ ;;  - renaming files from the status buffer
+ ;;  - creating tags
+@@ -191,6 +190,18 @@ if there is already one that displays the same directory."
+              (append (git-get-env-strings env) (list "git") args))
+     (apply #'call-process "git" nil buffer nil args)))
  
- (defun git-rename-as-string (info)
-   "Return a string describing the copy or rename associated with INFO, or an empty string if none."
-@@ -666,9 +669,11 @@ Return the list of files that haven't been handled."
-     (with-temp-buffer
-       (apply #'git-call-process-env t nil "ls-files" "-z" (append options (list "--") files))
-       (goto-char (point-min))
--      (while (re-search-forward "\\([^\0]*\\)\0" nil t 1)
-+      (while (re-search-forward "\\([^\0]*?\\)\\(/?\\)\0" nil t 1)
-         (let ((name (match-string 1)))
--          (push (git-create-fileinfo default-state name) infolist)
-+          (push (git-create-fileinfo default-state name 0
-+                                     (if (string-equal "/" (match-string 2)) (lsh ?\110 9) 0))
-+                infolist)
-           (setq files (delete name files)))))
-     (git-insert-info-list status infolist)
-     files))
-@@ -713,7 +718,7 @@ Return the list of files that haven't been handled."
- (defun git-run-ls-files-with-excludes (status files default-state &rest options)
-   "Run git-ls-files on FILES with appropriate --exclude-from options."
-   (let ((exclude-files (git-get-exclude-files)))
--    (apply #'git-run-ls-files status files default-state
-+    (apply #'git-run-ls-files status files default-state "--directory"
-            (concat "--exclude-per-directory=" git-per-dir-ignore-file)
-            (append options (mapcar (lambda (f) (concat "--exclude-from=" f)) exclude-files)))))
++(defun git-call-process-display-error (&rest args)
++  "Wrapper for call-process that displays error messages."
++  (let* ((dir default-directory)
++         (buffer (get-buffer-create "*Git Command Output*"))
++         (ok (with-current-buffer buffer
++               (let ((default-directory dir)
++                     (buffer-read-only nil))
++                 (erase-buffer)
++                 (eq 0 (apply 'call-process "git" nil (list buffer t) nil args))))))
++    (unless ok (display-message-or-buffer buffer))
++    ok))
++
+ (defun git-call-process-env-string (env &rest args)
+   "Wrapper for call-process that sets environment strings,
+ and returns the process output as a string."
+@@ -377,7 +388,7 @@ and returns the process output as a string."
+     (when reason
+      (push reason args)
+      (push "-m" args))
+-    (eq 0 (apply #'git-call-process-env nil nil "update-ref" args))))
++    (apply 'git-call-process-display-error "update-ref" args)))
  
-@@ -957,6 +962,7 @@ Return the list of files that haven't been handled."
-   "Add marked file(s) to the index cache."
-   (interactive)
-   (let ((files (git-get-filenames (git-marked-files-state 'unknown 'ignored))))
-+    ;; FIXME: add support for directories
+ (defun git-read-tree (tree &optional index-file)
+   "Read a tree into the index file."
+@@ -866,16 +877,17 @@ Return the list of files that haven't been handled."
+                       (if (or (not (string-equal tree head-tree))
+                               (yes-or-no-p "The tree was not modified, do you really want to perform an empty commit? "))
+                           (let ((commit (git-commit-tree buffer tree head)))
+-                            (condition-case nil (delete-file ".git/MERGE_HEAD") (error nil))
+-                            (condition-case nil (delete-file ".git/MERGE_MSG") (error nil))
+-                            (with-current-buffer buffer (erase-buffer))
+-			    (git-update-status-files (git-get-filenames files) 'uptodate)
+-                            (git-call-process-env nil nil "rerere")
+-                            (git-call-process-env nil nil "gc" "--auto")
+-                            (git-refresh-files)
+-                            (git-refresh-ewoc-hf git-status)
+-                            (message "Committed %s." commit)
+-                            (git-run-hook "post-commit" nil))
++                            (when commit
++                              (condition-case nil (delete-file ".git/MERGE_HEAD") (error nil))
++                              (condition-case nil (delete-file ".git/MERGE_MSG") (error nil))
++                              (with-current-buffer buffer (erase-buffer))
++                              (git-update-status-files (git-get-filenames files) 'uptodate)
++                              (git-call-process-env nil nil "rerere")
++                              (git-call-process-env nil nil "gc" "--auto")
++                              (git-refresh-files)
++                              (git-refresh-ewoc-hf git-status)
++                              (message "Committed %s." commit)
++                              (git-run-hook "post-commit" nil)))
+                         (message "Commit aborted."))))
+                 (message "No files to commit.")))
+           (delete-file index-file))))))
+@@ -986,9 +998,9 @@ Return the list of files that haven't been handled."
+     ;; FIXME: add support for directories
      (unless files
        (push (file-relative-name (read-file-name "File to add: " nil nil t)) files))
-     (apply #'git-call-process-env nil nil "update-index" "--add" "--" files)
-@@ -983,7 +989,10 @@ Return the list of files that haven't been handled."
-          (format "Remove %d file%s? " (length files) (if (> (length files) 1) "s" "")))
-         (progn
-           (dolist (name files)
--            (when (file-exists-p name) (delete-file name)))
-+            (ignore-errors
-+              (if (file-directory-p name)
-+                  (delete-directory name)
-+                (delete-file name))))
-           (apply #'git-call-process-env nil nil "update-index" "--remove" "--" files)
-           (git-update-status-files files nil)
-           (git-success-message "Removed" files))
-@@ -992,7 +1001,7 @@ Return the list of files that haven't been handled."
+-    (apply #'git-call-process-env nil nil "update-index" "--add" "--" files)
+-    (git-update-status-files files 'uptodate)
+-    (git-success-message "Added" files)))
++    (when (apply 'git-call-process-display-error "update-index" "--add" "--" files)
++      (git-update-status-files files 'uptodate)
++      (git-success-message "Added" files))))
+ 
+ (defun git-ignore-file ()
+   "Add marked file(s) to the ignore list."
+@@ -1014,9 +1026,9 @@ Return the list of files that haven't been handled."
+               (if (file-directory-p name)
+                   (delete-directory name)
+                 (delete-file name))))
+-          (apply #'git-call-process-env nil nil "update-index" "--remove" "--" files)
+-          (git-update-status-files files nil)
+-          (git-success-message "Removed" files))
++          (when (apply 'git-call-process-display-error "update-index" "--remove" "--" files)
++            (git-update-status-files files nil)
++            (git-success-message "Removed" files)))
+       (message "Aborting"))))
+ 
  (defun git-revert-file ()
-   "Revert changes to the marked file(s)."
-   (interactive)
--  (let ((files (git-marked-files))
-+  (let ((files (git-marked-files-state 'added 'deleted 'modified 'unmerged))
-         added modified)
-     (when (and files
-                (yes-or-no-p
-@@ -1063,6 +1072,16 @@ Return the list of files that haven't been handled."
-         (message "Inserting unknown files...done"))
-     (git-remove-handled)))
+@@ -1034,28 +1046,30 @@ Return the list of files that haven't been handled."
+           ('unmerged (push (git-fileinfo->name info) modified))
+           ('modified (push (git-fileinfo->name info) modified))))
+       ;; check if a buffer contains one of the files and isn't saved
+-      (dolist (file (append added modified))
++      (dolist (file modified)
+         (let ((buffer (get-file-buffer file)))
+           (when (and buffer (buffer-modified-p buffer))
+             (error "Buffer %s is modified. Please kill or save modified buffers before reverting." (buffer-name buffer)))))
+-      (when added
+-        (apply #'git-call-process-env nil nil "update-index" "--force-remove" "--" added))
+-      (when modified
+-        (apply #'git-call-process-env nil nil "checkout" "HEAD" modified))
+-      (git-update-status-files (append added modified) 'uptodate)
+-      (dolist (file (append added modified))
+-        (let ((buffer (get-file-buffer file)))
+-          (when buffer (with-current-buffer buffer (revert-buffer t t t)))))
+-      (git-success-message "Reverted" (git-get-filenames files)))))
++      (let ((ok (and
++                 (or (not added)
++                     (apply 'git-call-process-display-error "update-index" "--force-remove" "--" added))
++                 (or (not modified)
++                     (apply 'git-call-process-display-error "checkout" "HEAD" modified)))))
++        (git-update-status-files (append added modified) 'uptodate)
++        (when ok
++          (dolist (file modified)
++            (let ((buffer (get-file-buffer file)))
++              (when buffer (with-current-buffer buffer (revert-buffer t t t)))))
++          (git-success-message "Reverted" (git-get-filenames files)))))))
  
-+(defun git-expand-directory (info)
-+  "Expand the directory represented by INFO to list its files."
-+  (when (eq (lsh (git-fileinfo->new-perm info) -9) ?\110)
-+    (let ((dir (git-fileinfo->name info)))
-+      (git-set-filenames-state git-status (list dir) nil)
-+      (git-run-ls-files-with-excludes git-status (list (concat dir "/")) 'unknown "-o")
+ (defun git-resolve-file ()
+   "Resolve conflicts in marked file(s)."
+   (interactive)
+   (let ((files (git-get-filenames (git-marked-files-state 'unmerged))))
+     (when files
+-      (apply #'git-call-process-env nil nil "update-index" "--" files)
+-      (git-update-status-files files 'uptodate)
+-      (git-success-message "Resolved" files))))
++      (when (apply 'git-call-process-display-error "update-index" "--" files)
++        (git-update-status-files files 'uptodate)
++        (git-success-message "Resolved" files)))))
+ 
+ (defun git-remove-handled ()
+   "Remove handled files from the status list."
+@@ -1320,12 +1334,12 @@ amended version of it."
+   (when (git-empty-db-p) (error "No commit to amend."))
+   (let* ((commit (git-rev-parse "HEAD"))
+          (files (git-get-commit-files commit)))
+-    (git-call-process-env nil nil "reset" "--soft" "HEAD^")
+-    (git-update-status-files (copy-sequence files) 'uptodate)
+-    (git-mark-files git-status files)
+-    (git-refresh-files)
+-    (git-setup-commit-buffer commit)
+-    (git-commit-file)))
++    (when (git-call-process-display-error "reset" "--soft" "HEAD^")
++      (git-update-status-files (copy-sequence files) 'uptodate)
++      (git-mark-files git-status files)
 +      (git-refresh-files)
-+      (git-refresh-ewoc-hf git-status)
-+      t)))
-+
- (defun git-setup-diff-buffer (buffer)
-   "Setup a buffer for displaying a diff."
-   (let ((dir default-directory))
-@@ -1237,9 +1256,10 @@ Return the list of files that haven't been handled."
-   (interactive)
-   (unless git-status (error "Not in git-status buffer."))
-   (let ((info (ewoc-data (ewoc-locate git-status))))
--    (find-file (git-fileinfo->name info))
--    (when (eq 'unmerged (git-fileinfo->state info))
--      (smerge-mode 1))))
-+    (unless (git-expand-directory info)
-+      (find-file (git-fileinfo->name info))
-+      (when (eq 'unmerged (git-fileinfo->state info))
-+        (smerge-mode 1)))))
++      (git-setup-commit-buffer commit)
++      (git-commit-file))))
  
- (defun git-find-file-other-window ()
-   "Visit the current file in its own buffer in another window."
+ (defun git-find-file ()
+   "Visit the current file in its own buffer."
 -- 
 1.5.4.38.g0d380
 
