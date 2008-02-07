@@ -1,49 +1,49 @@
-From: Dmitry Potapov <dpotapov-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+From: Linus Torvalds <torvalds-de/tnXTf+JLsfHDXvbKv3WD2FQJk+8+b@public.gmane.org>
 Subject: Re: [ANNOUNCE] GIT 1.5.4
-Date: Thu, 7 Feb 2008 22:58:39 +0300
-Message-ID: <20080207195839.GN30368@dpotapov.dyndns.org>
-References: <7vmyqk563z.fsf@gitster.siamese.dyndns.org> <CFB8A272-863C-4758-91F7-E9669D70A200@zib.de> <20080207123108.GA12009@bit.office.eurotux.com>
-Reply-To: dpotapov-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org
+Date: Thu, 7 Feb 2008 11:59:03 -0800 (PST)
+Message-ID: <alpine.LFD.1.00.0802071157360.2896@woody.linux-foundation.org>
+References: <7vmyqk563z.fsf@gitster.siamese.dyndns.org> <CFB8A272-863C-4758-91F7-E9669D70A200@zib.de> <20080207123108.GA12009@bit.office.eurotux.com> <alpine.LSU.1.00.0802071255110.8543@racer.site> <20080207130715.GA14000@bit.office.eurotux.com> <alpine.LSU.1.00.0802071324460.8543@racer.site> <7v1w7ooes3.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0802071831520.8543@racer.site> <7vprv8mu2k.fsf@gitster.siamese.dyndns.org>
+Reply-To: torvalds-de/tnXTf+JLsfHDXvbKv3WD2FQJk+8+b@public.gmane.org
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Steffen Prohaska <prohaska-wjoc1KHpMeg@public.gmane.org>, Git Mailing List <git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>, msysGit <msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>, Junio C Hamano <gitster-e+AXbWqSrlAAvxtiuMwx3w@public.gmane.org>
-To: Luciano Rocha <luciano-YWehAnL2kLNBDgjK7y7TUQ@public.gmane.org>
-X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Thu Feb 07 20:59:31 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johannes Schindelin <Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org>, Luciano Rocha <luciano-YWehAnL2kLNBDgjK7y7TUQ@public.gmane.org>, Steffen Prohaska <prohaska-wjoc1KHpMeg@public.gmane.org>, Git Mailing List <git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>, msysGit <msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+To: Junio C Hamano <gitster-e+AXbWqSrlAAvxtiuMwx3w@public.gmane.org>
+X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Thu Feb 07 21:00:36 2008
 Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from py-out-1314.google.com ([64.233.166.171])
+Received: from ag-out-0910.google.com ([72.14.246.185])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNCu1-0003UJ-3L
-	for gcvm-msysgit@m.gmane.org; Thu, 07 Feb 2008 20:59:21 +0100
-Received: by py-out-1314.google.com with SMTP id p69so2511639pyb.2
-        for <gcvm-msysgit@m.gmane.org>; Thu, 07 Feb 2008 11:58:50 -0800 (PST)
+	id 1JNCv6-0003wD-1A
+	for gcvm-msysgit@m.gmane.org; Thu, 07 Feb 2008 21:00:28 +0100
+Received: by ag-out-0910.google.com with SMTP id 32so6199441agc.3
+        for <gcvm-msysgit@m.gmane.org>; Thu, 07 Feb 2008 11:59:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:received:x-sender:x-apparently-to:received:received:received-spf:authentication-results:received:dkim-signature:domainkey-signature:received:received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
-        bh=AdqBYbaNsTueFEXPx4Ozt2xvmrkD3YsVapZAzYQRWL8=;
-        b=OK680T4uxzQIpDx0LFb3rUPHbs86LS0PYbYXZPDWbU0Md8Dkp6HuPYfAUr4KCSltRfe60TjqevBb7hcSPEPYdJZ7znwJKWJyD4X/o/59Xc3xe1La5Fe+FVv/47l9dE17THW90ej3FfpA0I8T9Y6X/KRSwzPklYk1Fy5eAh1Hk20=
+        h=domainkey-signature:received:received:x-sender:x-apparently-to:received:received:received-spf:authentication-results:received:received:date:from:to:cc:subject:in-reply-to:message-id:references:user-agent:mime-version:content-type:x-spam-status:x-spam-checker-version:x-mimedefang-filter:x-scanned-by:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
+        bh=a90ymjIZ91CJ1xPfy/Oi8SKtHnq4m8dPiT7DQhV4MZk=;
+        b=trj73BE0y8hjbXjNqIOqoozt1qzYLDHe43NnXr1156xcazSimQ/tkKeVlduLXaHGmqf3LDOyFNlmN9HWqQLx6E5qMPJ7juoFOXKSO7mEX+cCskLbNP+j2ZAMgm80UE/7NxinZvtT1XkyWIrHXXcoUyzU4cgwaYimfYNDugLlFbQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=googlegroups.com; s=beta;
-        h=x-sender:x-apparently-to:received-spf:authentication-results:dkim-signature:domainkey-signature:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
-        b=tUuH2vhfFPZif+ttpMYcekOKA2cnGux7RZ/Si0baOEtvw7rlgQMPRwFXQBuT76u4Powzhv56gnrH02hqG2gJJlJwsCnkuh4lnfmlDUwyfsCvJR7qdxhZdvLbtDDCluCwNnDYRj3ldi3P3hkby6UDOSomTn4WwhQ9xhXhXGiQIlc=
-Received: by 10.141.176.6 with SMTP id d6mr1035rvp.15.1202414326299;
-        Thu, 07 Feb 2008 11:58:46 -0800 (PST)
-Received: by 10.107.168.22 with SMTP id v22gr1666pro;
-	Thu, 07 Feb 2008 11:58:46 -0800 (PST)
-X-Sender: dpotapov-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org
+        h=x-sender:x-apparently-to:received-spf:authentication-results:date:from:to:cc:subject:in-reply-to:message-id:references:user-agent:mime-version:content-type:x-spam-status:x-spam-checker-version:x-mimedefang-filter:x-scanned-by:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
+        b=wi6a4JlfUDofr7NnBd495WOJscUfhSXtTXyLhxARaGCmsYw1lf0x7YwCJtWFucGlq4BFT8G2B4/kV2hXIZ0/oMvlQbifkuGSy3DVTndK2iGa0rTnw9Xc+2J7C6q/T7//ldGehfy/Ge+90DPNWUA8zSsSbUvKsGvIo4rJTCprw1A=
+Received: by 10.142.154.20 with SMTP id b20mr1063wfe.21.1202414395371;
+        Thu, 07 Feb 2008 11:59:55 -0800 (PST)
+Received: by 10.107.168.22 with SMTP id v22gr1667pro;
+	Thu, 07 Feb 2008 11:59:55 -0800 (PST)
+X-Sender: torvalds-de/tnXTf+JLsfHDXvbKv3WD2FQJk+8+b@public.gmane.org
 X-Apparently-To: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-Received: by 10.35.37.18 with SMTP id p18mr25636856pyj.6.1202414326109; Thu, 07 Feb 2008 11:58:46 -0800 (PST)
-Received: from fg-out-1718.google.com (fg-out-1718.google.com [72.14.220.155]) by mx.google.com with ESMTP id x46si7324431pyg.3.2008.02.07.11.58.44; Thu, 07 Feb 2008 11:58:46 -0800 (PST)
-Received-SPF: pass (google.com: domain of dpotapov-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org designates 72.14.220.155 as permitted sender) client-ip=72.14.220.155;
-Authentication-Results: mx.google.com; spf=pass (google.com: domain of dpotapov-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org designates 72.14.220.155 as permitted sender) smtp.mail=dpotapov-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org; dkim=pass (test mode) header.i=@gmail.com
-Received: by fg-out-1718.google.com with SMTP id e21so5074693fga.16 for <msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>; Thu, 07 Feb 2008 11:58:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=gamma; h=domainkey-signature:received:received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent; bh=3nisEht7izvrCJ08n0EB5MK7S9LNLNwMYS/PQiUVObU=; b=B6pUT6Ru51WLk9Q/QnZEa1i4V3Zx6iKnRBf9LcsoeESVpvdgQ6ZCgws7ELY/rCGKOzQ4I89JEvcUjiSm9ZcU2ZZ9k8r/tls21gL4YvG/D8CHeU9IoT7oATO8Yw54Tc554ve+GI2aBSMJ2U0jGOiE4ljysj2Rga6B7uhp9DaKbH0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=gmail.com; s=gamma; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent; b=JVEgZrA0sL55G1O3u5d70Ink66QOYYeZEy7AZbB6A1BzcR0XlrT2BPoy4ul0nY/gFMGbHZwJth/lpVXV/OiIzbVZWY7uUwUaDlLgyCBZan2q1XKv37qdYF3gh8fO74RtTYx3zPSN4S0nUg6KVOUBf5XW88VdSK43E3+ygqJP27s=
-Received: by 10.86.62.3 with SMTP id k3mr10819082fga.24.1202414323549; Thu, 07 Feb 2008 11:58:43 -0800 (PST)
-Received: from localhost ( [85.141.191.183]) by mx.google.com with ESMTPS id d4sm5552198fga.2.2008.02.07.11.58.41 (version=TLSv1/SSLv3 cipher=OTHER); Thu, 07 Feb 2008 11:58:42 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20080207123108.GA12009-oEplIgxCSygGFt9iVWuREaMaJEuR8uiQ@public.gmane.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+Received: by 10.35.124.20 with SMTP id b20mr5583523pyn.5.1202414395143; Thu, 07 Feb 2008 11:59:55 -0800 (PST)
+Received: from smtp2.linux-foundation.org (smtp2.linux-foundation.org [207.189.120.14]) by mx.google.com with ESMTP id a28si7332973pye.0.2008.02.07.11.59.54; Thu, 07 Feb 2008 11:59:55 -0800 (PST)
+Received-SPF: pass (google.com: domain of torvalds-de/tnXTf+JLsfHDXvbKv3WD2FQJk+8+b@public.gmane.org designates 207.189.120.14 as permitted sender) client-ip=207.189.120.14;
+Authentication-Results: mx.google.com; spf=pass (google.com: domain of torvalds-de/tnXTf+JLsfHDXvbKv3WD2FQJk+8+b@public.gmane.org designates 207.189.120.14 as permitted sender) smtp.mail=torvalds-de/tnXTf+JLsfHDXvbKv3WD2FQJk+8+b@public.gmane.org
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55]) by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m17Jx4KQ001945 (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO); Thu, 7 Feb 2008 11:59:05 -0800
+Received: from localhost (localhost [127.0.0.1]) by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m17Jx3M3018973; Thu, 7 Feb 2008 11:59:03 -0800
+In-Reply-To: <7vprv8mu2k.fsf-jO8aZxhGsIagbBziECNbOZn29agUkmeCHZ5vskTnxNA@public.gmane.org>
+User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+X-Spam-Status: No, hits=-3.214 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
 Precedence: bulk
 X-Google-Loop: groups
@@ -54,29 +54,23 @@ List-Post: <mailto:msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
 List-Help: <mailto:msysgit-help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
 List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
 	<mailto:msysgit-unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72994>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72995>
 
 
-On Thu, Feb 07, 2008 at 12:31:09PM +0000, Luciano Rocha wrote:
+
+
+On Thu, 7 Feb 2008, Junio C Hamano wrote:
 > 
-> Why do I have to accept the GPL to install msysgit?
-> 
-> Only the "NO WARRANTY ..." should be required, GPL is only required for
-> distribution (and you could make that information available at install).
-> 
+> I think removing the license dialog is a bad idea.  You need to
+> tell the end-user about his rights, and one of the things is
+> that he can get source to git under the terms of GPLv2.  The bug
+> is not about showing the license, but is about refusing to
+> install unless the end user agrees with it.
 
-Section 1 of the GPL requires to "give any other recipients of the
-Program a copy of this License along with the Program." AFAIK, showing
-the License during installation is the traditional way to do so on
-Windows. Please, note that the GPL clearly states that distribution is
-possible "provided that you conspicuously and appropriately publish on
-each copy an appropriate copyright notice and disclaimer of warranty."
-IANAL, but it appears to me that if an installer that does not follow
-the traditional way (for the target system) of publishing the copyright
-notice, may be found in violation of the later requirement, and thus
-any such distribution may deem as unlawful.
+Yeah. Why not just rather than the whole ok/cancel discussion, go with a 
+single button saying "good for me!" and be done with it.
 
-So, if you think about creating your own installer for Git, don't forget
-to consult to your lawyer...
+IOW, the license thing should be considered *informational* rather than a 
+choice. Because to a user, that's exactly what the GPL is. 
 
-Dmitry
+		Linus
