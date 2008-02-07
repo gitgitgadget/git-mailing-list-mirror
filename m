@@ -1,176 +1,124 @@
 From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: [PATCH v2 02/11] Add flag to make unpack_trees() not print errors.
-Date: Thu, 7 Feb 2008 11:39:52 -0500 (EST)
-Message-ID: <alpine.LNX.1.00.0802071118090.13593@iabervon.org>
+Subject: [PATCH v2 05/11] Add "skip_unmerged" option to unpack_trees.
+Date: Thu, 7 Feb 2008 11:40:02 -0500 (EST)
+Message-ID: <alpine.LNX.1.00.0802071129130.13593@iabervon.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Thu Feb 07 17:40:41 2008
+X-From: git-owner@vger.kernel.org Thu Feb 07 17:41:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JN9ne-00074M-0s
-	for gcvg-git-2@gmane.org; Thu, 07 Feb 2008 17:40:34 +0100
+	id 1JN9oh-0007U1-6h
+	for gcvg-git-2@gmane.org; Thu, 07 Feb 2008 17:41:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753093AbYBGQjz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Feb 2008 11:39:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753197AbYBGQjz
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Feb 2008 11:39:55 -0500
-Received: from iabervon.org ([66.92.72.58]:39478 "EHLO iabervon.org"
+	id S1755594AbYBGQkI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Feb 2008 11:40:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755572AbYBGQkH
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Feb 2008 11:40:07 -0500
+Received: from iabervon.org ([66.92.72.58]:39484 "EHLO iabervon.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753042AbYBGQjy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Feb 2008 11:39:54 -0500
-Received: (qmail 29704 invoked by uid 1000); 7 Feb 2008 16:39:52 -0000
+	id S1754720AbYBGQkE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Feb 2008 11:40:04 -0500
+Received: (qmail 29767 invoked by uid 1000); 7 Feb 2008 16:40:02 -0000
 Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 7 Feb 2008 16:39:52 -0000
+  by localhost with SMTP; 7 Feb 2008 16:40:02 -0000
 User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72967>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72968>
 
-(This applies only to errors where a plausible operation is impossible due 
-to the particular data, not to errors resulting from misuse of the merge 
-functions.)
+This option allows the caller to reset everything that isn't unmerged,
+leaving the unmerged things to be resolved. If, after a merge of
+"working" and "HEAD", this is used with "HEAD" (reset, !update), the
+result will be that all of the changes from "local" are in the working
+tree but not added to the index (either with the index clean but
+unchanged, or with the index unmerged, depending on whether there are
+conflicts).
 
-This will allow builtin-checkout to suppress merge errors if it's
-going to try more merging methods.
-
-Additionally, if unpack_trees() returns with an error, but without
-printing anything, it will roll back any changes to the index (by
-rereading the index, currently). This obviously could be done by the
-caller, but chances are that the caller would forget and debugging
-this is difficult. Also, future implementations may give unpack_trees() a 
-more efficient way of undoing its changes than the caller could.
+This will be used in checkout -m.
 
 Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
 ---
- unpack-trees.c |   43 +++++++++++++++++++++++++++++--------------
+ unpack-trees.c |   20 +++++++++++++++++---
  unpack-trees.h |    1 +
- 2 files changed, 30 insertions(+), 14 deletions(-)
+ 2 files changed, 18 insertions(+), 3 deletions(-)
 
 diff --git a/unpack-trees.c b/unpack-trees.c
-index 9271bf3..416b14f 100644
+index 99aa45f..f9c4829 100644
 --- a/unpack-trees.c
 +++ b/unpack-trees.c
-@@ -356,12 +356,23 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
- 			posns[i] = create_tree_entry_list(t+i);
+@@ -85,6 +85,7 @@ static int unpack_trees_rec(struct tree_entry_list **posns, int len,
+ 		int any_dirs = 0;
+ 		char *cache_name;
+ 		int ce_stage;
++		int skip_entry = 0;
  
- 		if (unpack_trees_rec(posns, len, o->prefix ? o->prefix : "",
--				     o, &df_conflict_list))
-+				     o, &df_conflict_list)) {
-+			if (o->gently) {
-+				discard_cache();
-+				read_cache();
-+			}
- 			return -1;
-+		}
- 	}
+ 		/* Find the first name in the input. */
  
--	if (o->trivial_merges_only && o->nontrivial_merge)
--		return error("Merge requires file-level merging");
-+	if (o->trivial_merges_only && o->nontrivial_merge) {
-+		if (o->gently) {
-+			discard_cache();
-+			read_cache();
-+		}
-+		return o->gently ? -1 :
-+			error("Merge requires file-level merging");
-+	}
- 
- 	check_updates(active_cache, active_nr, o);
- 	return 0;
-@@ -415,7 +426,8 @@ static int verify_uptodate(struct cache_entry *ce,
- 	}
- 	if (errno == ENOENT)
- 		return 0;
--	return error("Entry '%s' not uptodate. Cannot merge.", ce->name);
-+	return o->gently ? -1 :
-+		error("Entry '%s' not uptodate. Cannot merge.", ce->name);
- }
- 
- static void invalidate_ce_path(struct cache_entry *ce)
-@@ -501,8 +513,9 @@ static int verify_clean_subdirectory(struct cache_entry *ce, const char *action,
- 		d.exclude_per_dir = o->dir->exclude_per_dir;
- 	i = read_directory(&d, ce->name, pathbuf, namelen+1, NULL);
- 	if (i)
--		return error("Updating '%s' would lose untracked files in it",
--			     ce->name);
-+		return o->gently ? -1 :
-+			error("Updating '%s' would lose untracked files in it",
-+			      ce->name);
- 	free(pathbuf);
- 	return cnt;
- }
-@@ -575,8 +588,9 @@ static int verify_absent(struct cache_entry *ce, const char *action,
- 				return 0;
+@@ -153,6 +154,8 @@ static int unpack_trees_rec(struct tree_entry_list **posns, int len,
+ 			any_files = 1;
+ 			src[0] = active_cache[o->pos];
+ 			remove = o->pos;
++			if (o->skip_unmerged && ce_stage(src[0]))
++				skip_entry = 1;
  		}
  
--		return error("Untracked working tree file '%s' "
--			     "would be %s by merge.", ce->name, action);
-+		return o->gently ? -1 :
-+			error("Untracked working tree file '%s' "
-+			      "would be %s by merge.", ce->name, action);
- 	}
- 	return 0;
- }
-@@ -708,7 +722,7 @@ int threeway_merge(struct cache_entry **stages,
- 	/* #14, #14ALT, #2ALT */
- 	if (remote && !df_conflict_head && head_match && !remote_match) {
- 		if (index && !same(index, remote) && !same(index, head))
--			return reject_merge(index);
-+			return o->gently ? -1 : reject_merge(index);
- 		return merged_entry(remote, index, o);
- 	}
- 	/*
-@@ -716,7 +730,7 @@ int threeway_merge(struct cache_entry **stages,
+ 		for (i = 0; i < len; i++) {
+@@ -181,6 +184,12 @@ static int unpack_trees_rec(struct tree_entry_list **posns, int len,
+ 				continue;
+ 			}
+ 
++			if (skip_entry) {
++				subposns[i] = df_conflict_list;
++				posns[i] = posns[i]->next;
++				continue;
++			}
++
+ 			if (!o->merge)
+ 				ce_stage = 0;
+ 			else if (i + 1 < o->head_idx)
+@@ -205,7 +214,13 @@ static int unpack_trees_rec(struct tree_entry_list **posns, int len,
+ 			posns[i] = posns[i]->next;
+ 		}
+ 		if (any_files) {
+-			if (o->merge) {
++			if (skip_entry) {
++				o->pos++;
++				while (o->pos < active_nr &&
++				       !strcmp(active_cache[o->pos]->name,
++					       src[0]->name))
++					o->pos++;
++			} else if (o->merge) {
+ 				int ret;
+ 
+ #if DBRT_DEBUG > 1
+@@ -731,9 +746,8 @@ int threeway_merge(struct cache_entry **stages,
+ 	 * If we have an entry in the index cache, then we want to
  	 * make sure that it matches head.
  	 */
- 	if (index && !same(index, head)) {
--		return reject_merge(index);
-+		return o->gently ? -1 : reject_merge(index);
- 	}
+-	if (index && !same(index, head)) {
++	if (index && !same(index, head))
+ 		return o->gently ? -1 : reject_merge(index);
+-	}
  
  	if (head) {
-@@ -867,11 +881,11 @@ int twoway_merge(struct cache_entry **src,
- 			/* all other failures */
- 			remove_entry(remove);
- 			if (oldtree)
--				return reject_merge(oldtree);
-+				return o->gently ? -1 : reject_merge(oldtree);
- 			if (current)
--				return reject_merge(current);
-+				return o->gently ? -1 : reject_merge(current);
- 			if (newtree)
--				return reject_merge(newtree);
-+				return o->gently ? -1 : reject_merge(newtree);
- 			return -1;
- 		}
- 	}
-@@ -898,7 +912,8 @@ int bind_merge(struct cache_entry **src,
- 		return error("Cannot do a bind merge of %d trees\n",
- 			     o->merge_size);
- 	if (a && old)
--		return error("Entry '%s' overlaps.  Cannot bind.", a->name);
-+		return o->gently ? -1 :
-+			error("Entry '%s' overlaps.  Cannot bind.", a->name);
- 	if (!a)
- 		return keep_entry(old, o);
- 	else
+ 		/* #5ALT, #15 */
 diff --git a/unpack-trees.h b/unpack-trees.h
-index 197a004..83d1229 100644
+index 83d1229..a2df544 100644
 --- a/unpack-trees.h
 +++ b/unpack-trees.h
 @@ -16,6 +16,7 @@ struct unpack_trees_options {
  	int trivial_merges_only;
  	int verbose_update;
  	int aggressive;
-+	int gently;
++	int skip_unmerged;
+ 	int gently;
  	const char *prefix;
  	int pos;
- 	struct dir_struct *dir;
 -- 
 1.5.4
