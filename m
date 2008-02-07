@@ -1,99 +1,93 @@
-From: Luciano Rocha <luciano@eurotux.com>
-Subject: Re: [msysGit] Re: [ANNOUNCE] GIT 1.5.4
-Date: Thu, 7 Feb 2008 15:59:46 +0000
-Message-ID: <20080207155946.GA20459@bit.office.eurotux.com>
-References: <7vmyqk563z.fsf@gitster.siamese.dyndns.org> <CFB8A272-863C-4758-91F7-E9669D70A200@zib.de> <20080207123108.GA12009@bit.office.eurotux.com> <alpine.LSU.1.00.0802071255110.8543@racer.site> <20080207130715.GA14000@bit.office.eurotux.com> <alpine.LFD.1.00.0802070949460.2732@xanadu.home>
+From: Michael Poole <mdpoole-IZmAEv5cUt1AfugRpC6u6w@public.gmane.org>
+Subject: Re: [ANNOUNCE] GIT 1.5.4
+Date: Thu, 07 Feb 2008 11:02:44 -0500
+Message-ID: <87sl0469gb.fsf@graviton.dyn.troilus.org>
+References: <7vmyqk563z.fsf@gitster.siamese.dyndns.org> <CFB8A272-863C-4758-91F7-E9669D70A200@zib.de> <20080207123108.GA12009@bit.office.eurotux.com> <alpine.LSU.1.00.0802071255110.8543@racer.site> <86k5lguce2.fsf@lola.quinscape.zz> <8763x07thd.fsf@graviton.dyn.troilus.org> <86tzkksuua.fsf@lola.quinscape.zz>
+Reply-To: mdpoole-IZmAEv5cUt1AfugRpC6u6w@public.gmane.org
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="MGYHOYXEY6WxJCY8"
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Steffen Prohaska <prohaska@zib.de>,
-	Git Mailing List <git@vger.kernel.org>,
-	msysGit <msysgit@googlegroups.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Thu Feb 07 17:00:35 2008
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Type: text/plain; charset=us-ascii
+Cc: git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org,  msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+To: David Kastrup <dak-mXXj517/zsQ@public.gmane.org>
+X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Thu Feb 07 17:03:28 2008
+Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from wa-out-0708.google.com ([209.85.146.247])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JN9Aq-0007ec-FD
-	for gcvg-git-2@gmane.org; Thu, 07 Feb 2008 17:00:28 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753860AbYBGP7z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Feb 2008 10:59:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759140AbYBGP7y
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Feb 2008 10:59:54 -0500
-Received: from os.eurotux.com ([216.75.63.6]:35195 "EHLO os.eurotux.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759474AbYBGP7x (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Feb 2008 10:59:53 -0500
-Received: (qmail 16295 invoked from network); 7 Feb 2008 15:59:51 -0000
-Received: from nc.eurotux.com (HELO bit.office.eurotux.com) (luciano@81.84.255.161)
-  by os.eurotux.com with AES256-SHA encrypted SMTP; 7 Feb 2008 15:59:51 -0000
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.1.00.0802070949460.2732@xanadu.home>
-User-Agent: Mutt/1.5.14 (2007-03-31)
-Sender: git-owner@vger.kernel.org
+	id 1JN9Dc-0000Hg-1l
+	for gcvm-msysgit@m.gmane.org; Thu, 07 Feb 2008 17:03:20 +0100
+Received: by wa-out-0708.google.com with SMTP id n36so6476141wag.21
+        for <gcvm-msysgit@m.gmane.org>; Thu, 07 Feb 2008 08:02:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:received:x-sender:x-apparently-to:received:received:received-spf:authentication-results:received:to:cc:subject:references:from:date:in-reply-to:message-id:user-agent:mime-version:content-type:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
+        bh=JqiMy/c9kwmdKiwPeowlfepq7BEyqLW5qrLc1Jz7XGc=;
+        b=ZZQCxlxrhWDzUmkdpxtQg0PmNcgKdjp6eBF6esxwx3TmZ7h82miXueGPkibNxUu4a1sUXVpIkn+dCdIcDaVFh/XF9eQfiZQjusO8yHduloH4GqKzAcGi135sFyxbsI898An9HupZS7sNuaEf36U80CbgTziptT6ZEWBTHhdXMYs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlegroups.com; s=beta;
+        h=x-sender:x-apparently-to:received-spf:authentication-results:to:cc:subject:references:from:date:in-reply-to:message-id:user-agent:mime-version:content-type:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
+        b=IGtYSFKFcgTp1y9bQQf8XctHcyeo8YIKI46LD8tejRK0R+hH3bEJfs/8896lYqWmF1x2spk+P8ehw1RGbMUnpnV6qZTFXgCd0Gn3AvcMWW/5974H3wFgGBZFj8b069Ce971j+IifAneU2HDEtF/fByQjoDo5BogSqCPnIzr7jfo=
+Received: by 10.114.156.1 with SMTP id d1mr811070wae.27.1202400167560;
+        Thu, 07 Feb 2008 08:02:47 -0800 (PST)
+Received: by 10.106.159.22 with SMTP id h22gr1646pre;
+	Thu, 07 Feb 2008 08:02:47 -0800 (PST)
+X-Sender: mdpoole-IZmAEv5cUt1AfugRpC6u6w@public.gmane.org
+X-Apparently-To: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+Received: by 10.35.14.4 with SMTP id r4mr25280205pyi.2.1202400167278; Thu, 07 Feb 2008 08:02:47 -0800 (PST)
+Received: from sanosuke.troilus.org ([75.145.205.121]) by mx.google.com with ESMTP id a28si6811898pye.0.2008.02.07.08.02.44; Thu, 07 Feb 2008 08:02:47 -0800 (PST)
+Received-SPF: neutral (google.com: 75.145.205.121 is neither permitted nor denied by best guess record for domain of mdpoole-IZmAEv5cUt1AfugRpC6u6w@public.gmane.org) client-ip=75.145.205.121;
+Authentication-Results: mx.google.com; spf=neutral (google.com: 75.145.205.121 is neither permitted nor denied by best guess record for domain of mdpoole-IZmAEv5cUt1AfugRpC6u6w@public.gmane.org) smtp.mail=mdpoole-IZmAEv5cUt1AfugRpC6u6w@public.gmane.org
+Received: by sanosuke.troilus.org (Postfix, from userid 1000) id 8697089C0F1; Thu,  7 Feb 2008 11:02:44 -0500 (EST)
+In-Reply-To: <86tzkksuua.fsf-Gv3ZRPJT63HkqtzbHXq1RqVXKuFTiq87@public.gmane.org> (David Kastrup's message of "Thu\, 07 Feb 2008 15\:29\:49 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+Sender: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72957>
+X-Google-Loop: groups
+Mailing-List: list msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org;
+	contact msysgit-owner-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+List-Id: <msysgit.googlegroups.com>
+List-Post: <mailto:msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Help: <mailto:msysgit-help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
+	<mailto:msysgit-unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72958>
 
 
---MGYHOYXEY6WxJCY8
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+David Kastrup writes:
 
-On Thu, Feb 07, 2008 at 09:53:05AM -0500, Nicolas Pitre wrote:
-> On Thu, 7 Feb 2008, Luciano Rocha wrote:
->=20
-> > On Thu, Feb 07, 2008 at 12:55:58PM +0000, Johannes Schindelin wrote:
-> > > Hi,
-> > >=20
-> > > On Thu, 7 Feb 2008, Luciano Rocha wrote:
-> > >=20
-> > > > Why do I have to accept the GPL to install msysgit?
-> > >=20
-> > > Because that's the only license you have to use git.
-> >=20
-> > Again, GPL governs distribution, not use.
-> >=20
-> > > Get over it, or use another SCM,
-> >=20
-> > I like and use GPL, but I won't force my users to accept the GPL in
-> > order to use programs released under it.
->=20
-> What are they forced into if they indeed only want to _use_ Git?
+> I think that most countries will grant some right to the purchaser of a
+> physical copy of copyrighted material.  For example, I doubt there are
+> countries where it is prohibited to read a book you have bought (via a
+> channel authorized by the copyright holder) when it contains no explicit
+> license granting you the right to read it.
 
-The msys git installer forces me to accept the GNU GPL in order to
-proceed.
+I see two serious dis-analogies here:
 
-Of course, I can use another installer, or compile my own set of
-binaries. I just wanted to bring that case to attention, nothing else.
+How many users of msysgit purchase a physical copy of it?  (I suspect
+this is a relevant difference in the US due to its commerce codes, and
+maybe in other common law countries; it probably is not so important
+in civil law countries, where exchange of consideration is not a
+requirement to form a contract.)
 
-> They nevertheless must be made aware of the rules they have to follow in=
-=20
-> case the idea of redistributing it crosses their mind.
+Reading a literary work is typically not a reserved right, either;
+while it seems good to treat executing a computer program in the same
+way as reading a book, all copyright regimes that I know of give
+consideration to the copy that is made to RAM for most computers.  (I
+will ignore the implications for devices that have execute-in-place
+non-volatile memory -- I am not a lawyer, and those devices are
+probably too new to be addressed by courts yet.)
 
-I don't dispute that, only that I can't continue with the install unless
-I click on "I Accept" to the GNU GPL.
+Michael Poole
 
---=20
-Luciano Rocha <luciano@eurotux.com>
-Eurotux Inform=E1tica, S.A. <http://www.eurotux.com/>
+[Also- The git list did not receive my previous mail and probably will
+not receive this one either.  vger.kernel.org issues a bogus bounce,
+shown in part below.  I apologize for hijacking the thread this way,
+but mail to postmaster-at-vger bounces for the same reason.
 
---MGYHOYXEY6WxJCY8
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+Error in "rcvdfrom" envelope address:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (GNU/Linux)
+	75.145.205-121-BusName-sterling.va.richmond.hfc.comcastbusiness.net!^Q
+	^								    ^-illegal control character
+	 \-Extraneous program text
 
-iD8DBQFHqyryinSul6a7oB8RApSgAJ4npQcks8hi+L33FnT0wqyX84/+mgCeNOUb
-n+3pR31E5r35ejEfJdlV1Ek=
-=m1nc
------END PGP SIGNATURE-----
-
---MGYHOYXEY6WxJCY8--
+.. where my mail host does not use that name for any reason; vger
+seems to be doing a DNS PTR lookup, then mangling the response.]
