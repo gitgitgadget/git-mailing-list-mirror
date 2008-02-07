@@ -1,93 +1,76 @@
-From: Michael Poole <mdpoole-IZmAEv5cUt1AfugRpC6u6w@public.gmane.org>
-Subject: Re: [ANNOUNCE] GIT 1.5.4
-Date: Thu, 07 Feb 2008 11:02:44 -0500
-Message-ID: <87sl0469gb.fsf@graviton.dyn.troilus.org>
-References: <7vmyqk563z.fsf@gitster.siamese.dyndns.org> <CFB8A272-863C-4758-91F7-E9669D70A200@zib.de> <20080207123108.GA12009@bit.office.eurotux.com> <alpine.LSU.1.00.0802071255110.8543@racer.site> <86k5lguce2.fsf@lola.quinscape.zz> <8763x07thd.fsf@graviton.dyn.troilus.org> <86tzkksuua.fsf@lola.quinscape.zz>
-Reply-To: mdpoole-IZmAEv5cUt1AfugRpC6u6w@public.gmane.org
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Applying patches from gmane can be dangerous.
+Date: Thu, 7 Feb 2008 16:10:01 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0802071605540.8543@racer.site>
+References: <20080205211044.GP26392@lavos.net> <7vodatqu6w.fsf@gitster.siamese.dyndns.org> <20080207133208.GT26392@lavos.net> <20080207145036.GM26016@yugib.highrise.ca>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org,  msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-To: David Kastrup <dak-mXXj517/zsQ@public.gmane.org>
-X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Thu Feb 07 17:03:28 2008
-Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from wa-out-0708.google.com ([209.85.146.247])
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Brian Downing <bdowning@lavos.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Lars Magne Ingebrigtsen <larsi+gmane@gnus.org>
+To: Aidan Van Dyk <aidan@highrise.ca>
+X-From: git-owner@vger.kernel.org Thu Feb 07 17:12:03 2008
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JN9Dc-0000Hg-1l
-	for gcvm-msysgit@m.gmane.org; Thu, 07 Feb 2008 17:03:20 +0100
-Received: by wa-out-0708.google.com with SMTP id n36so6476141wag.21
-        for <gcvm-msysgit@m.gmane.org>; Thu, 07 Feb 2008 08:02:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:received:x-sender:x-apparently-to:received:received:received-spf:authentication-results:received:to:cc:subject:references:from:date:in-reply-to:message-id:user-agent:mime-version:content-type:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
-        bh=JqiMy/c9kwmdKiwPeowlfepq7BEyqLW5qrLc1Jz7XGc=;
-        b=ZZQCxlxrhWDzUmkdpxtQg0PmNcgKdjp6eBF6esxwx3TmZ7h82miXueGPkibNxUu4a1sUXVpIkn+dCdIcDaVFh/XF9eQfiZQjusO8yHduloH4GqKzAcGi135sFyxbsI898An9HupZS7sNuaEf36U80CbgTziptT6ZEWBTHhdXMYs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-sender:x-apparently-to:received-spf:authentication-results:to:cc:subject:references:from:date:in-reply-to:message-id:user-agent:mime-version:content-type:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
-        b=IGtYSFKFcgTp1y9bQQf8XctHcyeo8YIKI46LD8tejRK0R+hH3bEJfs/8896lYqWmF1x2spk+P8ehw1RGbMUnpnV6qZTFXgCd0Gn3AvcMWW/5974H3wFgGBZFj8b069Ce971j+IifAneU2HDEtF/fByQjoDo5BogSqCPnIzr7jfo=
-Received: by 10.114.156.1 with SMTP id d1mr811070wae.27.1202400167560;
-        Thu, 07 Feb 2008 08:02:47 -0800 (PST)
-Received: by 10.106.159.22 with SMTP id h22gr1646pre;
-	Thu, 07 Feb 2008 08:02:47 -0800 (PST)
-X-Sender: mdpoole-IZmAEv5cUt1AfugRpC6u6w@public.gmane.org
-X-Apparently-To: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-Received: by 10.35.14.4 with SMTP id r4mr25280205pyi.2.1202400167278; Thu, 07 Feb 2008 08:02:47 -0800 (PST)
-Received: from sanosuke.troilus.org ([75.145.205.121]) by mx.google.com with ESMTP id a28si6811898pye.0.2008.02.07.08.02.44; Thu, 07 Feb 2008 08:02:47 -0800 (PST)
-Received-SPF: neutral (google.com: 75.145.205.121 is neither permitted nor denied by best guess record for domain of mdpoole-IZmAEv5cUt1AfugRpC6u6w@public.gmane.org) client-ip=75.145.205.121;
-Authentication-Results: mx.google.com; spf=neutral (google.com: 75.145.205.121 is neither permitted nor denied by best guess record for domain of mdpoole-IZmAEv5cUt1AfugRpC6u6w@public.gmane.org) smtp.mail=mdpoole-IZmAEv5cUt1AfugRpC6u6w@public.gmane.org
-Received: by sanosuke.troilus.org (Postfix, from userid 1000) id 8697089C0F1; Thu,  7 Feb 2008 11:02:44 -0500 (EST)
-In-Reply-To: <86tzkksuua.fsf-Gv3ZRPJT63HkqtzbHXq1RqVXKuFTiq87@public.gmane.org> (David Kastrup's message of "Thu\, 07 Feb 2008 15\:29\:49 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-Sender: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+	id 1JN9Lv-0003ZJ-BU
+	for gcvg-git-2@gmane.org; Thu, 07 Feb 2008 17:11:55 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1757511AbYBGQKv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Feb 2008 11:10:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754792AbYBGQKv
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Feb 2008 11:10:51 -0500
+Received: from mail.gmx.net ([213.165.64.20]:47720 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1757288AbYBGQKu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Feb 2008 11:10:50 -0500
+Received: (qmail invoked by alias); 07 Feb 2008 16:10:48 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp038) with SMTP; 07 Feb 2008 17:10:48 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/jFyovBznjQ6w6Mz7o56gAruLvUo+czr1WRjoh/w
+	P41TGyk6MFMAkm
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20080207145036.GM26016@yugib.highrise.ca>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Google-Loop: groups
-Mailing-List: list msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org;
-	contact msysgit-owner-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-List-Id: <msysgit.googlegroups.com>
-List-Post: <mailto:msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Help: <mailto:msysgit-help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
-	<mailto:msysgit-unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72958>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72959>
 
+Hi,
 
-David Kastrup writes:
+On Thu, 7 Feb 2008, Aidan Van Dyk wrote:
 
-> I think that most countries will grant some right to the purchaser of a
-> physical copy of copyrighted material.  For example, I doubt there are
-> countries where it is prohibited to read a book you have bought (via a
-> channel authorized by the copyright holder) when it contains no explicit
-> license granting you the right to read it.
+> * Brian Downing <bdowning@lavos.net> [080207 07:32]:
+> > On Wed, Feb 06, 2008 at 08:14:31PM -0800, Junio C Hamano wrote:
+> > > This is really sad.  gmane gives us a clean threaded interface
+> > > (both in web and newsreader), and it never forgets. Whenever I
+> > > need to refer somebody to an old discussion, I can give an URL
+> > > to it and allmost all the discussion messages are there with a
+> > > single paste and clicking around.  It has been an indispensable
+> > > service to me ever since I started reading the git list with it.
+> > > It is really a shame that I have to prevent picking up patch
+> > > messages from it with the above hook.
+> > > 
+> > > I am wondering if other development communities had a similar
+> > > issue already, and if so how they are dealing with it.
+> > 
+> > Gmane didn't start doing this until recently.  Maybe they can stop it on
+> > a group-by-group basis?  Every post to git@vger is archived elsewhere
+> > with unmangled email addresses anyway...
+> > 
+> > "We understand why you're doing this, but it hurts us greatly.  Please
+> > stop."
+> 
+> Gmane has always done the "hide the real email" address on groups that
+> request it.  The git group does *not* request it, but the msysgit group
+> *has* requested it.
 
-I see two serious dis-analogies here:
+I just requested this setting to be changed.  Will keep you posted.
 
-How many users of msysgit purchase a physical copy of it?  (I suspect
-this is a relevant difference in the US due to its commerce codes, and
-maybe in other common law countries; it probably is not so important
-in civil law countries, where exchange of consideration is not a
-requirement to form a contract.)
-
-Reading a literary work is typically not a reserved right, either;
-while it seems good to treat executing a computer program in the same
-way as reading a book, all copyright regimes that I know of give
-consideration to the copy that is made to RAM for most computers.  (I
-will ignore the implications for devices that have execute-in-place
-non-volatile memory -- I am not a lawyer, and those devices are
-probably too new to be addressed by courts yet.)
-
-Michael Poole
-
-[Also- The git list did not receive my previous mail and probably will
-not receive this one either.  vger.kernel.org issues a bogus bounce,
-shown in part below.  I apologize for hijacking the thread this way,
-but mail to postmaster-at-vger bounces for the same reason.
-
-Error in "rcvdfrom" envelope address:
-
-	75.145.205-121-BusName-sterling.va.richmond.hfc.comcastbusiness.net!^Q
-	^								    ^-illegal control character
-	 \-Extraneous program text
-
-.. where my mail host does not use that name for any reason; vger
-seems to be doing a DNS PTR lookup, then mangling the response.]
+Thanks,
+Dscho
