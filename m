@@ -1,77 +1,88 @@
-From: Eyvind Bernhardsen <eyvind-git-A1zFcjaSW2ZTqyR7fV3oUw@public.gmane.org>
-Subject: Re: [ANNOUNCE] GIT 1.5.4
-Date: Thu, 7 Feb 2008 14:23:52 +0100
-Message-ID: <5157060E-A310-456B-96DE-7F9DF7CE7D05@orakel.ntnu.no>
-References: <7vmyqk563z.fsf@gitster.siamese.dyndns.org> <CFB8A272-863C-4758-91F7-E9669D70A200@zib.de> <20080207123108.GA12009@bit.office.eurotux.com> <alpine.LSU.1.00.0802071255110.8543@racer.site>
-Mime-Version: 1.0 (Apple Message framework v915)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: Luciano Rocha <luciano-YWehAnL2kLNBDgjK7y7TUQ@public.gmane.org>, Steffen Prohaska <prohaska-wjoc1KHpMeg@public.gmane.org>, Git Mailing List <git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>, msysGit <msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>, Junio C Hamano <gitster-e+AXbWqSrlAAvxtiuMwx3w@public.gmane.org>
-To: Johannes Schindelin <Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org>
-X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Thu Feb 07 14:24:41 2008
-Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from py-out-1314.google.com ([64.233.166.169])
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [msysGit] Re: [ANNOUNCE] GIT 1.5.4
+Date: Thu, 07 Feb 2008 14:25:25 +0100
+Message-ID: <86k5lguce2.fsf@lola.quinscape.zz>
+References: <7vmyqk563z.fsf@gitster.siamese.dyndns.org>
+	<CFB8A272-863C-4758-91F7-E9669D70A200@zib.de>
+	<20080207123108.GA12009@bit.office.eurotux.com>
+	<alpine.LSU.1.00.0802071255110.8543@racer.site>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: msysgit@googlegroups.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 07 14:26:16 2008
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JN6k2-0000iM-JL
-	for gcvm-msysgit@m.gmane.org; Thu, 07 Feb 2008 14:24:40 +0100
-Received: by py-out-1314.google.com with SMTP id p69so1690781pyb.2
-        for <gcvm-msysgit@m.gmane.org>; Thu, 07 Feb 2008 05:24:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:received:x-sender:x-apparently-to:received:received:received-spf:authentication-results:received:cc:message-id:from:to:in-reply-to:content-type:content-transfer-encoding:mime-version:subject:date:references:x-mailer:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
-        bh=j7M8IBVGYIgJcDTTPEQuwxwYGaElNa51Vrfx4X+7xtQ=;
-        b=G/RwQITypPsa3vRUnd3gkdqJ3qWFbSmlioHPH4XYh3B6utr74U9CwKhsm/EJl6/TCirucoF1S+Xsc2CpERH4wT8fDkgxRxk2Bklb44HUEIbci2wY6mjU1H0D+Fzq8FjNPxJIgejKjOLpTFA1INXGQW1LD8WHyF5YMUWhd4cPRN4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-sender:x-apparently-to:received-spf:authentication-results:cc:message-id:from:to:in-reply-to:content-type:content-transfer-encoding:mime-version:subject:date:references:x-mailer:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
-        b=gs1SGs/cfUJt2sb+3bSm11tYqbVbPoGOWS0eI/oPtGWeF2hBTBi5y+e5oCErxBaPcuWtdSHKeLwmD/tX9qXFHHfRlt6CRIYe6XRngVk0avRIXUhzlArim/4L7ivS82648ga05COCK9JxKBcKSCWs75rOQXCjtF1ZLYdYH2uYaXQ=
-Received: by 10.141.176.6 with SMTP id d6mr388464rvp.15.1202390634681;
-        Thu, 07 Feb 2008 05:23:54 -0800 (PST)
-Received: by 10.106.243.37 with SMTP id q37gr1638prh;
-	Thu, 07 Feb 2008 05:23:54 -0800 (PST)
-X-Sender: eyvind-git-A1zFcjaSW2ZTqyR7fV3oUw@public.gmane.org
-X-Apparently-To: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-Received: by 10.35.99.14 with SMTP id b14mr24983520pym.4.1202390634426; Thu, 07 Feb 2008 05:23:54 -0800 (PST)
-Received: from eyvind.bernhardsens.net (97.84-49-228.nextgentel.com [84.49.228.97]) by mx.google.com with ESMTP id x46si6507566pyg.3.2008.02.07.05.23.53; Thu, 07 Feb 2008 05:23:54 -0800 (PST)
-Received-SPF: neutral (google.com: 84.49.228.97 is neither permitted nor denied by best guess record for domain of eyvind-git-A1zFcjaSW2ZTqyR7fV3oUw@public.gmane.org) client-ip=84.49.228.97;
-Authentication-Results: mx.google.com; spf=neutral (google.com: 84.49.228.97 is neither permitted nor denied by best guess record for domain of eyvind-git-A1zFcjaSW2ZTqyR7fV3oUw@public.gmane.org) smtp.mail=eyvind-git-A1zFcjaSW2ZTqyR7fV3oUw@public.gmane.org
-Received: from vredefort.d.eyvind.bernhardsens.net (vredefort.d.eyvind.bernhardsens.net [172.16.3.223]) (using TLSv1 with cipher AES128-SHA (128/128 bits)) (No client certificate requested) by eyvind.bernhardsens.net (Postfix) with ESMTP id 926F064EE29; Thu,  7 Feb 2008 14:23:52 +0100 (CET)
-In-Reply-To: <alpine.LSU.1.00.0802071255110.8543-OGWIkrnhIhzN0uC3ymp8PA@public.gmane.org>
-X-Mailer: Apple Mail (2.915)
-Sender: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+	id 1JN6lb-0001DY-8v
+	for gcvg-git-2@gmane.org; Thu, 07 Feb 2008 14:26:15 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1753539AbYBGNZl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Feb 2008 08:25:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753477AbYBGNZl
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Feb 2008 08:25:41 -0500
+Received: from main.gmane.org ([80.91.229.2]:60371 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753224AbYBGNZk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Feb 2008 08:25:40 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1JN6kw-0002Oo-01
+	for git@vger.kernel.org; Thu, 07 Feb 2008 13:25:34 +0000
+Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 07 Feb 2008 13:25:33 +0000
+Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 07 Feb 2008 13:25:33 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.50 (gnu/linux)
+Cancel-Lock: sha1:fdSu/odS/otuWLW+4JdNYtIN1M8=
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Google-Loop: groups
-Mailing-List: list msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org;
-	contact msysgit-owner-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-List-Id: <msysgit.googlegroups.com>
-List-Post: <mailto:msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Help: <mailto:msysgit-help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
-	<mailto:msysgit-unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72939>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72940>
 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On 7. feb.. 2008, at 13.55, Johannes Schindelin wrote:
-
-> Hi,
->
 > On Thu, 7 Feb 2008, Luciano Rocha wrote:
 >
+>> On Sat, Feb 02, 2008 at 11:42:11PM +0100, Steffen Prohaska wrote:
+>> > 
+>> >  On Feb 2, 2008, at 5:34 AM, Junio C Hamano wrote:
+>> > 
+>> > > The latest feature release GIT 1.5.4 is available at the usual
+>> > > places:
+>> > 
+>> >  The msysgit setup is available at:
+>> > 
+>> >    http://code.google.com/p/msysgit/downloads/
+>> > 
+>> 
 >> Why do I have to accept the GPL to install msysgit?
 >
 > Because that's the only license you have to use git.
 
-I think his point is that you don't need to "accept" anything to be  
-allowed to use GPLed software. Presenting the GPL as a click-through  
-licence on installation implies that you should read it carefully to  
-see what limits are imposed on you, when in fact the GPL explicitly  
-allows you to "run the program, for any purpose" (http://www.gnu.org/philosophy/free-sw.html 
-).
+Uh no.  The right to use git is "fair use": if you have acquired a copy
+of a copyrighted work through a legal channel, you have prima facie a
+certain set of rights.  Conventional software "licenses" try to make you
+give up many of these rights which is why the recipient needs to agree
+to those licenses (which are actually contracts rather than licenses).
 
-> Get over it, or use another SCM,
-> Dscho "who hates license wars"
+But the GPL just grants additional rights, so no agreement is necessary
+for fair use.  From the GPL 2.1 (please read the first sentence in
+particular):
 
-No war for you!
+    Activities other than copying, distribution and modification are not
+    covered by this License; they are outside its scope.  The act of
+    running the Program is not restricted, and the output from the Program
+    is covered only if its contents constitute a work based on the
+    Program (independent of having been made by running the Program).
+    Whether that is true depends on what the Program does.
 
-Eyvind Bernhardsen
+-- 
+David Kastrup
