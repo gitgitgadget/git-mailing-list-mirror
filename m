@@ -1,78 +1,66 @@
-From: Alexandre Julliard <julliard@winehq.org>
-Subject: [PATCH 3/4] git.el: Check for existing buffers on revert.
-Date: Thu, 07 Feb 2008 13:51:20 +0100
-Message-ID: <87r6fporp3.fsf@wine.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [msysGit] Re: [ANNOUNCE] GIT 1.5.4
+Date: Thu, 7 Feb 2008 12:55:58 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0802071255110.8543@racer.site>
+References: <7vmyqk563z.fsf@gitster.siamese.dyndns.org> <CFB8A272-863C-4758-91F7-E9669D70A200@zib.de> <20080207123108.GA12009@bit.office.eurotux.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 07 13:52:55 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Steffen Prohaska <prohaska@zib.de>,
+	Git Mailing List <git@vger.kernel.org>,
+	msysGit <msysgit@googlegroups.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Luciano Rocha <luciano@eurotux.com>
+X-From: git-owner@vger.kernel.org Thu Feb 07 13:57:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JN6FD-00073P-0e
-	for gcvg-git-2@gmane.org; Thu, 07 Feb 2008 13:52:47 +0100
+	id 1JN6JZ-0000Bi-OR
+	for gcvg-git-2@gmane.org; Thu, 07 Feb 2008 13:57:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761369AbYBGMve (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Feb 2008 07:51:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760534AbYBGMvd
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Feb 2008 07:51:33 -0500
-Received: from mail.codeweavers.com ([216.251.189.131]:60856 "EHLO
-	mail.codeweavers.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761369AbYBGMvc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Feb 2008 07:51:32 -0500
-Received: from adsl-84-227-175-174.adslplus.ch ([84.227.175.174] helo=wine.dyndns.org)
-	by mail.codeweavers.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <julliard@winehq.org>)
-	id 1JN6Dr-0006sv-HG
-	for git@vger.kernel.org; Thu, 07 Feb 2008 06:51:31 -0600
-Received: by wine.dyndns.org (Postfix, from userid 1000)
-	id 9C41A1E7141; Thu,  7 Feb 2008 13:51:20 +0100 (CET)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.50 (gnu/linux)
-X-Spam-Score: -2.9
+	id S1760453AbYBGM4r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Feb 2008 07:56:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760434AbYBGM4r
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Feb 2008 07:56:47 -0500
+Received: from mail.gmx.net ([213.165.64.20]:50614 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752173AbYBGM4q (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Feb 2008 07:56:46 -0500
+Received: (qmail invoked by alias); 07 Feb 2008 12:56:44 -0000
+Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
+  by mail.gmx.net (mp045) with SMTP; 07 Feb 2008 13:56:44 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/QeKoxWwDQ7FSgimnNz4SDEaJsOr4rXQ36V2hZel
+	3kG/yIbIZBr77o
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20080207123108.GA12009@bit.office.eurotux.com>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72933>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72934>
 
-Refuse to revert a file if it is modified in an existing buffer but
-not saved. On success, revert the buffers that contains the files that
-have been reverted.
+Hi,
 
-Signed-off-by: Alexandre Julliard <julliard@winehq.org>
----
- contrib/emacs/git.el |    8 ++++++++
- 1 files changed, 8 insertions(+), 0 deletions(-)
+On Thu, 7 Feb 2008, Luciano Rocha wrote:
 
-diff --git a/contrib/emacs/git.el b/contrib/emacs/git.el
-index 5519ed1..e1058b9 100644
---- a/contrib/emacs/git.el
-+++ b/contrib/emacs/git.el
-@@ -1033,11 +1033,19 @@ Return the list of files that haven't been handled."
-           ('deleted (push (git-fileinfo->name info) modified))
-           ('unmerged (push (git-fileinfo->name info) modified))
-           ('modified (push (git-fileinfo->name info) modified))))
-+      ;; check if a buffer contains one of the files and isn't saved
-+      (dolist (file (append added modified))
-+        (let ((buffer (get-file-buffer file)))
-+          (when (and buffer (buffer-modified-p buffer))
-+            (error "Buffer %s is modified. Please kill or save modified buffers before reverting." (buffer-name buffer)))))
-       (when added
-         (apply #'git-call-process-env nil nil "update-index" "--force-remove" "--" added))
-       (when modified
-         (apply #'git-call-process-env nil nil "checkout" "HEAD" modified))
-       (git-update-status-files (append added modified) 'uptodate)
-+      (dolist (file (append added modified))
-+        (let ((buffer (get-file-buffer file)))
-+          (when buffer (with-current-buffer buffer (revert-buffer t t t)))))
-       (git-success-message "Reverted" (git-get-filenames files)))))
- 
- (defun git-resolve-file ()
--- 
-1.5.4.38.g0d380
+> On Sat, Feb 02, 2008 at 11:42:11PM +0100, Steffen Prohaska wrote:
+> > 
+> >  On Feb 2, 2008, at 5:34 AM, Junio C Hamano wrote:
+> > 
+> > > The latest feature release GIT 1.5.4 is available at the usual
+> > > places:
+> > 
+> >  The msysgit setup is available at:
+> > 
+> >    http://code.google.com/p/msysgit/downloads/
+> > 
+> 
+> Why do I have to accept the GPL to install msysgit?
 
--- 
-Alexandre Julliard
-julliard@winehq.org
+Because that's the only license you have to use git.
+
+Get over it, or use another SCM,
+Dscho "who hates license wars"
