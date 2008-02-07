@@ -1,180 +1,119 @@
-From: Luciano Rocha <luciano-YWehAnL2kLNBDgjK7y7TUQ@public.gmane.org>
-Subject: Re: [ANNOUNCE] GIT 1.5.4
-Date: Thu, 7 Feb 2008 18:59:23 +0000
-Message-ID: <20080207185923.GC28753@bit.office.eurotux.com>
-References: <7vmyqk563z.fsf@gitster.siamese.dyndns.org> <CFB8A272-863C-4758-91F7-E9669D70A200@zib.de> <20080207123108.GA12009@bit.office.eurotux.com> <alpine.LSU.1.00.0802071255110.8543@racer.site> <20080207130715.GA14000@bit.office.eurotux.com> <alpine.LSU.1.00.0802071324460.8543@racer.site> <7v1w7ooes3.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0802071831520.8543@racer.site>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] allow setting GIT_WORK_TREE to "no work tree"
+Date: Thu, 7 Feb 2008 19:02:47 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0802071855550.8543@racer.site>
+References: <20080206102608.GA1007@coredump.intra.peff.net> <47A98F07.4000402@viscovery.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="eHhjakXzOLJAF9wJ"
-Cc: Junio C Hamano <gitster-e+AXbWqSrlAAvxtiuMwx3w@public.gmane.org>, Steffen Prohaska <prohaska-wjoc1KHpMeg@public.gmane.org>, Git Mailing List <git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>, msysGit <msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-To: Johannes Schindelin <Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org>
-X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Thu Feb 07 20:00:11 2008
-Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from wa-out-0708.google.com ([209.85.146.248])
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Thu Feb 07 20:04:54 2008
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNByd-0004qI-8e
-	for gcvm-msysgit@m.gmane.org; Thu, 07 Feb 2008 20:00:03 +0100
-Received: by wa-out-0708.google.com with SMTP id n36so6619404wag.21
-        for <gcvm-msysgit@m.gmane.org>; Thu, 07 Feb 2008 10:59:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:received:x-sender:x-apparently-to:received:received:received-spf:authentication-results:received:received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
-        bh=mnA/YXp78pYG5OsQlyAGORByY98/ZPBBUGZJypykdAo=;
-        b=xMcAEcmyRRT/Ys2airykdxGBxnKBbgVjzDL3Mgwso0NOx3DBGS5Z7OlKmCtu3/QRJaQJHQ2d0j875QAxHYIlTT7j40iloZzDugZ+5sod98/kBB3jmr1x48BKguBFM4e2EeSF8tg1VYZbihzx7vN6o2bRget88BgX23J/txUVdpU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-sender:x-apparently-to:received-spf:authentication-results:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
-        b=ioKBWDIFNqZOSioMeelrSUQItfBP/BxxHHLkYnNPFWzzpVZblPxa1BU8wbaFWJ5dbka4TY7nt6pa/bFQ2uilVLrFqYDKlnBsftoOpDYx7BD8GbVP+a0H8E4cwm3TgnuVUHS0KpsbGp6R6kbZTkE4Box9XgwUhpWF2C0V5xfO0rY=
-Received: by 10.114.113.1 with SMTP id l1mr818051wac.23.1202410771092;
-        Thu, 07 Feb 2008 10:59:31 -0800 (PST)
-Received: by 10.107.168.22 with SMTP id v22gr1662pro;
-	Thu, 07 Feb 2008 10:59:31 -0800 (PST)
-X-Sender: luciano-YWehAnL2kLNBDgjK7y7TUQ@public.gmane.org
-X-Apparently-To: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-Received: by 10.35.108.12 with SMTP id k12mr25577366pym.3.1202410770887; Thu, 07 Feb 2008 10:59:30 -0800 (PST)
-Received: from os.eurotux.com (os.eurotux.com [216.75.63.6]) by mx.google.com with ESMTP id z53si7226537pyg.1.2008.02.07.10.59.30; Thu, 07 Feb 2008 10:59:30 -0800 (PST)
-Received-SPF: pass (google.com: domain of luciano-YWehAnL2kLNBDgjK7y7TUQ@public.gmane.org designates 216.75.63.6 as permitted sender) client-ip=216.75.63.6;
-Authentication-Results: mx.google.com; spf=pass (google.com: domain of luciano-YWehAnL2kLNBDgjK7y7TUQ@public.gmane.org designates 216.75.63.6 as permitted sender) smtp.mail=luciano-YWehAnL2kLNBDgjK7y7TUQ@public.gmane.org
-Received: (qmail 14619 invoked from network); 7 Feb 2008 18:59:28 -0000
-Received: from nc.eurotux.com (HELO bit.office.eurotux.com) (luciano-IvQC36bfUK4FrjaEzgZ1Mw@public.gmane.org) by os.eurotux.com with AES256-SHA encrypted SMTP; 7 Feb 2008 18:59:28 -0000
-Content-Disposition: inline
-In-Reply-To: <alpine.LSU.1.00.0802071831520.8543-OGWIkrnhIhzN0uC3ymp8PA@public.gmane.org>
-User-Agent: Mutt/1.5.14 (2007-03-31)
-Sender: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+	id 1JNC3I-0007NR-4f
+	for gcvg-git-2@gmane.org; Thu, 07 Feb 2008 20:04:52 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1760584AbYBGTDj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Feb 2008 14:03:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760446AbYBGTDi
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Feb 2008 14:03:38 -0500
+Received: from mail.gmx.net ([213.165.64.20]:38997 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1760594AbYBGTDf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Feb 2008 14:03:35 -0500
+Received: (qmail invoked by alias); 07 Feb 2008 19:03:33 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp008) with SMTP; 07 Feb 2008 20:03:33 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/ELnBQaKXEpgAf88SWUx2N+dUOj7iTLVWq9+6W4j
+	x3676l0dVaAHqW
+X-X-Sender: gene099@racer.site
+In-Reply-To: <47A98F07.4000402@viscovery.net>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Google-Loop: groups
-Mailing-List: list msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org;
-	contact msysgit-owner-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-List-Id: <msysgit.googlegroups.com>
-List-Post: <mailto:msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Help: <mailto:msysgit-help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
-	<mailto:msysgit-unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72988>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72989>
 
+Hi,
 
+On Wed, 6 Feb 2008, Johannes Sixt wrote:
 
---eHhjakXzOLJAF9wJ
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Jeff King schrieb:
+> > In setup_git_directory_gently, we have a special rule that says "if 
+> > GIT_DIR is set but GIT_WORK_TREE is not, then use the current working 
+> > directory as the work tree." This is the intended behavior for the 
+> > user perspective.
+> > 
+> > However, setup_git_directory_gently sets GIT_DIR itself, meaning that 
+> > further setups (either because we are executing a command via alias, 
+> > or in a subprocess) will see the non-existent GIT_WORK_TREE and assume 
+> > we fall into the "current working directory is the working tree" 
+> > codepath.
+> > 
+> > Instead, we now use a special value of GIT_WORK_TREE to indicate that 
+> > we have already checked for a worktree and that there isn't one, 
+> > setting it when we set GIT_DIR and checking for it in the special case 
+> > path.
+> > 
+> > The special value is a blank GIT_WORK_TREE; it could be any value, but 
+> > this should not conflict with any user values (and as a bonus, you can 
+> > now tell git "I don't have a work tree" with "GIT_WORK_TREE= git", 
+> > though I suspect the use case for that is limited).
+> 
+> Hrm. Unfortunately, on Windows there is no such thing as an empty 
+> environment string. setenv(x, "") *removes* the environment variable.
 
-On Thu, Feb 07, 2008 at 06:40:28PM +0000, Johannes Schindelin wrote:
-> Hi,
->=20
-> On Thu, 7 Feb 2008, Junio C Hamano wrote:
->=20
-> > Johannes Schindelin <Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org> writes:
-> >=20
-> > > Besides, if you do not like that our installer shows the GPL, just go=
- and=20
-> > > make your own (but be sure to shell out money to your lawyer of choic=
-e to=20
-> > > confirm that the GPL allows you to do that).
-> > >
-> > > The Git installer of msysGit will always show the GPL, and have the u=
-ser=20
-> > > accept it.
-> >=20
-> > I may be missing the details because I do not do Windows myself,
-> > but if you are discussing the "end user binary distribution"
-> > one, then I think:
-> >=20
-> >  * It is a mistake if you do not to show GPL, as you are
-> >    redistributing GPL code in a binary form and you need to tell
-> >    the end user his rights (e.g. he can request source for it,
-> >    the source is found at a well known location, etc.)
-> >=20
-> >  * The restriction on redistribution of modified program would
-> >    probably not apply (unless the receiver hacks binary) to most
-> >    casual users, so making the label say "I Accept" feels a bit
-> >    silly (but still is technically correct).  As Nico suggested,
-> >    "Continue" may be fine here, as long as the message already
-> >    says "this program is distributed under this license you are
-> >    looking at".
-> >=20
-> > I recall you had another installer that gives the full
-> > development environment for hack on "git" with a clone of the
-> > git repository.  I do not know if you still offer that
-> > installer, but "I Accept" would be very appropriate for that
-> > one.
->=20
-> Yes, the full installer does not (yet) ask for acceptance of the GPL,=20
-> basically because I am too lazy, and also because I expect developers to=
-=20
-> actually read the notices in the copyright section in the source code,=20
-> should they modify the source.
->=20
-> The reasoning for showing the GPL in the Git installer I cannot explain,=
-=20
-> because I was not part of it.  However, I am very much in favour, for two=
-=20
-> reasons:
->=20
-> - the end users should really know that the software is licensed in a=20
->   pretty free way.  Most of the users will have read about "the GPL", and=
-=20
->   know what it says without reading it.  Others may see it for the first=
-=20
->   time, and be astonished that such a license exists, and actually covers=
-=20
->   a useful program.
->=20
-> - _every_ serious Windows program comes with a click-through license.  We=
-=20
->   just don't want to be left behind.
->=20
-> - even if it would be not necessary to accept the license (which I am not=
-=20
->   at all sure about, but do not care enough to learn about it, either), I=
-=20
->   am not amused by somebody I do not know of, and who did not share=20
->   anything with me that I know of, asking me to remove that license=20
->   dialog.
+That might be a shortcoming of our implementation of setenv():
 
-I beg your pardon? I never asked you such thing. My first e-mail was,
-verbatim:
--- begin --
-Why do I have to accept the GPL to install msysgit?
+-- snip --
+cd /git
 
-Only the "NO WARRANTY ..." should be required, GPL is only required for
-distribution (and you could make that information available at install).
--- end --
+cat > a1.c << EOF
+#include <stdio.h>
+#include "compat/setenv.c"
+#include "compat/unsetenv.c"
 
-Any next e-mail in reply to this thread, from me, were only suggestions
-and reasonings for *not requiring acceptance*, not for removing the
-screen.
+static void p()
+{
+	const char *abc = getenv("ABC");
+	printf("env ABC: %s\n", abc ? abc : "(null)");
+}
 
+int main()
+{
+	p();
+	gitsetenv("ABC", "Hello", 1);
+	p();
+	gitsetenv("ABC", "", 1);
+	p();
+	gitunsetenv("ABC");
+	p();
+	return 0;
+}
+EOF
 
+gcc -DNO_MMAP=1 -I. -Icompat -o a1.exe a1.c
 
->   If you are not okay with accepting a tit-for-tat license, well... I'll=
-=20
->   not give you "tat".
+ABC="" ./a1.exe 
+-- snap --
 
-I never said I was. I mean, would I had sent a patch to this list if I
-wasn't OK with the license?
+This will show
 
-> So there is really nothing that I can think of, which would change my min=
-d=20
-> about that "issue".
+env ABC: 
+env ABC: Hello
+env ABC: (null)
+env ABC: (null)
 
-I was asking for the reasons for the installer being like it is, not for
-you to change your mind.
+So it seems that environment variables _can_ be empty.  Just our 
+relatively stupid implementation of setenv() does not do it.
 
---=20
-Luciano Rocha <luciano-YWehAnL2kLNBDgjK7y7TUQ@public.gmane.org>
-Eurotux Inform=E1tica, S.A. <http://www.eurotux.com/>
+Maybe something like compat/unsetenv.c is needed in setenv(), too.
 
---eHhjakXzOLJAF9wJ
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (GNU/Linux)
-
-iD8DBQFHq1ULinSul6a7oB8RAnWQAKCI2PUbR9p0hyFW0UQveW3Tj7+n9gCfSV6X
-jxenJxXHqq+wT9722QPE1yc=
-=HgLg
------END PGP SIGNATURE-----
-
---eHhjakXzOLJAF9wJ--
+Ciao,
+Dscho
