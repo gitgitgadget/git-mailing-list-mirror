@@ -1,92 +1,101 @@
-From: "Lars Hjemli" <hjemli@gmail.com>
-Subject: Re: What's cooking in git.git (topics)
-Date: Thu, 7 Feb 2008 10:43:12 +0100
-Message-ID: <8c5c35580802070143g697d82b7s3b04019664892f74@mail.gmail.com>
-References: <7v7ihmuwzi.fsf@gitster.siamese.dyndns.org>
-	 <7vodavd9qw.fsf@gitster.siamese.dyndns.org>
-	 <7vbq6tset4.fsf@gitster.siamese.dyndns.org>
-	 <20080207050548.GA32242@sigill.intra.peff.net>
+From: Jari Aalto <jari.aalto@cante.net>
+Subject: git 1.5.4 push/pull failure (1.5.3.8 works ok)
+Date: Thu, 07 Feb 2008 11:54:55 +0200
+Organization: Private
+Message-ID: <fxw5w0pc.fsf@blue.sea.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-To: "Jeff King" <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Feb 07 10:43:52 2008
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 07 10:56:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JN3IL-0003kT-W5
-	for gcvg-git-2@gmane.org; Thu, 07 Feb 2008 10:43:50 +0100
+	id 1JN3Uc-0007gw-Rw
+	for gcvg-git-2@gmane.org; Thu, 07 Feb 2008 10:56:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752703AbYBGJnO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Feb 2008 04:43:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752104AbYBGJnO
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Feb 2008 04:43:14 -0500
-Received: from wa-out-1112.google.com ([209.85.146.179]:38914 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752096AbYBGJnN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Feb 2008 04:43:13 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so996988wah.23
-        for <git@vger.kernel.org>; Thu, 07 Feb 2008 01:43:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=1A+t87P8dp6FmM2fSVA5fjavc6j6XidfzOEQJWFvjFY=;
-        b=IY8Bp9H5hxuRq9gCWLRUL+uSzdPLnrB/4DpNZPu0AHJQtAu+yEPN3Fsyu4mLSBI9EhrgbUiJH+a/SJGNbNN/+vLYSZubVx1MRuGxvZU/OBzjidvoah1ndGS62Ur+ojsUUZwYjgpxL7ewKebBjj1d5wa/y8+TaaYx7Fhuv7jPO+k=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=lenQV5zvdr0Vb6Zdw7O6v81xfcLf1NYf5/5HV6SLDDuf2rLFUt+6J6U14Uu+JPoa4F+VrVjj3lYUxkazUvB3goQFHpuZPi8J27LXpPATEyDmZcXSkzyFzVmKF7Suk7w0Q24xo04t883d2MJXkjsK3RSDqEKALj9VOhrrs7yHWbA=
-Received: by 10.114.38.2 with SMTP id l2mr5940586wal.106.1202377392671;
-        Thu, 07 Feb 2008 01:43:12 -0800 (PST)
-Received: by 10.115.73.7 with HTTP; Thu, 7 Feb 2008 01:43:12 -0800 (PST)
-In-Reply-To: <20080207050548.GA32242@sigill.intra.peff.net>
-Content-Disposition: inline
+	id S1754095AbYBGJz4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Feb 2008 04:55:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753344AbYBGJzz
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Feb 2008 04:55:55 -0500
+Received: from main.gmane.org ([80.91.229.2]:58562 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752813AbYBGJzx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Feb 2008 04:55:53 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1JN3Tv-0000ho-GO
+	for git@vger.kernel.org; Thu, 07 Feb 2008 09:55:47 +0000
+Received: from a91-155-178-181.elisa-laajakaista.fi ([91.155.178.181])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 07 Feb 2008 09:55:47 +0000
+Received: from jari.aalto by a91-155-178-181.elisa-laajakaista.fi with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 07 Feb 2008 09:55:47 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: a91-155-178-181.elisa-laajakaista.fi
+User-Agent: Gnus/5.110007 (No Gnus v0.7) Emacs/22.1 (windows-nt)
+Cancel-Lock: sha1:1YY2o8li1BU//qqcx0xdqRL9BiQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72917>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72918>
 
-On Feb 7, 2008 6:05 AM, Jeff King <peff@peff.net> wrote:
-> On Wed, Feb 06, 2008 at 06:03:51PM -0800, Junio C Hamano wrote:
->
-> > * lh/gitdir (Mon Feb 4 21:59:21 2008 +0100) 4 commits
-> >  - git-submodule: prepare for the .git-file
-> >  - Add tests for .git file
-> >  - Document the .git-file
-> >  - Add platform-independent .git "symlink"
-> >
-> > Seems to have funny interaction with Jeff King's test script
-> > updates.
->
-> I think this is a bug in Lars' code. The problem is that even though we
-> set GIT_DIR to the contents of the '.git' file, we may already have run
-> setup_git_env, which creates and remembers paths like '.git/objects'.
 
-Yeah, we need to run set_git_dir() to get all the paths set correctly:
+I just upgraded Git in SunOS/Debian/Cygwin and the 1.5.4 version causes
+constant pull/push failures over ssh:
 
-diff --git a/setup.c b/setup.c
-index 2cbda91..64b069f 100644
---- a/setup.c
-+++ b/setup.c
-@@ -339,7 +339,8 @@ const char *setup_git_directory_gently(int *nongit_ok)
-        for (;;) {
-                gitfile_dir = read_gitfile_gently(DEFAULT_GIT_DIR_ENVIRONMENT);
-                if (gitfile_dir) {
--                       setenv(GIT_DIR_ENVIRONMENT, gitfile_dir, 1);
-+                       if (set_git_dir(gitfile_dir))
-+                               return NULL;
-                        break;
-                }
-                if (is_git_directory(DEFAULT_GIT_DIR_ENVIRONMENT))
+    $ git pull
+    ...
+    Resolving deltas: 100% (141/141), completed with 11 local objects.
+    fatal: Fetch failure: jaalto@host:srv/git/repo
 
-But this isn't enough either, git-sh-setup.sh needs a patch when
-setting GIT_DIR and I just noticed merge-recursive failing (it needs
-to call setup_git_directory() in it's main()).
+I downgraded all back to 1.5.3.8 in all hosts, and the pull/push failure
+problem disappeared.
 
-I'll work on this tonight.
+Jari
+
+-----------------------------------------------------------------------
+SunOS:
+
+ $ uname -a
+ SunOS host 5.9 Generic_118558-35 sun4u sparc SUNW,Serverblade1
+
+ $ ldd /usr/local/bin/git
+        libz.so =>       /opt/csw/lib/libz.so
+        libiconv.so.2 =>         /opt/csw/lib/libiconv.so.2
+        libsocket.so.1 =>        /usr/lib/libsocket.so.1
+        libnsl.so.1 =>   /usr/lib/libnsl.so.1
+        libcrypto.so.0.9.8 =>    /opt/csw/lib/libcrypto.so.0.9.8
+        libc.so.1 =>     /usr/lib/libc.so.1
+        libdl.so.1 =>    /usr/lib/libdl.so.1
+        libmp.so.2 =>    /usr/lib/libmp.so.2
+        /usr/platform/SUNW,Serverblade1/lib/libc_psr.so.1
+
+Cygwin:
+
+  $uname -a
+  CYGWIN_NT-5.0 host 1.5.25(0.156/4/2) 2007-12-09 09:47 i686 Cygwin
+
+    D:\cygwin\bin\git.exe
+      D:\cygwin\bin\cygcrypto-0.9.8.dll
+        D:\cygwin\bin\cygwin1.dll
+          C:\WINNT\system32\ADVAPI32.DLL
+            C:\WINNT\system32\NTDLL.DLL
+            C:\WINNT\system32\KERNEL32.DLL
+            C:\WINNT\system32\RPCRT4.DLL
+      D:\cygwin\bin\cygiconv-2.dll
+      D:\cygwin\bin\cygz.dll
+
+Debian/unstable (hand compiled deb-src 1.5.3.8):
+
+  $ ldd /usr/bin/git
+        linux-gate.so.1 =>  (0xffffe000)
+        libz.so.1 => /usr/lib/libz.so.1 (0xb7f0f000)
+        libc.so.6 => /lib/i686/cmov/libc.so.6 (0xb7dc2000)
+        /lib/ld-linux.so.2 (0xb7f3a000)
 
 -- 
-larsh
+Welcome to FOSS revolution: we fix and modify until it shines
