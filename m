@@ -1,97 +1,95 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: what does @NNN in git-svn branch names mean?
-Date: Thu, 7 Feb 2008 09:16:07 +0100
-Message-ID: <20080207081607.GA18999@diana.vm.bytemark.co.uk>
-References: <20080206162905.GA29432@diana.vm.bytemark.co.uk> <20080206191830.GA9654@hand.yhbt.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Applying patches from gmane can be dangerous.
+Date: Thu, 07 Feb 2008 00:21:36 -0800
+Message-ID: <7vsl05p46n.fsf@gitster.siamese.dyndns.org>
+References: <20080205211044.GP26392@lavos.net>
+	<7vodatqu6w.fsf@gitster.siamese.dyndns.org>
+	<ve51w5yb.fsf@blue.sea.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Peter Harris <git@peter.is-a-geek.org>
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Thu Feb 07 09:17:03 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jari Aalto <jari.aalto@cante.net>
+X-From: git-owner@vger.kernel.org Thu Feb 07 09:22:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JN1wK-0003YN-LJ
-	for gcvg-git-2@gmane.org; Thu, 07 Feb 2008 09:17:01 +0100
+	id 1JN21S-0004yj-3i
+	for gcvg-git-2@gmane.org; Thu, 07 Feb 2008 09:22:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753653AbYBGIQ1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 7 Feb 2008 03:16:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753808AbYBGIQ1
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Feb 2008 03:16:27 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2646 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753078AbYBGIQ0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Feb 2008 03:16:26 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1JN1vT-000560-00; Thu, 07 Feb 2008 08:16:07 +0000
-Content-Disposition: inline
-In-Reply-To: <20080206191830.GA9654@hand.yhbt.net>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1754342AbYBGIVp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Feb 2008 03:21:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754305AbYBGIVp
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Feb 2008 03:21:45 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:40738 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754143AbYBGIVo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Feb 2008 03:21:44 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 2B8022B13;
+	Thu,  7 Feb 2008 03:21:43 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 76EAE2B12;
+	Thu,  7 Feb 2008 03:21:40 -0500 (EST)
+In-Reply-To: <ve51w5yb.fsf@blue.sea.net> (Jari Aalto's message of "Thu, 07 Feb
+	2008 10:01:32 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72907>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72908>
 
-On 2008-02-06 11:18:30 -0800, Eric Wong wrote:
+Jari Aalto <jari.aalto@cante.net> writes:
 
-> The follow parent feature uses it, with the foo@NNN version being
-> the parent branch.
+> FYI,
 >
-> For example, if I'm tracking http://example.com/project/trunk, but
-> it was created from http://example.com/old-project at revision 76
-> (before they used the trunk/branches/tags convention), then the
-> contents of http://example.com/old-project would show up as the ref
-> trunk@75, and the trunk ref would start as r76 with the ref trunk@75
-> as its parent.
+> Emacs Gnus + news.gmane.org gives access to raw articles with single
+> command. Suppose cursor is at thread start "!"
+>
+> ! R. [  40: Junio C Hamano         ] Applying patches from gmane can be dangerous.
+>   R.     [  19: Nicolas Pitre          ]
+>
+>
+> Pressing "C-u g" will display the unmodified article as seen by mail
+> transport. Running git's apply command can be automated pretty easily
+> from there.
 
-I thought I understood (especially with Peter's answer), so I tried to
-make a script that would create one of those @ branches:
+I do not think Gnus demiming (that C-u g helps us with) is not
+an issue.
 
-    svnrepo=3Dfile://$(pwd)/svnrepo
-    rm -rf svnrepo wd gs
-    svnadmin create svnrepo
-    svn mkdir -m c1 $svnrepo/trunk
-    svn mkdir -m c2 $svnrepo/branches
-    svn mkdir -m c3 $svnrepo/tags
+Have you tried to look at the article in question?  Inside your
+Gnus + news.gmane.org, try typing this:
 
-    svn co $svnrepo/trunk wd
-    (
-        cd wd
-        echo foo > foo.txt
-        svn add foo.txt
-        svn ci -m c4
-    )
+	j 7 2 6 9 9 <Enter> C-u g
 
-    svn cp -m c5 $svnrepo/trunk $svnrepo/branches/br
+The last two keystrokes are your "C-u g".
 
-    (
-        cd wd
-        svn switch $svnrepo/branches/br
-        echo foo >> foo.txt
-        svn ci -m c6
-        svn switch $svnrepo/trunk
-        echo foobar >> foo.txt
-        svn ci -m c7
-    )
+And look at the second line in the buffer, that says:
 
-    svn rm -m c8 $svnrepo/branches/br
-    svn cp -m c9 $svnrepo/trunk $svnrepo/branches/br
+    From: Brian Downing <bdowning-oU/tDdhfGLReoWH0uzbU5w@public.gmane.org>
 
-    git svn clone --stdlayout --prefix=3Dsvn/ $svnrepo gs
-    (
-        cd gs
-        gitk --all
-    )
+and weep X-<.
 
-However, this does not result in a br@N branch; instead, the
-remove-and-copy is imported as a merge from trunk to br. I'm not
-saying this is not correct, but it does seem that I still don't
-understand under what circumstances the @N branches are created.
+Then scroll down to find Signed-off-by: lines that are similarly
+mangled, and weep more.
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+Maybe you run a much newer Gnus, and Lars taught "C-u g" to
+unmangle them.  After all, gmane and Gnus are both his
+creations, so it _is_ possible.  But somehow I doubt it.
+
+If there weren't gmane address mangling, a quickest way to apply
+a gmane patch to commit is:
+
+	C-u g | g i t  a m - 3 - s <Enter>
+
+	For Gnus uninitiated, it reads: show as raw as opposed
+	to demimed (C-u g), pipe the article to the shell
+	command (|) that is "git am -3 -s".
+
+But I usually work in batches, so I first C-o (write to file)
+the articles to a separate mbox, review and _edit_ them as
+needed before running "git am".  And C-o does not suffer from
+Gnus demiming, so C-u g is not useful in my workflow.
