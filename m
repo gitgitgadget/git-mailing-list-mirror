@@ -1,49 +1,46 @@
-From: Johannes Schindelin <Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org>
+From: Steffen Prohaska <prohaska-wjoc1KHpMeg@public.gmane.org>
 Subject: Re: [ANNOUNCE] GIT 1.5.4
-Date: Thu, 7 Feb 2008 16:53:43 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802071651440.8543@racer.site>
-References: <7vmyqk563z.fsf@gitster.siamese.dyndns.org> <CFB8A272-863C-4758-91F7-E9669D70A200@zib.de> <20080207123108.GA12009@bit.office.eurotux.com> <alpine.LSU.1.00.0802071255110.8543@racer.site> <20080207130715.GA14000@bit.office.eurotux.com> <alpine.LFD.1.00.0802070949460.2732@xanadu.home> <20080207155946.GA20459@bit.office.eurotux.com> <alpine.LFD.1.00.0802071133230.2732@xanadu.home>
-Reply-To: Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Luciano Rocha <luciano-YWehAnL2kLNBDgjK7y7TUQ@public.gmane.org>, Steffen Prohaska <prohaska-wjoc1KHpMeg@public.gmane.org>,  Git Mailing List <git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>, msysGit <msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>,  Junio C Hamano <gitster-e+AXbWqSrlAAvxtiuMwx3w@public.gmane.org>
-To: Nicolas Pitre <nico-mo2vmkxb4K0@public.gmane.org>
-X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Thu Feb 07 17:55:22 2008
+Date: Thu, 7 Feb 2008 18:01:26 +0100
+Message-ID: <FBE31353-CEB6-4563-AE5F-866D23D129EC@zib.de>
+References: <7vmyqk563z.fsf@gitster.siamese.dyndns.org> <CFB8A272-863C-4758-91F7-E9669D70A200@zib.de> <20080207123108.GA12009@bit.office.eurotux.com> <alpine.LSU.1.00.0802071255110.8543@racer.site> <20080207130715.GA14000@bit.office.eurotux.com> <alpine.LFD.1.00.0802070949460.2732@xanadu.home> <20080207155946.GA20459@bit.office.eurotux.com>
+Reply-To: prohaska-wjoc1KHpMeg@public.gmane.org
+Mime-Version: 1.0 (Apple Message framework v753)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Nicolas Pitre <nico-mo2vmkxb4K0@public.gmane.org>, Johannes Schindelin <Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org>, Git Mailing List <git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>, msysGit <msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>, Junio C Hamano <gitster-e+AXbWqSrlAAvxtiuMwx3w@public.gmane.org>
+To: Luciano Rocha <luciano-YWehAnL2kLNBDgjK7y7TUQ@public.gmane.org>
+X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Thu Feb 07 18:12:14 2008
 Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from wa-out-0708.google.com ([209.85.146.248])
+Received: from wr-out-0708.google.com ([64.233.184.251])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNA1f-0004M2-4L
-	for gcvm-msysgit@m.gmane.org; Thu, 07 Feb 2008 17:55:03 +0100
-Received: by wa-out-0708.google.com with SMTP id n36so6520677wag.21
-        for <gcvm-msysgit@m.gmane.org>; Thu, 07 Feb 2008 08:54:33 -0800 (PST)
+	id 1JNAHb-0002pm-AQ
+	for gcvm-msysgit@m.gmane.org; Thu, 07 Feb 2008 18:11:33 +0100
+Received: by wr-out-0708.google.com with SMTP id 56so5862374wra.3
+        for <gcvm-msysgit@m.gmane.org>; Thu, 07 Feb 2008 09:10:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:received:x-sender:x-apparently-to:received:received:received-spf:authentication-results:received:received:x-authenticated:x-provags-id:date:from:x-x-sender:to:cc:subject:in-reply-to:message-id:references:user-agent:mime-version:content-type:x-y-gmx-trusted:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
-        bh=XKmosWpGg6i0FLEYFhfLBp/1jCRkeJfvoAUgivzAjz4=;
-        b=6WfQaDFHMMLO2oXoQCHiRSs4s/cUb0aSVJ7WKXVv8ThdY1LzVLsrEL4kSlIyMR84gDpfhYBOi36jvG03yUAYuiGOZ/wde1jr/dq9b8qgbY9w0wkUGkQDXrZAZqtMPLMmGP89SDAyPas/6DQFvHOjJe+khbWelLSa4+e8z0hPt2E=
+        h=domainkey-signature:received:received:x-sender:x-apparently-to:received:received:received-spf:authentication-results:received:received:in-reply-to:references:mime-version:content-type:message-id:cc:content-transfer-encoding:from:subject:date:to:x-mailer:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
+        bh=0v6DaXZoV220ODsdrcT9eKziX457mD7WzXpbqtQTyGc=;
+        b=T5SaE5YoOQ+cM+M0jOBGPVaqrSmkrCJtaVR7WIFPE44cEw2KSEJweyOAP7Rblfe0AnHVoDihBqMjim5lF1/yvTQGKGWbvU2QcG0nKA1RRcmBi7DE262f+8hcq87ZoNjGt4CCIZwT7lEUufksTuCPOanAInU8sdWGlUoQ49GeZGI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=googlegroups.com; s=beta;
-        h=x-sender:x-apparently-to:received-spf:authentication-results:x-authenticated:x-provags-id:date:from:x-x-sender:to:cc:subject:in-reply-to:message-id:references:user-agent:mime-version:content-type:x-y-gmx-trusted:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
-        b=FXCaa/TyCG6URijk+8VJQRoak0G3U59DTz52kRTIr5PpVLHnVfVv6Hei+ZqJWELSdkVf9dH+ICeXJuTsjsS/DzCAPleAdzBGBdXceqcggT73nB+jhO1AGEuIkNthHFOv+LOpT8dHkXDB6TAiJ9K7CYZY/t5plSpumoUQmotKeHw=
-Received: by 10.114.37.1 with SMTP id k1mr814843wak.0.1202403270817;
-        Thu, 07 Feb 2008 08:54:30 -0800 (PST)
-Received: by 10.106.159.22 with SMTP id h22gr1653pre;
-	Thu, 07 Feb 2008 08:54:30 -0800 (PST)
-X-Sender: Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org
+        h=x-sender:x-apparently-to:received-spf:authentication-results:in-reply-to:references:mime-version:content-type:message-id:cc:content-transfer-encoding:from:subject:date:to:x-mailer:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
+        b=ExlOL9pH40cN1ojmq1AK8WTzepPva+pzK+rZciqodMwY13tfdMstSQSUyJIDUNryY4vsEWWQVaAoMMjNW/Qe9x5iTy7U+TdLYTzNBATDpGx0NEXEhdwK/7hD4B/8Ip0uBy3o7CIVIlO1T3J587am6vic9s4bz8CvFAaGY2Nl+FQ=
+Received: by 10.100.168.18 with SMTP id q18mr974680ane.12.1202404236684;
+        Thu, 07 Feb 2008 09:10:36 -0800 (PST)
+Received: by 10.106.191.30 with SMTP id o30gr1654prf;
+	Thu, 07 Feb 2008 09:10:36 -0800 (PST)
+X-Sender: prohaska-wjoc1KHpMeg@public.gmane.org
 X-Apparently-To: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-Received: by 10.35.59.5 with SMTP id m5mr25339123pyk.0.1202403270382; Thu, 07 Feb 2008 08:54:30 -0800 (PST)
-Received: from mail.gmx.net (mail.gmx.net [213.165.64.20]) by mx.google.com with SMTP id v63si6960783pyh.2.2008.02.07.08.54.29; Thu, 07 Feb 2008 08:54:30 -0800 (PST)
-Received-SPF: pass (google.com: domain of Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org designates 213.165.64.20 as permitted sender) client-ip=213.165.64.20;
-Authentication-Results: mx.google.com; spf=pass (google.com: domain of Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org designates 213.165.64.20 as permitted sender) smtp.mail=Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org
-Received: (qmail invoked by alias); 07 Feb 2008 16:54:28 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74] by mail.gmx.net (mp058) with SMTP; 07 Feb 2008 17:54:28 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+6pspHc4W6SijhW89RjwIJvYoMd8RQKsF917Vsk7 7M+FpmS+pOHFFO
-X-X-Sender: gene099-OGWIkrnhIhzN0uC3ymp8PA@public.gmane.org
-In-Reply-To: <alpine.LFD.1.00.0802071133230.2732-QuJgVwGFrdf/9pzu0YdTqQ@public.gmane.org>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+Received: by 10.35.108.12 with SMTP id k12mr25394914pym.3.1202404231640; Thu, 07 Feb 2008 09:10:31 -0800 (PST)
+Received: from mailer.zib.de (mailer.zib.de [130.73.108.11]) by mx.google.com with ESMTP id x46si6974186pyg.3.2008.02.07.09.10.30; Thu, 07 Feb 2008 09:10:31 -0800 (PST)
+Received-SPF: pass (google.com: best guess record for domain of prohaska-wjoc1KHpMeg@public.gmane.org designates 130.73.108.11 as permitted sender) client-ip=130.73.108.11;
+Authentication-Results: mx.google.com; spf=pass (google.com: best guess record for domain of prohaska-wjoc1KHpMeg@public.gmane.org designates 130.73.108.11 as permitted sender) smtp.mail=prohaska-wjoc1KHpMeg@public.gmane.org
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31]) by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id m17H0ScZ009672; Thu, 7 Feb 2008 18:00:28 +0100 (CET)
+Received: from [130.73.68.185] (cougar.zib.de [130.73.68.185]) (authenticated bits=0) by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m17H0RlZ013191 (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO); Thu, 7 Feb 2008 18:00:27 +0100 (MET)
+In-Reply-To: <20080207155946.GA20459-oEplIgxCSygGFt9iVWuREaMaJEuR8uiQ@public.gmane.org>
+X-Mailer: Apple Mail (2.753)
 Sender: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
 Precedence: bulk
 X-Google-Loop: groups
@@ -54,20 +51,20 @@ List-Post: <mailto:msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
 List-Help: <mailto:msysgit-help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
 List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
 	<mailto:msysgit-unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72977>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72978>
 
 
-Hi,
 
-On Thu, 7 Feb 2008, Nicolas Pitre wrote:
+On Feb 7, 2008, at 4:59 PM, Luciano Rocha wrote:
 
-> Then, simply changing the button text from "I accept" to "Continue" 
-> should be OK?
+>> They nevertheless must be made aware of the rules they have to  
+>> follow in
+>> case the idea of redistributing it crosses their mind.
+>
+> I don't dispute that, only that I can't continue with the install  
+> unless
+> I click on "I Accept" to the GNU GPL.
 
-I consider this bike-shedding, git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org being the wrong mailing 
-list to discuss this (and as a matter of fact, the msysgit list is also 
-not the correct forum for discussing such legal/personal issues), and 
-besides, the msysgit installer will not be changed in this respect.
+Simple question: Do you accept it or not?
 
-Hth,
-Dscho
+	Steffen
