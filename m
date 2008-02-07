@@ -1,65 +1,98 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: git-fetch in 1.5.4 fails versus 1.5.3.8
-Date: Thu, 7 Feb 2008 10:42:15 -0800 (PST)
-Message-ID: <alpine.LFD.1.00.0802071039010.2883@woody.linux-foundation.org>
-References: <pan.2008.02.04.18.25.26@progsoc.org> <20080205050741.GA4624@coredump.intra.peff.net> <pan.2008.02.06.21.56.35@progsoc.org> <20080207042332.GA7632@sigill.intra.peff.net> <pan.2008.02.07.10.15.05@progsoc.org>
- <20080207142322.GC18497@mail-vs.djpig.de>
+From: Luciano Rocha <luciano@eurotux.com>
+Subject: Re: [msysGit] Re: [ANNOUNCE] GIT 1.5.4
+Date: Thu, 7 Feb 2008 18:52:14 +0000
+Message-ID: <20080207185214.GA28753@bit.office.eurotux.com>
+References: <7vmyqk563z.fsf@gitster.siamese.dyndns.org> <CFB8A272-863C-4758-91F7-E9669D70A200@zib.de> <20080207123108.GA12009@bit.office.eurotux.com> <alpine.LSU.1.00.0802071255110.8543@racer.site> <20080207130715.GA14000@bit.office.eurotux.com> <alpine.LFD.1.00.0802070949460.2732@xanadu.home> <20080207155946.GA20459@bit.office.eurotux.com> <alpine.LFD.1.00.0802071133230.2732@xanadu.home>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Anand Kumria <wildfire@progsoc.org>, git@vger.kernel.org
-To: Frank Lichtenheld <frank@lichtenheld.de>
-X-From: git-owner@vger.kernel.org Thu Feb 07 19:44:02 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="RnlQjJ0d97Da+TV1"
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Steffen Prohaska <prohaska@zib.de>,
+	Git Mailing List <git@vger.kernel.org>,
+	msysGit <msysgit@googlegroups.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Thu Feb 07 19:53:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNBj1-0006jJ-EJ
-	for gcvg-git-2@gmane.org; Thu, 07 Feb 2008 19:43:55 +0100
+	id 1JNBrm-0002BK-Hy
+	for gcvg-git-2@gmane.org; Thu, 07 Feb 2008 19:52:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750882AbYBGSnV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Feb 2008 13:43:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750877AbYBGSnV
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Feb 2008 13:43:21 -0500
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:37928 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750861AbYBGSnU (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 7 Feb 2008 13:43:20 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m17IgGm5031435
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 7 Feb 2008 10:42:17 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m17IgFxb016060;
-	Thu, 7 Feb 2008 10:42:15 -0800
-In-Reply-To: <20080207142322.GC18497@mail-vs.djpig.de>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
-X-Spam-Status: No, hits=-2.714 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1751229AbYBGSwW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Feb 2008 13:52:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751210AbYBGSwW
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Feb 2008 13:52:22 -0500
+Received: from os.eurotux.com ([216.75.63.6]:34382 "EHLO os.eurotux.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751169AbYBGSwV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Feb 2008 13:52:21 -0500
+Received: (qmail 10069 invoked from network); 7 Feb 2008 18:52:19 -0000
+Received: from nc.eurotux.com (HELO bit.office.eurotux.com) (luciano@81.84.255.161)
+  by os.eurotux.com with AES256-SHA encrypted SMTP; 7 Feb 2008 18:52:19 -0000
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.1.00.0802071133230.2732@xanadu.home>
+User-Agent: Mutt/1.5.14 (2007-03-31)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72985>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72986>
 
 
+--RnlQjJ0d97Da+TV1
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, 7 Feb 2008, Frank Lichtenheld wrote:
-> 
-> Since git has no OpenSSL link exception the resulting binary wouldn't be
-> distributable AFAIK.
+On Thu, Feb 07, 2008 at 11:35:40AM -0500, Nicolas Pitre wrote:
+> On Thu, 7 Feb 2008, Luciano Rocha wrote:
+>=20
+> > On Thu, Feb 07, 2008 at 09:53:05AM -0500, Nicolas Pitre wrote:
+> > > What are they forced into if they indeed only want to _use_ Git?
+> >=20
+> > The msys git installer forces me to accept the GNU GPL in order to
+> > proceed.
+> >=20
+> > Of course, I can use another installer, or compile my own set of
+> > binaries. I just wanted to bring that case to attention, nothing else.
+> >=20
+> > > They nevertheless must be made aware of the rules they have to follow=
+ in=20
+> > > case the idea of redistributing it crosses their mind.
+> >=20
+> > I don't dispute that, only that I can't continue with the install unless
+> > I click on "I Accept" to the GNU GPL.
+>=20
+> Then, simply changing the button text from "I accept" to "Continue"=20
+> should be OK?
 
-For crazy people who think that regular libraries can change the copyright 
-status of a program (not so), you can always decide to build without 
-OpenSSL and use the included Mozilla-based SHA1 implementation for git.
+It has two radio-buttons with:
 
-Performance will probably suffer, and maybe something else breaks too (I 
-doubt many people test the build that way very often), but I assume Debian 
-people don't care.
+* "I accept the agreement"
+* "I do not accept the agreement"
 
-After all, if you're a Debian person, it's likely more important to you to 
-be difficult and anal and argue about theoretical license details than 
-actually be *usable*.
+The latter one is the one selected by default, and until the user
+selects the "I accept", the "Next>" button is greyed-out.
 
-		Linus
+What I would suggest would be to remove both radio-buttons, and just leave
+the "Next>" button active.
+
+--=20
+Luciano Rocha <luciano@eurotux.com>
+Eurotux Inform=E1tica, S.A. <http://www.eurotux.com/>
+
+--RnlQjJ0d97Da+TV1
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (GNU/Linux)
+
+iD8DBQFHq1NeinSul6a7oB8RAj+TAJsGbviOPq5DKk1L1CKmHfnGpU/gDgCfeVz+
+vwzhpb9Qr/iGSHYlqdCUuFg=
+=p5cy
+-----END PGP SIGNATURE-----
+
+--RnlQjJ0d97Da+TV1--
