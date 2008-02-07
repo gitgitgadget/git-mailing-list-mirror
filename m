@@ -1,98 +1,104 @@
-From: Luciano Rocha <luciano@eurotux.com>
-Subject: Re: [msysGit] Re: [ANNOUNCE] GIT 1.5.4
-Date: Thu, 7 Feb 2008 18:52:14 +0000
-Message-ID: <20080207185214.GA28753@bit.office.eurotux.com>
-References: <7vmyqk563z.fsf@gitster.siamese.dyndns.org> <CFB8A272-863C-4758-91F7-E9669D70A200@zib.de> <20080207123108.GA12009@bit.office.eurotux.com> <alpine.LSU.1.00.0802071255110.8543@racer.site> <20080207130715.GA14000@bit.office.eurotux.com> <alpine.LFD.1.00.0802070949460.2732@xanadu.home> <20080207155946.GA20459@bit.office.eurotux.com> <alpine.LFD.1.00.0802071133230.2732@xanadu.home>
+From: Luciano Rocha <luciano-YWehAnL2kLNBDgjK7y7TUQ@public.gmane.org>
+Subject: Re: [ANNOUNCE] GIT 1.5.4
+Date: Thu, 7 Feb 2008 18:55:24 +0000
+Message-ID: <20080207185524.GB28753@bit.office.eurotux.com>
+References: <7vmyqk563z.fsf@gitster.siamese.dyndns.org> <CFB8A272-863C-4758-91F7-E9669D70A200@zib.de> <20080207123108.GA12009@bit.office.eurotux.com> <alpine.LSU.1.00.0802071255110.8543@racer.site> <20080207130715.GA14000@bit.office.eurotux.com> <alpine.LFD.1.00.0802070949460.2732@xanadu.home> <20080207155946.GA20459@bit.office.eurotux.com> <alpine.LFD.1.00.0802071133230.2732@xanadu.home> <alpine.LSU.1.00.0802071651440.8543@racer.site>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="RnlQjJ0d97Da+TV1"
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Steffen Prohaska <prohaska@zib.de>,
-	Git Mailing List <git@vger.kernel.org>,
-	msysGit <msysgit@googlegroups.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Thu Feb 07 19:53:01 2008
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="mojUlQ0s9EVzWg2t"
+Cc: Nicolas Pitre <nico-mo2vmkxb4K0@public.gmane.org>, Steffen Prohaska <prohaska-wjoc1KHpMeg@public.gmane.org>, Git Mailing List <git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>, msysGit <msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>, Junio C Hamano <gitster-e+AXbWqSrlAAvxtiuMwx3w@public.gmane.org>
+To: Johannes Schindelin <Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org>
+X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Thu Feb 07 19:56:28 2008
+Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from yw-out-2122.google.com ([74.125.46.26])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNBrm-0002BK-Hy
-	for gcvg-git-2@gmane.org; Thu, 07 Feb 2008 19:52:58 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751229AbYBGSwW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Feb 2008 13:52:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751210AbYBGSwW
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Feb 2008 13:52:22 -0500
-Received: from os.eurotux.com ([216.75.63.6]:34382 "EHLO os.eurotux.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751169AbYBGSwV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Feb 2008 13:52:21 -0500
-Received: (qmail 10069 invoked from network); 7 Feb 2008 18:52:19 -0000
-Received: from nc.eurotux.com (HELO bit.office.eurotux.com) (luciano@81.84.255.161)
-  by os.eurotux.com with AES256-SHA encrypted SMTP; 7 Feb 2008 18:52:19 -0000
+	id 1JNBun-0003QG-8d
+	for gcvm-msysgit@m.gmane.org; Thu, 07 Feb 2008 19:56:05 +0100
+Received: by yw-out-2122.google.com with SMTP id 4so5142811ywc.37
+        for <gcvm-msysgit@m.gmane.org>; Thu, 07 Feb 2008 10:55:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:received:x-sender:x-apparently-to:received:received:received-spf:authentication-results:received:received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
+        bh=GlSnykkun0+jFn4ES/SPXBHaNjEJNKhGvVaTKOQQ99E=;
+        b=5TVpR8U3Ewgs05LTU6Hp8by+IMf8FE63FD51ZyP9CADZNyBfgPdsbbvM0M0d75V1unLzTtUGtuZO9aqSyjOA13oQk7yShY7wCDV10FbIlDf2R56LQOZ09kyObQiWZNPynn744H8fL+tXOlR1zmIQqBXcz9jHcomTnfSex/b5qB4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlegroups.com; s=beta;
+        h=x-sender:x-apparently-to:received-spf:authentication-results:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
+        b=0TyalOqSCTlV7cZI3jvy7DDf5l9QSeGmQka23fP2UzUbO2WvyL15G1TkA2kpkT8DE/rGhd7lelbKDonfaKd95z5vz5NmQh0FAS+HvNszSS8P1GC+mudYcoKnUICMpRub6E5XpN60AnLz3qSFx8T6d2kHNueN9qU7CM2hcm4OI0U=
+Received: by 10.143.34.11 with SMTP id m11mr225466wfj.23.1202410531532;
+        Thu, 07 Feb 2008 10:55:31 -0800 (PST)
+Received: by 10.106.78.1 with SMTP id a1gr1661prb;
+	Thu, 07 Feb 2008 10:55:31 -0800 (PST)
+X-Sender: luciano-YWehAnL2kLNBDgjK7y7TUQ@public.gmane.org
+X-Apparently-To: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+Received: by 10.35.124.20 with SMTP id b20mr5480104pyn.5.1202410531329; Thu, 07 Feb 2008 10:55:31 -0800 (PST)
+Received: from os.eurotux.com (os.eurotux.com [216.75.63.6]) by mx.google.com with ESMTP id a28si7198717pye.0.2008.02.07.10.55.30; Thu, 07 Feb 2008 10:55:31 -0800 (PST)
+Received-SPF: pass (google.com: domain of luciano-YWehAnL2kLNBDgjK7y7TUQ@public.gmane.org designates 216.75.63.6 as permitted sender) client-ip=216.75.63.6;
+Authentication-Results: mx.google.com; spf=pass (google.com: domain of luciano-YWehAnL2kLNBDgjK7y7TUQ@public.gmane.org designates 216.75.63.6 as permitted sender) smtp.mail=luciano-YWehAnL2kLNBDgjK7y7TUQ@public.gmane.org
+Received: (qmail 11596 invoked from network); 7 Feb 2008 18:55:29 -0000
+Received: from nc.eurotux.com (HELO bit.office.eurotux.com) (luciano-IvQC36bfUK4FrjaEzgZ1Mw@public.gmane.org) by os.eurotux.com with AES256-SHA encrypted SMTP; 7 Feb 2008 18:55:29 -0000
 Content-Disposition: inline
-In-Reply-To: <alpine.LFD.1.00.0802071133230.2732@xanadu.home>
+In-Reply-To: <alpine.LSU.1.00.0802071651440.8543-OGWIkrnhIhzN0uC3ymp8PA@public.gmane.org>
 User-Agent: Mutt/1.5.14 (2007-03-31)
-Sender: git-owner@vger.kernel.org
+Sender: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72986>
+X-Google-Loop: groups
+Mailing-List: list msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org;
+	contact msysgit-owner-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+List-Id: <msysgit.googlegroups.com>
+List-Post: <mailto:msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Help: <mailto:msysgit-help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
+	<mailto:msysgit-unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72987>
 
 
---RnlQjJ0d97Da+TV1
+
+--mojUlQ0s9EVzWg2t
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Feb 07, 2008 at 11:35:40AM -0500, Nicolas Pitre wrote:
-> On Thu, 7 Feb 2008, Luciano Rocha wrote:
+On Thu, Feb 07, 2008 at 04:53:43PM +0000, Johannes Schindelin wrote:
+> Hi,
 >=20
-> > On Thu, Feb 07, 2008 at 09:53:05AM -0500, Nicolas Pitre wrote:
-> > > What are they forced into if they indeed only want to _use_ Git?
-> >=20
-> > The msys git installer forces me to accept the GNU GPL in order to
-> > proceed.
-> >=20
-> > Of course, I can use another installer, or compile my own set of
-> > binaries. I just wanted to bring that case to attention, nothing else.
-> >=20
-> > > They nevertheless must be made aware of the rules they have to follow=
- in=20
-> > > case the idea of redistributing it crosses their mind.
-> >=20
-> > I don't dispute that, only that I can't continue with the install unless
-> > I click on "I Accept" to the GNU GPL.
+> On Thu, 7 Feb 2008, Nicolas Pitre wrote:
 >=20
-> Then, simply changing the button text from "I accept" to "Continue"=20
-> should be OK?
+> > Then, simply changing the button text from "I accept" to "Continue"=20
+> > should be OK?
+>=20
+> I consider this bike-shedding, git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org being the wrong mailin=
+g=20
+> list to discuss this (and as a matter of fact, the msysgit list is also=
+=20
+> not the correct forum for discussing such legal/personal issues), and=20
+> besides, the msysgit installer will not be changed in this respect.
 
-It has two radio-buttons with:
+I don't care much about that. I only installed the msysgit to have a
+binary copy on my pen for using on friends' computers.
 
-* "I accept the agreement"
-* "I do not accept the agreement"
+I only thought it an unnecessary step, and w/o it the barrier-to-entry
+would decrease slightly, as some people are put off by EULA.
 
-The latter one is the one selected by default, and until the user
-selects the "I accept", the "Next>" button is greyed-out.
+I never expect this level of hostility and I apologize if my question
+sounded as offensive.
 
-What I would suggest would be to remove both radio-buttons, and just leave
-the "Next>" button active.
+I respect the msysgit author/packager, and I thank him for his work.
 
 --=20
-Luciano Rocha <luciano@eurotux.com>
+Luciano Rocha <luciano-YWehAnL2kLNBDgjK7y7TUQ@public.gmane.org>
 Eurotux Inform=E1tica, S.A. <http://www.eurotux.com/>
 
---RnlQjJ0d97Da+TV1
+--mojUlQ0s9EVzWg2t
 Content-Type: application/pgp-signature
 Content-Disposition: inline
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.7 (GNU/Linux)
 
-iD8DBQFHq1NeinSul6a7oB8RAj+TAJsGbviOPq5DKk1L1CKmHfnGpU/gDgCfeVz+
-vwzhpb9Qr/iGSHYlqdCUuFg=
-=p5cy
+iD8DBQFHq1QcinSul6a7oB8RAm9uAJ9R+V7XJuQG68pM5DXYbbBK0CzitgCeOmF9
+RpoqKmVshJ/8+6JU/65JUBk=
+=Ib73
 -----END PGP SIGNATURE-----
 
---RnlQjJ0d97Da+TV1--
+--mojUlQ0s9EVzWg2t--
