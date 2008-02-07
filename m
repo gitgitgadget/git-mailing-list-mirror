@@ -1,76 +1,84 @@
-From: Bruno Cesar Ribas <ribas@c3sl.ufpr.br>
-Subject: Re: [PATCH] gitweb: Use config file or file for repository owner's
-	name.
-Date: Thu, 7 Feb 2008 02:12:46 -0200
-Message-ID: <20080207041246.GA32595@c3sl.ufpr.br>
-References: <1201670898-15076-1-git-send-email-ribas@c3sl.ufpr.br> <7vwsprj0sv.fsf@gitster.siamese.dyndns.org> <20080131023629.GB7778@c3sl.ufpr.br> <7vsl0eg16c.fsf@gitster.siamese.dyndns.org> <7vabmmg0cb.fsf@gitster.siamese.dyndns.org> <20080205044121.GA13263@c3sl.ufpr.br>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Applying patches from gmane can be dangerous.
+Date: Wed, 06 Feb 2008 20:14:31 -0800
+Message-ID: <7vodatqu6w.fsf@gitster.siamese.dyndns.org>
+References: <20080205211044.GP26392@lavos.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 07 05:13:52 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Brian Downing <bdowning@lavos.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Lars Magne Ingebrigtsen <larsi+gmane@gnus.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 07 05:15:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JMy92-0003xz-43
-	for gcvg-git-2@gmane.org; Thu, 07 Feb 2008 05:13:52 +0100
+	id 1JMyAU-0004DH-IB
+	for gcvg-git-2@gmane.org; Thu, 07 Feb 2008 05:15:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753017AbYBGENK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Feb 2008 23:13:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752990AbYBGENJ
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Feb 2008 23:13:09 -0500
-Received: from mx.inf.ufpr.br ([200.17.202.3]:48074 "EHLO urquell.c3sl.ufpr.br"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752250AbYBGENI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Feb 2008 23:13:08 -0500
-Received: from localhost (unknown [189.1.135.222])
+	id S1752990AbYBGEOu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Feb 2008 23:14:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753216AbYBGEOu
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Feb 2008 23:14:50 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:61746 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752256AbYBGEOt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Feb 2008 23:14:49 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id D45372F89;
+	Wed,  6 Feb 2008 23:14:47 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	(Authenticated sender: ribas)
-	by urquell.c3sl.ufpr.br (Postfix) with ESMTP id 7F8B1700003EC;
-	Thu,  7 Feb 2008 02:13:05 -0200 (BRST)
-Content-Disposition: inline
-In-Reply-To: <20080205044121.GA13263@c3sl.ufpr.br>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 220202F84;
+	Wed,  6 Feb 2008 23:14:40 -0500 (EST)
+In-Reply-To: <20080205211044.GP26392@lavos.net> (Brian Downing's message of
+	"Tue, 5 Feb 2008 15:10:44 -0600")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72888>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72889>
 
-On Tue, Feb 05, 2008 at 02m41:21AM -0200, Bruno Cesar Ribas wrote:
-><alll snip>
+I picked up the qsort patch from Brian while reading the list
+via gmane's newsfeed and applied it without realizing that it
+was one of the articles whose addresses on all the address
+header fields _and_ all strings that look like e-mail addresses
+have been mangled by gmane.  Sign-offs by Dscho and Steffen
+Prohaska have also been munged (even though that are not part of
+headers).
 
-Hello again,
+It already is part of 'next', and we have the policy of not
+rewinding 'next', so the record of this mistake will
+unfortunately be with us forever.  Sorry, Brian, Dscho and
+Steffen.
 
-I made another bench, but testing time difference between a gitweb.cgi
-without reading gitweb.owner AND reading it.
+For the curious, the message was:
 
-These times i got with a 1000projects running 2 dd to generate disk IO.
-Here comes the resultm
-NO projects_list  projects_list
-16m30s69          15m10s74       default gitweb, using FS's owner
-16m07s40          15m24s34       patched to get gitweb.owner
-16m37s76          15m59s32       same above, but without gitweb.owner
+    http://article.gmane.org/gmane.comp.version-control.git/72699/raw
 
-Now results for a 1000projects on an idle machine.
-NO projects_list  projects_list
-1m19s08           1m09s55       default gitweb, using FS's owner
-1m17s58           1m09s55       patched to get gitweb.owner
-1m18s49           1m08s96       same above, but without gitweb.owner
+I've added the following in my .git/hooks/applypatch-msg and
+made it executable, so hopefully it won't happen again.
 
-*For "projects_list" column, gitweb got owner via project_list file.
+    #!/bin/sh
+    case "$GIT_AUTHOR_EMAIL" in
+    *@public.gmane.org)
+            echo >&2 "Gmane munged the author's email address, aborting."
+            echo >&2 "Pick up the original message from your mbox!"
+            exit 1
+            ;;
+    esac
 
-Small fluctuation occurs. But speed is essencially the same.
+This is really sad.  gmane gives us a clean threaded interface
+(both in web and newsreader), and it never forgets. Whenever I
+need to refer somebody to an old discussion, I can give an URL
+to it and allmost all the discussion messages are there with a
+single paste and clicking around.  It has been an indispensable
+service to me ever since I started reading the git list with it.
+It is really a shame that I have to prevent picking up patch
+messages from it with the above hook.
 
-My guess is that adding a gitweb.owner there's no problem and helps people
-to get owner when there's no need to maintain a project_list or maintain
-this file is not wanted.
-
-Bruno
-
--- 
-Bruno Ribas - ribas@c3sl.ufpr.br
-http://web.inf.ufpr.br/ribas
-C3SL: http://www.c3sl.ufpr.br 
+I am wondering if other development communities had a similar
+issue already, and if so how they are dealing with it.
