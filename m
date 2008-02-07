@@ -1,84 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Applying patches from gmane can be dangerous.
-Date: Wed, 06 Feb 2008 20:14:31 -0800
-Message-ID: <7vodatqu6w.fsf@gitster.siamese.dyndns.org>
-References: <20080205211044.GP26392@lavos.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: git-fetch in 1.5.4 fails versus 1.5.3.8
+Date: Wed, 6 Feb 2008 23:23:33 -0500
+Message-ID: <20080207042332.GA7632@sigill.intra.peff.net>
+References: <pan.2008.02.04.18.25.26@progsoc.org> <20080205050741.GA4624@coredump.intra.peff.net> <pan.2008.02.06.21.56.35@progsoc.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Brian Downing <bdowning@lavos.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Lars Magne Ingebrigtsen <larsi+gmane@gnus.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 07 05:15:23 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Anand Kumria <wildfire@progsoc.org>
+X-From: git-owner@vger.kernel.org Thu Feb 07 05:24:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JMyAU-0004DH-IB
-	for gcvg-git-2@gmane.org; Thu, 07 Feb 2008 05:15:22 +0100
+	id 1JMyJD-0005kx-Rv
+	for gcvg-git-2@gmane.org; Thu, 07 Feb 2008 05:24:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752990AbYBGEOu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Feb 2008 23:14:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753216AbYBGEOu
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Feb 2008 23:14:50 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:61746 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752256AbYBGEOt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Feb 2008 23:14:49 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id D45372F89;
-	Wed,  6 Feb 2008 23:14:47 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 220202F84;
-	Wed,  6 Feb 2008 23:14:40 -0500 (EST)
-In-Reply-To: <20080205211044.GP26392@lavos.net> (Brian Downing's message of
-	"Tue, 5 Feb 2008 15:10:44 -0600")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1755346AbYBGEXu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Feb 2008 23:23:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755307AbYBGEXu
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Feb 2008 23:23:50 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3057 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755245AbYBGEXt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Feb 2008 23:23:49 -0500
+Received: (qmail 8770 invoked by uid 111); 7 Feb 2008 04:23:34 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Wed, 06 Feb 2008 23:23:34 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 06 Feb 2008 23:23:33 -0500
+Content-Disposition: inline
+In-Reply-To: <pan.2008.02.06.21.56.35@progsoc.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72889>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72890>
 
-I picked up the qsort patch from Brian while reading the list
-via gmane's newsfeed and applied it without realizing that it
-was one of the articles whose addresses on all the address
-header fields _and_ all strings that look like e-mail addresses
-have been mangled by gmane.  Sign-offs by Dscho and Steffen
-Prohaska have also been munged (even though that are not part of
-headers).
+On Wed, Feb 06, 2008 at 09:56:35PM +0000, Anand Kumria wrote:
 
-It already is part of 'next', and we have the policy of not
-rewinding 'next', so the record of this mistake will
-unfortunately be with us forever.  Sorry, Brian, Dscho and
-Steffen.
+> With GIT_SSL_NO_VERIFY defined, it fails with:
+> 
+> $ GIT_SSL_NO_VERIFY=1 ../git/git-fetch richard
+> error: gnutls_handshake() failed: ASN1 parser: Element was not found. (curl_result = 35, http_code = 0, sha1 = 510567ca41e201253445528ca6eb89ed43e71fce)
+> Getting pack list for https://server.example.com/~richard/newfoo.git
+> error: gnutls_handshake() failed: ASN1 parser: Element was not found.
+> Getting alternates list for https://server.example.com/~richard/newfoo.git
+> error: Unable to find 510567ca41e201253445528ca6eb89ed43e71fce under https://server.example.com/~richard/newfoo.git
+> Cannot obtain needed object 510567ca41e201253445528ca6eb89ed43e71fce
+> fatal: Fetch failed.
 
-For the curious, the message was:
+OK, I was finally able to reproduce your bug. It seems that it _only_
+happens when using curl built against gnutls. I built against the
+libcurl4-openssl-dev in Debian unstable, and the problem goes away.
 
-    http://article.gmane.org/gmane.comp.version-control.git/72699/raw
+Can you confirm that building using the openssl version of curl fixes
+the problem?
 
-I've added the following in my .git/hooks/applypatch-msg and
-made it executable, so hopefully it won't happen again.
+Googling for your error message turns up only one other instance: a bug
+in pidgin where the result was "this seems like a bug in gnutls." I hate
+to say "it's not our bug" without knowing exactly what is causing it,
+though. And it does seem odd that it works with 1.5.3.8. I wonder if
+there is some difference in the way we are calling curl that matters.
 
-    #!/bin/sh
-    case "$GIT_AUTHOR_EMAIL" in
-    *@public.gmane.org)
-            echo >&2 "Gmane munged the author's email address, aborting."
-            echo >&2 "Pick up the original message from your mbox!"
-            exit 1
-            ;;
-    esac
+> I *think* what is happening is that it is it is trying for the object
+> - not seeing it and then not attempting to get the pack file.
 
-This is really sad.  gmane gives us a clean threaded interface
-(both in web and newsreader), and it never forgets. Whenever I
-need to refer somebody to an old discussion, I can give an URL
-to it and allmost all the discussion messages are there with a
-single paste and clicking around.  It has been an indispensable
-service to me ever since I started reading the git list with it.
-It is really a shame that I have to prevent picking up patch
-messages from it with the above hook.
+No, it only fails to see objects because of the curl failure (it tries
+the loose and then the pack).
 
-I am wondering if other development communities had a similar
-issue already, and if so how they are dealing with it.
+-Peff
