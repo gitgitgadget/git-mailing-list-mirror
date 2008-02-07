@@ -1,70 +1,89 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
+From: Brandon Casey <casey@nrlssc.navy.mil>
 Subject: Re: Using thunderbird to post/apply patches?
-Date: Fri, 8 Feb 2008 12:42:09 +1300
-Message-ID: <46a038f90802071542j765a8501kc57b065f22c734b2@mail.gmail.com>
+Date: Thu, 07 Feb 2008 17:44:44 -0600
+Message-ID: <47AB97EC.8030002@nrlssc.navy.mil>
 References: <46a038f90802071521n674b61c2t5e4d4c740375b951@mail.gmail.com>
-	 <alpine.LSU.1.00.0802072333120.11591@racer.site>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Feb 08 00:42:55 2008
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Martin Langhoff <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 08 00:45:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNGOF-0006eI-09
-	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 00:42:47 +0100
+	id 1JNGR1-0007NB-3d
+	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 00:45:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757945AbYBGXmO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Feb 2008 18:42:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757318AbYBGXmN
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Feb 2008 18:42:13 -0500
-Received: from ug-out-1314.google.com ([66.249.92.172]:12793 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757049AbYBGXmL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Feb 2008 18:42:11 -0500
-Received: by ug-out-1314.google.com with SMTP id z38so797332ugc.16
-        for <git@vger.kernel.org>; Thu, 07 Feb 2008 15:42:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=w/e8pYqlkksl9Cqd8xo99Sho1xLGqybzNZBn//csp7E=;
-        b=XC4+3ifoWJovAJK6lkEQehJwULH/nxoHSUM5rWWXV5cx5IDsTCSiMFMDEo74pR8SUNdr7QwXQtjV/kg/GRDw7NFR6cbfgRVCNgiRgItcY+CyXXVknmneHAphi0c1iciYEvpF8gQRi/lL24T2NQGcuB+GA7NvckN23XwTsLaclvs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=lxLMU2kS8E/Futo3WI/VhuPgvW6pGs0ZTlkVHGfDFwjOXpkO1xSQbK1ZFQGKqd6l67JL2aO8orggcCoa5LxL4R3gnHRIfiAvpQu8SMy8ZGo2yCltDNo1r4AL0b+vT+I6/mcr8nAgcyhyPFMdzPLu+aD9+S+uSLeFz5PYrpkWUtY=
-Received: by 10.66.221.5 with SMTP id t5mr4654961ugg.83.1202427729466;
-        Thu, 07 Feb 2008 15:42:09 -0800 (PST)
-Received: by 10.66.250.13 with HTTP; Thu, 7 Feb 2008 15:42:09 -0800 (PST)
-In-Reply-To: <alpine.LSU.1.00.0802072333120.11591@racer.site>
-Content-Disposition: inline
+	id S1758261AbYBGXpF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Feb 2008 18:45:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758295AbYBGXpF
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Feb 2008 18:45:05 -0500
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:57290 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758204AbYBGXpD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Feb 2008 18:45:03 -0500
+Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
+	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id m17Nij35032382;
+	Thu, 7 Feb 2008 17:44:45 -0600
+Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
+	 Thu, 7 Feb 2008 17:44:44 -0600
+User-Agent: Thunderbird 2.0.0.9 (X11/20071031)
+In-Reply-To: <46a038f90802071521n674b61c2t5e4d4c740375b951@mail.gmail.com>
+X-OriginalArrivalTime: 07 Feb 2008 23:44:44.0930 (UTC) FILETIME=[6ABCA620:01C869E3]
+X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-5.0.0.1023-15706001
+X-TM-AS-Result: : Yes--10.586800-0-1-1
+X-TM-AS-Category-Info: : 1:0.000000
+X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNTY3LTcwMDA3NS0xMzkw?=
+	=?us-ascii?B?MTAtNzA5NTg0LTcwMjA1MC03MDA2MTgtNzA0NzQ5LTE4NzA2Ny0x?=
+	=?us-ascii?B?ODgwMTktNzA2NDU0LTcwMjc5MS03MDAxMTUtNzA0NDIxLTcwMjM1?=
+	=?us-ascii?B?OC03MDU3MzMtNzAzNzg4LTEyMTU5NC03MDQ0MjUtNzAyMTQzLTcw?=
+	=?us-ascii?B?MzkwNy03MDcyMjUtNzAwNDc2LTcwMTQ1NS03MDE0ODItNzAzODM1?=
+	=?us-ascii?B?LTcwMDM1NS03MDIwNzktNzAxMzg0LTcwNTQ0MS03MDIwNDQtNzAy?=
+	=?us-ascii?B?ODU3LTcwMTU0NC0xMDY0NzAtNzA4MjU3LTcwMDE1My0xNDgwMzkt?=
+	=?us-ascii?B?MTQ4MDUxLTIwMDQy?=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73020>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73021>
 
-On Feb 8, 2008 12:34 PM, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> The "Thunderbird" section in Documentation/SubmittingPatches should help
-> here.
+Martin Langhoff wrote:
+> Is there anyone using thunderbird/mozilla to post patches with
+> additional email commentary like Junio and Linus do? Are there good
+> tricks for this? Or otherwise a similar MUA that does things right?
+> 
+> The 2 workflows I am after are...
+> 
+>  - Load up a patch created with git-format-patch into my email editor
+> to add some commentary before sending. Should not munge the patch
+> itself!
 
-If that's state-of-the-art then thunderbird hasn't gotten any better
-since I last tried. Shame.
+I use git-send-email to first send the patch to myself.
+When it shows up in thunderbird, I Right-click and select "Edit As New..."
+Add my text, update the recipients, and voila.
 
-> >  - Feed an email I am reading to git-apply-mbox so that if it's
-> > reasonably formatted as a patch it will do the right thing and apply
-> > it.
->
-> Recently, git-am learnt to apply mails in maildir format.  Thunderbird
-> uses maildir format internally, if I am not mistaken.
+If you're replying to a previous message, you can get the Message-ID to
+supply to git-send-email by selecting View->Headers->All. Copy&Paste
+everything between the angle brackets.
 
-It uses mbox - but the delimiter is somewhat broken, so sometimes
-git-am fails to split the emails correctly.
+I have these options set in Edit->Preferences:
+  Display->Formatting->Display emoticons as graphics: unchecked, it turns
+    HEAD^2 into HEAD squared
+  Composition->General->Wrap plain text messages at 0 characters
+                                                    ^
 
-A pretty sad story overall. Grumble...
+I also have mailnews.send_plaintext_flowed => false as suggested in
+SubmittingPatches. There is a different suggestion in that document
+you may want to read.
 
+>  - Feed an email I am reading to git-apply-mbox so that if it's
+> reasonably formatted as a patch it will do the right thing and apply
+> it.
 
-m
+I just Right-click and Save As...
+
+cat <saved_as> | git am
+
+-brandon
