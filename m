@@ -1,95 +1,134 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Applying patches from gmane can be dangerous.
-Date: Thu, 07 Feb 2008 00:21:36 -0800
-Message-ID: <7vsl05p46n.fsf@gitster.siamese.dyndns.org>
-References: <20080205211044.GP26392@lavos.net>
-	<7vodatqu6w.fsf@gitster.siamese.dyndns.org>
-	<ve51w5yb.fsf@blue.sea.net>
+Subject: [PATCH] gitattributes: fix relative path matching
+Date: Thu, 07 Feb 2008 00:22:16 -0800
+Message-ID: <7vodatp45j.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jari Aalto <jari.aalto@cante.net>
-X-From: git-owner@vger.kernel.org Thu Feb 07 09:22:20 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 07 09:23:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JN21S-0004yj-3i
-	for gcvg-git-2@gmane.org; Thu, 07 Feb 2008 09:22:18 +0100
+	id 1JN229-0005Dl-IJ
+	for gcvg-git-2@gmane.org; Thu, 07 Feb 2008 09:23:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754342AbYBGIVp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Feb 2008 03:21:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754305AbYBGIVp
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Feb 2008 03:21:45 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:40738 "EHLO
+	id S1754432AbYBGIW2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Feb 2008 03:22:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754681AbYBGIW1
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Feb 2008 03:22:27 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:40749 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754143AbYBGIVo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Feb 2008 03:21:44 -0500
+	with ESMTP id S1754432AbYBGIW0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Feb 2008 03:22:26 -0500
 Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 2B8022B13;
-	Thu,  7 Feb 2008 03:21:43 -0500 (EST)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id E66302B17;
+	Thu,  7 Feb 2008 03:22:24 -0500 (EST)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 76EAE2B12;
-	Thu,  7 Feb 2008 03:21:40 -0500 (EST)
-In-Reply-To: <ve51w5yb.fsf@blue.sea.net> (Jari Aalto's message of "Thu, 07 Feb
-	2008 10:01:32 +0200")
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 173A22B16;
+	Thu,  7 Feb 2008 03:22:22 -0500 (EST)
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72908>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72909>
 
-Jari Aalto <jari.aalto@cante.net> writes:
+There was an embarrassing pair of off-by-one miscounting that
+failed to match path "a/b/c" when "a/.gitattributes" tried to
+name it with relative path "b/c".
 
-> FYI,
->
-> Emacs Gnus + news.gmane.org gives access to raw articles with single
-> command. Suppose cursor is at thread start "!"
->
-> ! R. [  40: Junio C Hamano         ] Applying patches from gmane can be dangerous.
->   R.     [  19: Nicolas Pitre          ]
->
->
-> Pressing "C-u g" will display the unmodified article as seen by mail
-> transport. Running git's apply command can be automated pretty easily
-> from there.
+This fixes it.
 
-I do not think Gnus demiming (that C-u g helps us with) is not
-an issue.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ attr.c                |    6 +++---
+ t/t0003-attributes.sh |   49 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 52 insertions(+), 3 deletions(-)
+ create mode 100755 t/t0003-attributes.sh
 
-Have you tried to look at the article in question?  Inside your
-Gnus + news.gmane.org, try typing this:
-
-	j 7 2 6 9 9 <Enter> C-u g
-
-The last two keystrokes are your "C-u g".
-
-And look at the second line in the buffer, that says:
-
-    From: Brian Downing <bdowning-oU/tDdhfGLReoWH0uzbU5w@public.gmane.org>
-
-and weep X-<.
-
-Then scroll down to find Signed-off-by: lines that are similarly
-mangled, and weep more.
-
-Maybe you run a much newer Gnus, and Lars taught "C-u g" to
-unmangle them.  After all, gmane and Gnus are both his
-creations, so it _is_ possible.  But somehow I doubt it.
-
-If there weren't gmane address mangling, a quickest way to apply
-a gmane patch to commit is:
-
-	C-u g | g i t  a m - 3 - s <Enter>
-
-	For Gnus uninitiated, it reads: show as raw as opposed
-	to demimed (C-u g), pipe the article to the shell
-	command (|) that is "git am -3 -s".
-
-But I usually work in batches, so I first C-o (write to file)
-the articles to a separate mbox, review and _edit_ them as
-needed before running "git am".  And C-o does not suffer from
-Gnus demiming, so C-u g is not useful in my workflow.
+diff --git a/attr.c b/attr.c
+index 741db3b..64b77b1 100644
+--- a/attr.c
++++ b/attr.c
+@@ -406,7 +406,7 @@ static void debug_info(const char *what, struct attr_stack *elem)
+ {
+ 	fprintf(stderr, "%s: %s\n", what, elem->origin ? elem->origin : "()");
+ }
+-static void debug_set(const char *what, const char *match, struct git_attr *attr, void *v)
++static void debug_set(const char *what, const char *match, struct git_attr *attr, const void *v)
+ {
+ 	const char *value = v;
+ 
+@@ -543,10 +543,10 @@ static int path_matches(const char *pathname, int pathlen,
+ 	if (*pattern == '/')
+ 		pattern++;
+ 	if (pathlen < baselen ||
+-	    (baselen && pathname[baselen - 1] != '/') ||
++	    (baselen && pathname[baselen] != '/') ||
+ 	    strncmp(pathname, base, baselen))
+ 		return 0;
+-	return fnmatch(pattern, pathname + baselen, FNM_PATHNAME) == 0;
++	return fnmatch(pattern, pathname + baselen + 1, FNM_PATHNAME) == 0;
+ }
+ 
+ static int fill_one(const char *what, struct match_attr *a, int rem)
+diff --git a/t/t0003-attributes.sh b/t/t0003-attributes.sh
+new file mode 100755
+index 0000000..47f08a4
+--- /dev/null
++++ b/t/t0003-attributes.sh
+@@ -0,0 +1,49 @@
++#!/bin/sh
++
++test_description=gitattributes
++
++. ./test-lib.sh
++
++attr_check () {
++
++	path="$1"
++	expect="$2"
++
++	git check-attr test -- "$path" >actual &&
++	echo "$path: test: $2" >expect &&
++	diff -u expect actual
++
++}
++
++
++test_expect_success 'setup' '
++
++	mkdir -p a/b/d a/c &&
++	(
++		echo "f	test=f"
++	) >.gitattributes &&
++	(
++		echo "g test=a/g" &&
++		echo "b/g test=a/b/g"
++	) >a/.gitattributes &&
++	(
++		echo "h test=a/b/h" &&
++		echo "d/* test=a/b/d/*"
++	) >a/b/.gitattributes
++
++'
++
++test_expect_success 'attribute test' '
++
++	attr_check f f &&
++	attr_check a/f f &&
++	attr_check a/c/f f &&
++	attr_check a/g a/g &&
++	attr_check a/b/g a/b/g &&
++	attr_check b/g unspecified &&
++	attr_check a/b/h a/b/h &&
++	attr_check a/b/d/g "a/b/d/*"
++
++'
++
++test_done
+-- 
+1.5.4.1213.g2bdeb
