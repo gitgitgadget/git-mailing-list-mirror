@@ -1,71 +1,72 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: git-fetch in 1.5.4 fails versus 1.5.3.8
-Date: Fri, 8 Feb 2008 02:23:37 +0300
-Message-ID: <20080207232337.GR30368@dpotapov.dyndns.org>
-References: <pan.2008.02.04.18.25.26@progsoc.org> <20080205050741.GA4624@coredump.intra.peff.net> <pan.2008.02.06.21.56.35@progsoc.org> <20080207042332.GA7632@sigill.intra.peff.net> <pan.2008.02.07.10.15.05@progsoc.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Bug in git rebase -i where <upstream> is "HEAD" in 1.5.4?
+Date: Thu, 07 Feb 2008 15:32:44 -0800
+Message-ID: <7vlk5wmjfn.fsf@gitster.siamese.dyndns.org>
+References: <D94A5309-3EB0-46FA-9114-D11376585DBB@apple.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Anand Kumria <wildfire@progsoc.org>
-X-From: git-owner@vger.kernel.org Fri Feb 08 00:24:18 2008
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Adam Roben <aroben@apple.com>
+X-From: git-owner@vger.kernel.org Fri Feb 08 00:33:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNG6M-0000Ls-AQ
-	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 00:24:18 +0100
+	id 1JNGFX-0003gX-9l
+	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 00:33:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756605AbYBGXXp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Feb 2008 18:23:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756471AbYBGXXp
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Feb 2008 18:23:45 -0500
-Received: from nf-out-0910.google.com ([64.233.182.188]:15943 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756356AbYBGXXo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Feb 2008 18:23:44 -0500
-Received: by nf-out-0910.google.com with SMTP id g13so1033704nfb.21
-        for <git@vger.kernel.org>; Thu, 07 Feb 2008 15:23:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
-        bh=HEfX6sGAqYjhRiF4w0e0LAJGtPTMxJy+7OxvTvNncTw=;
-        b=nI/hfGk1Cl/EaxX9pWuZLubnVl7YbDL17Sq7DJW4xDe0cuCEla1AlNIetWQd+ZX/SJtFijXVpdAl4gPz9PRwzqWZ8iDW0Q5y0PYCke4+jmC24UbvpDXmvdAzUmk2c0GL+RJscQvpFbKYM8aMXZQWwy8ZQQwUxJYxUknEkgpj/oU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
-        b=MPBeUQ5SZA1k30KHMu8423AO2YampWu8OkEpyFIAWqRtbyLDFYijVZPO9FWEEH83BKFc1onKvE7izV6b6KvstqlZqIlgFKKY7nQrqCjBLEStLcJrsagCMDZlLVvYNBII7GXZlCyT9PfE8VMdV7VcQQUrLpVeH/N6i/KFkbmsO9k=
-Received: by 10.78.123.4 with SMTP id v4mr21515037huc.18.1202426621797;
-        Thu, 07 Feb 2008 15:23:41 -0800 (PST)
-Received: from localhost ( [85.141.191.183])
-        by mx.google.com with ESMTPS id e9sm2029612muf.0.2008.02.07.15.23.39
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 07 Feb 2008 15:23:40 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <pan.2008.02.07.10.15.05@progsoc.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1760998AbYBGXdF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Feb 2008 18:33:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758283AbYBGXdE
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Feb 2008 18:33:04 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:33279 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760998AbYBGXdD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Feb 2008 18:33:03 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 7AE645B15;
+	Thu,  7 Feb 2008 18:33:01 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id C9DF95B13;
+	Thu,  7 Feb 2008 18:32:56 -0500 (EST)
+In-Reply-To: <D94A5309-3EB0-46FA-9114-D11376585DBB@apple.com> (Adam Roben's
+	message of "Thu, 07 Feb 2008 16:47:27 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73017>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73018>
 
-On Thu, Feb 07, 2008 at 10:15:02AM +0000, Anand Kumria wrote:
-> On Wed, 06 Feb 2008 23:23:33 -0500, Jeff King wrote:
-> 
-> > Googling for your error message turns up only one other instance: a bug
-> > in pidgin where the result was "this seems like a bug in gnutls." I hate
-> > to say "it's not our bug" without knowing exactly what is causing it,
-> > though. And it does seem odd that it works with 1.5.3.8. I wonder if
-> > there is some difference in the way we are calling curl that matters.
-> 
-> It appears that git 1.5.3.8 on Debian links to libcurl3-gnutls whereas, 
-> at least for me, git 1.5.4 on Debian links to libcurl4-gnutls 
-> (or libcurl4-openssl).
+Adam Roben <aroben@apple.com> writes:
 
-Have you tried Git 1.5.4 with libcurl3-gnutls? It seems the package from
-Debian unstable is built with it. I have backported Git 1.5.4 to Etch with
-libcurl3-gnutls and I have not noticed any problems with https fetch. So,
-I wonder if the problem happens with libcurl4-gnutls only regardless of
-your version of Git.
+>    I've discovered a difference in behavior between `git rebase` and
+> `git rebase -i`, and I believe the behavior exhibited by `git rebase -
+> i` is incorrect and should be changed to match `git rebase`. The
+> behavior difference occurs when running the command in the form:
+>
+> git rebase [-i] <upstream> <branch>
+>
+>    If <upstream> is "HEAD", `git rebase` seems to perform these
+> (correct) steps:
+>
+> A=$(git rev-parse HEAD)
+> git checkout <branch>
+> git rebase $A
 
-Dmitry
+Yes, I remember writing that side carefully, taking exactly this
+issue into account.
+
+>    However, `git rebase -i` seems to perform these (incorrect) steps:
+
+Yeah, I see that interactive side is sloppier.  In
+git-rebase--interactive.sh, if you move
+
+        HEAD=$(git rev-parse --verify HEAD) || die "No HEAD?"
+        UPSTREAM=$(git rev-parse --verify "$1") || die "Invalid base"
+
+around l.481 up so that they come before if test !  -z "$2",
+you would be Ok, although I didn't test it.
