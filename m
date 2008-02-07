@@ -1,119 +1,62 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] allow setting GIT_WORK_TREE to "no work tree"
-Date: Thu, 7 Feb 2008 19:02:47 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802071855550.8543@racer.site>
-References: <20080206102608.GA1007@coredump.intra.peff.net> <47A98F07.4000402@viscovery.net>
+Subject: Re: [msysGit] Re: [ANNOUNCE] GIT 1.5.4
+Date: Thu, 7 Feb 2008 19:08:26 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0802071906120.8543@racer.site>
+References: <7vmyqk563z.fsf@gitster.siamese.dyndns.org> <CFB8A272-863C-4758-91F7-E9669D70A200@zib.de> <20080207123108.GA12009@bit.office.eurotux.com> <alpine.LSU.1.00.0802071255110.8543@racer.site> <20080207130715.GA14000@bit.office.eurotux.com>
+ <alpine.LSU.1.00.0802071324460.8543@racer.site> <7v1w7ooes3.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0802071831520.8543@racer.site> <20080207185923.GC28753@bit.office.eurotux.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu Feb 07 20:04:54 2008
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Steffen Prohaska <prohaska@zib.de>,
+	Git Mailing List <git@vger.kernel.org>,
+	msysGit <msysgit@googlegroups.com>
+To: Luciano Rocha <luciano@eurotux.com>
+X-From: git-owner@vger.kernel.org Thu Feb 07 20:10:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNC3I-0007NR-4f
-	for gcvg-git-2@gmane.org; Thu, 07 Feb 2008 20:04:52 +0100
+	id 1JNC8X-0001Mq-5T
+	for gcvg-git-2@gmane.org; Thu, 07 Feb 2008 20:10:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760584AbYBGTDj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Feb 2008 14:03:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760446AbYBGTDi
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Feb 2008 14:03:38 -0500
-Received: from mail.gmx.net ([213.165.64.20]:38997 "HELO mail.gmx.net"
+	id S1759868AbYBGTJP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Feb 2008 14:09:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758147AbYBGTJP
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Feb 2008 14:09:15 -0500
+Received: from mail.gmx.net ([213.165.64.20]:42099 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1760594AbYBGTDf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Feb 2008 14:03:35 -0500
-Received: (qmail invoked by alias); 07 Feb 2008 19:03:33 -0000
+	id S1759868AbYBGTJO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Feb 2008 14:09:14 -0500
+Received: (qmail invoked by alias); 07 Feb 2008 19:09:12 -0000
 Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp008) with SMTP; 07 Feb 2008 20:03:33 +0100
+  by mail.gmx.net (mp038) with SMTP; 07 Feb 2008 20:09:12 +0100
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/ELnBQaKXEpgAf88SWUx2N+dUOj7iTLVWq9+6W4j
-	x3676l0dVaAHqW
+X-Provags-ID: V01U2FsdGVkX19FdRVqF4lFzUsURksjAPoTJ2GimPEx6HErqBhF9k
+	a52zXN1lv8RLgA
 X-X-Sender: gene099@racer.site
-In-Reply-To: <47A98F07.4000402@viscovery.net>
+In-Reply-To: <20080207185923.GC28753@bit.office.eurotux.com>
 User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72989>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72990>
 
 Hi,
 
-On Wed, 6 Feb 2008, Johannes Sixt wrote:
+On Thu, 7 Feb 2008, Luciano Rocha wrote:
 
-> Jeff King schrieb:
-> > In setup_git_directory_gently, we have a special rule that says "if 
-> > GIT_DIR is set but GIT_WORK_TREE is not, then use the current working 
-> > directory as the work tree." This is the intended behavior for the 
-> > user perspective.
-> > 
-> > However, setup_git_directory_gently sets GIT_DIR itself, meaning that 
-> > further setups (either because we are executing a command via alias, 
-> > or in a subprocess) will see the non-existent GIT_WORK_TREE and assume 
-> > we fall into the "current working directory is the working tree" 
-> > codepath.
-> > 
-> > Instead, we now use a special value of GIT_WORK_TREE to indicate that 
-> > we have already checked for a worktree and that there isn't one, 
-> > setting it when we set GIT_DIR and checking for it in the special case 
-> > path.
-> > 
-> > The special value is a blank GIT_WORK_TREE; it could be any value, but 
-> > this should not conflict with any user values (and as a bonus, you can 
-> > now tell git "I don't have a work tree" with "GIT_WORK_TREE= git", 
-> > though I suspect the use case for that is limited).
-> 
-> Hrm. Unfortunately, on Windows there is no such thing as an empty 
-> environment string. setenv(x, "") *removes* the environment variable.
+> I was asking for the reasons for the installer being like it is, not for 
+> you to change your mind.
 
-That might be a shortcoming of our implementation of setenv():
+I am sorry: I misunderstood.
 
--- snip --
-cd /git
+Two reasons: we stay on the safe side (because no lawyer could now 
+possible say that we forgot to present the license), and we want to give 
+the Git installer some "professional" look-and-feel ;-)
 
-cat > a1.c << EOF
-#include <stdio.h>
-#include "compat/setenv.c"
-#include "compat/unsetenv.c"
-
-static void p()
-{
-	const char *abc = getenv("ABC");
-	printf("env ABC: %s\n", abc ? abc : "(null)");
-}
-
-int main()
-{
-	p();
-	gitsetenv("ABC", "Hello", 1);
-	p();
-	gitsetenv("ABC", "", 1);
-	p();
-	gitunsetenv("ABC");
-	p();
-	return 0;
-}
-EOF
-
-gcc -DNO_MMAP=1 -I. -Icompat -o a1.exe a1.c
-
-ABC="" ./a1.exe 
--- snap --
-
-This will show
-
-env ABC: 
-env ABC: Hello
-env ABC: (null)
-env ABC: (null)
-
-So it seems that environment variables _can_ be empty.  Just our 
-relatively stupid implementation of setenv() does not do it.
-
-Maybe something like compat/unsetenv.c is needed in setenv(), too.
+Please ignore my comments that offended you.
 
 Ciao,
 Dscho
