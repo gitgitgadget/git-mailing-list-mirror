@@ -1,97 +1,126 @@
-From: Anand Kumria <wildfire@progsoc.org>
-Subject: Re: git-fetch in 1.5.4 fails versus 1.5.3.8
-Date: Thu, 7 Feb 2008 10:15:02 +0000 (UTC)
-Message-ID: <pan.2008.02.07.10.15.05@progsoc.org>
-References: <pan.2008.02.04.18.25.26@progsoc.org>
-	<20080205050741.GA4624@coredump.intra.peff.net>
-	<pan.2008.02.06.21.56.35@progsoc.org>
-	<20080207042332.GA7632@sigill.intra.peff.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: What's cooking in git.git (topics)
+Date: Thu, 07 Feb 2008 02:32:48 -0800 (PST)
+Message-ID: <m3ir113vmv.fsf@localhost.localdomain>
+References: <7v7ihmuwzi.fsf@gitster.siamese.dyndns.org>
+	<7vodavd9qw.fsf@gitster.siamese.dyndns.org>
+	<7vbq6tset4.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 07 11:16:07 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 07 11:33:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JN3nS-0005Zs-Qi
-	for gcvg-git-2@gmane.org; Thu, 07 Feb 2008 11:15:59 +0100
+	id 1JN44S-00038m-0T
+	for gcvg-git-2@gmane.org; Thu, 07 Feb 2008 11:33:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753955AbYBGKPW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Feb 2008 05:15:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754118AbYBGKPV
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Feb 2008 05:15:21 -0500
-Received: from main.gmane.org ([80.91.229.2]:38039 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753064AbYBGKPU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Feb 2008 05:15:20 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1JN3mj-0001cE-Kw
-	for git@vger.kernel.org; Thu, 07 Feb 2008 10:15:13 +0000
-Received: from 82-35-82-57.cable.ubr03.dals.blueyonder.co.uk ([82.35.82.57])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 07 Feb 2008 10:15:13 +0000
-Received: from wildfire by 82-35-82-57.cable.ubr03.dals.blueyonder.co.uk with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 07 Feb 2008 10:15:13 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 82-35-82-57.cable.ubr03.dals.blueyonder.co.uk
-User-Agent: Pan/0.132 (Waxed in Black)
+	id S1755144AbYBGKcy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Feb 2008 05:32:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755038AbYBGKcy
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Feb 2008 05:32:54 -0500
+Received: from wa-out-1112.google.com ([209.85.146.180]:52539 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754778AbYBGKcx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Feb 2008 05:32:53 -0500
+Received: by wa-out-1112.google.com with SMTP id v27so1020417wah.23
+        for <git@vger.kernel.org>; Thu, 07 Feb 2008 02:32:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
+        bh=XT4xvW9JHHovCEB7pP4MdmERIUYe0xRsLyOFsSz5z9E=;
+        b=WxmdyFdJ5+gBRTnNbC4b0i66ULS7T/w39wSS8cY28e0jtuhvJv9Cakd3vLL5VmVkZrXfmVi8jZfRq2LG0EpgyQfCMrDqKQKTSKtB/dgVKHv0B9Ay/q2yG6fP1Zo7UwsGHoQbe/X1RXLLeUEsA+eSFz92vk17gzGPWXD35j7MIio=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
+        b=Y2aHPzg0zU6BCMSBgIvV21Sd+nanUAPrTmBu9UiRETp4AJl4Lb/riJjgkVvAc5jAi1NEOEtAiFz+/uaI6SkBeFhqehMB0UavCR/cDqevSPpVeaYcEUhLu9Y/iypfqaskMUSc4vpk3szveukR92k2diOADTThKqSUQNVoeVyICcw=
+Received: by 10.114.159.1 with SMTP id h1mr4842002wae.122.1202380369853;
+        Thu, 07 Feb 2008 02:32:49 -0800 (PST)
+Received: from localhost.localdomain ( [83.8.207.33])
+        by mx.google.com with ESMTPS id c14sm28621307nfi.6.2008.02.07.02.32.47
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 07 Feb 2008 02:32:48 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m17AWA4t020273;
+	Thu, 7 Feb 2008 11:32:21 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m17AVsfU020269;
+	Thu, 7 Feb 2008 11:31:54 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@fuw.edu.pl using -f
+In-Reply-To: <7vbq6tset4.fsf@gitster.siamese.dyndns.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72921>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72922>
 
-On Wed, 06 Feb 2008 23:23:33 -0500, Jeff King wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On Wed, Feb 06, 2008 at 09:56:35PM +0000, Anand Kumria wrote:
+> * jk/noetcconfig (Wed Feb 6 05:11:53 2008 -0500) 2 commits
+>  + fix config reading in tests
+>  + allow suppressing of global and system config
 > 
->> With GIT_SSL_NO_VERIFY defined, it fails with:
->> 
->> $ GIT_SSL_NO_VERIFY=1 ../git/git-fetch richard error:
->> gnutls_handshake() failed: ASN1 parser: Element was not found.
->> (curl_result = 35, http_code = 0, sha1 =
->> 510567ca41e201253445528ca6eb89ed43e71fce) Getting pack list for
->> https://server.example.com/~richard/newfoo.git error:
->> gnutls_handshake() failed: ASN1 parser: Element was not found. Getting
->> alternates list for https://server.example.com/~richard/newfoo.git
->> error: Unable to find 510567ca41e201253445528ca6eb89ed43e71fce under
->> https://server.example.com/~richard/newfoo.git Cannot obtain needed
->> object 510567ca41e201253445528ca6eb89ed43e71fce fatal: Fetch failed.
+> * lh/gitdir (Mon Feb 4 21:59:21 2008 +0100) 4 commits
+>  - git-submodule: prepare for the .git-file
+>  - Add tests for .git file
+>  - Document the .git-file
+>  - Add platform-independent .git "symlink"
 > 
-> OK, I was finally able to reproduce your bug. It seems that it _only_
-> happens when using curl built against gnutls. I built against the
-> libcurl4-openssl-dev in Debian unstable, and the problem goes away.
+> Seems to have funny interaction with Jeff King's test script
+> updates.
+
+I think that gitdir is a very good idea, but needs further testing.
+ 
+> * ph/describe-match (Mon Dec 24 12:18:22 2007 +0100) 2 commits
+>  + git-name-rev: add a --(no-)undefined option.
+>  + git-describe: Add a --match option to limit considered tags.
+
+This looks nice. I'd like also to have some kind of --pretty=<format>
+(or --format=<format>) for git-describe, and a way to limit both
+git-name-rev and git-describe to only *signed* commits.
+
+With this it would be fairly easy in generating git.spec file
+from git.spec.in to check if we are on tagged release and use
+pre-compiled manpages if it is the case. Although perhaps option
+(default?) to use pre-compiled manpages (even if they are outdated
+a bit) instead of requiring asciidoc toolchain would be better;
+this would make SRPM size larger, as it would contain manpages.
+ 
+
+> * nd/dashless (Wed Nov 28 23:21:57 2007 +0700) 1 commit
+>  - Move all dashed-form commands to libexecdir
 > 
-> Can you confirm that building using the openssl version of curl fixes
-> the problem?
+> Scheduled for 1.6.0.  I am not sure if we should merge this to
+> 'next' before 1.5.5.  Most active people will be on 'next' and
+> if we have this there, the resulting 1.5.5 release might end up
+> having issues that come from differences this one introduces.
 
-Confirmed.
+Perhaps we should first generate libexecdir separate from bindir,
+and put helper scripts there (the *--* scripts), to not pollute
+PATH with commands which are never meant to be called directly
+by user.
+ 
+> * bf/remote-head (Sun Dec 23 20:52:32 2007 -0500) 1 commit
+>  . git-remote: make add -f guess HEAD, as clone does
+> 
+> I might have carefully looked at this in the past but I do not
+> recall if there were issues.  Need re-reviewing and help from
+> the list is appreciated.
 
-Thanks for figuring out how to reproduce it ... how did you btw?
+I'd rather below get implemented, so there isn't any guessing
+involved.
+ 
+> * jc/git-symref (Tue Dec 11 16:42:46 2007 -0800) 1 commit
+>  . PARK: show-symref protocol extension.
 
-> Googling for your error message turns up only one other instance: a bug
-> in pidgin where the result was "this seems like a bug in gnutls." I hate
-> to say "it's not our bug" without knowing exactly what is causing it,
-> though. And it does seem odd that it works with 1.5.3.8. I wonder if
-> there is some difference in the way we are calling curl that matters.
+What are the plans on git-clone builtinification (and cleaning up
+clone progress and error messages[*1*])?
 
-It appears that git 1.5.3.8 on Debian links to libcurl3-gnutls whereas, 
-at least for me, git 1.5.4 on Debian links to libcurl4-gnutls 
-(or libcurl4-openssl).
-
-I agree with you, it is a bit problematic when the library (curl) relies
-on another library (gnutls) and the bottom one is having a problem.
-
-Gerrit - since I seem to be able to reproduce this fairly easily - would
-it be useful to you to have me do anything to track this down. Or will you
-switch the Debian build to openssl?
-
-Thanks for looking into this Jeff.
-
-Regards,
-Anand
+[*1*] http://texagon.blogspot.com/2008/02/let-play-git.html
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
