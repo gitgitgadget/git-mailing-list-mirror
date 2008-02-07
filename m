@@ -1,74 +1,108 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] allow setting GIT_WORK_TREE to "no work tree"
-Date: Thu, 7 Feb 2008 00:13:18 -0500
-Message-ID: <20080207051317.GA32296@sigill.intra.peff.net>
-References: <20080206102608.GA1007@coredump.intra.peff.net> <47A98F07.4000402@viscovery.net> <20080206110131.GA4167@coredump.intra.peff.net> <7v4pclvmae.fsf@gitster.siamese.dyndns.org> <7vwsphu7gr.fsf@gitster.siamese.dyndns.org>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH] config: add test cases for empty value and no value config
+ variables.
+Date: Thu, 7 Feb 2008 06:23:46 +0100
+Message-ID: <20080207062346.3936cc53.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org,
-	Lars Hjemli <hjemli@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 07 06:13:56 2008
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio Hamano <junkio@cox.net>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Thu Feb 07 06:18:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JMz5A-0006Hf-2H
-	for gcvg-git-2@gmane.org; Thu, 07 Feb 2008 06:13:56 +0100
+	id 1JMz9Q-00073t-Jv
+	for gcvg-git-2@gmane.org; Thu, 07 Feb 2008 06:18:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751395AbYBGFNV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Feb 2008 00:13:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751320AbYBGFNV
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Feb 2008 00:13:21 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3359 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751325AbYBGFNU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Feb 2008 00:13:20 -0500
-Received: (qmail 9169 invoked by uid 111); 7 Feb 2008 05:13:19 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Thu, 07 Feb 2008 00:13:19 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 07 Feb 2008 00:13:18 -0500
-Content-Disposition: inline
-In-Reply-To: <7vwsphu7gr.fsf@gitster.siamese.dyndns.org>
+	id S1751838AbYBGFRr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Feb 2008 00:17:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751469AbYBGFRr
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Feb 2008 00:17:47 -0500
+Received: from smtp1-g19.free.fr ([212.27.42.27]:34622 "EHLO smtp1-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751320AbYBGFRq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Feb 2008 00:17:46 -0500
+Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id DEE631AB2B4;
+	Thu,  7 Feb 2008 06:17:44 +0100 (CET)
+Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with SMTP id 8B7951AB2B9;
+	Thu,  7 Feb 2008 06:17:44 +0100 (CET)
+X-Mailer: Sylpheed 2.4.8 (GTK+ 2.12.5; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72893>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72894>
 
-On Wed, Feb 06, 2008 at 12:59:32PM -0800, Junio C Hamano wrote:
+The tests in 't1300-repo-config.sh' did not check what happens when
+an empty value like the following is used in the config file:
 
-> I do not like the magic GIT_WORK_TREE=: which is simply
-> illogical.  GIT_EDITOR=: made perfect sense (":" is actually a
-> command that succeeds without doing anything), but ":" does not
-> have anything to do with "there is no such path".
+[emptyvalue]
+	variable =
 
-No, it doesn't, but they are both no-ops. Sort of. I agree the reasoning
-is stretched, but I think we are just going to have to choose _some_
-arbitrary value.
+Also it was not checked that a variable with no value like the
+following:
 
-Unless you want to switch it to a "git set GIT_DIR automatically,
-so don't pretend the user set it" flag variable.
+[novalue]
+	variable
 
-> I was tempted to suggest GIT_WORK_TREE=/dev/null because that is
-> what "diff" uses to mark "this does not even exist", but that
-> feels dirty.
+gives a boolean "true" value, while an ampty value gives a boolean
+"false" value.
 
-It feels dirty to me, too. I would rather choose something that doesn't
-even look like a path. I think GIT_WORK_TREE=" " is too ugly, too.
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ t/t1300-repo-config.sh |   23 +++++++++++++++++++++++
+ 1 files changed, 23 insertions(+), 0 deletions(-)
 
-Also, having just looked at the '.git-file' code, it does the same thing
-(setting GIT_DIR even though the user didn't explicitly ask for it), so
-it will need a similar fix. Which makes me lean towards just setting a
-"we set this behind the user's back" flag, since that code won't even
-have anything to do with the worktree.
-
-In fact, the more I think about it, that makes sense. WORK_TREE munging
-just happens to be the only special behavior right now that depends on
-whether the user manually set GIT_DIR. But what we really want to
-communicate to later code is not "I have corrected this particular
-munge" but "don't run any special behavior as a result of this variable
-being set."
-
--Peff
+diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
+index a786c5c..66aeb88 100755
+--- a/t/t1300-repo-config.sh
++++ b/t/t1300-repo-config.sh
+@@ -283,17 +283,40 @@ test_expect_success '--add' \
+ cat > .git/config << EOF
+ [novalue]
+ 	variable
++[emptyvalue]
++	variable =
+ EOF
+ 
+ test_expect_success 'get variable with no value' \
+ 	'git config --get novalue.variable ^$'
+ 
++test_expect_success 'get variable with empty value' \
++	'git config --get emptyvalue.variable ^$'
++
+ echo novalue.variable > expect
+ 
+ test_expect_success 'get-regexp variable with no value' \
+ 	'git config --get-regexp novalue > output &&
+ 	 cmp output expect'
+ 
++echo 'emptyvalue.variable ' > expect
++
++test_expect_success 'get-regexp variable with empty value' \
++	'git config --get-regexp emptyvalue > output &&
++	 cmp output expect'
++
++echo true > expect
++
++test_expect_success 'get bool variable with no value' \
++	'git config --bool novalue.variable > output &&
++	 cmp output expect'
++
++echo false > expect
++
++test_expect_success 'get bool variable with empty value' \
++	'git config --bool emptyvalue.variable > output &&
++	 cmp output expect'
++
+ git config > output 2>&1
+ 
+ test_expect_success 'no arguments, but no crash' \
+-- 
+1.5.4.18.gd0b8
