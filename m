@@ -1,244 +1,624 @@
 From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: [PATCH v2 06/11] Build-in merge-recursive
-Date: Thu, 7 Feb 2008 11:40:05 -0500 (EST)
-Message-ID: <alpine.LNX.1.00.0802071130180.13593@iabervon.org>
+Subject: [PATCH v2 11/11] Build in checkout
+Date: Thu, 7 Feb 2008 11:40:23 -0500 (EST)
+Message-ID: <alpine.LNX.1.00.0802071137490.13593@iabervon.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Thu Feb 07 17:42:04 2008
+X-From: git-owner@vger.kernel.org Thu Feb 07 17:42:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JN9oh-0007U1-Sf
-	for gcvg-git-2@gmane.org; Thu, 07 Feb 2008 17:41:40 +0100
+	id 1JN9ol-0007U1-7M
+	for gcvg-git-2@gmane.org; Thu, 07 Feb 2008 17:41:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755707AbYBGQkL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Feb 2008 11:40:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755599AbYBGQkL
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Feb 2008 11:40:11 -0500
-Received: from iabervon.org ([66.92.72.58]:39486 "EHLO iabervon.org"
+	id S1755875AbYBGQk3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Feb 2008 11:40:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755624AbYBGQk3
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Feb 2008 11:40:29 -0500
+Received: from iabervon.org ([66.92.72.58]:39496 "EHLO iabervon.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755519AbYBGQkH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Feb 2008 11:40:07 -0500
-Received: (qmail 29782 invoked by uid 1000); 7 Feb 2008 16:40:05 -0000
+	id S1755875AbYBGQkZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Feb 2008 11:40:25 -0500
+Received: (qmail 29836 invoked by uid 1000); 7 Feb 2008 16:40:23 -0000
 Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 7 Feb 2008 16:40:05 -0000
+  by localhost with SMTP; 7 Feb 2008 16:40:23 -0000
 User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72970>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72971>
 
-This makes write_tree_from_memory(), which writes the active cache as
-a tree and returns the struct tree for it, available to other code. It
-also makes available merge_trees(), which does the internal merge of
-two trees with a known base, and merge_recursive(), which does the
-recursive internal merge of two commits with a list of common
-ancestors.
+The only differences in behavior should be:
 
-The first two of these will be used by checkout -m, and the third is
-presumably useful in general, although the implementation of checkout
--m which entirely matches the behavior of the shell version does not
-use it (since it ignores the difference of ancestry between the old
-branch and the new branch).
+ - git checkout -m with non-trivial merging won't print out
+   merge-recursive messages (see the change in t7201-co.sh)
+
+ - git checkout -- paths... will give a sensible error message if
+   HEAD is invalid as a commit.
+
+ - some intermediate states which were written to disk in the shell
+   version (in particular, index states) are only kept in memory in
+   this version, and therefore these can no longer be revealed by
+   later write operations becoming impossible.
+
+ - when we change branches, we discard MERGE_MSG, SQUASH_MSG, and
+   rr-cache/MERGE_RR, like reset always has.
+
+I'm not 100% sure I got the merge recursive setup exactly right; the
+base for a non-trivial merge in the shell code doesn't seem
+theoretically justified to me, but I tried to match it anyway, and the
+tests all pass this way.
+
+Other than these items, the results should be identical to the shell
+version, so far as I can tell.
 
 Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
 ---
- Makefile                                       |    2 +-
- merge-recursive.c => builtin-merge-recursive.c |   44 ++++++++++++-----------
- builtin.h                                      |    1 +
- git.c                                          |    1 +
- merge-recursive.h                              |   20 +++++++++++
- 5 files changed, 46 insertions(+), 22 deletions(-)
- rename merge-recursive.c => builtin-merge-recursive.c (98%)
- create mode 100644 merge-recursive.h
+ Makefile                                           |    3 +-
+ builtin-checkout.c                                 |  479 ++++++++++++++++++++
+ builtin.h                                          |    1 +
+ .../examples/git-checkout.sh                       |    0 
+ git.c                                              |    1 +
+ t/t7201-co.sh                                      |    7 -
+ 6 files changed, 483 insertions(+), 8 deletions(-)
+ create mode 100644 builtin-checkout.c
+ rename git-checkout.sh => contrib/examples/git-checkout.sh (100%)
 
 diff --git a/Makefile b/Makefile
-index 2d97366..27a8b1b 100644
+index cc0643e..2b5093e 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -262,7 +262,6 @@ PROGRAMS = \
- 	git-upload-pack$X \
- 	git-pack-redundant$X git-var$X \
- 	git-merge-tree$X git-imap-send$X \
--	git-merge-recursive$X \
- 	$(EXTRA_PROGRAMS)
+@@ -223,7 +223,7 @@ BASIC_CFLAGS =
+ BASIC_LDFLAGS =
  
- # Empty...
-@@ -366,6 +365,7 @@ BUILTIN_OBJS = \
- 	builtin-merge-base.o \
- 	builtin-merge-file.o \
- 	builtin-merge-ours.o \
-+	builtin-merge-recursive.o \
- 	builtin-mv.o \
- 	builtin-name-rev.o \
- 	builtin-pack-objects.o \
-diff --git a/merge-recursive.c b/builtin-merge-recursive.c
-similarity index 98%
-rename from merge-recursive.c
-rename to builtin-merge-recursive.c
-index bdf03b1..45d4601 100644
---- a/merge-recursive.c
-+++ b/builtin-merge-recursive.c
-@@ -7,6 +7,7 @@
- #include "cache-tree.h"
- #include "commit.h"
- #include "blob.h"
+ SCRIPT_SH = \
+-	git-bisect.sh git-checkout.sh \
++	git-bisect.sh \
+ 	git-clone.sh \
+ 	git-merge-one-file.sh git-mergetool.sh git-parse-remote.sh \
+ 	git-pull.sh git-rebase.sh git-rebase--interactive.sh \
+@@ -335,6 +335,7 @@ BUILTIN_OBJS = \
+ 	builtin-bundle.o \
+ 	builtin-cat-file.o \
+ 	builtin-check-attr.o \
++	builtin-checkout.o \
+ 	builtin-checkout-index.o \
+ 	builtin-check-ref-format.o \
+ 	builtin-clean.o \
+diff --git a/builtin-checkout.c b/builtin-checkout.c
+new file mode 100644
+index 0000000..0894eae
+--- /dev/null
++++ b/builtin-checkout.c
+@@ -0,0 +1,479 @@
++#include "cache.h"
 +#include "builtin.h"
- #include "tree-walk.h"
- #include "diff.h"
- #include "diffcore.h"
-@@ -17,6 +18,7 @@
- #include "xdiff-interface.h"
- #include "interpolate.h"
- #include "attr.h"
++#include "parse-options.h"
++#include "refs.h"
++#include "commit.h"
++#include "tree.h"
++#include "tree-walk.h"
++#include "unpack-trees.h"
++#include "dir.h"
++#include "run-command.h"
 +#include "merge-recursive.h"
- 
- static int subtree_merge;
- 
-@@ -232,7 +234,7 @@ static int unmerged_index(void)
- 	return 0;
- }
- 
--static struct tree *git_write_tree(void)
-+struct tree *write_tree_from_memory(void)
- {
- 	struct tree *result = NULL;
- 
-@@ -1495,12 +1497,12 @@ static int process_entry(const char *path, struct stage_data *entry,
- 	return clean_merge;
- }
- 
--static int merge_trees(struct tree *head,
--		       struct tree *merge,
--		       struct tree *common,
--		       const char *branch1,
--		       const char *branch2,
--		       struct tree **result)
-+int merge_trees(struct tree *head,
-+		struct tree *merge,
-+		struct tree *common,
-+		const char *branch1,
-+		const char *branch2,
-+		struct tree **result)
- {
- 	int code, clean;
- 
-@@ -1552,7 +1554,7 @@ static int merge_trees(struct tree *head,
- 		clean = 1;
- 
- 	if (index_only)
--		*result = git_write_tree();
-+		*result = write_tree_from_memory();
- 
- 	return clean;
- }
-@@ -1572,12 +1574,12 @@ static struct commit_list *reverse_commit_list(struct commit_list *list)
-  * Merge the commits h1 and h2, return the resulting virtual
-  * commit object and a flag indicating the cleanness of the merge.
-  */
--static int merge(struct commit *h1,
--		 struct commit *h2,
--		 const char *branch1,
--		 const char *branch2,
--		 struct commit_list *ca,
--		 struct commit **result)
-+int merge_recursive(struct commit *h1,
-+		    struct commit *h2,
-+		    const char *branch1,
-+		    const char *branch2,
-+		    struct commit_list *ca,
-+		    struct commit **result)
- {
- 	struct commit_list *iter;
- 	struct commit *merged_common_ancestors;
-@@ -1622,11 +1624,11 @@ static int merge(struct commit *h1,
- 		 * "conflicts" were already resolved.
- 		 */
- 		discard_cache();
--		merge(merged_common_ancestors, iter->item,
--		      "Temporary merge branch 1",
--		      "Temporary merge branch 2",
--		      NULL,
--		      &merged_common_ancestors);
-+		merge_recursive(merged_common_ancestors, iter->item,
-+				"Temporary merge branch 1",
-+				"Temporary merge branch 2",
-+				NULL,
-+				&merged_common_ancestors);
- 		call_depth--;
- 
- 		if (!merged_common_ancestors)
-@@ -1695,7 +1697,7 @@ static int merge_config(const char *var, const char *value)
- 	return git_default_config(var, value);
- }
- 
--int main(int argc, char *argv[])
-+int cmd_merge_recursive(int argc, const char **argv, const char *prefix)
- {
- 	static const char *bases[20];
- 	static unsigned bases_count = 0;
-@@ -1749,7 +1751,7 @@ int main(int argc, char *argv[])
- 		struct commit *ancestor = get_ref(bases[i]);
- 		ca = commit_list_insert(ancestor, &ca);
- 	}
--	clean = merge(h1, h2, branch1, branch2, ca, &result);
-+	clean = merge_recursive(h1, h2, branch1, branch2, ca, &result);
- 
- 	if (active_cache_changed &&
- 	    (write_cache(index_fd, active_cache, active_nr) ||
++#include "branch.h"
++#include "diff.h"
++#include "revision.h"
++
++static const char * const checkout_usage[] = {
++	"git checkout [options] <branch>",
++	"git checkout [options] [<branch>] -- <file>...",
++	NULL,
++};
++
++static int post_checkout_hook(struct commit *old, struct commit *new,
++			      int changed)
++{
++	struct child_process proc;
++	const char *name = git_path("hooks/post-checkout");
++	const char *argv[5];
++
++	if (access(name, X_OK) < 0)
++		return 0;
++
++	memset(&proc, 0, sizeof(proc));
++	argv[0] = name;
++	argv[1] = xstrdup(sha1_to_hex(old->object.sha1));
++	argv[2] = xstrdup(sha1_to_hex(new->object.sha1));
++	argv[3] = changed ? "1" : "0";
++	argv[4] = NULL;
++	proc.argv = argv;
++	proc.no_stdin = 1;
++	proc.stdout_to_stderr = 1;
++	return run_command(&proc);
++}
++
++static int update_some(const unsigned char *sha1, const char *base, int baselen,
++		       const char *pathname, unsigned mode, int stage)
++{
++	int len;
++	struct cache_entry *ce;
++
++	if (S_ISGITLINK(mode))
++		return 0;
++
++	if (S_ISDIR(mode))
++		return READ_TREE_RECURSIVE;
++
++	len = baselen + strlen(pathname);
++	ce = xcalloc(1, cache_entry_size(len));
++	hashcpy(ce->sha1, sha1);
++	memcpy(ce->name, base, baselen);
++	memcpy(ce->name + baselen, pathname, len - baselen);
++	ce->ce_flags = create_ce_flags(len, 0);
++	ce->ce_mode = create_ce_mode(mode);
++	add_cache_entry(ce, ADD_CACHE_OK_TO_ADD | ADD_CACHE_OK_TO_REPLACE);
++	return 0;
++}
++
++static int read_tree_some(struct tree *tree, const char **pathspec)
++{
++	int newfd;
++	struct lock_file lock_file;
++	newfd = hold_locked_index(&lock_file, 1);
++	read_cache();
++
++	read_tree_recursive(tree, "", 0, 0, pathspec, update_some);
++
++	if (write_cache(newfd, active_cache, active_nr) ||
++	    commit_locked_index(&lock_file))
++		die("unable to write new index file");
++
++	/* update the index with the given tree's info
++	 * for all args, expanding wildcards, and exit
++	 * with any non-zero return code.
++	 */
++	return 0;
++}
++
++static int checkout_paths(const char **pathspec)
++{
++	int pos;
++	struct checkout state;
++	static char *ps_matched;
++	unsigned char rev[20];
++	int flag;
++	struct commit *head;
++
++	for (pos = 0; pathspec[pos]; pos++)
++		;
++	ps_matched = xcalloc(1, pos);
++
++	for (pos = 0; pos < active_nr; pos++) {
++		struct cache_entry *ce = active_cache[pos];
++		pathspec_match(pathspec, ps_matched, ce->name, 0);
++	}
++
++	if (report_path_error(ps_matched, pathspec, 0))
++		return 1;
++
++	memset(&state, 0, sizeof(state));
++	state.force = 1;
++	state.refresh_cache = 1;
++	for (pos = 0; pos < active_nr; pos++) {
++		struct cache_entry *ce = active_cache[pos];
++		if (pathspec_match(pathspec, NULL, ce->name, 0)) {
++			checkout_entry(ce, &state, NULL);
++		}
++	}
++
++	resolve_ref("HEAD", rev, 0, &flag);
++	head = lookup_commit_reference_gently(rev, 1);
++
++	return post_checkout_hook(head, head, 0);
++}
++
++static void show_local_changes(struct object *head)
++{
++	struct rev_info rev;
++	/* I think we want full paths, even if we're in a subdirectory. */
++	init_revisions(&rev, NULL);
++	rev.abbrev = 0;
++	rev.diffopt.output_format |= DIFF_FORMAT_NAME_STATUS;
++	add_pending_object(&rev, head, NULL);
++	run_diff_index(&rev, 0);
++}
++
++static void describe_detached_head(char *msg, struct commit *commit)
++{
++	struct strbuf sb;
++	strbuf_init(&sb, 0);
++	parse_commit(commit);
++	pretty_print_commit(CMIT_FMT_ONELINE, commit, &sb, 0, "", "", 0, 0);
++	fprintf(stderr, "%s %s... %s\n", msg,
++		find_unique_abbrev(commit->object.sha1, DEFAULT_ABBREV), sb.buf);
++	strbuf_release(&sb);
++}
++
++static int reset_to_new(struct tree *tree, int quiet)
++{
++	struct unpack_trees_options opts;
++	struct tree_desc tree_desc;
++	memset(&opts, 0, sizeof(opts));
++	opts.head_idx = -1;
++	opts.update = 1;
++	opts.reset = 1;
++	opts.merge = 1;
++	opts.fn = oneway_merge;
++	opts.verbose_update = !quiet;
++	parse_tree(tree);
++	init_tree_desc(&tree_desc, tree->buffer, tree->size);
++	if (unpack_trees(1, &tree_desc, &opts))
++		return 128;
++	return 0;
++}
++
++static void reset_clean_to_new(struct tree *tree, int quiet)
++{
++	struct unpack_trees_options opts;
++	struct tree_desc tree_desc;
++	memset(&opts, 0, sizeof(opts));
++	opts.head_idx = -1;
++	opts.skip_unmerged = 1;
++	opts.reset = 1;
++	opts.merge = 1;
++	opts.fn = oneway_merge;
++	opts.verbose_update = !quiet;
++	parse_tree(tree);
++	init_tree_desc(&tree_desc, tree->buffer, tree->size);
++	if (unpack_trees(1, &tree_desc, &opts))
++		exit(128);
++}
++
++struct checkout_opts {
++	int quiet;
++	int merge;
++	int force;
++
++	char *new_branch;
++	int new_branch_log;
++	int track;
++};
++
++struct branch_info {
++	const char *name; /* The short name used */
++	const char *path; /* The full name of a real branch */
++	struct commit *commit; /* The named commit */
++};
++
++static void setup_branch_path(struct branch_info *branch)
++{
++	struct strbuf buf;
++	strbuf_init(&buf, 0);
++	strbuf_addstr(&buf, "refs/heads/");
++	strbuf_addstr(&buf, branch->name);
++	branch->path = strbuf_detach(&buf, NULL);
++}
++
++static int merge_working_tree(struct checkout_opts *opts,
++			      struct branch_info *old, struct branch_info *new,
++			      const char *prefix)
++{
++	int ret;
++	struct lock_file *lock_file = xcalloc(1, sizeof(struct lock_file));
++	int newfd = hold_locked_index(lock_file, 1);
++	read_cache();
++
++	if (opts->force) {
++		ret = reset_to_new(new->commit->tree, opts->quiet);
++		if (ret)
++			return ret;
++	} else {
++		struct tree_desc trees[2];
++		struct tree *tree;
++		struct unpack_trees_options topts;
++		memset(&topts, 0, sizeof(topts));
++		topts.head_idx = -1;
++
++		refresh_cache(REFRESH_QUIET);
++
++		if (unmerged_cache()) {
++			ret = opts->merge ? -1 :
++				error("you need to resolve your current index first");
++		} else {
++			topts.update = 1;
++			topts.merge = 1;
++			topts.gently = opts->merge;
++			topts.fn = twoway_merge;
++			topts.dir = xcalloc(1, sizeof(*topts.dir));
++			topts.dir->show_ignored = 1;
++			topts.dir->exclude_per_dir = ".gitignore";
++			topts.prefix = prefix;
++			tree = parse_tree_indirect(old->commit->object.sha1);
++			init_tree_desc(&trees[0], tree->buffer, tree->size);
++			tree = parse_tree_indirect(new->commit->object.sha1);
++			init_tree_desc(&trees[1], tree->buffer, tree->size);
++			ret = unpack_trees(2, trees, &topts);
++		}
++		if (ret) {
++			/*
++			 * Unpack couldn't do a trivial merge; either
++			 * give up or do a real merge, depending on
++			 * whether the merge flag was used.
++			 */
++			struct tree *result;
++			struct tree *work;
++			if (!opts->merge)
++				return 1;
++			parse_commit(old->commit);
++
++			/* Do more real merge */
++
++			/*
++			 * We update the index fully, then write the
++			 * tree from the index, then merge the new
++			 * branch with the current tree, with the old
++			 * branch as the base. Then we reset the index
++			 * (but not the working tree) to the new
++			 * branch, leaving the working tree as the
++			 * merged version, but skipping unmerged
++			 * entries in the index.
++			 */
++
++			add_files_to_cache(0, NULL, NULL);
++			work = write_tree_from_memory();
++
++			ret = reset_to_new(new->commit->tree, opts->quiet);
++			if (ret)
++				return ret;
++			merge_trees(new->commit->tree, work, old->commit->tree,
++				    new->name, "local", &result);
++			reset_clean_to_new(new->commit->tree, opts->quiet);
++		}
++	}
++
++	if (write_cache(newfd, active_cache, active_nr) ||
++	    commit_locked_index(lock_file))
++		die("unable to write new index file");
++
++	if (!opts->force)
++		show_local_changes(&new->commit->object);
++
++	return 0;
++}
++
++static void update_refs_for_switch(struct checkout_opts *opts,
++				   struct branch_info *old,
++				   struct branch_info *new)
++{
++	struct strbuf msg;
++	const char *old_desc;
++	if (opts->new_branch) {
++		create_branch(old->name, opts->new_branch, new->name, 0,
++			      opts->new_branch_log, opts->track);
++		new->name = opts->new_branch;
++		setup_branch_path(new);
++	}
++
++	strbuf_init(&msg, 0);
++	old_desc = old->name;
++	if (!old_desc)
++		old_desc = sha1_to_hex(old->commit->object.sha1);
++	strbuf_addf(&msg, "checkout: moving from %s to %s",
++		    old_desc, new->name);
++
++	if (new->path) {
++		create_symref("HEAD", new->path, msg.buf);
++		if (!opts->quiet) {
++			if (old->path && !strcmp(new->path, old->path))
++				fprintf(stderr, "Already on \"%s\"\n",
++					new->name);
++			else
++				fprintf(stderr, "Switched to%s branch \"%s\"\n",
++					opts->new_branch ? " a new" : "",
++					new->name);
++		}
++	} else if (strcmp(new->name, "HEAD")) {
++		update_ref(msg.buf, "HEAD", new->commit->object.sha1, NULL,
++			   REF_NODEREF, DIE_ON_ERR);
++		if (!opts->quiet) {
++			if (old->path)
++				fprintf(stderr, "Note: moving to \"%s\" which isn't a local branch\nIf you want to create a new branch from this checkout, you may do so\n(now or later) by using -b with the checkout command again. Example:\n  git checkout -b <new_branch_name>\n", new->name);
++			describe_detached_head("HEAD is now at", new->commit);
++		}
++	}
++	remove_branch_state();
++	strbuf_release(&msg);
++}
++
++static int switch_branches(struct checkout_opts *opts,
++			   struct branch_info *new, const char *prefix)
++{
++	int ret = 0;
++	struct branch_info old;
++	unsigned char rev[20];
++	int flag;
++	memset(&old, 0, sizeof(old));
++	old.path = resolve_ref("HEAD", rev, 0, &flag);
++	old.commit = lookup_commit_reference_gently(rev, 1);
++	if (!(flag & REF_ISSYMREF))
++		old.path = NULL;
++
++	if (old.path && !prefixcmp(old.path, "refs/heads/"))
++		old.name = old.path + strlen("refs/heads/");
++
++	if (!new->name) {
++		new->name = "HEAD";
++		new->commit = old.commit;
++		if (!new->commit)
++			die("You are on a branch yet to be born");
++		parse_commit(new->commit);
++	}
++
++	/*
++	 * If the new thing isn't a branch and isn't HEAD and we're
++	 * not starting a new branch, and we want messages, and we
++	 * weren't on a branch, and we're moving to a new commit,
++	 * describe the old commit.
++	 */
++	if (!new->path && strcmp(new->name, "HEAD") && !opts->new_branch &&
++	    !opts->quiet && !old.path && new->commit != old.commit)
++		describe_detached_head("Previous HEAD position was", old.commit);
++
++	if (!old.commit) {
++		if (!opts->quiet) {
++			fprintf(stderr, "warning: You appear to be on a branch yet to be born.\n");
++			fprintf(stderr, "warning: Forcing checkout of %s.\n", new->name);
++		}
++		opts->force = 1;
++	}
++
++	ret = merge_working_tree(opts, &old, new, prefix);
++	if (ret)
++		return ret;
++
++	update_refs_for_switch(opts, &old, new);
++
++	return post_checkout_hook(old.commit, new->commit, 1);
++}
++
++static int branch_track = 0;
++
++static int git_checkout_config(const char *var, const char *value)
++{
++	if (!strcmp(var, "branch.autosetupmerge"))
++		branch_track = git_config_bool(var, value);
++
++	return git_default_config(var, value);
++}
++
++int cmd_checkout(int argc, const char **argv, const char *prefix)
++{
++	struct checkout_opts opts;
++	unsigned char rev[20];
++	const char *arg;
++	struct branch_info new;
++	struct tree *source_tree = NULL;
++
++	memset(&opts, 0, sizeof(opts));
++
++	memset(&new, 0, sizeof(new));
++
++	struct option options[] = {
++		OPT__QUIET(&opts.quiet),
++		OPT_STRING('b', NULL, &opts.new_branch, "new branch", "branch"),
++		OPT_BOOLEAN('l', NULL, &opts.new_branch_log, "log for new branch"),
++		OPT_BOOLEAN( 0 , "track", &opts.track, "track"),
++		OPT_BOOLEAN('f', NULL, &opts.force, "force"),
++		OPT_BOOLEAN('m', NULL, &opts.merge, "merge"),
++	};
++
++	git_config(git_checkout_config);
++
++	opts.track = branch_track;
++
++	argc = parse_options(argc, argv, options, checkout_usage, 0);
++	if (argc) {
++		arg = argv[0];
++		if (get_sha1(arg, rev))
++			;
++		else if ((new.commit = lookup_commit_reference_gently(rev, 1))) {
++			new.name = arg;
++			setup_branch_path(&new);
++			if (resolve_ref(new.path, rev, 1, NULL))
++				new.commit = lookup_commit_reference(rev);
++			else
++				new.path = NULL;
++			parse_commit(new.commit);
++			source_tree = new.commit->tree;
++			argv++;
++			argc--;
++		} else if ((source_tree = parse_tree_indirect(rev))) {
++			argv++;
++			argc--;
++		}
++	}
++
++	if (argc && !strcmp(argv[0], "--")) {
++		argv++;
++		argc--;
++	}
++
++	if (!opts.new_branch && (opts.track != branch_track))
++		die("git checkout: --track and --no-track require -b");
++
++	if (opts.force && opts.merge)
++		die("git checkout: -f and -m are incompatible");
++
++	if (argc) {
++		const char **pathspec = get_pathspec(prefix, argv);
++		/* Checkout paths */
++		if (opts.new_branch || opts.force || opts.merge) {
++			if (argc == 1) {
++				die("git checkout: updating paths is incompatible with switching branches/forcing\nDid you intend to checkout '%s' which can not be resolved as commit?", argv[0]);
++			} else {
++				die("git checkout: updating paths is incompatible with switching branches/forcing");
++			}
++		}
++
++		if (source_tree)
++			read_tree_some(source_tree, pathspec);
++		else
++			read_cache();
++		return checkout_paths(pathspec);
++	}
++
++	if (new.name && !new.commit) {
++		die("Cannot switch branch to a non-commit.");
++	}
++
++	return switch_branches(&opts, &new, prefix);
++}
 diff --git a/builtin.h b/builtin.h
-index 3d1628c..16b85c6 100644
+index 16b85c6..674c8a1 100644
 --- a/builtin.h
 +++ b/builtin.h
-@@ -56,6 +56,7 @@ extern int cmd_mailsplit(int argc, const char **argv, const char *prefix);
- extern int cmd_merge_base(int argc, const char **argv, const char *prefix);
- extern int cmd_merge_ours(int argc, const char **argv, const char *prefix);
- extern int cmd_merge_file(int argc, const char **argv, const char *prefix);
-+extern int cmd_merge_recursive(int argc, const char **argv, const char *prefix);
- extern int cmd_mv(int argc, const char **argv, const char *prefix);
- extern int cmd_name_rev(int argc, const char **argv, const char *prefix);
- extern int cmd_pack_objects(int argc, const char **argv, const char *prefix);
+@@ -18,6 +18,7 @@ extern int cmd_blame(int argc, const char **argv, const char *prefix);
+ extern int cmd_branch(int argc, const char **argv, const char *prefix);
+ extern int cmd_bundle(int argc, const char **argv, const char *prefix);
+ extern int cmd_cat_file(int argc, const char **argv, const char *prefix);
++extern int cmd_checkout(int argc, const char **argv, const char *prefix);
+ extern int cmd_checkout_index(int argc, const char **argv, const char *prefix);
+ extern int cmd_check_attr(int argc, const char **argv, const char *prefix);
+ extern int cmd_check_ref_format(int argc, const char **argv, const char *prefix);
+diff --git a/git-checkout.sh b/contrib/examples/git-checkout.sh
+similarity index 100%
+rename from git-checkout.sh
+rename to contrib/examples/git-checkout.sh
 diff --git a/git.c b/git.c
-index 15fec89..114ea75 100644
+index 114ea75..fc15686 100644
 --- a/git.c
 +++ b/git.c
-@@ -330,6 +330,7 @@ static void handle_internal_command(int argc, const char **argv)
- 		{ "merge-base", cmd_merge_base, RUN_SETUP },
- 		{ "merge-file", cmd_merge_file },
- 		{ "merge-ours", cmd_merge_ours, RUN_SETUP },
-+		{ "merge-recursive", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE },
- 		{ "mv", cmd_mv, RUN_SETUP | NEED_WORK_TREE },
- 		{ "name-rev", cmd_name_rev, RUN_SETUP },
- 		{ "pack-objects", cmd_pack_objects, RUN_SETUP },
-diff --git a/merge-recursive.h b/merge-recursive.h
-new file mode 100644
-index 0000000..f37630a
---- /dev/null
-+++ b/merge-recursive.h
-@@ -0,0 +1,20 @@
-+#ifndef MERGE_RECURSIVE_H
-+#define MERGE_RECURSIVE_H
-+
-+int merge_recursive(struct commit *h1,
-+		    struct commit *h2,
-+		    const char *branch1,
-+		    const char *branch2,
-+		    struct commit_list *ancestors,
-+		    struct commit **result);
-+
-+int merge_trees(struct tree *head,
-+		struct tree *merge,
-+		struct tree *common,
-+		const char *branch1,
-+		const char *branch2,
-+		struct tree **result);
-+
-+struct tree *write_tree_from_memory(void);
-+
-+#endif
+@@ -287,6 +287,7 @@ static void handle_internal_command(int argc, const char **argv)
+ 		{ "branch", cmd_branch, RUN_SETUP },
+ 		{ "bundle", cmd_bundle },
+ 		{ "cat-file", cmd_cat_file, RUN_SETUP },
++		{ "checkout", cmd_checkout, RUN_SETUP | NEED_WORK_TREE },
+ 		{ "checkout-index", cmd_checkout_index,
+ 			RUN_SETUP | NEED_WORK_TREE},
+ 		{ "check-ref-format", cmd_check_ref_format },
+diff --git a/t/t7201-co.sh b/t/t7201-co.sh
+index 42cf0ab..06959d9 100755
+--- a/t/t7201-co.sh
++++ b/t/t7201-co.sh
+@@ -103,13 +103,6 @@ test_expect_success "checkout -m with dirty tree" '
+ 	test "$(git symbolic-ref HEAD)" = "refs/heads/side" &&
+ 
+ 	(cat >expect.messages <<EOF
+-Merging side with local
+-Merging:
+-ab76817 Side M one, D two, A three
+-virtual local
+-found 1 common ancestor(s):
+-7329388 Initial A one, A two
+-Auto-merged one
+ M	one
+ EOF
+ ) &&
 -- 
 1.5.4
