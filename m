@@ -1,69 +1,78 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: List of files aded/removed/modified by "git-checkout"
-Date: Thu, 7 Feb 2008 16:11:33 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802071610370.8543@racer.site>
-References: <jwvodatkbdm.fsf-monnier+gmane.comp.version-control.git@gnu.org> <7vve51qva3.fsf@gitster.siamese.dyndns.org> <jwvfxw4ga0s.fsf-monnier+inbox@gnu.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [msysGit] Re: [ANNOUNCE] GIT 1.5.4
+Date: Thu, 07 Feb 2008 17:12:45 +0100
+Organization: At home
+Message-ID: <fofalu$gpo$1@ger.gmane.org>
+References: <7vmyqk563z.fsf@gitster.siamese.dyndns.org> <CFB8A272-863C-4758-91F7-E9669D70A200@zib.de> <20080207123108.GA12009@bit.office.eurotux.com> <alpine.LSU.1.00.0802071255110.8543@racer.site> <20080207130715.GA14000@bit.office.eurotux.com> <alpine.LFD.1.00.0802070949460.2732@xanadu.home> <20080207155946.GA20459@bit.office.eurotux.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Stefan Monnier <monnier@iro.umontreal.ca>
-X-From: git-owner@vger.kernel.org Thu Feb 07 17:13:20 2008
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+Cc: msysgit@googlegroups.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 07 17:13:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JN9N8-00045R-3R
-	for gcvg-git-2@gmane.org; Thu, 07 Feb 2008 17:13:10 +0100
+	id 1JN9NX-0004Fv-5g
+	for gcvg-git-2@gmane.org; Thu, 07 Feb 2008 17:13:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754442AbYBGQMW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Feb 2008 11:12:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755570AbYBGQMW
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Feb 2008 11:12:22 -0500
-Received: from mail.gmx.net ([213.165.64.20]:37977 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755644AbYBGQMV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Feb 2008 11:12:21 -0500
-Received: (qmail invoked by alias); 07 Feb 2008 16:12:20 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp053) with SMTP; 07 Feb 2008 17:12:20 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18T1WNjEwoTcTPNh8moaGZ8qu3nAPBVa+eCSm8jEd
-	uHbqQx+r6M9BCN
-X-X-Sender: gene099@racer.site
-In-Reply-To: <jwvfxw4ga0s.fsf-monnier+inbox@gnu.org>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1756233AbYBGQNF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Feb 2008 11:13:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756063AbYBGQND
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Feb 2008 11:13:03 -0500
+Received: from main.gmane.org ([80.91.229.2]:55837 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755288AbYBGQNB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Feb 2008 11:13:01 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1JN9Mt-0002EK-1S
+	for git@vger.kernel.org; Thu, 07 Feb 2008 16:12:55 +0000
+Received: from abvj33.neoplus.adsl.tpnet.pl ([83.8.207.33])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 07 Feb 2008 16:12:55 +0000
+Received: from jnareb by abvj33.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 07 Feb 2008 16:12:55 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+Followup-To: gmane.comp.version-control.git
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: abvj33.neoplus.adsl.tpnet.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72960>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72961>
 
-Hi,
+Luciano Rocha wrote:
+> On Thu, Feb 07, 2008 at 09:53:05AM -0500, Nicolas Pitre wrote:
+>> On Thu, 7 Feb 2008, Luciano Rocha wrote: 
 
-On Thu, 7 Feb 2008, Stefan Monnier wrote:
-
-> >> Whenever I do a git-checkout to switch between branches, I'm 
-> >> disappointed by the absence of a "-v" option which would list the 
-> >> operations performed.
-> >> 
-> >> How can I get this information?
+>>> I like and use GPL, but I won't force my users to accept the GPL in
+>>> order to use programs released under it.
+>> 
+>> What are they forced into if they indeed only want to _use_ Git?
 > 
-> > I'd be mightily annoyed with it myself, though, as I switch between 
-> > 'master', 'next', 'pu' and 'maint' pretty often.
+> The msys git installer forces me to accept the GNU GPL in order to
+> proceed.
 > 
-> Why would such a "-v" option bother you?  Nobody forces you to use it.
-
-I agree.
-
-> > Have something like this in .git/hooks/post-checkout and make it 
-> > executable, perhaps?  Modify the options to suit your taste.
+> Of course, I can use another installer, or compile my own set of
+> binaries. I just wanted to bring that case to attention, nothing else.
 > 
-> That doesn't really cut it: I'd like to use it in a git frontend.
+>> They nevertheless must be made aware of the rules they have to follow in 
+>> case the idea of redistributing it crosses their mind.
+> 
+> I don't dispute that, only that I can't continue with the install unless
+> I click on "I Accept" to the GNU GPL.
 
-Well, this request does not really cut it: it lacks a patch.  And yes, you 
-have been given enough information to hack it yourself.  No, I will not do 
-something about it; this is not my itch.
+So, would you prefer to be presented with GNU GPL with two buttons:
+"That's great" and "Oh, f**k", instead of "I Accept" and "Cancel",
+both of which would allow to install msysGit? ;-ppppppp
 
-Hth,
-Dscho
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
