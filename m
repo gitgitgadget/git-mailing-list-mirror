@@ -1,85 +1,80 @@
-From: Junio C Hamano <gitster-e+AXbWqSrlAAvxtiuMwx3w@public.gmane.org>
-Subject: Re: [ANNOUNCE] GIT 1.5.4
-Date: Thu, 07 Feb 2008 09:30:20 -0800
-Message-ID: <7v1w7ooes3.fsf@gitster.siamese.dyndns.org>
-References: <7vmyqk563z.fsf@gitster.siamese.dyndns.org> <CFB8A272-863C-4758-91F7-E9669D70A200@zib.de> <20080207123108.GA12009@bit.office.eurotux.com> <alpine.LSU.1.00.0802071255110.8543@racer.site> <20080207130715.GA14000@bit.office.eurotux.com> <alpine.LSU.1.00.0802071324460.8543@racer.site>
+From: "Jay Soffian" <jaysoffian+git@gmail.com>
+Subject: Re: [PATCH] allow setting GIT_WORK_TREE to "no work tree"
+Date: Thu, 7 Feb 2008 13:06:46 -0500
+Message-ID: <76718490802071006j9eaa4bctedc18f4a62e2b91c@mail.gmail.com>
+References: <20080206102608.GA1007@coredump.intra.peff.net>
+	 <47A98F07.4000402@viscovery.net>
+	 <20080206110131.GA4167@coredump.intra.peff.net>
+	 <7v4pclvmae.fsf@gitster.siamese.dyndns.org>
+	 <7vwsphu7gr.fsf@gitster.siamese.dyndns.org>
+	 <20080207051317.GA32296@sigill.intra.peff.net>
+	 <76718490802062313jdbd0e84xc9f36d703bb86c44@mail.gmail.com>
+	 <alpine.LSU.1.00.0802071231540.8543@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Luciano Rocha <luciano-YWehAnL2kLNBDgjK7y7TUQ@public.gmane.org>,  Steffen Prohaska <prohaska-wjoc1KHpMeg@public.gmane.org>,  Git Mailing List <git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>,  msysGit <msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-To: Johannes Schindelin <Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org>
-X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Thu Feb 07 18:31:06 2008
-Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from ag-out-0910.google.com ([72.14.246.191])
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Jeff King" <peff@peff.net>, "Junio C Hamano" <gitster@pobox.com>,
+	"Johannes Sixt" <j.sixt@viscovery.net>, git@vger.kernel.org,
+	"Lars Hjemli" <hjemli@gmail.com>
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Feb 07 19:09:32 2008
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNAaW-0002bR-H9
-	for gcvm-msysgit@m.gmane.org; Thu, 07 Feb 2008 18:31:05 +0100
-Received: by ag-out-0910.google.com with SMTP id 32so6004890agc.3
-        for <gcvm-msysgit@m.gmane.org>; Thu, 07 Feb 2008 09:30:34 -0800 (PST)
+	id 1JNB9h-0008VQ-5u
+	for gcvg-git-2@gmane.org; Thu, 07 Feb 2008 19:07:25 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1759279AbYBGSGv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Feb 2008 13:06:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758863AbYBGSGv
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Feb 2008 13:06:51 -0500
+Received: from wx-out-0506.google.com ([66.249.82.227]:27626 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757997AbYBGSGt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Feb 2008 13:06:49 -0500
+Received: by wx-out-0506.google.com with SMTP id h31so3748385wxd.4
+        for <git@vger.kernel.org>; Thu, 07 Feb 2008 10:06:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:received:x-sender:x-apparently-to:received:received:received-spf:authentication-results:received:received:from:to:cc:subject:references:date:in-reply-to:message-id:user-agent:mime-version:content-type:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
-        bh=AKT324+BoZYFD0Avr3wd4rp7hfyxdcaINp7Wk/pOAqc=;
-        b=QlsqvRVXVgOXN3TZVAkJrtaj3jcwSulOIYHPHMrDpm4fON+VB18YhD0S1yi30G1B2G6Me0u1fMlJa/7XmpQ8IPz25PfeNm4kHaWz2juq/lTHGAyNImgoLkNDh2Ab5YZuTPARJF5SAK/0+yrhGh85PbE8BfRIOOT+y3k3jZ9uJ3M=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        bh=osUTzD1gXpUBnollGuZBIErxsryrdXVSPUz8GOleyiE=;
+        b=VBWd6UHRyqDd7E9h59JuXdf/30N+8Rwjg5vJZ30/cnqbJV6mS1015MZcT2DtagtfVmsRduVkThCzbs1ob8zw79cMdWErjRrkUCPdIWmaFM0czx/vQ9trs3du4gti6il+vsha/WNC+DHNopYzBV0Hi48dZ2Wf37drUoVDppEZB0s=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-sender:x-apparently-to:received-spf:authentication-results:from:to:cc:subject:references:date:in-reply-to:message-id:user-agent:mime-version:content-type:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
-        b=HVe/HFU9qC5O1fpcXz/zzaKKXCkt3pthS8Q+L0QprNXrYMTMfhlg3rBjlw55IF+0oDGW3+jpBfWh/7b91i5XvB1hKn/ZPQVTzDNkqxr538Yl7wEI/wmmggNlkEDUoUtFT/lRSzreKMFQ5uhf5rYJZhXG49d+/6jTPgN8+8B6x3k=
-Received: by 10.141.68.12 with SMTP id v12mr399933rvk.11.1202405430169;
-        Thu, 07 Feb 2008 09:30:30 -0800 (PST)
-Received: by 10.106.159.13 with SMTP id h13gr1656pre;
-	Thu, 07 Feb 2008 09:30:30 -0800 (PST)
-X-Sender: gitster-e+AXbWqSrlAAvxtiuMwx3w@public.gmane.org
-X-Apparently-To: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-Received: by 10.35.13.4 with SMTP id q4mr25383829pyi.7.1202405429947; Thu, 07 Feb 2008 09:30:29 -0800 (PST)
-Received: from sasl.smtp.pobox.com (a-sasl-quonix.sasl.smtp.pobox.com [208.72.237.25]) by mx.google.com with ESMTP id v63si7064903pyh.2.2008.02.07.09.30.29; Thu, 07 Feb 2008 09:30:29 -0800 (PST)
-Received-SPF: pass (google.com: domain of gitster-e+AXbWqSrlAAvxtiuMwx3w@public.gmane.org designates 208.72.237.25 as permitted sender) client-ip=208.72.237.25;
-Authentication-Results: mx.google.com; spf=pass (google.com: domain of gitster-e+AXbWqSrlAAvxtiuMwx3w@public.gmane.org designates 208.72.237.25 as permitted sender) smtp.mail=gitster-e+AXbWqSrlAAvxtiuMwx3w@public.gmane.org
-Received: from a-sasl-quonix (localhost [127.0.0.1]) by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 7AB9F3EDF; Thu,  7 Feb 2008 12:30:28 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77]) (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by a-sasl-quonix.pobox.com (Postfix) with ESMTP id B280E3EDE; Thu,  7 Feb 2008 12:30:22 -0500 (EST)
-In-Reply-To: <alpine.LSU.1.00.0802071324460.8543-OGWIkrnhIhzN0uC3ymp8PA@public.gmane.org> (Johannes Schindelin's message of "Thu, 7 Feb 2008 13:28:06 +0000 (GMT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-Sender: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=YK+btsGHhQHVXkh+bD7bYESkLHaoULX2PU0v171bQX2ggbAT8Xs1EgKKC+pCwSSySBi1oCPdfBE89TWgTn2HXe81D/rmIO0U3jZbqMO74+b9jeZT5PpnDNZPbR4bvZVe07ZnH75flUQVtLDeALVJ3mmtLrQ84Rf3tAw/lf5n3XU=
+Received: by 10.114.137.2 with SMTP id k2mr5963891wad.104.1202407606405;
+        Thu, 07 Feb 2008 10:06:46 -0800 (PST)
+Received: by 10.114.255.11 with HTTP; Thu, 7 Feb 2008 10:06:46 -0800 (PST)
+In-Reply-To: <alpine.LSU.1.00.0802071231540.8543@racer.site>
+Content-Disposition: inline
+X-Google-Sender-Auth: 8343e674adbcf9ad
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Google-Loop: groups
-Mailing-List: list msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org;
-	contact msysgit-owner-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-List-Id: <msysgit.googlegroups.com>
-List-Post: <mailto:msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Help: <mailto:msysgit-help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
-	<mailto:msysgit-unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72980>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72981>
 
-
-Johannes Schindelin <Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org> writes:
-
-> Besides, if you do not like that our installer shows the GPL, just go and 
-> make your own (but be sure to shell out money to your lawyer of choice to 
-> confirm that the GPL allows you to do that).
+On Feb 7, 2008 7:33 AM, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
 >
-> The Git installer of msysGit will always show the GPL, and have the user 
-> accept it.
+> On Thu, 7 Feb 2008, Jay Soffian wrote:
+>
+> > Is using something like "__GIT_WORK_TREE_NOT_SET__" that terrible?
+>
+> Yes.  First: it looks more like a C constant than a proper environment
+> variable.  Second: what to do _sanely_, when both GIT_WORK_TREE and
+> GIT_WORK_TREE_NOT_SET are true?
 
-I may be missing the details because I do not do Windows myself,
-but if you are discussing the "end user binary distribution"
-one, then I think:
+Sorry I was unclear. The discussion was about using a special value to
+denote "this is not set." So I meant something like:
 
- * It is a mistake if you do not to show GPL, as you are
-   redistributing GPL code in a binary form and you need to tell
-   the end user his rights (e.g. he can request source for it,
-   the source is found at a well known location, etc.)
+GIT_WORK_TREE="__GIT_WORK_TREE_NOT_SET"
 
- * The restriction on redistribution of modified program would
-   probably not apply (unless the receiver hacks binary) to most
-   casual users, so making the label say "I Accept" feels a bit
-   silly (but still is technically correct).  As Nico suggested,
-   "Continue" may be fine here, as long as the message already
-   says "this program is distributed under this license you are
-   looking at".
+There may not be precedent in git, but it is not unusual to use a
+double-underbar prefix to denote private names and/or values. While in
+theory a user could have a directory named as such, it would seem
+highly unlikely. This looks a little cleaner to me than using ":", "
+", or "/dev/null".
 
-I recall you had another installer that gives the full
-development environment for hack on "git" with a clone of the
-git repository.  I do not know if you still offer that
-installer, but "I Accept" would be very appropriate for that
-one.
+j.
