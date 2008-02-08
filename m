@@ -1,63 +1,110 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: Why does git depend on two versions of libcrypto?
-Date: Fri, 8 Feb 2008 11:03:47 +0100
-Organization: glandium.org
-Message-ID: <20080208100346.GA20601@glandium.org>
-References: <20080208104612.724d82ce@pc09.procura.nl>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "H.Merijn Brand" <h.m.brand@xs4all.nl>
-X-From: git-owner@vger.kernel.org Fri Feb 08 11:04:33 2008
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Add case-challenged file system tests
+Date: Fri,  8 Feb 2008 08:09:35 +0100
+Message-ID: <12024545763364-git-send-email-prohaska@zib.de>
+Cc: Steffen Prohaska <prohaska@zib.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 08 11:08:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNQ5p-0004k4-AK
-	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 11:04:25 +0100
+	id 1JNQA8-00060d-Uw
+	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 11:08:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932756AbYBHKDv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Feb 2008 05:03:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932752AbYBHKDv
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 05:03:51 -0500
-Received: from smtp28.orange.fr ([80.12.242.100]:47011 "EHLO smtp28.orange.fr"
+	id S933398AbYBHKIP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Feb 2008 05:08:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934433AbYBHKIO
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 05:08:14 -0500
+Received: from mailer.zib.de ([130.73.108.11]:36720 "EHLO mailer.zib.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932422AbYBHKDu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Feb 2008 05:03:50 -0500
-Received: from me-wanadoo.net (localhost [127.0.0.1])
-	by mwinf2812.orange.fr (SMTP Server) with ESMTP id A52077000853
-	for <git@vger.kernel.org>; Fri,  8 Feb 2008 11:03:48 +0100 (CET)
-Received: from vaio.glandium.org (APuteaux-153-1-42-109.w82-124.abo.wanadoo.fr [82.124.6.109])
-	by mwinf2812.orange.fr (SMTP Server) with ESMTP id 62E1C70000C7;
-	Fri,  8 Feb 2008 11:03:48 +0100 (CET)
-X-ME-UUID: 20080208100348405.62E1C70000C7@mwinf2812.orange.fr
-Received: from mh by vaio.glandium.org with local (Exim 4.63)
-	(envelope-from <mh@glandium.org>)
-	id 1JNQ5D-0005mj-Mp; Fri, 08 Feb 2008 11:03:47 +0100
-Content-Disposition: inline
-In-Reply-To: <20080208104612.724d82ce@pc09.procura.nl>
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: mh@glandium.org
-X-SA-Exim-Scanned: No (on vaio.glandium.org); SAEximRunCond expanded to false
+	id S934415AbYBHKIM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Feb 2008 05:08:12 -0500
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id m1879imQ016368
+	for <git@vger.kernel.org>; Fri, 8 Feb 2008 08:09:44 +0100 (CET)
+Received: from localhost.localdomain (vss6.zib.de [130.73.69.7])
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m1879aYX024894;
+	Fri, 8 Feb 2008 08:09:44 +0100 (MET)
+X-Mailer: git-send-email 1.5.2.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73065>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73066>
 
-On Fri, Feb 08, 2008 at 10:46:12AM +0100, H.Merijn Brand <h.m.brand@xs4all.nl> wrote:
-> Don't know if this is a git question or a OpenSUSE question, but why does git
-> depend on libcrypto.so.6 and not on libcrypto.so.0.9.8, like the rest does?
-> 
-> Isn't that asking for trouble?
-> In my case, they're both linked to the same lib, so I guess I'm safe.
-(...)
-> ldd[03] on /usr/lib64/libcrypto.so.0.9.8  <= /usr/lib64/libcurl.so.3.0.0
-> ldd[02] on /usr/lib64/libcrypto.so.6      <= /usr/bin/git
+There have been discussions lately on case-challenging file
+systems and UTF normalization on Mac OS X.  I like to see
+these problems fixed and would like to start working on a
+resolution.  But I did not follow the recent discussions closely.
 
-The answer is here. git was obviously built against a different version
-of OpenSSL than curl. This is an OpenSUSE problem.
+Is anyone actively orking on these issues?
+What is the current status?
 
-Mike
+The patch below adds two simple tests that currently fail on Mac
+and Windows.  I also collected Mitch's test on utf-8 and will
+send it as a reply to this mail.  These two patches contain test
+cases that should pass, but do currently fail.
+
+    Steffen
+
+-- >8 --
+Git behaves strangely (from a user's point of view) on
+filesystems that preserve case but do not distinguish filenames
+that only differ by case.  The two major examples are Windows and
+Mac OS X.  Simple operations such as "git mv" or "git merge" can
+fail unexpectedly.
+
+This commit adds two simple tests.  Both tests currently fail on
+Windows and Mac, although they pass on Linux.
+
+Signed-off-by: Steffen Prohaska <prohaska@zib.de>
+---
+ t/t0050-filesystems.sh |   36 ++++++++++++++++++++++++++++++++++++
+ 1 files changed, 36 insertions(+), 0 deletions(-)
+ create mode 100755 t/t0050-filesystems.sh
+
+diff --git a/t/t0050-filesystems.sh b/t/t0050-filesystems.sh
+new file mode 100755
+index 0000000..953b02b
+--- /dev/null
++++ b/t/t0050-filesystems.sh
+@@ -0,0 +1,36 @@
++#!/bin/sh
++
++test_description='Various filesystems issues'
++
++. ./test-lib.sh
++
++test_expect_success setup '
++
++	touch camelcase &&
++	git add camelcase &&
++	git commit -m "initial" &&
++	git tag initial &&
++	git checkout -b topic &&
++	git mv camelcase tmp &&
++	git mv tmp CamelCase &&
++	git commit -m "rename" &&
++	git checkout -f master
++
++'
++
++test_expect_success 'rename (case change)' '
++
++	git mv camelcase CamelCase &&
++	git commit -m "rename"
++
++'
++
++test_expect_success 'merge (case change)' '
++
++	git reset --hard initial &&
++	git merge topic
++
++'
++
++
++test_done
+-- 
+1.5.4.40.g4a680
