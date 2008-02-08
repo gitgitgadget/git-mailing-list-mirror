@@ -1,34 +1,38 @@
 From: "H.Merijn Brand" <h.m.brand@xs4all.nl>
-Subject: [PATCH] opening files in remote.c should ensure it is opening a
- file
-Date: Fri, 8 Feb 2008 17:46:54 +0100
-Message-ID: <20080208174654.2e9e679c@pc09.procura.nl>
+Subject: Re: read_branches_file ()
+Date: Fri, 8 Feb 2008 17:49:24 +0100
+Message-ID: <20080208174924.24203ff3@pc09.procura.nl>
+References: <20080208165008.52630d36@pc09.procura.nl>
+	<20080208170305.069d43d2@pc09.procura.nl>
+	<alpine.LSU.1.00.0802081618210.11591@racer.site>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 08 17:47:43 2008
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Feb 08 17:51:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNWO0-0006J9-HD
-	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 17:47:36 +0100
+	id 1JNWR9-0007hU-HC
+	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 17:50:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755437AbYBHQrB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Feb 2008 11:47:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755143AbYBHQrB
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 11:47:01 -0500
-Received: from smtp-vbr1.xs4all.nl ([194.109.24.21]:4731 "EHLO
-	smtp-vbr1.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755238AbYBHQrA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Feb 2008 11:47:00 -0500
+	id S1762886AbYBHQtd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Feb 2008 11:49:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761965AbYBHQtc
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 11:49:32 -0500
+Received: from smtp-vbr2.xs4all.nl ([194.109.24.22]:3072 "EHLO
+	smtp-vbr2.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762871AbYBHQtb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Feb 2008 11:49:31 -0500
 Received: from pc09.procura.nl (procura.xs4all.nl [82.95.216.29])
 	(authenticated bits=0)
-	by smtp-vbr1.xs4all.nl (8.13.8/8.13.8) with ESMTP id m18GksWB066169
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Fri, 8 Feb 2008 17:46:59 +0100 (CET)
+	by smtp-vbr2.xs4all.nl (8.13.8/8.13.8) with ESMTP id m18GnPDw035127
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 8 Feb 2008 17:49:25 +0100 (CET)
 	(envelope-from h.m.brand@xs4all.nl)
+In-Reply-To: <alpine.LSU.1.00.0802081618210.11591@racer.site>
 X-Mailer: Claws Mail 3.2.0cvs74 (GTK+ 2.10.6; x86_64-unknown-linux-gnu)
 Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwEAIAAACI8LKTAAAACXBIWXMAAABIAAAASABGyWs+AAAC
  JElEQVRo3u2aMY4CMQxFczZ6RItEzRm4DBINDbRUSPRInIRbsNK6+dJfezN4kokn48IaCSjysL8d
@@ -46,50 +50,57 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73111>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73112>
 
-HP-UX allows directories to be opened with fopen (path, "r"), which
-will cause some translations that expect to read files, read dirs
-instead. This patch makes sure the two fopen () calls in remote.c
-only open the file if it is a file.
+On Fri, 8 Feb 2008 16:22:45 +0000 (GMT), Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
 
-Signed-off-by: H.Merijn Brand <h.m.brand@xs4all.nl>
----
+> Hi,
+> 
+> On Fri, 8 Feb 2008, H.Merijn Brand wrote:
+> 
+> > --8<--- remote.c.diff
+> > --- remote.c.org        2008-01-27 09:04:18 +0100
+> > +++ remote.c    2008-02-08 17:01:09 +0100
+> > @@ -1,6 +1,7 @@
+> >  #include "cache.h"
+> >  #include "remote.h"
+> >  #include "refs.h"
+> > +#include <sys/stat.h>
+> 
+> This should not be necessary; we include all system headers in cache.h.
 
-diff -pur git-1.5.4a/remote.c git-1.5.4b/remote.c
---- git-1.5.4a/remote.c    2008-01-27 09:04:18 +0100
-+++ git-1.5.4/remote.c     2008-02-08 17:38:43 +0100
-@@ -121,9 +121,18 @@ static struct branch *make_branch(const
-        return branches[empty];
- }
+dropped
 
-+/* Helper function to ensure that we are opening a file and not a directory */
-+static FILE *open_file(char *full_path)
-+{
-+       struct stat st_buf;
-+       if (stat(full_path, &st_buf) || !S_ISREG(st_buf.st_mode))
-+               return NULL;
-+       return (fopen(full_path, "r"));
-+}
-+
- static void read_remotes_file(struct remote *remote)
- {
--       FILE *f = fopen(git_path("remotes/%s", remote->name), "r");
-+       FILE *f = open_file(git_path("remotes/%s", remote->name));
+> > @@ -173,11 +174,15 @@ static void read_branches_file(struct re
+> >         char *frag;
+> >         char *branch;
+> >         int n = slash ? slash - remote->name : 1000;
+> > -       FILE *f = fopen(git_path("branches/%.*s", n, remote->name), "r");
+> > +       char *gp = git_path ("branches/%.*s", n, remote->name);
+> 
+> Please use a more descriptive variable name, such as "branches_file" or 
+> "branches_path".
 
-        if (!f)
-                return;
-@@ -173,7 +182,7 @@ static void read_branches_file(struct re
-        char *frag;
-        char *branch;
-        int n = slash ? slash - remote->name : 1000;
--       FILE *f = fopen(git_path("branches/%.*s", n, remote->name), "r");
-+       FILE *f = open_file(git_path("branches/%.*s", n, remote->name));
-        char *s, *p;
-        int len;
+took another approach, as that also addresses the other fopen () call
 
---
-git-1.5.4
+> Also, we only leave a space after operators like "for", "while", but not 
+> after function names.
+
+This patch was not sent to be applied as-is, only as a proof-of-concept
+Not that I agree to the layout/indentation, the new patch is sent trying
+to follow what you use.
+
+> > +       if (stat (gp, &st_buf) || S_ISDIR (st_buf.st_mode))
+> 
+> Again, please remove the spaces after "stat" and "S_ISDIR".
+
+you said please :)
+
+> Other than that, the patch looks obviously correct: please resubmit with a 
+> nice commit message and a sign-off.
+
+Done
 
 -- 
 H.Merijn Brand         Amsterdam Perl Mongers (http://amsterdam.pm.org/)
