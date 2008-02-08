@@ -1,58 +1,61 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Add case-challenged file system tests
-Date: Fri, 08 Feb 2008 10:02:11 -0800
-Message-ID: <7vlk5vjpi4.fsf@gitster.siamese.dyndns.org>
-References: <12024545763364-git-send-email-prohaska@zib.de>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH] RFC: git lazy clone proof-of-concept
+Date: Fri, 08 Feb 2008 13:03:49 -0500 (EST)
+Message-ID: <alpine.LFD.1.00.0802081250240.2732@xanadu.home>
+References: <200802081828.43849.kendy@suse.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Fri Feb 08 19:03:23 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Jan Holesovsky <kendy@suse.cz>
+X-From: git-owner@vger.kernel.org Fri Feb 08 19:05:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNXZB-0003wq-7a
-	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 19:03:13 +0100
+	id 1JNXbi-0004cQ-4S
+	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 19:05:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964853AbYBHSCY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Feb 2008 13:02:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964852AbYBHSCX
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 13:02:23 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:43024 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934382AbYBHSCU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Feb 2008 13:02:20 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 11B575F2A;
-	Fri,  8 Feb 2008 13:02:18 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 9A1F25F28;
-	Fri,  8 Feb 2008 13:02:14 -0500 (EST)
-In-Reply-To: <12024545763364-git-send-email-prohaska@zib.de> (Steffen
-	Prohaska's message of "Fri, 8 Feb 2008 08:09:35 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S933019AbYBHSDz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Feb 2008 13:03:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965106AbYBHSDy
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 13:03:54 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:27471 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933968AbYBHSDw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Feb 2008 13:03:52 -0500
+Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0JVX003RIM6EC3A0@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Fri, 08 Feb 2008 13:03:51 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <200802081828.43849.kendy@suse.cz>
+User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73118>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73119>
 
-Steffen Prohaska <prohaska@zib.de> writes:
+On Fri, 8 Feb 2008, Jan Holesovsky wrote:
 
-> Is anyone actively orking on these issues?
-> What is the current status?
+> Currently we are evaluating the usage of git for OpenOffice.org as one of the
+> candidates (SVN is the other one), see
+> 
+>   http://wiki.services.openoffice.org/wiki/SCM_Migration
+> 
+> I've provided a git import of OOo with the entire history; the problem is that
+> the pack has 2.5G, so it's not too convenient to download for casual
+> developers that just want to try it.  Shallow clone is not a possibility - we
+> don't get patches through mailing lists, so we need the pull/push, and also
+> thanks to the OOo development cycle, we have too many living heads which
+> causes the shallow clone to download about 1.5G even with --depth 1.
 
-Not that I know of.
+How did you repack your repository?
 
-> The patch below adds two simple tests that currently fail on Mac
-> and Windows.  I also collected Mitch's test on utf-8 and will
-> send it as a reply to this mail.  These two patches contain test
-> cases that should pass, but do currently fail.
+We know that current defaults are not suitable for large projects.  For 
+example, the gcc git repository shrinked from 1.5GB pack down to 230MB 
+after some tuning.
 
-Could you fold them into one?  They are about the same topic.
 
-Also, mark them with test_expect_failure if these are meant to
-be applied.
+Nicolas
