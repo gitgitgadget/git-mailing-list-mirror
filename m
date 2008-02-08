@@ -1,86 +1,76 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: [PATCH] setup.c: guard config parser from value=NULL
-Date: Fri, 8 Feb 2008 22:29:47 +0100
-Message-ID: <20080208212947.GA25954@genesis.frugalware.org>
-References: <20080208142702.GY25954@genesis.frugalware.org> <200802081734.24967.barra_cuda@katamail.com>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: [PATCH] Work around curl-gnutls not liking to be reinitialized
+Date: Fri, 8 Feb 2008 22:31:48 +0100
+Organization: glandium.org
+Message-ID: <20080208213148.GA2823@glandium.org>
+References: <20080208073456.GA17791@glandium.org> <1202501335-28205-1-git-send-email-mh@glandium.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="gQt10JDuGyDb0HQ5"
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Michele Ballabio <barra_cuda@katamail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 08 22:30:58 2008
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri Feb 08 22:32:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNao2-0007B4-SL
-	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 22:30:47 +0100
+	id 1JNapY-0007m1-Ng
+	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 22:32:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753111AbYBHVaM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Feb 2008 16:30:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753519AbYBHVaL
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 16:30:11 -0500
-Received: from mx2.mail.elte.hu ([157.181.151.9]:60405 "EHLO mx2.mail.elte.hu"
+	id S1754672AbYBHVba (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Feb 2008 16:31:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754607AbYBHVba
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 16:31:30 -0500
+Received: from vuizook.err.no ([85.19.215.103]:54178 "EHLO vuizook.err.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752877AbYBHVaK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Feb 2008 16:30:10 -0500
-Received: from frugalware.elte.hu ([157.181.177.34] helo=genesis.frugalware.org)
-	by mx2.mail.elte.hu with esmtp (Exim)
-	id 1JNanG-0000Cz-61
-	from <vmiklos@frugalware.org>; Fri, 08 Feb 2008 22:30:04 +0100
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id D72E211901BD; Fri,  8 Feb 2008 22:29:47 +0100 (CET)
+	id S1753851AbYBHVb3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Feb 2008 16:31:29 -0500
+Received: from aputeaux-153-1-42-109.w82-124.abo.wanadoo.fr ([82.124.6.109] helo=jigen)
+	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.67)
+	(envelope-from <mh@glandium.org>)
+	id 1JNapU-0005Jh-T1; Fri, 08 Feb 2008 22:32:23 +0100
+Received: from mh by jigen with local (Exim 4.69)
+	(envelope-from <mh@jigen>)
+	id 1JNap2-0001em-1X; Fri, 08 Feb 2008 22:31:48 +0100
 Content-Disposition: inline
-In-Reply-To: <200802081734.24967.barra_cuda@katamail.com>
-User-Agent: Mutt/1.5.16 (2007-06-09)
-X-ELTE-VirusStatus: clean
-X-ELTE-SpamScore: -0.5
-X-ELTE-SpamLevel: 
-X-ELTE-SpamCheck: no
-X-ELTE-SpamVersion: ELTE 2.0 
-X-ELTE-SpamCheck-Details: score=-0.5 required=5.9 tests=BAYES_20 autolearn=no SpamAssassin version=3.2.3
-	-0.5 BAYES_20               BODY: Bayesian spam probability is 5 to 20%
-	[score: 0.0588]
+In-Reply-To: <1202501335-28205-1-git-send-email-mh@glandium.org>
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+X-Spam-Status: (score 2.2): No, score=2.2 required=5.0 tests=RCVD_IN_PBL,RCVD_IN_SORBS_DUL,RDNS_DYNAMIC autolearn=disabled version=3.2.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73150>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73151>
 
+>  In the end, it was a bit of git's fault, but either curl or gnutls is the
+>  actual culprit. I've not looked into either code to find out who's
+>  responsible, but a very simplified testcase is as follows:
+> 
+> 	#include <curl/curl.h>
+> 	#include <curl/easy.h>
+> 
+> 	int main(void) {
+> 	        CURL *easy = curl_easy_init();
+> 	        curl_easy_setopt(easy, CURLOPT_VERBOSE, 1);
+> 	        curl_easy_setopt(easy, CURLOPT_URL, "https://www.verisign.com/");
+> 	        curl_easy_perform(easy);
+> 	        curl_global_cleanup();
+> 	        easy = curl_easy_init();
+> 	        curl_easy_setopt(easy, CURLOPT_VERBOSE, 1);
+> 	        curl_easy_setopt(easy, CURLOPT_URL, "https://www.verisign.com/");
+> 	        curl_easy_perform(easy);
+> 	}
+> 
+> 	(build with gcc -o test test.c -lcurl)
+> 	(note curl_easy_init does curl_global_init behind the curtains, even the
+> 	second time. You can convince yourself by adding
+> 	curl_global_init(CURL_GLOBAL_ALL);)
 
---gQt10JDuGyDb0HQ5
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+And the winner is... curl !
+The bug was introduced in this commit:
+http://cool.haxx.se/cvs.cgi/curl/lib/gtls.c.diff?r1=1.26&r2=1.27
+Note how gtls_inited is not set back to FALSE in cleanup.
 
-On Fri, Feb 08, 2008 at 05:34:24PM +0100, Michele Ballabio <barra_cuda@katamail.com> wrote:
-> On Friday 08 February 2008, Miklos Vajna wrote:
-> > diff --git a/setup.c b/setup.c
-> > index adede16..361825f 100644
-> > --- a/setup.c
-> > +++ b/setup.c
-> > @@ -346,13 +346,13 @@ int git_config_perm(const char *var, const char *value)
-> >  {
-> >  	if (value) {
->             ^^^^^
-> value is already checked here. No need to check further.
+This ended up released in 7.16.3. I'm filing a bug.
 
-ah, i missed it. should we add some comment about this or just it wasn't
-obvious to me only? (same true to the other patch where you pointed out
-the check was not necessary)
-
-thanks,
-- VMiklos
-
---gQt10JDuGyDb0HQ5
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (GNU/Linux)
-
-iD8DBQFHrMnLe81tAgORUJYRApAJAJ4xq2sJma2ervcr3b+YjzDHFWKMRACgmpD3
-jVxgMP2kvL5tQTf8wSfApiI=
-=f8kn
------END PGP SIGNATURE-----
-
---gQt10JDuGyDb0HQ5--
+Mike
