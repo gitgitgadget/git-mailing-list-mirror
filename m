@@ -1,60 +1,75 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: [PATCH (repost)] Improve bash prompt to detect merge / rebase in progress
-Date: Fri, 8 Feb 2008 14:12:49 +0100
-Message-ID: <E3983D26-5DAC-48CE-A261-7C424FCB2D64@zib.de>
-References: <9b3e2dc20802061152q63bc61acuaecf3f33d4df8b19@mail.gmail.com> <200802062314.39440.robin.rosenberg.lists@dewire.com> <7vodatu37m.fsf@gitster.siamese.dyndns.org> <200802070123.43109.robin.rosenberg.lists@dewire.com> <20080207063412.GQ24004@spearce.org> <F19A1227-3803-4C23-BEA2-26F23824ACF5@zib.de> <alpine.LSU.1.00.0802081224210.11591@racer.site>
-Mime-Version: 1.0 (Apple Message framework v753)
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Stephen Sinclair <radarsat1@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Feb 08 14:14:57 2008
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: git-fetch in 1.5.4 fails versus 1.5.3.8
+Date: Fri, 8 Feb 2008 16:27:21 +0300
+Message-ID: <20080208132721.GW30368@dpotapov.dyndns.org>
+References: <pan.2008.02.04.18.25.26@progsoc.org> <20080205050741.GA4624@coredump.intra.peff.net> <pan.2008.02.06.21.56.35@progsoc.org> <20080207042332.GA7632@sigill.intra.peff.net> <pan.2008.02.07.10.15.05@progsoc.org> <20080207232337.GR30368@dpotapov.dyndns.org> <pan.2008.02.08.02.43.21@progsoc.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Anand Kumria <wildfire@progsoc.org>
+X-From: git-owner@vger.kernel.org Fri Feb 08 14:29:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNT3z-0006xb-Ui
-	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 14:14:44 +0100
+	id 1JNTHx-0003BS-4c
+	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 14:29:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757567AbYBHNNq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Feb 2008 08:13:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752047AbYBHNNp
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 08:13:45 -0500
-Received: from mailer.zib.de ([130.73.108.11]:33071 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756632AbYBHNNY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Feb 2008 08:13:24 -0500
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id m18DC2ES001757;
-	Fri, 8 Feb 2008 14:12:02 +0100 (CET)
-Received: from [130.73.68.185] (cougar.zib.de [130.73.68.185])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m18DBprL001129
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Fri, 8 Feb 2008 14:11:51 +0100 (MET)
-In-Reply-To: <alpine.LSU.1.00.0802081224210.11591@racer.site>
-X-Mailer: Apple Mail (2.753)
+	id S1758185AbYBHN1f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Feb 2008 08:27:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753210AbYBHN1f
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 08:27:35 -0500
+Received: from el-out-1112.google.com ([209.85.162.179]:40646 "EHLO
+	el-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758185AbYBHN11 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Feb 2008 08:27:27 -0500
+Received: by el-out-1112.google.com with SMTP id v27so1501511ele.23
+        for <git@vger.kernel.org>; Fri, 08 Feb 2008 05:27:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
+        bh=hWA8m/OPO6hgE5ZuqH9ZHU5wQVG2y9PZLsSpIdWPKFQ=;
+        b=Rsnaz/H4S/ZcZa6Fo3K8S/Y/JmIP30xDQCyC9BUNV6L99Ah9K0IRSsB+ZubINkPF44jriTChd9PaEW5+r7XSr7EhN9h/DtZpRYnW7IaAf1yWfI14hfQqGmWbc4VR614z1EJARsKj6wDxG2rSEZz9vjEGb5xiEDQvam/7eTBTZfo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
+        b=BK0Y2Rl/NpWL8hODh3C07nBcVAJKSUybmd1lyl3fvo3sCbywXJcngxbF5FOxY7SlDjzk6QYYBvfpuWRgC1jCRTSNLF8ks5ti4ulv1V821bdguth72P7M98oJ7CZMc4pFLcAL6/mjkmei0vY3qT5Rpr9oPofaqW33ldm4qQTZsJ4=
+Received: by 10.150.201.13 with SMTP id y13mr5286933ybf.53.1202477244679;
+        Fri, 08 Feb 2008 05:27:24 -0800 (PST)
+Received: from localhost ( [85.141.191.38])
+        by mx.google.com with ESMTPS id w5sm10007456mue.2.2008.02.08.05.27.22
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 08 Feb 2008 05:27:23 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <pan.2008.02.08.02.43.21@progsoc.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73085>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73086>
 
+On Fri, Feb 08, 2008 at 02:43:19AM +0000, Anand Kumria wrote:
+> 
+> Yes. I've tried the Debian git 1.5.3.8 and git 1.5.4 with whatever they 
+> are linked to (libcurl3-gnutls as you point out).
+> 
+> When I decided to build & bisect to see if I could troubleshoot, I ended 
+> up building with libcurl4-gnutls-dev installed first. When compiled 
+> against libcurl4-openssl-dev things works. 
+> 
+> So it definately seems specific to how git uses libcurl and how it, in 
+> turn, uses gnutls.
 
-On Feb 8, 2008, at 1:25 PM, Johannes Schindelin wrote:
+I have investigated this issue a bit more... As I mentioned before I
+used Git 1.5.4 with libcurl3-gnutls on Debian Etch and did not have
+that problem, but when I installed exactly the same package on Debian
+unstable it exhibits the above problem. Debian Etch has curl v7.15.5,
+while Debian testing uses curl v7.17.1 and Debian unstable uses curl
+7.18.0 (both libcurl3 and libcurl4 are built from the same sources).
+So the version of libcurl seems to be relevant here. OTOH, git 1.5.3.8
+works with both versions of libcurl-gnutls, while git 1.5.4 does not
+work with a new one. So, it is also specific to how git uses libcurl.
+I will look into it more during the weekend.
 
-> On Fri, 8 Feb 2008, Steffen Prohaska wrote:
->
->> This improved prompt is great.  I already miss it each time I switch
->> back from next to master.
->
-> Maybe we (as in msysgit) should install the git-completion.bash script
-> into /share/git-core/?
-
-Yes.
-
-	Steffen
+Dmitry
