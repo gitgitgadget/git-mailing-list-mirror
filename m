@@ -1,78 +1,116 @@
-From: Alexandre Julliard <julliard@winehq.org>
-Subject: Re: [PATCH 3/4] git.el: Check for existing buffers on revert.
-Date: Fri, 08 Feb 2008 15:54:34 +0100
-Message-ID: <8763wzwlat.fsf@wine.dyndns.org>
-References: <87r6fporp3.fsf@wine.dyndns.org> <87ve4zzfkl.fsf@osv.gnss.ru>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: Use the config file to set repository owner's name.
+Date: Fri, 8 Feb 2008 16:33:54 +0100
+Message-ID: <200802081633.55934.jnareb@gmail.com>
+References: <1202445714-28971-1-git-send-email-ribas@c3sl.ufpr.br> <20080208135327.GC30264@c3sl.ufpr.br> <20080208143027.GA707@c3sl.ufpr.br>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Sergei Organov <osv@javad.com>
-X-From: git-owner@vger.kernel.org Fri Feb 08 15:55:46 2008
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Git Managment for C3SL <git@git.c3sl.ufpr.br>
+To: Bruno Cesar Ribas <ribas@c3sl.ufpr.br>
+X-From: git-owner@vger.kernel.org Fri Feb 08 16:34:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNUdl-0000DN-DU
-	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 15:55:45 +0100
+	id 1JNVFU-0008DX-2q
+	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 16:34:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755623AbYBHOyu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Feb 2008 09:54:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752200AbYBHOyu
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 09:54:50 -0500
-Received: from mail.codeweavers.com ([216.251.189.131]:56710 "EHLO
-	mail.codeweavers.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751332AbYBHOyt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Feb 2008 09:54:49 -0500
-Received: from adsl-89-217-38-111.adslplus.ch ([89.217.38.111] helo=wine.dyndns.org)
-	by mail.codeweavers.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <julliard@winehq.org>)
-	id 1JNUcf-00089s-OG; Fri, 08 Feb 2008 08:54:44 -0600
-Received: by wine.dyndns.org (Postfix, from userid 1000)
-	id 928C71E7143; Fri,  8 Feb 2008 15:54:34 +0100 (CET)
-In-Reply-To: <87ve4zzfkl.fsf@osv.gnss.ru> (Sergei Organov's message of "Fri,
-	08 Feb 2008 17:30:02 +0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.50 (gnu/linux)
-X-Spam-Score: -3.8
+	id S1757970AbYBHPeJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Feb 2008 10:34:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757855AbYBHPeJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 10:34:09 -0500
+Received: from wr-out-0506.google.com ([64.233.184.228]:30373 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757238AbYBHPeG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Feb 2008 10:34:06 -0500
+Received: by wr-out-0506.google.com with SMTP id c48so3595620wra.23
+        for <git@vger.kernel.org>; Fri, 08 Feb 2008 07:34:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-disposition:content-type:content-transfer-encoding:message-id;
+        bh=ISXnu4jKWD7GsaIOo3sdeYQirK1lvPVMlSc1UW+wIpI=;
+        b=UxIxP6DF8WDaZyoHCEw/nTpONr6v1BMB1JGKHswZ9Xa/nbE3670m/XPv7b0grxp15taS8m0VSl5P3xjdxYMMXtF41w7hnqF01x1s83qw7aeADfgc3bV6p4oacQndlWLpTqli/UeoVRSu433jw5PRIR37q+9FX0fim5Wgxu7vY1k=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-disposition:content-type:content-transfer-encoding:message-id;
+        b=vxSk0qsgVj5MTTR8zFIO1UDzl1BioYTWsCAIvIJU/rPE+UGRZ4t6z8tVZI2u7ANJvLsEyrUmzNUokswXcHl2NRSaxacDCoOQTZDxn6ynkvVjSXbiW4lNXHarPLFSV17cyWy0ssDZnyEoDXhX6zT3lIZXSxzsJk4kXhgLwB71sns=
+Received: by 10.115.77.1 with SMTP id e1mr3681975wal.103.1202484842318;
+        Fri, 08 Feb 2008 07:34:02 -0800 (PST)
+Received: from ?192.168.1.11? ( [83.8.242.186])
+        by mx.google.com with ESMTPS id i4sm1112535nfh.26.2008.02.08.07.33.59
+        (version=SSLv3 cipher=OTHER);
+        Fri, 08 Feb 2008 07:34:00 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20080208143027.GA707@c3sl.ufpr.br>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73098>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73099>
 
-Sergei Organov <osv@javad.com> writes:
+I have joined the two emails to reply only once.
 
-> What's the point? What if I do want to have modified buffer and still
-> revert the on-disk file? Why git-revert cares to the level of
-> prohibiting this?
->
-> Besides, it's inconsistent with the rest of Emacs, I think, as in
-> similar situations Emacs usually allows to either save the buffer(s), do
-> not save the buffer(s) and continue, or abort operation (I suppose using
-> (save-some-buffers) call, though I didn't check). See, for example, how
-> (compile) behaves when some of buffers are not saved.
+On Fri, 8 Feb 2008, Bruno Cesar Ribas wrote:
+> On Fri, Feb 08, 2008 at 02:55:33AM -0800, Jakub Narebski wrote:
+>> Bruno Ribas <ribas@c3sl.ufpr.br> writes:
+>>> 
+>>> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+>>> index 8ef2735..e8a43b7 100755
+>>> --- a/gitweb/gitweb.perl
+>>> +++ b/gitweb/gitweb.perl
+>>> @@ -1767,7 +1767,12 @@ sub git_get_project_owner {
+>>>       if (exists $gitweb_project_owner->{$project}) {
+>>>               $owner = $gitweb_project_owner->{$project};
+>>>       }
+>>> -     if (!defined $owner) {
+>>> +
+>>> +     if (!defined $owner){
+>>> +             $owner = git_get_project_config('owner');
+>>> +     }
+>>> +
+>>> +     if (!$owner) {
+>>>               $owner = get_file_owner("$projectroot/$project");
+>>>       }
 
-It's modeled on the vc-revert behavior, but yes, it could also prompt
-whether to discard changes; prompting to save doesn't make sense if you
-are about to throw away the changes. I think reverting the file on disk
-without changing the buffer is confusing: either you want to discard the
-changes, and you want to discard the buffer changes too, or you want to
-keep your changes, and reverting the file on disk doesn't make sense
-since the revert will be undone as soon as you save the buffer.
+Another comment: why did you change from checking of "!defined $owner"
+to checking "!$owner"? git_get_project_config('owner') returns undef
+if gitweb.owner is not defined. With checking for defined we can avoid
+false positives of owner being "0" (in practice I think this does not
+matter) or "" (this could happen if somebody doesn't want for project
+to have owner shown).
 
-> In fact I believe the way PCL-CVS handles this, and that was implemented
-> in my earlier patch, is superior compared to this patch. An addition of
-> save-some-buffers call won't hurt either, but IMHO is not very useful in
-> the specific case of git-revert.
->
-> BTW, what definitely lacks (save-some-buffers) call is git-commit, as it
-> silently commits on-disk state of a file when corresponding buffer is
-> modified.
+>> First, I think the empty lines added are not needed.
+> 
+> I made those empty lines because original code had same empty lines
+> above, I just let it to have same pattern, but I can remove. Should I
+> remove?!
 
-This could certainly be done, though it would have to be smarter than
-a simple (save-some-buffers), I find it very annoying when compile
-prompts to save a bunch of unrelated files.
+The idea was for empty lines to separate blocks of code: variables 
+declaration, initialization, finding an owner, and return value.
+So I think that empty lines are not needed here. There were no empty 
+lines between check for owner in the structure populated by 
+git_get_project_list_from_file() and checking filesystem stat for 
+project directory owner.
 
+By the way, the git_get_project_list_from_file() interface is a bit 
+strange...
+
+> I that last 3lines should be inside the block that we call
+> git_get_project_config, don't you think?
+
+No. I think using "if (!defined $foo) { maybe define foo }..."
+sequence is a good flow.
+
+> I'll resend [...] with $git_dir set.
+
+And with signoff corrected, I assume?
+
+Please try to check if the code works with and without gitweb.owner set 
+before sending new version of the patch...
 -- 
-Alexandre Julliard
-julliard@winehq.org
+Jakub Narebski
+Poland
