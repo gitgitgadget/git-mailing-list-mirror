@@ -1,97 +1,78 @@
-From: Bruno Cesar Ribas <ribas@c3sl.ufpr.br>
-Subject: Re: [PATCH] gitweb: Use the config file to set repository owner's
-	name.
-Date: Fri, 8 Feb 2008 14:07:57 -0200
-Message-ID: <20080208160757.GA11965@c3sl.ufpr.br>
-References: <1202445714-28971-1-git-send-email-ribas@c3sl.ufpr.br> <20080208135327.GC30264@c3sl.ufpr.br> <20080208143027.GA707@c3sl.ufpr.br> <200802081633.55934.jnareb@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: read_branches_file ()
+Date: Fri, 8 Feb 2008 16:22:45 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0802081618210.11591@racer.site>
+References: <20080208165008.52630d36@pc09.procura.nl> <20080208170305.069d43d2@pc09.procura.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Git Managment for C3SL <git@git.c3sl.ufpr.br>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 08 17:09:26 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: "H.Merijn Brand" <h.m.brand@xs4all.nl>
+X-From: git-owner@vger.kernel.org Fri Feb 08 17:23:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNVmx-0005k1-C1
-	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 17:09:19 +0100
+	id 1JNW0W-0003n3-6p
+	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 17:23:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757154AbYBHQI3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Feb 2008 11:08:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757344AbYBHQI3
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 11:08:29 -0500
-Received: from urquell.c3sl.ufpr.br ([200.17.202.3]:48302 "EHLO
-	urquell.c3sl.ufpr.br" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756679AbYBHQI2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Feb 2008 11:08:28 -0500
-Received: from localhost (unknown [189.1.130.222])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	(Authenticated sender: ribas)
-	by urquell.c3sl.ufpr.br (Postfix) with ESMTP id 96983700003CB;
-	Fri,  8 Feb 2008 14:08:25 -0200 (BRST)
-Content-Disposition: inline
-In-Reply-To: <200802081633.55934.jnareb@gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1754485AbYBHQWj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Feb 2008 11:22:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754473AbYBHQWj
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 11:22:39 -0500
+Received: from mail.gmx.net ([213.165.64.20]:46341 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754084AbYBHQWi (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Feb 2008 11:22:38 -0500
+Received: (qmail invoked by alias); 08 Feb 2008 16:22:36 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp008) with SMTP; 08 Feb 2008 17:22:36 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/pK3s8G73pY5HM6Wwd7CAgEbVouCC3KQUvDogwDj
+	XmtIR5t7T4fuQr
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20080208170305.069d43d2@pc09.procura.nl>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73102>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73103>
 
-On Fri, Feb 08, 2008 at 04:33:54PM +0100, Jakub Narebski wrote:
-> I have joined the two emails to reply only once.
-> 
-> On Fri, 8 Feb 2008, Bruno Cesar Ribas wrote:
-> > On Fri, Feb 08, 2008 at 02:55:33AM -0800, Jakub Narebski wrote:
-> >> Bruno Ribas <ribas@c3sl.ufpr.br> writes:
-> >>> 
-> >>> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> >>> index 8ef2735..e8a43b7 100755
-> >>> --- a/gitweb/gitweb.perl
-> >>> +++ b/gitweb/gitweb.perl
-> >>> @@ -1767,7 +1767,12 @@ sub git_get_project_owner {
-> >>>       if (exists $gitweb_project_owner->{$project}) {
-> >>>               $owner = $gitweb_project_owner->{$project};
-> >>>       }
-> >>> -     if (!defined $owner) {
-> >>> +
-> >>> +     if (!defined $owner){
-> >>> +             $owner = git_get_project_config('owner');
-> >>> +     }
-> >>> +
-> >>> +     if (!$owner) {
-> >>>               $owner = get_file_owner("$projectroot/$project");
-> >>>       }
-> 
-> Another comment: why did you change from checking of "!defined $owner"
-> to checking "!$owner"? git_get_project_config('owner') returns undef
-> if gitweb.owner is not defined. With checking for defined we can avoid
-> false positives of owner being "0" (in practice I think this does not
-> matter) or "" (this could happen if somebody doesn't want for project
-> to have owner shown).
+Hi,
 
-When I tested it returned empty, but i found out it was lack of NAME for the
-user i was running tests.
+On Fri, 8 Feb 2008, H.Merijn Brand wrote:
 
-> 
-> 
-> > I'll resend [...] with $git_dir set.
-> 
-> And with signoff corrected, I assume?
+> --8<--- remote.c.diff
+> --- remote.c.org        2008-01-27 09:04:18 +0100
+> +++ remote.c    2008-02-08 17:01:09 +0100
+> @@ -1,6 +1,7 @@
+>  #include "cache.h"
+>  #include "remote.h"
+>  #include "refs.h"
+> +#include <sys/stat.h>
 
-of course.
-> 
-> Please try to check if the code works with and without gitweb.owner set 
-> before sending new version of the patch...
+This should not be necessary; we include all system headers in cache.h.
 
-I always do that.
-> -- 
-> Jakub Narebski
-> Poland
+> @@ -173,11 +174,15 @@ static void read_branches_file(struct re
+>         char *frag;
+>         char *branch;
+>         int n = slash ? slash - remote->name : 1000;
+> -       FILE *f = fopen(git_path("branches/%.*s", n, remote->name), "r");
+> +       char *gp = git_path ("branches/%.*s", n, remote->name);
 
--- 
-Bruno Ribas - ribas@c3sl.ufpr.br
-http://web.inf.ufpr.br/ribas
-C3SL: http://www.c3sl.ufpr.br 
+Please use a more descriptive variable name, such as "branches_file" or 
+"branches_path".
+
+Also, we only leave a space after operators like "for", "while", but not 
+after function names.
+
+> +       if (stat (gp, &st_buf) || S_ISDIR (st_buf.st_mode))
+
+Again, please remove the spaces after "stat" and "S_ISDIR".
+
+Other than that, the patch looks obviously correct: please resubmit with a 
+nice commit message and a sign-off.
+
+Thanks,
+Dscho
