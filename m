@@ -1,110 +1,145 @@
-From: "H.Merijn Brand" <h.m.brand@xs4all.nl>
-Subject: Re: read_branches_file ()
-Date: Fri, 8 Feb 2008 17:49:24 +0100
-Message-ID: <20080208174924.24203ff3@pc09.procura.nl>
-References: <20080208165008.52630d36@pc09.procura.nl>
-	<20080208170305.069d43d2@pc09.procura.nl>
-	<alpine.LSU.1.00.0802081618210.11591@racer.site>
+From: "Govind Salinas" <blix@sophiasuchtig.com>
+Subject: Re: [Janitors] value could be NULL in config parser
+Date: Fri, 8 Feb 2008 11:07:42 -0600
+Message-ID: <5d46db230802080907i2a13c4fep6d4c0af436fd9704@mail.gmail.com>
+References: <7v63x0lzhw.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Feb 08 17:51:11 2008
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 08 18:08:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNWR9-0007hU-HC
-	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 17:50:51 +0100
+	id 1JNWi3-0007EK-II
+	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 18:08:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762886AbYBHQtd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Feb 2008 11:49:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761965AbYBHQtc
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 11:49:32 -0500
-Received: from smtp-vbr2.xs4all.nl ([194.109.24.22]:3072 "EHLO
-	smtp-vbr2.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762871AbYBHQtb (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Feb 2008 11:49:31 -0500
-Received: from pc09.procura.nl (procura.xs4all.nl [82.95.216.29])
-	(authenticated bits=0)
-	by smtp-vbr2.xs4all.nl (8.13.8/8.13.8) with ESMTP id m18GnPDw035127
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 8 Feb 2008 17:49:25 +0100 (CET)
-	(envelope-from h.m.brand@xs4all.nl)
-In-Reply-To: <alpine.LSU.1.00.0802081618210.11591@racer.site>
-X-Mailer: Claws Mail 3.2.0cvs74 (GTK+ 2.10.6; x86_64-unknown-linux-gnu)
-Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwEAIAAACI8LKTAAAACXBIWXMAAABIAAAASABGyWs+AAAC
- JElEQVRo3u2aMY4CMQxFczZ6RItEzRm4DBINDbRUSPRInIRbsNK6+dJfezN4kokn48IaCSjysL8d
- e9Knoj2fr9f9/gllqQ6U9/vxWK3EdwdIEGjRIVCu18NhuxUfK46SH81+fzrdbuKPx/P5ctHQdAdI
- TKAgpvV6s9ntBEfXEYSGgMQzIHnuFBBjkshCNJ2KtJZ04hHNAugP8bZr3NIHhbcF0AKoK0CoaHXU
- LUWBIs1n+jV+Fl8CVqOApEXAwyMO/DSR4XVntoAYDR7eBjQupuYAYTMph8Rj21D4m7MChN02tpqs
- NSnb/KqU2oHCXu5xDCgflj/RAgBiKBIXnICzAsSjWBsTz5K4/HeXYvb8yK5lY3VGEwPi2aONKT+5
- AlcxrTPOwcTiraGRChgMEKJh0bVVifGVTq6qgBiNVl8QE29EsK6VE+YJAOG2wz5AvsqUS6uqgHCA
- n4NGvBYpnJ64Jgg27sCtxtBk1CJIA4S/GhdWKh07QxUB48jWGhZ4jKamRRr/T8/M0AaEyctry6YB
- 4dTGj9iWZNs3DahES5kPCJOu0RQbF/fQOBprsB9gaO9JtPDzII9U5ySXX7AnuIt91y54AAW7rPpT
- LCe5gt3F+CLqr2UarGB3MXvMylWGq4+9RCx3TW1oJq1t3HPQlFs6N1fFNEB4s8dn7Ne7ACSm7TPQ
- I5quAWmw6qBpulHM33B0Csge4Nd8JTTYG2b1XyRe3lH8x34ABJ6aePuQ2N4AAAAASUVORK5CYII=
-X-Virus-Scanned: by XS4ALL Virus Scanner
+	id S964837AbYBHRHr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Feb 2008 12:07:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964826AbYBHRHq
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 12:07:46 -0500
+Received: from rn-out-0910.google.com ([64.233.170.191]:6295 "EHLO
+	rn-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964812AbYBHRHo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Feb 2008 12:07:44 -0500
+Received: by rn-out-0910.google.com with SMTP id i24so5272039rng.19
+        for <git@vger.kernel.org>; Fri, 08 Feb 2008 09:07:42 -0800 (PST)
+Received: by 10.150.123.16 with SMTP id v16mr5393108ybc.76.1202490462379;
+        Fri, 08 Feb 2008 09:07:42 -0800 (PST)
+Received: by 10.150.199.5 with HTTP; Fri, 8 Feb 2008 09:07:42 -0800 (PST)
+In-Reply-To: <7v63x0lzhw.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
+X-Google-Sender-Auth: 6514423e7c72ab31
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73112>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73113>
 
-On Fri, 8 Feb 2008 16:22:45 +0000 (GMT), Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
+On 2/8/08, Junio C Hamano <gitster@pobox.com> wrote:
+> If somebody wants to dip his or her toe in git hacking, and is
+> tempted to send in a "clean up" patch (e.g. whitespace, coding
+> style) that does not really _fix_ anything, please don't.
+>
+> I have a task of similar complexity (meaning, reasonably easy)
+> that is much more useful and appreciated than clean-up patches
+> for you.
+>
+> The callback functions that are passed to git_config() need to
+> be audited so that they do not barf when given NULL.  Currently,
+> many of them are not safe.
+>
+> A callback function of git_config() is called when the command
+> reads value from .git/config and friends.  The function takes
+> two parameters, var and value.  var is never NULL and it is the
+> name of the configuration variable found in the file being
+> read.  value could be either string or NULL.
+>
+> A NULL value is boolean "true".  For example, on MS-DOS, you may
+> have something like this:
+>
+>         [core]
+>                 autocrlf
+>
+> and your callback will be called with var = "core.autocrlf" and
+> value = NULL in such a case.
+>
+> If you want to fix them (you do not have to do all of them, and
+> if you would like to help, please make one patch per function
+> fixed), the procedure is:
+>
+>  (1) Find calling sites for git_config().  For example, we find
+>      one in archive-tar.c::write_tar_archive().
+>
+>         int write_tar_archive(struct archiver_args *args)
+>         {
+>                 int plen = args->base ? strlen(args->base) : 0;
+>
+>                 git_config(git_tar_config);
+>
+>                 archive_time = args->time;
+>                 verbose = args->verbose;
+>         ...
+>
+>  (2) Look at the function that is passed to git_config().
+>
+>         static int git_tar_config(const char *var, const char *value)
+>         {
+>                 if (!strcmp(var, "tar.umask")) {
+>                         if (!strcmp(value, "user")) {
+>                                 tar_umask = umask(0);
+>                                 umask(tar_umask);
+>                         } else {
+>                                 tar_umask = git_config_int(var, value);
+>                         }
+>                         return 0;
+>                 }
+>                 return git_default_config(var, value);
+>         }
+>
+>  (3) Let's fix it.  If the user's configuration has:
+>
+>         [tar]
+>                 umask
+>
+>      it is an illegal configuration, but the code above does not
+>      check for NULL, and the second strcmp() would fail.  If we
+>      guard that strcmp() with a check against NULL, we would be
+>      Ok.  git_config_int() will correctly barf telling the user
+>      that "tar.umask" configuration is wrong.
+>
+>  (4) Then send in a patch.  Again, one patch per fixed function,
+>      please.  The message may look like this:
+>
+> -- >8 --
+> [PATCH] archive-tar.c: guard config parser from value=NULL
+>
+> Signed-off-by: A U Thor <author@example.com>
+>
+>  archive-tar.c |    2 +-
+>  1 files changed, 1 insertions(+), 1 deletions(-)
+>
+> diff --git a/archive-tar.c b/archive-tar.c
+> index e1bced5..30aa2e2 100644
+> --- a/archive-tar.c
+> +++ b/archive-tar.c
+> @@ -222,7 +222,7 @@ static void write_global_extended_header(const unsigned char *sha1)
+>  static int git_tar_config(const char *var, const char *value)
+>  {
+>         if (!strcmp(var, "tar.umask")) {
+> -               if (!strcmp(value, "user")) {
+> +               if (value && !strcmp(value, "user")) {
+>                         tar_umask = umask(0);
+>                         umask(tar_umask);
+>                 } else {
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
 
-> Hi,
-> 
-> On Fri, 8 Feb 2008, H.Merijn Brand wrote:
-> 
-> > --8<--- remote.c.diff
-> > --- remote.c.org        2008-01-27 09:04:18 +0100
-> > +++ remote.c    2008-02-08 17:01:09 +0100
-> > @@ -1,6 +1,7 @@
-> >  #include "cache.h"
-> >  #include "remote.h"
-> >  #include "refs.h"
-> > +#include <sys/stat.h>
-> 
-> This should not be necessary; we include all system headers in cache.h.
+I can try my hand at that.  I will send some patches later today (after work).
 
-dropped
-
-> > @@ -173,11 +174,15 @@ static void read_branches_file(struct re
-> >         char *frag;
-> >         char *branch;
-> >         int n = slash ? slash - remote->name : 1000;
-> > -       FILE *f = fopen(git_path("branches/%.*s", n, remote->name), "r");
-> > +       char *gp = git_path ("branches/%.*s", n, remote->name);
-> 
-> Please use a more descriptive variable name, such as "branches_file" or 
-> "branches_path".
-
-took another approach, as that also addresses the other fopen () call
-
-> Also, we only leave a space after operators like "for", "while", but not 
-> after function names.
-
-This patch was not sent to be applied as-is, only as a proof-of-concept
-Not that I agree to the layout/indentation, the new patch is sent trying
-to follow what you use.
-
-> > +       if (stat (gp, &st_buf) || S_ISDIR (st_buf.st_mode))
-> 
-> Again, please remove the spaces after "stat" and "S_ISDIR".
-
-you said please :)
-
-> Other than that, the patch looks obviously correct: please resubmit with a 
-> nice commit message and a sign-off.
-
-Done
-
--- 
-H.Merijn Brand         Amsterdam Perl Mongers (http://amsterdam.pm.org/)
-using & porting perl 5.6.2, 5.8.x, 5.10.x  on HP-UX 10.20, 11.00, 11.11,
-& 11.23, SuSE 10.1 & 10.2, AIX 5.2, and Cygwin.       http://qa.perl.org
-http://mirrors.develooper.com/hpux/            http://www.test-smoke.org
-                        http://www.goldmark.org/jeff/stupid-disclaimers/
+-Govind
