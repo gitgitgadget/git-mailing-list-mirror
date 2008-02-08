@@ -1,70 +1,92 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] Adjust .gitignore for 5884f1(Rename
- 'git-help--browse.sh'...)
-Date: Fri, 8 Feb 2008 13:33:51 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802081333060.11591@racer.site>
+From: Bruno Cesar Ribas <ribas@c3sl.ufpr.br>
+Subject: Re: Adding gitweb.owner, last shot
+Date: Fri, 8 Feb 2008 11:49:21 -0200
+Message-ID: <20080208134921.GA30264@c3sl.ufpr.br>
+References: <1202445714-28971-1-git-send-email-ribas@c3sl.ufpr.br> <7v3as3lwxn.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Feb 08 14:34:20 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 08 14:50:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNTMw-0004tQ-MA
-	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 14:34:19 +0100
+	id 1JNTcZ-0001r5-Tg
+	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 14:50:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755272AbYBHNdq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Feb 2008 08:33:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755127AbYBHNdp
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 08:33:45 -0500
-Received: from mail.gmx.net ([213.165.64.20]:45029 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754508AbYBHNdp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Feb 2008 08:33:45 -0500
-Received: (qmail invoked by alias); 08 Feb 2008 13:33:43 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp021) with SMTP; 08 Feb 2008 14:33:43 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/7gpJWwlT7ciSkmRBL9pcf9J59K3vxZu64CUtzmP
-	H07XdDC0K+O95c
-X-X-Sender: gene099@racer.site
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1754950AbYBHNtx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Feb 2008 08:49:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753656AbYBHNtx
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 08:49:53 -0500
+Received: from urquell.c3sl.ufpr.br ([200.17.202.3]:45850 "EHLO
+	urquell.c3sl.ufpr.br" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753522AbYBHNtw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Feb 2008 08:49:52 -0500
+Received: from localhost (unknown [189.1.136.222])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	(Authenticated sender: ribas)
+	by urquell.c3sl.ufpr.br (Postfix) with ESMTP id 3D947700003D9;
+	Fri,  8 Feb 2008 11:49:50 -0200 (BRST)
+Content-Disposition: inline
+In-Reply-To: <7v3as3lwxn.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73087>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73088>
 
+On Thu, Feb 07, 2008 at 11:38:44PM -0800, Junio C Hamano wrote:
+> Bruno Ribas <ribas@c3sl.ufpr.br> writes:
+> 
+> > ... there is no major performance downgrade
+> > compared to $projects_list , as seen below:
+> >
+> > 8<-------
+> > These times i got with a 1000projects running 2 dd to generate disk IO.
+> > Here comes the resultm
+> > NO projects_list  projects_list
+> > 16m30s69          15m10s74       default gitweb, using FS's owner
+> > 16m07s40          15m24s34       patched to get gitweb.owner
+> > 16m37s76          15m59s32       same above, but without gitweb.owner
+> >
+> > Now results for a 1000projects on an idle machine.
+> > NO projects_list  projects_list
+> > 1m19s08           1m09s55       default gitweb, using FS's owner
+> > 1m17s58           1m09s55       patched to get gitweb.owner
+> > 1m18s49           1m08s96       same above, but without gitweb.owner
+> > 8<-------
+> 
+> Large installations would maintain the project_list in the flat
+> file format for performance reasons anyway.  Benchmarking under
+> a condition that yields unreasonably long response time is
+> somewhat meaningless, I am afraid.  Who sane would wait for 15
+> minutes for project list to come up?
 
-Since git-help--browse was renamed, we should ignore git-web--browse
-instead.
+But it got 15minutes with project_list to! The real problem is geting last
+change on repository under high IO.
+> 
+><snip>
+> 
+> As the act of signing off patches is a legal statement, I'd
+> prefer real person's name, not "Git Managment for C3SL", in the
+> messages to be applied.  The change that adds the feature, and
+> the documentation update to describe that new feature, should be
+> in the same single patch for a small change like this.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- .gitignore |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+I'll resend it !! my mistake of names =(
+> 
+> 
+> 
+> 
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
 
-diff --git a/.gitignore b/.gitignore
-index 1a73de0..a85d2e7 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -51,7 +51,6 @@ git-gc
- git-get-tar-commit-id
- git-grep
- git-hash-object
--git-help--browse
- git-http-fetch
- git-http-push
- git-imap-send
-@@ -137,6 +136,7 @@ git-upload-pack
- git-var
- git-verify-pack
- git-verify-tag
-+git-web--browse
- git-whatchanged
- git-write-tree
- git-core-*/?*
 -- 
-1.5.4.1261.g18335
+Bruno Ribas - ribas@c3sl.ufpr.br
+http://web.inf.ufpr.br/ribas
+C3SL: http://www.c3sl.ufpr.br 
