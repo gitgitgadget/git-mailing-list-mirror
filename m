@@ -1,133 +1,126 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [Janitors] value could be NULL in config parser
-Date: Thu, 07 Feb 2008 22:43:23 -0800
-Message-ID: <7v63x0lzhw.fsf@gitster.siamese.dyndns.org>
+Subject: Re: small question about the repack algorithm
+Date: Thu, 07 Feb 2008 23:12:44 -0800
+Message-ID: <7vodarly4z.fsf@gitster.siamese.dyndns.org>
+References: <20080207090331.GA1958@artemis.madism.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 08 07:44:11 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git ML <git@vger.kernel.org>
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Fri Feb 08 08:13:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNMy2-0001RL-HP
-	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 07:44:10 +0100
+	id 1JNNQO-0006tz-3F
+	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 08:13:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754768AbYBHGng (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Feb 2008 01:43:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754651AbYBHGng
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 01:43:36 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:64149 "EHLO
+	id S1756259AbYBHHMy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Feb 2008 02:12:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756007AbYBHHMy
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 02:12:54 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:32922 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754214AbYBHGnf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Feb 2008 01:43:35 -0500
+	with ESMTP id S1754705AbYBHHMx convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 8 Feb 2008 02:12:53 -0500
 Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 0F34F632A;
-	Fri,  8 Feb 2008 01:43:34 -0500 (EST)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 719E36759;
+	Fri,  8 Feb 2008 02:12:51 -0500 (EST)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 41A366328;
-	Fri,  8 Feb 2008 01:43:31 -0500 (EST)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id BDD806758;
+	Fri,  8 Feb 2008 02:12:46 -0500 (EST)
+In-Reply-To: <20080207090331.GA1958@artemis.madism.org> (Pierre Habouzit's
+	message of "Thu, 07 Feb 2008 10:03:31 +0100")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73044>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73045>
 
-If somebody wants to dip his or her toe in git hacking, and is
-tempted to send in a "clean up" patch (e.g. whitespace, coding
-style) that does not really _fix_ anything, please don't.
+Pierre Habouzit <madcoder@debian.org> writes:
 
-I have a task of similar complexity (meaning, reasonably easy)
-that is much more useful and appreciated than clean-up patches
-for you.
+>   I've trying to see if that optimization was used but I was somehow
+> unable to find if it was the case, as the code is a bit tough :)
+>
+>   I was wondering if the repacking window was using triangle inequali=
+ty
+> to discard trying some costly deltas (I assume that what costs the mo=
+st
+> in the repacking is computing the delta). I mean, if you consider the
+> "size" of a delta, I'm almost sure that it's very near a distance.
+>
+>   So assuming that we know the delta sizes between any pair of refere=
+nce
+> objects in the window, well, if an object we want to delta against th=
+e
+> window Od are near one reference O1 enough, for each Oi in the window
+> that holds: len(=CE=B4(O1, Oi)) > 2 * len(=CE=B4(Od, O1)), then it's =
+not worth
+> investigating.
 
-The callback functions that are passed to git_config() need to
-be audited so that they do not barf when given NULL.  Currently,
-many of them are not safe.
+We do not keep track of the delta size matrix between delta-base
+candidates in the window, but I presume we could.  The storage
+cost for doing so is very cheap (window^2 * size_t).  But we do
+not even compute the distance matrix fully (I'll mention the
+reason why the above is not (window^2 * size_t / 2) later).
 
-A callback function of git_config() is called when the command
-reads value from .git/config and friends.  The function takes
-two parameters, var and value.  var is never NULL and it is the
-name of the configuration variable found in the file being
-read.  value could be either string or NULL.
+    1-----------------------------i   <=3D delta-base candidates
+     \
+      \=20
+       D <-- the target we are considering
 
-A NULL value is boolean "true".  For example, on MS-DOS, you may
-have something like this:
+Your idea is that if we want to find the cheapest delta-base,
+and after we find out that candidate #1 is close to our target D
+and candidate #i is very far from candidate #1, then delta to
+create D using candidate #i as the base would be much bigger.
+If the distance space is Euclidean, that would be a nice
+optimization.
 
-	[core]
- 		autocrlf
+However I do not think deltification would work that way, for
+two reasons.
 
-and your callback will be called with var = "core.autocrlf" and
-value = NULL in such a case.
+The deltified representation of an object is a sequence of two
+kinds of opcodes:
 
-If you want to fix them (you do not have to do all of them, and
-if you would like to help, please make one patch per function
-fixed), the procedure is:
+ (1) the N bytes in the target from the current point is a copy
+     of the source at offset M;
 
- (1) Find calling sites for git_config().  For example, we find
-     one in archive-tar.c::write_tar_archive().
+ (2) the N bytes in the target from the current point are the
+     following literal string.
 
-        int write_tar_archive(struct archiver_args *args)
-        {
-                int plen = args->base ? strlen(args->base) : 0;
+The first form is two integers (and we represent short integers
+efficiently), and the second form is one integer plus N bytes
+literal.
 
-                git_config(git_tar_config);
+An efficient delta candidate is the one with most common
+contents with the target image.  Saying "copy that part" is
+cheaper than "Here is the contents.....".
 
-                archive_time = args->time;
-                verbose = args->verbose;
-	...
+Notice that it does not matter how much other cruft a target
+contains.  In an extreme case, if the base candidate #1 is a
+prefix of the candidate #i, and the difference does not have any
+commonality with target D, then the delta to represent D using
+the base #1 and the delta using the base #i would be of the same
+size and the same contents (as all offsets from the source image
+of copied parts would be the same).  The tail part of #i would
+not participate reconstruction of D at all.
 
- (2) Look at the function that is passed to git_config().
+In such a case, you would have a long distance between #1 and
+#i, but that is because #i has very many unrelated contents that
+are not shared with #1 (so the difference has to be represented
+as "Append these bytes to represent #i, as we cannot copy from #1".
 
-        static int git_tar_config(const char *var, const char *value)
-        {
-                if (!strcmp(var, "tar.umask")) {
-                        if (!strcmp(value, "user")) {
-                                tar_umask = umask(0);
-                                umask(tar_umask);
-                        } else {
-                                tar_umask = git_config_int(var, value);
-                        }
-                        return 0;
-                }
-                return git_default_config(var, value);
-        }
+But that does not mean #i has less common contents than #1 has
+with D.  In fact, we might even find common contents between the
+tail part of #i and D that the delta using base #1 needed to
+represent as literals.  In other words, #i could well be a
+better candidate than #1.
 
- (3) Let's fix it.  If the user's configuration has:
-
-	[tar]
-        	umask
-
-     it is an illegal configuration, but the code above does not
-     check for NULL, and the second strcmp() would fail.  If we
-     guard that strcmp() with a check against NULL, we would be
-     Ok.  git_config_int() will correctly barf telling the user
-     that "tar.umask" configuration is wrong.
-
- (4) Then send in a patch.  Again, one patch per fixed function,
-     please.  The message may look like this:
-
--- >8 --
-[PATCH] archive-tar.c: guard config parser from value=NULL
-
-Signed-off-by: A U Thor <author@example.com>
-
- archive-tar.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/archive-tar.c b/archive-tar.c
-index e1bced5..30aa2e2 100644
---- a/archive-tar.c
-+++ b/archive-tar.c
-@@ -222,7 +222,7 @@ static void write_global_extended_header(const unsigned char *sha1)
- static int git_tar_config(const char *var, const char *value)
- {
- 	if (!strcmp(var, "tar.umask")) {
--		if (!strcmp(value, "user")) {
-+		if (value && !strcmp(value, "user")) {
- 			tar_umask = umask(0);
- 			umask(tar_umask);
- 		} else {
+The second reason is that the deltification is not symmetric.
+If you define the "distance" between #1 and #i as "the size of
+delta to reproduce #i using #1 as base", the distance between #1
+and #i is very different from the distance between #i and #1.
