@@ -1,79 +1,86 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Adding gitweb.owner, last shot
-Date: Thu, 07 Feb 2008 23:38:44 -0800
-Message-ID: <7v3as3lwxn.fsf@gitster.siamese.dyndns.org>
-References: <1202445714-28971-1-git-send-email-ribas@c3sl.ufpr.br>
+Subject: Re: Minor annoyance with git push
+Date: Thu, 07 Feb 2008 23:48:05 -0800
+Message-ID: <7vwspfkhxm.fsf@gitster.siamese.dyndns.org>
+References: <46a038f90802072044u3329fd33w575c689cba2917ee@mail.gmail.com>
+	<46a038f90802072050s46ffe305mcffffa068511e3b8@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Bruno Ribas <ribas@c3sl.ufpr.br>
-X-From: git-owner@vger.kernel.org Fri Feb 08 08:39:35 2008
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Martin Langhoff" <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 08 08:49:18 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNNpe-0003qx-V8
-	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 08:39:35 +0100
+	id 1JNNz2-00062B-R5
+	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 08:49:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758708AbYBHHi5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Feb 2008 02:38:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758636AbYBHHi4
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 02:38:56 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:34369 "EHLO
+	id S1759568AbYBHHs2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Feb 2008 02:48:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753536AbYBHHs2
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 02:48:28 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:35006 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758521AbYBHHiz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Feb 2008 02:38:55 -0500
+	with ESMTP id S1759354AbYBHHs1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Feb 2008 02:48:27 -0500
 Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 592F76B4C;
-	Fri,  8 Feb 2008 02:38:54 -0500 (EST)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id C55AA6C63;
+	Fri,  8 Feb 2008 02:48:25 -0500 (EST)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id A08736AF3;
-	Fri,  8 Feb 2008 02:38:47 -0500 (EST)
-In-Reply-To: <1202445714-28971-1-git-send-email-ribas@c3sl.ufpr.br> (Bruno
-	Ribas's message of "Fri, 8 Feb 2008 02:41:52 -0200")
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 3018D6C62;
+	Fri,  8 Feb 2008 02:48:23 -0500 (EST)
+In-Reply-To: <46a038f90802072050s46ffe305mcffffa068511e3b8@mail.gmail.com>
+	(Martin Langhoff's message of "Fri, 8 Feb 2008 17:50:36 +1300")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73050>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73051>
 
-Bruno Ribas <ribas@c3sl.ufpr.br> writes:
+"Martin Langhoff" <martin.langhoff@gmail.com> writes:
 
-> ... there is no major performance downgrade
-> compared to $projects_list , as seen below:
+> On Feb 8, 2008 5:44 PM, Martin Langhoff <martin.langhoff@gmail.com> wrote:
+>>  None of these "rejected" branches have anything _new_, they
+>> are just stale. Nothing new to say.
 >
-> 8<-------
-> These times i got with a 1000projects running 2 dd to generate disk IO.
-> Here comes the resultm
-> NO projects_list  projects_list
-> 16m30s69          15m10s74       default gitweb, using FS's owner
-> 16m07s40          15m24s34       patched to get gitweb.owner
-> 16m37s76          15m59s32       same above, but without gitweb.owner
+> And I guess the natural follow up question is: would it make sense to
+> tell git pull to do a "merge" for not-checked-out branches where we
+> can safely tell that the resulting "merge" will actually be a
+> fast-forward?
 >
-> Now results for a 1000projects on an idle machine.
-> NO projects_list  projects_list
-> 1m19s08           1m09s55       default gitweb, using FS's owner
-> 1m17s58           1m09s55       patched to get gitweb.owner
-> 1m18s49           1m08s96       same above, but without gitweb.owner
-> 8<-------
+> Would that be unsafe in any way?
 
-Large installations would maintain the project_list in the flat
-file format for performance reasons anyway.  Benchmarking under
-a condition that yields unreasonably long response time is
-somewhat meaningless, I am afraid.  Who sane would wait for 15
-minutes for project list to come up?
+Not "unsafe" in the sense that you would not be losing commit
+objects, but I'd feel uneasy about that.  The fact that the
+branch tip was pointing at an older commit gets lost, and in
+your workflow that information is useless, but that does not
+necessarily mean it is useless for everybody.
 
-So I think your patch makes sense.  It would not help nor hurt
-large installations, and would help smaller installations that
-do not care much about performance but are more interested in
-the convenience of not having to worry about maintaining the
-project_list.
+> Because when I "git checkout bla-stale-branch" to help a fellow
+> developer again, I have to remember to "git merge
+> origin/bla-stale-branch" to get a much needed fast-forward before
+> starting to work.
 
-As the act of signing off patches is a legal statement, I'd
-prefer real person's name, not "Git Managment for C3SL", in the
-messages to be applied.  The change that adds the feature, and
-the documentation update to describe that new feature, should be
-in the same single patch for a small change like this.
+Perhaps it might make sense to have a checkout hook that notices
+the branch that is being checked out is meant to build on top of
+a corresponding remote tracking branch, and performs the
+necessary fast-forward when that is the case.
+
+> [ Or we could be more proactive at deleting unused local heads. But
+> that's a bit of silly maintenance just to keep things tidy, that git
+> could keep tidy ;-) ... ]
+
+Well, git couldn't, unless you tell it "I've pushed out my work,
+and I am done with helping with this client branch for now", and
+the way for you to do so is "git branch -d".
+
+Perhaps "git branch -d" should be taught to check if the tip of
+the deleted branch is part of the corresponding remote tracking
+branch, when "one local branch to track one remote branch" model
+is used.  Its safety to forbid deleting the branch unless it is
+an ancestor of the "current" branch would not make sense in such
+a workflow.
