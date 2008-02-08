@@ -1,110 +1,120 @@
-From: "H.Merijn Brand" <h.m.brand@xs4all.nl>
-Subject: Re: [PATCH] opening files in remote.c should ensure it is opening a
- file
-Date: Fri, 8 Feb 2008 21:04:47 +0100
-Message-ID: <20080208210447.289022b6@pc09.procura.nl>
-References: <20080208174654.2e9e679c@pc09.procura.nl>
-	<e2b179460802080925s61270036q81896010c76236ae@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Mike Ralphson" <mike.ralphson@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 08 21:06:04 2008
+From: Mike Hommey <mh@glandium.org>
+Subject: [PATCH] Work around curl-gnutls not liking to be reinitialized
+Date: Fri,  8 Feb 2008 21:08:55 +0100
+Message-ID: <1202501335-28205-1-git-send-email-mh@glandium.org>
+References: <20080208073456.GA17791@glandium.org>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri Feb 08 21:09:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNZTo-0000W2-NP
-	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 21:05:49 +0100
+	id 1JNZX9-00028h-2A
+	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 21:09:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935223AbYBHUE5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Feb 2008 15:04:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935220AbYBHUE4
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 15:04:56 -0500
-Received: from smtp-vbr13.xs4all.nl ([194.109.24.33]:1432 "EHLO
-	smtp-vbr13.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S935200AbYBHUEy (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Feb 2008 15:04:54 -0500
-Received: from pc09.procura.nl (procura.xs4all.nl [82.95.216.29])
-	(authenticated bits=0)
-	by smtp-vbr13.xs4all.nl (8.13.8/8.13.8) with ESMTP id m18K4mD0024991
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 8 Feb 2008 21:04:48 +0100 (CET)
-	(envelope-from h.m.brand@xs4all.nl)
-In-Reply-To: <e2b179460802080925s61270036q81896010c76236ae@mail.gmail.com>
-X-Mailer: Claws Mail 3.3.0 (GTK+ 2.10.6; x86_64-unknown-linux-gnu)
-Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwEAIAAACI8LKTAAAACXBIWXMAAABIAAAASABGyWs+AAAC
- JElEQVRo3u2aMY4CMQxFczZ6RItEzRm4DBINDbRUSPRInIRbsNK6+dJfezN4kokn48IaCSjysL8d
- e9Knoj2fr9f9/gllqQ6U9/vxWK3EdwdIEGjRIVCu18NhuxUfK46SH81+fzrdbuKPx/P5ctHQdAdI
- TKAgpvV6s9ntBEfXEYSGgMQzIHnuFBBjkshCNJ2KtJZ04hHNAugP8bZr3NIHhbcF0AKoK0CoaHXU
- LUWBIs1n+jV+Fl8CVqOApEXAwyMO/DSR4XVntoAYDR7eBjQupuYAYTMph8Rj21D4m7MChN02tpqs
- NSnb/KqU2oHCXu5xDCgflj/RAgBiKBIXnICzAsSjWBsTz5K4/HeXYvb8yK5lY3VGEwPi2aONKT+5
- AlcxrTPOwcTiraGRChgMEKJh0bVVifGVTq6qgBiNVl8QE29EsK6VE+YJAOG2wz5AvsqUS6uqgHCA
- n4NGvBYpnJ64Jgg27sCtxtBk1CJIA4S/GhdWKh07QxUB48jWGhZ4jKamRRr/T8/M0AaEyctry6YB
- 4dTGj9iWZNs3DahES5kPCJOu0RQbF/fQOBprsB9gaO9JtPDzII9U5ySXX7AnuIt91y54AAW7rPpT
- LCe5gt3F+CLqr2UarGB3MXvMylWGq4+9RCx3TW1oJq1t3HPQlFs6N1fFNEB4s8dn7Ne7ACSm7TPQ
- I5quAWmw6qBpulHM33B0Csge4Nd8JTTYG2b1XyRe3lH8x34ABJ6aePuQ2N4AAAAASUVORK5CYII=
-X-Virus-Scanned: by XS4ALL Virus Scanner
+	id S1760720AbYBHUIg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Feb 2008 15:08:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760408AbYBHUIg
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 15:08:36 -0500
+Received: from vuizook.err.no ([85.19.215.103]:50723 "EHLO vuizook.err.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751783AbYBHUIf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Feb 2008 15:08:35 -0500
+Received: from aputeaux-153-1-42-109.w82-124.abo.wanadoo.fr ([82.124.6.109] helo=jigen)
+	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.67)
+	(envelope-from <mh@glandium.org>)
+	id 1JNZXL-0002Qi-Ql; Fri, 08 Feb 2008 21:09:34 +0100
+Received: from mh by jigen with local (Exim 4.69)
+	(envelope-from <mh@jigen>)
+	id 1JNZWp-0007LK-TC; Fri, 08 Feb 2008 21:08:55 +0100
+X-Mailer: git-send-email 1.5.4.7.gd8534-dirty
+In-Reply-To: <20080208073456.GA17791@glandium.org>
+X-Spam-Status: (score 2.2): No, score=2.2 required=5.0 tests=RCVD_IN_PBL,RCVD_IN_SORBS_DUL,RDNS_DYNAMIC autolearn=disabled version=3.2.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73127>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73128>
 
-On Fri, 8 Feb 2008 17:25:52 +0000, "Mike Ralphson" <mike.ralphson@gmail.com>
-wrote:
+Either recent curl or gnutls doesn't like initializing again after cleaning
+up, and this is happening in some cases such as git fetch.
 
-> On Feb 8, 2008 4:46 PM, H.Merijn Brand <h.m.brand@xs4all.nl> wrote:
-> > HP-UX allows directories to be opened with fopen (path, "r"), which
-> > will cause some translations that expect to read files, read dirs
-> > instead. This patch makes sure the two fopen () calls in remote.c
-> > only open the file if it is a file.
-> >
-> > Signed-off-by: H.Merijn Brand <h.m.brand@xs4all.nl>
-> 
-> Many thanks, this is also required for AIX. I had got some way to
-> tracking it down, but I thought it was an issue with strbuf. So...
-> 
-> Tested-by: Mike Ralphson <mike.ralphson@gmail.com>
-> 
-> Your other fix there [- if (!strbuf_avail(sb)) / + if
-> (strbuf_avail(sb) < 64) ] is, guess what, also required on AIX.
-> 
-> Thanks again.
+We work around this by removing the http_cleanup call from get_refs_via_curl,
+and allowing http_init to be called several times without initializing http.c
+global variables again and leaking old values.
 
-Not there yet ...
+The remaining calls to http_cleanup are either last (http-push.c), or almost
+never called (walker.c; the function it lies in is only called from
+transport-disconnect, which is called last, and only in builtin-push.c).
+These leaks shall be addressed in the http code refactoring.
 
-$ cat do-tests
-#!/bin/sh
+Signed-off-by: Mike Hommey <mh@glandium.org>
+---
 
-export TAR=ntar
-rm -f *.err
-for t in t[0-9]*.sh ; do
-    echo $t
-    sh $t > test.err 2>&1 || mv test.err $t.err
-    rm -f test.err
-    done
-$
+ > So, it looks like either gnutls has a problem reinitializing its ASN1
+ > parser or curl is doing something wrong with gnutls when initializing a
+ > new request.
 
-197509 -rw-rw-rw- 1 merijn softwr 1633 Feb  8 18:03 t5302-pack-index.sh.err
-196846 -rw-rw-rw- 1 merijn softwr  943 Feb  8 18:04 t5500-fetch-pack.sh.err
-203431 -rw-rw-rw- 1 merijn softwr  344 Feb  8 18:05 t5600-clone-fail-cleanup.sh.err
-202602 -rw-rw-rw- 1 merijn softwr  458 Feb  8 18:05 t5701-clone-local.sh.err
-202761 -rw-rw-rw- 1 merijn softwr 3039 Feb  8 18:06 t6002-rev-list-bisect.sh.err
-202641 -rw-rw-rw- 1 merijn softwr 3980 Feb  8 18:06 t6003-rev-list-topo-order.sh.err
-202731 -rw-rw-rw- 1 merijn softwr  899 Feb  8 18:06 t6022-merge-rename.sh.err
-197510 -rw-rw-rw- 1 merijn softwr 1340 Feb  8 18:08 t7201-co.sh.err
-202705 -rw-rw-rw- 1 merijn softwr  149 Feb  8 18:09 t9300-fast-import.sh.err
-197051 -rw-rw-rw- 1 merijn softwr 1651 Feb  8 18:09 t9301-fast-export.sh.err
+ In the end, it was a bit of git's fault, but either curl or gnutls is the
+ actual culprit. I've not looked into either code to find out who's
+ responsible, but a very simplified testcase is as follows:
 
-http://www.xs4all.nl/~procura/git-1.5.3-1123ipf.tar
+	#include <curl/curl.h>
+	#include <curl/easy.h>
 
-Tips welcome :)
+	int main(void) {
+	        CURL *easy = curl_easy_init();
+	        curl_easy_setopt(easy, CURLOPT_VERBOSE, 1);
+	        curl_easy_setopt(easy, CURLOPT_URL, "https://www.verisign.com/");
+	        curl_easy_perform(easy);
+	        curl_global_cleanup();
+	        easy = curl_easy_init();
+	        curl_easy_setopt(easy, CURLOPT_VERBOSE, 1);
+	        curl_easy_setopt(easy, CURLOPT_URL, "https://www.verisign.com/");
+	        curl_easy_perform(easy);
+	}
 
+	(build with gcc -o test test.c -lcurl)
+	(note curl_easy_init does curl_global_init behind the curtains, even the
+	second time. You can convince yourself by adding
+	curl_global_init(CURL_GLOBAL_ALL);)
+
+ http.c      |    5 +++++
+ transport.c |    2 --
+ 2 files changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/http.c b/http.c
+index d2c11ae..a3aa9e9 100644
+--- a/http.c
++++ b/http.c
+@@ -215,9 +215,14 @@ static CURL* get_curl_handle(void)
+ 
+ void http_init(void)
+ {
++	static int init = 0;
+ 	char *low_speed_limit;
+ 	char *low_speed_time;
+ 
++	if (init)
++		return;
++	init = 1;
++
+ 	curl_global_init(CURL_GLOBAL_ALL);
+ 
+ 	pragma_header = curl_slist_append(pragma_header, "Pragma: no-cache");
+diff --git a/transport.c b/transport.c
+index babaa21..1eb6d78 100644
+--- a/transport.c
++++ b/transport.c
+@@ -473,8 +473,6 @@ static struct ref *get_refs_via_curl(struct transport *transport)
+ 		return NULL;
+ 	}
+ 
+-	http_cleanup();
+-
+ 	data = buffer.buf;
+ 	start = NULL;
+ 	mid = data;
 -- 
-H.Merijn Brand         Amsterdam Perl Mongers (http://amsterdam.pm.org/)
-using & porting perl 5.6.2, 5.8.x, 5.10.x  on HP-UX 10.20, 11.00, 11.11,
-& 11.23, SuSE 10.1 & 10.2, AIX 5.2, and Cygwin.       http://qa.perl.org
-http://mirrors.develooper.com/hpux/            http://www.test-smoke.org
-                        http://www.goldmark.org/jeff/stupid-disclaimers/
+1.5.4.7.gd8534-dirty
