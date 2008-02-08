@@ -1,110 +1,130 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Completion message for git-clone?
-Date: Fri, 08 Feb 2008 02:01:21 -0800 (PST)
-Message-ID: <m3ejbn4vis.fsf@localhost.localdomain>
-References: <ad4f9af90802071909s4dad180as26b2dd8b7600342f@mail.gmail.com>
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: [PATCH] [WIP] git on MacOSX and files with decomposed utf-8 file names
+Date: Fri,  8 Feb 2008 08:09:36 +0100
+Message-ID: <12024545841553-git-send-email-prohaska@zib.de>
+References: <12024545763364-git-send-email-prohaska@zib.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Ian Dees" <undees@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 08 11:02:02 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Mitch Tishmack <mitcht.git@gmail.com>,
+	Steffen Prohaska <prohaska@zib.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 08 11:02:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNQ3V-0003x5-MC
-	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 11:02:02 +0100
+	id 1JNQ4E-0004C9-PZ
+	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 11:02:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760468AbYBHKB0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Feb 2008 05:01:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760786AbYBHKB0
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 05:01:26 -0500
-Received: from ug-out-1314.google.com ([66.249.92.169]:23425 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760446AbYBHKBY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Feb 2008 05:01:24 -0500
-Received: by ug-out-1314.google.com with SMTP id z38so850431ugc.16
-        for <git@vger.kernel.org>; Fri, 08 Feb 2008 02:01:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
-        bh=fslqqE1sZs++YIsck67Q8eL8Sfygkc+AsKkKAhVIci0=;
-        b=cqny+qJ/ljgG5mUHscdRYTQevsBMBm46fudob45eJqjRDrSJqgwJq+4yk9ZUvYI0FigPiVH0CtuI60ay6+DSBzr9hnl/2ihN/baRePD5a0zCrt8AkT9E24wGCpQoqoZYE1KlDP1wo7Tun8a6yHzIN9a/PxWeKkIU3kvxSNryFp0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
-        b=nRcIXUkFmOI4JLiMvl43Emfg6ydmY9L4p7PqiUxvRxWVX7Od0zpoqNw2AID6BmljKp5+OsTrWOGrD2cehPPUV1DReqoIchdqlwawdRVDJLfZNe11pnCes74/4fXrE9TNkjuPxwWjnVPOJdpZOuHvsHk0YTNNH7AA6nbn4jkB3yI=
-Received: by 10.67.24.11 with SMTP id b11mr5214905ugj.2.1202464882956;
-        Fri, 08 Feb 2008 02:01:22 -0800 (PST)
-Received: from localhost.localdomain ( [83.8.242.186])
-        by mx.google.com with ESMTPS id j4sm3684692ugf.49.2008.02.08.02.01.20
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 08 Feb 2008 02:01:21 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m18A1Hw2027080;
-	Fri, 8 Feb 2008 11:01:17 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m18A1FvX027076;
-	Fri, 8 Feb 2008 11:01:15 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@fuw.edu.pl using -f
-In-Reply-To: <ad4f9af90802071909s4dad180as26b2dd8b7600342f@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S932535AbYBHKCO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Feb 2008 05:02:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932422AbYBHKCO
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 05:02:14 -0500
+Received: from mailer.zib.de ([130.73.108.11]:35891 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932416AbYBHKCM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Feb 2008 05:02:12 -0500
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id m1879iPs016369;
+	Fri, 8 Feb 2008 08:09:44 +0100 (CET)
+Received: from localhost.localdomain (vss6.zib.de [130.73.69.7])
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m1879aYY024894;
+	Fri, 8 Feb 2008 08:09:44 +0100 (MET)
+X-Mailer: git-send-email 1.5.2.4
+In-Reply-To: <12024545763364-git-send-email-prohaska@zib.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73062>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73063>
 
-"Ian Dees" <undees@gmail.com> writes:
+=46rom: Mitch Tishmack <mitcht.git@gmail.com>
 
-> Hi, all.  Upon cloning a repository, the initial message reads:
-> 
->   Initialized empty Git repository in path/to/new-repo/.git
->   0 blocks
-> 
-> I'd wager "empty" means, "empty because Git is about to populate it."
-> Even so, this wording could be a bit surprising to new adopters,
-> especially coupled with the "0 blocks" suffix (is it really creating
-> hardlinks on NTFS?).  The impression is that the clone didn't work.
-> The impression is, of course, eventually dispelled by looking inside
-> the new directory.  Is there a way to clarify the overall status of
-> the clone operation?
+[ spr: This patch contains Mitch's work with his original email
+       as the commit message. ]
 
-This is caused by the fact that for now git-clone is a shell script,
-which creates empty repository using git-init (The "Initialized..."
-message is from git-init), then configures it and populates it.
-For local clones it uses cpio for hardlinking: the "0 blocks" is
-from cpio.
+Apologies Steffen, I grabbed your CamelCase test and did a search/repla=
+ce,
+wasn't sure what to call it though... But I am on lunch and wanted to b=
+e
+useful. Rip it apart all you want.
 
-It shouldn't be hard to add message which would confirm successful
-completion of the clone if it is local clone; the messages from
-git-fetch are I think enough indication that clone succeeded...
-but perhaps we would want to add final message anyway.
+=46ails on hfs* on OSX, works on ufs. I will bother with zfs when it ca=
+n be used
+again.
 
-Nevertheless git-clone waits to be rewritten in C anyway, so
-there is no much initiative to improve shell version. The stumbling
-blocks are as far as I can remember moving detection of which branch
-is currently checked out to git-remote, and optionally adding
-symbolic-ref extension to git transfer protocol for git to not have to
-guess which branch is HEAD.
- 
-> One other minor thing I noticed while futzing with clones: if you try
-> to clone an empty repository, you get the same "Initialized empty
-> repository" message, even though no such second directory is created.
-> I'm not suggesting Git should suddenly start allowing empty cloning,
-> but perhaps a "Empty repository; skipping clone" message would be
-> helpful.
+On UFS:
+$ /bin/sh ./t0060-normalization.sh
+*   ok 1: setup
+*   ok 2: rename (silent normalization)
+*   ok 3: merge (silent normalization)
+* passed all 3 test(s)
 
-$ git clone a b
-Initialized empty Git repository in /tmp/b/.git/
-fatal: cannot clone empty repository
-$ git --version
-git version 1.5.4
+On HFS:
+$ /bin/sh t0060-normalization.sh
+*   ok 1: setup
+* FAIL 2: rename (silent normalization)
 
-Perhaps git should check if there is anything to clone _before_
-git-init, or do not remove empty directory after failing to fetch.
+     git mv =C3=A4 =C3=A4 &&
+     git commit -m "rename"
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+* FAIL 3: merge (silent normalization)
+
+     git reset --hard initial &&
+     git merge topic
+
+* failed 2 among 3 test(s)
+
+The test case, it uses perl, assuming only 5.6.1+ will work with this:
+
+Signed-off-by: Steffen Prohaska <prohaska@zib.de>
+---
+ t/t0060-normalization.sh |   36 ++++++++++++++++++++++++++++++++++++
+ 1 files changed, 36 insertions(+), 0 deletions(-)
+ create mode 100755 t/t0060-normalization.sh
+
+diff --git a/t/t0060-normalization.sh b/t/t0060-normalization.sh
+new file mode 100755
+index 0000000..f754fe4
+--- /dev/null
++++ b/t/t0060-normalization.sh
+@@ -0,0 +1,36 @@
++#!/bin/sh
++
++test_description=3D'Test for silent normalization issues'
++
++. ./test-lib.sh
++
++auml=3D`perl -CO -e 'print pack("U",0x00E4)'`
++aumlcdiar=3D`perl -CO -e 'print pack("U",0x0061).pack("U",0x0308)'`
++test_expect_success setup "
++  touch $aumlcdiar &&
++  git add $aumlcdiar &&
++  git commit -m \"initial\"
++  git tag initial &&
++  git checkout -b topic &&
++  git mv $aumlcdiar tmp &&
++  git mv tmp $auml &&
++  git commit -m \"rename\" &&
++  git checkout -f master
++
++"
++
++test_expect_success 'rename (silent normalization)' "
++
++ git mv $aumlcdiar $auml &&
++ git commit -m \"rename\"
++
++"
++
++test_expect_success 'merge (silent normalization)' '
++
++ git reset --hard initial &&
++ git merge topic
++
++'
++
++test_done
+--=20
+1.5.4.40.g4a680
