@@ -1,86 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Minor annoyance with git push
-Date: Thu, 07 Feb 2008 23:48:05 -0800
-Message-ID: <7vwspfkhxm.fsf@gitster.siamese.dyndns.org>
-References: <46a038f90802072044u3329fd33w575c689cba2917ee@mail.gmail.com>
-	<46a038f90802072050s46ffe305mcffffa068511e3b8@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Completion message for git-clone?
+Date: Fri, 8 Feb 2008 03:29:57 -0500
+Message-ID: <20080208082957.GA23616@coredump.intra.peff.net>
+References: <ad4f9af90802071909s4dad180as26b2dd8b7600342f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Martin Langhoff" <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 08 08:49:18 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Ian Dees <undees@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 08 09:30:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNNz2-00062B-R5
-	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 08:49:17 +0100
+	id 1JNOd3-0008My-Uw
+	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 09:30:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759568AbYBHHs2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Feb 2008 02:48:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753536AbYBHHs2
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 02:48:28 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:35006 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759354AbYBHHs1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Feb 2008 02:48:27 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id C55AA6C63;
-	Fri,  8 Feb 2008 02:48:25 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 3018D6C62;
-	Fri,  8 Feb 2008 02:48:23 -0500 (EST)
-In-Reply-To: <46a038f90802072050s46ffe305mcffffa068511e3b8@mail.gmail.com>
-	(Martin Langhoff's message of "Fri, 8 Feb 2008 17:50:36 +1300")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1761794AbYBHIaE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Feb 2008 03:30:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761427AbYBHIaD
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 03:30:03 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1621 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1761247AbYBHIaA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Feb 2008 03:30:00 -0500
+Received: (qmail 26372 invoked by uid 111); 8 Feb 2008 08:29:58 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Fri, 08 Feb 2008 03:29:58 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 08 Feb 2008 03:29:57 -0500
+Content-Disposition: inline
+In-Reply-To: <ad4f9af90802071909s4dad180as26b2dd8b7600342f@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73051>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73052>
 
-"Martin Langhoff" <martin.langhoff@gmail.com> writes:
+On Thu, Feb 07, 2008 at 07:09:54PM -0800, Ian Dees wrote:
 
-> On Feb 8, 2008 5:44 PM, Martin Langhoff <martin.langhoff@gmail.com> wrote:
->>  None of these "rejected" branches have anything _new_, they
->> are just stale. Nothing new to say.
->
-> And I guess the natural follow up question is: would it make sense to
-> tell git pull to do a "merge" for not-checked-out branches where we
-> can safely tell that the resulting "merge" will actually be a
-> fast-forward?
->
-> Would that be unsafe in any way?
+>   Initialized empty Git repository in path/to/new-repo/.git
+>   0 blocks
+> 
+> I'd wager "empty" means, "empty because Git is about to populate it."
+> Even so, this wording could be a bit surprising to new adopters,
+> especially coupled with the "0 blocks" suffix (is it really creating
+> hardlinks on NTFS?).  The impression is that the clone didn't work.
+> The impression is, of course, eventually dispelled by looking inside
+> the new directory.  Is there a way to clarify the overall status of
+> the clone operation?
 
-Not "unsafe" in the sense that you would not be losing commit
-objects, but I'd feel uneasy about that.  The fact that the
-branch tip was pointing at an older commit gets lost, and in
-your workflow that information is useless, but that does not
-necessarily mean it is useless for everybody.
+The '0 blocks' actually comes from cpio, because it's hardlinking. I
+complained about this when it first appeared, but getting cpio to print
+something sane is a bit tricky. However, there has been talk of making
+git-clone a builtin in the near future, and I suspect it will be much
+easier to generate more user-friendly muessages then. So it is probably
+simplest to hold your breath and see what comes of that effort (though I
+can't seem to find any mention of it in the archives...)
 
-> Because when I "git checkout bla-stale-branch" to help a fellow
-> developer again, I have to remember to "git merge
-> origin/bla-stale-branch" to get a much needed fast-forward before
-> starting to work.
+> One other minor thing I noticed while futzing with clones: if you try
+> to clone an empty repository, you get the same "Initialized empty
+> repository" message, even though no such second directory is created.
+> I'm not suggesting Git should suddenly start allowing empty cloning,
+> but perhaps a "Empty repository; skipping clone" message would be
+> helpful.
 
-Perhaps it might make sense to have a checkout hook that notices
-the branch that is being checked out is meant to build on top of
-a corresponding remote tracking branch, and performs the
-necessary fast-forward when that is the case.
+What version are you using? This should be fixed in v1.5.4 (see commit
+ef4cffde).
 
-> [ Or we could be more proactive at deleting unused local heads. But
-> that's a bit of silly maintenance just to keep things tidy, that git
-> could keep tidy ;-) ... ]
-
-Well, git couldn't, unless you tell it "I've pushed out my work,
-and I am done with helping with this client branch for now", and
-the way for you to do so is "git branch -d".
-
-Perhaps "git branch -d" should be taught to check if the tip of
-the deleted branch is part of the corresponding remote tracking
-branch, when "one local branch to track one remote branch" model
-is used.  Its safety to forbid deleting the branch unless it is
-an ancestor of the "current" branch would not make sense in such
-a workflow.
+-Peff
