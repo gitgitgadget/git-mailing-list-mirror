@@ -1,83 +1,75 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: [PATCH (repost)] Improve bash prompt to detect merge / rebase in progress
-Date: Fri, 8 Feb 2008 12:26:01 +0100
-Message-ID: <F19A1227-3803-4C23-BEA2-26F23824ACF5@zib.de>
-References: <9b3e2dc20802061152q63bc61acuaecf3f33d4df8b19@mail.gmail.com> <200802062314.39440.robin.rosenberg.lists@dewire.com> <7vodatu37m.fsf@gitster.siamese.dyndns.org> <200802070123.43109.robin.rosenberg.lists@dewire.com> <20080207063412.GQ24004@spearce.org>
-Mime-Version: 1.0 (Apple Message framework v753)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Stephen Sinclair <radarsat1@gmail.com>,
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Using thunderbird to post/apply patches?
+Date: Fri, 8 Feb 2008 11:38:20 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0802081135080.11591@racer.site>
+References: <46a038f90802071521n674b61c2t5e4d4c740375b951@mail.gmail.com>  <47AB97EC.8030002@nrlssc.navy.mil> <76718490802072010x63e2082akf1aa92b12cd24030@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Brandon Casey <casey@nrlssc.navy.mil>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
 	Git Mailing List <git@vger.kernel.org>
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Fri Feb 08 12:26:52 2008
+To: Jay Soffian <jaysoffian+git@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 08 12:38:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNRN9-00067B-K4
-	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 12:26:24 +0100
+	id 1JNRZF-0001zm-Eb
+	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 12:38:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932445AbYBHLZx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Feb 2008 06:25:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932434AbYBHLZw
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 06:25:52 -0500
-Received: from mailer.zib.de ([130.73.108.11]:48554 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932201AbYBHLZv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Feb 2008 06:25:51 -0500
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id m18BP4Em016829;
-	Fri, 8 Feb 2008 12:25:08 +0100 (CET)
-Received: from [130.73.68.185] (cougar.zib.de [130.73.68.185])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m18BP2LP020578
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Fri, 8 Feb 2008 12:25:03 +0100 (MET)
-In-Reply-To: <20080207063412.GQ24004@spearce.org>
-X-Mailer: Apple Mail (2.753)
+	id S1753021AbYBHLiQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Feb 2008 06:38:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752052AbYBHLiQ
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 06:38:16 -0500
+Received: from mail.gmx.net ([213.165.64.20]:57484 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751855AbYBHLiO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Feb 2008 06:38:14 -0500
+Received: (qmail invoked by alias); 08 Feb 2008 11:38:12 -0000
+Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
+  by mail.gmx.net (mp027) with SMTP; 08 Feb 2008 12:38:12 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+/FsEWUzy/pvM2ZxE3Lze3tg3aWrz2G3SYv14x+a
+	0qUfoWDGC7ad9h
+X-X-Sender: gene099@racer.site
+In-Reply-To: <76718490802072010x63e2082akf1aa92b12cd24030@mail.gmail.com>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73075>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73076>
 
+Hi,
 
-On Feb 7, 2008, at 7:34 AM, Shawn O. Pearce wrote:
+On Thu, 7 Feb 2008, Jay Soffian wrote:
 
-> Robin Rosenberg <robin.rosenberg.lists@dewire.com> wrote:
->> I sent a patch and Shawn modified it somewhat and posted the full  
->> modified
->> patch. Here is the same patch again (to make sure you get the  
->> right one). It
->> has a better comment than the one I sent recently.
->>
->> -- robin
->>
->> From 82a5b8d5b043ffc7c1950b391ec7ae69d575640b Mon Sep 17 00:00:00  
->> 2001
->> From: Robin Rosenberg <robin.rosenberg@dewire.com>
->> Date: Sun, 30 Sep 2007 02:20:45 +0200
->> Subject: [PATCH] Improve bash prompt to detect various states like  
->> an unfinished merge
->>
->> This patch makes the git prompt (when enabled) show if a merge or a
->> rebase is unfinished. It also detects if a bisect is being done as
->> well as detached checkouts.
->>
->> An uncompleted git-am cannot be distinguised from a rebase (the
->> non-interactive version). Instead of having an even longer prompt
->> we simply ignore that and hope the power users that use git-am knows
->> the difference.
->>
->> Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
->
-> For what it's worth:
->
-> Acked-by: Shawn O. Pearce <spearce@spearce.org>
+> On Feb 7, 2008 6:44 PM, Brandon Casey <casey@nrlssc.navy.mil> wrote:
+> 
+> > I also have mailnews.send_plaintext_flowed => false as suggested in 
+> > SubmittingPatches.
+> 
+> Would teaching git-mailsplit to handle format=flowed be considered a 
+> useful contribution?
+> 
+> (W/o sounding like a total script weenie, I'm actually wondering if 
+> converting git-am, git-mailsplit, and git-mailinfo to Perl code wouldn't 
+> be a bad idea... groking email is a lot more pleasant in Perl than shell 
+> and/or C.)
 
-This improved prompt is great.  I already miss it each time I switch
-back from next to master.
+FWIW I think you have it backwards.  It might look nicer in Perl, but we 
+try very hard to consolidate the major pieces into C code.  This is done 
+for several reasons:
 
-	Steffen
+- reducing dependencies (not everybody needs all git programs, so it even 
+helps if one script is converted at a time), and
+
+- making the experience nicer on Windows (reducing the foot-print, since 
+Perl is _not_ commonly installed, and drastically improving performance, 
+since the number of processes is reduced).
+
+So no, I would not like these scripts being converted (back?) to scripts.
+
+Thank you,
+Dscho
