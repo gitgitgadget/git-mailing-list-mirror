@@ -1,128 +1,60 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] allow setting GIT_WORK_TREE to "no work tree"
-Date: Fri, 08 Feb 2008 08:21:25 +0100
-Message-ID: <47AC02F5.9080705@viscovery.net>
-References: <20080206102608.GA1007@coredump.intra.peff.net> <47A98F07.4000402@viscovery.net> <alpine.LSU.1.00.0802071855550.8543@racer.site>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Using thunderbird to post/apply patches?
+Date: Thu, 07 Feb 2008 23:26:32 -0800
+Message-ID: <7vejbnlxhz.fsf@gitster.siamese.dyndns.org>
+References: <46a038f90802071521n674b61c2t5e4d4c740375b951@mail.gmail.com>
+	<47AB97EC.8030002@nrlssc.navy.mil>
+	<76718490802072010x63e2082akf1aa92b12cd24030@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Feb 08 08:22:06 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: "Brandon Casey" <casey@nrlssc.navy.mil>,
+	"Martin Langhoff" <martin.langhoff@gmail.com>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Jay Soffian" <jaysoffian+git@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 08 08:27:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNNYi-0000HT-3k
-	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 08:22:04 +0100
+	id 1JNNe6-0001W4-H0
+	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 08:27:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932279AbYBHHVc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Feb 2008 02:21:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932235AbYBHHVb
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 02:21:31 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:22895 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932225AbYBHHVa (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Feb 2008 02:21:30 -0500
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1JNNXk-0003jF-Jz; Fri, 08 Feb 2008 08:21:04 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 36C8DA33B; Fri,  8 Feb 2008 08:21:25 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <alpine.LSU.1.00.0802071855550.8543@racer.site>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S932090AbYBHH0v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Feb 2008 02:26:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758029AbYBHH0v
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 02:26:51 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:33672 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754358AbYBHH0u (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Feb 2008 02:26:50 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 7B833697E;
+	Fri,  8 Feb 2008 02:26:47 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id D2EC1697D;
+	Fri,  8 Feb 2008 02:26:40 -0500 (EST)
+In-Reply-To: <76718490802072010x63e2082akf1aa92b12cd24030@mail.gmail.com> (Jay
+	Soffian's message of "Thu, 7 Feb 2008 23:10:13 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73047>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73048>
 
-Johannes Schindelin schrieb:
-> Hi,
-> 
-> On Wed, 6 Feb 2008, Johannes Sixt wrote:
-> 
->> Jeff King schrieb:
->>> In setup_git_directory_gently, we have a special rule that says "if 
->>> GIT_DIR is set but GIT_WORK_TREE is not, then use the current working 
->>> directory as the work tree." This is the intended behavior for the 
->>> user perspective.
->>>
->>> However, setup_git_directory_gently sets GIT_DIR itself, meaning that 
->>> further setups (either because we are executing a command via alias, 
->>> or in a subprocess) will see the non-existent GIT_WORK_TREE and assume 
->>> we fall into the "current working directory is the working tree" 
->>> codepath.
->>>
->>> Instead, we now use a special value of GIT_WORK_TREE to indicate that 
->>> we have already checked for a worktree and that there isn't one, 
->>> setting it when we set GIT_DIR and checking for it in the special case 
->>> path.
->>>
->>> The special value is a blank GIT_WORK_TREE; it could be any value, but 
->>> this should not conflict with any user values (and as a bonus, you can 
->>> now tell git "I don't have a work tree" with "GIT_WORK_TREE= git", 
->>> though I suspect the use case for that is limited).
->> Hrm. Unfortunately, on Windows there is no such thing as an empty 
->> environment string. setenv(x, "") *removes* the environment variable.
-> 
-> That might be a shortcoming of our implementation of setenv():
+"Jay Soffian" <jaysoffian+git@gmail.com> writes:
 
-No, it is not. It's Windows's putenv(), and it's even documented.
+> On Feb 7, 2008 6:44 PM, Brandon Casey <casey@nrlssc.navy.mil> wrote:
+>
+>> I also have mailnews.send_plaintext_flowed => false as suggested in
+>> SubmittingPatches.
+>
+> Would teaching git-mailsplit to handle format=flowed be considered a
+> useful contribution?
 
-> -- snip --
-> cd /git
-> 
-> cat > a1.c << EOF
-> #include <stdio.h>
-> #include "compat/setenv.c"
-> #include "compat/unsetenv.c"
-> 
-> static void p()
-> {
-> 	const char *abc = getenv("ABC");
-> 	printf("env ABC: %s\n", abc ? abc : "(null)");
-> }
-> 
-> int main()
-> {
-> 	p();
-> 	gitsetenv("ABC", "Hello", 1);
-> 	p();
-> 	gitsetenv("ABC", "", 1);
-> 	p();
-> 	gitunsetenv("ABC");
-> 	p();
-> 	return 0;
-> }
-> EOF
-> 
-> gcc -DNO_MMAP=1 -I. -Icompat -o a1.exe a1.c
-> 
-> ABC="" ./a1.exe 
-> -- snap --
-> 
-> This will show
-> 
-> env ABC: 
-> env ABC: Hello
-> env ABC: (null)
-> env ABC: (null)
-> 
-> So it seems that environment variables _can_ be empty.  Just our 
-> relatively stupid implementation of setenv() does not do it.
-> 
-> Maybe something like compat/unsetenv.c is needed in setenv(), too.
-
-This only shows that, yes, variables _can_ be empty - if the setenv/putenv
-implementation is "sane", like MSYS/bash's.
-
-That said, we probably should modify environ directly in gitsetenv().
-
--- Hannes
+In the way the e-mail processing toolchain is structured, I
+think git-mailinfo is the logical place to do that, not
+git-mailsplit.  It already knows how to unwrap single level of
+MIME multi-part and also CTE.
