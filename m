@@ -1,71 +1,93 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: Minor annoyance with git push
-Date: Fri, 8 Feb 2008 17:50:36 +1300
-Message-ID: <46a038f90802072050s46ffe305mcffffa068511e3b8@mail.gmail.com>
-References: <46a038f90802072044u3329fd33w575c689cba2917ee@mail.gmail.com>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH] git help -w should not create nohup.out
+Date: Fri, 8 Feb 2008 06:37:03 +0100
+Message-ID: <200802080637.04015.chriscool@tuxfamily.org>
+References: <1202434421-8066-1-git-send-email-dpotapov@gmail.com> <alpine.LSU.1.00.0802080153570.11591@racer.site> <7vhcgkm7yy.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Feb 08 05:51:12 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Dmitry Potapov <dpotapov@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 08 06:31:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNLCh-0006jb-Ui
-	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 05:51:12 +0100
+	id 1JNLpr-0005jg-HC
+	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 06:31:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932330AbYBHEuj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Feb 2008 23:50:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760502AbYBHEui
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Feb 2008 23:50:38 -0500
-Received: from ug-out-1314.google.com ([66.249.92.172]:24509 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760215AbYBHEuh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Feb 2008 23:50:37 -0500
-Received: by ug-out-1314.google.com with SMTP id z38so824710ugc.16
-        for <git@vger.kernel.org>; Thu, 07 Feb 2008 20:50:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=aFT33qgdGvvmZ/z3ZUsXp3Jer/YkHKfDNUZMFIl9mXk=;
-        b=iQty07PRipxnfzW5pofYzATe9c4Q3NIa3yYaJG4ksBIXCRldkGulVI2y5IizuP6+iWMUN9+Rv+XrE8GmQCrZ4S7zQ1rzX/sRfUtVfegr19wIChbigHHtZ+cAT5a1ClquK89KjDM7NNoU66GIje7IztRANYgmmteIVhVZSRrx03U=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=jzvtaDN1oxGSDKHoNiDJXHTn55NylCkhcm8z7uUwXuT2RIDZDVevy//YjJRa7TNODDxfSNpmnXTpghxgatINEFx1fOgR17oc/meTL4eYcWHZDoCrBEtmVfkL4nNDXAXzj9wptgGi8pdlSuOIEeVwaETlBUVKZMC/6xpfJPeuF9U=
-Received: by 10.66.252.18 with SMTP id z18mr4938297ugh.37.1202446236225;
-        Thu, 07 Feb 2008 20:50:36 -0800 (PST)
-Received: by 10.66.250.13 with HTTP; Thu, 7 Feb 2008 20:50:36 -0800 (PST)
-In-Reply-To: <46a038f90802072044u3329fd33w575c689cba2917ee@mail.gmail.com>
+	id S1751441AbYBHFbF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Feb 2008 00:31:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751381AbYBHFbF
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 00:31:05 -0500
+Received: from smtp1-g19.free.fr ([212.27.42.27]:47390 "EHLO smtp1-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751322AbYBHFbE convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 8 Feb 2008 00:31:04 -0500
+Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 0F3051AB2AF;
+	Fri,  8 Feb 2008 06:31:03 +0100 (CET)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id E435B1AB2B3;
+	Fri,  8 Feb 2008 06:31:02 +0100 (CET)
+User-Agent: KMail/1.9.7
+In-Reply-To: <7vhcgkm7yy.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73039>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73040>
 
-On Feb 8, 2008 5:44 PM, Martin Langhoff <martin.langhoff@gmail.com> wrote:
->  None of these "rejected" branches have anything _new_, they
-> are just stale. Nothing new to say.
+Le vendredi 8 f=E9vrier 2008, Junio C Hamano a =E9crit :
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> > Hi,
+> >
+> > On Fri, 8 Feb 2008, Dmitry Potapov wrote:
+> >> git-help--browse uses 'nohup' to launch some browsers.
+> >
+> > Why?
+> >
+> > "nohup" should be used to start a program that should persist even
+> > after you logged out.  I fail to see how this should be sensible fo=
+r
+> > "git help -w".  So "off with the head", uh, do away with the "nohup=
+", I
+> > say!
+>
+> True.  Christian, what was the reason you added nohup?
 
-And I guess the natural follow up question is: would it make sense to
-tell git pull to do a "merge" for not-checked-out branches where we
-can safely tell that the resulting "merge" will actually be a
-fast-forward?
+I think I was worried about something like this:
 
-Would that be unsafe in any way?
+1) ssh -Y other_machine
+2) git help -w, it opens my browser
+3) open many other tabs in the browser
+4) exit other_machine, oops my browser with all my tabs is gone
 
-Because when I "git checkout bla-stale-branch" to help a fellow
-developer again, I have to remember to "git merge
-origin/bla-stale-branch" to get a much needed fast-forward before
-starting to work.
+or
 
-[ Or we could be more proactive at deleting unused local heads. But
-that's a bit of silly maintenance just to keep things tidy, that git
-could keep tidy ;-) ... ]
+1) open my favorite browser and many tabs in it
+2) ssh -Y other_machine
+3) git help -w, cool it opens a tab in my already opened browser in 1)
+4) exit other_machine, oops my browser with all my tabs is gone
 
-cheers,
+I thought it would perhaps help, and it was better to be on the safe si=
+de.=20
+But I just tested a little and it seems it doesn't change anything.
 
+Also there are some browser that are very verbose on the SDTOUT or STDE=
+RR=20
+(especially konqueror) and I thought the nohup would also help move the=
+=20
+output out of the command line while not discarding it in case it's nee=
+ded.=20
+But I agree that it's not very often usefull and anyway there are bette=
+r=20
+ways to deal with it.
 
-m
+So no problem to do away with the "nohup".
+
+Thanks,
+Christian.
