@@ -1,66 +1,72 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] opening files in remote.c should ensure it is opening
- a file
-Date: Fri, 8 Feb 2008 21:47:18 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802082146400.11591@racer.site>
-References: <20080208174654.2e9e679c@pc09.procura.nl> <118833cc0802081215t380587f6w7b5c0aba66a55799@mail.gmail.com> <7v8x1vjiic.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0802082040010.11591@racer.site> <7vwspfi1t4.fsf@gitster.siamese.dyndns.org>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: [PATCH] Work around curl-gnutls not liking to be reinitialized
+Date: Fri, 8 Feb 2008 22:51:40 +0100
+Organization: glandium.org
+Message-ID: <20080208215140.GA21362@glandium.org>
+References: <20080208073456.GA17791@glandium.org> <1202501335-28205-1-git-send-email-mh@glandium.org> <20080208213148.GA2823@glandium.org> <7vlk5vi0k9.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Morten Welinder <mwelinder@gmail.com>,
-	"H.Merijn Brand" <h.m.brand@xs4all.nl>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 08 22:48:33 2008
+X-From: git-owner@vger.kernel.org Fri Feb 08 22:51:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNb5B-0005VU-1z
-	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 22:48:29 +0100
+	id 1JNb8J-0006fw-PX
+	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 22:51:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752010AbYBHVrO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Feb 2008 16:47:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753695AbYBHVrO
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 16:47:14 -0500
-Received: from mail.gmx.net ([213.165.64.20]:49813 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751057AbYBHVrN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Feb 2008 16:47:13 -0500
-Received: (qmail invoked by alias); 08 Feb 2008 21:47:11 -0000
-Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
-  by mail.gmx.net (mp040) with SMTP; 08 Feb 2008 22:47:11 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19EyXpMinpEQbmKBNKkbXqs+zSKkgKyQo8PCUHrlL
-	IG8ByB3DaqB1Dj
-X-X-Sender: gene099@racer.site
-In-Reply-To: <7vwspfi1t4.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1753755AbYBHVvN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Feb 2008 16:51:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752363AbYBHVvL
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 16:51:11 -0500
+Received: from vuizook.err.no ([85.19.215.103]:46295 "EHLO vuizook.err.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751718AbYBHVvK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Feb 2008 16:51:10 -0500
+Received: from aputeaux-153-1-42-109.w82-124.abo.wanadoo.fr ([82.124.6.109] helo=jigen)
+	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.67)
+	(envelope-from <mh@glandium.org>)
+	id 1JNb8c-0006Ig-NC; Fri, 08 Feb 2008 22:52:09 +0100
+Received: from mh by jigen with local (Exim 4.69)
+	(envelope-from <mh@jigen>)
+	id 1JNb8G-0005az-6w; Fri, 08 Feb 2008 22:51:40 +0100
+Content-Disposition: inline
+In-Reply-To: <7vlk5vi0k9.fsf@gitster.siamese.dyndns.org>
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+X-Spam-Status: (score 2.2): No, score=2.2 required=5.0 tests=RCVD_IN_PBL,RCVD_IN_SORBS_DUL,RDNS_DYNAMIC autolearn=disabled version=3.2.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73155>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73156>
 
-Hi,
-
-On Fri, 8 Feb 2008, Junio C Hamano wrote:
-
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Fri, Feb 08, 2008 at 01:46:14PM -0800, Junio C Hamano wrote:
+> Mike Hommey <mh@glandium.org> writes:
 > 
-> > On Fri, 8 Feb 2008, Junio C Hamano wrote:
+> >>  In the end, it was a bit of git's fault, but either curl or gnutls is the
+> >>  actual culprit. I've not looked into either code to find out who's
+> >>  responsible, but a very simplified testcase is as follows:
+> >> ...
 > >
-> >> 	#ifdef FOPEN_OPENS_DIRECTORIES
+> > And the winner is... curl !
+> > The bug was introduced in this commit:
+> > http://cool.haxx.se/cvs.cgi/curl/lib/gtls.c.diff?r1=1.26&r2=1.27
+> > Note how gtls_inited is not set back to FALSE in cleanup.
 > >
-> > Funny... our emails crossed, and you picked the same name ;-)
+> > This ended up released in 7.16.3. I'm filing a bug.
 > 
-> Bad Dscho.
+> Good detetive work.  Thanks.
 > 
-> It has been a very well kept secret that Dscho and Junio are one
-> and the same person, but you just spilled the beans.
+> I guess we need to ship with a known leak to work this around.
+> Sigh...
 
-Shush... left-hemisphere: shut up.
+We can probably add a test on curl versions to avoid leaking on every
+install. Something like #if LIBCURL_VERSION_NUM < 0x071003. And then add
+|| LIBCURL_VERSION_NUM > .... whenever this is fixed in curl...
+Though, as I said, we are not calling http_cleanup in a lot of cases,
+already.
 
-Ciao,
-Dscho
-
-P.S.: double ;-)
+Mike
