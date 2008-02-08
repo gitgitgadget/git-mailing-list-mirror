@@ -1,65 +1,60 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: [PATCH] opening files in remote.c should ensure it is opening
- a file
-Date: Fri, 08 Feb 2008 15:14:54 -0600
-Message-ID: <47ACC64E.7040102@nrlssc.navy.mil>
-References: <20080208174654.2e9e679c@pc09.procura.nl>	<118833cc0802081215t380587f6w7b5c0aba66a55799@mail.gmail.com> <7v8x1vjiic.fsf@gitster.siamese.dyndns.org> <47ACC261.6060404@nrlssc.navy.mil>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] opening files in remote.c should ensure it is opening a file
+Date: Fri, 08 Feb 2008 13:19:19 -0800
+Message-ID: <7vwspfi1t4.fsf@gitster.siamese.dyndns.org>
+References: <20080208174654.2e9e679c@pc09.procura.nl>
+	<118833cc0802081215t380587f6w7b5c0aba66a55799@mail.gmail.com>
+	<7v8x1vjiic.fsf@gitster.siamese.dyndns.org>
+	<alpine.LSU.1.00.0802082040010.11591@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: Morten Welinder <mwelinder@gmail.com>,
 	"H.Merijn Brand" <h.m.brand@xs4all.nl>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 08 22:15:56 2008
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Feb 08 22:20:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNaZf-00027d-GW
-	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 22:15:55 +0100
+	id 1JNae1-0003cC-8T
+	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 22:20:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752827AbYBHVPS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Feb 2008 16:15:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752458AbYBHVPS
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 16:15:18 -0500
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:50414 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751762AbYBHVPQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Feb 2008 16:15:16 -0500
-Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
-	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id m18LEsiE013636;
-	Fri, 8 Feb 2008 15:14:55 -0600
-Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 8 Feb 2008 15:14:54 -0600
-User-Agent: Thunderbird 2.0.0.9 (X11/20071031)
-In-Reply-To: <47ACC261.6060404@nrlssc.navy.mil>
-X-OriginalArrivalTime: 08 Feb 2008 21:14:54.0855 (UTC) FILETIME=[A6A5D170:01C86A97]
-X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-5.0.0.1023-15706001
-X-TM-AS-Result: : Yes--5.968800-0-31-1
-X-TM-AS-Category-Info: : 31:0.000000
-X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNTY3LTcwMDA3NS0xMzkw?=
-	=?us-ascii?B?MTAtNzAxODQ4LTcwNTM4OC03MDAzMDAtNzA4MTQzLTcwMjA0NC03?=
-	=?us-ascii?B?MDEyMzYtMTQ4MDM5LTE0ODA1MS0yMDA0MA==?=
+	id S1758259AbYBHVTq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Feb 2008 16:19:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757630AbYBHVTq
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 16:19:46 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:57903 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758025AbYBHVTp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Feb 2008 16:19:45 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 6C5286C8A;
+	Fri,  8 Feb 2008 16:19:43 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id CFBB36C87;
+	Fri,  8 Feb 2008 16:19:36 -0500 (EST)
+In-Reply-To: <alpine.LSU.1.00.0802082040010.11591@racer.site> (Johannes
+	Schindelin's message of "Fri, 8 Feb 2008 20:40:26 +0000 (GMT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73147>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73148>
 
-Brandon Casey wrote:
-> Junio C Hamano wrote:
-> 
->> And have Makefile set FOPEN_OPENS_DIRECTORIES on appropriate
->> platforms.
-> 
-> Which ones _don't_ open directories?
-> 
-> Shouldn't fopen("path_to_some_directory", "r") work?
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Ok. It's the FOPEN_OPENS_DIRECTORIES term that confused me.
+> On Fri, 8 Feb 2008, Junio C Hamano wrote:
+>
+>> 	#ifdef FOPEN_OPENS_DIRECTORIES
+>
+> Funny... our emails crossed, and you picked the same name ;-)
 
-fopen is expected to succeed, even on directories. It's the read
-that should fail but is not on HPUX. Obviously we don't want to
-change the read.
+Bad Dscho.
 
--brandon
+It has been a very well kept secret that Dscho and Junio are one
+and the same person, but you just spilled the beans.
+
+;-)
