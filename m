@@ -1,52 +1,52 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: "Morten Welinder" <mwelinder@gmail.com>
 Subject: Re: [PATCH] opening files in remote.c should ensure it is opening a file
-Date: Fri, 08 Feb 2008 12:09:46 -0800
-Message-ID: <7vhcgjjjlh.fsf@gitster.siamese.dyndns.org>
+Date: Fri, 8 Feb 2008 15:15:40 -0500
+Message-ID: <118833cc0802081215t380587f6w7b5c0aba66a55799@mail.gmail.com>
 References: <20080208174654.2e9e679c@pc09.procura.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
 To: "H.Merijn Brand" <h.m.brand@xs4all.nl>
-X-From: git-owner@vger.kernel.org Fri Feb 08 21:10:53 2008
+X-From: git-owner@vger.kernel.org Fri Feb 08 21:16:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNZYi-0002pm-MC
-	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 21:10:53 +0100
+	id 1JNZdy-00052x-U7
+	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 21:16:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932938AbYBHUKG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Feb 2008 15:10:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932882AbYBHUKF
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 15:10:05 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:52866 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932670AbYBHUKD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Feb 2008 15:10:03 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 166384414;
-	Fri,  8 Feb 2008 15:09:57 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 85A734412;
-	Fri,  8 Feb 2008 15:09:53 -0500 (EST)
-In-Reply-To: <20080208174654.2e9e679c@pc09.procura.nl> (H. Merijn Brand's
-	message of "Fri, 8 Feb 2008 17:46:54 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S935706AbYBHUPq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Feb 2008 15:15:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935699AbYBHUPp
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 15:15:45 -0500
+Received: from fg-out-1718.google.com ([72.14.220.154]:40842 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S935469AbYBHUPo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Feb 2008 15:15:44 -0500
+Received: by fg-out-1718.google.com with SMTP id e21so2983503fga.17
+        for <git@vger.kernel.org>; Fri, 08 Feb 2008 12:15:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=H4HhLt5G44/hKXSKjmdi5ZFnOU/bnGDK2QvqcG81Tdg=;
+        b=Npg3ryucrDrHPsoHKL5gvRCY7xuoTUSaceR0rIWoTg5uYllL9KgtvHJkjiHgoR1SWfbqqjFy8Pq+ITLTsUY8ko8dTQoenofNoGPtIsA9z7JZWdgnBKJ8bqx/6+QK57lxx4bSqgz/0EZFfB+LhatZh+IvqUWOs330iVf8rT+zdUo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=mAb2J5hSaZcOfYGiqYhAH6VMHhyoXLvc76BN42c9FxQQH8Mbf9tlv9OiEHZXBF9drQQqEQASx98UzdsWnQIwI6U2wP12bX8c9F0r993g9WDiNvwQ0h7GGP9ASjB7wBnIKbL6hwJxi8GZAXTxmYH7bVaqFgUhIld7yXLmyzbV51I=
+Received: by 10.86.99.9 with SMTP id w9mr12072848fgb.58.1202501740178;
+        Fri, 08 Feb 2008 12:15:40 -0800 (PST)
+Received: by 10.86.1.11 with HTTP; Fri, 8 Feb 2008 12:15:40 -0800 (PST)
+In-Reply-To: <20080208174654.2e9e679c@pc09.procura.nl>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73130>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73131>
 
-"H.Merijn Brand" <h.m.brand@xs4all.nl> writes:
-
-> HP-UX allows directories to be opened with fopen (path, "r"), which
-> will cause some translations that expect to read files, read dirs
-> instead. This patch makes sure the two fopen () calls in remote.c
-> only open the file if it is a file.
-
+> +/* Helper function to ensure that we are opening a file and not a directory */
 > +static FILE *open_file(char *full_path)
 > +{
 > +       struct stat st_buf;
@@ -55,8 +55,7 @@ Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73130>
 > +       return (fopen(full_path, "r"));
 > +}
 
-Can we make this a platform specific "compat" hack?
+That looks wrong.  stat+fopen has a pointless race condition that
+open+fstat+fdopen would not have.
 
-It is not fair to force stat() overhead to ports on platforms
-that fails fopen() on directories, as I doubt we would ever want
-from directory using fopen() anyway.
+Morten
