@@ -1,76 +1,100 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: [PATCH] Work around curl-gnutls not liking to be reinitialized
-Date: Fri, 8 Feb 2008 22:31:48 +0100
-Organization: glandium.org
-Message-ID: <20080208213148.GA2823@glandium.org>
-References: <20080208073456.GA17791@glandium.org> <1202501335-28205-1-git-send-email-mh@glandium.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Abort early if not being sourced under bash.
+Date: Fri, 08 Feb 2008 13:31:08 -0800
+Message-ID: <7vprv7i19f.fsf@gitster.siamese.dyndns.org>
+References: <200802082310.34398.ville.skytta@iki.fi>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Feb 08 22:32:22 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Ville =?utf-8?Q?Skytt=C3=A4?= <ville.skytta@iki.fi>
+X-From: git-owner@vger.kernel.org Fri Feb 08 22:32:27 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNapY-0007m1-Ng
-	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 22:32:21 +0100
+	id 1JNapY-0007m1-1c
+	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 22:32:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754672AbYBHVba (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Feb 2008 16:31:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754607AbYBHVba
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 16:31:30 -0500
-Received: from vuizook.err.no ([85.19.215.103]:54178 "EHLO vuizook.err.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753851AbYBHVb3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Feb 2008 16:31:29 -0500
-Received: from aputeaux-153-1-42-109.w82-124.abo.wanadoo.fr ([82.124.6.109] helo=jigen)
-	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.67)
-	(envelope-from <mh@glandium.org>)
-	id 1JNapU-0005Jh-T1; Fri, 08 Feb 2008 22:32:23 +0100
-Received: from mh by jigen with local (Exim 4.69)
-	(envelope-from <mh@jigen>)
-	id 1JNap2-0001em-1X; Fri, 08 Feb 2008 22:31:48 +0100
-Content-Disposition: inline
-In-Reply-To: <1202501335-28205-1-git-send-email-mh@glandium.org>
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-X-Spam-Status: (score 2.2): No, score=2.2 required=5.0 tests=RCVD_IN_PBL,RCVD_IN_SORBS_DUL,RDNS_DYNAMIC autolearn=disabled version=3.2.3
+	id S1754553AbYBHVbW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Feb 2008 16:31:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754463AbYBHVbV
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 16:31:21 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:58667 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753426AbYBHVbT convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 8 Feb 2008 16:31:19 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 4D6BA4409;
+	Fri,  8 Feb 2008 16:31:15 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 8EDF64408;
+	Fri,  8 Feb 2008 16:31:11 -0500 (EST)
+In-Reply-To: <200802082310.34398.ville.skytta@iki.fi> (Ville =?utf-8?Q?Sky?=
+ =?utf-8?Q?tt=C3=A4's?= message
+	of "Fri, 8 Feb 2008 23:10:34 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73151>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73152>
 
->  In the end, it was a bit of git's fault, but either curl or gnutls is the
->  actual culprit. I've not looked into either code to find out who's
->  responsible, but a very simplified testcase is as follows:
-> 
-> 	#include <curl/curl.h>
-> 	#include <curl/easy.h>
-> 
-> 	int main(void) {
-> 	        CURL *easy = curl_easy_init();
-> 	        curl_easy_setopt(easy, CURLOPT_VERBOSE, 1);
-> 	        curl_easy_setopt(easy, CURLOPT_URL, "https://www.verisign.com/");
-> 	        curl_easy_perform(easy);
-> 	        curl_global_cleanup();
-> 	        easy = curl_easy_init();
-> 	        curl_easy_setopt(easy, CURLOPT_VERBOSE, 1);
-> 	        curl_easy_setopt(easy, CURLOPT_URL, "https://www.verisign.com/");
-> 	        curl_easy_perform(easy);
-> 	}
-> 
-> 	(build with gcc -o test test.c -lcurl)
-> 	(note curl_easy_init does curl_global_init behind the curtains, even the
-> 	second time. You can convince yourself by adding
-> 	curl_global_init(CURL_GLOBAL_ALL);)
+Ville Skytt=C3=A4 <ville.skytta@iki.fi> writes:
 
-And the winner is... curl !
-The bug was introduced in this commit:
-http://cool.haxx.se/cvs.cgi/curl/lib/gtls.c.diff?r1=1.26&r2=1.27
-Note how gtls_inited is not set back to FALSE in cleanup.
+> Subject: [PATCH] Abort early if not being sourced under bash.
+>
+> This way, the file can be safely sourced from profile files shared wi=
+th
+> non-bash shells, eg. dropped into /etc/profile.d like directories.
+>
+> Signed-off-by: Ville Skytt=C3=A4 <ville.skytta@iki.fi>
+> ---
+>  contrib/completion/git-completion.bash |    2 ++
+>  1 files changed, 2 insertions(+), 0 deletions(-)
+>
+> diff --git a/contrib/completion/git-completion.bash b/contrib/complet=
+ion/git-completion.bash
+> index 4ea727b..3cde9f4 100755
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -45,6 +45,8 @@
+>  #       git@vger.kernel.org
+>  #
+> =20
+> +[ -z "$BASH_VERSION" ] && return
+> +
+>  __gitdir ()
+>  {
+>  	if [ -z "$1" ]; then
 
-This ended up released in 7.16.3. I'm filing a bug.
+I do not particularly sympathize with the /etc/profile.d/
+argument.  Ditros can and should put a small script in there
+that checks what /bin/sh it really is running and source the
+real thing from elsewhere, perhaps /usr/share/git-core/,
+appropriately.
 
-Mike
+However, even if you did so, there is another issue.  One of my
+hosts have a bash that does not know the "complete" command, and
+logging into the host I get twenty-or-so "bash: complete:
+command not found".
+
+So
+
+	if bash "complete" would not work for this shell
+        then
+        	__git_ps1 () { : dummy; }
+		return
+	fi
+
+at the beginning may be needed even if you know we are running
+bash.
+
+Then people can safely say:
+
+	PS1=3D': \h \W$(__git_ps1 "/%s"); '
+
+(or whatever git-completion.bash suggests these days) in their
+start-up script.
