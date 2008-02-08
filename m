@@ -1,71 +1,62 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: [PATCH] opening files in remote.c should ensure it is opening
- a file
-Date: Fri, 08 Feb 2008 14:58:09 -0600
-Message-ID: <47ACC261.6060404@nrlssc.navy.mil>
-References: <20080208174654.2e9e679c@pc09.procura.nl>	<118833cc0802081215t380587f6w7b5c0aba66a55799@mail.gmail.com> <7v8x1vjiic.fsf@gitster.siamese.dyndns.org>
+From: Ville =?iso-8859-1?q?Skytt=E4?= <ville.skytta@iki.fi>
+Subject: [PATCH] Abort early if not being sourced under bash.
+Date: Fri, 8 Feb 2008 23:10:34 +0200
+Message-ID: <200802082310.34398.ville.skytta@iki.fi>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Morten Welinder <mwelinder@gmail.com>,
-	"H.Merijn Brand" <h.m.brand@xs4all.nl>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 08 21:59:57 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Feb 08 22:11:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNaJy-0004Va-IG
-	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 21:59:42 +0100
+	id 1JNaVF-0000Zz-HD
+	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 22:11:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754835AbYBHU7H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Feb 2008 15:59:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754809AbYBHU7G
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 15:59:06 -0500
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:38511 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754656AbYBHU7F (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Feb 2008 15:59:05 -0500
-Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
-	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id m18Kw9Xe013071;
-	Fri, 8 Feb 2008 14:58:09 -0600
-Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 8 Feb 2008 14:58:09 -0600
-User-Agent: Thunderbird 2.0.0.9 (X11/20071031)
-In-Reply-To: <7v8x1vjiic.fsf@gitster.siamese.dyndns.org>
-X-OriginalArrivalTime: 08 Feb 2008 20:58:09.0519 (UTC) FILETIME=[4F6BB7F0:01C86A95]
-X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-5.0.0.1023-15706001
-X-TM-AS-Result: : Yes--7.131400-0-31-1
-X-TM-AS-Category-Info: : 31:0.000000
-X-TM-AS-MatchedID: : 
-	150567-700075-139010-701848-705388-704852-188198-700971-148039-148051
+	id S1758274AbYBHVKj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Feb 2008 16:10:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755891AbYBHVKi
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 16:10:38 -0500
+Received: from smtp4.pp.htv.fi ([213.243.153.38]:34527 "EHLO smtp4.pp.htv.fi"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758096AbYBHVKf convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 8 Feb 2008 16:10:35 -0500
+Received: from viper.bobcat.mine.nu (cs181043142.pp.htv.fi [82.181.43.142])
+	by smtp4.pp.htv.fi (Postfix) with ESMTP id 0BEBC5BC01D;
+	Fri,  8 Feb 2008 23:10:34 +0200 (EET)
+User-Agent: KMail/1.9.6 (enterprise 0.20071204.744707)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73144>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73145>
 
-Junio C Hamano wrote:
+Subject: [PATCH] Abort early if not being sourced under bash.
 
-> And have Makefile set FOPEN_OPENS_DIRECTORIES on appropriate
-> platforms.
+This way, the file can be safely sourced from profile files shared with
+non-bash shells, eg. dropped into /etc/profile.d like directories.
 
-Which ones _don't_ open directories?
+Signed-off-by: Ville Skytt=E4 <ville.skytta@iki.fi>
+---
+ contrib/completion/git-completion.bash |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
 
-Shouldn't fopen("path_to_some_directory", "r") work?
-
--brandon
-
-#include <stdio.h>
-
-int main(int argc, char* argv[])
-{
-    if (!fopen(argv[1], "r")) {
-        perror("File open failed");
-        return 1;
-    }
-
-    puts("File open succeeded.");
-
-    return 0;
-}
+diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
+n/git-completion.bash
+index 4ea727b..3cde9f4 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -45,6 +45,8 @@
+ #       git@vger.kernel.org
+ #
+=20
++[ -z "$BASH_VERSION" ] && return
++
+ __gitdir ()
+ {
+ 	if [ -z "$1" ]; then
+--=20
+1.5.3.8
