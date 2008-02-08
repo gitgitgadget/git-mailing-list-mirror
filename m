@@ -1,78 +1,68 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: read_branches_file ()
-Date: Fri, 8 Feb 2008 16:22:45 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802081618210.11591@racer.site>
-References: <20080208165008.52630d36@pc09.procura.nl> <20080208170305.069d43d2@pc09.procura.nl>
+From: "Ian Dees" <undees@gmail.com>
+Subject: Re: Completion message for git-clone?
+Date: Fri, 8 Feb 2008 08:23:23 -0800
+Message-ID: <ad4f9af90802080823g64b44d27lb870e849e106743b@mail.gmail.com>
+References: <ad4f9af90802071909s4dad180as26b2dd8b7600342f@mail.gmail.com>
+	 <m3ejbn4vis.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: "H.Merijn Brand" <h.m.brand@xs4all.nl>
-X-From: git-owner@vger.kernel.org Fri Feb 08 17:23:24 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: peff@peff.net, jnareb@gmail.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 08 17:24:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNW0W-0003n3-6p
-	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 17:23:20 +0100
+	id 1JNW1C-000487-FJ
+	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 17:24:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754485AbYBHQWj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Feb 2008 11:22:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754473AbYBHQWj
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 11:22:39 -0500
-Received: from mail.gmx.net ([213.165.64.20]:46341 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754084AbYBHQWi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Feb 2008 11:22:38 -0500
-Received: (qmail invoked by alias); 08 Feb 2008 16:22:36 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp008) with SMTP; 08 Feb 2008 17:22:36 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/pK3s8G73pY5HM6Wwd7CAgEbVouCC3KQUvDogwDj
-	XmtIR5t7T4fuQr
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20080208170305.069d43d2@pc09.procura.nl>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1754699AbYBHQX2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Feb 2008 11:23:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754522AbYBHQX2
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 11:23:28 -0500
+Received: from wr-out-0506.google.com ([64.233.184.226]:8025 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754473AbYBHQX1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Feb 2008 11:23:27 -0500
+Received: by wr-out-0506.google.com with SMTP id c48so3621868wra.23
+        for <git@vger.kernel.org>; Fri, 08 Feb 2008 08:23:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=QOpNUNu65ott/nFzH2T3jUI79EBL3tpJlVRcJNM8idY=;
+        b=PHRRNsiQ8v+8un+flMBDLuHrVTKC07gBlCW0LwLTbI6Og1lpORrjQpdwIv8MxmhHKi1OXN5e1AtmRn2IsThh9SyAKyZHJoaQAZGvdPzx5Z6533eY3V/xNsbD+/IUziZlSA4c3iybmGvGPBdGhffAll8tEvbNCPDeHn7Rm3leu4U=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=TZSJiYp58PpZtRX2ll0m5NAM+ZgvnBsoTFuIN1VVdC9ktc4+Kr++XvLs/flzvDX1ZYFSUsMLNC/w2+FN1+L60Qv8Ej14t1AfAMYOJ2ZwD0GP0e8KWvomVB+nX3rPD6NumpMobxCgXLTlncoIwX/J61Akq6O14NqApkx1fMwntBM=
+Received: by 10.142.225.11 with SMTP id x11mr7076970wfg.115.1202487803130;
+        Fri, 08 Feb 2008 08:23:23 -0800 (PST)
+Received: by 10.142.238.18 with HTTP; Fri, 8 Feb 2008 08:23:23 -0800 (PST)
+In-Reply-To: <m3ejbn4vis.fsf@localhost.localdomain>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73103>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73104>
 
-Hi,
+Hi, all.
 
-On Fri, 8 Feb 2008, H.Merijn Brand wrote:
+Thanks, Jeff and Jakub, for the clarifications.
 
-> --8<--- remote.c.diff
-> --- remote.c.org        2008-01-27 09:04:18 +0100
-> +++ remote.c    2008-02-08 17:01:09 +0100
-> @@ -1,6 +1,7 @@
->  #include "cache.h"
->  #include "remote.h"
->  #include "refs.h"
-> +#include <sys/stat.h>
+Jakub writes:
 
-This should not be necessary; we include all system headers in cache.h.
+> Nevertheless git-clone waits to be rewritten in C anyway, so
+> there is no much initiative to improve shell version
 
-> @@ -173,11 +174,15 @@ static void read_branches_file(struct re
->         char *frag;
->         char *branch;
->         int n = slash ? slash - remote->name : 1000;
-> -       FILE *f = fopen(git_path("branches/%.*s", n, remote->name), "r");
-> +       char *gp = git_path ("branches/%.*s", n, remote->name);
+I agree with you.  If it's about to be replaced, there's not much
+point in making a wording change to the shell script.
 
-Please use a more descriptive variable name, such as "branches_file" or 
-"branches_path".
+> Perhaps git should check if there is anything to clone _before_
+> git-init, or do not remove empty directory after failing to fetch.
 
-Also, we only leave a space after operators like "for", "while", but not 
-after function names.
+I'm not sure that's necessary, as long as that new message is there in
+1.5.4.  I'll hang tight for my distro to pick it up.
 
-> +       if (stat (gp, &st_buf) || S_ISDIR (st_buf.st_mode))
-
-Again, please remove the spaces after "stat" and "S_ISDIR".
-
-Other than that, the patch looks obviously correct: please resubmit with a 
-nice commit message and a sign-off.
-
-Thanks,
-Dscho
+--Ian
