@@ -1,63 +1,75 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Minor annoyance with git push
-Date: Fri, 8 Feb 2008 11:52:44 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802081151170.11591@racer.site>
-References: <46a038f90802072044u3329fd33w575c689cba2917ee@mail.gmail.com> <46a038f90802072050s46ffe305mcffffa068511e3b8@mail.gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: Any tricks for speeding up cvsps?
+Date: Fri, 08 Feb 2008 13:02:35 +0100
+Message-ID: <47AC44DB.1000002@alum.mit.edu>
+References: <47AC1FDC.9000502@glidos.net> <20080208094812.GA9666@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Martin Langhoff <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 08 12:53:17 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Paul Gardiner <osronline@glidos.net>, git@vger.kernel.org
+To: =?ISO-8859-1?Q?Karl_Hasselstr=F6m?= <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Fri Feb 08 13:03:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNRn4-0006WH-60
-	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 12:53:10 +0100
+	id 1JNRxO-0001Lq-56
+	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 13:03:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753235AbYBHLwh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Feb 2008 06:52:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752538AbYBHLwh
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 06:52:37 -0500
-Received: from mail.gmx.net ([213.165.64.20]:40220 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751718AbYBHLwg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Feb 2008 06:52:36 -0500
-Received: (qmail invoked by alias); 08 Feb 2008 11:52:35 -0000
-Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
-  by mail.gmx.net (mp009) with SMTP; 08 Feb 2008 12:52:35 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+esulOfmKezh4TpjH5Q3HxCZFocnu0FBJZqy0Uqr
-	S6qiFjIvC30Md8
-X-X-Sender: gene099@racer.site
-In-Reply-To: <46a038f90802072050s46ffe305mcffffa068511e3b8@mail.gmail.com>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1751637AbYBHMC7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Feb 2008 07:02:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751654AbYBHMC7
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 07:02:59 -0500
+Received: from einhorn.in-berlin.de ([192.109.42.8]:53329 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751521AbYBHMC6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Feb 2008 07:02:58 -0500
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.142])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id m18C2kR6017861
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 8 Feb 2008 13:02:46 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.8pre) Gecko/20071022 Thunderbird/2.0.0.6 Mnenhy/0.7.5.666
+In-Reply-To: <20080208094812.GA9666@diana.vm.bytemark.co.uk>
+X-Enigmail-Version: 0.95.0
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73078>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73079>
 
-Hi,
+Karl Hasselstr=F6m wrote:
+> On 2008-02-08 09:24:44 +0000, Paul Gardiner wrote:
+>=20
+>> I'm trying to convert a huge cvs repository. I've left cvsps running
+>> for days. First attempt, stderr filled my disc with warnings about
+>> tags that couldn't be associated with any one commit, without
+>> producing anything from stdout. I'm now redirecting stderr to
+>> /dev/null, but it still just sits there producing nothing. Is
+>> git-cvsimport infeasible for large repositories, or are there tricks
+>> I might use?
+>=20
+> This topic comes up on the list every once in a while; try searching
+> the list archives.
+>=20
+> I seem to recall that for heavy imports, the Subversion CVS importer
+> is popular. I don't know if it can give you a git repository directly=
+,
+> or if you'll have to go via svn.
 
-On Fri, 8 Feb 2008, Martin Langhoff wrote:
+The trunk version of cvs2svn [1] can convert directly from CVS to git,
+including branches and tags.  Recently I wrote up better documentation
+[2] for using cvs2svn to convert to git.
 
-> On Feb 8, 2008 5:44 PM, Martin Langhoff <martin.langhoff@gmail.com> wrote:
-> >  None of these "rejected" branches have anything _new_, they are just 
-> > stale. Nothing new to say.
-> 
-> And I guess the natural follow up question is: would it make sense to 
-> tell git pull to do a "merge" for not-checked-out branches where we can 
-> safely tell that the resulting "merge" will actually be a fast-forward?
+Please direct suggestions, bug reports, or offers of help to the cvs2sv=
+n
+mailing lists [3] or irc channel [4].
 
-That question comes up pretty often, I think.  But you need a working 
-directory to resolve conflicts for merges.  You only have one, though.
+Michael Haggerty
 
-So no, I think it is saner to have tracking branches (which are updated 
-anyway), and local branches.  And once you're done with a branch, you 
-simply push it, and then delete it (you will still have the result in the 
-tracking branch).
-
-Ciao,
-Dscho
+[1] http://cvs2svn.tigris.org
+[2] http://cvs2svn.tigris.org/cvs2git.html
+[3] http://cvs2svn.tigris.org/servlets/ProjectMailingListList
+[4] irc.freenode.net, channel #cvs2svn
