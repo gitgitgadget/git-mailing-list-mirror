@@ -1,57 +1,65 @@
-From: Gerrit Pape <pape@smarden.org>
-Subject: Re: [PATCH (try 2)] git-svn: fix "Malformed network data" with
-	svn:// servers
-Date: Fri, 8 Feb 2008 16:24:33 +0000
-Message-ID: <20080208162433.25929.qmail@dd8a37fc58824d.315fe32.mid.smarden.org>
-References: <20070626133704.24521.qmail@a4f750d1ddce1f.315fe32.mid.smarden.org> <20070704210526.GA9582@muzzle> <20070807134220.23420.qmail@c96e4a6cce1e57.315fe32.mid.smarden.org> <20070907073424.GA16468@mayonaise> <20070907100711.GA24166@muzzle> <20070907110040.GA9369@mayonaise>
+From: Michele Ballabio <barra_cuda@katamail.com>
+Subject: Re: [PATCH] remote.c: guard config parser from value=NULL
+Date: Fri, 8 Feb 2008 17:34:37 +0100
+Message-ID: <200802081734.37715.barra_cuda@katamail.com>
+References: <20080208142640.GX25954@genesis.frugalware.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Fri Feb 08 17:25:10 2008
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Miklos Vajna <vmiklos@frugalware.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 08 17:27:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNW1z-0004aZ-8K
-	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 17:24:51 +0100
+	id 1JNW45-0005XG-En
+	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 17:27:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754535AbYBHQYS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Feb 2008 11:24:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754747AbYBHQYS
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 11:24:18 -0500
-Received: from a.ns.smarden.org ([212.42.242.37]:35685 "HELO a.mx.smarden.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754522AbYBHQYR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Feb 2008 11:24:17 -0500
-Received: (qmail 25930 invoked by uid 1000); 8 Feb 2008 16:24:33 -0000
+	id S1757329AbYBHQ0I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Feb 2008 11:26:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756820AbYBHQ0H
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 11:26:07 -0500
+Received: from smtp.katamail.com ([62.149.157.154]:57230 "HELO
+	smtp1.pc.aruba.it" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with SMTP id S1757311AbYBHQ0F (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Feb 2008 11:26:05 -0500
+Received: (qmail 30211 invoked by uid 89); 8 Feb 2008 16:25:41 -0000
+X-Spam-Checker-Version: SpamAssassin 3.2.3 (2007-08-08) on smtp1-pc
+X-Spam-Level: 
+X-Spam-Status: No, score=0.1 required=5.0 tests=RDNS_NONE autolearn=disabled
+	version=3.2.3
+Received: from unknown (HELO host116-57-static.104-80-b.business.telecomitalia.it) (barra?cuda@katamail.com@80.104.57.116)
+  by smtp1-pc with SMTP; 8 Feb 2008 16:25:41 -0000
+User-Agent: KMail/1.9.7
+In-Reply-To: <20080208142640.GX25954@genesis.frugalware.org>
 Content-Disposition: inline
-In-Reply-To: <20070907110040.GA9369@mayonaise>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73105>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73106>
 
-On Fri, Sep 07, 2007 at 04:00:40AM -0700, Eric Wong wrote:
-> We have a workaround for the reparent function not working
-> correctly on the SVN native protocol servers.  This workaround
-> opens a new connection (SVN::Ra object) to the new
-> URL/directory.
+On Friday 08 February 2008, Miklos Vajna wrote:
+> Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+> ---
+>  remote.c |    2 +-
+>  1 files changed, 1 insertions(+), 1 deletions(-)
+> 
+> diff --git a/remote.c b/remote.c
+> index 0e00680..4765815 100644
+> --- a/remote.c
+> +++ b/remote.c
+> @@ -276,7 +276,7 @@ static int handle_config(const char *key, const char *value)
+>  		else
+>  			error("more than one uploadpack given, using the first");
+>  	} else if (!strcmp(subkey, ".tagopt")) {
+> -		if (!strcmp(value, "--no-tags"))
+> +		if (value && !strcmp(value, "--no-tags"))
+>  			remote->fetch_tags = -1;
+>  	} else if (!strcmp(subkey, ".proxy")) {
+>  		remote->http_proxy = xstrdup(value);
 
-Hi, this problem popped up again, please see
- http://bugs.debian.org/464713
- 
-I can reproduce it with v1.5.4 through
-
- $ git svn clone svn://svn.debian.org/chinese/packages/lunar-applet
- [...]
- r159 = 010d0b481753bd32ce0255ce433d63e14114d3b6 (git-svn@159)
- Found branch parent: (git-svn) 010d0b481753bd32ce0255ce433d63e14114d3b6
- Following parent with do_switch
- Malformed network data: Malformed network data at /usr/bin/git-svn line
- 2251
-
- $ 
-
-Regards, Gerrit.
+Function handle_config() has already returned 0 at this point.
