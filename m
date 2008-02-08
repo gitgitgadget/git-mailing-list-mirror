@@ -1,58 +1,63 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: Any tricks for speeding up cvsps?
-Date: Fri, 8 Feb 2008 10:48:12 +0100
-Message-ID: <20080208094812.GA9666@diana.vm.bytemark.co.uk>
-References: <47AC1FDC.9000502@glidos.net>
+From: Gerrit Pape <pape@smarden.org>
+Subject: [PATCH] builtin-commit: remove .git/SQUASH_MSG upon successful
+	commit
+Date: Fri, 8 Feb 2008 09:53:58 +0000
+Message-ID: <20080208095358.25666.qmail@b4daf7aef4dba9.315fe32.mid.smarden.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=unknown-8bit
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Paul Gardiner <osronline@glidos.net>
-X-From: git-owner@vger.kernel.org Fri Feb 08 10:49:32 2008
+To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 08 10:54:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNPrH-0007vk-6U
-	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 10:49:23 +0100
+	id 1JNPw8-0001Le-QW
+	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 10:54:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760813AbYBHJst convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Feb 2008 04:48:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760997AbYBHJst
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 04:48:49 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3174 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750996AbYBHJsr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Feb 2008 04:48:47 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1JNPq8-0002ef-00; Fri, 08 Feb 2008 09:48:12 +0000
+	id S932701AbYBHJxn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Feb 2008 04:53:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932611AbYBHJxm
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 04:53:42 -0500
+Received: from a.ns.smarden.org ([212.42.242.37]:33205 "HELO a.mx.smarden.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932643AbYBHJxl (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Feb 2008 04:53:41 -0500
+Received: (qmail 25667 invoked by uid 1000); 8 Feb 2008 09:53:58 -0000
 Content-Disposition: inline
-In-Reply-To: <47AC1FDC.9000502@glidos.net>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73059>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73060>
 
-On 2008-02-08 09:24:44 +0000, Paul Gardiner wrote:
+After doing a merge --squash, and commit afterwards, the commit message
+template SQUASH_MSG in the git directory is not removed, which means th=
+at
+the content of SQUASH_MSG is used as default commit message for all
+subsequent commits.  So have git commit remove the file SQUASH_MSG from
+the git directory upon a successful commit.
 
-> I'm trying to convert a huge cvs repository. I've left cvsps running
-> for days. First attempt, stderr filled my disc with warnings about
-> tags that couldn't be associated with any one commit, without
-> producing anything from stdout. I'm now redirecting stderr to
-> /dev/null, but it still just sits there producing nothing. Is
-> git-cvsimport infeasible for large repositories, or are there tricks
-> I might use?
+The problem was discovered by Fr=E9d=E9ric Bri=E8re, reported through
+ http://bugs.debian.org/464656
 
-This topic comes up on the list every once in a while; try searching
-the list archives.
+Signed-off-by: Gerrit Pape <pape@smarden.org>
+---
+ builtin-commit.c |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
-I seem to recall that for heavy imports, the Subversion CVS importer
-is popular. I don't know if it can give you a git repository directly,
-or if you'll have to go via svn.
-
+diff --git a/builtin-commit.c b/builtin-commit.c
+index c787bed..3a47275 100644
+--- a/builtin-commit.c
++++ b/builtin-commit.c
+@@ -929,6 +929,7 @@ int cmd_commit(int argc, const char **argv, const c=
+har *prefix)
+=20
+ 	unlink(git_path("MERGE_HEAD"));
+ 	unlink(git_path("MERGE_MSG"));
++	unlink(git_path("SQUASH_MSG"));
+=20
+ 	if (commit_index_files())
+ 		die ("Repository has been updated, but unable to write\n"
 --=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+1.5.4
