@@ -1,116 +1,79 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: Use the config file to set repository owner's name.
-Date: Fri, 8 Feb 2008 16:33:54 +0100
-Message-ID: <200802081633.55934.jnareb@gmail.com>
-References: <1202445714-28971-1-git-send-email-ribas@c3sl.ufpr.br> <20080208135327.GC30264@c3sl.ufpr.br> <20080208143027.GA707@c3sl.ufpr.br>
+From: "H.Merijn Brand" <h.m.brand@xs4all.nl>
+Subject: read_branches_file ()
+Date: Fri, 8 Feb 2008 16:50:08 +0100
+Message-ID: <20080208165008.52630d36@pc09.procura.nl>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Git Managment for C3SL <git@git.c3sl.ufpr.br>
-To: Bruno Cesar Ribas <ribas@c3sl.ufpr.br>
-X-From: git-owner@vger.kernel.org Fri Feb 08 16:34:50 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 08 16:51:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNVFU-0008DX-2q
-	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 16:34:44 +0100
+	id 1JNVVI-0006kG-2a
+	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 16:51:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757970AbYBHPeJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Feb 2008 10:34:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757855AbYBHPeJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 10:34:09 -0500
-Received: from wr-out-0506.google.com ([64.233.184.228]:30373 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757238AbYBHPeG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Feb 2008 10:34:06 -0500
-Received: by wr-out-0506.google.com with SMTP id c48so3595620wra.23
-        for <git@vger.kernel.org>; Fri, 08 Feb 2008 07:34:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-disposition:content-type:content-transfer-encoding:message-id;
-        bh=ISXnu4jKWD7GsaIOo3sdeYQirK1lvPVMlSc1UW+wIpI=;
-        b=UxIxP6DF8WDaZyoHCEw/nTpONr6v1BMB1JGKHswZ9Xa/nbE3670m/XPv7b0grxp15taS8m0VSl5P3xjdxYMMXtF41w7hnqF01x1s83qw7aeADfgc3bV6p4oacQndlWLpTqli/UeoVRSu433jw5PRIR37q+9FX0fim5Wgxu7vY1k=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-disposition:content-type:content-transfer-encoding:message-id;
-        b=vxSk0qsgVj5MTTR8zFIO1UDzl1BioYTWsCAIvIJU/rPE+UGRZ4t6z8tVZI2u7ANJvLsEyrUmzNUokswXcHl2NRSaxacDCoOQTZDxn6ynkvVjSXbiW4lNXHarPLFSV17cyWy0ssDZnyEoDXhX6zT3lIZXSxzsJk4kXhgLwB71sns=
-Received: by 10.115.77.1 with SMTP id e1mr3681975wal.103.1202484842318;
-        Fri, 08 Feb 2008 07:34:02 -0800 (PST)
-Received: from ?192.168.1.11? ( [83.8.242.186])
-        by mx.google.com with ESMTPS id i4sm1112535nfh.26.2008.02.08.07.33.59
-        (version=SSLv3 cipher=OTHER);
-        Fri, 08 Feb 2008 07:34:00 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <20080208143027.GA707@c3sl.ufpr.br>
-Content-Disposition: inline
+	id S1757878AbYBHPuQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Feb 2008 10:50:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757506AbYBHPuQ
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 10:50:16 -0500
+Received: from smtp-vbr1.xs4all.nl ([194.109.24.21]:1049 "EHLO
+	smtp-vbr1.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757265AbYBHPuO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Feb 2008 10:50:14 -0500
+Received: from pc09.procura.nl (procura.xs4all.nl [82.95.216.29])
+	(authenticated bits=0)
+	by smtp-vbr1.xs4all.nl (8.13.8/8.13.8) with ESMTP id m18Fo8b5013559
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
+	for <git@vger.kernel.org>; Fri, 8 Feb 2008 16:50:13 +0100 (CET)
+	(envelope-from h.m.brand@xs4all.nl)
+X-Mailer: Claws Mail 3.2.0cvs74 (GTK+ 2.10.6; x86_64-unknown-linux-gnu)
+Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwEAIAAACI8LKTAAAACXBIWXMAAABIAAAASABGyWs+AAAC
+ JElEQVRo3u2aMY4CMQxFczZ6RItEzRm4DBINDbRUSPRInIRbsNK6+dJfezN4kokn48IaCSjysL8d
+ e9Knoj2fr9f9/gllqQ6U9/vxWK3EdwdIEGjRIVCu18NhuxUfK46SH81+fzrdbuKPx/P5ctHQdAdI
+ TKAgpvV6s9ntBEfXEYSGgMQzIHnuFBBjkshCNJ2KtJZ04hHNAugP8bZr3NIHhbcF0AKoK0CoaHXU
+ LUWBIs1n+jV+Fl8CVqOApEXAwyMO/DSR4XVntoAYDR7eBjQupuYAYTMph8Rj21D4m7MChN02tpqs
+ NSnb/KqU2oHCXu5xDCgflj/RAgBiKBIXnICzAsSjWBsTz5K4/HeXYvb8yK5lY3VGEwPi2aONKT+5
+ AlcxrTPOwcTiraGRChgMEKJh0bVVifGVTq6qgBiNVl8QE29EsK6VE+YJAOG2wz5AvsqUS6uqgHCA
+ n4NGvBYpnJ64Jgg27sCtxtBk1CJIA4S/GhdWKh07QxUB48jWGhZ4jKamRRr/T8/M0AaEyctry6YB
+ 4dTGj9iWZNs3DahES5kPCJOu0RQbF/fQOBprsB9gaO9JtPDzII9U5ySXX7AnuIt91y54AAW7rPpT
+ LCe5gt3F+CLqr2UarGB3MXvMylWGq4+9RCx3TW1oJq1t3HPQlFs6N1fFNEB4s8dn7Ne7ACSm7TPQ
+ I5quAWmw6qBpulHM33B0Csge4Nd8JTTYG2b1XyRe3lH8x34ABJ6aePuQ2N4AAAAASUVORK5CYII=
+X-Virus-Scanned: by XS4ALL Virus Scanner
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73099>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73100>
 
-I have joined the two emails to reply only once.
+I'm (again) trying to port git-1.5.4 to HP-UX, and I've already got rather
+far, but I'm hitting some stuff I cannot explain.
 
-On Fri, 8 Feb 2008, Bruno Cesar Ribas wrote:
-> On Fri, Feb 08, 2008 at 02:55:33AM -0800, Jakub Narebski wrote:
->> Bruno Ribas <ribas@c3sl.ufpr.br> writes:
->>> 
->>> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
->>> index 8ef2735..e8a43b7 100755
->>> --- a/gitweb/gitweb.perl
->>> +++ b/gitweb/gitweb.perl
->>> @@ -1767,7 +1767,12 @@ sub git_get_project_owner {
->>>       if (exists $gitweb_project_owner->{$project}) {
->>>               $owner = $gitweb_project_owner->{$project};
->>>       }
->>> -     if (!defined $owner) {
->>> +
->>> +     if (!defined $owner){
->>> +             $owner = git_get_project_config('owner');
->>> +     }
->>> +
->>> +     if (!$owner) {
->>>               $owner = get_file_owner("$projectroot/$project");
->>>       }
+t5405-send-pack-rewind.sh fails the 'git fetch .. master:master' part in
+the setup, as deep down, read_branches_file () is called with in remote
+the name "..".
 
-Another comment: why did you change from checking of "!defined $owner"
-to checking "!$owner"? git_get_project_config('owner') returns undef
-if gitweb.owner is not defined. With checking for defined we can avoid
-false positives of owner being "0" (in practice I think this does not
-matter) or "" (this could happen if somebody doesn't want for project
-to have owner shown).
+The file that it tries to open using git_path () is ".git/branches/.."
+That is weird. That is not a file, but a dir. "../.git/branches" would
+be more logical, but whatever. HP-UX 11.00 will gladly return a valid
+FILE * for opening a directory with fopen (), which, when read, will
+return anything but what is expected. So, maybe read_branches_file ()
+should be protected against opening anything but files. Maybe with some
+stat () and S_ISREG ()'s.
 
->> First, I think the empty lines added are not needed.
-> 
-> I made those empty lines because original code had same empty lines
-> above, I just let it to have same pattern, but I can remove. Should I
-> remove?!
+Or has something gone wrong earlier on?
 
-The idea was for empty lines to separate blocks of code: variables 
-declaration, initialization, finding an owner, and return value.
-So I think that empty lines are not needed here. There were no empty 
-lines between check for owner in the structure populated by 
-git_get_project_list_from_file() and checking filesystem stat for 
-project directory owner.
+In my case, the returned url is 'l', which cannot be opened:
 
-By the way, the git_get_project_list_from_file() interface is a bit 
-strange...
+fatal: 'l': unable to chdir or not a git archive
+fatal: The remote end hung up unexpectedly
 
-> I that last 3lines should be inside the block that we call
-> git_get_project_config, don't you think?
+which is cast from upload-pack.c:main ()
 
-No. I think using "if (!defined $foo) { maybe define foo }..."
-sequence is a good flow.
-
-> I'll resend [...] with $git_dir set.
-
-And with signoff corrected, I assume?
-
-Please try to check if the code works with and without gitweb.owner set 
-before sending new version of the patch...
 -- 
-Jakub Narebski
-Poland
+H.Merijn Brand         Amsterdam Perl Mongers (http://amsterdam.pm.org/)
+using & porting perl 5.6.2, 5.8.x, 5.10.x  on HP-UX 10.20, 11.00, 11.11,
+& 11.23, SuSE 10.1 & 10.2, AIX 5.2, and Cygwin.       http://qa.perl.org
+http://mirrors.develooper.com/hpux/            http://www.test-smoke.org
+                        http://www.goldmark.org/jeff/stupid-disclaimers/
