@@ -1,82 +1,71 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2] Work around curl-gnutls not liking to be
- reinitialized
-Date: Fri, 8 Feb 2008 22:51:49 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802082250550.11591@racer.site>
-References: <20080208220941.GA22199@glandium.org> <1202509359-23840-1-git-send-email-mh@glandium.org>
+Subject: Re: Minor annoyance with git push
+Date: Fri, 8 Feb 2008 22:57:36 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0802082256290.11591@racer.site>
+References: <46a038f90802072044u3329fd33w575c689cba2917ee@mail.gmail.com>  <alpine.LSU.1.00.0802081142060.11591@racer.site> <46a038f90802081427k6ee94cfagbc02533538e75b49@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Fri Feb 08 23:52:26 2008
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Martin Langhoff <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 08 23:58:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNc50-0002iZ-9t
-	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 23:52:22 +0100
+	id 1JNcB1-0004YR-5F
+	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 23:58:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751654AbYBHWvq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Feb 2008 17:51:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752052AbYBHWvq
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 17:51:46 -0500
-Received: from mail.gmx.net ([213.165.64.20]:41761 "HELO mail.gmx.net"
+	id S1751189AbYBHW5d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Feb 2008 17:57:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752551AbYBHW5c
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 17:57:32 -0500
+Received: from mail.gmx.net ([213.165.64.20]:59396 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751637AbYBHWvp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Feb 2008 17:51:45 -0500
-Received: (qmail invoked by alias); 08 Feb 2008 22:51:42 -0000
+	id S1751031AbYBHW5b (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Feb 2008 17:57:31 -0500
+Received: (qmail invoked by alias); 08 Feb 2008 22:57:29 -0000
 Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
-  by mail.gmx.net (mp057) with SMTP; 08 Feb 2008 23:51:42 +0100
+  by mail.gmx.net (mp025) with SMTP; 08 Feb 2008 23:57:29 +0100
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+Mvj0mde+MLkxMy/Iek1KSBWir/Rn1E5unMfM0j8
-	aHW6I/h+syCIq+
+X-Provags-ID: V01U2FsdGVkX1/7WPcizLj7WLBPQHFBshCB7717QgpR87/RfR5ClF
+	BgkuqQxFiPfPDS
 X-X-Sender: gene099@racer.site
-In-Reply-To: <1202509359-23840-1-git-send-email-mh@glandium.org>
+In-Reply-To: <46a038f90802081427k6ee94cfagbc02533538e75b49@mail.gmail.com>
 User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73168>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73169>
 
 Hi,
 
-On Fri, 8 Feb 2008, Mike Hommey wrote:
+On Sat, 9 Feb 2008, Martin Langhoff wrote:
 
-> diff --git a/http.c b/http.c
-> index d2c11ae..a3aa9e9 100644
-> --- a/http.c
-> +++ b/http.c
-> @@ -215,9 +215,14 @@ static CURL* get_curl_handle(void)
->  
->  void http_init(void)
->  {
-> +	static int init = 0;
->  	char *low_speed_limit;
->  	char *low_speed_time;
->  
-> +	if (init)
-> +		return;
-> +	init = 1;
-> +
+> On Feb 9, 2008 12:50 AM, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> 
+> > The problem is that the local side cannot tell
+> 
+> The local side has the remote refs if the client has fetched recently, 
+> so it might be able to tell in some cases. Not with authority (things 
+> may have changed on the server side...) but the client might be able to 
+> say something less alarming.
 
-Don't you have to make this conditional on the CURL version as well?  I 
-mean, that cleanup:
+But if it was not fetched recently?  I think that what you suggest is too 
+tricky (IOW too prone to break).
 
-> diff --git a/transport.c b/transport.c
-> index babaa21..32ab521 100644
-> --- a/transport.c
-> +++ b/transport.c
-> @@ -473,7 +473,9 @@ static struct ref *get_refs_via_curl(struct transport *transport)
->  		return NULL;
->  	}
->  
-> +#if (LIBCURL_VERSION_NUM < 0x071003) || (LIBCURL_VERSION_NUM > 0x071200)
->  	http_cleanup();
-> +#endif
+> > Another way to "solve" this issue, of course, is to use the remote 
+> > layout. I did the switchover myself some time ago; it was hard at 
+> > first, since I was so used to just check out the branches I just 
+> > fetched.  But in the long run the distinction between local and 
+> > tracking branches made life much easier for me.
+> 
+> What do you mean with "the remote layout"? I am using "remotes"+tracking 
+> branches as far as I can tell...
 
-requires us to init again, no?
+I mean keeping most branches purely as tracking branches.  Whenever you 
+are done with one branch, you delete the local branch.
 
 Ciao,
 Dscho
