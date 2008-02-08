@@ -1,33 +1,35 @@
 From: "H.Merijn Brand" <h.m.brand@xs4all.nl>
-Subject: read_branches_file ()
-Date: Fri, 8 Feb 2008 16:50:08 +0100
-Message-ID: <20080208165008.52630d36@pc09.procura.nl>
+Subject: Re: read_branches_file ()
+Date: Fri, 8 Feb 2008 17:03:05 +0100
+Message-ID: <20080208170305.069d43d2@pc09.procura.nl>
+References: <20080208165008.52630d36@pc09.procura.nl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 08 16:51:21 2008
+X-From: git-owner@vger.kernel.org Fri Feb 08 17:03:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNVVI-0006kG-2a
-	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 16:51:04 +0100
+	id 1JNVha-0003N0-BS
+	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 17:03:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757878AbYBHPuQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Feb 2008 10:50:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757506AbYBHPuQ
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 10:50:16 -0500
-Received: from smtp-vbr1.xs4all.nl ([194.109.24.21]:1049 "EHLO
-	smtp-vbr1.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757265AbYBHPuO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Feb 2008 10:50:14 -0500
+	id S1755717AbYBHQDL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Feb 2008 11:03:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755558AbYBHQDJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 11:03:09 -0500
+Received: from smtp-vbr13.xs4all.nl ([194.109.24.33]:3632 "EHLO
+	smtp-vbr13.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752761AbYBHQDI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Feb 2008 11:03:08 -0500
 Received: from pc09.procura.nl (procura.xs4all.nl [82.95.216.29])
 	(authenticated bits=0)
-	by smtp-vbr1.xs4all.nl (8.13.8/8.13.8) with ESMTP id m18Fo8b5013559
+	by smtp-vbr13.xs4all.nl (8.13.8/8.13.8) with ESMTP id m18G35SK034412
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Fri, 8 Feb 2008 16:50:13 +0100 (CET)
+	for <git@vger.kernel.org>; Fri, 8 Feb 2008 17:03:06 +0100 (CET)
 	(envelope-from h.m.brand@xs4all.nl)
+In-Reply-To: <20080208165008.52630d36@pc09.procura.nl>
 X-Mailer: Claws Mail 3.2.0cvs74 (GTK+ 2.10.6; x86_64-unknown-linux-gnu)
 Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwEAIAAACI8LKTAAAACXBIWXMAAABIAAAASABGyWs+AAAC
  JElEQVRo3u2aMY4CMQxFczZ6RItEzRm4DBINDbRUSPRInIRbsNK6+dJfezN4kokn48IaCSjysL8d
@@ -45,31 +47,68 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73100>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73101>
 
-I'm (again) trying to port git-1.5.4 to HP-UX, and I've already got rather
-far, but I'm hitting some stuff I cannot explain.
+On Fri, 8 Feb 2008 16:50:08 +0100, "H.Merijn Brand" <h.m.brand@xs4all.nl>
+wrote:
 
-t5405-send-pack-rewind.sh fails the 'git fetch .. master:master' part in
-the setup, as deep down, read_branches_file () is called with in remote
-the name "..".
+> I'm (again) trying to port git-1.5.4 to HP-UX, and I've already got rather
+> far, but I'm hitting some stuff I cannot explain.
+> 
+> t5405-send-pack-rewind.sh fails the 'git fetch .. master:master' part in
+> the setup, as deep down, read_branches_file () is called with in remote
+> the name "..".
+> 
+> The file that it tries to open using git_path () is ".git/branches/.."
+> That is weird. That is not a file, but a dir. "../.git/branches" would
+> be more logical, but whatever. HP-UX 11.00 will gladly return a valid
+> FILE * for opening a directory with fopen (), which, when read, will
+> return anything but what is expected. So, maybe read_branches_file ()
+> should be protected against opening anything but files. Maybe with some
+> stat () and S_ISREG ()'s.
 
-The file that it tries to open using git_path () is ".git/branches/.."
-That is weird. That is not a file, but a dir. "../.git/branches" would
-be more logical, but whatever. HP-UX 11.00 will gladly return a valid
-FILE * for opening a directory with fopen (), which, when read, will
-return anything but what is expected. So, maybe read_branches_file ()
-should be protected against opening anything but files. Maybe with some
-stat () and S_ISREG ()'s.
+Something like this seems so `fix' this specific problem.
+Feel free to take another approach, t5405 now passes
 
-Or has something gone wrong earlier on?
+--8<--- remote.c.diff
+--- remote.c.org        2008-01-27 09:04:18 +0100
++++ remote.c    2008-02-08 17:01:09 +0100
+@@ -1,6 +1,7 @@
+ #include "cache.h"
+ #include "remote.h"
+ #include "refs.h"
++#include <sys/stat.h>
 
-In my case, the returned url is 'l', which cannot be opened:
+ static struct remote **remotes;
+ static int allocated_remotes;
+@@ -173,11 +174,15 @@ static void read_branches_file(struct re
+        char *frag;
+        char *branch;
+        int n = slash ? slash - remote->name : 1000;
+-       FILE *f = fopen(git_path("branches/%.*s", n, remote->name), "r");
++       char *gp = git_path ("branches/%.*s", n, remote->name);
++       struct stat st_buf;
++       FILE *f;
+        char *s, *p;
+        int len;
 
-fatal: 'l': unable to chdir or not a git archive
-fatal: The remote end hung up unexpectedly
+-       if (!f)
++       if (stat (gp, &st_buf) || S_ISDIR (st_buf.st_mode))
++               return;
++       if (!(f = fopen(gp, "r")))
+                return;
+        s = fgets(buffer, BUF_SIZE, f);
+        fclose(f);
+-->8---
 
-which is cast from upload-pack.c:main ()
+> Or has something gone wrong earlier on?
+> 
+> In my case, the returned url is 'l', which cannot be opened:
+> 
+> fatal: 'l': unable to chdir or not a git archive
+> fatal: The remote end hung up unexpectedly
+> 
+> which is cast from upload-pack.c:main ()
 
 -- 
 H.Merijn Brand         Amsterdam Perl Mongers (http://amsterdam.pm.org/)
