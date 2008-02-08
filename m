@@ -1,116 +1,75 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: small question about the repack algorithm
-Date: Fri, 08 Feb 2008 09:38:58 +0100
-Message-ID: <20080208083858.GA24913@artemis.madism.org>
-References: <20080207090331.GA1958@artemis.madism.org> <7vodarly4z.fsf@gitster.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: Make use of the $git_dir variable at sub git_get_project_url_list
+Date: Fri, 8 Feb 2008 10:15:39 +0100
+Message-ID: <200802081015.39707.jnareb@gmail.com>
+References: <1202318112-8223-1-git-send-email-ribas@c3sl.ufpr.br> <20080208041542.GA28336@c3sl.ufpr.br> <7vbq6sm0j3.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="VS++wcV0S1rZb1Fb";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: Git ML <git@vger.kernel.org>
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Bruno Cesar Ribas <ribas@c3sl.ufpr.br>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 08 09:39:38 2008
+X-From: git-owner@vger.kernel.org Fri Feb 08 10:16:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNOll-0002mt-Eu
-	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 09:39:37 +0100
+	id 1JNPLR-0005sS-JM
+	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 10:16:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932190AbYBHIjE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Feb 2008 03:39:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932135AbYBHIjD
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 03:39:03 -0500
-Received: from pan.madism.org ([88.191.52.104]:48501 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754525AbYBHIjA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Feb 2008 03:39:00 -0500
-Received: from madism.org (def92-8-82-236-12-71.fbx.proxad.net [82.236.12.71])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id EF14A2C441;
-	Fri,  8 Feb 2008 09:38:59 +0100 (CET)
-Received: by madism.org (Postfix, from userid 1000)
-	id 764D392BE; Fri,  8 Feb 2008 09:38:58 +0100 (CET)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Junio C Hamano <gitster@pobox.com>, Git ML <git@vger.kernel.org>
+	id S1757812AbYBHJPz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Feb 2008 04:15:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760943AbYBHJPz
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 04:15:55 -0500
+Received: from ug-out-1314.google.com ([66.249.92.171]:27971 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757654AbYBHJPx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Feb 2008 04:15:53 -0500
+Received: by ug-out-1314.google.com with SMTP id z38so845210ugc.16
+        for <git@vger.kernel.org>; Fri, 08 Feb 2008 01:15:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        bh=EnQ96FZZZPLSjdNhRoJn69Z/KaDg6usEt3UpERkgKtw=;
+        b=P41LiQPKurIy9ExyPYpkk3FBj1dGxTnWgqt7cOHlz8b6DE//AqegA/B0Oa/VCcF9RiN7xl9Yzxr9eA0DTpB8BxgzwKC9u/R7z5LRggF6cnI3FDiIqnxKfe6C7r48bG3vjh4mBV+MxYObP1ftikPgLQ/mRV+YT5D19fEC3FMv4K4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=RpljObYOKLXSFTySutqWsDOJogwPrdQi/LlrSwfvCtUyeKJx+Hm0HA9G4t0IIPldvz0QnbwjSA41iZsWchm7Eu0dZqM31LBQCUAGgYssOTNQ9jubf6nP51dumAYqpOlaeoNtg1XQ02IviRempLtur27tfqvjggUb4QQpSkHAXk8=
+Received: by 10.67.98.15 with SMTP id a15mr5139829ugm.69.1202462151276;
+        Fri, 08 Feb 2008 01:15:51 -0800 (PST)
+Received: from ?192.168.1.11? ( [83.8.242.186])
+        by mx.google.com with ESMTPS id j4sm3656394ugf.49.2008.02.08.01.15.47
+        (version=SSLv3 cipher=OTHER);
+        Fri, 08 Feb 2008 01:15:49 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vbq6sm0j3.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
-In-Reply-To: <7vodarly4z.fsf@gitster.siamese.dyndns.org>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73054>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73055>
 
+Junio C Hamano wrote:
+> Bruno Cesar Ribas <ribas@c3sl.ufpr.br> writes:
+>> On Wed, Feb 06, 2008 at 11:37:51AM -0800, Jakub Narebski wrote:
+>>> Bruno Ribas <ribas@c3sl.ufpr.br> writes:
+>>>
+>>><snip> 
+>>>
+>>> Good catch (although it wasn't actually a bug).
+>>
+>> Not a bug but makes the code cleaner =)
+> 
+> I think I saw very similar 's|projectroot/$path|$git_dir|' patch
+> recently.  If there are more of the same, I'd rather see all of
+> them in a single patch.
 
---VS++wcV0S1rZb1Fb
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+That's all that it is. Those patches are about places where we read
+file inside repo or get repo config, and there are only two places now: 
+description and cloneurl/URL list.
 
-On Fri, Feb 08, 2008 at 07:12:44AM +0000, Junio C Hamano wrote:
-> Pierre Habouzit <madcoder@debian.org> writes:
->=20
-> >   I've trying to see if that optimization was used but I was somehow
-> > unable to find if it was the case, as the code is a bit tough :)
-> >
-> >   I was wondering if the repacking window was using triangle inequality
-> > to discard trying some costly deltas (I assume that what costs the most
-> > in the repacking is computing the delta). I mean, if you consider the
-> > "size" of a delta, I'm almost sure that it's very near a distance.
-> >
-> >   So assuming that we know the delta sizes between any pair of reference
-> > objects in the window, well, if an object we want to delta against the
-> > window Od are near one reference O1 enough, for each Oi in the window
-> > that holds: len(=CE=B4(O1, Oi)) > 2 * len(=CE=B4(Od, O1)), then it's no=
-t worth
-> > investigating.
->=20
-> We do not keep track of the delta size matrix between delta-base
-> candidates in the window, but I presume we could.  The storage
-> cost for doing so is very cheap (window^2 * size_t).  But we do
-> not even compute the distance matrix fully (I'll mention the
-> reason why the above is not (window^2 * size_t / 2) later).
->=20
->     1-----------------------------i   <=3D delta-base candidates
->      \
->       \=20
->        D <-- the target we are considering
->=20
-> Your idea is that if we want to find the cheapest delta-base,
-> and after we find out that candidate #1 is close to our target D
-> and candidate #i is very far from candidate #1, then delta to
-> create D using candidate #i as the base would be much bigger.
-> If the distance space is Euclidean, that would be a nice
-> optimization.
-
-  Well, Euclidean is too much, a simple Metric Space is enough IIRC.
-
-> The second reason is that the deltification is not symmetric.
-> If you define the "distance" between #1 and #i as "the size of
-> delta to reproduce #i using #1 as base", the distance between #1
-> and #i is very different from the distance between #i and #1.
-
-  Well that's the most obvious reason indeed and I totally missed that,
-dang. The delta is not near a distance enough. Too bad :)
-
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---VS++wcV0S1rZb1Fb
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBHrBUivGr7W6HudhwRAgwMAJ9zf7hxQZaAmqy0DYRhvRMqSsKfwACfQ/+u
-oM1vk4uWAoeVAd20qekRUYM=
-=w+tr
------END PGP SIGNATURE-----
-
---VS++wcV0S1rZb1Fb--
+-- 
+Jakub Narebski
+Poland
