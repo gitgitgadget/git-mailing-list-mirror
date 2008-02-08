@@ -1,118 +1,97 @@
-From: "H.Merijn Brand" <h.m.brand@xs4all.nl>
-Subject: Re: read_branches_file ()
-Date: Fri, 8 Feb 2008 17:03:05 +0100
-Message-ID: <20080208170305.069d43d2@pc09.procura.nl>
-References: <20080208165008.52630d36@pc09.procura.nl>
+From: Bruno Cesar Ribas <ribas@c3sl.ufpr.br>
+Subject: Re: [PATCH] gitweb: Use the config file to set repository owner's
+	name.
+Date: Fri, 8 Feb 2008 14:07:57 -0200
+Message-ID: <20080208160757.GA11965@c3sl.ufpr.br>
+References: <1202445714-28971-1-git-send-email-ribas@c3sl.ufpr.br> <20080208135327.GC30264@c3sl.ufpr.br> <20080208143027.GA707@c3sl.ufpr.br> <200802081633.55934.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 08 17:03:54 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Git Managment for C3SL <git@git.c3sl.ufpr.br>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 08 17:09:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNVha-0003N0-BS
-	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 17:03:46 +0100
+	id 1JNVmx-0005k1-C1
+	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 17:09:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755717AbYBHQDL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Feb 2008 11:03:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755558AbYBHQDJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 11:03:09 -0500
-Received: from smtp-vbr13.xs4all.nl ([194.109.24.33]:3632 "EHLO
-	smtp-vbr13.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752761AbYBHQDI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Feb 2008 11:03:08 -0500
-Received: from pc09.procura.nl (procura.xs4all.nl [82.95.216.29])
-	(authenticated bits=0)
-	by smtp-vbr13.xs4all.nl (8.13.8/8.13.8) with ESMTP id m18G35SK034412
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Fri, 8 Feb 2008 17:03:06 +0100 (CET)
-	(envelope-from h.m.brand@xs4all.nl)
-In-Reply-To: <20080208165008.52630d36@pc09.procura.nl>
-X-Mailer: Claws Mail 3.2.0cvs74 (GTK+ 2.10.6; x86_64-unknown-linux-gnu)
-Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwEAIAAACI8LKTAAAACXBIWXMAAABIAAAASABGyWs+AAAC
- JElEQVRo3u2aMY4CMQxFczZ6RItEzRm4DBINDbRUSPRInIRbsNK6+dJfezN4kokn48IaCSjysL8d
- e9Knoj2fr9f9/gllqQ6U9/vxWK3EdwdIEGjRIVCu18NhuxUfK46SH81+fzrdbuKPx/P5ctHQdAdI
- TKAgpvV6s9ntBEfXEYSGgMQzIHnuFBBjkshCNJ2KtJZ04hHNAugP8bZr3NIHhbcF0AKoK0CoaHXU
- LUWBIs1n+jV+Fl8CVqOApEXAwyMO/DSR4XVntoAYDR7eBjQupuYAYTMph8Rj21D4m7MChN02tpqs
- NSnb/KqU2oHCXu5xDCgflj/RAgBiKBIXnICzAsSjWBsTz5K4/HeXYvb8yK5lY3VGEwPi2aONKT+5
- AlcxrTPOwcTiraGRChgMEKJh0bVVifGVTq6qgBiNVl8QE29EsK6VE+YJAOG2wz5AvsqUS6uqgHCA
- n4NGvBYpnJ64Jgg27sCtxtBk1CJIA4S/GhdWKh07QxUB48jWGhZ4jKamRRr/T8/M0AaEyctry6YB
- 4dTGj9iWZNs3DahES5kPCJOu0RQbF/fQOBprsB9gaO9JtPDzII9U5ySXX7AnuIt91y54AAW7rPpT
- LCe5gt3F+CLqr2UarGB3MXvMylWGq4+9RCx3TW1oJq1t3HPQlFs6N1fFNEB4s8dn7Ne7ACSm7TPQ
- I5quAWmw6qBpulHM33B0Csge4Nd8JTTYG2b1XyRe3lH8x34ABJ6aePuQ2N4AAAAASUVORK5CYII=
-X-Virus-Scanned: by XS4ALL Virus Scanner
+	id S1757154AbYBHQI3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Feb 2008 11:08:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757344AbYBHQI3
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 11:08:29 -0500
+Received: from urquell.c3sl.ufpr.br ([200.17.202.3]:48302 "EHLO
+	urquell.c3sl.ufpr.br" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756679AbYBHQI2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Feb 2008 11:08:28 -0500
+Received: from localhost (unknown [189.1.130.222])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	(Authenticated sender: ribas)
+	by urquell.c3sl.ufpr.br (Postfix) with ESMTP id 96983700003CB;
+	Fri,  8 Feb 2008 14:08:25 -0200 (BRST)
+Content-Disposition: inline
+In-Reply-To: <200802081633.55934.jnareb@gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73101>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73102>
 
-On Fri, 8 Feb 2008 16:50:08 +0100, "H.Merijn Brand" <h.m.brand@xs4all.nl>
-wrote:
-
-> I'm (again) trying to port git-1.5.4 to HP-UX, and I've already got rather
-> far, but I'm hitting some stuff I cannot explain.
+On Fri, Feb 08, 2008 at 04:33:54PM +0100, Jakub Narebski wrote:
+> I have joined the two emails to reply only once.
 > 
-> t5405-send-pack-rewind.sh fails the 'git fetch .. master:master' part in
-> the setup, as deep down, read_branches_file () is called with in remote
-> the name "..".
+> On Fri, 8 Feb 2008, Bruno Cesar Ribas wrote:
+> > On Fri, Feb 08, 2008 at 02:55:33AM -0800, Jakub Narebski wrote:
+> >> Bruno Ribas <ribas@c3sl.ufpr.br> writes:
+> >>> 
+> >>> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> >>> index 8ef2735..e8a43b7 100755
+> >>> --- a/gitweb/gitweb.perl
+> >>> +++ b/gitweb/gitweb.perl
+> >>> @@ -1767,7 +1767,12 @@ sub git_get_project_owner {
+> >>>       if (exists $gitweb_project_owner->{$project}) {
+> >>>               $owner = $gitweb_project_owner->{$project};
+> >>>       }
+> >>> -     if (!defined $owner) {
+> >>> +
+> >>> +     if (!defined $owner){
+> >>> +             $owner = git_get_project_config('owner');
+> >>> +     }
+> >>> +
+> >>> +     if (!$owner) {
+> >>>               $owner = get_file_owner("$projectroot/$project");
+> >>>       }
 > 
-> The file that it tries to open using git_path () is ".git/branches/.."
-> That is weird. That is not a file, but a dir. "../.git/branches" would
-> be more logical, but whatever. HP-UX 11.00 will gladly return a valid
-> FILE * for opening a directory with fopen (), which, when read, will
-> return anything but what is expected. So, maybe read_branches_file ()
-> should be protected against opening anything but files. Maybe with some
-> stat () and S_ISREG ()'s.
+> Another comment: why did you change from checking of "!defined $owner"
+> to checking "!$owner"? git_get_project_config('owner') returns undef
+> if gitweb.owner is not defined. With checking for defined we can avoid
+> false positives of owner being "0" (in practice I think this does not
+> matter) or "" (this could happen if somebody doesn't want for project
+> to have owner shown).
 
-Something like this seems so `fix' this specific problem.
-Feel free to take another approach, t5405 now passes
+When I tested it returned empty, but i found out it was lack of NAME for the
+user i was running tests.
 
---8<--- remote.c.diff
---- remote.c.org        2008-01-27 09:04:18 +0100
-+++ remote.c    2008-02-08 17:01:09 +0100
-@@ -1,6 +1,7 @@
- #include "cache.h"
- #include "remote.h"
- #include "refs.h"
-+#include <sys/stat.h>
-
- static struct remote **remotes;
- static int allocated_remotes;
-@@ -173,11 +174,15 @@ static void read_branches_file(struct re
-        char *frag;
-        char *branch;
-        int n = slash ? slash - remote->name : 1000;
--       FILE *f = fopen(git_path("branches/%.*s", n, remote->name), "r");
-+       char *gp = git_path ("branches/%.*s", n, remote->name);
-+       struct stat st_buf;
-+       FILE *f;
-        char *s, *p;
-        int len;
-
--       if (!f)
-+       if (stat (gp, &st_buf) || S_ISDIR (st_buf.st_mode))
-+               return;
-+       if (!(f = fopen(gp, "r")))
-                return;
-        s = fgets(buffer, BUF_SIZE, f);
-        fclose(f);
--->8---
-
-> Or has something gone wrong earlier on?
 > 
-> In my case, the returned url is 'l', which cannot be opened:
 > 
-> fatal: 'l': unable to chdir or not a git archive
-> fatal: The remote end hung up unexpectedly
+> > I'll resend [...] with $git_dir set.
 > 
-> which is cast from upload-pack.c:main ()
+> And with signoff corrected, I assume?
+
+of course.
+> 
+> Please try to check if the code works with and without gitweb.owner set 
+> before sending new version of the patch...
+
+I always do that.
+> -- 
+> Jakub Narebski
+> Poland
 
 -- 
-H.Merijn Brand         Amsterdam Perl Mongers (http://amsterdam.pm.org/)
-using & porting perl 5.6.2, 5.8.x, 5.10.x  on HP-UX 10.20, 11.00, 11.11,
-& 11.23, SuSE 10.1 & 10.2, AIX 5.2, and Cygwin.       http://qa.perl.org
-http://mirrors.develooper.com/hpux/            http://www.test-smoke.org
-                        http://www.goldmark.org/jeff/stupid-disclaimers/
+Bruno Ribas - ribas@c3sl.ufpr.br
+http://web.inf.ufpr.br/ribas
+C3SL: http://www.c3sl.ufpr.br 
