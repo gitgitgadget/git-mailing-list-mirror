@@ -1,71 +1,112 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Minor annoyance with git push
-Date: Fri, 8 Feb 2008 22:57:36 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802082256290.11591@racer.site>
-References: <46a038f90802072044u3329fd33w575c689cba2917ee@mail.gmail.com>  <alpine.LSU.1.00.0802081142060.11591@racer.site> <46a038f90802081427k6ee94cfagbc02533538e75b49@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Martin Langhoff <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 08 23:58:35 2008
+From: Mike Hommey <mh@glandium.org>
+Subject: [PATCH] Work around curl-gnutls not liking to be reinitialized
+Date: Sat,  9 Feb 2008 00:08:44 +0100
+Message-ID: <1202512124-28669-1-git-send-email-mh@glandium.org>
+References: <alpine.LSU.1.00.0802082250550.11591@racer.site>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Sat Feb 09 00:08:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNcB1-0004YR-5F
-	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 23:58:35 +0100
+	id 1JNcKy-0007qr-S4
+	for gcvg-git-2@gmane.org; Sat, 09 Feb 2008 00:08:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751189AbYBHW5d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Feb 2008 17:57:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752551AbYBHW5c
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 17:57:32 -0500
-Received: from mail.gmx.net ([213.165.64.20]:59396 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751031AbYBHW5b (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Feb 2008 17:57:31 -0500
-Received: (qmail invoked by alias); 08 Feb 2008 22:57:29 -0000
-Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
-  by mail.gmx.net (mp025) with SMTP; 08 Feb 2008 23:57:29 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/7WPcizLj7WLBPQHFBshCB7717QgpR87/RfR5ClF
-	BgkuqQxFiPfPDS
-X-X-Sender: gene099@racer.site
-In-Reply-To: <46a038f90802081427k6ee94cfagbc02533538e75b49@mail.gmail.com>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1752489AbYBHXIS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Feb 2008 18:08:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752432AbYBHXIS
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 18:08:18 -0500
+Received: from vuizook.err.no ([85.19.215.103]:57844 "EHLO vuizook.err.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751919AbYBHXIR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Feb 2008 18:08:17 -0500
+Received: from aputeaux-153-1-42-109.w82-124.abo.wanadoo.fr ([82.124.6.109] helo=jigen)
+	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.67)
+	(envelope-from <mh@glandium.org>)
+	id 1JNcLF-0000jB-VJ; Sat, 09 Feb 2008 00:09:16 +0100
+Received: from mh by jigen with local (Exim 4.69)
+	(envelope-from <mh@jigen>)
+	id 1JNcKq-0007So-2L; Sat, 09 Feb 2008 00:08:44 +0100
+X-Mailer: git-send-email 1.5.4.8.g95ac
+In-Reply-To: <alpine.LSU.1.00.0802082250550.11591@racer.site>
+X-Spam-Status: (score 2.2): No, score=2.2 required=5.0 tests=RCVD_IN_PBL,RCVD_IN_SORBS_DUL,RDNS_DYNAMIC autolearn=disabled version=3.2.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73169>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73170>
 
-Hi,
+curl versions 7.16.3 to 7.18.0 included had a regression in which https
+requests following curl_global_cleanup/init sequence would fail with ASN1
+parser errors with curl-gnutls. Such sequences happen in some cases such
+as git fetch.
 
-On Sat, 9 Feb 2008, Martin Langhoff wrote:
+We work around this by removing the http_cleanup call from get_refs_via_curl
+for the broken versions of curl, and allowing http_init to be called several
+times without initializing http.c global variables again and leaking old
+values, which is a safe thing to have unconditionally.
 
-> On Feb 9, 2008 12:50 AM, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> 
-> > The problem is that the local side cannot tell
-> 
-> The local side has the remote refs if the client has fetched recently, 
-> so it might be able to tell in some cases. Not with authority (things 
-> may have changed on the server side...) but the client might be able to 
-> say something less alarming.
+The remaining calls to http_cleanup are either last (http-push.c), or almost
+never called (walker.c; the function it lies in is only called from
+transport-disconnect, which is called last, and only in builtin-push.c)
+These leaks shall be addressed in the http code refactoring.
 
-But if it was not fetched recently?  I think that what you suggest is too 
-tricky (IOW too prone to break).
+Signed-off-by: Mike Hommey <mh@glandium.org>
+---
+ > Don't you have to make this conditional on the CURL version as well?  I
+ > mean, that cleanup:
 
-> > Another way to "solve" this issue, of course, is to use the remote 
-> > layout. I did the switchover myself some time ago; it was hard at 
-> > first, since I was so used to just check out the branches I just 
-> > fetched.  But in the long run the distinction between local and 
-> > tracking branches made life much easier for me.
-> 
-> What do you mean with "the remote layout"? I am using "remotes"+tracking 
-> branches as far as I can tell...
+ > > diff --git a/transport.c b/transport.c
+ > > index babaa21..32ab521 100644
+ > > --- a/transport.c
+ > > +++ b/transport.c
+ > > @@ -473,7 +473,9 @@ static struct ref *get_refs_via_curl(struct transport *transport)
+ > >              return NULL;
+ > >      }
+ > >
+ > > +#if (LIBCURL_VERSION_NUM < 0x071003) || (LIBCURL_VERSION_NUM > 0x071200)
+ > >       http_cleanup();
+ > > +#endif
+ >
+ > requires us to init again, no?
 
-I mean keeping most branches purely as tracking branches.  Whenever you 
-are done with one branch, you delete the local branch.
+ Damn, you're right. But it would actually be better to just have the init
+ variable set to 0 again in http_cleanup, and actually, we already have a
+ global variable that is set in http_init and reset in http_cleanup that
+ could be used for this test...
 
-Ciao,
-Dscho
+ http.c      |    3 +++
+ transport.c |    2 ++
+ 2 files changed, 5 insertions(+), 0 deletions(-)
+
+diff --git a/http.c b/http.c
+index d2c11ae..d69ba90 100644
+--- a/http.c
++++ b/http.c
+@@ -218,6 +218,9 @@ void http_init(void)
+ 	char *low_speed_limit;
+ 	char *low_speed_time;
+ 
++	if (pragma_header)
++		return;
++
+ 	curl_global_init(CURL_GLOBAL_ALL);
+ 
+ 	pragma_header = curl_slist_append(pragma_header, "Pragma: no-cache");
+diff --git a/transport.c b/transport.c
+index babaa21..32ab521 100644
+--- a/transport.c
++++ b/transport.c
+@@ -473,7 +473,9 @@ static struct ref *get_refs_via_curl(struct transport *transport)
+ 		return NULL;
+ 	}
+ 
++#if (LIBCURL_VERSION_NUM < 0x071003) || (LIBCURL_VERSION_NUM > 0x071200)
+ 	http_cleanup();
++#endif
+ 
+ 	data = buffer.buf;
+ 	start = NULL;
+-- 
+1.5.4.8.g95ac
