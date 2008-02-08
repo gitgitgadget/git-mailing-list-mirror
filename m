@@ -1,66 +1,74 @@
-From: "Ian Dees" <undees@gmail.com>
-Subject: Completion message for git-clone?
-Date: Thu, 7 Feb 2008 19:09:54 -0800
-Message-ID: <ad4f9af90802071909s4dad180as26b2dd8b7600342f@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git help -w should not create nohup.out
+Date: Thu, 07 Feb 2008 19:40:21 -0800
+Message-ID: <7vhcgkm7yy.fsf@gitster.siamese.dyndns.org>
+References: <1202434421-8066-1-git-send-email-dpotapov@gmail.com>
+	<alpine.LSU.1.00.0802080153570.11591@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 08 04:10:33 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Dmitry Potapov <dpotapov@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Fri Feb 08 04:41:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNJdI-0004bu-Hw
-	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 04:10:32 +0100
+	id 1JNK7K-00025B-9M
+	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 04:41:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755942AbYBHDJ5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Feb 2008 22:09:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755266AbYBHDJ5
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Feb 2008 22:09:57 -0500
-Received: from wx-out-0506.google.com ([66.249.82.225]:28511 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754480AbYBHDJ4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Feb 2008 22:09:56 -0500
-Received: by wx-out-0506.google.com with SMTP id h31so3924179wxd.4
-        for <git@vger.kernel.org>; Thu, 07 Feb 2008 19:09:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=7L3ESA0cfCiP1ukHbiic+W0cbbGmmbnEtUICjH2uJbI=;
-        b=v7+lNngC6mTy6RV5Q+z1m2UJDclft2N3+21cg0YZ2/by8fY1MhW80JWXtk2Q5I2JEh0p3ipYzj/0kTI6Fh+rJZP0atJ75T4mv3oditpf0teLRqgroqTsZW6gRkb6qsSxwq28NMWLEneXyru6EQD2MCdu6TwSr1NCCyvMB6v9J8g=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=PJHpZS25i00J2oHTrpEISIk3fS2B0Nv8w4slb7qOb9kuwkmz3ww9x9Oh9NbHuRqau5/zq56w4LIIcVA3LRKMM96WRB7wyFG94jVLR5PbyWc+jNZluwnDhFu+0fpFYIf/Uvkg7B070eF3p5evljjcQHvlAlXXgqxWUrf218/k8os=
-Received: by 10.142.147.15 with SMTP id u15mr6651201wfd.149.1202440194640;
-        Thu, 07 Feb 2008 19:09:54 -0800 (PST)
-Received: by 10.142.238.18 with HTTP; Thu, 7 Feb 2008 19:09:54 -0800 (PST)
-Content-Disposition: inline
+	id S1758900AbYBHDkq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Feb 2008 22:40:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758075AbYBHDkq
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Feb 2008 22:40:46 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:53834 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757377AbYBHDkp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Feb 2008 22:40:45 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 89BB9643B;
+	Thu,  7 Feb 2008 22:40:43 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id D9FD9643A;
+	Thu,  7 Feb 2008 22:40:38 -0500 (EST)
+In-Reply-To: <alpine.LSU.1.00.0802080153570.11591@racer.site> (Johannes
+	Schindelin's message of "Fri, 8 Feb 2008 01:55:33 +0000 (GMT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73029>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73030>
 
-Hi, all.  Upon cloning a repository, the initial message reads:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-  Initialized empty Git repository in path/to/new-repo/.git
-  0 blocks
+> Hi,
+>
+> On Fri, 8 Feb 2008, Dmitry Potapov wrote:
+>
+>> git-help--browse uses 'nohup' to launch some browsers.
+>
+> Why?
+>
+> "nohup" should be used to start a program that should persist even after 
+> you logged out.  I fail to see how this should be sensible for "git help 
+> -w".  So "off with the head", uh, do away with the "nohup", I say!
 
-I'd wager "empty" means, "empty because Git is about to populate it."
-Even so, this wording could be a bit surprising to new adopters,
-especially coupled with the "0 blocks" suffix (is it really creating
-hardlinks on NTFS?).  The impression is that the clone didn't work.
-The impression is, of course, eventually dispelled by looking inside
-the new directory.  Is there a way to clarify the overall status of
-the clone operation?
+True.  Christian, what was the reason you added nohup?
+I would imagine if you did this:
 
-One other minor thing I noticed while futzing with clones: if you try
-to clone an empty repository, you get the same "Initialized empty
-repository" message, even though no such second directory is created.
-I'm not suggesting Git should suddenly start allowing empty cloning,
-but perhaps a "Empty repository; skipping clone" message would be
-helpful.
+	(1) open a new xterm;
 
---Ian
+        (2) in that xterm, run the browser, perhaps from
+            git-help--browse, but without nohup, in the
+            background;
+
+	(3) exit the terminal
+
+then the browser might get upset, losing its controlling
+terminal.
+
+But I suspect that would be a really broken behaviour.
