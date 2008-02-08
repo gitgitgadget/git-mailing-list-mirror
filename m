@@ -1,77 +1,69 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: [PATCH] setup.c: guard config parser from value=NULL
-Date: Fri, 8 Feb 2008 15:27:02 +0100
-Message-ID: <20080208142702.GY25954@genesis.frugalware.org>
-References: <7v63x0lzhw.fsf@gitster.siamese.dyndns.org>
+From: Sergei Organov <osv@javad.com>
+Subject: Re: [PATCH 3/4] git.el: Check for existing buffers on revert.
+Date: Fri, 08 Feb 2008 17:30:02 +0300
+Message-ID: <87ve4zzfkl.fsf@osv.gnss.ru>
+References: <87r6fporp3.fsf@wine.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 08 15:27:55 2008
+To: Alexandre Julliard <julliard@winehq.org>
+X-From: git-owner@vger.kernel.org Fri Feb 08 15:31:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNUCm-0006Ty-Nc
-	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 15:27:53 +0100
+	id 1JNUFj-0007a7-Gx
+	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 15:30:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756871AbYBHO1Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Feb 2008 09:27:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756876AbYBHO1P
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 09:27:15 -0500
-Received: from mx2.mail.elte.hu ([157.181.151.9]:55923 "EHLO mx2.mail.elte.hu"
+	id S1757071AbYBHOaX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Feb 2008 09:30:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757090AbYBHOaX
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 09:30:23 -0500
+Received: from javad.com ([216.122.176.236]:4415 "EHLO javad.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756771AbYBHO1P (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Feb 2008 09:27:15 -0500
-Received: from frugalware.elte.hu ([157.181.177.34] helo=genesis.frugalware.org)
-	by mx2.mail.elte.hu with esmtp (Exim)
-	id 1JNUC3-0006Ya-By
-	from <vmiklos@frugalware.org>; Fri, 08 Feb 2008 15:27:14 +0100
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 07F9811901BD; Fri,  8 Feb 2008 15:27:02 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <7v63x0lzhw.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.16 (2007-06-09)
-X-ELTE-VirusStatus: clean
-X-ELTE-SpamScore: 1.0
-X-ELTE-SpamLevel: s
-X-ELTE-SpamCheck: no
-X-ELTE-SpamVersion: ELTE 2.0 
-X-ELTE-SpamCheck-Details: score=1.0 required=5.9 tests=BAYES_50 autolearn=no SpamAssassin version=3.2.3
-	1.0 BAYES_50               BODY: Bayesian spam probability is 40 to 60%
-	[score: 0.4020]
+	id S1757065AbYBHOaW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Feb 2008 09:30:22 -0500
+Received: from osv ([87.236.81.130])
+	by javad.com (8.11.6/8.11.0) with ESMTP id m18EU9d98689;
+	Fri, 8 Feb 2008 14:30:10 GMT
+	(envelope-from s.organov@javad.com)
+Received: from osv by osv with local (Exim 4.63)
+	(envelope-from <s.organov@javad.com>)
+	id 1JNUEs-00086D-Ta; Fri, 08 Feb 2008 17:30:02 +0300
+In-Reply-To: <87r6fporp3.fsf@wine.dyndns.org> (Alexandre Julliard's message of "Thu\, 07 Feb 2008 13\:51\:20 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73095>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73096>
 
-Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
----
- setup.c |    8 ++++----
- 1 files changed, 4 insertions(+), 4 deletions(-)
+Alexandre Julliard <julliard@winehq.org> writes:
+> Refuse to revert a file if it is modified in an existing buffer but
+> not saved.
 
-diff --git a/setup.c b/setup.c
-index adede16..361825f 100644
---- a/setup.c
-+++ b/setup.c
-@@ -346,13 +346,13 @@ int git_config_perm(const char *var, const char *value)
- {
- 	if (value) {
- 		int i;
--		if (!strcmp(value, "umask"))
-+		if (value && !strcmp(value, "umask"))
- 			return PERM_UMASK;
--		if (!strcmp(value, "group"))
-+		if (value && !strcmp(value, "group"))
- 			return PERM_GROUP;
--		if (!strcmp(value, "all") ||
-+		if (value && (!strcmp(value, "all") ||
- 		    !strcmp(value, "world") ||
--		    !strcmp(value, "everybody"))
-+		    !strcmp(value, "everybody")))
- 			return PERM_EVERYBODY;
- 		i = atoi(value);
- 		if (i > 1)
--- 
-1.5.4
+What's the point? What if I do want to have modified buffer and still
+revert the on-disk file? Why git-revert cares to the level of
+prohibiting this?
+
+Besides, it's inconsistent with the rest of Emacs, I think, as in
+similar situations Emacs usually allows to either save the buffer(s), do
+not save the buffer(s) and continue, or abort operation (I suppose using
+(save-some-buffers) call, though I didn't check). See, for example, how
+(compile) behaves when some of buffers are not saved.
+
+In fact I believe the way PCL-CVS handles this, and that was implemented
+in my earlier patch, is superior compared to this patch. An addition of
+save-some-buffers call won't hurt either, but IMHO is not very useful in
+the specific case of git-revert.
+
+BTW, what definitely lacks (save-some-buffers) call is git-commit, as it
+silently commits on-disk state of a file when corresponding buffer is
+modified.
+
+> On success, revert the buffers that contains the files that have been
+> reverted.
+
+This part is indeed very handy.
+
+-- Sergei Organov.
