@@ -1,102 +1,86 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Re: [PATCH] RFC: git lazy clone proof-of-concept
-Date: Fri, 8 Feb 2008 15:41:49 -0500
-Message-ID: <9e4733910802081241g1543f873h76181c0d3165cc00@mail.gmail.com>
-References: <200802081828.43849.kendy@suse.cz>
-	 <m3ejbngtnn.fsf@localhost.localdomain>
-	 <9e4733910802081126r5bf19c95rec817a1b6648ee4d@mail.gmail.com>
-	 <1202502007.12966.30.camel@brick>
-	 <9e4733910802081224k28310b0cj171453c96802ec7f@mail.gmail.com>
-	 <1202502302.12966.32.camel@brick>
+From: Jan Hudec <bulb@ucw.cz>
+Subject: Re: The 7th number of the msysGit Herald
+Date: Fri, 8 Feb 2008 21:44:24 +0100
+Message-ID: <20080208204424.GA17147@efreet.light.src>
+References: <alpine.LSU.1.00.0802011653180.7372@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Jakub Narebski" <jnareb@gmail.com>,
-	"Jan Holesovsky" <kendy@suse.cz>, git@vger.kernel.org,
-	gitster@pobox.com
-To: "Harvey Harrison" <harvey.harrison@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 08 21:42:29 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="ibTvN161/egqYuK8"
+Cc: git@vger.kernel.org, msysgit@googlegroups.com
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Feb 08 21:45:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNa3J-0005lO-4M
-	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 21:42:29 +0100
+	id 1JNa5p-0006sj-OL
+	for gcvg-git-2@gmane.org; Fri, 08 Feb 2008 21:45:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933691AbYBHUly (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Feb 2008 15:41:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933652AbYBHUly
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 15:41:54 -0500
-Received: from wa-out-1112.google.com ([209.85.146.177]:47203 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933120AbYBHUlv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Feb 2008 15:41:51 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so639151wah.23
-        for <git@vger.kernel.org>; Fri, 08 Feb 2008 12:41:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=YS/bF+Mh2ac7HmBusHIZtDVfiaXukXMkG+P4ys+VUPQ=;
-        b=SGeOZF2xB54c4ssvMt4AQf21YbauwutPmwDmOWtzGsDWLbp2zex17svxDm7/vAh8OYDk+9kcsScik66KavDJD8V3kW5gxU+Oz9TlV8pXcmelIMYADUCw5XBed7hubnWFX9dbiE4/20owMrqtV95/gsfkMcI6C1ugDAhMDEWpKDA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=QvWSS0MzbagCYu0AlC5lq29GOcIvuk6wxhab272wAZH2Y00ipqFb85SqujiuWCe32EYSzXFlq1/4BApf1189PU74/c3aLx/PVj3x9v37aYmneS0O6LbsEALSuXroekx+Tk44r3TdE9fqZwtkJIT/nRnFwiBrkOpGVCWqAgwzKrY=
-Received: by 10.114.111.1 with SMTP id j1mr4063094wac.138.1202503309492;
-        Fri, 08 Feb 2008 12:41:49 -0800 (PST)
-Received: by 10.114.200.7 with HTTP; Fri, 8 Feb 2008 12:41:49 -0800 (PST)
-In-Reply-To: <1202502302.12966.32.camel@brick>
+	id S1752069AbYBHUof (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Feb 2008 15:44:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751811AbYBHUoe
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 15:44:34 -0500
+Received: from ns1.bluetone.cz ([212.158.128.13]:37255 "EHLO ns1.bluetone.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751351AbYBHUod (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Feb 2008 15:44:33 -0500
+Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
+	by ns1.bluetone.cz (Postfix) with ESMTP id E79D6572B0;
+	Fri,  8 Feb 2008 21:44:31 +0100 (CET)
+Received: from ns1.bluetone.cz ([192.168.13.1])
+	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
+	with ESMTP id cVREtGetD8ie; Fri,  8 Feb 2008 21:44:29 +0100 (CET)
+Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
+	by ns1.bluetone.cz (Postfix) with ESMTP id CF905573DD;
+	Fri,  8 Feb 2008 21:44:27 +0100 (CET)
+Received: from bulb by efreet.light.src with local (Exim 4.69)
+	(envelope-from <bulb@ucw.cz>)
+	id 1JNa5A-0004fg-3y; Fri, 08 Feb 2008 21:44:24 +0100
 Content-Disposition: inline
+In-Reply-To: <alpine.LSU.1.00.0802011653180.7372@racer.site>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73141>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73142>
 
-On 2/8/08, Harvey Harrison <harvey.harrison@gmail.com> wrote:
-> On Fri, 2008-02-08 at 15:24 -0500, Jon Smirl wrote:
-> > On 2/8/08, Harvey Harrison <harvey.harrison@gmail.com> wrote:
-> > > On Fri, 2008-02-08 at 14:26 -0500, Jon Smirl wrote:
-> > > > On 2/8/08, Jakub Narebski <jnareb@gmail.com> wrote:
-> > > > > Jan Holesovsky <kendy@suse.cz> writes:
-> > > > > One of the reasons why 'lazy clone' was not implemented was the fact
-> > > > > that by using large enough window, and larger than default delta
-> > > > > length you can repack "archive pack" (and keep it from trying to
-> > > > > repack using .keep files, see git-config(1)) much tighter than with
-> > > > > default (time and CPU conserving) options, and much, much tighter than
-> > > > > pack which is result of fast-import driven import.
-> > > > >
-> > > > > Both Mozilla import, and GCC import were packed below 0.5 GB. Warning:
-> > > > > you would need machine with large amount of memory to repack it
-> > > > > tightly in sensible time!
-> > > >
-> > > > A lot of memory is 2-4GB. Without this much memory you will trigger
-> > > > swapping and the pack process will finish in about a month.
-> > >
-> > > Well, my modest little Celeron M laptop w/ 1GB of ram did the full
-> > > repack overnight on the gcc repo, so a month is a bit of an
-> > > exaggeration.
-> >
-> > Try it again with window=250 and depth=250. That's how you get the
-> > really small packs.
-> >
->
-> Yes, I know, and I did if you remember back to the gcc discussion.
 
-Now that you mention it I seem to recall some changes were made to git
-during that discussion that reduced the memory footprint and made the
-optimized gcc repack fit into 1GB. I've forgotten the exact timings
-and git is a moving target. When I was working on Mozilla it needed
-2.4GB to avoid swapping but that was with a much older git.
+--ibTvN161/egqYuK8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-The rule is: if it starts swapping it is going to take way longer that
-you are probably willing to wait. Buying more RAM is a cheap and easy
-fix.
+On Fri, Feb 01, 2008 at 16:53:54 +0000, Johannes Schindelin wrote:
+> [...]
+> Ah, my pet peeve. Rxvt would be so nice to have, instead of that=20
+> console window Windows provides, which is not even resizable (makes=20
+> you wonder which meaning of "console" the inventors meant).=20
+> [...]
 
-If people are having trouble with large repositories please let the
-git community know and your issues will probably get quickly fixed.
-We can't fix something we don't know about.
+Well, the console is /somewhat/ resizable. Dynamically, you can change the
+height, but not the width. Probably because windows don't have a SIGWINCH.
 
--- 
-Jon Smirl
-jonsmirl@gmail.com
+However, you /can/ select what size the console will start with -- in the
+properties of the .lnk you run your program with. Ie. I normally run Cygwin
+sessions at 160x60, which makes it somewhat usable (of course the rectangul=
+ar
+selection is still extremely braindead).
+
+--=20
+						 Jan 'Bulb' Hudec <bulb@ucw.cz>
+
+--ibTvN161/egqYuK8
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFHrL8oRel1vVwhjGURAmjuAJ0XLqKzXnVcAS3d0mzRJCCaLARbPgCeJliX
+sKX3bmvSQz4RtoE8aRnRqbA=
+=zj31
+-----END PGP SIGNATURE-----
+
+--ibTvN161/egqYuK8--
