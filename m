@@ -1,138 +1,87 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: [PATCH] Add compat/fopen.c which returns NULL on attempt to open
- directory
-Date: Fri, 08 Feb 2008 20:32:47 -0600
-Message-ID: <47AD10CF.1040207@nrlssc.navy.mil>
-References: <47ACFFD9.2030705@nrlssc.navy.mil>
+From: Jeff King <peff@peff.net>
+Subject: Re: Minor annoyance with git push
+Date: Fri, 8 Feb 2008 21:46:36 -0500
+Message-ID: <20080209024636.GE2572@coredump.intra.peff.net>
+References: <46a038f90802072044u3329fd33w575c689cba2917ee@mail.gmail.com> <alpine.LSU.1.00.0802081142060.11591@racer.site> <46a038f90802081427k6ee94cfagbc02533538e75b49@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Morten Welinder <mwelinder@gmail.com>,
-	"H.Merijn Brand" <h.m.brand@xs4all.nl>,
+Content-Type: text/plain; charset=utf-8
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 09 03:34:03 2008
+To: Martin Langhoff <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 09 03:47:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNfXU-0006s6-VQ
-	for gcvg-git-2@gmane.org; Sat, 09 Feb 2008 03:34:01 +0100
+	id 1JNfkM-0000xH-PB
+	for gcvg-git-2@gmane.org; Sat, 09 Feb 2008 03:47:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756718AbYBICd2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Feb 2008 21:33:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756637AbYBICd1
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 21:33:27 -0500
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:49681 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754864AbYBICd0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Feb 2008 21:33:26 -0500
-Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
-	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id m192Wljl016555;
-	Fri, 8 Feb 2008 20:32:48 -0600
-Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 8 Feb 2008 20:32:47 -0600
-User-Agent: Thunderbird 2.0.0.9 (X11/20071031)
-In-Reply-To: <47ACFFD9.2030705@nrlssc.navy.mil>
-X-OriginalArrivalTime: 09 Feb 2008 02:32:47.0790 (UTC) FILETIME=[0F00BCE0:01C86AC4]
-X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-5.0.0.1023-15706001
-X-TM-AS-Result: : Yes--10.218800-0-31-1
-X-TM-AS-Category-Info: : 31:0.000000
-X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNjQzLTcwMDMwMC03MDM3?=
-	=?us-ascii?B?ODgtNzAzODA3LTcxMDk4OS03MDAxNjAtNzA3OTA5LTcwMzUyOS0x?=
-	=?us-ascii?B?ODgwMTktNzAyMDIwLTcwNTExMS0xMjE1MjMtNzAwMTk0LTcwMTQ1?=
-	=?us-ascii?B?NS0xMjE2MjQtNzAyNzkxLTcwNDQyNS03MDA5NzEtNzAwMzI0LTcw?=
-	=?us-ascii?B?NDc0Ny03MDEyOTYtNzAwMjY0LTE4ODE5OC0xNDgwMzktMTQ4MDUx?=
+	id S1752218AbYBICql (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Feb 2008 21:46:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752173AbYBICqk
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 21:46:40 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3123 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751386AbYBICqj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Feb 2008 21:46:39 -0500
+Received: (qmail 7089 invoked by uid 111); 9 Feb 2008 02:46:38 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Fri, 08 Feb 2008 21:46:38 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 08 Feb 2008 21:46:36 -0500
+Content-Disposition: inline
+In-Reply-To: <46a038f90802081427k6ee94cfagbc02533538e75b49@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73184>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73185>
 
-Some systems do not fail as expected when fread et al. are called on
-a directory stream. Replace fopen on such systems which will fail
-when the supplied path is a directory.
+On Sat, Feb 09, 2008 at 11:27:51AM +1300, Martin Langhoff wrote:
 
-Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
----
- Makefile          |    7 +++++++
- compat/fopen.c    |   26 ++++++++++++++++++++++++++
- git-compat-util.h |    5 +++++
- 3 files changed, 38 insertions(+), 0 deletions(-)
- create mode 100644 compat/fopen.c
+> Exactly. And we could show a nicer message - rejected is too strong a
+> word ;-)
 
-diff --git a/Makefile b/Makefile
-index 92341c4..debfc23 100644
---- a/Makefile
-+++ b/Makefile
-@@ -3,6 +3,9 @@ all::
- 
- # Define V=1 to have a more verbose compile.
- #
-+# Define FREAD_READS_DIRECTORIES if your are on a system which succeeds
-+# when attempting to read from an fopen'ed directory.
-+#
- # Define NO_OPENSSL environment variable if you do not have OpenSSL.
- # This also implies MOZILLA_SHA1.
- #
-@@ -618,6 +621,10 @@ endif
- ifdef NO_C99_FORMAT
- 	BASIC_CFLAGS += -DNO_C99_FORMAT
- endif
-+ifdef FREAD_READS_DIRECTORIES
-+	COMPAT_CFLAGS += -DFREAD_READS_DIRECTORIES
-+	COMPAT_OBJS += compat/fopen.o
-+endif
- ifdef NO_SYMLINK_HEAD
- 	BASIC_CFLAGS += -DNO_SYMLINK_HEAD
- endif
-diff --git a/compat/fopen.c b/compat/fopen.c
-new file mode 100644
-index 0000000..ccb9e89
---- /dev/null
-+++ b/compat/fopen.c
-@@ -0,0 +1,26 @@
-+#include "../git-compat-util.h"
-+#undef fopen
-+FILE *git_fopen(const char *path, const char *mode)
-+{
-+	FILE *fp;
-+	struct stat st;
-+
-+	if (mode[0] == 'w' || mode[0] == 'a')
-+		return fopen(path, mode);
-+
-+	if (!(fp = fopen(path, mode)))
-+		return NULL;
-+
-+	if (fstat(fileno(fp), &st)) {
-+		fclose(fp);
-+		return NULL;
-+	}
-+
-+	if (S_ISDIR(st.st_mode)) {
-+		fclose(fp);
-+		errno = EISDIR;
-+		return NULL;
-+	}
-+
-+	return fp;
-+}
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 4df90cb..46d5e93 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -204,6 +204,11 @@ void *gitmemmem(const void *haystack, size_t haystacklen,
-                 const void *needle, size_t needlelen);
- #endif
- 
-+#ifdef FREAD_READS_DIRECTORIES
-+#define fopen(a,b) git_fopen(a,b)
-+extern FILE *git_fopen(const char*, const char*);
-+#endif
-+
- #ifdef __GLIBC_PREREQ
- #if __GLIBC_PREREQ(2, 1)
- #define HAVE_STRCHRNUL
--- 
-1.5.4.26.g5ef4da
+Like
+
+diff --git a/builtin-send-pack.c b/builtin-send-pack.c
+index 454ad8f..3979918 100644
+--- a/builtin-send-pack.c
++++ b/builtin-send-pack.c
+@@ -315,7 +315,7 @@ static int print_one_push_status(struct ref *ref, const char *dest, int count)
+ 				ref->peer_ref, NULL);
+ 		break;
+ 	case REF_STATUS_REJECT_NONFASTFORWARD:
+-		print_ref_status('!', "[rejected]", ref, ref->peer_ref,
++		print_ref_status('!', "[kindly refused]", ref, ref->peer_ref,
+ 				"non-fast forward");
+ 		break;
+ 	case REF_STATUS_REMOTE_REJECT:
+
+?
+
+> The local side has the remote refs if the client has fetched recently,
+> so it might be able to tell in some cases. Not with authority (things
+> may have changed on the server side...) but the client might be able
+> to say something less alarming.
+
+This is actually not that hard to do in the case that we can. Patch will
+follow in a second, though I am not sure it is a good idea (because it
+silently ignores pushing rewinds).
+
+> > Another way to "solve" this issue, of course, is to use the remote layout.
+> > I did the switchover myself some time ago; it was hard at first, since I
+> > was so used to just check out the branches I just fetched.  But in the
+> > long run the distinction between local and tracking branches made life
+> > much easier for me.
+> 
+> What do you mean with "the remote layout"? I am using
+> "remotes"+tracking branches as far as I can tell...
+
+I think he means something like "if I have 'next' and 'origin/next',
+then I should check whether 'next' is a subset of 'origin/next'" and
+just say "nothing to send." But that suffers from the same "silently
+ignoring rewinds" as above. You could ignore the push if you have
+next exactly equal to origin/next, but that implies that you haven't done
+any fetching (which is unlikely in the scenario you described).
+
+-Peff
