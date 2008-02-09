@@ -1,76 +1,73 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Minor annoyance with git push
-Date: Sat, 9 Feb 2008 13:10:21 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802091307160.11591@racer.site>
-References: <46a038f90802072044u3329fd33w575c689cba2917ee@mail.gmail.com> <20080209030046.GA10470@coredump.intra.peff.net> <6B804F0D-9C3B-46F3-B922-7A5CBEF55522@zib.de>
+From: Andi Kleen <andi@firstfloor.org>
+Subject: [PATCH] Ignore duplicated slashes in git-log
+Date: Sat, 9 Feb 2008 13:54:57 +0100
+Message-ID: <20080209125457.GA5686@basil.nowhere.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jeff King <peff@peff.net>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Sat Feb 09 14:11:02 2008
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 09 14:11:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNpTo-0001s3-LP
-	for gcvg-git-2@gmane.org; Sat, 09 Feb 2008 14:10:53 +0100
+	id 1JNpUk-0002C2-9p
+	for gcvg-git-2@gmane.org; Sat, 09 Feb 2008 14:11:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754587AbYBINKT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Feb 2008 08:10:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754566AbYBINKS
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Feb 2008 08:10:18 -0500
-Received: from mail.gmx.net ([213.165.64.20]:58225 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754533AbYBINKR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Feb 2008 08:10:17 -0500
-Received: (qmail invoked by alias); 09 Feb 2008 13:10:15 -0000
-Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
-  by mail.gmx.net (mp010) with SMTP; 09 Feb 2008 14:10:15 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+2g+MxwhC2g160Pl8YiBBXOjrhwMkZHiyFKGS6Sx
-	1CcKJfw3vK2c+a
-X-X-Sender: gene099@racer.site
-In-Reply-To: <6B804F0D-9C3B-46F3-B922-7A5CBEF55522@zib.de>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1752150AbYBINLR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Feb 2008 08:11:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753184AbYBINLR
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Feb 2008 08:11:17 -0500
+Received: from smtp-out01.alice-dsl.net ([88.44.60.11]:47176 "EHLO
+	smtp-out01.alice-dsl.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751731AbYBINLQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Feb 2008 08:11:16 -0500
+X-Greylist: delayed 976 seconds by postgrey-1.27 at vger.kernel.org; Sat, 09 Feb 2008 08:11:16 EST
+Received: from out.alice-dsl.de ([192.168.125.60]) by smtp-out01.alice-dsl.net with Microsoft SMTPSVC(6.0.3790.1830);
+	 Sat, 9 Feb 2008 13:48:37 +0100
+Received: from basil.firstfloor.org ([78.53.156.214]) by out.alice-dsl.de with Microsoft SMTPSVC(6.0.3790.1830);
+	 Sat, 9 Feb 2008 13:48:37 +0100
+Received: by basil.firstfloor.org (Postfix, from userid 1000)
+	id 0FCCD1B41CF; Sat,  9 Feb 2008 13:54:57 +0100 (CET)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-OriginalArrivalTime: 09 Feb 2008 12:48:37.0697 (UTC) FILETIME=[16DD1B10:01C86B1A]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73219>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73220>
 
-Hi,
 
-On Sat, 9 Feb 2008, Steffen Prohaska wrote:
+When I use git-log ... path/name  I seem to regularly
+typo path/name as path//name (with duplicated slashes)
+The normal kernel ignores these duplicated slashes
+according to POSIX so it's typically no problem, but git 
+fails and cannot find the correct file name when this
+happens.
 
-> Personally, I decided it is safer to teach users to explicitly type what 
-> they mean.  I'd probably not use the push.onlyHEAD config option.
-> 
-> I also proposed that the default could do nothing if no explicit push 
-> lines are in the configuration file.  Users would be forced to 
-> explicitly type what the want: Either they can say "--matching" or they 
-> can say "--current".  This is similar to the new "git clean" default.  
-> But I remember there *was* objection against this because everyone would 
-> be forced to type more and different than "git clean" the default of 
-> "git push" is considered "safe", so there's no need to protect the user 
-> from "git push".
-> 
-> Junio proposed various possible changes to the configuration variables 
-> that could resolve the issues.  I do not remember the details.
+This patch fixes this case for git-log at least, by
+handling duplicated slashes as a single slash. I probably
+didn't change all places where file names are parsed
+in the source base, but this seems to be a relatively common
+place used by several sub commands. And at least for me
+fixing git-log is the most important case anyways.
 
-The way would be like this, I think:
+Patch against git 1.5.4
 
-- introduce a command line option for push, like "--push-common-refs", and 
-issue a warning whenever "git push" is called without command line 
-options (along the lines "This default behaviour is deprecated; please use 
---push-common-refs").
+-Andi
 
-- in a waaaay later version, just take away the default action of "git 
-push", instead showing the usage.
-
-We had something similar wit the -i and -o options to "git commit".
-
-Ciao,
-Dscho
+diff -u git-1.5.4/setup.c-o git-1.5.4/setup.c
+--- git-1.5.4/setup.c-o	2008-02-09 13:35:21.000000000 +0100
++++ git-1.5.4/setup.c	2008-02-09 13:47:53.000000000 +0100
+@@ -7,6 +7,11 @@
+ const char *prefix_path(const char *prefix, int len, const char *path)
+ {
+ 	const char *orig = path;
++	char *s;
++
++	while ((s = strstr(path, "//")) != NULL)
++		memmove(s, s + 1, strlen(s));
++
+ 	for (;;) {
+ 		char c;
+ 		if (*path != '.')
