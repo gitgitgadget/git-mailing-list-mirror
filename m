@@ -1,90 +1,58 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: [PATCH] remove "nohup" from git-help--browse
-Date: Sat, 9 Feb 2008 23:03:51 +0300
-Message-ID: <20080209200351.GC30368@dpotapov.dyndns.org>
-References: <7vhcgkm7yy.fsf@gitster.siamese.dyndns.org> <1202502982-6822-1-git-send-email-dpotapov@gmail.com> <200802090653.43280.chriscool@tuxfamily.org>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: [PATCH] Add gitattributes file making whitespace checking
+	pickier
+Date: Sat, 9 Feb 2008 15:04:35 -0500
+Message-ID: <20080209200435.GA8919@fieldses.org>
+References: <20080209162234.GA25533@fieldses.org> <alpine.LNX.1.00.0802091251430.13593@iabervon.org> <20080209185038.GB25533@fieldses.org> <20080209190533.GD25533@fieldses.org> <m3abm9hqix.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Sat Feb 09 21:04:35 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Daniel Barkalow <barkalow@iabervon.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 09 21:05:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNvw9-0001wz-Cp
-	for gcvg-git-2@gmane.org; Sat, 09 Feb 2008 21:04:33 +0100
+	id 1JNvws-000270-WE
+	for gcvg-git-2@gmane.org; Sat, 09 Feb 2008 21:05:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755402AbYBIUD6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 9 Feb 2008 15:03:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755358AbYBIUD6
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Feb 2008 15:03:58 -0500
-Received: from fg-out-1718.google.com ([72.14.220.155]:3781 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755318AbYBIUD4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Feb 2008 15:03:56 -0500
-Received: by fg-out-1718.google.com with SMTP id e21so3269203fga.17
-        for <git@vger.kernel.org>; Sat, 09 Feb 2008 12:03:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:content-transfer-encoding:in-reply-to:user-agent;
-        bh=G6svTkJYF7TWrDJpv4wrqx3d/+fxA0XQ8+O5wWSlQCc=;
-        b=Jxp/Q4XdsUbTUFhxk6bMISFeNRxEDwFTzhptyHwqfkI+cGhEbxKqIvGEJgJEiMeUOC/b9DkIZysfKIblXuXcwzKKojPkM78IpcqDKxAKO2cKz5wIgLpYidgqI9gdWnV+QeEcvRAOVx9/fvnh6YqBcDrUmuFRmeXb2QU4f+suugc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:content-transfer-encoding:in-reply-to:user-agent;
-        b=ohVuAxVwacn4VQnInT87uhsceBVcMVYfRBFwH2O76l40d7PyHx7zclxlIHDHMNfBHOrG4IXxexXksmswa3jMzCcILPgcUtc6kfxeTES3LprLvAvKi9TsL4glj7zuG+3fkzzVUzybB9tDKvB3CuI2vTOv2zDHhMeb7i2SkMZE7Eg=
-Received: by 10.86.28.5 with SMTP id b5mr13164901fgb.79.1202587435287;
-        Sat, 09 Feb 2008 12:03:55 -0800 (PST)
-Received: from localhost ( [85.140.169.229])
-        by mx.google.com with ESMTPS id 3sm15551789fge.7.2008.02.09.12.03.53
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 09 Feb 2008 12:03:54 -0800 (PST)
+	id S1755417AbYBIUEl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Feb 2008 15:04:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755121AbYBIUEl
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Feb 2008 15:04:41 -0500
+Received: from mail.fieldses.org ([66.93.2.214]:39492 "EHLO fieldses.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754716AbYBIUEl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Feb 2008 15:04:41 -0500
+Received: from bfields by fieldses.org with local (Exim 4.69)
+	(envelope-from <bfields@fieldses.org>)
+	id 1JNvwC-0002Lp-0I; Sat, 09 Feb 2008 15:04:36 -0500
 Content-Disposition: inline
-In-Reply-To: <200802090653.43280.chriscool@tuxfamily.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <m3abm9hqix.fsf@localhost.localdomain>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73256>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73257>
 
-On Sat, Feb 09, 2008 at 06:53:43AM +0100, Christian Couder wrote:
-> Le vendredi 8 f=E9vrier 2008, Dmitry Potapov a =E9crit :
-> > There is no good reason to run GUI browsers using "nohup". It does =
-not
-> > solve any real problem but creates annoying "nohup.out" files in ev=
-ery
-> > directory where git help -w is run.
->=20
-> That's right, but if you just remove "nohup", then there may be some=20
-> annoying browser output on the terminal. Perhaps we should also redir=
-ect=20
-> stderr and stdout to /dev/null.
+On Sat, Feb 09, 2008 at 11:36:31AM -0800, Jakub Narebski wrote:
+> "J. Bruce Fields" <bfields@fieldses.org> writes:
+> 
+> >  gitweb/gitweb.perl                                  |  566 ++--
+> >  index-pack.c                                        |   30 
+> 
+> gitweb (at my insistence) uses tabs for indent, but spaces for align,
+> so that the layout is [roughly] preserved independently of the tab
+> size. IMHO it is superior style, but much harder to check
+> algorithmically (although I send some sketch of idea how to check that
+> at least for aligned commands). That is why there is such a big change.
+> 
+> I'd rather have real bugfixes, real documentation improvements, new
+> features instead of such bikeshedding.  If someone is making a change
+> somewhere, he/she can fix the whitespace in the neighbourhood.
 
-I don't mind this redirection, but I am not sure whether it is the righ=
-t
-thing to do, because it may hide relevant error information, and if you=
-r
-browser tends to print irrelevant and annoying messages at start, then
-perhaps the script to start this browser should be corrected to suppres=
-s
-these output.
+I agree completely.  Did I suggest otherwise?
 
-So, I want to hear what other people think. If there is no objection,
-I will add this redirection.
-
->=20
-> > This patch removes "nohup" from git-help--browse.sh
->=20
-> "git-help--browse.sh" has been renamed "git-web--browse.sh" in next s=
-o we=20
-> need a similar patch for next.
-
-Okay, I will base my patch on next.
-
-
-Dmitry
+--b.
