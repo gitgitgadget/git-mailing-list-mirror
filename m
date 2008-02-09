@@ -1,78 +1,56 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] Add gitattributes file making whitespace checking pickier
-Date: Sat, 9 Feb 2008 21:22:00 +0100
-Message-ID: <200802092122.01656.jnareb@gmail.com>
-References: <20080209162234.GA25533@fieldses.org> <m3abm9hqix.fsf@localhost.localdomain> <20080209200435.GA8919@fieldses.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Introduce the config variable pack.packSizeLimit
+Date: Sat, 09 Feb 2008 12:42:18 -0800
+Message-ID: <7vwspdeuad.fsf@gitster.siamese.dyndns.org>
+References: <alpine.LSU.1.00.0802051423530.8543@racer.site>
+	<7vfxw2g0gb.fsf@gitster.siamese.dyndns.org>
+	<7vbq6qfz94.fsf@gitster.siamese.dyndns.org>
+	<alpine.LSU.1.00.0802091312350.11591@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "J. Bruce Fields" <bfields@fieldses.org>
-X-From: git-owner@vger.kernel.org Sat Feb 09 21:22:47 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, torarvid@gmail.com
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Feb 09 21:43:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNwDk-0007Ft-EA
-	for gcvg-git-2@gmane.org; Sat, 09 Feb 2008 21:22:44 +0100
+	id 1JNwXc-000534-8p
+	for gcvg-git-2@gmane.org; Sat, 09 Feb 2008 21:43:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755563AbYBIUWL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Feb 2008 15:22:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755543AbYBIUWK
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Feb 2008 15:22:10 -0500
-Received: from mu-out-0910.google.com ([209.85.134.186]:58890 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755527AbYBIUWJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Feb 2008 15:22:09 -0500
-Received: by mu-out-0910.google.com with SMTP id i10so4786380mue.5
-        for <git@vger.kernel.org>; Sat, 09 Feb 2008 12:22:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=Gh6jt5UOWG8L6a0GBvpOPjR7iQ0cfDEWESeRE/l09FA=;
-        b=OE2R7XNZShN9Xvv/fjLGkSap1+A8dKc3hOEkI2D/R8nmLT3LwUIeoZLsRTTSepLtWpEuNa5UlIVCxkg3/PhEVhoeXSUx4IGsG4w2esHnEr8McgvRULEhdgSDRjurJHolRhlsAX7YloIeTXJIMRweFHQ8RIZgPXeYFF9PTBKvQR8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=LQ1gU3BO5INf538QxGpMEvlOEWlEcOxz0sQWt7TZ0EJ9Tr7X/u0Ycf+gPUR2d3nF80M6xvMB5j5So4UKesh8AzLg+NFMUOQDNHQJzsI+pyU2SNIgVLcaUe2yHReU/6Df8C9eMOduFIJahNTQy8/YcvNlvqEoe/ZmJcNXy8iZF1g=
-Received: by 10.78.107.8 with SMTP id f8mr25741894huc.38.1202588527817;
-        Sat, 09 Feb 2008 12:22:07 -0800 (PST)
-Received: from ?192.168.1.11? ( [83.8.255.105])
-        by mx.google.com with ESMTPS id 35sm1173191nfu.12.2008.02.09.12.22.05
-        (version=SSLv3 cipher=OTHER);
-        Sat, 09 Feb 2008 12:22:06 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <20080209200435.GA8919@fieldses.org>
-Content-Disposition: inline
+	id S1755553AbYBIUmd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Feb 2008 15:42:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755477AbYBIUmd
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Feb 2008 15:42:33 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:36505 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755417AbYBIUmc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Feb 2008 15:42:32 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 6D38D3746;
+	Sat,  9 Feb 2008 15:42:29 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id A6BB43745;
+	Sat,  9 Feb 2008 15:42:25 -0500 (EST)
+In-Reply-To: <alpine.LSU.1.00.0802091312350.11591@racer.site> (Johannes
+	Schindelin's message of "Sat, 9 Feb 2008 13:15:07 +0000 (GMT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73262>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73263>
 
-J. Bruce Fields wrote:
-> On Sat, Feb 09, 2008 at 11:36:31AM -0800, Jakub Narebski wrote:
-> > "J. Bruce Fields" <bfields@fieldses.org> writes:
-> > 
-> > >  gitweb/gitweb.perl                                  |  566 ++--
-> > >  index-pack.c                                        |   30 
-> > 
-> > gitweb (at my insistence) uses tabs for indent, but spaces for align,
-> > so that the layout is [roughly] preserved independently of the tab
-> > size. IMHO it is superior style, but much harder to check
-> > algorithmically (although I send some sketch of idea how to check that
-> > at least for aligned commands). That is why there is such a big change.
-> > 
-> > I'd rather have real bugfixes, real documentation improvements, new
-> > features instead of such bikeshedding.  If someone is making a change
-> > somewhere, he/she can fix the whitespace in the neighbourhood.
-> 
-> I agree completely.  Did I suggest otherwise?
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Ah, sorry, I have misunderstood.
+> Minor modification that is necessary: MacOSX' find does not accept a find 
+> call like that.  It must be
+>
+> 	bigger=$(find . -name test-4-*.pack -size +${limit}c) &&
 
-This is an informational piece, then, isn't it?
--- 
-Jakub Narebski
-Poland
+That looks more traditional, but now you mention it, I agree
+that it might not be so portable.  I've used "-size +$size" in
+Ancient Unices, but 'c' suffix is a more recent invention (V7
+did not have it, neither did 4BSD, IIRC).
