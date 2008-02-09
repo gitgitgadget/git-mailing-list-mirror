@@ -1,76 +1,122 @@
-From: "Govind Salinas" <govind@sophiasuchtig.com>
-Subject: Re: [Janitors] value could be NULL in config parser
-Date: Fri, 8 Feb 2008 19:20:34 -0600
-Message-ID: <5d46db230802081720x122a807do6c63b6b3e435b4c5@mail.gmail.com>
-References: <7v63x0lzhw.fsf@gitster.siamese.dyndns.org>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: [PATCH] opening files in remote.c should ensure it is opening
+ a file
+Date: Fri, 08 Feb 2008 19:20:25 -0600
+Message-ID: <47ACFFD9.2030705@nrlssc.navy.mil>
+References: <20080208174654.2e9e679c@pc09.procura.nl>	<118833cc0802081215t380587f6w7b5c0aba66a55799@mail.gmail.com> <7v8x1vjiic.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 09 02:21:24 2008
+Cc: Morten Welinder <mwelinder@gmail.com>,
+	"H.Merijn Brand" <h.m.brand@xs4all.nl>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Feb 09 02:21:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNePD-0001UM-Op
+	id 1JNePE-0001UM-DG
 	for gcvg-git-2@gmane.org; Sat, 09 Feb 2008 02:21:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756059AbYBIBUh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Feb 2008 20:20:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756013AbYBIBUg
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 20:20:36 -0500
-Received: from wx-out-0506.google.com ([66.249.82.229]:42391 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751821AbYBIBUf (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1756077AbYBIBUk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Feb 2008 20:20:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756068AbYBIBUh
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 20:20:37 -0500
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:46476 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754920AbYBIBUf (ORCPT <rfc822;git@vger.kernel.org>);
 	Fri, 8 Feb 2008 20:20:35 -0500
-Received: by wx-out-0506.google.com with SMTP id h31so4256978wxd.4
-        for <git@vger.kernel.org>; Fri, 08 Feb 2008 17:20:34 -0800 (PST)
-Received: by 10.150.122.13 with SMTP id u13mr802548ybc.131.1202520034845;
-        Fri, 08 Feb 2008 17:20:34 -0800 (PST)
-Received: by 10.150.199.5 with HTTP; Fri, 8 Feb 2008 17:20:34 -0800 (PST)
-In-Reply-To: <7v63x0lzhw.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
+	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id m191KP6s016116;
+	Fri, 8 Feb 2008 19:20:25 -0600
+Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
+	 Fri, 8 Feb 2008 19:20:25 -0600
+User-Agent: Thunderbird 2.0.0.9 (X11/20071031)
+In-Reply-To: <7v8x1vjiic.fsf@gitster.siamese.dyndns.org>
+X-OriginalArrivalTime: 09 Feb 2008 01:20:25.0889 (UTC) FILETIME=[F3073910:01C86AB9]
+X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-5.0.0.1023-15706001
+X-TM-AS-Result: : Yes--12.622000-0-31-1
+X-TM-AS-Category-Info: : 31:0.000000
+X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNTY3LTcwMDA3NS0xMzkw?=
+	=?us-ascii?B?MTAtNzAwMDczLTcwMzczMS03MDg3OTctNzEwNzE4LTcwMDk3MS03?=
+	=?us-ascii?B?MDYyOTAtNzAxMjk2LTcwMzUyOS03MDAzMjQtNzAzMjgzLTcwMjcy?=
+	=?us-ascii?B?Ni03MDI2ODMtNzA3MzYxLTcwODE3OS03MDkwNjUtNzA0NDI1LTE4?=
+	=?us-ascii?B?ODAxOS03MDc5MDktNzA0NzQ3LTcwNDQ3My03MDM3MTItNzAyNjA5?=
+	=?us-ascii?B?LTcwMjM1OC0xNDgwMzktMTQ4MDUxLTIwMDQz?=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73181>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73182>
 
-On 2/8/08, Junio C Hamano <gitster@pobox.com> wrote:
-> A callback function of git_config() is called when the command
-> reads value from .git/config and friends.  The function takes
-> two parameters, var and value.  var is never NULL and it is the
-> name of the configuration variable found in the file being
-> read.  value could be either string or NULL.
->
-> A NULL value is boolean "true".  For example, on MS-DOS, you may
-> have something like this:
->
->         [core]
->                 autocrlf
->
-> and your callback will be called with var = "core.autocrlf" and
-> value = NULL in such a case.
->
-> If you want to fix them (you do not have to do all of them, and
-> if you would like to help, please make one patch per function
-> fixed), the procedure is:
->
+Junio C Hamano wrote:
+> "Morten Welinder" <mwelinder@gmail.com> writes:
+> 
+>>> +/* Helper function to ensure that we are opening a file and not a directory */
+>>> +static FILE *open_file(char *full_path)
+>>> +{
+>>> +       struct stat st_buf;
+>>> +       if (stat(full_path, &st_buf) || !S_ISREG(st_buf.st_mode))
+>>> +               return NULL;
+>>> +       return (fopen(full_path, "r"));
+>>> +}
+>> That looks wrong.  stat+fopen has a pointless race condition that
+>> open+fstat+fdopen would not have.
+> 
+> That's true.  How about doing something like this?
+> 
+>  (1) in a new file "compat/gitfopen.c" have this:
+> 
+> 	#include "../git-compat-util.h"
+> 	#undef fopen
+> 	FILE *gitfopen(const char *path, const char *mode)
+>         {
+> 		int fd, flags;
+>                 struct stat st;
+>         	if (mode[0] == 'w')
+>                 	return fopen(path, mode);
+> 		switch (mode[0]) {
+>                 case 'r': flags = O_RDONLY; break;
+>                 case 'a': flags = O_APPEND; break;
+> 		default:
+> 			errno = EINVAL;
+>                 	return NULL;
+> 		}
+> 		fd = open(path, flags);
+> 		if (fd < 0 || fstat(fd, &st))
+>                 	return NULL;
+> 		if (S_ISDIR(st_buf.st_mode)) {
+>                 	errno = EISDIR;
+>                         return NULL;
+> 		}
+> 		return fdopen(fd, mode);
+> 	}
 
-I think I got all the erroneous ones.  I did
+Can we use fileno()? Something like:
 
-find . -name "*.c" | xargs grep git_config\( | awk '{ idx = index($2,
-")"); p = substr($2, 12, idx - 12); print  p }' | sort | uniq -u
+FILE *gitfopen(const char *path, const char *mode)
+{   
+        FILE *fp;
+        struct stat st;
 
-To try and get a list of all the ones that might need updating.  I did
-notice that most functions never check value for null, but they don't
-directly access them.  They pass them off to other methods.  As far as
-I can tell, some of these methods don't validate the NULL.  So they
-will need to be updated.
+        if (strpbrk(mode, "wa"))
+                return fopen(path, mode);
 
-Question.  Wouldn't it reduce the amount of validation we have to do
-if whoever is calling back checked null and assigned an empty string?
-If so, we can probably replace all these patches with one patch.
+        if (!(fp = fopen(path, mode)))
+                return NULL;
 
--Govind
+        if (fstat(fileno(fp), &st)) {
+                fclose(fp);
+                return NULL;
+        }
+
+        if (S_ISDIR(st.st_mode)) {
+                fclose(fp);
+                errno = EISDIR;
+                return NULL;
+        }
+
+        return fp;
+}   
+
+-brandon
