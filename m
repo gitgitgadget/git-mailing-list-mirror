@@ -1,122 +1,62 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: [PATCH] opening files in remote.c should ensure it is opening
- a file
-Date: Fri, 08 Feb 2008 19:20:25 -0600
-Message-ID: <47ACFFD9.2030705@nrlssc.navy.mil>
-References: <20080208174654.2e9e679c@pc09.procura.nl>	<118833cc0802081215t380587f6w7b5c0aba66a55799@mail.gmail.com> <7v8x1vjiic.fsf@gitster.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Work around curl-gnutls not liking to be reinitialized
+Date: Fri, 8 Feb 2008 21:28:00 -0500
+Message-ID: <20080209022759.GD2572@coredump.intra.peff.net>
+References: <20080208073456.GA17791@glandium.org> <1202501335-28205-1-git-send-email-mh@glandium.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Morten Welinder <mwelinder@gmail.com>,
-	"H.Merijn Brand" <h.m.brand@xs4all.nl>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 09 02:21:25 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Sat Feb 09 03:29:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNePE-0001UM-DG
-	for gcvg-git-2@gmane.org; Sat, 09 Feb 2008 02:21:24 +0100
+	id 1JNfSe-0005vP-63
+	for gcvg-git-2@gmane.org; Sat, 09 Feb 2008 03:29:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756077AbYBIBUk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Feb 2008 20:20:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756068AbYBIBUh
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 20:20:37 -0500
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:46476 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754920AbYBIBUf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Feb 2008 20:20:35 -0500
-Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
-	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id m191KP6s016116;
-	Fri, 8 Feb 2008 19:20:25 -0600
-Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 8 Feb 2008 19:20:25 -0600
-User-Agent: Thunderbird 2.0.0.9 (X11/20071031)
-In-Reply-To: <7v8x1vjiic.fsf@gitster.siamese.dyndns.org>
-X-OriginalArrivalTime: 09 Feb 2008 01:20:25.0889 (UTC) FILETIME=[F3073910:01C86AB9]
-X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-5.0.0.1023-15706001
-X-TM-AS-Result: : Yes--12.622000-0-31-1
-X-TM-AS-Category-Info: : 31:0.000000
-X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNTY3LTcwMDA3NS0xMzkw?=
-	=?us-ascii?B?MTAtNzAwMDczLTcwMzczMS03MDg3OTctNzEwNzE4LTcwMDk3MS03?=
-	=?us-ascii?B?MDYyOTAtNzAxMjk2LTcwMzUyOS03MDAzMjQtNzAzMjgzLTcwMjcy?=
-	=?us-ascii?B?Ni03MDI2ODMtNzA3MzYxLTcwODE3OS03MDkwNjUtNzA0NDI1LTE4?=
-	=?us-ascii?B?ODAxOS03MDc5MDktNzA0NzQ3LTcwNDQ3My03MDM3MTItNzAyNjA5?=
-	=?us-ascii?B?LTcwMjM1OC0xNDgwMzktMTQ4MDUxLTIwMDQz?=
+	id S1756696AbYBIC2I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Feb 2008 21:28:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756694AbYBIC2H
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Feb 2008 21:28:07 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3636 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756687AbYBIC2G (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Feb 2008 21:28:06 -0500
+Received: (qmail 6768 invoked by uid 111); 9 Feb 2008 02:28:01 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Fri, 08 Feb 2008 21:28:01 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 08 Feb 2008 21:28:00 -0500
+Content-Disposition: inline
+In-Reply-To: <1202501335-28205-1-git-send-email-mh@glandium.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73182>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73183>
 
-Junio C Hamano wrote:
-> "Morten Welinder" <mwelinder@gmail.com> writes:
+On Fri, Feb 08, 2008 at 09:08:55PM +0100, Mike Hommey wrote:
+
+> 	#include <curl/curl.h>
+> 	#include <curl/easy.h>
 > 
->>> +/* Helper function to ensure that we are opening a file and not a directory */
->>> +static FILE *open_file(char *full_path)
->>> +{
->>> +       struct stat st_buf;
->>> +       if (stat(full_path, &st_buf) || !S_ISREG(st_buf.st_mode))
->>> +               return NULL;
->>> +       return (fopen(full_path, "r"));
->>> +}
->> That looks wrong.  stat+fopen has a pointless race condition that
->> open+fstat+fdopen would not have.
-> 
-> That's true.  How about doing something like this?
-> 
->  (1) in a new file "compat/gitfopen.c" have this:
-> 
-> 	#include "../git-compat-util.h"
-> 	#undef fopen
-> 	FILE *gitfopen(const char *path, const char *mode)
->         {
-> 		int fd, flags;
->                 struct stat st;
->         	if (mode[0] == 'w')
->                 	return fopen(path, mode);
-> 		switch (mode[0]) {
->                 case 'r': flags = O_RDONLY; break;
->                 case 'a': flags = O_APPEND; break;
-> 		default:
-> 			errno = EINVAL;
->                 	return NULL;
-> 		}
-> 		fd = open(path, flags);
-> 		if (fd < 0 || fstat(fd, &st))
->                 	return NULL;
-> 		if (S_ISDIR(st_buf.st_mode)) {
->                 	errno = EISDIR;
->                         return NULL;
-> 		}
-> 		return fdopen(fd, mode);
+> 	int main(void) {
+> 	        CURL *easy = curl_easy_init();
+> 	        curl_easy_setopt(easy, CURLOPT_VERBOSE, 1);
+> 	        curl_easy_setopt(easy, CURLOPT_URL, "https://www.verisign.com/");
+> 	        curl_easy_perform(easy);
+> 	        curl_global_cleanup();
+> 	        easy = curl_easy_init();
+> 	        curl_easy_setopt(easy, CURLOPT_VERBOSE, 1);
+> 	        curl_easy_setopt(easy, CURLOPT_URL, "https://www.verisign.com/");
+> 	        curl_easy_perform(easy);
 > 	}
 
-Can we use fileno()? Something like:
+Hrmph. I had tried to produce a similar minimum test case, but for some
+reason I didn't try doing a global_cleanup() between the requests, which
+obviously is the culprit.
 
-FILE *gitfopen(const char *path, const char *mode)
-{   
-        FILE *fp;
-        struct stat st;
+Thank you for spending the time to track this down. I have confirmed
+that your fix works on my test case.
 
-        if (strpbrk(mode, "wa"))
-                return fopen(path, mode);
-
-        if (!(fp = fopen(path, mode)))
-                return NULL;
-
-        if (fstat(fileno(fp), &st)) {
-                fclose(fp);
-                return NULL;
-        }
-
-        if (S_ISDIR(st.st_mode)) {
-                fclose(fp);
-                errno = EISDIR;
-                return NULL;
-        }
-
-        return fp;
-}   
-
--brandon
+-Peff
