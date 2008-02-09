@@ -1,81 +1,63 @@
 From: "Govind Salinas" <govind@sophiasuchtig.com>
-Subject: Re: [Janitors] value could be NULL in config parser
-Date: Sat, 9 Feb 2008 14:11:23 -0600
-Message-ID: <5d46db230802091211k304197e2i2556c82494c0852f@mail.gmail.com>
-References: <7v63x0lzhw.fsf@gitster.siamese.dyndns.org>
-	 <5d46db230802081720x122a807do6c63b6b3e435b4c5@mail.gmail.com>
-	 <200802091118.11174.chriscool@tuxfamily.org>
-	 <200802091415.20295.chriscool@tuxfamily.org>
+Subject: [PATCH] commit.c: guard config parser from value=NULL
+Date: Sat, 9 Feb 2008 14:16:10 -0600
+Message-ID: <5d46db230802091216h40f88f06r20ebb84de6717af6@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-To: "Christian Couder" <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Sat Feb 09 21:12:01 2008
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <gitster@pobox.com>
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Feb 09 21:16:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNw3L-0004MV-5g
-	for gcvg-git-2@gmane.org; Sat, 09 Feb 2008 21:11:59 +0100
+	id 1JNw7y-0005iH-Lr
+	for gcvg-git-2@gmane.org; Sat, 09 Feb 2008 21:16:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755142AbYBIULZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 9 Feb 2008 15:11:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755346AbYBIULZ
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Feb 2008 15:11:25 -0500
-Received: from wx-out-0506.google.com ([66.249.82.228]:31489 "EHLO
+	id S1755477AbYBIUQM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Feb 2008 15:16:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755467AbYBIUQM
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Feb 2008 15:16:12 -0500
+Received: from wx-out-0506.google.com ([66.249.82.233]:34032 "EHLO
 	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755121AbYBIULY convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 9 Feb 2008 15:11:24 -0500
-Received: by wx-out-0506.google.com with SMTP id h31so4364497wxd.4
-        for <git@vger.kernel.org>; Sat, 09 Feb 2008 12:11:24 -0800 (PST)
-Received: by 10.150.138.8 with SMTP id l8mr5950593ybd.141.1202587883936;
-        Sat, 09 Feb 2008 12:11:23 -0800 (PST)
-Received: by 10.150.199.5 with HTTP; Sat, 9 Feb 2008 12:11:23 -0800 (PST)
-In-Reply-To: <200802091415.20295.chriscool@tuxfamily.org>
+	with ESMTP id S1755440AbYBIUQL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Feb 2008 15:16:11 -0500
+Received: by wx-out-0506.google.com with SMTP id h31so4365375wxd.4
+        for <git@vger.kernel.org>; Sat, 09 Feb 2008 12:16:10 -0800 (PST)
+Received: by 10.151.26.12 with SMTP id d12mr5948633ybj.74.1202588170634;
+        Sat, 09 Feb 2008 12:16:10 -0800 (PST)
+Received: by 10.150.199.5 with HTTP; Sat, 9 Feb 2008 12:16:10 -0800 (PST)
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73258>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73259>
 
-On 2/9/08, Christian Couder <chriscool@tuxfamily.org> wrote:
-> Le samedi 9 f=E9vrier 2008, Christian Couder a =E9crit :
-> > Le samedi 9 f=E9vrier 2008, Govind Salinas a =E9crit :
-> > > I think I got all the erroneous ones.  I did
-> > >
-> > > find . -name "*.c" | xargs grep git_config\( | awk '{ idx =3D ind=
-ex($2,
-> > > ")"); p =3D substr($2, 12, idx - 12); print  p }' | sort | uniq -=
-u
-> >
-> > It seems the "uniq -u" should be only "uniq".
-> > This way, you will also get the following ones to check:
-> >
-> > git_default_config
-> > git_diff_basic_config
-> > git_log_config
-> > git_pack_config
->
-> I don't know awk so I cannot tell if there is something wrong with yo=
-ur
-> script but with:
->
-> find . -name "*.c" | xargs perl -ne 'print "$1\n" if (m/git_config ?
-> \(([^)]*)\)/)' | sort | uniq
->
-> I also get:
->
-> git_imap_config
-> show_all_config
->
+Signed-off-by: Govind Salinas <blix@sophiasuchtig.com>
+---
+ config.c |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-It appears only git_imap_config and git_default_config need patches.
-I will send them to the list.
+diff --git a/config.c b/config.c
+index 498259e..8247e88 100644
+--- a/config.c
++++ b/config.c
+@@ -407,12 +407,12 @@ int git_default_config(const char *var, const char *value)
+ 		return 0;
+ 	}
 
-Are any changes to the git_config_$type functions going to be made?
-It sounds like any change could break current configs so we are only
-going to stop the segfaults.
+-	if (!strcmp(var, "user.name")) {
++	if (value && !strcmp(var, "user.name")) {
+ 		strlcpy(git_default_name, value, sizeof(git_default_name));
+ 		return 0;
+ 	}
 
--Govind
+-	if (!strcmp(var, "user.email")) {
++	if (value && !strcmp(var, "user.email")) {
+ 		strlcpy(git_default_email, value, sizeof(git_default_email));
+ 		return 0;
+ 	}
+-- 
+1.5.4.36.g9af61
