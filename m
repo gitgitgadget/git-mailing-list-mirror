@@ -1,73 +1,99 @@
-From: Paul Gardiner <osronline@glidos.net>
-Subject: Re: Any tricks for speeding up cvsps?
-Date: Sat, 09 Feb 2008 08:32:19 +0000
-Message-ID: <47AD6513.2040609@glidos.net>
-References: <47AC1FDC.9000502@glidos.net> <47AC2775.5090403@viscovery.net> <47AC2AC3.6020704@glidos.net> <47AC2FF6.1030103@viscovery.net>
+From: Andreas Ericsson <ae-n0Zl8IkGad4@public.gmane.org>
+Subject: Re: [ANNOUNCE] GIT 1.5.4
+Date: Sat, 09 Feb 2008 10:25:37 +0100
+Message-ID: <47AD7191.3040209@op5.se>
+References: <7vmyqk563z.fsf@gitster.siamese.dyndns.org> <CFB8A272-863C-4758-91F7-E9669D70A200@zib.de> <20080207123108.GA12009@bit.office.eurotux.com> <alpine.LSU.1.00.0802071255110.8543@racer.site> <20080207130715.GA14000@bit.office.eurotux.com> <alpine.LFD.1.00.0802070949460.2732@xanadu.home>
+Reply-To: ae-n0Zl8IkGad4@public.gmane.org
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 09 09:33:05 2008
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Cc: Luciano Rocha <luciano-YWehAnL2kLNBDgjK7y7TUQ@public.gmane.org>,  Johannes Schindelin <Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org>, Steffen Prohaska <prohaska-wjoc1KHpMeg@public.gmane.org>,  Git Mailing List <git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>, msysGit <msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>, Junio C Hamano <gitster-e+AXbWqSrlAAvxtiuMwx3w@public.gmane.org>
+To: Nicolas Pitre <nico-mo2vmkxb4K0@public.gmane.org>
+X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Sat Feb 09 10:26:18 2008
+Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from wa-out-0708.google.com ([209.85.146.248])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNl8v-0008Sp-NS
-	for gcvg-git-2@gmane.org; Sat, 09 Feb 2008 09:33:02 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751189AbYBIIc1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Feb 2008 03:32:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751327AbYBIIc1
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Feb 2008 03:32:27 -0500
-Received: from mk-outboundfilter-1.mail.uk.tiscali.com ([212.74.114.37]:43573
-	"EHLO mk-outboundfilter-1.mail.uk.tiscali.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751040AbYBIIc0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 9 Feb 2008 03:32:26 -0500
-X-Trace: 37189055/mk-outboundfilter-1.mail.uk.tiscali.com/PIPEX/$MX-ACCEPTED/pipex-infrastructure/62.241.163.7
-X-SBRS: None
-X-RemoteIP: 62.241.163.7
-X-IP-MAIL-FROM: osronline@glidos.net
-X-IP-BHB: Once
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Ao8CAEf0rEc+8aMH/2dsb2JhbACodw
-X-IP-Direction: IN
-Received: from blaster.systems.pipex.net ([62.241.163.7])
-  by smtp.pipex.tiscali.co.uk with ESMTP; 09 Feb 2008 08:32:23 +0000
-Received: from [10.0.0.24] (80-42-19-184.dynamic.dsl.as9105.com [80.42.19.184])
-	by blaster.systems.pipex.net (Postfix) with ESMTP id A91E0E000084
-	for <git@vger.kernel.org>; Sat,  9 Feb 2008 08:32:21 +0000 (GMT)
-User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
-In-Reply-To: <47AC2FF6.1030103@viscovery.net>
-Sender: git-owner@vger.kernel.org
+	id 1JNlyS-0004Pk-PK
+	for gcvm-msysgit@m.gmane.org; Sat, 09 Feb 2008 10:26:17 +0100
+Received: by wa-out-0708.google.com with SMTP id n36so8369637wag.21
+        for <gcvm-msysgit@m.gmane.org>; Sat, 09 Feb 2008 01:25:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:received:x-sender:x-apparently-to:received:received:received-spf:authentication-results:received:x-virus-scanned:x-spam-flag:x-spam-score:x-spam-level:x-spam-status:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
+        bh=FHj0BMzWKWrUqjGyXAKah9lqrPgDOqA4CwmXEmycnf8=;
+        b=qu/AyVAOXBJBRB/9MAqppdq/H51iRPfhRBlhAVg6323GLST9JQ1NO5N0BNqJz/aag3sxShQhW68ZqVGFDW7GWw0DasZ9gQcUdW2nUHmSo3klHGpIyo3pRsd+x3oWLXsBTaJXDcq7BJWqAFd1NBJ0tq0MUn5k3QZr9Y1LuzoA7YA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlegroups.com; s=beta;
+        h=x-sender:x-apparently-to:received-spf:authentication-results:x-virus-scanned:x-spam-flag:x-spam-score:x-spam-level:x-spam-status:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
+        b=OxQwmcN9NX4SgJrEGGHuIb0BRF81v0aHW+k3C2Of0G76CFh3B4D4tAKJ+x7r1VCDPLHSJ55ON6Mb/rmADeOl/GGrIsgl0ikYzssXBHMLFQq2sYvOx6qoDd+xhVwwEnXZuGTE6RhmWVG907AqhF2oSPchk8YYqNeB0P1xUmGJCJs=
+Received: by 10.114.57.1 with SMTP id f1mr939047waa.5.1202549143918;
+        Sat, 09 Feb 2008 01:25:43 -0800 (PST)
+Received: by 10.106.159.22 with SMTP id h22gr1690pre;
+	Sat, 09 Feb 2008 01:25:43 -0800 (PST)
+X-Sender: ae-n0Zl8IkGad4@public.gmane.org
+X-Apparently-To: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+Received: by 10.35.13.4 with SMTP id q4mr28436244pyi.7.1202549143224; Sat, 09 Feb 2008 01:25:43 -0800 (PST)
+Received: from mail.op5.se (mail.op5.se [193.201.96.20]) by mx.google.com with ESMTP id x46si850179pyg.3.2008.02.09.01.25.41; Sat, 09 Feb 2008 01:25:43 -0800 (PST)
+Received-SPF: pass (google.com: best guess record for domain of ae-n0Zl8IkGad4@public.gmane.org designates 193.201.96.20 as permitted sender) client-ip=193.201.96.20;
+Authentication-Results: mx.google.com; spf=pass (google.com: best guess record for domain of ae-n0Zl8IkGad4@public.gmane.org designates 193.201.96.20 as permitted sender) smtp.mail=ae-n0Zl8IkGad4@public.gmane.org
+Received: from localhost (localhost.localdomain [127.0.0.1]) by mail.op5.se (Postfix) with ESMTP id 2C96A1F0801E; Sat,  9 Feb 2008 10:25:40 +0100 (CET)
+X-Virus-Scanned: amavisd-new at
+X-Spam-Flag: NO
+X-Spam-Score: -2.499
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6 tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1]) by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024) with ESMTP id 5LHTec--CQaP; Sat,  9 Feb 2008 10:25:39 +0100 (CET)
+Received: from clix.int.op5.se (unknown [172.27.78.26]) by mail.op5.se (Postfix) with ESMTP id 04D521F0800A; Sat,  9 Feb 2008 10:25:38 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.9 (X11/20071115)
+In-Reply-To: <alpine.LFD.1.00.0802070949460.2732-QuJgVwGFrdf/9pzu0YdTqQ@public.gmane.org>
+Sender: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73201>
+X-Google-Loop: groups
+Mailing-List: list msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org;
+	contact msysgit-owner-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+List-Id: <msysgit.googlegroups.com>
+List-Post: <mailto:msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Help: <mailto:msysgit-help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
+	<mailto:msysgit-unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73202>
 
-Johannes Sixt wrote:
-> Paul Gardiner schrieb:
->> Johannes Sixt wrote:
->>> I've used fast-export (not git-fast-export) to convert a CVS repository:
+
+Nicolas Pitre wrote:
+> On Thu, 7 Feb 2008, Luciano Rocha wrote:
+> 
+>> On Thu, Feb 07, 2008 at 12:55:58PM +0000, Johannes Schindelin wrote:
+>>> Hi,
 >>>
->>> http://repo.or.cz/w/fast-export.git
+>>> On Thu, 7 Feb 2008, Luciano Rocha wrote:
 >>>
->>> It worked better than git-cvsimport because the repository was a real
->>> mess.
->> That looks to require going either via svn or mercurial. Is that right?
->> And if so, which did you find best?
+>>>> Why do I have to accept the GPL to install msysgit?
+>>> Because that's the only license you have to use git.
+>> Again, GPL governs distribution, not use.
+>>
+>>> Get over it, or use another SCM,
+>> I like and use GPL, but I won't force my users to accept the GPL in
+>> order to use programs released under it.
 > 
-> You are right. Because I'm utterly confused. I actually used fromcvs/togit:
+> What are they forced into if they indeed only want to _use_ Git?
 > 
-> http://ww2.fs.ei.tum.de/~corecode/hg/fromcvs
+> They nevertheless must be made aware of the rules they have to follow in 
+> case the idea of redistributing it crosses their mind.
 > 
-> Please bear with me; I did this about a year ago. Sorry for the noise.
-> 
-> Be warned that fromcvs/togit does not convert tags.
 
-That's amazing. Less than an hour to for the initial conversion,
-and just minutes to progressively sync up.
+No, because redistributing software is always illegal unless explicitly
+permitted. The GPL explicitly permits it, so they have to find that
+piece of license, read it, determine "oh this is ok then" and then go
+ahead and email it to their friends.
 
-Thanks to everyone for all the usefull feedback I've received here.
+Seriously though, the only thing I expect nobody would want to is
+that some company starts distributing git as their own scm, under a
+different license and probably closed-source too. EFF can provide
+lawyer help for such cases. Such a company would obviously read the
+license and realise that it's impossible for them to do so.
 
-Cheers,
-	Paul.
+-- 
+Andreas Ericsson                   andreas.ericsson-n0Zl8IkGad4@public.gmane.org
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
