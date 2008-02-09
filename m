@@ -1,52 +1,69 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] RFC: git lazy clone proof-of-concept
-Date: Sat, 09 Feb 2008 18:38:39 -0500 (EST)
-Message-ID: <alpine.LFD.1.00.0802091838070.2732@xanadu.home>
-References: <200802081828.43849.kendy@suse.cz>
- <alpine.LFD.1.00.0802081250240.2732@xanadu.home>
- <200802091525.36284.kendy@suse.cz> <20080209220551.GA30139@glandium.org>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: [PATCH] Add gitattributes file making whitespace checking
+	pickier
+Date: Sat, 9 Feb 2008 18:39:48 -0500
+Message-ID: <20080209233948.GC20501@fieldses.org>
+References: <20080209162234.GA25533@fieldses.org> <m3abm9hqix.fsf@localhost.localdomain> <20080209200435.GA8919@fieldses.org> <200802092122.01656.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Jan Holesovsky <kendy@suse.cz>, git@vger.kernel.org,
-	gitster@pobox.com
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Sun Feb 10 00:39:41 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 10 00:40:27 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNzIJ-0004wJ-PE
-	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 00:39:40 +0100
+	id 1JNzJ4-0005Ah-Dg
+	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 00:40:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756674AbYBIXip (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Feb 2008 18:38:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756972AbYBIXin
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Feb 2008 18:38:43 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:60012 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756674AbYBIXil (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Feb 2008 18:38:41 -0500
-Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR003.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JVZ00D55WCGFCH0@VL-MO-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Sat, 09 Feb 2008 18:38:40 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <20080209220551.GA30139@glandium.org>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+	id S1755954AbYBIXjv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Feb 2008 18:39:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755953AbYBIXjv
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Feb 2008 18:39:51 -0500
+Received: from mail.fieldses.org ([66.93.2.214]:39333 "EHLO fieldses.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755950AbYBIXjt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Feb 2008 18:39:49 -0500
+Received: from bfields by fieldses.org with local (Exim 4.69)
+	(envelope-from <bfields@fieldses.org>)
+	id 1JNzIS-0005xW-Js; Sat, 09 Feb 2008 18:39:48 -0500
+Content-Disposition: inline
+In-Reply-To: <200802092122.01656.jnareb@gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73275>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73276>
 
-On Sat, 9 Feb 2008, Mike Hommey wrote:
+On Sat, Feb 09, 2008 at 09:22:00PM +0100, Jakub Narebski wrote:
+> J. Bruce Fields wrote:
+> > On Sat, Feb 09, 2008 at 11:36:31AM -0800, Jakub Narebski wrote:
+> > > "J. Bruce Fields" <bfields@fieldses.org> writes:
+> > > 
+> > > >  gitweb/gitweb.perl                                  |  566 ++--
+> > > >  index-pack.c                                        |   30 
+> > > 
+> > > gitweb (at my insistence) uses tabs for indent, but spaces for align,
+> > > so that the layout is [roughly] preserved independently of the tab
+> > > size. IMHO it is superior style, but much harder to check
+> > > algorithmically (although I send some sketch of idea how to check that
+> > > at least for aligned commands). That is why there is such a big change.
+> > > 
+> > > I'd rather have real bugfixes, real documentation improvements, new
+> > > features instead of such bikeshedding.  If someone is making a change
+> > > somewhere, he/she can fix the whitespace in the neighbourhood.
+> > 
+> > I agree completely.  Did I suggest otherwise?
+> 
+> Ah, sorry, I have misunderstood.
+> 
+> This is an informational piece, then, isn't it?
 
-> Speaking of which, I haven't taken a look at builtin-pack-objects.c deep
-> enough but shouldn't it be possible to do prepare_pack and
-> write_pack_file in one pass ?
+Yeah, I was generating the diff just as a way to get an idea which paths
+which policies should apply to.
 
-No.
+That still doesn't rise much above bikeshedding, but it's not quite as
+bad as actually trying to apply such a diff...
 
-
-Nicolas
+--b.
