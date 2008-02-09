@@ -1,80 +1,67 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: Minor annoyance with git push
-Date: Sat, 9 Feb 2008 11:53:22 +0100
-Message-ID: <6B804F0D-9C3B-46F3-B922-7A5CBEF55522@zib.de>
-References: <46a038f90802072044u3329fd33w575c689cba2917ee@mail.gmail.com> <20080209030046.GA10470@coredump.intra.peff.net>
-Mime-Version: 1.0 (Apple Message framework v753)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+From: "Reece Dunn" <msclrhd@googlemail.com>
+Subject: git fetch workflow improvements
+Date: Sat, 9 Feb 2008 10:57:11 +0000
+Message-ID: <3f4fd2640802090257m9ab8e24l2a836abfd2ef6bf@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Martin Langhoff <martin.langhoff@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Feb 09 11:53:23 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 09 11:57:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNnKi-0000Hp-Tl
-	for gcvg-git-2@gmane.org; Sat, 09 Feb 2008 11:53:21 +0100
+	id 1JNnP2-0001Fm-8B
+	for gcvg-git-2@gmane.org; Sat, 09 Feb 2008 11:57:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752395AbYBIKwc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Feb 2008 05:52:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752287AbYBIKwc
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Feb 2008 05:52:32 -0500
-Received: from mailer.zib.de ([130.73.108.11]:51102 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750796AbYBIKwa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Feb 2008 05:52:30 -0500
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id m19AqPKB013511;
-	Sat, 9 Feb 2008 11:52:25 +0100 (CET)
-Received: from [192.168.178.21] (brln-4db92967.pool.einsundeins.de [77.185.41.103])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m19AqOrP019587
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Sat, 9 Feb 2008 11:52:24 +0100 (MET)
-In-Reply-To: <20080209030046.GA10470@coredump.intra.peff.net>
-X-Mailer: Apple Mail (2.753)
+	id S1752724AbYBIK5O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Feb 2008 05:57:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752699AbYBIK5O
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Feb 2008 05:57:14 -0500
+Received: from rv-out-0910.google.com ([209.85.198.186]:5446 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752638AbYBIK5N (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Feb 2008 05:57:13 -0500
+Received: by rv-out-0910.google.com with SMTP id k20so2789478rvb.1
+        for <git@vger.kernel.org>; Sat, 09 Feb 2008 02:57:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=8A5FRUtgGxsbzOQjYo33G+gQnxr5tvUnsGr1wFalSO8=;
+        b=KmJ4++m0pgQ5VX+CljUq4AXWE0z+fanZcLPWSDfooiQ9OXmDzAbCXAWS//GecSi90uB7KJdpF0F+l6vhfGAohDPo+460CCGMPstNYBpr4kWFlFL5HelV22BgepwPmi6w+LCfYEJRQUjWUlxVDUb+vcWnrePOziNWmgf6VY7tBcA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=n2VqKx1AenLMMEwJaSgJspcrGTdgZrRXONP/unz5F4fglei9zHLJO9CvdPOAehOGtjkQTquzVLyurm8Lf+RzCKYRuA7MBOUmSfzOt4SDpjv0rsDiUjX4iNLRKMHu4/Ut5dS+xMIvnWFkifaWA/E4nOPFyb7vDMExl15yOuLkO+U=
+Received: by 10.141.99.4 with SMTP id b4mr9159107rvm.217.1202554631627;
+        Sat, 09 Feb 2008 02:57:11 -0800 (PST)
+Received: by 10.141.23.10 with HTTP; Sat, 9 Feb 2008 02:57:11 -0800 (PST)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73208>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73209>
 
+Hi,
 
-On Feb 9, 2008, at 4:00 AM, Jeff King wrote:
+I have some ideas on improvements I would like to make to git fetch. I
+am not familiar with the implementation details of builtin-fetch.c and
+friends, and having a brief look at the implementation I am unsure how
+to proceed.
 
->
-> I really think that Steffen's "default to pushing only the current
-> branch" approach fits much better with the model described in your
-> workflow, and is generally a safer default. IIRC, the main  
-> objection was
-> that old-timers like the current push behavior better. Steffen, was
-> there objection to a "push.onlyHEAD" config option?
+The ideas for improvements I have are:
 
-There might have been an argument like: We should have a single
-default because otherwise the behaviour of git depends on the
-local configuration of the user.  This may cause even more
-confusion than it tries to solve, because now you always need
-to start first talking about the local configuration of the
-users before you can start explaining how to actually solve the
-problem.
+    1.  When running `git fetch` on a bare repository that does not
+have a remote called 'origin', fetch fails. I would like this to pick
+up the first remote entry in the config file.
 
-Personally, I decided it is safer to teach users to explicitly
-type what they mean.  I'd probably not use the push.onlyHEAD
-config option.
+    2.  When mirroring a repository such as the Linux kernel and its
+stable repositories in the same git repository, it would be useful to
+be able to fetch the latest data from all the remotes that you are
+tracking in the config file. I envision this being done by running
+`git fetch -all`.
 
-I also proposed that the default could do nothing if no explicit
-push lines are in the configuration file.  Users would be forced
-to explicitly type what the want: Either they can say "--matching"
-or they can say "--current".  This is similar to the new
-"git clean" default.  But I remember there *was* objection against
-this because everyone would be forced to type more and different
-than "git clean" the default of "git push" is considered "safe",
-so there's no need to protect the user from "git push".
+    3.  When fetching, if everything is up-to-date, display a message saying so.
 
-Junio proposed various possible changes to the configuration
-variables that could resolve the issues.  I do not remember the
-details.
-
-	Steffen
+- Reece
