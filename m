@@ -1,80 +1,90 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] Add gitattributes file making whitespace checking pickier
-Date: Sat, 09 Feb 2008 11:36:31 -0800 (PST)
-Message-ID: <m3abm9hqix.fsf@localhost.localdomain>
-References: <20080209162234.GA25533@fieldses.org>
-	<alpine.LNX.1.00.0802091251430.13593@iabervon.org>
-	<20080209185038.GB25533@fieldses.org>
-	<20080209190533.GD25533@fieldses.org>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: [PATCH] remove "nohup" from git-help--browse
+Date: Sat, 9 Feb 2008 23:03:51 +0300
+Message-ID: <20080209200351.GC30368@dpotapov.dyndns.org>
+References: <7vhcgkm7yy.fsf@gitster.siamese.dyndns.org> <1202502982-6822-1-git-send-email-dpotapov@gmail.com> <200802090653.43280.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Daniel Barkalow <barkalow@iabervon.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: "J. Bruce Fields" <bfields@fieldses.org>
-X-From: git-owner@vger.kernel.org Sat Feb 09 20:37:15 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Sat Feb 09 21:04:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNvVe-0002PX-H4
-	for gcvg-git-2@gmane.org; Sat, 09 Feb 2008 20:37:10 +0100
+	id 1JNvw9-0001wz-Cp
+	for gcvg-git-2@gmane.org; Sat, 09 Feb 2008 21:04:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754377AbYBITgf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Feb 2008 14:36:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754872AbYBITgf
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Feb 2008 14:36:35 -0500
-Received: from ug-out-1314.google.com ([66.249.92.168]:3332 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753076AbYBITgd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Feb 2008 14:36:33 -0500
-Received: by ug-out-1314.google.com with SMTP id z38so84895ugc.16
-        for <git@vger.kernel.org>; Sat, 09 Feb 2008 11:36:32 -0800 (PST)
+	id S1755402AbYBIUD6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 9 Feb 2008 15:03:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755358AbYBIUD6
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Feb 2008 15:03:58 -0500
+Received: from fg-out-1718.google.com ([72.14.220.155]:3781 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755318AbYBIUD4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Feb 2008 15:03:56 -0500
+Received: by fg-out-1718.google.com with SMTP id e21so3269203fga.17
+        for <git@vger.kernel.org>; Sat, 09 Feb 2008 12:03:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
-        bh=ucAKyFTB1kLuO40KLT6ClZqOhGCIiNLhfHRxkYLbwxQ=;
-        b=Ubo3X4AmcDQNHNbKUK0OmSmr3j3pQ+15t4Tn664D74r75zq9J4JsgHA0/TpogEP9u+1ZRnm82SN3uAswqMDcRibFJPD9OM5Gqx5xl8FSmCWrd+krKtTXQ2ZjmfxdIH1Uzk3q1PpdmJ93fSqTvre/CaHjDenM0Xr01CPMlMzcvKA=
+        h=domainkey-signature:received:received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:content-transfer-encoding:in-reply-to:user-agent;
+        bh=G6svTkJYF7TWrDJpv4wrqx3d/+fxA0XQ8+O5wWSlQCc=;
+        b=Jxp/Q4XdsUbTUFhxk6bMISFeNRxEDwFTzhptyHwqfkI+cGhEbxKqIvGEJgJEiMeUOC/b9DkIZysfKIblXuXcwzKKojPkM78IpcqDKxAKO2cKz5wIgLpYidgqI9gdWnV+QeEcvRAOVx9/fvnh6YqBcDrUmuFRmeXb2QU4f+suugc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
-        b=pi3rIe/NgSreGRCRQRcaQKzaw+lG9jvBGCBfC7//Tf86C94Vp8Ir4dgjAfTJy/HtFASoc2x3Qkjid+PelPnWjabcuOtiPlgyVKz2ZIq5rRySiv7awbtK8z4X+2fhABRcqNRTLVEaWPAs9EdM9kBzFZVyl3OuypBVrx5kE7/GDOk=
-Received: by 10.67.119.15 with SMTP id w15mr6952428ugm.73.1202585792494;
-        Sat, 09 Feb 2008 11:36:32 -0800 (PST)
-Received: from localhost.localdomain ( [83.8.255.105])
-        by mx.google.com with ESMTPS id o24sm2620062ugd.41.2008.02.09.11.36.29
+        h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:content-transfer-encoding:in-reply-to:user-agent;
+        b=ohVuAxVwacn4VQnInT87uhsceBVcMVYfRBFwH2O76l40d7PyHx7zclxlIHDHMNfBHOrG4IXxexXksmswa3jMzCcILPgcUtc6kfxeTES3LprLvAvKi9TsL4glj7zuG+3fkzzVUzybB9tDKvB3CuI2vTOv2zDHhMeb7i2SkMZE7Eg=
+Received: by 10.86.28.5 with SMTP id b5mr13164901fgb.79.1202587435287;
+        Sat, 09 Feb 2008 12:03:55 -0800 (PST)
+Received: from localhost ( [85.140.169.229])
+        by mx.google.com with ESMTPS id 3sm15551789fge.7.2008.02.09.12.03.53
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 09 Feb 2008 11:36:31 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m19JZmpW006475;
-	Sat, 9 Feb 2008 20:35:59 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m19JZIae006470;
-	Sat, 9 Feb 2008 20:35:18 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@fuw.edu.pl using -f
-In-Reply-To: <20080209190533.GD25533@fieldses.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        Sat, 09 Feb 2008 12:03:54 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <200802090653.43280.chriscool@tuxfamily.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73255>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73256>
 
-"J. Bruce Fields" <bfields@fieldses.org> writes:
+On Sat, Feb 09, 2008 at 06:53:43AM +0100, Christian Couder wrote:
+> Le vendredi 8 f=E9vrier 2008, Dmitry Potapov a =E9crit :
+> > There is no good reason to run GUI browsers using "nohup". It does =
+not
+> > solve any real problem but creates annoying "nohup.out" files in ev=
+ery
+> > directory where git help -w is run.
+>=20
+> That's right, but if you just remove "nohup", then there may be some=20
+> annoying browser output on the terminal. Perhaps we should also redir=
+ect=20
+> stderr and stdout to /dev/null.
 
->  gitweb/gitweb.perl                                  |  566 ++--
->  index-pack.c                                        |   30 
+I don't mind this redirection, but I am not sure whether it is the righ=
+t
+thing to do, because it may hide relevant error information, and if you=
+r
+browser tends to print irrelevant and annoying messages at start, then
+perhaps the script to start this browser should be corrected to suppres=
+s
+these output.
 
-gitweb (at my insistence) uses tabs for indent, but spaces for align,
-so that the layout is [roughly] preserved independently of the tab
-size. IMHO it is superior style, but much harder to check
-algorithmically (although I send some sketch of idea how to check that
-at least for aligned commands). That is why there is such a big change.
+So, I want to hear what other people think. If there is no objection,
+I will add this redirection.
 
-I'd rather have real bugfixes, real documentation improvements, new
-features instead of such bikeshedding.  If someone is making a change
-somewhere, he/she can fix the whitespace in the neighbourhood.
+>=20
+> > This patch removes "nohup" from git-help--browse.sh
+>=20
+> "git-help--browse.sh" has been renamed "git-web--browse.sh" in next s=
+o we=20
+> need a similar patch for next.
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Okay, I will base my patch on next.
+
+
+Dmitry
