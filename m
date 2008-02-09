@@ -1,63 +1,73 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 2/2] web--browse: Add a few quotes in 'init_browser_path'.
-Date: Sat, 9 Feb 2008 07:11:01 +0100
-Message-ID: <20080209071101.acf6cdbe.chriscool@tuxfamily.org>
+From: Paul Gardiner <osronline@glidos.net>
+Subject: Re: Any tricks for speeding up cvsps?
+Date: Sat, 09 Feb 2008 08:32:19 +0000
+Message-ID: <47AD6513.2040609@glidos.net>
+References: <47AC1FDC.9000502@glidos.net> <47AC2775.5090403@viscovery.net> <47AC2AC3.6020704@glidos.net> <47AC2FF6.1030103@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio Hamano <junkio@cox.net>, Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Sat Feb 09 07:06:36 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 09 09:33:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNiqg-0000NP-1E
-	for gcvg-git-2@gmane.org; Sat, 09 Feb 2008 07:06:02 +0100
+	id 1JNl8v-0008Sp-NS
+	for gcvg-git-2@gmane.org; Sat, 09 Feb 2008 09:33:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751327AbYBIGFa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Feb 2008 01:05:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751290AbYBIGF3
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Feb 2008 01:05:29 -0500
-Received: from smtp1-g19.free.fr ([212.27.42.27]:58080 "EHLO smtp1-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751207AbYBIGFB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Feb 2008 01:05:01 -0500
-Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 4FEA21AB2AC;
-	Sat,  9 Feb 2008 07:05:00 +0100 (CET)
-Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp1-g19.free.fr (Postfix) with SMTP id 0BD821AB2A9;
-	Sat,  9 Feb 2008 07:05:00 +0100 (CET)
-X-Mailer: Sylpheed 2.4.8 (GTK+ 2.12.5; i486-pc-linux-gnu)
+	id S1751189AbYBIIc1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Feb 2008 03:32:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751327AbYBIIc1
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Feb 2008 03:32:27 -0500
+Received: from mk-outboundfilter-1.mail.uk.tiscali.com ([212.74.114.37]:43573
+	"EHLO mk-outboundfilter-1.mail.uk.tiscali.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751040AbYBIIc0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 9 Feb 2008 03:32:26 -0500
+X-Trace: 37189055/mk-outboundfilter-1.mail.uk.tiscali.com/PIPEX/$MX-ACCEPTED/pipex-infrastructure/62.241.163.7
+X-SBRS: None
+X-RemoteIP: 62.241.163.7
+X-IP-MAIL-FROM: osronline@glidos.net
+X-IP-BHB: Once
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Ao8CAEf0rEc+8aMH/2dsb2JhbACodw
+X-IP-Direction: IN
+Received: from blaster.systems.pipex.net ([62.241.163.7])
+  by smtp.pipex.tiscali.co.uk with ESMTP; 09 Feb 2008 08:32:23 +0000
+Received: from [10.0.0.24] (80-42-19-184.dynamic.dsl.as9105.com [80.42.19.184])
+	by blaster.systems.pipex.net (Postfix) with ESMTP id A91E0E000084
+	for <git@vger.kernel.org>; Sat,  9 Feb 2008 08:32:21 +0000 (GMT)
+User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
+In-Reply-To: <47AC2FF6.1030103@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73200>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73201>
 
-These changes were made to the 'init_browser_path' function in
-'git-instaweb.sh', but was not in 'git-web--browse.sh'.
+Johannes Sixt wrote:
+> Paul Gardiner schrieb:
+>> Johannes Sixt wrote:
+>>> I've used fast-export (not git-fast-export) to convert a CVS repository:
+>>>
+>>> http://repo.or.cz/w/fast-export.git
+>>>
+>>> It worked better than git-cvsimport because the repository was a real
+>>> mess.
+>> That looks to require going either via svn or mercurial. Is that right?
+>> And if so, which did you find best?
+> 
+> You are right. Because I'm utterly confused. I actually used fromcvs/togit:
+> 
+> http://ww2.fs.ei.tum.de/~corecode/hg/fromcvs
+> 
+> Please bear with me; I did this about a year ago. Sorry for the noise.
+> 
+> Be warned that fromcvs/togit does not convert tags.
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- git-web--browse.sh |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+That's amazing. Less than an hour to for the initial conversion,
+and just minutes to progressively sync up.
 
-diff --git a/git-web--browse.sh b/git-web--browse.sh
-index 8ed489d..855de40 100755
---- a/git-web--browse.sh
-+++ b/git-web--browse.sh
-@@ -34,8 +34,8 @@ valid_tool() {
- }
- 
- init_browser_path() {
--	browser_path=`git config browser.$1.path`
--	test -z "$browser_path" && browser_path=$1
-+	browser_path="`git config browser.$1.path`"
-+	test -z "$browser_path" && browser_path="$1"
- }
- 
- while test $# != 0
--- 
-1.5.4.16.g9f0c3
+Thanks to everyone for all the usefull feedback I've received here.
+
+Cheers,
+	Paul.
