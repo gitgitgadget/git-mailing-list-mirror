@@ -1,77 +1,64 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git fetch workflow improvements
-Date: Sat, 9 Feb 2008 13:20:29 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802091318080.11591@racer.site>
-References: <3f4fd2640802090257m9ab8e24l2a836abfd2ef6bf@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Minor annoyance with git push
+Date: Sat, 9 Feb 2008 08:22:09 -0500
+Message-ID: <20080209132209.GA20443@coredump.intra.peff.net>
+References: <46a038f90802072044u3329fd33w575c689cba2917ee@mail.gmail.com> <alpine.LSU.1.00.0802081142060.11591@racer.site> <46a038f90802081427k6ee94cfagbc02533538e75b49@mail.gmail.com> <20080209024636.GE2572@coredump.intra.peff.net> <20080209025431.GF2572@coredump.intra.peff.net> <alpine.LSU.1.00.0802091302550.11591@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Reece Dunn <msclrhd@googlemail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 09 14:21:24 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Martin Langhoff <martin.langhoff@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Feb 09 14:22:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNpdz-0004da-Ta
-	for gcvg-git-2@gmane.org; Sat, 09 Feb 2008 14:21:24 +0100
+	id 1JNpfN-0004vo-3t
+	for gcvg-git-2@gmane.org; Sat, 09 Feb 2008 14:22:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755131AbYBINU1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Feb 2008 08:20:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755004AbYBINU0
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Feb 2008 08:20:26 -0500
-Received: from mail.gmx.net ([213.165.64.20]:57412 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754867AbYBINUY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Feb 2008 08:20:24 -0500
-Received: (qmail invoked by alias); 09 Feb 2008 13:20:22 -0000
-Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
-  by mail.gmx.net (mp056) with SMTP; 09 Feb 2008 14:20:22 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/YsSEF7YHYLcvfkv8CqYBb3MgpH0HZtKDU5/Ap1h
-	uoQTS4d+GYfTRz
-X-X-Sender: gene099@racer.site
-In-Reply-To: <3f4fd2640802090257m9ab8e24l2a836abfd2ef6bf@mail.gmail.com>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1754661AbYBINWN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Feb 2008 08:22:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754653AbYBINWN
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Feb 2008 08:22:13 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3293 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754597AbYBINWN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Feb 2008 08:22:13 -0500
+Received: (qmail 13006 invoked by uid 111); 9 Feb 2008 13:22:11 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Sat, 09 Feb 2008 08:22:11 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 09 Feb 2008 08:22:09 -0500
+Content-Disposition: inline
+In-Reply-To: <alpine.LSU.1.00.0802091302550.11591@racer.site>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73222>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73223>
 
-Hi,
+On Sat, Feb 09, 2008 at 01:04:10PM +0000, Johannes Schindelin wrote:
 
-On Sat, 9 Feb 2008, Reece Dunn wrote:
+> I was already trying to make a patch on top of yours which says "[stale]" 
+> instead of "[rejected]" for those cases, but then I realised that 2 tests 
+> in t5400 fail.
 
-> I have some ideas on improvements I would like to make to git fetch. I 
-> am not familiar with the implementation details of builtin-fetch.c and 
-> friends, and having a brief look at the implementation I am unsure how 
-> to proceed.
+I think the problem is that tests 7/8 in t5400 actually try to create
+a non-ff situation by doing a rewind. So it is not a bug in the new code
+so much as the test relied on the very behavior we changed.
+
+> > -			ref->status = REF_STATUS_REJECT_NONFASTFORWARD;
+> > +			if (ref_newer(ref->old_sha1, new_sha1))
+> > +				ref->status = REF_STATUS_REJECT_REWIND;
+> > +			else
+> > +				ref->status = REF_STATUS_REJECT_NONFASTFORWARD;
 > 
-> The ideas for improvements I have are:
-> 
->     1.  When running `git fetch` on a bare repository that does not have 
-> a remote called 'origin', fetch fails. I would like this to pick up the 
-> first remote entry in the config file.
+> Indeed.  I did not think it was that easy, but apparently it is.
 
-I am opposed to that.  If you want a default remote, then set the remote 
-"origin".  That is well established semantics, and you would only confuse 
-yourself if all of a sudden you fetched from a remote that you erroneously 
-added at some stage.
+It's also slower than it needs to be, since we also do a ref_newer in
+the other direction, and because non-ff cases traverse all the way to
+the root.  I think you could do better to write a function (similar to
+limit_list) which returned one of { A is an ancestor of B, B is an
+ancestor of A, A and B are equal, A and B are not directly related },
+and you would have to traverse down only to the nearest merge base.
 
->     2.  When mirroring a repository such as the Linux kernel and its 
-> stable repositories in the same git repository, it would be useful to be 
-> able to fetch the latest data from all the remotes that you are tracking 
-> in the config file. I envision this being done by running `git fetch 
-> -all`.
-
-$ git remote update
-
->     3.  When fetching, if everything is up-to-date, display a message 
-> saying so.
-
-We recently tried to unverbosify the transports.  So I think this would be 
-a step back.
-
-Ciao,
-Dscho
+-Peff
