@@ -1,75 +1,81 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: [PATCH] RFC: git lazy clone proof-of-concept
-Date: Sat, 9 Feb 2008 23:05:51 +0100
-Organization: glandium.org
-Message-ID: <20080209220551.GA30139@glandium.org>
-References: <200802081828.43849.kendy@suse.cz> <alpine.LFD.1.00.0802081250240.2732@xanadu.home> <200802091525.36284.kendy@suse.cz>
+From: Paul Gardiner <osronline@glidos.net>
+Subject: Re: All I wanted was git-fast-export
+Date: Sat, 09 Feb 2008 22:44:47 +0000
+Message-ID: <47AE2CDF.4090208@glidos.net>
+References: <47ADE275.3060109@glidos.net> <alpine.LSU.1.00.0802091803580.11591@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org,
-	gitster@pobox.com
-To: Jan Holesovsky <kendy@suse.cz>
-X-From: git-owner@vger.kernel.org Sat Feb 09 23:06:30 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 09 23:45:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNxq7-0005Is-UW
-	for gcvg-git-2@gmane.org; Sat, 09 Feb 2008 23:06:29 +0100
+	id 1JNySD-00088U-Da
+	for gcvg-git-2@gmane.org; Sat, 09 Feb 2008 23:45:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755721AbYBIWFw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Feb 2008 17:05:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755712AbYBIWFv
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Feb 2008 17:05:51 -0500
-Received: from vuizook.err.no ([85.19.215.103]:43143 "EHLO vuizook.err.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755595AbYBIWFu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Feb 2008 17:05:50 -0500
-Received: from aputeaux-153-1-42-109.w82-124.abo.wanadoo.fr ([82.124.6.109] helo=jigen)
-	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.67)
-	(envelope-from <mh@glandium.org>)
-	id 1JNxqO-00073n-Ff; Sat, 09 Feb 2008 23:06:50 +0100
-Received: from mh by jigen with local (Exim 4.69)
-	(envelope-from <mh@jigen>)
-	id 1JNxpX-0007sM-4t; Sat, 09 Feb 2008 23:05:51 +0100
-Content-Disposition: inline
-In-Reply-To: <200802091525.36284.kendy@suse.cz>
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-X-Spam-Status: (score 2.2): No, score=2.2 required=5.0 tests=RCVD_IN_PBL,RCVD_IN_SORBS_DUL,RDNS_DYNAMIC autolearn=disabled version=3.2.3
+	id S1754169AbYBIWoy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Feb 2008 17:44:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754224AbYBIWoy
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Feb 2008 17:44:54 -0500
+Received: from mk-outboundfilter-1.mail.uk.tiscali.com ([212.74.114.37]:58570
+	"EHLO mk-outboundfilter-1.mail.uk.tiscali.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753695AbYBIWox (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 9 Feb 2008 17:44:53 -0500
+X-Trace: 37523260/mk-outboundfilter-1.mail.uk.tiscali.com/PIPEX/$MX-ACCEPTED/pipex-infrastructure/62.241.162.31
+X-SBRS: None
+X-RemoteIP: 62.241.162.31
+X-IP-MAIL-FROM: osronline@glidos.net
+X-IP-BHB: Once
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Ao8CAEK7rUc+8aIf/2dsb2JhbACoBQ
+X-IP-Direction: IN
+Received: from galaxy.systems.pipex.net ([62.241.162.31])
+  by smtp.pipex.tiscali.co.uk with ESMTP; 09 Feb 2008 22:44:50 +0000
+Received: from [10.0.0.24] (80-42-19-184.dynamic.dsl.as9105.com [80.42.19.184])
+	by galaxy.systems.pipex.net (Postfix) with ESMTP id E88F8E000088
+	for <git@vger.kernel.org>; Sat,  9 Feb 2008 22:44:49 +0000 (GMT)
+User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
+In-Reply-To: <alpine.LSU.1.00.0802091803580.11591@racer.site>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73271>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73272>
 
-On Sat, Feb 09, 2008 at 03:25:35PM +0100, Jan Holesovsky wrote:
-> Hi Nicolas,
+Johannes Schindelin wrote:
+> Hi,
 > 
-> On Friday 08 February 2008 19:03, Nicolas Pitre wrote:
+> On Sat, 9 Feb 2008, Paul Gardiner wrote:
 > 
-> > > I've provided a git import of OOo with the entire history; the problem is
-> > > that the pack has 2.5G, so it's not too convenient to download for casual
-> > > developers that just want to try it.
-> >
-> > How did you repack your repository?
-> >
-> > We know that current defaults are not suitable for large projects.  For
-> > example, the gcc git repository shrinked from 1.5GB pack down to 230MB
-> > after some tuning.
+>> With your kind help, I've been able to convert a cvs repository
+>> to git, but the last several years commits start with a line
+>> saying "Summary;" :-(  I thought it might not be hard to put
+>> a filter between git-fast-export and git-fast-import to sort
+>> it out.
 > 
-> After the suggestions in this thread I tried to experiment with the --window 
-> and --depth options of git-repack, and indeed, there are still reserves.
-> 
-> So far I'm at 2G (saved 500M), unfortunately the aggressive values like 
-> --window=250 --depth=250 that someone mentioned here cause out-of-memory on a 
-> machine with 8G :-(. If there's anybody brave enough here to try as well, I'd 
-> be grateful.  Maybe it would be also interesting to _exactly_ locate what 
-> causes the oom, and eg. exclude the object from the pack if possible.
+> The better tool for this should be filter-branch.
 
-Speaking of which, I haven't taken a look at builtin-pack-objects.c deep
-enough but shouldn't it be possible to do prepare_pack and
-write_pack_file in one pass ?
+filter-branch does look to be brilliant for this sort of thing,
+but I don't think I can use it in my case. The git repository
+in question is a mirror of a live cvs repository, which I need
+to keep synced up. What I was thinking was to repeatedly do:
 
-Mike
+   cvs rep  =>  git rep   => tidied git rep
+
+
+using fromcvs/togit for the first step, and
+git-fast-export/git-fast-import for the second. It doesn't
+look to be the case that filter-branch can be used with
+the source and target repositories being different, and
+if I tried having one git repository that I applied
+tidying to, then I don't think the syncing process would
+work afterwards... or would it? Do you thing that changing
+commit messages would mess up subsequent syncing? I
+guess I could try it and see.
+
+I think I need git 1.5.4 either way, and I still
+haven't found a way to get that installed under SuSE 10.3
+
+P.
