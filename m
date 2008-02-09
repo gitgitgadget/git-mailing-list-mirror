@@ -1,58 +1,81 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: [PATCH] Add gitattributes file making whitespace checking
-	pickier
-Date: Sat, 9 Feb 2008 15:04:35 -0500
-Message-ID: <20080209200435.GA8919@fieldses.org>
-References: <20080209162234.GA25533@fieldses.org> <alpine.LNX.1.00.0802091251430.13593@iabervon.org> <20080209185038.GB25533@fieldses.org> <20080209190533.GD25533@fieldses.org> <m3abm9hqix.fsf@localhost.localdomain>
+From: "Govind Salinas" <govind@sophiasuchtig.com>
+Subject: Re: [Janitors] value could be NULL in config parser
+Date: Sat, 9 Feb 2008 14:11:23 -0600
+Message-ID: <5d46db230802091211k304197e2i2556c82494c0852f@mail.gmail.com>
+References: <7v63x0lzhw.fsf@gitster.siamese.dyndns.org>
+	 <5d46db230802081720x122a807do6c63b6b3e435b4c5@mail.gmail.com>
+	 <200802091118.11174.chriscool@tuxfamily.org>
+	 <200802091415.20295.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Daniel Barkalow <barkalow@iabervon.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 09 21:05:55 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+To: "Christian Couder" <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Sat Feb 09 21:12:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNvws-000270-WE
-	for gcvg-git-2@gmane.org; Sat, 09 Feb 2008 21:05:38 +0100
+	id 1JNw3L-0004MV-5g
+	for gcvg-git-2@gmane.org; Sat, 09 Feb 2008 21:11:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755417AbYBIUEl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Feb 2008 15:04:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755121AbYBIUEl
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Feb 2008 15:04:41 -0500
-Received: from mail.fieldses.org ([66.93.2.214]:39492 "EHLO fieldses.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754716AbYBIUEl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Feb 2008 15:04:41 -0500
-Received: from bfields by fieldses.org with local (Exim 4.69)
-	(envelope-from <bfields@fieldses.org>)
-	id 1JNvwC-0002Lp-0I; Sat, 09 Feb 2008 15:04:36 -0500
+	id S1755142AbYBIULZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 9 Feb 2008 15:11:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755346AbYBIULZ
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Feb 2008 15:11:25 -0500
+Received: from wx-out-0506.google.com ([66.249.82.228]:31489 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755121AbYBIULY convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 9 Feb 2008 15:11:24 -0500
+Received: by wx-out-0506.google.com with SMTP id h31so4364497wxd.4
+        for <git@vger.kernel.org>; Sat, 09 Feb 2008 12:11:24 -0800 (PST)
+Received: by 10.150.138.8 with SMTP id l8mr5950593ybd.141.1202587883936;
+        Sat, 09 Feb 2008 12:11:23 -0800 (PST)
+Received: by 10.150.199.5 with HTTP; Sat, 9 Feb 2008 12:11:23 -0800 (PST)
+In-Reply-To: <200802091415.20295.chriscool@tuxfamily.org>
 Content-Disposition: inline
-In-Reply-To: <m3abm9hqix.fsf@localhost.localdomain>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73257>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73258>
 
-On Sat, Feb 09, 2008 at 11:36:31AM -0800, Jakub Narebski wrote:
-> "J. Bruce Fields" <bfields@fieldses.org> writes:
-> 
-> >  gitweb/gitweb.perl                                  |  566 ++--
-> >  index-pack.c                                        |   30 
-> 
-> gitweb (at my insistence) uses tabs for indent, but spaces for align,
-> so that the layout is [roughly] preserved independently of the tab
-> size. IMHO it is superior style, but much harder to check
-> algorithmically (although I send some sketch of idea how to check that
-> at least for aligned commands). That is why there is such a big change.
-> 
-> I'd rather have real bugfixes, real documentation improvements, new
-> features instead of such bikeshedding.  If someone is making a change
-> somewhere, he/she can fix the whitespace in the neighbourhood.
+On 2/9/08, Christian Couder <chriscool@tuxfamily.org> wrote:
+> Le samedi 9 f=E9vrier 2008, Christian Couder a =E9crit :
+> > Le samedi 9 f=E9vrier 2008, Govind Salinas a =E9crit :
+> > > I think I got all the erroneous ones.  I did
+> > >
+> > > find . -name "*.c" | xargs grep git_config\( | awk '{ idx =3D ind=
+ex($2,
+> > > ")"); p =3D substr($2, 12, idx - 12); print  p }' | sort | uniq -=
+u
+> >
+> > It seems the "uniq -u" should be only "uniq".
+> > This way, you will also get the following ones to check:
+> >
+> > git_default_config
+> > git_diff_basic_config
+> > git_log_config
+> > git_pack_config
+>
+> I don't know awk so I cannot tell if there is something wrong with yo=
+ur
+> script but with:
+>
+> find . -name "*.c" | xargs perl -ne 'print "$1\n" if (m/git_config ?
+> \(([^)]*)\)/)' | sort | uniq
+>
+> I also get:
+>
+> git_imap_config
+> show_all_config
+>
 
-I agree completely.  Did I suggest otherwise?
+It appears only git_imap_config and git_default_config need patches.
+I will send them to the list.
 
---b.
+Are any changes to the git_config_$type functions going to be made?
+It sounds like any change could break current configs so we are only
+going to stop the segfaults.
+
+-Govind
