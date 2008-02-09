@@ -1,63 +1,63 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: Minor annoyance with git push
-Date: Sat, 9 Feb 2008 12:22:33 +0100
-Message-ID: <3AA71024-080B-4252-8416-82AE38A4498E@zib.de>
-References: <46a038f90802072044u3329fd33w575c689cba2917ee@mail.gmail.com> <46a038f90802072050s46ffe305mcffffa068511e3b8@mail.gmail.com> <7vwspfkhxm.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v753)
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Martin Langhoff" <martin.langhoff@gmail.com>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 09 12:23:16 2008
+From: Mark Wooding <mdw@distorted.org.uk>
+Subject: [PATCH] daemon: Set up PATH properly on startup.
+Date: Sat,  9 Feb 2008 11:17:53 +0000
+Organization: Straylight/Edgeware
+Message-ID: <1202555873-8099-1-git-send-email-mdw@distorted.org.uk>
+Cc: Mark Wooding <mdw@distorted.org.uk>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 09 12:25:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNnnb-0007cU-1T
-	for gcvg-git-2@gmane.org; Sat, 09 Feb 2008 12:23:11 +0100
+	id 1JNnpi-00084F-Qd
+	for gcvg-git-2@gmane.org; Sat, 09 Feb 2008 12:25:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756260AbYBILV6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Feb 2008 06:21:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756292AbYBILV5
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Feb 2008 06:21:57 -0500
-Received: from mailer.zib.de ([130.73.108.11]:55851 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753160AbYBILVz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Feb 2008 06:21:55 -0500
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id m19BLalZ016899;
-	Sat, 9 Feb 2008 12:21:38 +0100 (CET)
-Received: from [192.168.178.21] (brln-4db92967.pool.einsundeins.de [77.185.41.103])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m19BLZXB028833
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Sat, 9 Feb 2008 12:21:35 +0100 (MET)
-In-Reply-To: <7vwspfkhxm.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.753)
+	id S1756750AbYBILYh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Feb 2008 06:24:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757016AbYBILYh
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Feb 2008 06:24:37 -0500
+Received: from distorted.demon.co.uk ([80.177.3.76]:44809 "HELO
+	metalzone.distorted.org.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1752195AbYBILYg (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 9 Feb 2008 06:24:36 -0500
+X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Sat, 09 Feb 2008 06:24:35 EST
+Received: (qmail 8122 invoked by uid 1000); 9 Feb 2008 11:17:53 -0000
+X-Mailer: git-send-email 1.5.4.rc5.5.gab98-dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73211>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73212>
 
+Since exec_cmd.c changed (511707d42b3b3e57d9623493092590546ffeae80) to
+just use the PATH variable for finding Git binaries, the daemon has been
+broken for people with picky inetds (such as the OpenBSD one) which
+launder the environment on startup.  The result is that the daemon
+mysteriously fails to do anything useful.
 
-On Feb 8, 2008, at 8:48 AM, Junio C Hamano wrote:
+One line fix: call setup_paths() in main before doing anything.
 
-> "Martin Langhoff" <martin.langhoff@gmail.com> writes:
->
->> Because when I "git checkout bla-stale-branch" to help a fellow
->> developer again, I have to remember to "git merge
->> origin/bla-stale-branch" to get a much needed fast-forward before
->> starting to work.
->
-> Perhaps it might make sense to have a checkout hook that notices
-> the branch that is being checked out is meant to build on top of
-> a corresponding remote tracking branch, and performs the
-> necessary fast-forward when that is the case.
+Signed-off-by: Mark Wooding <mdw@distorted.org.uk>
+---
+ daemon.c |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
-Or just print a warning that there are new commits on the
-tracked branch and leave the decision how to proceed to
-the user?
+	I've not addressed the other problem with git-daemon which this
+	bug brought to my attention, which is that it doesn't log any
+	kind of error if it fails to exec.
 
-	Steffen
+diff --git a/daemon.c b/daemon.c
+index 41a60af..cfd6124 100644
+--- a/daemon.c
++++ b/daemon.c
+@@ -1149,6 +1149,7 @@ int main(int argc, char **argv)
+ 		usage(daemon_usage);
+ 	}
+ 
++	setup_path(NULL);
+ 	if (inetd_mode && (group_name || user_name))
+ 		die("--user and --group are incompatible with --inetd");
+ 
+-- 
+1.5.4.rc5.5.gab98-dirty
