@@ -1,58 +1,59 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [Janitors] value could be NULL in config parser
-Date: Sat, 9 Feb 2008 11:18:10 +0100
-Message-ID: <200802091118.11174.chriscool@tuxfamily.org>
-References: <7v63x0lzhw.fsf@gitster.siamese.dyndns.org> <5d46db230802081720x122a807do6c63b6b3e435b4c5@mail.gmail.com>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: [PATCH v2] Work around curl-gnutls not liking to be
+	reinitialized
+Date: Sat, 9 Feb 2008 11:43:01 +0100
+Organization: glandium.org
+Message-ID: <20080209104301.GA32309@glandium.org>
+References: <20080208220941.GA22199@glandium.org> <1202509359-23840-1-git-send-email-mh@glandium.org> <87y79usbu0.fsf@mid.deneb.enyo.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-To: "Govind Salinas" <govind@sophiasuchtig.com>
-X-From: git-owner@vger.kernel.org Sat Feb 09 11:12:47 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Florian Weimer <fw@deneb.enyo.de>
+X-From: git-owner@vger.kernel.org Sat Feb 09 11:43:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNmhT-0007VZ-7U
-	for gcvg-git-2@gmane.org; Sat, 09 Feb 2008 11:12:47 +0100
+	id 1JNnAj-0006Ht-1H
+	for gcvg-git-2@gmane.org; Sat, 09 Feb 2008 11:43:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754078AbYBIKMO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 9 Feb 2008 05:12:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751879AbYBIKMN
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Feb 2008 05:12:13 -0500
-Received: from smtp1-g19.free.fr ([212.27.42.27]:54175 "EHLO smtp1-g19.free.fr"
+	id S1751827AbYBIKm0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Feb 2008 05:42:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751871AbYBIKm0
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Feb 2008 05:42:26 -0500
+Received: from vuizook.err.no ([85.19.215.103]:41550 "EHLO vuizook.err.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751845AbYBIKMN convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 9 Feb 2008 05:12:13 -0500
-Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id A414D1AB315;
-	Sat,  9 Feb 2008 11:12:11 +0100 (CET)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 71C9E1AB2E2;
-	Sat,  9 Feb 2008 11:12:11 +0100 (CET)
-User-Agent: KMail/1.9.7
-In-Reply-To: <5d46db230802081720x122a807do6c63b6b3e435b4c5@mail.gmail.com>
+	id S1751531AbYBIKmZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Feb 2008 05:42:25 -0500
+Received: from aputeaux-153-1-42-109.w82-124.abo.wanadoo.fr ([82.124.6.109] helo=jigen)
+	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.67)
+	(envelope-from <mh@glandium.org>)
+	id 1JNnB1-0003sj-4E; Sat, 09 Feb 2008 11:43:25 +0100
+Received: from mh by jigen with local (Exim 4.69)
+	(envelope-from <mh@jigen>)
+	id 1JNnAj-0008Qf-6i; Sat, 09 Feb 2008 11:43:01 +0100
 Content-Disposition: inline
+In-Reply-To: <87y79usbu0.fsf@mid.deneb.enyo.de>
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+X-Spam-Status: (score 2.2): No, score=2.2 required=5.0 tests=RCVD_IN_PBL,RCVD_IN_SORBS_DUL,RDNS_DYNAMIC autolearn=disabled version=3.2.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73206>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73207>
 
-Le samedi 9 f=E9vrier 2008, Govind Salinas a =E9crit :
-> I think I got all the erroneous ones.  I did
->
-> find . -name "*.c" | xargs grep git_config\( | awk '{ idx =3D index($=
-2,
-> ")"); p =3D substr($2, 12, idx - 12); print  p }' | sort | uniq -u
+On Sat, Feb 09, 2008 at 10:44:55AM +0100, Florian Weimer wrote:
+> * Mike Hommey:
+> 
+> > +#if (LIBCURL_VERSION_NUM < 0x071003) || (LIBCURL_VERSION_NUM > 0x071200)
+> >  	http_cleanup();
+> > +#endif
+> 
+> Shouldn't you check the version that is used at run time, not the one at
+> compile time?
 
-It seems the "uniq -u" should be only "uniq".
-This way, you will also get the following ones to check:
+That is a very good remark, and another good reason to prefer patch v4.
 
-git_default_config
-git_diff_basic_config
-git_log_config
-git_pack_config
-
-Thanks in advance,
-Christian.
+Mike
