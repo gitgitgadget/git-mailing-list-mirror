@@ -1,98 +1,93 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC] New commit object headers: note headers
-Date: Sun, 10 Feb 2008 00:26:38 +0100
-Message-ID: <200802100026.39340.jnareb@gmail.com>
-References: <200802091746.09102.jnareb@gmail.com> <fcaeb9bf0802090950l27aa247ei5d067e0f24fcade0@mail.gmail.com> <7vlk5tetaa.fsf@gitster.siamese.dyndns.org>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: [PATCH] Add gitattributes file making whitespace checking
+	pickier
+Date: Sat, 9 Feb 2008 18:36:58 -0500
+Message-ID: <20080209233658.GB20501@fieldses.org>
+References: <20080209162234.GA25533@fieldses.org> <alpine.LNX.1.00.0802091251430.13593@iabervon.org> <20080209185038.GB25533@fieldses.org> <7vr6fletkl.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>,
-	"Daniel Barkalow" <barkalow@iabervon.org>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Feb 10 00:28:42 2008
+X-From: git-owner@vger.kernel.org Sun Feb 10 00:38:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNz7b-0002LU-Vr
-	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 00:28:36 +0100
+	id 1JNzGo-0004dP-Ip
+	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 00:38:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756626AbYBIX1O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Feb 2008 18:27:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756872AbYBIX1M
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Feb 2008 18:27:12 -0500
-Received: from fg-out-1718.google.com ([72.14.220.159]:32771 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756416AbYBIX0s (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Feb 2008 18:26:48 -0500
-Received: by fg-out-1718.google.com with SMTP id e21so3310089fga.17
-        for <git@vger.kernel.org>; Sat, 09 Feb 2008 15:26:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=PtV+u9a/g/HzcbA+K1o/9FJ4n+VKZpztRvsKxgi/4No=;
-        b=dH7kqfugTKO7/HDFtnVQDNkQQAI+nYo44Zk7OMMVA8pfDpwZuGBDdfrcteR7KwCTBet0fJDRYYxZs57cK0c+07gt/+24q9eATuCfGR0g3WM4VFQn7MRVdpZDPBraep1nIv73haRi8OmdHZa3afQ4JV3QkR1m1uVZooifoVmutPk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=XJRJk39CbYV4b+kJvE3ZplMkQYiA1BOVy4BiMqDqH7q7P4zW1uhBDqLj5E/V1sZdxtCZN7KAbVaPVJR+frYYnQQnC8BfSmGiHlRTj0eMKER2U3YKvrj8cBR+W59Ez/sy8DEkhrZnopBov6qeHUArHaxNnDP8IOO8FOhTUBLvp2c=
-Received: by 10.86.73.17 with SMTP id v17mr13327683fga.67.1202599607080;
-        Sat, 09 Feb 2008 15:26:47 -0800 (PST)
-Received: from ?192.168.1.11? ( [83.8.255.105])
-        by mx.google.com with ESMTPS id y37sm15654252iky.7.2008.02.09.15.26.43
-        (version=SSLv3 cipher=OTHER);
-        Sat, 09 Feb 2008 15:26:45 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <7vlk5tetaa.fsf@gitster.siamese.dyndns.org>
+	id S1755846AbYBIXhF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Feb 2008 18:37:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755742AbYBIXhE
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Feb 2008 18:37:04 -0500
+Received: from mail.fieldses.org ([66.93.2.214]:39311 "EHLO fieldses.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755403AbYBIXhC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Feb 2008 18:37:02 -0500
+Received: from bfields by fieldses.org with local (Exim 4.69)
+	(envelope-from <bfields@fieldses.org>)
+	id 1JNzFi-0005td-CP; Sat, 09 Feb 2008 18:36:58 -0500
 Content-Disposition: inline
+In-Reply-To: <7vr6fletkl.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73273>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73274>
 
-On Sat, 9 Feb 2008, Junio C Hamano wrote:
-> "Nguyen Thai Ngoc Duy" <pclouds@gmail.com> writes:
->> On Sun, Feb 10, 2008 at 12:35 AM, Daniel Barkalow <barkalow@iabervon.org> wrote:
->>> On Sat, 9 Feb 2008, Jakub Narebski wrote:
->>>>
->>>> 2. 'note' header (no semantical meaning)
->>>>
->>>> There was some time ago discussion about adding 'note' header, initially
->>>> to save original sha-1 of a commit for cherry-picking and rebase; then
->>>> for saving explicit rename or corrected rename info, for saving chosen
->>>> merge strategy, and for saving original ID of SCM import.
->>>
->>>  Probably want to have a prescribed syntax for specifying what note this
->>>  is, so that different programs using notes don't confuse each other.
->>
->> How about git ignoring all X- headers and let programs freely add
->> them? For example, X-SVN may be used for git-svn.
+On Sat, Feb 09, 2008 at 12:57:46PM -0800, Junio C Hamano wrote:
+> "J. Bruce Fields" <bfields@fieldses.org> writes:
 > 
-> Please don't.
+> > Yeah, fair enough.  Hard to know where to start, though.  OK, just to
+> > get an idea, I committed a completely empty tree, made a diff (with
+> > --binary), then applied with --whitespace=fix and compared to the
+> > original.  In some cases these seem to be accidental, in some cases
+> > (git-p4) I assume they're intended to use the different style.
 > 
-> When two people/programs create an otherwise identical (for the
-> purpose of git) commits that have two different object names,
-> there'd better be a very good reason other than "I felt like
-> adding an extra header that I can use willy-nilly".
+> I personally have this in .git/config
 > 
-> Please separate the 'note' part and the 'generation' part and
-> make two separate discussion threads.
+> [core]
+> 	whitespace = indent,trail,space
 > 
-> And kill 'note' part altogether, but that can be done in that
-> thread ;-).
+> and the following three lines in contrib/.gitattributes (untracked)
+> 
+> *.py whitespace=!indent,trail,space
+> *.el whitespace=!indent,trail,space
+> fast-import/git-p4 whitespace=!indent,trail,space
+> 
+> The latter I added after receiving a fix-up patch from Toby
+> Allsopp a few days ago.  I applied git-p4 patch with the
+> strictest rule.
+> 
+> As you argued correctly earlier, when we made the whitespace
+> rules per-path using the attributes mechanism, the whitespace
+> policy should be project wide, just like coding style, so I
+> think it is a good idea to have in-tree .gitattributes files
+> that spell out what the policy is more explicitly.
+> 
+> At least I think we can all agree that this one entry in the
+> toplevel .gitattributes is a safe and good idea.
+> 
+> *.[ch] whitespace
 
-Ah, well... very good reservation. So here it goes generic 'note'
-(or 'X-*', similarly to non-standarized email headers) header...
+Sounds good to me (but so does your configuration above, and if you've
+been running with it for a while then it must not to too bad....)
 
-Still I think it is would be nice to have original commit id in
-a header when importing from foreign SCM. First, it would not pollute
-commit message, which would be identical with the original commit
-message (which allows easy two-way interaction). Second, it is
-much easier and much less error prone to extract it by machine.
+> I am not sure about the AsciiDoc Documentation.  I've always
+> assumed that the docs would format exactly the same before and
+> after running expand and/or unexpand on Documentation/*.txt
 
-As to marking explicitely renames and copies...
--- 
-Jakub Narebski
-Poland
+That's what I'd assumed too.
+
+--b.
+
+> , and
+> if that is indeed the case we should add
+> 
+> *.txt whitespace
+> 
+> to Documentation/.gitattributes as well.
+> 
+> Then I should _discard_ the one in my .git/config and the
+> untracked contrib/.gitattributes file.
