@@ -1,99 +1,89 @@
-From: Andreas Ericsson <ae-n0Zl8IkGad4@public.gmane.org>
-Subject: Re: [ANNOUNCE] GIT 1.5.4
-Date: Sat, 09 Feb 2008 10:25:37 +0100
-Message-ID: <47AD7191.3040209@op5.se>
-References: <7vmyqk563z.fsf@gitster.siamese.dyndns.org> <CFB8A272-863C-4758-91F7-E9669D70A200@zib.de> <20080207123108.GA12009@bit.office.eurotux.com> <alpine.LSU.1.00.0802071255110.8543@racer.site> <20080207130715.GA14000@bit.office.eurotux.com> <alpine.LFD.1.00.0802070949460.2732@xanadu.home>
-Reply-To: ae-n0Zl8IkGad4@public.gmane.org
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Luciano Rocha <luciano-YWehAnL2kLNBDgjK7y7TUQ@public.gmane.org>,  Johannes Schindelin <Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org>, Steffen Prohaska <prohaska-wjoc1KHpMeg@public.gmane.org>,  Git Mailing List <git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>, msysGit <msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>, Junio C Hamano <gitster-e+AXbWqSrlAAvxtiuMwx3w@public.gmane.org>
-To: Nicolas Pitre <nico-mo2vmkxb4K0@public.gmane.org>
-X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Sat Feb 09 10:26:18 2008
-Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from wa-out-0708.google.com ([209.85.146.248])
+From: Mike Hommey <mh@glandium.org>
+Subject: [PATCH v4] Work around curl-gnutls not liking to be reinitialized
+Date: Sat,  9 Feb 2008 10:41:36 +0100
+Message-ID: <1202550096-13233-1-git-send-email-mh@glandium.org>
+References: <1202512124-28669-1-git-send-email-mh@glandium.org>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Sat Feb 09 10:42:29 2008
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JNlyS-0004Pk-PK
-	for gcvm-msysgit@m.gmane.org; Sat, 09 Feb 2008 10:26:17 +0100
-Received: by wa-out-0708.google.com with SMTP id n36so8369637wag.21
-        for <gcvm-msysgit@m.gmane.org>; Sat, 09 Feb 2008 01:25:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:received:x-sender:x-apparently-to:received:received:received-spf:authentication-results:received:x-virus-scanned:x-spam-flag:x-spam-score:x-spam-level:x-spam-status:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
-        bh=FHj0BMzWKWrUqjGyXAKah9lqrPgDOqA4CwmXEmycnf8=;
-        b=qu/AyVAOXBJBRB/9MAqppdq/H51iRPfhRBlhAVg6323GLST9JQ1NO5N0BNqJz/aag3sxShQhW68ZqVGFDW7GWw0DasZ9gQcUdW2nUHmSo3klHGpIyo3pRsd+x3oWLXsBTaJXDcq7BJWqAFd1NBJ0tq0MUn5k3QZr9Y1LuzoA7YA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-sender:x-apparently-to:received-spf:authentication-results:x-virus-scanned:x-spam-flag:x-spam-score:x-spam-level:x-spam-status:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
-        b=OxQwmcN9NX4SgJrEGGHuIb0BRF81v0aHW+k3C2Of0G76CFh3B4D4tAKJ+x7r1VCDPLHSJ55ON6Mb/rmADeOl/GGrIsgl0ikYzssXBHMLFQq2sYvOx6qoDd+xhVwwEnXZuGTE6RhmWVG907AqhF2oSPchk8YYqNeB0P1xUmGJCJs=
-Received: by 10.114.57.1 with SMTP id f1mr939047waa.5.1202549143918;
-        Sat, 09 Feb 2008 01:25:43 -0800 (PST)
-Received: by 10.106.159.22 with SMTP id h22gr1690pre;
-	Sat, 09 Feb 2008 01:25:43 -0800 (PST)
-X-Sender: ae-n0Zl8IkGad4@public.gmane.org
-X-Apparently-To: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-Received: by 10.35.13.4 with SMTP id q4mr28436244pyi.7.1202549143224; Sat, 09 Feb 2008 01:25:43 -0800 (PST)
-Received: from mail.op5.se (mail.op5.se [193.201.96.20]) by mx.google.com with ESMTP id x46si850179pyg.3.2008.02.09.01.25.41; Sat, 09 Feb 2008 01:25:43 -0800 (PST)
-Received-SPF: pass (google.com: best guess record for domain of ae-n0Zl8IkGad4@public.gmane.org designates 193.201.96.20 as permitted sender) client-ip=193.201.96.20;
-Authentication-Results: mx.google.com; spf=pass (google.com: best guess record for domain of ae-n0Zl8IkGad4@public.gmane.org designates 193.201.96.20 as permitted sender) smtp.mail=ae-n0Zl8IkGad4@public.gmane.org
-Received: from localhost (localhost.localdomain [127.0.0.1]) by mail.op5.se (Postfix) with ESMTP id 2C96A1F0801E; Sat,  9 Feb 2008 10:25:40 +0100 (CET)
-X-Virus-Scanned: amavisd-new at
-X-Spam-Flag: NO
-X-Spam-Score: -2.499
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6 tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
-Received: from mail.op5.se ([127.0.0.1]) by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024) with ESMTP id 5LHTec--CQaP; Sat,  9 Feb 2008 10:25:39 +0100 (CET)
-Received: from clix.int.op5.se (unknown [172.27.78.26]) by mail.op5.se (Postfix) with ESMTP id 04D521F0800A; Sat,  9 Feb 2008 10:25:38 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.9 (X11/20071115)
-In-Reply-To: <alpine.LFD.1.00.0802070949460.2732-QuJgVwGFrdf/9pzu0YdTqQ@public.gmane.org>
-Sender: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+	id 1JNmDw-0008IA-7G
+	for gcvg-git-2@gmane.org; Sat, 09 Feb 2008 10:42:16 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1756952AbYBIJlP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Feb 2008 04:41:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756077AbYBIJlO
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Feb 2008 04:41:14 -0500
+Received: from vuizook.err.no ([85.19.215.103]:39446 "EHLO vuizook.err.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752459AbYBIJlJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Feb 2008 04:41:09 -0500
+Received: from aputeaux-153-1-42-109.w82-124.abo.wanadoo.fr ([82.124.6.109] helo=jigen)
+	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.67)
+	(envelope-from <mh@glandium.org>)
+	id 1JNmDj-0001tc-3g; Sat, 09 Feb 2008 10:42:09 +0100
+Received: from mh by jigen with local (Exim 4.69)
+	(envelope-from <mh@jigen>)
+	id 1JNmDI-0003Rt-Gc; Sat, 09 Feb 2008 10:41:36 +0100
+X-Mailer: git-send-email 1.5.4.35.gb88c
+In-Reply-To: <1202512124-28669-1-git-send-email-mh@glandium.org>
+X-Spam-Status: (score 2.2): No, score=2.2 required=5.0 tests=RCVD_IN_PBL,RCVD_IN_SORBS_DUL,RDNS_DYNAMIC autolearn=disabled version=3.2.3
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Google-Loop: groups
-Mailing-List: list msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org;
-	contact msysgit-owner-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-List-Id: <msysgit.googlegroups.com>
-List-Post: <mailto:msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Help: <mailto:msysgit-help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
-	<mailto:msysgit-unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73202>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73203>
 
+curl versions 7.16.3 to 7.18.0 included had a regression in which https
+requests following curl_global_cleanup/init sequence would fail with ASN1
+parser errors with curl-gnutls. Such sequences happen in some cases such
+as git fetch.
 
-Nicolas Pitre wrote:
-> On Thu, 7 Feb 2008, Luciano Rocha wrote:
-> 
->> On Thu, Feb 07, 2008 at 12:55:58PM +0000, Johannes Schindelin wrote:
->>> Hi,
->>>
->>> On Thu, 7 Feb 2008, Luciano Rocha wrote:
->>>
->>>> Why do I have to accept the GPL to install msysgit?
->>> Because that's the only license you have to use git.
->> Again, GPL governs distribution, not use.
->>
->>> Get over it, or use another SCM,
->> I like and use GPL, but I won't force my users to accept the GPL in
->> order to use programs released under it.
-> 
-> What are they forced into if they indeed only want to _use_ Git?
-> 
-> They nevertheless must be made aware of the rules they have to follow in 
-> case the idea of redistributing it crosses their mind.
-> 
+We work around this by removing the http_init and http_cleanup calls from
+get_refs_via_curl, replacing them with a transport->data initialization
+with the http_walker (which does http_init).
 
-No, because redistributing software is always illegal unless explicitly
-permitted. The GPL explicitly permits it, so they have to find that
-piece of license, read it, determine "oh this is ok then" and then go
-ahead and email it to their friends.
+While the http_walker is not currently used in get_refs_via_curl, http
+and walker code refactor will make it use it.
 
-Seriously though, the only thing I expect nobody would want to is
-that some company starts distributing git as their own scm, under a
-different license and probably closed-source too. EFF can provide
-lawyer help for such cases. Such a company would obviously read the
-license and realise that it's impossible for them to do so.
+Signed-off-by: Mike Hommey <mh@glandium.org>
+---
+ FWIW, the previous patch lacked an initialization for pragma_header. But I
+ actually got a better idea ; a more long-term one.
 
+ transport.c |    7 +++----
+ 1 files changed, 3 insertions(+), 4 deletions(-)
+
+diff --git a/transport.c b/transport.c
+index babaa21..497f853 100644
+--- a/transport.c
++++ b/transport.c
+@@ -441,11 +441,12 @@ static struct ref *get_refs_via_curl(struct transport *transport)
+ 	struct ref *ref = NULL;
+ 	struct ref *last_ref = NULL;
+ 
++	if (!transport->data)
++		transport->data = get_http_walker(transport->url);
++
+ 	refs_url = xmalloc(strlen(transport->url) + 11);
+ 	sprintf(refs_url, "%s/info/refs", transport->url);
+ 
+-	http_init();
+-
+ 	slot = get_active_slot();
+ 	slot->results = &results;
+ 	curl_easy_setopt(slot->curl, CURLOPT_FILE, &buffer);
+@@ -473,8 +474,6 @@ static struct ref *get_refs_via_curl(struct transport *transport)
+ 		return NULL;
+ 	}
+ 
+-	http_cleanup();
+-
+ 	data = buffer.buf;
+ 	start = NULL;
+ 	mid = data;
 -- 
-Andreas Ericsson                   andreas.ericsson-n0Zl8IkGad4@public.gmane.org
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+1.5.4.35.gb88c
