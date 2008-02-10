@@ -1,107 +1,142 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Add "--show-all" revision walker flag for debugging
-Date: Sun, 10 Feb 2008 12:17:21 -0800 (PST)
-Message-ID: <m3myq8fwdx.fsf@localhost.localdomain>
-References: <alpine.LFD.1.00.0802091341210.2896@woody.linux-foundation.org>
-	<alpine.LSU.1.00.0802100110450.11591@racer.site>
-	<alpine.LFD.1.00.0802092016540.2732@xanadu.home>
-	<alpine.LSU.1.00.0802100130090.11591@racer.site>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [EGIT PATCH 2/2] Resort entries in "normal" order before looking for conflicts
+Date: Sun, 10 Feb 2008 21:18:29 +0100
+Message-ID: <200802102118.29647.robin.rosenberg.lists@dewire.com>
+References: <1202255166-4581-1-git-send-email-robin.rosenberg@dewire.com> <200802060150.37222.robin.rosenberg@dewire.com> <200802102113.50578.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nicolas Pitre <nico@cam.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Feb 10 21:18:17 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Roger C. Soares" <rogersoares@intelinet.com.br>,
+	Dave Watson <dwatson@mimvista.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Feb 10 21:19:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOIcp-0005Ki-Eb
-	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 21:18:07 +0100
+	id 1JOIdo-0005gK-8i
+	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 21:19:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753430AbYBJUR1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Feb 2008 15:17:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753351AbYBJUR1
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 15:17:27 -0500
-Received: from fg-out-1718.google.com ([72.14.220.152]:8009 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753174AbYBJUR0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Feb 2008 15:17:26 -0500
-Received: by fg-out-1718.google.com with SMTP id e21so3561311fga.17
-        for <git@vger.kernel.org>; Sun, 10 Feb 2008 12:17:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
-        bh=VAPLU5jnJbFI52at7ck0xDDCkVRibqCF0kEnstrTbxI=;
-        b=UChacqr9AzRuSxjsgS3ZVvl28CbtgTUJY7U05SjTsIZ52vXjO8Oc1j95LgcxWUgFzkOXV/Ly7w0wRrznMg8Nz0taE79BgYf2QFHer3VKpB9PyEfPd7NI07FnXfVNoYgaqBaCzUNqEM8evRe/3VofiHvyou0rLzZC0UFn1j9Gx8o=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
-        b=iZZ3LS7b9T932CUGk4tnvN1YxXp+3hqzvirGch6mJkYO5mFWDvlKC7VhXp58A+Fy31fhFLPdOBuhlFVEnevK7/sQTJX2WHMk0sCRhANrc8TtwbYcNbsST4yanTYta1kXUPb5q9KlbjTz2A/WQ6jnIXjCj4B6231wt9MrqEH0LrU=
-Received: by 10.82.158.12 with SMTP id g12mr27966030bue.18.1202674642804;
-        Sun, 10 Feb 2008 12:17:22 -0800 (PST)
-Received: from localhost.localdomain ( [83.8.220.19])
-        by mx.google.com with ESMTPS id z37sm17427011ikz.1.2008.02.10.12.17.20
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 10 Feb 2008 12:17:21 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m1AJNwhJ031754;
-	Sun, 10 Feb 2008 20:23:59 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m1AJNsOu031751;
-	Sun, 10 Feb 2008 20:23:54 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@fuw.edu.pl using -f
-In-Reply-To: <alpine.LSU.1.00.0802100130090.11591@racer.site>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1753436AbYBJUSf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 10 Feb 2008 15:18:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753351AbYBJUSe
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 15:18:34 -0500
+Received: from [83.140.172.130] ([83.140.172.130]:14654 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1753203AbYBJUSe convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 10 Feb 2008 15:18:34 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id A55808006AB;
+	Sun, 10 Feb 2008 21:18:32 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id BMQsOui5Y2yX; Sun, 10 Feb 2008 21:18:32 +0100 (CET)
+Received: from [10.9.0.3] (unknown [10.9.0.3])
+	by dewire.com (Postfix) with ESMTP id D70AA800686;
+	Sun, 10 Feb 2008 21:18:31 +0100 (CET)
+User-Agent: KMail/1.9.6 (enterprise 0.20071123.740460)
+In-Reply-To: <200802102113.50578.robin.rosenberg.lists@dewire.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73398>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73399>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+s=C3=B6ndagen den 10 februari 2008 skrev Robin Rosenberg:
+> In order to fix a bug where everything is marked as modified, or in s=
+ome cases
+> not modified the unit tests. The fixes here continue to work, but I w=
+ant to
+> emphasize the tests. Comments?
 
-> On Sat, 9 Feb 2008, Nicolas Pitre wrote:
-> 
-> > I, too, have some reservations about adding any kind of generation 
-> > header to commit objects.  First because it can be generated and 
-> > maintained locally, just like the pack index.  But also because its 
-> > usefulness has not been proven in all possible graph topologies, and 
-> > adding it to the commit header pretty much deny any further 
-> > modifications/improvements on it, if for example some other kind of 
-> > generation notation becomes advantageous to use.
-> 
-> I fully agree.
+Actually the reverse. This the extension that works, the previous mail =
+contains
+the test that fails, i.e. testUnchangedComplex().
 
-I think I'd agree, also because without 'generation' (and 'roots')
-commit object header being there from beginning it is not clear when
-to calculate it: the first few commits with it would be costly.
-Besides graft and shallow information is local, and it affect commit
-traversal.
+You need this patch first though.=20
 
-I was thinking about pack-index like file, either directly mapping
-"sha1 -> generation + roots", or indirectly "sha1 -> offset", 
-"offset -> generation + roots".
+-- robin
 
+=46rom 6d169c4e682359d8832047662591e341e91d186d Mon Sep 17 00:00:00 200=
+1
+=46rom: Robin Rosenberg <robin.rosenberg@dewire.com>
+Date: Sun, 10 Feb 2008 20:01:53 +0100
+Subject: [PATCH] Tighten IndexDiffTest to make it test better what it c=
+laims to test
 
-P.S. Would having generation + roots be enough?
+---
+ .../tst/org/spearce/jgit/lib/IndexDiffTest.java    |   22 ++++++++++++=
+++++++++
+ 1 files changed, 22 insertions(+), 0 deletions(-)
 
-  gen(rev) = max_i { gen(i) + 1 : i in parents(rev) } || 1
-
-  roots(rev) = { rev  if rev is a root (parentless) commit 
-               { union of roots of parents of a commit otherwise
-
-Union in the sense of set sum.
-
-Note that if roots was to be saved in commit header, then it couldn't
-be as simple as commit-id for root commits: no self links. It would
-have to be empty for root commits, and the "union of roots" would have
-to be modified to "union of roots or commit ids for root commits, of
-each of parents of a commit".
-
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/lib/IndexDiffTe=
+st.java=20
+b/org.spearce.jgit.test/tst/org/spearce/jgit/lib/IndexDiffTest.java
+index ba5d8d7..629c06c 100644
+--- a/org.spearce.jgit.test/tst/org/spearce/jgit/lib/IndexDiffTest.java
++++ b/org.spearce.jgit.test/tst/org/spearce/jgit/lib/IndexDiffTest.java
+@@ -31,8 +31,12 @@ public class IndexDiffTest extends RepositoryTestCas=
+e {
+ 		index.add(trash, new File(trash, "dir/subfile"));
+ 		IndexDiff diff =3D new IndexDiff(tree, index);
+ 		diff.diff();
++		assertEquals(2, diff.getAdded().size());
+ 		assertTrue(diff.getAdded().contains("file1"));
+ 		assertTrue(diff.getAdded().contains("dir/subfile"));
++		assertEquals(0, diff.getChanged().size());
++		assertEquals(0, diff.getModified().size());
++		assertEquals(0, diff.getRemoved().size());
+ 	}
+=20
+ 	public void testRemoved() throws IOException {
+@@ -44,11 +48,20 @@ public class IndexDiffTest extends RepositoryTestCa=
+se {
+ 		tree.addFile("file2");
+ 		tree.addFile("dir/file3");
+ 		assertEquals(2, tree.memberCount());
++		tree.findBlobMember("file2").setId(new ObjectId("30d67d4672d5c05833b=
+7192cc77a79eaafb5c7ad"));
++		Tree tree2 =3D (Tree) tree.findTreeMember("dir");
++		tree2.findBlobMember("file3").setId(new ObjectId("873fb8d667d05436d7=
+28c52b1d7a09528e6eb59b"));
++		tree2.setId(new ObjectWriter(db).writeTree(tree2));
++		tree.setId(new ObjectWriter(db).writeTree(tree));
+=20
+ 		IndexDiff diff =3D new IndexDiff(tree, index);
+ 		diff.diff();
++		assertEquals(2, diff.getRemoved().size());
+ 		assertTrue(diff.getRemoved().contains("file2"));
+ 		assertTrue(diff.getRemoved().contains("dir/file3"));
++		assertEquals(0, diff.getChanged().size());
++		assertEquals(0, diff.getModified().size());
++		assertEquals(0, diff.getAdded().size());
+ 	}
+=20
+ 	public void testModified() throws IOException {
+@@ -65,10 +78,19 @@ public class IndexDiffTest extends RepositoryTestCa=
+se {
+ 		tree.addFile("dir/file3").setId(new ObjectId("0123456789012345678901=
+234567890123456789"));
+ 		assertEquals(2, tree.memberCount());
+=20
++		Tree tree2 =3D (Tree) tree.findTreeMember("dir");
++		tree2.setId(new ObjectWriter(db).writeTree(tree2));
++		tree.setId(new ObjectWriter(db).writeTree(tree));
+ 		IndexDiff diff =3D new IndexDiff(tree, index);
+ 		diff.diff();
++		assertEquals(2, diff.getChanged().size());
+ 		assertTrue(diff.getChanged().contains("file2"));
+ 		assertTrue(diff.getChanged().contains("dir/file3"));
++		assertEquals(1, diff.getModified().size());
+ 		assertTrue(diff.getModified().contains("dir/file3"));
++		assertEquals(0, diff.getAdded().size());
++		assertEquals(0, diff.getRemoved().size());
++		assertEquals(0, diff.getMissing().size());
+ 	}
++
+ }
+--=20
+1.5.4.rc4.25.g81cc
