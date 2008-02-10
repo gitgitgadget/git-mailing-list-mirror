@@ -1,62 +1,46 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] RFC: git lazy clone proof-of-concept
-Date: Sat, 09 Feb 2008 22:10:06 -0500 (EST)
-Message-ID: <alpine.LFD.1.00.0802092200350.2732@xanadu.home>
-References: <200802081828.43849.kendy@suse.cz>
- <m3ejbngtnn.fsf@localhost.localdomain> <200802091627.25913.kendy@suse.cz>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH] Fix "git clone" for git:// protocol
+Date: Sat, 9 Feb 2008 22:14:16 -0500 (EST)
+Message-ID: <alpine.LNX.1.00.0802092208280.13593@iabervon.org>
+References: <alpine.LSU.1.00.0802091657000.11591@racer.site> <alpine.LNX.1.00.0802091205530.13593@iabervon.org> <alpine.LSU.1.00.0802100302050.11591@racer.site>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Jan Holesovsky <kendy@suse.cz>
-X-From: git-owner@vger.kernel.org Sun Feb 10 04:10:51 2008
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Feb 10 04:15:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JO2ag-0000iq-L7
-	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 04:10:51 +0100
+	id 1JO2el-0001Mb-Oo
+	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 04:15:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755544AbYBJDKK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Feb 2008 22:10:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755490AbYBJDKK
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Feb 2008 22:10:10 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:50102 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755412AbYBJDKI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Feb 2008 22:10:08 -0500
-Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR005.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JW00020Q64MJK60@VL-MO-MR005.ip.videotron.ca> for
- git@vger.kernel.org; Sat, 09 Feb 2008 22:09:59 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <200802091627.25913.kendy@suse.cz>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+	id S1755627AbYBJDOS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Feb 2008 22:14:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755959AbYBJDOS
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Feb 2008 22:14:18 -0500
+Received: from iabervon.org ([66.92.72.58]:55075 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755627AbYBJDOR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Feb 2008 22:14:17 -0500
+Received: (qmail 4609 invoked by uid 1000); 10 Feb 2008 03:14:16 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 10 Feb 2008 03:14:16 -0000
+In-Reply-To: <alpine.LSU.1.00.0802100302050.11591@racer.site>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73302>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73303>
 
-On Sat, 9 Feb 2008, Jan Holesovsky wrote:
+On Sun, 10 Feb 2008, Johannes Schindelin wrote:
 
-> On Friday 08 February 2008 20:00, Jakub Narebski wrote:
-> 
-> > Both Mozilla import, and GCC import were packed below 0.5 GB. Warning:
-> > you would need machine with large amount of memory to repack it
-> > tightly in sensible time!
-> 
-> As I answered elsewhere, unfortunately it goes out of memory even on 8G 
-> machine (x86-64), so...  But still trying.
+> 	How about this?
 
-Try setting the following config variables as follows:
+Looks good to me.
 
-	git config pack.deltaCacheLimit 1
-	git config pack.deltaCacheSize 1
-	git config pack.windowMemory 1g
+Acked-by: Daniel Barkalow <barkalow@iabervon.org>
 
-That should help keeping memory usage somewhat bounded.
-
-
-Nicolas
+	-Daniel
+*This .sig left intentionally blank*
