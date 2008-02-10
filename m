@@ -1,74 +1,86 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: [RFC/PATCH] Implement git-cp.
-Date: Sun, 10 Feb 2008 14:29:04 +0100
-Message-ID: <200802101429.04765.robin.rosenberg.lists@dewire.com>
-References: <38b2ab8a0802031023y2ed7a5aax6d3c404b08757a4d@mail.gmail.com> <alpine.LSU.1.00.0802100125510.11591@racer.site> <7vzlu9uu7c.fsf@gitster.siamese.dyndns.org>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH] Improve git-help--browse browser support under OS X
+Date: Sun, 10 Feb 2008 14:45:15 +0100
+Message-ID: <200802101445.16033.chriscool@tuxfamily.org>
+References: <1202505794-13409-1-git-send-email-jaysoffian+git@gmail.com> <76718490802091815s45c19113t938f5257aad3f46c@mail.gmail.com> <20080210124336.GH30368@dpotapov.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Miklos Vajna <vmiklos@frugalware.org>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Francis Moreau <francis.moro@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Feb 10 14:29:46 2008
+Cc: Jay Soffian <jaysoffian+git@gmail.com>, git@vger.kernel.org
+To: Dmitry Potapov <dpotapov@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 10 14:39:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOCFd-0007aP-3S
-	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 14:29:45 +0100
+	id 1JOCPV-0001Kl-IO
+	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 14:39:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750865AbYBJN3N convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 10 Feb 2008 08:29:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750852AbYBJN3N
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 08:29:13 -0500
-Received: from [83.140.172.130] ([83.140.172.130]:12490 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1750781AbYBJN3I (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Feb 2008 08:29:08 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 04B978006AB;
-	Sun, 10 Feb 2008 14:29:07 +0100 (CET)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 1FSk5ldHZKsF; Sun, 10 Feb 2008 14:29:06 +0100 (CET)
-Received: from [10.9.0.3] (unknown [10.9.0.3])
-	by dewire.com (Postfix) with ESMTP id 6550C800686;
-	Sun, 10 Feb 2008 14:29:06 +0100 (CET)
-User-Agent: KMail/1.9.6 (enterprise 0.20071123.740460)
-In-Reply-To: <7vzlu9uu7c.fsf@gitster.siamese.dyndns.org>
+	id S1750851AbYBJNjX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 10 Feb 2008 08:39:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750829AbYBJNjX
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 08:39:23 -0500
+Received: from smtp1-g19.free.fr ([212.27.42.27]:49465 "EHLO smtp1-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750751AbYBJNjW convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 10 Feb 2008 08:39:22 -0500
+Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 5DA731AB2B7;
+	Sun, 10 Feb 2008 14:39:18 +0100 (CET)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 3EA491AB2B3;
+	Sun, 10 Feb 2008 14:39:18 +0100 (CET)
+User-Agent: KMail/1.9.7
+In-Reply-To: <20080210124336.GH30368@dpotapov.dyndns.org>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73353>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73354>
 
-s=F6ndagen den 10 februari 2008 skrev Junio C Hamano:
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->=20
-> > If you touch builtin-mv.c already, why not just move cmd_cp() in th=
-ere? =20
-> > It's not like it would be the first cmd_*() function living in the =
-same=20
-> > file as other cmd_*() functions.
->=20
-> Why do we even want "git-cp", especially when git-mv and git-rm
-> are already pretty much redundant commands?
->=20
-> Especially, why do we even encourage copy-and-paste?
+Le dimanche 10 f=E9vrier 2008, Dmitry Potapov a =E9crit :
+> On Sat, Feb 09, 2008 at 09:15:30PM -0500, Jay Soffian wrote:
+> > I guess I'm confused by the criticism as I thought that's what I di=
+d.
+> > "open" is only added to the list of browsers to try if the
+> > SECURITYSESSIONID environment variable is set (indicating an OS X G=
+UI
+> > login environment).=20
 
-We do not. I've seen too much damage being done through copy/paste. A
-much better (safer) way to copy code is to re-type it. I've asked more
-than once, when asked to help debug a piece of code: "Did you copy this=
-=20
-code?".
+I wonder if "open" works on OS X outside the OS X GUI environment. (And=
+ do=20
+people use OS X outside the OS X GUI environment ?)
 
-=46or this reason I have a vision of a "plugin" for Eclipse that disabl=
-es paste
-if the clipboard contains copied code. Cut and paste would be ok.
+> > I don't see how the change I made could adversely=20
+> > impact the users of other systems.
+>
+> Would not be better to use uname instead like this
+>
+>   if test "$(uname -s)" =3D=3D "Darwin"; then
+>     ...
+> or in addition to SECURITYSESSIONID:
+>
+>   if test -n "$SECURITYSESSIONID" -a "$(uname -s)" =3D=3D "Darwin"; t=
+hen
+>     ...
+> ?
+>
+> I think it would be more reliable and more importantly it makes the
+> code easier to understand, because it is clear now for everyone that
+> this is OS X specific.
+>
+> BTW, should not it be mentioned in the documentation? Probably, in
+> the list of supported web browsers in git-help.txt.
 
--- robin
+In the git "next" branch, "git-help--browse" has been=20
+renamed "git-web--browse". And the original patch is=20
+against "git-web--browse" except in the title where it is=20
+about "git-help--browse".
+
+Anyway now in "next", "git-web--browse" is used by both "git help" and =
+"git=20
+instaweb", so the documentation of both commands need an update.
+
+Thanks,
+Christian.=20
