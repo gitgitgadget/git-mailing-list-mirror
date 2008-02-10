@@ -1,129 +1,85 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Add "--show-all" revision walker flag for debugging
-Date: Sun, 10 Feb 2008 23:53:39 +0100
-Message-ID: <200802102353.40230.jnareb@gmail.com>
-References: <alpine.LFD.1.00.0802091341210.2896@woody.linux-foundation.org> <m3myq8fwdx.fsf@localhost.localdomain> <alpine.LFD.1.00.0802101241590.2896@woody.linux-foundation.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Minor annoyance with git push
+Date: Sun, 10 Feb 2008 14:59:18 -0800
+Message-ID: <7vzlu8cta1.fsf@gitster.siamese.dyndns.org>
+References: <46a038f90802072044u3329fd33w575c689cba2917ee@mail.gmail.com>
+	<20080209030046.GA10470@coredump.intra.peff.net>
+	<6B804F0D-9C3B-46F3-B922-7A5CBEF55522@zib.de>
+	<alpine.LSU.1.00.0802091307160.11591@racer.site>
+	<7v7ihd7ee1.fsf@gitster.siamese.dyndns.org>
+	<alpine.LSU.1.00.0802100213330.11591@racer.site>
+	<0DE4061C-7189-4932-AA3D-D09009F753F2@wincent.com>
+	<alpine.LSU.1.00.0802101625200.11591@racer.site>
+	<07136779-23EB-4DAA-84C3-D54B7AC029AB@wincent.com>
+	<20080210223440.GA15051@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Nicolas Pitre <nico@cam.org>,
-	Junio C Hamano <gitster@pobox.com>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Wincent Colaiuta <win@wincent.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Steffen Prohaska <prohaska@zib.de>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
 	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sun Feb 10 23:54:46 2008
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Feb 11 00:01:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOL4O-0000pD-JT
-	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 23:54:45 +0100
+	id 1JOLA9-0002KJ-Db
+	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 00:00:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752328AbYBJWxw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Feb 2008 17:53:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752074AbYBJWxw
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 17:53:52 -0500
-Received: from ug-out-1314.google.com ([66.249.92.170]:14190 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752047AbYBJWxv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Feb 2008 17:53:51 -0500
-Received: by ug-out-1314.google.com with SMTP id z38so195027ugc.16
-        for <git@vger.kernel.org>; Sun, 10 Feb 2008 14:53:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=5j2s+6cbrX6JIwDWWpr11kYgHmTQQFOUqPBlXaVLicE=;
-        b=UzjXT4WGKhXO5X9MW+EZm6b5dL1heDhJFeCwF2vqiG6RRAEw9T1SKnv4uBJo/apRRqJ98u5K8+K9SoCcYMXwrdgMx4xnB/Lf1WimqGn4F6OUlZIxYnPPb1YNKsblplq74dn4j65wecqOG1zWvBvzRPD59n3B6P+XplELcx1uiQU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=iuFuwDHUq7SOZMIk3NBioBMWjxvUilXoVR5tTUIZnpcXbltoP3EyU2eLwfBhqJ3tfRLu0KOvYnRKHCAlzyMkkezWm+ZzL/O5lcgiunmFny/+gH99yGneF+RPoP0p3J9ragVFS0QQhKuPyAgXrIaF5pVYQfAucIZZDCWMGFAP3fA=
-Received: by 10.67.20.3 with SMTP id x3mr8346431ugi.3.1202684025768;
-        Sun, 10 Feb 2008 14:53:45 -0800 (PST)
-Received: from ?192.168.1.11? ( [83.8.220.19])
-        by mx.google.com with ESMTPS id w40sm1584137ugc.45.2008.02.10.14.53.43
-        (version=SSLv3 cipher=OTHER);
-        Sun, 10 Feb 2008 14:53:44 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <alpine.LFD.1.00.0802101241590.2896@woody.linux-foundation.org>
-Content-Disposition: inline
+	id S1753142AbYBJW7n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Feb 2008 17:59:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752971AbYBJW7m
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 17:59:42 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:54390 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753153AbYBJW7l (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Feb 2008 17:59:41 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 9A5462FCF;
+	Sun, 10 Feb 2008 17:59:36 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id D9F8C2FCE;
+	Sun, 10 Feb 2008 17:59:25 -0500 (EST)
+In-Reply-To: <20080210223440.GA15051@sigill.intra.peff.net> (Jeff King's
+	message of "Sun, 10 Feb 2008 17:34:40 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73431>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73432>
 
-On Sat, 10 Feb 2008, Linus Torvalds wrote:
-> 
-> On Sun, 10 Feb 2008, Jakub Narebski wrote:
-> > 
-> > P.S. Would having generation + roots be enough?
->
-> I'm wavering here. Maybe just "generation" works (the longest path from 
-> any root), because what we are looking for is essentially "guarantee that 
-> this commit cannot possibly be reached from that other commit", and I 
-> guess a simple generation count actually does work for that (if the 
-> generation of "x" is smaller than the generation of "y", we definitely 
-> cannot reach y from x).
+Jeff King <peff@peff.net> writes:
 
-Well, "generation" number alone would work quote well as an exclusion
-mechanism; generation + roots would work better, I think.
+> ... Are there any
+> other git commands which use non-HEAD branches that have not been
+> explicitly mentioned by the user?  I can think only of query-type
+> commands (like show-branch, or describe) that are non-state-changing.
 
-Lets take for an example the following revision graph:
+That's an irrelevant comparison.  push and fetch have always
+been multi-branch operations by default from day one.  The issue
+is not HEAD vs non-HEAD.
 
-roots: a    a    a    aA   aA
-gen:   1    2    3    4    5
+You can argue that historically established practices do not
+matter at all (at least to new people), and I'd grant that it
+may be a valid argument.  But a change that breaks existing
+practices needs to be sold much more carefully.  I still do not
+understand what the opposition is to keep the current behaviour
+as the default and have a shorthand for the single head push
+accessible with a short and sweet "git push $there HEAD" (and
+default $there to 'origin' when missing).
 
-       a----b----c----d----e
-                     /
-            A----B--/
+If you are introducing a new behaviour, there is no way the new
+behaviour can start out by replacing the longtime default.  It
+should start out as an option, and if it is a commonly useful
+option then make it an _easily accessible_ option.  And accept
+such an _enhancement_ sooner to help people who want such a
+behaviour sooner.  That would not hurt anybody but help
+(hopefully) many people, without downside.
 
-gen:        1    2
-roots:      A    A
-
-For example lone generation number is enough to decide that 'c'
-(generation 3) cannot be reached from 'a' (generation 1 < 3), and
-that 'c' (generation 3) cannot be reached from 'B' (generation 2 < 3).
-Roots allow for easy check that 'B' (gen: 2, roots: A) cannot be
-reached from 'c' (roots: a, and A \not\in a), but can be reached
-from 'e' (gen: 5 > 2, roots: aA \ni a).
-
-What I don't know if generation number would be enough to avoid
-"going to root" or "going to common ancestor" costly case when
-calculating excluded commits.
-
-> At the same time, I'm still not really convinced we need to add the 
-> redundant info. I do think I *should* have designed it that way to start 
-> with (and I thought so two years ago - blaah), so the strongest reason for 
-> "we should add generation numbers" at least for me is that I actually 
-> think it's a GoodThing(tm) to have.
-
-While this information can be calculated from revision graph it is
-I think costly enough that it truly would be better to have it in
-commit object.
-
-Well, we could always start using core.repositoryFormatVersion ;-)
-
-> But adding it is a pretty invasive thing, and would force people to 
-> upgrade (it really isn't backwards compatible - old versions of git would 
-> immediately refuse to touch archives with even just a single top commit 
-> that has a generation number in it, unless we'd hide it at the end of the 
-> buffer and just uglify things in general).
-
-Well, we could always add it as a local (per repository) "cache".
-With only generation numbers we could use pack-index-like format
-to store a mapping "commit sha-1 => generation number", just like
-now pack index stores mapping "object sha-1 => offset in pack".
-
-If we want to store also roots, we could either map 
-"commit sha-1 => generation number, roots set offset / id" (constant
-length value)[*1*], or have gen-*.gen file with generation numbers
-and roots, and gen-*.idx as index to that file.
-
-
-[*1*] If I understand math correctly it would limit us in theory to
-up to 64 roots (git.git has 8 roots IIRC).
--- 
-Jakub Narebski
-Poland
+Switching the default behaviour is a much longer term thing.  It
+definitely has downside people mentioned in this thread.
