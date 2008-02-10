@@ -1,189 +1,100 @@
-From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
-Subject: [StGit PATCH 1/2] Convert "stg delete" to the new infrastructure
-Date: Sun, 10 Feb 2008 21:48:45 +0100
-Message-ID: <20080210204706.17886.69425.stgit@yoghurt>
-References: <20080210204628.17886.27365.stgit@yoghurt>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [RFC] repack vs re-clone
+Date: Sun, 10 Feb 2008 15:50:46 -0500 (EST)
+Message-ID: <alpine.LFD.1.00.0802101452550.2732@xanadu.home>
+References: <e5bfff550802100025k616ccff5ib2917d283eeb0ff0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	David =?utf-8?q?K=C3=A5gedal?= <davidk@lysator.liu.se>
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 10 21:49:24 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: gi mailing list <git@vger.kernel.org>
+To: Marco Costalba <mcostalba@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 10 21:51:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOJ75-0006dS-M6
-	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 21:49:24 +0100
+	id 1JOJ90-0007JV-4d
+	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 21:51:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754827AbYBJUsu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 10 Feb 2008 15:48:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754755AbYBJUst
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 15:48:49 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2855 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754032AbYBJUst (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Feb 2008 15:48:49 -0500
-Received: from localhost ([127.0.0.1] helo=[127.0.1.1])
-	by diana.vm.bytemark.co.uk with esmtp (Exim 3.36 #1 (Debian))
-	id 1JOJ6S-0005G3-00; Sun, 10 Feb 2008 20:48:44 +0000
-In-Reply-To: <20080210204628.17886.27365.stgit@yoghurt>
-User-Agent: StGIT/0.14.1
+	id S1754452AbYBJUus (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Feb 2008 15:50:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753011AbYBJUus
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 15:50:48 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:46631 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752744AbYBJUur (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Feb 2008 15:50:47 -0500
+Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0JW100CTTJ8MHDC0@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Sun, 10 Feb 2008 15:50:46 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <e5bfff550802100025k616ccff5ib2917d283eeb0ff0@mail.gmail.com>
+User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73411>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73412>
 
-In the process, it gains the ability to delete any applied patch (not
-just the topmost one, like before), even when deleting patches from
-another branch. (However, when deleting patches on another branch, we
-obviously can't represent a conflict in the index and worktree, so any
-conflicts will make the operation abort.)
+On Sun, 10 Feb 2008, Marco Costalba wrote:
 
-One of the t1600 subtests made sure that we couldn't delete
-non-topmost patches, and had to be corrected.
+> Sometime I found myself re-cloning entirely a repository, as example
+> the Linux tree, instead of repackaging my local copy.
+> 
+> The reason is that the published Linux repository is super compressed
+> and to reach the same level of compression on my local copy I would
+> need to give my laptop a long night running.
 
-Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
+No.  I really doubt the public Linux repository is compressed with 
+anything but the default repack settings.
 
----
+And on my average PC by today's standards (P4 @ 3GHz with 1GB memory), 
+repacking the Linux repo takes less than 6.5 minutes, and peak RSS is 
+around 450MB.
 
-Unlike the "stg new" conversion, this resulted in a sizeable reduction
-of lines of code, and of code complexity.
+> So it happens to be just faster to re-clone the whole thing by upstream.
 
- stgit/commands/delete.py |   72 +++++++++++++++-----------------------=
---------
- t/t1600-delete-one.sh    |    8 +++--
- 2 files changed, 27 insertions(+), 53 deletions(-)
+Only if you're lucky to have a fast connection to the net with a high 
+transfer quota.
+
+> Also repackaging a big repo in the optimal way is not so trivial, you
+> need to understand quite advanced stuff like window depth and so on
+> and probably the pack parameters used upstream are easily better then
+> what you could 'guess' trying yourself. Or simply you don't have
+> enough RAM as would be needed.
+
+If such is your case, why would you fully repack your repo in the first 
+place?  Simply running 'git gc' should be quite good enough for people 
+uninterested in the "advanced" stuff.  The repack that 'git gc' uses 
+will happily reuse existing packed data from upstream.
 
 
-diff --git a/stgit/commands/delete.py b/stgit/commands/delete.py
-index 1696cb9..106fbd2 100644
---- a/stgit/commands/delete.py
-+++ b/stgit/commands/delete.py
-@@ -16,67 +16,41 @@ along with this program; if not, write to the Free =
-Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 US=
-A
- """
-=20
--import sys, os
--from optparse import OptionParser, make_option
--
--from stgit.commands.common import *
--from stgit.utils import *
--from stgit.out import *
--from stgit import stack, git
-+from optparse import make_option
-=20
-+from stgit.commands import common
-+from stgit.lib import transaction
-=20
- help =3D 'delete patches'
- usage =3D """%prog [options] <patch1> [<patch2>] [<patch3>..<patch4>]
-=20
--Delete the patches passed as arguments. If an applied patch is to be
--deleted, all other patches applied on top of it must be deleted too,
--and they must be explicitly specified, since this command will not try
--to delete a patch unless you explicitly ask it to. If any applied
--patches are deleted, they are popped from the stack.
-+Delete the patches passed as arguments.
-=20
- Note that the 'delete' operation is irreversible."""
-=20
--directory =3D DirectoryGotoToplevel()
-+directory =3D common.DirectoryHasRepositoryLib()
- options =3D [make_option('-b', '--branch',
-                        help =3D 'use BRANCH instead of the default one=
-')]
-=20
- def func(parser, options, args):
--    """Deletes one or more patches.
--    """
--    applied_patches =3D crt_series.get_applied()
--    unapplied_patches =3D crt_series.get_unapplied()
--    all_patches =3D applied_patches + unapplied_patches
--
-+    """Delete one or more patches."""
-+    if options.branch:
-+        stack =3D directory.repository.get_stack(options.branch)
-+        iw =3D None # can't use index/workdir to manipulate another br=
-anch
-+    else:
-+        stack =3D directory.repository.current_stack
-+        iw =3D stack.repository.default_iw
-     if args:
--        patches =3D parse_patches(args, all_patches, len(applied_patch=
-es))
-+        patches =3D set(common.parse_patches(
-+                args, (list(stack.patchorder.applied)
-+                       + list(stack.patchorder.unapplied))))
-     else:
-         parser.error('No patches specified')
--
--    applied =3D []
--
--    # find the applied patches to be deleted. We can only delete
--    # consecutive patches in the applied range
--    for patch in applied_patches[::-1]:
--        if patch in patches:
--            applied.append(patch)
--            patches.remove(patch)
--        else:
--            break
--
--    # any applied patches to be deleted but not in consecutive order?
--    for patch in patches:
--        if patch in applied_patches:
--            raise CmdException, 'Cannot delete the applied patch "%s"'=
- % patch
--
--    if applied and not options.branch:
--        check_local_changes()
--        check_conflicts()
--        check_head_top_equal(crt_series)
--
--    # delete the patches
--    for patch in applied + patches:
--        crt_series.delete_patch(patch)
--        out.info('Patch "%s" successfully deleted' % patch)
--
--    if not options.branch:
--        print_crt_patch(crt_series)
-+    trans =3D transaction.StackTransaction(stack, 'stg delete')
-+    try:
-+        to_push =3D trans.delete_patches(lambda pn: pn in patches)
-+        for pn in to_push:
-+            trans.push_patch(pn, iw)
-+    except transaction.TransactionHalted:
-+        pass
-+    return trans.run(iw)
-diff --git a/t/t1600-delete-one.sh b/t/t1600-delete-one.sh
-index 3052b3a..c3451d8 100755
---- a/t/t1600-delete-one.sh
-+++ b/t/t1600-delete-one.sh
-@@ -77,8 +77,8 @@ test_expect_success \
-     'Try to delete a non-topmost applied patch' \
-     '
-     [ $(stg applied | wc -l) -eq 2 ] &&
--    ! stg delete foo &&
--    [ $(stg applied | wc -l) -eq 2 ]
-+    stg delete foo &&
-+    [ $(stg applied | wc -l) -eq 1 ]
-     '
-=20
- test_expect_success \
-@@ -99,10 +99,10 @@ test_expect_success \
- test_expect_success \
-     'Delete a patch in another branch' \
-     '
--    [ $(stg applied | wc -l) -eq 3 ] &&
-+    [ $(stg applied | wc -l) -eq 2 ] &&
-     [ $(stg applied -b br | wc -l) -eq 1 ] &&
-     stg delete -b br baz &&
--    [ $(stg applied | wc -l) -eq 3 ] &&
-+    [ $(stg applied | wc -l) -eq 2 ] &&
-     [ $(stg applied -b br | wc -l) -eq 0 ]
-     '
-=20
+
+> On the other end it would be interesting to know, before to start the
+> new clone, what is the real advantage of this, i.e. what is the
+> repository size upstream.
+
+You can already query the remote repository directory listing and figure 
+it out.  For example:
+
+lftp -c 'open http://kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git/objects/pack && ls'
+
+And you'll note that even upstream isn't always fully packed in advance.
+
+> So I would like to ask if anyone would consider useful:
+> 
+> - A command like 'git info' or something like that that prints size of
+> local and upstream repository (among possibly other things)
+> 
+> - An option like 'git repack --clone' to instruct git to download and
+> use current upstream packs instead of trying to recreate new ones.
+
+I think that would be a very bad idea.  Not only this is rather 
+unnecessary (either you can aford to repack locally, or you live with 
+the upstream provided packing and repack incrementally which is pretty 
+good enough), but it is also really bad resource wise (that'll end up 
+only wasting net bandwitdh and CPU cycles on the server).
+
+
+Nicolas
