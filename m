@@ -1,86 +1,66 @@
-From: mkoegler@auto.tuwien.ac.at (Martin Koegler)
-Subject: Re: [PATCH] diff.c: guard config parser from value=NULL
-Date: Sun, 10 Feb 2008 22:13:41 +0100
-Message-ID: <20080210211341.GA24976@auto.tuwien.ac.at>
-References: <20080210193534.d11d8b15.chriscool@tuxfamily.org>
+From: Seth Falcon <seth@userprimary.net>
+Subject: Trouble with gitk and ActiveState tcltk on OS X
+Date: Sun, 10 Feb 2008 13:15:10 -0800
+Message-ID: <m2ve4wh5sx.fsf@ziti.evri.corp>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio Hamano <junkio@cox.net>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Pierre Habouzit <madcoder@debian.org>,
-	Govind Salinas <blix@sophiasuchtig.com>, git@vger.kernel.org
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Sun Feb 10 22:14:50 2008
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Feb 10 22:15:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOJVh-0005ym-K5
-	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 22:14:50 +0100
+	id 1JOJWh-0006Gf-3I
+	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 22:15:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756438AbYBJVNo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 10 Feb 2008 16:13:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755597AbYBJVNo
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 16:13:44 -0500
-Received: from thor.auto.tuwien.ac.at ([128.130.60.15]:33431 "EHLO
-	thor.auto.tuwien.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755384AbYBJVNn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Feb 2008 16:13:43 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by thor.auto.tuwien.ac.at (Postfix) with ESMTP id 1DD7D680BEAC;
-	Sun, 10 Feb 2008 22:13:42 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at auto.tuwien.ac.at
-Received: from thor.auto.tuwien.ac.at ([127.0.0.1])
-	by localhost (thor.auto.tuwien.ac.at [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id J26n3lr75W1q; Sun, 10 Feb 2008 22:13:42 +0100 (CET)
-Received: by thor.auto.tuwien.ac.at (Postfix, from userid 3001)
-	id EE5A068018C6; Sun, 10 Feb 2008 22:13:41 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <20080210193534.d11d8b15.chriscool@tuxfamily.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1751046AbYBJVPU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Feb 2008 16:15:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750974AbYBJVPU
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 16:15:20 -0500
+Received: from qmta06.emeryville.ca.mail.comcast.net ([76.96.30.56]:52503 "EHLO
+	QMTA06.emeryville.ca.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750943AbYBJVPS (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 10 Feb 2008 16:15:18 -0500
+Received: from OMTA01.emeryville.ca.mail.comcast.net ([76.96.30.11])
+	by QMTA06.emeryville.ca.mail.comcast.net with comcast
+	id npuh1Y0020EPchoA60Rs00; Sun, 10 Feb 2008 21:15:06 +0000
+Received: from ziti.evri.corp ([24.19.171.108])
+	by OMTA01.emeryville.ca.mail.comcast.net with comcast
+	id nxFF1Y0092LgWns8M00000; Sun, 10 Feb 2008 21:15:16 +0000
+X-Authority-Analysis: v=1.0 c=1 a=mFPw9axO2vMA:10 a=Z4mJgif-AAAA:8
+ a=xtGCs6gw5ITshMobTPoA:9 a=rxgt2zm0F-VY2M85Tr4A:7
+ a=2LS9eeMiwsRwL2vCmaWah4vRSjAA:4 a=F-J2dRE9H3gA:10 a=50e4U0PicR4A:10
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.90 (darwin)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73416>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73417>
 
-On Sun, Feb 10, 2008 at 07:35:34PM +0100, Christian Couder wrote:
-> In fact we also guard for value=3D"" as it doesn't make more sense
-> for the variables here.
->=20
-> We do that by using a new function 'xstrdup_confval' to avoid code
-> duplication.
->=20
-> By the way this changes a 'strdup' into 'xstrdup'.
->=20
-> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-> ---
->  diff.c |   23 +++++++++++++----------
->  1 files changed, 13 insertions(+), 10 deletions(-)
->=20
-> diff --git a/diff.c b/diff.c
-> index 5b8afdc..d51aecb 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -60,6 +60,14 @@ static struct ll_diff_driver {
->  	char *cmd;
->  } *user_diff, **user_diff_tail;
-> =20
-> +static int xstrdup_confval(const char *dest, const char *var, const =
-char *value)
-> +{
-> +	if (!value || !*value)
-> +		return error("%s: lacks value", var);
-> +	dest =3D xstrdup(value);
-> +	return 0;
-> +}
-> +
->  /*
->   * Currently there is only "diff.<drivername>.command" variable;
->   * because there are "diff.color.<slot>" variables, we are parsing
+Hi all,
 
-This function could be used in config.c too. So move it to a common fil=
-e.
+I'm hoping that another OS X git user can point me in the right
+direction...
 
-mfg Martin K=F6gler
+I installed the ActiveState tcltk and set the following in
+git/config.mak:
+
+    TCLTK_PATH=/usr/local/bin/wish8.5
+
+With this, git gui works great (I get a real icon when switching apps
+and the overall look is more consistent than when I was running with
+X11 + MacPorts tcltk).
+
+But gitk does not work.  gitk starts up but no window appears.  The
+menus appear, but that's it.
+
+If I start X11 and switch the wish path to /opt/local/bin/wish in the
+gitk script, then things work.  Any suggestions for running gitk
+without X11 on OS X?
+
+Thanks,
+
++ seth
+
+-- 
+Seth Falcon | seth@userprimary.net | blog: http://userprimary.net/user/
