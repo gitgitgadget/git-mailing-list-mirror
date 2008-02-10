@@ -1,122 +1,82 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Re: [PATCH] RFC: git lazy clone proof-of-concept
-Date: Sun, 10 Feb 2008 12:01:47 -0500
-Message-ID: <9e4733910802100901m729b0cdfg85ccc0ca77011249@mail.gmail.com>
-References: <200802081828.43849.kendy@suse.cz>
-	 <m3ejbngtnn.fsf@localhost.localdomain>
-	 <200802091627.25913.kendy@suse.cz>
-	 <alpine.LFD.1.00.0802092200350.2732@xanadu.home>
-	 <alpine.LSU.1.00.0802101640570.11591@racer.site>
+From: mkoegler@auto.tuwien.ac.at (Martin Koegler)
+Subject: Re: [PATCH] guard config parser from value=NULL
+Date: Sun, 10 Feb 2008 18:08:20 +0100
+Message-ID: <20080210170820.GA12162@auto.tuwien.ac.at>
+References: <12025767241532-git-send-email-mkoegler@auto.tuwien.ac.at> <7vhcghet3q.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Nicolas Pitre" <nico@cam.org>, "Jan Holesovsky" <kendy@suse.cz>,
-	"Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org,
-	"Junio C Hamano" <gitster@pobox.com>
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Feb 10 18:02:41 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Govind Salinas <govind@sophiasuchtig.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Feb 10 18:09:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOFZe-0008FK-Ti
-	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 18:02:39 +0100
+	id 1JOFft-0001yC-Se
+	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 18:09:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751926AbYBJRBv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Feb 2008 12:01:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751903AbYBJRBv
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 12:01:51 -0500
-Received: from wa-out-1112.google.com ([209.85.146.182]:32996 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751855AbYBJRBu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Feb 2008 12:01:50 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so1655282wah.23
-        for <git@vger.kernel.org>; Sun, 10 Feb 2008 09:01:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=gOio2+Cm8eImNV5cFOWzew7jUwgEiXyM269xS86qh5s=;
-        b=tQPqQpGdVpeDWC10hAtNIm01YY0AYHl4fSbaZU1RtBpPsMtPvYJgXNWnUmZMg/nuaPRn5gKmisxGpO1kp4XLpdI/RoEA+x/GlSlcFjZYqkh83mtRaw/WWDW4Lg41bByeKcDiiW5GRftbA4HHtGIjdHJMJruzXrESnJKiad4uopg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=v24a4XRhntVZIivqaBX6TaOv58OwbY9lJ2qrXV+GyqmoyU6O4yW7HKl7EG7ig3pPEHL/1L1fDWgaT9xT7s/Kx25B8TuO52XKVSuPDh+mGwplrt1wQxWZRZ+sjCcdfkjVn/I3YasWcM4CqnIjPt+KEpVQ92zKPMWSyOIEHDQNi2E=
-Received: by 10.114.81.1 with SMTP id e1mr9036517wab.11.1202662908045;
-        Sun, 10 Feb 2008 09:01:48 -0800 (PST)
-Received: by 10.114.200.7 with HTTP; Sun, 10 Feb 2008 09:01:47 -0800 (PST)
-In-Reply-To: <alpine.LSU.1.00.0802101640570.11591@racer.site>
+	id S1751924AbYBJRIX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 10 Feb 2008 12:08:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751838AbYBJRIX
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 12:08:23 -0500
+Received: from thor.auto.tuwien.ac.at ([128.130.60.15]:37345 "EHLO
+	thor.auto.tuwien.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751783AbYBJRIW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Feb 2008 12:08:22 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by thor.auto.tuwien.ac.at (Postfix) with ESMTP id 37298680BEAC;
+	Sun, 10 Feb 2008 18:08:20 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at auto.tuwien.ac.at
+Received: from thor.auto.tuwien.ac.at ([127.0.0.1])
+	by localhost (thor.auto.tuwien.ac.at [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id u-6+0SXnhb3B; Sun, 10 Feb 2008 18:08:20 +0100 (CET)
+Received: by thor.auto.tuwien.ac.at (Postfix, from userid 3001)
+	id 1DCD8680067B; Sun, 10 Feb 2008 18:08:20 +0100 (CET)
 Content-Disposition: inline
+In-Reply-To: <7vhcghet3q.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73376>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73377>
 
-On 2/10/08, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> Hi,
->
-> On Sat, 9 Feb 2008, Nicolas Pitre wrote:
->
-> > On Sat, 9 Feb 2008, Jan Holesovsky wrote:
-> >
-> > > On Friday 08 February 2008 20:00, Jakub Narebski wrote:
-> > >
-> > > > Both Mozilla import, and GCC import were packed below 0.5 GB. Warning:
-> > > > you would need machine with large amount of memory to repack it
-> > > > tightly in sensible time!
-> > >
-> > > As I answered elsewhere, unfortunately it goes out of memory even on 8G
-> > > machine (x86-64), so...  But still trying.
-> >
-> > Try setting the following config variables as follows:
-> >
-> >       git config pack.deltaCacheLimit 1
-> >       git config pack.deltaCacheSize 1
-> >       git config pack.windowMemory 1g
-> >
-> > That should help keeping memory usage somewhat bounded.
->
-> I tried that:
->
-> $ git config pack.deltaCacheLimit 1
-> $ git config pack.deltaCacheSize 1
-> $ git config pack.windowMemory 2g
-> $ #/usr/bin/time git repack -a -d -f --window=250 --depth=250
-> $ du -s objects/
-> 2548137 objects/
-> $ /usr/bin/time git repack -a -d -f --window=250 --depth=250
-> Counting objects: 2477715, done.
-> fatal: Out of memory, malloc failed411764)
-> Command exited with non-zero status 1
-> 9356.95user 53.33system 2:38:58elapsed 98%CPU (0avgtext+0avgdata
-> 0maxresident)k
-> 0inputs+0outputs (31929major+18088744minor)pagefaults 0swaps
->
-> Note that this is on a 2.4GHz Quadcode CPU with 3.5GB RAM.
+On Sat, Feb 09, 2008 at 01:07:53PM -0800, Junio C Hamano wrote:
+> Martin Koegler <mkoegler@auto.tuwien.ac.at> writes:
+>=20
+> > @@ -416,7 +416,7 @@ int git_default_config(const char *var, const c=
+har *value)
+> >  		return 0;
+> >  	}
+> > =20
+> > -	if (!strcmp(var, "user.name")) {
+> > +	if (value && !strcmp(var, "user.name")) {
+> >  		strlcpy(git_default_name, value, sizeof(git_default_name));
+> >  		return 0;
+> >  	}
+>=20
+> This is wrong, isn't it?  When somebody says
+>=20
+> 	[user]
+>         	name
+>=20
+> we should not silently ignore it, but instead say "user.name is
+> not a bool!" and error out.
+>=20
+> The same comment applies to all other
+>=20
+> 	if (value && !strcmp(var, "<varname>"))
+>=20
+> conversions.
 
-Turning on multi-core support greatly increases the memory
-consumption; at least double the single thread case.
+=46or all in config.c, yes.
 
-Going over the original repository and deleting (get all copies out of
-the history) those giant i18n files generated by programs than Sean
-refers to would be my first step. If you have 5,000 revisions of a
-10MB file I suspect it would take a huge amount of memory to pack.
-Plus you have to copy all of that pointless history around.
+=46or setup.c, I would say no. The code is called, when trying to find =
+a
+git repository.
 
->
-> I'm retrying with smaller values, but at over 2.5 hours per try, this is
-> getting tedious.
->
-> Ciao,
-> Dscho
->
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+I have seen, that a similar patch for the config.c stuff has been
+posted. I will wait some days to see, what happens with it.
 
-
--- 
-Jon Smirl
-jonsmirl@gmail.com
+mfg Martin K=F6gler
