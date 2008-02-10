@@ -1,68 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Minor annoyance with git push
-Date: Sat, 09 Feb 2008 18:07:34 -0800
-Message-ID: <7v7ihd7ee1.fsf@gitster.siamese.dyndns.org>
-References: <46a038f90802072044u3329fd33w575c689cba2917ee@mail.gmail.com>
-	<20080209030046.GA10470@coredump.intra.peff.net>
-	<6B804F0D-9C3B-46F3-B922-7A5CBEF55522@zib.de>
-	<alpine.LSU.1.00.0802091307160.11591@racer.site>
+From: "Jay Soffian" <jaysoffian+git@gmail.com>
+Subject: Re: [PATCH] Improve git-help--browse browser support under OS X
+Date: Sat, 9 Feb 2008 21:15:30 -0500
+Message-ID: <76718490802091815s45c19113t938f5257aad3f46c@mail.gmail.com>
+References: <1202505794-13409-1-git-send-email-jaysoffian+git@gmail.com>
+	 <20080209202020.GD30368@dpotapov.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Steffen Prohaska <prohaska@zib.de>, Jeff King <peff@peff.net>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Feb 10 03:08:23 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Dmitry Potapov" <dpotapov@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 10 03:16:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JO1cE-0007LU-6D
-	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 03:08:22 +0100
+	id 1JO1jk-0000Ke-0s
+	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 03:16:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752661AbYBJCHt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Feb 2008 21:07:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752836AbYBJCHt
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Feb 2008 21:07:49 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:47960 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752234AbYBJCHr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Feb 2008 21:07:47 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 0992724F7;
-	Sat,  9 Feb 2008 21:07:47 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 6796924F4;
-	Sat,  9 Feb 2008 21:07:41 -0500 (EST)
-In-Reply-To: <alpine.LSU.1.00.0802091307160.11591@racer.site> (Johannes
-	Schindelin's message of "Sat, 9 Feb 2008 13:10:21 +0000 (GMT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754536AbYBJCPd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Feb 2008 21:15:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754361AbYBJCPd
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Feb 2008 21:15:33 -0500
+Received: from wa-out-1112.google.com ([209.85.146.182]:1037 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753607AbYBJCPb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Feb 2008 21:15:31 -0500
+Received: by wa-out-1112.google.com with SMTP id v27so1329631wah.23
+        for <git@vger.kernel.org>; Sat, 09 Feb 2008 18:15:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        bh=sxqzG7LDh5LsIDA2SlHxpKAGmWjtMnuyZjCcRepfzn0=;
+        b=aFKOMSWd+6SZ8gvCpyhAul32PhPo+mnKntWe3gqGC2Bz8NVU45YRypA+dKC7tYciczQToAVYvTFOd+sFOO/EOcCdxd84+0WHEkYGusFYA+g3X99g1QJohAuCOZeq6M5dXrVxyRrFHurValGe1NEp33/sMabUj0CPmi4/xSfiq58=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=n/7sPQtUQc+mmCIkvupO82x0I3Qvs1Z6YoUhR4ccpaJGEDq2hIf+ENhbFtz5Ae6V39iJMtC4lVaTltUqI+nCgVqX5ajuu49xsPtvzF7ZPeRoLylenmAJgX/c9/4GgaLtcrsC5EtPn1n484fhAKhvpOtfi10GxMevUoxT2WTLT9k=
+Received: by 10.114.171.1 with SMTP id t1mr8818000wae.83.1202609730939;
+        Sat, 09 Feb 2008 18:15:30 -0800 (PST)
+Received: by 10.114.255.11 with HTTP; Sat, 9 Feb 2008 18:15:30 -0800 (PST)
+In-Reply-To: <20080209202020.GD30368@dpotapov.dyndns.org>
+Content-Disposition: inline
+X-Google-Sender-Auth: e11fd31cc6ddf36b
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73291>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73292>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-
-> The way would be like this, I think:
+On Feb 9, 2008 3:20 PM, Dmitry Potapov <dpotapov@gmail.com> wrote:
+> On Fri, Feb 08, 2008 at 04:23:14PM -0500, jaysoffian+git@gmail.com wrote:
+> > /usr/bin/open <document> is used under OS X to open a document just as if the
+> > user had double-clicked on the file's icon. In other words, this will open HTML
+> > files with the user's default browser. Note however that whether the document
+> > opens in a new window, or in a new tab depends upon the browser configuration.
 >
-> - introduce a command line option for push, like "--push-common-refs", and 
-> issue a warning whenever "git push" is called without command line 
-> options (along the lines "This default behaviour is deprecated; please use 
-> --push-common-refs").
->
-> - in a waaaay later version, just take away the default action of "git 
-> push", instead showing the usage.
+> This is OS X specific, so the change should be made in such a way that it
+> will not affect anyone else. Because people on other platforms may have
+> "open" to do different things. For example, on Linux, the "open" command
+> is used to open a new virtual terminal. At the same time, other systems
+> may have their own ways to start the default browser. For instance, on
+> Debian based systems, it is usually x-www-browser for X and www-browser
+> for terminal.
 
-I do not think that is a right approach.  To please both camps
-without forcing people to
+I guess I'm confused by the criticism as I thought that's what I did.
+"open" is only added to the list of browsers to try if the
+SECURITYSESSIONID environment variable is set (indicating an OS X GUI
+login environment). I don't see how the change I made could adversely
+impact the users of other systems.
 
- (1) change what they are used to, and
- (2) type overlong command line,
-
-I think the traditional "matching refs by default", combined
-with "'git push HEAD' defaults to pushing the current branch to
-the default location" would be a well balanced compromise.
+j.
