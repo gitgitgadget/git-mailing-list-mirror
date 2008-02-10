@@ -1,66 +1,56 @@
 From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: Upcoming memcached releases + rambling.
-Date: Sun, 10 Feb 2008 07:14:58 -0800 (PST)
-Message-ID: <m31w7khmhq.fsf@localhost.localdomain>
-References: <47AAC7DA.2010604@rydia.net>
-	<4422C0B2-6874-41EA-B4A0-4F3414F385FC@spy.net>
-	<47AB3DBD.60004@rydia.net>
-	<3897B3FD-4DCB-4150-8A07-7F8868A70A93@spy.net>
-	<47AD2D1F.7030807@rydia.net>
-	<5222C3B4-5E2C-45D2-8DF3-A85D69DDA2CF@spy.net>
-	<20080210110504.GA27314@coredump.intra.peff.net>
+Date: Sun, 10 Feb 2008 16:39:49 +0100
+Organization: At home
+Message-ID: <fon5s6$kff$1@ger.gmane.org>
+References: <47AAC7DA.2010604@rydia.net> <4422C0B2-6874-41EA-B4A0-4F3414F385FC@spy.net> <47AB3DBD.60004@rydia.net> <3897B3FD-4DCB-4150-8A07-7F8868A70A93@spy.net> <47AD2D1F.7030807@rydia.net> <5222C3B4-5E2C-45D2-8DF3-A85D69DDA2CF@spy.net> <20080210110504.GA27314@coredump.intra.peff.net> <m31w7khmhq.fsf@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Dustin Sallings <dustin@spy.net>, dormando <dormando@rydia.net>,
-	memcached list <memcached@lists.danga.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Feb 10 16:15:48 2008
+Content-Transfer-Encoding: 7Bit
+Cc: memcached@lists.danga.com, mercurial@selenic.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Feb 10 16:41:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JODuC-00014D-9l
-	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 16:15:45 +0100
+	id 1JOEJW-0008Fd-M5
+	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 16:41:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751490AbYBJPPJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Feb 2008 10:15:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751443AbYBJPPI
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 10:15:08 -0500
-Received: from fg-out-1718.google.com ([72.14.220.157]:11231 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751430AbYBJPPG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Feb 2008 10:15:06 -0500
-Received: by fg-out-1718.google.com with SMTP id e21so3499628fga.17
-        for <git@vger.kernel.org>; Sun, 10 Feb 2008 07:15:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
-        bh=2pybyFD8YrY0reawsDzB8CUxq7eqar8lCJI1Vii/1O4=;
-        b=Ax1al0Mih6oijIvXVuxbzAnuAbFSrAdzqw4HiUA9ntIvdr+somncwMdF5xXLkf8Z38HatP5dRVqyahhEqvjDjrq+sO1nRF/Cil7URaPGBdG0HK6c3WgrCjYhAGJT7erfraVRTnDyd0QiPl0gbfKUVVDrr3a0k0lunrzdvid4B/M=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
-        b=QiVeEKSbNjeOJY52FCPmMLpAl7eaBtT3vkCa3xQif+BfAVkORhnfjCtgwuYzv//zNIv/f/RZf+p9u6nqyAWKrFBA/6wtWf/6WUx16eBMGnxc2gHbSQtX8W/TKgY3wYCMNqFK4D8oGLx1KPRepGy+isBvILtbpR1KjoNjI1uHBEk=
-Received: by 10.82.118.2 with SMTP id q2mr27471336buc.23.1202656500495;
-        Sun, 10 Feb 2008 07:15:00 -0800 (PST)
-Received: from localhost.localdomain ( [83.8.255.105])
-        by mx.google.com with ESMTPS id z34sm4549431ikz.8.2008.02.10.07.14.56
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 10 Feb 2008 07:14:58 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m1AFEpb2030269;
-	Sun, 10 Feb 2008 16:14:53 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m1AFEfkI030261;
-	Sun, 10 Feb 2008 16:14:41 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@fuw.edu.pl using -f
-In-Reply-To: <20080210110504.GA27314@coredump.intra.peff.net>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1752791AbYBJPkU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Feb 2008 10:40:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751279AbYBJPkT
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 10:40:19 -0500
+Received: from main.gmane.org ([80.91.229.2]:45078 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753083AbYBJPkH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Feb 2008 10:40:07 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1JOEHf-0000bX-0A
+	for git@vger.kernel.org; Sun, 10 Feb 2008 15:39:59 +0000
+Received: from abxf105.neoplus.adsl.tpnet.pl ([83.8.255.105])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 10 Feb 2008 15:39:58 +0000
+Received: from jnareb by abxf105.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 10 Feb 2008 15:39:58 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+Followup-To: gmane.comp.version-control.git,gmane.comp.web.cache.memcached
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: abxf105.neoplus.adsl.tpnet.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73359>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73360>
+
+[I hate subscribe-only default-DROP mailing lists for a OSS project,
+ where you don't get even: waiting for moderator approval for not
+ subscribed. I'm trying to resend it via GMane. I'm not subscribed
+ to memcached mailing list]
 
 Jeff King <peff@peff.net> writes:
 
@@ -80,7 +70,7 @@ Did they at least asked (tried to ask) on #git channel on FreeNode?
  
 > > serve, bundle, export, import, incoming, and outgoing don't seem
 > > to have equivalences in git.
-> 
+
 > I don't know hg well at all, but I will attempt to translate (please
 > correct me if I'm wrong on any hg behavior).
 
@@ -226,7 +216,7 @@ If Git ever would want to have a command which would show which
 branches differ in some remote repository, I think it would be added
 to "git remote" (which I recommend checking).
 
-> > 	I've contributed changes to both git and hg projects and haven't had  
+> >     I've contributed changes to both git and hg projects and haven't had  
 > > good luck submitting changes upstream.   I'd be interesting in talking to 
 > > people who collaborate on projects using git both as first and  
 > > second-level contributors to see if their experiences are any better than 
@@ -249,7 +239,7 @@ http://weblog.masukomi.org/2008/2/4/some-thoughts-about-git
   or a good discussion of a patch, or a good discussion of some new
   feature and how to go about implementing it.
 
-> > 	Should memcached choose git, it may be as simple as putting up a page  
+> >     Should memcached choose git, it may be as simple as putting up a page  
 > > that says, ``this is how you clone, this is how you work, this is how you 
 > > submit your changes back.''
 > 
