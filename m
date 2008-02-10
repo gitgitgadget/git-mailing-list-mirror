@@ -1,75 +1,72 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Minor annoyance with git push
-Date: Sun, 10 Feb 2008 16:29:31 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802101626201.11591@racer.site>
-References: <46a038f90802072044u3329fd33w575c689cba2917ee@mail.gmail.com> <20080209030046.GA10470@coredump.intra.peff.net> <6B804F0D-9C3B-46F3-B922-7A5CBEF55522@zib.de> <alpine.LSU.1.00.0802091307160.11591@racer.site> <7v7ihd7ee1.fsf@gitster.siamese.dyndns.org>
- <alpine.LSU.1.00.0802100213330.11591@racer.site> <0DE4061C-7189-4932-AA3D-D09009F753F2@wincent.com> <20080210150216.GB8797@dervierte>
+From: "Derek Mahar" <derek.mahar@gmail.com>
+Subject: Re: git-cvsexportcommit and commit date
+Date: Sun, 10 Feb 2008 11:30:52 -0500
+Message-ID: <5f4b18bf0802100830w682c67e0r9886b2fe32ce3715@mail.gmail.com>
+References: <OFFF18703C.5539A99A-ON852573E7.00699FE4-852573E7.006A0F3E@db.com>
+	 <200802101415.00726.robin.rosenberg.lists@dewire.com>
+	 <5f4b18bf0802100801t20952180u6afd1eeaf2fac17@mail.gmail.com>
+	 <200802101717.32747.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Wincent Colaiuta <win@wincent.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Steffen Prohaska <prohaska@zib.de>, Jeff King <peff@peff.net>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Steven Walter <stevenrwalter@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 10 17:30:16 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Robin Rosenberg" <robin.rosenberg.lists@dewire.com>
+X-From: git-owner@vger.kernel.org Sun Feb 10 17:31:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOF4B-00050v-Fj
-	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 17:30:07 +0100
+	id 1JOF5W-0005Xi-S4
+	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 17:31:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751043AbYBJQ3b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Feb 2008 11:29:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751086AbYBJQ3b
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 11:29:31 -0500
-Received: from mail.gmx.net ([213.165.64.20]:43777 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750917AbYBJQ3a (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Feb 2008 11:29:30 -0500
-Received: (qmail invoked by alias); 10 Feb 2008 16:29:28 -0000
-Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
-  by mail.gmx.net (mp025) with SMTP; 10 Feb 2008 17:29:28 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/WdnZ7Z6/WtiY6GaGnW5wWl3pBNtSiF6tTi+Clf2
-	bCemQQYMBPgR3D
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20080210150216.GB8797@dervierte>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1751247AbYBJQaz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Feb 2008 11:30:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751197AbYBJQaz
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 11:30:55 -0500
+Received: from wx-out-0506.google.com ([66.249.82.234]:2470 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751191AbYBJQay (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Feb 2008 11:30:54 -0500
+Received: by wx-out-0506.google.com with SMTP id h31so4487931wxd.4
+        for <git@vger.kernel.org>; Sun, 10 Feb 2008 08:30:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=YJlylR7fwLfqHgAJaDpNNKg5IQzEKXwCHT055fVIGvM=;
+        b=NBlwg8dNeeeWmL9Me6ncAC96djHVSMBrNl76zYqOcVaPFhM6aAVq2wsPg6oogYLFbzsaGncb61eh1RNnVdBCa8dJHb0G0CkmyTIfbyAPb7A+3dovRfrrq33o3uAmsOUNrDq/wJpTLrGMHTGsvTNise5EvSLRxz1Y203Fuffqzcw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=KwDMqwf1NWdL5yxXUbDYcz1HOIJCh+f5DnyrmS65TJF2HoeBuRirbIAJ1ctxvqrshn0pKtOChSdyOkiCR7qdf4wKqfOL/FVVTwWDV77VGZCGrH0XqaVF7B9RRoi5DyD+Fkz3R2lXdEfq1qIj3lMAHt8dbVJf6E5NsgN28b6SoUE=
+Received: by 10.143.40.18 with SMTP id s18mr711330wfj.168.1202661052487;
+        Sun, 10 Feb 2008 08:30:52 -0800 (PST)
+Received: by 10.142.177.13 with HTTP; Sun, 10 Feb 2008 08:30:52 -0800 (PST)
+In-Reply-To: <200802101717.32747.robin.rosenberg.lists@dewire.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73366>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73367>
 
-Hi,
+On Feb 10, 2008 11:17 AM, Robin Rosenberg
+<robin.rosenberg.lists@dewire.com> wrote:
+> If you involve CVS (or any other SCM) you must rebase on top of the
+> CVS imported version, whether your repo is a clone or not. The changed
+> commit to me also means I can see wheter it s a pure git checkin or
+> whether it is from the official CVS repo, which is a "good" thing.
 
-On Sun, 10 Feb 2008, Steven Walter wrote:
+Good point.  I can also keep a second "pure" git clone of the CVS repo
+from which other users make copies.
 
-> I propose a new configuration option, remote.*.pushAllRefs, defaulting 
-> to off.  When pushAllRefs is false, "git push" pushes only the current 
-> branch.  When pushAllRefs is true, "git push" does what it does today. 
-> For the old-timers, the impact of such a change seems minimal. 
-> Worst-case, they run "git push," it doesn't do what they expect, they 
-> run "git push origin" and then go change their config files.
 
-I don't like it.
+> > Can fromcvs read from a remote CVS repository via pserver or does it
+> > only parse the RCS files directly?  I have only pserver access to our
+> > CVS repo,
+> RCS only. Note that sometimes you have rsync access. If not politely ask
+> the admin of the repo that you get read access to the raw files. (the CVSROOT/*
+> files are not needed in case that is a concern).
 
-This would mean that I would have to look into the config everytime before 
-I push, to be sure what semantics the push has in _this_ repository.
+Thank you.  I'll try this suggestion.
 
-_If_ we change git-push's default behaviour, we have to introduce an 
-option to do what the default action is now, _first_!
-
-And _then_ we can start discussing what the default action should be, and 
-I tend to think that it would make sense to default to the synopsis.
-
-But that comes _second_, and we'd have to agree on _one_ course of action.
-
-I mean, if you do not like the default behaviour of git-push now, you can 
-always introduce an alias, if you want repository/host-specific actions.
-
-Ciao,
-Dscho
+Derek
