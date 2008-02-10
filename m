@@ -1,61 +1,63 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH] Add gitattributes file making whitespace checking
- pickier
-Date: Sun, 10 Feb 2008 15:22:17 -0500 (EST)
-Message-ID: <alpine.LNX.1.00.0802101502320.13593@iabervon.org>
-References: <20080209162234.GA25533@fieldses.org> <alpine.LNX.1.00.0802091251430.13593@iabervon.org> <20080209185038.GB25533@fieldses.org> <7vr6fletkl.fsf@gitster.siamese.dyndns.org> <7vabm9gk1p.fsf@gitster.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] RFC: git lazy clone proof-of-concept
+Date: Sun, 10 Feb 2008 20:32:41 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0802102032211.11591@racer.site>
+References: <200802081828.43849.kendy@suse.cz> <alpine.LFD.1.00.0802081250240.2732@xanadu.home> <200802091525.36284.kendy@suse.cz> <e5bfff550802092323u3ec3c9c8uf6e92399395efd27@mail.gmail.com> <alpine.LSU.1.00.0802101207330.11591@racer.site>
+ <ee77f5c20802100846g10937a49m4901f88a70a6de0@mail.gmail.com> <alpine.LSU.1.00.0802101649110.11591@racer.site> <alpine.LFD.1.00.0802101443240.2732@xanadu.home>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "J. Bruce Fields" <bfields@fieldses.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Feb 10 21:22:56 2008
+Cc: David Symonds <dsymonds@gmail.com>,
+	Marco Costalba <mcostalba@gmail.com>,
+	Jan Holesovsky <kendy@suse.cz>, git@vger.kernel.org,
+	gitster@pobox.com
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Sun Feb 10 21:33:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOIhR-0006sT-FK
-	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 21:22:53 +0100
+	id 1JOIrY-0001vS-0w
+	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 21:33:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753931AbYBJUWT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Feb 2008 15:22:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753641AbYBJUWT
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 15:22:19 -0500
-Received: from iabervon.org ([66.92.72.58]:60952 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753565AbYBJUWS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Feb 2008 15:22:18 -0500
-Received: (qmail 8968 invoked by uid 1000); 10 Feb 2008 20:22:17 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 10 Feb 2008 20:22:17 -0000
-In-Reply-To: <7vabm9gk1p.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1754631AbYBJUcl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Feb 2008 15:32:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754237AbYBJUcl
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 15:32:41 -0500
+Received: from mail.gmx.net ([213.165.64.20]:38232 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753790AbYBJUck (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Feb 2008 15:32:40 -0500
+Received: (qmail invoked by alias); 10 Feb 2008 20:32:38 -0000
+Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
+  by mail.gmx.net (mp002) with SMTP; 10 Feb 2008 21:32:38 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/f5AI6/YLftP7HQaWIETuYxFAAOdbNJUBPr1K47e
+	v+18RNF7LoBNx2
+X-X-Sender: gene099@racer.site
+In-Reply-To: <alpine.LFD.1.00.0802101443240.2732@xanadu.home>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73400>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73401>
 
-On Sun, 10 Feb 2008, Junio C Hamano wrote:
+Hi,
 
-> I've tried "unexpand | expand" to Documentation/*.txt and
-> compared the formatted documentation before and after the
-> change, and as we suspected everything seems to match.
+On Sun, 10 Feb 2008, Nicolas Pitre wrote:
+
+> On Sun, 10 Feb 2008, Johannes Schindelin wrote:
 > 
-> So I am considering applying this patch.  We may want to tighten
-> it later but as the initial set of rules this should do.
+> > Resolving 34549 deltas...
+> >  100% (34549/34549) done
+> 
+> What Git version is this?
+> 
+> You better try out 1.5.4 for packing comparisons.  It produces slightly 
+> tighter packs than 1.5.3.
 
-I think it's worthwhile to note that some of the files under t/ have 
-whitespace that doesn't conform to the rest of the project. This would 
-include anything with a email signature break marker (line consisting of 
-"-- "), as well as patches with non-standard whitespace used for testing 
-whitespace checking, and (I think) correct patches with blank lines as 
-context. It's possible that we want to declare all of t/ as binary, at 
-least initially, in the theory that we want to test with exact byte 
-sequence expectations and inputs.
+Ooops.  I thought I updated, but no: 1.5.3.6.2835.gf9ebf
 
-On the other hand, I think this patch is an odd combination of stuff; 
-aren't the contrib exceptions not exceptional, since only *.[ch] and *.txt 
-gets declared as "whitespace"?
-
-	-Daniel
-*This .sig left intentionally blank*
+Ciao,
+Dscho
