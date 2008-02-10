@@ -1,156 +1,142 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Re: [PATCH] RFC: git lazy clone proof-of-concept
-Date: Sun, 10 Feb 2008 15:11:48 -0500
-Message-ID: <9e4733910802101211v11c0e285teb36f06d9a0e5f37@mail.gmail.com>
-References: <200802081828.43849.kendy@suse.cz>
-	 <m3ejbngtnn.fsf@localhost.localdomain>
-	 <200802091627.25913.kendy@suse.cz>
-	 <alpine.LFD.1.00.0802092200350.2732@xanadu.home>
-	 <alpine.LSU.1.00.0802101640570.11591@racer.site>
-	 <alpine.LSU.1.00.0802101845320.11591@racer.site>
-	 <alpine.LFD.1.00.0802101437040.2732@xanadu.home>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [EGIT PATCH 2/2] Resort entries in "normal" order before looking for conflicts
+Date: Sun, 10 Feb 2008 21:13:49 +0100
+Message-ID: <200802102113.50578.robin.rosenberg.lists@dewire.com>
+References: <1202255166-4581-1-git-send-email-robin.rosenberg@dewire.com> <1202255166-4581-3-git-send-email-robin.rosenberg@dewire.com> <200802060150.37222.robin.rosenberg@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Jan Holesovsky" <kendy@suse.cz>,
-	"Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org,
-	"Junio C Hamano" <gitster@pobox.com>
-To: "Nicolas Pitre" <nico@cam.org>
-X-From: git-owner@vger.kernel.org Sun Feb 10 21:13:00 2008
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 8BIT
+Cc: "Roger C. Soares" <rogersoares@intelinet.com.br>,
+	Dave Watson <dwatson@mimvista.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Feb 10 21:14:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOIXr-0003h9-7H
-	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 21:12:59 +0100
+	id 1JOIZK-0004AZ-JG
+	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 21:14:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754967AbYBJULw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Feb 2008 15:11:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752692AbYBJULv
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 15:11:51 -0500
-Received: from wa-out-1112.google.com ([209.85.146.178]:37292 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755162AbYBJULu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Feb 2008 15:11:50 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so1731446wah.23
-        for <git@vger.kernel.org>; Sun, 10 Feb 2008 12:11:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=5fgGNzMxBFiCJaQagWd33FjGn5g7HFedtaNqbdaXnqk=;
-        b=gxve+8HboVTwZLzzL2XwOp4oVcGgjA+uD0vCT36y5uXzblLQxo4E4t/xOIPAUp128KGAahht/GNPfCxVwM4pDm99JDG7UAvSUUaDT0aZiqf0EZcUx3OkZeAfsRT/OEtNCN/cuAAbMePDmd5Tlw/EEjLirxsqokoiRidmv+V3N1A=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=SD8GgKbYhxdlOw02HiJ4tXneBpAugea1hN31BnHWG8nDCNbhu1BMbI8SZUeVJ+/aCAM5ypCjGjiRJ/kPBBGX8oKaJNH/QnrfVn15VAojpQLgiWW2YfMDlPTMa/pzMf/Ahz2ztW+quL07NrM9pvN88mwMPxFuVyGd4HuqPFxWJSQ=
-Received: by 10.114.79.1 with SMTP id c1mr8665151wab.148.1202674309043;
-        Sun, 10 Feb 2008 12:11:49 -0800 (PST)
-Received: by 10.114.200.7 with HTTP; Sun, 10 Feb 2008 12:11:48 -0800 (PST)
-In-Reply-To: <alpine.LFD.1.00.0802101437040.2732@xanadu.home>
+	id S1753268AbYBJUN4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Feb 2008 15:13:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753293AbYBJUN4
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 15:13:56 -0500
+Received: from [83.140.172.130] ([83.140.172.130]:14625 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1752692AbYBJUNz convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 10 Feb 2008 15:13:55 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 1D8F38006AB;
+	Sun, 10 Feb 2008 21:13:54 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id gu7iHfdBPUuA; Sun, 10 Feb 2008 21:13:53 +0100 (CET)
+Received: from [10.9.0.3] (unknown [10.9.0.3])
+	by dewire.com (Postfix) with ESMTP id 0D47E800686;
+	Sun, 10 Feb 2008 21:13:53 +0100 (CET)
+User-Agent: KMail/1.9.6 (enterprise 0.20071123.740460)
+In-Reply-To: <200802060150.37222.robin.rosenberg@dewire.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73396>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73397>
 
-On 2/10/08, Nicolas Pitre <nico@cam.org> wrote:
-> On Sun, 10 Feb 2008, Johannes Schindelin wrote:
->
-> > Hi,
-> >
-> > On Sun, 10 Feb 2008, Johannes Schindelin wrote:
-> >
-> > > On Sat, 9 Feb 2008, Nicolas Pitre wrote:
-> > >
-> > > > On Sat, 9 Feb 2008, Jan Holesovsky wrote:
-> > > >
-> > > > > On Friday 08 February 2008 20:00, Jakub Narebski wrote:
-> > > > >
-> > > > > > Both Mozilla import, and GCC import were packed below 0.5 GB.
-> > > > > > Warning: you would need machine with large amount of memory to
-> > > > > > repack it tightly in sensible time!
-> > > > >
-> > > > > As I answered elsewhere, unfortunately it goes out of memory even on
-> > > > > 8G machine (x86-64), so...  But still trying.
-> > > >
-> > > > Try setting the following config variables as follows:
-> > > >
-> > > >   git config pack.deltaCacheLimit 1
-> > > >   git config pack.deltaCacheSize 1
-> > > >   git config pack.windowMemory 1g
-> > > >
-> > > > That should help keeping memory usage somewhat bounded.
-> > >
-> > > I tried that:
-> > >
-> > > $ git config pack.deltaCacheLimit 1
-> > > $ git config pack.deltaCacheSize 1
-> > > $ git config pack.windowMemory 2g
-> > > $ #/usr/bin/time git repack -a -d -f --window=250 --depth=250
-> > > $ du -s objects/
-> > > 2548137 objects/
-> > > $ /usr/bin/time git repack -a -d -f --window=250 --depth=250
-> > > Counting objects: 2477715, done.
-> > > fatal: Out of memory, malloc failed411764)
-> > > Command exited with non-zero status 1
-> > > 9356.95user 53.33system 2:38:58elapsed 98%CPU (0avgtext+0avgdata
-> > > 0maxresident)k
-> > > 0inputs+0outputs (31929major+18088744minor)pagefaults 0swaps
-> > >
-> > > Note that this is on a 2.4GHz Quadcode CPU with 3.5GB RAM.
-> > >
-> > > I'm retrying with smaller values, but at over 2.5 hours per try, this is
-> > > getting tedious.
-> >
-> > Now, _that_ is strange.  Using 150 instead of 250 brings it down even
-> > quicker!
-> >
-> > $ /usr/bin/time git repack -a -d -f --window=150 --depth=150
-> > Counting objects: 2477715, done.
-> > Compressing objects:  19% (481551/2411764)
-> > Compressing objects:  19% (482333/2411764)
-> > fatal: Out of memory, malloc failed411764)
-> > Command exited with non-zero status 1
-> > 7118.37user 54.15system 2:01:44elapsed 98%CPU (0avgtext+0avgdata
-> > 0maxresident)k
-> > 0inputs+0outputs (29834major+17122977minor)pagefaults 0swaps
-> >
-> > (I hit the Return key twice during the time I suspected it would go out of
-> > memory, so it might have been really at 20%.)
-> >
-> > Ideas?
->
-> You're probably hitting the same memory allocator fragmentation issue I
-> had with the gcc repo.  On my machine with 1GB of ram, I was able to
-> repack the 1.5GB source pack just fine, but repacking the 300MB source
-> pack was impossible due to memory exhaustion.
->
-> My theory is that the smaller pack has many more deltas with deeper
-> delta chains, and this is stumping much harder on the memory allocator
-> which fails to prevent fragmentation at some point.  When Jon Smirl
-> tested Git using the Google memory allocator there was around 1GB less
-> allocated, which might indicate that the glibc allocator has issues with
-> some of Git's workloads.
+>From 39d5e19cd2e16f476501fda71d6551e51225ed2d Mon Sep 17 00:00:00 2001
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Date: Sun, 10 Feb 2008 20:03:06 +0100
+Subject: [PATCH] Extend IndexDiffTest with more tests
 
-I'm forgetting everything again, but I seem to recall that the Google
-allocator only made a significant difference with multithreading.  It
-is much better at keeping the threads from fragmenting each other.
-It's very easy to try it, all you have to do is add another lib the
-the link command.
+In order to fix a bug where everything is marked as modified, or in some cases
+not modified the unit tests. The fixes here continue to work, but I want to
+emphasize the tests. Comments?
 
+---
+ .../tst/org/spearce/jgit/lib/IndexDiffTest.java    |   67 ++++++++++++++++++++
+ 1 files changed, 67 insertions(+), 0 deletions(-)
 
->
->
-> Nicolas
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+One more to come (that fails).
 
-
+diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/lib/IndexDiffTest.java 
+b/org.spearce.jgit.test/tst/org/spearce/jgit/lib/IndexDiffTest.java
+index 629c06c..4692fa2 100644
+--- a/org.spearce.jgit.test/tst/org/spearce/jgit/lib/IndexDiffTest.java
++++ b/org.spearce.jgit.test/tst/org/spearce/jgit/lib/IndexDiffTest.java
+@@ -93,4 +93,71 @@ public class IndexDiffTest extends RepositoryTestCase {
+ 		assertEquals(0, diff.getMissing().size());
+ 	}
+ 
++	public void testUnchangedSimple() throws IOException {
++		GitIndex index = new GitIndex(db);
++
++		index.add(trash, writeTrashFile("a.b", "a.b"));
++		index.add(trash, writeTrashFile("a.c", "a.c"));
++		index.add(trash, writeTrashFile("a=c", "a=c"));
++		index.add(trash, writeTrashFile("a=d", "a=d"));
++
++		Tree tree = new Tree(db);
++		// got the hash id'd from the data using echo -n a.b|git hash-object -t blob --stdin
++		tree.addFile("a.b").setId(new ObjectId("f6f28df96c2b40c951164286e08be7c38ec74851"));
++		tree.addFile("a.c").setId(new ObjectId("6bc0e647512d2a0bef4f26111e484dc87df7f5ca"));
++		tree.addFile("a=c").setId(new ObjectId("06022365ddbd7fb126761319633bf73517770714"));
++		tree.addFile("a=d").setId(new ObjectId("fa6414df3da87840700e9eeb7fc261dd77ccd5c2"));
++
++		tree.setId(new ObjectWriter(db).writeTree(tree));
++
++		IndexDiff diff = new IndexDiff(tree, index);
++		diff.diff();
++		assertEquals(0, diff.getChanged().size());
++		assertEquals(0, diff.getAdded().size());
++		assertEquals(0, diff.getRemoved().size());
++		assertEquals(0, diff.getMissing().size());
++		assertEquals(0, diff.getModified().size());
++	}
++
++	/**
++	 * This test has both files and directories that involve
++	 * the tricky ordering used by Git.
++	 *
++	 * @throws IOException
++	 */
++	public void testUnchangedComplex() throws IOException {
++		GitIndex index = new GitIndex(db);
++
++		index.add(trash, writeTrashFile("a.b", "a.b"));
++		index.add(trash, writeTrashFile("a.c", "a.c"));
++		index.add(trash, writeTrashFile("a/b.b/b", "a/b.b/b"));
++		index.add(trash, writeTrashFile("a/b", "a/b"));
++		index.add(trash, writeTrashFile("a/c", "a/c"));
++		index.add(trash, writeTrashFile("a=c", "a=c"));
++		index.add(trash, writeTrashFile("a=d", "a=d"));
++
++		Tree tree = new Tree(db);
++		// got the hash id'd from the data using echo -n a.b|git hash-object -t blob --stdin
++		tree.addFile("a.b").setId(new ObjectId("f6f28df96c2b40c951164286e08be7c38ec74851"));
++		tree.addFile("a.c").setId(new ObjectId("6bc0e647512d2a0bef4f26111e484dc87df7f5ca"));
++		tree.addFile("a/b.b/b").setId(new ObjectId("8d840bd4e2f3a48ff417c8e927d94996849933fd"));
++		tree.addFile("a/b").setId(new ObjectId("db89c972fc57862eae378f45b74aca228037d415"));
++		tree.addFile("a/c").setId(new ObjectId("52ad142a008aeb39694bafff8e8f1be75ed7f007"));
++		tree.addFile("a=c").setId(new ObjectId("06022365ddbd7fb126761319633bf73517770714"));
++		tree.addFile("a=d").setId(new ObjectId("fa6414df3da87840700e9eeb7fc261dd77ccd5c2"));
++
++		Tree tree3 = (Tree) tree.findTreeMember("a/b.b");
++		tree3.setId(new ObjectWriter(db).writeTree(tree3));
++		Tree tree2 = (Tree) tree.findTreeMember("a");
++		tree2.setId(new ObjectWriter(db).writeTree(tree2));
++		tree.setId(new ObjectWriter(db).writeTree(tree));
++
++		IndexDiff diff = new IndexDiff(tree, index);
++		diff.diff();
++		assertEquals(0, diff.getChanged().size());
++		assertEquals(0, diff.getAdded().size());
++		assertEquals(0, diff.getRemoved().size());
++		assertEquals(0, diff.getMissing().size());
++		assertEquals(0, diff.getModified().size());
++	}
+ }
 -- 
-Jon Smirl
-jonsmirl@gmail.com
+1.5.4.rc4.25.g81cc
