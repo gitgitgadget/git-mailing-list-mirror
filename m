@@ -1,93 +1,122 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Upcoming memcached releases + rambling.
-Date: Sun, 10 Feb 2008 06:15:57 -0500
-Message-ID: <20080210111557.GA27348@coredump.intra.peff.net>
-References: <47AAC7DA.2010604@rydia.net> <4422C0B2-6874-41EA-B4A0-4F3414F385FC@spy.net> <47AB3DBD.60004@rydia.net> <3897B3FD-4DCB-4150-8A07-7F8868A70A93@spy.net> <47AD2D1F.7030807@rydia.net> <5222C3B4-5E2C-45D2-8DF3-A85D69DDA2CF@spy.net> <47AD643D.3040800@rydia.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] Add gitattributes file making whitespace checking pickier
+Date: Sun, 10 Feb 2008 12:31:15 +0100
+Message-ID: <200802101231.16847.jnareb@gmail.com>
+References: <20080209162234.GA25533@fieldses.org> <m363wxhey1.fsf@localhost.localdomain> <7v8x1t5uk1.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Dustin Sallings <dustin@spy.net>,
-	memcached list <memcached@lists.danga.com>, git@vger.kernel.org
-To: dormando <dormando@rydia.net>
-X-From: git-owner@vger.kernel.org Sun Feb 10 12:16:57 2008
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: "J. Bruce Fields" <bfields@fieldses.org>,
+	Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Feb 10 12:32:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOAB7-0008QS-Du
-	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 12:16:57 +0100
+	id 1JOAPl-0003z4-C8
+	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 12:32:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756211AbYBJLQE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Feb 2008 06:16:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756769AbYBJLQB
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 06:16:01 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3183 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754899AbYBJLQA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Feb 2008 06:16:00 -0500
-Received: (qmail 26435 invoked by uid 111); 10 Feb 2008 11:15:58 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Sun, 10 Feb 2008 06:15:58 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 10 Feb 2008 06:15:57 -0500
+	id S1755646AbYBJLbb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Feb 2008 06:31:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755620AbYBJLbb
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 06:31:31 -0500
+Received: from fg-out-1718.google.com ([72.14.220.157]:54658 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754899AbYBJLba (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Feb 2008 06:31:30 -0500
+Received: by fg-out-1718.google.com with SMTP id e21so3455419fga.17
+        for <git@vger.kernel.org>; Sun, 10 Feb 2008 03:31:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        bh=58tBAUv/zULuJv0rYPR3Zn9W+U3D2HHCLLhItSonID0=;
+        b=Bo/3M5wZsE36p1XE3Es5eUKs2xkiMyMF+LDVPKq8ltYeEwaY+OizNRb7sf27izxpcACTzNJuRzl45hVd4qzJDVjAFr2eGhkwU9Cr8C2vE9tdbpASRpBgBtfYbsiqYfKR4WaR+h7QgLqZDmdiq79yn2BnjY18ptYuCJbcqc2AAME=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=aJwLPFlFAlDbs//6+qLufPnWRBEK5mH32koklSbREvr+xqdx//P5Qh8pFng4Fws2SB5pjL/DCZnallimbJtJaKnJO9r309wJCsAMytQkVSeVTlefzB3brpE68nr8tjk/abnpSgLKLajEuI3cKt5DuyIpoJmblIMtE+exQzQH2B4=
+Received: by 10.82.187.2 with SMTP id k2mr27099476buf.16.1202643087929;
+        Sun, 10 Feb 2008 03:31:27 -0800 (PST)
+Received: from ?192.168.1.11? ( [83.8.255.105])
+        by mx.google.com with ESMTPS id z33sm16642213ikz.0.2008.02.10.03.31.25
+        (version=SSLv3 cipher=OTHER);
+        Sun, 10 Feb 2008 03:31:26 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7v8x1t5uk1.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
-In-Reply-To: <47AD643D.3040800@rydia.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73338>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73339>
 
-On Sat, Feb 09, 2008 at 12:28:45AM -0800, dormando wrote:
+Junio C Hamano wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
+> 
+>>> *.py whitespace=!indent,trail,space
+>>> *.el whitespace=!indent,trail,space
 
-> If I _think_ I understand these right, you can actually sometimes git
-> diff with the second repo as an argument. That'll show the differences
-> since the target repo/branch (git diff . /path/to/other/repo#branch),
-> which will be incoming or outgoing.
+Emacs Lisp is (like Perl, and contrary to Python) whitespace agnostic,
+so here you just agree on historical usage. In this case the same
+should IMHO be done for gitweb/gitweb.perl in main .gitattributes.
 
-No, that doesn't work. It will literally diff the two directories.
+:<: checks contrib/emacs/git.el :>:
 
-What you have probably seen is:
+Hmmm... it looks like git.el uses only spaces, both for indent
+and for align, with some spurious TABS happening.
 
-  git diff origin HEAD
+If you allow this, couldn't you allow also for the gitweb.perl?
 
-which means "diff my current branch with the branch origin". Now
-"origin" is typically the name of your upstream remote. However, we also
-use the same name to store "tracking branches" that keep tabs on the
-remote's state. So the branch "origin" stores the state of the remote's
-current branch (as of the last time you did a "git fetch" of course).
+>>> fast-import/git-p4 whitespace=!indent,trail,space
+>>
+>> I would also exclude gitweb/gitweb.perl
+> 
+> Why?
+> 
+> As far as I can tell, Perl does not use Python/Elisp "indents
+> are all whitespace" rule and neither does the script.
 
-But "git diff HEAD <someURL>" does not work. You would want "git fetch
-<someURL> && git diff HEAD FETCH_HEAD".
+Elisp is also whitespace agnostic, but like in Perl it can contain
+here-docs, and heredoc-like docstring; I'm not sure about whitespace
+rules for that.
 
-> That'll show the raw changes... for showing the difference in changeset,
->   you can do a: git log --since HEAD origin
-> ... if origin were the remote repo. If you don't have the latest
-> changes, fetch more, rebase your repo on top of that, then git log
-> --since will show you what you have to upload.
+> It also happens that I do not personally believe in "alignment
+> with spaces" argument.  If you accept W and a SP occupy the same
+> horizontal space (which "alignment with spaces" assume), I do
+> not think it is unreasonable to accept HT goes to the next
+> column that is multiple of 8 places.
+ 
+My argument is that when you change tab-width (and basic-offset), with
+"tabs for indent, spaces for align" you don't have source get out of 
+align. And not everybody uses large screens, and large resolution.
 
-That --since is not necessary. You want "git log HEAD..origin" (where
-"A..B" means "what's in B, but not in A"). "--since" is for
-date-limiting, and the syntax is like "--since=2.weeks.ago".
+Besides there is also purely theoretical argument of consistency.
+When using tabs also for align, it is in prectice align with tabs
+_and spaces_, e.g.:
 
-> I think my knowledge on how to do this in git is a bit dated, so I'll go
-> read (I started with git in 0.99 series, where it was missing most of
-> these fancy "usability features", so sometimes I do things the hard way
-> still).
+------>|if (expression ||
+------>|____expression) {
 
-Pre-1.5 and 1.5 have quite a few interface differences (and of course
-there were many changes from 0.99 to 1.5 :) ).
+or
 
-> Otherwise you can use git fetch to "pull" the remote changes into a
-> branch but not apply anywhere, then use git log with relative commit ids
-> to show the changesets (with -p to show the full changes!)
+------>|print "something" .
+------>|______"something";
 
-Yes, although I would say that git fetch "fetches" changes, so as not to
-confuse it with the "pull" command which does something different.
+or
 
-> Unless I'm getting my wires crossed and this is a patch management
-> thinger, in that case it's 'git format-patch' and 'git am' (although
-> there's an alternative to am).
+------>|$date{'mday-time'} = sprintf "%d %s %02d:%02d",
+------>|------>|------>|_____$mday, $months[$mon], $hour ,$min;
 
-Actually "am" is the new alternative to "applymbox" which is now
-officially gone in 1.5.4.
+where leading tab is marked as "------>|", and leading space as "_".
 
--Peff
+
+The argument for using tabs for align is that it is easy to check 
+programatically for those kind of whitespace errors, and that editors 
+do that. But lacking tools or misconfigured tools shouldn't IMHO be 
+cause of selecting a coding style / choosing a policy.
+
+-- 
+Jakub Narebski
+Poland
