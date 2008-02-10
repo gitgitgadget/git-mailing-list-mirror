@@ -1,112 +1,108 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH] diff.c: guard config parser from value=NULL
-Date: Sun, 10 Feb 2008 19:35:34 +0100
-Message-ID: <20080210193534.d11d8b15.chriscool@tuxfamily.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] RFC: git lazy clone proof-of-concept
+Date: Sun, 10 Feb 2008 18:47:32 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0802101845320.11591@racer.site>
+References: <200802081828.43849.kendy@suse.cz> <m3ejbngtnn.fsf@localhost.localdomain> <200802091627.25913.kendy@suse.cz> <alpine.LFD.1.00.0802092200350.2732@xanadu.home> <alpine.LSU.1.00.0802101640570.11591@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio Hamano <junkio@cox.net>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Pierre Habouzit <madcoder@debian.org>,
-	Govind Salinas <blix@sophiasuchtig.com>,
-	Martin Koegler <mkoegler@auto.tuw
-X-From: git-owner@vger.kernel.org Sun Feb 10 19:30:22 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jan Holesovsky <kendy@suse.cz>, Jakub Narebski <jnareb@gmail.com>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Sun Feb 10 19:48:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOGwP-0005O6-Uh
-	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 19:30:14 +0100
+	id 1JOHEB-0002jD-VV
+	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 19:48:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751961AbYBJS3k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Feb 2008 13:29:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752089AbYBJS3k
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 13:29:40 -0500
-Received: from smtp1-g19.free.fr ([212.27.42.27]:48047 "EHLO smtp1-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751597AbYBJS3j (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Feb 2008 13:29:39 -0500
-Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 64BE61AB37F;
-	Sun, 10 Feb 2008 19:29:37 +0100 (CET)
-Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp1-g19.free.fr (Postfix) with SMTP id 58DE21AB33C;
-	Sun, 10 Feb 2008 19:29:36 +0100 (CET)
-X-Mailer: Sylpheed 2.4.8 (GTK+ 2.12.5; i486-pc-linux-gnu)
+	id S1753271AbYBJSrj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Feb 2008 13:47:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752182AbYBJSrj
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 13:47:39 -0500
+Received: from mail.gmx.net ([213.165.64.20]:40921 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754168AbYBJSrc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Feb 2008 13:47:32 -0500
+Received: (qmail invoked by alias); 10 Feb 2008 18:47:30 -0000
+Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
+  by mail.gmx.net (mp027) with SMTP; 10 Feb 2008 19:47:30 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+hUsgTCaehmrJV8aadYxPj/Xjh0/fu5mfDTtwil/
+	fgI57k9pDLEWed
+X-X-Sender: gene099@racer.site
+In-Reply-To: <alpine.LSU.1.00.0802101640570.11591@racer.site>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73387>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73388>
 
-In fact we also guard for value="" as it doesn't make more sense
-for the variables here.
+Hi,
 
-We do that by using a new function 'xstrdup_confval' to avoid code
-duplication.
+On Sun, 10 Feb 2008, Johannes Schindelin wrote:
 
-By the way this changes a 'strdup' into 'xstrdup'.
+> On Sat, 9 Feb 2008, Nicolas Pitre wrote:
+> 
+> > On Sat, 9 Feb 2008, Jan Holesovsky wrote:
+> > 
+> > > On Friday 08 February 2008 20:00, Jakub Narebski wrote:
+> > > 
+> > > > Both Mozilla import, and GCC import were packed below 0.5 GB. 
+> > > > Warning: you would need machine with large amount of memory to 
+> > > > repack it tightly in sensible time!
+> > > 
+> > > As I answered elsewhere, unfortunately it goes out of memory even on 
+> > > 8G machine (x86-64), so...  But still trying.
+> > 
+> > Try setting the following config variables as follows:
+> > 
+> > 	git config pack.deltaCacheLimit 1
+> > 	git config pack.deltaCacheSize 1
+> > 	git config pack.windowMemory 1g
+> > 
+> > That should help keeping memory usage somewhat bounded.
+> 
+> I tried that:
+> 
+> $ git config pack.deltaCacheLimit 1
+> $ git config pack.deltaCacheSize 1
+> $ git config pack.windowMemory 2g
+> $ #/usr/bin/time git repack -a -d -f --window=250 --depth=250
+> $ du -s objects/
+> 2548137 objects/
+> $ /usr/bin/time git repack -a -d -f --window=250 --depth=250
+> Counting objects: 2477715, done.
+> fatal: Out of memory, malloc failed411764)
+> Command exited with non-zero status 1
+> 9356.95user 53.33system 2:38:58elapsed 98%CPU (0avgtext+0avgdata 
+> 0maxresident)k
+> 0inputs+0outputs (31929major+18088744minor)pagefaults 0swaps
+> 
+> Note that this is on a 2.4GHz Quadcode CPU with 3.5GB RAM.
+> 
+> I'm retrying with smaller values, but at over 2.5 hours per try, this is 
+> getting tedious.
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- diff.c |   23 +++++++++++++----------
- 1 files changed, 13 insertions(+), 10 deletions(-)
+Now, _that_ is strange.  Using 150 instead of 250 brings it down even 
+quicker!
 
-diff --git a/diff.c b/diff.c
-index 5b8afdc..d51aecb 100644
---- a/diff.c
-+++ b/diff.c
-@@ -60,6 +60,14 @@ static struct ll_diff_driver {
- 	char *cmd;
- } *user_diff, **user_diff_tail;
- 
-+static int xstrdup_confval(const char *dest, const char *var, const char *value)
-+{
-+	if (!value || !*value)
-+		return error("%s: lacks value", var);
-+	dest = xstrdup(value);
-+	return 0;
-+}
-+
- /*
-  * Currently there is only "diff.<drivername>.command" variable;
-  * because there are "diff.color.<slot>" variables, we are parsing
-@@ -86,10 +94,7 @@ static int parse_lldiff_command(const char *var, const char *ep, const char *val
- 		user_diff_tail = &(drv->next);
- 	}
- 
--	if (!value)
--		return error("%s: lacks value", var);
--	drv->cmd = strdup(value);
--	return 0;
-+	return xstrdup_confval(drv->cmd, var, value);
- }
- 
- /*
-@@ -123,8 +128,8 @@ static int parse_funcname_pattern(const char *var, const char *ep, const char *v
- 	}
- 	if (pp->pattern)
- 		free(pp->pattern);
--	pp->pattern = xstrdup(value);
--	return 0;
-+
-+	return xstrdup_confval(pp->pattern, var, value);
- }
- 
- /*
-@@ -157,10 +162,8 @@ int git_diff_ui_config(const char *var, const char *value)
- 		diff_auto_refresh_index = git_config_bool(var, value);
- 		return 0;
- 	}
--	if (!strcmp(var, "diff.external")) {
--		external_diff_cmd_cfg = xstrdup(value);
--		return 0;
--	}
-+	if (!strcmp(var, "diff.external"))
-+		return xstrdup_confval(external_diff_cmd_cfg, var, value);
- 	if (!prefixcmp(var, "diff.")) {
- 		const char *ep = strrchr(var, '.');
- 
--- 
-1.5.4.35.g3360
+$ /usr/bin/time git repack -a -d -f --window=150 --depth=150
+Counting objects: 2477715, done.
+Compressing objects:  19% (481551/2411764)
+Compressing objects:  19% (482333/2411764)
+fatal: Out of memory, malloc failed411764)
+Command exited with non-zero status 1
+7118.37user 54.15system 2:01:44elapsed 98%CPU (0avgtext+0avgdata 
+0maxresident)k
+0inputs+0outputs (29834major+17122977minor)pagefaults 0swaps
+
+(I hit the Return key twice during the time I suspected it would go out of 
+memory, so it might have been really at 20%.)
+
+Ideas?
+
+Ciao,
+Dscho
