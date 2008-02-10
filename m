@@ -1,106 +1,93 @@
 From: Jeff King <peff@peff.net>
 Subject: Re: Upcoming memcached releases + rambling.
-Date: Sun, 10 Feb 2008 06:05:04 -0500
-Message-ID: <20080210110504.GA27314@coredump.intra.peff.net>
-References: <47AAC7DA.2010604@rydia.net> <4422C0B2-6874-41EA-B4A0-4F3414F385FC@spy.net> <47AB3DBD.60004@rydia.net> <3897B3FD-4DCB-4150-8A07-7F8868A70A93@spy.net> <47AD2D1F.7030807@rydia.net> <5222C3B4-5E2C-45D2-8DF3-A85D69DDA2CF@spy.net>
+Date: Sun, 10 Feb 2008 06:15:57 -0500
+Message-ID: <20080210111557.GA27348@coredump.intra.peff.net>
+References: <47AAC7DA.2010604@rydia.net> <4422C0B2-6874-41EA-B4A0-4F3414F385FC@spy.net> <47AB3DBD.60004@rydia.net> <3897B3FD-4DCB-4150-8A07-7F8868A70A93@spy.net> <47AD2D1F.7030807@rydia.net> <5222C3B4-5E2C-45D2-8DF3-A85D69DDA2CF@spy.net> <47AD643D.3040800@rydia.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: dormando <dormando@rydia.net>,
+Cc: Dustin Sallings <dustin@spy.net>,
 	memcached list <memcached@lists.danga.com>, git@vger.kernel.org
-To: Dustin Sallings <dustin@spy.net>
-X-From: git-owner@vger.kernel.org Sun Feb 10 12:05:52 2008
+To: dormando <dormando@rydia.net>
+X-From: git-owner@vger.kernel.org Sun Feb 10 12:16:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOA0H-0005HP-9S
-	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 12:05:51 +0100
+	id 1JOAB7-0008QS-Du
+	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 12:16:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753274AbYBJLFL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Feb 2008 06:05:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751678AbYBJLFL
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 06:05:11 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1638 "EHLO
+	id S1756211AbYBJLQE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Feb 2008 06:16:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756769AbYBJLQB
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 06:16:01 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3183 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751420AbYBJLFI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Feb 2008 06:05:08 -0500
-Received: (qmail 26333 invoked by uid 111); 10 Feb 2008 11:05:05 -0000
+	id S1754899AbYBJLQA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Feb 2008 06:16:00 -0500
+Received: (qmail 26435 invoked by uid 111); 10 Feb 2008 11:15:58 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Sun, 10 Feb 2008 06:05:05 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 10 Feb 2008 06:05:04 -0500
+    by peff.net (qpsmtpd/0.32) with SMTP; Sun, 10 Feb 2008 06:15:58 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 10 Feb 2008 06:15:57 -0500
 Content-Disposition: inline
-In-Reply-To: <5222C3B4-5E2C-45D2-8DF3-A85D69DDA2CF@spy.net>
+In-Reply-To: <47AD643D.3040800@rydia.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73337>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73338>
 
-[I'm not on the list, so please cc me in replies]
+On Sat, Feb 09, 2008 at 12:28:45AM -0800, dormando wrote:
 
-On Fri, Feb 08, 2008 at 09:21:16PM -0800, Dustin Sallings wrote:
+> If I _think_ I understand these right, you can actually sometimes git
+> diff with the second repo as an argument. That'll show the differences
+> since the target repo/branch (git diff . /path/to/other/repo#branch),
+> which will be incoming or outgoing.
 
-> I've seen lots of people using git for their own work, but not enough
-> using it in a distributed fashion.  I've been asking questions about how
-> to collaborate with git, but I can't seem to find any git experts who will
-> answer questions.
+No, that doesn't work. It will literally diff the two directories.
 
-Please, if you have git questions, feel free to ask them on the git list
-(which I am cc'ing here).
+What you have probably seen is:
 
-> serve, bundle, export, import, incoming, and outgoing don't seem
-> to have equivalences in git.
+  git diff origin HEAD
 
-I don't know hg well at all, but I will attempt to translate (please
-correct me if I'm wrong on any hg behavior).
+which means "diff my current branch with the branch origin". Now
+"origin" is typically the name of your upstream remote. However, we also
+use the same name to store "tracking branches" that keep tabs on the
+remote's state. So the branch "origin" stores the state of the remote's
+current branch (as of the last time you did a "git fetch" of course).
 
-"hg serve" runs a web repo browser and a pull server. In git, these
-duties are split. Depending on what you want, you can:
-  - for allowing people to pull from you, you can use git-daemon
-  - for repository browsing, run an instance of gitweb. There is a
-    git-instaweb script for doing one-off "I just need to set this up
-    for a minute" versions.
-  - you can also allow people to pull via http; just copy your '.git'
-    directory somewhere that is accessible by the web server
-  - you can also allow people to pull via ssh; just give them an ssh
-    account and point them to host:/path/to/repo
+But "git diff HEAD <someURL>" does not work. You would want "git fetch
+<someURL> && git diff HEAD FETCH_HEAD".
 
-"hg bundle" has an equivalent in git: "git bundle"
+> That'll show the raw changes... for showing the difference in changeset,
+>   you can do a: git log --since HEAD origin
+> ... if origin were the remote repo. If you don't have the latest
+> changes, fetch more, rebase your repo on top of that, then git log
+> --since will show you what you have to upload.
 
-"hg export" seems to generate the commit message + patch for a set of
-commits. The git equivalent is "git format-patch" which puts each patch
-in its own mbox file (you can also use "git format-patch --stdout >mbox"
-to put them all in one mbox.
+That --since is not necessary. You want "git log HEAD..origin" (where
+"A..B" means "what's in B, but not in A"). "--since" is for
+date-limiting, and the syntax is like "--since=2.weeks.ago".
 
-"hg import" presumably applies the results of "hg export". In git, this
-is "git am" (where am stands for apply mailbox), which applies the
-changes from an entire mbox one by one.
+> I think my knowledge on how to do this in git is a bit dated, so I'll go
+> read (I started with git in 0.99 series, where it was missing most of
+> these fancy "usability features", so sometimes I do things the hard way
+> still).
 
-"incoming" and "outgoing" seem to basically be diffs against remote
-repositories (i.e., "what do I have that he doesn't" and vice versa). In
-git, you would do a "git fetch" to say "contact the remote repository
-and get what he has, but don't update any of my branches" followed by
-"git log origin..HEAD" (what does I have that he doesn't) or "git log
-HEAD..origin" (the opposite). You can also use the symmetric difference
-with a graphical browser like gitk: "gitk origin...HEAD" which will show
-everything that he has and everything you have, down to the point where
-the two histories last diverged.
+Pre-1.5 and 1.5 have quite a few interface differences (and of course
+there were many changes from 0.99 to 1.5 :) ).
 
-> 	I've contributed changes to both git and hg projects and haven't had  
-> good luck submitting changes upstream.   I'd be interesting in talking to 
-> people who collaborate on projects using git both as first and  
-> second-level contributors to see if their experiences are any better than 
-> mine.  I don't doubt that I may be doing it wrong.
+> Otherwise you can use git fetch to "pull" the remote changes into a
+> branch but not apply anywhere, then use git log with relative commit ids
+> to show the changesets (with -p to show the full changes!)
 
-Again, if you have specific questions, please feel free to ask on the
-git list. We are more than happy to help out if we can.
+Yes, although I would say that git fetch "fetches" changes, so as not to
+confuse it with the "pull" command which does something different.
 
-> 	Should memcached choose git, it may be as simple as putting up a page  
-> that says, ``this is how you clone, this is how you work, this is how you 
-> submit your changes back.''
+> Unless I'm getting my wires crossed and this is a patch management
+> thinger, in that case it's 'git format-patch' and 'git am' (although
+> there's an alternative to am).
 
-I don't know hg very well, but my impression is that the implementation
-is quite similar to git and that writing a document "translating"
-commands from one system to the other would be feasible.
+Actually "am" is the new alternative to "applymbox" which is now
+officially gone in 1.5.4.
 
 -Peff
