@@ -1,59 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH] Implement git-cp.
-Date: Sat, 09 Feb 2008 23:49:43 -0800
-Message-ID: <7vzlu9uu7c.fsf@gitster.siamese.dyndns.org>
-References: <38b2ab8a0802031023y2ed7a5aax6d3c404b08757a4d@mail.gmail.com>
-	<vpq63x5swsj.fsf@bauges.imag.fr>
-	<m3tzkp6eqz.fsf@localhost.localdomain>
-	<20080210011203.GL25954@genesis.frugalware.org>
-	<alpine.LSU.1.00.0802100125510.11591@racer.site>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: [RFC] repack vs re-clone
+Date: Sun, 10 Feb 2008 09:25:49 +0100
+Message-ID: <e5bfff550802100025k616ccff5ib2917d283eeb0ff0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Miklos Vajna <vmiklos@frugalware.org>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Francis Moreau <francis.moro@gmail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Feb 10 08:50:32 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: "gi mailing list" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Feb 10 09:26:27 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JO6xM-0006oD-FP
-	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 08:50:32 +0100
+	id 1JO7W6-0004zf-D0
+	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 09:26:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756167AbYBJHt4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Feb 2008 02:49:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755197AbYBJHt4
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 02:49:56 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:62771 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751459AbYBJHtz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Feb 2008 02:49:55 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 5F7E123D6;
-	Sun, 10 Feb 2008 02:49:54 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id AC78623CD;
-	Sun, 10 Feb 2008 02:49:45 -0500 (EST)
-In-Reply-To: <alpine.LSU.1.00.0802100125510.11591@racer.site> (Johannes
-	Schindelin's message of "Sun, 10 Feb 2008 01:26:44 +0000 (GMT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1756077AbYBJIZv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Feb 2008 03:25:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756041AbYBJIZv
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 03:25:51 -0500
+Received: from rv-out-0910.google.com ([209.85.198.190]:59759 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755562AbYBJIZu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Feb 2008 03:25:50 -0500
+Received: by rv-out-0910.google.com with SMTP id k20so3021650rvb.1
+        for <git@vger.kernel.org>; Sun, 10 Feb 2008 00:25:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=PSN/6PMkEhJBGxRZST93iwhgC0fjArzvn6krUcFc7/s=;
+        b=vp+KbmYDrtetdfN6GxDVr0Eqb0v2NnR9tCf9RM4kp2DEL3hd7NstqA9867vK//qtoF5em4g5WKRLjFjVFUJ8ID8wD4+zSYs8NJgDYnLyM9br27y5CE/iTZRUSkTkvD+MopKlvsw5EjvdoIelhsjXTczJtzzXhQQ2Bdslt5sy08w=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=H6y8oAUzuGmMSoHiMiDUa8ExvLhDBIo/d0NRvDlEnaHKJk1fV6o6Aq/Ze/5t4A3NOmxL80zdifz4XSvgfga0aHGlfh+Cu++4Az5Icp0j34YWjySyMDpWXcnjuXgYWYPiL0n0nPt7a/ZJXvpgQ3fnAToynLOc17rKipooxtfG8Fg=
+Received: by 10.141.15.19 with SMTP id s19mr9755544rvi.161.1202631949994;
+        Sun, 10 Feb 2008 00:25:49 -0800 (PST)
+Received: by 10.141.76.1 with HTTP; Sun, 10 Feb 2008 00:25:49 -0800 (PST)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73324>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73325>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Sometime I found myself re-cloning entirely a repository, as example
+the Linux tree, instead of repackaging my local copy.
 
-> If you touch builtin-mv.c already, why not just move cmd_cp() in there?  
-> It's not like it would be the first cmd_*() function living in the same 
-> file as other cmd_*() functions.
+The reason is that the published Linux repository is super compressed
+and to reach the same level of compression on my local copy I would
+need to give my laptop a long night running.
 
-Why do we even want "git-cp", especially when git-mv and git-rm
-are already pretty much redundant commands?
+So it happens to be just faster to re-clone the whole thing by upstream.
 
-Especially, why do we even encourage copy-and-paste?
+Also repackaging a big repo in the optimal way is not so trivial, you
+need to understand quite advanced stuff like window depth and so on
+and probably the pack parameters used upstream are easily better then
+what you could 'guess' trying yourself. Or simply you don't have
+enough RAM as would be needed.
+
+On the other end it would be interesting to know, before to start the
+new clone, what is the real advantage of this, i.e. what is the
+repository size upstream.
+
+So I would like to ask if anyone would consider useful:
+
+- A command like 'git info' or something like that that prints size of
+local and upstream repository (among possibly other things)
+
+- An option like 'git repack --clone' to instruct git to download and
+use current upstream packs instead of trying to recreate new ones.
+
+
+Marco
