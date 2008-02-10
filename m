@@ -1,66 +1,72 @@
-From: Sam Granieri Jr <sjgdev@gmail.com>
-Subject: [Feature Request] Better Subversion integration
-Date: Sat, 9 Feb 2008 20:44:59 -0600
-Message-ID: <FC5B6F22-27A9-4F0F-85EE-0B72B94C69E2@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v919.1)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-To: Git Users List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Feb 10 03:46:06 2008
+From: Bruno Cesar Ribas <ribas@c3sl.ufpr.br>
+Subject: Re: [PATCH] gitweb: Make use of the $git_dir variable at sub
+	git_get_project_url_list
+Date: Sun, 10 Feb 2008 00:46:11 -0200
+Message-ID: <20080210024611.GA31577@c3sl.ufpr.br>
+References: <1202318112-8223-1-git-send-email-ribas@c3sl.ufpr.br> <20080208041542.GA28336@c3sl.ufpr.br> <7vbq6sm0j3.fsf@gitster.siamese.dyndns.org> <200802081015.39707.jnareb@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 10 03:47:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JO2Ci-0005GF-Oh
-	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 03:46:05 +0100
+	id 1JO2E1-0005Rj-A2
+	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 03:47:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752575AbYBJCpF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Feb 2008 21:45:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753026AbYBJCpE
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Feb 2008 21:45:04 -0500
-Received: from py-out-1112.google.com ([64.233.166.179]:31822 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752201AbYBJCpC (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Feb 2008 21:45:02 -0500
-Received: by py-out-1112.google.com with SMTP id u52so6163808pyb.10
-        for <git@vger.kernel.org>; Sat, 09 Feb 2008 18:45:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:from:to:content-type:content-transfer-encoding:mime-version:subject:date:x-mailer;
-        bh=8vpoxwabFn7ixtygiiTSjLh+TCplrIY3mjexsrCAdNQ=;
-        b=IwVskaEv7M3AvG3VWY6HKdDkmtfBkY9xu/0kJvjmcD68SWckGoJyv6kgI29QLk5jdb6lLTh/UmSqjQxoe05MaxW2mYCP0Emn6ufiC9fLkRvWtxpfCtT2oPCt9mZY/sITdDwsb20ZFBifhodUkvSm55VwJiwaWU3cwstmmFVB+WE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:from:to:content-type:content-transfer-encoding:mime-version:subject:date:x-mailer;
-        b=Rgn4Wr8wRvMjRUhVq+6AL65gVwlGmxrgIFo9t7pSnGmsVeogHhowvAkS6jDDV6Ajg+qZFA0DmBX/PDeGWrP3PHrFKdH5NgwMWmwxUtu4KOa8QXJ7ZWP/L22d+XwJBy7/UmN78UDCqvpuuseKDEV9gf8APccF2nC1Yu7Vhq03EK0=
-Received: by 10.35.88.16 with SMTP id q16mr16220275pyl.1.1202611501878;
-        Sat, 09 Feb 2008 18:45:01 -0800 (PST)
-Received: from ?192.168.5.104? ( [24.13.188.37])
-        by mx.google.com with ESMTPS id x56sm46818098pyg.36.2008.02.09.18.45.01
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 09 Feb 2008 18:45:01 -0800 (PST)
-X-Mailer: Apple Mail (2.919.1)
+	id S1755391AbYBJCqv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Feb 2008 21:46:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755297AbYBJCqu
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Feb 2008 21:46:50 -0500
+Received: from mx.c3sl.ufpr.br ([200.17.202.3]:54952 "EHLO
+	urquell.c3sl.ufpr.br" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753043AbYBJCqt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Feb 2008 21:46:49 -0500
+Received: from localhost (unknown [189.1.135.222])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	(Authenticated sender: ribas)
+	by urquell.c3sl.ufpr.br (Postfix) with ESMTP id 23252700003D4;
+	Sun, 10 Feb 2008 00:46:42 -0200 (BRST)
+Content-Disposition: inline
+In-Reply-To: <200802081015.39707.jnareb@gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73296>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73297>
 
-Right now, git-svn import (or clone) will convert tags and branches as  
-remote branches.
-I would like it if git could pick up subversion tags and translate  
-them as git tags upon importing
+On Fri, Feb 08, 2008 at 10:15:39AM +0100, Jakub Narebski wrote:
+> Junio C Hamano wrote:
+> > Bruno Cesar Ribas <ribas@c3sl.ufpr.br> writes:
+> >> On Wed, Feb 06, 2008 at 11:37:51AM -0800, Jakub Narebski wrote:
+> >>> Bruno Ribas <ribas@c3sl.ufpr.br> writes:
+> >>>
+> >>><snip> 
+> >>>
+> >>> Good catch (although it wasn't actually a bug).
+> >>
+> >> Not a bug but makes the code cleaner =)
+> > 
+> > I think I saw very similar 's|projectroot/$path|$git_dir|' patch
+> > recently.  If there are more of the same, I'd rather see all of
+> > them in a single patch.
+> 
+> That's all that it is. Those patches are about places where we read
+> file inside repo or get repo config, and there are only two places now: 
+> description and cloneurl/URL list.
 
-I also have some concerns with git-svn dcommit
+And (if added) at the owner's place ;)
 
-Would it be possible for git-svn dcommit to convert locally created  
-git tags to subversion tags? How about branches?
+> 
+> -- 
+> Jakub Narebski
+> Poland
 
-Or is git-svn dcommit only meant to push the current working  (git )  
-branch to whatever (svn) branch you checked out from?
-
-I've been using git since december and I'm trying to convert everyone  
-I know to it from subversion. Unfortunately, I need to use subversion  
-at work. Gits a great tool and I intend to be using it for a while.
-
-Sam
+-- 
+Bruno Ribas - ribas@c3sl.ufpr.br
+http://web.inf.ufpr.br/ribas
+C3SL: http://www.c3sl.ufpr.br 
