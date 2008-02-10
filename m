@@ -1,112 +1,79 @@
-From: Tim Stoakes <tim@stoakes.net>
-Subject: [PATCH] [svn] Add `git svn blame' command
-Date: Sun, 10 Feb 2008 15:21:08 +1030
-Message-ID: <1202619068-1404-1-git-send-email-tim@stoakes.net>
-Cc: gitster@pobox.com, normalperson@yhbt.net,
-	Tim Stoakes <tim@stoakes.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 10 05:52:06 2008
+From: Sean <seanlkml@sympatico.ca>
+Subject: Re: [PATCH] RFC: git lazy clone proof-of-concept
+Date: Sat, 9 Feb 2008 23:59:49 -0500
+Message-ID: <BAYC1-PASMTP10AF630E8A5B3D6C255317AE290@CEZ.ICE>
+References: <200802081828.43849.kendy@suse.cz>
+	<m3ejbngtnn.fsf@localhost.localdomain>
+	<200802091627.25913.kendy@suse.cz>
+	<alpine.LFD.1.00.0802092200350.2732@xanadu.home>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Jan Holesovsky <kendy@suse.cz>, Jakub Narebski <jnareb@gmail.com>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Sun Feb 10 06:01:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JO4Ae-0007Bt-7S
-	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 05:52:04 +0100
+	id 1JO4JU-0008MZ-9m
+	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 06:01:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756097AbYBJEvP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Feb 2008 23:51:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754610AbYBJEvP
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Feb 2008 23:51:15 -0500
-Received: from hosted07.westnet.com.au ([203.10.1.223]:44659 "EHLO
-	hosted07.westnet.com.au" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754552AbYBJEvO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Feb 2008 23:51:14 -0500
-Received: from hosted07.westnet.com.au (hosted07.westnet.com.au [127.0.0.1])
-	by hosted07.westnet.com.au (Postfix) with SMTP id 8AA6233D25A;
-	Sun, 10 Feb 2008 13:51:11 +0900 (WST)
-Received: from mail.stoakes.net (dsl-202-173-137-105.sa.westnet.com.au [202.173.137.105])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by hosted07.westnet.com.au (Postfix) with ESMTP id 28E4D33D240;
-	Sun, 10 Feb 2008 13:51:07 +0900 (WST)
-Received: from noodle.stoakes.net (unknown [192.168.20.209])
-	by mail.stoakes.net (Postfix) with ESMTP id 4831E28C010;
-	Sun, 10 Feb 2008 15:21:06 +1030 (CST)
-Received: by noodle.stoakes.net (Postfix, from userid 1000)
-	id 1AA597F1FF; Sun, 10 Feb 2008 15:21:08 +1030 (CST)
-X-Mailer: git-send-email 1.5.4
-X-PMX-Branch: TNG-Outgoing
+	id S1751292AbYBJFAl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Feb 2008 00:00:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751878AbYBJFA3
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 00:00:29 -0500
+Received: from bay0-omc2-s14.bay0.hotmail.com ([65.54.246.150]:35574 "EHLO
+	bay0-omc2-s14.bay0.hotmail.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755030AbYBJE74 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 9 Feb 2008 23:59:56 -0500
+Received: from BAYC1-PASMTP10 ([65.54.191.183]) by bay0-omc2-s14.bay0.hotmail.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Sat, 9 Feb 2008 20:59:51 -0800
+X-Originating-IP: [74.14.66.77]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Received: from linux1.attic.local ([74.14.66.77]) by BAYC1-PASMTP10.CEZ.ICE over TLS secured channel with Microsoft SMTPSVC(6.0.3790.2668);
+	 Sat, 9 Feb 2008 20:59:51 -0800
+Received: from guru.attic.local ([10.10.10.28])
+	by linux1.attic.local with smtp (Exim 4.43)
+	id 1JO5E4-0002A8-Hl; Sun, 10 Feb 2008 00:59:40 -0500
+In-Reply-To: <alpine.LFD.1.00.0802092200350.2732@xanadu.home>
+X-Mailer: Sylpheed 2.4.8 (GTK+ 2.12.7; i686-pc-linux-gnu)
+X-OriginalArrivalTime: 10 Feb 2008 04:59:51.0260 (UTC) FILETIME=[C49D29C0:01C86BA1]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73313>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73314>
 
-This command is identical to `git blame', but it shows SVN revision
-numbers instead of git commit hashes.
+On Sat, 09 Feb 2008 22:10:06 -0500 (EST)
+Nicolas Pitre <nico@cam.org> wrote:
 
-Signed-off-by: Tim Stoakes <tim@stoakes.net>
----
- Documentation/git-svn.txt |    7 +++++++
- git-svn.perl              |   21 +++++++++++++++++++++
- 2 files changed, 28 insertions(+), 0 deletions(-)
+> On Sat, 9 Feb 2008, Jan Holesovsky wrote:
+> 
+> > On Friday 08 February 2008 20:00, Jakub Narebski wrote:
+> > 
+> > > Both Mozilla import, and GCC import were packed below 0.5 GB. Warning:
+> > > you would need machine with large amount of memory to repack it
+> > > tightly in sensible time!
+> > 
+> > As I answered elsewhere, unfortunately it goes out of memory even on 8G 
+> > machine (x86-64), so...  But still trying.
+> 
+> Try setting the following config variables as follows:
+> 
+> 	git config pack.deltaCacheLimit 1
+> 	git config pack.deltaCacheSize 1
+> 	git config pack.windowMemory 1g
+> 
+> That should help keeping memory usage somewhat bounded.
+> 
 
-diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
-index b1d527f..340f1be 100644
---- a/Documentation/git-svn.txt
-+++ b/Documentation/git-svn.txt
-@@ -161,6 +161,13 @@ New features:
- +
- Any other arguments are passed directly to `git log'
- 
-+'blame'::
-+       Show what revision and author last modified each line of a file. This is
-+       identical to `git blame', but SVN revision numbers are shown instead of git
-+       commit hashes.
-++
-+All arguments are passed directly to `git blame'.
-+
- --
- 'find-rev'::
- 	When given an SVN revision number of the form 'rN', returns the
-diff --git a/git-svn.perl b/git-svn.perl
-index 7889cce..4437ed5 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -186,6 +186,9 @@ my %cmd = (
- 		    "Show info about the latest SVN revision
- 		     on the current branch",
- 		    { 'url' => \$_url, } ],
-+	'blame' => [ \&Git::SVN::Log::cmd_blame,
-+	            "Show what revision and author last modified each line of a file",
-+	            {} ],
- );
- 
- my $cmd;
-@@ -4448,6 +4451,24 @@ out:
- 	print commit_log_separator unless $incremental || $oneline;
- }
- 
-+sub cmd_blame {
-+	my $path = shift;
-+
-+	config_pager();
-+	run_pager();
-+
-+	my ($fh, $ctx) = command_output_pipe('blame', @_, $path);
-+	while (my $line = <$fh>) {
-+		if ($line=~/^([[:xdigit:]]+)\s/) {
-+			my (undef, $rev, undef) = ::cmt_metadata($1);
-+			$rev = sprintf('%-10s', $rev);
-+			$line=~s/^[[:xdigit:]]+(\s)/$rev$1/;
-+		}
-+		print $line;
-+	}
-+	command_close_pipe($fh, $ctx);
-+}
-+
- package Git::SVN::Migration;
- # these version numbers do NOT correspond to actual version numbers
- # of git nor git-svn.  They are just relative.
--- 
-1.5.4
+Hi Nicolas,
+
+Tried that earlier today and got a 1.6G pack (on a 2G machine).  There are
+some big objects in that repo.. over 100 are 30 to 62M in size, 400 more
+over 10M, and ~40,000 over 100K.  Would you expect a larger memory window
+(on a better machine) to help shrink the repo down any more?
+
+Sean
