@@ -1,71 +1,67 @@
-From: Sean <seanlkml@sympatico.ca>
-Subject: Re: [PATCH] RFC: git lazy clone proof-of-concept
-Date: Sun, 10 Feb 2008 00:35:17 -0500
-Message-ID: <BAYC1-PASMTP059B375F7660D93F93647DAE290@CEZ.ICE>
-References: <200802081828.43849.kendy@suse.cz>
-	<m3ejbngtnn.fsf@localhost.localdomain>
-	<200802091627.25913.kendy@suse.cz>
-	<alpine.LFD.1.00.0802092200350.2732@xanadu.home>
-	<BAYC1-PASMTP10AF630E8A5B3D6C255317AE290@CEZ.ICE>
-	<alpine.LFD.1.00.0802100017380.2732@xanadu.home>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: git-cvsexportcommit and commit date
+Date: Sun, 10 Feb 2008 06:45:31 +0100
+Message-ID: <200802100645.32743.robin.rosenberg.lists@dewire.com>
+References: <OFFF18703C.5539A99A-ON852573E7.00699FE4-852573E7.006A0F3E@db.com> <47AA0FD8.1050801@catalyst.net.nz> <loom.20080210T033717-237@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Jan Holesovsky <kendy@suse.cz>, Jakub Narebski <jnareb@gmail.com>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Sun Feb 10 06:35:56 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Derek Mahar <derek.mahar@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 10 06:46:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JO4r5-0004bA-Sd
-	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 06:35:56 +0100
+	id 1JO511-0005uH-UH
+	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 06:46:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751455AbYBJFfV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Feb 2008 00:35:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751222AbYBJFfV
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 00:35:21 -0500
-Received: from bay0-omc2-s12.bay0.hotmail.com ([65.54.246.148]:31972 "EHLO
-	bay0-omc2-s12.bay0.hotmail.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751365AbYBJFfT (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 10 Feb 2008 00:35:19 -0500
-Received: from BAYC1-PASMTP05 ([65.54.191.165]) by bay0-omc2-s12.bay0.hotmail.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Sat, 9 Feb 2008 21:35:19 -0800
-X-Originating-IP: [74.14.66.77]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([74.14.66.77]) by BAYC1-PASMTP05.CEZ.ICE over TLS secured channel with Microsoft SMTPSVC(6.0.3790.2668);
-	 Sat, 9 Feb 2008 21:35:18 -0800
-Received: from guru.attic.local ([10.10.10.28])
-	by linux1.attic.local with smtp (Exim 4.43)
-	id 1JO5mO-0002Ca-4l; Sun, 10 Feb 2008 01:35:08 -0500
-In-Reply-To: <alpine.LFD.1.00.0802100017380.2732@xanadu.home>
-X-Mailer: Sylpheed 2.4.8 (GTK+ 2.12.7; i686-pc-linux-gnu)
-X-OriginalArrivalTime: 10 Feb 2008 05:35:18.0923 (UTC) FILETIME=[B8CCC5B0:01C86BA6]
+	id S1751584AbYBJFpi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 10 Feb 2008 00:45:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751504AbYBJFph
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 00:45:37 -0500
+Received: from [83.140.172.130] ([83.140.172.130]:10801 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1751236AbYBJFph (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Feb 2008 00:45:37 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 69FCD8006AB;
+	Sun, 10 Feb 2008 06:45:35 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id dawQZb+cUtiX; Sun, 10 Feb 2008 06:45:35 +0100 (CET)
+Received: from [10.9.0.3] (unknown [10.9.0.3])
+	by dewire.com (Postfix) with ESMTP id E98F5800687;
+	Sun, 10 Feb 2008 06:45:34 +0100 (CET)
+User-Agent: KMail/1.9.6 (enterprise 0.20071123.740460)
+In-Reply-To: <loom.20080210T033717-237@post.gmane.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73316>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73317>
 
-On Sun, 10 Feb 2008 00:22:09 -0500 (EST)
-Nicolas Pitre <nico@cam.org> wrote:
+s=F6ndagen den 10 februari 2008 skrev Derek Mahar:
+> How do you get git-cvsimport to avoid the "duplicate" commit that it =
+creates
+> when it imports a commit that you "landed" in CVS with git-cvsexportc=
+ommit?  I
+> call this commit a duplicate because though it has a different SHA1 i=
+dentifier,
+> commit timestamp, and even committer email address, it refers to the =
+same tree
+> identifier as the landed commit.  However, because it has the same te=
+xtual
+> difference as the landed commit, the duplicate commit introduces no n=
+ew textual
+> difference.  It is essentially an "empty" commit.  Do you just accept=
+ and ignore
+> this empty commit?
 
-> Well, I don't think so.  Anyway, with the above pack.windowMemory 
-> setting, the window probably gets shrinked if those big objects are all 
-> to be found in the same window.  So that would be the setting to 
-> increase if you have lots of ram.
+git rebase will drop those "empty" commits by default and you'll end up=
+ with the
+cvs-imported version.
 
-Sounds like it would be worthwhile then for Jan to try on that 8G machine
-and see what comes out the other end.
-
-> Finding out what those huge objects are, and if they actually need to be 
-> there, would be a good thing to do to reduce any repository size.
-
-Okay, i've sent the sha1's of the top 500 to Jan for inspection.  It appears
-that many of the largest objects are automatically generated i18n files that
-could be regenerated from source files when needed rather than being checked
-in themselves; but that's for the OO folks to decide.
-
-Thanks,
-Sean
+-- robin
