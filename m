@@ -1,134 +1,127 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] Add a test for git-daemon and clone via git:// protocol
-Date: Sun, 10 Feb 2008 13:45:08 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802101343480.11591@racer.site>
-References: <alpine.LSU.1.00.0802091657000.11591@racer.site> <alpine.LNX.1.00.0802091205530.13593@iabervon.org> <alpine.LSU.1.00.0802100302050.11591@racer.site> <alpine.LNX.1.00.0802092208280.13593@iabervon.org> <7vhcgh4fb9.fsf@gitster.siamese.dyndns.org>
- <alpine.LSU.1.00.0802101210340.11591@racer.site>
+Subject: [PATCH] bisect: allow starting with a detached HEAD
+Date: Sun, 10 Feb 2008 13:59:50 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0802101358440.11591@racer.site>
+References: <3f4fd2640802100301y436bda41kcca1b1eb8ec0ea10@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Feb 10 14:45:46 2008
+Cc: Git <git@vger.kernel.org>, gitster@pobox.com
+To: Reece Dunn <msclrhd@googlemail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 10 15:01:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOCV5-0002jp-9J
-	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 14:45:43 +0100
+	id 1JOCk6-0006Qx-PT
+	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 15:01:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750884AbYBJNpK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Feb 2008 08:45:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750833AbYBJNpK
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 08:45:10 -0500
-Received: from mail.gmx.net ([213.165.64.20]:34942 "HELO mail.gmx.net"
+	id S1751035AbYBJN7v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Feb 2008 08:59:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751033AbYBJN7u
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 08:59:50 -0500
+Received: from mail.gmx.net ([213.165.64.20]:58399 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750769AbYBJNpI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Feb 2008 08:45:08 -0500
-Received: (qmail invoked by alias); 10 Feb 2008 13:45:05 -0000
+	id S1751924AbYBJN7t (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Feb 2008 08:59:49 -0500
+Received: (qmail invoked by alias); 10 Feb 2008 13:59:47 -0000
 Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
-  by mail.gmx.net (mp018) with SMTP; 10 Feb 2008 14:45:05 +0100
+  by mail.gmx.net (mp006) with SMTP; 10 Feb 2008 14:59:47 +0100
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+FyvsH9E2FSu+koS7nEiK2equwcN3oFPs9rg8yfg
-	nidkjAFRPJjUra
+X-Provags-ID: V01U2FsdGVkX1+5q5xbjnW5+528SIZBplZ+rFhwARr3qfwh0HyZOP
+	nA9YFTACrDAvyV
 X-X-Sender: gene099@racer.site
-In-Reply-To: <alpine.LSU.1.00.0802101210340.11591@racer.site>
+In-Reply-To: <3f4fd2640802100301y436bda41kcca1b1eb8ec0ea10@mail.gmail.com>
 User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73355>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73356>
 
 
-The new test, t5703-daemon.sh, sets up a simple git-daemon at port 8111
-(you can override it with the environment variable GIT_DAEMON_TEST_PORT),
-and then tries to clone via git:// from it, first without the
-git-daemon-export-ok file (which should fail), and then with it (which
-should succeed).
+Instead of insisting on a symbolic ref, bisect now accepts detached
+HEADs, too.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
 
+	On Sun, 10 Feb 2008, Reece Dunn wrote:
 
-	On Sun, 10 Feb 2008, Johannes Schindelin wrote:
-
-	> On Sat, 9 Feb 2008, Junio C Hamano wrote:
+	> When hunting bugs with the wine source code
+	> (git://source.winehq.org/git/wine.git), both Dan Kegel and I have
+	> found the following berhaviour with git bisect:
 	> 
-	> > Thanks.  The patch makes sense.
-	> > 
-	> > I wonder this deserves a new test case to protect the fix from 
-	> > future regressions.
-	> 
-	> It would probably make sense; this would also exercise 
-	> git-daemon for the first time in our test suite.
+	> $ git checkout wine-0.9.54
+	> HEAD is now at 8f954cc... Release 0.9.54.
+	> $ git bisect start
+	> fatal: ref HEAD is not a symbolic ref
+	> Bad HEAD - I need a symbolic ref
 
-	How's this?
+	Woohoo!  test_expect_failure is nice... it tells you about
+	a fixed behaviour, too!
 
- t/t5703-daemon.sh |   55 +++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 55 insertions(+), 0 deletions(-)
- create mode 100755 t/t5703-daemon.sh
+	(Of course, I changed it to test_expect_success now...)
 
-diff --git a/t/t5703-daemon.sh b/t/t5703-daemon.sh
-new file mode 100755
-index 0000000..10696a1
---- /dev/null
-+++ b/t/t5703-daemon.sh
-@@ -0,0 +1,55 @@
-+#!/bin/sh
+ git-bisect.sh               |    8 ++++++--
+ t/t6030-bisect-porcelain.sh |   12 ++++++++++++
+ 2 files changed, 18 insertions(+), 2 deletions(-)
+
+diff --git a/git-bisect.sh b/git-bisect.sh
+index 5385249..393fa35 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -26,6 +26,9 @@ OPTIONS_SPEC=
+ . git-sh-setup
+ require_work_tree
+ 
++_x40='[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]'
++_x40="$_x40$_x40$_x40$_x40$_x40$_x40$_x40$_x40"
 +
-+test_description='git daemon and cloning via git:// protocol'
-+. ./test-lib.sh
+ sq() {
+ 	@@PERL@@ -e '
+ 		for (@ARGV) {
+@@ -60,7 +63,8 @@ bisect_start() {
+ 	# top-of-line master first!
+ 	#
+ 	head=$(GIT_DIR="$GIT_DIR" git symbolic-ref HEAD) ||
+-	die "Bad HEAD - I need a symbolic ref"
++	head=$(GIT_DIR="$GIT_DIR" git rev-parse --verify HEAD) ||
++	die "Bad HEAD - I need a HEAD"
+ 	case "$head" in
+ 	refs/heads/bisect)
+ 		if [ -s "$GIT_DIR/head-name" ]; then
+@@ -70,7 +74,7 @@ bisect_start() {
+ 		fi
+ 		git checkout $branch || exit
+ 		;;
+-	refs/heads/*)
++	refs/heads/*|$_x40)
+ 		[ -s "$GIT_DIR/head-name" ] && die "won't bisect on seeked tree"
+ 		echo "${head#refs/heads/}" >"$GIT_DIR/head-name"
+ 		;;
+diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
+index 2ba4b00..ec71123 100755
+--- a/t/t6030-bisect-porcelain.sh
++++ b/t/t6030-bisect-porcelain.sh
+@@ -254,6 +254,18 @@ test_expect_success 'bisect run & skip: find first bad' '
+ 	grep "$HASH6 is first bad commit" my_bisect_log.txt
+ '
+ 
++test_expect_success 'bisect starting with a detached HEAD' '
 +
-+test_expect_success 'setup' '
-+
-+	mkdir first &&
-+	(cd first &&
-+	 git init &&
-+	 echo biomimicry > ted &&
-+	 git add ted &&
-+	 test_tick &&
-+	 git commit -m initial &&
-+	 git gc)
-+
-+'
-+
-+PORT=${GIT_DAEMON_TEST_PORT:-8111}
-+
-+start_daemon () {
-+	trap 'kill "$DAEMON_PID"' 0
-+	git daemon --base-path="$(pwd)" \
-+		--port="$PORT" \
-+		--detach \
-+		--pid-file=pid-file \
-+		-- "$(pwd)/first"
-+	DAEMON_PID=$(cat pid-file)
-+}
-+
-+test_expect_success 'daemon' '
-+
-+	start_daemon &&
-+	test -f pid-file
-+
-+'
-+
-+test_expect_success 'clone fails without export-ok' '
-+
-+	! git clone git://127.0.0.1:"$PORT"/first second
-+
-+'
-+
-+test_expect_success 'clone succeeds with export-ok' '
-+
-+	: > first/.git/git-daemon-export-ok &&
-+	git clone git://127.0.0.1:"$PORT"/first second &&
-+	for f in refs/heads/master objects/pack/*.pack
-+	do
-+		cmp first/.git/$f second/.git/$f || break
-+	done
++	git bisect reset &&
++	git checkout master^ &&
++	HEAD=$(git rev-parse --verify HEAD) &&
++	git bisect start &&
++	test $HEAD = $(cat .git/head-name) &&
++	git bisect reset &&
++	test $HEAD = $(git rev-parse --verify HEAD)
 +
 +'
 +
-+test_done
+ #
+ #
+ test_done
 -- 
 1.5.4.1264.gb53928
