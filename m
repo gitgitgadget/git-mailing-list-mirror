@@ -1,121 +1,153 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (topics)
-Date: Sun, 10 Feb 2008 14:09:52 -0800
-Message-ID: <7vr6fkea4v.fsf@gitster.siamese.dyndns.org>
-References: <7v7ihmuwzi.fsf@gitster.siamese.dyndns.org>
-	<7vodavd9qw.fsf@gitster.siamese.dyndns.org>
-	<7vbq6tset4.fsf@gitster.siamese.dyndns.org>
-	<7vmyq9gk94.fsf@gitster.siamese.dyndns.org>
-	<m3wspcg4hg.fsf@localhost.localdomain>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: [Feature Request] Better Subversion integration
+Date: Sun, 10 Feb 2008 23:18:08 +0100
+Message-ID: <20080210221808.GA16615@atjola.homenet>
+References: <FC5B6F22-27A9-4F0F-85EE-0B72B94C69E2@gmail.com> <20080210035611.GA2454@atjola.homenet> <47AF2BBF.1060403@alum.mit.edu> <20080210175351.GA13411@atjola.homenet> <47AF5242.9080804@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 10 23:10:57 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Sam Granieri Jr <sjgdev@gmail.com>,
+	Git Users List <git@vger.kernel.org>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Sun Feb 10 23:18:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOKO0-0005fk-1X
-	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 23:10:56 +0100
+	id 1JOKVc-0007sB-T5
+	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 23:18:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752133AbYBJWKR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Feb 2008 17:10:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751892AbYBJWKQ
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 17:10:16 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:44927 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752128AbYBJWKP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Feb 2008 17:10:15 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id E2852227F;
-	Sun, 10 Feb 2008 17:10:10 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id D4134227D;
-	Sun, 10 Feb 2008 17:10:06 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752105AbYBJWSN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 10 Feb 2008 17:18:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752078AbYBJWSN
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 17:18:13 -0500
+Received: from mail.gmx.net ([213.165.64.20]:41438 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751799AbYBJWSM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Feb 2008 17:18:12 -0500
+Received: (qmail invoked by alias); 10 Feb 2008 22:18:09 -0000
+Received: from i577B8755.versanet.de (EHLO atjola.local) [87.123.135.85]
+  by mail.gmx.net (mp015) with SMTP; 10 Feb 2008 23:18:09 +0100
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX19p6m9tNFNpWoPUfCLY3S3jsQcz2Ake0nwLcpsK4T
+	/MoL0C4F0owSK6
+Content-Disposition: inline
+In-Reply-To: <47AF5242.9080804@alum.mit.edu>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73425>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73426>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+On 2008.02.10 20:36:34 +0100, Michael Haggerty wrote:
+> Bj=F6rn Steinbrink wrote:
+> > On 2008.02.10 17:52:15 +0100, Michael Haggerty wrote:
+> >> Bj=F6rn Steinbrink wrote:
+> >>> On 2008.02.09 20:44:59 -0600, Sam Granieri Jr wrote:
+> >>>> Right now, git-svn import (or clone) will convert tags and branc=
+hes as =20
+> >>>> remote branches.
+> >>>> I would like it if git could pick up subversion tags and transla=
+te them=20
+> >>>> as git tags upon importing
+> >>> SVN tags aren't like git tags. A "tag" in SVN is just another dir=
+ectory,
+> >>> which you can modify at will. Yeah, I know, you _should_ not comm=
+it any
+> >>> changes to SVN "tags", but shit happens. And once you modify the =
+"tag"
+> >>> in SVN, you would have to invalidate the git tag, and finding a c=
+ommit
+> >>> that matches the SVN state of things is probably way too expensiv=
+e to be
+> >>> practical. Maybe some --we-never-mess-up-svn-tag-alike-branches c=
+ould
+> >>> be added to allow git-svn to create teal git tags though? Dunno, =
+I don't
+> >>> care much. Shouldn't be too hard to find some shell magic to crea=
+te
+> >>> tags, if one wants them.
+> >> Because of the way an SVN repository is stored, it should be cheap=
+ to
+> >> ask SVN whether the contents of a tag in the HEAD revision are ide=
+ntical
+> >> to the contents at the time the tag was created.  If there was any
+> >> change anywhere under the tag directory, then the node of the tag
+> >> directory will be different in the two revisions.
+> >>
+> >> For that matter, you could ask SVN for information about the revis=
+ions
+> >> in which the tags/ directory was changed (this is also very cheap)=
+, and
+> >> make sure that none of those changes modified an existing tag.  Th=
+is
+> >> scan could be done at the beginning of a conversion to determine w=
+hich
+> >> tags were handled as pure tags (and therefore convertible as git t=
+ags)
+> >> and which were not (and therefore require more complicated handlin=
+g).
+> >=20
+> > Yeah, but what if a "tag" in SVN is modified after that? Then the g=
+it
+> > tag becomes kinda invalid, and I see no cheap way to figure out if =
+there
+> > is a commit somewhere that has the same content of the new "tag". T=
+hat's
+> > what I'm talking about.
+> >=20
+> > The only way I see to handle that is to create a new commit in git =
+and
+> > tag that. But IMHO that's totally nuts, because the tag doesn't eve=
+n
+> > point to a commit of the "real" branch anymore. And you'd either ne=
+ed to
+> > replace/remove the old tag or use a naming scheme that includes som=
+e
+> > @rev marker, both of which are just confusing when talking about ta=
+gs.
+>=20
+> You're right; when importing incrementally there is no way to know wh=
+at
+> people will do with a tag after the initial conversion.  I was thinki=
+ng
+> more of a one-time conversion.
+>=20
+> If a new tag is created cleanly in subversion (that is, a single copy
+> from a single location, then you can read the SVN source (trunk or
+> branch name + SVN revision number) directly out of SVN.  A persistent
+> look-up table could keep track of the git hashes corresponding to suc=
+h
+> sources.
+>=20
+> If a clean tag is later modified, would it be reasonable to
+> "retroactively" create a git branch based on the contents of the old
+> tag, and modify that?
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> * jc/submittingpatches (Sun Feb 3 17:02:28 2008 -0800) 3 commits
->>  + Documentation/SubmittingPatches: What's Acked-by and Tested-by?
->>  + Documentation/SubmittingPatches: discuss first then submit
->>  + Documentation/SubmittingPatches: Instruct how to use [PATCH]
->>    Subject header
->> 
->> These I think are sensible but they did not see much discussion,
->> so they are parked here for now.
->
-> I thing first and last are good to go, while second could get
-> improved. This means I guess either resending second patch for further
-> discussion, or adding it as is, and wait for further improvements; it
-> is better than nothing.
+That's the first option I described (well, I skipped the "create a
+branch" part). But you would get a history like this:
 
-Ok.  As you can see above it's already merged to 'next', so here
-is an update with pieces taken from my earlier response to your
-question.
+Before the tag change:
 
--- >8 --
-[PATCH] Documentation/SubmittingPatches - a suggested patch flow
+ ---A (tag XYZ)
+     \
+      B---C---D (trunk)
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
+After the tag change:
 
- Documentation/SubmittingPatches |   35 +++++++++++++++++++++++++++++++++++
- 1 files changed, 35 insertions(+), 0 deletions(-)
+ ---A---A' (tag XYZ)
+     \
+      B---C---D (trunk)
 
-diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-index 0661293..0e155c9 100644
---- a/Documentation/SubmittingPatches
-+++ b/Documentation/SubmittingPatches
-@@ -230,6 +230,41 @@ to modify.  "Tested-by:" says the patch was tested by the person
- and found to have the desired effect.
- 
- ------------------------------------------------
-+An ideal patch flow
-+
-+Here is an ideal patch flow for this project the current maintainer
-+suggests to the contributors:
-+
-+ (0) You come up with an itch.  You code it up.
-+
-+ (1) Send it to the list and cc people who may need to know about
-+     the change.
-+
-+     The people who may need to know are the ones whose code you
-+     are butchering.  These people happen to be the ones who are
-+     most likely to be knowledgeable enough to help you, but
-+     they have no obligation to help you (i.e. you ask for help,
-+     don't demand).  "git log -p -- $area_you_are_modifying" would
-+     help you find out who they are.
-+
-+ (2) You get comments and suggestions for improvements.  You may
-+     even get them in a "on top of your change" patch form.
-+
-+ (3) Polish, refine, and re-send to the list and the people who
-+     spend their time to improve your patch.  Go back to step (2).
-+
-+ (4) The list forms consensus that the last round of your patch is
-+     good.  Send it to the list and cc the maintainer.
-+
-+ (5) A topic branch is created with the patch and is merged to 'next',
-+     and cooked further and eventually graduates to 'master'.
-+
-+In any time between the (2)-(3) cycle, the maintainer may pick it up
-+from the list and queue it to 'pu', in order to make it easier for
-+people play with it without having to pick up and apply the patch to
-+their trees themselves.
-+
-+------------------------------------------------
- MUA specific hints
- 
- Some of patches I receive or pick up from the list share common
+So not only does the tag move, but it's also no longer in the history o=
+f
+trunk. And that makes it IMHO a bit confusing/useless to do that. With
+the branches, you at least _know_ that things can change. Tags are not
+supposed to do so.
+
+That said, I'd not oppose any optional support to create such tags, I'd
+just never use it.
+
+Bj=F6rn
