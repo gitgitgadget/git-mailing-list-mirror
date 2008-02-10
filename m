@@ -1,71 +1,86 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Add "--show-all" revision walker flag for debugging
-Date: Sun, 10 Feb 2008 16:04:59 -0500 (EST)
-Message-ID: <alpine.LFD.1.00.0802101558200.2732@xanadu.home>
-References: <alpine.LFD.1.00.0802091341210.2896@woody.linux-foundation.org>
- <alpine.LSU.1.00.0802100110450.11591@racer.site>
- <alpine.LFD.1.00.0802092016540.2732@xanadu.home>
- <alpine.LSU.1.00.0802100130090.11591@racer.site>
- <m3myq8fwdx.fsf@localhost.localdomain>
- <alpine.LFD.1.00.0802101241590.2896@woody.linux-foundation.org>
+From: mkoegler@auto.tuwien.ac.at (Martin Koegler)
+Subject: Re: [PATCH] diff.c: guard config parser from value=NULL
+Date: Sun, 10 Feb 2008 22:13:41 +0100
+Message-ID: <20080210211341.GA24976@auto.tuwien.ac.at>
+References: <20080210193534.d11d8b15.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sun Feb 10 22:05:52 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio Hamano <junkio@cox.net>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Pierre Habouzit <madcoder@debian.org>,
+	Govind Salinas <blix@sophiasuchtig.com>, git@vger.kernel.org
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Sun Feb 10 22:14:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOJN1-00036a-0O
-	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 22:05:51 +0100
+	id 1JOJVh-0005ym-K5
+	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 22:14:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755157AbYBJVFB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Feb 2008 16:05:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755178AbYBJVFA
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 16:05:00 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:13301 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754938AbYBJVE7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Feb 2008 16:04:59 -0500
-Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR004.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JW100MPKJWBG090@VL-MO-MR004.ip.videotron.ca> for
- git@vger.kernel.org; Sun, 10 Feb 2008 16:04:59 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <alpine.LFD.1.00.0802101241590.2896@woody.linux-foundation.org>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+	id S1756438AbYBJVNo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 10 Feb 2008 16:13:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755597AbYBJVNo
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 16:13:44 -0500
+Received: from thor.auto.tuwien.ac.at ([128.130.60.15]:33431 "EHLO
+	thor.auto.tuwien.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755384AbYBJVNn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Feb 2008 16:13:43 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by thor.auto.tuwien.ac.at (Postfix) with ESMTP id 1DD7D680BEAC;
+	Sun, 10 Feb 2008 22:13:42 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at auto.tuwien.ac.at
+Received: from thor.auto.tuwien.ac.at ([127.0.0.1])
+	by localhost (thor.auto.tuwien.ac.at [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id J26n3lr75W1q; Sun, 10 Feb 2008 22:13:42 +0100 (CET)
+Received: by thor.auto.tuwien.ac.at (Postfix, from userid 3001)
+	id EE5A068018C6; Sun, 10 Feb 2008 22:13:41 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <20080210193534.d11d8b15.chriscool@tuxfamily.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73415>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73416>
 
-On Sun, 10 Feb 2008, Linus Torvalds wrote:
+On Sun, Feb 10, 2008 at 07:35:34PM +0100, Christian Couder wrote:
+> In fact we also guard for value=3D"" as it doesn't make more sense
+> for the variables here.
+>=20
+> We do that by using a new function 'xstrdup_confval' to avoid code
+> duplication.
+>=20
+> By the way this changes a 'strdup' into 'xstrdup'.
+>=20
+> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+> ---
+>  diff.c |   23 +++++++++++++----------
+>  1 files changed, 13 insertions(+), 10 deletions(-)
+>=20
+> diff --git a/diff.c b/diff.c
+> index 5b8afdc..d51aecb 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -60,6 +60,14 @@ static struct ll_diff_driver {
+>  	char *cmd;
+>  } *user_diff, **user_diff_tail;
+> =20
+> +static int xstrdup_confval(const char *dest, const char *var, const =
+char *value)
+> +{
+> +	if (!value || !*value)
+> +		return error("%s: lacks value", var);
+> +	dest =3D xstrdup(value);
+> +	return 0;
+> +}
+> +
+>  /*
+>   * Currently there is only "diff.<drivername>.command" variable;
+>   * because there are "diff.color.<slot>" variables, we are parsing
 
-> At the same time, I'm still not really convinced we need to add the 
-> redundant info. I do think I *should* have designed it that way to start 
-> with (and I thought so two years ago - blaah), so the strongest reason for 
-> "we should add generation numbers" at least for me is that I actually 
-> think it's a GoodThing(tm) to have.
-> 
-> But adding it is a pretty invasive thing, and would force people to 
-> upgrade (it really isn't backwards compatible - old versions of git would 
-> immediately refuse to touch archives with even just a single top commit 
-> that has a generation number in it, unless we'd hide it at the end of the 
-> buffer and just uglify things in general).
+This function could be used in config.c too. So move it to a common fil=
+e.
 
-Repeating myself: for one, I'm rather against any such generation 
-headers in the commit object, and so is Dscho.
-
-Why?  Because it doesn't have to live in the commit object at all.
-
-Just like we have a locally managed pack index file, we can have a 
-locally managed "index of generations" file just fine.
-
-
-Nicolas
+mfg Martin K=F6gler
