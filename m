@@ -1,60 +1,72 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] RFC: git lazy clone proof-of-concept
-Date: Sun, 10 Feb 2008 14:50:49 -0500 (EST)
-Message-ID: <alpine.LFD.1.00.0802101445430.2732@xanadu.home>
-References: <200802081828.43849.kendy@suse.cz>
- <m3ejbngtnn.fsf@localhost.localdomain> <200802091627.25913.kendy@suse.cz>
- <alpine.LFD.1.00.0802092200350.2732@xanadu.home>
- <alpine.LSU.1.00.0802101640570.11591@racer.site>
+From: Johannes Sixt <johannes.sixt@telecom.at>
+Subject: Re: [PATCH] daemon: Set up PATH properly on startup.
+Date: Sun, 10 Feb 2008 21:00:26 +0100
+Message-ID: <20080210200027.169BD5B0E7@dx.sixt.local>
+References: <1202555873-8099-1-git-send-email-mdw@distorted.org.uk>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Jan Holesovsky <kendy@suse.cz>, Jakub Narebski <jnareb@gmail.com>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Feb 10 20:51:31 2008
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+To: Mark Wooding <mdw@distorted.org.uk>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Feb 10 21:01:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOID4-0005Jb-6n
-	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 20:51:30 +0100
+	id 1JOIMM-0007u2-Ra
+	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 21:01:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752830AbYBJTu4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Feb 2008 14:50:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752813AbYBJTu4
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 14:50:56 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:9800 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752458AbYBJTuz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Feb 2008 14:50:55 -0500
-Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR005.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JW100KZAGGI5280@VL-MO-MR005.ip.videotron.ca> for
- git@vger.kernel.org; Sun, 10 Feb 2008 14:50:47 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <alpine.LSU.1.00.0802101640570.11591@racer.site>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+	id S1752780AbYBJUAa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Feb 2008 15:00:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752668AbYBJUAa
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 15:00:30 -0500
+Received: from smtp5.srv.eunet.at ([193.154.160.227]:35551 "EHLO
+	smtp5.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752435AbYBJUAa (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Feb 2008 15:00:30 -0500
+Received: from dx.sixt.local (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
+	by smtp5.srv.eunet.at (Postfix) with ESMTP id 5EE1413AB88;
+	Sun, 10 Feb 2008 21:00:27 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by dx.sixt.local (Postfix) with ESMTP id 169BD5B0E7;
+	Sun, 10 Feb 2008 21:00:27 +0100 (CET)
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73394>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73395>
 
-On Sun, 10 Feb 2008, Johannes Schindelin wrote:
+Mark Wooding wrote:
+> Since exec_cmd.c changed (511707d42b3b3e57d9623493092590546ffeae80) to
+> just use the PATH variable for finding Git binaries, the daemon has been
+> broken for people with picky inetds (such as the OpenBSD one) which
+> launder the environment on startup.  The result is that the daemon
+> mysteriously fails to do anything useful.
+[...] 
+> diff --git a/daemon.c b/daemon.c
+> index 41a60af..cfd6124 100644
+> --- a/daemon.c
+> +++ b/daemon.c
+> @@ -1149,6 +1149,7 @@ int main(int argc, char **argv)
+>  usage(daemon_usage);
+>  }
+>  
+> +     setup_path(NULL);
+>  if (inetd_mode && (group_name || user_name))
+>  die("--user and --group are incompatible with --inetd");
+>  
 
-> I tried that:
-> 
-> $ git config pack.deltaCacheLimit 1
-> $ git config pack.deltaCacheSize 1
-> $ git config pack.windowMemory 2g
+There are 2 reason, *not* to do this:
 
-This has nothing to do with repacking memory usage, but even tighter 
-packs can be obtained with:
+1. It's not needed. You can use
 
-	git config repack.usedeltabaseoffset true
+    /usr/local/bin/git --exec-path=/usr/local/bin daemon --inetd ...
 
-This is not the default yet.
+to inject the exec-path.
 
+2. Security. Those inetds launder the environment for a reason. Assume inetd
+sets PATH=/usr/bin:/bin and git-daemon is installed
+as /usr/sbin/git-daemon. With your patch now all hooks run with the path
+set to /usr/sbin:/usr/bin:/bin.
 
-Nicolas
+-- Hannes
