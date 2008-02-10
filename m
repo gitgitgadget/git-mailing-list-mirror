@@ -1,84 +1,122 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [Feature Request] Better Subversion integration
-Date: Sun, 10 Feb 2008 17:52:15 +0100
-Message-ID: <47AF2BBF.1060403@alum.mit.edu>
-References: <FC5B6F22-27A9-4F0F-85EE-0B72B94C69E2@gmail.com> <20080210035611.GA2454@atjola.homenet>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Re: [PATCH] RFC: git lazy clone proof-of-concept
+Date: Sun, 10 Feb 2008 12:01:47 -0500
+Message-ID: <9e4733910802100901m729b0cdfg85ccc0ca77011249@mail.gmail.com>
+References: <200802081828.43849.kendy@suse.cz>
+	 <m3ejbngtnn.fsf@localhost.localdomain>
+	 <200802091627.25913.kendy@suse.cz>
+	 <alpine.LFD.1.00.0802092200350.2732@xanadu.home>
+	 <alpine.LSU.1.00.0802101640570.11591@racer.site>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Sam Granieri Jr <sjgdev@gmail.com>,
-	Git Users List <git@vger.kernel.org>
-To: =?ISO-8859-1?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Feb 10 17:53:11 2008
+Content-Transfer-Encoding: 7bit
+Cc: "Nicolas Pitre" <nico@cam.org>, "Jan Holesovsky" <kendy@suse.cz>,
+	"Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org,
+	"Junio C Hamano" <gitster@pobox.com>
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Feb 10 18:02:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOFQT-0004sz-Nx
-	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 17:53:10 +0100
+	id 1JOFZe-0008FK-Ti
+	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 18:02:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751835AbYBJQwe convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 10 Feb 2008 11:52:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751803AbYBJQwe
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 11:52:34 -0500
-Received: from einhorn.in-berlin.de ([192.109.42.8]:45887 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751490AbYBJQwd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Feb 2008 11:52:33 -0500
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from [192.168.69.135] (kaiserty.in-dsl.de [217.197.85.174])
-	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id m1AGqSfm019949
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sun, 10 Feb 2008 17:52:30 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.8pre) Gecko/20071022 Thunderbird/2.0.0.6 Mnenhy/0.7.5.666
-In-Reply-To: <20080210035611.GA2454@atjola.homenet>
-X-Enigmail-Version: 0.95.0
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1751926AbYBJRBv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Feb 2008 12:01:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751903AbYBJRBv
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 12:01:51 -0500
+Received: from wa-out-1112.google.com ([209.85.146.182]:32996 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751855AbYBJRBu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Feb 2008 12:01:50 -0500
+Received: by wa-out-1112.google.com with SMTP id v27so1655282wah.23
+        for <git@vger.kernel.org>; Sun, 10 Feb 2008 09:01:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=gOio2+Cm8eImNV5cFOWzew7jUwgEiXyM269xS86qh5s=;
+        b=tQPqQpGdVpeDWC10hAtNIm01YY0AYHl4fSbaZU1RtBpPsMtPvYJgXNWnUmZMg/nuaPRn5gKmisxGpO1kp4XLpdI/RoEA+x/GlSlcFjZYqkh83mtRaw/WWDW4Lg41bByeKcDiiW5GRftbA4HHtGIjdHJMJruzXrESnJKiad4uopg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=v24a4XRhntVZIivqaBX6TaOv58OwbY9lJ2qrXV+GyqmoyU6O4yW7HKl7EG7ig3pPEHL/1L1fDWgaT9xT7s/Kx25B8TuO52XKVSuPDh+mGwplrt1wQxWZRZ+sjCcdfkjVn/I3YasWcM4CqnIjPt+KEpVQ92zKPMWSyOIEHDQNi2E=
+Received: by 10.114.81.1 with SMTP id e1mr9036517wab.11.1202662908045;
+        Sun, 10 Feb 2008 09:01:48 -0800 (PST)
+Received: by 10.114.200.7 with HTTP; Sun, 10 Feb 2008 09:01:47 -0800 (PST)
+In-Reply-To: <alpine.LSU.1.00.0802101640570.11591@racer.site>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73375>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73376>
 
-Bj=F6rn Steinbrink wrote:
-> On 2008.02.09 20:44:59 -0600, Sam Granieri Jr wrote:
->> Right now, git-svn import (or clone) will convert tags and branches =
-as =20
->> remote branches.
->> I would like it if git could pick up subversion tags and translate t=
-hem=20
->> as git tags upon importing
->=20
-> SVN tags aren't like git tags. A "tag" in SVN is just another directo=
-ry,
-> which you can modify at will. Yeah, I know, you _should_ not commit a=
-ny
-> changes to SVN "tags", but shit happens. And once you modify the "tag=
-"
-> in SVN, you would have to invalidate the git tag, and finding a commi=
-t
-> that matches the SVN state of things is probably way too expensive to=
- be
-> practical. Maybe some --we-never-mess-up-svn-tag-alike-branches could
-> be added to allow git-svn to create teal git tags though? Dunno, I do=
-n't
-> care much. Shouldn't be too hard to find some shell magic to create
-> tags, if one wants them.
+On 2/10/08, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> Hi,
+>
+> On Sat, 9 Feb 2008, Nicolas Pitre wrote:
+>
+> > On Sat, 9 Feb 2008, Jan Holesovsky wrote:
+> >
+> > > On Friday 08 February 2008 20:00, Jakub Narebski wrote:
+> > >
+> > > > Both Mozilla import, and GCC import were packed below 0.5 GB. Warning:
+> > > > you would need machine with large amount of memory to repack it
+> > > > tightly in sensible time!
+> > >
+> > > As I answered elsewhere, unfortunately it goes out of memory even on 8G
+> > > machine (x86-64), so...  But still trying.
+> >
+> > Try setting the following config variables as follows:
+> >
+> >       git config pack.deltaCacheLimit 1
+> >       git config pack.deltaCacheSize 1
+> >       git config pack.windowMemory 1g
+> >
+> > That should help keeping memory usage somewhat bounded.
+>
+> I tried that:
+>
+> $ git config pack.deltaCacheLimit 1
+> $ git config pack.deltaCacheSize 1
+> $ git config pack.windowMemory 2g
+> $ #/usr/bin/time git repack -a -d -f --window=250 --depth=250
+> $ du -s objects/
+> 2548137 objects/
+> $ /usr/bin/time git repack -a -d -f --window=250 --depth=250
+> Counting objects: 2477715, done.
+> fatal: Out of memory, malloc failed411764)
+> Command exited with non-zero status 1
+> 9356.95user 53.33system 2:38:58elapsed 98%CPU (0avgtext+0avgdata
+> 0maxresident)k
+> 0inputs+0outputs (31929major+18088744minor)pagefaults 0swaps
+>
+> Note that this is on a 2.4GHz Quadcode CPU with 3.5GB RAM.
 
-Because of the way an SVN repository is stored, it should be cheap to
-ask SVN whether the contents of a tag in the HEAD revision are identica=
-l
-to the contents at the time the tag was created.  If there was any
-change anywhere under the tag directory, then the node of the tag
-directory will be different in the two revisions.
+Turning on multi-core support greatly increases the memory
+consumption; at least double the single thread case.
 
-=46or that matter, you could ask SVN for information about the revision=
-s
-in which the tags/ directory was changed (this is also very cheap), and
-make sure that none of those changes modified an existing tag.  This
-scan could be done at the beginning of a conversion to determine which
-tags were handled as pure tags (and therefore convertible as git tags)
-and which were not (and therefore require more complicated handling).
+Going over the original repository and deleting (get all copies out of
+the history) those giant i18n files generated by programs than Sean
+refers to would be my first step. If you have 5,000 revisions of a
+10MB file I suspect it would take a huge amount of memory to pack.
+Plus you have to copy all of that pointless history around.
 
-Michael
+>
+> I'm retrying with smaller values, but at over 2.5 hours per try, this is
+> getting tedious.
+>
+> Ciao,
+> Dscho
+>
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
+
+
+-- 
+Jon Smirl
+jonsmirl@gmail.com
