@@ -1,77 +1,54 @@
 From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
-Subject: [StGit PATCH 5/5] Emacs mode: use "stg new --file"
-Date: Sun, 10 Feb 2008 21:46:04 +0100
-Message-ID: <20080210204434.17683.61684.stgit@yoghurt>
-References: <20080210203846.17683.43153.stgit@yoghurt>
+Subject: [StGit PATCH 0/2] Convert "stg delete" to the new infrastructure
+Date: Sun, 10 Feb 2008 21:47:01 +0100
+Message-ID: <20080210204628.17886.27365.stgit@yoghurt>
+References: <20080210203640.GA19688@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org,
 	David =?utf-8?q?K=C3=A5gedal?= <davidk@lysator.liu.se>
 To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 10 21:46:49 2008
+X-From: git-owner@vger.kernel.org Sun Feb 10 21:47:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOJ4W-0005pG-3v
-	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 21:46:44 +0100
+	id 1JOJ5Z-0006B4-Tz
+	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 21:47:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755527AbYBJUqJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 10 Feb 2008 15:46:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755440AbYBJUqJ
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 15:46:09 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2844 "EHLO
+	id S1754845AbYBJUrP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 10 Feb 2008 15:47:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754638AbYBJUrP
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 15:47:15 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2848 "EHLO
 	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755186AbYBJUqH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Feb 2008 15:46:07 -0500
+	with ESMTP id S1754841AbYBJUrO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Feb 2008 15:47:14 -0500
 Received: from localhost ([127.0.0.1] helo=[127.0.1.1])
 	by diana.vm.bytemark.co.uk with esmtp (Exim 3.36 #1 (Debian))
-	id 1JOJ3r-0005DX-00; Sun, 10 Feb 2008 20:46:03 +0000
-In-Reply-To: <20080210203846.17683.43153.stgit@yoghurt>
+	id 1JOJ4m-0005E8-00; Sun, 10 Feb 2008 20:47:00 +0000
+In-Reply-To: <20080210203640.GA19688@diana.vm.bytemark.co.uk>
 User-Agent: StGIT/0.14.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73409>
-
-Creating a new patch is a great deal easier now that "stg new" has a
---file flag.
-
-Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73410>
 
 ---
 
-David, will you sanity-check this? I don't really speak elisp, so I
-might have done something insane without knowing it. But it does seem
-to work. :-)
-
- contrib/stgit.el |   10 ++--------
- 1 files changed, 2 insertions(+), 8 deletions(-)
+Karl Hasselstr=C3=B6m (2):
+      Emacs mode: delete patches
+      Convert "stg delete" to the new infrastructure
 
 
-diff --git a/contrib/stgit.el b/contrib/stgit.el
-index bef41c7..30c1cd1 100644
---- a/contrib/stgit.el
-+++ b/contrib/stgit.el
-@@ -316,16 +316,10 @@ Commands:
-=20
- (defun stgit-confirm-new ()
-   (interactive)
--  (let ((file (make-temp-file "stgit-edit-"))
--        (patch (stgit-create-patch-name
--                (buffer-substring (point-min)
--                                  (save-excursion (goto-char (point-mi=
-n))
--                                                  (end-of-line)
--                                                  (point))))))
-+  (let ((file (make-temp-file "stgit-edit-")))
-     (write-region (point-min) (point-max) file)
-     (stgit-capture-output nil
--      (stgit-run "new" "-m" "placeholder" patch)
--      (stgit-run "edit" "-f" file patch))
-+      (stgit-run "new" "-f" file))
-     (with-current-buffer log-edit-parent-buffer
-       (stgit-refresh))))
-=20
+ contrib/stgit.el         |   10 ++++++
+ stgit/commands/delete.py |   72 +++++++++++++++-----------------------=
+--------
+ t/t1600-delete-one.sh    |    8 +++--
+ 3 files changed, 36 insertions(+), 54 deletions(-)
+
+--=20
+Karl Hasselstr=C3=B6m, kha@treskal.com
+      www.treskal.com/kalle
