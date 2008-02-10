@@ -1,153 +1,100 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: [Feature Request] Better Subversion integration
-Date: Sun, 10 Feb 2008 23:18:08 +0100
-Message-ID: <20080210221808.GA16615@atjola.homenet>
-References: <FC5B6F22-27A9-4F0F-85EE-0B72B94C69E2@gmail.com> <20080210035611.GA2454@atjola.homenet> <47AF2BBF.1060403@alum.mit.edu> <20080210175351.GA13411@atjola.homenet> <47AF5242.9080804@alum.mit.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Alternative approach to the git config NULL value checking patches..
+Date: Sun, 10 Feb 2008 14:29:01 -0800
+Message-ID: <7vbq6oe98y.fsf@gitster.siamese.dyndns.org>
+References: <alpine.LFD.1.00.0802101225110.2896@woody.linux-foundation.org>
+	<7vir0wfqrz.fsf@gitster.siamese.dyndns.org>
+	<alpine.LFD.1.00.0802101406560.2896@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Sam Granieri Jr <sjgdev@gmail.com>,
-	Git Users List <git@vger.kernel.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Sun Feb 10 23:18:50 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sun Feb 10 23:30:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOKVc-0007sB-T5
-	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 23:18:49 +0100
+	id 1JOKgY-0002Ku-DM
+	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 23:30:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752105AbYBJWSN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 10 Feb 2008 17:18:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752078AbYBJWSN
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 17:18:13 -0500
-Received: from mail.gmx.net ([213.165.64.20]:41438 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751799AbYBJWSM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Feb 2008 17:18:12 -0500
-Received: (qmail invoked by alias); 10 Feb 2008 22:18:09 -0000
-Received: from i577B8755.versanet.de (EHLO atjola.local) [87.123.135.85]
-  by mail.gmx.net (mp015) with SMTP; 10 Feb 2008 23:18:09 +0100
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX19p6m9tNFNpWoPUfCLY3S3jsQcz2Ake0nwLcpsK4T
-	/MoL0C4F0owSK6
-Content-Disposition: inline
-In-Reply-To: <47AF5242.9080804@alum.mit.edu>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-X-Y-GMX-Trusted: 0
+	id S1752724AbYBJW3b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Feb 2008 17:29:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752368AbYBJW3b
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 17:29:31 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:48614 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751495AbYBJW3b (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Feb 2008 17:29:31 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 217812829;
+	Sun, 10 Feb 2008 17:29:28 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 26D962827;
+	Sun, 10 Feb 2008 17:29:19 -0500 (EST)
+In-Reply-To: <alpine.LFD.1.00.0802101406560.2896@woody.linux-foundation.org>
+	(Linus Torvalds's message of "Sun, 10 Feb 2008 14:08:58 -0800 (PST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73426>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73427>
 
-On 2008.02.10 20:36:34 +0100, Michael Haggerty wrote:
-> Bj=F6rn Steinbrink wrote:
-> > On 2008.02.10 17:52:15 +0100, Michael Haggerty wrote:
-> >> Bj=F6rn Steinbrink wrote:
-> >>> On 2008.02.09 20:44:59 -0600, Sam Granieri Jr wrote:
-> >>>> Right now, git-svn import (or clone) will convert tags and branc=
-hes as =20
-> >>>> remote branches.
-> >>>> I would like it if git could pick up subversion tags and transla=
-te them=20
-> >>>> as git tags upon importing
-> >>> SVN tags aren't like git tags. A "tag" in SVN is just another dir=
-ectory,
-> >>> which you can modify at will. Yeah, I know, you _should_ not comm=
-it any
-> >>> changes to SVN "tags", but shit happens. And once you modify the =
-"tag"
-> >>> in SVN, you would have to invalidate the git tag, and finding a c=
-ommit
-> >>> that matches the SVN state of things is probably way too expensiv=
-e to be
-> >>> practical. Maybe some --we-never-mess-up-svn-tag-alike-branches c=
-ould
-> >>> be added to allow git-svn to create teal git tags though? Dunno, =
-I don't
-> >>> care much. Shouldn't be too hard to find some shell magic to crea=
-te
-> >>> tags, if one wants them.
-> >> Because of the way an SVN repository is stored, it should be cheap=
- to
-> >> ask SVN whether the contents of a tag in the HEAD revision are ide=
-ntical
-> >> to the contents at the time the tag was created.  If there was any
-> >> change anywhere under the tag directory, then the node of the tag
-> >> directory will be different in the two revisions.
-> >>
-> >> For that matter, you could ask SVN for information about the revis=
-ions
-> >> in which the tags/ directory was changed (this is also very cheap)=
-, and
-> >> make sure that none of those changes modified an existing tag.  Th=
-is
-> >> scan could be done at the beginning of a conversion to determine w=
-hich
-> >> tags were handled as pure tags (and therefore convertible as git t=
-ags)
-> >> and which were not (and therefore require more complicated handlin=
-g).
-> >=20
-> > Yeah, but what if a "tag" in SVN is modified after that? Then the g=
-it
-> > tag becomes kinda invalid, and I see no cheap way to figure out if =
-there
-> > is a commit somewhere that has the same content of the new "tag". T=
-hat's
-> > what I'm talking about.
-> >=20
-> > The only way I see to handle that is to create a new commit in git =
-and
-> > tag that. But IMHO that's totally nuts, because the tag doesn't eve=
-n
-> > point to a commit of the "real" branch anymore. And you'd either ne=
-ed to
-> > replace/remove the old tag or use a naming scheme that includes som=
-e
-> > @rev marker, both of which are just confusing when talking about ta=
-gs.
->=20
-> You're right; when importing incrementally there is no way to know wh=
-at
-> people will do with a tag after the initial conversion.  I was thinki=
-ng
-> more of a one-time conversion.
->=20
-> If a new tag is created cleanly in subversion (that is, a single copy
-> from a single location, then you can read the SVN source (trunk or
-> branch name + SVN revision number) directly out of SVN.  A persistent
-> look-up table could keep track of the git hashes corresponding to suc=
-h
-> sources.
->=20
-> If a clean tag is later modified, would it be reasonable to
-> "retroactively" create a git branch based on the contents of the old
-> tag, and modify that?
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-That's the first option I described (well, I skipped the "create a
-branch" part). But you would get a history like this:
+> On Sun, 10 Feb 2008, Junio C Hamano wrote:
+> ...
+>> will now need to be changed to:
+>> 
+>> 	if (value == config_true)
+>>         	Ah we have true;
+>> 	else if (!*value)
+>>         	Ok this is false;
+>
+> And that was done by my patch. 
+>
+>> still need to be fixed to:
+>> 
+>> 	if (value == config_true)
+>>         	die("oops '%s' is not a bool", var);
+>> 	else if (!strcmp(value, "somevalue")
+>> 		Ok let's use somevalue;
+>
+> And this is different from checking against NULL exactly how?
 
-Before the tag change:
+Exactly.  My answer to your question is: "It is not different
+from checking against NULL at all."
 
- ---A (tag XYZ)
-     \
-      B---C---D (trunk)
+The first one (i.e. you needed to do so in your patch) shows
+that the codepath that is already doing the right thing needs to
+be modified.  If we do not introduce config_true, we do not even
+have to.  You need additional change to correctly functioning
+codepaths that you should not have to do.
 
-After the tag change:
+The second one shows that even if we introduce config_true, such
+an already broken codepath needs to be fixed to check with
+either NULL or config_true anyway.  The need for fix the
+codepath has not been reduced.  Changing the rule does not help
+for this class of codepath.
 
- ---A---A' (tag XYZ)
-     \
-      B---C---D (trunk)
+But as you seem to imply, it might make sense to equate
 
-So not only does the tag move, but it's also no longer in the history o=
-f
-trunk. And that makes it IMHO a bit confusing/useless to do that. With
-the branches, you at least _know_ that things can change. Tags are not
-supposed to do so.
+	[some-random-section]
+        	some-random-variable
 
-That said, I'd not oppose any optional support to create such tags, I'd
-just never use it.
+to
 
-Bj=F6rn
+	[some-random-section]
+        	some-random-variable = ""
+
+for variables that cannot possibly have any meaningful "bool"
+semantics.  This third class of variables is a possible benefit
+your patch brings in.  The code can be lax for these variables.
+
+However, it would make things inconsistent ("this variable is
+bool and the above two forms mean completely opposite things,
+while that variable is not bool and they mean the same thing").
+I am just having a hard time convincing myself that this little
+detail does not matter.
