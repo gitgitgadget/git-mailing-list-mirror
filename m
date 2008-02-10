@@ -1,64 +1,78 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Minor annoyance with git push
-Date: Sun, 10 Feb 2008 07:23:21 -0500
-Message-ID: <20080210122321.GA31009@coredump.intra.peff.net>
-References: <46a038f90802072044u3329fd33w575c689cba2917ee@mail.gmail.com> <20080209030046.GA10470@coredump.intra.peff.net> <6B804F0D-9C3B-46F3-B922-7A5CBEF55522@zib.de> <alpine.LSU.1.00.0802091307160.11591@racer.site> <7v7ihd7ee1.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0802100213330.11591@racer.site> <20080210101756.GB26568@coredump.intra.peff.net> <alpine.LSU.1.00.0802101219280.11591@racer.site>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [RFC/PATCH] Implement git-cp.
+Date: Sun, 10 Feb 2008 12:33:33 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0802101230160.11591@racer.site>
+References: <38b2ab8a0802031023y2ed7a5aax6d3c404b08757a4d@mail.gmail.com> <vpq63x5swsj.fsf@bauges.imag.fr> <m3tzkp6eqz.fsf@localhost.localdomain> <20080210011203.GL25954@genesis.frugalware.org> <alpine.LSU.1.00.0802100125510.11591@racer.site>
+ <7vzlu9uu7c.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Steffen Prohaska <prohaska@zib.de>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Feb 10 13:24:10 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Miklos Vajna <vmiklos@frugalware.org>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Francis Moreau <francis.moro@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Feb 10 13:34:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOBE6-0000XT-VU
-	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 13:24:07 +0100
+	id 1JOBNq-0002uL-MT
+	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 13:34:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756850AbYBJMXZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Feb 2008 07:23:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754181AbYBJMXZ
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 07:23:25 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2135 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756850AbYBJMXY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Feb 2008 07:23:24 -0500
-Received: (qmail 27336 invoked by uid 111); 10 Feb 2008 12:23:22 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Sun, 10 Feb 2008 07:23:22 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 10 Feb 2008 07:23:21 -0500
-Content-Disposition: inline
-In-Reply-To: <alpine.LSU.1.00.0802101219280.11591@racer.site>
+	id S1755864AbYBJMdd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Feb 2008 07:33:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755646AbYBJMdc
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 07:33:32 -0500
+Received: from mail.gmx.net ([213.165.64.20]:40650 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755544AbYBJMdb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Feb 2008 07:33:31 -0500
+Received: (qmail invoked by alias); 10 Feb 2008 12:33:30 -0000
+Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
+  by mail.gmx.net (mp046) with SMTP; 10 Feb 2008 13:33:30 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/8lBMnQU38jOp1SW8A/WSdyarOhW/siEetBdd/rm
+	FUwn6C7PhzTf/y
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7vzlu9uu7c.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73345>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73346>
 
-On Sun, Feb 10, 2008 at 12:20:23PM +0000, Johannes Schindelin wrote:
+Hi,
 
-> > I am still not convinced that an option to change the default behavior 
-> > is unreasonable. Yes, it means that "git push" will do different things 
-> > depending on your confi$g. But "git push" is a _shorthand_, and if you 
-> > want to say things definitely, then say them: "git push --matching 
-> > origin" or "git push HEAD" (assuming that a "--matching" option would 
-> > exist to specify what is now the default behavior).
+On Sat, 9 Feb 2008, Junio C Hamano wrote:
+
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> Well, I am not completely opposed to changing the default behaviour, be 
-> that showing the synopsis or pushing HEAD to origin.
+> > If you touch builtin-mv.c already, why not just move cmd_cp() in 
+> > there?  It's not like it would be the first cmd_*() function living in 
+> > the same file as other cmd_*() functions.
 > 
-> But _do_ give old-timers some time to adjust, _if_ you want to change the 
-> default behaviour.
+> Why do we even want "git-cp", especially when git-mv and git-rm are 
+> already pretty much redundant commands?
+> 
+> Especially, why do we even encourage copy-and-paste?
 
-Sorry, I should have been more clear. By "default" I mean "what happens
-when you type "git push" not "the behavior with no config options set."
+Heh.  I quote:
 
-IOW, I am not necessarily proposing to change the default for
-old-timers, but rather to allow differing behavior for "git push"
-without remote depending on a config variable. So different behavior for
-different people.
+	If you want to shoot yourself in the foot Git will point you to 
+	the gun rack and show you how to load the bullets. (Masukomi)
 
--Peff
+But yeah, I did not really think about it.  I had the impression 
+originally that it would make sense to copy a few tracked files around, in 
+order to modify them.
+
+Think "kernel module".  You'd not start from scratch, but find a similar 
+one, and then change the heck out of it.
+
+But your comment made me think again: It's better to "cp" those 
+files/directories, and then "git add" the relevant ones.  It even avoids 
+stupid mistakes where you commit something you "cp"ed, but did not need.
+
+Ciao,
+Dscho
