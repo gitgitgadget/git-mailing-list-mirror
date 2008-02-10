@@ -1,122 +1,58 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] Add gitattributes file making whitespace checking pickier
-Date: Sun, 10 Feb 2008 12:31:15 +0100
-Message-ID: <200802101231.16847.jnareb@gmail.com>
-References: <20080209162234.GA25533@fieldses.org> <m363wxhey1.fsf@localhost.localdomain> <7v8x1t5uk1.fsf@gitster.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] RFC: git lazy clone proof-of-concept
+Date: Sun, 10 Feb 2008 12:08:40 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0802101207330.11591@racer.site>
+References: <200802081828.43849.kendy@suse.cz>  <alpine.LFD.1.00.0802081250240.2732@xanadu.home>  <200802091525.36284.kendy@suse.cz> <e5bfff550802092323u3ec3c9c8uf6e92399395efd27@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: "J. Bruce Fields" <bfields@fieldses.org>,
-	Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Feb 10 12:32:08 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jan Holesovsky <kendy@suse.cz>, Nicolas Pitre <nico@cam.org>,
+	git@vger.kernel.org, gitster@pobox.com
+To: Marco Costalba <mcostalba@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 10 13:09:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOAPl-0003z4-C8
-	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 12:32:05 +0100
+	id 1JOAzm-00050t-AO
+	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 13:09:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755646AbYBJLbb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Feb 2008 06:31:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755620AbYBJLbb
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 06:31:31 -0500
-Received: from fg-out-1718.google.com ([72.14.220.157]:54658 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754899AbYBJLba (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Feb 2008 06:31:30 -0500
-Received: by fg-out-1718.google.com with SMTP id e21so3455419fga.17
-        for <git@vger.kernel.org>; Sun, 10 Feb 2008 03:31:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=58tBAUv/zULuJv0rYPR3Zn9W+U3D2HHCLLhItSonID0=;
-        b=Bo/3M5wZsE36p1XE3Es5eUKs2xkiMyMF+LDVPKq8ltYeEwaY+OizNRb7sf27izxpcACTzNJuRzl45hVd4qzJDVjAFr2eGhkwU9Cr8C2vE9tdbpASRpBgBtfYbsiqYfKR4WaR+h7QgLqZDmdiq79yn2BnjY18ptYuCJbcqc2AAME=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=aJwLPFlFAlDbs//6+qLufPnWRBEK5mH32koklSbREvr+xqdx//P5Qh8pFng4Fws2SB5pjL/DCZnallimbJtJaKnJO9r309wJCsAMytQkVSeVTlefzB3brpE68nr8tjk/abnpSgLKLajEuI3cKt5DuyIpoJmblIMtE+exQzQH2B4=
-Received: by 10.82.187.2 with SMTP id k2mr27099476buf.16.1202643087929;
-        Sun, 10 Feb 2008 03:31:27 -0800 (PST)
-Received: from ?192.168.1.11? ( [83.8.255.105])
-        by mx.google.com with ESMTPS id z33sm16642213ikz.0.2008.02.10.03.31.25
-        (version=SSLv3 cipher=OTHER);
-        Sun, 10 Feb 2008 03:31:26 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <7v8x1t5uk1.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1751455AbYBJMIo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Feb 2008 07:08:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751660AbYBJMIo
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 07:08:44 -0500
+Received: from mail.gmx.net ([213.165.64.20]:60995 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750881AbYBJMIn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Feb 2008 07:08:43 -0500
+Received: (qmail invoked by alias); 10 Feb 2008 12:08:41 -0000
+Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
+  by mail.gmx.net (mp045) with SMTP; 10 Feb 2008 13:08:41 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+lhTQAfLSlMTBq00fZAxrsmYk0xCnioXNGQTOAAu
+	kLOvfbNq4+MH5U
+X-X-Sender: gene099@racer.site
+In-Reply-To: <e5bfff550802092323u3ec3c9c8uf6e92399395efd27@mail.gmail.com>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73340>
 
-Junio C Hamano wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
+Hi,
+
+On Sun, 10 Feb 2008, Marco Costalba wrote:
+
+> Linux git repository is not very big and can be downloaded with easy. On 
+> the other end Linux history spans many more years then the repo does.
 > 
->>> *.py whitespace=!indent,trail,space
->>> *.el whitespace=!indent,trail,space
+> The design choice here is two have *two repositories*, one with recent 
+> stuff and one historical, with stuff older then version 2.6.12
 
-Emacs Lisp is (like Perl, and contrary to Python) whitespace agnostic,
-so here you just agree on historical usage. In this case the same
-should IMHO be done for gitweb/gitweb.perl in main .gitattributes.
+I do not think that this is an option: Jan already tried a shallow clone 
+(which would amount to something like what you propose), and it was still 
+too large.
 
-:<: checks contrib/emacs/git.el :>:
-
-Hmmm... it looks like git.el uses only spaces, both for indent
-and for align, with some spurious TABS happening.
-
-If you allow this, couldn't you allow also for the gitweb.perl?
-
->>> fast-import/git-p4 whitespace=!indent,trail,space
->>
->> I would also exclude gitweb/gitweb.perl
-> 
-> Why?
-> 
-> As far as I can tell, Perl does not use Python/Elisp "indents
-> are all whitespace" rule and neither does the script.
-
-Elisp is also whitespace agnostic, but like in Perl it can contain
-here-docs, and heredoc-like docstring; I'm not sure about whitespace
-rules for that.
-
-> It also happens that I do not personally believe in "alignment
-> with spaces" argument.  If you accept W and a SP occupy the same
-> horizontal space (which "alignment with spaces" assume), I do
-> not think it is unreasonable to accept HT goes to the next
-> column that is multiple of 8 places.
- 
-My argument is that when you change tab-width (and basic-offset), with
-"tabs for indent, spaces for align" you don't have source get out of 
-align. And not everybody uses large screens, and large resolution.
-
-Besides there is also purely theoretical argument of consistency.
-When using tabs also for align, it is in prectice align with tabs
-_and spaces_, e.g.:
-
------->|if (expression ||
------->|____expression) {
-
-or
-
------->|print "something" .
------->|______"something";
-
-or
-
------->|$date{'mday-time'} = sprintf "%d %s %02d:%02d",
------->|------>|------>|_____$mday, $months[$mon], $hour ,$min;
-
-where leading tab is marked as "------>|", and leading space as "_".
-
-
-The argument for using tabs for align is that it is easy to check 
-programatically for those kind of whitespace errors, and that editors 
-do that. But lacking tools or misconfigured tools shouldn't IMHO be 
-cause of selecting a coding style / choosing a policy.
-
--- 
-Jakub Narebski
-Poland
+Ciao,
+Dscho
