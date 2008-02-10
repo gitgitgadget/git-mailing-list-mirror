@@ -1,72 +1,156 @@
-From: Johannes Sixt <johannes.sixt@telecom.at>
-Subject: Re: [PATCH] daemon: Set up PATH properly on startup.
-Date: Sun, 10 Feb 2008 21:00:26 +0100
-Message-ID: <20080210200027.169BD5B0E7@dx.sixt.local>
-References: <1202555873-8099-1-git-send-email-mdw@distorted.org.uk>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Re: [PATCH] RFC: git lazy clone proof-of-concept
+Date: Sun, 10 Feb 2008 15:11:48 -0500
+Message-ID: <9e4733910802101211v11c0e285teb36f06d9a0e5f37@mail.gmail.com>
+References: <200802081828.43849.kendy@suse.cz>
+	 <m3ejbngtnn.fsf@localhost.localdomain>
+	 <200802091627.25913.kendy@suse.cz>
+	 <alpine.LFD.1.00.0802092200350.2732@xanadu.home>
+	 <alpine.LSU.1.00.0802101640570.11591@racer.site>
+	 <alpine.LSU.1.00.0802101845320.11591@racer.site>
+	 <alpine.LFD.1.00.0802101437040.2732@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: Mark Wooding <mdw@distorted.org.uk>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 10 21:01:10 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Jan Holesovsky" <kendy@suse.cz>,
+	"Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org,
+	"Junio C Hamano" <gitster@pobox.com>
+To: "Nicolas Pitre" <nico@cam.org>
+X-From: git-owner@vger.kernel.org Sun Feb 10 21:13:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOIMM-0007u2-Ra
-	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 21:01:07 +0100
+	id 1JOIXr-0003h9-7H
+	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 21:12:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752780AbYBJUAa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Feb 2008 15:00:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752668AbYBJUAa
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 15:00:30 -0500
-Received: from smtp5.srv.eunet.at ([193.154.160.227]:35551 "EHLO
-	smtp5.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752435AbYBJUAa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Feb 2008 15:00:30 -0500
-Received: from dx.sixt.local (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
-	by smtp5.srv.eunet.at (Postfix) with ESMTP id 5EE1413AB88;
-	Sun, 10 Feb 2008 21:00:27 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by dx.sixt.local (Postfix) with ESMTP id 169BD5B0E7;
-	Sun, 10 Feb 2008 21:00:27 +0100 (CET)
-User-Agent: KNode/0.10.2
+	id S1754967AbYBJULw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Feb 2008 15:11:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752692AbYBJULv
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 15:11:51 -0500
+Received: from wa-out-1112.google.com ([209.85.146.178]:37292 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755162AbYBJULu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Feb 2008 15:11:50 -0500
+Received: by wa-out-1112.google.com with SMTP id v27so1731446wah.23
+        for <git@vger.kernel.org>; Sun, 10 Feb 2008 12:11:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=5fgGNzMxBFiCJaQagWd33FjGn5g7HFedtaNqbdaXnqk=;
+        b=gxve+8HboVTwZLzzL2XwOp4oVcGgjA+uD0vCT36y5uXzblLQxo4E4t/xOIPAUp128KGAahht/GNPfCxVwM4pDm99JDG7UAvSUUaDT0aZiqf0EZcUx3OkZeAfsRT/OEtNCN/cuAAbMePDmd5Tlw/EEjLirxsqokoiRidmv+V3N1A=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=SD8GgKbYhxdlOw02HiJ4tXneBpAugea1hN31BnHWG8nDCNbhu1BMbI8SZUeVJ+/aCAM5ypCjGjiRJ/kPBBGX8oKaJNH/QnrfVn15VAojpQLgiWW2YfMDlPTMa/pzMf/Ahz2ztW+quL07NrM9pvN88mwMPxFuVyGd4HuqPFxWJSQ=
+Received: by 10.114.79.1 with SMTP id c1mr8665151wab.148.1202674309043;
+        Sun, 10 Feb 2008 12:11:49 -0800 (PST)
+Received: by 10.114.200.7 with HTTP; Sun, 10 Feb 2008 12:11:48 -0800 (PST)
+In-Reply-To: <alpine.LFD.1.00.0802101437040.2732@xanadu.home>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73395>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73396>
 
-Mark Wooding wrote:
-> Since exec_cmd.c changed (511707d42b3b3e57d9623493092590546ffeae80) to
-> just use the PATH variable for finding Git binaries, the daemon has been
-> broken for people with picky inetds (such as the OpenBSD one) which
-> launder the environment on startup.  The result is that the daemon
-> mysteriously fails to do anything useful.
-[...] 
-> diff --git a/daemon.c b/daemon.c
-> index 41a60af..cfd6124 100644
-> --- a/daemon.c
-> +++ b/daemon.c
-> @@ -1149,6 +1149,7 @@ int main(int argc, char **argv)
->  usage(daemon_usage);
->  }
->  
-> +     setup_path(NULL);
->  if (inetd_mode && (group_name || user_name))
->  die("--user and --group are incompatible with --inetd");
->  
+On 2/10/08, Nicolas Pitre <nico@cam.org> wrote:
+> On Sun, 10 Feb 2008, Johannes Schindelin wrote:
+>
+> > Hi,
+> >
+> > On Sun, 10 Feb 2008, Johannes Schindelin wrote:
+> >
+> > > On Sat, 9 Feb 2008, Nicolas Pitre wrote:
+> > >
+> > > > On Sat, 9 Feb 2008, Jan Holesovsky wrote:
+> > > >
+> > > > > On Friday 08 February 2008 20:00, Jakub Narebski wrote:
+> > > > >
+> > > > > > Both Mozilla import, and GCC import were packed below 0.5 GB.
+> > > > > > Warning: you would need machine with large amount of memory to
+> > > > > > repack it tightly in sensible time!
+> > > > >
+> > > > > As I answered elsewhere, unfortunately it goes out of memory even on
+> > > > > 8G machine (x86-64), so...  But still trying.
+> > > >
+> > > > Try setting the following config variables as follows:
+> > > >
+> > > >   git config pack.deltaCacheLimit 1
+> > > >   git config pack.deltaCacheSize 1
+> > > >   git config pack.windowMemory 1g
+> > > >
+> > > > That should help keeping memory usage somewhat bounded.
+> > >
+> > > I tried that:
+> > >
+> > > $ git config pack.deltaCacheLimit 1
+> > > $ git config pack.deltaCacheSize 1
+> > > $ git config pack.windowMemory 2g
+> > > $ #/usr/bin/time git repack -a -d -f --window=250 --depth=250
+> > > $ du -s objects/
+> > > 2548137 objects/
+> > > $ /usr/bin/time git repack -a -d -f --window=250 --depth=250
+> > > Counting objects: 2477715, done.
+> > > fatal: Out of memory, malloc failed411764)
+> > > Command exited with non-zero status 1
+> > > 9356.95user 53.33system 2:38:58elapsed 98%CPU (0avgtext+0avgdata
+> > > 0maxresident)k
+> > > 0inputs+0outputs (31929major+18088744minor)pagefaults 0swaps
+> > >
+> > > Note that this is on a 2.4GHz Quadcode CPU with 3.5GB RAM.
+> > >
+> > > I'm retrying with smaller values, but at over 2.5 hours per try, this is
+> > > getting tedious.
+> >
+> > Now, _that_ is strange.  Using 150 instead of 250 brings it down even
+> > quicker!
+> >
+> > $ /usr/bin/time git repack -a -d -f --window=150 --depth=150
+> > Counting objects: 2477715, done.
+> > Compressing objects:  19% (481551/2411764)
+> > Compressing objects:  19% (482333/2411764)
+> > fatal: Out of memory, malloc failed411764)
+> > Command exited with non-zero status 1
+> > 7118.37user 54.15system 2:01:44elapsed 98%CPU (0avgtext+0avgdata
+> > 0maxresident)k
+> > 0inputs+0outputs (29834major+17122977minor)pagefaults 0swaps
+> >
+> > (I hit the Return key twice during the time I suspected it would go out of
+> > memory, so it might have been really at 20%.)
+> >
+> > Ideas?
+>
+> You're probably hitting the same memory allocator fragmentation issue I
+> had with the gcc repo.  On my machine with 1GB of ram, I was able to
+> repack the 1.5GB source pack just fine, but repacking the 300MB source
+> pack was impossible due to memory exhaustion.
+>
+> My theory is that the smaller pack has many more deltas with deeper
+> delta chains, and this is stumping much harder on the memory allocator
+> which fails to prevent fragmentation at some point.  When Jon Smirl
+> tested Git using the Google memory allocator there was around 1GB less
+> allocated, which might indicate that the glibc allocator has issues with
+> some of Git's workloads.
 
-There are 2 reason, *not* to do this:
+I'm forgetting everything again, but I seem to recall that the Google
+allocator only made a significant difference with multithreading.  It
+is much better at keeping the threads from fragmenting each other.
+It's very easy to try it, all you have to do is add another lib the
+the link command.
 
-1. It's not needed. You can use
 
-    /usr/local/bin/git --exec-path=/usr/local/bin daemon --inetd ...
+>
+>
+> Nicolas
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
 
-to inject the exec-path.
 
-2. Security. Those inetds launder the environment for a reason. Assume inetd
-sets PATH=/usr/bin:/bin and git-daemon is installed
-as /usr/sbin/git-daemon. With your patch now all hooks run with the path
-set to /usr/sbin:/usr/bin:/bin.
-
--- Hannes
+-- 
+Jon Smirl
+jonsmirl@gmail.com
