@@ -1,100 +1,106 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: [PATCH] Add gitattributes file making whitespace checking
-	pickier
-Date: Sun, 10 Feb 2008 13:56:49 -0500
-Message-ID: <20080210185649.GB8267@fieldses.org>
-References: <20080209162234.GA25533@fieldses.org> <alpine.LNX.1.00.0802091251430.13593@iabervon.org> <20080209185038.GB25533@fieldses.org> <7vr6fletkl.fsf@gitster.siamese.dyndns.org> <7vabm9gk1p.fsf@gitster.siamese.dyndns.org>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [PATCH] diff.c: guard config parser from value=NULL
+Date: Sun, 10 Feb 2008 20:01:45 +0100
+Message-ID: <20080210190145.GB5129@artemis.madism.org>
+References: <20080210193534.d11d8b15.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Feb 10 19:57:34 2008
+Content-Type: multipart/signed; boundary="hQiwHBbRI9kgIhsi";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: Junio Hamano <junkio@cox.net>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Govind Salinas <blix@sophiasuchtig.com>,
+	Martin Koegler <mkoegler@auto.tuwien.ac.at>,
+	git@vger.kernel.org
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Sun Feb 10 20:02:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOHMq-0005Va-On
-	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 19:57:33 +0100
+	id 1JOHRa-00079l-4H
+	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 20:02:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752332AbYBJS4z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Feb 2008 13:56:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752375AbYBJS4z
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 13:56:55 -0500
-Received: from mail.fieldses.org ([66.93.2.214]:40151 "EHLO fieldses.org"
+	id S1752725AbYBJTBu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Feb 2008 14:01:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752653AbYBJTBu
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 14:01:50 -0500
+Received: from pan.madism.org ([88.191.52.104]:60774 "EHLO hermes.madism.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752201AbYBJS4y (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Feb 2008 13:56:54 -0500
-Received: from bfields by fieldses.org with local (Exim 4.69)
-	(envelope-from <bfields@fieldses.org>)
-	id 1JOHM9-0002Ui-58; Sun, 10 Feb 2008 13:56:49 -0500
+	id S1752442AbYBJTBs (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Feb 2008 14:01:48 -0500
+Received: from madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id F03832E1CF;
+	Sun, 10 Feb 2008 20:01:46 +0100 (CET)
+Received: by madism.org (Postfix, from userid 1000)
+	id F1F3951; Sun, 10 Feb 2008 20:01:45 +0100 (CET)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Junio Hamano <junkio@cox.net>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Govind Salinas <blix@sophiasuchtig.com>,
+	Martin Koegler <mkoegler@auto.tuwien.ac.at>, git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <7vabm9gk1p.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+In-Reply-To: <20080210193534.d11d8b15.chriscool@tuxfamily.org>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73389>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73390>
 
-On Sun, Feb 10, 2008 at 02:52:50AM -0800, Junio C Hamano wrote:
-> I've tried "unexpand | expand" to Documentation/*.txt and
-> compared the formatted documentation before and after the
-> change, and as we suspected everything seems to match.
 
-Thanks for testing that.
+--hQiwHBbRI9kgIhsi
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> So I am considering applying this patch.  We may want to tighten
-> it later but as the initial set of rules this should do.
-
-No objections from me.--b.
-
-> 
-> -- >8 --
-> [PATCH] Add gitattributes file making whitespace checking pickier
-> 
-> This establishes what the "bad" whitespaces are for this
-> project.
-> 
-> The rules are:
-> 
->  - For C source files, trailing whitespaces, an HT that follows
->    a SP in the leading indent, and initial indent by SP that can
->    be replaced with HT are all bad.
-> 
->  - The same rule applies to the AsciiDoc input files in the
->    Documentation/ hierarchy.
-> 
->  - It is Ok to indent with all spaces the Python and Elisp
->    sources in the contrib/ area.
-> 
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+On Sun, Feb 10, 2008 at 06:35:34PM +0000, Christian Couder wrote:
+> In fact we also guard for value=3D"" as it doesn't make more sense
+> for the variables here.
+>=20
+> We do that by using a new function 'xstrdup_confval' to avoid code
+> duplication.
+>=20
+> By the way this changes a 'strdup' into 'xstrdup'.
+>=20
+> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 > ---
-> 
->  .gitattributes               |    1 +
->  Documentation/.gitattributes |    1 +
->  contrib/.gitattributes       |    3 +++
->  3 files changed, 5 insertions(+), 0 deletions(-)
-> 
-> diff --git a/.gitattributes b/.gitattributes
-> new file mode 100644
-> index 0000000..9dd769a
-> --- /dev/null
-> +++ b/.gitattributes
-> @@ -0,0 +1 @@
-> +*.[ch] whitespace
-> diff --git a/Documentation/.gitattributes b/Documentation/.gitattributes
-> new file mode 100644
-> index 0000000..ddb0301
-> --- /dev/null
-> +++ b/Documentation/.gitattributes
-> @@ -0,0 +1 @@
-> +*.txt whitespace
-> diff --git a/contrib/.gitattributes b/contrib/.gitattributes
-> new file mode 100644
-> index 0000000..2b48d05
-> --- /dev/null
-> +++ b/contrib/.gitattributes
-> @@ -0,0 +1,3 @@
-> +*.py whitespace=!indent,trail,space
-> +*.el whitespace=!indent,trail,space
-> +fast-import/git-p4 whitespace=!indent,trail,space
+>  diff.c |   23 +++++++++++++----------
+>  1 files changed, 13 insertions(+), 10 deletions(-)
+>=20
+> diff --git a/diff.c b/diff.c
+> index 5b8afdc..d51aecb 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -60,6 +60,14 @@ static struct ll_diff_driver {
+>  	char *cmd;
+>  } *user_diff, **user_diff_tail;
+> =20
+> +static int xstrdup_confval(const char *dest, const char *var, const char=
+ *value)
+
+  Why not calling that "git_config_string" in config.[hc] and be
+API-consistent ?
+
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+
+--hQiwHBbRI9kgIhsi
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBHr0oZvGr7W6HudhwRAiy3AJ0YT4yoR/gTFs3sJUcInmIwWx6kBQCeKE/+
++svJlYXfyNwObWRcDuADFhE=
+=Y1DO
+-----END PGP SIGNATURE-----
+
+--hQiwHBbRI9kgIhsi--
