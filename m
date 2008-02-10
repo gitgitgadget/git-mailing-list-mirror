@@ -1,106 +1,105 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Minor annoyance with git push
-Date: Sun, 10 Feb 2008 18:29:11 -0500
-Message-ID: <20080210232911.GA15313@sigill.intra.peff.net>
-References: <20080209030046.GA10470@coredump.intra.peff.net> <6B804F0D-9C3B-46F3-B922-7A5CBEF55522@zib.de> <alpine.LSU.1.00.0802091307160.11591@racer.site> <7v7ihd7ee1.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0802100213330.11591@racer.site> <0DE4061C-7189-4932-AA3D-D09009F753F2@wincent.com> <alpine.LSU.1.00.0802101625200.11591@racer.site> <07136779-23EB-4DAA-84C3-D54B7AC029AB@wincent.com> <20080210223440.GA15051@sigill.intra.peff.net> <7vzlu8cta1.fsf@gitster.siamese.dyndns.org>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: Alternative approach to the git config NULL value checking patches..
+Date: Mon, 11 Feb 2008 00:29:20 +0100
+Message-ID: <20080210232920.GH5129@artemis.madism.org>
+References: <alpine.LFD.1.00.0802101225110.2896@woody.linux-foundation.org> <7vir0wfqrz.fsf@gitster.siamese.dyndns.org> <alpine.LFD.1.00.0802101406560.2896@woody.linux-foundation.org> <7vbq6oe98y.fsf@gitster.siamese.dyndns.org> <7v7ihce8ex.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Wincent Colaiuta <win@wincent.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Steffen Prohaska <prohaska@zib.de>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
+Content-Type: multipart/signed; boundary="tcC6YSqBgqqkz7Sb";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
 	Git Mailing List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 11 00:29:51 2008
+X-From: git-owner@vger.kernel.org Mon Feb 11 00:30:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOLcM-0000lN-Hp
-	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 00:29:50 +0100
+	id 1JOLce-0000qu-Ek
+	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 00:30:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753274AbYBJX3P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Feb 2008 18:29:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753083AbYBJX3P
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 18:29:15 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1408 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752695AbYBJX3O (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Feb 2008 18:29:14 -0500
-Received: (qmail 1690 invoked by uid 111); 10 Feb 2008 23:29:12 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Sun, 10 Feb 2008 18:29:12 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 10 Feb 2008 18:29:11 -0500
+	id S1753287AbYBJX3X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Feb 2008 18:29:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753083AbYBJX3X
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 18:29:23 -0500
+Received: from pan.madism.org ([88.191.52.104]:47279 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752695AbYBJX3W (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Feb 2008 18:29:22 -0500
+Received: from madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id 225012DC88;
+	Mon, 11 Feb 2008 00:29:20 +0100 (CET)
+Received: by madism.org (Postfix, from userid 1000)
+	id 47E2F64D1; Mon, 11 Feb 2008 00:29:20 +0100 (CET)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Git Mailing List <git@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <7vzlu8cta1.fsf@gitster.siamese.dyndns.org>
+In-Reply-To: <7v7ihce8ex.fsf@gitster.siamese.dyndns.org>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73434>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73435>
 
-On Sun, Feb 10, 2008 at 02:59:18PM -0800, Junio C Hamano wrote:
 
-> > ... Are there any
-> > other git commands which use non-HEAD branches that have not been
-> > explicitly mentioned by the user?  I can think only of query-type
-> > commands (like show-branch, or describe) that are non-state-changing.
-> 
-> That's an irrelevant comparison.  push and fetch have always
-> been multi-branch operations by default from day one.  The issue
-> is not HEAD vs non-HEAD.
+--tcC6YSqBgqqkz7Sb
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I think "irrelevant" here is in the eye of the beholder. If you are
-coming from the perspective of "historical behavior" then the current
-behavior makes sense. If you are coming from the perspective of a user
-who does not typically do a lot of branching, then the behavior can be
-surprising. And I think there is anecdotal evidence that some users _do_
-find this surprising. I have personally seen it, and I think even an
-experienced user like Martin is finding the behavior non-intuitive.
+On Sun, Feb 10, 2008 at 10:47:02PM +0000, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+>=20
+> > But as you seem to imply, it might make sense to equate
+> >
+> > 	[some-random-section]
+> >         	some-random-variable
+> >
+> > to
+> >
+> > 	[some-random-section]
+> >         	some-random-variable =3D ""
+> >
+> > for variables that cannot possibly have any meaningful "bool"
+> > semantics.  This third class of variables is a possible benefit
+> > your patch brings in.  The code can be lax for these variables.
+> >
+> > However, it would make things inconsistent ("this variable is
+> > bool and the above two forms mean completely opposite things,
+> > while that variable is not bool and they mean the same thing").
+> > I am just having a hard time convincing myself that this little
+> > detail does not matter.
+>=20
+> Having said all that, it might be an option to change your patch
+> slightly to say:
+>=20
+> 	const char config_true[] =3D "true";
 
-> You can argue that historically established practices do not
-> matter at all (at least to new people), and I'd grant that it
-> may be a valid argument.  But a change that breaks existing
-> practices needs to be sold much more carefully.  I still do not
+I was about to suggest the same, and testing against "config_true" just
+becomes an optimization, but isn't required. Seems an appropriate hack
+to me.
 
-Agreed.
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
 
-> understand what the opposition is to keep the current behaviour
-> as the default and have a shorthand for the single head push
-> accessible with a short and sweet "git push $there HEAD" (and
-> default $there to 'origin' when missing).
+--tcC6YSqBgqqkz7Sb
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-I think the problem is that you are asking people with particular
-workflows to always remember to type something extra, and if they
-forget, you punish them by doing a potentially destructive operation
-(although admittedly, it is destructive only if you happen to be using
-"-f").
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
 
-> If you are introducing a new behaviour, there is no way the new
-> behaviour can start out by replacing the longtime default.  It
-> should start out as an option, and if it is a commonly useful
-> option then make it an _easily accessible_ option.  And accept
-> such an _enhancement_ sooner to help people who want such a
-> behaviour sooner.  That would not hurt anybody but help
-> (hopefully) many people, without downside.
+iD8DBQBHr4jQvGr7W6HudhwRAgEYAKCeyFqOC8K9nk/7qusu4+fJEv56YgCgjpbc
+s7bOclWvaJ+pmpbcSoQb5GE=
+=8MVZ
+-----END PGP SIGNATURE-----
 
-I think we already have that option (as you mentioned): "git push $there
-HEAD". We can make it more easily accessible (as you have proposed):
-"git push HEAD" (though I still have some reservations about that). But
-none of that changes the fact that for some people's workflows, they
-will _always_ have to remember to add extra magic to the command line.
-
-What I have proposed is adding a config option to make that option even
-more easily accessible. The only argument I have seen against that is
-"some users can't use other users' git setup". While this is a downside,
-I think this uncommon situation is outweighed by the very common
-situation of users using their _own_ git setups.
-
-IOW, such an option makes a tradeoff. Users helping other users must
-explicitly say what they mean: "git push --matching" or "git push $there
-HEAD". But users using their own setups can use the shorthand "git push"
-to do what is most useful for their workflow. And I think we should
-optimize for the latter case, as it is much more common.
-
--Peff
+--tcC6YSqBgqqkz7Sb--
