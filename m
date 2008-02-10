@@ -1,122 +1,65 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: [Feature Request] Better Subversion integration
-Date: Sun, 10 Feb 2008 04:56:11 +0100
-Message-ID: <20080210035611.GA2454@atjola.homenet>
-References: <FC5B6F22-27A9-4F0F-85EE-0B72B94C69E2@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Add gitattributes file making whitespace checking pickier
+Date: Sat, 09 Feb 2008 20:01:18 -0800
+Message-ID: <7v8x1t5uk1.fsf@gitster.siamese.dyndns.org>
+References: <20080209162234.GA25533@fieldses.org>
+	<alpine.LNX.1.00.0802091251430.13593@iabervon.org>
+	<20080209185038.GB25533@fieldses.org>
+	<7vr6fletkl.fsf@gitster.siamese.dyndns.org>
+	<m363wxhey1.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Users List <git@vger.kernel.org>
-To: Sam Granieri Jr <sjgdev@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 10 04:56:53 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: "J. Bruce Fields" <bfields@fieldses.org>,
+	Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 10 05:02:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JO3JE-0007dE-Dn
-	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 04:56:52 +0100
+	id 1JO3OF-0008RI-QJ
+	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 05:02:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755772AbYBJD4P convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 9 Feb 2008 22:56:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755774AbYBJD4P
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Feb 2008 22:56:15 -0500
-Received: from mail.gmx.net ([213.165.64.20]:37414 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755770AbYBJD4O (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Feb 2008 22:56:14 -0500
-Received: (qmail invoked by alias); 10 Feb 2008 03:56:13 -0000
-Received: from i577B9D6C.versanet.de (EHLO atjola.local) [87.123.157.108]
-  by mail.gmx.net (mp031) with SMTP; 10 Feb 2008 04:56:13 +0100
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX1/UrPQxIMnUgOaAh7bmSPUkGuFOhR/tUayN5N8QKq
-	T+g68ylfegr1CB
-Content-Disposition: inline
-In-Reply-To: <FC5B6F22-27A9-4F0F-85EE-0B72B94C69E2@gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-X-Y-GMX-Trusted: 0
+	id S1755863AbYBJEBa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Feb 2008 23:01:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755857AbYBJEBa
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Feb 2008 23:01:30 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:64223 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755809AbYBJEB3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Feb 2008 23:01:29 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 744F731B3;
+	Sat,  9 Feb 2008 23:01:27 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id BE13031AF;
+	Sat,  9 Feb 2008 23:01:20 -0500 (EST)
+In-Reply-To: <m363wxhey1.fsf@localhost.localdomain> (Jakub Narebski's message
+	of "Sat, 09 Feb 2008 15:45:35 -0800 (PST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73305>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73306>
 
-On 2008.02.09 20:44:59 -0600, Sam Granieri Jr wrote:
-> Right now, git-svn import (or clone) will convert tags and branches a=
-s =20
-> remote branches.
-> I would like it if git could pick up subversion tags and translate th=
-em=20
-> as git tags upon importing
+Jakub Narebski <jnareb@gmail.com> writes:
 
-SVN tags aren't like git tags. A "tag" in SVN is just another directory=
-,
-which you can modify at will. Yeah, I know, you _should_ not commit any
-changes to SVN "tags", but shit happens. And once you modify the "tag"
-in SVN, you would have to invalidate the git tag, and finding a commit
-that matches the SVN state of things is probably way too expensive to b=
-e
-practical. Maybe some --we-never-mess-up-svn-tag-alike-branches could
-be added to allow git-svn to create teal git tags though? Dunno, I don'=
-t
-care much. Shouldn't be too hard to find some shell magic to create
-tags, if one wants them.
-
-> I also have some concerns with git-svn dcommit
+>> *.py whitespace=!indent,trail,space
+>> *.el whitespace=!indent,trail,space
+>> fast-import/git-p4 whitespace=!indent,trail,space
 >
-> Would it be possible for git-svn dcommit to convert locally created g=
-it=20
-> tags to subversion tags? How about branches?
+> I would also exclude gitweb/gitweb.perl
 
-Didn't need to convert tags yet, but I have a small shell script that
-does branching for me (see below). What it does, is to simply look at
-the history and figure out the first commit that exists in SVN. Then it
-invokes the svn program and creates a branch in SVN, starting at that
-commit. Then you can just fetch that branch, rebase your work and commi=
-t
-away. Writing a similar hack for tags shouldn't be too hard.
+Why?
 
-=46or example (assuming that you saved the script as git-svn-branch):
-git checkout -b my_branch remotes/trunk
-// work work work
-=2EoO( Hm, maybe I should put that into a SVN branch for foobar reason =
-)
-git-svn-branch my_branch
-git svn fetch
-git rebase --onto remotes/my_branch remotes/trunk my_branch
-git svn dcommit -n # This should now (pretend to) dcommit to my_branch
+As far as I can tell, Perl does not use Python/Elisp "indents
+are all whitespace" rule and neither does the script.
 
-One thing it gets wrong (probably, never tried) is that it will take th=
-e
-wrong starting point when you cherry-picked a commit from another SVN
-branch and didn't remove the git-svn-id line. That is because it doesn'=
-t
-make use of the .rev_map files and thus cannot figure out if the
-git-svn-id line is actually valid.
-
-IIRC git-svn should handle such cherry-picks gracefully, so
-integrating that thing with git-svn would have some benefits, but I
-don't speak any perl. Maybe someone else wants to take the job?
-
-HTH
-Bj=F6rn
-
-
-#!/bin/sh
-if test "$1" =3D ''
-then
-	echo "Usage: git-svn-branch <branch_name>"
-	exit 127
-fi
-
-CURRENT=3D$(git rev-list --first-parent --pretty=3Dformat:%b HEAD | gre=
-p -m1 -o 'git-svn-id: [^ ]*' | sed -e 's/git-svn-id: //')
-
-SRC=3D${CURRENT%@*}
-REV=3D${CURRENT#*@}
-URL=3D$(git config --get svn-remote.svn.url)
-
-URL=3D$(echo -n "$URL" | sed -e 's!//.*@!//!')
-DST=3D"$URL/$(git config --get svn-remote.svn.branches | grep -o '^[^:]=
-*' | sed -e "s/\*/$1/")"
-
-svn cp -r "$REV" "$SRC" "$DST" -m "Create branch $1"
+It also happens that I do not personally believe in "alignment
+with spaces" argument.  If you accept W and a SP occupy the same
+horizontal space (which "alignment with spaces" assume), I do
+not think it is unreasonable to accept HT goes to the next
+column that is multiple of 8 places.
