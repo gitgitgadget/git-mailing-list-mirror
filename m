@@ -1,86 +1,134 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH] Improve git-help--browse browser support under OS X
-Date: Sun, 10 Feb 2008 14:45:15 +0100
-Message-ID: <200802101445.16033.chriscool@tuxfamily.org>
-References: <1202505794-13409-1-git-send-email-jaysoffian+git@gmail.com> <76718490802091815s45c19113t938f5257aad3f46c@mail.gmail.com> <20080210124336.GH30368@dpotapov.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] Add a test for git-daemon and clone via git:// protocol
+Date: Sun, 10 Feb 2008 13:45:08 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0802101343480.11591@racer.site>
+References: <alpine.LSU.1.00.0802091657000.11591@racer.site> <alpine.LNX.1.00.0802091205530.13593@iabervon.org> <alpine.LSU.1.00.0802100302050.11591@racer.site> <alpine.LNX.1.00.0802092208280.13593@iabervon.org> <7vhcgh4fb9.fsf@gitster.siamese.dyndns.org>
+ <alpine.LSU.1.00.0802101210340.11591@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jay Soffian <jaysoffian+git@gmail.com>, git@vger.kernel.org
-To: Dmitry Potapov <dpotapov@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 10 14:39:58 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Feb 10 14:45:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOCPV-0001Kl-IO
-	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 14:39:57 +0100
+	id 1JOCV5-0002jp-9J
+	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 14:45:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750851AbYBJNjX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 10 Feb 2008 08:39:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750829AbYBJNjX
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 08:39:23 -0500
-Received: from smtp1-g19.free.fr ([212.27.42.27]:49465 "EHLO smtp1-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750751AbYBJNjW convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 10 Feb 2008 08:39:22 -0500
-Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 5DA731AB2B7;
-	Sun, 10 Feb 2008 14:39:18 +0100 (CET)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 3EA491AB2B3;
-	Sun, 10 Feb 2008 14:39:18 +0100 (CET)
-User-Agent: KMail/1.9.7
-In-Reply-To: <20080210124336.GH30368@dpotapov.dyndns.org>
-Content-Disposition: inline
+	id S1750884AbYBJNpK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Feb 2008 08:45:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750833AbYBJNpK
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 08:45:10 -0500
+Received: from mail.gmx.net ([213.165.64.20]:34942 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750769AbYBJNpI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Feb 2008 08:45:08 -0500
+Received: (qmail invoked by alias); 10 Feb 2008 13:45:05 -0000
+Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
+  by mail.gmx.net (mp018) with SMTP; 10 Feb 2008 14:45:05 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+FyvsH9E2FSu+koS7nEiK2equwcN3oFPs9rg8yfg
+	nidkjAFRPJjUra
+X-X-Sender: gene099@racer.site
+In-Reply-To: <alpine.LSU.1.00.0802101210340.11591@racer.site>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73354>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73355>
 
-Le dimanche 10 f=E9vrier 2008, Dmitry Potapov a =E9crit :
-> On Sat, Feb 09, 2008 at 09:15:30PM -0500, Jay Soffian wrote:
-> > I guess I'm confused by the criticism as I thought that's what I di=
-d.
-> > "open" is only added to the list of browsers to try if the
-> > SECURITYSESSIONID environment variable is set (indicating an OS X G=
-UI
-> > login environment).=20
 
-I wonder if "open" works on OS X outside the OS X GUI environment. (And=
- do=20
-people use OS X outside the OS X GUI environment ?)
+The new test, t5703-daemon.sh, sets up a simple git-daemon at port 8111
+(you can override it with the environment variable GIT_DAEMON_TEST_PORT),
+and then tries to clone via git:// from it, first without the
+git-daemon-export-ok file (which should fail), and then with it (which
+should succeed).
 
-> > I don't see how the change I made could adversely=20
-> > impact the users of other systems.
->
-> Would not be better to use uname instead like this
->
->   if test "$(uname -s)" =3D=3D "Darwin"; then
->     ...
-> or in addition to SECURITYSESSIONID:
->
->   if test -n "$SECURITYSESSIONID" -a "$(uname -s)" =3D=3D "Darwin"; t=
-hen
->     ...
-> ?
->
-> I think it would be more reliable and more importantly it makes the
-> code easier to understand, because it is clear now for everyone that
-> this is OS X specific.
->
-> BTW, should not it be mentioned in the documentation? Probably, in
-> the list of supported web browsers in git-help.txt.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
 
-In the git "next" branch, "git-help--browse" has been=20
-renamed "git-web--browse". And the original patch is=20
-against "git-web--browse" except in the title where it is=20
-about "git-help--browse".
 
-Anyway now in "next", "git-web--browse" is used by both "git help" and =
-"git=20
-instaweb", so the documentation of both commands need an update.
+	On Sun, 10 Feb 2008, Johannes Schindelin wrote:
 
-Thanks,
-Christian.=20
+	> On Sat, 9 Feb 2008, Junio C Hamano wrote:
+	> 
+	> > Thanks.  The patch makes sense.
+	> > 
+	> > I wonder this deserves a new test case to protect the fix from 
+	> > future regressions.
+	> 
+	> It would probably make sense; this would also exercise 
+	> git-daemon for the first time in our test suite.
+
+	How's this?
+
+ t/t5703-daemon.sh |   55 +++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 55 insertions(+), 0 deletions(-)
+ create mode 100755 t/t5703-daemon.sh
+
+diff --git a/t/t5703-daemon.sh b/t/t5703-daemon.sh
+new file mode 100755
+index 0000000..10696a1
+--- /dev/null
++++ b/t/t5703-daemon.sh
+@@ -0,0 +1,55 @@
++#!/bin/sh
++
++test_description='git daemon and cloning via git:// protocol'
++. ./test-lib.sh
++
++test_expect_success 'setup' '
++
++	mkdir first &&
++	(cd first &&
++	 git init &&
++	 echo biomimicry > ted &&
++	 git add ted &&
++	 test_tick &&
++	 git commit -m initial &&
++	 git gc)
++
++'
++
++PORT=${GIT_DAEMON_TEST_PORT:-8111}
++
++start_daemon () {
++	trap 'kill "$DAEMON_PID"' 0
++	git daemon --base-path="$(pwd)" \
++		--port="$PORT" \
++		--detach \
++		--pid-file=pid-file \
++		-- "$(pwd)/first"
++	DAEMON_PID=$(cat pid-file)
++}
++
++test_expect_success 'daemon' '
++
++	start_daemon &&
++	test -f pid-file
++
++'
++
++test_expect_success 'clone fails without export-ok' '
++
++	! git clone git://127.0.0.1:"$PORT"/first second
++
++'
++
++test_expect_success 'clone succeeds with export-ok' '
++
++	: > first/.git/git-daemon-export-ok &&
++	git clone git://127.0.0.1:"$PORT"/first second &&
++	for f in refs/heads/master objects/pack/*.pack
++	do
++		cmp first/.git/$f second/.git/$f || break
++	done
++
++'
++
++test_done
+-- 
+1.5.4.1264.gb53928
