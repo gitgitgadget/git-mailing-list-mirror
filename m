@@ -1,74 +1,81 @@
 From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: Add "--show-all" revision walker flag for debugging
-Date: Sat, 09 Feb 2008 20:21:50 -0800
-Message-ID: <7vd4r54f1d.fsf@gitster.siamese.dyndns.org>
+Date: Sat, 09 Feb 2008 20:44:31 -0800
+Message-ID: <7v63wx4dzk.fsf@gitster.siamese.dyndns.org>
 References: <alpine.LFD.1.00.0802091341210.2896@woody.linux-foundation.org>
-	<alpine.LSU.1.00.0802100110450.11591@racer.site>
-	<alpine.LFD.1.00.0802091720010.2896@woody.linux-foundation.org>
-	<7vy79t4fld.fsf@gitster.siamese.dyndns.org>
+	<alpine.LFD.1.00.0802091531220.2896@woody.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>
+Cc: Git Mailing List <git@vger.kernel.org>
 To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sun Feb 10 05:22:34 2008
+X-From: git-owner@vger.kernel.org Sun Feb 10 05:45:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JO3i5-0002yp-QC
-	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 05:22:34 +0100
+	id 1JO44S-0006Pf-K3
+	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 05:45:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753684AbYBJEV7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Feb 2008 23:21:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753301AbYBJEV7
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Feb 2008 23:21:59 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:34246 "EHLO
+	id S1754550AbYBJEor (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Feb 2008 23:44:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754435AbYBJEoq
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Feb 2008 23:44:46 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:37242 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753558AbYBJEV6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Feb 2008 23:21:58 -0500
+	with ESMTP id S1751185AbYBJEoq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Feb 2008 23:44:46 -0500
 Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 45E2036D2;
-	Sat,  9 Feb 2008 23:21:56 -0500 (EST)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id D691D10A9;
+	Sat,  9 Feb 2008 23:44:43 -0500 (EST)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 77E7E36CF;
-	Sat,  9 Feb 2008 23:21:52 -0500 (EST)
-In-Reply-To: <7vy79t4fld.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Sat, 09 Feb 2008 20:09:50 -0800")
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 35E9210A8;
+	Sat,  9 Feb 2008 23:44:41 -0500 (EST)
+In-Reply-To: <alpine.LFD.1.00.0802091531220.2896@woody.linux-foundation.org>
+	(Linus Torvalds's message of "Sat, 9 Feb 2008 15:52:12 -0800 (PST)")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73311>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73312>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> Linus Torvalds <torvalds@linux-foundation.org> writes:
+> And here's a slight expansion patch on top of the above
 >
->> The real issue is that it doesn't work. I thought about it, and with 
->> multiple roots (which _can_ get merged together) it just isn't something 
->> that actually helps.
->>
->> If you couldn't merge across roots, you could have a "uuid+generation 
->> header", but the moment you have multiple roots it actually gets quite 
->> complex.
->>
->> So scratch the generation header.  It's not the answer.
+> It does:
 >
-> I do not think multiple roots can be helped without going all
-> the way down to the roots, and I think it can be proven.
+>  - when it actually breaks out due to the "everybody_uninteresting()" 
+>    case, it adds the uninteresting commits (both the one it's looking at 
+>    now, and the list of pending ones) to the list
+>
+>    This way, we really list *all* the commits we've looked at
+>
+>  - Because we now end up listing commits we may not even have been parsed 
+>    at all "show_log" and "show_commit" need to protect against commits 
+>    that don't have a commit buffer entry.
+>
+> That second part is debatable just how it should work. Maybe we shouldn't 
+> show such entries at all (with this patch those entries do get shown, they 
+> just don't get any message shown with them). But I think this is a useful 
+> case.
 
-Ah, please scratch that comment.  I was puzzled but did not
-understand what you meant by uuid+generation.
+Showing them would probably be useful (definitely for
+debugging), but I do not think it is useful not to show the
+buffer contents (i.e. adding without parsing).
 
-You are right.  If we cannot tell if we are dealing with
-disconnected history, we would always need to play safe and do
-the clean-up like what I suggested earlier using merge-base
-traversal, which could be costly, and we do not want to pay that
-penalty in a connected history, which should be the normal case.
+It _might_ mean that the excess uninteresting ones we take out
+from "list" can be distinguished from the ones that we did look
+at (and once thought they were worth keeping), but I do not
+think it is reliable information.  The command line parser may
+have caused them to be parsed independent from what the revision
+traversal did.
 
-Generation header does not help us detect that case, so it is
-not useful.
+So I think it would make more sense to parse them while we add
+them to the "newlist", and if we really want to distinguish them
+from others we would want to mark them separately with another
+flag bit.
+
+Or unparse them when we add them to the "newlist".
