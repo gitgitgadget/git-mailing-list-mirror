@@ -1,84 +1,100 @@
-From: "George Spelvin" <linux@horizon.com>
-Subject: Re: Upcoming memcached releases + rambling.
-Date: Sun, 10 Feb 2008 04:47:53 -0500
-Message-ID: <20080210094753.23234.qmail@science.horizon.com>
+From: Paul Gardiner <osronline@glidos.net>
+Subject: Re: All I wanted was git-fast-export
+Date: Sun, 10 Feb 2008 10:07:24 +0000
+Message-ID: <47AECCDC.3050500@glidos.net>
+References: <47ADE275.3060109@glidos.net> <alpine.LSU.1.00.0802091803580.11591@racer.site> <47AE2CDF.4090208@glidos.net> <alpine.LSU.1.00.0802100054490.11591@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org, memcached@lists.danga.com
-X-From: git-owner@vger.kernel.org Sun Feb 10 10:48:37 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Feb 10 11:08:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JO8na-0004rt-Jz
-	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 10:48:35 +0100
+	id 1JO96a-0000IU-Sg
+	for gcvg-git-2@gmane.org; Sun, 10 Feb 2008 11:08:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752599AbYBJJr4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Feb 2008 04:47:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752238AbYBJJr4
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 04:47:56 -0500
-Received: from science.horizon.com ([192.35.100.1]:11288 "HELO
-	science.horizon.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1751724AbYBJJrz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Feb 2008 04:47:55 -0500
-Received: (qmail 23235 invoked by uid 1000); 10 Feb 2008 04:47:53 -0500
+	id S1754533AbYBJKHg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Feb 2008 05:07:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754658AbYBJKHf
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 05:07:35 -0500
+Received: from mk-outboundfilter-1.mail.uk.tiscali.com ([212.74.114.37]:9395
+	"EHLO mk-outboundfilter-1.mail.uk.tiscali.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754367AbYBJKHe (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 10 Feb 2008 05:07:34 -0500
+X-Trace: 37703377/mk-outboundfilter-1.mail.uk.tiscali.com/PIPEX/$MX-ACCEPTED/pipex-infrastructure/62.241.163.7
+X-SBRS: None
+X-RemoteIP: 62.241.163.7
+X-IP-MAIL-FROM: osronline@glidos.net
+X-IP-BHB: Once
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Ao8CAApcrkc+8aMH/2dsb2JhbACnJw
+X-IP-Direction: IN
+Received: from blaster.systems.pipex.net ([62.241.163.7])
+  by smtp.pipex.tiscali.co.uk with ESMTP; 10 Feb 2008 10:07:29 +0000
+Received: from [10.0.0.24] (80-42-19-184.dynamic.dsl.as9105.com [80.42.19.184])
+	by blaster.systems.pipex.net (Postfix) with ESMTP id 1B9A8E00008F
+	for <git@vger.kernel.org>; Sun, 10 Feb 2008 10:07:27 +0000 (GMT)
+User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
+In-Reply-To: <alpine.LSU.1.00.0802100054490.11591@racer.site>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73327>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73328>
 
-A few notes about git that may be causing confusion:
+Johannes Schindelin wrote:
+> Hi,
+> 
+> On Sat, 9 Feb 2008, Paul Gardiner wrote:
+> 
+>> Johannes Schindelin wrote:
+>>
+>>> On Sat, 9 Feb 2008, Paul Gardiner wrote:
+>>>
+>>>> With your kind help, I've been able to convert a cvs repository to 
+>>>> git, but the last several years commits start with a line saying 
+>>>> "Summary;" :-( I thought it might not be hard to put a filter 
+>>>> between git-fast-export and git-fast-import to sort it out.
+>>> The better tool for this should be filter-branch.
+>> filter-branch does look to be brilliant for this sort of thing,
+>> but I don't think I can use it in my case.
+> 
+> I beg to differ.  filter-branch does exactly the same as the fast-export | 
+> filter | fast-import you prosed does: it rewrites history.
+> 
+> The thing is, filter-branch was _written for this purpose_.  So if you 
+> know what commit you rewrote last, you can make the process faster/safer 
+> by issuing
+> 
+> 	$ git filter-branch --msg-filter="<blabla>" <old-commit>..master
 
-1) "git pull" does more than you think, and is for developers only.
+That does look just what I need, but did you see the reason I thought I
+couldn't use it? I need to repeatedly sync the git repository from a
+live cvs repository, and repeatedly filter the new commit messages.
+I'd imagined that filtering the commit messages will mess up subsequent
+syncing. That's why I thought I'd need a chaing of repositories
 
-   To just follow some other work, use only "git fetch".
+cvs => git => tiedied git
 
-   "git pull" does a fetch, and then merges the fetched branch into your
-   current HEAD.  If your current HEAD is a copy of the remote branch,
-   this will be harmless, but if it's not, it will produce code changes.
+What do you think?
 
-   "git fetch" will fetch the remote branch, and then do a "fast-forward"
-   update of the corresponding local tracking branch.  If the local
-   tracking branch is not an ancestor of the fetched branch, it will
-   abort with an error.
+> There's also a further upside to filter-branch: at least until recently, 
+> it did not use any special features of newer git, but could be extracted 
+> (e.g. via gitweb) and used with older git (any git >= 1.5.3 should do, 
+> maybe even older ones).
+> 
+> Hth,
+> Dscho
+> 
+> P.S.: but you seem to be dead-set to upgrade.  No problem for me: just go 
+> ahead and do what you must.
 
-   So, in summary, don't use "pull" unless you want to do a merge.
-   It will suppress the merge in the obvious trivial cases (no changes
-   on one side or the other), but will happily combine things.
+God no, not if I can help it. I've been performing surgery on my
+packages over the last couple of days, and I'm sure the whole
+system is going to fall over any minute. I'd love to be able to
+use the version I have. It's 1.5.2.4 Is filter-branch likely to work
+with that?
 
-   (The reason that "pull" is such a prominent command is that it's what
-   Linus does all day: merges other people's development into his tree.)
-
-
-2) "git log old..new" is a special case of a very general mechanism
-   for specifying a set of commits to examine.  See the man page for
-   "git-rev-parse" for the full complete rules.  You specify a set of
-   commits to include, and a set to exclude.
-
-   The syntax is "include1 include2 ^exclude1 ^exclude2 include3...".
-
-   A commit is included in the final set if it is an ancestor of one of
-   the explicitly listed "include" commits, *and* it is *not* an ancestor
-   of any of the listed "exclude" commits.
-
-   old..new is a convenient equivalent for "^old new": everything in new's
-   history that is not included in old's history.  Thus, "old1..new1
-   old2..new2" is exactly synonymous with "old1..new2 old2..new1".
-   They both mean that new1, new2, and all their ancestors are included,
-   except that old1, old2, and all their ancestors are excluded.
-
-   There is one magic bit of syntax, the symmetric difference operator
-   "rev1...rev2" (note three dots).  That means all ancestors of rev1,
-   and all ancestors of rev2, but excluding all common ancestors of both.
-   It's also equivalent to an include-exclude list, but the computation
-   of the exclude set is a bit more complicated.  (It's usually just
-   one common ancestor, but there can be multiples in nasty criss-cross
-   merge cases.)
-
-3) "git diff old..new" uses the same syntax for a different purpose.
-   diff only works with two commits, so that's simply an alias for
-   "git diff old new".  (Whether this is a useful conveience or is too
-   misleading for the beginner has been the subject of heated discussion
-   on the git mailing list.)
+P.
