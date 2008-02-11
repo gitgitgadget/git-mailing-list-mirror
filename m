@@ -1,85 +1,115 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] RFC: git lazy clone proof-of-concept
-Date: Mon, 11 Feb 2008 02:42:26 +0100
-Message-ID: <200802110242.27324.jnareb@gmail.com>
-References: <200802081828.43849.kendy@suse.cz> <alpine.LFD.1.00.0802100017380.2732@xanadu.home> <BAYC1-PASMTP059B375F7660D93F93647DAE290@CEZ.ICE>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: warning: no common commits - slow pull
+Date: Sun, 10 Feb 2008 17:44:08 -0800
+Message-ID: <7vd4r4clnb.fsf@gitster.siamese.dyndns.org>
+References: <200802102007.38838.lenb@kernel.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Nicolas Pitre <nico@cam.org>, Jan Holesovsky <kendy@suse.cz>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Sean <seanlkml@sympatico.ca>
-X-From: git-owner@vger.kernel.org Mon Feb 11 02:43:28 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Len Brown <lenb@kernel.org>
+X-From: git-owner@vger.kernel.org Mon Feb 11 02:44:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JONhd-0003ks-2k
-	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 02:43:25 +0100
+	id 1JONj6-00040O-Ph
+	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 02:44:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750945AbYBKBml convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 10 Feb 2008 20:42:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751022AbYBKBml
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 20:42:41 -0500
-Received: from fg-out-1718.google.com ([72.14.220.158]:49022 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750904AbYBKBmk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Feb 2008 20:42:40 -0500
-Received: by fg-out-1718.google.com with SMTP id e21so3632126fga.17
-        for <git@vger.kernel.org>; Sun, 10 Feb 2008 17:42:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=Ka43nHqbheY+fZuvtNlhmJcWMf3V+8gph0oIaGLou7M=;
-        b=qcWUhaziZeJ5/qCW7PF43Zd5+ibWz7l0m/y9ry5Xc2uKoVMi5p37hiL2l7FHk4XI8WVIuVNFYQ9c7OYVe/7XqXBbXtIwSZ8len/ehQuXCodvcwHLjx4V2p7NDMjJh+vm2jHbzMpC7fLNWaI8xokRbcNotP1GAJk5eDNAWir5VdA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=KmyHV1DWlHfCcmmsvBhBmR8paOwTODsc31fUfu04qENd6paWNMB1s6XV8q/dTRmYfN0jesqT1+nOGHDTAzURKplfCCeLoMMbKp44FNrOBVPK7iFfkiAQR0RvrWlN0gs2fwmIUQfX9IzLVsBes+cu8u/5rLbBVs3N8gIzez6gl4Y=
-Received: by 10.82.145.7 with SMTP id s7mr28473842bud.7.1202694158372;
-        Sun, 10 Feb 2008 17:42:38 -0800 (PST)
-Received: from ?192.168.1.11? ( [83.8.220.19])
-        by mx.google.com with ESMTPS id c5sm622442nfi.2.2008.02.10.17.42.35
-        (version=SSLv3 cipher=OTHER);
-        Sun, 10 Feb 2008 17:42:36 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <BAYC1-PASMTP059B375F7660D93F93647DAE290@CEZ.ICE>
-Content-Disposition: inline
+	id S1751120AbYBKBoY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Feb 2008 20:44:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751138AbYBKBoX
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 20:44:23 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:53637 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750919AbYBKBoX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Feb 2008 20:44:23 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id C475C383B;
+	Sun, 10 Feb 2008 20:44:18 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 19C38383A;
+	Sun, 10 Feb 2008 20:44:15 -0500 (EST)
+In-Reply-To: <200802102007.38838.lenb@kernel.org> (Len Brown's message of
+	"Sun, 10 Feb 2008 20:07:38 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73450>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73451>
 
-On Sun, 10 Feb 2008, Sean napisa=B3:
-> On Sun, 10 Feb 2008 00:22:09 -0500 (EST)
-> Nicolas Pitre <nico@cam.org> wrote:
+Len Brown <lenb@kernel.org> writes:
+
+> A couple of hours ago I pulled my reference copy of Linux tree,
+> which brought the tip here:
 >
->> Finding out what those huge objects are, and if they actually need t=
-o be=20
->> there, would be a good thing to do to reduce any repository size.
->=20
-> Okay, i've sent the sha1's of the top 500 to Jan for inspection.  It =
-appears
-> that many of the largest objects are automatically generated i18n fil=
-es that
-> could be regenerated from source files when needed rather than being =
-checked
-> in themselves; but that's for the OO folks to decide.
+> commit 7cf712db6087342e5e7e259d3883a7b5ac3212d1
+> Merge: 58a14ee... 30ddb15...
+> Author: Linus Torvalds <torvalds@woody.linux-foundation.org>
+> Date:   Sun Feb 10 12:03:57 2008 -0800
+>
+>     Merge git://git.kernel.org/pub/scm/linux/kernel/git/davem/net-2.6
+>
+> Then, 10 minutes ago I did a pull to bring the head here:
+>
+> commit 19af35546de68c872dcb687613e0902a602cb20e
+> Author: Linus Torvalds <torvalds@woody.linux-foundation.org>
+> Date:   Sun Feb 10 14:18:14 2008 -0800
+>
+>     Linux 2.6.25-rc1
+>
+> But this second pull seems to have re-downloaded 172MB,
+> when it should have only needed the last few commits.
+>
+> thanks,
 
-Good practice is to not add generated files to version control.
-But sometimes such files are stored if regenerating them is costly
-(./configure file in some cases, 'man' and 'html' branches in git.git).
+Thanks.  This is very puzzling.
 
-IIRC Dana How tried also to deal with repository with large binary
-files in repo, although in that case those had shallow history. IIRC
-the proposed solution was to pack all such large objects undeltified
-into separate "large-objects" kept pack.
+> [lenb@d975xbx2 linus (master)]$ git pull
+> remote: Counting objects: 447, done.
+> remote: Compressing objects: 100% (39/39), done.
+> remote: Total 328 (delta 291), reused 325 (delta 289)
 
-You can mark large files with (undocumented except for RelNotes)
-'delta' gitattribute, but I don't know if it would help in your
-case.
+This part looks quite sane.
 
---=20
-Jakub Narebski
-Poland
+	$ git rev-list --objects ^7cf712d v2.6.25-rc1^0 | wc -l
+	328
+
+> Receiving objects: 100% (328/328), 60.81 KiB, done.
+> Resolving deltas: 100% (291/291), completed with 97 local objects.
+
+and the number of received objects exactly match.
+
+> warning: no common commits
+
+This is however very unexpected.  The sequence internally should
+be doing the equivalent of:
+
+  - fetch the objects to complete the branches we track
+    (i.e. what the above "rev-list" that fetches to complete the
+    commit pointed by the v2.6.25-rc1 tag based on your earlier
+    tip 7cf712d);
+
+  - store the tip (19af355 = v2.6.25-rc1^0) to the tracking
+    branch;
+
+  - run another "git fetch" to retrieve objects to complete the
+    v2.6.25-rc1 tag itself, based on our available refs (which
+    includes the commit 19af355).
+
+which should result in transferring only one object, which would
+say something like:
+
+    From git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6
+       7cf712d..19af355  master     -> linus
+    remote: Counting objects: 1, done.
+    remote: Total 1 (delta 0), reused 0 (delta 0)
+    Unpacking objects: 100% (1/1), done.
+    From git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6
+     * [new tag]         v2.6.25-rc1 -> v2.6.25-rc1
+    Updating 7cf712d..19af355
+
+We would need a bit more digging to reproduce it, as I do not
+seem to be able to.
