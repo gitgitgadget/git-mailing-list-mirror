@@ -1,61 +1,66 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: libcrypto core dump in 64bit
-Date: Mon, 11 Feb 2008 22:42:16 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802112240280.3870@racer.site>
-References: <20080211112822.16b69495@pc09.procura.nl>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] apply: fix segfault
+Date: Mon, 11 Feb 2008 15:06:26 -0800
+Message-ID: <7vprv36qkt.fsf@gitster.siamese.dyndns.org>
+References: <alpine.LSU.1.00.0802112227400.3870@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-To: "H.Merijn Brand" <h.m.brand@xs4all.nl>
-X-From: git-owner@vger.kernel.org Mon Feb 11 23:43:19 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Feb 12 00:07:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOhMl-0004v1-JW
-	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 23:43:12 +0100
+	id 1JOhk2-0004zU-H5
+	for gcvg-git-2@gmane.org; Tue, 12 Feb 2008 00:07:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754797AbYBKWmK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Feb 2008 17:42:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755772AbYBKWmK
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Feb 2008 17:42:10 -0500
-Received: from mail.gmx.net ([213.165.64.20]:52274 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754638AbYBKWmI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Feb 2008 17:42:08 -0500
-Received: (qmail invoked by alias); 11 Feb 2008 22:42:06 -0000
-Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
-  by mail.gmx.net (mp055) with SMTP; 11 Feb 2008 23:42:06 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19+IBVWtTZ+YBBGRf0nrVNkrJwx8JhRGvQNO1jnBg
-	R+sH/65lr3I3bU
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20080211112822.16b69495@pc09.procura.nl>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1753326AbYBKXGk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Feb 2008 18:06:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753592AbYBKXGk
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Feb 2008 18:06:40 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:38448 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751744AbYBKXGj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Feb 2008 18:06:39 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id CC05E298D;
+	Mon, 11 Feb 2008 18:06:37 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 2BA61298C;
+	Mon, 11 Feb 2008 18:06:33 -0500 (EST)
+In-Reply-To: <alpine.LSU.1.00.0802112227400.3870@racer.site> (Johannes
+	Schindelin's message of "Mon, 11 Feb 2008 22:28:25 +0000 (GMT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73601>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73602>
 
-Hi,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On Mon, 11 Feb 2008, H.Merijn Brand wrote:
+> When the patch reports a line number that is larger than the number of
+> lines in the current version of the file, git-apply used to segfault.
 
-> Any hints?
+I have to wonder if the correct fix should be like this
+instead.  Under that condition, I think computation of the
+initial "try" value already oversteps the line[] array for the
+original image.
 
-Yes.
-
-> #0  0xc0000000033c8940:0 in sha1_block_asm_host_order+0x22e0 ()
->    from /usr/local/ssl/lib/libcrypto.so
-
-This seems to be an OpenSSL issue, probably in its Itanium-optimised code 
-(since Itanium is not _all_ that common, it is quite likely that no many 
-people exercise this part of the code).
-
-Unfortunately, I am not at all an expert in Itanium's assembler, otherwise 
-I'd try to help...
-
-Sorry,
-Dscho
+diff --git a/builtin-apply.c b/builtin-apply.c
+index 2b8ba81..177f541 100644
+--- a/builtin-apply.c
++++ b/builtin-apply.c
+@@ -1809,6 +1809,9 @@ static int find_pos(struct image *img,
+ 	else if (match_end)
+ 		line = img->nr - preimage->nr;
+ 
++	if (line > preimage->nr)
++		line = preimage->nr;
++
+ 	try = 0;
+ 	for (i = 0; i < line; i++)
+ 		try += img->line[i].len;
