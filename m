@@ -1,75 +1,75 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH] RFC: git lazy clone proof-of-concept
-Date: Mon, 11 Feb 2008 11:13:59 +0100
-Message-ID: <47B01FE7.8010207@op5.se>
-References: <200802081828.43849.kendy@suse.cz> <m3ejbngtnn.fsf@localhost.localdomain> <9e4733910802081126r5bf19c95rec817a1b6648ee4d@mail.gmail.com> <alpine.LFD.1.00.0802081457170.2732@xanadu.home>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: Suggestion: git status --untracked
+Date: Mon, 11 Feb 2008 11:13:15 +0100
+Message-ID: <vpq63wvztqc.fsf@bauges.imag.fr>
+References: <b77c1dce0802110146o708e26a7lef56683f6b823365@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Jon Smirl <jonsmirl@gmail.com>, Jakub Narebski <jnareb@gmail.com>,
-	Jan Holesovsky <kendy@suse.cz>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Mon Feb 11 11:14:56 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Rafael Garcia-Suarez" <rgarciasuarez@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 11 11:15:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOVgb-0003Uq-Ov
-	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 11:14:54 +0100
+	id 1JOVhO-0003oZ-IS
+	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 11:15:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752074AbYBKKOK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Feb 2008 05:14:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752047AbYBKKOJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Feb 2008 05:14:09 -0500
-Received: from mail.op5.se ([193.201.96.20]:51897 "EHLO mail.op5.se"
+	id S1751600AbYBKKPE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Feb 2008 05:15:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752003AbYBKKPB
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Feb 2008 05:15:01 -0500
+Received: from imag.imag.fr ([129.88.30.1]:37924 "EHLO imag.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751949AbYBKKOI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Feb 2008 05:14:08 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 0037A1F08843;
-	Mon, 11 Feb 2008 11:14:06 +0100 (CET)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -2.499
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
-	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 05gTXmCDk4lJ; Mon, 11 Feb 2008 11:14:06 +0100 (CET)
-Received: from clix.int.op5.se (unknown [172.27.78.26])
-	by mail.op5.se (Postfix) with ESMTP id 836071F08841;
-	Mon, 11 Feb 2008 11:14:03 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.9 (X11/20071115)
-In-Reply-To: <alpine.LFD.1.00.0802081457170.2732@xanadu.home>
+	id S1751600AbYBKKO7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Feb 2008 05:14:59 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id m1BADGqj007002
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 11 Feb 2008 11:13:16 +0100 (CET)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1JOVf1-0001Xm-Kb; Mon, 11 Feb 2008 11:13:15 +0100
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1JOVf1-0008Rl-IG; Mon, 11 Feb 2008 11:13:15 +0100
+In-Reply-To: <b77c1dce0802110146o708e26a7lef56683f6b823365@mail.gmail.com> (Rafael Garcia-Suarez's message of "Mon\, 11 Feb 2008 10\:46\:25 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 11 Feb 2008 11:13:16 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73501>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73502>
 
-Nicolas Pitre wrote:
-> On Fri, 8 Feb 2008, Jon Smirl wrote:
-> 
->> There are some patches for making repack work multi-core. Not sure if
->> they made it into the main git tree yet.
-> 
-> Yes, they are.  You need to compile with"make THREADED_DELTA_SEARCH=yes" 
-> or add THREADED_DELTA_SEARCH=yes into config.mak for it to be enabled 
-> though.  Then you have to set the pack.threads configuration variable 
-> appropriately to use it.
-> 
+"Rafael Garcia-Suarez" <rgarciasuarez@gmail.com> writes:
 
-I sent a patch to get it to auto-detect multi-core machines, but I see
-now that it was commented upon for finalization (by Nicolas, actually)
-and I must have missed that, thinking it had been applied because I got
-an accidental merge in my own tree.
+> I find myself wanting sometimes to filter out the output of
+> git-status, to feed it to another command (for example, git-add, or
+> rm, or cat >> .gitignore). However it's not currently very easy to
+> parse in a one-liner.
+>
+> I'm suggesting to add options to control this behaviour. My suggestion
+> would be (for a start) to add an option --untracked that will list all
+> untracked files on stdout, without a leading "#\t", and without
+> listing the added / modified / removed files.
 
-As such, I've been using that patch the last several months without
-problems. I'll rework them as per Nicolas' suggestions and resend.
+Actually, it's already available (since a few weeks in master IIRC,
+not sure whether it's in the latest release), as
+
+  git ls-files --exclude-standard -o
+
+The --exclude-standard tells git ls-files to read .gitignore and
+friends as most commands do, and -o means "show 'other' files".
+
+Older gits didn't have the --exclude-standard, so you had to say
+--exclude-from=.git/info/exclude --exclude-per-directory=.gitignore
+(or stg like that) instead.
 
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Matthieu
