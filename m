@@ -1,68 +1,76 @@
-From: jaysoffian+git@gmail.com
-Subject: [PATCH] git-web--browse: fix misplaced quote in init_browser_path()
-Date: Mon, 11 Feb 2008 10:57:34 -0500
-Message-ID: <1202745454-10038-1-git-send-email-jaysoffian+git@gmail.com>
-Cc: Jay Soffian <jaysoffian@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 11 16:59:20 2008
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH] pack-objects: only throw away data during memory pressure
+Date: Mon, 11 Feb 2008 11:00:25 -0500 (EST)
+Message-ID: <alpine.LFD.1.00.0802111054080.2732@xanadu.home>
+References: <120271478556-git-send-email-mkoegler@auto.tuwien.ac.at>
+ <alpine.LSU.1.00.0802111519300.3870@racer.site>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Martin Koegler <mkoegler@auto.tuwien.ac.at>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Feb 11 17:01:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOb3g-0002XC-GB
-	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 16:59:04 +0100
+	id 1JOb5b-0003AR-Qi
+	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 17:01:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757902AbYBKP5o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Feb 2008 10:57:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757882AbYBKP5n
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Feb 2008 10:57:43 -0500
-Received: from an-out-0708.google.com ([209.85.132.249]:33002 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757832AbYBKP5l (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Feb 2008 10:57:41 -0500
-Received: by an-out-0708.google.com with SMTP id d31so1153650and.103
-        for <git@vger.kernel.org>; Mon, 11 Feb 2008 07:57:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date:message-id:x-mailer:sender;
-        bh=yjthP1OqNaBnsOCu2DVh7uPtA2ALqbP8tgrs5xIKYB4=;
-        b=gflI9X2aGh4M/vLWyK9mSu5yOD8MSu7h0ubxJSJXk+TE7RMuLhRtnEWXpg1t4Df4q2MlqY27ApboNhYm2AQDARxCnjv6/ypgHF6O/UGkBKPzlCZGZcbq6HfKncn6exiF7NctFNY+xVj+O4RnJVLs1H5XVHeqyv0C3uCLR65P7Iw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:sender;
-        b=kv8symICj8v7BM9mjTArs7HlDR301vyIuxv6c6Ny9ygoPWUnIQDhQwGxoXVZzoXFqa19XLHREmycOYMksByMsUZAGKAwwwjDJae2conCYRrKNewThy5WtPUMp5EuecJO8JqCLX1X4LnBAC9FVpBd4eY7oMeX+BUd8dUYwh1+NZw=
-Received: by 10.100.153.6 with SMTP id a6mr290720ane.18.1202745458443;
-        Mon, 11 Feb 2008 07:57:38 -0800 (PST)
-Received: from localhost ( [75.189.159.45])
-        by mx.google.com with ESMTPS id c30sm32415009ana.11.2008.02.11.07.57.37
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 11 Feb 2008 07:57:37 -0800 (PST)
-X-Mailer: git-send-email 1.5.4.1.1230.gf7885
+	id S1755057AbYBKQA2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Feb 2008 11:00:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755038AbYBKQA2
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Feb 2008 11:00:28 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:64890 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754797AbYBKQA0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Feb 2008 11:00:26 -0500
+Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR004.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0JW3003YA0GP3FB0@VL-MO-MR004.ip.videotron.ca> for
+ git@vger.kernel.org; Mon, 11 Feb 2008 11:00:26 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <alpine.LSU.1.00.0802111519300.3870@racer.site>
+User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73544>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73545>
 
-git "config browser.$1.path" should be git config "browser.$1.path"
+On Mon, 11 Feb 2008, Johannes Schindelin wrote:
 
-Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
----
- git-web--browse.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+> Hi,
+> 
+> On Mon, 11 Feb 2008, Martin Koegler wrote:
+> 
+> > What about this not really tested patch for dealing with memory pressure 
+> > in git-pack-objects?
+> > 
+> > It will slow down the repack in the case of memory pressure, but missing 
+> > memory will not affect the results.
+> 
+> It almost helped:
+> 
+> $ /usr/bin/time git repack -a -d -f --window=250 --depth=250
+> Counting objects: 2477715, done.
+> fatal: Out of memory, malloc failed411764)
+> Command exited with non-zero status 1
+> 10050.12user 240.63system 2:53:37elapsed 98%CPU (0avgtext+0avgdata 
+> 0maxresident)k
+> 0inputs+0outputs (29555major+94032945minor)pagefaults 0swaps
+> 
+> So, it ran longer until it ran out of memory.
 
-diff --git a/git-web--browse.sh b/git-web--browse.sh
-index 5179709..282dd41 100755
---- a/git-web--browse.sh
-+++ b/git-web--browse.sh
-@@ -34,7 +34,7 @@ valid_tool() {
- }
- 
- init_browser_path() {
--	browser_path=$(git "config browser.$1.path")
-+	browser_path=$(git config "browser.$1.path")
- 	test -z "$browser_path" && browser_path="$1"
- }
- 
--- 
-1.5.4.1.1230.gf7885
+What it can do for you is to limit the window memory usage much more 
+without affecting the end result, say to 128MB.  Of course the repack is 
+then going to progress much slower if active purging of the window 
+memory is involved.
+
+If you still run out of memory at that point then there is not much more 
+to do besides using a new memory allocator that doesn't suffer as much 
+from memory fragmentation, or find the possible memory leak that no one 
+else found so far.
+
+
+Nicolas
