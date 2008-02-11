@@ -1,59 +1,85 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] git-pull documentation: fix linkgit in the --rebase
- option description.
-Date: Mon, 11 Feb 2008 21:13:49 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802112112560.3870@racer.site>
-References: <20080211132800.GV25954@genesis.frugalware.org> <alpine.LSU.1.00.0802111514400.3870@racer.site> <20080211182907.GB25954@genesis.frugalware.org> <7vve4v8g2e.fsf@gitster.siamese.dyndns.org>
+Subject: Re: Applying patches from gmane can be dangerous.
+Date: Mon, 11 Feb 2008 21:16:57 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0802112115590.3870@racer.site>
+References: <20080205211044.GP26392@lavos.net> <7vodatqu6w.fsf@gitster.siamese.dyndns.org> <20080207133208.GT26392@lavos.net> <20080207145036.GM26016@yugib.highrise.ca> <alpine.LSU.1.00.0802071605540.8543@racer.site>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Miklos Vajna <vmiklos@frugalware.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 11 22:14:22 2008
+Cc: Brian Downing <bdowning@lavos.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Lars Magne Ingebrigtsen <larsi+gmane@gnus.org>,
+	Abdelrazak Younes <younes.a@free.fr>
+To: Aidan Van Dyk <aidan@highrise.ca>
+X-From: git-owner@vger.kernel.org Mon Feb 11 22:17:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOfyh-0007pI-0L
-	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 22:14:15 +0100
+	id 1JOg1n-0000VP-0V
+	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 22:17:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758798AbYBKVNo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Feb 2008 16:13:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757629AbYBKVNn
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Feb 2008 16:13:43 -0500
-Received: from mail.gmx.net ([213.165.64.20]:50620 "HELO mail.gmx.net"
+	id S1752806AbYBKVQw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Feb 2008 16:16:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752573AbYBKVQw
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Feb 2008 16:16:52 -0500
+Received: from mail.gmx.net ([213.165.64.20]:41013 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756218AbYBKVNm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Feb 2008 16:13:42 -0500
-Received: (qmail invoked by alias); 11 Feb 2008 21:13:40 -0000
+	id S1751385AbYBKVQv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Feb 2008 16:16:51 -0500
+Received: (qmail invoked by alias); 11 Feb 2008 21:16:49 -0000
 Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
-  by mail.gmx.net (mp041) with SMTP; 11 Feb 2008 22:13:40 +0100
+  by mail.gmx.net (mp018) with SMTP; 11 Feb 2008 22:16:49 +0100
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19kTrxSM/dkMg8zcaG5MNC7TrGq4UzQZ7sX/fV35N
-	ouQq3hUNSfRvif
+X-Provags-ID: V01U2FsdGVkX185fzRJ1Eg5D6hsoUA/2Pk0CmHQxIU7zuZKN/2uPY
+	qTrvjuEDw3KNU3
 X-X-Sender: gene099@racer.site
-In-Reply-To: <7vve4v8g2e.fsf@gitster.siamese.dyndns.org>
+In-Reply-To: <alpine.LSU.1.00.0802071605540.8543@racer.site>
 User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73584>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73585>
 
 Hi,
 
-On Mon, 11 Feb 2008, Junio C Hamano wrote:
+On Thu, 7 Feb 2008, Johannes Schindelin wrote:
 
-> Miklos Vajna <vmiklos@frugalware.org> writes:
+> On Thu, 7 Feb 2008, Aidan Van Dyk wrote:
 > 
-> > I see your point and i played with it a bit, no success so far. If it
-> > becomes a new paragraph, the linkgit: is not processed. maybe it's an
-> > asciidoc bug?
+> > * Brian Downing <bdowning@lavos.net> [080207 07:32]:
+> > > On Wed, Feb 06, 2008 at 08:14:31PM -0800, Junio C Hamano wrote:
+> > > > This is really sad.  gmane gives us a clean threaded interface
+> > > > (both in web and newsreader), and it never forgets. Whenever I
+> > > > need to refer somebody to an old discussion, I can give an URL
+> > > > to it and allmost all the discussion messages are there with a
+> > > > single paste and clicking around.  It has been an indispensable
+> > > > service to me ever since I started reading the git list with it.
+> > > > It is really a shame that I have to prevent picking up patch
+> > > > messages from it with the above hook.
+> > > > 
+> > > > I am wondering if other development communities had a similar
+> > > > issue already, and if so how they are dealing with it.
+> > > 
+> > > Gmane didn't start doing this until recently.  Maybe they can stop it on
+> > > a group-by-group basis?  Every post to git@vger is archived elsewhere
+> > > with unmangled email addresses anyway...
+> > > 
+> > > "We understand why you're doing this, but it hurts us greatly.  Please
+> > > stop."
+> > 
+> > Gmane has always done the "hide the real email" address on groups that
+> > request it.  The git group does *not* request it, but the msysgit group
+> > *has* requested it.
 > 
-> You probably meant to do this, then.
+> I just requested this setting to be changed.  Will keep you posted.
 
-Thanks.  At some point, it feels (at least to me) that the ease of 
-use of asciidoc just vanishes...
+Okay, this took a while, basically, because I am not registered as a "list 
+admin" at gmane.
 
-Ciao,
+But Abdel, who is, sorted out the problems, and we will no longer have 
+this issue.
+
+Thanks for your attention,
 Dscho
