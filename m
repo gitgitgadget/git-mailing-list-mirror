@@ -1,85 +1,76 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: [PATCH] git-pull documentation: fix linkgit in the --rebase
-	option description.
-Date: Mon, 11 Feb 2008 19:29:07 +0100
-Message-ID: <20080211182907.GB25954@genesis.frugalware.org>
-References: <20080211132800.GV25954@genesis.frugalware.org> <alpine.LSU.1.00.0802111514400.3870@racer.site>
+From: Jeff King <peff@peff.net>
+Subject: Re: referencing a revision at a certain date
+Date: Mon, 11 Feb 2008 13:29:34 -0500
+Message-ID: <20080211182934.GA23351@sigill.intra.peff.net>
+References: <20080211180424.GA4905@clipper.ens.fr>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="QHrz2k/ePFTn56xd"
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Feb 11 19:31:18 2008
+Content-Type: text/plain; charset=utf-8
+Cc: GIT mailing-list <git@vger.kernel.org>
+To: David Madore <david.madore@ens.fr>
+X-From: git-owner@vger.kernel.org Mon Feb 11 19:31:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOdQx-0005NF-RC
-	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 19:31:16 +0100
+	id 1JOdQz-0005NF-48
+	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 19:31:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760182AbYBKS3a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Feb 2008 13:29:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760173AbYBKS33
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Feb 2008 13:29:29 -0500
-Received: from mx2.mail.elte.hu ([157.181.151.9]:59206 "EHLO mx2.mail.elte.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760159AbYBKS32 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Feb 2008 13:29:28 -0500
-Received: from frugalware.elte.hu ([157.181.177.34] helo=genesis.frugalware.org)
-	by mx2.mail.elte.hu with esmtp (Exim)
-	id 1JOdP4-0007ZH-5L
-	from <vmiklos@frugalware.org>; Mon, 11 Feb 2008 19:29:26 +0100
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 01D3811904DD; Mon, 11 Feb 2008 19:29:07 +0100 (CET)
+	id S1760267AbYBKS3j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Feb 2008 13:29:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759196AbYBKS3j
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Feb 2008 13:29:39 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4518 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1760247AbYBKS3i (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Feb 2008 13:29:38 -0500
+Received: (qmail 13388 invoked by uid 111); 11 Feb 2008 18:29:36 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Mon, 11 Feb 2008 13:29:36 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 11 Feb 2008 13:29:34 -0500
 Content-Disposition: inline
-In-Reply-To: <alpine.LSU.1.00.0802111514400.3870@racer.site>
-User-Agent: Mutt/1.5.16 (2007-06-09)
-X-ELTE-VirusStatus: clean
-X-ELTE-SpamScore: -1.5
-X-ELTE-SpamLevel: 
-X-ELTE-SpamCheck: no
-X-ELTE-SpamVersion: ELTE 2.0 
-X-ELTE-SpamCheck-Details: score=-1.5 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.2.3
-	-1.5 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
-	[score: 0.0053]
+In-Reply-To: <20080211180424.GA4905@clipper.ens.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73559>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73560>
 
+On Mon, Feb 11, 2008 at 07:04:24PM +0100, David Madore wrote:
 
---QHrz2k/ePFTn56xd
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> I understand that if "rev" denotes a certain revision, then "rev~42"
+> references the commit which is 42 generations back from rev.  What I'd
+> like to do is write something like "rev~@{2008-01-18}" (say) to get
+> the same thing but with the 42 being computed automatically so that
+> the commit in question is the latest possible (in commit date) before
+> 2008-01-18.  Is this possible?  If so, how?  If not, might I suggest
+> this as an addition for consideration?
 
-On Mon, Feb 11, 2008 at 03:15:31PM +0000, Johannes Schindelin <Johannes.Sch=
-indelin@gmx.de> wrote:
-> The intention was to force a new paragraph.  The *NOTE* should be loud an=
-d=20
-> clear, so that those few people who read man pages are properly warned=20
-> that --rebase is a dangerous option if you do not know what you are doing.
+How about --before=2008-01-18? As in,
 
-i see your point and i played with it a bit, no success so far. if it
-becomes a new paragraph, the linkgit: is not processed. maybe it's an
-asciidoc bug?
+  git log --before=2008-01-18
 
-(is it better to have it as a new paragraph with linkgit: shown? hmm)
+to start your log there (and "git log -1 --before=2008-01-18" if you
+just want that one commit).
 
-thanks,
-- VMiklos
+> I thought "rev@{2008-01-18}" did this, but apparently it doesn't: it
+> requires a ref log of some kind, and I don't know how to make a ref
+> log (git-clone doesn't seem to copy them).
 
---QHrz2k/ePFTn56xd
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+Ref logs are a log of where your particular, local ref was pointing to.
+In other words, it is a history not of the project commits, but of an
+individual branch in your local repository. So you don't ask the reflog
+things like "which commit has a date at X" but rather "where was my
+master branch pointing at 3pm yesterday?"
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (GNU/Linux)
+And because they are purely a local matter, they don't get copied by
+clone.
 
-iD8DBQFHsJPze81tAgORUJYRAqmBAJ0bhLZuWjV/x6hpXaivCY0LvU71LwCgi+Ds
-pYNxdnEfMxFXdryneJKYGWA=
-=JIMn
------END PGP SIGNATURE-----
+> So, is there some way I can either generate a ref log by
+> systematically taking the first parent in each commit as per git-log
+> --first-parent, OR (better) specify a revision directly that way?
 
---QHrz2k/ePFTn56xd--
+So this question doesn't really make sense. You generate a ref log by
+doing operations on a branch.
+
+-Peff
