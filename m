@@ -1,66 +1,154 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] pack-objects: only throw away data during memory
- pressure
-Date: Mon, 11 Feb 2008 15:20:23 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802111519300.3870@racer.site>
-References: <120271478556-git-send-email-mkoegler@auto.tuwien.ac.at>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: gitweb bug: broken "next" and other links
+Date: Mon, 11 Feb 2008 16:30:28 +0100
+Message-ID: <200802111630.29159.jnareb@gmail.com>
+References: <B0EC9FB3-DDDE-4BC5-92D8-20487CBD6725@wincent.com> <m3ve4vejdr.fsf@localhost.localdomain> <0811044D-4929-494F-8189-B0B4AFE2D373@wincent.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
-To: Martin Koegler <mkoegler@auto.tuwien.ac.at>
-X-From: git-owner@vger.kernel.org Mon Feb 11 16:21:16 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>, Petr Baudis <pasky@suse.cz>
+To: Wincent Colaiuta <win@wincent.com>
+X-From: git-owner@vger.kernel.org Mon Feb 11 16:31:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOaSh-0005oj-9h
-	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 16:20:51 +0100
+	id 1JOacm-000178-NA
+	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 16:31:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753879AbYBKPUQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Feb 2008 10:20:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753860AbYBKPUQ
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Feb 2008 10:20:16 -0500
-Received: from mail.gmx.net ([213.165.64.20]:41497 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753857AbYBKPUO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Feb 2008 10:20:14 -0500
-Received: (qmail invoked by alias); 11 Feb 2008 15:20:12 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp045) with SMTP; 11 Feb 2008 16:20:12 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/bsaELe8TbgVrCbrXZU7pP+Ns7FK9G6+qqvsA7bq
-	6QcQgWF1bplngh
-X-X-Sender: gene099@racer.site
-In-Reply-To: <120271478556-git-send-email-mkoegler@auto.tuwien.ac.at>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1754115AbYBKPan convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 11 Feb 2008 10:30:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754006AbYBKPan
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Feb 2008 10:30:43 -0500
+Received: from ug-out-1314.google.com ([66.249.92.175]:44334 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754058AbYBKPam (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Feb 2008 10:30:42 -0500
+Received: by ug-out-1314.google.com with SMTP id z38so293024ugc.16
+        for <git@vger.kernel.org>; Mon, 11 Feb 2008 07:30:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        bh=HfawhgxO5vPMZAiKgmGYmKzdNZnELoWf/KMTfxTXymg=;
+        b=vQCnabeaMBevoDtI9XCrsIYeHxKBjZq/YmSUJsYHQfyR1YqHbbbdMw7xSWf2lmydzJKAdAXAP6pbamJ7VFXsG31SI+D77EjPKKsax+hD36ymKgKhNQQTbd8LkKT0m7j2H7DYTHmOKgq7GHvb8Xd2CosPuX1ErQfpXRlzT3/JpA4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=D0mD4hjVyXJgH4vnSdSIjn5S4zTeVAUYC8j+AwQmSba8v0VPVeLpdkRl3q1u1tNtxxiKpY3uMflwvzshIba54aA3ZYaXpoSPlzYKIG3sM2puSv/XPN//9PVay3Z8z4Nw/bxGaM4cvAbCJKSLD/AhSVddhdqpf4ho9hihg82WwQQ=
+Received: by 10.66.242.5 with SMTP id p5mr9166107ugh.87.1202743840256;
+        Mon, 11 Feb 2008 07:30:40 -0800 (PST)
+Received: from ?192.168.1.11? ( [83.8.220.23])
+        by mx.google.com with ESMTPS id f13sm20416972gvd.9.2008.02.11.07.30.37
+        (version=SSLv3 cipher=OTHER);
+        Mon, 11 Feb 2008 07:30:38 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <0811044D-4929-494F-8189-B0B4AFE2D373@wincent.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73540>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73541>
 
-Hi,
+Dnia poniedzia=C5=82ek 11. lutego 2008 14:33, Wincent Colaiuta napisa=C5=
+=82:
+> El 11/2/2008, a las 14:02, Jakub Narebski escribi=C3=B3:
+>> Wincent Colaiuta <win@wincent.com> writes:
+>>
+>>> Just noticed a bug (possibly bugs) in gitweb.
+>>>
+>>> Look at a shortlog page like this one:
+>>>
+>>>  http://repo.or.cz/w/git.git?a=3Dshortlog
+>>>
+>>> Mouse over the "next" link at the bottom and you'll see this is the=
+ =20
+>>> URL:
+>>>
+>>>  http://repo.or.cz/w/ARRAY(0x85a5318)?a=3Dshortlog;pg=3D1
+>>>
+>>> Which obviously won't work...
+>>
+>> This is bug in repo.or.cz version of gitweb, which is slightly
+>> modified as compared to the "stock" version. Such error would be
+>> catched by the gitweb 'run as standalone script and check stderr'
+>> test script.
+>=20
+> Hmm. I don't know. I can reproduce all three of those bugs on my own =
+=20
+> unmodified gitweb installation from 1.5.4.
 
-On Mon, 11 Feb 2008, Martin Koegler wrote:
+I'm sorry. You are right. I haven't seen breakage because it shows
+only when you use 'pathinfo' feature and pathinfo URLs.
 
-> What about this not really tested patch for dealing with memory pressure 
-> in git-pack-objects?
-> 
-> It will slow down the repack in the case of memory pressure, but missing 
-> memory will not affect the results.
+Below there is a fix for that; actully only second part mentioned
+(and first in patch) is needed, i.e. moving setting $params{'project'}
+before dealing with -replay is needed I think to fix this bug.
 
-It almost helped:
+Could you test it please?
+-- >8 --
+=46rom: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH] gitweb: Fix bug in href(..., -replay=3D>1) when 'pathi=
+nfo' feature used
 
-$ /usr/bin/time git repack -a -d -f --window=250 --depth=250
-Counting objects: 2477715, done.
-fatal: Out of memory, malloc failed411764)
-Command exited with non-zero status 1
-10050.12user 240.63system 2:53:37elapsed 98%CPU (0avgtext+0avgdata 
-0maxresident)k
-0inputs+0outputs (29555major+94032945minor)pagefaults 0swaps
+URLs generated by href(..., -replay=3D>1) (which includes 'next page'
+links and alternate view links) were not created correctly when using
+'pathinfo' feature (i.e. using pathinfo instead of query string to
+denote project / git repository used).
 
-So, it ran longer until it ran out of memory.
+This resulted in broken links such like:
+  http://www.example.com/w/ARRAY(0x85a5318)?a=3Dshortlog;pg=3D1
+instead of:
+  http://www.example.com/w/project.git?a=3Dshortlog;pg=3D1
 
-Ciao,
-Dscho
+This was caused by the fact that href() always replayed params in the
+arrayref form, were they multivalued or singlevalued, and the code
+dealing with 'pathinfo' feature didn't deal with $params{'project'}
+being arrayref.  The code was improved to use arrayref only when
+needed; because 'project' parameter should be always single-valued
+this fixes this bug.
+
+Additionally setting $params{'project'} is moved before replaying
+params, just in case somebody handcraft evil URL like the one below:
+  http://www.example.com/w/project.git?p=3Dotherproject.git ...
+
+Noticed-by: Peter Oberndorfer <kumbayo84@arcor.de>
+Noticed-by: Wincent Colaiuta <win@wincent.com>
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+ gitweb/gitweb.perl |   13 +++++++++----
+ 1 files changed, 9 insertions(+), 4 deletions(-)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 5e88637..648ee13 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -611,17 +611,22 @@ sub href(%) {
+ 	);
+ 	my %mapping =3D @mapping;
+=20
++	$params{'project'} =3D $project unless exists $params{'project'};
++
+ 	if ($params{-replay}) {
+ 		while (my ($name, $symbol) =3D each %mapping) {
+ 			if (!exists $params{$name}) {
+-				# to allow for multivalued params we use arrayref form
+-				$params{$name} =3D [ $cgi->param($symbol) ];
++				# for multivalued params we use arrayref form
++				my @par =3D $cgi->param($symbol);
++				if (@par > 1) {
++					$params{$name} =3D [ @par ];
++				} else {
++					$params{$name} =3D $par[0];
++				}
+ 			}
+ 		}
+ 	}
+=20
+-	$params{'project'} =3D $project unless exists $params{'project'};
+-
+ 	my ($use_pathinfo) =3D gitweb_check_feature('pathinfo');
+ 	if ($use_pathinfo) {
+ 		# use PATH_INFO for project name
+--=20
+1.5.4
