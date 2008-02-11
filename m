@@ -1,168 +1,80 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/3] git-submodule - Follow top-level remote on
- init/update/clone
-Date: Mon, 11 Feb 2008 22:09:20 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802112152050.3870@racer.site>
-References: <1202576245-284-1-git-send-email-mlevedahl@gmail.com>
+From: Sebastian Harl <sh@tokkee.org>
+Subject: Re: [Feature Request] Better Subversion integration
+Date: Mon, 11 Feb 2008 23:11:57 +0100
+Message-ID: <20080211221157.GF20741@albany.tokkee.org>
+References: <FC5B6F22-27A9-4F0F-85EE-0B72B94C69E2@gmail.com> <20080210035611.GA2454@atjola.homenet> <20080211084704.GB20741@albany.tokkee.org> <E947A49F-4A4C-43F5-8E22-FFAF008E0B82@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Mark Levedahl <mlevedahl@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 11 23:10:02 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="rtWt6SZ6GqpxALBD"
+Cc: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>,
+	Git Users List <git@vger.kernel.org>
+To: Sam Granieri Jr <sjgdev@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 11 23:12:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOgqX-0001wE-11
-	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 23:09:53 +0100
+	id 1JOgt5-0002yV-0m
+	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 23:12:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757651AbYBKWJQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Feb 2008 17:09:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757588AbYBKWJQ
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Feb 2008 17:09:16 -0500
-Received: from mail.gmx.net ([213.165.64.20]:56061 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757136AbYBKWJN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Feb 2008 17:09:13 -0500
-Received: (qmail invoked by alias); 11 Feb 2008 22:09:11 -0000
-Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
-  by mail.gmx.net (mp052) with SMTP; 11 Feb 2008 23:09:11 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19zTqNHUl5zFhgPAaW/rrKAEYLkcfOrj8rwTzbm5D
-	CbaFzx9fm6d7Ku
-X-X-Sender: gene099@racer.site
-In-Reply-To: <1202576245-284-1-git-send-email-mlevedahl@gmail.com>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1758473AbYBKWMA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Feb 2008 17:12:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757830AbYBKWL7
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Feb 2008 17:11:59 -0500
+Received: from mail.tokkee.org ([212.114.247.92]:39591 "EHLO albany.tokkee.org"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1757861AbYBKWL6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Feb 2008 17:11:58 -0500
+Received: by albany.tokkee.org (Postfix, from userid 1000)
+	id CE0F8364001; Mon, 11 Feb 2008 23:11:57 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <E947A49F-4A4C-43F5-8E22-FFAF008E0B82@gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73594>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73595>
 
-Hi,
 
-On Sat, 9 Feb 2008, Mark Levedahl wrote:
+--rtWt6SZ6GqpxALBD
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> This change allows the remote used for relative submodules (those defined
-> using a url that is relative to their parent) to be defined by explicit
-> definition on the command line or through the top-level project's
-> branch.<name>.remote configuration.  This override is applied *only* to
-> submodules defined using a url relative to the top-level project's url,
-> under the assumption that such modules are logically part of the same
-> project and managed as a unit.
+Hi Sam,
 
-That makes sense.
+On Mon, Feb 11, 2008 at 10:55:37AM -0600, Sam Granieri Jr wrote:
+> If a person wants to work on a tag branch, would the right idea be to =20
+> create new branch on it as to not screw up the previous tag?
 
-> @@ -40,11 +42,13 @@ get_repo_base() {
->  # Resolve relative url by appending to parent's url
->  resolve_relative_url ()
->  {
-> -	branch="$(git symbolic-ref HEAD 2>/dev/null)"
-> -	remote="$(git config branch.${branch#refs/heads/}.remote)"
-> -	remote="${remote:-origin}"
-> -	remoteurl="$(git config remote.$remote.url)" ||
-> -		die "remote ($remote) does not have a url in .git/config"
+Why would you want to do that? A tag is supposed to be something
+immutable. The only reason for having such a "tag branch" in the first
+place is that this seems to be the best representation of what SVN is
+doing and there's no better way (yet?) to convert it to something more
+Git-like...
 
-I did not really look at this code before, but does that not mean that 
-git-submodule does already what you want?
+Cheers,
+Sebastian
 
-Because usually, you clone the superproject from the URL that you actually 
-want to use, and in that case, the initial branch's default remote will 
-have exactly that URL.
+--=20
+Sebastian "tokkee" Harl +++ GnuPG-ID: 0x8501C7FC +++ http://tokkee.org/
 
-So I have to admit that I do not see the reason why you remove that code, 
-replace it with another (that I think does the same), and claim that you 
-introduce that behaviour.
+Those who would give up Essential Liberty to purchase a little Temporary
+Safety, deserve neither Liberty nor Safety.         -- Benjamin Franklin
 
-Your patch seems to change only one thing: you can specify "-r <remote>" 
-with "git submodule add/init/update" -- except for some peculiarity; see 
-below.
 
-> @@ -107,7 +112,7 @@ module_clone()
->  	test -e "$path" &&
->  	die "A file already exist at path '$path'"
->  
-> -	git-clone -n "$url" "$path" ||
-> +	git-clone -n -o "$remote" "$url" "$path" ||
->  	die "Clone of '$url' into submodule path '$path' failed"
->  }
->  
+--rtWt6SZ6GqpxALBD
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
 
-If you do _that_, you will _force_ the submodule to have no "origin" 
-remote.  As discussed _at length_, this is not what you should do.  The 
-only reason to use "-o <other-nick-name>" is if you plan _not_ to use the 
-same URL for the default remote.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
 
-IOW I do not like this hunk _at_ _all_.  Because I get the impression that 
-I really wasted my time explaining the same issue over and over and over 
-again.
+iD8DBQFHsMgtEFEKc4UBx/wRArN+AJ9nk+ziGMqsWCeJBMHfRm2hA0I0JQCfWkfZ
+sdNs/pQf2CGCHjstNF0MJXw=
+=/mJD
+-----END PGP SIGNATURE-----
 
-> @@ -156,13 +169,16 @@ cmd_add()
->  	case "$repo" in
->  	./*|../*)
->  		# dereference source url relative to parent's url
-> -		realrepo="$(resolve_relative_url $repo)" ;;
-> +		realremote=${remote:-$(get_default_remote)}
-> +		realrepo=$(resolve_relative_url $repo) || exit 1
-> +		;;
-
-Why do you need the "realremote" here?  Why is "$remote" not enough?
-
-> @@ -235,7 +259,7 @@ cmd_init()
->  		# Possibly a url relative to parent
->  		case "$url" in
->  		./*|../*)
-> -			url="$(resolve_relative_url "$url")"
-> +			url=$(resolve_relative_url "$url") || exit 1
-
-Yes for the "|| exit 1".  No for the removal of the quotes: keep in mind: 
-you are possibly getting a url from the _config_, which is supposed to be 
-user-editable.
-
-> @@ -274,6 +308,7 @@ cmd_update()
->  		shift
->  	done
->  
-> +	remote=${remote:-$(get_default_remote)}
-
-You have this paradigm so often, but AFAICS you only use it for the call 
-to module_clone.  Why not let module_clone figure it out, if $remote is 
-empty?
-
-> @@ -298,9 +333,24 @@ cmd_update()
->  			die "Unable to find current revision in submodule path '$path'"
-
->  		fi
->  
-> +		baseurl="$(GIT_CONFIG=.gitmodules git config submodule."$name".url)"
-> +		case "$baseurl" in
-> +		./*|../*)
-> +			fetch_remote=$remote
-> +			absurl=$(resolve_relative_url $baseurl) || exit 1
-> +			(unset GIT_DIR ; cd "$path" && git config remote."$fetch_remote".url > /dev/null) ||
-> +			(
-> +				unset GIT_DIR; cd "$path" && git remote add "$fetch_remote" "$absurl"
-> +			) || die "Unable to define remote '$fetch_remote' in submodule path '$path'"
-> +			;;
-> +		*)
-> +			fetch_remote=
-> +			;;
-> +		esac
-> +
->  		if test "$subsha1" != "$sha1"
->  		then
-> -			(unset GIT_DIR; cd "$path" && git-fetch &&
-> +			(unset GIT_DIR; cd "$path" && git-fetch $fetch_remote &&
-
-Wasn't the whole _point_ of having a two-stage init/update that you could 
-_change_ the remote in the config?
-
-Now you override those settings if .gitmodules says that the path is 
-relative?  Shouldn't you respect the setting in the config (which the user 
-can change freely), rather than .gitmodules (which the user cannot change 
-without either committing it or having a permanently dirty working 
-directory)?
-
-Ciao,
-Dscho
+--rtWt6SZ6GqpxALBD--
