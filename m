@@ -1,72 +1,72 @@
-From: =?utf-8?q?Uwe=20Kleine-K=C3=B6nig?= <Uwe.Kleine-Koenig@digi.com>
-Subject: [PATCH] rebase -i: accept -m as advertised in the man page
-Date: Mon, 11 Feb 2008 14:45:26 +0100
-Message-ID: <1202737526-18210-1-git-send-email-Uwe.Kleine-Koenig@digi.com>
+From: "Jay Soffian" <jaysoffian+git@gmail.com>
+Subject: Re: [PATCH] git-web--browse: improve browser support under OS X
+Date: Mon, 11 Feb 2008 09:15:23 -0500
+Message-ID: <76718490802110615j3017e17awcae2a04087984f0d@mail.gmail.com>
+References: <1202505794-13409-1-git-send-email-jaysoffian+git@gmail.com>
+	 <1202696664-1565-1-git-send-email-jaysoffian+git@gmail.com>
+	 <7vve4wb3h7.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 11 14:46:20 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 11 15:16:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOYz7-00079d-T3
-	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 14:46:14 +0100
+	id 1JOZSm-000051-UP
+	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 15:16:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752836AbYBKNpc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 11 Feb 2008 08:45:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752830AbYBKNpb
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Feb 2008 08:45:31 -0500
-Received: from mail164.messagelabs.com ([216.82.253.131]:40118 "HELO
-	mail164.messagelabs.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1751417AbYBKNpa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Feb 2008 08:45:30 -0500
-X-VirusChecked: Checked
-X-Env-Sender: Uwe.Kleine-Koenig@digi.com
-X-Msg-Ref: server-13.tower-164.messagelabs.com!1202737529!8862044!1
-X-StarScan-Version: 5.5.12.14.2; banners=-,-,-
-X-Originating-IP: [66.77.174.21]
-Received: (qmail 9630 invoked from network); 11 Feb 2008 13:45:29 -0000
-Received: from unknown (HELO owa.digi.com) (66.77.174.21)
-  by server-13.tower-164.messagelabs.com with SMTP; 11 Feb 2008 13:45:29 -0000
-Received: from mtk-sms-mail01.digi.com ([10.10.8.120]) by owa.digi.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 11 Feb 2008 07:45:29 -0600
-Received: from dor-sms-mail1.digi.com ([10.49.1.105]) by mtk-sms-mail01.digi.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 11 Feb 2008 07:45:28 -0600
-Received: from zentaur.digi.com ([10.100.10.144]) by dor-sms-mail1.digi.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 11 Feb 2008 14:45:26 +0100
-Received: by zentaur.digi.com (Postfix, from userid 1080)
-	id B326F1B23F; Mon, 11 Feb 2008 14:45:26 +0100 (CET)
-X-Mailer: git-send-email 1.5.4
-X-OriginalArrivalTime: 11 Feb 2008 13:45:26.0935 (UTC) FILETIME=[5BC10A70:01C86CB4]
-X-TM-AS-Product-Ver: SMEX-8.0.0.1181-5.000.1023-15724.000
-X-TM-AS-Result: No--6.132300-8.000000-31
-X-TM-AS-User-Approved-Sender: No
-X-TM-AS-User-Blocked-Sender: No
+	id S1752830AbYBKOPl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Feb 2008 09:15:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754677AbYBKOPa
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Feb 2008 09:15:30 -0500
+Received: from wr-out-0506.google.com ([64.233.184.237]:4186 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753926AbYBKOPY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Feb 2008 09:15:24 -0500
+Received: by wr-out-0506.google.com with SMTP id c48so4000609wra.23
+        for <git@vger.kernel.org>; Mon, 11 Feb 2008 06:15:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        bh=xMFUfMXlapDXIui0VASf+t474krStEawIABnS3y3Ylk=;
+        b=AbqsPrDBSCBhpNHAT3TqUI0uV+HsGfY+30d6UwEN34/CXo9WHDstughrZ4VmwUW+43l1h5Yc2m4ghv1g+ts466Puzi6AHIK2zQbdmKK/56vBzc9Ph/IcpUBUYldmk37lq/GHzLTXdAKHuNbAVZ1JZjF3E3+jwXOK+Ct62f/YV0c=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=JdU2KmTr1nHvPHjgFRSgHBdzEwhs1RwZVd0LnzRDr09VYVSIZR68cmTaMgRS9gclGXXZqfnZT3gRFgLC5DrI6GnM1enyKxyUF9okShk8CMEp3xZwM4paknITgTlMHGxpl4THYtp0byRvA9A21ox1aEgp58OPyC1Sc8FZaQKIlIY=
+Received: by 10.114.80.4 with SMTP id d4mr27521wab.44.1202739323142;
+        Mon, 11 Feb 2008 06:15:23 -0800 (PST)
+Received: by 10.114.255.11 with HTTP; Mon, 11 Feb 2008 06:15:23 -0800 (PST)
+In-Reply-To: <7vve4wb3h7.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
+X-Google-Sender-Auth: 4feb45a66fe4c555
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73535>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73536>
 
-Signed-off-by: Uwe Kleine-K=C3=B6nig <Uwe.Kleine-Koenig@digi.com>
----
- git-rebase--interactive.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+On Feb 10, 2008 10:01 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Because we preprocess git-web--browse.sh to create the final
+> git-web--browse to be installed, something like "open" that is
+> not a user but a platform preference might be better done as a
+> build-time thing, instead of forcing everybody to spawn "uname",
+> perhaps like this?
 
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 402ff37..fb12b03 100755
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -432,7 +432,7 @@ do
- 			shift ;;
- 		esac
- 		;;
--	--merge)
-+	-m|--merge)
- 		# we use merge anyway
- 		;;
- 	-C*)
---=20
-1.5.4
+Seems like overkill (over the original patch), but honestly, I'm happy
+with whatever solution deemed appropriate, just as long as I can use
+my native browser on OS X. :-)
+
+> Also I wonder why the check for SECURITYSESSIONID your original
+> had is not good enough for this Mac specific customization?
+
+Well, I thought it was. I was just responding to feedback. I don't
+have enough experience with the git project to have much of an opinion
+either way.
+
+Anyway, thanks for the pointers.
+
+j.
