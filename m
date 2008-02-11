@@ -1,83 +1,71 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Trouble with gitk and ActiveState tcltk on OS X
-Date: Sun, 10 Feb 2008 23:49:41 -0500
-Message-ID: <20080211044941.GX24004@spearce.org>
-References: <m2ve4wh5sx.fsf@ziti.evri.corp>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH] diff.c: guard config parser from value=NULL
+Date: Mon, 11 Feb 2008 05:55:19 +0100
+Message-ID: <200802110555.19383.chriscool@tuxfamily.org>
+References: <20080210193534.d11d8b15.chriscool@tuxfamily.org> <20080210190145.GB5129@artemis.madism.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Seth Falcon <seth@userprimary.net>
-X-From: git-owner@vger.kernel.org Mon Feb 11 05:50:17 2008
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio Hamano <junkio@cox.net>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Govind Salinas <blix@sophiasuchtig.com>,
+	Martin Koegler <mkoegler@auto.tuwien.ac.at>,
+	git@vger.kernel.org
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Mon Feb 11 05:50:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOQcT-00014p-Bs
+	id 1JOQcS-00014p-NO
 	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 05:50:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753214AbYBKEtq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Feb 2008 23:49:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753166AbYBKEtq
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 23:49:46 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:59594 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753113AbYBKEtp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Feb 2008 23:49:45 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1JOQbi-0000lS-To; Sun, 10 Feb 2008 23:49:30 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id E41E520FBAE; Sun, 10 Feb 2008 23:49:41 -0500 (EST)
+	id S1753007AbYBKEt0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 10 Feb 2008 23:49:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753005AbYBKEt0
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 23:49:26 -0500
+Received: from smtp1-g19.free.fr ([212.27.42.27]:36683 "EHLO smtp1-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752917AbYBKEtZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 10 Feb 2008 23:49:25 -0500
+Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 1ABB61AB2B4;
+	Mon, 11 Feb 2008 05:49:22 +0100 (CET)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id BFF4B1AB2B3;
+	Mon, 11 Feb 2008 05:49:21 +0100 (CET)
+User-Agent: KMail/1.9.7
+In-Reply-To: <20080210190145.GB5129@artemis.madism.org>
 Content-Disposition: inline
-In-Reply-To: <m2ve4wh5sx.fsf@ziti.evri.corp>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73465>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73466>
 
-Seth Falcon <seth@userprimary.net> wrote:
-> I'm hoping that another OS X git user can point me in the right
-> direction...
-> 
-> I installed the ActiveState tcltk and set the following in
-> git/config.mak:
-> 
->     TCLTK_PATH=/usr/local/bin/wish8.5
-> 
-> With this, git gui works great (I get a real icon when switching apps
-> and the overall look is more consistent than when I was running with
-> X11 + MacPorts tcltk).
+Le dimanche 10 f=E9vrier 2008, Pierre Habouzit a =E9crit :
+> On Sun, Feb 10, 2008 at 06:35:34PM +0000, Christian Couder wrote:
+> > +static int xstrdup_confval(const char *dest, const char *var, cons=
+t
+> > char *value)
+>
+>   Why not calling that "git_config_string" in config.[hc] and be
+> API-consistent ?
 
-For what its worth I use the native Tcl/Tk that ships with Mac OS X,
-/usr/bin/wish, which is really in /Library/Frameworks/Tk.framework.
-I've never used the ActiveState Tcl/Tk package on Mac OS X.
+In this function, there is:
 
-git-gui builds against the Tk.framework I mentioned above when on
-Mac OS X.  In particular the git-gui Makefile seems to ignore the
-setting of TCLTK_PATH when it sees the above mentioned Tk.framework
-is available in your filesystem.
+if (!value || !*value)
+	return error("%s: lacks value", var);
 
-The reason why you get nice icons for git-gui is because we use a
-feature of the Aqua port Tcl/Tk framework that allows us to create a
-full Mac OS X app by copying a tiny executable from the framework,
-and supplying our own resource bundle.  The bundle configures
-the icon.  Its the only way to get a custom icon on Mac OS X.
+but in some places an empty string is not an error, and in some other p=
+laces=20
+we "die" in case of error instead of using "return error..."
+So I am not sure this function can be generally usefull as it is now.
 
-Launching gitk from within git-gui (Repository -> Visualize History)
-uses the same app and bundle, so gitk inherits the icon too.
-I'd also bet gitk works this way, because it isn't launching through
-the ActiveState Tcl/Tk port.
+Maybe I should add a flag parameter to control if we should "die" or "r=
+eturn=20
+error" and if we should accept an empty string or not.
 
-In short, why not just use the native Aqua Tcl/Tk that Apple ships?
-Why go through X11 and MacPorts?
- 
--- 
-Shawn.
+What do you think ?
+
+Christian.
