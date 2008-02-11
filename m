@@ -1,106 +1,112 @@
-From: jaysoffian+git@gmail.com
-Subject: [PATCH] git-web--browse: improve browser support under OS X
-Date: Sun, 10 Feb 2008 21:24:24 -0500
-Message-ID: <1202696664-1565-1-git-send-email-jaysoffian+git@gmail.com>
-References: <1202505794-13409-1-git-send-email-jaysoffian+git@gmail.com>
-Cc: Jay Soffian <jaysoffian@gmail.com>
+From: Johan Herland <johan@herland.net>
+Subject: [PATCH] Fix 'git cvsexportcommit -w $cvsdir ...' when used with
+ relative $GIT_DIR
+Date: Mon, 11 Feb 2008 02:28:05 +0100
+Message-ID: <200802110228.05233.johan@herland.net>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN
+Content-Transfer-Encoding: 7BIT
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 11 03:25:06 2008
+X-From: git-owner@vger.kernel.org Mon Feb 11 03:28:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOOLx-0002FL-Hd
-	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 03:25:05 +0100
+	id 1JOOPV-0002vj-Ox
+	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 03:28:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754572AbYBKCY3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Feb 2008 21:24:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751738AbYBKCY3
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 21:24:29 -0500
-Received: from an-out-0708.google.com ([209.85.132.242]:50298 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751602AbYBKCY2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Feb 2008 21:24:28 -0500
-Received: by an-out-0708.google.com with SMTP id d31so1102422and.103
-        for <git@vger.kernel.org>; Sun, 10 Feb 2008 18:24:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references:sender;
-        bh=ScuRh2MN2yn8vK7D4+IowDzpiWXwEA35fWfbK9aGF4U=;
-        b=soEM8rF74BT1W62Y1KBk0736N63Eg7P48aLJlAfgnIj2H+gmsMjaCziZdtaUaHpRgtmWcxRb3cCSbDbi5zpt8opvSNhEjjMKJk3a7ZEAZKdYeSFcvdUNJvFOzL4TyAxqxofJ1uY6g2gi7YA7FpprFLALRqvi6UikTd0ti65rYww=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references:sender;
-        b=tnopXBuU0UTZleK1fIK5dERB1HEmY7Fhg8KhNHV81vmnOBIyHDiVui7vyM5x17qwlycGZ5FBVmjj2M3ni4d7/+2vm6cMH8YDjniYTyahj6fffflvX4i1Egd4JYIFsp1rUZ7G7dsrmfalqQBmeh2Pcu0DxsRn6ujHkPX5LF8RE3M=
-Received: by 10.100.252.16 with SMTP id z16mr33262287anh.36.1202696667409;
-        Sun, 10 Feb 2008 18:24:27 -0800 (PST)
-Received: from localhost ( [75.189.159.45])
-        by mx.google.com with ESMTPS id c37sm36486386ana.9.2008.02.10.18.24.26
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 10 Feb 2008 18:24:26 -0800 (PST)
-X-Mailer: git-send-email 1.5.4.1221.gf32f1
-In-Reply-To: <1202505794-13409-1-git-send-email-jaysoffian+git@gmail.com>
+	id S1751802AbYBKC2L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Feb 2008 21:28:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751602AbYBKC2K
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 21:28:10 -0500
+Received: from smtp.getmail.no ([84.208.20.33]:40897 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751769AbYBKC2J (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Feb 2008 21:28:09 -0500
+X-Greylist: delayed 3600 seconds by postgrey-1.27 at vger.kernel.org; Sun, 10 Feb 2008 21:28:09 EST
+Received: from pmxchannel-daemon.no-osl-m323-srv-009-z2.isp.get.no by
+ no-osl-m323-srv-009-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ id <0JW100301W2VX800@no-osl-m323-srv-009-z2.isp.get.no> for
+ git@vger.kernel.org; Mon, 11 Feb 2008 02:28:07 +0100 (CET)
+Received: from smtp.getmail.no ([10.5.16.1])
+ by no-osl-m323-srv-009-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JW10024OW2TMA00@no-osl-m323-srv-009-z2.isp.get.no> for
+ git@vger.kernel.org; Mon, 11 Feb 2008 02:28:05 +0100 (CET)
+Received: from alpha.herland ([84.215.102.95])
+ by no-osl-m323-srv-009-z1.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JW100885W2TJT50@no-osl-m323-srv-009-z1.isp.get.no> for
+ git@vger.kernel.org; Mon, 11 Feb 2008 02:28:05 +0100 (CET)
+Content-disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73457>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73458>
 
-From: Jay Soffian <jaysoffian@gmail.com>
+When using the '-w $cvsdir' option to cvsexportcommit, it will chdir into
+$cvsdir before executing several other git commands. If $GIT_DIR is set to
+a relative path (e.g. '.'), the git commands executed by cvsexportcommit
+will naturally fail with "fatal: Not a git repository".
 
-/usr/bin/open <document> is used under OS X to open a document as if the
-user had double-clicked on the file's icon (i.e. HTML files are opened
-w/the user's default browser).
+Therefore, if $GIT_DIR is relative, prepend $PWD to $GIT_DIR before the
+chdir to $cvsdir.
 
-Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
+Signed-off-by: Johan Herland <johan@herland.net>
 ---
- Documentation/git-help.txt |    1 +
- git-web--browse.sh         |    7 +++++--
- 2 files changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/git-help.txt b/Documentation/git-help.txt
-index ad41aab..897868a 100644
---- a/Documentation/git-help.txt
-+++ b/Documentation/git-help.txt
-@@ -68,6 +68,7 @@ The following browsers are currently supported by 'git-web--browse':
- * links
- * lynx
- * dillo
-+* open (OS X only, where it is the default)
+I'm working on an update hook script for automatically propagating commits 
+to a CVS server. My script calls 'git cvsexportcommit -w $cvsdir ...'. 
+However, the hooks infrastructure invokes the update hook script with the 
+(bare, in my case) Git repo as $PWD and sets up GIT_DIR="." in the script's 
+environment. For now, I work around this bug in my script by forcing 
+$GIT_DIR to $PWD, but this really seems like a bug in cvsexportcommit.
+
+In my case, this bug can also be fixed by making sure the hook 
+infrastructure set up an _absolute_ GIT_DIR for the update hook, something 
+I'd consider more polite than the current GIT_DIR=".". Whether we want to 
+fix this as well should be discussed. But the patch below is needed in any 
+case, since cvsexportcommit may not only be called from hook scripts.
+
+
+Have fun! :)
+
+...Johan
+
+
+ git-cvsexportcommit.perl |   15 +++++++++------
+ 1 files changed, 9 insertions(+), 6 deletions(-)
+
+diff --git a/git-cvsexportcommit.perl b/git-cvsexportcommit.perl
+index d2e50c3..fd4fbfb 100755
+--- a/git-cvsexportcommit.perl
++++ b/git-cvsexportcommit.perl
+@@ -15,15 +15,18 @@ $opt_h && usage();
+ die "Need at least one commit identifier!" unless @ARGV;
  
- CONFIGURATION VARIABLES
- -----------------------
-diff --git a/git-web--browse.sh b/git-web--browse.sh
-index 8ed489d..1927c3b 100755
---- a/git-web--browse.sh
-+++ b/git-web--browse.sh
-@@ -25,7 +25,7 @@ NONGIT_OK=Yes
+ if ($opt_w) {
++	# Remember where GIT_DIR is before changing to CVS checkout
+ 	unless ($ENV{GIT_DIR}) {
+-		# Remember where our GIT_DIR is before changing to CVS checkout
++		# Oops no GIT_DIR set. Figure out for ourselves
+ 		my $gd =`git-rev-parse --git-dir`;
+ 		chomp($gd);
+-		if ($gd eq '.git') {
+-			my $wd = `pwd`;
+-			chomp($wd);
+-			$gd = $wd."/.git"	;
+-		}
++		$ENV{GIT_DIR} = $gd;
++	}
++	unless ($ENV{GIT_DIR} =~ m[^/]) {
++		# GIT_DIR is relative. Prepend $PWD
++		my $wd = `pwd`;
++		chomp($wd);
++		my $gd = $wd."/".$ENV{GIT_DIR};
+ 		$ENV{GIT_DIR} = $gd;
+ 	}
  
- valid_tool() {
- 	case "$1" in
--		firefox | iceweasel | konqueror | w3m | links | lynx | dillo)
-+		firefox | iceweasel | konqueror | w3m | links | lynx | dillo | open)
- 			;; # happy
- 		*)
- 			return 1
-@@ -104,6 +104,9 @@ if test -z "$browser" ; then
-     else
- 	browser_candidates="w3m links lynx"
-     fi
-+    if test "$(uname)" = "Darwin" && test -n "$SECURITYSESSIONID"; then
-+	browser_candidates="open $browser_candidates"
-+    fi
- 
-     for i in $browser_candidates; do
- 	init_browser_path $i
-@@ -147,7 +150,7 @@ case "$browser" in
- 		;;
- 	esac
- 	;;
--    w3m|links|lynx)
-+    w3m|links|lynx|open)
- 	eval "$browser_path" "$@"
- 	;;
-     dillo)
 -- 
-1.5.4.1221.gf32f1
+1.5.4.2.g41ac4
