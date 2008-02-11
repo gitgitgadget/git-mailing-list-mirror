@@ -1,94 +1,168 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Add "--dirstat" for some directory statistics
-Date: Mon, 11 Feb 2008 13:41:14 -0800 (PST)
-Message-ID: <alpine.LFD.1.00.0802111338270.2920@woody.linux-foundation.org>
-References: <alpine.LFD.1.00.0802111230200.2920@woody.linux-foundation.org> <alpine.LSU.1.00.0802112122300.3870@racer.site>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/3] git-submodule - Follow top-level remote on
+ init/update/clone
+Date: Mon, 11 Feb 2008 22:09:20 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0802112152050.3870@racer.site>
+References: <1202576245-284-1-git-send-email-mlevedahl@gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Feb 11 23:07:39 2008
+Cc: git@vger.kernel.org
+To: Mark Levedahl <mlevedahl@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 11 23:10:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOgo9-00010M-IT
-	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 23:07:25 +0100
+	id 1JOgqX-0001wE-11
+	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 23:09:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756156AbYBKWGu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Feb 2008 17:06:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755667AbYBKWGu
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Feb 2008 17:06:50 -0500
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:39452 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755243AbYBKWGt (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 11 Feb 2008 17:06:49 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m1BLqWnI030999
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 11 Feb 2008 14:04:36 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m1BLfERO001746;
-	Mon, 11 Feb 2008 13:41:34 -0800
-In-Reply-To: <alpine.LSU.1.00.0802112122300.3870@racer.site>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
-X-Spam-Status: No, hits=-2.731 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1757651AbYBKWJQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Feb 2008 17:09:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757588AbYBKWJQ
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Feb 2008 17:09:16 -0500
+Received: from mail.gmx.net ([213.165.64.20]:56061 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1757136AbYBKWJN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Feb 2008 17:09:13 -0500
+Received: (qmail invoked by alias); 11 Feb 2008 22:09:11 -0000
+Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
+  by mail.gmx.net (mp052) with SMTP; 11 Feb 2008 23:09:11 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19zTqNHUl5zFhgPAaW/rrKAEYLkcfOrj8rwTzbm5D
+	CbaFzx9fm6d7Ku
+X-X-Sender: gene099@racer.site
+In-Reply-To: <1202576245-284-1-git-send-email-mlevedahl@gmail.com>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73593>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73594>
 
+Hi,
 
+On Sat, 9 Feb 2008, Mark Levedahl wrote:
 
-On Mon, 11 Feb 2008, Johannes Schindelin wrote:
-> 
-> Certainly you meant 0x0040 for DIRSTAT, n'est-ce pas?
+> This change allows the remote used for relative submodules (those defined
+> using a url that is relative to their parent) to be defined by explicit
+> definition on the command line or through the top-level project's
+> branch.<name>.remote configuration.  This override is applied *only* to
+> submodules defined using a url relative to the top-level project's url,
+> under the assumption that such modules are logically part of the same
+> project and managed as a unit.
 
-Yeah, yeah.
+That makes sense.
 
-> Also, are you sure that you do not want to make the minimal percentage 
-> configurable, maybe with --dirstat[=<min-percent>]?  I mean, sometimes 
-> even 0.01% is worth showing.
+> @@ -40,11 +42,13 @@ get_repo_base() {
+>  # Resolve relative url by appending to parent's url
+>  resolve_relative_url ()
+>  {
+> -	branch="$(git symbolic-ref HEAD 2>/dev/null)"
+> -	remote="$(git config branch.${branch#refs/heads/}.remote)"
+> -	remote="${remote:-origin}"
+> -	remoteurl="$(git config remote.$remote.url)" ||
+> -		die "remote ($remote) does not have a url in .git/config"
 
-Well, maybe, maybe not. But yeah, at least in whole percentages. Here is a 
-simple patch to fix that cut-and-past'o and add a configurable (but still 
-whole-percentage-point) thing.
+I did not really look at this code before, but does that not mean that 
+git-submodule does already what you want?
 
-		Linus
+Because usually, you clone the superproject from the URL that you actually 
+want to use, and in that case, the initial branch's default remote will 
+have exactly that URL.
 
----
- diff.c |    2 +-
- diff.h |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+So I have to admit that I do not see the reason why you remove that code, 
+replace it with another (that I think does the same), and claim that you 
+introduce that behaviour.
 
-diff --git a/diff.c b/diff.c
-index da91bdd..81948e7 100644
---- a/diff.c
-+++ b/diff.c
-@@ -2273,7 +2273,7 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
- 		options->output_format |= DIFF_FORMAT_NUMSTAT;
- 	else if (!strcmp(arg, "--shortstat"))
- 		options->output_format |= DIFF_FORMAT_SHORTSTAT;
--	else if (!strcmp(arg, "--dirstat"))
-+	else if (opt_arg(arg, 'X', "dirstat", &options->dirstat_percent))
- 		options->output_format |= DIFF_FORMAT_DIRSTAT;
- 	else if (!strcmp(arg, "--check"))
- 		options->output_format |= DIFF_FORMAT_CHECKDIFF;
-diff --git a/diff.h b/diff.h
-index 3181263..9da6601 100644
---- a/diff.h
-+++ b/diff.h
-@@ -30,7 +30,7 @@ typedef void (*diff_format_fn_t)(struct diff_queue_struct *q,
- #define DIFF_FORMAT_SUMMARY	0x0008
- #define DIFF_FORMAT_PATCH	0x0010
- #define DIFF_FORMAT_SHORTSTAT	0x0020
--#define DIFF_FORMAT_DIRSTAT	0x0020
-+#define DIFF_FORMAT_DIRSTAT	0x0040
- 
- /* These override all above */
- #define DIFF_FORMAT_NAME	0x0100
+Your patch seems to change only one thing: you can specify "-r <remote>" 
+with "git submodule add/init/update" -- except for some peculiarity; see 
+below.
+
+> @@ -107,7 +112,7 @@ module_clone()
+>  	test -e "$path" &&
+>  	die "A file already exist at path '$path'"
+>  
+> -	git-clone -n "$url" "$path" ||
+> +	git-clone -n -o "$remote" "$url" "$path" ||
+>  	die "Clone of '$url' into submodule path '$path' failed"
+>  }
+>  
+
+If you do _that_, you will _force_ the submodule to have no "origin" 
+remote.  As discussed _at length_, this is not what you should do.  The 
+only reason to use "-o <other-nick-name>" is if you plan _not_ to use the 
+same URL for the default remote.
+
+IOW I do not like this hunk _at_ _all_.  Because I get the impression that 
+I really wasted my time explaining the same issue over and over and over 
+again.
+
+> @@ -156,13 +169,16 @@ cmd_add()
+>  	case "$repo" in
+>  	./*|../*)
+>  		# dereference source url relative to parent's url
+> -		realrepo="$(resolve_relative_url $repo)" ;;
+> +		realremote=${remote:-$(get_default_remote)}
+> +		realrepo=$(resolve_relative_url $repo) || exit 1
+> +		;;
+
+Why do you need the "realremote" here?  Why is "$remote" not enough?
+
+> @@ -235,7 +259,7 @@ cmd_init()
+>  		# Possibly a url relative to parent
+>  		case "$url" in
+>  		./*|../*)
+> -			url="$(resolve_relative_url "$url")"
+> +			url=$(resolve_relative_url "$url") || exit 1
+
+Yes for the "|| exit 1".  No for the removal of the quotes: keep in mind: 
+you are possibly getting a url from the _config_, which is supposed to be 
+user-editable.
+
+> @@ -274,6 +308,7 @@ cmd_update()
+>  		shift
+>  	done
+>  
+> +	remote=${remote:-$(get_default_remote)}
+
+You have this paradigm so often, but AFAICS you only use it for the call 
+to module_clone.  Why not let module_clone figure it out, if $remote is 
+empty?
+
+> @@ -298,9 +333,24 @@ cmd_update()
+>  			die "Unable to find current revision in submodule path '$path'"
+
+>  		fi
+>  
+> +		baseurl="$(GIT_CONFIG=.gitmodules git config submodule."$name".url)"
+> +		case "$baseurl" in
+> +		./*|../*)
+> +			fetch_remote=$remote
+> +			absurl=$(resolve_relative_url $baseurl) || exit 1
+> +			(unset GIT_DIR ; cd "$path" && git config remote."$fetch_remote".url > /dev/null) ||
+> +			(
+> +				unset GIT_DIR; cd "$path" && git remote add "$fetch_remote" "$absurl"
+> +			) || die "Unable to define remote '$fetch_remote' in submodule path '$path'"
+> +			;;
+> +		*)
+> +			fetch_remote=
+> +			;;
+> +		esac
+> +
+>  		if test "$subsha1" != "$sha1"
+>  		then
+> -			(unset GIT_DIR; cd "$path" && git-fetch &&
+> +			(unset GIT_DIR; cd "$path" && git-fetch $fetch_remote &&
+
+Wasn't the whole _point_ of having a two-stage init/update that you could 
+_change_ the remote in the config?
+
+Now you override those settings if .gitmodules says that the path is 
+relative?  Shouldn't you respect the setting in the config (which the user 
+can change freely), rather than .gitmodules (which the user cannot change 
+without either committing it or having a permanently dirty working 
+directory)?
+
+Ciao,
+Dscho
