@@ -1,73 +1,100 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH] config: deprecate using "" as boolean value false.
-Date: Mon, 11 Feb 2008 08:22:16 +0100
-Message-ID: <20080211082216.e9212310.chriscool@tuxfamily.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio Hamano <junkio@cox.net>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Pierre Habouzit <madcoder@debian.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Mon Feb 11 08:17:15 2008
+From: Martin Koegler <mkoegler@auto.tuwien.ac.at>
+Subject: [PATCH] pack-objects: only throw away data during memory pressure
+Date: Mon, 11 Feb 2008 08:26:25 +0100
+Message-ID: <120271478556-git-send-email-mkoegler@auto.tuwien.ac.at>
+Cc: git@vger.kernel.org, Martin Koegler <mkoegler@auto.tuwien.ac.at>
+To: Nicolas Pitre <nico@cam.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Feb 11 08:27:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOSuZ-00025K-Dq
-	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 08:17:07 +0100
+	id 1JOT4H-0004EI-Fa
+	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 08:27:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752315AbYBKHQc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Feb 2008 02:16:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752260AbYBKHQb
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Feb 2008 02:16:31 -0500
-Received: from smtp1-g19.free.fr ([212.27.42.27]:58290 "EHLO smtp1-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751908AbYBKHQU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Feb 2008 02:16:20 -0500
-Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 273D21AB2E6;
-	Mon, 11 Feb 2008 08:16:19 +0100 (CET)
-Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp1-g19.free.fr (Postfix) with SMTP id C824A1AB2C4;
-	Mon, 11 Feb 2008 08:16:18 +0100 (CET)
-X-Mailer: Sylpheed 2.4.8 (GTK+ 2.12.5; i486-pc-linux-gnu)
+	id S1752537AbYBKH01 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Feb 2008 02:26:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752498AbYBKH01
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Feb 2008 02:26:27 -0500
+Received: from thor.auto.tuwien.ac.at ([128.130.60.15]:35772 "EHLO
+	thor.auto.tuwien.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752021AbYBKH00 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Feb 2008 02:26:26 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by thor.auto.tuwien.ac.at (Postfix) with ESMTP id 6DCDE680BF6C;
+	Mon, 11 Feb 2008 08:26:25 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at auto.tuwien.ac.at
+Received: from thor.auto.tuwien.ac.at ([127.0.0.1])
+	by localhost (thor.auto.tuwien.ac.at [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id BGrKb3JW+uwu; Mon, 11 Feb 2008 08:26:25 +0100 (CET)
+Received: by thor.auto.tuwien.ac.at (Postfix, from userid 3001)
+	id 5147568018CD; Mon, 11 Feb 2008 08:26:25 +0100 (CET)
+X-Mailer: git-send-email 1.5.3.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73474>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73475>
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+If pack-objects hit the memory limit, it deletes objects from the delta
+window.
+
+This patch make it only delete the data, which is recomputed, if needed again.
+
+Signed-off-by: Martin Koegler <mkoegler@auto.tuwien.ac.at>
 ---
- config.c |   13 ++++++++++++-
- 1 files changed, 12 insertions(+), 1 deletions(-)
+What about this not really tested patch for dealing with memory pressure in git-pack-objects?
 
-diff --git a/config.c b/config.c
-index 526a3f4..b5f1a11 100644
---- a/config.c
-+++ b/config.c
-@@ -300,8 +300,19 @@ int git_config_bool(const char *name, const char *value)
+It will slow down the repack in the case of memory pressure, but missing memory will not affect the results.
+
+ builtin-pack-objects.c |   13 +++++++++++--
+ 1 files changed, 11 insertions(+), 2 deletions(-)
+
+diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
+index 6f8f388..231d65f 100644
+--- a/builtin-pack-objects.c
++++ b/builtin-pack-objects.c
+@@ -1464,7 +1464,7 @@ static unsigned int check_delta_limit(struct object_entry *me, unsigned int n)
+ 	return m;
+ }
+ 
+-static unsigned long free_unpacked(struct unpacked *n)
++static unsigned long free_unpacked_data(struct unpacked *n)
  {
- 	if (!value)
- 		return 1;
--	if (!*value)
-+	if (!*value) {
-+		fprintf(stderr,
-+			"Warning: using an empty value for boolean config "
-+			"variables is deprecated.\n"
-+			"An empty value currently means 'false' as a "
-+			"boolean, but may very well means 'true' in the "
-+			"future!\n"
-+			"Please consider using a 'false' value explicitely "
-+			"for variable '%s', so that your config is future "
-+			"proof. You can do that using:\n"
-+			"\tgit config %s false\n", name, name);
- 		return 0;
-+	}
- 	if (!strcasecmp(value, "true") || !strcasecmp(value, "yes"))
- 		return 1;
- 	if (!strcasecmp(value, "false") || !strcasecmp(value, "no"))
+ 	unsigned long freed_mem = sizeof_delta_index(n->index);
+ 	free_delta_index(n->index);
+@@ -1474,6 +1474,12 @@ static unsigned long free_unpacked(struct unpacked *n)
+ 		free(n->data);
+ 		n->data = NULL;
+ 	}
++	return freed_mem;
++}
++
++static unsigned long free_unpacked(struct unpacked *n)
++{
++	unsigned long freed_mem = free_unpacked_data(n);
+ 	n->entry = NULL;
+ 	n->depth = 0;
+ 	return freed_mem;
+@@ -1514,7 +1520,7 @@ static void find_deltas(struct object_entry **list, unsigned *list_size,
+ 		       mem_usage > window_memory_limit &&
+ 		       count > 1) {
+ 			uint32_t tail = (idx + window - count) % window;
+-			mem_usage -= free_unpacked(array + tail);
++			mem_usage -= free_unpacked_data(array + tail);
+ 			count--;
+ 		}
+ 
+@@ -1547,6 +1553,9 @@ static void find_deltas(struct object_entry **list, unsigned *list_size,
+ 			if (!m->entry)
+ 				break;
+ 			ret = try_delta(n, m, max_depth, &mem_usage);
++			if (window_memory_limit &&
++			    mem_usage > window_memory_limit)
++				mem_usage -= free_unpacked_data(m);
+ 			if (ret < 0)
+ 				break;
+ 			else if (ret > 0)
 -- 
-1.5.4.20.gc135a-dirty
+1.5.4.g42f90
