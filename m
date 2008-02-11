@@ -1,118 +1,84 @@
-From: Nix <nix@esperi.org.uk>
-Subject: Re: warning: no common commits - slow pull
-Date: Mon, 11 Feb 2008 21:13:51 +0000
-Message-ID: <87ir0vxkkw.fsf@hades.wkstn.nix>
-References: <200802102007.38838.lenb@kernel.org>
-	<877ihbcwu5.fsf@mid.deneb.enyo.de>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Best way to specify all local branches and all remote branches.
+Date: Mon, 11 Feb 2008 13:34:47 -0800 (PST)
+Message-ID: <m3abm7dvp1.fsf@localhost.localdomain>
+References: <47B09921.2070109@glidos.net>
+	<m3ir0ve2c1.fsf@localhost.localdomain>
+	<alpine.LSU.1.00.0802112022560.3870@racer.site>
+	<47B0B775.1050401@glidos.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Florian Weimer <fw@deneb.enyo.de>
-X-From: git-owner@vger.kernel.org Mon Feb 11 22:25:59 2008
+To: Paul Gardiner <osronline@glidos.net>
+X-From: git-owner@vger.kernel.org Mon Feb 11 22:36:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOg9r-0003QO-JZ
-	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 22:25:48 +0100
+	id 1JOgJa-0006ii-SN
+	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 22:35:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753523AbYBKVZJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Feb 2008 16:25:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753075AbYBKVZI
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Feb 2008 16:25:08 -0500
-Received: from 41-052.adsl.zetnet.co.uk ([194.247.41.52]:52839 "EHLO
-	mail.esperi.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752725AbYBKVZH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Feb 2008 16:25:07 -0500
-X-Greylist: delayed 661 seconds by postgrey-1.27 at vger.kernel.org; Mon, 11 Feb 2008 16:25:06 EST
-Received: from esperi.org.uk (nix@hades.wkstn.nix [192.168.14.18])
-	by mail.esperi.org.uk (8.12.11.20060614/8.12.11) with ESMTP id m1BLDq3V021329;
-	Mon, 11 Feb 2008 21:13:52 GMT
-Received: (from nix@localhost)
-	by esperi.org.uk (8.12.11.20060614/8.12.11/Submit) id m1BLDppf024890;
-	Mon, 11 Feb 2008 21:13:51 GMT
-Emacs: Lovecraft was an optimist.
-In-Reply-To: <877ihbcwu5.fsf@mid.deneb.enyo.de> (Florian Weimer's message of "Mon, 11 Feb 2008 16:54:42 +0100")
-User-Agent: Gnus/5.1008 (Gnus v5.10.8) XEmacs/21.5-b28 (linux)
-X-DCC-Rhyolite-Metrics: hades 104; Body=0 Fuz1=0 Fuz2=0
+	id S1754032AbYBKVe4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Feb 2008 16:34:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754013AbYBKVez
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Feb 2008 16:34:55 -0500
+Received: from ug-out-1314.google.com ([66.249.92.172]:59520 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754088AbYBKVew (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Feb 2008 16:34:52 -0500
+Received: by ug-out-1314.google.com with SMTP id z38so386615ugc.16
+        for <git@vger.kernel.org>; Mon, 11 Feb 2008 13:34:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
+        bh=750uFGrOV/gjNgO4Cg2+yN6pdhhsskuHgPmQ4zu1PHs=;
+        b=WhKxI72+Z/Ba8wgNDJWBptym8hz7sG30WcPRh+DcEy9YOHwniN+Z+AZUdxYZU3j9VNrllJKNgnZDc2Om8EJu2juQpe1wo9IEWh1E1NV4GUZdUqYXCC3kbj7Qstlu5C3t6Qd1WhjJ48uSqUMiuftgo8RIkXuca/aLkgNrk7iqiyk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
+        b=cFcNNbcq5E2YoXIkvivvJGk400C6NeX8fRGZZjPu18a4SSqsQP99R5agP0UCni4GZeTerEFhmv840JPQVMbotUwx6N5tZDp+p8StTUJEaHT6EMDd/DhXIpph5EszXmXnw4DtvRz7K2I5LklsyHxep3PIuPPHpu0PdSXuFB3R9ts=
+Received: by 10.67.123.19 with SMTP id a19mr9600955ugn.4.1202765689218;
+        Mon, 11 Feb 2008 13:34:49 -0800 (PST)
+Received: from localhost.localdomain ( [83.8.220.23])
+        by mx.google.com with ESMTPS id x33sm2332748ugc.68.2008.02.11.13.34.45
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 11 Feb 2008 13:34:47 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m1BLYEPd017783;
+	Mon, 11 Feb 2008 22:34:26 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m1BLY3PF017780;
+	Mon, 11 Feb 2008 22:34:03 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <47B0B775.1050401@glidos.net>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73589>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73590>
 
-On 11 Feb 2008, Florian Weimer spake thusly:
+Paul Gardiner <osronline@glidos.net> writes:
 
-> * Len Brown:
->
->> But this second pull seems to have re-downloaded 172MB,
->> when it should have only needed the last few commits.
->
-> I've got a linux-2.6 tree which is reasonable up to date, but which has
-> been created by some acient GIT version.  I see the same behavior from
-> time to time.  The second pull, after I've canceled the first one,
-> usually downloads just the expected data.
+> Johannes Schindelin wrote:
+>> On Mon, 11 Feb 2008, Jakub Narebski wrote:
+>>
+>>> git-filter-branch [...] should support --all.
+>>
+>> It does.
+> 
+> Yep, it does. I'd forgotten how to drive the shell. It works if
+> I put -- --all.
+> 
+> Turns out that isn't what I want though. I want just the local
+> branches. Still can't find a way to do it other than my cd/ls
+> thing.
 
-I just saw it as well, doing a big update (most of the way from 2.6.23
-to current tip):
+I wrote: git-for-each-ref(1). See documentation, please.
 
-loki 214 /usr/packages/linux/linux% git pull
-remote: Counting objects: 118487, done.
-remote: Compressing objects: 100% (22411/22411), done.
-remote: Total 102959 (delta 85610), reused 97521 (delta 80449)
-Receiving objects: 100% (102959/102959), 26.41 MiB | 70 KiB/s, done.
-Resolving deltas: 100% (85610/85610), completed with 7493 local objects.
-warning: no common commits
-remote: Counting objects: 708160, done.
-remote: Compressing objects: 100% (124705/124705), done.
-Receiving objects:   9% (70213/708160), 25.33 MiB | 70 KiB/s
-
-loki 215 /usr/packages/linux/linux% ls -l .git/objects/pack
-total 240224
--r--r--r-- 1 compiler hackers   2651912 2008-02-11 20:44 pack-69c40f2970403946a75203cc393ecc2b1abf8aa3.idx
--r--r--r-- 1 compiler hackers  69189104 2008-02-11 20:44 pack-69c40f2970403946a75203cc393ecc2b1abf8aa3.pack
--r--r--r-- 1 compiler hackers  14719304 2007-12-02 16:01 pack-7eb87d068cee2214e4b0c5b6b571014654cbaaa4.idx
--rw-r--r-- 1 compiler hackers         0 2007-12-06 14:45 pack-7eb87d068cee2214e4b0c5b6b571014654cbaaa4.keep
--r--r--r-- 1 compiler hackers 157916633 2007-12-02 16:01 pack-7eb87d068cee2214e4b0c5b6b571014654cbaaa4.pack
--r--r--r-- 1 compiler hackers     11744 2007-12-14 22:55 pack-993c8617968f3d44603663e4a2915ee260236f91.idx
--r--r--r-- 1 compiler hackers   1004082 2007-12-14 22:55 pack-993c8617968f3d44603663e4a2915ee260236f91.pack
-
-
-Oddly enough I then halted it: I have no desire to blow an extra 160Mb
-of space on duplicates of objects I've already got.
-
-Pullng again promptly grabbed 102791 objects (i.e. prety much the same
-set again) as if the pack up there at the top of the directory listing
-didn't even exist. (git-repack will happily clean up the duplicates for
-me, I'm sure.)
-
-That time, it worked:
-
-loki 216 /usr/packages/linux/linux% git pull
-remote: Counting objects: 118319, done.
-remote: Compressing objects: 100% (22389/22389), done.
-remote: Total 102791 (delta 85463), reused 97353 (delta 80303)
-Receiving objects: 100% (102791/102791), 26.39 MiB | 91 KiB/s, done.
-Resolving deltas: 100% (85463/85463), completed with 7494 local objects.
-From git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6
- * [new tag]         v2.6.24    -> v2.6.24
- * [new tag]         v2.6.24-rc1 -> v2.6.24-rc1
- * [new tag]         v2.6.24-rc2 -> v2.6.24-rc2
- * [new tag]         v2.6.24-rc3 -> v2.6.24-rc3
- * [new tag]         v2.6.24-rc4 -> v2.6.24-rc4
- * [new tag]         v2.6.24-rc5 -> v2.6.24-rc5
- * [new tag]         v2.6.24-rc6 -> v2.6.24-rc6
- * [new tag]         v2.6.24-rc7 -> v2.6.24-rc7
- * [new tag]         v2.6.24-rc8 -> v2.6.24-rc8
- * [new tag]         v2.6.25-rc1 -> v2.6.25-rc1
-[...]
-
-This is with git version 1.5.4.25.g7f255-dirty. (only local changes are
-some makefile tweaks).
-
-I've never seen this failure before with any earlier git version, but
-that might just be coincidence.
+  $(git for-each-ref --shell --format="%(refname)" "refs/heads/*")
 
 -- 
-`The rest is a tale of post and counter-post.' --- Ian Rawlings
-                                                   describes USENET
+Jakub Narebski
+Poland
+ShadeHawk on #git
