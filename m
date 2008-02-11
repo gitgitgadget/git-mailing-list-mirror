@@ -1,70 +1,92 @@
-From: David Madore <david.madore@ens.fr>
-Subject: Re: referencing a revision at a certain date
-Date: Mon, 11 Feb 2008 19:57:13 +0100
-Message-ID: <20080211185713.GA16898@clipper.ens.fr>
-References: <20080211180424.GA4905@clipper.ens.fr> <m3r6fje3q8.fsf@localhost.localdomain>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Best way to specify all local branches and all remote branches.
+Date: Mon, 11 Feb 2008 11:10:44 -0800 (PST)
+Message-ID: <m3ir0ve2c1.fsf@localhost.localdomain>
+References: <47B09921.2070109@glidos.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>
-To: GIT mailing-list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Feb 11 19:57:55 2008
+Cc: git@vger.kernel.org
+To: Paul Gardiner <osronline@glidos.net>
+X-From: git-owner@vger.kernel.org Mon Feb 11 20:12:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOdqi-000783-NV
-	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 19:57:53 +0100
+	id 1JOe58-0004NK-Ex
+	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 20:12:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753699AbYBKS5R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Feb 2008 13:57:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752716AbYBKS5R
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Feb 2008 13:57:17 -0500
-Received: from nef2.ens.fr ([129.199.96.40]:2919 "EHLO nef2.ens.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751495AbYBKS5Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Feb 2008 13:57:16 -0500
-Received: from clipper.ens.fr (clipper-gw.ens.fr [129.199.1.22])
-          by nef2.ens.fr (8.13.6/1.01.28121999) with ESMTP id m1BIvD0v021693
-          ; Mon, 11 Feb 2008 19:57:13 +0100 (CET)
-Received: from (madore@localhost) by clipper.ens.fr (8.13.1/jb-1.1)
-Content-Disposition: inline
-In-Reply-To: <m3r6fje3q8.fsf@localhost.localdomain>
-User-Agent: Mutt/1.5.9i
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.1.4 (nef2.ens.fr [129.199.96.32]); Mon, 11 Feb 2008 19:57:13 +0100 (CET)
+	id S1753740AbYBKTLR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Feb 2008 14:11:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754025AbYBKTKt
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Feb 2008 14:10:49 -0500
+Received: from ug-out-1314.google.com ([66.249.92.175]:36549 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752268AbYBKTKr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Feb 2008 14:10:47 -0500
+Received: by ug-out-1314.google.com with SMTP id z38so351122ugc.16
+        for <git@vger.kernel.org>; Mon, 11 Feb 2008 11:10:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
+        bh=RVyirY2g64Me0ND/M5Vt0kG9A6yo9+ZtRyUt3krb0Jw=;
+        b=N5tjTYBtYCzOwS+h3BZz7v0NEIx9/L6WX04u86ZSxqRJ1dxfRb53i0e14WxdgI9UmrSVHVr9b5h7QZPqNCxx+rnupskCoMfDBPZq6yDosJLJTLjqBPhQJhOIQn8qrisyQlInGW1wbJbAccpXM+5Bo3KKTHXNERCEO2zc9Rx8BS0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
+        b=LKiqyXUdLHWfU8BL1I1y098Jz0y2DXAng+isIohWW1HJ2AiK7TEra2iJA13EKxaP6mp9mS351BCyLFGaUc6E4sMCKHK82wYLiBIHBUVUgI/shj+DU1QkcVr2t9qmEGEyrmslcmKePiBtQlUW9MIsfW21TGGCpzkOG/Lhc5PV4UI=
+Received: by 10.67.196.4 with SMTP id y4mr9433446ugp.39.1202757046465;
+        Mon, 11 Feb 2008 11:10:46 -0800 (PST)
+Received: from localhost.localdomain ( [83.8.220.23])
+        by mx.google.com with ESMTPS id m1sm7827638uge.69.2008.02.11.11.10.43
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 11 Feb 2008 11:10:44 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m1BJAdoE016780;
+	Mon, 11 Feb 2008 20:10:40 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m1BJAc1h016777;
+	Mon, 11 Feb 2008 20:10:38 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <47B09921.2070109@glidos.net>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73564>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73565>
 
-On Mon, Feb 11, 2008 at 10:40:39AM -0800, Jakub Narebski wrote:
-> But you can can get commit closest to given date by combining the time
-> limiting with limiting number of commits, as described in "Commit
-> limiting" in git-rev-list(1) and git-log(1) manpages.
-> 
->   $ git log -n 1 --before=<date> <branch>
-> 
-> which would return first commit older than <date>, starting from
-> <branch>.
+Paul Gardiner <osronline@glidos.net> writes:
 
-OK, thanks, I guess the --before part answers my question: so to get
-revision "rev" back at date "YYYY-MM-DD" (always using first parents)
-I'd do
+> New to git, and often finding it hard to specify the correct
+> refs for a command. Here's an example where I was converting
+> all the files in all the commits from unix line endings to
+> DOS line endings. You can see I've ended up using cd and ls.
+> I'm sure there must be a better way.
 
-git rev-list rev -n 1 --first-parent --before=YYYY-MM-DD
+git-for-each-ref, git-show-ref, git-ls-remote / git-peek-remote.
+ 
+> $ cd /home/public/tmp/git/
+> $ yes |rm -r vdos32
+> $ git clone /export/git/vdos32.git vdos32
+> $ cd vdos32/
+> $ for f in `(cd /export/git/vdos32.git/refs/heads; ls)|sed -e
+>     '/master/d' -e '/origin/d'`; do git fetch origin $f:$f; done
+> $ git-filter-branch --tag-name-filter cat --tree-filter 'find . -type f
+>     ! -name \*.gif ! -name \*.ico|xargs unix2dos -q' `(cd
+>     .git/refs/heads;ls)`
 
-as in:
+If you want to fetch all branches, you can specify globbing refspec;
+of course if you use separate remotes layout, or mirror layout.
 
-git checkout "`git rev-list rev -n 1 --first-parent --before=YYYY-MM-DD`"
+If you want to pass all branches to git command, usually --all would
+be enough (sometimes --heads).
+ 
+> With git-filter-branch, I'm surprised I can't use --all.
 
-It's a bit of a mouthful, but it does what I want (although I still
-think a syntax such as rev~@{YYYY-MM-DD} or rev~{YYYY-MM-DD} or
-whatever might prove useful: I imagine I'm not the first person to
-wish for something of the sort).
-
-Thanks,
+git-filter-branch is about single branch; I'm not sure if it should
+support --all.
 
 -- 
-     David A. Madore
-    (david.madore@ens.fr,
-     http://www.madore.org/~david/ )
+Jakub Narebski
+Poland
+ShadeHawk on #git
