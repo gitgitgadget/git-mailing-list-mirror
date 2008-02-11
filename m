@@ -1,75 +1,118 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC] repack vs re-clone
-Date: Mon, 11 Feb 2008 20:53:34 +0100
-Message-ID: <200802112053.35141.jnareb@gmail.com>
-References: <e5bfff550802100025k616ccff5ib2917d283eeb0ff0@mail.gmail.com> <m3myq7e3ie.fsf@localhost.localdomain> <alpine.LFD.1.00.0802111436100.2732@xanadu.home>
+From: mkoegler@auto.tuwien.ac.at (Martin Koegler)
+Subject: Re: [RFC Patch] Preventing corrupt objects from entering the repository
+Date: Mon, 11 Feb 2008 20:56:23 +0100
+Message-ID: <20080211195623.GA21878@auto.tuwien.ac.at>
+References: <20080210175812.GB12162@auto.tuwien.ac.at> <7vmyq8cqfn.fsf@gitster.siamese.dyndns.org> <alpine.LFD.1.00.0802101929310.2732@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Marco Costalba <mcostalba@gmail.com>,
-	git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Mon Feb 11 20:54:52 2008
+X-From: git-owner@vger.kernel.org Mon Feb 11 20:57:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOejK-00033U-Dv
-	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 20:54:18 +0100
+	id 1JOelw-0004Gf-Ru
+	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 20:57:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757431AbYBKTxn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Feb 2008 14:53:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757402AbYBKTxn
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Feb 2008 14:53:43 -0500
-Received: from ug-out-1314.google.com ([66.249.92.169]:58437 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755499AbYBKTxm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Feb 2008 14:53:42 -0500
-Received: by ug-out-1314.google.com with SMTP id z38so362172ugc.16
-        for <git@vger.kernel.org>; Mon, 11 Feb 2008 11:53:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=514EisYdOE0usnxFTiNkEDGeDQ1JlPegvYUCyr6m8AQ=;
-        b=lj8h5fHkH5nZcu9IlTNTN0EijRfMzvpUI7WxVv9gg4aXTUg8rBhnwdKetrRTRJdl1twCGzldNkyX2ccewgX/uLOjn1N73dCKhJZR9WCSTg5XoACvAxOvgiI22If9rd5BfIhhLvnPjoj5S8pG2mIrbJDtC5kJna2TCv3PqoheKJI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=uKK6zF1feBwPuLysQPJvLGvqjWlguzD4xUkoBt86+xOHzw3Ba2tgJCP9WG7NxpOedBtlKlH/XM64fiEfCH5XJ16nevn2sTYoK49qPo5OX50XkHygA+f09gKP1mRf6pb1AfNvp+AWSp2iCXOR6/nRs3mxSZTJQ1ZZZy9sXVbAo+E=
-Received: by 10.78.185.15 with SMTP id i15mr721280huf.61.1202759620455;
-        Mon, 11 Feb 2008 11:53:40 -0800 (PST)
-Received: from ?192.168.1.11? ( [83.8.220.23])
-        by mx.google.com with ESMTPS id 33sm484734nfu.9.2008.02.11.11.53.38
-        (version=SSLv3 cipher=OTHER);
-        Mon, 11 Feb 2008 11:53:39 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <alpine.LFD.1.00.0802111436100.2732@xanadu.home>
+	id S1756613AbYBKT40 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 11 Feb 2008 14:56:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756606AbYBKT40
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Feb 2008 14:56:26 -0500
+Received: from thor.auto.tuwien.ac.at ([128.130.60.15]:40981 "EHLO
+	thor.auto.tuwien.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756523AbYBKT4Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Feb 2008 14:56:25 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by thor.auto.tuwien.ac.at (Postfix) with ESMTP id 7A980680BF62;
+	Mon, 11 Feb 2008 20:56:23 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at auto.tuwien.ac.at
+Received: from thor.auto.tuwien.ac.at ([127.0.0.1])
+	by localhost (thor.auto.tuwien.ac.at [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id j2-+Z7R+rJFS; Mon, 11 Feb 2008 20:56:23 +0100 (CET)
+Received: by thor.auto.tuwien.ac.at (Postfix, from userid 3001)
+	id 56757680BED8; Mon, 11 Feb 2008 20:56:23 +0100 (CET)
 Content-Disposition: inline
+In-Reply-To: <alpine.LFD.1.00.0802101929310.2732@xanadu.home>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73575>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73576>
 
-Nicolas Pitre wrote:
-> On Mon, 11 Feb 2008, Jakub Narebski wrote:
-> 
-> > [*1*] I hope that '--no-reuse-delta' means _try_ to find better delta,
-> > but use current one as possible delta, not stupid forget about current
-> > deltaification at all...
-> 
-> It is really "forget about everything".  And by the time you look for 
-> the best delta from scratch, remembering what was the best delta before 
-> won't give you much performance gain, plus it has nasty issues like 
-> making sure no delta cycles are created if you reuse an old delta, etc.
+On Sun, Feb 10, 2008 at 07:33:34PM -0500, Nicolas Pitre wrote:
+> On Sun, 10 Feb 2008, Junio C Hamano wrote:
+>=20
+> > mkoegler@auto.tuwien.ac.at (Martin Koegler) writes:
+> >=20
+> > > This patch adds a cache to keep the object data in memory. The de=
+lta
+> > > resolving code must also search in the cache.
+> >=20
+> > I have to wonder what the memory pressure in real-life usage
+> > will be like.
 
-So we have either: don't try to find better delta (default), or forget
-totally about old delta (--no-reuse-delta), no middle ground? That's
-bad...
+> FWIW, I don't like this idea.
+>
+> I'm struggling to find ways to improve performances of=20
+> pack-objects/index-pack with those large repositories that are becomi=
+ng=20
+> more common (i.e. GCC, OOO, Mozilla, etc.)  Anything that increase=20
+> memory usage isn't very welcome IMHO.
 
-Or the default is try to find better delta, but reuse if better?
+Maybe I have missed something, but all repack problems reported on the
+git mailing list happen durring the deltifing phase. The problematic
+files are mostly bigger blobs. I'm aware of these problems, so my
+patch does not keep any blobs in memory.
 
--- 
-Jakub Narebski
-Poland
+As we are talking about memory, let's ignore unpack-objects, which is
+used for small packs. Lets compare the memory usage of index-pack to
+pack-objects:
+
+If it is disabled (no --strict passed), only a (unused) pointer for
+each object in the received pack file is additionally allocated.
+
+On i386, struct object_entry is 84 bytes in pack-objects, but only 52
+in index-pack. Both programs keep a struct object_entry for each
+object during the runtime in memory. So in this case, index-pack uses
+less memory than pack-objects
+
+If the --strict option is passed, more memory is used:
+
+* Again, we add one pointer to struct object_entry. object_entry is
+  still smaller.(52<84 bytes).
+
+* index-pack allocates a struct blob/tree/commit/tag for each object in=
+ the pack.
+
+  pack-objects also allocates only struct object in the best case
+  (reading from pack file), otherwise a struct
+  blob/tree/commit/tag. This objects are kept during the runtime of
+  pack-objects in memory.
+
+  So depending of the parameters of pack-objects, index-pack uses
+  additionally up to 24 bytes per object, but struct object_entry is 32
+  bytes smaller.
+
+* index-pack allocates a struct blob/tree/commit/tag for each link to a=
+ object outside the pack.
+
+  I don't know the code of pack-objects enough to say something to
+  this point.
+
+* index-pack keeps the data for each tag/tree/commit in the pack in mem=
+ory
+
+  In the next version, I don't need to keep the tag/commit data in
+  memory. Tree data could be reconstructed from the written pack,
+  but I'm not sure, if the additional code (resolving deltas again),
+  would justify the additional memory usage.
+
+So my conclusion is, that the memory usage of index-pack with --strict
+should not be too worse compared to pack-objects.
+
+Please remember, that --strict is used for pushing data.
+
+mfg Martin K=F6gler
