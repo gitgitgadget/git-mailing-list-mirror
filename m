@@ -1,80 +1,109 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Alternative approach to the git config NULL value checking patches..
-Date: Sun, 10 Feb 2008 16:40:46 -0800
-Message-ID: <7vhcggcokx.fsf@gitster.siamese.dyndns.org>
-References: <alpine.LFD.1.00.0802101225110.2896@woody.linux-foundation.org>
-	<7vir0wfqrz.fsf@gitster.siamese.dyndns.org>
-	<alpine.LFD.1.00.0802101406560.2896@woody.linux-foundation.org>
-	<7vbq6oe98y.fsf@gitster.siamese.dyndns.org>
-	<alpine.LFD.1.00.0802101532070.2920@woody.linux-foundation.org>
-	<alpine.LFD.1.00.0802101538030.2920@woody.linux-foundation.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Mon Feb 11 01:41:57 2008
+From: Frank Lichtenheld <frank@lichtenheld.de>
+Subject: [PATCH] config: Fix --unset for continuation lines
+Date: Mon, 11 Feb 2008 01:23:03 +0100
+Message-ID: <1202689383-9450-1-git-send-email-frank@lichtenheld.de>
+Cc: Junio C Hamano <junkio@cox.net>,
+	Frank Lichtenheld <frank@lichtenheld.de>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Feb 11 01:44:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOMk8-0000Ai-Ha
-	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 01:41:56 +0100
+	id 1JOMmb-0000d9-LO
+	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 01:44:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755313AbYBKAlX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Feb 2008 19:41:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754847AbYBKAlX
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 19:41:23 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:41898 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753142AbYBKAlW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Feb 2008 19:41:22 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 9156A2A76;
-	Sun, 10 Feb 2008 19:41:12 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 764DD2A3F;
-	Sun, 10 Feb 2008 19:40:58 -0500 (EST)
-In-Reply-To: <alpine.LFD.1.00.0802101538030.2920@woody.linux-foundation.org>
-	(Linus Torvalds's message of "Sun, 10 Feb 2008 15:41:23 -0800 (PST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1756078AbYBKAnj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Feb 2008 19:43:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754847AbYBKAnj
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 19:43:39 -0500
+Received: from archimedes.lenk.info ([217.160.134.107]:58902 "EHLO
+	archimedes.lenk.info" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755481AbYBKAni (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Feb 2008 19:43:38 -0500
+X-Greylist: delayed 1236 seconds by postgrey-1.27 at vger.kernel.org; Sun, 10 Feb 2008 19:43:37 EST
+Received: from herkules.lenk.info
+	([213.239.194.154] helo=smtp.lenk.info ident=Debian-exim)
+	by mail.lenk.info with esmtps 
+	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA1:32) (Exim 4.63 1)
+	id 1JOMRq-0003gU-Pk; Mon, 11 Feb 2008 01:23:02 +0100
+Received: from p57b25f66.dip.t-dialin.net ([87.178.95.102] helo=dirac.djpig.de)
+	by smtp.lenk.info with esmtpsa 
+	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA1:32) (Exim 4.63 1)
+	id 1JOMRj-0001yT-Co; Mon, 11 Feb 2008 01:22:55 +0100
+Received: from djpig by dirac.djpig.de with local (Exim 4.69)
+	(envelope-from <frank@lichtenheld.de>)
+	id 1JOMRr-0002Sq-P4; Mon, 11 Feb 2008 01:23:03 +0100
+X-Mailer: git-send-email 1.5.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73443>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73444>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+find_beginning_of_line didn't take into account that the
+previous line might have ended with \ in which case it shouldn't
+stop but continue its search.
 
-> And here's an example of this kind of effect. I'm not actually suggesting 
-> you apply this patch, but tell me it isn't simpler done this way?
+Signed-off-by: Frank Lichtenheld <frank@lichtenheld.de>
+---
+ config.c               |    5 +++++
+ t/t1300-repo-config.sh |   19 +++++++++++++++++++
+ 2 files changed, 24 insertions(+), 0 deletions(-)
 
-Yes, that is a good example of simplification.
+ My usual "I can't code C" disclaimer applies
 
-> So this is where it *does* make a difference whether we use NULL or 
-> config_bool, and where config_bool is simply better: it allows a config 
-> routine to simply never care..
-
-But that applies only to "originally bool but now has additional
-states" kind of variables.
-
-For a variable that is never about boolean, if the original code
-said:
-
-	if (!strcmp(var, "section.variable"))
-        	foo = xstrdup(value);
-
-it is wrong (would strdup NULL), and the correct fix would be:
-
-	if (!strcmp(var, "section.variable")) {
-		if (!value)
-			die("missing value for '%s'", var);
-        	foo = xstrdup(value);
-	}
-
-It does not make much of a difference if that "if (!value)"
-becomes "if (value == config_true)".  If you omit that check, as
-your "user.name" example shows, foo may get an empty string or a
-string "true", neither of which is what the user intended to
-say.
+diff --git a/config.c b/config.c
+index 498259e..1649aae 100644
+--- a/config.c
++++ b/config.c
+@@ -701,12 +701,17 @@ static ssize_t find_beginning_of_line(const char* contents, size_t size,
+ 	size_t equal_offset = size, bracket_offset = size;
+ 	ssize_t offset;
+ 
++contline:
+ 	for (offset = offset_-2; offset > 0
+ 			&& contents[offset] != '\n'; offset--)
+ 		switch (contents[offset]) {
+ 			case '=': equal_offset = offset; break;
+ 			case ']': bracket_offset = offset; break;
+ 		}
++	if (offset > 0 && contents[offset-1] == '\\') {
++		offset_ = offset;
++		goto contline;
++	}
+ 	if (bracket_offset < equal_offset) {
+ 		*found_bracket = 1;
+ 		offset = bracket_offset+1;
+diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
+index 66aeb88..5f7c3a5 100755
+--- a/t/t1300-repo-config.sh
++++ b/t/t1300-repo-config.sh
+@@ -72,6 +72,25 @@ EOF
+ test_expect_success 'non-match result' 'cmp .git/config expect'
+ 
+ cat > .git/config << EOF
++[alpha]
++bar = foo
++[beta]
++baz = multiple \\
++lines
++EOF
++
++test_expect_success 'unset with cont. lines' \
++	'git config --unset beta.baz'
++
++cat > expect << EOF
++[alpha]
++bar = foo
++[beta]
++EOF
++
++test_expect_success 'unset with cont. lines is correct' 'cmp .git/config expect'
++
++cat > .git/config << EOF
+ [beta] ; silly comment # another comment
+ noIndent= sillyValue ; 'nother silly comment
+ 
+-- 
+1.5.4
