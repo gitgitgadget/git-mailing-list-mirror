@@ -1,105 +1,94 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [RFC] gitweb: Use feed link according to current view
-Date: Mon, 11 Feb 2008 19:00:12 +0100
-Message-ID: <200802111900.12325.jnareb@gmail.com>
+From: David Madore <david.madore@ens.fr>
+Subject: referencing a revision at a certain date
+Date: Mon, 11 Feb 2008 19:04:24 +0100
+Message-ID: <20080211180424.GA4905@clipper.ens.fr>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 11 19:01:53 2008
+Content-Type: text/plain; charset=us-ascii
+To: GIT mailing-list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Feb 11 19:18:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOcyW-0002Ur-A8
-	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 19:01:52 +0100
+	id 1JOdEP-0000OF-1T
+	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 19:18:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754348AbYBKSA2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Feb 2008 13:00:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753002AbYBKSA2
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Feb 2008 13:00:28 -0500
-Received: from ug-out-1314.google.com ([66.249.92.171]:26248 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752767AbYBKSA1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Feb 2008 13:00:27 -0500
-Received: by ug-out-1314.google.com with SMTP id z38so333121ugc.16
-        for <git@vger.kernel.org>; Mon, 11 Feb 2008 10:00:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=5+KLb+S2n7sst7vdxBrbBviluFlbe458jeHQ8G6YFDA=;
-        b=c5V1TTrtJymTDjp++h6E/17Iy+tJKNP7LnH1GKJwbsEjUI7ZHbpcGqKkeiot41tPgtTooeeRC1Hufh83zgsgfSVSznrFV4ZTVPR3U7SRxSzykRlWWJNcsUFUpP2uXdlqjBikCSM760lANlg+hzdXaKp7p+bHcFGQxZGEnKMSPvg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=tRogJGoGNMOi20y/BqPHGrsJr/8m27omMLRSrR+R3oln+l1Yn4lETSLXBo+P8OHwiPqk4oPvAEUDZmUs5sHFxdh484uCCgJzqNEXr8EDYT5NnjuggY9DlvTcqV43CdCPF7qq6VdFblNueRYizkmNndURE0CGoyQ9a2ffI4PiOTQ=
-Received: by 10.67.30.3 with SMTP id h3mr8583743ugj.35.1202752823433;
-        Mon, 11 Feb 2008 10:00:23 -0800 (PST)
-Received: from ?192.168.1.11? ( [83.8.220.23])
-        by mx.google.com with ESMTPS id g11sm20413102gve.6.2008.02.11.10.00.21
-        (version=SSLv3 cipher=OTHER);
-        Mon, 11 Feb 2008 10:00:22 -0800 (PST)
-User-Agent: KMail/1.9.3
+	id S1755508AbYBKSRh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Feb 2008 13:17:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754999AbYBKSRh
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Feb 2008 13:17:37 -0500
+Received: from nef2.ens.fr ([129.199.96.40]:3852 "EHLO nef2.ens.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754493AbYBKSRg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Feb 2008 13:17:36 -0500
+X-Greylist: delayed 790 seconds by postgrey-1.27 at vger.kernel.org; Mon, 11 Feb 2008 13:17:36 EST
+Received: from clipper.ens.fr (clipper-gw.ens.fr [129.199.1.22])
+          by nef2.ens.fr (8.13.6/1.01.28121999) with ESMTP id m1BI4OP5008009
+          for <git@vger.kernel.org>; Mon, 11 Feb 2008 19:04:25 +0100 (CET)
+Received: from (madore@localhost) by clipper.ens.fr (8.13.1/jb-1.1)
 Content-Disposition: inline
+User-Agent: Mutt/1.5.9i
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.1.4 (nef2.ens.fr [129.199.96.32]); Mon, 11 Feb 2008 19:04:25 +0100 (CET)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73557>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73558>
 
-Michael G. Noll said in comments to the "Switching my code repository
-from Subversion (SVN) to git" article (http://tinyurl.com/37v67l) in
-his "My digital moleskine" blog, that one of the things he is missing
-in gitweb from SVN::Web is an RSS feed with news/information of the
-current view (including RSS feed for single file or directory).
+Hi,
 
-This is not exactly true, as since refactoring feed generation in
-  "gitweb: Refactor feed generation, make output prettier,
-   add Atom  feed"
-  commit-af6feeb229110a0fa77a179c2655fca08e72f879
-gitweb can generate feeds (RSS or Atom) for history of a given branch,
-history limited to a given directory, or history of a given file.
-Nevertheless this required handcrafting the URL to get wanted RSS
-feed.
+I'm left quite confused by the git-rev-parse(1) man page, I wonder if
+someone can help me with this.
 
+I understand that if "rev" denotes a certain revision, then "rev~42"
+references the commit which is 42 generations back from rev.  What I'd
+like to do is write something like "rev~@{2008-01-18}" (say) to get
+the same thing but with the 42 being computed automatically so that
+the commit in question is the latest possible (in commit date) before
+2008-01-18.  Is this possible?  If so, how?  If not, might I suggest
+this as an addition for consideration?
 
-The question is what feeds should be shown, both in <link .../> in page 
-header, and in [Atom][RSS] links at the bottom of the page. Some things 
-are fairly obvious:
- * projects list page has OPML feed (I'm open to suggestions for better
-   format) with list of feeds, one "'summary' page" feed per project
- * 'summary' page has feed(s) starting from HEAD (default: no arguments)
- * 'tree' view should have link to feed of a history of a directory
- * 'blob' and 'blame' views should have link to feed of a history
-    of file
- * 'log' and 'shortlog' views should have feed from a given commit
- * 'history' view should have link to feed of a history of pathspec
+I thought "rev@{2008-01-18}" did this, but apparently it doesn't: it
+requires a ref log of some kind, and I don't know how to make a ref
+log (git-clone doesn't seem to copy them).
 
-Some things needs some considerations:
- * should 'commit' and 'commitdiff' views have feed of log
-   starting from given commit (positive commit in the case of diff)?
- * should 'treediff' and 'blobdiff' have feed of history of given
-   directory or a file, starting from the 'to' version?
+So, is there some way I can either generate a ref log by
+systematically taking the first parent in each commit as per git-log
+--first-parent, OR (better) specify a revision directly that way?
 
-For some views it is hard to find a feed:
- * for 'forks' view we could have OPML feed limited to forks
-   of a projects, like for projects list page
- * for 'heads' and 'tags' we could have OPML of log feeds for
-   branches and tags
- * Should for 'tag' view if it points to a commit, have feed
-   like for 'commit' view?
- * What should be (if there should be any) feed for 'search'
-   page?
+Typical problem I'm faced with:
 
-And there are also pesky details. Should we offer in HTML <head> also
-no-merges and first-parent (and no-merges + first-parent) versions
-of feeds? Should we offer also follow version of a history of a file
-feed? For example for 'blob' view should we also offer full log feed,
-not only limited to given path? Should we always offer full feed
-staring from HEAD (default feed)?
+mizar david /tmp $ git clone git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
+Initialized empty Git repository in /tmp/linux-2.6/.git/
+remote: Counting objects: 712898, done.
+remote: Compressing objects: 100% (124199/124199), done.
+Indexing 712898 objects...
+remote: Total 712898 (delta 591709), reused 708828 (delta 587713)
+ 100% (712898/712898) done
+Resolving 591709 deltas...
+ 100% (591709/591709) done
+Checking 23757 files out...
+ 100% (23757/23757) done
+mizar david /tmp $ cd linux-2.6
+mizar david /tmp/linux-2.6 $ git rev-parse 'master@{2008-02-01}'
+warning: Log for 'master' only goes back to Mon, 11 Feb 2008 18:34:33 +0100.
+0000000000000000000000000000000000000000
+mizar david /tmp/linux-2.6 $ git rev-parse 'origin@{2008-02-01}'
+warning: Log for 'origin' only goes back to Mon, 11 Feb 2008 18:34:32 +0100.
+0000000000000000000000000000000000000000
+mizar david /tmp/linux-2.6 $ git cat-file -p 'master~1126' | head -5
+tree a72dadd4a8b4957a4e21bf7ae38a763a71d6e274
+parent e1a9c9872dd004617555dff079b357a6ffd945e9
+parent c4772d99300a9fc13c86aaa370e630c5973664f6
+author Linus Torvalds <torvalds@linux-foundation.org> 1201821909 +1100
+committer Linus Torvalds <torvalds@linux-foundation.org> 1201821909 +1100
 
-Thanks in advance for comments and answers.
+=> there must be some intelligent way of finding this revision, but
+which is it?
+
+Cheers,
+
 -- 
-Jakub Narebski
-Poland
+     David A. Madore
+    (david.madore@ens.fr,
+     http://www.madore.org/~david/ )
