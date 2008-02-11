@@ -1,67 +1,65 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [RFC] repack vs re-clone
-Date: Mon, 11 Feb 2008 15:44:48 -0500 (EST)
-Message-ID: <alpine.LFD.1.00.0802111542000.2732@xanadu.home>
-References: <e5bfff550802100025k616ccff5ib2917d283eeb0ff0@mail.gmail.com>
- <m3myq7e3ie.fsf@localhost.localdomain>
- <e5bfff550802111120x24338cd6n6eb1f6db55fe487f@mail.gmail.com>
- <200802112051.27271.jnareb@gmail.com>
+From: Paul Gardiner <osronline@glidos.net>
+Subject: Re: Best way to specify all local branches and all remote branches.
+Date: Mon, 11 Feb 2008 21:00:37 +0000
+Message-ID: <47B0B775.1050401@glidos.net>
+References: <47B09921.2070109@glidos.net> <m3ir0ve2c1.fsf@localhost.localdomain> <alpine.LSU.1.00.0802112022560.3870@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Marco Costalba <mcostalba@gmail.com>,
-	git mailing list <git@vger.kernel.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 11 21:45:45 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 11 22:01:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOfX6-00065u-LM
-	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 21:45:45 +0100
+	id 1JOfmB-0003Bx-Um
+	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 22:01:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753326AbYBKUou (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Feb 2008 15:44:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753708AbYBKUou
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Feb 2008 15:44:50 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:10389 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751221AbYBKUot (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Feb 2008 15:44:49 -0500
-Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR003.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JW300IXDDMONZE0@VL-MO-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 11 Feb 2008 15:44:49 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <200802112051.27271.jnareb@gmail.com>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+	id S1753438AbYBKVAn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Feb 2008 16:00:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753416AbYBKVAn
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Feb 2008 16:00:43 -0500
+Received: from mk-outboundfilter-1.mail.uk.tiscali.com ([212.74.114.37]:42416
+	"EHLO mk-outboundfilter-1.mail.uk.tiscali.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753111AbYBKVAm (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 11 Feb 2008 16:00:42 -0500
+X-Trace: 38717725/mk-outboundfilter-1.mail.uk.tiscali.com/PIPEX/$MX-ACCEPTED/pipex-infrastructure/62.241.162.31
+X-SBRS: None
+X-RemoteIP: 62.241.162.31
+X-IP-MAIL-FROM: osronline@glidos.net
+X-IP-BHB: Once
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Ao8CAGpFsEc+8aIf/2dsb2JhbACqHQ
+X-IP-Direction: IN
+Received: from galaxy.systems.pipex.net ([62.241.162.31])
+  by smtp.pipex.tiscali.co.uk with ESMTP; 11 Feb 2008 21:00:40 +0000
+Received: from [10.0.0.24] (81-86-57-226.dsl.pipex.com [81.86.57.226])
+	by galaxy.systems.pipex.net (Postfix) with ESMTP id C845FE000087
+	for <git@vger.kernel.org>; Mon, 11 Feb 2008 21:00:38 +0000 (GMT)
+User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
+In-Reply-To: <alpine.LSU.1.00.0802112022560.3870@racer.site>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73581>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73582>
 
-On Mon, 11 Feb 2008, Jakub Narebski wrote:
-
-> Marco Costalba wrote:
-> > On Feb 11, 2008 7:45 PM, Jakub Narebski <jnareb@gmail.com> wrote:
-> > > "Marco Costalba" <mcostalba@gmail.com> writes:
-> > >
-> > > > So it happens to be just faster to re-clone the whole thing by upstream.
-> > >
-> > > So what you are doing is passing the work, unnecessary work I'd say,
-> > > to some poor server. Not nice.
-> > 
-> > To a poor net bandwidth I would say because cloning from zero just
-> > downloads the packages.
+Johannes Schindelin wrote:
+> Hi,
 > 
-> Cloning from zero over http, https and rsync (and ftp) just downloads
-> the packfiles. Cloning over git or ssh if I understand correctly[*1*]
-> generates single pack for transfer. And that generates load for server.
+> On Mon, 11 Feb 2008, Jakub Narebski wrote:
+> 
+>> git-filter-branch is about single branch;
+> 
+> No.
+> 
+>> I'm not sure if it should support --all.
+> 
+> It does.
 
-The created pack will always reuse existing deltas, so the load is more 
-about making sure the sent pack contains only needed objects for the 
-required branch -- something that dumb protocols cannot do.
+Yep, it does. I'd forgotten how to drive the shell. It works if
+I put -- --all.
 
-
-Nicolas
+Turns out that isn't what I want though. I want just the local
+branches. Still can't find a way to do it other than my cd/ls
+thing.
