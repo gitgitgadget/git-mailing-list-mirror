@@ -1,79 +1,77 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] RFC: git lazy clone proof-of-concept
-Date: Sun, 10 Feb 2008 21:04:12 -0500 (EST)
-Message-ID: <alpine.LFD.1.00.0802102059260.2732@xanadu.home>
-References: <200802081828.43849.kendy@suse.cz>
- <alpine.LFD.1.00.0802100017380.2732@xanadu.home>
- <BAYC1-PASMTP059B375F7660D93F93647DAE290@CEZ.ICE>
- <200802110242.27324.jnareb@gmail.com>
+From: "Jay Soffian" <jaysoffian+git@gmail.com>
+Subject: Re: [PATCH] Improve git-help--browse browser support under OS X
+Date: Sun, 10 Feb 2008 21:10:31 -0500
+Message-ID: <76718490802101810u74f86927hefacac162c69f697@mail.gmail.com>
+References: <1202505794-13409-1-git-send-email-jaysoffian+git@gmail.com>
+	 <20080209202020.GD30368@dpotapov.dyndns.org>
+	 <76718490802091815s45c19113t938f5257aad3f46c@mail.gmail.com>
+	 <20080210124336.GH30368@dpotapov.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="Boundary_(ID_+N29K5GTs5qyet3s8oBRJg)"
-Cc: Sean <seanlkml@sympatico.ca>, Jan Holesovsky <kendy@suse.cz>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 11 03:04:55 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Dmitry Potapov" <dpotapov@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 11 03:11:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOO2M-0007PL-Vx
-	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 03:04:51 +0100
+	id 1JOO8W-0008SG-CJ
+	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 03:11:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751386AbYBKCEO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Feb 2008 21:04:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751357AbYBKCEO
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 21:04:14 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:50758 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751300AbYBKCEN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Feb 2008 21:04:13 -0500
-Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JW100GK9XR02CV0@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Sun, 10 Feb 2008 21:04:13 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <200802110242.27324.jnareb@gmail.com>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+	id S1751350AbYBKCKe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Feb 2008 21:10:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751299AbYBKCKe
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 21:10:34 -0500
+Received: from wa-out-1112.google.com ([209.85.146.177]:59282 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750832AbYBKCKd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Feb 2008 21:10:33 -0500
+Received: by wa-out-1112.google.com with SMTP id v27so1871513wah.23
+        for <git@vger.kernel.org>; Sun, 10 Feb 2008 18:10:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        bh=9fu2GU9Tk4kmeUaxXjH4lzkhFbCecelu+RBbPx9iDIk=;
+        b=Q6QkZ2LgSOc1hLbYthSVOrEilPwQU3Gi5QinYziWNOHZfmUV5tWKWcqK8lrp3UWzz4AGIPg6wU2fCKKkEudJrbu9uSw7UxYFdiiNTVQ9hpl2Yb0YZ9FEuexoMct3mPdWKGVP6XgdoyiQ+Gjjl6nua0kMJ8AShcabyNDzY3AFby4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=LuaAoqM1NOnf1LG5Jp+NFMj2xfNdg5aQjSGf3Jq76ojGMXMf9X1d0UGOZy3/qYpOZwLLgVyD33koatnxgyJhrxMuqGp0VP9sIWVXopyzus8L3TVQNrFlsuCbnII2FWuxvh5aAmG2MKxfexHFFFIXByZQtlRAuPbXz7VApfDwVXg=
+Received: by 10.114.121.1 with SMTP id t1mr8408795wac.55.1202695831393;
+        Sun, 10 Feb 2008 18:10:31 -0800 (PST)
+Received: by 10.114.255.11 with HTTP; Sun, 10 Feb 2008 18:10:31 -0800 (PST)
+In-Reply-To: <20080210124336.GH30368@dpotapov.dyndns.org>
+Content-Disposition: inline
+X-Google-Sender-Auth: 0a7e8287a3b1d292
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73454>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73455>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Feb 10, 2008 7:43 AM, Dmitry Potapov <dpotapov@gmail.com> wrote:
+> On Sat, Feb 09, 2008 at 09:15:30PM -0500, Jay Soffian wrote:
+>
+> Would not be better to use uname instead like this
+>
+>   if test "$(uname -s)" == "Darwin"; then
+>     ...
+> or in addition to SECURITYSESSIONID:
+>
+>   if test -n "$SECURITYSESSIONID" -a "$(uname -s)" == "Darwin"; then
+>     ...
+> ?
+>
+> I think it would be more reliable and more importantly it makes the
+> code easier to understand, because it is clear now for everyone that
+> this is OS X specific.
 
---Boundary_(ID_+N29K5GTs5qyet3s8oBRJg)
-Content-type: TEXT/PLAIN; charset=iso-8859-2
-Content-transfer-encoding: 8BIT
+Sure.
 
-On Mon, 11 Feb 2008, Jakub Narebski wrote:
+> BTW, should not it be mentioned in the documentation? Probably, in
+> the list of supported web browsers in git-help.txt.
 
-> On Sun, 10 Feb 2008, Sean napisa³:
-> > On Sun, 10 Feb 2008 00:22:09 -0500 (EST)
-> > Nicolas Pitre <nico@cam.org> wrote:
-> >
-> >> Finding out what those huge objects are, and if they actually need to be 
-> >> there, would be a good thing to do to reduce any repository size.
-> > 
-> > Okay, i've sent the sha1's of the top 500 to Jan for inspection.  It appears
-> > that many of the largest objects are automatically generated i18n files that
-> > could be regenerated from source files when needed rather than being checked
-> > in themselves; but that's for the OO folks to decide.
-> 
-> Good practice is to not add generated files to version control.
-> But sometimes such files are stored if regenerating them is costly
-> (./configure file in some cases, 'man' and 'html' branches in git.git).
-> 
-> IIRC Dana How tried also to deal with repository with large binary
-> files in repo, although in that case those had shallow history. IIRC
-> the proposed solution was to pack all such large objects undeltified
-> into separate "large-objects" kept pack.
+Yep, will do.
 
-That was to solve a completely different problem which wasn't about 
-space saving, but rather to save on 'git push' latency.
-
-
-Nicolas
-
---Boundary_(ID_+N29K5GTs5qyet3s8oBRJg)--
+j.
