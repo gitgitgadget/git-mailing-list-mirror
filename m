@@ -1,154 +1,100 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: gitweb bug: broken "next" and other links
-Date: Mon, 11 Feb 2008 16:30:28 +0100
-Message-ID: <200802111630.29159.jnareb@gmail.com>
-References: <B0EC9FB3-DDDE-4BC5-92D8-20487CBD6725@wincent.com> <m3ve4vejdr.fsf@localhost.localdomain> <0811044D-4929-494F-8189-B0B4AFE2D373@wincent.com>
+From: Seth Falcon <seth@userprimary.net>
+Subject: Re: Trouble with gitk and ActiveState tcltk on OS X
+Date: Mon, 11 Feb 2008 07:51:35 -0800
+Message-ID: <m2zlu71ofs.fsf@userprimary.net>
+References: <m2ve4wh5sx.fsf@ziti.evri.corp>
+	<20080211044941.GX24004@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>, Petr Baudis <pasky@suse.cz>
-To: Wincent Colaiuta <win@wincent.com>
-X-From: git-owner@vger.kernel.org Mon Feb 11 16:31:35 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon Feb 11 16:53:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOacm-000178-NA
-	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 16:31:17 +0100
+	id 1JOaxx-0000Tt-Uh
+	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 16:53:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754115AbYBKPan convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 11 Feb 2008 10:30:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754006AbYBKPan
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Feb 2008 10:30:43 -0500
-Received: from ug-out-1314.google.com ([66.249.92.175]:44334 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754058AbYBKPam (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Feb 2008 10:30:42 -0500
-Received: by ug-out-1314.google.com with SMTP id z38so293024ugc.16
-        for <git@vger.kernel.org>; Mon, 11 Feb 2008 07:30:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=HfawhgxO5vPMZAiKgmGYmKzdNZnELoWf/KMTfxTXymg=;
-        b=vQCnabeaMBevoDtI9XCrsIYeHxKBjZq/YmSUJsYHQfyR1YqHbbbdMw7xSWf2lmydzJKAdAXAP6pbamJ7VFXsG31SI+D77EjPKKsax+hD36ymKgKhNQQTbd8LkKT0m7j2H7DYTHmOKgq7GHvb8Xd2CosPuX1ErQfpXRlzT3/JpA4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=D0mD4hjVyXJgH4vnSdSIjn5S4zTeVAUYC8j+AwQmSba8v0VPVeLpdkRl3q1u1tNtxxiKpY3uMflwvzshIba54aA3ZYaXpoSPlzYKIG3sM2puSv/XPN//9PVay3Z8z4Nw/bxGaM4cvAbCJKSLD/AhSVddhdqpf4ho9hihg82WwQQ=
-Received: by 10.66.242.5 with SMTP id p5mr9166107ugh.87.1202743840256;
-        Mon, 11 Feb 2008 07:30:40 -0800 (PST)
-Received: from ?192.168.1.11? ( [83.8.220.23])
-        by mx.google.com with ESMTPS id f13sm20416972gvd.9.2008.02.11.07.30.37
-        (version=SSLv3 cipher=OTHER);
-        Mon, 11 Feb 2008 07:30:38 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <0811044D-4929-494F-8189-B0B4AFE2D373@wincent.com>
-Content-Disposition: inline
+	id S1754923AbYBKPwc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Feb 2008 10:52:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753773AbYBKPwb
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Feb 2008 10:52:31 -0500
+Received: from qmta10.emeryville.ca.mail.comcast.net ([76.96.30.17]:48068 "EHLO
+	QMTA10.emeryville.ca.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754893AbYBKPwa (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 11 Feb 2008 10:52:30 -0500
+Received: from OMTA02.emeryville.ca.mail.comcast.net ([76.96.30.19])
+	by QMTA10.emeryville.ca.mail.comcast.net with comcast
+	id oELo1Y06J0QkzPwAA03800; Mon, 11 Feb 2008 15:51:54 +0000
+Received: from ziti ([24.19.171.108])
+	by OMTA02.emeryville.ca.mail.comcast.net with comcast
+	id oFsQ1Y0052LgWns8N00000; Mon, 11 Feb 2008 15:52:25 +0000
+X-Authority-Analysis: v=1.0 c=1 a=XayAI9YopGsA:10 a=Z4mJgif-AAAA:8
+ a=XJjlb5ID-9CXZkCH3JEA:9 a=BrH0L-wRwK9wTzwgEbsA:7
+ a=km4OYawVLkxbAJMlcbmaXU5NXv4A:4 a=R0wQ3QzoQ0IA:10 a=F-J2dRE9H3gA:10
+ a=shE9WCRXG_MA:10
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.90 (darwin)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73541>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73542>
 
-Dnia poniedzia=C5=82ek 11. lutego 2008 14:33, Wincent Colaiuta napisa=C5=
-=82:
-> El 11/2/2008, a las 14:02, Jakub Narebski escribi=C3=B3:
->> Wincent Colaiuta <win@wincent.com> writes:
->>
->>> Just noticed a bug (possibly bugs) in gitweb.
->>>
->>> Look at a shortlog page like this one:
->>>
->>>  http://repo.or.cz/w/git.git?a=3Dshortlog
->>>
->>> Mouse over the "next" link at the bottom and you'll see this is the=
- =20
->>> URL:
->>>
->>>  http://repo.or.cz/w/ARRAY(0x85a5318)?a=3Dshortlog;pg=3D1
->>>
->>> Which obviously won't work...
->>
->> This is bug in repo.or.cz version of gitweb, which is slightly
->> modified as compared to the "stock" version. Such error would be
->> catched by the gitweb 'run as standalone script and check stderr'
->> test script.
->=20
-> Hmm. I don't know. I can reproduce all three of those bugs on my own =
-=20
-> unmodified gitweb installation from 1.5.4.
+"Shawn O. Pearce" <spearce@spearce.org> writes:
+> For what its worth I use the native Tcl/Tk that ships with Mac OS X,
+> /usr/bin/wish, which is really in /Library/Frameworks/Tk.framework.
+> I've never used the ActiveState Tcl/Tk package on Mac OS X.
+>
+> git-gui builds against the Tk.framework I mentioned above when on
+> Mac OS X.  In particular the git-gui Makefile seems to ignore the
+> setting of TCLTK_PATH when it sees the above mentioned Tk.framework
+> is available in your filesystem.
+>
+> The reason why you get nice icons for git-gui is because we use a
+> feature of the Aqua port Tcl/Tk framework that allows us to create a
+> full Mac OS X app by copying a tiny executable from the framework,
+> and supplying our own resource bundle.  The bundle configures
+> the icon.  Its the only way to get a custom icon on Mac OS X.
+>
+> Launching gitk from within git-gui (Repository -> Visualize History)
+> uses the same app and bundle, so gitk inherits the icon too.
+> I'd also bet gitk works this way, because it isn't launching through
+> the ActiveState Tcl/Tk port.
+>
+> In short, why not just use the native Aqua Tcl/Tk that Apple ships?
+> Why go through X11 and MacPorts?
 
-I'm sorry. You are right. I haven't seen breakage because it shows
-only when you use 'pathinfo' feature and pathinfo URLs.
+Hmm.  I don't doubt that I've inadvertently made things harder than
+they need to be, but...
 
-Below there is a fix for that; actully only second part mentioned
-(and first in patch) is needed, i.e. moving setting $params{'project'}
-before dealing with -replay is needed I think to fix this bug.
+I've just tried uninstalling the ActiveState stuff and removing the
+MacPorts stuff.
 
-Could you test it please?
--- >8 --
-=46rom: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH] gitweb: Fix bug in href(..., -replay=3D>1) when 'pathi=
-nfo' feature used
+Indeed git gui runs, but I no longer get the nice icon (instead a
+default Tcl/Tk icon with a feather).  Launching gitk from the git gui
+menu results in the same behavior for me: it launches and its menu
+appears, but no window.  It is quite odd because I can open the
+preference window for gitk via the menu and _that_ mini window does
+appear.  Same thing if I launch gitk from the command line.
 
-URLs generated by href(..., -replay=3D>1) (which includes 'next page'
-links and alternate view links) were not created correctly when using
-'pathinfo' feature (i.e. using pathinfo instead of query string to
-denote project / git repository used).
+If I try to open the "Git Gui.app" I get:
+ziti:git-gui seth$ open Git\ Gui.app/
+LSOpenFromURLSpec() failed with error -10810 for the file /Users/seth/src/git-MASTER/git-gui/Git Gui.app.
 
-This resulted in broken links such like:
-  http://www.example.com/w/ARRAY(0x85a5318)?a=3Dshortlog;pg=3D1
-instead of:
-  http://www.example.com/w/project.git?a=3Dshortlog;pg=3D1
+I've recently upgraded my system to Leopard, so I wouldn't be
+surprised if that is related to some of these issues.
 
-This was caused by the fact that href() always replayed params in the
-arrayref form, were they multivalued or singlevalued, and the code
-dealing with 'pathinfo' feature didn't deal with $params{'project'}
-being arrayref.  The code was improved to use arrayref only when
-needed; because 'project' parameter should be always single-valued
-this fixes this bug.
+Is there a big difference between how git gui uses Tcl/Tk and gitk?
+It seems really odd to me that one works and the other not so much :-\
 
-Additionally setting $params{'project'} is moved before replaying
-params, just in case somebody handcraft evil URL like the one below:
-  http://www.example.com/w/project.git?p=3Dotherproject.git ...
+Any other things to try or suggestions of where to look for root
+causes?
 
-Noticed-by: Peter Oberndorfer <kumbayo84@arcor.de>
-Noticed-by: Wincent Colaiuta <win@wincent.com>
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
- gitweb/gitweb.perl |   13 +++++++++----
- 1 files changed, 9 insertions(+), 4 deletions(-)
+Thanks again,
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 5e88637..648ee13 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -611,17 +611,22 @@ sub href(%) {
- 	);
- 	my %mapping =3D @mapping;
-=20
-+	$params{'project'} =3D $project unless exists $params{'project'};
-+
- 	if ($params{-replay}) {
- 		while (my ($name, $symbol) =3D each %mapping) {
- 			if (!exists $params{$name}) {
--				# to allow for multivalued params we use arrayref form
--				$params{$name} =3D [ $cgi->param($symbol) ];
-+				# for multivalued params we use arrayref form
-+				my @par =3D $cgi->param($symbol);
-+				if (@par > 1) {
-+					$params{$name} =3D [ @par ];
-+				} else {
-+					$params{$name} =3D $par[0];
-+				}
- 			}
- 		}
- 	}
-=20
--	$params{'project'} =3D $project unless exists $params{'project'};
--
- 	my ($use_pathinfo) =3D gitweb_check_feature('pathinfo');
- 	if ($use_pathinfo) {
- 		# use PATH_INFO for project name
---=20
-1.5.4
++ seth
+
+
+-- 
+Seth Falcon | seth@userprimary.net | blog: http://userprimary.net/user/
