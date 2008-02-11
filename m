@@ -1,115 +1,58 @@
-From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
-Subject: Re: [StGit PATCH 2/2] Emacs mode: delete patches
-Date: Mon, 11 Feb 2008 10:42:22 +0100
-Message-ID: <87wspbsubl.fsf@lysator.liu.se>
-References: <20080210204628.17886.27365.stgit@yoghurt>
-	<20080210204851.17886.69638.stgit@yoghurt>
+From: "Rafael Garcia-Suarez" <rgarciasuarez@gmail.com>
+Subject: Suggestion: git status --untracked
+Date: Mon, 11 Feb 2008 10:46:25 +0100
+Message-ID: <b77c1dce0802110146o708e26a7lef56683f6b823365@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>,
-	Karl =?utf-8?Q?Hasselstr?= =?utf-8?Q?=C3=B6m?= 
-	<kha@treskal.com>
-X-From: git-owner@vger.kernel.org Mon Feb 11 10:42:57 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Feb 11 10:47:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOVBg-00039V-9Z
-	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 10:42:56 +0100
+	id 1JOVFt-0004GK-EE
+	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 10:47:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751143AbYBKJmV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 11 Feb 2008 04:42:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751207AbYBKJmV
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Feb 2008 04:42:21 -0500
-Received: from mail.lysator.liu.se ([130.236.254.3]:47352 "EHLO
-	mail.lysator.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751069AbYBKJmU convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 11 Feb 2008 04:42:20 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.lysator.liu.se (Postfix) with ESMTP id 1CD52200A1F4;
-	Mon, 11 Feb 2008 10:42:19 +0100 (CET)
-Received: from mail.lysator.liu.se ([127.0.0.1])
-	by localhost (lenin.lysator.liu.se [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 26383-01-9; Mon, 11 Feb 2008 10:42:18 +0100 (CET)
-Received: from krank (78.156.200.233.bredband.tre.se [78.156.200.233])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.lysator.liu.se (Postfix) with ESMTP id 4A0FC200A1F9;
-	Mon, 11 Feb 2008 10:42:18 +0100 (CET)
-Received: by krank (Postfix, from userid 1000)
-	id 743587B4077; Mon, 11 Feb 2008 10:42:22 +0100 (CET)
-In-Reply-To: <20080210204851.17886.69638.stgit@yoghurt> ("Karl =?utf-8?Q?H?=
- =?utf-8?Q?asselstr=C3=B6m=22's?= message of "Sun\, 10 Feb 2008 21\:54\:08
- +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at lysator.liu.se
+	id S1751457AbYBKJq2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Feb 2008 04:46:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751365AbYBKJq1
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Feb 2008 04:46:27 -0500
+Received: from wx-out-0506.google.com ([66.249.82.238]:40774 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751168AbYBKJq0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Feb 2008 04:46:26 -0500
+Received: by wx-out-0506.google.com with SMTP id h31so4707474wxd.4
+        for <git@vger.kernel.org>; Mon, 11 Feb 2008 01:46:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=Orj4MDZWn2zb4+ziyeLZc47H5WtzBhuEUa/k2w6N/SM=;
+        b=W9RGTplMkz6lkUZUykSCpq/WOquLV/qwaiXl+VI+zkuPPN/zshhMD8CGuDBa5nQjExfB0BvsBcVnzX2jGvky9BG6purlzO6kOxBIhnOitjKjm/iTsD9Vp+IHeGPBJq+fjeTOfHXkAmggTKlDkFFqWWMp9LgjrGIf0/YXp5ANeAY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=hzuBmez1jhFiMqp/U8PFPHTqCvouslGcvW+tdHc0xK+ceoD0825VGuELUNCLEO0YEFZAdw1Yn1mOCvb/nw0WZM/zaM/eUDfOHUwAPwp6VQa1KaNLcBo6eQWhykE7lx7Hlhi8f5I33OlqXhCVgYuwrJZeTFTa00gawrh5a3fhVkc=
+Received: by 10.143.33.19 with SMTP id l19mr784614wfj.85.1202723185350;
+        Mon, 11 Feb 2008 01:46:25 -0800 (PST)
+Received: by 10.142.156.10 with HTTP; Mon, 11 Feb 2008 01:46:25 -0800 (PST)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73493>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73494>
 
-Karl Hasselstr=C3=B6m <kha@treskal.com> writes:
+I find myself wanting sometimes to filter out the output of
+git-status, to feed it to another command (for example, git-add, or
+rm, or cat >> .gitignore). However it's not currently very easy to
+parse in a one-liner.
 
-> Teach the emacs mode to delete patches.
->
-> Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
->
-> ---
->
-> David, could you have a look at this as well? In addition to me being
-> elisp challenged, there are the following issues:
->
->   * Is "d" a reasonable binding? Any better suggestion?
+I'm suggesting to add options to control this behaviour. My suggestion
+would be (for a start) to add an option --untracked that will list all
+untracked files on stdout, without a leading "#\t", and without
+listing the added / modified / removed files.
 
-We could reserve "d" for moving a patch "down", maybe.  The more
-destructive commands could be on less accessible keys. Maybe "D" or
-"C-d".
-
->   * Currently, this command requires you to mark one or more patches
->     before deleting. This is convenient when deleting more than one
->     patch, but one could argue that it should be possible to delete
->     the patch at point without having to select it.
-
-You need something like this:
-
---- a/contrib/stgit.el
-+++ b/contrib/stgit.el
-@@ -187,6 +187,15 @@ Commands:
-         (match-string-no-properties 1)
-       nil)))
-=20
-+(defun stgit-selected-patches ()
-+  "Return the names of the marked patches, or the patch on the current=
- line."
-+  (if stgit-marked-patches
-+      (stgit-marked-patches)
-+    (let ((patch (stgit-patch-at-point)))
-+      (if patch
-+          (list patch)
-+        '()))))
-+
- (defun stgit-goto-patch (patch)
-   "Move point to the line containing PATCH"
-   (let ((p (point)))
-
->   * We should probably ask for confirmation before deleting.
-
-Absolutely. Something like this (untested):
-
-(defun stgit-delete (patch-names)
-  "Delete the named patches"
-  (interactive (list (stgit-selected-patches)))
-  (if (zerop (length patch-names))
-      (error "No patches to delete")
-    (when (yes-or-no-p (format "Really delete %d patches? "
-                               (length patch-names)))
-      (stgit-capture-output nil
-        (apply 'stgit-run "delete" patch-names))
-      (stgit-refresh))
-
-
---=20
-David K=C3=A5gedal
+I'm willing to implement it, but I'd like to have some discussion
+about the interface first. Is that a good idea at all, and how could
+it be improved interface-wise?
