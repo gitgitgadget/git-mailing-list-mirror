@@ -1,75 +1,96 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: Suggestion: git status --untracked
-Date: Mon, 11 Feb 2008 11:13:15 +0100
-Message-ID: <vpq63wvztqc.fsf@bauges.imag.fr>
-References: <b77c1dce0802110146o708e26a7lef56683f6b823365@mail.gmail.com>
+From: "H.Merijn Brand" <h.m.brand@xs4all.nl>
+Subject: Re: [PATCH] Add compat/fopen.c which returns NULL on attempt to
+ open directory
+Date: Mon, 11 Feb 2008 11:15:37 +0100
+Message-ID: <20080211111537.2bf47448@pc09.procura.nl>
+References: <47ACFFD9.2030705@nrlssc.navy.mil>
+	<47AD10CF.1040207@nrlssc.navy.mil>
+	<20080211102950.122ba93d@pc09.procura.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Rafael Garcia-Suarez" <rgarciasuarez@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 11 11:15:45 2008
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Brandon Casey <casey@nrlssc.navy.mil>,
+	Junio C Hamano <gitster@pobox.com>,
+	Morten Welinder <mwelinder@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: "H.Merijn Brand" <h.m.brand@xs4all.nl>
+X-From: git-owner@vger.kernel.org Mon Feb 11 11:17:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOVhO-0003oZ-IS
-	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 11:15:42 +0100
+	id 1JOVit-0004Hg-U3
+	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 11:17:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751600AbYBKKPE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Feb 2008 05:15:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752003AbYBKKPB
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Feb 2008 05:15:01 -0500
-Received: from imag.imag.fr ([129.88.30.1]:37924 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751600AbYBKKO7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Feb 2008 05:14:59 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id m1BADGqj007002
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 11 Feb 2008 11:13:16 +0100 (CET)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1JOVf1-0001Xm-Kb; Mon, 11 Feb 2008 11:13:15 +0100
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1JOVf1-0008Rl-IG; Mon, 11 Feb 2008 11:13:15 +0100
-In-Reply-To: <b77c1dce0802110146o708e26a7lef56683f6b823365@mail.gmail.com> (Rafael Garcia-Suarez's message of "Mon\, 11 Feb 2008 10\:46\:25 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 11 Feb 2008 11:13:16 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1751573AbYBKKQl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Feb 2008 05:16:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751759AbYBKKQl
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Feb 2008 05:16:41 -0500
+Received: from smtp-vbr15.xs4all.nl ([194.109.24.35]:1738 "EHLO
+	smtp-vbr15.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751563AbYBKKQk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Feb 2008 05:16:40 -0500
+Received: from pc09.procura.nl (procura.xs4all.nl [82.95.216.29])
+	(authenticated bits=0)
+	by smtp-vbr15.xs4all.nl (8.13.8/8.13.8) with ESMTP id m1BAFdLS026548
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 11 Feb 2008 11:15:40 +0100 (CET)
+	(envelope-from h.m.brand@xs4all.nl)
+In-Reply-To: <20080211102950.122ba93d@pc09.procura.nl>
+X-Mailer: Claws Mail 3.3.0 (GTK+ 2.10.6; x86_64-unknown-linux-gnu)
+Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwEAIAAACI8LKTAAAACXBIWXMAAABIAAAASABGyWs+AAAC
+ JElEQVRo3u2aMY4CMQxFczZ6RItEzRm4DBINDbRUSPRInIRbsNK6+dJfezN4kokn48IaCSjysL8d
+ e9Knoj2fr9f9/gllqQ6U9/vxWK3EdwdIEGjRIVCu18NhuxUfK46SH81+fzrdbuKPx/P5ctHQdAdI
+ TKAgpvV6s9ntBEfXEYSGgMQzIHnuFBBjkshCNJ2KtJZ04hHNAugP8bZr3NIHhbcF0AKoK0CoaHXU
+ LUWBIs1n+jV+Fl8CVqOApEXAwyMO/DSR4XVntoAYDR7eBjQupuYAYTMph8Rj21D4m7MChN02tpqs
+ NSnb/KqU2oHCXu5xDCgflj/RAgBiKBIXnICzAsSjWBsTz5K4/HeXYvb8yK5lY3VGEwPi2aONKT+5
+ AlcxrTPOwcTiraGRChgMEKJh0bVVifGVTq6qgBiNVl8QE29EsK6VE+YJAOG2wz5AvsqUS6uqgHCA
+ n4NGvBYpnJ64Jgg27sCtxtBk1CJIA4S/GhdWKh07QxUB48jWGhZ4jKamRRr/T8/M0AaEyctry6YB
+ 4dTGj9iWZNs3DahES5kPCJOu0RQbF/fQOBprsB9gaO9JtPDzII9U5ySXX7AnuIt91y54AAW7rPpT
+ LCe5gt3F+CLqr2UarGB3MXvMylWGq4+9RCx3TW1oJq1t3HPQlFs6N1fFNEB4s8dn7Ne7ACSm7TPQ
+ I5quAWmw6qBpulHM33B0Csge4Nd8JTTYG2b1XyRe3lH8x34ABJ6aePuQ2N4AAAAASUVORK5CYII=
+X-Virus-Scanned: by XS4ALL Virus Scanner
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73502>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73503>
 
-"Rafael Garcia-Suarez" <rgarciasuarez@gmail.com> writes:
+On Mon, 11 Feb 2008 10:29:50 +0100, "H.Merijn Brand" <h.m.brand@xs4all.nl>
+wrote:
 
-> I find myself wanting sometimes to filter out the output of
-> git-status, to feed it to another command (for example, git-add, or
-> rm, or cat >> .gitignore). However it's not currently very easy to
-> parse in a one-liner.
->
-> I'm suggesting to add options to control this behaviour. My suggestion
-> would be (for a start) to add an option --untracked that will list all
-> untracked files on stdout, without a leading "#\t", and without
-> listing the added / modified / removed files.
+> On Fri, 08 Feb 2008 20:32:47 -0600, Brandon Casey <casey@nrlssc.navy.mil>
+> wrote:
+> 
+> > Some systems do not fail as expected when fread et al. are called on
+> > a directory stream. Replace fopen on such systems which will fail
+> > when the supplied path is a directory.
+> 
+> I applied this patch instead of mine, and added the Makefile define
+> Harder to trace, as it is not issuing error messages, but could this
+> success^Wfailure be related?
 
-Actually, it's already available (since a few weeks in master IIRC,
-not sure whether it's in the latest release), as
+No, it is not. Some shell weirdness. This fixes it. Don't know off-hand
+if it is portable enough
 
-  git ls-files --exclude-standard -o
+diff -pur a/t/t5701-clone-local.sh b/t/t5701-clone-local.sh
+--- a/t/t5701-clone-local.sh  2008-02-02 05:09:01 +0100
++++ b/t/t5701-clone-local.sh  2008-02-11 11:13:26 +0100
+@@ -37,8 +37,8 @@ test_expect_success 'local clone from x'
 
-The --exclude-standard tells git ls-files to read .gitignore and
-friends as most commands do, and -o means "show 'other' files".
-
-Older gits didn't have the --exclude-standard, so you had to say
---exclude-from=.git/info/exclude --exclude-per-directory=.gitignore
-(or stg like that) instead.
+ test_expect_success 'local clone from x.git that does not exist' '
+        cd "$D" &&
+-       if git clone -l -s x.git z
+-       then
++       git clone -l -s x.git z
++       if $? ; then
+                echo "Oops, should have failed"
+                false
+        else
 
 -- 
-Matthieu
+H.Merijn Brand         Amsterdam Perl Mongers (http://amsterdam.pm.org/)
+using & porting perl 5.6.2, 5.8.x, 5.10.x  on HP-UX 10.20, 11.00, 11.11,
+& 11.23, SuSE 10.1 & 10.2, AIX 5.2, and Cygwin.       http://qa.perl.org
+http://mirrors.develooper.com/hpux/            http://www.test-smoke.org
+                        http://www.goldmark.org/jeff/stupid-disclaimers/
