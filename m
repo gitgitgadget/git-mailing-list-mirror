@@ -1,74 +1,65 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [StGit PATCH 2/2] Emacs mode: delete patches
-Date: Mon, 11 Feb 2008 10:51:18 +0100
-Message-ID: <20080211095118.GB28140@diana.vm.bytemark.co.uk>
-References: <20080210204628.17886.27365.stgit@yoghurt> <20080210204851.17886.69638.stgit@yoghurt> <87wspbsubl.fsf@lysator.liu.se>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: read_branches_file ()
+Date: Mon, 11 Feb 2008 11:00:52 +0100
+Message-ID: <47B01CD4.4040004@op5.se>
+References: <20080208165008.52630d36@pc09.procura.nl> <20080208170305.069d43d2@pc09.procura.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
-To: David =?iso-8859-1?Q?K=E5gedal?= <davidk@lysator.liu.se>
-X-From: git-owner@vger.kernel.org Mon Feb 11 10:52:57 2008
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "H.Merijn Brand" <h.m.brand@xs4all.nl>
+X-From: git-owner@vger.kernel.org Mon Feb 11 11:02:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOVLE-0005j7-CG
-	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 10:52:48 +0100
+	id 1JOVUE-0008CX-9e
+	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 11:02:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756849AbYBKJvb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 11 Feb 2008 04:51:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753506AbYBKJvb
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Feb 2008 04:51:31 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2163 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756810AbYBKJva (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Feb 2008 04:51:30 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1JOVJm-0007LK-00; Mon, 11 Feb 2008 09:51:18 +0000
-Content-Disposition: inline
-In-Reply-To: <87wspbsubl.fsf@lysator.liu.se>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1752113AbYBKKBA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Feb 2008 05:01:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751571AbYBKKBA
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Feb 2008 05:01:00 -0500
+Received: from mail.op5.se ([193.201.96.20]:44791 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751567AbYBKKA7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Feb 2008 05:00:59 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id B8AFA1F08841;
+	Mon, 11 Feb 2008 11:00:57 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.499
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
+	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 4xRuxkpaNupg; Mon, 11 Feb 2008 11:00:57 +0100 (CET)
+Received: from clix.int.op5.se (unknown [172.27.78.26])
+	by mail.op5.se (Postfix) with ESMTP id 23CE91F08840;
+	Mon, 11 Feb 2008 11:00:55 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.9 (X11/20071115)
+In-Reply-To: <20080208170305.069d43d2@pc09.procura.nl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73496>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73497>
 
-On 2008-02-11 10:42:22 +0100, David K=E5gedal wrote:
+H.Merijn Brand wrote:
+> -       if (!f)
+> +       if (stat (gp, &st_buf) || S_ISDIR (st_buf.st_mode))
 
-> Karl Hasselstr=F6m <kha@treskal.com> writes:
->
-> > David, could you have a look at this as well? In addition to me
-> > being elisp challenged, there are the following issues:
-> >
-> >   * Is "d" a reasonable binding? Any better suggestion?
->
-> We could reserve "d" for moving a patch "down", maybe. The more
-> destructive commands could be on less accessible keys. Maybe "D" or
-> "C-d".
+Shouldn't this be
+	if (stat(gp, &st_buf) || !S_ISREG(st_buf.st_mode))
 
-I'll take "D" then, since control bindings are more likely to collide
-with existing bindings (as is already the case with C-r for stg
-repair).
+?
 
-> >   * Currently, this command requires you to mark one or more
-> >     patches before deleting. This is convenient when deleting more
-> >     than one patch, but one could argue that it should be possible
-> >     to delete the patch at point without having to select it.
->
-> You need something like this:
+Otherwise, you might end up opening a FIFO, a socket or a
+block/char special, which is obviously undesired.
 
-OK, thanks. I'll whip up a proper patch tonight -- unless you prefer
-to do it yourself?
-
-> >   * We should probably ask for confirmation before deleting.
->
-> Absolutely. Something like this (untested):
-
-Thanks again.
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
