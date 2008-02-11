@@ -1,97 +1,53 @@
-From: "H.Merijn Brand" <h.m.brand@xs4all.nl>
-Subject: libcrypto core dump in 64bit
-Date: Mon, 11 Feb 2008 11:28:22 +0100
-Message-ID: <20080211112822.16b69495@pc09.procura.nl>
+From: Gerrit Pape <pape@smarden.org>
+Subject: Re: [PATCH] builtin-commit: remove .git/SQUASH_MSG upon successful
+	commit
+Date: Mon, 11 Feb 2008 10:29:52 +0000
+Message-ID: <20080211102952.11456.qmail@d2fd415933607e.315fe32.mid.smarden.org>
+References: <20080208095358.25666.qmail@b4daf7aef4dba9.315fe32.mid.smarden.org> <7v4pch2ry8.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Feb 11 11:29:18 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 11 11:30:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOVuO-0007oq-1G
-	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 11:29:08 +0100
+	id 1JOVvL-00084r-7z
+	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 11:30:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754255AbYBKK22 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Feb 2008 05:28:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754169AbYBKK21
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Feb 2008 05:28:27 -0500
-Received: from smtp-vbr9.xs4all.nl ([194.109.24.29]:1903 "EHLO
-	smtp-vbr9.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753526AbYBKK20 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Feb 2008 05:28:26 -0500
-Received: from pc09.procura.nl (procura.xs4all.nl [82.95.216.29])
-	(authenticated bits=0)
-	by smtp-vbr9.xs4all.nl (8.13.8/8.13.8) with ESMTP id m1BASOFC024764
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Mon, 11 Feb 2008 11:28:24 +0100 (CET)
-	(envelope-from h.m.brand@xs4all.nl)
-X-Mailer: Claws Mail 3.3.0 (GTK+ 2.10.6; x86_64-unknown-linux-gnu)
-Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwEAIAAACI8LKTAAAACXBIWXMAAABIAAAASABGyWs+AAAC
- JElEQVRo3u2aMY4CMQxFczZ6RItEzRm4DBINDbRUSPRInIRbsNK6+dJfezN4kokn48IaCSjysL8d
- e9Knoj2fr9f9/gllqQ6U9/vxWK3EdwdIEGjRIVCu18NhuxUfK46SH81+fzrdbuKPx/P5ctHQdAdI
- TKAgpvV6s9ntBEfXEYSGgMQzIHnuFBBjkshCNJ2KtJZ04hHNAugP8bZr3NIHhbcF0AKoK0CoaHXU
- LUWBIs1n+jV+Fl8CVqOApEXAwyMO/DSR4XVntoAYDR7eBjQupuYAYTMph8Rj21D4m7MChN02tpqs
- NSnb/KqU2oHCXu5xDCgflj/RAgBiKBIXnICzAsSjWBsTz5K4/HeXYvb8yK5lY3VGEwPi2aONKT+5
- AlcxrTPOwcTiraGRChgMEKJh0bVVifGVTq6qgBiNVl8QE29EsK6VE+YJAOG2wz5AvsqUS6uqgHCA
- n4NGvBYpnJ64Jgg27sCtxtBk1CJIA4S/GhdWKh07QxUB48jWGhZ4jKamRRr/T8/M0AaEyctry6YB
- 4dTGj9iWZNs3DahES5kPCJOu0RQbF/fQOBprsB9gaO9JtPDzII9U5ySXX7AnuIt91y54AAW7rPpT
- LCe5gt3F+CLqr2UarGB3MXvMylWGq4+9RCx3TW1oJq1t3HPQlFs6N1fFNEB4s8dn7Ne7ACSm7TPQ
- I5quAWmw6qBpulHM33B0Csge4Nd8JTTYG2b1XyRe3lH8x34ABJ6aePuQ2N4AAAAASUVORK5CYII=
-X-Virus-Scanned: by XS4ALL Virus Scanner
+	id S1752663AbYBKK3f convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 11 Feb 2008 05:29:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754032AbYBKK3f
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Feb 2008 05:29:35 -0500
+Received: from a.ns.smarden.org ([212.42.242.37]:58631 "HELO a.mx.smarden.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751661AbYBKK3e (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Feb 2008 05:29:34 -0500
+Received: (qmail 11457 invoked by uid 1000); 11 Feb 2008 10:29:52 -0000
+Content-Disposition: inline
+In-Reply-To: <7v4pch2ry8.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73508>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73509>
 
-Any hints?
+On Sat, Feb 09, 2008 at 11:25:51PM -0800, Junio C Hamano wrote:
+> As your message was marked with
+>=20
+>         MIME-Version: 1.0
+>         Content-Type: text/plain; charset=3Dunknown-8bit
+>=20
+> I am getting this, which would most likely to be wrong rendition
+> of Fr???ic's name.
+>=20
+> > The problem was discovered by Fr=E9=A6=98=E9=A7=BBic Bri=E9=91=BDe,=
+ reported through
+>=20
+> Is the name "Fr=C3=A9d=C3=A9ric Bri=C3=A8re"?
 
-/pro/3gl/LINUX/git-1.5.4.rc5/t 154 > sh t5302-pack-index.sh
-*   ok 1: setup
-*   ok 2: pack-objects with index version 1
-*   ok 3: pack-objects with index version 2
-*   ok 4: both packs should be identical
-*   ok 5: index v1 and index v2 should be different
-*   ok 6: index-pack with index version 1
-*   ok 7: index-pack with index version 2
-*   ok 8: index-pack results should match pack-objects ones
-*   ok 9: index v2: force some 64-bit offsets with pack-objects
-t5302-pack-index.sh[67]: 3156 Illegal instruction(coredump)
-* FAIL 10: index v2: verify a pack with some 64-bit offsets
-        git verify-pack -v "test-3-${pack3}.pack"
-FATAL: Unexpected exit with code 0
+Sorry.  Yes, it's "Fr=C3=A9d=C3=A9ric Bri=C3=A8re" ;).
 
-
-HP gdb 5.7 for HP Itanium (32 or 64 bit) and target HP-UX 11.2x.
-Copyright 1986 - 2001 Free Software Foundation, Inc.
-Hewlett-Packard Wildebeest 5.7 (based on GDB) is covered by the
-GNU General Public License. Type "show copying" to see the conditions to
-change it and/or distribute copies. Type "show warranty" for warranty/support.
-..
-Core was generated by `git'.
-Program terminated with signal 4, Illegal instruction.
-ILL_REGNAT - Register NaT Consumption
-#0  0xc0000000033c8940:0 in sha1_block_asm_host_order+0x22e0 ()
-   from /usr/local/ssl/lib/libcrypto.so
-(gdb) where
-#0  0xc0000000033c8940:0 in sha1_block_asm_host_order+0x22e0 ()
-   from /usr/local/ssl/lib/libcrypto.so
-#1  0xc0000000033cb680:0 in SHA1_Update () at ../md32_common.h:476
-#2  0x40000000000ef560:0 in verify_pack (p=0x6000000000037e40, verbose=1)
-    at pack-check.c:168
-#3  0x40000000000d5130:0 in cmd_verify_pack (argc=2, argv=<not available>,
-    prefix=<NaT>) at builtin-verify-pack.c:43
-#4  0x40000000000440e0:0 in handle_internal_command (argc=3,
-    argv=0x9fffffffffffee88) at git.c:257
-#5  0x40000000000446a0:0 in main (argc=3, argv=0x9fffffffffffee88) at git.c:447
-(gdb)
-
--- 
-H.Merijn Brand         Amsterdam Perl Mongers (http://amsterdam.pm.org/)
-using & porting perl 5.6.2, 5.8.x, 5.10.x  on HP-UX 10.20, 11.00, 11.11,
-& 11.23, SuSE 10.1 & 10.2, AIX 5.2, and Cygwin.       http://qa.perl.org
-http://mirrors.develooper.com/hpux/            http://www.test-smoke.org
-                        http://www.goldmark.org/jeff/stupid-disclaimers/
+Regards, Gerrit.
