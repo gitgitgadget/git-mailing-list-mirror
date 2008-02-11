@@ -1,141 +1,128 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] apply: fix segfault
-Date: Mon, 11 Feb 2008 15:28:45 -0800
-Message-ID: <7vir0v6pjm.fsf@gitster.siamese.dyndns.org>
-References: <alpine.LSU.1.00.0802112227400.3870@racer.site>
-	<7vprv36qkt.fsf@gitster.siamese.dyndns.org>
+From: Johan Herland <johan@herland.net>
+Subject: [PATCH] Fix 'git cvsexportcommit -w $cvsdir ...' when used with
+ relative $GIT_DIR
+Date: Tue, 12 Feb 2008 00:43:41 +0100
+Message-ID: <200802120043.41610.johan@herland.net>
+References: <200802110228.05233.johan@herland.net>
+ <200802112158.16830.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Feb 12 00:29:47 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+X-From: git-owner@vger.kernel.org Tue Feb 12 00:44:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOi5q-0004Im-Cv
-	for gcvg-git-2@gmane.org; Tue, 12 Feb 2008 00:29:46 +0100
+	id 1JOiKH-0000HT-7M
+	for gcvg-git-2@gmane.org; Tue, 12 Feb 2008 00:44:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754043AbYBKX3M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Feb 2008 18:29:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751125AbYBKX3L
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Feb 2008 18:29:11 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:45456 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753245AbYBKX3J (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Feb 2008 18:29:09 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 8376832E4;
-	Mon, 11 Feb 2008 18:29:07 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id A1A1832E3;
-	Mon, 11 Feb 2008 18:29:04 -0500 (EST)
-In-Reply-To: <7vprv36qkt.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Mon, 11 Feb 2008 15:06:26 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1756165AbYBKXoG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 11 Feb 2008 18:44:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753773AbYBKXoF
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Feb 2008 18:44:05 -0500
+Received: from smtp.getmail.no ([84.208.20.33]:57262 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752829AbYBKXoD convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 11 Feb 2008 18:44:03 -0500
+Received: from pmxchannel-daemon.no-osl-m323-srv-004-z2.isp.get.no by
+ no-osl-m323-srv-004-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ id <0JW30011FLXDAI00@no-osl-m323-srv-004-z2.isp.get.no> for
+ git@vger.kernel.org; Tue, 12 Feb 2008 00:44:01 +0100 (CET)
+Received: from smtp.getmail.no ([10.5.16.1])
+ by no-osl-m323-srv-004-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JW300HX0LWTXB10@no-osl-m323-srv-004-z2.isp.get.no> for
+ git@vger.kernel.org; Tue, 12 Feb 2008 00:43:41 +0100 (CET)
+Received: from alpha.herland ([84.215.102.95])
+ by no-osl-m323-srv-004-z1.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JW300MUQLWT4Y20@no-osl-m323-srv-004-z1.isp.get.no> for
+ git@vger.kernel.org; Tue, 12 Feb 2008 00:43:41 +0100 (CET)
+In-reply-to: <200802112158.16830.robin.rosenberg.lists@dewire.com>
+Content-disposition: inline
+User-Agent: KMail/1.9.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73605>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73606>
 
-Junio C Hamano <gitster@pobox.com> writes:
+When using the '-w $cvsdir' option to cvsexportcommit, it will chdir in=
+to
+$cvsdir before executing several other git commands. If $GIT_DIR is set=
+ to
+a relative path (e.g. '.'), the git commands executed by cvsexportcommi=
+t
+will naturally fail.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->
->> When the patch reports a line number that is larger than the number of
->> lines in the current version of the file, git-apply used to segfault.
->
-> I have to wonder if the correct fix should be like this
-> instead.  Under that condition, I think computation of the
-> initial "try" value already oversteps the line[] array for the
-> original image.
+Therefore, ensure that $GIT_DIR is absolute before the chdir to $cvsdir=
+=2E
 
-With tests...
+Signed-off-by: Johan Herland <johan@herland.net>
+---
 
- builtin-apply.c       |    3 ++
- t/t4105-apply-fuzz.sh |   60 +++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 63 insertions(+), 0 deletions(-)
+On Monday 11 February 2008, Robin Rosenberg wrote:
+> m=C3=A5ndagen den 11 februari 2008 skrev Johan Herland:
+> > -		# Remember where our GIT_DIR is before changing to CVS checkout
+> > +		# Oops no GIT_DIR set. Figure out for ourselves
+>=20
+> That's not an "Oops". It's perfectly normal not to have GIT_DIR set.
 
-diff --git a/builtin-apply.c b/builtin-apply.c
-index 2b8ba81..177f541 100644
---- a/builtin-apply.c
-+++ b/builtin-apply.c
-@@ -1809,6 +1809,9 @@ static int find_pos(struct image *img,
- 	else if (match_end)
- 		line = img->nr - preimage->nr;
- 
-+	if (line > preimage->nr)
-+		line = preimage->nr;
-+
- 	try = 0;
- 	for (i = 0; i < line; i++)
- 		try += img->line[i].len;
-diff --git a/t/t4105-apply-fuzz.sh b/t/t4105-apply-fuzz.sh
-new file mode 100755
-index 0000000..9c2a9f5
---- /dev/null
-+++ b/t/t4105-apply-fuzz.sh
-@@ -0,0 +1,60 @@
-+#!/bin/sh
-+
-+test_description='apply with fuzz and offset'
-+
-+. ./test-lib.sh
-+
-+dotest () {
-+	
-+	name="$1" && shift &&
-+
-+	test_expect_success "$name" "
-+		git checkout-index -f -q -u file &&
-+		git apply $* &&
-+		diff -u expect file
-+	"
-+
-+}
-+
-+test_expect_success setup '
-+
-+	for i in 1 2 3 4 5 6 7 8 9 10 11 12
-+	do
-+		echo $i
-+	done >file &&
-+	git update-index --add file &&
-+	for i in 1 2 3 4 5 6 7 a b c d e 8 9 10 11 12
-+	do
-+		echo $i
-+	done >file &&
-+	cat file >expect &&
-+	git diff >O0.diff &&
-+
-+	sed -e "s/@@ -5,6 +5,11 @@/@@ -2,6 +2,11 @@/" >O1.diff O0.diff &&
-+	sed -e "s/@@ -5,6 +5,11 @@/@@ -7,6 +7,11 @@/" >O2.diff O0.diff &&
-+	sed -e "s/@@ -5,6 +5,11 @@/@@ -19,6 +19,11 @@/" >O3.diff O0.diff &&
-+
-+	sed -e "s/^ 5/ S/" >F0.diff O0.diff &&
-+	sed -e "s/^ 5/ S/" >F1.diff O1.diff &&
-+	sed -e "s/^ 5/ S/" >F2.diff O2.diff &&
-+	sed -e "s/^ 5/ S/" >F3.diff O3.diff
-+
-+'
-+
-+dotest 'unmodified patch' O0.diff
-+
-+dotest 'minus offset' O1.diff
-+
-+dotest 'plus offset' O2.diff
-+
-+dotest 'big offset' O3.diff
-+
-+dotest 'fuzz with no offset' -C2 F0.diff
-+
-+dotest 'fuzz with minus offset' -C2 F1.diff
-+
-+dotest 'fuzz with plus offset' -C2 F2.diff
-+
-+dotest 'fuzz with big offset' -C2 F3.diff
-+
-+test_done
+Of course not. Fixed.
+
+> > +	unless ($ENV{GIT_DIR} =3D~ m[^/]) {
+>=20
+> Hmm. C:/foo? You should probably use rel2abs in the File::Spec=20
+> module.
+
+Thanks. Fixed.
+
+
+Have fun! :)
+
+=2E..Johan
+
+
+ git-cvsexportcommit.perl |   11 +++++------
+ 1 files changed, 5 insertions(+), 6 deletions(-)
+
+diff --git a/git-cvsexportcommit.perl b/git-cvsexportcommit.perl
+index d2e50c3..2a8ad1e 100755
+--- a/git-cvsexportcommit.perl
++++ b/git-cvsexportcommit.perl
+@@ -5,6 +5,7 @@ use Getopt::Std;
+ use File::Temp qw(tempdir);
+ use Data::Dumper;
+ use File::Basename qw(basename dirname);
++use File::Spec;
+=20
+ our ($opt_h, $opt_P, $opt_p, $opt_v, $opt_c, $opt_f, $opt_a, $opt_m, $=
+opt_d, $opt_u, $opt_w);
+=20
+@@ -15,17 +16,15 @@ $opt_h && usage();
+ die "Need at least one commit identifier!" unless @ARGV;
+=20
+ if ($opt_w) {
++	# Remember where GIT_DIR is before changing to CVS checkout
+ 	unless ($ENV{GIT_DIR}) {
+-		# Remember where our GIT_DIR is before changing to CVS checkout
++		# No GIT_DIR set. Figure it out for ourselves
+ 		my $gd =3D`git-rev-parse --git-dir`;
+ 		chomp($gd);
+-		if ($gd eq '.git') {
+-			my $wd =3D `pwd`;
+-			chomp($wd);
+-			$gd =3D $wd."/.git"	;
+-		}
+ 		$ENV{GIT_DIR} =3D $gd;
+ 	}
++	# Make sure GIT_DIR is absolute
++	$ENV{GIT_DIR} =3D File::Spec->rel2abs($ENV{GIT_DIR});
+=20
+ 	if (! -d $opt_w."/CVS" ) {
+ 		die "$opt_w is not a CVS checkout";
+--=20
+1.5.4.2.g41ac4
