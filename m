@@ -1,53 +1,56 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Fix 'git cvsexportcommit -w $cvsdir ...' when used with relative $GIT_DIR
-Date: Mon, 11 Feb 2008 12:10:41 -0800
-Message-ID: <7vhcgf8da6.fsf@gitster.siamese.dyndns.org>
-References: <200802110228.05233.johan@herland.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Best way to specify all local branches and all remote
+ branches.
+Date: Mon, 11 Feb 2008 20:23:27 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0802112022560.3870@racer.site>
+References: <47B09921.2070109@glidos.net> <m3ir0ve2c1.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Robin Rosenberg <robin.rosenberg@dewire.com>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Mon Feb 11 21:11:35 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 11 21:24:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOf00-0001n1-Vc
-	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 21:11:33 +0100
+	id 1JOfC0-0006dd-8Z
+	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 21:23:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755593AbYBKUK5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Feb 2008 15:10:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752827AbYBKUK5
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Feb 2008 15:10:57 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:48301 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752697AbYBKUK4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Feb 2008 15:10:56 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id E08AC53C5;
-	Mon, 11 Feb 2008 15:10:49 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 5E303539F;
-	Mon, 11 Feb 2008 15:10:43 -0500 (EST)
-In-Reply-To: <200802110228.05233.johan@herland.net> (Johan Herland's message
-	of "Mon, 11 Feb 2008 02:28:05 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753607AbYBKUXV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Feb 2008 15:23:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753006AbYBKUXV
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Feb 2008 15:23:21 -0500
+Received: from mail.gmx.net ([213.165.64.20]:55314 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751962AbYBKUXU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Feb 2008 15:23:20 -0500
+Received: (qmail invoked by alias); 11 Feb 2008 20:23:18 -0000
+Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
+  by mail.gmx.net (mp029) with SMTP; 11 Feb 2008 21:23:18 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18bZq4jjVYbZvbQp3DDR0Ot3qzfR9JGmg43EumbjJ
+	V2ODLN4D4Psjhv
+X-X-Sender: gene099@racer.site
+In-Reply-To: <m3ir0ve2c1.fsf@localhost.localdomain>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73578>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73579>
 
-Johan Herland <johan@herland.net> writes:
+Hi,
 
-> When using the '-w $cvsdir' option to cvsexportcommit, it will chdir into
-> $cvsdir before executing several other git commands. If $GIT_DIR is set to
-> a relative path (e.g. '.'), the git commands executed by cvsexportcommit
-> will naturally fail with "fatal: Not a git repository".
->
-> Therefore, if $GIT_DIR is relative, prepend $PWD to $GIT_DIR before the
-> chdir to $cvsdir.
+On Mon, 11 Feb 2008, Jakub Narebski wrote:
 
-That sounds like a correct thing to do.  Robin?
+> git-filter-branch is about single branch;
+
+No.
+
+> I'm not sure if it should support --all.
+
+It does.
+
+Ciao,
+Dscho
