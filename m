@@ -1,97 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Add gitattributes file making whitespace checking pickier
-Date: Sun, 10 Feb 2008 19:34:01 -0800
-Message-ID: <7vk5lcb1zq.fsf@gitster.siamese.dyndns.org>
-References: <20080209162234.GA25533@fieldses.org>
-	<alpine.LNX.1.00.0802091251430.13593@iabervon.org>
-	<20080209185038.GB25533@fieldses.org>
-	<7vr6fletkl.fsf@gitster.siamese.dyndns.org>
-	<7vabm9gk1p.fsf@gitster.siamese.dyndns.org>
-	<alpine.LNX.1.00.0802101502320.13593@iabervon.org>
-	<7v8x1sfprd.fsf@gitster.siamese.dyndns.org>
-	<alpine.LNX.1.00.0802101724170.13593@iabervon.org>
+From: Theodore Tso <tytso@MIT.EDU>
+Subject: Re: warning: no common commits - slow pull
+Date: Sun, 10 Feb 2008 22:55:01 -0500
+Message-ID: <20080211035501.GB26205@mit.edu>
+References: <200802102007.38838.lenb@kernel.org> <20080211015342.GA26205@mit.edu> <7v4pcgcimw.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "J. Bruce Fields" <bfields@fieldses.org>, git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Mon Feb 11 04:35:04 2008
+Cc: Len Brown <lenb@kernel.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 11 05:02:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOPRe-00069B-S6
-	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 04:35:03 +0100
+	id 1JOPrt-0001uP-07
+	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 05:02:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752387AbYBKDe1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Feb 2008 22:34:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752369AbYBKDe0
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 22:34:26 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:43090 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752124AbYBKDe0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Feb 2008 22:34:26 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id DDB2033DB;
-	Sun, 10 Feb 2008 22:34:24 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 3D9A533D9;
-	Sun, 10 Feb 2008 22:34:19 -0500 (EST)
-In-Reply-To: <alpine.LNX.1.00.0802101724170.13593@iabervon.org> (Daniel
-	Barkalow's message of "Sun, 10 Feb 2008 17:34:17 -0500 (EST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752654AbYBKEBU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Feb 2008 23:01:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752622AbYBKEBU
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 23:01:20 -0500
+Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:56315 "EHLO
+	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752645AbYBKEBT (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 10 Feb 2008 23:01:19 -0500
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id m1B3wRt5019552;
+	Sun, 10 Feb 2008 22:59:01 -0500 (EST)
+Received: from closure.thunk.org (c-66-30-1-139.hsd1.ma.comcast.net [66.30.1.139])
+	(authenticated bits=0)
+        (User authenticated as tytso@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id m1B3t1nX016547
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Sun, 10 Feb 2008 22:55:02 -0500 (EST)
+Received: from tytso by closure.thunk.org with local (Exim 4.67)
+	(envelope-from <tytso@mit.edu>)
+	id 1JOPkz-0004Bq-Eu; Sun, 10 Feb 2008 22:55:01 -0500
+Content-Disposition: inline
+In-Reply-To: <7v4pcgcimw.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
+X-Scanned-By: MIMEDefang 2.42
+X-Spam-Flag: NO
+X-Spam-Score: 0.00
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73463>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73464>
 
-Daniel Barkalow <barkalow@iabervon.org> writes:
+On Sun, Feb 10, 2008 at 06:49:11PM -0800, Junio C Hamano wrote:
+> I am aware of that "push" side thing (basically it does not do
+> the negotiation and unless you are always doing fast-forward
+> pushes it tends to send needless stuff), but I had an impression
+> that the issue Len is raising is different.  Namely if you pull
+> from Linus twice into the same tree you should never see that
+> "No common commits".
 
-> On Sun, 10 Feb 2008, Junio C Hamano wrote:
-> ...
->> True, how about this instead?
->
-> That makes things more clear, although I'd still like a t/.gitattributes 
-> that meant that, regardless of the project's policies in general, t/ files 
-> may care about whitespace, so we don't have to worry about that in future 
-> changes to the top level .gitattributes.
+Yeah, when I saw your response to him I realized that.  I didn't
+notice the "No common commits" message in his transcript, and assumed
+he was referring to the problem I was describing.
 
-Ok, that's sensible.
+I wouldn't mind waiting myself, but it does result in uneeded objects
+in the destination repository, which I gather results in slightly more
+disk load on the kernel.org servers since there's slightly less object
+sharing, and sometimes I'm pushing from behind a slow link (such as an
+EVDO wireless modem), and pushing the few megabytes worth of shared
+objects can take a while.  So I've just always gotten in the habit of
+shelling into master.kernel.org and manually doing the git-update-ref;
+one of these days I'll get around to scripting it.
 
-This is what I'll apply.  We can tighten and/or loosen per type
-of the contents as we discover glitches.
-
---
-
- .gitattributes               |    2 ++
- Documentation/.gitattributes |    1 +
- t/.gitattributes             |    1 +
- 3 files changed, 4 insertions(+), 0 deletions(-)
- create mode 100644 .gitattributes
- create mode 100644 Documentation/.gitattributes
- create mode 100644 t/.gitattributes
-
-diff --git a/.gitattributes b/.gitattributes
-new file mode 100644
-index 0000000..6b9c715
---- /dev/null
-+++ b/.gitattributes
-@@ -0,0 +1,2 @@
-+* whitespace=!indent,trail,space
-+*.[ch] whitespace
-diff --git a/Documentation/.gitattributes b/Documentation/.gitattributes
-new file mode 100644
-index 0000000..ddb0301
---- /dev/null
-+++ b/Documentation/.gitattributes
-@@ -0,0 +1 @@
-+*.txt whitespace
-diff --git a/t/.gitattributes b/t/.gitattributes
-new file mode 100644
-index 0000000..562b12e
---- /dev/null
-+++ b/t/.gitattributes
-@@ -0,0 +1 @@
-+* -whitespace
+						- Ted
