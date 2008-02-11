@@ -1,88 +1,68 @@
-From: Theodore Tso <tytso@MIT.EDU>
-Subject: Re: warning: no common commits - slow pull
-Date: Sun, 10 Feb 2008 20:53:42 -0500
-Message-ID: <20080211015342.GA26205@mit.edu>
-References: <200802102007.38838.lenb@kernel.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: Add "--show-all" revision walker flag for debugging
+Date: Sun, 10 Feb 2008 20:59:14 -0500 (EST)
+Message-ID: <alpine.LFD.1.00.0802102053090.2732@xanadu.home>
+References: <alpine.LFD.1.00.0802091341210.2896@woody.linux-foundation.org>
+ <200802102353.40230.jnareb@gmail.com>
+ <alpine.LFD.1.00.0802101507100.2896@woody.linux-foundation.org>
+ <200802110224.48790.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Len Brown <lenb@kernel.org>
-X-From: git-owner@vger.kernel.org Mon Feb 11 02:54:37 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 11 02:59:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JONsR-0005fP-Mq
-	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 02:54:36 +0100
+	id 1JONxa-0006Z2-HD
+	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 02:59:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751255AbYBKByB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Feb 2008 20:54:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751229AbYBKByB
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 20:54:01 -0500
-Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:57459 "EHLO
-	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751197AbYBKByA (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 10 Feb 2008 20:54:00 -0500
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id m1B1rijP028440;
-	Sun, 10 Feb 2008 20:53:44 -0500 (EST)
-Received: from closure.thunk.org (c-66-30-1-139.hsd1.ma.comcast.net [66.30.1.139])
-	(authenticated bits=0)
-        (User authenticated as tytso@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id m1B1rg75022941
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sun, 10 Feb 2008 20:53:43 -0500 (EST)
-Received: from tytso by closure.thunk.org with local (Exim 4.67)
-	(envelope-from <tytso@mit.edu>)
-	id 1JONra-0006yX-RK; Sun, 10 Feb 2008 20:53:42 -0500
-Content-Disposition: inline
-In-Reply-To: <200802102007.38838.lenb@kernel.org>
-User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
-X-Scanned-By: MIMEDefang 2.42
-X-Spam-Flag: NO
-X-Spam-Score: 0.00
+	id S1751093AbYBKB7Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Feb 2008 20:59:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751278AbYBKB7Q
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 20:59:16 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:40916 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750992AbYBKB7P (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Feb 2008 20:59:15 -0500
+Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0JW100G5DXIQ2CV0@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Sun, 10 Feb 2008 20:59:14 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <200802110224.48790.jnareb@gmail.com>
+User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73452>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73453>
 
-On Sun, Feb 10, 2008 at 08:07:38PM -0500, Len Brown wrote:
-> A couple of hours ago I pulled my reference copy of Linux tree,
-> which brought the tip here:
-> 
-> commit 7cf712db6087342e5e7e259d3883a7b5ac3212d1
-> Merge: 58a14ee... 30ddb15...
-> Author: Linus Torvalds <torvalds@woody.linux-foundation.org>
-> Date:   Sun Feb 10 12:03:57 2008 -0800
-> 
->     Merge git://git.kernel.org/pub/scm/linux/kernel/git/davem/net-2.6
-> 
-> Then, 10 minutes ago I did a pull to bring the head here:
-> 
-> commit 19af35546de68c872dcb687613e0902a602cb20e
-> Author: Linus Torvalds <torvalds@woody.linux-foundation.org>
-> Date:   Sun Feb 10 14:18:14 2008 -0800
-> 
->     Linux 2.6.25-rc1
-> 
-> But this second pull seems to have re-downloaded 172MB,
-> when it should have only needed the last few commits.
+On Mon, 11 Feb 2008, Jakub Narebski wrote:
 
-Yeah, I have this problem very often when I push to the ext4 tree on
-master.kernel.org.  Apparently the push/pull logic isn't smart about
-objects are found via objects/info/alterntaes, so it will needlessly
-transfer objects that it doesn't need to.
+> Linus Torvalds wrote:
+> > On Sun, 10 Feb 2008, Jakub Narebski wrote:
+> > > 
+> > > Well, we could always add it as a local (per repository) "cache".
+> > > With only generation numbers we could use pack-index-like format
+> > > to store a mapping "commit sha-1 => generation number", just like
+> > > now pack index stores mapping "object sha-1 => offset in pack".
+> > 
+> > Yes, and even embedding this in the pack-file (or perhaps, the index, as a 
+> > new index extension) is probably a good idea.
+> 
+> Errr... index is per workarea (per checkout), and this information
+> is per repository, so IMHO storing this info in an index (dircache)
+> is a layering violation. Unless you were talking about pack-file-index.
 
-What I do to deal with this problem is I'll manually log into
-master.kernel.org, and then use the command "git-update-ref
-refs/heads/origin 19af35546de68c872dcb687613e0902a602cb20e", and then
-go back and do the push/pull.  Once there is a head which points to the
-latest from Linus, then the push/pull logic is smart and will only
-download the few commitments that aren't in the local git repository
-and aren't found in a shared repository.
+The pack index isn't a good idea since one pack doesn't necessarily 
+cover the whole of the repository.  A separate new file is the only 
+sensible thing to do, if done at all.
 
-Annoying, but as long as you have shell access on the machine with the
-destination repository, you can work around it.
 
-					- Ted
+Nicolas
