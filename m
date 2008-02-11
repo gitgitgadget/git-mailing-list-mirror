@@ -1,88 +1,75 @@
-From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
-Subject: Re: [StGit PATCH 2/2] Emacs mode: delete patches
-Date: Mon, 11 Feb 2008 11:12:12 +0100
-Message-ID: <87tzkfssxv.fsf@lysator.liu.se>
-References: <20080210204628.17886.27365.stgit@yoghurt>
-	<20080210204851.17886.69638.stgit@yoghurt>
-	<87wspbsubl.fsf@lysator.liu.se>
-	<20080211095118.GB28140@diana.vm.bytemark.co.uk>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH] RFC: git lazy clone proof-of-concept
+Date: Mon, 11 Feb 2008 11:13:59 +0100
+Message-ID: <47B01FE7.8010207@op5.se>
+References: <200802081828.43849.kendy@suse.cz> <m3ejbngtnn.fsf@localhost.localdomain> <9e4733910802081126r5bf19c95rec817a1b6648ee4d@mail.gmail.com> <alpine.LFD.1.00.0802081457170.2732@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Catalin Marinas <catalin.marinas@gmail.com>
-To: Karl =?utf-8?Q?Hasselstr=C3=B6m?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Mon Feb 11 11:12:57 2008
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Jon Smirl <jonsmirl@gmail.com>, Jakub Narebski <jnareb@gmail.com>,
+	Jan Holesovsky <kendy@suse.cz>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Mon Feb 11 11:14:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOVee-0002v2-Ha
-	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 11:12:52 +0100
+	id 1JOVgb-0003Uq-Ov
+	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 11:14:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751387AbYBKKMM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 11 Feb 2008 05:12:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751355AbYBKKMK
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Feb 2008 05:12:10 -0500
-Received: from mail.lysator.liu.se ([130.236.254.3]:47647 "EHLO
-	mail.lysator.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751156AbYBKKMJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 11 Feb 2008 05:12:09 -0500
+	id S1752074AbYBKKOK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Feb 2008 05:14:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752047AbYBKKOJ
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Feb 2008 05:14:09 -0500
+Received: from mail.op5.se ([193.201.96.20]:51897 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751949AbYBKKOI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Feb 2008 05:14:08 -0500
 Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.lysator.liu.se (Postfix) with ESMTP id E18E4200A218;
-	Mon, 11 Feb 2008 11:12:07 +0100 (CET)
-Received: from mail.lysator.liu.se ([127.0.0.1])
-	by localhost (lenin.lysator.liu.se [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 28491-01-84; Mon, 11 Feb 2008 11:12:07 +0100 (CET)
-Received: from krank (78.156.200.233.bredband.tre.se [78.156.200.233])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.lysator.liu.se (Postfix) with ESMTP id 3126A200A21C;
-	Mon, 11 Feb 2008 11:12:07 +0100 (CET)
-Received: by krank (Postfix, from userid 1000)
-	id 6C21F7B4077; Mon, 11 Feb 2008 11:12:12 +0100 (CET)
-In-Reply-To: <20080211095118.GB28140@diana.vm.bytemark.co.uk> ("Karl
- =?utf-8?Q?Hasselstr=C3=B6m=22's?= message of "Mon\, 11 Feb 2008 10\:51\:18
- +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at lysator.liu.se
+	by mail.op5.se (Postfix) with ESMTP id 0037A1F08843;
+	Mon, 11 Feb 2008 11:14:06 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.499
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
+	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 05gTXmCDk4lJ; Mon, 11 Feb 2008 11:14:06 +0100 (CET)
+Received: from clix.int.op5.se (unknown [172.27.78.26])
+	by mail.op5.se (Postfix) with ESMTP id 836071F08841;
+	Mon, 11 Feb 2008 11:14:03 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.9 (X11/20071115)
+In-Reply-To: <alpine.LFD.1.00.0802081457170.2732@xanadu.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73501>
 
-Karl Hasselstr=C3=B6m <kha@treskal.com> writes:
+Nicolas Pitre wrote:
+> On Fri, 8 Feb 2008, Jon Smirl wrote:
+> 
+>> There are some patches for making repack work multi-core. Not sure if
+>> they made it into the main git tree yet.
+> 
+> Yes, they are.  You need to compile with"make THREADED_DELTA_SEARCH=yes" 
+> or add THREADED_DELTA_SEARCH=yes into config.mak for it to be enabled 
+> though.  Then you have to set the pack.threads configuration variable 
+> appropriately to use it.
+> 
 
-> On 2008-02-11 10:42:22 +0100, David K=C3=A5gedal wrote:
->
->> Karl Hasselstr=C3=B6m <kha@treskal.com> writes:
->>
->> > David, could you have a look at this as well? In addition to me
->> > being elisp challenged, there are the following issues:
->> >
->> >   * Is "d" a reasonable binding? Any better suggestion?
->>
->> We could reserve "d" for moving a patch "down", maybe. The more
->> destructive commands could be on less accessible keys. Maybe "D" or
->> "C-d".
->
-> I'll take "D" then, since control bindings are more likely to collide
-> with existing bindings (as is already the case with C-r for stg
-> repair).
+I sent a patch to get it to auto-detect multi-core machines, but I see
+now that it was commented upon for finalization (by Nicolas, actually)
+and I must have missed that, thinking it had been applied because I got
+an accidental merge in my own tree.
 
-True, maybe we should move the repair binding as well.
+As such, I've been using that patch the last several months without
+problems. I'll rework them as per Nicolas' suggestions and resend.
 
->> >   * Currently, this command requires you to mark one or more
->> >     patches before deleting. This is convenient when deleting more
->> >     than one patch, but one could argue that it should be possible
->> >     to delete the patch at point without having to select it.
->>
->> You need something like this:
->
-> OK, thanks. I'll whip up a proper patch tonight -- unless you prefer
-> to do it yourself?
-
-Be my guest.
-
---=20
-David K=C3=A5gedal
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
