@@ -1,101 +1,255 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Alternative approach to the git config NULL value checking
- patches..
-Date: Sun, 10 Feb 2008 15:50:56 -0800 (PST)
-Message-ID: <alpine.LFD.1.00.0802101541380.2920@woody.linux-foundation.org>
-References: <alpine.LFD.1.00.0802101225110.2896@woody.linux-foundation.org> <7vir0wfqrz.fsf@gitster.siamese.dyndns.org> <alpine.LFD.1.00.0802101406560.2896@woody.linux-foundation.org> <7vbq6oe98y.fsf@gitster.siamese.dyndns.org> <7v7ihce8ex.fsf@gitster.siamese.dyndns.org>
- <20080210232920.GH5129@artemis.madism.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC Patch] Preventing corrupt objects from entering the repository
+Date: Sun, 10 Feb 2008 16:00:44 -0800
+Message-ID: <7vmyq8cqfn.fsf@gitster.siamese.dyndns.org>
+References: <20080210175812.GB12162@auto.tuwien.ac.at>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Mon Feb 11 00:52:51 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: mkoegler@auto.tuwien.ac.at (Martin Koegler)
+X-From: git-owner@vger.kernel.org Mon Feb 11 01:01:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOLyb-000627-46
-	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 00:52:49 +0100
+	id 1JOM7M-00088w-R7
+	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 01:01:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754013AbYBJXwN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Feb 2008 18:52:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753931AbYBJXwN
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 18:52:13 -0500
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:37911 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753494AbYBJXwM (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 10 Feb 2008 18:52:12 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m1ANov57019579
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 10 Feb 2008 15:50:58 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m1ANouro019873;
-	Sun, 10 Feb 2008 15:50:57 -0800
-In-Reply-To: <20080210232920.GH5129@artemis.madism.org>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
-X-Spam-Status: No, hits=-2.725 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1754167AbYBKABS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Feb 2008 19:01:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753980AbYBKABS
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Feb 2008 19:01:18 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:33676 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753458AbYBKABR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Feb 2008 19:01:17 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 8990B3EC4;
+	Sun, 10 Feb 2008 19:01:15 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id DEFFD3EBF;
+	Sun, 10 Feb 2008 19:01:06 -0500 (EST)
+In-Reply-To: <20080210175812.GB12162@auto.tuwien.ac.at> (Martin Koegler's
+	message of "Sun, 10 Feb 2008 18:58:12 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73440>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73441>
 
+mkoegler@auto.tuwien.ac.at (Martin Koegler) writes:
 
+> So I tried to fix the problem in another way: Instead of coping with 
+> corrupt objects, stop them from entering the repository.
 
-On Mon, 11 Feb 2008, Pierre Habouzit wrote:
+Good intention.  Very nice.
+
+> * add --strict option to unpack-objects (patch 1,8,9)
+> * add --strict option to index-pack (patch 8,10)
 >
-> > Having said all that, it might be an option to change your patch
-> > slightly to say:
-> > 
-> > 	const char config_true[] = "true";
-> 
-> I was about to suggest the same, and testing against "config_true" just
-> becomes an optimization, but isn't required. Seems an appropriate hack
-> to me.
+>   Same as for unpack-objects, but without writting objects.
+>
+> * add config option for receive pack to enable checking (patch 11)
 
-Well, I had the thing actually written that way, but it breaks some of the 
-test-suite. Whether the test-suite actually *should* test for what it 
-tests for is obviously debatable, but it does. It does test that when you 
-do
+If this patch is any good, I strongly suspect it should not be
+just the default but should always be on.  IOW no config is
+necessary.  That would make the series a bit simpler, I guess.
 
-	git config --get novalue.variable
+> From 76e86fe55345e633c910d6b8fe166e27c23c5aaf Mon Sep 17 00:00:00 2001
+> From: Martin Koegler <mkoegler@auto.tuwien.ac.at>
+> Date: Fri, 8 Feb 2008 08:51:38 +0100
+> Subject: [PATCH 01/12] unpack-object: cache for non written objects
+>
+> Preventing objects with broken links entering the repository
+> means, that write of some objects must be delayed.
+>
+> This patch adds a cache to keep the object data in memory. The delta
+> resolving code must also search in the cache.
 
-you are expected to get an empty result. Is that good? Probably not. But 
-it's what you get traditionally, and it's what the tests actually test for 
-(t/t1300-repo-config.sh in case you care).
+I have to wonder what the memory pressure in real-life usage
+will be like.
 
-But yes, I actually think it might be an improvement and have that thing 
-return "true" (which is what happens if you make the 'config_true' array 
-contain that string). And that allows removal of one test from the 
-"git_config_bool()" function, but on the other hand, it does result in 
-some strange stuff too..
+When an object is proven to be good, we should be able to free
+its buffer after writing it out, but would that be a good enough
+optimization we can make later on this code to keep its memory
+consumption manageable?
 
-In particular, *if* somebody just takes a string blindly and uses
+> diff --git a/fsck.c b/fsck.c
+> new file mode 100644
+> index 0000000..089f775
+> --- /dev/null
+> +++ b/fsck.c
+> @@ -0,0 +1,84 @@
+> +#include "cache.h"
+> +#include "object.h"
+> +#include "blob.h"
+> +#include "tree.h"
+> +#include "tree-walk.h"
+> +#include "commit.h"
+> +#include "tag.h"
+> +#include "fsck.h"
+> +
+> +static int fsck_walk_tree(struct tree* tree, fsck_walk_func walk, void* data)
+> +{
+> +	struct tree_desc desc;
+> +	struct name_entry entry;
+> +
+> +	if(parse_tree(tree))
+> +		return -1;
 
-	result = xstrdup(value);
+I noticed many coding style issues but I won't be mentioning
+them in this response.
 
-then with my patch it would then use an empty string for whatever it 
-happened to pick. So having something like
+It's a bit hard to see how these new set of functions relate to
+the original code in this patch series, because you add the new
+things that are initially not used anywhere independently, start
+referring to them in a separate patch and then remove the old
+related functions that are now unused.  This style makes
+reviewing easier and harder at the same time...
 
-	[user]
-		name
+> From 80b22c3f2c3e13c207790a49646020c55b34bba7 Mon Sep 17 00:00:00 2001
+> From: Martin Koegler <mkoegler@auto.tuwien.ac.at>
+> Date: Fri, 8 Feb 2008 09:01:50 +0100
+> Subject: [PATCH 03/12] fsck: move mark-reachable to fsck_walk
+>
+> Signed-off-by: Martin Koegler <mkoegler@auto.tuwien.ac.at>
+> ---
+>  builtin-fsck.c |   34 ++++++++++++++++++++++++----------
+>  1 files changed, 24 insertions(+), 10 deletions(-)
+>  ...
+> +static int mark_object(struct object* obj, int type, void* data)
+> +{
+> +	if (!obj)
+> +		return 0;
+> +	if (obj->flags & REACHABLE)
+> +		return 0;
+> +	obj->flags |= REACHABLE;
+> +	if (!obj->parsed)
+> +		return 0;
+> +	return fsck_walk(obj, mark_object, data);
+> +}
 
-will mean that your name is empty (which will actually trigger an error if 
-you try to commit).
+Hmm.  The return value 0 means Ok and negative is error?  The
+reason we can say success if obj is NULL or it is not parsed yet
+is because...?
 
-In contrast, if you do that 'config_true[] = "true"' thing, then that 
-config file entry will make your name be the string "true", which is just 
-_odd_.
+> @@ -326,8 +344,6 @@ static int fsck_tree(struct tree *item)
+>  		o_name = name;
+>  		o_sha1 = sha1;
+>  	}
+> -	free(item->buffer);
+> -	item->buffer = NULL;
 
-So I think an empty config_true actually has a nicer and more easily 
-explainable failure case. It causes empty strings when mis-used, not 
-arbitrary and strange "true" strings.
+Hmm.  The reason you still need the buffer after you checked the
+contents of the tree in the loop is because you haven't actually
+checked the referents are Ok.  But I do not see a corresponding
+free that releases this memory after you are actually done with
+the verification with fsck_walk() yet, so we leak this in the
+meantime?
 
-Whatever. 
+> @@ -375,8 +391,6 @@ static int fsck_commit(struct commit *commit)
+>  	}
+>  	if (memcmp(buffer, "author ", 7))
+>  		return objerror(&commit->object, "invalid format - expected 'author' line");
+> -	free(commit->buffer);
+> -	commit->buffer = NULL;
+>  	if (!commit->tree)
+>  		return objerror(&commit->object, "could not load commit's tree %s", tree_sha1);
+>  	if (!commit->parents && show_root)
 
-		Linus
+Likewise.
+
+> From ce43251ef71962ff64fe138f1295c405ef6aaf65 Mon Sep 17 00:00:00 2001
+> From: Martin Koegler <mkoegler@auto.tuwien.ac.at>
+> Date: Fri, 8 Feb 2008 09:04:08 +0100
+> Subject: [PATCH 04/12] fsck: move reachable object check to fsck_walk
+>
+> It handles NULL pointers in object references without crashing.
+>
+> Signed-off-by: Martin Koegler <mkoegler@auto.tuwien.ac.at>
+> ---
+>  builtin-fsck.c |   49 +++++++++++++++++++++++++++++--------------------
+>  1 files changed, 29 insertions(+), 20 deletions(-)
+>
+> diff --git a/builtin-fsck.c b/builtin-fsck.c
+> index 49e96ff..2c1e10f 100644
+> --- a/builtin-fsck.c
+> +++ b/builtin-fsck.c
+> @@ -81,13 +81,39 @@ static int objwarning(struct object *obj, const char *err, ...)
+>  	return -1;
+>  }
+>  
+> +static int check_reachable_object_childs(struct object *obj, int type, void *data)
+> +{
+> +	struct object *parent = data;
+> +	if (!obj) {
+> +		printf("broken link from %7s %s\n",
+> +			   typename(parent->type), sha1_to_hex(parent->sha1));
+> +		printf("broken link from %7s %s\n",
+> +			   (type==OBJ_ANY?"unknown":typename(type)), "unknown");
+
+Hmm?  I am not sure what this part is reporting...
+
+> From ee11f771be1ef1c29725cb56ab3eb8dfe61ca25a Mon Sep 17 00:00:00 2001
+> From: Martin Koegler <mkoegler@auto.tuwien.ac.at>
+> Date: Fri, 8 Feb 2008 09:07:33 +0100
+> Subject: [PATCH 06/12] create a common object checker code out of fsck
+>
+> The function provides a callback for reporting errors.
+
+The same "add unused new stuff independently, later use it and
+then finally remove now unused old stuff" pattern is here.  I am
+neutral to that patch style but it is a bit harder to see what
+is going on.
+
+Most of the changes seem to be straight and sane copy-and-paste though.
+
+> From a8db4e754e717bac0b2462333d4145eac3452099 Mon Sep 17 00:00:00 2001
+> From: Martin Koegler <mkoegler@auto.tuwien.ac.at>
+> Date: Fri, 8 Feb 2008 09:14:14 +0100
+> Subject: [PATCH 09/12] unpack-objects: prevent writing of inconsistent objects
+>
+> This patch introduces a strict mode, which ensures that:
+> - no malformed object will be written
+> - no object with broken links will be written
+>
+> The patch ensures this by delaying the write of all non blob object.
+> These object are written, after all objects they link to are written.
+>
+> An error can only result in unreferenced objects.
+
+> diff --git a/builtin-unpack-objects.c b/builtin-unpack-objects.c
+> index f18c7e8..3e906e4 100644
+> --- a/builtin-unpack-objects.c
+> +++ b/builtin-unpack-objects.c
+> @@ -173,7 +250,6 @@ static void resolve_delta(unsigned nr, enum object_type type,
+>  		die("failed to apply delta");
+>  	free(delta);
+>  	write_object(nr, type, result, result_size);
+> -	free(result);
+>  }
+
+And this is freed later elsewhere?
+
+> @@ -203,7 +279,8 @@ static void unpack_non_delta_entry(enum object_type type, unsigned long size,
+>  
+>  	if (!dry_run && buf)
+>  		write_object(nr, type, buf, size);
+> -	free(buf);
+> +	else if (buf)
+> +		free(buf);
+>  }
+
+You can always free NULL without checking.
+
+> @@ -356,6 +434,7 @@ static void unpack_all(void)
+>  	if (!quiet)
+>  		progress = start_progress("Unpacking objects", nr_objects);
+>  	obj_list = xmalloc(nr_objects * sizeof(*obj_list));
+> +	memset(obj_list, 0, nr_objects * sizeof(*obj_list));
+
+Hmm, is this a fix to the 'master' independent from all the rest
+of your patches, or a new requirement?
