@@ -1,114 +1,61 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Alternative approach to the git config NULL value checking
- patches..
-Date: Mon, 11 Feb 2008 12:27:30 -0500 (EST)
-Message-ID: <alpine.LNX.1.00.0802111133490.13593@iabervon.org>
-References: <alpine.LFD.1.00.0802101225110.2896@woody.linux-foundation.org> <7vir0wfqrz.fsf@gitster.siamese.dyndns.org>
+From: "Jay Soffian" <jaysoffian+git@gmail.com>
+Subject: Re: Trouble with gitk and ActiveState tcltk on OS X
+Date: Mon, 11 Feb 2008 12:59:45 -0500
+Message-ID: <76718490802110959y10df4bc6xfe98a9de57a4f8a@mail.gmail.com>
+References: <m2ve4wh5sx.fsf@ziti.evri.corp>
+	 <20080211044941.GX24004@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 11 18:29:06 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Seth Falcon" <seth@userprimary.net>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon Feb 11 19:01:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOcRy-0005DZ-DA
-	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 18:28:14 +0100
+	id 1JOcxJ-0001nK-9t
+	for gcvg-git-2@gmane.org; Mon, 11 Feb 2008 19:00:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758126AbYBKR1i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Feb 2008 12:27:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757644AbYBKR1h
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Feb 2008 12:27:37 -0500
-Received: from iabervon.org ([66.92.72.58]:45824 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755604AbYBKR1g (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Feb 2008 12:27:36 -0500
-Received: (qmail 22942 invoked by uid 1000); 11 Feb 2008 17:27:30 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 11 Feb 2008 17:27:30 -0000
-In-Reply-To: <7vir0wfqrz.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1757260AbYBKR7t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Feb 2008 12:59:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756817AbYBKR7t
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Feb 2008 12:59:49 -0500
+Received: from el-out-1112.google.com ([209.85.162.178]:58698 "EHLO
+	el-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756502AbYBKR7r (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Feb 2008 12:59:47 -0500
+Received: by el-out-1112.google.com with SMTP id v27so1758688ele.23
+        for <git@vger.kernel.org>; Mon, 11 Feb 2008 09:59:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        bh=icDz89pI5e3OSmdLIopb1KBkEU32IMDPRgn9X6IjVqc=;
+        b=eeoWIZU1ghZ/L0KOE1Kzfz3FDF72Q5mQHUNe0YQM5vz667bSE/oSD0bijRevjBdKepPBGdXf+aMnqm/VLIKCtoQzQ7qiVmvlhKszUhlQ07uwdDTDjSWwTtXiUig8r1578rzWUcm7dwFoizLpzGfXx01LPZ0bkFMwpwfkY0AMc6s=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=OvLa7hi9Y1laNA0q0ltC07eMzKsozaJxd4GNxRC0FwYXRETXgNJRttUUr1xdD5I6f4t+Ls4xYY8uPLk6oW6Ujdwosm+gTBwV2wUsNGFhNiyYCsE4sxb3TmHARchoy/f7qvkER4GR4c65lcDC3oYCQmbx9NN7/gPzkrWA8V171s0=
+Received: by 10.114.210.2 with SMTP id i2mr313724wag.36.1202752785194;
+        Mon, 11 Feb 2008 09:59:45 -0800 (PST)
+Received: by 10.114.255.11 with HTTP; Mon, 11 Feb 2008 09:59:45 -0800 (PST)
+In-Reply-To: <20080211044941.GX24004@spearce.org>
+Content-Disposition: inline
+X-Google-Sender-Auth: a7379881e846790d
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73555>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73556>
 
-On Sun, 10 Feb 2008, Junio C Hamano wrote:
+On Feb 10, 2008 11:49 PM, Shawn O. Pearce <spearce@spearce.org> wrote:
+> For what its worth I use the native Tcl/Tk that ships with Mac OS X,
+> /usr/bin/wish, which is really in /Library/Frameworks/Tk.framework.
 
-> Linus Torvalds <torvalds@linux-foundation.org> writes:
-> 
-> > It may be a bit odd, but it automatically means that codepaths that simply 
-> > don't want to care about the subtle difference between "true" and "empty" 
-> > will just automatically work, because to them the two cases will look 
-> > identical, because the strings will compare the same - they have the same 
-> > data, just different addresses.
-> 
-> I should have mentioned the reason why I did not suggest doing
-> it this way in my [Janitor] message.
-> 
-> It is not "suttle difference between true and empty".  Empty
-> means false, and with this approach, it switches the meaning of
-> valueless form of config to quite the opposite.
-> 
-> In addition to fixing existing breakages, a piece of code that
-> knew NULL is true and empty is false and coded accordingly, i.e.
-> 
-> 	if (!value)
->         	Ah we have true;
-> 	else if (!*value)
->         	Ok this is false;
-> 	else if (!strcmp(value, "something special")
->         	Ok, this is not bool but special;
-> 	else
->         	return git_config_bool(var, value);
-> 
-> will now need to be changed to:
-> 
-> 	if (value == config_true)
->         	Ah we have true;
-> 	else if (!*value)
->         	Ok this is false;
-> 	else if (!strcmp(value, "something special")
->         	Ok, this is not bool but special;
-> 	else
->         	return git_config_bool(var, value);
+Under 10.5, it's /System/Library/Frameworks/Tk.framework and the app
+is now /System/Library/Frameworks/Tk.framework/Resources/Wish\
+Shell.app. I'll work on a patch for the git-gui Makefile in next (or
+master?) to work w/both 10.4 and 10.5 if I can figure out the darn
+Makefile quoting (loathe whitespace in path names).
 
-Shouldn't it be simply:
-
-	if (!strcmp(value, "something special"))
-		Ok, this is not bool but special;
-	else
-		return git_config_bool(var, value);
-
-That is, don't check for special true or special false at all, but have 
-git_config_bool() sort them out? And Linus's code means that you can do 
-the strcmp without worrying about getting a segfault on special true.
-
-> if you do this.  And the code that was already broken:
-> 
-> 	if (!strcmp(value, "somevalue")
-> 		Ok let's use somevalue;
-> 	else if (!strcmp(value, "someothervalue")
-> 		Ok let's use someothervalue;
-> 	else
->         	die("oops we do not understand '%s'", value);
-> 
-> still need to be fixed to:
-> 
-> 	if (value == config_true)
->         	die("oops '%s' is not a bool", var);
-> 	else if (!strcmp(value, "somevalue")
-> 		Ok let's use somevalue;
-> 	else if (!strcmp(value, "someothervalue")
-> 		Ok let's use someothervalue;
-> 	else
->         	die("oops we do not understand '%s'", value);
-
-If it isn't changed, you'd get the message "oops we do not understand ''" 
-for either true or false empty values, which seems, if anything, better.
-
-	-Daniel
-*This .sig left intentionally blank*
+j.
