@@ -1,96 +1,106 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [RFC Patch] Preventing corrupt objects from entering the repository
-Date: Tue, 12 Feb 2008 11:02:06 -0500 (EST)
-Message-ID: <alpine.LFD.1.00.0802120937330.2732@xanadu.home>
-References: <20080210175812.GB12162@auto.tuwien.ac.at>
- <7vmyq8cqfn.fsf@gitster.siamese.dyndns.org>
- <alpine.LFD.1.00.0802101929310.2732@xanadu.home>
- <20080211195623.GA21878@auto.tuwien.ac.at>
- <alpine.LFD.1.00.0802111513360.2732@xanadu.home>
- <20080211215806.GA24971@auto.tuwien.ac.at>
+From: "H.Merijn Brand" <h.m.brand@xs4all.nl>
+Subject: Re: libcrypto core dump in 64bit
+Date: Tue, 12 Feb 2008 17:38:42 +0100
+Message-ID: <20080212173842.0a3704b1@pc09.procura.nl>
+References: <20080211112822.16b69495@pc09.procura.nl>
+	<alpine.LSU.1.00.0802112240280.3870@racer.site>
+	<20080212150612.4d28c373@pc09.procura.nl>
+	<loom.20080212T152138-849@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Martin Koegler <mkoegler@auto.tuwien.ac.at>
-X-From: git-owner@vger.kernel.org Tue Feb 12 17:03:07 2008
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Michal Rokos <michal@rokos.cz>
+X-From: git-owner@vger.kernel.org Tue Feb 12 17:39:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOxau-0005Cb-Lf
-	for gcvg-git-2@gmane.org; Tue, 12 Feb 2008 17:02:53 +0100
+	id 1JOyAQ-0002of-25
+	for gcvg-git-2@gmane.org; Tue, 12 Feb 2008 17:39:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754824AbYBLQCS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Feb 2008 11:02:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751539AbYBLQCS
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Feb 2008 11:02:18 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:56738 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752499AbYBLQCR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Feb 2008 11:02:17 -0500
-Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR005.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JW4005O4V7B2EI0@VL-MO-MR005.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 12 Feb 2008 11:01:59 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <20080211215806.GA24971@auto.tuwien.ac.at>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+	id S1754824AbYBLQi5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Feb 2008 11:38:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756508AbYBLQi5
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Feb 2008 11:38:57 -0500
+Received: from smtp-vbr8.xs4all.nl ([194.109.24.28]:4708 "EHLO
+	smtp-vbr8.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753690AbYBLQiz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Feb 2008 11:38:55 -0500
+Received: from pc09.procura.nl (procura.xs4all.nl [82.95.216.29])
+	(authenticated bits=0)
+	by smtp-vbr8.xs4all.nl (8.13.8/8.13.8) with ESMTP id m1CGcqsv015945
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 12 Feb 2008 17:38:52 +0100 (CET)
+	(envelope-from h.m.brand@xs4all.nl)
+In-Reply-To: <loom.20080212T152138-849@post.gmane.org>
+X-Mailer: Claws Mail 3.3.0 (GTK+ 2.10.6; x86_64-unknown-linux-gnu)
+Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwEAIAAACI8LKTAAAACXBIWXMAAABIAAAASABGyWs+AAAC
+ JElEQVRo3u2aMY4CMQxFczZ6RItEzRm4DBINDbRUSPRInIRbsNK6+dJfezN4kokn48IaCSjysL8d
+ e9Knoj2fr9f9/gllqQ6U9/vxWK3EdwdIEGjRIVCu18NhuxUfK46SH81+fzrdbuKPx/P5ctHQdAdI
+ TKAgpvV6s9ntBEfXEYSGgMQzIHnuFBBjkshCNJ2KtJZ04hHNAugP8bZr3NIHhbcF0AKoK0CoaHXU
+ LUWBIs1n+jV+Fl8CVqOApEXAwyMO/DSR4XVntoAYDR7eBjQupuYAYTMph8Rj21D4m7MChN02tpqs
+ NSnb/KqU2oHCXu5xDCgflj/RAgBiKBIXnICzAsSjWBsTz5K4/HeXYvb8yK5lY3VGEwPi2aONKT+5
+ AlcxrTPOwcTiraGRChgMEKJh0bVVifGVTq6qgBiNVl8QE29EsK6VE+YJAOG2wz5AvsqUS6uqgHCA
+ n4NGvBYpnJ64Jgg27sCtxtBk1CJIA4S/GhdWKh07QxUB48jWGhZ4jKamRRr/T8/M0AaEyctry6YB
+ 4dTGj9iWZNs3DahES5kPCJOu0RQbF/fQOBprsB9gaO9JtPDzII9U5ySXX7AnuIt91y54AAW7rPpT
+ LCe5gt3F+CLqr2UarGB3MXvMylWGq4+9RCx3TW1oJq1t3HPQlFs6N1fFNEB4s8dn7Ne7ACSm7TPQ
+ I5quAWmw6qBpulHM33B0Csge4Nd8JTTYG2b1XyRe3lH8x34ABJ6aePuQ2N4AAAAASUVORK5CYII=
+X-Virus-Scanned: by XS4ALL Virus Scanner
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73671>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73672>
 
-On Mon, 11 Feb 2008, Martin Koegler wrote:
+On Tue, 12 Feb 2008 15:26:16 +0000 (UTC), Michal Rokos <michal@rokos.cz>
+wrote:
 
-> On Mon, Feb 11, 2008 at 03:41:06PM -0500, Nicolas Pitre wrote:
-> > On Mon, 11 Feb 2008, Martin Koegler wrote:
-> > > Please remember, that --strict is used for pushing data.
+> Hello,
+> 
+> H.Merijn Brand <h.m.brand <at> xs4all.nl> writes:
+> > On Mon, 11 Feb 2008 22:42:16 +0000 (GMT), Johannes Schindelin
+> > <Johannes.Schindelin <at> gmx.de> wrote:
+> > > > #0  0xc0000000033c8940:0 in sha1_block_asm_host_order+0x22e0 ()
+> > > >    from /usr/local/ssl/lib/libcrypto.so
+> > > 
+> > > This seems to be an OpenSSL issue, probably in its Itanium-optimised code 
+> > > (since Itanium is not _all_ that common, it is quite likely that no many 
+> > > people exercise this part of the code).
 > > 
-> > And what exactly does it provide in terms of safetiness that index-pack 
-> > doesn't already do?  I'm not sure I fully understood the goal here.
+> > Now tried with HP C-ANSI-C -O3, -O2, -O1, and -O0 and with GNU gcc 4.2.1 -O3
+> > All give the same failure
+> > 
+> > > Unfortunately, I am not at all an expert in Itanium's assembler, otherwise 
+> > > I'd try to help...
 > 
-> The patch is about verifing the content of objects. My intented use is
-> for running a (restricted) server, which allows pushing via git-daemon
-> (or git-shell) from (untrusted) users. It can be also used to catch
-> corrupt objects, before they leave your repository, but this is for me
-> only a side effect.
+> yes, this is OpenSSL issue. I had to recompile OpenSSL myself to make it work
+> (with no-asm option)
+
+OK, I did the same now, and the docs tell me to turn down optimization to
++O2 when you choose to do so.
+
+Apart from that, when you create shared libs, the default build creates a
+conflicting situation, so you have to throw away the files that cause dup
+names: aes-ia64.o rc4-ia64.o bn-ia64.o from libcrypto.a
+
+t5302-pack-index.sh now passes
+
+> I'm using only HP cc for building git (with all the toolchain). (No gcc here)
 > 
-> receive-pack accepts any crap (anything, which you can pipe into
-> git-hash-object with -t parameter of your choice), if the pack file
-> format is correct.
-> 
-> But lots of code in git assums that the object content is welformd.
-> 
-> Having such objects somewhere reachable in your repository will
-> disturb cloning (In the best case you get a error messages, in the
-> worst a child process of upload-pack segfaults), gitweb, ... . To fix
-> it, you will need a person with native access to the repository in the
-> worst case. 
+> # uname -mrs
+> HP-UX B.11.23 ia64
+> # cc --version
+> cc: HP C/aC++ B3910B A.06.14 [Feb 22 2007]
 
-OK that makes sense.
+HP-UX 11.23/64 U  rx1620/64 Itanium 2/1600(2) ia64  2037 Mb
+cc: HP C/aC++ B3910B A.06.15 [May 16 2007]
 
-I think this is a good idea to always have some sanity checks on any 
-incoming objects so to make sure they're well formed and valid before 
-giving them a SHA1 value, and bail out as soon as any error is found.  
-From my understanding that's what your patch is doing, right? (sorry I 
-can't find them in my mailbox anymore).  This can be done as objects are 
-coming in just fine and requires no extra memory, and I would say this 
-should be done unconditionally all the time.  After all, the Git 
-coherency model is based on the SHA1 checksuming, and therefore it is a 
-good idea to never validate any malformed objects with a SHA1.  So I'm 
-all in favor of such validation always performed in index-pack and 
-unpack-objects.
+Did you get the full test suite to pass?
 
-As to making sure those objects are well connected... well this is a 
-technically different issue entirely, and I wonder if a special mode to 
-fsck might not be a better solution.  For example, fsck could be made to 
-validate object connectivity, starting from the new ref(s), and stopping 
-object walking as soon as a reference to an object not included in the 
-newly received pack is encountered.  This could be run from some hook to 
-decide whether or not to update the new refs, and to delete the pack 
-otherwise.
-
-
-Nicolas
+-- 
+H.Merijn Brand         Amsterdam Perl Mongers (http://amsterdam.pm.org/)
+using & porting perl 5.6.2, 5.8.x, 5.10.x  on HP-UX 10.20, 11.00, 11.11,
+& 11.23, SuSE 10.1 & 10.2, AIX 5.2, and Cygwin.       http://qa.perl.org
+http://mirrors.develooper.com/hpux/            http://www.test-smoke.org
+                        http://www.goldmark.org/jeff/stupid-disclaimers/
