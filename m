@@ -1,111 +1,67 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: gitweb bug: broken "next" and other links
-Date: Tue, 12 Feb 2008 14:34:49 +0100
-Message-ID: <2BAB20FB-3FDF-4133-A41A-55BB2AB32603@wincent.com>
-References: <B0EC9FB3-DDDE-4BC5-92D8-20487CBD6725@wincent.com> <200802111630.29159.jnareb@gmail.com> <E16BED2E-C146-44D8-BD90-ECF0DF89CA35@wincent.com> <200802121410.58208.jnareb@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v915)
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>, Petr Baudis <pasky@suse.cz>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 12 14:36:24 2008
+From: Bill Priest <priestwilliaml@yahoo.com>
+Subject: git 1.5.4.1 svn fetch stops fetching w/ "Last fetch revision ..."
+Date: Tue, 12 Feb 2008 05:42:57 -0800 (PST)
+Message-ID: <883188.51167.qm@web55015.mail.re4.yahoo.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 12 14:50:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOvIp-0000Vc-7Q
-	for gcvg-git-2@gmane.org; Tue, 12 Feb 2008 14:36:03 +0100
+	id 1JOvWa-0005rZ-2B
+	for gcvg-git-2@gmane.org; Tue, 12 Feb 2008 14:50:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762230AbYBLNe5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 Feb 2008 08:34:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762286AbYBLNe5
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Feb 2008 08:34:57 -0500
-Received: from wincent.com ([72.3.236.74]:48259 "EHLO s69819.wincent.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1761476AbYBLNe4 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 12 Feb 2008 08:34:56 -0500
-Received: from cuzco.lan (localhost [127.0.0.1])
-	(authenticated bits=0)
-	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id m1CDYoaS023692;
-	Tue, 12 Feb 2008 07:34:51 -0600
-In-Reply-To: <200802121410.58208.jnareb@gmail.com>
-X-Mailer: Apple Mail (2.915)
+	id S1757460AbYBLNtl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Feb 2008 08:49:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757554AbYBLNtl
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Feb 2008 08:49:41 -0500
+Received: from web55015.mail.re4.yahoo.com ([206.190.58.149]:20568 "HELO
+	web55015.mail.re4.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1755128AbYBLNtk (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 12 Feb 2008 08:49:40 -0500
+X-Greylist: delayed 398 seconds by postgrey-1.27 at vger.kernel.org; Tue, 12 Feb 2008 08:49:40 EST
+Received: (qmail 55533 invoked by uid 60001); 12 Feb 2008 13:42:57 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=X-YMail-OSG:Received:Date:From:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
+  b=6tMWg+dJFMUXl1QvLKzLL6SpXT/mKCSLH4egPnGkJDHSKzT17as0OROG5yuYhmt2176zqXmO7Inl7gvoW2Qr04NL9nUDGDbn0s6r+r3OvnFPSUPeHN8A5dYrPDhmKtIvOrsgMjgapA5YdBkzsaaFoMjiLIQPS8zT6mmXn1xxiMo=;
+X-YMail-OSG: dTJ8_gQVM1nYuTmY7oG4B3QhCA21Bwgpw0QCWKoX
+Received: from [12.44.137.148] by web55015.mail.re4.yahoo.com via HTTP; Tue, 12 Feb 2008 05:42:57 PST
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73660>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73661>
 
-El 12/2/2008, a las 14:10, Jakub Narebski escribi=C3=B3:
+All,
+    I upgraded from git 1.5.3.4.452.g09149 to git
+1.5.4.1 and upon a subsequent git svn fetch I started
+receiving the following:
+Index mismatch:
+d1437ce54ff0e90f4023ee653761c28626a8295a !=
+f567f1f12e7d7ddf1d18e3889061aa9a783dfbba
+rereading 1c3d0737f3eb78241eb508e7da6b80e3f3b7fa85
+        M       src/foo.c
+        M       src/bar.c
+Last fetched revision of refs/remotes/release was
+r2990, but we are about to fetch: r2985!
 
-> Dnia wtorek 12. lutego 2008 13:24, Wincent Colaiuta napisa=C5=82:
->> El 11/2/2008, a las 16:30, Jakub Narebski escribi=C3=B3:
->>>
->>> I'm sorry. You are right. I haven't seen breakage because it shows
->>> only when you use 'pathinfo' feature and pathinfo URLs.
->>>
->>> Below there is a fix for that; actully only second part mentioned
->>> (and first in patch) is needed, i.e. moving setting =20
->>> $params{'project'}
->>> before dealing with -replay is needed I think to fix this bug.
->>>
->>> Could you test it please?
->>
->> Your patch fixes the "next" links in the shortlog and log views.
->>
->> It doesn't fix the broken "raw" links in the commitdiff view. I'm
->> still seeing links like:
->>
->> http://example.com/ARRAY(0x8c97f64)?a=3Dcommitdiff_plain;h=3Df29d562=
-69a1c3bd4a970897397470f41553a64f9
->
-> Could yu please give an URL for the page containing broken
-> link
+git svn fetch w/ 1.5.3 worked correctly and subsequent
+fetches "do nothing" as expected.
 
-Any commitdiff page on repo.or.cz:
+Is this a known issue?  Is there a work-around? I can
+try to track down which change caused the breakage if
+needed.
 
-eg.
+Thanks,
 
-http://repo.or.cz/w/git.git?a=3Dcommitdiff;h=3D94bf9f7c37cca0241785a5f4=
-e54e5cc98e175244
+Bill
 
-Any commitdiff page on my own gitweb install:
 
-eg.
 
-http://git.wincent.com/wikitext.git?a=3Dcommitdiff;h=3Df29d56269a1c3bd4=
-a970897397470f41553a64f9
-
-> relevant parts of gitweb configuration (gitweb_config.perl),
-> and gitweb parts of repository configuration, if there are any?
-
-Obviously I can't comment about the repo.or.cz config, but in my local =
-=20
-install gitweb was built with:
-
-make prefix=3D/usr/local \
-  GITWEB_PROJECTROOT=3D/pub/git/path_to_public_repos \
-  GITWEB_LIST=3D/pub/git/conf/gitweb-projects \
-  GITWEB_STRICT_EXPORT=3D1 \
-  GITWEB_CSS=3D"/gitweb.css" \
-  GITWEB_LOGO=3D"/git-logo.png" \
-  GITWEB_FAVICON=3D"/git-favicon.png" \
-  GITWEB_CONFIG=3D"/pub/git/conf/gitweb.conf" \
-  gitweb/gitweb.cgi
-
-And gitweb.conf contains:
-
-$feature{'search'}{'default'} =3D [undef];
-$feature{'blame'}{'default'} =3D [undef];
-$feature{'pickaxe'}{'default'} =3D [undef];
-$feature{'grep'}{'default'} =3D [undef];
-$feature{'pathinfo'}{'default'} =3D [1];
-$my_uri =3D "http://git.wincent.com";
-$home_link =3D "http://git.wincent.com/";
-$site_name =3D "git.wincent.com";
-
-So all pretty stock standard, I think.
-
-Cheers,
-Wincent
+      ____________________________________________________________________________________
+Looking for last minute shopping deals?  
+Find them fast with Yahoo! Search.  http://tools.search.yahoo.com/newsearch/category.php?category=shopping
