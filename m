@@ -1,61 +1,82 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: StGit: kha/safe and kha/experimental updated
-Date: Tue, 12 Feb 2008 17:54:24 +0000
-Message-ID: <b0943d9e0802120954j4322e1d9o7796428f9480f9a@mail.gmail.com>
-References: <20080210203640.GA19688@diana.vm.bytemark.co.uk>
+From: "Nikita V. Youshchenko" <yoush@debian.org>
+Subject: git apply fails because of 'index xxxxxxx..yyyyyyy' line?
+Date: Tue, 12 Feb 2008 21:55:30 +0300
+Message-ID: <1358330.RVoaTMz8tR@yoush.homelinux.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, "Peter Oberndorfer" <kumbayo84@arcor.de>,
-	"=?ISO-8859-1?Q?David_K=E5gedal?=" <davidk@lysator.liu.se>
-To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Tue Feb 12 18:55:09 2008
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 12 19:56:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOzLR-0006mp-Fa
-	for gcvg-git-2@gmane.org; Tue, 12 Feb 2008 18:55:01 +0100
+	id 1JP0Ir-0005Gh-R7
+	for gcvg-git-2@gmane.org; Tue, 12 Feb 2008 19:56:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761022AbYBLRy0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 Feb 2008 12:54:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761307AbYBLRy0
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Feb 2008 12:54:26 -0500
-Received: from py-out-1112.google.com ([64.233.166.179]:5583 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761022AbYBLRyZ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 12 Feb 2008 12:54:25 -0500
-Received: by py-out-1112.google.com with SMTP id u52so7433823pyb.10
-        for <git@vger.kernel.org>; Tue, 12 Feb 2008 09:54:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=UhHJEjlGYz0y9pVS1c421AhvG05cBfnY3ZlpxeFCEIs=;
-        b=t6bO31kK2ZYMe0ZUA9z6FxGCprCKQRyqCVholUqeKDfQpz3OcqUARNi0RA7bOwkKjeI+e0fZD97R/mkYLKYNST+Z1Ghvhi6rdW+RYWiMIp2w6u9i9K7G8zI6Fdg10pm8z7I/a+UE24IDZWDZDaZMm+h7GX38k+3w2455qh9aFVI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=ey2htzcvTu5b9n+Hr1M+rg8RRuhYasQ700LSUbx3vCeT9yIG782/P4lO3q9/cpNXQKviXo8ePc93uqj1AT+Q3h+VDYQ2hHWbrkMxS0u95SbORTK6AujkTTwv3H95XclQSp+RUUqA8vmscyHJm0bh3EFFmwcdeG7JVI2LqbT2XPM=
-Received: by 10.140.169.6 with SMTP id r6mr1130875rve.210.1202838864300;
-        Tue, 12 Feb 2008 09:54:24 -0800 (PST)
-Received: by 10.141.186.5 with HTTP; Tue, 12 Feb 2008 09:54:24 -0800 (PST)
-In-Reply-To: <20080210203640.GA19688@diana.vm.bytemark.co.uk>
-Content-Disposition: inline
+	id S1763588AbYBLSzs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Feb 2008 13:55:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763441AbYBLSzr
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Feb 2008 13:55:47 -0500
+Received: from main.gmane.org ([80.91.229.2]:58546 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1763368AbYBLSzq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Feb 2008 13:55:46 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1JP0I9-0003H5-V1
+	for git@vger.kernel.org; Tue, 12 Feb 2008 18:55:41 +0000
+Received: from ppp85-140-98-91.pppoe.mtu-net.ru ([85.140.98.91])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 12 Feb 2008 18:55:41 +0000
+Received: from yoush by ppp85-140-98-91.pppoe.mtu-net.ru with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 12 Feb 2008 18:55:41 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: ppp85-140-98-91.pppoe.mtu-net.ru
+User-Agent: KNode/0.10.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73681>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73682>
 
-On 10/02/2008, Karl Hasselstr=F6m <kha@treskal.com> wrote:
-> Both branches updated. I've promoted some experimental patches to
-> safe, and done some work on new and delete (will post the patches in
-> reply to this mail).
+Hello
 
-Thanks, I merged them last night. I now have to spend some time to
-understand StGIT as it's moving too fast :-). I'll try to put back
-some of the things I use like the automatic invocation of the merge
-tool during conflicts etc.
+I was playing with 'git quiltimport' feature, trying to import a large quilt
+patchset (coming from vendor) into a local git repository containing linux
+kernel tree.
 
---=20
-Catalin
+Some of quilt patches in the patchset have been created by picking single
+git commits, likely with 'git show XXXXXX > file.patch.
+
+And I found that such patches fail to apply with 'git apply' (which is
+internally used by 'git quiltimport'). Git complains:
+
+fatal: patch with only garbage at line 3
+
+However, if I edit patch file and add a space before the
+'index XXXXXXX..YYYYYYY' in the header, then patch applies cleanly!
+
+Also, some patches did not apply with error message that looked like
+
+error: removal patch leaves file contents
+error: arch/arm/mm/mmu.c: patch does not apply
+
+But these patches applied cleanly after I addeed a space before
+'deleted file mode XXXXXX' lines.
+
+Finally, some patches fauled to apply, with error message
+
+fatal: patch with only garbage at line 3
+
+but applied cleanly after I added a space before
+'dissimilarity index XX%' line.
+
+The mentioned addition of spaces do not modify patches themselves. But it
+makes 'git apply' happy.
+
+I'm confused.
+Could someone please comment on this?
+Isn't it a bug in 'git apply'?
