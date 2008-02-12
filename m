@@ -1,87 +1,68 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Unable to clone an ssh repository (with ugly installation-specific
- workaround)
-Date: Tue, 12 Feb 2008 10:30:01 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802121028290.3870@racer.site>
-References: <51419b2c0802111822k4600e06bp4167a09b30bf947a@mail.gmail.com> <m31w7iegk6.fsf@localhost.localdomain> <47B15ADC.8080309@viscovery.net>
+From: "Bert Wesarg" <bert.wesarg@googlemail.com>
+Subject: Re: [PATCH] pack-objects: Add runtime detection of online CPU's
+Date: Tue, 12 Feb 2008 12:18:57 +0100
+Message-ID: <36ca99e90802120318y5099b06cta3f8488dc758f6@mail.gmail.com>
+References: <47B156CD.1010209@op5.se>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Elijah Newren <newren@gmail.com>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Tue Feb 12 11:30:37 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>,
+	"Junio C Hamano" <gitster@pobox.com>,
+	"Nicolas Pitre" <nico@cam.org>
+To: "Andreas Ericsson" <ae@op5.se>
+X-From: git-owner@vger.kernel.org Tue Feb 12 12:20:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOsPM-0005rX-NR
-	for gcvg-git-2@gmane.org; Tue, 12 Feb 2008 11:30:37 +0100
+	id 1JOtB5-00065f-4e
+	for gcvg-git-2@gmane.org; Tue, 12 Feb 2008 12:19:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761770AbYBLK3z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Feb 2008 05:29:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761169AbYBLK3z
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Feb 2008 05:29:55 -0500
-Received: from mail.gmx.net ([213.165.64.20]:59838 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1761653AbYBLK3y (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Feb 2008 05:29:54 -0500
-Received: (qmail invoked by alias); 12 Feb 2008 10:29:52 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp001) with SMTP; 12 Feb 2008 11:29:52 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18faulvf3cf2iAWm0oxxU0eK4fyNmKglGXf8jyUE2
-	MLNpQ0ATNm2f7E
-X-X-Sender: gene099@racer.site
-In-Reply-To: <47B15ADC.8080309@viscovery.net>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1759923AbYBLLS7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Feb 2008 06:18:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752952AbYBLLS7
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Feb 2008 06:18:59 -0500
+Received: from py-out-1112.google.com ([64.233.166.181]:44801 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751184AbYBLLS6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Feb 2008 06:18:58 -0500
+Received: by py-out-1112.google.com with SMTP id u52so7299630pyb.10
+        for <git@vger.kernel.org>; Tue, 12 Feb 2008 03:18:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=SroIgfIrzxVRKybvGQ9h989jbXokJL0D1lzesj9c6Rg=;
+        b=lEX54rZthGxhWZmIMGjj7BUPcEo6AmSrkkhqA5FIt4+yOwQEJqXHSMsToUlDX1C+MQQlXBjcvaW5h/rEQttgxiNHKDy0imTXCIQvL28kAXkg+iSSeiMsoVdUDKKv+76QKb8co6De41Wz/nJcVH2OiG9xcCAmvDHDu9bNDR544WI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=l17IbZS4VWEB5uvDHtACG4yJSvg1v8goJvcVlzkEZ5SUAYvXcJ3WiC/xCOJsHLqdhOsGDdOFvdHds/33P2TECek7T8PAtOajBdmKKmyhNJzPV7a+PjKiklr72ZZ4++J3lp/2tiw5q5sZT5q4SO2y2zwZAbj9on8RHZuOPveLLRM=
+Received: by 10.35.103.6 with SMTP id f6mr1288515pym.45.1202815137089;
+        Tue, 12 Feb 2008 03:18:57 -0800 (PST)
+Received: by 10.35.37.3 with HTTP; Tue, 12 Feb 2008 03:18:57 -0800 (PST)
+In-Reply-To: <47B156CD.1010209@op5.se>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73649>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73650>
 
 Hi,
 
-On Tue, 12 Feb 2008, Johannes Sixt wrote:
+On Feb 12, 2008 9:20 AM, Andreas Ericsson <ae@op5.se> wrote:
+> +#ifdef THREADED_DELTA_SEARCH
+> +# ifdef _SC_NPROCESSORS_ONLN
+> +       long ncpus;
+> +
+> +       if ((ncpus = (long)sysconf(_SC_NPROCESSORS_ONLN)) > 0)
+> +               return (int)ncpus;
+> +# else
+I can't find the right pointer, but for linux it would be more usable
+to use sched_getaffinity(). Than you can do thinks like this:
 
-> Jakub Narebski schrieb:
-> > "Elijah Newren" <newren@gmail.com> writes:
-> > 
-> >> I'm pretty sure this worked before, but with git-1.5.4, when trying 
-> >> to clone a repository via ssh from a machine that does not have git 
-> >> installed in a standard system path, I get the following:
-> >>
-> >> $ git clone -u /home/enewren/software/install/linux/git/bin/git-upload-pack
-> >> ssh://enewren@remote/var/scratch/enewren/votd
-> >> Initialized empty Git repository in /home/newren/devel/votd/.git/
-> >> remote: fatal: exec pack-objects failed.
-> > 
-> > git-pull(1)
-> > [...]
-> >        --upload-pack <upload-pack>
-> >               When  given,  and  the  repository  to  fetch from is handled by
-> >               git-fetch-pack, --exec=<upload-pack> is passed to the command to
-> >               specify non-default path for the command run on the other end.
-> > 
-> 
-> The OP *did* use this option (rather, its short form, -u), see above.
-> 
-> The problem is that git-upload-pack (which is not a built-in) does not
-> call setup_path() and so does not extend PATH to contain the special
-> installation location. Now, when git-upload-pack tries to exec
-> git-pack-objects, it fails since this is not in PATH.
+$ taskset 0x3 git gc ...
 
-So, let's make git-upload-pack a builtin, no?
+and you will get 2 cpus, even 4 are online.
 
-> A quick work-around for Elijah is to add
-> 
->    GIT_EXEC_PATH=/home/enewren/software/install/linux/git/bin
-> 
-> to .profile on the remote host.
-
-I guess you meant .bashrc, as .profile is not sourced when using ssh 
-transport (it does not spawn a shell) AFAIR.
-
-Ciao,
-Dscho
+Bert
