@@ -1,314 +1,255 @@
-From: mkoegler@auto.tuwien.ac.at (Martin Koegler)
-Subject: Re: [RFC Patch] Preventing corrupt objects from entering the repository
-Date: Tue, 12 Feb 2008 08:20:30 +0100
-Message-ID: <20080212072030.GA20857@auto.tuwien.ac.at>
-References: <20080210175812.GB12162@auto.tuwien.ac.at> <7vmyq8cqfn.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: What's cooking in git.git (topics)
+Date: Mon, 11 Feb 2008 23:24:49 -0800
+Message-ID: <7vk5la4oxq.fsf@gitster.siamese.dyndns.org>
+References: <7v7ihmuwzi.fsf@gitster.siamese.dyndns.org>
+	<7vodavd9qw.fsf@gitster.siamese.dyndns.org>
+	<7vbq6tset4.fsf@gitster.siamese.dyndns.org>
+	<7vmyq9gk94.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 12 08:21:12 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 12 08:25:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOpS0-0005gc-Dx
-	for gcvg-git-2@gmane.org; Tue, 12 Feb 2008 08:21:09 +0100
+	id 1JOpWN-0006p0-Dt
+	for gcvg-git-2@gmane.org; Tue, 12 Feb 2008 08:25:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756939AbYBLHUe convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 Feb 2008 02:20:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758193AbYBLHUe
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Feb 2008 02:20:34 -0500
-Received: from thor.auto.tuwien.ac.at ([128.130.60.15]:40207 "EHLO
-	thor.auto.tuwien.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756310AbYBLHUc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Feb 2008 02:20:32 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by thor.auto.tuwien.ac.at (Postfix) with ESMTP id F0544680BEB9;
-	Tue, 12 Feb 2008 08:20:30 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at auto.tuwien.ac.at
-Received: from thor.auto.tuwien.ac.at ([127.0.0.1])
-	by localhost (thor.auto.tuwien.ac.at [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ZmlN68bBX65g; Tue, 12 Feb 2008 08:20:30 +0100 (CET)
-Received: by thor.auto.tuwien.ac.at (Postfix, from userid 3001)
-	id BE5466800656; Tue, 12 Feb 2008 08:20:30 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <7vmyq8cqfn.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1759441AbYBLHZE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 Feb 2008 02:25:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759402AbYBLHZE
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Feb 2008 02:25:04 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:52438 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755480AbYBLHZA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 12 Feb 2008 02:25:00 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id BC7F432B5;
+	Tue, 12 Feb 2008 02:24:54 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 9494932B4;
+	Tue, 12 Feb 2008 02:24:51 -0500 (EST)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73630>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73631>
 
-On Sun, Feb 10, 2008 at 04:00:44PM -0800, Junio C Hamano wrote:
-> mkoegler@auto.tuwien.ac.at (Martin Koegler) writes:
-> > * add --strict option to unpack-objects (patch 1,8,9)
-> > * add --strict option to index-pack (patch 8,10)
-> >
-> >   Same as for unpack-objects, but without writting objects.
-> >
-> > * add config option for receive pack to enable checking (patch 11)
->=20
-> If this patch is any good, I strongly suspect it should not be
-> just the default but should always be on.  IOW no config is
-> necessary.  That would make the series a bit simpler, I guess.
+Here are the topics that have been kept out of 'master'.
+Commits prefixed with '-' are only in 'pu' while commits
+prefixed with '+' are in 'next'.  Now I am pushing 1.5.4.1 out,
+mature topics will start moving to 'master'.
 
-Not very much. In patch 11, we would not need to parse a config
-variable and could pass --strict option unconditional to
-index-pack/unpack-objects.
+The topics list the commits in reverse chronological order.
 
-=46or the moment, I would like to keep it as an option (enabled by
-default). If somebody has a repository with a totally broken history,
-he would not be able to push any more, if there is no way to disable
-it.
+My wish is to have small but short release cycle for 1.5.5 and
+leave bigger ones cooking for 1.6.0.
 
-> > From 76e86fe55345e633c910d6b8fe166e27c23c5aaf Mon Sep 17 00:00:00 2=
-001
-> > From: Martin Koegler <mkoegler@auto.tuwien.ac.at>
-> > Date: Fri, 8 Feb 2008 08:51:38 +0100
-> > Subject: [PATCH 01/12] unpack-object: cache for non written objects
-> >
-> > Preventing objects with broken links entering the repository
-> > means, that write of some objects must be delayed.
-> >
-> > This patch adds a cache to keep the object data in memory. The delt=
-a
-> > resolving code must also search in the cache.
->=20
-> I have to wonder what the memory pressure in real-life usage
-> will be like.
->=20
-> When an object is proven to be good, we should be able to free
-> its buffer after writing it out, but would that be a good enough
-> optimization we can make later on this code to keep its memory
-> consumption manageable?
+Many topics graduated to "master".  As announced, I'll rewind
+and rebuild "next" with the surviving topics on top of "master"
+shortly.
 
-This code is only used by unpack-objects, which is used for small
-packs. It only caches metadata (tree,commit,tag), no blobs. So the
-memory usage should not be a problem.
+----------------------------------------------------------------
+[Graduated to "master"]
 
-> > diff --git a/fsck.c b/fsck.c
-> > new file mode 100644
-> > index 0000000..089f775
-> > --- /dev/null
-> > +++ b/fsck.c
-> > @@ -0,0 +1,84 @@
-> > +#include "cache.h"
-> > +#include "object.h"
-> > +#include "blob.h"
-> > +#include "tree.h"
-> > +#include "tree-walk.h"
-> > +#include "commit.h"
-> > +#include "tag.h"
-> > +#include "fsck.h"
-> > +
-> > +static int fsck_walk_tree(struct tree* tree, fsck_walk_func walk, =
-void* data)
-> > +{
-> > +	struct tree_desc desc;
-> > +	struct name_entry entry;
-> > +
-> > +	if(parse_tree(tree))
-> > +		return -1;
->=20
-> It's a bit hard to see how these new set of functions relate to
-> the original code in this patch series, because you add the new
-> things that are initially not used anywhere independently, start
-> referring to them in a separate patch and then remove the old
-> related functions that are now unused.  This style makes
-> reviewing easier and harder at the same time...
+* ph/describe-match (Mon Dec 24 12:18:22 2007 +0100) 2 commits
 
-Will try to restructure the patches.
+* lt/in-core-index (Tue Jan 22 23:01:13 2008 -0800) 9 commits
 
-> > From 80b22c3f2c3e13c207790a49646020c55b34bba7 Mon Sep 17 00:00:00 2=
-001
-> > From: Martin Koegler <mkoegler@auto.tuwien.ac.at>
-> > Date: Fri, 8 Feb 2008 09:01:50 +0100
-> > Subject: [PATCH 03/12] fsck: move mark-reachable to fsck_walk
-> >
-> > Signed-off-by: Martin Koegler <mkoegler@auto.tuwien.ac.at>
-> > ---
-> >  builtin-fsck.c |   34 ++++++++++++++++++++++++----------
-> >  1 files changed, 24 insertions(+), 10 deletions(-)
-> >  ...
-> > +static int mark_object(struct object* obj, int type, void* data)
-> > +{
-> > +	if (!obj)
-> > +		return 0;
-> > +	if (obj->flags & REACHABLE)
-> > +		return 0;
-> > +	obj->flags |=3D REACHABLE;
-> > +	if (!obj->parsed)
-> > +		return 0;
-> > +	return fsck_walk(obj, mark_object, data);
-> > +}
->=20
-> Hmm.  The return value 0 means Ok and negative is error?  The
-> reason we can say success if obj is NULL or it is not parsed yet
-> is because...?
+This is about reducing number of lstat(2) calls during complex
+operations, and optimizing "do we have this in the index"
+queries.
 
-In mark_objects, I don't care for the results. Its should only
-mark all reachable objects (without crashing).
+* jc/error-message-in-cherry-pick (Thu Jan 10 22:49:35 2008 -0800) 1 co=
+mmit
 
-> > @@ -326,8 +344,6 @@ static int fsck_tree(struct tree *item)
-> >  		o_name =3D name;
-> >  		o_sha1 =3D sha1;
-> >  	}
-> > -	free(item->buffer);
-> > -	item->buffer =3D NULL;
->=20
-> Hmm.  The reason you still need the buffer after you checked the
-> contents of the tree in the loop is because you haven't actually
-> checked the referents are Ok.  But I do not see a corresponding
-> free that releases this memory after you are actually done with
-> the verification with fsck_walk() yet, so we leak this in the
-> meantime?
+Bj=C3=B6rn Steinbrink reported and then tested this.
 
-The tree is traversed multiple times:
-* to mark reachable objects
-* to mark it's childs used
-* to check for broken links
+* db/send-email-omit-cc (Tue Dec 25 19:56:29 2007 -0800) 1 commit
 
-The last use of the tree content is, after all objects are already in
-memory.
+This came after 1.5.4-rc cycle started and was placed on hold.
+I do not recall if there was any objection to it.
 
-> > @@ -375,8 +391,6 @@ static int fsck_commit(struct commit *commit)
-> >  	}
-> >  	if (memcmp(buffer, "author ", 7))
-> >  		return objerror(&commit->object, "invalid format - expected 'aut=
-hor' line");
-> > -	free(commit->buffer);
-> > -	commit->buffer =3D NULL;
-> >  	if (!commit->tree)
-> >  		return objerror(&commit->object, "could not load commit's tree %=
-s", tree_sha1);
-> >  	if (!commit->parents && show_root)
->=20
-> Likewise.
+* mw/send-email (Sun Feb 3 19:53:58 2008 -0500) 3 commits
 
-Will change.
+* db/no-separate-ls-remote-connection (Sun Feb 10 13:45:08 2008 +0000) =
+1 commit
 
-> > From ce43251ef71962ff64fe138f1295c405ef6aaf65 Mon Sep 17 00:00:00 2=
-001
-> > From: Martin Koegler <mkoegler@auto.tuwien.ac.at>
-> > Date: Fri, 8 Feb 2008 09:04:08 +0100
-> > Subject: [PATCH 04/12] fsck: move reachable object check to fsck_wa=
-lk
-> >
-> > It handles NULL pointers in object references without crashing.
-> >
-> > Signed-off-by: Martin Koegler <mkoegler@auto.tuwien.ac.at>
-> > ---
-> >  builtin-fsck.c |   49 +++++++++++++++++++++++++++++---------------=
------
-> >  1 files changed, 29 insertions(+), 20 deletions(-)
-> >
-> > diff --git a/builtin-fsck.c b/builtin-fsck.c
-> > index 49e96ff..2c1e10f 100644
-> > --- a/builtin-fsck.c
-> > +++ b/builtin-fsck.c
-> > @@ -81,13 +81,39 @@ static int objwarning(struct object *obj, const=
- char *err, ...)
-> >  	return -1;
-> >  }
-> > =20
-> > +static int check_reachable_object_childs(struct object *obj, int t=
-ype, void *data)
-> > +{
-> > +	struct object *parent =3D data;
-> > +	if (!obj) {
-> > +		printf("broken link from %7s %s\n",
-> > +			   typename(parent->type), sha1_to_hex(parent->sha1));
-> > +		printf("broken link from %7s %s\n",
-> > +			   (type=3D=3DOBJ_ANY?"unknown":typename(type)), "unknown");
->=20
-> Hmm?  I am not sure what this part is reporting...
+----------------------------------------------------------------
+[Old New Topics]
 
-If eg. the sha1 of a commit is stored as tree in a commit, you will
-find a null pointer in struct commit->tree. Such things will hit this
-check.
+* br/gitweb (Fri Feb 8 14:38:04 2008 -0200) 1 commit
+ - gitweb: Use the config file to set repository owner's name.
 
-> > From ee11f771be1ef1c29725cb56ab3eb8dfe61ca25a Mon Sep 17 00:00:00 2=
-001
-> > From: Martin Koegler <mkoegler@auto.tuwien.ac.at>
-> > Date: Fri, 8 Feb 2008 09:07:33 +0100
-> > Subject: [PATCH 06/12] create a common object checker code out of f=
-sck
-> >
-> > The function provides a callback for reporting errors.
->=20
-> The same "add unused new stuff independently, later use it and
-> then finally remove now unused old stuff" pattern is here.  I am
-> neutral to that patch style but it is a bit harder to see what
-> is going on.
->=20
-> Most of the changes seem to be straight and sane copy-and-paste thoug=
-h.
+Looked Ok.
 
-I'll merge this patch with the next patch.
+* lt/revision-walker (Sat Feb 9 14:02:07 2008 -0800) 1 commit
+ - Add "--show-all" revision walker flag for debugging
 
-> > From a8db4e754e717bac0b2462333d4145eac3452099 Mon Sep 17 00:00:00 2=
-001
-> > From: Martin Koegler <mkoegler@auto.tuwien.ac.at>
-> > Date: Fri, 8 Feb 2008 09:14:14 +0100
-> > Subject: [PATCH 09/12] unpack-objects: prevent writing of inconsist=
-ent objects
-> >
-> > This patch introduces a strict mode, which ensures that:
-> > - no malformed object will be written
-> > - no object with broken links will be written
-> >
-> > The patch ensures this by delaying the write of all non blob object=
-=2E
-> > These object are written, after all objects they link to are writte=
-n.
-> >
-> > An error can only result in unreferenced objects.
->=20
-> > diff --git a/builtin-unpack-objects.c b/builtin-unpack-objects.c
-> > index f18c7e8..3e906e4 100644
-> > --- a/builtin-unpack-objects.c
-> > +++ b/builtin-unpack-objects.c
-> > @@ -173,7 +250,6 @@ static void resolve_delta(unsigned nr, enum obj=
-ect_type type,
-> >  		die("failed to apply delta");
-> >  	free(delta);
-> >  	write_object(nr, type, result, result_size);
-> > -	free(result);
-> >  }
->=20
-> And this is freed later elsewhere?
+* mc/prefix (Sat Feb 9 15:40:19 2008 +0100) 1 commit
+ - Avoid a useless prefix lookup in strbuf_expand()
 
-The free is the task of write_object. If (!strict), then it is freeed
-immediatly. Similar for blobs. Other objects are put in the cache (see
-patch 1).
+* db/checkout (Sun Feb 10 01:27:00 2008 -0800) 11 commits
+ - Build in checkout
+ - Move code to clean up after a branch change to branch.c
+ - Library function to check for unmerged index entries
+ - Use diff -u instead of diff in t7201
+ - Move create_branch into a library file
+ - Build-in merge-recursive
+ - Add "skip_unmerged" option to unpack_trees.
+ - Discard "deleted" cache entries after using them to update the
+   working tree
+ - Send unpack-trees debugging output to stderr
+ - Add flag to make unpack_trees() not print errors.
+ - Allow callers of unpack_trees() to handle failure
 
-> > @@ -203,7 +279,8 @@ static void unpack_non_delta_entry(enum object_=
-type type, unsigned long size,
-> > =20
-> >  	if (!dry_run && buf)
-> >  		write_object(nr, type, buf, size);
-> > -	free(buf);
-> > +	else if (buf)
-> > +		free(buf);
-> >  }
->=20
-> You can always free NULL without checking.
+This is building on top of Linus's change to in-core index
+structure, which will be in 'master' soon.
 
-Will fix.
+----------------------------------------------------------------
+[Will merge to 'master' soon]
 
-> > @@ -356,6 +434,7 @@ static void unpack_all(void)
-> >  	if (!quiet)
-> >  		progress =3D start_progress("Unpacking objects", nr_objects);
-> >  	obj_list =3D xmalloc(nr_objects * sizeof(*obj_list));
-> > +	memset(obj_list, 0, nr_objects * sizeof(*obj_list));
->=20
-> Hmm, is this a fix to the 'master' independent from all the rest
-> of your patches, or a new requirement?
+* jc/submittingpatches (Sun Feb 3 17:02:28 2008 -0800) 3 commits
+ + Documentation/SubmittingPatches: What's Acked-by and Tested-by?
+ + Documentation/SubmittingPatches: discuss first then submit
+ + Documentation/SubmittingPatches: Instruct how to use [PATCH]
+   Subject header
 
-This is, because the new field in obj_list must be initialized with
-zero.
+* jk/noetcconfig (Wed Feb 6 05:11:53 2008 -0500) 2 commits
+ + fix config reading in tests
+ + allow suppressing of global and system config
 
-mfg martin K=F6gler
+* pb/prepare-commit-msg (Tue Feb 5 08:04:18 2008 +0100) 4 commits
+ + git-commit: add a prepare-commit-msg hook
+ + git-commit: Refactor creation of log message.
+ + git-commit: set GIT_EDITOR=3D: if editor will not be launched
+ + git-commit: support variable number of hook arguments
+
+* jc/gitignore-ends-with-slash (Thu Jan 31 20:23:25 2008 -0800) 2 commi=
+ts
+ + gitignore: lazily find dtype
+ + gitignore(5): Allow "foo/" in ignore list to match directory "foo"
+
+This is redone after we had discussion on the list to properly
+make "foo/" match only with directories and "foo" with both
+files and directories without unnecessary lstat(2) calls.
+
+* bd/qsort (Tue Feb 5 15:10:44 2008 -0600) 1 commit
+ + compat: Add simplified merge sort implementation from glibc
+
+More reasonable qsort(3) than Microsoft by Brian Downing.
+
+----------------------------------------------------------------
+[Actively Cooking]
+
+* cc/browser (Mon Feb 11 10:57:34 2008 -0500) 9 commits
+ + git-web--browse: fix misplaced quote in init_browser_path()
+ + web--browse: Add a few quotes in 'init_browser_path'.
+ + Documentation: instaweb: add 'git-web--browse' information.
+ + Adjust .gitignore for 5884f1(Rename 'git-help--browse.sh'...)
+ + git-web--browse: do not start the browser with nohup
+ + instaweb: use 'git-web--browse' to launch browser.
+ + Rename 'git-help--browse.sh' to 'git-web--browse.sh'.
+ + help--browse: add '--config' option to check a config option for a
+   browser.
+ + help: make 'git-help--browse' usable outside 'git-help'.
+
+Christian Couder consolidated the logic to pick user's favorite
+browser between instaweb and help.
+
+* jc/setup (Sun Feb 3 23:59:17 2008 -0800) 4 commits
+ + builtin-mv: minimum fix to avoid losing files
+ + git-add: adjust to the get_pathspec() changes.
+ + Make blame accept absolute paths
+ + setup: sanitize absolute and funny paths in get_pathspec()
+
+* sp/safecrlf (Wed Feb 6 12:25:58 2008 +0100) 1 commit
+ + safecrlf: Add mechanism to warn about irreversible crlf
+   conversions
+
+* jc/apply-whitespace (Mon Feb 11 15:32:29 2008 -0800) 14 commits
+ + apply: do not barf on patch with too large an offset
+ + core.whitespace: cr-at-eol
+ + git-apply --whitespace=3Dfix: fix whitespace fuzz introduced by
+   previous run
+ + builtin-apply.c: pass ws_rule down to match_fragment()
+ + builtin-apply.c: move copy_wsfix() function a bit higher.
+ + builtin-apply.c: do not feed copy_wsfix() leading '+'
+ + builtin-apply.c: simplify calling site to apply_line()
+ + builtin-apply.c: clean-up apply_one_fragment()
+ + builtin-apply.c: mark common context lines in lineinfo structure.
+ + builtin-apply.c: optimize match_beginning/end processing a bit.
+ + builtin-apply.c: make it more line oriented
+ + builtin-apply.c: push match-beginning/end logic down
+ + builtin-apply.c: restructure "offset" matching
+ + builtin-apply.c: refactor small part that matches context
+
+----------------------------------------------------------------
+[On Hold]
+
+* js/reflog-delete (Fri Jan 4 19:11:37 2008 -0600) 2 commits
+ + builtin-reflog.c: fix typo that accesses an unset variable
+ + Teach "git reflog" a subcommand to delete single entries
+
+There was a patch that uses this to implement "git-stash drop",
+which I didn't queue, as the command name and the UI was
+undecided yet.  Dscho was in favor of "pop" without "drop".
+
+* nd/dashless (Wed Nov 28 23:21:57 2007 +0700) 1 commit
+ - Move all dashed-form commands to libexecdir
+
+Scheduled for 1.6.0.  I am not sure if we should merge this to
+'next' before 1.5.5.  Most active people will be on 'next' and
+if we have this there, the resulting 1.5.5 release might end up
+having issues that come from differences this one introduces.
+
+* bf/remote-head (Sun Dec 23 20:52:32 2007 -0500) 1 commit
+ - git-remote: make add -f guess HEAD, as clone does
+
+* ab/pserver (Fri Dec 14 04:08:51 2007 +0000) 1 commit
+ - Authentication support for pserver
+
+This needs careful security audit and a fix to its password
+database format.  Plaintext in .git/config is not acceptable.
+
+* jc/cherry-pick (Mon Dec 24 00:51:01 2007 -0800) 4 commits
+ - PARK: Start using replay-tree merge in cherry-pick
+ - revert/cherry-pick: start refactoring call to merge_recursive
+ - expose a helper function peel_to_type().
+ - merge-recursive: split low-level merge functions out.
+
+Meant to avoid merge_recursive() during cherry-pick and revert,
+so that D/F conflicts can be redone right, but I got busy and
+this has unfortunately stalled.
+
+* jc/dashless (Sat Dec 1 22:09:22 2007 -0800) 2 commits
+ - Prepare execv_git_cmd() for removal of builtins from the
+   filesystem
+ - git-shell: accept "git foo" form
+
+We do not plan to remove git-foo form completely from the filesystem at
+this point, but git-shell may need to be updated.
+
+* jc/diff-relative (Thu Dec 6 09:48:32 2007 -0800) 1 commit
+ - diff --relative: output paths as relative to the current
+   subdirectory
+
+* jc/git-symref (Tue Dec 11 16:42:46 2007 -0800) 1 commit
+ - PARK: show-symref protocol extension.
+
+* jc/sha1-lookup (Sun Dec 30 03:13:27 2007 -0800) 2 commits
+ - sha1-lookup: make selection of 'middle' less aggressive
+ - sha1-lookup: more memory efficient search in sorted list of SHA-1
+
+Micro-optimization whose real world benefit is not proven.
+
+* jc/rename (Tue Jan 29 20:54:56 2008 -0800) 1 commit
+ - Optimize rename detection for a huge diff
+
+Micro-optimization whose real world benefit is not proven.
