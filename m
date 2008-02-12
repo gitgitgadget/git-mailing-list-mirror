@@ -1,159 +1,85 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Another bench on gitweb (also on gitweb caching)
-Date: Mon, 11 Feb 2008 16:44:23 -0800 (PST)
-Message-ID: <m363wvdmxr.fsf@localhost.localdomain>
-References: <20080210030919.GA32733@c3sl.ufpr.br>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Petr Baudis <pasky@suse.cz>
-To: Bruno Cesar Ribas <ribas@c3sl.ufpr.br>
-X-From: git-owner@vger.kernel.org Tue Feb 12 01:45:07 2008
+From: "Rhodes, Kate" <masukomi@gmail.com>
+Subject: [Bug] git-status shows bad instructions prior to first commit
+Date: Mon, 11 Feb 2008 19:59:39 -0500
+Message-ID: <F1B5775C-1C11-4C30-B72E-9EB4076613A5@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v915)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 12 02:00:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOjGh-0008BQ-Sb
-	for gcvg-git-2@gmane.org; Tue, 12 Feb 2008 01:45:04 +0100
+	id 1JOjVo-0003H2-Vp
+	for gcvg-git-2@gmane.org; Tue, 12 Feb 2008 02:00:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751355AbYBLAo2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Feb 2008 19:44:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751198AbYBLAo2
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Feb 2008 19:44:28 -0500
-Received: from ug-out-1314.google.com ([66.249.92.174]:34944 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751197AbYBLAo1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Feb 2008 19:44:27 -0500
-Received: by ug-out-1314.google.com with SMTP id z38so416178ugc.16
-        for <git@vger.kernel.org>; Mon, 11 Feb 2008 16:44:25 -0800 (PST)
+	id S1752070AbYBLA7z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Feb 2008 19:59:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751899AbYBLA7s
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Feb 2008 19:59:48 -0500
+Received: from rn-out-0910.google.com ([64.233.170.191]:30892 "EHLO
+	rn-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751835AbYBLA7q (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Feb 2008 19:59:46 -0500
+Received: by rn-out-0910.google.com with SMTP id i24so6349896rng.19
+        for <git@vger.kernel.org>; Mon, 11 Feb 2008 16:59:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
-        bh=h6Cs5iHLI6X545IouKf6Bb0xuB8uKrtPnqZc5S2u6Yg=;
-        b=Cpwk4BmdUmyLgkS4KJTpNGzonDg7xgvyKyigZegNckuzJvGUYZBBxqY+ZuofWij70P0bPaTzdwPXpM1V/WFGEx0Qw141eNYz2Hp0qSYh/xD7amsKyfsL1OMDOr3v4m2srgTrWLBgpjYS8mImf6AGS0A118MINYoz7bsOEE/7yLI=
+        h=domainkey-signature:received:received:message-id:from:to:content-type:content-transfer-encoding:mime-version:subject:date:x-mailer;
+        bh=73vjQ55r+hmgVtA/V5vT1BXeepis3EcCO/JwGlBi0bk=;
+        b=fE3ICVL6rWLpcS1WsuNm3rO55u6JXNH4Es5QKRT5kbOmE4dkjlKU+eyIEEk7pVQjeqOH+8WhxrdXbeabjrs8y/g61eAiPYD9fQEBaxDYSPrGMKGpxZUwG7vUqe41ABacZGOeMiAhC6Bt8JHJGh9q1wP4N8aHkM3CkaNGQT2Sxpg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
-        b=Hcbsv1Tb/tNkWJeDk7Hdl1VkRFHVAwcMytHL9jLuXI/oGf16NdvtUfnyAT7pI5MqQTCIn/8JF8aIJUPqnZibK67Q+HC7/Z/csO8u+ih96gy0/zBtkRvjvICAunJ6ikHKphsdV246n2StFQrxT1UWOqyIA11uEZmoCuj6KQnv9/0=
-Received: by 10.66.251.20 with SMTP id y20mr9733685ugh.67.1202777064991;
-        Mon, 11 Feb 2008 16:44:24 -0800 (PST)
-Received: from localhost.localdomain ( [83.8.220.23])
-        by mx.google.com with ESMTPS id b30sm9850827ika.11.2008.02.11.16.44.21
+        h=message-id:from:to:content-type:content-transfer-encoding:mime-version:subject:date:x-mailer;
+        b=xzfjYXer5psJg0jlEQ94J7RiVBYSTfPx1qoIhF48tpuPcRne4/cpyk+IhGJuhGskl4kqlhlhiwpWt1UcJOEccyhM9NYQvK0OCSxmsv6gNR8O75owsLaIWZstdOh3GJ1DWllgmDyzyWtjbSzewkutOzLf+q6RqkAnU3da03A0RJw=
+Received: by 10.150.11.6 with SMTP id 6mr229716ybk.165.1202777985573;
+        Mon, 11 Feb 2008 16:59:45 -0800 (PST)
+Received: from ?192.168.1.103? ( [72.93.197.103])
+        by mx.google.com with ESMTPS id 26sm41960849wrl.29.2008.02.11.16.59.41
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 11 Feb 2008 16:44:23 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m1C0hYBx019103;
-	Tue, 12 Feb 2008 01:43:45 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m1C0hCI9019099;
-	Tue, 12 Feb 2008 01:43:12 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <20080210030919.GA32733@c3sl.ufpr.br>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        Mon, 11 Feb 2008 16:59:43 -0800 (PST)
+X-Mailer: Apple Mail (2.915)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73612>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73613>
 
-Bruno Cesar Ribas <ribas@c3sl.ufpr.br> writes:
+git-status incorrectly reports that you should
 
-> I made another SIMPLE bench on gitweb. Testing time on git-for-each-ref.
-> 
-> Using my 1000 projects I ran:
-> 8<----------------
-> #/bin/bash
-> PEGAR_ref() { 
->     PROJ=projeto$1.git; 
->     cd $PROJ; 
->     printf "\tlastref = $(git-for-each-ref --sort=-committerdate --count=1\
->             --format='%(committer)')\n" >> config; 
->     cd -; 
-> }
-> cd $HOME/scm
-> for((i=1;i<=1000;i++)){ PEGAR_ref $i & }
-> 8<----------------
-
-Could you please do not mix English and your native language
-(Portuguese?) in shown examples? Mixing two languages in one
-identifier name (unless it is ref in br too) is especially bad
-form... TIA.
-
-Besides, what I'm more interested in is a script used to generate
-those 1000 projects...
- 
-> And at the "git_get_last_activity" instead of running git-for-each-ref i
-> asked to get gitweb.lastref
-> 
-> Here are the results:
-> "dd" means: dd if=/dev/zero of=$HOME/dd/$i bs=1M count=400000
-> 
-> Running 2 dd to generate disk IO.  Here comes the results:
-> NO projects_list  projects_list
-> 7m56s55           6m11s95        cached last change, using gitweb.lastref
-> 16m30s69          15m10s74       default gitweb, using FS's owner
-> 16m07s40          15m24s34       patched to get gitweb.owner
-> 
-> Now results for a 1000projects on an idle machine. (No dd running to
-> generate IO)
-> NO projects_list  projects_list
-> 0m26s79           0m38s70       cached last change, using gitweb.lastref
-> 1m19s08           1m09s55       default gitweb, using FS's owner
-> 1m17s58           1m09s55       patched to get gitweb.owner
-
-Those are results of running gitweb as standalone script, or your
-script runing git-for-each-ref?
-
-Besides, I'd rather see results of running ApacheBench. On Linux it
-usually comes with installed Apache, and it is called by runing
-'ab'. Your tests instead of adding superficial load could try to use
-concurrent requests, and more than 1 request to get better average.
- 
-> I found out those VERY interesting, so instead of trying to think a
-> new way to store gitweb config, we should think a way to cache those
-> information.
-
-Below there are my thoughts about caching information for gitweb:
-
-First, the basis of each otimisation is checking the bottlenecks.
-I think it was posted sometime there that the pages taking most load
-are projects list and feeds. 
-
-Kernel.org even run modified version of gitweb, with some caching
-support; Cgit (git web interface in C) also has caching support.
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
 
 
-Due to the fact that gitweb produces relative time in output for
-projects list page and for project summary page, it is unfortunately
-not easy to just simply cache HTML output: one would have either
-resign from using relative time, or rewrite time from relative to
-absolute, either on server (in gitweb), or on client (in JavaScript).
-So perhaps it would be better to cache generating (costly to obtain)
-information; like lastchanged time for projects.
+when working on the Initial commit.
 
-Or we can for example assume (i.e. do that if appropriate gitweb
-feature is set) that projects are bare projects pushed to, and that
-git-update-server-info is ran on repository update (for example for
-HTTP protocol transport), and stat $GIT_DIR/info/refs and/or
-$GIT_DIR/objects/info/packs instead of running git-for-each-ref.
-Of course then column would be called something like "Last Update"
-instead of "Last Change".
+To reproduce
+mkdir foo
+cd foo
+touch a.txt
+git init
+git add a.txt
+git status
 
-The "Last Update" information is especially easy because it can be
-invalidated / update externally, by the update / post-receive hook,
-outside gitweb. So gitweb doesn't need to implement some caching
-invalidation mechanism for this.
 
-We can store lastref / lastchange information in repository config, as
-for example "gitweb.lastref" key. We can store it in gitweb wide
-config, for example in $projectroot/gitwebconfig file, as for example
-"gitweb.<project>.lastref" key. Or we can store it as hash initializer
-in some sourced Perl file, read from gitweb_config.perl (this I think
-can be done even now without touching gitweb code at all); we can use
-Data::Dumper to save such information.
+The problem is, obviously, that calling
+git reset HEAD a.txt
+will result in
+fatal: Failed to resolve 'HEAD' as a valid ref.
 
-The possibilities are many.
+Why this is important:
+New users are Going to accidentally add files they didn't mean to in  
+their first trials with Git. Providing instructions guaranteed to  
+error when people are just getting started with it will give git a bad  
+image and hurt adoption. Also,  just about every time I've added a  
+sizable project to a new version control system I've accidentally  
+added a file before the first commit, usually something that should be  
+added to the ignore file, but still, I think this isn't some random  
+isolated problem that people never encounter.
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+While we're at it, can someone please explain to me how to remove a  
+file from the index prior to the first commit? I'm stumped.
+
+-masukomi
