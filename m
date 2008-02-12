@@ -1,89 +1,81 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] pack-objects: only throw away data during memory pressure
-Date: Tue, 12 Feb 2008 09:26:25 -0500 (EST)
-Message-ID: <alpine.LFD.1.00.0802120910440.2732@xanadu.home>
-References: <120271478556-git-send-email-mkoegler@auto.tuwien.ac.at>
- <alpine.LFD.1.00.0802110942310.2732@xanadu.home>
- <20080212082211.GE27535@lavos.net>
+From: Bill Priest <priestwilliaml@yahoo.com>
+Subject: Re: git 1.5.4.1 svn fetch stops fetching w/ "Last fetch revision ..."
+Date: Tue, 12 Feb 2008 06:34:41 -0800 (PST)
+Message-ID: <167999.8397.qm@web55008.mail.re4.yahoo.com>
+References: <883188.51167.qm@web55015.mail.re4.yahoo.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
-Cc: Martin Koegler <mkoegler@auto.tuwien.ac.at>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Brian Downing <bdowning@lavos.net>
-X-From: git-owner@vger.kernel.org Tue Feb 12 15:27:19 2008
+To: Bill Priest <priestwilliaml@yahoo.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 12 15:35:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOw6M-00032I-7t
-	for gcvg-git-2@gmane.org; Tue, 12 Feb 2008 15:27:14 +0100
+	id 1JOwEA-0005i3-MF
+	for gcvg-git-2@gmane.org; Tue, 12 Feb 2008 15:35:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761164AbYBLO0k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Feb 2008 09:26:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761047AbYBLO0k
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Feb 2008 09:26:40 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:54361 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760977AbYBLO0j (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Feb 2008 09:26:39 -0500
-Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JW4005UWQS10K30@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 12 Feb 2008 09:26:26 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <20080212082211.GE27535@lavos.net>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+	id S1761118AbYBLOen (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Feb 2008 09:34:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761143AbYBLOen
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Feb 2008 09:34:43 -0500
+Received: from web55008.mail.re4.yahoo.com ([206.190.58.142]:44388 "HELO
+	web55008.mail.re4.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1761118AbYBLOem (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 12 Feb 2008 09:34:42 -0500
+Received: (qmail 8783 invoked by uid 60001); 12 Feb 2008 14:34:41 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=X-YMail-OSG:Received:Date:From:Subject:To:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
+  b=F6xT51Prthwos1rg0dzCPRjpgmMmZmD0ljunvQJh90oB31GgkrX2GaiZCDPHilbyNazqxiouEvTO2SBH23CZIeN1JJdZQpa0WUBkLvNd+zPtnFnnM/lEQRG8+1vPpjTdtOqylu9wXvWGqtvJfThwCP4vPkhj2GziVzUrxCfZvOM=;
+X-YMail-OSG: m3fgAYIVM1krebvo.pGircMkaMRYIZ9f4vR1Oz6O0176RkHhmrmF7v1CAxwHIHKZGajSJbYxXmFb_2D5.fuL_aePPeMWS1Jn.7M24IKvgSfu2moPmg--
+Received: from [12.44.137.148] by web55008.mail.re4.yahoo.com via HTTP; Tue, 12 Feb 2008 06:34:41 PST
+In-Reply-To: <883188.51167.qm@web55015.mail.re4.yahoo.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73663>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73664>
 
-On Tue, 12 Feb 2008, Brian Downing wrote:
 
-> On Mon, Feb 11, 2008 at 11:00:33AM -0500, Nicolas Pitre wrote:
-> > On Mon, 11 Feb 2008, Martin Koegler wrote:
-> > > If pack-objects hit the memory limit, it deletes objects from the
-> > > delta window.
-> > > 
-> > > This patch make it only delete the data, which is recomputed, if
-> > > needed again.
-> > > 
-> > > Signed-off-by: Martin Koegler <mkoegler@auto.tuwien.ac.at>
-> > 
-> > Looks fine.
-> > 
-> > Acked-by: Nicolas Pitre <nico@cam.org>
+--- Bill Priest <priestwilliaml@yahoo.com> wrote:
+
+> All,
+>     I upgraded from git 1.5.3.4.452.g09149 to git
+> 1.5.4.1 and upon a subsequent git svn fetch I
+> started
+> receiving the following:
+> Index mismatch:
+> d1437ce54ff0e90f4023ee653761c28626a8295a !=
+> f567f1f12e7d7ddf1d18e3889061aa9a783dfbba
+> rereading 1c3d0737f3eb78241eb508e7da6b80e3f3b7fa85
+>         M       src/foo.c
+>         M       src/bar.c
+> Last fetched revision of refs/remotes/release was
+> r2990, but we are about to fetch: r2985!
 > 
-> Unfortunately this patch (if I understand what it's doing correctly)
-> basically defeats my intended use-case for which I wrote the memory
-> limiter.  I have a repository with files of very mixed size.  I want the
-> window to be very large for small files, for good archival repacking,
-> but I don't want it to be very large for my 20+MB files with hundreds of
-> revisions, because I want it to finish someday.
+> git svn fetch w/ 1.5.3 worked correctly and
+> subsequent
+> fetches "do nothing" as expected.
 > 
-> Also, I've gotten into the habit of just doing:
->     git repack --window=100000 --window-memory=256m
-> for archival repacks and just letting the memory limit automatically
-> size the window.  Basically, I don't really want to specify a window
-> size, I just want it to use 512mb of RAM (and go at the speed that size
-> of a window would entail.)  While this is slow, it tends to be a
-> relatively constant speed, and it tends to find some very interesting
-> deltas in my trees that I wouldn't have otherwise expected.
+> Is this a known issue?  Is there a work-around? I
+> can
+> try to track down which change caused the breakage
+> if
+> needed.
 > 
-> If this patch is accepted, I'd really like a way to maintain the old
-> behavior as an option.
+> Thanks,
+> 
+> Bill
 
-I think your use case has merits, but the previous behavior had 
-semantics problems.  We always had constant window size with dynamic 
-memory usage, and now we have constant window size with bounded memory 
-usage.
+Here is an update.  The problem first occurs in
+1.5.4.rc0 and isn't present in 1.5.3.7
 
-If what you want is really to have a dynamic window size using a 
-constant memory usage then it needs a different and coherent way to be 
-specified.
+FYI,
+
+Bill
 
 
-Nicolas
+      ____________________________________________________________________________________
+Never miss a thing.  Make Yahoo your home page. 
+http://www.yahoo.com/r/hs
