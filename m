@@ -1,95 +1,68 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [RFC Patch] Preventing corrupt objects from entering the repository
-Date: Tue, 12 Feb 2008 15:22:17 -0500 (EST)
-Message-ID: <alpine.LFD.1.00.0802121507310.2732@xanadu.home>
-References: <20080210175812.GB12162@auto.tuwien.ac.at>
- <7vmyq8cqfn.fsf@gitster.siamese.dyndns.org>
- <alpine.LFD.1.00.0802101929310.2732@xanadu.home>
- <20080211195623.GA21878@auto.tuwien.ac.at>
- <alpine.LFD.1.00.0802111513360.2732@xanadu.home>
- <20080211215806.GA24971@auto.tuwien.ac.at>
- <alpine.LFD.1.00.0802120937330.2732@xanadu.home>
- <20080212190411.GA23837@auto.tuwien.ac.at>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] RFC: git lazy clone proof-of-concept
+Date: Tue, 12 Feb 2008 20:37:58 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0802122036150.3870@racer.site>
+References: <200802081828.43849.kendy@suse.cz> <m3ejbngtnn.fsf@localhost.localdomain> <200802091627.25913.kendy@suse.cz> <alpine.LFD.1.00.0802092200350.2732@xanadu.home> <alpine.LSU.1.00.0802101640570.11591@racer.site>
+ <alpine.LSU.1.00.0802101845320.11591@racer.site>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Martin Koegler <mkoegler@auto.tuwien.ac.at>
-X-From: git-owner@vger.kernel.org Tue Feb 12 21:22:58 2008
+Cc: Jan Holesovsky <kendy@suse.cz>, Jakub Narebski <jnareb@gmail.com>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Tue Feb 12 21:38:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JP1ea-00066s-Bd
-	for gcvg-git-2@gmane.org; Tue, 12 Feb 2008 21:22:56 +0100
+	id 1JP1tz-0003XB-L3
+	for gcvg-git-2@gmane.org; Tue, 12 Feb 2008 21:38:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752806AbYBLUWV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Feb 2008 15:22:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752863AbYBLUWU
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Feb 2008 15:22:20 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:33321 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750940AbYBLUWU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Feb 2008 15:22:20 -0500
-Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR004.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JW5006N1795A2D0@VL-MO-MR004.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 12 Feb 2008 15:22:18 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <20080212190411.GA23837@auto.tuwien.ac.at>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+	id S1756198AbYBLUhx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Feb 2008 15:37:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755601AbYBLUhx
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Feb 2008 15:37:53 -0500
+Received: from mail.gmx.net ([213.165.64.20]:39139 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755421AbYBLUhw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Feb 2008 15:37:52 -0500
+Received: (qmail invoked by alias); 12 Feb 2008 20:37:50 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp004) with SMTP; 12 Feb 2008 21:37:50 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+uIpBhlb6u1pttwMnoxJQEj9pr7LbOAUJuW4fRD3
+	wRBI0Z5r6y7Pa6
+X-X-Sender: gene099@racer.site
+In-Reply-To: <alpine.LSU.1.00.0802101845320.11591@racer.site>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73687>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73688>
 
-On Tue, 12 Feb 2008, Martin Koegler wrote:
+Hi,
 
-> On Tue, Feb 12, 2008 at 11:02:06AM -0500, Nicolas Pitre wrote:
-> > I think this is a good idea to always have some sanity checks on any 
-> > incoming objects so to make sure they're well formed and valid before 
-> > giving them a SHA1 value, and bail out as soon as any error is found.  
-> > From my understanding that's what your patch is doing, right? (sorry I 
-> > can't find them in my mailbox anymore). 
-> 
-> Yes. (=>http://marc.info/?l=git&m=120266631524947&w=2)
-> 
-> >  This can be done as objects are 
-> > coming in just fine and requires no extra memory, and I would say this 
-> > should be done unconditionally all the time.  After all, the Git 
-> > coherency model is based on the SHA1 checksuming, and therefore it is a 
-> > good idea to never validate any malformed objects with a SHA1.  So I'm 
-> > all in favor of such validation always performed in index-pack and 
-> > unpack-objects.
-> 
-> We will need some additional memory for struct blob/tree/tag/commit
-> even for this check.
+On Sun, 10 Feb 2008, Johannes Schindelin wrote:
 
-Why so?
+> $ /usr/bin/time git repack -a -d -f --window=150 --depth=150
+> Counting objects: 2477715, done.
+> Compressing objects:  19% (481551/2411764)
+> Compressing objects:  19% (482333/2411764)
+> fatal: Out of memory, malloc failed411764)
+> Command exited with non-zero status 1
+> 7118.37user 54.15system 2:01:44elapsed 98%CPU (0avgtext+0avgdata 
+> 0maxresident)k
+> 0inputs+0outputs (29834major+17122977minor)pagefaults 0swaps
 
-Each received object is stored in memory when received, so why can't you 
-simply validate it in place?  No need to keep trace of them afterward.
+I made the window much smaller (512 megabyte), and it still runs, after 27 
+hours:
 
-> > As to making sure those objects are well connected... well this is a 
-> > technically different issue entirely, and I wonder if a special mode to 
-> > fsck might not be a better solution.  For example, fsck could be made to 
-> > validate object connectivity, starting from the new ref(s), and stopping 
-> > object walking as soon as a reference to an object not included in the 
-> > newly received pack is encountered.  This could be run from some hook to 
-> > decide whether or not to update the new refs, and to delete the pack 
-> > otherwise.
-> 
-> Do you really think, that this will need less memory? fsck loads first
-> all objects and then verifies their connections.
+Compressing objects:  20% (484132/2411764)
 
-Not all objects otherwise I wouldn't even be able to run it.
+However, it seems that it only worked on about 4000 objects in the last 
+20(!) hours.  So, the first 19% were relatively quick.  The next percent 
+not at all.
 
-My point is that you can have fsck load only objects contained in the 
-received pack (you can use the pack index to load them) and assume 
-connectivity is good whenever an object in the pack reference an 
-existing object outside of the pack.  At least this doesn't need to 
-happen in parallel with pack indexing.
-
-
-Nicolas
+Will keep you posted,
+Dscho
