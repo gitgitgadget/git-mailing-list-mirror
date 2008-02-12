@@ -1,90 +1,331 @@
-From: Stefan Monnier <monnier@iro.umontreal.ca>
-Subject: Re: Merge-Recursive Improvements
-Date: Tue, 12 Feb 2008 18:03:00 -0500
-Message-ID: <jwv3arxairx.fsf-monnier+gmane.comp.version-control.git@gnu.org>
-References: <A21B3CA8-6240-434F-87A9-C6F76DA15265@gmail.com>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: [StGit PATCH] Refactor --author/--committer options
+Date: Wed, 13 Feb 2008 00:08:42 +0100
+Message-ID: <20080212230842.GA25839@diana.vm.bytemark.co.uk>
+References: <20080210203846.17683.43153.stgit@yoghurt> <20080210204359.17683.41935.stgit@yoghurt> <200802122305.05696.kumbayo84@arcor.de> <20080212224724.GA24993@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 13 00:03:55 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org,
+	David =?iso-8859-1?Q?K=E5gedal?= <davidk@lysator.liu.se>
+To: Peter Oberndorfer <kumbayo84@arcor.de>
+X-From: git-owner@vger.kernel.org Wed Feb 13 00:10:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JP4AJ-0000IM-8V
-	for gcvg-git-2@gmane.org; Wed, 13 Feb 2008 00:03:51 +0100
+	id 1JP4Gj-0002c7-MB
+	for gcvg-git-2@gmane.org; Wed, 13 Feb 2008 00:10:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751050AbYBLXDL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Feb 2008 18:03:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751802AbYBLXDL
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Feb 2008 18:03:11 -0500
-Received: from main.gmane.org ([80.91.229.2]:38870 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751015AbYBLXDK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Feb 2008 18:03:10 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1JP49a-0007Zv-43
-	for git@vger.kernel.org; Tue, 12 Feb 2008 23:03:06 +0000
-Received: from vpn-132-204-232-187.acd.umontreal.ca ([132.204.232.187])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 12 Feb 2008 23:03:06 +0000
-Received: from monnier by vpn-132-204-232-187.acd.umontreal.ca with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 12 Feb 2008 23:03:06 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: vpn-132-204-232-187.acd.umontreal.ca
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.50 (gnu/linux)
-Cancel-Lock: sha1:fvI8aVYLOCAnFc1XZ+kvK1yrfQA=
+	id S1756265AbYBLXIz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 Feb 2008 18:08:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755173AbYBLXIz
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Feb 2008 18:08:55 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4450 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759952AbYBLXIw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Feb 2008 18:08:52 -0500
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1JP4F0-0006kG-00; Tue, 12 Feb 2008 23:08:42 +0000
+Content-Disposition: inline
+In-Reply-To: <20080212224724.GA24993@diana.vm.bytemark.co.uk>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73708>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73709>
 
-> "ORIG_HEAD...MERGE_HEAD" diffs to see what was going on. I could use an
-> external diff tool (yuck), but I would like to modify the conflict markers
-> to resemble those of Perforce:
+This refactoring is specific to the new infrastructure, so only new
+and edit use it currently, but other commands can start using it as
+they are converted.
 
->>>>>>>> merge-base:file.txt
->   Original code.
->   ======= HEAD:file.txt
->   Head code.
->   ======= merge:file.txt
->   Merged code.
->   <<<<<<<
+Signed-off-by: Karl Hasselstr=F6m <kha@treskal.com>
 
-Having such 3-parts conflicts helps tremendously when you have to do
-the merge by hand, so I'm 100% in favor of such a change.
+---
 
-BUT Please, please, pretty please, don't follow Perforce who blindly
-disregards previous standards.  Instead use the format used by diff3
-which has been there for ages:
+On 2008-02-12 23:47:24 +0100, Karl Hasselstr=F6m wrote:
 
-   <<<<<<< foo
-   original text
-   ||||||| bar
-   ancestor
-   =======
-   new text
-   >>>>>>> baz
+> On 2008-02-12 23:05:05 +0100, Peter Oberndorfer wrote:
+>
+> > So another way to fix this might be, to not overwrite cd
+> > unconditionally.
+>
+> Yes, this is what we want -- if the user gives --author, we
+> shouldn't open the interactive editor even if the given author is
+> the same as the patch already had.
+>
+> Updated patch on the way.
 
-> Third, git doesn't appear to have any sense of context when performing a
-> merge. Another contrived example which wouldn't be flagged as a merge
-> conflict:
+And here it is. The relevant piece of code now reads
 
->   ptr = malloc(len); // Added in HEAD.
->   init();            // Included in merge-base.
->   ptr = malloc(len); // Added in "merge".
+    a, c =3D options.author(cd.author), options.committer(cd.committer)
+    if (a, c) !=3D (cd.author, cd.committer):
+        cd =3D cd.set_author(a).set_committer(c)
 
-Yes, that's nasty.
+This works because the default value for options.author and
+options.committer -- used when no commandline options are given -- is
+the identity function.
 
-> Fourth, git doesn't provide a mechanism for merges to ignore whitespace
-> changes.
-
-I can live with that.  As long as the conflict is clearly marked with
-all 3 parts, I can use any external tool I want to resolve the conflict.
+ stgit/commands/common.py |   33 ++++++++++--------------------
+ stgit/commands/edit.py   |   26 ++++--------------------
+ stgit/commands/new.py    |   40 ++++++++++---------------------------
+ stgit/utils.py           |   50 ++++++++++++++++++++++++++++++++++++++=
+++++++++
+ 4 files changed, 76 insertions(+), 73 deletions(-)
 
 
-        Stefan
+diff --git a/stgit/commands/common.py b/stgit/commands/common.py
+index 5a1952b..d6df813 100644
+--- a/stgit/commands/common.py
++++ b/stgit/commands/common.py
+@@ -266,30 +266,19 @@ def parse_patches(patch_args, patch_list, boundar=
+y =3D 0, ordered =3D False):
+     return patches
+=20
+ def name_email(address):
+-    """Return a tuple consisting of the name and email parsed from a
+-    standard 'name <email>' or 'email (name)' string
+-    """
+-    address =3D re.sub(r'[\\"]', r'\\\g<0>', address)
+-    str_list =3D re.findall('^(.*)\s*<(.*)>\s*$', address)
+-    if not str_list:
+-        str_list =3D re.findall('^(.*)\s*\((.*)\)\s*$', address)
+-        if not str_list:
+-            raise CmdException('Incorrect "name <email>"/"email (name)=
+"'
+-                               ' string: %s' % address)
+-        return ( str_list[0][1], str_list[0][0] )
+-
+-    return str_list[0]
++    p =3D parse_name_email(address)
++    if p:
++        return p
++    else:
++        raise CmdException('Incorrect "name <email>"/"email (name)" st=
+ring: %s'
++                           % address)
+=20
+ def name_email_date(address):
+-    """Return a tuple consisting of the name, email and date parsed
+-    from a 'name <email> date' string
+-    """
+-    address =3D re.sub(r'[\\"]', r'\\\g<0>', address)
+-    str_list =3D re.findall('^(.*)\s*<(.*)>\s*(.*)\s*$', address)
+-    if not str_list:
+-        raise CmdException, 'Incorrect "name <email> date" string: %s'=
+ % address
+-
+-    return str_list[0]
++    p =3D parse_name_email_date(address)
++    if p:
++        return p
++    else:
++        raise CmdException('Incorrect "name <email> date" string: %s' =
+% address)
+=20
+ def address_or_alias(addr_str):
+     """Return the address if it contains an e-mail address or look up
+diff --git a/stgit/commands/edit.py b/stgit/commands/edit.py
+index 7daf156..436f7ea 100644
+--- a/stgit/commands/edit.py
++++ b/stgit/commands/edit.py
+@@ -60,19 +60,8 @@ options =3D [make_option('-d', '--diff',
+                        action =3D 'store_true'),
+            make_option('-e', '--edit', action =3D 'store_true',
+                        help =3D 'invoke interactive editor'),
+-           make_option('--author', metavar =3D '"NAME <EMAIL>"',
+-                       help =3D 'replae the author details with "NAME =
+<EMAIL>"'),
+-           make_option('--authname',
+-                       help =3D 'replace the author name with AUTHNAME=
+'),
+-           make_option('--authemail',
+-                       help =3D 'replace the author e-mail with AUTHEM=
+AIL'),
+-           make_option('--authdate',
+-                       help =3D 'replace the author date with AUTHDATE=
+'),
+-           make_option('--commname',
+-                       help =3D 'replace the committer name with COMMN=
+AME'),
+-           make_option('--commemail',
+-                       help =3D 'replace the committer e-mail with COM=
+MEMAIL')
+            ] + (utils.make_sign_options() + utils.make_message_options=
+()
++                + utils.make_author_committer_options()
+                 + utils.make_diff_opts_option())
+=20
+ def patch_diff(repository, cd, diff, diff_flags):
+@@ -141,16 +130,9 @@ def func(parser, options, args):
+                                                    options.message)
+=20
+     # Modify author and committer data.
+-    if options.author !=3D None:
+-        options.authname, options.authemail =3D common.name_email(opti=
+ons.author)
+-    for p, f, val in [('author', 'name', options.authname),
+-                      ('author', 'email', options.authemail),
+-                      ('author', 'date', gitlib.Date.maybe(options.aut=
+hdate)),
+-                      ('committer', 'name', options.commname),
+-                      ('committer', 'email', options.commemail)]:
+-        if val !=3D None:
+-            cd =3D getattr(cd, 'set_' + p)(
+-                getattr(getattr(cd, p), 'set_' + f)(val))
++    a, c =3D options.author(cd.author), options.committer(cd.committer=
+)
++    if (a, c) !=3D (cd.author, cd.committer):
++        cd =3D cd.set_author(a).set_committer(c)
+=20
+     # Add Signed-off-by: or similar.
+     if options.sign_str !=3D None:
+diff --git a/stgit/commands/new.py b/stgit/commands/new.py
+index dd9f93e..d44b8cc 100644
+--- a/stgit/commands/new.py
++++ b/stgit/commands/new.py
+@@ -39,19 +39,8 @@ line of the commit message."""
+ directory =3D common.DirectoryHasRepositoryLib()
+ options =3D [make_option('-m', '--message',
+                        help =3D 'use MESSAGE as the patch description'=
+),
+-           make_option('-a', '--author', metavar =3D '"NAME <EMAIL>"',
+-                       help =3D 'use "NAME <EMAIL>" as the author deta=
+ils'),
+-           make_option('--authname',
+-                       help =3D 'use AUTHNAME as the author name'),
+-           make_option('--authemail',
+-                       help =3D 'use AUTHEMAIL as the author e-mail'),
+-           make_option('--authdate',
+-                       help =3D 'use AUTHDATE as the author date'),
+-           make_option('--commname',
+-                       help =3D 'use COMMNAME as the committer name'),
+-           make_option('--commemail',
+-                       help =3D 'use COMMEMAIL as the committer e-mail=
+')
+-           ] + utils.make_sign_options()
++           ] + (utils.make_author_committer_options()
++                + utils.make_sign_options())
+=20
+ def func(parser, options, args):
+     """Create a new patch."""
+@@ -72,30 +61,23 @@ def func(parser, options, args):
+         parser.error('incorrect number of arguments')
+=20
+     head =3D directory.repository.refs.get(directory.repository.head)
+-    cd =3D gitlib.Commitdata(tree =3D head.data.tree, parents =3D [hea=
+d],
+-                           message =3D '')
++    cd =3D gitlib.Commitdata(
++        tree =3D head.data.tree, parents =3D [head], message =3D '',
++        author =3D gitlib.Person.author(), committer =3D gitlib.Person=
+=2Ecommitter())
+=20
+     # Set patch commit message from commandline.
+     if options.message !=3D None:
+         cd =3D cd.set_message(options.message)
+=20
+-    # Specify author and committer data.
+-    if options.author !=3D None:
+-        options.authname, options.authemail =3D common.name_email(opti=
+ons.author)
+-    for p, f, val in [('author', 'name', options.authname),
+-                      ('author', 'email', options.authemail),
+-                      ('author', 'date', gitlib.Date.maybe(options.aut=
+hdate)),
+-                      ('committer', 'name', options.commname),
+-                      ('committer', 'email', options.commemail)]:
+-        if val !=3D None:
+-            cd =3D getattr(cd, 'set_' + p)(
+-                getattr(getattr(cd, p), 'set_' + f)(val))
++    # Modify author and committer data.
++    cd =3D (cd.set_author(options.author(cd.author))
++            .set_committer(options.committer(cd.committer)))
+=20
+     # Add Signed-off-by: or similar.
+     if options.sign_str !=3D None:
+-        cd =3D cd.set_message(utils.add_sign_line(
+-                cd.message, options.sign_str, gitlib.Person.committer(=
+).name,
+-                gitlib.Person.committer().email))
++        cd =3D cd.set_message(
++            utils.add_sign_line(cd.message, options.sign_str,
++                                cd.committer.name, cd.committer.email)=
+)
+=20
+     # Let user edit the commit message manually.
+     if not options.message:
+diff --git a/stgit/utils.py b/stgit/utils.py
+index b75c3b4..947f747 100644
+--- a/stgit/utils.py
++++ b/stgit/utils.py
+@@ -322,6 +322,56 @@ def make_diff_opts_option():
+         type =3D 'string', metavar =3D 'OPTIONS',
+         help =3D 'extra options to pass to "git diff"')]
+=20
++def parse_name_email(address):
++    """Return a tuple consisting of the name and email parsed from a
++    standard 'name <email>' or 'email (name)' string."""
++    address =3D re.sub(r'[\\"]', r'\\\g<0>', address)
++    str_list =3D re.findall(r'^(.*)\s*<(.*)>\s*$', address)
++    if not str_list:
++        str_list =3D re.findall(r'^(.*)\s*\((.*)\)\s*$', address)
++        if not str_list:
++            return None
++        return (str_list[0][1], str_list[0][0])
++    return str_list[0]
++
++def parse_name_email_date(address):
++    """Return a tuple consisting of the name, email and date parsed
++    from a 'name <email> date' string."""
++    address =3D re.sub(r'[\\"]', r'\\\g<0>', address)
++    str_list =3D re.findall('^(.*)\s*<(.*)>\s*(.*)\s*$', address)
++    if not str_list:
++        return None
++    return str_list[0]
++
++def make_person_options(person, short):
++    """Sets options.<person> to a function that modifies a Person
++    according to the commandline options."""
++    def short_callback(option, opt_str, value, parser, field):
++        f =3D getattr(parser.values, person)
++        setattr(parser.values, person,
++                lambda p: getattr(f(p), 'set_' + field)(value))
++    def full_callback(option, opt_str, value, parser):
++        ne =3D parse_name_email(value)
++        if not ne:
++            raise optparse.OptionValueError(
++                'Bad %s specification: %r' % (opt_str, value))
++        name, email =3D ne
++        short_callback(option, opt_str, name, parser, 'name')
++        short_callback(option, opt_str, email, parser, 'email')
++    return ([optparse.make_option(
++                '--%s' % person, metavar =3D '"NAME <EMAIL>"', type =3D=
+ 'string',
++                action =3D 'callback', callback =3D full_callback, des=
+t =3D person,
++                default =3D lambda p: p, help =3D 'set the %s details'=
+ % person)]
++            + [optparse.make_option(
++                '--%s%s' % (short, f), metavar =3D f.upper(), type =3D=
+ 'string',
++                action =3D 'callback', callback =3D short_callback, de=
+st =3D person,
++                callback_args =3D (f,), help =3D 'set the %s %s' % (pe=
+rson, f))
++               for f in ['name', 'email', 'date']])
++
++def make_author_committer_options():
++    return (make_person_options('author', 'auth')
++            + make_person_options('committer', 'comm'))
++
+ # Exit codes.
+ STGIT_SUCCESS =3D 0        # everything's OK
+ STGIT_GENERAL_ERROR =3D 1  # seems to be non-command-specific error
+
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
