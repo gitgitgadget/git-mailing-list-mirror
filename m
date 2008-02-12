@@ -1,77 +1,88 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH] pack-objects: Add runtime detection of online CPU's
-Date: Tue, 12 Feb 2008 13:21:47 +0100
-Message-ID: <47B18F5B.7020106@op5.se>
-References: <47B156CD.1010209@op5.se> <36ca99e90802120318y5099b06cta3f8488dc758f6@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Nicolas Pitre <nico@cam.org>
-To: Bert Wesarg <bert.wesarg@googlemail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 12 13:22:59 2008
+From: Wincent Colaiuta <win@wincent.com>
+Subject: Re: gitweb bug: broken "next" and other links
+Date: Tue, 12 Feb 2008 13:24:29 +0100
+Message-ID: <E16BED2E-C146-44D8-BD90-ECF0DF89CA35@wincent.com>
+References: <B0EC9FB3-DDDE-4BC5-92D8-20487CBD6725@wincent.com> <m3ve4vejdr.fsf@localhost.localdomain> <0811044D-4929-494F-8189-B0B4AFE2D373@wincent.com> <200802111630.29159.jnareb@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v915)
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed	delsp=yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>, Petr Baudis <pasky@suse.cz>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 12 13:25:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOu9n-0001Lg-3j
-	for gcvg-git-2@gmane.org; Tue, 12 Feb 2008 13:22:39 +0100
+	id 1JOuCE-00029c-OB
+	for gcvg-git-2@gmane.org; Tue, 12 Feb 2008 13:25:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752727AbYBLMWA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Feb 2008 07:22:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752207AbYBLMV7
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Feb 2008 07:21:59 -0500
-Received: from mail.op5.se ([193.201.96.20]:39000 "EHLO mail.op5.se"
+	id S1752869AbYBLMYg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 Feb 2008 07:24:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752495AbYBLMYg
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Feb 2008 07:24:36 -0500
+Received: from wincent.com ([72.3.236.74]:48160 "EHLO s69819.wincent.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752183AbYBLMV7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Feb 2008 07:21:59 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id ABB3B1F08859;
-	Tue, 12 Feb 2008 13:21:57 +0100 (CET)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -3.262
-X-Spam-Level: 
-X-Spam-Status: No, score=-3.262 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, AWL=1.137, BAYES_00=-2.599]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id zT+wFL3VUdlD; Tue, 12 Feb 2008 13:21:56 +0100 (CET)
-Received: from clix.int.op5.se (unknown [192.168.1.28])
-	by mail.op5.se (Postfix) with ESMTP id 6E7B41F08857;
-	Tue, 12 Feb 2008 13:21:54 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.9 (X11/20071115)
-In-Reply-To: <36ca99e90802120318y5099b06cta3f8488dc758f6@mail.gmail.com>
+	id S1751892AbYBLMYf convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 12 Feb 2008 07:24:35 -0500
+Received: from cuzco.lan (localhost [127.0.0.1])
+	(authenticated bits=0)
+	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id m1CCOUUN025368;
+	Tue, 12 Feb 2008 06:24:31 -0600
+In-Reply-To: <200802111630.29159.jnareb@gmail.com>
+X-Mailer: Apple Mail (2.915)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73656>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73657>
 
-Bert Wesarg wrote:
-> Hi,
-> 
-> On Feb 12, 2008 9:20 AM, Andreas Ericsson <ae@op5.se> wrote:
->> +#ifdef THREADED_DELTA_SEARCH
->> +# ifdef _SC_NPROCESSORS_ONLN
->> +       long ncpus;
->> +
->> +       if ((ncpus = (long)sysconf(_SC_NPROCESSORS_ONLN)) > 0)
->> +               return (int)ncpus;
->> +# else
-> I can't find the right pointer, but for linux it would be more usable
-> to use sched_getaffinity(). Than you can do thinks like this:
-> 
-> $ taskset 0x3 git gc ...
-> 
-> and you will get 2 cpus, even 4 are online.
-> 
+El 11/2/2008, a las 16:30, Jakub Narebski escribi=C3=B3:
 
-Since you can do roughly the same by saying "git pack-objects --threads=2",
-I'd rather not add a GNU/Linux specific hack for this.
+> Dnia poniedzia=C5=82ek 11. lutego 2008 14:33, Wincent Colaiuta napisa=
+=C5=82:
+>> El 11/2/2008, a las 14:02, Jakub Narebski escribi=C3=B3:
+>>> Wincent Colaiuta <win@wincent.com> writes:
+>>>
+>>>> Just noticed a bug (possibly bugs) in gitweb.
+>>>>
+>>>> Look at a shortlog page like this one:
+>>>>
+>>>> http://repo.or.cz/w/git.git?a=3Dshortlog
+>>>>
+>>>> Mouse over the "next" link at the bottom and you'll see this is th=
+e
+>>>> URL:
+>>>>
+>>>> http://repo.or.cz/w/ARRAY(0x85a5318)?a=3Dshortlog;pg=3D1
+>>>>
+>>>> Which obviously won't work...
+>>>
+>>> This is bug in repo.or.cz version of gitweb, which is slightly
+>>> modified as compared to the "stock" version. Such error would be
+>>> catched by the gitweb 'run as standalone script and check stderr'
+>>> test script.
+>>
+>> Hmm. I don't know. I can reproduce all three of those bugs on my own
+>> unmodified gitweb installation from 1.5.4.
+>
+> I'm sorry. You are right. I haven't seen breakage because it shows
+> only when you use 'pathinfo' feature and pathinfo URLs.
+>
+> Below there is a fix for that; actully only second part mentioned
+> (and first in patch) is needed, i.e. moving setting $params{'project'=
+}
+> before dealing with -replay is needed I think to fix this bug.
+>
+> Could you test it please?
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Your patch fixes the "next" links in the shortlog and log views.
+
+It doesn't fix the broken "raw" links in the commitdiff view. I'm =20
+still seeing links like:
+
+http://example.com/ARRAY(0x8c97f64)?a=3Dcommitdiff_plain;h=3Df29d56269a=
+1c3bd4a970897397470f41553a64f9
+
+Cheers,
+Wincent
