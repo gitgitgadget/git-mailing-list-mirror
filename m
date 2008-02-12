@@ -1,59 +1,65 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [BUG] git bisect should not expand file globs in log
-Date: Tue, 12 Feb 2008 19:50:57 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802121950210.3870@racer.site>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: [PATCH] Fix shell quoting in git-bisect
+Date: Tue, 12 Feb 2008 21:06:50 +0100
+Message-ID: <20080212200650.GA15258@steel.home>
 References: <200802122023.28879.elendil@planet.nl>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>,
+	Christian Couder <chriscool@tuxfamily.org>
 To: Frans Pop <elendil@planet.nl>
-X-From: git-owner@vger.kernel.org Tue Feb 12 20:51:43 2008
+X-From: git-owner@vger.kernel.org Tue Feb 12 21:07:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JP1AH-0001t7-6q
-	for gcvg-git-2@gmane.org; Tue, 12 Feb 2008 20:51:37 +0100
+	id 1JP1Pe-0008RC-ID
+	for gcvg-git-2@gmane.org; Tue, 12 Feb 2008 21:07:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752876AbYBLTuw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Feb 2008 14:50:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752465AbYBLTuw
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Feb 2008 14:50:52 -0500
-Received: from mail.gmx.net ([213.165.64.20]:53648 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752630AbYBLTuv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Feb 2008 14:50:51 -0500
-Received: (qmail invoked by alias); 12 Feb 2008 19:50:49 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp048) with SMTP; 12 Feb 2008 20:50:49 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18e5bh9DEge7RK+741mQrvx/zZ5mQuWqobwnybFrz
-	hVqdrJJuX5boZ/
-X-X-Sender: gene099@racer.site
+	id S1752725AbYBLUGz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Feb 2008 15:06:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752709AbYBLUGy
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Feb 2008 15:06:54 -0500
+Received: from mo-p07-ob.rzone.de ([81.169.146.188]:38667 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752458AbYBLUGy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Feb 2008 15:06:54 -0500
+X-RZG-CLASS-ID: mo07
+X-RZG-AUTH: z4gQVF2k5XWuW3Ccul2hcN+Psg==
+Received: from tigra.home (Fa946.f.strato-dslnet.de [195.4.169.70])
+	by post.webmailer.de (mrclete mo36) (RZmta 16.5)
+	with ESMTP id x002bck1CHdrOD ; Tue, 12 Feb 2008 21:06:51 +0100 (MET)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id C3DFD277BD;
+	Tue, 12 Feb 2008 21:06:50 +0100 (CET)
+Received: by steel.home (Postfix, from userid 1000)
+	id 24F2956D24; Tue, 12 Feb 2008 21:06:50 +0100 (CET)
+Content-Disposition: inline
 In-Reply-To: <200802122023.28879.elendil@planet.nl>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73685>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73686>
 
-Hi,
-
-does this help?  (It is a really trivial patch...)
-
--- snipsnap --
-[PATCH] bisect: use verbatim commit subject in the bisect log
-
-Due to a typo, the commit subject was shell expanded in the bisect log.
-That is, if you had some shell pattern in the commit subject, bisect
-would happily put all matching file names into the log.
-
-Noticed by Frans Pop.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
 ---
+Frans Pop, Tue, Feb 12, 2008 20:23:28 +0100:
+> During a git bisect session I ended up with the following in the
+> .git/BISECT_LOG:
+> 
+> # bad: [38a382ae5dd4f4d04e3046816b0a41836094e538] Kobject: convert 
+> arch/alpha arch/arm arch/avr32 arch/blackfin arch/cris arch/frv arch/h8300 
+> ...
+> 
+> From the following command you can see shat happened: the 'arch/*' from the 
+> commit log was expanded in the comment line in the bisect log file.
+
+This should fix it
+
  git-bisect.sh |    2 +-
  1 files changed, 1 insertions(+), 1 deletions(-)
 
@@ -71,4 +77,4 @@ index 5385249..0bb51d7 100755
  }
  
 -- 
-1.5.4.18.gb6d712
+1.5.4.1.112.g94408
