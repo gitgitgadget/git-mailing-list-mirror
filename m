@@ -1,63 +1,77 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] upload-pack: Initialize the exec-path.
-Date: Tue, 12 Feb 2008 11:49:42 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802121149220.3870@racer.site>
-References: <51419b2c0802111822k4600e06bp4167a09b30bf947a@mail.gmail.com> <m31w7iegk6.fsf@localhost.localdomain> <47B15ADC.8080309@viscovery.net> <alpine.LSU.1.00.0802121028290.3870@racer.site> <47B182C1.60006@viscovery.net>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH] pack-objects: Add runtime detection of online CPU's
+Date: Tue, 12 Feb 2008 13:21:47 +0100
+Message-ID: <47B18F5B.7020106@op5.se>
+References: <47B156CD.1010209@op5.se> <36ca99e90802120318y5099b06cta3f8488dc758f6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Elijah Newren <newren@gmail.com>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Tue Feb 12 12:50:12 2008
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Nicolas Pitre <nico@cam.org>
+To: Bert Wesarg <bert.wesarg@googlemail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 12 13:22:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOteO-0007Nl-DR
-	for gcvg-git-2@gmane.org; Tue, 12 Feb 2008 12:50:12 +0100
+	id 1JOu9n-0001Lg-3j
+	for gcvg-git-2@gmane.org; Tue, 12 Feb 2008 13:22:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751409AbYBLLti (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Feb 2008 06:49:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751207AbYBLLth
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Feb 2008 06:49:37 -0500
-Received: from mail.gmx.net ([213.165.64.20]:48720 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751046AbYBLLtg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Feb 2008 06:49:36 -0500
-Received: (qmail invoked by alias); 12 Feb 2008 11:49:33 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp026) with SMTP; 12 Feb 2008 12:49:33 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19cYlQ40LdchmhO5DXnVsTnxsTMjKiUe58nDIe17P
-	814TxZLUdRTbt6
-X-X-Sender: gene099@racer.site
-In-Reply-To: <47B182C1.60006@viscovery.net>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1752727AbYBLMWA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Feb 2008 07:22:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752207AbYBLMV7
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Feb 2008 07:21:59 -0500
+Received: from mail.op5.se ([193.201.96.20]:39000 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752183AbYBLMV7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Feb 2008 07:21:59 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id ABB3B1F08859;
+	Tue, 12 Feb 2008 13:21:57 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -3.262
+X-Spam-Level: 
+X-Spam-Status: No, score=-3.262 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, AWL=1.137, BAYES_00=-2.599]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id zT+wFL3VUdlD; Tue, 12 Feb 2008 13:21:56 +0100 (CET)
+Received: from clix.int.op5.se (unknown [192.168.1.28])
+	by mail.op5.se (Postfix) with ESMTP id 6E7B41F08857;
+	Tue, 12 Feb 2008 13:21:54 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.9 (X11/20071115)
+In-Reply-To: <36ca99e90802120318y5099b06cta3f8488dc758f6@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73655>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73656>
 
-Hi,
-
-On Tue, 12 Feb 2008, Johannes Sixt wrote:
-
-> Johannes Schindelin schrieb:
-> > Hi,
-> > 
-> > On Tue, 12 Feb 2008, Johannes Sixt wrote:
-> >> The problem is that git-upload-pack (which is not a built-in) does not
-> >> call setup_path() and so does not extend PATH to contain the special
-> >> installation location. Now, when git-upload-pack tries to exec
-> >> git-pack-objects, it fails since this is not in PATH.
-> > 
-> > So, let's make git-upload-pack a builtin, no?
+Bert Wesarg wrote:
+> Hi,
 > 
-> How about this (almost) one-liner instead?
+> On Feb 12, 2008 9:20 AM, Andreas Ericsson <ae@op5.se> wrote:
+>> +#ifdef THREADED_DELTA_SEARCH
+>> +# ifdef _SC_NPROCESSORS_ONLN
+>> +       long ncpus;
+>> +
+>> +       if ((ncpus = (long)sysconf(_SC_NPROCESSORS_ONLN)) > 0)
+>> +               return (int)ncpus;
+>> +# else
+> I can't find the right pointer, but for linux it would be more usable
+> to use sched_getaffinity(). Than you can do thinks like this:
+> 
+> $ taskset 0x3 git gc ...
+> 
+> and you will get 2 cpus, even 4 are online.
+> 
 
-I'm fine with it.
+Since you can do roughly the same by saying "git pack-objects --threads=2",
+I'd rather not add a GNU/Linux specific hack for this.
 
-Ciao,
-Dscho
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
