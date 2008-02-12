@@ -1,90 +1,68 @@
-From: mkoegler@auto.tuwien.ac.at (Martin Koegler)
-Subject: Re: [RFC Patch] Preventing corrupt objects from entering the repository
-Date: Tue, 12 Feb 2008 20:04:11 +0100
-Message-ID: <20080212190411.GA23837@auto.tuwien.ac.at>
-References: <20080210175812.GB12162@auto.tuwien.ac.at> <7vmyq8cqfn.fsf@gitster.siamese.dyndns.org> <alpine.LFD.1.00.0802101929310.2732@xanadu.home> <20080211195623.GA21878@auto.tuwien.ac.at> <alpine.LFD.1.00.0802111513360.2732@xanadu.home> <20080211215806.GA24971@auto.tuwien.ac.at> <alpine.LFD.1.00.0802120937330.2732@xanadu.home>
+From: Frans Pop <elendil@planet.nl>
+Subject: [BUG] git bisect should not expand file globs in log
+Date: Tue, 12 Feb 2008 20:23:28 +0100
+Message-ID: <200802122023.28879.elendil@planet.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Tue Feb 12 20:04:56 2008
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 12 20:41:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JP0R2-0000Ny-UM
-	for gcvg-git-2@gmane.org; Tue, 12 Feb 2008 20:04:53 +0100
+	id 1JP0zu-0006Ep-6A
+	for gcvg-git-2@gmane.org; Tue, 12 Feb 2008 20:40:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762047AbYBLTEP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 Feb 2008 14:04:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761791AbYBLTEP
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Feb 2008 14:04:15 -0500
-Received: from thor.auto.tuwien.ac.at ([128.130.60.15]:50066 "EHLO
-	thor.auto.tuwien.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761022AbYBLTEO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Feb 2008 14:04:14 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by thor.auto.tuwien.ac.at (Postfix) with ESMTP id D8951680BF77;
-	Tue, 12 Feb 2008 20:04:11 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at auto.tuwien.ac.at
-Received: from thor.auto.tuwien.ac.at ([127.0.0.1])
-	by localhost (thor.auto.tuwien.ac.at [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id M9kxaGfj2POC; Tue, 12 Feb 2008 20:04:11 +0100 (CET)
-Received: by thor.auto.tuwien.ac.at (Postfix, from userid 3001)
-	id B07C9680BF6C; Tue, 12 Feb 2008 20:04:11 +0100 (CET)
+	id S1750968AbYBLTju (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Feb 2008 14:39:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753368AbYBLTju
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Feb 2008 14:39:50 -0500
+Received: from hpsmtp-eml12.KPNXCHANGE.COM ([213.75.38.112]:37013 "EHLO
+	hpsmtp-eml12.kpnxchange.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750968AbYBLTjt convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Feb 2008 14:39:49 -0500
+X-Greylist: delayed 976 seconds by postgrey-1.27 at vger.kernel.org; Tue, 12 Feb 2008 14:39:49 EST
+Received: from cpsmtp-eml105.kpnxchange.com ([213.75.84.105]) by hpsmtp-eml12.kpnxchange.com with Microsoft SMTPSVC(6.0.3790.1830);
+	 Tue, 12 Feb 2008 20:23:31 +0100
+Received: from faramir.fjphome.nl ([84.85.147.182]) by cpsmtp-eml105.kpnxchange.com with Microsoft SMTPSVC(6.0.3790.1830);
+	 Tue, 12 Feb 2008 20:23:31 +0100
+User-Agent: KMail/1.9.7
 Content-Disposition: inline
-In-Reply-To: <alpine.LFD.1.00.0802120937330.2732@xanadu.home>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+X-OriginalArrivalTime: 12 Feb 2008 19:23:31.0439 (UTC) FILETIME=[C0AC77F0:01C86DAC]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73683>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73684>
 
-On Tue, Feb 12, 2008 at 11:02:06AM -0500, Nicolas Pitre wrote:
-> I think this is a good idea to always have some sanity checks on any=20
-> incoming objects so to make sure they're well formed and valid before=
-=20
-> giving them a SHA1 value, and bail out as soon as any error is found.=
- =20
-> From my understanding that's what your patch is doing, right? (sorry =
-I=20
-> can't find them in my mailbox anymore).=20
+Hi,
 
-Yes. (=3D>http://marc.info/?l=3Dgit&m=3D120266631524947&w=3D2)
+During a git bisect session I ended up with the following in the
+.git/BISECT_LOG:
 
->  This can be done as objects are=20
-> coming in just fine and requires no extra memory, and I would say thi=
-s=20
-> should be done unconditionally all the time.  After all, the Git=20
-> coherency model is based on the SHA1 checksuming, and therefore it is=
- a=20
-> good idea to never validate any malformed objects with a SHA1.  So I'=
-m=20
-> all in favor of such validation always performed in index-pack and=20
-> unpack-objects.
+# bad: [38a382ae5dd4f4d04e3046816b0a41836094e538] Kobject: convert 
+arch/alpha arch/arm arch/avr32 arch/blackfin arch/cris arch/frv arch/h8300 
+arch/ia64 arch/m32r arch/m68k arch/m68knommu arch/mips arch/parisc 
+arch/powerpc arch/ppc arch/s390 arch/sh arch/sh64 arch/sparc arch/sparc64 
+arch/um arch/v850 arch/x86 arch/x86_64 arch/xtensa from 
+kobject_unregister() to kobject_put()
+git-bisect bad 38a382ae5dd4f4d04e3046816b0a41836094e538
 
-We will need some additional memory for struct blob/tree/tag/commit
-even for this check.
+>From the following command you can see shat happened: the 'arch/*' from the 
+commit log was expanded in the comment line in the bisect log file.
 
-I'll start reworking my patches.
+$ git bisect bad
+38a382ae5dd4f4d04e3046816b0a41836094e538 is first bad commit
+commit 38a382ae5dd4f4d04e3046816b0a41836094e538
+Author: Greg Kroah-Hartman <gregkh@suse.de>
+Date:   Thu Dec 20 08:13:05 2007 -0800
 
-> As to making sure those objects are well connected... well this is a=20
-> technically different issue entirely, and I wonder if a special mode =
-to=20
-> fsck might not be a better solution.  For example, fsck could be made=
- to=20
-> validate object connectivity, starting from the new ref(s), and stopp=
-ing=20
-> object walking as soon as a reference to an object not included in th=
-e=20
-> newly received pack is encountered.  This could be run from some hook=
- to=20
-> decide whether or not to update the new refs, and to delete the pack=20
-> otherwise.
+    Kobject: convert arch/* from kobject_unregister() to kobject_put()
 
-Do you really think, that this will need less memory? fsck loads first
-all objects and then verifies their connections.
+git version: 1.5.4 (current Debian unstable)
 
-mfg Martin K=F6gler
+Cheers,
+FJP
