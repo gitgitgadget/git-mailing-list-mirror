@@ -1,110 +1,95 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Re: [PATCH] RFC: git lazy clone proof-of-concept
-Date: Tue, 12 Feb 2008 17:43:37 -0500
-Message-ID: <9e4733910802121443g7b3f5977s1f7dfeb9ba6abaab@mail.gmail.com>
-References: <200802081828.43849.kendy@suse.cz>
-	 <200802091627.25913.kendy@suse.cz>
-	 <alpine.LFD.1.00.0802092200350.2732@xanadu.home>
-	 <alpine.LSU.1.00.0802101640570.11591@racer.site>
-	 <alpine.LSU.1.00.0802101845320.11591@racer.site>
-	 <alpine.LSU.1.00.0802122036150.3870@racer.site>
-	 <alpine.LFD.1.00.0802121303450.2920@woody.linux-foundation.org>
-	 <9e4733910802121336x42055baawf2b8f3714e2a1eb4@mail.gmail.com>
-	 <alpine.LFD.1.00.0802121356330.2920@woody.linux-foundation.org>
-	 <alpine.LFD.1.00.0802121412520.2920@woody.linux-foundation.org>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: Subject: [PATCH] fix stg edit command
+Date: Tue, 12 Feb 2008 23:47:24 +0100
+Message-ID: <20080212224724.GA24993@diana.vm.bytemark.co.uk>
+References: <20080210203846.17683.43153.stgit@yoghurt> <20080210204359.17683.41935.stgit@yoghurt> <200802122305.05696.kumbayo84@arcor.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Nicolas Pitre" <nico@cam.org>, "Jan Holesovsky" <kendy@suse.cz>,
-	"Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org,
-	"Junio C Hamano" <gitster@pobox.com>
-To: "Linus Torvalds" <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Feb 12 23:44:19 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org,
+	David =?iso-8859-1?Q?K=E5gedal?= <davidk@lysator.liu.se>
+To: Peter Oberndorfer <kumbayo84@arcor.de>
+X-From: git-owner@vger.kernel.org Tue Feb 12 23:48:27 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JP3rN-00017W-Pd
-	for gcvg-git-2@gmane.org; Tue, 12 Feb 2008 23:44:18 +0100
+	id 1JP3vG-0002kW-7v
+	for gcvg-git-2@gmane.org; Tue, 12 Feb 2008 23:48:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753883AbYBLWnn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Feb 2008 17:43:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753567AbYBLWnn
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Feb 2008 17:43:43 -0500
-Received: from wr-out-0506.google.com ([64.233.184.232]:41882 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753304AbYBLWnm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Feb 2008 17:43:42 -0500
-Received: by wr-out-0506.google.com with SMTP id c48so4792126wra.23
-        for <git@vger.kernel.org>; Tue, 12 Feb 2008 14:43:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=l3HQ4f+LgUoyH/t2QOc6E0JywS6/epTaJlwDgBtoW8Q=;
-        b=e40iGPe0T9bQ+mOOjoy+OO26/1gqJgjUDu2C8YE9fTtDNc3p83tPcbu3rL5OCFdQfOHxGGEUQdDE870owSHjGQkjZBmeARRm5PFy3gGRFs157bJHaaXIe/MMeoBQGPypsDkl07L6ZWB8i3peopbD26ivH6ONttGFiinSUjAmrXc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=bSCiMyNEg2ss4y8S37KwBUVLYKkEVmqveq3219OBo1857yDQpwf0nn6VocabpOrUjxBfhbqFq9C28VPMzRWhyQL6t/+IIX3UPjEmR1tSImjm7Nq53KBrRnKLEbjwzfIqqSLOBMpwRf5t9CHvWSPinEE88BQ6i4+IFjpvH0dYeDA=
-Received: by 10.114.190.6 with SMTP id n6mr2132279waf.51.1202856218000;
-        Tue, 12 Feb 2008 14:43:38 -0800 (PST)
-Received: by 10.114.200.7 with HTTP; Tue, 12 Feb 2008 14:43:37 -0800 (PST)
-In-Reply-To: <alpine.LFD.1.00.0802121412520.2920@woody.linux-foundation.org>
+	id S1752351AbYBLWrl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 Feb 2008 17:47:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752028AbYBLWrl
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Feb 2008 17:47:41 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4333 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751819AbYBLWrk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Feb 2008 17:47:40 -0500
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1JP3uO-0006dQ-00; Tue, 12 Feb 2008 22:47:24 +0000
 Content-Disposition: inline
+In-Reply-To: <200802122305.05696.kumbayo84@arcor.de>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73706>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73707>
 
-On 2/12/08, Linus Torvalds <torvalds@linux-foundation.org> wrote:
->
->
-> On Tue, 12 Feb 2008, Linus Torvalds wrote:
-> >
-> >  (b) we compare each object to the "window-1" preceding objects, which is
-> >      how I got the O(windowsize^2)
->
-> That's not really true, of course. But my (broken and inexact) logic is
-> that we get one cost multiplier from the number of objects, and one from
-> the size of the objects.
->
-> So *if* we have the situation of not limiting the window size, we
-> basically have a big slowdown from raising the window in number of
-> objects: not only do we get a slowdown from comparing more objects, we
-> spend relatively more time comparing the *large* ones to begin with and
-> having more of them just makes it even more skewed - when we hit a series
-> of big blocks, the window will also contain more big blocks, so it kind of
-> a double whammy.
->
-> But I don't think calling it O(windowsize^2) is really correct. It's still
-> O(windowsize), it's just that the purely "number-of-object" thing doesn't
-> account for big objects being much more expensive to diff. So you really
-> want to make the *memory* limiter the big one, because that's the one that
-> actually approximates how much time you end up spending.
->
-> So ignore that O(n^2) blather. It's not correct. What _is_ correct is that
-> we want to aggressively limit memory size, because CPU cost goes up
-> linearly not just with number of objects, but also super-linearly with
-> size of the object ("super-linear" due to bad cache behavior and in worst
-> case due to paging).
+On 2008-02-12 23:05:05 +0100, Peter Oberndorfer wrote:
 
+> While testing my editor searching ordering patch i found that this
+> patch(Refactor --author/--committer options) seems to break "stg
+> edit" (without arguments) starting a interactive editor for me. When
+> i issue "stg edit" it silently does nothing.
 
-In the gcc case I wasn't running out memory. I believe was CPU bound
-for an hour processing a single object chain with 2000 entries. That
-sure doesn't feel like O(windowsize).
+Thanks for the report. And yes, as far as I can tell your analysis is
+spot on. In the initial patch I remember being careful to not replace
+cd unless it was actually changed, but obviously I got sloppy after
+that. :-(
 
-Maybe someone playing the the OO repo can stick in an appropriate
-printf and see how many diffs are really being done just to make sure
-they match what we think the number should be.
-
-
+> It seems the following comparison does not return True
 >
->                         Linus
+> > # Let user edit the patch manually.
+> > if cd =3D=3D orig_cd or options.edit:
 >
+> I can work around this by adding a comparison function to Commitdata
+> but maybe __eq__ or __ne__ should be used instead(prevent similar
+> bugs caused by =3D=3D comparison)?
+>
+> +    def is_same(self, other):
+> +        return (self.__tree =3D=3D other.__tree and
+> +                self.__parents =3D=3D other.__parents and
+> +                self.__author =3D=3D other.__author and
+> +                self.__committer =3D=3D other.__committer and
+> +                self.__message =3D=3D other.__message)
 
+Yes, you'd definitely want the common operators to work. But I usually
+implement __cmp__ instead of __eq__ and __ne__ -- that gives you all
+of <, <=3D, =3D, !=3D, >=3D, and > for the price of a single method. An=
+d it's
+usually possible to define it rather simply in terms of cmp() with
+tuple arguments, like this:
 
--- 
-Jon Smirl
-jonsmirl@gmail.com
+    def __cmp__(self, other):
+        return cmp((self.__tree, self.__parents, self.__author,
+                    self.__committer, self.__message),
+                   (other.__tree, other.__parents, other.__author,
+                    other.__committer, other.__message))
+
+This sidesteps the great problem of cmp -- having to remember when to
+return 1 and when to return -1.
+
+> So another way to fix this might be, to not overwrite cd
+> unconditionally.
+
+Yes, this is what we want -- if the user gives --author, we shouldn't
+open the interactive editor even if the given author is the same as
+the patch already had.
+
+Updated patch on the way.
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
