@@ -1,52 +1,122 @@
-From: Daniel Stenberg <daniel@haxx.se>
-Subject: Re: What's in git.git
-Date: Tue, 12 Feb 2008 12:35:18 +0100 (CET)
-Message-ID: <Pine.LNX.4.64.0802121234170.416@yvahk3.pbagnpgbe.fr>
-References: <7v8x27iui1.fsf@gitster.siamese.dyndns.org>
- <7vd4r24ox6.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0802121010590.416@yvahk3.pbagnpgbe.fr>
- <20080212094755.GA17195@glandium.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: gitweb bug: broken "next" and other links
+Date: Tue, 12 Feb 2008 12:39:05 +0100
+Message-ID: <200802121239.06287.jnareb@gmail.com>
+References: <B0EC9FB3-DDDE-4BC5-92D8-20487CBD6725@wincent.com> <0811044D-4929-494F-8189-B0B4AFE2D373@wincent.com> <200802111630.29159.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: git@vger.kernel.org
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Tue Feb 12 12:36:15 2008
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>, Petr Baudis <pasky@suse.cz>
+To: Wincent Colaiuta <win@wincent.com>
+X-From: git-owner@vger.kernel.org Tue Feb 12 12:39:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOtQt-0003E8-B0
-	for gcvg-git-2@gmane.org; Tue, 12 Feb 2008 12:36:15 +0100
+	id 1JOtUN-0004Jx-6L
+	for gcvg-git-2@gmane.org; Tue, 12 Feb 2008 12:39:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761532AbYBLLfh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Feb 2008 06:35:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761306AbYBLLfh
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Feb 2008 06:35:37 -0500
-Received: from kluster1.contactor.se ([91.191.140.11]:57403 "EHLO
-	kluster1.contactor.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760881AbYBLLfg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Feb 2008 06:35:36 -0500
-Received: from linux3.contactor.se (linux3.contactor.se [91.191.140.23])
-	by kluster1.contactor.se (8.13.8/8.13.8/Debian-3) with ESMTP id m1CBZI6u012196;
-	Tue, 12 Feb 2008 12:35:18 +0100
-X-X-Sender: dast@linux3.contactor.se
-In-Reply-To: <20080212094755.GA17195@glandium.org>
-X-fromdanielhimself: yes
+	id S1761618AbYBLLjP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Feb 2008 06:39:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761574AbYBLLjP
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Feb 2008 06:39:15 -0500
+Received: from nf-out-0910.google.com ([64.233.182.189]:16755 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761306AbYBLLjO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Feb 2008 06:39:14 -0500
+Received: by nf-out-0910.google.com with SMTP id g13so1381213nfb.21
+        for <git@vger.kernel.org>; Tue, 12 Feb 2008 03:39:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        bh=j07BCs39r1ijGcHAuDqf5TREa6Se2aDucwNWNKA6Kaw=;
+        b=DnJpslho08fxOMEVG+xhnQ5NNQdp/jJxUzsAehlPSp9yIjSyECMZjgWNIdgSmYVT4pzpM6g3KS5jyd1xB9UHBZ8Yx4gknL0SpWOx8TqgIOwz7DdzcJKla1PvMii4ez6DbhHxcjlc274nezhYzwZMIKucfbkSYPNDjImSkEuD6JQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=bU5b1Z2eeDAP5xvgl9I+TpLOBnbarUf1of3IP6FOOjhhKt4ZZ2HEPZiFc4LXK2YrYRoViLyMQjFu//LAYuVDWhLriSifhxWiH1yHqzZmsxdY23QnRZvZoE7V+IcTDrEoWd26R0gvpUlhodIWoxxldRf2KjraveriI0R+OdeMjIw=
+Received: by 10.78.145.14 with SMTP id s14mr2110669hud.58.1202816351703;
+        Tue, 12 Feb 2008 03:39:11 -0800 (PST)
+Received: from ?192.168.1.11? ( [83.8.220.23])
+        by mx.google.com with ESMTPS id c14sm90822nfi.6.2008.02.12.03.39.09
+        (version=SSLv3 cipher=OTHER);
+        Tue, 12 Feb 2008 03:39:10 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <200802111630.29159.jnareb@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73652>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73653>
 
-On Tue, 12 Feb 2008, Mike Hommey wrote:
+On Mon, 11 Feb 2008, Jakub Narebski wrote:
 
-> The important bit in the commit message reads:
->> We work around this by removing the http_init and http_cleanup calls
->> from get_refs_via_curl, replacing them with a transport->data
->> initialization with the http_walker (which does http_init).
->
-> Which means there remains only one initialization. I agree it's not a 
-> workaround anymore, but the word remained from the 3 previous attempts, 
-> which were workarounds.
+> I'm sorry. You are right. I haven't seen breakage because it shows
+> only when you use 'pathinfo' feature and pathinfo URLs.
+> 
+> Below there is a fix for that; actully only second part mentioned
+> (and first in patch) is needed, i.e. moving setting $params{'project'}
+> before dealing with -replay is needed I think to fix this bug.
+> 
+> Could you test it please?
+> -->8 --
+> From: Jakub Narebski <jnareb@gmail.com>
+> Subject: [PATCH] gitweb: Fix bug in href(..., -replay=>1) when 'pathinfo' feature used
+> 
+> URLs generated by href(..., -replay=>1) (which includes 'next page'
+> links and alternate view links) were not created correctly when using
+> 'pathinfo' feature (i.e. using pathinfo instead of query string to
+> denote project / git repository used).
+> 
+> This resulted in broken links such like:
+>   http://www.example.com/w/ARRAY(0x85a5318)?a=shortlog;pg=1
+> instead of:
+>   http://www.example.com/w/project.git?a=shortlog;pg=1
 
-Ah, ok. Then I'll retract my comments! :-) Sorry for not checking out the 
-actual code change, I only read the description!
+Actually the error is there even without using 'pathinfo' feature,
+namely if you use pathinfo to provide project, for example:
+  http://www.example.com/w/project.git?a=shortlog
+then 'next' link on the page lacks project (instead of having
+dereferenced anonymous array reference, i.e. ARRAY(sth)), like below
+  http://www.example.com/w/?a=shortlog;pg=1
+
+But I could not come up with automated test which would _fail_
+on this error. So please check, and reply if this patch helps.
+
+
+Below there is hand-crafted minimal fixing patch.
+
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index 5e88637..648ee13 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -611,17 +611,17 @@ sub href(%) {
+>  	);
+>  	my %mapping = @mapping;
+>  
+> +	$params{'project'} = $project unless exists $params{'project'};
+> +
+>  	if ($params{-replay}) {
+>  		while (my ($name, $symbol) = each %mapping) {
+>  			if (!exists $params{$name}) {
+>  				# to allow for multivalued params we use arrayref form
+>  				$params{$name} = [ $cgi->param($symbol) ];
+>  			}
+>  		}
+>  	}
+>  
+> -	$params{'project'} = $project unless exists $params{'project'};
+> -
+>  	my ($use_pathinfo) = gitweb_check_feature('pathinfo');
+>  	if ($use_pathinfo) {
+>  		# use PATH_INFO for project name
+> -- 
+> 1.5.4
+> 
+> 
+
+-- 
+Jakub Narebski
+Poland
