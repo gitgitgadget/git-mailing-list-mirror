@@ -1,96 +1,88 @@
-From: Mark Levedahl <mlevedahl@gmail.com>
-Subject: Re: [PATCH 1/3] git-submodule - Follow top-level remote on init/update/clone
-Date: Mon, 11 Feb 2008 20:34:04 -0500
-Message-ID: <47B0F78C.1050605@gmail.com>
-References: <1202576245-284-1-git-send-email-mlevedahl@gmail.com> <alpine.LSU.1.00.0802112152050.3870@racer.site> <47B0EFA2.9070903@gmail.com> <alpine.LSU.1.00.0802120109270.3870@racer.site>
+From: "Elijah Newren" <newren@gmail.com>
+Subject: Unable to clone an ssh repository (with ugly installation-specific workaround)
+Date: Mon, 11 Feb 2008 19:22:48 -0700
+Message-ID: <51419b2c0802111822k4600e06bp4167a09b30bf947a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Feb 12 02:34:59 2008
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_17549_18020323.1202782968253"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 12 03:23:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOk2s-0003Re-Mj
-	for gcvg-git-2@gmane.org; Tue, 12 Feb 2008 02:34:51 +0100
+	id 1JOknt-0005UZ-5t
+	for gcvg-git-2@gmane.org; Tue, 12 Feb 2008 03:23:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756165AbYBLBeL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Feb 2008 20:34:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756182AbYBLBeK
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Feb 2008 20:34:10 -0500
-Received: from rn-out-0910.google.com ([64.233.170.189]:62247 "EHLO
-	rn-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754209AbYBLBeI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Feb 2008 20:34:08 -0500
-Received: by rn-out-0910.google.com with SMTP id i24so6366178rng.19
-        for <git@vger.kernel.org>; Mon, 11 Feb 2008 17:34:07 -0800 (PST)
+	id S1752182AbYBLCWv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Feb 2008 21:22:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751461AbYBLCWu
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Feb 2008 21:22:50 -0500
+Received: from wa-out-1112.google.com ([209.85.146.182]:32320 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751430AbYBLCWu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Feb 2008 21:22:50 -0500
+Received: by wa-out-1112.google.com with SMTP id v27so2503631wah.23
+        for <git@vger.kernel.org>; Mon, 11 Feb 2008 18:22:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        bh=ceP7VFCmUUvrsnlzlv0+yOPArKK50SmOcPMQxRVYZPQ=;
-        b=CJOs74RpfM4Mo+/juN7sunqlIIHpkDqXYGweL06CsyVdxtYsEDrYQLi+oqcm+PsxxQWA6347d9VaWpuHQqUWBs212DysVSkHg3HLPDaZQ0G0eWtDP5EJz33uKhEJE0wL4r+XZj10DHYGDcXRf/DsMplG86Ou6vT/mUbRUNcp4zg=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type;
+        bh=k/GkPX/6dkcv62UnlGPflTkWTxfi1fC7nV/Wj3oqM+g=;
+        b=iD2cnbFk8LTqVGHKRPqG3LHlE89de2ZSvbW/NiY/y63RiEhViz1OUBk+kvt4f6Xon+1ZixYJ6kJDrv0Rngi5rsAxBHGPLbaPFjV4H9bX7JNfiRcyhztvfeid75Wiwf+j9N3yJ3WVBPI2laXy7KQQ/nMD56dR+bzY6TbqFSiL8yc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=wCVMMX1v0FYaLDxi0HOG7nSrF3ZRII30X6Qs0yjfhtJwMQhNOh+1jfSn66D7HwGBlvEAV1nFkz2B61f2ZV4bgqNW9tnd1N/Md39XZxuYql6RkK3dbo1RKONR2yXQXqi1Bu4uu6+MAjhykDPRGA5+K8n/rUDBz6NMez1IACXHbo4=
-Received: by 10.150.145.20 with SMTP id s20mr259414ybd.5.1202780047660;
-        Mon, 11 Feb 2008 17:34:07 -0800 (PST)
-Received: from ?192.168.1.117? ( [71.163.29.241])
-        by mx.google.com with ESMTPS id c53sm42125915wrc.13.2008.02.11.17.34.05
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 11 Feb 2008 17:34:06 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
-In-Reply-To: <alpine.LSU.1.00.0802120109270.3870@racer.site>
+        h=message-id:date:from:to:subject:mime-version:content-type;
+        b=jyIj2Ai9k9nniZcj80ni4du6GHlXFWmaW/TC/cRY1NTBvRoI6jUh9EL6V+U54ubCt6jRTDrMG04oJ5UUFmtqASPSjOCaLObuwJt4MEEPH/fkZMWY0Bsib6Ox5IimqQQb/C+Q8KiTEIg7d5yrvwYKeA2vTU83gwfr2Kcc2LXOrWw=
+Received: by 10.114.171.1 with SMTP id t1mr825181wae.83.1202782968260;
+        Mon, 11 Feb 2008 18:22:48 -0800 (PST)
+Received: by 10.114.205.19 with HTTP; Mon, 11 Feb 2008 18:22:48 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73618>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73619>
 
-Johannes Schindelin wrote:
-> Hi,
->
-> On Mon, 11 Feb 2008, Mark Levedahl wrote:
->
->   
->> Johannes Schindelin wrote:
->>
->>     
->>>> @@ -107,7 +112,7 @@ module_clone()
->>>>  	test -e "$path" &&
->>>>  	die "A file already exist at path '$path'"
->>>>  -	git-clone -n "$url" "$path" ||
->>>> +	git-clone -n -o "$remote" "$url" "$path" ||
->>>>  	die "Clone of '$url' into submodule path '$path' failed"
->>>>  }
->>>>      
->>>>         
->>> If you do _that_, you will _force_ the submodule to have no "origin" 
->>> remote.  As discussed _at length_, this is not what you should do.  
->>> The only reason to use "-o <other-nick-name>" is if you plan _not_ to 
->>> use the same URL for the default remote.
->>>       
->> This *must* define the remote using the same name as flowed down from 
->> top-level, whatever that name is.
->>     
->
-> At this point, I give up my review in despair,
-> Dscho
->
->   
-The submodules must use the same remote name to refer to the same 
-server/repo-tree as top-level, or the coordinated fetch / update driven 
-by top-level's branch.<name>.remote cannot work. It is always origin, or 
-always frotz, not mix and match. There are two ways to achieve this:
+------=_Part_17549_18020323.1202782968253
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 
-1) Use the name given by top-level, as I did.
-2) Restrict git to only allow one remote name, *origin*, ever (or at 
-least if submodules are used). Not just the default remote, *any* 
-remote. This removes branch.<name>.remote as that is defined to be origin.
+Hi,
 
-I infer you choose option 2? It is certainly simpler, though 
-significantly more restrictive.
+I'm pretty sure this worked before, but with git-1.5.4, when trying to
+clone a repository via ssh from a machine that does not have git
+installed in a standard system path, I get the following:
 
-Mark
+$ git clone -u /home/enewren/software/install/linux/git/bin/git-upload-pack
+ssh://enewren@remote/var/scratch/enewren/votd
+Initialized empty Git repository in /home/newren/devel/votd/.git/
+remote: fatal: exec pack-objects failed.
+remote: aborting due to possible repository corruption on the remote side.
+fatal: early EOF
+fatal: index-pack failed
+fetch-pack from 'ssh://enewren@remote/var/scratch/enewren/votd' failed.
+
+I tried doing a local clone of the same repository (worked fine), a
+'git fsck -full' on the relevant repository (reported no errors), and
+a few other things.  After a bit of digging, I found a really ugly
+hack that works around my problem.  After recompiling git on the
+remote machine with the attached patch, the clone operation succeeded.
+
+
+Thanks,
+Elijah
+
+------=_Part_17549_18020323.1202782968253
+Content-Type: text/x-patch; name=ugly-hack.patch
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_fcjtllzu0
+Content-Disposition: attachment; filename=ugly-hack.patch
+
+LS0tIGdpdC0xLjUuNC9leGVjX2NtZC5jfgkyMDA4LTAyLTAxIDIxOjA5OjAxLjAwMDAwMDAwMCAt
+MDcwMAorKysgZ2l0LTEuNS40L2V4ZWNfY21kLmMJMjAwOC0wMi0xMSAxNzozNToxMS4wOTI3OTYw
+MDAgLTA3MDAKQEAgLTY5LDcgKzY5LDcgQEAKIAljb25zdCBjaGFyICp0bXA7CiAKIAlzdHJidWZf
+aW5pdCgmY21kLCAwKTsKLQlzdHJidWZfYWRkZigmY21kLCAiZ2l0LSVzIiwgYXJndlswXSk7CisJ
+c3RyYnVmX2FkZGYoJmNtZCwgIi9ob21lL2VuZXdyZW4vc29mdHdhcmUvaW5zdGFsbC9saW51eC9n
+aXQvYmluL2dpdC0lcyIsIGFyZ3ZbMF0pOwogCiAJLyoKIAkgKiBhcmd2WzBdIG11c3QgYmUgdGhl
+IGdpdCBjb21tYW5kLCBidXQgdGhlIGFyZ3YgYXJyYXkK
+------=_Part_17549_18020323.1202782968253--
