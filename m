@@ -1,119 +1,80 @@
-From: Voltage Spike <voltspike@gmail.com>
-Subject: Merge-Recursive Improvements
-Date: Tue, 12 Feb 2008 15:16:33 -0700
-Message-ID: <A21B3CA8-6240-434F-87A9-C6F76DA15265@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v753)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 12 23:17:22 2008
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH] RFC: git lazy clone proof-of-concept
+Date: Tue, 12 Feb 2008 14:25:20 -0800 (PST)
+Message-ID: <alpine.LFD.1.00.0802121412520.2920@woody.linux-foundation.org>
+References: <200802081828.43849.kendy@suse.cz>  <m3ejbngtnn.fsf@localhost.localdomain>  <200802091627.25913.kendy@suse.cz>  <alpine.LFD.1.00.0802092200350.2732@xanadu.home>  <alpine.LSU.1.00.0802101640570.11591@racer.site>  <alpine.LSU.1.00.0802101845320.11591@racer.site>
+  <alpine.LSU.1.00.0802122036150.3870@racer.site>  <alpine.LFD.1.00.0802121303450.2920@woody.linux-foundation.org> <9e4733910802121336x42055baawf2b8f3714e2a1eb4@mail.gmail.com> <alpine.LFD.1.00.0802121356330.2920@woody.linux-foundation.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Nicolas Pitre <nico@cam.org>, Jan Holesovsky <kendy@suse.cz>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Jon Smirl <jonsmirl@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 12 23:27:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JP3RD-00083l-7B
-	for gcvg-git-2@gmane.org; Tue, 12 Feb 2008 23:17:15 +0100
+	id 1JP3aa-0003C6-Jy
+	for gcvg-git-2@gmane.org; Tue, 12 Feb 2008 23:26:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755987AbYBLWQi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Feb 2008 17:16:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755228AbYBLWQi
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Feb 2008 17:16:38 -0500
-Received: from wf-out-1314.google.com ([209.85.200.172]:45689 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751842AbYBLWQh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Feb 2008 17:16:37 -0500
-Received: by wf-out-1314.google.com with SMTP id 28so246521wff.4
-        for <git@vger.kernel.org>; Tue, 12 Feb 2008 14:16:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:mime-version:content-transfer-encoding:message-id:content-type:to:from:subject:date:x-mailer;
-        bh=x7YPQ6OQ2oiIUbIDtw1Rg+2jsucdjmSwc/Pzq53pDU0=;
-        b=GPVCfRemhh9msw65+CeK9qWFUSVw6QRvvHIXBxyAKB6guuPTWdPne8N2m3qd7JGVzv7UuByH+8cyjeGSH1UYlVJMeavenQKefu2kfiITCQkNVOXnIig1VxHcai02bQmBB5Ym1sFG7qxP4AaxQXDes0uXNNdttLZpPaSN6lWAff0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:content-transfer-encoding:message-id:content-type:to:from:subject:date:x-mailer;
-        b=L7spauZh6aUybYHnJIqObJDVik4rql/k6tOaw3yxcJzFroCLxX5YcvPfLv+l+zzpZwxnbs6OD+6HVYGLWnzzyQj0Hr0HbNNh+2wxImFBro4p2P+ZRmu88VgJ4h5QxhW0d6xZWEsLn3ci5wAdIPh8RrU00y0JKhdHlF5CWuu3NSI=
-Received: by 10.142.242.8 with SMTP id p8mr1486203wfh.232.1202854595738;
-        Tue, 12 Feb 2008 14:16:35 -0800 (PST)
-Received: from ?172.16.10.31? ( [199.0.156.179])
-        by mx.google.com with ESMTPS id 24sm1259985wff.10.2008.02.12.14.16.34
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 12 Feb 2008 14:16:34 -0800 (PST)
-X-Mailer: Apple Mail (2.753)
+	id S1752508AbYBLW0R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Feb 2008 17:26:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752384AbYBLW0R
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Feb 2008 17:26:17 -0500
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:47822 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751638AbYBLW0Q (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 12 Feb 2008 17:26:16 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m1CMPMPE012783
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 12 Feb 2008 14:25:24 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m1CMPKK2025560;
+	Tue, 12 Feb 2008 14:25:20 -0800
+In-Reply-To: <alpine.LFD.1.00.0802121356330.2920@woody.linux-foundation.org>
+User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+X-Spam-Status: No, hits=-4.741 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73703>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73704>
 
-I would like to make a series of significant improvements to the
-merge-recursive mechanism in git, but I was hoping to solicit some early
-feedback before submitting patches.
 
-First, git is overly zealous at merging differences and two functions  
-added
-at the same point in a file become intertwined during the merge. A  
-trivial
-example of this behavior:
 
-   <<<<<<< HEAD:file.txt
-   void newfunc1()
-   =======
-   void newfunc2()
-   >>>>>>> merge:file.txt
-   {
-     int err;
-   <<<<<<< HEAD:file.txt
-     err = doSomething();
-   =======
-     err = doSomethingElse();
-   >>>>>>> merge:file.txt
+On Tue, 12 Feb 2008, Linus Torvalds wrote:
+>
+>  (b) we compare each object to the "window-1" preceding objects, which is 
+>      how I got the O(windowsize^2) 
 
-Second, git doesn't tell me the original code inside the conflict  
-markers so
-I almost always resort to "MERGE_HEAD...ORIG_HEAD" and
-"ORIG_HEAD...MERGE_HEAD" diffs to see what was going on. I could use an
-external diff tool (yuck), but I would like to modify the conflict  
-markers
-to resemble those of Perforce:
+That's not really true, of course. But my (broken and inexact) logic is 
+that we get one cost multiplier from the number of objects, and one from 
+the size of the objects.
 
-   >>>>>>> merge-base:file.txt
-   Original code.
-   ======= HEAD:file.txt
-   Head code.
-   ======= merge:file.txt
-   Merged code.
-   <<<<<<<
+So *if* we have the situation of not limiting the window size, we 
+basically have a big slowdown from raising the window in number of 
+objects: not only do we get a slowdown from comparing more objects, we 
+spend relatively more time comparing the *large* ones to begin with and 
+having more of them just makes it even more skewed - when we hit a series 
+of big blocks, the window will also contain more big blocks, so it kind of 
+a double whammy.
 
-Third, git doesn't appear to have any sense of context when performing a
-merge. Another contrived example which wouldn't be flagged as a merge
-conflict:
+But I don't think calling it O(windowsize^2) is really correct. It's still 
+O(windowsize), it's just that the purely "number-of-object" thing doesn't 
+account for big objects being much more expensive to diff. So you really 
+want to make the *memory* limiter the big one, because that's the one that 
+actually approximates how much time you end up spending.
 
-   ptr = malloc(len); // Added in HEAD.
-   init();            // Included in merge-base.
-   ptr = malloc(len); // Added in "merge".
+So ignore that O(n^2) blather. It's not correct. What _is_ correct is that 
+we want to aggressively limit memory size, because CPU cost goes up 
+linearly not just with number of objects, but also super-linearly with 
+size of the object ("super-linear" due to bad cache behavior and in worst 
+case due to paging).
 
-Fourth, git doesn't provide a mechanism for merges to ignore whitespace
-changes.
-
-I resolved issues the first and the fourth through the introduction  
-of new
-configuration variables and trivial modifications to the manner in  
-which we
-call xdl_merge. I suspect the second and third issue may also be  
-simple to
-solve but would require that I modify libxdiff directly.
-
-Are these changes something other people might be interested in? (It  
-seems
-odd that nobody is complaining about these really irritating flaws.)  
-Should
-I concern myself with writing a custom merge driver rather than  
-modify core
-behavior (even if the change is configurable)?  If I should focus on an
-external driver, under what circumstances would merge.*.recursive  
-come into
-play (i.e., when do I have to worry about poor behavior for an "internal
-merge")?
-
-Thank you in advance for the feedback.
+			Linus
