@@ -1,83 +1,89 @@
-From: "H.Merijn Brand" <h.m.brand@xs4all.nl>
-Subject: Re: libcrypto core dump in 64bit
-Date: Tue, 12 Feb 2008 15:06:12 +0100
-Message-ID: <20080212150612.4d28c373@pc09.procura.nl>
-References: <20080211112822.16b69495@pc09.procura.nl>
-	<alpine.LSU.1.00.0802112240280.3870@racer.site>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH] pack-objects: only throw away data during memory pressure
+Date: Tue, 12 Feb 2008 09:26:25 -0500 (EST)
+Message-ID: <alpine.LFD.1.00.0802120910440.2732@xanadu.home>
+References: <120271478556-git-send-email-mkoegler@auto.tuwien.ac.at>
+ <alpine.LFD.1.00.0802110942310.2732@xanadu.home>
+ <20080212082211.GE27535@lavos.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Feb 12 15:08:09 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Martin Koegler <mkoegler@auto.tuwien.ac.at>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Brian Downing <bdowning@lavos.net>
+X-From: git-owner@vger.kernel.org Tue Feb 12 15:27:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JOvmd-0003dI-JD
-	for gcvg-git-2@gmane.org; Tue, 12 Feb 2008 15:06:52 +0100
+	id 1JOw6M-00032I-7t
+	for gcvg-git-2@gmane.org; Tue, 12 Feb 2008 15:27:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759183AbYBLOGS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Feb 2008 09:06:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758875AbYBLOGR
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Feb 2008 09:06:17 -0500
-Received: from smtp-vbr14.xs4all.nl ([194.109.24.34]:1330 "EHLO
-	smtp-vbr14.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758619AbYBLOGQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Feb 2008 09:06:16 -0500
-Received: from pc09.procura.nl (procura.xs4all.nl [82.95.216.29])
-	(authenticated bits=0)
-	by smtp-vbr14.xs4all.nl (8.13.8/8.13.8) with ESMTP id m1CE6C3N017308
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 12 Feb 2008 15:06:13 +0100 (CET)
-	(envelope-from h.m.brand@xs4all.nl)
-In-Reply-To: <alpine.LSU.1.00.0802112240280.3870@racer.site>
-X-Mailer: Claws Mail 3.3.0 (GTK+ 2.10.6; x86_64-unknown-linux-gnu)
-Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwEAIAAACI8LKTAAAACXBIWXMAAABIAAAASABGyWs+AAAC
- JElEQVRo3u2aMY4CMQxFczZ6RItEzRm4DBINDbRUSPRInIRbsNK6+dJfezN4kokn48IaCSjysL8d
- e9Knoj2fr9f9/gllqQ6U9/vxWK3EdwdIEGjRIVCu18NhuxUfK46SH81+fzrdbuKPx/P5ctHQdAdI
- TKAgpvV6s9ntBEfXEYSGgMQzIHnuFBBjkshCNJ2KtJZ04hHNAugP8bZr3NIHhbcF0AKoK0CoaHXU
- LUWBIs1n+jV+Fl8CVqOApEXAwyMO/DSR4XVntoAYDR7eBjQupuYAYTMph8Rj21D4m7MChN02tpqs
- NSnb/KqU2oHCXu5xDCgflj/RAgBiKBIXnICzAsSjWBsTz5K4/HeXYvb8yK5lY3VGEwPi2aONKT+5
- AlcxrTPOwcTiraGRChgMEKJh0bVVifGVTq6qgBiNVl8QE29EsK6VE+YJAOG2wz5AvsqUS6uqgHCA
- n4NGvBYpnJ64Jgg27sCtxtBk1CJIA4S/GhdWKh07QxUB48jWGhZ4jKamRRr/T8/M0AaEyctry6YB
- 4dTGj9iWZNs3DahES5kPCJOu0RQbF/fQOBprsB9gaO9JtPDzII9U5ySXX7AnuIt91y54AAW7rPpT
- LCe5gt3F+CLqr2UarGB3MXvMylWGq4+9RCx3TW1oJq1t3HPQlFs6N1fFNEB4s8dn7Ne7ACSm7TPQ
- I5quAWmw6qBpulHM33B0Csge4Nd8JTTYG2b1XyRe3lH8x34ABJ6aePuQ2N4AAAAASUVORK5CYII=
-X-Virus-Scanned: by XS4ALL Virus Scanner
+	id S1761164AbYBLO0k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Feb 2008 09:26:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761047AbYBLO0k
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Feb 2008 09:26:40 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:54361 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760977AbYBLO0j (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Feb 2008 09:26:39 -0500
+Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0JW4005UWQS10K30@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 12 Feb 2008 09:26:26 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <20080212082211.GE27535@lavos.net>
+User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73662>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73663>
 
-On Mon, 11 Feb 2008 22:42:16 +0000 (GMT), Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
+On Tue, 12 Feb 2008, Brian Downing wrote:
 
-> Hi,
+> On Mon, Feb 11, 2008 at 11:00:33AM -0500, Nicolas Pitre wrote:
+> > On Mon, 11 Feb 2008, Martin Koegler wrote:
+> > > If pack-objects hit the memory limit, it deletes objects from the
+> > > delta window.
+> > > 
+> > > This patch make it only delete the data, which is recomputed, if
+> > > needed again.
+> > > 
+> > > Signed-off-by: Martin Koegler <mkoegler@auto.tuwien.ac.at>
+> > 
+> > Looks fine.
+> > 
+> > Acked-by: Nicolas Pitre <nico@cam.org>
 > 
-> On Mon, 11 Feb 2008, H.Merijn Brand wrote:
+> Unfortunately this patch (if I understand what it's doing correctly)
+> basically defeats my intended use-case for which I wrote the memory
+> limiter.  I have a repository with files of very mixed size.  I want the
+> window to be very large for small files, for good archival repacking,
+> but I don't want it to be very large for my 20+MB files with hundreds of
+> revisions, because I want it to finish someday.
 > 
-> > Any hints?
+> Also, I've gotten into the habit of just doing:
+>     git repack --window=100000 --window-memory=256m
+> for archival repacks and just letting the memory limit automatically
+> size the window.  Basically, I don't really want to specify a window
+> size, I just want it to use 512mb of RAM (and go at the speed that size
+> of a window would entail.)  While this is slow, it tends to be a
+> relatively constant speed, and it tends to find some very interesting
+> deltas in my trees that I wouldn't have otherwise expected.
 > 
-> Yes.
-> 
-> > #0  0xc0000000033c8940:0 in sha1_block_asm_host_order+0x22e0 ()
-> >    from /usr/local/ssl/lib/libcrypto.so
-> 
-> This seems to be an OpenSSL issue, probably in its Itanium-optimised code 
-> (since Itanium is not _all_ that common, it is quite likely that no many 
-> people exercise this part of the code).
+> If this patch is accepted, I'd really like a way to maintain the old
+> behavior as an option.
 
-Now tried with HP C-ANSI-C -O3, -O2, -O1, and -O0 and with GNU gcc 4.2.1 -O3
-All give the same failure
- 
-> Unfortunately, I am not at all an expert in Itanium's assembler, otherwise 
-> I'd try to help...
+I think your use case has merits, but the previous behavior had 
+semantics problems.  We always had constant window size with dynamic 
+memory usage, and now we have constant window size with bounded memory 
+usage.
 
--- 
-H.Merijn Brand         Amsterdam Perl Mongers (http://amsterdam.pm.org/)
-using & porting perl 5.6.2, 5.8.x, 5.10.x  on HP-UX 10.20, 11.00, 11.11,
-& 11.23, SuSE 10.1 & 10.2, AIX 5.2, and Cygwin.       http://qa.perl.org
-http://mirrors.develooper.com/hpux/            http://www.test-smoke.org
-                        http://www.goldmark.org/jeff/stupid-disclaimers/
+If what you want is really to have a dynamic window size using a 
+constant memory usage then it needs a different and coherent way to be 
+specified.
+
+
+Nicolas
