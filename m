@@ -1,114 +1,142 @@
-From: mkoegler@auto.tuwien.ac.at (Martin Koegler)
+From: "Shawn O. Pearce" <spearce@spearce.org>
 Subject: Re: [RFC Patch] Preventing corrupt objects from entering the repository
-Date: Wed, 13 Feb 2008 08:39:59 +0100
-Message-ID: <20080213073959.GA27158@auto.tuwien.ac.at>
-References: <alpine.LFD.1.00.0802101929310.2732@xanadu.home> <20080211195623.GA21878@auto.tuwien.ac.at> <alpine.LFD.1.00.0802111513360.2732@xanadu.home> <20080211215806.GA24971@auto.tuwien.ac.at> <alpine.LFD.1.00.0802120937330.2732@xanadu.home> <20080212190411.GA23837@auto.tuwien.ac.at> <alpine.LFD.1.00.0802121507310.2732@xanadu.home> <20080212213858.GA29151@auto.tuwien.ac.at> <alpine.LFD.1.00.0802121645121.2732@xanadu.home> <20080213062015.GF24004@spearce.org>
+Date: Wed, 13 Feb 2008 02:42:09 -0500
+Message-ID: <20080213074209.GG24004@spearce.org>
+References: <20080210175812.GB12162@auto.tuwien.ac.at> <7vmyq8cqfn.fsf@gitster.siamese.dyndns.org> <alpine.LFD.1.00.0802101929310.2732@xanadu.home> <20080211195623.GA21878@auto.tuwien.ac.at> <alpine.LFD.1.00.0802111513360.2732@xanadu.home> <20080211215806.GA24971@auto.tuwien.ac.at> <alpine.LFD.1.00.0802120937330.2732@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Nicolas Pitre <nico@cam.org>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Feb 13 08:40:45 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>,
+	Martin Koegler <mkoegler@auto.tuwien.ac.at>
+X-From: git-owner@vger.kernel.org Wed Feb 13 08:43:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JPCET-0002nD-E3
-	for gcvg-git-2@gmane.org; Wed, 13 Feb 2008 08:40:41 +0100
+	id 1JPCGj-0003QG-Oj
+	for gcvg-git-2@gmane.org; Wed, 13 Feb 2008 08:43:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755249AbYBMHkD convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Feb 2008 02:40:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755102AbYBMHkD
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Feb 2008 02:40:03 -0500
-Received: from thor.auto.tuwien.ac.at ([128.130.60.15]:40983 "EHLO
-	thor.auto.tuwien.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755151AbYBMHkA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Feb 2008 02:40:00 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by thor.auto.tuwien.ac.at (Postfix) with ESMTP id 5852A680BED8;
-	Wed, 13 Feb 2008 08:39:59 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at auto.tuwien.ac.at
-Received: from thor.auto.tuwien.ac.at ([127.0.0.1])
-	by localhost (thor.auto.tuwien.ac.at [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id VCOuLcuqbGJn; Wed, 13 Feb 2008 08:39:59 +0100 (CET)
-Received: by thor.auto.tuwien.ac.at (Postfix, from userid 3001)
-	id 2928668018E6; Wed, 13 Feb 2008 08:39:59 +0100 (CET)
+	id S1754881AbYBMHm1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Feb 2008 02:42:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754828AbYBMHm1
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Feb 2008 02:42:27 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:49028 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754467AbYBMHm0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Feb 2008 02:42:26 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1JPCFu-0003BN-T8; Wed, 13 Feb 2008 02:42:11 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 586D620FBAE; Wed, 13 Feb 2008 02:42:10 -0500 (EST)
 Content-Disposition: inline
-In-Reply-To: <20080213062015.GF24004@spearce.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <alpine.LFD.1.00.0802120937330.2732@xanadu.home>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73747>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73748>
 
-On Wed, Feb 13, 2008 at 01:20:15AM -0500, Shawn O. Pearce wrote:
->   tree.c:
->=20
->     This is inside track_tree_refs and its a file mode we do
->     not recognize.  We spit out a warning, but try to lookup
->     the unknown object anyway, even though we're looking at what
->     should be a bogus tree.  This occurs only in parse_tree_buffer,
->     only if track_objects_refs is on, and only if we see a tree
->     that is actually not understood by this version of Git.  Hmm,
->     shouldn't happen unless the tree itself is corrupt.
->=20
->     This code looked fishy enough to me to dig up the blame history
->     for it:
->=20
->       commit e2ac7cb5fbcf1407003aa07cdcd14141527ea2e3
->       Author: Sam Vilain <sam.vilain@catalyst.net.nz>
->       Date: Wed Jun  6 06:25:17 2007
->=20
->       Don't assume tree entries that are not dirs are blobs
->=20
->       When scanning the trees in track_tree_refs() there is a "lazy" =
-test
->       that assumes that entries are either directories or files.  Don=
-'t do
->       that.
->=20
->     Sounds like it was around the time of S_ISGITLINK being
->     introduced.  Looking at this code again I have to wonder, why
->     the hell are we looking up and tracking an object inside of a
->     tree when we don't understand the mode?
->=20
->     Lets say a new form of S_ISGITLINK gets introduced in the future.
->     By this I mean the mode says "hey, this SHA-1 isn't really in my
->     object pool".  We're going to cram a dummy object into the refs
->     table for this tree.  Why?  We don't do this for S_ISGITLINK.
->=20
->     Lets say its a new object type (not tree/tag/commit/blob) but
->     it is in our storage pool.  If this Git doesn't know the mode,
->     it sure as heck won't know what the hell the loose object header
->     (or pack header!) says about that object.
->=20
->     One of the key places where you might expect tracking an unknown
->     (but referenced by a tree) SHA-1 type would be in reachability,
->     rev-list --objects, packfile generation.  But the process_tree()
->     function in reachable.c doesn't have Sam's change above, so it
->     will assume anything new looking is a blob.
->    =20
->     Oh, and what a rabbit hole I just fell down.  The only caller
->     that seems to set "track_object_refs =3D 1" (and thus get into th=
-is
->     odd lookup_unknown_object() call) is fsck.  Everyone else sets
->     it to 0, including its default declaration.
->=20
->     So we've got this nice baggage, and differing implementation,
->     so fsck can be happy how?  We've also got a whole lot of apps
->     setting "track_object_refs =3D 0", which is what it defaults to,
->     unless you managed to run fsck first.  Hmmph.
->=20
->     Is it just me or is track_object_refs perhaps outlived its
->     usefulness?
+Nicolas Pitre <nico@cam.org> wrote:
+> On Mon, 11 Feb 2008, Martin Koegler wrote:
+> > 
+> > But lots of code in git assums that the object content is welformd.
+> > 
+> > Having such objects somewhere reachable in your repository will
+> > disturb cloning (In the best case you get a error messages, in the
+> > worst a child process of upload-pack segfaults), gitweb, ... . To fix
+> > it, you will need a person with native access to the repository in the
+> > worst case. 
 
-See the patch at the start of this topic. I'm working on replacing
-track-object-refs.
+We have *waaaay* overthought this.  The solution is a lot simpler
+than Martin's patches make it out to be, and we can do it without
+changing our current memory footprint.
 
-It is missing some frees and I copied the lookup_unknown_object call
-(This should be replaced with an error message in my patch, as the the
-verification of the tree content would reject such an invalid mode).
+> I think this is a good idea to always have some sanity checks on any 
+> incoming objects so to make sure they're well formed and valid before 
+> giving them a SHA1 value, and bail out as soon as any error is found.  
 
-mfg Martin K=F6gler
+When we get the raw data for an object so we can compute its SHA-1
+and/or write its loose object to disk we should first verify its
+content is sane, then do the SHA-1/store loose.
+
+Blobs - always assume sane.  Remember that these make up the largest
+percentage in terms of raw bytes of any project's packfiles and we
+don't need to do any additional processing to them.  Yay us.
+
+Tags - stack allocate a temporary struct tag and pass it's address
+into parse_tag_buffer().  The only thing it tries to allocate is
+the item->tagged.  Throw an extra argument into parse_tag_buffer()
+to bypass this lookup block.  Now there's no extra memory used for
+tags, just a bit more CPU.  Tags aren't frequent.
+
+Commits - do like tags, but use parse_commit_buffer().  Avoid
+looking up the tree object and the parents, and allocating the
+parent references via a new argument.  Also check !item->date like
+fsck does.  Other than that I think the validation code in fsck is
+redundant with what parse_commit_buffer() is doing already.
+
+Trees - just run init_tree_desc() and tree_entry() loop like in
+track_tree_refs() (and a ton of other places) to iterate over the
+buffer.  All we care about is sane entry names (no '/'), sane modes,
+and correct sorting.
+
+In short, we ignore reachability, but get fsck, and we can completely
+avoid additional malloc activity as well as any sort of heap increase
+in index-pack and unpack-objects.  Its not hard.
+
+Its a small amount of refactoring for the parse functions we
+already have, and maybe expose a function or two from builtin-fsck
+(in particular a bulk of fsck_tree should be reused).
+
+Yea, its a tad more CPU time, but it shouldn't be that costly here.
+The huge cost in fsck is redoing the SHA-1 checksums, and inflating
+the deltas.  We've already got the delta inflated, and we're about
+to compute the SHA-1 checksum for the first time.  So those major
+costs of fsck drop to 0.
+
+> As to making sure those objects are well connected... well this is a 
+> technically different issue entirely, and I wonder if a special mode to 
+> fsck might not be a better solution.
+
+Nah, just do what quickfetch does in builtin-fetch.c, but run it
+in receive-pack, between unpack() and execute_commands():
+
+	rev-list --quiet --objects $new... --not --all
+
+If it aborts, reachability testing failed and the push is rejected
+without updating any refs.  Yes your repository now has objects
+that are missing things, but none of those are considered to be
+reachable, so this isn't a big deal.  They will get cleaned up on
+the next `gc --prune`, whenever that is.
+
+In this configuration (--quiet) rev-list tries to be pretty low
+on its memory usage, it doesn't save buffers, etc.  Further since
+everything that is already considered reachable is not interesting,
+we are only doing a walk over the objects that we just received,
+not our entire ODB.  Its also after index-pack exited, so we just
+freed up a good chunk of memory.
+
+Rememeber we are talking about receive-pack here.  The cost on
+the to perform the rev-list is lower than the cost will be to pack
+these objects for distribution back to just one client.  Since this
+is a server of some sorts (otherwise why did you push here?), odds
+are its going to be doing a lot of packing requests for clients to
+receive these newly uploaded objects by the native git protocol.
+This new rev-list is nothing compared to that already existing load.
+And if your OS is any good the just created .idx and .pack is still
+in OS buffer cache, so there shouldn't be any additional disk IO.
+
+Yes, we could make this optional in receive-pack, but really I don't
+see a reason to.  Just run it.  The client shouldn't be giving us
+unreachable crap.
+
+-- 
+Shawn.
