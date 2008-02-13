@@ -1,66 +1,58 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: Using kdiff3 to compare two different revisions of a folder
-Date: Wed, 13 Feb 2008 23:38:18 +0100
-Message-ID: <200802132338.18449.robin.rosenberg.lists@dewire.com>
-References: <b8bf37780802121744i62849a53rfa71cc0571aec3a@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "=?iso-8859-1?q?Andr=E9_Goddard?= Rosa" <andre.goddard@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 13 23:40:00 2008
+From: Pieter de Bie <pdebie@ai.rug.nl>
+Subject: Re: [PATCH] git-web--browse: improve browser support under OS X
+Date: Wed, 13 Feb 2008 23:46:09 +0100
+Message-ID: <CE42C4F4-1E6B-4300-9FD9-29F7E17B4F27@ai.rug.nl>
+References: <1202505794-13409-1-git-send-email-jaysoffian+git@gmail.com> <7vve4wb3h7.fsf@gitster.siamese.dyndns.org> <76718490802120840r4a45c016k4cccf321f68893ce@mail.gmail.com> <200802130755.20884.chriscool@tuxfamily.org> <7vk5l8o65o.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v753)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Christian Couder <chriscool@tuxfamily.org>,
+	"Jay Soffian" <jaysoffian@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 13 23:47:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JPQGX-0001vD-SN
-	for gcvg-git-2@gmane.org; Wed, 13 Feb 2008 23:39:46 +0100
+	id 1JPQNi-0004Xn-EA
+	for gcvg-git-2@gmane.org; Wed, 13 Feb 2008 23:47:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759964AbYBMWiy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Feb 2008 17:38:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754059AbYBMWiy
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Feb 2008 17:38:54 -0500
-Received: from [83.140.172.130] ([83.140.172.130]:16750 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1752401AbYBMWix (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Feb 2008 17:38:53 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 3C31C8006AD;
-	Wed, 13 Feb 2008 23:38:51 +0100 (CET)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id itmCITq+Ka11; Wed, 13 Feb 2008 23:38:50 +0100 (CET)
-Received: from [10.9.0.5] (unknown [10.9.0.5])
-	by dewire.com (Postfix) with ESMTP id 689CC80069F;
-	Wed, 13 Feb 2008 23:38:50 +0100 (CET)
-User-Agent: KMail/1.9.6 (enterprise 0.20071123.740460)
-In-Reply-To: <b8bf37780802121744i62849a53rfa71cc0571aec3a@mail.gmail.com>
-Content-Disposition: inline
+	id S1751645AbYBMWqd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Feb 2008 17:46:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765659AbYBMWqc
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Feb 2008 17:46:32 -0500
+Received: from smtp-4.orange.nl ([193.252.22.249]:5810 "EHLO smtp-4.orange.nl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1765078AbYBMWqb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Feb 2008 17:46:31 -0500
+Received: from me-wanadoo.net (localhost [127.0.0.1])
+	by mwinf6309.orange.nl (SMTP Server) with ESMTP id 9A8CC1C0012D
+	for <git@vger.kernel.org>; Wed, 13 Feb 2008 23:46:21 +0100 (CET)
+Received: from [192.168.1.12] (s55918ba6.adsl.wanadoo.nl [85.145.139.166])
+	by mwinf6309.orange.nl (SMTP Server) with ESMTP id DE3ED1C00100;
+	Wed, 13 Feb 2008 23:46:14 +0100 (CET)
+X-ME-UUID: 20080213224618910.DE3ED1C00100@mwinf6309.orange.nl
+In-Reply-To: <7vk5l8o65o.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.753)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73823>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73824>
 
-onsdagen den 13 februari 2008 skrev Andr=E9 Goddard Rosa:
-> Hi, all!
->=20
->     I would like to use kdiff3 to compare some folder like "include"
-> between two different revisions.
->     It would be something like "git diff v2.5:makefile HEAD:makefile"=
-,
-> but for an entire folder.
->=20
->     Kdiff3 give me a quick glance of its nice graphical output of the
-> differences, without have to resort to looking/parsing 'git log'
-> output.
->     For now, easiest way for me is to keep my tree replicated in two
-> different folders pointing to different revisions then use it.
->=20
->     Is there a better way to do this kind of comparison?
+On Feb 13, 2008, at 11:14 PM, Junio C Hamano wrote:
+>
+> Unless somebody comes up with a good reason that the environment
+> check for SECURITYSESSIONID would misidentify (my understanding
+> is that it is a MacOS specific hack^Wenvironment variable and
+> nobody else would have it, but I haven't found authoritative
+> source), I think the original from Jay is good and I can apply
+> it to 'master'.
 
-Yes.
-	git diff <whatever options> | kompare -
+When I SSH to my mac, the SECURITYSESSIONID variable isn't set, but  
+open will succeed in displaying the page.
 
--- robin
+Not sure if that is a valid concern though; how often would you do a  
+remote login to your mac to display a webpage?
+
+- Pieter
