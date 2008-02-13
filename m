@@ -1,75 +1,58 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: [PATCH] gitk: Heed the lines of context in merge commits.
-Date: Wed, 13 Feb 2008 17:27:30 +0100
-Message-ID: <47B31A72.7020502@viscovery.net>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [PATCH] Add function to checkout a branch in git.el
+Date: Wed, 13 Feb 2008 17:30:02 +0100
+Message-ID: <20080213163002.GA5670@diana.vm.bytemark.co.uk>
+References: <87wsp8u9m7.dlv@maison.homelinux.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Wed Feb 13 17:28:11 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Alexandre Julliard <julliard@winehq.org>
+To: =?us-ascii?B?PT91dGYtOD9xP1I9QzM9QTltaT0yMFZhbmljYXQ/PQ==?= 
+	<vanicat@debian.org>
+X-From: git-owner@vger.kernel.org Wed Feb 13 17:31:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JPKSu-0003Ca-8l
-	for gcvg-git-2@gmane.org; Wed, 13 Feb 2008 17:28:08 +0100
+	id 1JPKWC-0004js-Vd
+	for gcvg-git-2@gmane.org; Wed, 13 Feb 2008 17:31:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756501AbYBMQ1d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Feb 2008 11:27:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755814AbYBMQ1d
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Feb 2008 11:27:33 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:48921 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756501AbYBMQ1c (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Feb 2008 11:27:32 -0500
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1JPKRu-0007Lj-1u; Wed, 13 Feb 2008 17:27:06 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 78A1569F; Wed, 13 Feb 2008 17:27:30 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1761358AbYBMQak convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Feb 2008 11:30:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760527AbYBMQak
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Feb 2008 11:30:40 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2997 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759997AbYBMQaj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Feb 2008 11:30:39 -0500
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1JPKUk-0001VI-00; Wed, 13 Feb 2008 16:30:02 +0000
+Content-Disposition: inline
+In-Reply-To: <87wsp8u9m7.dlv@maison.homelinux.org>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73800>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73801>
 
-From: Johannes Sixt <johannes.sixt@telecom.at>
+On 2008-02-13 16:53:12 +0100, =3D?utf-8?q?R=3DC3=3DA9mi=3D20Vanicat?=3D=
+ wrote:
 
-There is an edit box where the number of context lines can be chosen.
-But it was only used when regular diffs were displayed, not for
-merge commits. Fix this.
+> - checkout an existing branch with M-x git-change-branch
+> - create and checkout a new branch with C-u M-x git-change-branch
 
-Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
----
- gitk |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
+Why the prefix? Wouldn't it be easier to just have one "switch branch"
+prompt that would tab complete existing branch names, and
 
-diff --git a/gitk b/gitk
-index 7a97cc8..b20fa81 100644
---- a/gitk
-+++ b/gitk
-@@ -5028,13 +5028,14 @@ proc getblobline {bf id} {
- proc mergediff {id l} {
-     global diffmergeid mdifffd
-     global diffids
-+    global diffcontext
-     global parentlist
-     global limitdiffs viewfiles curview
+  * if the user enters the name of an existing branch, just switch to
+    it;
 
-     set diffmergeid $id
-     set diffids $id
-     # this doesn't seem to actually affect anything...
--    set cmd [concat | git diff-tree --no-commit-id --cc $id]
-+    set cmd [concat | git diff-tree --no-commit-id --cc -U$diffcontext $id]
-     if {$limitdiffs && $viewfiles($curview) ne {}} {
- 	set cmd [concat $cmd -- $viewfiles($curview)]
-     }
--- 
-1.5.4.43.gbd39-dirty
+  * if the user enters a name that's not the name of an existing
+    branch, ask for confirmation, and then create the new branch and
+    switch to it.
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
