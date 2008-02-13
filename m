@@ -1,81 +1,85 @@
-From: "Elijah Newren" <newren@gmail.com>
-Subject: Re: [PATCH] upload-pack: Initialize the exec-path.
-Date: Wed, 13 Feb 2008 06:00:33 -0700
-Message-ID: <51419b2c0802130500v9753ebeg934e2d02c9e363f7@mail.gmail.com>
-References: <51419b2c0802111822k4600e06bp4167a09b30bf947a@mail.gmail.com>
-	 <m31w7iegk6.fsf@localhost.localdomain>
-	 <47B15ADC.8080309@viscovery.net>
-	 <alpine.LSU.1.00.0802121028290.3870@racer.site>
-	 <47B182C1.60006@viscovery.net>
-	 <alpine.LSU.1.00.0802121149220.3870@racer.site>
-	 <alpine.LSU.1.00.0802121245140.3870@racer.site>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] add--interactive: handle initial commit better
+Date: Wed, 13 Feb 2008 05:11:10 -0800 (PST)
+Message-ID: <m3fxvxc87u.fsf@localhost.localdomain>
+References: <C50196C5-B0C5-4536-AD4A-0F9C553782EE@gmail.com>
+	<20080213101649.GA18444@coredump.intra.peff.net>
+	<20080213105051.GA26522@coredump.intra.peff.net>
+	<20080213112504.GA26627@coredump.intra.peff.net>
+	<alpine.LSU.1.00.0802131213270.30505@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Johannes Sixt" <j.sixt@viscovery.net>,
-	"Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Feb 13 14:01:22 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, "Rhodes, Kate" <masukomi@gmail.com>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Feb 13 14:12:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JPHEc-0005Xv-9G
-	for gcvg-git-2@gmane.org; Wed, 13 Feb 2008 14:01:10 +0100
+	id 1JPHOx-0000wV-Gy
+	for gcvg-git-2@gmane.org; Wed, 13 Feb 2008 14:11:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757008AbYBMNAg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Feb 2008 08:00:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757029AbYBMNAg
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Feb 2008 08:00:36 -0500
-Received: from wr-out-0506.google.com ([64.233.184.226]:17058 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755667AbYBMNAf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Feb 2008 08:00:35 -0500
-Received: by wr-out-0506.google.com with SMTP id c48so5692wra.23
-        for <git@vger.kernel.org>; Wed, 13 Feb 2008 05:00:34 -0800 (PST)
+	id S1753792AbYBMNLQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Feb 2008 08:11:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754889AbYBMNLQ
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Feb 2008 08:11:16 -0500
+Received: from ug-out-1314.google.com ([66.249.92.173]:14080 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753755AbYBMNLP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Feb 2008 08:11:15 -0500
+Received: by ug-out-1314.google.com with SMTP id z38so736160ugc.16
+        for <git@vger.kernel.org>; Wed, 13 Feb 2008 05:11:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=H+7xltsypEbz7wkRhhmEVgvDrjPewDKlb2FJ4uoyWqw=;
-        b=dRDARPV8ebC9PkBov6gzQ7ndoK2icmO3x63CPeZ8+J13TPm9X1xboVpvGN08QAnPDYzfSG6dGktAc8PlNdqPdwBaYNMtgUj19bzw5G09hRoXzsk2kVOADoz/7CZaRhTbELvk+LNxSLc4gwDRPYicGe0r4UkJN12/mM1ewAAK7so=
+        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
+        bh=VOoz4mREWhBs/VrOShOjzLWhm7yI6y8tQwC5oHcbpKI=;
+        b=Ah4hJ1PSIljasxRcV4S9ntBH2sH2Bz6aqPESw8/27kFiHKs1QK3CVwkWEoaDzYWvX1W/6IqXUG8g+AbapnMDOpB4D8wTtz2C/l67vg8rWolFtyqoOb/hS17FJ8ayzwDlUI8c/GzL6RZzPBk1CQF5+FQN8jqLnx8zexKfGmmE6vU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=wB8GdyGnbugG26MdDo2kq72S2cvNDBPm0N9b7HHriRf8N1UsC45IwiRsDRL4UB5zD32xQqaD9SQn9QLpwjK5vwDigr9xTeGAtUu3AHYV/VsK2WsRr3ndZgxC+FviAjxFAXltQiymCqB3QwQQZ0roLWOITIHhtiQSmfY0Z56ck6Q=
-Received: by 10.114.181.1 with SMTP id d1mr2912543waf.10.1202907633600;
-        Wed, 13 Feb 2008 05:00:33 -0800 (PST)
-Received: by 10.114.205.19 with HTTP; Wed, 13 Feb 2008 05:00:33 -0800 (PST)
-In-Reply-To: <alpine.LSU.1.00.0802121245140.3870@racer.site>
-Content-Disposition: inline
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
+        b=j18g9yBnvN4FoIU5D3IrzIQHv/BxAgrf97hTqYyE2ExJaHVUQNuDOEWZsT2uQxXxkXjMchWY1PkrhJ0FdqsWFiVm3ndWHKukwUMDitblGTAgFlmT4pZlK4rvquNU9NR7G38P20g1lYLIMW29LzT0W3n2XeZksV3eL1KS5AlVbss=
+Received: by 10.150.195.21 with SMTP id s21mr959050ybf.114.1202908271751;
+        Wed, 13 Feb 2008 05:11:11 -0800 (PST)
+Received: from localhost.localdomain ( [83.8.196.88])
+        by mx.google.com with ESMTPS id d25sm3069055nfh.33.2008.02.13.05.11.09
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 13 Feb 2008 05:11:10 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m1DDB5Rn004124;
+	Wed, 13 Feb 2008 14:11:06 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m1DDB2CN004121;
+	Wed, 13 Feb 2008 14:11:02 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <alpine.LSU.1.00.0802131213270.30505@racer.site>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73784>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73785>
 
-On Feb 12, 2008 5:45 AM, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> On Tue, 12 Feb 2008, Johannes Schindelin wrote:
-> > On Tue, 12 Feb 2008, Johannes Sixt wrote:
-> > > Johannes Schindelin schrieb:
-> > > > So, let's make git-upload-pack a builtin, no?
-> > >
-> > > How about this (almost) one-liner instead?
-> >
-> > I'm fine with it.
->
-> But I also made this:
->
-> -- snipsnap --
-> [PATCH] Make upload-pack a builtin
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-<snip>
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-I tried this patch yesterday, but it seems to suffer from the same
-problem?  I had to manually apply the patch from Johannes Sixt on top
-of this ("manually" since there was a trivial conflict) in order for
-it to solve the problem.
+> On Wed, 13 Feb 2008, Jeff King wrote:
+> >  	}
+> > +	if (!hashcmp(sha1, empty_tree.sha1))
+> > +		return &empty_tree;
+> >  	return NULL;
+> >  }
+> 
+> Heh.  This is cute.  But it is also a bit hard to reference, no?  I mean, 
+> you have to remember the SHA-1 of it...
+> 
+> Maybe {} ?
 
-Anyway, it works for me now.  Thanks for the quick fixes!
+Or NULL? You can do this even without modifying git code, I think, by
+adding refs/NULL with appropriate sha-1...
 
-Elijah
+^{tree} I think resolves to HEAD^{tree}
+
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
