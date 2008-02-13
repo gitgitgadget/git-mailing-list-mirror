@@ -1,58 +1,72 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH/RFC] diff --relative: output paths as relative to the
- current subdirectory
-Date: Tue, 12 Feb 2008 15:53:06 -0800 (PST)
-Message-ID: <alpine.LFD.1.00.0802121550570.2920@woody.linux-foundation.org>
-References: <7vzlu524n9.fsf@gitster.siamese.dyndns.org> <alpine.LFD.1.00.0802121531170.2920@woody.linux-foundation.org> <7vfxvx211k.fsf@gitster.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Merge-Recursive Improvements
+Date: Wed, 13 Feb 2008 00:05:41 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0802130003370.3870@racer.site>
+References: <A21B3CA8-6240-434F-87A9-C6F76DA15265@gmail.com> <alpine.LFD.1.00.0802121544370.2920@woody.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 13 00:53:57 2008
+Cc: Voltage Spike <voltspike@gmail.com>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Feb 13 01:06:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JP4wn-000802-2L
-	for gcvg-git-2@gmane.org; Wed, 13 Feb 2008 00:53:57 +0100
+	id 1JP58u-00037F-St
+	for gcvg-git-2@gmane.org; Wed, 13 Feb 2008 01:06:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754538AbYBLXxX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Feb 2008 18:53:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752972AbYBLXxW
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Feb 2008 18:53:22 -0500
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:48009 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752674AbYBLXxV (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 12 Feb 2008 18:53:21 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m1CNr7NQ017903
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 12 Feb 2008 15:53:08 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m1CNr6iS029601;
-	Tue, 12 Feb 2008 15:53:06 -0800
-In-Reply-To: <7vfxvx211k.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
-X-Spam-Status: No, hits=-3.242 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1757146AbYBMAFi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Feb 2008 19:05:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756840AbYBMAFi
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Feb 2008 19:05:38 -0500
+Received: from mail.gmx.net ([213.165.64.20]:40271 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752432AbYBMAFg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Feb 2008 19:05:36 -0500
+Received: (qmail invoked by alias); 13 Feb 2008 00:05:34 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp026) with SMTP; 13 Feb 2008 01:05:34 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+CGENSBWuCwBhqoi95mGMwVa5BM9j4sc6nK9lLn2
+	/3cDtgJ7He+9Lf
+X-X-Sender: gene099@racer.site
+In-Reply-To: <alpine.LFD.1.00.0802121544370.2920@woody.linux-foundation.org>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73715>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73716>
 
+Hi,
 
+On Tue, 12 Feb 2008, Linus Torvalds wrote:
 
-On Tue, 12 Feb 2008, Junio C Hamano wrote:
+> On Tue, 12 Feb 2008, Voltage Spike wrote:
+> > 
+> > First, git is overly zealous at merging differences and two functions 
+> > added at the same point in a file become intertwined during the merge. 
+> > A trivial example of this behavior:
 > 
-> Your example is shorter to type as:
+> Hmm. Have you tested what happens if you use XDL_MERGE_EAGER instead of 
+> XDL_MERGE_ZEALOUS in the "level" argument to xdl_merge() in 
+> merge-recursive.c?
 > 
-> 	(cd drivers/scsi && git diff --relative a..b --)
+> (No, I didn't test it myself, but it may get you the behaviour you want, 
+> and we could make it a config option for people who want a less 
+> aggressive merge)
 
-No it isn't. The above doesn't even work for bare repositories, or when 
-you want to look at a branch that has a different directory structure than 
-the currently-checked-out one.
+Actually, I have this in my ever-growing TODO:
 
-				Linus
+XDL_MERGE_ZEALOUS_ALNUM: require an alnum in the common code; otherwise do 
+not de-conflict it.
+
+In other words, if there is a hunk consisting of conflicting lines, which 
+are identical, but have no letter and no number in it, then keep them as 
+conflicts.
+
+But I never got around to try it.
+
+Ciao,
+Dscho
