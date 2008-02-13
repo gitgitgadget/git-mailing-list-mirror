@@ -1,55 +1,68 @@
-From: Jeff King <peff@peff.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [PATCH] add--interactive: handle initial commit better
-Date: Wed, 13 Feb 2008 08:15:23 -0500
-Message-ID: <20080213131523.GA3266@coredump.intra.peff.net>
-References: <C50196C5-B0C5-4536-AD4A-0F9C553782EE@gmail.com> <20080213101649.GA18444@coredump.intra.peff.net> <20080213105051.GA26522@coredump.intra.peff.net> <20080213112504.GA26627@coredump.intra.peff.net> <alpine.LSU.1.00.0802131213270.30505@racer.site> <m3fxvxc87u.fsf@localhost.localdomain>
+Date: Wed, 13 Feb 2008 13:22:06 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0802131321140.30505@racer.site>
+References: <C50196C5-B0C5-4536-AD4A-0F9C553782EE@gmail.com> <20080213101649.GA18444@coredump.intra.peff.net> <20080213105051.GA26522@coredump.intra.peff.net> <20080213112504.GA26627@coredump.intra.peff.net> <alpine.LSU.1.00.0802131213270.30505@racer.site>
+ <m3fxvxc87u.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	"Rhodes, Kate" <masukomi@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jeff King <peff@peff.net>, "Rhodes, Kate" <masukomi@gmail.com>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
 To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 13 14:16:08 2008
+X-From: git-owner@vger.kernel.org Wed Feb 13 14:22:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JPHT0-0002Pl-RU
-	for gcvg-git-2@gmane.org; Wed, 13 Feb 2008 14:16:03 +0100
+	id 1JPHZR-0004Zi-Pt
+	for gcvg-git-2@gmane.org; Wed, 13 Feb 2008 14:22:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751289AbYBMNP2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Feb 2008 08:15:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751280AbYBMNP1
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Feb 2008 08:15:27 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2756 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751096AbYBMNP1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Feb 2008 08:15:27 -0500
-Received: (qmail 15444 invoked by uid 111); 13 Feb 2008 13:15:24 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 13 Feb 2008 08:15:24 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 13 Feb 2008 08:15:23 -0500
-Content-Disposition: inline
+	id S1752759AbYBMNWE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Feb 2008 08:22:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752264AbYBMNWD
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Feb 2008 08:22:03 -0500
+Received: from mail.gmx.net ([213.165.64.20]:43465 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752153AbYBMNWA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Feb 2008 08:22:00 -0500
+Received: (qmail invoked by alias); 13 Feb 2008 13:21:59 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp024) with SMTP; 13 Feb 2008 14:21:59 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+fOplggoCf7gWumh77lhcHGD1UIVXpWovUmI0+Ka
+	8fT7RiTlPzNvjz
+X-X-Sender: gene099@racer.site
 In-Reply-To: <m3fxvxc87u.fsf@localhost.localdomain>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73786>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73787>
 
-On Wed, Feb 13, 2008 at 05:11:10AM -0800, Jakub Narebski wrote:
+Hi,
 
+On Wed, 13 Feb 2008, Jakub Narebski wrote:
+
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > On Wed, 13 Feb 2008, Jeff King wrote:
+> > >  	}
+> > > +	if (!hashcmp(sha1, empty_tree.sha1))
+> > > +		return &empty_tree;
+> > >  	return NULL;
+> > >  }
+> > 
 > > Heh.  This is cute.  But it is also a bit hard to reference, no?  I mean, 
 > > you have to remember the SHA-1 of it...
 > > 
 > > Maybe {} ?
 > 
-> Or NULL? You can do this even without modifying git code, I think, by
-> adding refs/NULL with appropriate sha-1...
+> Or NULL?
 
-You still need my patch, unless you want to create the empty tree object
-in the databsae. The existence of the object and its name are separate.
-If you want to add a magic ref or syntax that maps to the correct SHA-1,
-then that makes sense to me.
+I was talking about a special handling: "{}" is not a valid refname.  But 
+"NULL" _is_.  So I wanted to avoid that "NULL" explicitely.
 
--Peff
+Ciao,
+Dscho
