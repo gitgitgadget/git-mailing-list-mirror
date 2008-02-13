@@ -1,117 +1,82 @@
-From: Sergei Organov <osv@javad.com>
-Subject: Re: [PATCH] Add function to checkout a branch in git.el
-Date: Wed, 13 Feb 2008 21:23:52 +0300
-Message-ID: <87zlu4vhon.fsf@osv.gnss.ru>
-References: <87wsp8u9m7.dlv@maison.homelinux.org>
-	<20080213163002.GA5670@diana.vm.bytemark.co.uk>
-	<20080213164356.GA5828@diana.vm.bytemark.co.uk>
+From: Luciano Rocha <luciano@eurotux.com>
+Subject: clone --bare 2.6.24.y with --reference linus.git too big?
+Date: Wed, 13 Feb 2008 18:25:45 +0000
+Message-ID: <20080213182545.GA14886@bit.office.eurotux.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: <vanicat@debian.org>, git@vger.kernel.org,
-	Alexandre Julliard <julliard@winehq.org>
-To: Karl =?utf-8?Q?Hasselstr=C3=B6m?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Wed Feb 13 19:24:50 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="jRHKVT23PllUwdXP"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 13 19:26:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JPMHl-0002Oy-U1
-	for gcvg-git-2@gmane.org; Wed, 13 Feb 2008 19:24:46 +0100
+	id 1JPMJh-0003Cv-Ee
+	for gcvg-git-2@gmane.org; Wed, 13 Feb 2008 19:26:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752341AbYBMSYJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Feb 2008 13:24:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751009AbYBMSYJ
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Feb 2008 13:24:09 -0500
-Received: from javad.com ([216.122.176.236]:2110 "EHLO javad.com"
+	id S1757916AbYBMSZw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Feb 2008 13:25:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752094AbYBMSZw
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Feb 2008 13:25:52 -0500
+Received: from os.eurotux.com ([216.75.63.6]:51460 "EHLO os.eurotux.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751086AbYBMSYH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Feb 2008 13:24:07 -0500
-Received: from osv ([87.236.81.130])
-	by javad.com (8.11.6/8.11.0) with ESMTP id m1DINwd79132;
-	Wed, 13 Feb 2008 18:23:59 GMT
-	(envelope-from s.organov@javad.com)
-Received: from osv by osv with local (Exim 4.63)
-	(envelope-from <s.organov@javad.com>)
-	id 1JPMGu-00045j-Ku; Wed, 13 Feb 2008 21:23:52 +0300
-In-Reply-To: <20080213164356.GA5828@diana.vm.bytemark.co.uk> ("Karl
- =?utf-8?Q?Hasselstr=C3=B6m=22's?= message of "Wed\, 13 Feb 2008 17\:43\:56
- +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+	id S1751883AbYBMSZv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Feb 2008 13:25:51 -0500
+Received: (qmail 32475 invoked from network); 13 Feb 2008 18:25:49 -0000
+Received: from nc.eurotux.com (HELO bit.office.eurotux.com) (luciano@81.84.255.161)
+  by os.eurotux.com with AES256-SHA encrypted SMTP; 13 Feb 2008 18:25:49 -0000
+Content-Disposition: inline
+User-Agent: Mutt/1.5.14 (2007-03-31)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73807>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73808>
 
-Karl Hasselstr=C3=B6m <kha@treskal.com> writes:
 
-> On 2008-02-13 17:30:02 +0100, Karl Hasselstr=C3=B6m wrote:
->
->> Why the prefix? Wouldn't it be easier to just have one "switch
->> branch" prompt that would tab complete existing branch names, and
->>
->>   * if the user enters the name of an existing branch, just switch t=
-o
->>     it;
->>
->>   * if the user enters a name that's not the name of an existing
->>     branch, ask for confirmation, and then create the new branch and
->>     switch to it.
->
-> Reading your code a bit more carefully, I realize that my suggestion
-> doesn't give you the opportunity to base the new branch on anything
-> but HEAD. So change the second bullet to
->
->   * if the user enters a name that's not the name of an existing
->     branch, display a prompt like this
->
->       Creating new branch "foo". Where should it start?
->
->     Tab complete on existing tags and branches, but accept any
->     committish. Create the new branch and switch to it.
+--jRHKVT23PllUwdXP
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-It still doesn't allow to detach HEAD at arbitrary tag/committish, as
-far as I can see.
 
-I believe the interface should be designed more carefully. Here are som=
-e
-thoughts/suggestions:
+Hello,
 
-1. Let `git-checkout' switch HEAD. It will never create new branches bu=
-t
-   will be able to detach HEAD. Use tab-completion on branch names and
-   maybe tags (maybe by inserting tags/ into completion list, and
-   switching completion list to tags after tags/ is enterd by user), bu=
-t
-   allow any commitish. Ideally, it will also revert Emacs buffers for
-   which working copy files are changed during checkout.
+I did today a bare clone of the 2.6.24.y tree of the Linux kernel.
 
-2. Let `git-create-branch' create new branches. It will prompt for a br=
-anch
-   name, then prompt for starting point with default set to HEAD, and
-   create the branch. As it doesn't switch HEAD, it won't touch working
-   files.
+I instructed git to use a local mirror of Linus's tree, but the clone
+ended up downloading over 40MB of data:
 
-3. Let `git-branch' create new branch at HEAD and switch to it. This
-   will be just a short-cut for common and simple case. Note that this
-   will never change working files as newly created branch will match
-   HEAD.
+$ git clone --bare --reference /.src/kernel/linus.git/ \
+    git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-2.6.24.y.git=
+ \
+    2.6.24.y.git
+Initialized empty Git repository in /media/stuff/src/kernel/2.6.24.y.git/
+remote: Counting objects: 15483, done.
+remote: Compressing objects: 100% (14747/14747), done.
+remote: Total 15483 (delta 1795), reused 5236 (delta 632)
+Receiving objects: 100% (15483/15483), 46.30 MiB | 317 KiB/s, done.
+Resolving deltas: 100% (1795/1795), done.
 
-4. Reserve C-u prefix for ability to provide arbitrary options to
-   underlying GIT commands. For example, it's useful to be able to give
-   -m or -f option to "git checkout"; or --track or -f to "git branch".
+I expected a much smaller download, as the difference between the heads
+of both trees are only a few patches (2.6.24 -> 2.6.24.2).
 
-The "create new branch at arbitrary point and then switch to it" will
-then be a two-step operation: either "
+My git is at version 1.5.4.1.99.g3b933.
 
-((git-create-branch <name> <point>) (git-checkout <name>)
+--=20
+Luciano Rocha <luciano@eurotux.com>
+Eurotux Inform=E1tica, S.A. <http://www.eurotux.com/>
 
-or
+--jRHKVT23PllUwdXP
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-((git-checkout <point>) (git-branch <name>))
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (GNU/Linux)
 
-but that is IMHO reasonable trade-off for interface simplicity, though
-yet another function could be defined to do it in one step.
+iD8DBQFHszYpinSul6a7oB8RAge7AJ47C2io3JO+XlWEICT1MtJ61ykFtwCfftAi
+8uRFSMM728DoSkWp2aE/j+g=
+=s3Ii
+-----END PGP SIGNATURE-----
 
--- Sergei.
+--jRHKVT23PllUwdXP--
