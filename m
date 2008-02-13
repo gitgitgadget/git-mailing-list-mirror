@@ -1,7 +1,7 @@
-From: "J.H." <warthog19@eaglescrag.net>
+From: "J.H." <warthog9@kernel.org>
 Subject: Re: Another bench on gitweb (also on gitweb caching)
-Date: Tue, 12 Feb 2008 16:57:30 -0800
-Message-ID: <1202864250.17207.22.camel@localhost.localdomain>
+Date: Tue, 12 Feb 2008 17:01:33 -0800
+Message-ID: <1202864493.17207.24.camel@localhost.localdomain>
 References: <20080210030919.GA32733@c3sl.ufpr.br>
 	 <m363wvdmxr.fsf@localhost.localdomain>
 	 <20080213004528.GB31455@c3sl.ufpr.br>
@@ -16,23 +16,23 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JP6oE-0004pU-F9
+	id 1JP6oD-0004pU-Qc
 	for gcvg-git-2@gmane.org; Wed, 13 Feb 2008 02:53:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753008AbYBMBwm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Feb 2008 20:52:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752497AbYBMBwm
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Feb 2008 20:52:42 -0500
+	id S1752748AbYBMBwk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Feb 2008 20:52:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752497AbYBMBwk
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Feb 2008 20:52:40 -0500
 Received: from shards.monkeyblade.net ([198.137.202.13]:34880 "EHLO
 	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751847AbYBMBwk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Feb 2008 20:52:40 -0500
-X-Greylist: delayed 3287 seconds by postgrey-1.27 at vger.kernel.org; Tue, 12 Feb 2008 20:52:40 EST
+	with ESMTP id S1751806AbYBMBwj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Feb 2008 20:52:39 -0500
+X-Greylist: delayed 3047 seconds by postgrey-1.27 at vger.kernel.org; Tue, 12 Feb 2008 20:52:39 EST
 Received: from [10.255.255.198] (65-115-68-195.dia.static.qwest.net [65.115.68.195])
 	(authenticated bits=0)
-	by shards.monkeyblade.net (8.14.1/8.13.8) with ESMTP id m1D0vUcD024662
+	by shards.monkeyblade.net (8.14.1/8.13.8) with ESMTP id m1D11XU8025639
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 12 Feb 2008 16:57:30 -0800
+	Tue, 12 Feb 2008 17:01:33 -0800
 In-Reply-To: <20080213004528.GB31455@c3sl.ufpr.br>
 X-Mailer: Evolution 2.12.3 (2.12.3-1.fc8) 
 X-Virus-Scanned: ClamAV 0.88.7/5794/Tue Feb 12 12:49:27 2008 on shards.monkeyblade.net
@@ -41,9 +41,8 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73735>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73736>
 
- 
 > > > I found out those VERY interesting, so instead of trying to think a
 > > > new way to store gitweb config, we should think a way to cache those
 > > > information.
