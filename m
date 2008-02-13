@@ -1,68 +1,84 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] add--interactive: handle initial commit better
-Date: Wed, 13 Feb 2008 13:22:06 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802131321140.30505@racer.site>
-References: <C50196C5-B0C5-4536-AD4A-0F9C553782EE@gmail.com> <20080213101649.GA18444@coredump.intra.peff.net> <20080213105051.GA26522@coredump.intra.peff.net> <20080213112504.GA26627@coredump.intra.peff.net> <alpine.LSU.1.00.0802131213270.30505@racer.site>
- <m3fxvxc87u.fsf@localhost.localdomain>
+From: Abdelrazak Younes <younes@lyx.org>
+Subject: Re: [PATCH updated] Add "--dirstat" for some directory statistics
+Date: Wed, 13 Feb 2008 08:55:37 +0100
+Message-ID: <fou7pu$dpq$1@ger.gmane.org>
+References: <alpine.LFD.1.00.0802121308360.2920@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jeff King <peff@peff.net>, "Rhodes, Kate" <masukomi@gmail.com>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 13 14:22:43 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 13 14:25:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JPHZR-0004Zi-Pt
-	for gcvg-git-2@gmane.org; Wed, 13 Feb 2008 14:22:42 +0100
+	id 1JPHcI-0005Wr-7R
+	for gcvg-git-2@gmane.org; Wed, 13 Feb 2008 14:25:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752759AbYBMNWE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Feb 2008 08:22:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752264AbYBMNWD
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Feb 2008 08:22:03 -0500
-Received: from mail.gmx.net ([213.165.64.20]:43465 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752153AbYBMNWA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Feb 2008 08:22:00 -0500
-Received: (qmail invoked by alias); 13 Feb 2008 13:21:59 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp024) with SMTP; 13 Feb 2008 14:21:59 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+fOplggoCf7gWumh77lhcHGD1UIVXpWovUmI0+Ka
-	8fT7RiTlPzNvjz
-X-X-Sender: gene099@racer.site
-In-Reply-To: <m3fxvxc87u.fsf@localhost.localdomain>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1752520AbYBMNZH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Feb 2008 08:25:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752605AbYBMNZH
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Feb 2008 08:25:07 -0500
+Received: from main.gmane.org ([80.91.229.2]:37869 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752357AbYBMNZE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Feb 2008 08:25:04 -0500
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1JPHbi-0003uO-3g
+	for git@vger.kernel.org; Wed, 13 Feb 2008 13:25:02 +0000
+Received: from matrix-eth-s4p3c0.eurocontrol.fr ([192.93.23.254])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 13 Feb 2008 13:25:02 +0000
+Received: from younes by matrix-eth-s4p3c0.eurocontrol.fr with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 13 Feb 2008 13:25:02 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: matrix-eth-s4p3c0.eurocontrol.fr
+User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
+In-Reply-To: <alpine.LFD.1.00.0802121308360.2920@woody.linux-foundation.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73787>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73788>
 
-Hi,
+Linus Torvalds wrote:
+> 	   7.6% fs/afs/
+> 	   7.6% fs/fuse/
+> 	   7.6% fs/gfs2/
+> 	   5.1% fs/jffs2/
+> 	   5.1% fs/nfs/
+> 	   5.1% fs/nfsd/
+> 	   7.6% fs/reiserfs/
+> 	  15.3% fs/
+[...]
+> For an example of the cumulative reporting, the above commit becomes
+[...]
+> 	   7.6% fs/afs/
+> 	   7.6% fs/fuse/
+> 	   7.6% fs/gfs2/
+> 	   5.1% fs/jffs2/
+> 	   5.1% fs/nfs/
+> 	   5.1% fs/nfsd/
+> 	   7.6% fs/reiserfs/
+> 	  61.5% fs/
 
-On Wed, 13 Feb 2008, Jakub Narebski wrote:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > On Wed, 13 Feb 2008, Jeff King wrote:
-> > >  	}
-> > > +	if (!hashcmp(sha1, empty_tree.sha1))
-> > > +		return &empty_tree;
-> > >  	return NULL;
-> > >  }
-> > 
-> > Heh.  This is cute.  But it is also a bit hard to reference, no?  I mean, 
-> > you have to remember the SHA-1 of it...
-> > 
-> > Maybe {} ?
-> 
-> Or NULL?
+May I suggest this instead so to get rid of the cumulative option?
 
-I was talking about a special handling: "{}" is not a valid refname.  But 
-"NULL" _is_.  So I wanted to avoid that "NULL" explicitely.
+  	   7.6% fs/afs
+  	   7.6% fs/fuse
+  	   7.6% fs/gfs2
+  	   5.1% fs/jffs2
+  	   5.1% fs/nfs
+  	   5.1% fs/nfsd
+  	   7.6% fs/reiserfs
+  	  15.3% fs/
+  	  61.5% fs
 
-Ciao,
-Dscho
+A trailing slash would mean "no recursive, only this directory" and no 
+trailing slash means well the opposite :-)
+
+Abdel.
