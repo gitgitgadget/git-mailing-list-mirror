@@ -1,98 +1,117 @@
-From: Toby Allsopp <Toby.Allsopp@navman.co.nz>
-Subject: [PATCH] Fix "stg branch --delete" on a nonexistent branch
-Date: Thu, 14 Feb 2008 11:25:29 +1300
-Message-ID: <87r6fgjwoi.fsf@nav-akl-pcn-343.mitacad.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/selftest] hash-object: don't rely on order of --stdin, -w
+ arguments
+Date: Wed, 13 Feb 2008 15:25:11 -0800
+Message-ID: <7v8x1oo2w8.fsf@gitster.siamese.dyndns.org>
+References: <20080213190338.7393.qmail@d70c5cbe18d4bd.315fe32.mid.smarden.org>
+ <7v7ih8pre6.fsf@gitster.siamese.dyndns.org>
+ <20080213224941.18121.qmail@c0fdbb95c1b5f1.315fe32.mid.smarden.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 13 23:53:54 2008
+To: Gerrit Pape <pape@smarden.org>
+X-From: git-owner@vger.kernel.org Thu Feb 14 00:26:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JPQU5-0006oU-6T
-	for gcvg-git-2@gmane.org; Wed, 13 Feb 2008 23:53:45 +0100
+	id 1JPQzR-0002C6-1l
+	for gcvg-git-2@gmane.org; Thu, 14 Feb 2008 00:26:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754726AbYBMWxL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Feb 2008 17:53:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751357AbYBMWxJ
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Feb 2008 17:53:09 -0500
-Received: from ip-58-28-171-25.wxnz.net ([58.28.171.25]:4320 "EHLO
-	AKLEXFE01.mitacad.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753301AbYBMWxH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Feb 2008 17:53:07 -0500
-Received: from AKLEXVS01.mitacad.com ([10.112.5.35]) by AKLEXFE01.mitacad.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Thu, 14 Feb 2008 11:53:03 +1300
-Received: from nav-akl-pcn-343.mitacad.com.navman.co.nz ([10.112.8.136]) by AKLEXVS01.mitacad.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Thu, 14 Feb 2008 11:53:03 +1300
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.60 (gnu/linux)
-X-OriginalArrivalTime: 13 Feb 2008 22:53:03.0152 (UTC) FILETIME=[30696300:01C86E93]
-X-TM-AS-Product-Ver: SMEX-8.0.0.1181-5.000.1023-15728.000
-X-TM-AS-Result: No--5.530200-8.000000-31
-X-TM-AS-User-Approved-Sender: No
-X-TM-AS-User-Blocked-Sender: No
+	id S932923AbYBMXZd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Feb 2008 18:25:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932717AbYBMXZb
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Feb 2008 18:25:31 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:60870 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932920AbYBMXZ3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Feb 2008 18:25:29 -0500
+Received: from a-sasl-quonix.pobox.com (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 3F79E3A53;
+	Wed, 13 Feb 2008 18:25:25 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.pobox.com (Postfix) with ESMTP id
+ 5616B3A51; Wed, 13 Feb 2008 18:25:19 -0500 (EST)
+In-Reply-To: <20080213224941.18121.qmail@c0fdbb95c1b5f1.315fe32.mid.smarden.org> (Gerrit
+ Pape's message of "Wed, 13 Feb 2008 22:49:41 +0000")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73826>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73827>
 
-Before this patch, I get the following:
+Gerrit Pape <pape@smarden.org> writes:
 
- $ stg branch --delete tmp
- Deleting branch "tmp" ... Traceback (most recent call last):
-   File "/usr/bin/stg", line 43, in ?
-     main()
-   File "/var/lib/python-support/python2.4/stgit/main.py", line 281, in main
-     command.func(parser, options, args)
-   File "/var/lib/python-support/python2.4/stgit/commands/branch.py", line 190, in func
-     __delete_branch(args[0], options.force)
-   File "/var/lib/python-support/python2.4/stgit/commands/branch.py", line 100, in __delete_branch
-     doomed.delete(force)
-   File "/var/lib/python-support/python2.4/stgit/stack.py", line 758, in delete
-     except GitException:
- NameError: global name 'GitException' is not defined
+> Fix 'git hash-object --stdin -w' to actually write the object, just as
+> 'git hash-object -w --stdin' does.
+>
+> Reported by Josh Triplett through
+>  http://bugs.debian.org/464432
+>
+> Signed-off-by: Gerrit Pape <pape@smarden.org>
 
-After it, I get:
+Thanks.  I think the patch itself is a good fix to the old
+design mistake we made.
 
- Deleting branch "tmp" ...
-   Warning: Could not delete branch "tmp"
- done
+However, I would _really_ like to see something like the
+following mentioned in the proposed commit log message for
+discussion:
 
-Signed-off-by: Toby Allsopp <toby.allsopp@navman.co.nz>
----
- stgit/stack.py           |    2 +-
- t/t1005-branch-delete.sh |    4 ++++
- 2 files changed, 5 insertions(+), 1 deletions(-)
+    This regresses the use case of running:
 
-diff --git a/stgit/stack.py b/stgit/stack.py
-index 7fe9f2b..1f01295 100644
---- a/stgit/stack.py
-+++ b/stgit/stack.py
-@@ -661,7 +661,7 @@ class Series(PatchSet):
- 
-         try:
-             git.delete_branch(self.get_name())
--        except GitException:
-+        except git.GitException:
-             out.warn('Could not delete branch "%s"' % self.get_name())
- 
-         config.remove_section('branch.%s' % self.get_name())
-diff --git a/t/t1005-branch-delete.sh b/t/t1005-branch-delete.sh
-index 00fc9eb..e061baf 100755
---- a/t/t1005-branch-delete.sh
-+++ b/t/t1005-branch-delete.sh
-@@ -19,6 +19,10 @@ test_expect_success 'Create a non-StGIT branch and delete it' '
-     stg branch --delete bar
-     '
- 
-+test_expect_success 'Delete a nonexistent branch' '
-+   stg branch --delete bar
-+   '
-+
- test_expect_success 'Make sure the branch ref was deleted' '
-     [ -z "$(git show-ref | grep master | tee /dev/stderr)" ]
-     '
--- 
-1.5.4.1.97.g40aab-dirty
+        $ git hash-object --stdin Makefile <cache.h
+
+    to obtain hash values for cache.h and then Makefile.  It
+    used to report the object names in order, but now it always
+    processes --stdin at the end.  It is not an issue if
+    everything is file (i.e. "git hash-object cache.h Makefile"
+    is an easy replacement), but if existing scripts used the
+    option to read from a pipe, this might become problematic.
+
+    Similarly, when typing from terminal:
+
+        $ git hash-object --stdin --stdin
+        foo
+        ^D
+        bar
+        ^D
+
+    used to work, but not anymore.  The latter however should
+    not be something we need to worry about.  It is an insane
+    usage.
+
+Granted, we _should have_ prevented such insane usages (the
+second one is definitely insane and not so useful, and the first
+one is but to a much lessor degree).  We _should have_ forced
+scripted users to do these with two separate invocations of "git
+hash-object", by refusing more than one --stdin and --stdin with
+filename on the command line.  But we didn't, and this earlier
+design mistake has already been in the field for a long time.
+People may have been depending on the existing misbehaviour.
+
+So I am Ok with the patch, and I strongly suspect that we should
+even detect more than one --stdin and --stdin with filename on
+the command line to reject the usage your saner version behaves
+differently from before, instead of accepting and silently doing
+an unexpected thing.
+
+But at the same time I would really like our commit messages,
+and Release Notes that is based on these commit messages, to be
+_candid_ about our previous mistakes and the incompatibility we
+are incurring to the existing users.
+
+> +test_expect_success \
+> +    'git hash-object -w --stdin saves the object' \
+> +    'echo foo | git hash-object -w --stdin &&
+> +    test -r .git/objects/25/7cc5642cb1a054f08cc83f2d943e56fd3ebe99 &&
+> +    rm -f .git/objects/25/7cc5642cb1a054f08cc83f2d943e56fd3ebe99'
+
+I'd feel better if tests outside t0000 did not hardcode the
+actual values, like this:
+
+	obname=$(echo foo | git hash-object -w --stdin) &&
+        ob=$(expr "$obname" : "\(..\)") &&
+        name=$(expr "$obname" : "..\(.*\)") &&
+        test -f ".git/objects/$ob/$name"
