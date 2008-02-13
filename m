@@ -1,69 +1,75 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [PATCH] Add function to checkout a branch in git.el
-Date: Wed, 13 Feb 2008 17:43:56 +0100
-Message-ID: <20080213164356.GA5828@diana.vm.bytemark.co.uk>
-References: <87wsp8u9m7.dlv@maison.homelinux.org> <20080213163002.GA5670@diana.vm.bytemark.co.uk>
+From: "Jean-Baptiste Quenot" <jbq@caraldi.com>
+Subject: [PATCH] Do not chop HTML tags in commit search result
+Date: Wed, 13 Feb 2008 18:37:24 +0100
+Message-ID: <ae63f8b50802130937mddf9df9re2a95bee44661ee3@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Alexandre Julliard <julliard@winehq.org>
-To: =?us-ascii?B?PT91dGYtOD9xP1I9QzM9QTltaT0yMFZhbmljYXQ/PQ==?= 
-	<vanicat@debian.org>
-X-From: git-owner@vger.kernel.org Wed Feb 13 17:45:11 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 13 18:38:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JPKj6-0001o3-L0
-	for gcvg-git-2@gmane.org; Wed, 13 Feb 2008 17:44:53 +0100
+	id 1JPLZ2-0008F6-V0
+	for gcvg-git-2@gmane.org; Wed, 13 Feb 2008 18:38:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761097AbYBMQoG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Feb 2008 11:44:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933354AbYBMQoF
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Feb 2008 11:44:05 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4953 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756504AbYBMQoE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Feb 2008 11:44:04 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1JPKiC-0001ai-00; Wed, 13 Feb 2008 16:43:56 +0000
+	id S1763093AbYBMRhb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Feb 2008 12:37:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762803AbYBMRhb
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Feb 2008 12:37:31 -0500
+Received: from nf-out-0910.google.com ([64.233.182.186]:56204 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760628AbYBMRh2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Feb 2008 12:37:28 -0500
+Received: by nf-out-0910.google.com with SMTP id g13so58596nfb.21
+        for <git@vger.kernel.org>; Wed, 13 Feb 2008 09:37:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition:x-google-sender-auth;
+        bh=OfWfowQx1RDQPNpov41v+MC31Lcj1owVHCVpkRClvkA=;
+        b=VVBGC8W9e7I2XjkvexorTQ8pGWJcMdwx660pMhKKoY6WBHnw0t2mySb9/SqYFyq3c0PL5KBRLYv1nZTlIvgRGP6l1tY9BttrTfLRk5ea30EubCS3pXn9B2hw2dTz3bFt4le8OP9dWhX6Toz3Md311k9cEXaB2CgjJq6yoAyBDvE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:sender:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition:x-google-sender-auth;
+        b=WqVVItTuzw8v4KjUInZVStabGFHMmHxK53Tf+LCvo3N2NRngm0TwCl5C91BW/t7UsSW/1TLdeRy8Oxv9Q0Vhytw3aPBgybm73TVWWOR+/pyKqtQnibN98dFTiq3tycRp66zbpxxlXaWcK61g5Jcbd+6CtEhQt4ljz2yKNRu35ow=
+Received: by 10.78.170.6 with SMTP id s6mr334325hue.50.1202924244825;
+        Wed, 13 Feb 2008 09:37:24 -0800 (PST)
+Received: by 10.78.130.20 with HTTP; Wed, 13 Feb 2008 09:37:24 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <20080213163002.GA5670@diana.vm.bytemark.co.uk>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+X-Google-Sender-Auth: 6c76543d9a424507
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73802>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73803>
 
-On 2008-02-13 17:30:02 +0100, Karl Hasselstr=F6m wrote:
+Hi there,
 
-> Why the prefix? Wouldn't it be easier to just have one "switch
-> branch" prompt that would tab complete existing branch names, and
->
->   * if the user enters the name of an existing branch, just switch to
->     it;
->
->   * if the user enters a name that's not the name of an existing
->     branch, ask for confirmation, and then create the new branch and
->     switch to it.
+Thanks for Git! It's a great program.  I encountered an annoying bug
+with gitweb 1.5.4.1, when searching for commits, if the search string
+is too long, the generated HTML is munged leading to an ill-formed
+XHTML document.
 
-Reading your code a bit more carefully, I realize that my suggestion
-doesn't give you the opportunity to base the new branch on anything
-but HEAD. So change the second bullet to
+Here is the patch, hope it helps:
 
-  * if the user enters a name that's not the name of an existing
-    branch, display a prompt like this
-
-      Creating new branch "foo". Where should it start?
-
-    Tab complete on existing tags and branches, but accept any
-    committish. Create the new branch and switch to it.
-
-This bit of UI could obviously be reused to make create-branch and
-create-tag commands that don't switch the current branch.
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index ae2d057..2c0b990 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -3780,7 +3780,10 @@ sub git_search_grep_body {
+                                my $trail = esc_html($3) || "";
+                                $trail = chop_str($trail, 30, 10);
+                                my $text = "$lead<span
+class=\"match\">$match</span>$trail";
+-                               print chop_str($text, 80, 5) . "<br/>\n";
++                               # Do not chop $text as match can be
+long, and we don't want to
++                               # munge HTML tags!
++                               #print chop_str($text, 80, 5) . "<br/>\n";
++                               print $text . "<br/>\n";
+                        }
+                }
+                print "</td>\n" .
+-- 
+1.5.4.1-dirty
