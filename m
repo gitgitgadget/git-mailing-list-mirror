@@ -1,64 +1,81 @@
-From: "=?ISO-8859-1?Q?Andr=E9_Goddard_Rosa?=" <andre.goddard@gmail.com>
-Subject: Using kdiff3 to compare two different revisions of a folder
-Date: Tue, 12 Feb 2008 23:44:07 -0200
-Message-ID: <b8bf37780802121744i62849a53rfa71cc0571aec3a@mail.gmail.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH] pack-objects: only throw away data during memory pressure
+Date: Tue, 12 Feb 2008 20:48:06 -0500 (EST)
+Message-ID: <alpine.LFD.1.00.0802122025490.2732@xanadu.home>
+References: <120271478556-git-send-email-mkoegler@auto.tuwien.ac.at>
+ <alpine.LFD.1.00.0802110942310.2732@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Feb 13 02:44:49 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, Brian Downing <bdowning@lavos.net>
+To: Martin Koegler <mkoegler@auto.tuwien.ac.at>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 13 02:48:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JP6g1-0002uU-QA
-	for gcvg-git-2@gmane.org; Wed, 13 Feb 2008 02:44:46 +0100
+	id 1JP6jt-0003qS-FZ
+	for gcvg-git-2@gmane.org; Wed, 13 Feb 2008 02:48:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752875AbYBMBoL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 Feb 2008 20:44:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752294AbYBMBoL
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Feb 2008 20:44:11 -0500
-Received: from nf-out-0910.google.com ([64.233.182.186]:8615 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752105AbYBMBoJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 12 Feb 2008 20:44:09 -0500
-Received: by nf-out-0910.google.com with SMTP id g13so1552941nfb.21
-        for <git@vger.kernel.org>; Tue, 12 Feb 2008 17:44:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=v2BVx1prJJt3qybMVYJtGUArS7RSW0GbRaKf6565bwQ=;
-        b=k0XcjSGTN/3KR7WMPsaQ58qDjfbyuWDkm0mhRjxdiHORTKMz4WPciAffARo240N4vlGamnINoE1howH/yxjry3HWx3qK7iLPNciKGLl3avAwN3AKigl49aA6CKSzeVsfvaQa8oZO33bB5vAuop3WUwU5lo84xPq1BxhsHpSEQnE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=mpmutK5zaUJQQwUvFUS63Ci23eukm/jNXUk7yHoGAA4huY/EzfDR7po7nYB944yk4XRhZj+JM3uUjyCNW0+lCa2kTBdXURFhXb6fA9YZ4OBpeACqbD+N4xD5AnPPJAekW2M4S3LEi3EeslY8MuHO9OIqGqX8yVlCQQlayea65ho=
-Received: by 10.78.193.19 with SMTP id q19mr3831699huf.69.1202867047999;
-        Tue, 12 Feb 2008 17:44:07 -0800 (PST)
-Received: by 10.78.100.15 with HTTP; Tue, 12 Feb 2008 17:44:07 -0800 (PST)
-Content-Disposition: inline
+	id S1752940AbYBMBsK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Feb 2008 20:48:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753341AbYBMBsJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Feb 2008 20:48:09 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:19436 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752297AbYBMBsI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Feb 2008 20:48:08 -0500
+Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR002.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0JW500FADMC6BIF0@VL-MO-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 12 Feb 2008 20:48:07 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <alpine.LFD.1.00.0802110942310.2732@xanadu.home>
+User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73733>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73734>
 
-Hi, all!
+On Mon, 11 Feb 2008, Nicolas Pitre wrote:
 
-    I would like to use kdiff3 to compare some folder like "include"
-between two different revisions.
-    It would be something like "git diff v2.5:makefile HEAD:makefile",
-but for an entire folder.
+> On Mon, 11 Feb 2008, Martin Koegler wrote:
+> 
+> > If pack-objects hit the memory limit, it deletes objects from the delta
+> > window.
+> > 
+> > This patch make it only delete the data, which is recomputed, if needed again.
+> > 
+> > Signed-off-by: Martin Koegler <mkoegler@auto.tuwien.ac.at>
+> 
+> Looks fine.
+> 
+> Acked-by: Nicolas Pitre <nico@cam.org>
 
-    Kdiff3 give me a quick glance of its nice graphical output of the
-differences, without have to resort to looking/parsing 'git log'
-output.
-    For now, easiest way for me is to keep my tree replicated in two
-different folders pointing to different revisions then use it.
+Well, I take that back.
 
-    Is there a better way to do this kind of comparison?
+Some testing on the OOO repository with this turns out to be 
+completely unusable.
 
-Thanks in advance,
---=20
-[]s,
-Andr=E9 Goddard
+By the time this gets into action and data is actively thrown away, 
+performance simply goes down the drain due to the data constantly being
+reloaded over and over and over and over and over and over again, to the 
+point of virtually making no relative progress at all.
+
+So this change is not actually helping anything.  The previous behavior 
+of enforcing the memory limit by dynamically shrinking the window size 
+at least had the effect of allowing some kind of progress, even if the 
+end result wouldn't be optimal.
+
+And that's the whole point behind this memory limiting feature: allowing 
+some progress to be made when resources are too limited to let the 
+repack go unbounded.
+
+Therefore I think commit 9c2174350cc0ae0f6bad126e15fe1f9f044117ab should 
+be reverted.
+
+
+Nicolas
