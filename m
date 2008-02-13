@@ -1,76 +1,67 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Jeff King <peff@peff.net>
 Subject: Re: git-archive for files changed in revision range
-Date: Wed, 13 Feb 2008 13:37:33 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802131335120.30505@racer.site>
+Date: Wed, 13 Feb 2008 08:43:13 -0500
+Message-ID: <20080213134313.GA3617@coredump.intra.peff.net>
 References: <20080213130304.GA19957@grahamcox.co.uk>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
 To: Graham Cox <graham@grahamcox.co.uk>
-X-From: git-owner@vger.kernel.org Wed Feb 13 14:38:08 2008
+X-From: git-owner@vger.kernel.org Wed Feb 13 14:44:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JPHoM-0001cZ-ET
-	for gcvg-git-2@gmane.org; Wed, 13 Feb 2008 14:38:06 +0100
+	id 1JPHtv-0003dB-Gx
+	for gcvg-git-2@gmane.org; Wed, 13 Feb 2008 14:43:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753180AbYBMNh2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Feb 2008 08:37:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753451AbYBMNh2
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Feb 2008 08:37:28 -0500
-Received: from mail.gmx.net ([213.165.64.20]:58502 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753031AbYBMNh1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Feb 2008 08:37:27 -0500
-Received: (qmail invoked by alias); 13 Feb 2008 13:37:25 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp025) with SMTP; 13 Feb 2008 14:37:25 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19w5YkVOBdwtQj8Fb+YapPDEL1pp8AWjzDlBq0bbC
-	QBNa0PpgFkXFaT
-X-X-Sender: gene099@racer.site
+	id S1753533AbYBMNnR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Feb 2008 08:43:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753359AbYBMNnR
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Feb 2008 08:43:17 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4821 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753420AbYBMNnQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Feb 2008 08:43:16 -0500
+Received: (qmail 15853 invoked by uid 111); 13 Feb 2008 13:43:15 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 13 Feb 2008 08:43:15 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 13 Feb 2008 08:43:13 -0500
+Content-Disposition: inline
 In-Reply-To: <20080213130304.GA19957@grahamcox.co.uk>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73790>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73791>
 
-Hi,
+On Wed, Feb 13, 2008 at 01:03:04PM +0000, Graham Cox wrote:
 
-On Wed, 13 Feb 2008, Graham Cox wrote:
-
-> We have a small project that is being managed in a Git repository 
-> (MSysGit to be exact) - mostly for backups and so on. The project is a 
-> mod for the computer game Civilization 4. (Actually a mod of a mod, but 
-> still...)  As such, to release the mod to other people to actually use 
-> the only thing that needs to be released is all of the files that have 
-> actually been changed. (The actual git repository contains ~700MB of 
-> files, the vast majority of which haven't changed since the initial 
-> import and so don't need to be downloaded by people).
-> 
-> I've managed to make it produce an archive that contains only the files 
-> that have changed by using a combination of git-archive and 
-> git-whatchanged, along with grep and sed, but it's kinda unwieldly. Is 
-> there a better way of doing this?
-> 
 > The command line I used was something like (This is mostly from memory):
 > git-archive --format=zip . `git-whatchanged <start>..HEAD --pretty=oneline 
 >   | grep '^:' | sed 's/^.*\t//'` > release.zip
-> 
-> To produce a zip containing all of the modified and added files for the 
-> revision range <start>..HEAD.
 
-Mebbe
+That will list files multiple times if they were modified in more than
+one commit. And really, there's no need to walk the history. You really
+are just comparing against two points (your baseline and your current
+state). Walking the history will also erroneously include files which
+changed, but then reverted back to their original state (though I expect
+that is the uncommon case).
 
-	git archive --format=zip HEAD \
-		$(git diff-tree -r --name-only --diff-filter=AM \
-			<start>..HEAD)
+How about:
 
-Hmm?
+  # mark our start point for this and future releases
+  git tag baseline `git rev-list HEAD | tail -n 1`
 
-Ciao,
-Dscho
+  # find files which differ between then and now; but we only need
+  # to care about added and modified files, since deleted ones
+  # don't need to be shipped
+  git diff --diff-filter=AM --raw baseline HEAD | awk '{print $6}' >files
+
+  # and archive
+  git archive --format=zip HEAD `cat files`
+
+You can even use diff's "-z" option if you have filenames that are hard
+to quote, but I will leave that as an exercise to the reader.
+
+-Peff
