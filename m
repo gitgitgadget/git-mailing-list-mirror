@@ -1,103 +1,118 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Do not chop HTML tags in commit search result
-Date: Wed, 13 Feb 2008 11:43:14 -0800
-Message-ID: <7vbq6kprql.fsf@gitster.siamese.dyndns.org>
-References: <ae63f8b50802130937mddf9df9re2a95bee44661ee3@mail.gmail.com>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: git-branch -m interprets first argument differently when two are
+ supplied
+Date: Wed, 13 Feb 2008 13:48:10 -0600
+Message-ID: <47B3497A.9050703@nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Jean-Baptiste Quenot" <jbq@caraldi.com>
-X-From: git-owner@vger.kernel.org Wed Feb 13 20:44:28 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Feb 13 20:48:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JPNWf-0001Q6-2j
-	for gcvg-git-2@gmane.org; Wed, 13 Feb 2008 20:44:13 +0100
+	id 1JPNb8-0003GM-St
+	for gcvg-git-2@gmane.org; Wed, 13 Feb 2008 20:48:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753054AbYBMTni (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Feb 2008 14:43:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752897AbYBMTni
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Feb 2008 14:43:38 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:44624 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750897AbYBMTnh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Feb 2008 14:43:37 -0500
-Received: from a-sasl-quonix.pobox.com (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id C4521378C;
-	Wed, 13 Feb 2008 14:43:35 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.pobox.com (Postfix) with ESMTP id
- DDE3B378B; Wed, 13 Feb 2008 14:43:31 -0500 (EST)
-In-Reply-To: <ae63f8b50802130937mddf9df9re2a95bee44661ee3@mail.gmail.com>
- (Jean-Baptiste Quenot's message of "Wed, 13 Feb 2008 18:37:24 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751272AbYBMTsR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Feb 2008 14:48:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752341AbYBMTsR
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Feb 2008 14:48:17 -0500
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:47432 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751009AbYBMTsQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Feb 2008 14:48:16 -0500
+Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
+	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id m1DJmBOZ019872
+	for <git@vger.kernel.org>; Wed, 13 Feb 2008 13:48:12 -0600
+Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
+	 Wed, 13 Feb 2008 13:48:10 -0600
+User-Agent: Thunderbird 2.0.0.9 (X11/20071031)
+X-OriginalArrivalTime: 13 Feb 2008 19:48:10.0508 (UTC) FILETIME=[5CAE3CC0:01C86E79]
+X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-5.0.0.1023-15722001
+X-TM-AS-Result: : Yes--8.318400-0-31-1
+X-TM-AS-Category-Info: : 31:0.000000
+X-TM-AS-MatchedID: : =?us-ascii?B?NzEwOTg5LTcwNDcxMi03MDEy?=
+	=?us-ascii?B?MzYtNzAyMTEzLTcwNTEwMi03MDE2MTgtNzAyNzI2LTcwMjA1MC03?=
+	=?us-ascii?B?MDgxNzktNzA2MjQ5LTcwNzQ1MS0xMTE2MDQtNzAyMTQzLTcwNzc1?=
+	=?us-ascii?B?MC03MDU5MDEtNzA0MDQ4LTcwMzQzNS03MDMxNTctNzAzNzEyLTcw?=
+	=?us-ascii?B?MTQ1NS03MDczNjEtMTg3MDY3LTcwMjA0NC0xMTMyMTEtNzAzNDU0?=
+	=?us-ascii?B?LTcwMzA4OC03MDA3MjYtNzAzNzg4LTcwNDQyNS03MDUzODgtNzA0?=
+	=?us-ascii?B?MDQ5LTcwMjYzOC0xMDU3MDAtMTg4MDE5LTcwNjg5MS03MDA3ODIt?=
+	=?us-ascii?B?NzAxODM3LTcwNTQ3NS0xNDgwMzktMTQ4MDUx?=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73814>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73815>
 
-"Jean-Baptiste Quenot" <jbq@caraldi.com> writes:
 
-> ... I encountered an annoying bug
-> with gitweb 1.5.4.1, when searching for commits, if the search string
-> is too long, the generated HTML is munged leading to an ill-formed
-> XHTML document.
+If 'git-branch -m' is supplied one argument, it changes the name of the
+current branch to the name of the argument.
 
-> Here is the patch, hope it helps:
->
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index ae2d057..2c0b990 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -3780,7 +3780,10 @@ sub git_search_grep_body {
->                                 my $trail = esc_html($3) || "";
->                                 $trail = chop_str($trail, 30, 10);
-> ...
->                                 my $text = "$lead<span
-> class=\"match\">$match</span>$trail";
-> -                               print chop_str($text, 80, 5) . "<br/>\n";
+If two arguments are supplied, then the first argument is interpreted
+as the branch whose name is to be changed, and the second argument is
+the name to change it to.
 
-I think esc_html() and chop_str() are backwards here.  If $3 is
-overlong it is cut in the middle of some markup.  Even though
-chop_str() claims to be "HTML aware", I do not think it is.  It
-seems to know about "&entities;" but not mark-ups.
+The first non-option argument is interpreted differently depending on
+whether one argument or two arguments have been supplied.
 
-There are quite a many instances of esc_html() first then chop_str()
-in that function, and I think they all deserve to be fixed.
+	git-branch -m [<oldbranch>] <newbranch>
 
-	my $comment = $co{'comment'};
-	foreach my $line (@$comment) {
-		if ($line =~ m/^(.*)($search_regexp)(.*)$/i) {
-			my $lead = esc_html($1) || "";
-			$lead = chop_str($lead, 30, 10);
-			my $match = esc_html($2) || "";
-			my $trail = esc_html($3) || "";
-			$trail = chop_str($trail, 30, 10);
-			my $text = "$lead<span class=\"match\">$match</span>$trail";
-			print chop_str($text, 80, 5) . "<br/>\n";
-		}
-	}
+Has anyone considered whether this is inconsistent with how other
+commands operate?
 
-I think this is trying to fit the result on a line, showing the
-match sandwitched by not-too-long part taken from leading and
-trailing context ($lead and $trail can be chomped aggressively
-than $match).  But $lead and $trail are escaped then chomped
-which is already wrong.
+For example, these commands always interpret the first argument
+consistently. If a second argument is supplied, it modifies the
+base or the reference from which to run the command.
 
-I think the body of that if() would be better written like this:
+	git-rebase <upstream> [<branch>]
+	git-cherry <upstream> [<head>] [<limit.]
+	git-tag <name> [<head>]
+	git-update-ref <ref> <newvalue> [<oldvalue>]
 
-	my ($lead, $match, $trail) = ($1, $2, $3);
-	$match = chop_str($match, 70, $slop); # in case it is very long...
-	$contextlen = (80 - len($match)) / 2; # and the remainder...
-        if ($contextlen > 30) { $contextlen = 30 }; # but not too much
-        $trail = chop_str($trail, $contextlen, $slop);
-        $lead = chop_str($lead, $contextlen, $slop);
+or even
 
-	$lead = esc_html($lead);
-	$match = esc_html($match);
-	$trail = esc_html($trail);
+	git-branch <branchname> [<start-point>]
 
-        print "$lead<span ...>$match</span>$trail";
+It's hard to describe, but I have learned to think about the ordering
+of arguments (especially for rebase and cherry), by thinking about
+how the single argument case would operate. For rebase, if only one
+argument is supplied, you know that the thing you are rebasing is
+the current branch, that's the only way it makes sense.
+
+If I am _not_ on the branch I want to rebase, it may be tempting to
+think that rebase works like:
+
+	rebase <this> <on_to_this>
+
+So if I am not on the branch, I think about how arguments would be
+supplied if I _were_ on the branch I wanted to rebase. Then it is
+clear how to specify the branch I want to rebase, namely that <this>
+should be the second argument.
+
+For 'git-branch -m', this relationship is broken. So I can't think
+"How would this operate if I were on the branch whose name I'd like
+to change", and then append the name, since when two arguments are
+supplied the new branch name is the _second_ argument.
+
+I guess maybe
+
+	git-branch -m <oldname> <newname>
+
+is supposed to work like
+
+	mv <oldname> <newname>
+
+but then the same could be said about the others too.
+
+	rebase <this> <on_top_of_this>
+	cherry <whats_in_here> <but_not_in_here>
+	...
+
+I'm not suggesting we change the 'branch -m' behavior, just pointing
+out that it seems inconsistent and broke my git intuition. Maybe
+someone can point out a thinko on my part.
+
+-brandon
