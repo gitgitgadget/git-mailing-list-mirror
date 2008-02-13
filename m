@@ -1,118 +1,130 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <Uwe.Kleine-Koenig@digi.com>
-Subject: Re: problem with git rebase -i
-Date: Wed, 13 Feb 2008 10:29:10 +0100
-Message-ID: <20080213092910.GA20219@digi.com>
-References: <20080211134448.GA17588@digi.com> <20080213081059.GA18230@digi.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Optimize rename detection for a huge diff
+Date: Wed, 13 Feb 2008 01:53:55 -0800
+Message-ID: <7vodalqj0s.fsf@gitster.siamese.dyndns.org>
+References: <20080127172748.GD2558@does.not.exist>
+ <20080128055933.GA13521@coredump.intra.peff.net>
+ <alpine.LFD.1.00.0801300844170.28476@www.l.google.com>
+ <20080129222007.GA3985@coredump.intra.peff.net>
+ <7vfxwgmf87.fsf@gitster.siamese.dyndns.org>
+ <7vwspskynz.fsf@gitster.siamese.dyndns.org>
+ <7vprvkj58q.fsf_-_@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Len Brown <len.brown@intel.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 13 10:30:11 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, Adrian Bunk <bunk@kernel.org>,
+	git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Feb 13 10:55:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JPDwO-0001Mu-ST
-	for gcvg-git-2@gmane.org; Wed, 13 Feb 2008 10:30:09 +0100
+	id 1JPEKY-0001h2-N9
+	for gcvg-git-2@gmane.org; Wed, 13 Feb 2008 10:55:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932513AbYBMJ3X convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Feb 2008 04:29:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932152AbYBMJ3W
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Feb 2008 04:29:22 -0500
-Received: from mail164.messagelabs.com ([216.82.253.131]:35381 "HELO
-	mail164.messagelabs.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1751400AbYBMJ3S (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Feb 2008 04:29:18 -0500
-X-VirusChecked: Checked
-X-Env-Sender: Uwe.Kleine-Koenig@digi.com
-X-Msg-Ref: server-10.tower-164.messagelabs.com!1202894956!7780243!1
-X-StarScan-Version: 5.5.12.14.2; banners=-,-,-
-X-Originating-IP: [66.77.174.21]
-Received: (qmail 8680 invoked from network); 13 Feb 2008 09:29:16 -0000
-Received: from unknown (HELO owa.digi.com) (66.77.174.21)
-  by server-10.tower-164.messagelabs.com with SMTP; 13 Feb 2008 09:29:16 -0000
-Received: from mtk-sms-mail01.digi.com ([10.10.8.120]) by owa.digi.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Wed, 13 Feb 2008 03:29:16 -0600
-Received: from dor-sms-mail1.digi.com ([10.49.1.105]) by mtk-sms-mail01.digi.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Wed, 13 Feb 2008 03:29:15 -0600
-Received: from zentaur.digi.com ([10.100.10.144]) by dor-sms-mail1.digi.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Wed, 13 Feb 2008 10:29:10 +0100
-Received: by zentaur.digi.com (Postfix, from userid 1080)
-	id CE15D1B23F; Wed, 13 Feb 2008 10:29:10 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <20080213081059.GA18230@digi.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-OriginalArrivalTime: 13 Feb 2008 09:29:11.0072 (UTC) FILETIME=[E3DA0A00:01C86E22]
-X-TM-AS-Product-Ver: SMEX-8.0.0.1181-5.000.1023-15726.002
-X-TM-AS-Result: No--24.652200-8.000000-4
-X-TM-AS-User-Approved-Sender: No
-X-TM-AS-User-Blocked-Sender: No
+	id S1752327AbYBMJyb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Feb 2008 04:54:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751641AbYBMJyb
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Feb 2008 04:54:31 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:41811 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751866AbYBMJya (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Feb 2008 04:54:30 -0500
+Received: from a-sasl-quonix.pobox.com (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 3E0BC2D26;
+	Wed, 13 Feb 2008 04:54:28 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.77]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-quonix.pobox.com (Postfix) with ESMTP id DB32C2D22; Wed, 13 Feb 2008
+ 04:54:16 -0500 (EST)
+In-Reply-To: <7vprvkj58q.fsf_-_@gitster.siamese.dyndns.org> (Junio C.
+ Hamano's message of "Tue, 29 Jan 2008 20:40:21 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73763>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73764>
 
-Hello,
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> Uwe Kleine-K=F6nig wrote:
-> > I tried to rebase my work (on the Linux kernel) to current Linus'
-> > master.  As I have two branches I merged them and ran:
-> >=20
-> > 	git rebase -i -p v2.6.25-rc1
-> >=20
-> > But then the list I got in my editor didn't include the merge and s=
-o the
-> > result was broken.
-> >=20
-> > If I add
-> >=20
-> > 	pick 913183f
-> >=20
-> > (with 913183f being my HEAD) to the list, the result is correct.
-> >=20
-> > The reason that my merge is missing is that git rev-list thinks my
-> > merge is the same as 249d621 and so skips that as it uses --cherry-=
-pick.
-> I think the right thing to do here is to let --cherry-pick only kick =
-out
-> revs that are no merges.  This should be save as git-rebase--interact=
-ive
-> is the only user of --cherry-pick.
-After some debugging I found the problem.
+> On Mon, 28 Jan 2008, Jeff King wrote:
+>> 
+>> I tried to reproduce this, but my peak heap allocation was only around
+>> 20MB. Is your repository fully packed? Not packed at all? Can you use
+>> valgrind/massif to figure out where the memory is going?
+>
+> I definitely can reproduce it, it's horrid.
+>
+> This is from "top" fairly late in the game, but with the thing not even 
+> done yet. Current git, pretty much fully (and fairly aggressively) packed 
+> current kernel repo, and using "diff.renamelmit=0".
+>
+> 	4751 torvalds  20   0  852m 446m  47m R   72 22.4   2:46.58 git-merge-recur
+>
+> It finally finished with time reporting:
+>
+> 	208.15user 3.50system 4:01.50elapsed 87%CPU (0avgtext+0avgdata 0maxresident)k
+> 	238736inputs+4544outputs (8261major+280971minor)pagefaults 0swaps
+>
+> where those 280971 minor page faults are what largely indicates how much 
+> memory it used (the technical term for that number is "metric buttload of 
+> memory").
 
-I created 913183f with
+With a bit of tweak, now I am getting these numbers to the
+rename detection that used to spend 800MB (the peak I observed
+was somewhere around 430MB).
 
-	git merge --no-ff -s ours branch1 branch2
+(after patch, in the kernel repository, master at 96b5a46)
+$ /usr/bin/time git-diff -M -l0 --name-status d19fbe8a7 master >/var/tmp/3
+157.20user 1.03system 2:38.72elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
+0inputs+0outputs (32major+237315minor)pagefaults 0swaps
 
-while HEAD was on an ancestor of v2.6.25-rc1.  As patch_id uses the dif=
-f
-to the first parent the result was the id of an empty patch.
-As 249d621 is empty, too, 913183f was skipped.
+$ /usr/bin/time git-diff -M -l0 --name-status d19fbe8a7 master >/var/tmp/4
+174.00user 2.73system 3:09.55elapsed 93%CPU (0avgtext+0avgdata 0maxresident)k
+0inputs+0outputs (6106major+459314minor)pagefaults 0swaps
 
-@Len: The log message of 249d621 suggests that this should be a merge,
-but it only has one parent.  Did you lost some commits here?
+So it is not that much of an improvement, but it seems to help
+somewhat.
 
-I didn't try it, but I assume that if I hadn't used --no-ff to create
-913183f it would have worked.
+The first hunk is about shrinking the diff_score structure;
+before the patch, it was O(NxM) where N and M are number of
+rename source and destination candidates, but after the patch it
+is now O(M), so this shrinkage should not matter, but score is
+capped to MAX_SCORE (60000) and name_score is actually 0 or 1.
+We cannot make it 1-bit unsigned bitfield as there is a qsort
+comparison callback that does (b->name_score - a->name_score).
 
-Nonetheless I think that kicking out 913183f is wrong.  In my eyes the
-fix must result in=20
+We would need to see where the remaining 400MB is going and try
+to shrink it, but this would be an improvement so I'll soon be
+moving this to 'next'.
 
-	patch-id(913183f) !=3D patch-id(249d621)
+---
 
-So probably the combined diff should be used to calculate the patch id?
+ diffcore-rename.c |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
 
-I don't understand the git code here, but I will provide a test in a
-follow-up mail.
-
-Best regards
-Uwe
-
---=20
-Uwe Kleine-K=F6nig, Software Engineer
-Digi International GmbH Branch Breisach, K=FCferstrasse 8, 79206 Breisa=
-ch, Germany
-Tax: 315/5781/0242 / VAT: DE153662976 / Reg. Amtsgericht Dortmund HRB 1=
-3962
+diff --git a/diffcore-rename.c b/diffcore-rename.c
+index 90d06f0..99953e7 100644
+--- a/diffcore-rename.c
++++ b/diffcore-rename.c
+@@ -112,8 +112,8 @@ static int basename_same(struct diff_filespec *src, struct diff_filespec *dst)
+ struct diff_score {
+ 	int src; /* index in rename_src */
+ 	int dst; /* index in rename_dst */
+-	int score;
+-	int name_score;
++	unsigned short score;
++	short name_score;
+ };
+ 
+ static int estimate_similarity(struct diff_filespec *src,
+@@ -393,7 +393,7 @@ static int find_exact_renames(void)
+ 	return i;
+ }
+ 
+-#define NUM_CANDIDATE_PER_DST 8
++#define NUM_CANDIDATE_PER_DST 4
+ static void record_if_better(struct diff_score m[], struct diff_score *o)
+ {
+ 	int i, worst;
