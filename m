@@ -1,81 +1,83 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] pack-objects: only throw away data during memory pressure
-Date: Tue, 12 Feb 2008 20:48:06 -0500 (EST)
-Message-ID: <alpine.LFD.1.00.0802122025490.2732@xanadu.home>
-References: <120271478556-git-send-email-mkoegler@auto.tuwien.ac.at>
- <alpine.LFD.1.00.0802110942310.2732@xanadu.home>
+From: "J.H." <warthog19@eaglescrag.net>
+Subject: Re: Another bench on gitweb (also on gitweb caching)
+Date: Tue, 12 Feb 2008 16:57:30 -0800
+Message-ID: <1202864250.17207.22.camel@localhost.localdomain>
+References: <20080210030919.GA32733@c3sl.ufpr.br>
+	 <m363wvdmxr.fsf@localhost.localdomain>
+	 <20080213004528.GB31455@c3sl.ufpr.br>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, Brian Downing <bdowning@lavos.net>
-To: Martin Koegler <mkoegler@auto.tuwien.ac.at>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 13 02:48:46 2008
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
+	Petr Baudis <pasky@suse.cz>
+To: Bruno Cesar Ribas <ribas@c3sl.ufpr.br>
+X-From: git-owner@vger.kernel.org Wed Feb 13 02:53:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JP6jt-0003qS-FZ
-	for gcvg-git-2@gmane.org; Wed, 13 Feb 2008 02:48:45 +0100
+	id 1JP6oE-0004pU-F9
+	for gcvg-git-2@gmane.org; Wed, 13 Feb 2008 02:53:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752940AbYBMBsK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Feb 2008 20:48:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753341AbYBMBsJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Feb 2008 20:48:09 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:19436 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752297AbYBMBsI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Feb 2008 20:48:08 -0500
-Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR002.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JW500FADMC6BIF0@VL-MO-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 12 Feb 2008 20:48:07 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <alpine.LFD.1.00.0802110942310.2732@xanadu.home>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+	id S1753008AbYBMBwm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Feb 2008 20:52:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752497AbYBMBwm
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Feb 2008 20:52:42 -0500
+Received: from shards.monkeyblade.net ([198.137.202.13]:34880 "EHLO
+	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751847AbYBMBwk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Feb 2008 20:52:40 -0500
+X-Greylist: delayed 3287 seconds by postgrey-1.27 at vger.kernel.org; Tue, 12 Feb 2008 20:52:40 EST
+Received: from [10.255.255.198] (65-115-68-195.dia.static.qwest.net [65.115.68.195])
+	(authenticated bits=0)
+	by shards.monkeyblade.net (8.14.1/8.13.8) with ESMTP id m1D0vUcD024662
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 12 Feb 2008 16:57:30 -0800
+In-Reply-To: <20080213004528.GB31455@c3sl.ufpr.br>
+X-Mailer: Evolution 2.12.3 (2.12.3-1.fc8) 
+X-Virus-Scanned: ClamAV 0.88.7/5794/Tue Feb 12 12:49:27 2008 on shards.monkeyblade.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73734>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73735>
 
-On Mon, 11 Feb 2008, Nicolas Pitre wrote:
-
-> On Mon, 11 Feb 2008, Martin Koegler wrote:
-> 
-> > If pack-objects hit the memory limit, it deletes objects from the delta
-> > window.
+ 
+> > > I found out those VERY interesting, so instead of trying to think a
+> > > new way to store gitweb config, we should think a way to cache those
+> > > information.
 > > 
-> > This patch make it only delete the data, which is recomputed, if needed again.
+> > Below there are my thoughts about caching information for gitweb:
 > > 
-> > Signed-off-by: Martin Koegler <mkoegler@auto.tuwien.ac.at>
+> > First, the basis of each otimisation is checking the bottlenecks.
+> > I think it was posted sometime there that the pages taking most load
+> > are projects list and feeds. 
+> > 
+> > Kernel.org even run modified version of gitweb, with some caching
+> > support; Cgit (git web interface in C) also has caching support.
 > 
-> Looks fine.
-> 
-> Acked-by: Nicolas Pitre <nico@cam.org>
+> Is this gitweb version for kernel.org available somewhere?
+> > 
+> > 
 
-Well, I take that back.
+It's available from my git tree on kernel.org
+http://git.kernel.org/?p=git/warthog9/gitweb.git;a=summary
 
-Some testing on the OOO repository with this turns out to be 
-completely unusable.
+or
 
-By the time this gets into action and data is actively thrown away, 
-performance simply goes down the drain due to the data constantly being
-reloaded over and over and over and over and over and over again, to the 
-point of virtually making no relative progress at all.
+git://git.kernel.org/pub/scm/git/warthog9/gitweb.git
 
-So this change is not actually helping anything.  The previous behavior 
-of enforcing the memory limit by dynamically shrinking the window size 
-at least had the effect of allowing some kind of progress, even if the 
-end result wouldn't be optimal.
+Mind you my performance on the non-cache state is not going to be any
+better than normal gitweb, however the performance on a cache-hit is
+orders of magnitude faster - though at a rather expensive cost - disk
+space.  There is currently something like 20G of disk being used on one
+of kernel.org's machines providing the cache (this does get flushed on
+occasion - I think) but that is providing caching for everything that
+kernel.org has in it's git trees (or 255188 unique urls currently).  My
+code base is now, horribly, out of date with respect to mainline but it
+works and it's been solid and reasonably reliable (though I do know of
+two bugs in it right now I need to track down - one with respect to a
+failure of the script - and one that is an array out of bounds error)
 
-And that's the whole point behind this memory limiting feature: allowing 
-some progress to be made when resources are too limited to let the 
-repack go unbounded.
-
-Therefore I think commit 9c2174350cc0ae0f6bad126e15fe1f9f044117ab should 
-be reverted.
-
-
-Nicolas
+- John
