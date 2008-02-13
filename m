@@ -1,93 +1,103 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <Uwe.Kleine-Koenig@digi.com>
-Subject: Re: problem with git rebase -i
-Date: Wed, 13 Feb 2008 09:10:59 +0100
-Message-ID: <20080213081059.GA18230@digi.com>
-References: <20080211134448.GA17588@digi.com>
+From: mkoegler@auto.tuwien.ac.at (Martin Koegler)
+Subject: Re: [RFC Patch] Preventing corrupt objects from entering the repository
+Date: Wed, 13 Feb 2008 09:11:29 +0100
+Message-ID: <20080213081128.GA27730@auto.tuwien.ac.at>
+References: <20080210175812.GB12162@auto.tuwien.ac.at> <7vmyq8cqfn.fsf@gitster.siamese.dyndns.org> <alpine.LFD.1.00.0802101929310.2732@xanadu.home> <20080211195623.GA21878@auto.tuwien.ac.at> <alpine.LFD.1.00.0802111513360.2732@xanadu.home> <20080211215806.GA24971@auto.tuwien.ac.at> <alpine.LFD.1.00.0802120937330.2732@xanadu.home> <20080213074209.GG24004@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 13 09:11:53 2008
+Cc: Nicolas Pitre <nico@cam.org>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Feb 13 09:12:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JPCiU-0002rN-L1
-	for gcvg-git-2@gmane.org; Wed, 13 Feb 2008 09:11:43 +0100
+	id 1JPCit-000308-Ui
+	for gcvg-git-2@gmane.org; Wed, 13 Feb 2008 09:12:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756047AbYBMILG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Feb 2008 03:11:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755725AbYBMILF
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Feb 2008 03:11:05 -0500
-Received: from mail29.messagelabs.com ([216.82.249.147]:25638 "HELO
-	mail29.messagelabs.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1755571AbYBMILC (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Feb 2008 03:11:02 -0500
-X-VirusChecked: Checked
-X-Env-Sender: Uwe.Kleine-Koenig@digi.com
-X-Msg-Ref: server-10.tower-29.messagelabs.com!1202890262!5866199!1
-X-StarScan-Version: 5.5.12.14.2; banners=-,-,-
-X-Originating-IP: [66.77.174.21]
-Received: (qmail 6825 invoked from network); 13 Feb 2008 08:11:02 -0000
-Received: from unknown (HELO owa.digi.com) (66.77.174.21)
-  by server-10.tower-29.messagelabs.com with SMTP; 13 Feb 2008 08:11:02 -0000
-Received: from mtk-sms-mail01.digi.com ([10.10.8.120]) by owa.digi.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Wed, 13 Feb 2008 02:11:02 -0600
-Received: from dor-sms-mail1.digi.com ([10.49.1.105]) by mtk-sms-mail01.digi.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Wed, 13 Feb 2008 02:11:01 -0600
-Received: from zentaur.digi.com ([10.100.10.144]) by dor-sms-mail1.digi.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Wed, 13 Feb 2008 09:10:59 +0100
-Received: by zentaur.digi.com (Postfix, from userid 1080)
-	id 873C91B23F; Wed, 13 Feb 2008 09:10:59 +0100 (CET)
+	id S1756872AbYBMILc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Feb 2008 03:11:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756751AbYBMILc
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Feb 2008 03:11:32 -0500
+Received: from thor.auto.tuwien.ac.at ([128.130.60.15]:37314 "EHLO
+	thor.auto.tuwien.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756592AbYBMILb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Feb 2008 03:11:31 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by thor.auto.tuwien.ac.at (Postfix) with ESMTP id 302EF680B581;
+	Wed, 13 Feb 2008 09:11:29 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at auto.tuwien.ac.at
+Received: from thor.auto.tuwien.ac.at ([127.0.0.1])
+	by localhost (thor.auto.tuwien.ac.at [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id cQDOwLypH26f; Wed, 13 Feb 2008 09:11:29 +0100 (CET)
+Received: by thor.auto.tuwien.ac.at (Postfix, from userid 3001)
+	id 0E3C668018E6; Wed, 13 Feb 2008 09:11:29 +0100 (CET)
 Content-Disposition: inline
-In-Reply-To: <20080211134448.GA17588@digi.com>
+In-Reply-To: <20080213074209.GG24004@spearce.org>
 User-Agent: Mutt/1.5.13 (2006-08-11)
-X-OriginalArrivalTime: 13 Feb 2008 08:10:59.0774 (UTC) FILETIME=[F79EC5E0:01C86E17]
-X-TM-AS-Product-Ver: SMEX-8.0.0.1181-5.000.1023-15726.002
-X-TM-AS-Result: No--8.633400-8.000000-4
-X-TM-AS-User-Approved-Sender: No
-X-TM-AS-User-Blocked-Sender: No
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73750>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73751>
 
-Hello,
+On Wed, Feb 13, 2008 at 02:42:09AM -0500, Shawn O. Pearce wrote:
+> Nicolas Pitre <nico@cam.org> wrote:
+> > I think this is a good idea to always have some sanity checks on an=
+y=20
+> > incoming objects so to make sure they're well formed and valid befo=
+re=20
+> > giving them a SHA1 value, and bail out as soon as any error is foun=
+d. =20
+>=20
+> When we get the raw data for an object so we can compute its SHA-1
+> and/or write its loose object to disk we should first verify its
+> content is sane, then do the SHA-1/store loose.
+>=20
+[...]
+> > As to making sure those objects are well connected... well this is =
+a=20
+> > technically different issue entirely, and I wonder if a special mod=
+e to=20
+> > fsck might not be a better solution.
+>=20
+> Nah, just do what quickfetch does in builtin-fetch.c, but run it
+> in receive-pack, between unpack() and execute_commands():
+>=20
+> 	rev-list --quiet --objects $new... --not --all
+>=20
+> If it aborts, reachability testing failed and the push is rejected
+> without updating any refs.  Yes your repository now has objects
+> that are missing things, but none of those are considered to be
+> reachable, so this isn't a big deal.  They will get cleaned up on
+> the next `gc --prune`, whenever that is.
 
-Uwe Kleine-K=F6nig wrote:
-> I tried to rebase my work (on the Linux kernel) to current Linus'
-> master.  As I have two branches I merged them and ran:
->=20
-> 	git rebase -i -p v2.6.25-rc1
->=20
-> But then the list I got in my editor didn't include the merge and so =
-the
-> result was broken.
->=20
-> If I add
->=20
-> 	pick 913183f
->=20
-> (with 913183f being my HEAD) to the list, the result is correct.
->=20
-> The reason that my merge is missing is that git rev-list thinks my
-> merge is the same as 249d621 and so skips that as it uses --cherry-pi=
-ck.
-I think the right thing to do here is to let --cherry-pick only kick ou=
-t
-revs that are no merges.  This should be save as git-rebase--interactiv=
-e
-is the only user of --cherry-pick.
+This would mean, that we must make git-rev-list and git-pack-objects
+not segfault on incorrect links between objects.
 
-Comments?
+> In this configuration (--quiet) rev-list tries to be pretty low
+> on its memory usage, it doesn't save buffers, etc.  Further since
+> everything that is already considered reachable is not interesting,
+> we are only doing a walk over the objects that we just received,
+> not our entire ODB.  Its also after index-pack exited, so we just
+> freed up a good chunk of memory.
+>=20
+> Rememeber we are talking about receive-pack here.  The cost on
+> the to perform the rev-list is lower than the cost will be to pack
+> these objects for distribution back to just one client.  Since this
+> is a server of some sorts (otherwise why did you push here?), odds
+> are its going to be doing a lot of packing requests for clients to
+> receive these newly uploaded objects by the native git protocol.
+> This new rev-list is nothing compared to that already existing load.
+> And if your OS is any good the just created .idx and .pack is still
+> in OS buffer cache, so there shouldn't be any additional disk IO.
+>=20
+> Yes, we could make this optional in receive-pack, but really I don't
+> see a reason to.  Just run it.  The client shouldn't be giving us
+> unreachable crap.
 
-Best regards
-Uwe
+Looks sane to me.
 
---=20
-Uwe Kleine-K=F6nig, Software Engineer
-Digi International GmbH Branch Breisach, K=FCferstrasse 8, 79206 Breisa=
-ch, Germany
-Tax: 315/5781/0242 / VAT: DE153662976 / Reg. Amtsgericht Dortmund HRB 1=
-3962
+mfg Martin K=F6gler
