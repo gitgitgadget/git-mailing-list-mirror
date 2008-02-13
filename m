@@ -1,174 +1,121 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] add--interactive: handle initial commit better
-Date: Wed, 13 Feb 2008 05:50:51 -0500
-Message-ID: <20080213105051.GA26522@coredump.intra.peff.net>
-References: <C50196C5-B0C5-4536-AD4A-0F9C553782EE@gmail.com> <20080213101649.GA18444@coredump.intra.peff.net>
+From: "H.Merijn Brand" <h.m.brand@xs4all.nl>
+Subject: Re: libcrypto core dump in 64bit
+Date: Wed, 13 Feb 2008 11:57:38 +0100
+Message-ID: <20080213115738.75301520@pc09.procura.nl>
+References: <20080211112822.16b69495@pc09.procura.nl>
+	<alpine.LSU.1.00.0802112240280.3870@racer.site>
+	<20080212150612.4d28c373@pc09.procura.nl>
+	<loom.20080212T152138-849@post.gmane.org>
+	<20080212173842.0a3704b1@pc09.procura.nl>
+	<bcfb3e870802130104n46d88964uee3eb3841c38807b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: "Rhodes, Kate" <masukomi@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 13 11:52:02 2008
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Michal Rokos" <michal@rokos.cz>
+X-From: git-owner@vger.kernel.org Wed Feb 13 11:58:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JPFDb-0004L6-9K
-	for gcvg-git-2@gmane.org; Wed, 13 Feb 2008 11:51:59 +0100
+	id 1JPFJo-0006ib-RQ
+	for gcvg-git-2@gmane.org; Wed, 13 Feb 2008 11:58:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752675AbYBMKu4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Feb 2008 05:50:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755419AbYBMKu4
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Feb 2008 05:50:56 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2733 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752294AbYBMKuz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Feb 2008 05:50:55 -0500
-Received: (qmail 13739 invoked by uid 111); 13 Feb 2008 10:50:53 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 13 Feb 2008 05:50:53 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 13 Feb 2008 05:50:51 -0500
-Content-Disposition: inline
-In-Reply-To: <20080213101649.GA18444@coredump.intra.peff.net>
+	id S1753740AbYBMK5u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Feb 2008 05:57:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753089AbYBMK5u
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Feb 2008 05:57:50 -0500
+Received: from smtp-vbr3.xs4all.nl ([194.109.24.23]:1485 "EHLO
+	smtp-vbr3.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751539AbYBMK5r (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Feb 2008 05:57:47 -0500
+Received: from pc09.procura.nl (procura.xs4all.nl [82.95.216.29])
+	(authenticated bits=0)
+	by smtp-vbr3.xs4all.nl (8.13.8/8.13.8) with ESMTP id m1DAvdR7043644
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 13 Feb 2008 11:57:39 +0100 (CET)
+	(envelope-from h.m.brand@xs4all.nl)
+In-Reply-To: <bcfb3e870802130104n46d88964uee3eb3841c38807b@mail.gmail.com>
+X-Mailer: Claws Mail 3.3.0cvs11 (GTK+ 2.10.6; x86_64-unknown-linux-gnu)
+Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwEAIAAACI8LKTAAAACXBIWXMAAABIAAAASABGyWs+AAAC
+ JElEQVRo3u2aMY4CMQxFczZ6RItEzRm4DBINDbRUSPRInIRbsNK6+dJfezN4kokn48IaCSjysL8d
+ e9Knoj2fr9f9/gllqQ6U9/vxWK3EdwdIEGjRIVCu18NhuxUfK46SH81+fzrdbuKPx/P5ctHQdAdI
+ TKAgpvV6s9ntBEfXEYSGgMQzIHnuFBBjkshCNJ2KtJZ04hHNAugP8bZr3NIHhbcF0AKoK0CoaHXU
+ LUWBIs1n+jV+Fl8CVqOApEXAwyMO/DSR4XVntoAYDR7eBjQupuYAYTMph8Rj21D4m7MChN02tpqs
+ NSnb/KqU2oHCXu5xDCgflj/RAgBiKBIXnICzAsSjWBsTz5K4/HeXYvb8yK5lY3VGEwPi2aONKT+5
+ AlcxrTPOwcTiraGRChgMEKJh0bVVifGVTq6qgBiNVl8QE29EsK6VE+YJAOG2wz5AvsqUS6uqgHCA
+ n4NGvBYpnJ64Jgg27sCtxtBk1CJIA4S/GhdWKh07QxUB48jWGhZ4jKamRRr/T8/M0AaEyctry6YB
+ 4dTGj9iWZNs3DahES5kPCJOu0RQbF/fQOBprsB9gaO9JtPDzII9U5ySXX7AnuIt91y54AAW7rPpT
+ LCe5gt3F+CLqr2UarGB3MXvMylWGq4+9RCx3TW1oJq1t3HPQlFs6N1fFNEB4s8dn7Ne7ACSm7TPQ
+ I5quAWmw6qBpulHM33B0Csge4Nd8JTTYG2b1XyRe3lH8x34ABJ6aePuQ2N4AAAAASUVORK5CYII=
+X-Virus-Scanned: by XS4ALL Virus Scanner
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73771>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73772>
 
-On Wed, Feb 13, 2008 at 05:16:49AM -0500, Jeff King wrote:
+On Wed, 13 Feb 2008 10:04:23 +0100, "Michal Rokos" <michal@rokos.cz> wrote:
 
-> However, I wonder if this is the best approach. It would be nice if
-> there were a shorthand for "the empty tree" for diffing, so you could
-> just diff against that rather than HEAD, and have the regular plumbing
-> generate.
+> Hello,
 > 
-> I suppose we could just create that tree object, though it adds a slight
-> amount of cruft to the object database.
+> On Feb 12, 2008 5:38 PM, H.Merijn Brand <h.m.brand@xs4all.nl> wrote:
+> > Did you get the full test suite to pass?
+> 
+> No - vanilla git's master won't pass (since HPUX vsnprintf is broken
+> (it returns -1 when n is exceeded).
 
-And here it is. I think this is a more sane approach in general than the
-last patch. The only ugly thing is the empty tree hack, but that can be
-addressed with a patch to allow referencing the empty tree without it
-existing in the object db.
+diff -purN git-1.5.4/strbuf.c git-1.5.4p/strbuf.c
+--- git-1.5.4/strbuf.c  2008-02-02 05:09:01 +0100
++++ git-1.5.4p/strbuf.c 2008-02-13 11:26:56 +0100
+@@ -127,7 +127,7 @@ void strbuf_addf(struct strbuf *sb, cons
+        int len;
+        va_list ap;
 
--- >8 --
+-       if (!strbuf_avail(sb))
++       if (strbuf_avail(sb) < 64)
+                strbuf_grow(sb, 64);
+        va_start(ap, fmt);
+        len = vsnprintf(sb->buf + sb->len, sb->alloc - sb->len, fmt, ap);
 
-There were several points where we looked at the HEAD
-commit; for initial commits, this is meaningless. So instead
-we:
 
-  - show staged status data as a diff against the empty tree
-    instead of HEAD
-  - show file diffs as creation events
-  - use "git rm --cached" to revert instead of going back to
-    the HEAD commit
+> With strbuf workarounds test suite passes up to t4200-rerere.sh.
+> 
+> I did not try to investigate further or continue with the rest of the tests.
 
-The empty tree diff is a little hack-ish. We actually write
-the empty tree object from a fake index using "git
-write-tree". This would be a bit cleaner if we could
-magically reference the empty tree.
+I did, and got here
+http://www.xs4all.nl/~procura/git-1.5.4-hpux1123ipf64.diff
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- git-add--interactive.perl |   64 +++++++++++++++++++++++++++++++++-----------
- 1 files changed, 48 insertions(+), 16 deletions(-)
+Note, ntar = GNU tar, and npatch is the 'patch' as the rest of the world
+knows it. Our perl is in /pro. We do not want to interfere with the system
+perl (and mine is always newer anyway).
 
-diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index 17ca5b8..bae631e 100755
---- a/git-add--interactive.perl
-+++ b/git-add--interactive.perl
-@@ -82,6 +82,28 @@ sub list_untracked {
- my $status_fmt = '%12s %12s %s';
- my $status_head = sprintf($status_fmt, 'staged', 'unstaged', 'path');
- 
-+{
-+	my $initial;
-+	sub is_initial_commit {
-+		$initial = system('git rev-parse HEAD -- >/dev/null 2>&1') != 0
-+			unless defined $initial;
-+		return $initial;
-+	}
-+}
-+
-+{
-+	my $sha1;
-+	sub get_empty_tree {
-+		if (!$sha1) {
-+			local $ENV{GIT_INDEX_FILE} = "$GIT_DIR/empty_index";
-+			$sha1 = run_cmd_pipe(qw(git write-tree));
-+			chomp $sha1;
-+			unlink($ENV{GIT_INDEX_FILE});
-+		}
-+		return $sha1;
-+	}
-+}
-+
- # Returns list of hashes, contents of each of which are:
- # VALUE:	pathname
- # BINARY:	is a binary path
-@@ -103,8 +125,10 @@ sub list_modified {
- 		return if (!@tracked);
- 	}
- 
-+	my $reference = is_initial_commit() ? get_empty_tree() : 'HEAD';
- 	for (run_cmd_pipe(qw(git diff-index --cached
--			     --numstat --summary HEAD --), @tracked)) {
-+			     --numstat --summary), $reference,
-+			     '--', @tracked)) {
- 		if (($add, $del, $file) =
- 		    /^([-\d]+)	([-\d]+)	(.*)/) {
- 			my ($change, $bin);
-@@ -476,21 +500,27 @@ sub revert_cmd {
- 				       HEADER => $status_head, },
- 				     list_modified());
- 	if (@update) {
--		my @lines = run_cmd_pipe(qw(git ls-tree HEAD --),
--					 map { $_->{VALUE} } @update);
--		my $fh;
--		open $fh, '| git update-index --index-info'
--		    or die;
--		for (@lines) {
--			print $fh $_;
-+		if (is_initial_commit()) {
-+			system(qw(git rm --cached),
-+				map { $_->{VALUE} } @update);
- 		}
--		close($fh);
--		for (@update) {
--			if ($_->{INDEX_ADDDEL} &&
--			    $_->{INDEX_ADDDEL} eq 'create') {
--				system(qw(git update-index --force-remove --),
--				       $_->{VALUE});
--				print "note: $_->{VALUE} is untracked now.\n";
-+		else {
-+			my @lines = run_cmd_pipe(qw(git ls-tree HEAD --),
-+						 map { $_->{VALUE} } @update);
-+			my $fh;
-+			open $fh, '| git update-index --index-info'
-+			    or die;
-+			for (@lines) {
-+				print $fh $_;
-+			}
-+			close($fh);
-+			for (@update) {
-+				if ($_->{INDEX_ADDDEL} &&
-+				    $_->{INDEX_ADDDEL} eq 'create') {
-+					system(qw(git update-index --force-remove --),
-+					       $_->{VALUE});
-+					print "note: $_->{VALUE} is untracked now.\n";
-+				}
- 			}
- 		}
- 		refresh();
-@@ -956,7 +986,9 @@ sub diff_cmd {
- 				     HEADER => $status_head, },
- 				   @mods);
- 	return if (!@them);
--	system(qw(git diff -p --cached HEAD --), map { $_->{VALUE} } @them);
-+	my $reference = is_initial_commit() ? get_empty_tree() : 'HEAD';
-+	system(qw(git diff -p --cached), $reference, '--',
-+		map { $_->{VALUE} } @them);
- }
- 
- sub quit_cmd {
+git-clone is a shell script, and it's return value is ignored somewhere
+
+/pro/3gl/LINUX/git-1.5.4p/t 122 > cat do-tests
+#!/bin/sh
+
+export TAR=ntar
+rm -f *.err
+for t in t[0-9]*.sh ; do
+    echo $t
+    sh $t > test.err 2>&1 || mv test.err $t.err
+    rm -f test.err
+    done
+/pro/3gl/LINUX/git-1.5.4p/t 123 > ll *.err
+204744 -rw-rw-rw- 1 merijn softwr  344 Feb 13 11:49 t5600-clone-fail-cleanup.sh.err
+204788 -rw-rw-rw- 1 merijn softwr  458 Feb 13 11:49 t5701-clone-local.sh.err
+205057 -rw-rw-rw- 1 merijn softwr 3039 Feb 13 11:50 t6002-rev-list-bisect.sh.err
+204643 -rw-rw-rw- 1 merijn softwr 3980 Feb 13 11:50 t6003-rev-list-topo-order.sh.err
+204808 -rw-rw-rw- 1 merijn softwr  899 Feb 13 11:50 t6022-merge-rename.sh.err
+204697 -rw-rw-rw- 1 merijn softwr 1340 Feb 13 11:52 t7201-co.sh.err
+204747 -rw-rw-rw- 1 merijn softwr  149 Feb 13 11:53 t9300-fast-import.sh.err
+204699 -rw-rw-rw- 1 merijn softwr 1651 Feb 13 11:53 t9301-fast-export.sh.err
+/pro/3gl/LINUX/git-1.5.4p/t 124 >
+
 -- 
-1.5.4.1.1296.g34f89-dirty
+H.Merijn Brand         Amsterdam Perl Mongers (http://amsterdam.pm.org/)
+using & porting perl 5.6.2, 5.8.x, 5.10.x  on HP-UX 10.20, 11.00, 11.11,
+& 11.23, SuSE 10.1 & 10.2, AIX 5.2, and Cygwin.       http://qa.perl.org
+http://mirrors.develooper.com/hpux/            http://www.test-smoke.org
+                        http://www.goldmark.org/jeff/stupid-disclaimers/
