@@ -1,70 +1,104 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [PATCH] Add function to checkout a branch in git.el
-Date: Wed, 13 Feb 2008 22:04:20 +0100
-Message-ID: <20080213210420.GA9316@diana.vm.bytemark.co.uk>
-References: <87wsp8u9m7.dlv@maison.homelinux.org> <20080213163002.GA5670@diana.vm.bytemark.co.uk> <20080213164356.GA5828@diana.vm.bytemark.co.uk> <87zlu4vhon.fsf@osv.gnss.ru>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH/maint review] Protect get_author_ident_from_commit() from
+ filenames in work tree
+Date: Wed, 13 Feb 2008 13:45:33 -0800
+Message-ID: <7vy79oo7ia.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: vanicat@debian.org, git@vger.kernel.org,
-	Alexandre Julliard <julliard@winehq.org>
-To: Sergei Organov <osv@javad.com>
-X-From: git-owner@vger.kernel.org Wed Feb 13 22:06:23 2008
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 13 22:48:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JPOnY-00009w-Jp
-	for gcvg-git-2@gmane.org; Wed, 13 Feb 2008 22:05:51 +0100
+	id 1JPPSk-0008O2-1a
+	for gcvg-git-2@gmane.org; Wed, 13 Feb 2008 22:48:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752167AbYBMVEy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Feb 2008 16:04:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752147AbYBMVEy
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Feb 2008 16:04:54 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3758 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752022AbYBMVEy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Feb 2008 16:04:54 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1JPOmC-0002TL-00; Wed, 13 Feb 2008 21:04:20 +0000
-Content-Disposition: inline
-In-Reply-To: <87zlu4vhon.fsf@osv.gnss.ru>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1765748AbYBMVrj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Feb 2008 16:47:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933980AbYBMVri
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Feb 2008 16:47:38 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:34527 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933947AbYBMVrf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Feb 2008 16:47:35 -0500
+Received: from a-sasl-quonix.pobox.com (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 981B93360;
+	Wed, 13 Feb 2008 16:45:45 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.pobox.com (Postfix) with ESMTP id
+ 33E3D3354; Wed, 13 Feb 2008 16:45:42 -0500 (EST)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73818>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73819>
 
-On 2008-02-13 21:23:52 +0300, Sergei Organov wrote:
+We used to use "cat-file commit $commit" to extract the original
+author information from existing commit, but an earlier commit
+5ac2715 (Consistent message encoding while reusing log from an
+existing commit) changed it to use "git show -s $commit".  If
+you have a file in your work tree that can be interpreted as a
+valid object name (e.g. "HEAD"), this conversion will not work.
 
-> Karl Hasselstr=F6m <kha@treskal.com> writes:
->
-> >   * if the user enters a name that's not the name of an existing
-> >     branch, display a prompt like this
-> >
-> >       Creating new branch "foo". Where should it start?
-> >
-> >     Tab complete on existing tags and branches, but accept any
-> >     committish. Create the new branch and switch to it.
->
-> It still doesn't allow to detach HEAD at arbitrary tag/committish,
-> as far as I can see.
+Disambiguate by marking the end of revision parameter on the
+comand line with an explicit "--" to fix this.
 
-It wouldn't be hard. Just try to interpret the string supplied by the
-user as a committish: if successful, check it out; if not, create a
-new branch by that name. Of course, this makes it impossible to create
-a branch with the same name as an existing committish, but that's
-probably OK.
+This breakage is most visible with rebase when a file called
+"HEAD" exists in the worktree.
 
-> I believe the interface should be designed more carefully. Here are
-> some thoughts/suggestions:
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-Yes, having different commands that do one job each and do it well
-isn't a bad idea either. I like my idea more, but obviously whoever
-writes the code gets to decide ...
+ git-sh-setup.sh               |    2 +-
+ t/t3404-rebase-interactive.sh |   22 ++++++++++++++++++++++
+ 2 files changed, 23 insertions(+), 1 deletions(-)
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+diff --git a/git-sh-setup.sh b/git-sh-setup.sh
+index aae1409..f388275 100755
+--- a/git-sh-setup.sh
++++ b/git-sh-setup.sh
+@@ -119,7 +119,7 @@ get_author_ident_from_commit () {
+ 	}
+ 	'
+ 	encoding=$(git config i18n.commitencoding || echo UTF-8)
+-	git show -s --pretty=raw --encoding="$encoding" "$1" |
++	git show -s --pretty=raw --encoding="$encoding" "$1" -- |
+ 	LANG=C LC_ALL=C sed -ne "$pick_author_script"
+ }
+ 
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index e33ea4e..e5ed745 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -340,4 +340,26 @@ test_expect_success 'rebase a commit violating pre-commit' '
+ 
+ '
+ 
++test_expect_success 'rebase with a file named HEAD in worktree' '
++
++	rm -fr .git/hooks &&
++	git reset --hard &&
++	git checkout -b branch3 A &&
++
++	(
++		GIT_AUTHOR_NAME="Squashed Away" &&
++		export GIT_AUTHOR_NAME &&
++		>HEAD &&
++		git add HEAD &&
++		git commit -m "Add head" &&
++		>BODY &&
++		git add BODY &&
++		git commit -m "Add body"
++	) &&
++
++	FAKE_LINES="1 squash 2" git rebase -i to-be-rebased &&
++	test "$(git show -s --pretty=format:%an)" = "Squashed Away"
++
++'
++
+ test_done
+-- 
+1.5.4.1.1278.gc75be
