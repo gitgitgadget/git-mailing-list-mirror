@@ -1,140 +1,115 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH] xdl_merge(): introduce XDL_MERGE_ZEALOUS_ALNUM
-Date: Tue, 12 Feb 2008 18:06:37 -0800 (PST)
-Message-ID: <alpine.LFD.1.00.0802121758220.2920@woody.linux-foundation.org>
-References: <A21B3CA8-6240-434F-87A9-C6F76DA15265@gmail.com> <alpine.LFD.1.00.0802121544370.2920@woody.linux-foundation.org> <alpine.LSU.1.00.0802130003370.3870@racer.site> <alpine.LSU.1.00.0802130108060.3870@racer.site>
+From: Martin Langhoff <martin@catalyst.net.nz>
+Subject: [offtopic?] xdelta patch format wrapper
+Date: Wed, 13 Feb 2008 14:53:14 +1300
+Message-ID: <47B24D8A.5090703@catalyst.net.nz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: gitster@pobox.com, Voltage Spike <voltspike@gmail.com>,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Feb 13 03:07:29 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: jmacd@cs.berkeley.edu
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 13 04:03:36 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JP720-00089W-DX
-	for gcvg-git-2@gmane.org; Wed, 13 Feb 2008 03:07:28 +0100
+	id 1JP7uJ-0002wx-4v
+	for gcvg-git-2@gmane.org; Wed, 13 Feb 2008 04:03:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753420AbYBMCGx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Feb 2008 21:06:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753066AbYBMCGx
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Feb 2008 21:06:53 -0500
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:47176 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753278AbYBMCGw (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 12 Feb 2008 21:06:52 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m1D26crq022755
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 12 Feb 2008 18:06:39 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m1D26bUU002558;
-	Tue, 12 Feb 2008 18:06:37 -0800
-In-Reply-To: <alpine.LSU.1.00.0802130108060.3870@racer.site>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
-X-Spam-Status: No, hits=-4.741 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1751899AbYBMDDA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Feb 2008 22:03:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751887AbYBMDDA
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Feb 2008 22:03:00 -0500
+Received: from godel.catalyst.net.nz ([202.78.240.40]:60331 "EHLO
+	mail1.catalyst.net.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751855AbYBMDC7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Feb 2008 22:02:59 -0500
+Received: from leibniz.catalyst.net.nz ([202.78.240.7] helo=[127.0.0.1])
+	by mail1.catalyst.net.nz with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <martin@catalyst.net.nz>)
+	id 1JP7td-0003X5-HQ; Wed, 13 Feb 2008 16:02:53 +1300
+User-Agent: Thunderbird 2.0.0.6 (X11/20071022)
+X-Enigmail-Version: 0.95.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73737>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73738>
+
+This is somewhat offtopic but this list is the best-informed crowd on
+diff/xdelta matters so here I am, abusing your attention...
+
+I am working on an "incremental content" feature for Moodle - and my
+plan is to serve pre-computed "patchfiles" based on the xdelta utility
+to the client systems.
+
+Now, I need to provide a wrapper that concats the deltas from the xdelta
+utility with a more verbose header - akin to the header in git's unified
+diff output. This is because the xdelta utility only handles one file
+delta at a time - the file is a pure delta (prefaced with a SHA1 of the
+file it applies to, IIRC).
+
+(From xdelta I like that it's one-way-only, and compressed internally --
+thus saving a lot of space on large changes. There are small statically
+linked binaries for windows, osx and linux. I did consider using git's
+own diffs, but it involves significantly more work, and portability to
+Win32 is still green for the wide distribution this project is expecting.)
+
+So my question is what is a good format for the header? My thinking sofar:
+
+ - have a prefix to scan for, such as "xdelta" at the beginning of
+   the file, or after a newline/whitespace
+
+ - keep the <fromsha1> <tosha1> line
+
+ - \0 delimited filenames
+
+ - filenames as ambiguous bag'o'bytes or utf-8?
+   (should we have another flamewar on this? ;-) )
+
+ - keep file modes and perhaps support copy/move headers
+
+ - keep a/ b/ prefixes?
+
+ - last line in the header is length: <length-in-bytes>, followed by
+   a newline and the xdelta itself
+
+ - one or more newlines follow the end of the xdelta if there is another
+   header coming
+
+Something along the lines of
+
+xdelta d065883..74cd8e5 100644
+a/foo.zip\0
+b/foo.zip\0
+length 1024
+<1024 bytes of xdelta data>
+
+xdelta d065883..74cd8e5 100644
+a/bar.zip\0
+b/bar.zip\0
+length 92312
+
+<92312 bytes xdelta data>EOF
+
+  ---
+
+Would the above work as a reasonably solid patch header format? Is there
+something else I should be using instead of rolling my own? If there
+isn't a more suitable tool,  and I'm hoping to come up with something
+unambiguous and reliable that is generally useful.
+
+[ I have to confess, it came as a bit of a surprise that xdelta didn't
+support this out of the box. Haven't seen any existing wrapper for it
+that covers this either. ]
+
+As a kludge I could tar both sides and xdelta across the tars, but it is
+wasteful, and an xdelta-based diff/patch that can handle multiple files
+does seem useful. And I don't know how stable the output of tar is (wrt
+file ordering for example).
+
+TIA for any feedback :-)
 
 
-
-On Wed, 13 Feb 2008, Johannes Schindelin wrote:
-> 
-> With XDL_MERGE_ZEALOUS_ALNUM, we use the following heuristics: when a
-> hunk does not contain any letters or digits, it is treated as conflicting.
-
-Well, I think this is interesting in itself, but..
-
-To some degree it would be even more interesting to at least partially 
-separate the issue of "what conflicts" with the issue of "how do we 
-express things when they _do_ conflict".
-
-IOW, it's quite possible that we want to have the ZEALOUS algorithm for 
-doing conflict resolution (on the assumption that we want aggressively 
-merge), but then when conflicts happen _despite_ being zealous in the 
-resolver, print out the resulting conflict with near-by conflicts merged 
-into bigger block.
-
-> In other words, a conflict which used to look like this:
-> 
-> 	<<<<<<<
-> 	if (a == 1)
-> 	=======
-> 	if (a == 2)
-> 	>>>>>>>
-> 	{
-> 	<<<<<<<
-> 		b = 2;
-> 	=======
-> 		b = 1;
-> 	>>>>>>>
-> 
-> will look like this with ZEALOUS_ALNUM:
-> 
-> 	<<<<<<<
-> 	if (a == 1)
-> 	{
-> 		b = 2;
-> 	=======
-> 	if (a == 2)
-> 	{
-> 		b = 1;
-> 	>>>>>>>
-
-I think this is an improvement already, but to take the example that 
-voltspike had:
-
- <<<<<<< HEAD:file.txt
- void newfunc1()
- =======
- void newfunc2()
- >>>>>>> merge:file.txt
- {
-   int err;
- <<<<<<< HEAD:file.txt
-   err = doSomething();
- =======
-   err = doSomethingElse();
- >>>>>>> merge:file.txt
-
-this does have alnum's in the shared region ("int err") so it wouldn't 
-have been modified by this, but it would be nice to notice: "there were 
-just two small lines between two conflicts, and we could actually make the 
-final conflict marker _smaller_ by merging them", and just doing the 
-reverse of xdl_refine_conflicts(), and do a "xdl_merge_conflicts()" before 
-printout, and get
-
- <<<<<<< HEAD:file.txt
- void newfunc1()
- {
-   int err;
-   err = doSomething();
- =======
- void newfunc2()
- {
-   int err;
-   err = doSomethingElse();
- >>>>>>> merge:file.txt
-
-(note how this really *is* smaller: it's 11 lines rather than 12 lines, 
-because while we had to duplicate the two common lines in between the 
-conflicts (+2), we got rid of the three marker lines (-3), giving us a net 
-win of one line.
-
-So the "merge adjacent conflicts" logic should actually be pretty simple: 
-if there is less than three lines between two conflicts, the conflicts 
-should always be merged, because the end result is smaller.
-
-(And with three lines in between the end result is as many lines, but 
-arguably simpler, so it's probably better to merge then too).
-
-Hmm? What do you think?
-
-			Linus
+m
+-- 
