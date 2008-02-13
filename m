@@ -1,56 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [Bug] git add -i fails in multiple ways prior to first commit.
-Date: Wed, 13 Feb 2008 03:30:44 -0800
-Message-ID: <7v63wtqejf.fsf@gitster.siamese.dyndns.org>
-References: <C50196C5-B0C5-4536-AD4A-0F9C553782EE@gmail.com>
- <20080213101649.GA18444@coredump.intra.peff.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [offtopic?] xdelta patch format wrapper
+Date: Wed, 13 Feb 2008 11:33:51 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0802131128040.30505@racer.site>
+References: <47B24D8A.5090703@catalyst.net.nz> <7vy79py1it.fsf@gitster.siamese.dyndns.org> <47B26830.6090501@catalyst.net.nz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Rhodes, Kate" <masukomi@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Feb 13 12:32:02 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	jmacd@cs.berkeley.edu
+To: Martin Langhoff <martin@catalyst.net.nz>
+X-From: git-owner@vger.kernel.org Wed Feb 13 12:34:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JPFq3-0001g6-E9
-	for gcvg-git-2@gmane.org; Wed, 13 Feb 2008 12:31:43 +0100
+	id 1JPFsd-0002hA-Ro
+	for gcvg-git-2@gmane.org; Wed, 13 Feb 2008 12:34:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755238AbYBMLbI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Feb 2008 06:31:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755880AbYBMLbG
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Feb 2008 06:31:06 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:57971 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755058AbYBMLbG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Feb 2008 06:31:06 -0500
-Received: from a-sasl-quonix.pobox.com (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id CBC9C2F89;
-	Wed, 13 Feb 2008 06:31:01 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.pobox.com (Postfix) with ESMTP id
- A78972F29; Wed, 13 Feb 2008 06:30:53 -0500 (EST)
-In-Reply-To: <20080213101649.GA18444@coredump.intra.peff.net> (Jeff King's
- message of "Wed, 13 Feb 2008 05:16:49 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1757390AbYBMLdr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Feb 2008 06:33:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756940AbYBMLdr
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Feb 2008 06:33:47 -0500
+Received: from mail.gmx.net ([213.165.64.20]:48683 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756245AbYBMLdq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Feb 2008 06:33:46 -0500
+Received: (qmail invoked by alias); 13 Feb 2008 11:33:44 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp020) with SMTP; 13 Feb 2008 12:33:44 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+IjJt8V8yI+GWuK2zZIdG/NX9FD7SRvVhKPPGjCi
+	OLCMMkZn5aQB2p
+X-X-Sender: gene099@racer.site
+In-Reply-To: <47B26830.6090501@catalyst.net.nz>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73776>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73777>
 
-Jeff King <peff@peff.net> writes:
+Hi,
 
-> However, I wonder if this is the best approach. It would be nice if
-> there were a shorthand for "the empty tree" for diffing, so you could
-> just diff against that rather than HEAD, and have the regular plumbing
-> generate.
+On Wed, 13 Feb 2008, Martin Langhoff wrote:
 
-I guess you can set your worktree to an empty directory and run
-diff-files backwards, like perhaps:
+> I don't think I'll use *any* git code at all for the time being. If it
+> was trivial to produce a statically compiled git-diff.exe and
+> git-apply-patch.exe that work without funny dependencies on any windows
+> box then I would.
 
-	mkdir /var/tmp/empty
-        (cd .git && GIT_WORK_TREE=/var/tmp/empty git diff -R)
+It is trivial.
 
-Have I tried it?  No --- I am not sick enough to be motivated.
+Except that we do not have any git-apply-patch.exe.  Maybe you meant 
+git-apply.exe?
+
+> Don't think any of the windows ports of git are there (even though they 
+> are excellent!).
+
+How can you say that they are excellent, and then say they are not there 
+yet?
+
+FWIW I just checked.  In msysGit, git-apply.exe and git-diff.exe are 
+identical (no mystery there: they are both builtins), and weigh in with 
+2893142 bytes.
+
+If you're serious about wanting something reliable, quick, but smaller 
+than that, it should be _trivial_ to cut down.  For example, a simple 
+"strip git-diff.exe" brings it down to 821248 bytes.
+
+And that's without removing all the other builtins, which would be 
+trivial, too (just cull "struct cmd_struct commands" in git.c, and 
+"BUILT_INS" and "BUILTIN_OBJS" in the Makefile).
+
+Hth,
+Dscho
