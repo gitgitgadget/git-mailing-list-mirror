@@ -1,60 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: setup_path()
-Date: Wed, 13 Feb 2008 12:00:40 -0800
-Message-ID: <7v3arwpqxj.fsf@gitster.siamese.dyndns.org>
-References: <20080213.044915.123319879.davem@davemloft.net>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [PATCH] Add function to checkout a branch in git.el
+Date: Wed, 13 Feb 2008 22:04:20 +0100
+Message-ID: <20080213210420.GA9316@diana.vm.bytemark.co.uk>
+References: <87wsp8u9m7.dlv@maison.homelinux.org> <20080213163002.GA5670@diana.vm.bytemark.co.uk> <20080213164356.GA5828@diana.vm.bytemark.co.uk> <87zlu4vhon.fsf@osv.gnss.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: David Miller <davem@davemloft.net>
-X-From: git-owner@vger.kernel.org Wed Feb 13 21:01:51 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: vanicat@debian.org, git@vger.kernel.org,
+	Alexandre Julliard <julliard@winehq.org>
+To: Sergei Organov <osv@javad.com>
+X-From: git-owner@vger.kernel.org Wed Feb 13 22:06:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JPNnf-0008DO-To
-	for gcvg-git-2@gmane.org; Wed, 13 Feb 2008 21:01:48 +0100
+	id 1JPOnY-00009w-Jp
+	for gcvg-git-2@gmane.org; Wed, 13 Feb 2008 22:05:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759303AbYBMUBI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Feb 2008 15:01:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755404AbYBMUBH
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Feb 2008 15:01:07 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:51080 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754451AbYBMUBF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Feb 2008 15:01:05 -0500
-Received: from a-sasl-quonix.pobox.com (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 51A71412A;
-	Wed, 13 Feb 2008 15:01:04 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.pobox.com (Postfix) with ESMTP id
- 960B44126; Wed, 13 Feb 2008 15:00:59 -0500 (EST)
-In-Reply-To: <20080213.044915.123319879.davem@davemloft.net> (David Miller's
- message of "Wed, 13 Feb 2008 04:49:15 -0800 (PST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752167AbYBMVEy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Feb 2008 16:04:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752147AbYBMVEy
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Feb 2008 16:04:54 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3758 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752022AbYBMVEy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Feb 2008 16:04:54 -0500
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1JPOmC-0002TL-00; Wed, 13 Feb 2008 21:04:20 +0000
+Content-Disposition: inline
+In-Reply-To: <87zlu4vhon.fsf@osv.gnss.ru>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73817>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73818>
 
-David Miller <davem@davemloft.net> writes:
+On 2008-02-13 21:23:52 +0300, Sergei Organov wrote:
 
-> Shouldn't stand-alone programs other than git.c itself also call
-> setup_path()?
+> Karl Hasselstr=F6m <kha@treskal.com> writes:
 >
-> I have a problem where if I only install git into my own home
-> directory ~/bin, I can't send pull requests over SSH to that machine
-> successfully because the execvp() of "pack-objects" by git-upload-pack
-> fails due to the PATH not containing "git --exec-dir"
+> >   * if the user enters a name that's not the name of an existing
+> >     branch, display a prompt like this
+> >
+> >       Creating new branch "foo". Where should it start?
+> >
+> >     Tab complete on existing tags and branches, but accept any
+> >     committish. Create the new branch and switch to it.
 >
-> If I add a dummy setup_path(NULL) call to upload-pack.c, it works
-> fine.
+> It still doesn't allow to detach HEAD at arbitrary tag/committish,
+> as far as I can see.
 
-Yeah, Johannes Sixt had a patch to do exactly that earlier
+It wouldn't be hard. Just try to interpret the string supplied by the
+user as a committish: if successful, check it out; if not, create a
+new branch by that name. Of course, this makes it impossible to create
+a branch with the same name as an existing committish, but that's
+probably OK.
 
-	Message-ID: <47B182C1.60006@viscovery.net>
-	http://news.gmane.org/gmane.comp.version-control.git/73651
+> I believe the interface should be designed more carefully. Here are
+> some thoughts/suggestions:
 
-and I think it is a good idea to apply it.
+Yes, having different commands that do one job each and do it well
+isn't a bad idea either. I like my idea more, but obviously whoever
+writes the code gets to decide ...
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
