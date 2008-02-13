@@ -1,91 +1,68 @@
-From: Voltage Spike <voltspike@gmail.com>
-Subject: Re: Merge-Recursive Improvements
-Date: Wed, 13 Feb 2008 01:21:36 -0700
-Message-ID: <E105587B-9E61-4A21-91F5-6310A83C3F41@gmail.com>
-References: <A21B3CA8-6240-434F-87A9-C6F76DA15265@gmail.com> <47B29EBF.7060607@viscovery.net>
-Mime-Version: 1.0 (Apple Message framework v753)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed Feb 13 09:22:48 2008
+From: Tom Koelman <tkoelman@xs4all.nl>
+Subject: Can a git repository be initialized with a bundle?
+Date: Wed, 13 Feb 2008 09:21:42 +0100
+Message-ID: <m3abm56zc9.fsf@assurancetourix.xs4all.nl>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 13 09:25:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JPCt7-0005kP-U4
-	for gcvg-git-2@gmane.org; Wed, 13 Feb 2008 09:22:42 +0100
+	id 1JPCw6-0006lH-Gf
+	for gcvg-git-2@gmane.org; Wed, 13 Feb 2008 09:25:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755143AbYBMIVm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Feb 2008 03:21:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753160AbYBMIVm
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Feb 2008 03:21:42 -0500
-Received: from rv-out-0910.google.com ([209.85.198.184]:22522 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759980AbYBMIVl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Feb 2008 03:21:41 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so3835594rvb.1
-        for <git@vger.kernel.org>; Wed, 13 Feb 2008 00:21:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:in-reply-to:references:mime-version:content-type:message-id:cc:content-transfer-encoding:from:subject:date:to:x-mailer;
-        bh=IjSgItwNsGiTDe4uYluA9GdZPVykrLL2uaWcTv9FiX4=;
-        b=d0cOXZ5ZEEvHRZ8k66evfkHp621i462ncllQUFi8MvEQb2I4aAJbG2gjCK4YC4mq6+2H56iFtroXsp18XracmiLXysq2F6owdF8HZVXeIj8zezO3MeC5xjuU5tqMygu4yM+ommLVA+qcjLhE6bVxfLKYRjxlUV2DxEpMIhGXFI8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=in-reply-to:references:mime-version:content-type:message-id:cc:content-transfer-encoding:from:subject:date:to:x-mailer;
-        b=v7GVc1Efoi/QyN2s49/wSsv9LmCqFkvY2TMpVUlVlQ6Ea/t/nwbdl/pvpG0b5ArHm/x3uWgQvzzjAbfBzQd9grS3SzT6J9KRw2dcgoOmhTN0i3A0ARZkHNi1goGLo+RzPppfOp+U6eFyGkvZq6psj++Tlk9DK+IPCZVOlOPhJ9Q=
-Received: by 10.140.251.1 with SMTP id y1mr1643186rvh.102.1202890899410;
-        Wed, 13 Feb 2008 00:21:39 -0800 (PST)
-Received: from ?149.169.205.128? ( [149.169.205.128])
-        by mx.google.com with ESMTPS id f34sm3164210rvb.3.2008.02.13.00.21.38
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 13 Feb 2008 00:21:38 -0800 (PST)
-In-Reply-To: <47B29EBF.7060607@viscovery.net>
-X-Mailer: Apple Mail (2.753)
+	id S1756117AbYBMIZM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Feb 2008 03:25:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755846AbYBMIZL
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Feb 2008 03:25:11 -0500
+Received: from main.gmane.org ([80.91.229.2]:35786 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756108AbYBMIZJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Feb 2008 03:25:09 -0500
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1JPCvO-0005qf-Qp
+	for git@vger.kernel.org; Wed, 13 Feb 2008 08:25:02 +0000
+Received: from tosti.xs4all.nl ([80.126.36.191])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 13 Feb 2008 08:25:02 +0000
+Received: from tkoelman by tosti.xs4all.nl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 13 Feb 2008 08:25:02 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: tosti.xs4all.nl
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/22.1 (gnu/linux)
+Cancel-Lock: sha1:FQN7sqVBby/xy2X4huHbDzNxi/o=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73753>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73754>
 
-On Feb 13, 2008, at 12:39 AM, Johannes Sixt wrote:
 
-> Voltage Spike schrieb:
->> Third, git doesn't appear to have any sense of context when  
->> performing a
->> merge. Another contrived example which wouldn't be flagged as a merge
->> conflict:
->>
->>   ptr = malloc(len); // Added in HEAD.
->>   init();            // Included in merge-base.
->>   ptr = malloc(len); // Added in "merge".
->
-> You seem to say that you want this to result in a merge conflict.
+Hi,
 
-Yes, it appears that I wasn't clear that I see the above as a conflict.
+I got some repository from which I created a bundle like so:
 
-> I'm opposed to this: It means that you would mark a conflict if  
-> there is a
-> single unchanged line between the two changes that come from the  
-> merged
-> branches. So far it has happened for me much more frequently that such
-> merges were correct, and I should not be bothered with conflict  
-> markers. I
-> conciously prefer to pay the price that such a merge is incorrect  
-> on occasion.
+$ git bundle create all.bundle --all
 
-That is why I'm hoping to make it configurable. I know that we have  
-more information than during a simple patch, but it seems odd that  
-changes can be occurring all around your local modifications and  
-you'll never be notified.
+Now I want to recreate this repository somewhere else:
 
-Which leads to a different point: does this lessen the value of  
-falling back to a 3-way merge during a rebase?
+$ mkdir tmp ; cd tmp ; git init
+Initialized empty Git repository in .git/
+$ git fetch all.bundle
+fatal: Couldn't find remote ref HEAD
 
-> You also need to draw a border line: a single unchanged line  
-> between the
-> changes? Or better also conflict at 2 lines? Or 3?
+It doesn't matter whether I try to fetch, pull, or add -f to the command
+line, I always get this response.
 
-I naturally assumed the default number of context lines: 3. If I  
-recall correctly, this isn't typically configurable.
+Am I trying to accomplish something that can't be done or am I doing it
+wrong?
+
+I am running git version 1.5.4.1 under Linux.
+
+Regards,
+Tom Koelman
