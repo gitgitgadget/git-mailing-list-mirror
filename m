@@ -1,75 +1,89 @@
-From: "Jean-Baptiste Quenot" <jbq@caraldi.com>
-Subject: [PATCH] Do not chop HTML tags in commit search result
-Date: Wed, 13 Feb 2008 18:37:24 +0100
-Message-ID: <ae63f8b50802130937mddf9df9re2a95bee44661ee3@mail.gmail.com>
+From: bdowning@lavos.net (Brian Downing)
+Subject: Re: Using kdiff3 to compare two different revisions of a folder
+Date: Wed, 13 Feb 2008 11:44:28 -0600
+Message-ID: <20080213174428.GN27535@lavos.net>
+References: <b8bf37780802121744i62849a53rfa71cc0571aec3a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 13 18:38:43 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: =?iso-8859-1?Q?Andr=E9?= Goddard Rosa <andre.goddard@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 13 18:45:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JPLZ2-0008F6-V0
-	for gcvg-git-2@gmane.org; Wed, 13 Feb 2008 18:38:33 +0100
+	id 1JPLfT-0002iq-9o
+	for gcvg-git-2@gmane.org; Wed, 13 Feb 2008 18:45:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763093AbYBMRhb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Feb 2008 12:37:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762803AbYBMRhb
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Feb 2008 12:37:31 -0500
-Received: from nf-out-0910.google.com ([64.233.182.186]:56204 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760628AbYBMRh2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Feb 2008 12:37:28 -0500
-Received: by nf-out-0910.google.com with SMTP id g13so58596nfb.21
-        for <git@vger.kernel.org>; Wed, 13 Feb 2008 09:37:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition:x-google-sender-auth;
-        bh=OfWfowQx1RDQPNpov41v+MC31Lcj1owVHCVpkRClvkA=;
-        b=VVBGC8W9e7I2XjkvexorTQ8pGWJcMdwx660pMhKKoY6WBHnw0t2mySb9/SqYFyq3c0PL5KBRLYv1nZTlIvgRGP6l1tY9BttrTfLRk5ea30EubCS3pXn9B2hw2dTz3bFt4le8OP9dWhX6Toz3Md311k9cEXaB2CgjJq6yoAyBDvE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition:x-google-sender-auth;
-        b=WqVVItTuzw8v4KjUInZVStabGFHMmHxK53Tf+LCvo3N2NRngm0TwCl5C91BW/t7UsSW/1TLdeRy8Oxv9Q0Vhytw3aPBgybm73TVWWOR+/pyKqtQnibN98dFTiq3tycRp66zbpxxlXaWcK61g5Jcbd+6CtEhQt4ljz2yKNRu35ow=
-Received: by 10.78.170.6 with SMTP id s6mr334325hue.50.1202924244825;
-        Wed, 13 Feb 2008 09:37:24 -0800 (PST)
-Received: by 10.78.130.20 with HTTP; Wed, 13 Feb 2008 09:37:24 -0800 (PST)
+	id S1757743AbYBMRoh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Feb 2008 12:44:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755901AbYBMRoh
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Feb 2008 12:44:37 -0500
+Received: from mxsf07.insightbb.com ([74.128.0.77]:34865 "EHLO
+	mxsf07.insightbb.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756047AbYBMRog (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Feb 2008 12:44:36 -0500
+X-IronPort-AV: E=Sophos;i="4.25,347,1199682000"; 
+   d="scan'208";a="245914707"
+Received: from unknown (HELO asav01.insightbb.com) ([172.31.249.124])
+  by mxsf07.insightbb.com with ESMTP; 13 Feb 2008 12:44:34 -0500
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Ah4FAKy7skdKhvkY/2dsb2JhbACBWZA3m1Y
+X-IronPort-AV: E=Sophos;i="4.25,347,1199682000"; 
+   d="scan'208";a="116678309"
+Received: from 74-134-249-24.dhcp.insightbb.com (HELO mail.lavos.net) ([74.134.249.24])
+  by asav01.insightbb.com with ESMTP; 13 Feb 2008 12:44:34 -0500
+Received: by mail.lavos.net (Postfix, from userid 1000)
+	id 9AD37309F21; Wed, 13 Feb 2008 11:44:28 -0600 (CST)
 Content-Disposition: inline
-X-Google-Sender-Auth: 6c76543d9a424507
+In-Reply-To: <b8bf37780802121744i62849a53rfa71cc0571aec3a@mail.gmail.com>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73803>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73804>
 
-Hi there,
+On Tue, Feb 12, 2008 at 11:44:07PM -0200, Andr=E9 Goddard Rosa wrote:
+>     I would like to use kdiff3 to compare some folder like "include"
+> between two different revisions.
+>     It would be something like "git diff v2.5:makefile HEAD:makefile"=
+,
+> but for an entire folder.
+>=20
+>     Kdiff3 give me a quick glance of its nice graphical output of the
+> differences, without have to resort to looking/parsing 'git log'
+> output.
+>     For now, easiest way for me is to keep my tree replicated in two
+> different folders pointing to different revisions then use it.
+>=20
+>     Is there a better way to do this kind of comparison?
 
-Thanks for Git! It's a great program.  I encountered an annoying bug
-with gitweb 1.5.4.1, when searching for commits, if the search string
-is too long, the generated HTML is munged leading to an ill-formed
-XHTML document.
+Maybe you want something like this?  This uses kdiff3 to compare two
+full commits, by extracting the changed files into a temporary location=
+=2E
+Modifying it so it can work with path limiters and/or take arguments
+exactly like 'git diff' is left as an excercise for the reader.
 
-Here is the patch, hope it helps:
+-bcd
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index ae2d057..2c0b990 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -3780,7 +3780,10 @@ sub git_search_grep_body {
-                                my $trail = esc_html($3) || "";
-                                $trail = chop_str($trail, 30, 10);
-                                my $text = "$lead<span
-class=\"match\">$match</span>$trail";
--                               print chop_str($text, 80, 5) . "<br/>\n";
-+                               # Do not chop $text as match can be
-long, and we don't want to
-+                               # munge HTML tags!
-+                               #print chop_str($text, 80, 5) . "<br/>\n";
-+                               print $text . "<br/>\n";
-                        }
-                }
-                print "</td>\n" .
--- 
-1.5.4.1-dirty
+#!/bin/sh -e
+
+# usage: git-kdiff3 commit1 commit2
+
+SUBDIRECTORY_OK=3D1
+=2E git-sh-setup
+cd_to_toplevel
+
+O=3D".git-kdiff3-tmp-$$"
+list=3D"$O/list"
+trap "rm -rf $O" 0
+mkdir $O
+
+git diff --name-only -z $1 $2 > $list
+
+cat $list | xargs -0 git archive --prefix=3Da/ $1 | tar xf - -C $O
+cat $list | xargs -0 git archive --prefix=3Db/ $2 | tar xf - -C $O
+
+kdiff3 $O/a $O/b
