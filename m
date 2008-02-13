@@ -1,122 +1,56 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] add--interactive: handle initial commit better
-Date: Wed, 13 Feb 2008 06:25:04 -0500
-Message-ID: <20080213112504.GA26627@coredump.intra.peff.net>
-References: <C50196C5-B0C5-4536-AD4A-0F9C553782EE@gmail.com> <20080213101649.GA18444@coredump.intra.peff.net> <20080213105051.GA26522@coredump.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [Bug] git add -i fails in multiple ways prior to first commit.
+Date: Wed, 13 Feb 2008 03:30:44 -0800
+Message-ID: <7v63wtqejf.fsf@gitster.siamese.dyndns.org>
+References: <C50196C5-B0C5-4536-AD4A-0F9C553782EE@gmail.com>
+ <20080213101649.GA18444@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: "Rhodes, Kate" <masukomi@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 13 12:25:47 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: "Rhodes, Kate" <masukomi@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Feb 13 12:32:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JPFkG-0007vX-VZ
-	for gcvg-git-2@gmane.org; Wed, 13 Feb 2008 12:25:45 +0100
+	id 1JPFq3-0001g6-E9
+	for gcvg-git-2@gmane.org; Wed, 13 Feb 2008 12:31:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755648AbYBMLZJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Feb 2008 06:25:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755594AbYBMLZJ
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Feb 2008 06:25:09 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4851 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754505AbYBMLZI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Feb 2008 06:25:08 -0500
-Received: (qmail 14089 invoked by uid 111); 13 Feb 2008 11:25:06 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 13 Feb 2008 06:25:06 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 13 Feb 2008 06:25:04 -0500
-Content-Disposition: inline
-In-Reply-To: <20080213105051.GA26522@coredump.intra.peff.net>
+	id S1755238AbYBMLbI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Feb 2008 06:31:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755880AbYBMLbG
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Feb 2008 06:31:06 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:57971 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755058AbYBMLbG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Feb 2008 06:31:06 -0500
+Received: from a-sasl-quonix.pobox.com (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id CBC9C2F89;
+	Wed, 13 Feb 2008 06:31:01 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.pobox.com (Postfix) with ESMTP id
+ A78972F29; Wed, 13 Feb 2008 06:30:53 -0500 (EST)
+In-Reply-To: <20080213101649.GA18444@coredump.intra.peff.net> (Jeff King's
+ message of "Wed, 13 Feb 2008 05:16:49 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73775>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73776>
 
-On Wed, Feb 13, 2008 at 05:50:51AM -0500, Jeff King wrote:
+Jeff King <peff@peff.net> writes:
 
-> And here it is. I think this is a more sane approach in general than the
-> last patch. The only ugly thing is the empty tree hack, but that can be
-> addressed with a patch to allow referencing the empty tree without it
-> existing in the object db.
+> However, I wonder if this is the best approach. It would be nice if
+> there were a shorthand for "the empty tree" for diffing, so you could
+> just diff against that rather than HEAD, and have the regular plumbing
+> generate.
 
-And this patch hard-codes the empty tree. I _think_ this shouldn't cause
-us any problems, as it just reuses the existing pretend_sha1_file
-infrastructure. However that infrastructure is very rarely used.
+I guess you can set your worktree to an empty directory and run
+diff-files backwards, like perhaps:
 
-This patch also contains the matching fix to git-add--interactive (on
-top of my last patch). They should probably just be squashed together,
-but I can submit a cleaned up 2-patch series if people agree that this
-is a good idea.
+	mkdir /var/tmp/empty
+        (cd .git && GIT_WORK_TREE=/var/tmp/empty git diff -R)
 
--- >8 --
-hard-code the empty tree object
-
-Now any commands may reference the empty tree object by its
-sha1 (4b825dc642cb6eb9a060e54bf8d69288fbee4904). This is
-useful for showing some diffs, especially for initial
-commits.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- git-add--interactive.perl |   13 ++-----------
- sha1_file.c               |   11 +++++++++++
- 2 files changed, 13 insertions(+), 11 deletions(-)
-
-diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index bae631e..a0a81f1 100755
---- a/git-add--interactive.perl
-+++ b/git-add--interactive.perl
-@@ -91,17 +91,8 @@ my $status_head = sprintf($status_fmt, 'staged', 'unstaged', 'path');
- 	}
- }
- 
--{
--	my $sha1;
--	sub get_empty_tree {
--		if (!$sha1) {
--			local $ENV{GIT_INDEX_FILE} = "$GIT_DIR/empty_index";
--			$sha1 = run_cmd_pipe(qw(git write-tree));
--			chomp $sha1;
--			unlink($ENV{GIT_INDEX_FILE});
--		}
--		return $sha1;
--	}
-+sub get_empty_tree {
-+	return '4b825dc642cb6eb9a060e54bf8d69288fbee4904';
- }
- 
- # Returns list of hashes, contents of each of which are:
-diff --git a/sha1_file.c b/sha1_file.c
-index 4179949..1a6c7c8 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -1845,6 +1845,15 @@ static struct cached_object {
- } *cached_objects;
- static int cached_object_nr, cached_object_alloc;
- 
-+static struct cached_object empty_tree = {
-+	/* empty tree sha1: 4b825dc642cb6eb9a060e54bf8d69288fbee4904 */
-+	"\x4b\x82\x5d\xc6\x42\xcb\x6e\xb9\xa0\x60"
-+	"\xe5\x4b\xf8\xd6\x92\x88\xfb\xee\x49\x04",
-+	OBJ_TREE,
-+	"",
-+	0
-+};
-+
- static struct cached_object *find_cached_object(const unsigned char *sha1)
- {
- 	int i;
-@@ -1854,6 +1863,8 @@ static struct cached_object *find_cached_object(const unsigned char *sha1)
- 		if (!hashcmp(co->sha1, sha1))
- 			return co;
- 	}
-+	if (!hashcmp(sha1, empty_tree.sha1))
-+		return &empty_tree;
- 	return NULL;
- }
- 
--- 
-1.5.4.1.1297.g3482b-dirty
+Have I tried it?  No --- I am not sick enough to be motivated.
