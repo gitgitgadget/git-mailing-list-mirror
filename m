@@ -1,98 +1,92 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: Merge-Recursive Improvements
-Date: Wed, 13 Feb 2008 09:46:35 +0100
-Message-ID: <47B2AE6B.2030700@viscovery.net>
-References: <A21B3CA8-6240-434F-87A9-C6F76DA15265@gmail.com> <47B29EBF.7060607@viscovery.net> <E105587B-9E61-4A21-91F5-6310A83C3F41@gmail.com>
+From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
+Subject: Re: Can a git repository be initialized with a bundle?
+Date: Wed, 13 Feb 2008 10:02:15 +0100
+Message-ID: <8aa486160802130102k42158154t7c81b37171a29243@mail.gmail.com>
+References: <m3abm56zc9.fsf@assurancetourix.xs4all.nl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Voltage Spike <voltspike@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 13 09:47:22 2008
+To: "Tom Koelman" <tkoelman@xs4all.nl>
+X-From: git-owner@vger.kernel.org Wed Feb 13 10:03:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JPDGu-0004g2-2W
-	for gcvg-git-2@gmane.org; Wed, 13 Feb 2008 09:47:16 +0100
+	id 1JPDW2-0001SY-2A
+	for gcvg-git-2@gmane.org; Wed, 13 Feb 2008 10:02:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754102AbYBMIql (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Feb 2008 03:46:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753764AbYBMIql
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Feb 2008 03:46:41 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:15995 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752096AbYBMIqk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Feb 2008 03:46:40 -0500
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1JPDFr-0007Wg-95; Wed, 13 Feb 2008 09:46:12 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 91E0769F; Wed, 13 Feb 2008 09:46:35 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <E105587B-9E61-4A21-91F5-6310A83C3F41@gmail.com>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1752897AbYBMJCS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Feb 2008 04:02:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753079AbYBMJCS
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Feb 2008 04:02:18 -0500
+Received: from el-out-1112.google.com ([209.85.162.180]:43790 "EHLO
+	el-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752824AbYBMJCQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Feb 2008 04:02:16 -0500
+Received: by el-out-1112.google.com with SMTP id v27so2211041ele.23
+        for <git@vger.kernel.org>; Wed, 13 Feb 2008 01:02:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=f+nWSC8uYxd80FixXAZlPZWDuMtP9l0k9MkcmmGD+Nw=;
+        b=bdx72468offdEnfcsW9ZPGI13ELdNKe4hm0dZ90B+s0P5eyUJkq4AVZtH23kdElaW2pL6Dk73089aTf9belntwtI2mHGyRUUMpMH3NSipSWQsp1kEncPGd9P7+bm9xgKutK1zzI97NDGXj1rWKNp0ZLmTy2M8e2ZSAnw9aeFYlw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=fnCjOe7m4jJQCYAHIFZi9BgK9OK7k6g3an0Vn2FLyoDKo4zhWsDSMVzTEeXnzcNM0ndhng5ua80W4PQMBVthwBABguAJ0nOwskVrmu25xToXuc9narFJqaDlRDjaI42rk+rPDBj0BJSIBRkz5GpKWhQn5DaUxCBHCkjg6xdPpRg=
+Received: by 10.151.156.2 with SMTP id i2mr874794ybo.177.1202893335113;
+        Wed, 13 Feb 2008 01:02:15 -0800 (PST)
+Received: by 10.150.205.9 with HTTP; Wed, 13 Feb 2008 01:02:15 -0800 (PST)
+In-Reply-To: <m3abm56zc9.fsf@assurancetourix.xs4all.nl>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73757>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73758>
 
-Voltage Spike schrieb:
-> On Feb 13, 2008, at 12:39 AM, Johannes Sixt wrote:
-> 
->> Voltage Spike schrieb:
->>> Third, git doesn't appear to have any sense of context when performing a
->>> merge. Another contrived example which wouldn't be flagged as a merge
->>> conflict:
->>>
->>>   ptr = malloc(len); // Added in HEAD.
->>>   init();            // Included in merge-base.
->>>   ptr = malloc(len); // Added in "merge".
->>
->> You seem to say that you want this to result in a merge conflict.
-> 
-> Yes, it appears that I wasn't clear that I see the above as a conflict.
-> 
->> I'm opposed to this: It means that you would mark a conflict if there
->> is a
->> single unchanged line between the two changes that come from the merged
->> branches. So far it has happened for me much more frequently that such
->> merges were correct, and I should not be bothered with conflict
->> markers. I
->> conciously prefer to pay the price that such a merge is incorrect on
->> occasion.
-> 
-> That is why I'm hoping to make it configurable. I know that we have more
-> information than during a simple patch, but it seems odd that changes
-> can be occurring all around your local modifications and you'll never be
-> notified.
-> 
-> Which leads to a different point: does this lessen the value of falling
-> back to a 3-way merge during a rebase?
+On Feb 13, 2008 9:21 AM, Tom Koelman <tkoelman@xs4all.nl> wrote:
+>
+> Hi,
+>
+> I got some repository from which I created a bundle like so:
+>
+> $ git bundle create all.bundle --all
 
-The current non-conflicting merges are invaluable for my workflow, which
-involves lots and lots of rebasing and cherry-picking.
+--all does not imply HEAD, so:
 
->> You also need to draw a border line: a single unchanged line between the
->> changes? Or better also conflict at 2 lines? Or 3?
-> 
-> I naturally assumed the default number of context lines: 3. If I recall
-> correctly, this isn't typically configurable.
+$ git bundle create all.bundle --all HEAD
 
-Nawww... Guess how many, many more conflicts this would report?
+> Now I want to recreate this repository somewhere else:
+>
+> $ mkdir tmp ; cd tmp ; git init
+> Initialized empty Git repository in .git/
+> $ git fetch all.bundle
+> fatal: Couldn't find remote ref HEAD
 
-Practically all merges that I do are during rebase and cherry-pick. During
-this work I often have changes that are separated by only a single line.
-The potential merge conflicts that fall in the above category I know in
-advance because I've made the changes just two minutes ago, and I can fix
-them even without being reminded by a merge conflict.
+you have to say explicitly the branches you want as:
 
-IOW: I don't need conflict markers in this case - I need them not to
-conflict at all.
+$ git fetch all.bundle master:bundle/master
 
--- Hannes
+or with a remote:
+
+$ git remote add bundle all.bundle
+$ git fetch bundle
+
+>
+> It doesn't matter whether I try to fetch, pull, or add -f to the command
+> line, I always get this response.
+
+The same happens with a normal remote repository without a HEAD.
+
+>
+> Am I trying to accomplish something that can't be done or am I doing it
+> wrong?
+
+I sent a path to support bundles in clone, but it was late for 1.5.4
+and at some point "git clone" will be converted to C (now it is a
+script). For now you have to do the "git init ; git remote add -f
+...", or similar.
+
+Santi
