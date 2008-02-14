@@ -1,82 +1,87 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Keeping reflogs on branch deletion
-Date: Thu, 14 Feb 2008 08:35:08 -0800 (PST)
-Message-ID: <m33arvcx8x.fsf@localhost.localdomain>
-References: <76718490802131739n22c56cadn39c1871ea1762dc3@mail.gmail.com>
-	<ee77f5c20802131745p23aa1db3j47207f1e6538b0e@mail.gmail.com>
-	<18355.42595.377377.433309@lisa.zopyra.com>
-	<ee77f5c20802131903i45b1629fpcb4a5c6e4f483052@mail.gmail.com>
-	<7vr6fgkxt2.fsf@gitster.siamese.dyndns.org>
-	<20080214140152.GT27535@lavos.net>
+From: Jeff King <peff@peff.net>
+Subject: git-status producing incorrect results
+Date: Thu, 14 Feb 2008 11:45:05 -0500
+Message-ID: <20080214164505.GA21932@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Cc: Junio C Hamano <gitster@pobox.com>,
-	David Symonds <dsymonds@gmail.com>,
-	Bill Lear <rael@zopyra.com>,
-	Jay Soffian <jaysoffian@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: bdowning@lavos.net (Brian Downing)
-X-From: git-owner@vger.kernel.org Thu Feb 14 17:35:56 2008
+	Kristian =?utf-8?B?SMO4Z3NiZXJn?= <krh@redhat.com>,
+	git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Feb 14 17:45:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JPh3t-000074-MJ
-	for gcvg-git-2@gmane.org; Thu, 14 Feb 2008 17:35:50 +0100
+	id 1JPhDX-0004LK-9Q
+	for gcvg-git-2@gmane.org; Thu, 14 Feb 2008 17:45:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753348AbYBNQfN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Feb 2008 11:35:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753838AbYBNQfN
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Feb 2008 11:35:13 -0500
-Received: from ug-out-1314.google.com ([66.249.92.171]:23019 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753016AbYBNQfL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Feb 2008 11:35:11 -0500
-Received: by ug-out-1314.google.com with SMTP id z38so1074186ugc.16
-        for <git@vger.kernel.org>; Thu, 14 Feb 2008 08:35:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
-        bh=/FbUrwOOZHMzeDJTASNV6aAUR7juWBSNobBK3Fp4Aj0=;
-        b=ryJeZF+A+h9RxZXfgrhunRxP/73EVpZGRXeYHWCmkfOiWCCNW+rLdg/HKhxXqb3C4GokNtCMTyMZJUBI2ycMNJ8Znl5Xwge5bFXZ+xQ7aPX7fyoLyOFS2HQPizmsa9RyFvr37DcyfsZNoTpYX4AullLVSyNYGGpYWED2U79r++o=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
-        b=rLuhoNJ/IGsnkDK3hO0GgRuHSQLyVlCcniuQBe/nXJx0fjQyDnSEiZG/fOCX2GMv6CH6MxFKfwvqIzmJJJuXWRyo2re8hQv/As4B8bsiRziO8e0nrO9K0/kvMF/G8Dgrmpy51fMz5IOLgcjwhOgmM2mFo5yS2Gd0UJi9OSu36bA=
-Received: by 10.67.40.15 with SMTP id s15mr106441ugj.46.1203006909607;
-        Thu, 14 Feb 2008 08:35:09 -0800 (PST)
-Received: from localhost.localdomain ( [83.8.219.2])
-        by mx.google.com with ESMTPS id k2sm4480593ugf.12.2008.02.14.08.35.06
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 14 Feb 2008 08:35:08 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m1EGZ0Wi012861;
-	Thu, 14 Feb 2008 17:35:01 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m1EGYtsf012858;
-	Thu, 14 Feb 2008 17:34:55 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <20080214140152.GT27535@lavos.net>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1754641AbYBNQpK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Feb 2008 11:45:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754450AbYBNQpK
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Feb 2008 11:45:10 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1618 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753213AbYBNQpI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Feb 2008 11:45:08 -0500
+Received: (qmail 8707 invoked by uid 111); 14 Feb 2008 16:45:06 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Thu, 14 Feb 2008 11:45:06 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Feb 2008 11:45:05 -0500
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73886>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73887>
 
-Brian Downing <bdowning@lavos.net> writes:
+There seems to be a bug in "git-status" in next (but not in master). I
+bisected it to:
 
-> When deleting a branch, is there any reason we can't add a deletion
-> entry into the reflog and keep the reflog around?  This would seem to be
-> a lot safer; I know I've been burned by expecting the reflog safety net
-> to be there, and surprised that it's not when I've deleted a branch.
+  commit d1f2d7e8ca65504722108e2db710788f66c34c6c
+  Author: Linus Torvalds <torvalds@linux-foundation.org>
+  Date:   Sat Jan 19 17:27:12 2008 -0800
 
-There is techical problem with that, namely possibility of D/F
-conflict. When you delete branch 'foo', you can later create branch
-'foo/bar'. If reflog for 'foo' was not deleted, you couldn't create
-reflog for 'foo/bar' because of directory / file conflict.
+  Make run_diff_index() use unpack_trees(), not read_tree()
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Basically, doing a partial commit when a new file has been added to the
+index but isn't part of the partial commit will cause that new file to
+be listed as part of the index. You can reproduce it with:
+
+  mkdir trash && cd trash && git init &&
+  touch file && git add file && git commit -m one &&
+  touch added && git add added &&
+  echo modified >file && git status file
+
+Even more exciting, the later commit cf558704 causes an infinite loop
+(but still has the bad behavior), which is then fixed in 9cb76b8c (which
+still has the bad behavior, in addition to printing the "bug in
+wt_status_print_untracked" message to indicate that we found something
+funny in the index).
+
+I _think_ of all of this is caused by the fact that builtin-commit looks
+in the regular index, but then gives us an alternate index. This didn't
+matter before because we were discarding the index so many time anyway.
+
+The patch below fixes it by discarding and re-reading the index if we
+are doing a partial commit, but I suspect it may just be papering over
+the problem again. We probably need to have two separate index_states,
+and pass in the correct one to wt-status (rather than giving it the
+filename and having it read into the_index).
+
+diff --git a/builtin-commit.c b/builtin-commit.c
+index c63ff82..005362e 100644
+--- a/builtin-commit.c
++++ b/builtin-commit.c
+@@ -313,6 +313,10 @@ static char *prepare_index(int argc, const char **argv, const char *prefix)
+ 	if (write_cache(fd, active_cache, active_nr) ||
+ 	    close_lock_file(&false_lock))
+ 		die("unable to write temporary index file");
++
++	discard_cache();
++	read_cache_from(false_lock.filename);
++
+ 	return false_lock.filename;
+ }
+ 
+-Peff
