@@ -1,118 +1,220 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 1/2] hard-code the empty tree object
-Date: Thu, 14 Feb 2008 05:32:56 -0500
-Message-ID: <20080214103256.GA17951@coredump.intra.peff.net>
+Subject: [PATCH 2/2] add--interactive: handle initial commit better
+Date: Thu, 14 Feb 2008 05:34:40 -0500
+Message-ID: <20080214103440.GB17951@coredump.intra.peff.net>
+References: <f20febf5dbdc5d3af69bccff8be8e3e2bcec0a90.1202985100.git.peff@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Kate Rhodes <masukomi@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 14 11:33:41 2008
+X-From: git-owner@vger.kernel.org Thu Feb 14 11:35:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JPbPM-0004FV-UN
-	for gcvg-git-2@gmane.org; Thu, 14 Feb 2008 11:33:37 +0100
+	id 1JPbQz-0004lN-QL
+	for gcvg-git-2@gmane.org; Thu, 14 Feb 2008 11:35:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753567AbYBNKdA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Feb 2008 05:33:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753495AbYBNKdA
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Feb 2008 05:33:00 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4042 "EHLO
+	id S1752981AbYBNKen (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Feb 2008 05:34:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752387AbYBNKen
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Feb 2008 05:34:43 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4073 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753270AbYBNKc7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Feb 2008 05:32:59 -0500
-Received: (qmail 4159 invoked by uid 111); 14 Feb 2008 10:32:57 -0000
+	id S1752596AbYBNKem (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Feb 2008 05:34:42 -0500
+Received: (qmail 4184 invoked by uid 111); 14 Feb 2008 10:34:41 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Thu, 14 Feb 2008 05:32:57 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Feb 2008 05:32:56 -0500
+    by peff.net (qpsmtpd/0.32) with SMTP; Thu, 14 Feb 2008 05:34:41 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Feb 2008 05:34:40 -0500
 Content-Disposition: inline
+In-Reply-To: <f20febf5dbdc5d3af69bccff8be8e3e2bcec0a90.1202985100.git.peff@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73870>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73871>
 
-This maps sha1 4b825dc642cb6eb9a060e54bf8d69288fbee4904 to
-the empty tree object, whether such an object exists in the
-object database or not. The empty tree is useful for showing
-some specialized diffs, especially for initial commits.
+There were several points where we looked at the HEAD
+commit; for initial commits, this is meaningless. So instead
+we:
 
-We also hard-code the special ref '{}' as an alias for the
-empty tree. Users may refer to the empty tree by its
-sha1 or by '{}'.
-
-Thanks to Johannes Schindelin for the '{}' syntax and
-implementation.
+  - show staged status data as a diff against the empty tree
+    instead of HEAD
+  - show file diffs as creation events
+  - use "git rm --cached" to revert instead of going back to
+    the HEAD commit
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-This is a cleaned-up version of what's in pu, along with the magic ref
-syntax from Johannes (2/2 will have the fixes to "git add -i").
+This is close to what is in pu, but using '{}' instead of the raw sha1,
+and adding some tests.
 
- cache.h     |    5 +++++
- sha1_file.c |    9 +++++++++
- sha1_name.c |    5 +++++
- 3 files changed, 19 insertions(+), 0 deletions(-)
+ git-add--interactive.perl  |   51 ++++++++++++++++++++++----------
+ t/t3701-add-interactive.sh |   69 ++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 104 insertions(+), 16 deletions(-)
+ create mode 100755 t/t3701-add-interactive.sh
 
-diff --git a/cache.h b/cache.h
-index 3867ba7..e3abbe1 100644
---- a/cache.h
-+++ b/cache.h
-@@ -253,6 +253,11 @@ static inline enum object_type object_type(unsigned int mode)
- #define INFOATTRIBUTES_FILE "info/attributes"
- #define ATTRIBUTE_MACRO_PREFIX "[attr]"
+diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+index 17ca5b8..130bc30 100755
+--- a/git-add--interactive.perl
++++ b/git-add--interactive.perl
+@@ -82,6 +82,15 @@ sub list_untracked {
+ my $status_fmt = '%12s %12s %s';
+ my $status_head = sprintf($status_fmt, 'staged', 'unstaged', 'path');
  
-+/* empty tree sha1: 4b825dc642cb6eb9a060e54bf8d69288fbee4904 */
-+#define EMPTY_TREE_SHA1 \
-+	"\x4b\x82\x5d\xc6\x42\xcb\x6e\xb9\xa0\x60" \
-+	"\xe5\x4b\xf8\xd6\x92\x88\xfb\xee\x49\x04"
-+
- extern int is_bare_repository_cfg;
- extern int is_bare_repository(void);
- extern int is_inside_git_dir(void);
-diff --git a/sha1_file.c b/sha1_file.c
-index 66a4e00..8068a4b 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -1845,6 +1845,13 @@ static struct cached_object {
- } *cached_objects;
- static int cached_object_nr, cached_object_alloc;
- 
-+static struct cached_object empty_tree = {
-+	EMPTY_TREE_SHA1,
-+	OBJ_TREE,
-+	"",
-+	0
-+};
-+
- static struct cached_object *find_cached_object(const unsigned char *sha1)
- {
- 	int i;
-@@ -1854,6 +1861,8 @@ static struct cached_object *find_cached_object(const unsigned char *sha1)
- 		if (!hashcmp(co->sha1, sha1))
- 			return co;
- 	}
-+	if (!hashcmp(sha1, empty_tree.sha1))
-+		return &empty_tree;
- 	return NULL;
- }
- 
-diff --git a/sha1_name.c b/sha1_name.c
-index be8489e..165aa7d 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -716,5 +716,10 @@ int get_sha1_with_mode(const char *name, unsigned char *sha1, unsigned *mode)
- 			return get_tree_entry(tree_sha1, cp+1, sha1,
- 					      mode);
- 	}
-+	if (ret && !strcmp(name, "{}")) {
-+		*mode = 0755;
-+		hashcpy(sha1, (unsigned char *)EMPTY_TREE_SHA1);
-+		ret = 0;
++{
++	my $initial;
++	sub is_initial_commit {
++		$initial = system('git rev-parse HEAD -- >/dev/null 2>&1') != 0
++			unless defined $initial;
++		return $initial;
 +	}
- 	return ret;
++}
++
+ # Returns list of hashes, contents of each of which are:
+ # VALUE:	pathname
+ # BINARY:	is a binary path
+@@ -103,8 +112,10 @@ sub list_modified {
+ 		return if (!@tracked);
+ 	}
+ 
++	my $reference = is_initial_commit() ? '{}' : 'HEAD';
+ 	for (run_cmd_pipe(qw(git diff-index --cached
+-			     --numstat --summary HEAD --), @tracked)) {
++			     --numstat --summary), $reference,
++			     '--', @tracked)) {
+ 		if (($add, $del, $file) =
+ 		    /^([-\d]+)	([-\d]+)	(.*)/) {
+ 			my ($change, $bin);
+@@ -476,21 +487,27 @@ sub revert_cmd {
+ 				       HEADER => $status_head, },
+ 				     list_modified());
+ 	if (@update) {
+-		my @lines = run_cmd_pipe(qw(git ls-tree HEAD --),
+-					 map { $_->{VALUE} } @update);
+-		my $fh;
+-		open $fh, '| git update-index --index-info'
+-		    or die;
+-		for (@lines) {
+-			print $fh $_;
++		if (is_initial_commit()) {
++			system(qw(git rm --cached),
++				map { $_->{VALUE} } @update);
+ 		}
+-		close($fh);
+-		for (@update) {
+-			if ($_->{INDEX_ADDDEL} &&
+-			    $_->{INDEX_ADDDEL} eq 'create') {
+-				system(qw(git update-index --force-remove --),
+-				       $_->{VALUE});
+-				print "note: $_->{VALUE} is untracked now.\n";
++		else {
++			my @lines = run_cmd_pipe(qw(git ls-tree HEAD --),
++						 map { $_->{VALUE} } @update);
++			my $fh;
++			open $fh, '| git update-index --index-info'
++			    or die;
++			for (@lines) {
++				print $fh $_;
++			}
++			close($fh);
++			for (@update) {
++				if ($_->{INDEX_ADDDEL} &&
++				    $_->{INDEX_ADDDEL} eq 'create') {
++					system(qw(git update-index --force-remove --),
++					       $_->{VALUE});
++					print "note: $_->{VALUE} is untracked now.\n";
++				}
+ 			}
+ 		}
+ 		refresh();
+@@ -956,7 +973,9 @@ sub diff_cmd {
+ 				     HEADER => $status_head, },
+ 				   @mods);
+ 	return if (!@them);
+-	system(qw(git diff -p --cached HEAD --), map { $_->{VALUE} } @them);
++	my $reference = is_initial_commit() ? '{}' : 'HEAD';
++	system(qw(git diff -p --cached), $reference, '--',
++		map { $_->{VALUE} } @them);
  }
+ 
+ sub quit_cmd {
+diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
+new file mode 100755
+index 0000000..c8dc1ac
+--- /dev/null
++++ b/t/t3701-add-interactive.sh
+@@ -0,0 +1,69 @@
++#!/bin/sh
++
++test_description='add -i basic tests'
++. ./test-lib.sh
++
++test_expect_success 'setup (initial)' '
++	echo content >file &&
++	git add file &&
++	echo more >>file &&
++	echo lines >>file
++'
++test_expect_success 'status works (initial)' '
++	git add -i </dev/null >output &&
++	grep "+1/-0 *+2/-0 file" output
++'
++cat >expected <<EOF
++new file mode 100644
++index 0000000..d95f3ad
++--- /dev/null
+++++ b/file
++@@ -0,0 +1 @@
+++content
++EOF
++test_expect_success 'diff works (initial)' '
++	(echo d; echo 1) | git add -i >output &&
++	sed -ne "/new file/,/content/p" <output >diff &&
++	diff -u expected diff
++'
++test_expect_success 'revert works (initial)' '
++	git add file &&
++	(echo r; echo 1) | git add -i &&
++	git ls-files >output &&
++	! grep . output
++'
++
++test_expect_success 'setup (commit)' '
++	echo baseline >file &&
++	git add file &&
++	git commit -m commit &&
++	echo content >>file &&
++	git add file &&
++	echo more >>file &&
++	echo lines >>file
++'
++test_expect_success 'status works (commit)' '
++	git add -i </dev/null >output &&
++	grep "+1/-0 *+2/-0 file" output
++'
++cat >expected <<EOF
++index 180b47c..b6f2c08 100644
++--- a/file
+++++ b/file
++@@ -1 +1,2 @@
++ baseline
+++content
++EOF
++test_expect_success 'diff works (commit)' '
++	(echo d; echo 1) | git add -i >output &&
++	sed -ne "/^index/,/content/p" <output >diff &&
++	diff -u expected diff
++'
++test_expect_success 'revert works (commit)' '
++	git add file &&
++	(echo r; echo 1) | git add -i &&
++	git add -i </dev/null >output &&
++	grep "unchanged *+3/-0 file" output
++'
++
++test_done
 -- 
 1.5.4.1.123.ge4e8d-dirty
