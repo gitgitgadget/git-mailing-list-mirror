@@ -1,53 +1,55 @@
-From: "Vincent Legoll" <vincent.legoll@gmail.com>
-Subject: [PATCH][EGIT] README typo fixes
-Date: Thu, 14 Feb 2008 23:47:49 +0100
-Message-ID: <4727185d0802141447j4b34958eg5dea5daf52346345@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH][EGIT] README typo fixes
+Date: Thu, 14 Feb 2008 23:18:46 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0802142318240.30505@racer.site>
+References: <4727185d0802141447j4b34958eg5dea5daf52346345@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: spearce@spearce.org, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 14 23:48:30 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: spearce@spearce.org, git@vger.kernel.org
+To: Vincent Legoll <vincent.legoll@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 15 00:19:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JPmsX-0005N6-6E
-	for gcvg-git-2@gmane.org; Thu, 14 Feb 2008 23:48:29 +0100
+	id 1JPnMT-00070W-AX
+	for gcvg-git-2@gmane.org; Fri, 15 Feb 2008 00:19:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758117AbYBNWrz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Feb 2008 17:47:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757878AbYBNWrz
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Feb 2008 17:47:55 -0500
-Received: from wx-out-0506.google.com ([66.249.82.225]:26957 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757046AbYBNWry (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Feb 2008 17:47:54 -0500
-Received: by wx-out-0506.google.com with SMTP id h31so457933wxd.4
-        for <git@vger.kernel.org>; Thu, 14 Feb 2008 14:47:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=FdzNV0wLSDb41Pu37QjLvqdX4BYN54bEcj5EhFVMpS0=;
-        b=WiVAgAFZlvm6r8xEiox+Ot/+g67qkKrOnVbi7iCXlTB6wT7RURxPn8ht5/zvK7Q/E7gRdsKkCe44n72Pcpte4sJSWKHXQIOr0h335NEYnpksfpe04UIqSF1O/+K3fcfq4RXuuvpunWvunQhDaCjY5JhF83yGwNGJqwXqAXDtfTU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=EZ70YkD0I7tL42SFzFQTJ1WdS/3D0TUnI6MCel5VvwNSZZMtZ20hQMl89YXgzKebU4JwoTnHUclwrY7KirLrrCBjpJz5ndvh9wOtTLszf1a1DCz6IbvZIpPonSpZxZObdD1Gd7+na3bz1mYhcQvR02Eg67JsI3vFjQysY5Av8m0=
-Received: by 10.70.135.3 with SMTP id i3mr1235963wxd.36.1203029269969;
-        Thu, 14 Feb 2008 14:47:49 -0800 (PST)
-Received: by 10.70.84.14 with HTTP; Thu, 14 Feb 2008 14:47:49 -0800 (PST)
-Content-Disposition: inline
+	id S1756337AbYBNXSv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Feb 2008 18:18:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756389AbYBNXSv
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Feb 2008 18:18:51 -0500
+Received: from mail.gmx.net ([213.165.64.20]:48967 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756309AbYBNXSu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Feb 2008 18:18:50 -0500
+Received: (qmail invoked by alias); 14 Feb 2008 23:18:48 -0000
+Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO [192.168.1.75]) [86.138.198.40]
+  by mail.gmx.net (mp020) with SMTP; 15 Feb 2008 00:18:48 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/hgu4kF0Lh5pBFZvqjQGibfl0twgz4iv+1QSUmiR
+	LWOKz7i8iN1pmu
+X-X-Sender: gene099@racer.site
+In-Reply-To: <4727185d0802141447j4b34958eg5dea5daf52346345@mail.gmail.com>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73920>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73921>
 
-Hello,
+Hi,
 
-Reading egit README file I fixed a bunch of typos, random
-whitespace and such small things, and produced the attached
-patch, could you integrate it in your repository ?
+On Thu, 14 Feb 2008, Vincent Legoll wrote:
 
--- 
-Vincent Legoll
+> Reading egit README file I fixed a bunch of typos, random
+> whitespace and such small things, and produced the attached
+> patch, could you integrate it in your repository ?
+
+Umm, which attached patch?
+
+And shouldn't you rather direct this at Robin Rosenberg?
+
+Ciao,
+Dscho
