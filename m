@@ -1,67 +1,112 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: [PATCH] RFC: git lazy clone proof-of-concept
-Date: Thu, 14 Feb 2008 15:08:13 -0600
-Message-ID: <47B4ADBD.9030409@nrlssc.navy.mil>
-References: <200802081828.43849.kendy@suse.cz>	<m3ejbngtnn.fsf@localhost.localdomain>	<200802091627.25913.kendy@suse.cz>	<alpine.LFD.1.00.0802092200350.2732@xanadu.home>	<alpine.LSU.1.00.0802101640570.11591@racer.site>	<alpine.LSU.1.00.0802101845320.11591@racer.site>	<alpine.LSU.1.00.0802122036150.3870@racer.site>	<alpine.LSU.1.00.0802141917420.30505@racer.site> <m3y79nb8xk.fsf@localhost.localdomain>
+Date: Thu, 14 Feb 2008 22:59:59 +0100
+Message-ID: <200802142300.01615.jnareb@gmail.com>
+References: <200802081828.43849.kendy@suse.cz> <m3y79nb8xk.fsf@localhost.localdomain> <alpine.LSU.1.00.0802142054080.30505@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+Cc: Brandon Casey <casey@nrlssc.navy.mil>,
 	Nicolas Pitre <nico@cam.org>, Jan Holesovsky <kendy@suse.cz>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 14 22:12:50 2008
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Brian Downing <bdowning@lavos.net>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Feb 14 23:00:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JPlNr-0003P1-9z
-	for gcvg-git-2@gmane.org; Thu, 14 Feb 2008 22:12:43 +0100
+	id 1JPm8Q-0004ie-5U
+	for gcvg-git-2@gmane.org; Thu, 14 Feb 2008 23:00:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760952AbYBNVMB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Feb 2008 16:12:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763046AbYBNVMA
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Feb 2008 16:12:00 -0500
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:53136 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758335AbYBNVL7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Feb 2008 16:11:59 -0500
-Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
-	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id m1EL8Dw1003887;
-	Thu, 14 Feb 2008 15:08:13 -0600
-Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
-	 Thu, 14 Feb 2008 15:08:13 -0600
-User-Agent: Thunderbird 2.0.0.9 (X11/20071031)
-In-Reply-To: <m3y79nb8xk.fsf@localhost.localdomain>
-X-OriginalArrivalTime: 14 Feb 2008 21:08:13.0387 (UTC) FILETIME=[B5D529B0:01C86F4D]
-X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-5.0.0.1023-15722001
-X-TM-AS-Result: : Yes--9.097900-0-31-1
-X-TM-AS-Category-Info: : 31:0.000000
-X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNTY3LTcwMDA3NS0xMzkw?=
-	=?us-ascii?B?MTAtNzA4OTMyLTcwMTQ1NS03MDc0MTAtNzA3Mzk1LTcwNDkyNy03?=
-	=?us-ascii?B?MDE1MTMtNzAzNTg4LTcwMDI2NC03MDE1ODMtMTQ4MDM5LTE0ODA1?=
-	=?us-ascii?B?MS0yMDA0MA==?=
+	id S932679AbYBNWAN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Feb 2008 17:00:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933318AbYBNWAM
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Feb 2008 17:00:12 -0500
+Received: from mu-out-0910.google.com ([209.85.134.188]:22248 "EHLO
+	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932679AbYBNWAK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Feb 2008 17:00:10 -0500
+Received: by mu-out-0910.google.com with SMTP id i10so331855mue.5
+        for <git@vger.kernel.org>; Thu, 14 Feb 2008 14:00:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        bh=vuU14n3MPsnjCoFARgnKqXZYLZzKbTaRxlXlQY4Xnvc=;
+        b=ivGZCWOGGZFbkieLiVTP1vWdUwO8WAo+GQpw40gybxAOw2Agkm7+106S5U9jP9EsmC29CzMtEVT/WBUcp5g+EaoltEDHxFCesJJxu53JUYx1Wt3BUNqqWjnpptMDVrncDIQ3jx7EMEZkuYWkn0joDOGm5K1lSLhMvG3tC0S8DFE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=oLAIcDpKmBgfjBSX04GnUj0v6nRTYOKr0/ZH+BiDP84xoxIYenwvnw71A7bHxze1R33/uJvOfnlglytFPOiBLzylYEVmNsVAB76iD290761I+LbRDyX66B0uYE7wmk+yH7ucr84aZk8RfAbD6MivoDfyD/JSXJ6XLb5IrtuA9X0=
+Received: by 10.82.186.5 with SMTP id j5mr1794349buf.12.1203026408080;
+        Thu, 14 Feb 2008 14:00:08 -0800 (PST)
+Received: from ?192.168.1.11? ( [83.8.219.2])
+        by mx.google.com with ESMTPS id h1sm6670743nfh.20.2008.02.14.14.00.05
+        (version=SSLv3 cipher=OTHER);
+        Thu, 14 Feb 2008 14:00:06 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <alpine.LSU.1.00.0802142054080.30505@racer.site>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73916>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73917>
 
-Jakub Narebski wrote:
-> Brandon Casey wrote:
+Johannes Schindelin wrote:
+> On Thu, 14 Feb 2008, Jakub Narebski wrote:
 
->> The smallest attained pack was about 1.45G (1556569742B).
+>> Perhaps you could try running contrib/stats/packinfo.pl on this pack to 
+>> examine it to get to know what takes most space.
 > 
-> Do you perchance know why OOo needs so large pack? Perhaps you could
-> try running contrib/stats/packinfo.pl on this pack to examine it to
-> get to know what takes most space.
+> $ ~/git/contrib/stats/packinfo.pl < \
+> objects/pack/pack-e4dc6da0a10888ec4345490575efc587b7523b45.pack 2>&1 | \
+> tee packinfo.txt
+> Illegal division by zero at /home/imaging/git/contrib/stats/packinfo.pl 
+> line 141, <STDIN> line 6330855.
 
-Earlier in this thread Sean did some analysis and found lots of large
-objects, and he mentioned that he sent a listing to Jan for inspection.
-I haven't heard anything more.
+Errr... sorry, I should have been more explicit. What I meant here
+is the result of
 
-> What is the size of checkout, by the way?
+$ git verify-pack -v <packfile> | \
+  ~/git/contrib/stats/packinfo.pl
 
-2.4G
 
--brandon
+>> What is the size of checkout, by the way?
+> 
+> I work on a bare repository, but:
+> 
+> $ git archive origin/master | wc -c
+> 2010060800
+> 
+> Or more precisely:
+> 
+> $ echo $(($(git ls-tree -l -r origin/master | sed -n 's/^[^ ]* [^ ]* [^ ]*  
+> *\([0-9]*\).*$/\1/p' | tr '\012' +)0))
+> 1947839459
+> 
+> So yes, we still have the crown of the _whole_ repository being _smaller_ 
+> than a single checkout.
+> 
+> Yeah!
+
+
+Brandon Casey wrote:
+> Jakub Narebski wrote:
+>> 
+>> What is the size of checkout, by the way?
+> 
+> 2.4G
+
+That's huuuuge tree. Compared to that 1.6G (or 1.4G) packfile doesn't
+look large.
+
+I wonder if proper subdivision into submodules (which should encourage
+better code by the way, see TAOUP), and perhaps partial checkouts
+wouldn't be better solution than lazy clone. But it is nice to have
+long discussed about feature, even if at RFC stage, but with some code.
+
+-- 
+Jakub Narebski
+Poland
