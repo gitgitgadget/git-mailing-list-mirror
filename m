@@ -1,225 +1,130 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH] Documentation: add 'git-web--browse.txt' and simplify other
- docs.
-Date: Thu, 14 Feb 2008 08:01:23 +0100
-Message-ID: <20080214080123.5ffb1f19.chriscool@tuxfamily.org>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: git-branch -m interprets first argument differently when two
+ are   supplied
+Date: Thu, 14 Feb 2008 08:37:40 +0100
+Message-ID: <47B3EFC4.1020808@viscovery.net>
+References: <47B3497A.9050703@nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Jay Soffian <jaysoffian@gmail.com>
-To: Junio Hamano <junkio@cox.net>, Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Thu Feb 14 07:56:06 2008
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Brandon Casey <casey@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Thu Feb 14 08:38:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JPY0r-0000sL-7e
-	for gcvg-git-2@gmane.org; Thu, 14 Feb 2008 07:56:05 +0100
+	id 1JPYfu-00039d-Q9
+	for gcvg-git-2@gmane.org; Thu, 14 Feb 2008 08:38:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755159AbYBNGz3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Feb 2008 01:55:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755483AbYBNGz3
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Feb 2008 01:55:29 -0500
-Received: from smtp1-g19.free.fr ([212.27.42.27]:50020 "EHLO smtp1-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755102AbYBNGz2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Feb 2008 01:55:28 -0500
-Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 1C5DA1AB2C8;
-	Thu, 14 Feb 2008 07:55:27 +0100 (CET)
-Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp1-g19.free.fr (Postfix) with SMTP id 7CA721AB2E0;
-	Thu, 14 Feb 2008 07:55:26 +0100 (CET)
-X-Mailer: Sylpheed 2.4.8 (GTK+ 2.12.5; i486-pc-linux-gnu)
+	id S1757527AbYBNHhq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Feb 2008 02:37:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757506AbYBNHhp
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Feb 2008 02:37:45 -0500
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:20494 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757260AbYBNHho (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Feb 2008 02:37:44 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1JPYeh-0004PN-Du; Thu, 14 Feb 2008 08:37:15 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 3B5D8A33B; Thu, 14 Feb 2008 08:37:40 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <47B3497A.9050703@nrlssc.navy.mil>
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73862>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73863>
 
-'git-help.txt' and 'git-instaweb.txt' contained duplicated
-information about 'git-web--browse'.
+Brandon Casey schrieb:
+> The first non-option argument is interpreted differently depending on
+> whether one argument or two arguments have been supplied.
+> 
+> 	git-branch -m [<oldbranch>] <newbranch>
+> 
+> Has anyone considered whether this is inconsistent with how other
+> commands operate?
 
-This patch puts this information where it belongs.
+Funny, I fell into this trap just yesterday and accidentally renamed
+my master branch to something else. IMO git-branch -m should take two
+arguments. Full stop.
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+Something like this.
+
+-- >8 --
+From: Johannes Sixt <johannes.sixt@telecom.at>
+Subject: [PATCH] git-branch: Deprecate -m with only one argument.
+
+"git branch -m" can be invoked with only one argument, in which case
+it renames the current branch to the new name. This is inconsistent since
+the first argument is either a source or destination depending on whether
+a second argument follows. Furthermore, it is surprising that a rename
+command that is given only one argument succeeds at all.
+
+Let's aim for removing this feature.
+
+Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
 ---
- Documentation/git-help.txt        |   24 +----------
- Documentation/git-instaweb.txt    |   27 ++----------
- Documentation/git-web--browse.txt |   78 +++++++++++++++++++++++++++++++++++++
- 3 files changed, 86 insertions(+), 43 deletions(-)
- create mode 100644 Documentation/git-web--browse.txt
+ Documentation/git-branch.txt |    4 ++--
+ builtin-branch.c             |    9 ++++++---
+ 2 files changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/git-help.txt b/Documentation/git-help.txt
-index ad41aab..0926dc1 100644
---- a/Documentation/git-help.txt
-+++ b/Documentation/git-help.txt
-@@ -48,26 +48,8 @@ OPTIONS
- The web browser can be specified using the configuration variable
- 'help.browser', or 'web.browser' if the former is not set. If none of
- these config variables is set, the 'git-web--browse' helper script
--(called by 'git-help') will pick a suitable default.
--+
--You can explicitly provide a full path to your preferred browser by
--setting the configuration variable 'browser.<tool>.path'. For example,
--you can configure the absolute path to firefox by setting
--'browser.firefox.path'. Otherwise, 'git-web--browse' assumes the tool
--is available in PATH.
--+
--Note that the script tries, as much as possible, to display the HTML
--page in a new tab on an already opened browser.
--+
--The following browsers are currently supported by 'git-web--browse':
--+
--* firefox (this is the default under X Window when not using KDE)
--* iceweasel
--* konqueror (this is the default under KDE)
--* w3m (this is the default outside X Window)
--* links
--* lynx
--* dillo
-+(called by 'git-help') will pick a suitable default. See
-+linkgit:git-web--browse[1] for more information about this.
- 
- CONFIGURATION VARIABLES
- -----------------------
-@@ -84,7 +66,7 @@ line option:
- The 'help.browser', 'web.browser' and 'browser.<tool>.path' will also
- be checked if the 'web' format is chosen (either by command line
- option or configuration variable). See '-w|--web' in the OPTIONS
--section above.
-+section above and linkgit:git-web--browse[1].
- 
- Note that these configuration variables should probably be set using
- the '--global' flag, for example like this:
-diff --git a/Documentation/git-instaweb.txt b/Documentation/git-instaweb.txt
-index a1456ab..51f1532 100644
---- a/Documentation/git-instaweb.txt
-+++ b/Documentation/git-instaweb.txt
-@@ -40,21 +40,9 @@ OPTIONS
- -b|--browser::
- 	The web browser that should be used to view the gitweb
- 	page. This will be passed to the 'git-web--browse' helper
--	script along with the URL of the gitweb instance. If the
--	script fails, the URL will be printed to stdout.
--+
--Note that the 'git-web--browse' script tries, as much as possible, to
--display the HTML page in a new tab on an already opened browser.
--+
--The following browsers are currently supported by 'git-web--browse':
--+
--* firefox (this is the default under X Window when not using KDE)
--* iceweasel
--* konqueror (this is the default under KDE)
--* w3m (this is the default outside X Window)
--* links
--* lynx
--* dillo
-+	script along with the URL of the gitweb instance. See
-+	linkgit:git-web--browse[1] for more information about this. If
-+	the script fails, the URL will be printed to stdout.
- 
- --start::
- 	Start the httpd instance and exit.  This does not generate
-@@ -85,13 +73,8 @@ You may specify configuration in your .git/config
- -----------------------------------------------------------------------
- 
- If the configuration variable 'instaweb.browser' is not set,
--'web.browser' will be used instead if it is defined.
--
--You can explicitly provide a full path to your preferred browser by
--setting the configuration variable 'browser.<tool>.path'. For example,
--you can configure the absolute path to firefox by setting
--'browser.firefox.path'. Otherwise, 'git-web--browse' assumes the tool
--is available in PATH.
-+'web.browser' will be used instead if it is defined. See
-+linkgit:git-web--browse[1] for more information about this.
- 
- Author
- ------
-diff --git a/Documentation/git-web--browse.txt b/Documentation/git-web--browse.txt
-new file mode 100644
-index 0000000..df57d01
---- /dev/null
-+++ b/Documentation/git-web--browse.txt
-@@ -0,0 +1,78 @@
-+git-web--browse(1)
-+==================
-+
-+NAME
-+----
-+git-web--browse - git helper script to launch a web browser
-+
-+SYNOPSIS
-+--------
-+'git-web--browse' [OPTIONS] URL/FILE ...
-+
-+DESCRIPTION
-+-----------
-+
-+This script tries, as much as possible, to display the URLs and FILEs
-+that are passed as arguments, as HTML pages in new tabs on an already
-+opened web browser.
-+
-+The following browsers (or commands) are currently supported:
-+
-+* firefox (this is the default under X Window when not using KDE)
-+* iceweasel
-+* konqueror (this is the default under KDE)
-+* w3m (this is the default outside graphical environments)
-+* links
-+* lynx
-+* dillo
-+* open (this is the default under Mac OS X GUI)
-+
-+OPTIONS
-+-------
-+-b BROWSER|--browser=BROWSER::
-+	Use the specified BROWSER. It must be in the list of supported
-+	browsers.
-+
-+-t BROWSER|--tool=BROWSER::
-+	Same as above.
-+
-+-c CONF.VAR|--config=CONF.VAR::
-+	CONF.VAR is looked up in the git config files. If it's set,
-+	then its value specify the browser that should be used.
-+
-+CONFIGURATION VARIABLES
-+-----------------------
-+
-+The web browser can be specified using a configuration variable passed
-+with the -c (or --config) command line option, or the 'web.browser'
-+configuration variable if the former is not used.
-+
-+You can explicitly provide a full path to your preferred browser by
-+setting the configuration variable 'browser.<tool>.path'. For example,
-+you can configure the absolute path to firefox by setting
-+'browser.firefox.path'. Otherwise, 'git-web--browse' assumes the tool
-+is available in PATH.
-+
-+Note that these configuration variables should probably be set using
-+the '--global' flag, for example like this:
-+
-+------------------------------------------------
-+$ git config --global web.browser firefox
-+------------------------------------------------
-+
-+as they are probably more user specific than repository specific.
-+See linkgit:git-config[1] for more information about this.
-+
-+Author
-+------
-+Written by Christian Couder <chriscool@tuxfamily.org> and the git-list
-+<git@vger.kernel.org>, based on git-mergetool by Theodore Y. Ts'o.
-+
-+Documentation
-+-------------
-+Documentation by Christian Couder <chriscool@tuxfamily.org> and the
-+git-list <git@vger.kernel.org>.
-+
-+GIT
-+---
-+Part of the linkgit:git[7] suite
+diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
+index 7e8874a..56bea06 100644
+--- a/Documentation/git-branch.txt
++++ b/Documentation/git-branch.txt
+@@ -12,7 +12,7 @@ SYNOPSIS
+ 	   [-v [--abbrev=<length> | --no-abbrev]]
+ 	   [--contains <commit>]
+ 'git-branch' [--track | --no-track] [-l] [-f] <branchname> [<start-point>]
+-'git-branch' (-m | -M) [<oldbranch>] <newbranch>
++'git-branch' (-m | -M) <oldbranch> <newbranch>
+ 'git-branch' (-d | -D) [-r] <branchname>...
+
+ DESCRIPTION
+@@ -136,7 +136,7 @@ OPTIONS
+
+ <newbranch>::
+ 	The new name for an existing branch. The same restrictions as for
+-	<branchname> applies.
++	<branchname> apply.
+
+
+ Examples
+diff --git a/builtin-branch.c b/builtin-branch.c
+index e414c88..14df594 100644
+--- a/builtin-branch.c
++++ b/builtin-branch.c
+@@ -17,7 +17,7 @@ static const char * const builtin_branch_usage[] = {
+ 	"git-branch [options] [-r | -a]",
+ 	"git-branch [options] [-l] [-f] <branchname> [<start-point>]",
+ 	"git-branch [options] [-r] (-d | -D) <branchname>",
+-	"git-branch [options] (-m | -M) [<oldbranch>] <newbranch>",
++	"git-branch [options] (-m | -M) <oldbranch> <newbranch>",
+ 	NULL
+ };
+
+@@ -609,9 +609,12 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 		return delete_branches(argc, argv, delete > 1, kinds);
+ 	else if (argc == 0)
+ 		print_ref_list(kinds, detached, verbose, abbrev, with_commit);
+-	else if (rename && (argc == 1))
++	else if (rename && (argc == 1)) {
++		fprintf(stderr, "'git branch -m' with only one parameter is deprecated.\n"
++			"Will continue, assuming that you meant\n"
++			"    git branch -m %s %s\n", head, argv[0]);
+ 		rename_branch(head, argv[0], rename > 1);
+-	else if (rename && (argc == 2))
++	} else if (rename && (argc == 2))
+ 		rename_branch(argv[0], argv[1], rename > 1);
+ 	else if (argc <= 2)
+ 		create_branch(argv[0], (argc == 2) ? argv[1] : head,
 -- 
-1.5.4.20.gc135a-dirty
+1.5.4.1.104.g84d88
