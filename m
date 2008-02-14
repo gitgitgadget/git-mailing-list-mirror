@@ -1,116 +1,80 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Keeping reflogs on branch deletion
-Date: Thu, 14 Feb 2008 12:57:24 -0500
-Message-ID: <20080214175724.GA30689@coredump.intra.peff.net>
-References: <ee77f5c20802131745p23aa1db3j47207f1e6538b0e@mail.gmail.com> <18355.42595.377377.433309@lisa.zopyra.com> <ee77f5c20802131903i45b1629fpcb4a5c6e4f483052@mail.gmail.com> <7vr6fgkxt2.fsf@gitster.siamese.dyndns.org> <20080214140152.GT27535@lavos.net> <alpine.LFD.1.00.0802140945520.2732@xanadu.home> <20080214151752.GB3889@coredump.intra.peff.net> <alpine.LFD.1.00.0802141103280.2732@xanadu.home> <20080214163101.GA24673@coredump.intra.peff.net> <alpine.LFD.1.00.0802141147200.2732@xanadu.home>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] builtin-checkout: use struct lock_file correctly
+Date: Thu, 14 Feb 2008 18:17:05 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0802141816120.30505@racer.site>
+References: <alpine.LNX.1.00.0802071137490.13593@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Brian Downing <bdowning@lavos.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	David Symonds <dsymonds@gmail.com>,
-	Bill Lear <rael@zopyra.com>,
-	Jay Soffian <jaysoffian@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Thu Feb 14 18:58:17 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Thu Feb 14 19:18:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JPiLT-0001tg-HN
-	for gcvg-git-2@gmane.org; Thu, 14 Feb 2008 18:58:03 +0100
+	id 1JPieX-0001AF-2c
+	for gcvg-git-2@gmane.org; Thu, 14 Feb 2008 19:17:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752366AbYBNR53 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Feb 2008 12:57:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752395AbYBNR53
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Feb 2008 12:57:29 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2557 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752360AbYBNR52 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Feb 2008 12:57:28 -0500
-Received: (qmail 9642 invoked by uid 111); 14 Feb 2008 17:57:25 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Thu, 14 Feb 2008 12:57:25 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Feb 2008 12:57:24 -0500
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.1.00.0802141147200.2732@xanadu.home>
+	id S1754535AbYBNSRJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Feb 2008 13:17:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754058AbYBNSRI
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Feb 2008 13:17:08 -0500
+Received: from mail.gmx.net ([213.165.64.20]:42687 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754535AbYBNSRH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Feb 2008 13:17:07 -0500
+Received: (qmail invoked by alias); 14 Feb 2008 18:17:05 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp034) with SMTP; 14 Feb 2008 19:17:05 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19lr6xBtN5lq2X6xvAiYp82dTVqhUpZSyOZsgjiLW
+	kSqu3mIxUjCZtf
+X-X-Sender: gene099@racer.site
+In-Reply-To: <alpine.LNX.1.00.0802071137490.13593@iabervon.org>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73900>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73901>
 
-On Thu, Feb 14, 2008 at 12:32:07PM -0500, Nicolas Pitre wrote:
 
-> I typically have lots of branches.  Many of those are fairly dynamic -- 
-> they come and go.  Keeping reflogs for them would only clutter the 
-> reflog space, especially when the same names are reused.  I prefer to 
-> have a clean reflog for the currently alive branch of a given name 
-> rather than having a log of anything that occurred under that name.  And 
-> if I really want to find out about that old branch then there is always 
-> the HEAD reflog.
+A lock_file instance must not be cleaned up, since an atexit() handler
+will try to access even correctly committed lock_files, since it has
+to make sure that they were correctly committed.
 
-OK, that is a fair argument. I totally disagree, but this is a question
-of "what users would want" and you and I happen to want different
-behavior. I suspect it has to do with how you name your branches.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
 
-> > For one thing, just because a modification wasn't _yours_ doesn't mean
-> > it isn't valuable. It entered your repository, and therefore it may be
-> > of interest.
-> 
-> And if you delete it then you can retrieve it again from its origin.  
+	I am using builtin checkout since quite some time, but this is the 
+	first time it crashed... That fix helps; you might want to amend 
+	your patch 11/11.
 
-In a system which touts totally independent operation of separate
-repositories, saying "oh, you can just ask some other repository for it
-again" seems silly. Who is to say the other repo still exists? Or that
-it contains the information you're looking for (e.g., a git push from an
-arbitrary commit at one repo may enter your branch at a specific point.
-the information that is useful to you is where and when it landed in
-your branch, which was never in the other repo in the first place).
+ builtin-checkout.c |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
 
-> > Secondly, you _can_ change a ref without it being the HEAD. Try
-> > 
-> >   git branch -f foo bar
-> 
-> Sure.  And what information would become unreachable if you delete 'foo' 
-> at that point?  The 'bar' commit is not lost, and likely to still exist 
-> in some other reflog.
-
-The fact that 'foo' was set to a particular sha1 at a particular point
-in time? Isn't that the point of a reflog?
-
-Of course the 'bar' commit is not lost. My point is not that you are
-losing commits this way, it is that finding the commit you wanted
-becomes more difficult (e.g., asking "what was at the tip of the branch
-when it was deleted").
-
-> This is trivial.
-> 
-> $ git log -g HEAD | grep -C2 "^Reflog.*moving from branch to"
-> 
-> If the first hit is HEAD@{x} then your branch@{0} is just HEAD@{x+1}.
-
-That isn't too bad. But it really works only for branch@{0}, and it
-doesn't handle any of the non-HEAD cases I mentioned above.
-
-> The naming of deleted reflogs when new branches with same name are 
-> created, or the concatenation of entries for unrelated branches that 
-> might happen to have existed under the same name.
-
-It seems like there are only 3 options: clear the log upon deletion,
-clear the log upon making the new branch of the same name, or appending
-to the old log. I think the third makes the most sense, but there is
-probably room for a config option.
-
-> And because the relevant entries are already in the HEAD reflog anyway, 
-> and trivially retrieved as demonstrated above, I don't think it is worth 
-> adding any additional complexity for what is only a convenience feature 
-> that is not supposed to be used many times a day after all.
-
-Fair enough. I actually also don't think it is personally worth my time
-to implement, which I suppose means I agree with you. But I don't think
-it's a bad idea, and I would have no objection if somebody else
-implemented it (which I guess that you do). I was mainly responding to
-Brian's post about whether it is a reasonable idea; I think it is.
-
--Peff
+diff --git a/builtin-checkout.c b/builtin-checkout.c
+index 0894eae..12000b1 100644
+--- a/builtin-checkout.c
++++ b/builtin-checkout.c
+@@ -67,14 +67,14 @@ static int update_some(const unsigned char *sha1, const char *base, int baselen,
+ static int read_tree_some(struct tree *tree, const char **pathspec)
+ {
+ 	int newfd;
+-	struct lock_file lock_file;
+-	newfd = hold_locked_index(&lock_file, 1);
++	struct lock_file *lock_file = xcalloc(1, sizeof(struct lock_file));
++	newfd = hold_locked_index(lock_file, 1);
+ 	read_cache();
+ 
+ 	read_tree_recursive(tree, "", 0, 0, pathspec, update_some);
+ 
+ 	if (write_cache(newfd, active_cache, active_nr) ||
+-	    commit_locked_index(&lock_file))
++	    commit_locked_index(lock_file))
+ 		die("unable to write new index file");
+ 
+ 	/* update the index with the given tree's info
+-- 
+1.5.4.1.1353.g0d5dd
