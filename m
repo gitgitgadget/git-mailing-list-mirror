@@ -1,220 +1,95 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 2/2] add--interactive: handle initial commit better
-Date: Thu, 14 Feb 2008 05:34:40 -0500
-Message-ID: <20080214103440.GB17951@coredump.intra.peff.net>
-References: <f20febf5dbdc5d3af69bccff8be8e3e2bcec0a90.1202985100.git.peff@peff.net>
+From: Sergei Organov <osv@javad.com>
+Subject: Re: [PATCH] Add function to checkout a branch in git.el
+Date: Thu, 14 Feb 2008 14:47:51 +0300
+Message-ID: <87myq3vjx4.fsf@osv.gnss.ru>
+References: <87wsp8u9m7.dlv@maison.homelinux.org>
+	<20080213163002.GA5670@diana.vm.bytemark.co.uk>
+	<20080213164356.GA5828@diana.vm.bytemark.co.uk>
+	<87zlu4vhon.fsf@osv.gnss.ru>
+	<20080213210420.GA9316@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Kate Rhodes <masukomi@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 14 11:35:26 2008
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: vanicat@debian.org, git@vger.kernel.org,
+	Alexandre Julliard <julliard@winehq.org>
+To: Karl =?utf-8?Q?Hasselstr=C3=B6m?= <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Thu Feb 14 12:48:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JPbQz-0004lN-QL
-	for gcvg-git-2@gmane.org; Thu, 14 Feb 2008 11:35:18 +0100
+	id 1JPcaD-0003pd-PK
+	for gcvg-git-2@gmane.org; Thu, 14 Feb 2008 12:48:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752981AbYBNKen (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Feb 2008 05:34:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752387AbYBNKen
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Feb 2008 05:34:43 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4073 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752596AbYBNKem (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Feb 2008 05:34:42 -0500
-Received: (qmail 4184 invoked by uid 111); 14 Feb 2008 10:34:41 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Thu, 14 Feb 2008 05:34:41 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Feb 2008 05:34:40 -0500
-Content-Disposition: inline
-In-Reply-To: <f20febf5dbdc5d3af69bccff8be8e3e2bcec0a90.1202985100.git.peff@peff.net>
+	id S1754556AbYBNLsL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Feb 2008 06:48:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754605AbYBNLsK
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Feb 2008 06:48:10 -0500
+Received: from javad.com ([216.122.176.236]:1486 "EHLO javad.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754415AbYBNLsI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Feb 2008 06:48:08 -0500
+Received: from osv ([87.236.81.130])
+	by javad.com (8.11.6/8.11.0) with ESMTP id m1EBlxd32132;
+	Thu, 14 Feb 2008 11:47:59 GMT
+	(envelope-from s.organov@javad.com)
+Received: from osv by osv with local (Exim 4.63)
+	(envelope-from <s.organov@javad.com>)
+	id 1JPcZD-0005lU-NF; Thu, 14 Feb 2008 14:47:51 +0300
+In-Reply-To: <20080213210420.GA9316@diana.vm.bytemark.co.uk> ("Karl
+ =?utf-8?Q?Hasselstr=C3=B6m=22's?= message of "Wed\, 13 Feb 2008 22\:04\:20
+ +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73871>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73872>
 
-There were several points where we looked at the HEAD
-commit; for initial commits, this is meaningless. So instead
-we:
+Karl Hasselstr=C3=B6m <kha@treskal.com> writes:
 
-  - show staged status data as a diff against the empty tree
-    instead of HEAD
-  - show file diffs as creation events
-  - use "git rm --cached" to revert instead of going back to
-    the HEAD commit
+> On 2008-02-13 21:23:52 +0300, Sergei Organov wrote:
+>
+>> Karl Hasselstr=C3=B6m <kha@treskal.com> writes:
+>>
+>> >   * if the user enters a name that's not the name of an existing
+>> >     branch, display a prompt like this
+>> >
+>> >       Creating new branch "foo". Where should it start?
+>> >
+>> >     Tab complete on existing tags and branches, but accept any
+>> >     committish. Create the new branch and switch to it.
+>>
+>> It still doesn't allow to detach HEAD at arbitrary tag/committish,
+>> as far as I can see.
+>
+> It wouldn't be hard. Just try to interpret the string supplied by the
+> user as a committish: if successful, check it out; if not, create a
+> new branch by that name.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-This is close to what is in pu, but using '{}' instead of the raw sha1,
-and adding some tests.
+Too much AI for a function, at least to my taste.
 
- git-add--interactive.perl  |   51 ++++++++++++++++++++++----------
- t/t3701-add-interactive.sh |   69 ++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 104 insertions(+), 16 deletions(-)
- create mode 100755 t/t3701-add-interactive.sh
+> Of course, this makes it impossible to create a branch with the same
+> name as an existing committish, but that's probably OK.
 
-diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index 17ca5b8..130bc30 100755
---- a/git-add--interactive.perl
-+++ b/git-add--interactive.perl
-@@ -82,6 +82,15 @@ sub list_untracked {
- my $status_fmt = '%12s %12s %s';
- my $status_head = sprintf($status_fmt, 'staged', 'unstaged', 'path');
- 
-+{
-+	my $initial;
-+	sub is_initial_commit {
-+		$initial = system('git rev-parse HEAD -- >/dev/null 2>&1') != 0
-+			unless defined $initial;
-+		return $initial;
-+	}
-+}
-+
- # Returns list of hashes, contents of each of which are:
- # VALUE:	pathname
- # BINARY:	is a binary path
-@@ -103,8 +112,10 @@ sub list_modified {
- 		return if (!@tracked);
- 	}
- 
-+	my $reference = is_initial_commit() ? '{}' : 'HEAD';
- 	for (run_cmd_pipe(qw(git diff-index --cached
--			     --numstat --summary HEAD --), @tracked)) {
-+			     --numstat --summary), $reference,
-+			     '--', @tracked)) {
- 		if (($add, $del, $file) =
- 		    /^([-\d]+)	([-\d]+)	(.*)/) {
- 			my ($change, $bin);
-@@ -476,21 +487,27 @@ sub revert_cmd {
- 				       HEADER => $status_head, },
- 				     list_modified());
- 	if (@update) {
--		my @lines = run_cmd_pipe(qw(git ls-tree HEAD --),
--					 map { $_->{VALUE} } @update);
--		my $fh;
--		open $fh, '| git update-index --index-info'
--		    or die;
--		for (@lines) {
--			print $fh $_;
-+		if (is_initial_commit()) {
-+			system(qw(git rm --cached),
-+				map { $_->{VALUE} } @update);
- 		}
--		close($fh);
--		for (@update) {
--			if ($_->{INDEX_ADDDEL} &&
--			    $_->{INDEX_ADDDEL} eq 'create') {
--				system(qw(git update-index --force-remove --),
--				       $_->{VALUE});
--				print "note: $_->{VALUE} is untracked now.\n";
-+		else {
-+			my @lines = run_cmd_pipe(qw(git ls-tree HEAD --),
-+						 map { $_->{VALUE} } @update);
-+			my $fh;
-+			open $fh, '| git update-index --index-info'
-+			    or die;
-+			for (@lines) {
-+				print $fh $_;
-+			}
-+			close($fh);
-+			for (@update) {
-+				if ($_->{INDEX_ADDDEL} &&
-+				    $_->{INDEX_ADDDEL} eq 'create') {
-+					system(qw(git update-index --force-remove --),
-+					       $_->{VALUE});
-+					print "note: $_->{VALUE} is untracked now.\n";
-+				}
- 			}
- 		}
- 		refresh();
-@@ -956,7 +973,9 @@ sub diff_cmd {
- 				     HEADER => $status_head, },
- 				   @mods);
- 	return if (!@them);
--	system(qw(git diff -p --cached HEAD --), map { $_->{VALUE} } @them);
-+	my $reference = is_initial_commit() ? '{}' : 'HEAD';
-+	system(qw(git diff -p --cached), $reference, '--',
-+		map { $_->{VALUE} } @them);
- }
- 
- sub quit_cmd {
-diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-new file mode 100755
-index 0000000..c8dc1ac
---- /dev/null
-+++ b/t/t3701-add-interactive.sh
-@@ -0,0 +1,69 @@
-+#!/bin/sh
-+
-+test_description='add -i basic tests'
-+. ./test-lib.sh
-+
-+test_expect_success 'setup (initial)' '
-+	echo content >file &&
-+	git add file &&
-+	echo more >>file &&
-+	echo lines >>file
-+'
-+test_expect_success 'status works (initial)' '
-+	git add -i </dev/null >output &&
-+	grep "+1/-0 *+2/-0 file" output
-+'
-+cat >expected <<EOF
-+new file mode 100644
-+index 0000000..d95f3ad
-+--- /dev/null
-++++ b/file
-+@@ -0,0 +1 @@
-++content
-+EOF
-+test_expect_success 'diff works (initial)' '
-+	(echo d; echo 1) | git add -i >output &&
-+	sed -ne "/new file/,/content/p" <output >diff &&
-+	diff -u expected diff
-+'
-+test_expect_success 'revert works (initial)' '
-+	git add file &&
-+	(echo r; echo 1) | git add -i &&
-+	git ls-files >output &&
-+	! grep . output
-+'
-+
-+test_expect_success 'setup (commit)' '
-+	echo baseline >file &&
-+	git add file &&
-+	git commit -m commit &&
-+	echo content >>file &&
-+	git add file &&
-+	echo more >>file &&
-+	echo lines >>file
-+'
-+test_expect_success 'status works (commit)' '
-+	git add -i </dev/null >output &&
-+	grep "+1/-0 *+2/-0 file" output
-+'
-+cat >expected <<EOF
-+index 180b47c..b6f2c08 100644
-+--- a/file
-++++ b/file
-+@@ -1 +1,2 @@
-+ baseline
-++content
-+EOF
-+test_expect_success 'diff works (commit)' '
-+	(echo d; echo 1) | git add -i >output &&
-+	sed -ne "/^index/,/content/p" <output >diff &&
-+	diff -u expected diff
-+'
-+test_expect_success 'revert works (commit)' '
-+	git add file &&
-+	(echo r; echo 1) | git add -i &&
-+	git add -i </dev/null >output &&
-+	grep "unchanged *+3/-0 file" output
-+'
-+
-+test_done
--- 
-1.5.4.1.123.ge4e8d-dirty
+I'd say it's probably even desirable. Whatever implementation, I'd at
+least check for such a collision and ask for confirmation, provided it'=
+s
+not very time-consuming.
+
+>
+>> I believe the interface should be designed more carefully. Here are
+>> some thoughts/suggestions:
+>
+> Yes, having different commands that do one job each and do it well
+> isn't a bad idea either. I like my idea more, but obviously whoever
+> writes the code gets to decide ...
+
+Yes, sure. I just wanted to point to alternative approach. Or maybe I'l=
+l
+get the time to implement it myself, though I'm more interested in
+git-merge and git-[fetch|pull]-[merge|rebase] implementation, so that
+git.el support at least some of real workflows without resorting to
+plain GIT commands.
+
+-- Sergei.
