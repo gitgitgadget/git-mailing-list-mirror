@@ -1,7 +1,7 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH 3/5] Include the fast-import marks table in crash reports
-Date: Thu, 14 Feb 2008 01:34:40 -0500
-Message-ID: <20080214063440.GC30678@spearce.org>
+Subject: [PATCH 2/5] Include annotated tags in fast-import crash reports
+Date: Thu, 14 Feb 2008 01:34:36 -0500
+Message-ID: <20080214063436.GB30678@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
@@ -11,23 +11,23 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JPXhD-0005F9-4p
-	for gcvg-git-2@gmane.org; Thu, 14 Feb 2008 07:35:47 +0100
+	id 1JPXhC-0005F9-FE
+	for gcvg-git-2@gmane.org; Thu, 14 Feb 2008 07:35:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759614AbYBNGeq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Feb 2008 01:34:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758536AbYBNGeo
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Feb 2008 01:34:44 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:60638 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756328AbYBNGem (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1756199AbYBNGem (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Thu, 14 Feb 2008 01:34:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755527AbYBNGem
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Feb 2008 01:34:42 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:60632 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755112AbYBNGek (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Feb 2008 01:34:40 -0500
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.68)
 	(envelope-from <spearce@spearce.org>)
-	id 1JPXg9-0004VD-Gt; Thu, 14 Feb 2008 01:34:41 -0500
+	id 1JPXg6-0004V9-LZ; Thu, 14 Feb 2008 01:34:38 -0500
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 2DDC220FBC9; Thu, 14 Feb 2008 01:34:40 -0500 (EST)
+	id 00C6D20FBAE; Thu, 14 Feb 2008 01:34:36 -0500 (EST)
 Content-Disposition: inline
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
@@ -39,46 +39,42 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73860>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73861>
 
-If fast-import was not run with --export-marks but we are crashing
-the frontend application developer may still benefit from having
-that information available to them.  We now include the marks table
-as part of the crash report if --export-marks was not supplied on
-the command line.
+If annotated tags were created they exist in a different namespace
+within the fast-import process' internal memory tables so we did
+not export them in the inactive branch table.  Now they are written
+out after the branches, in the order that they were defined by the
+frontend process.
 
 Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
- fast-import.c |   10 ++++++++++
- 1 files changed, 10 insertions(+), 0 deletions(-)
+ fast-import.c |   13 +++++++++++++
+ 1 files changed, 13 insertions(+), 0 deletions(-)
 
 diff --git a/fast-import.c b/fast-import.c
-index 8ef607f..117f38c 100644
+index 9b71ccc..8ef607f 100644
 --- a/fast-import.c
 +++ b/fast-import.c
-@@ -372,6 +372,8 @@ static void write_branch_report(FILE *rpt, struct branch *b)
- 	fputc('\n', rpt);
- }
- 
-+static void dump_marks_helper(FILE *, uintmax_t, struct mark_set *);
-+
- static void write_crash_report(const char *err)
- {
- 	char *loc = git_path("fast_import_crash_%d", getpid());
-@@ -444,6 +446,14 @@ static void write_crash_report(const char *err)
+@@ -430,6 +430,19 @@ static void write_crash_report(const char *err)
+ 			write_branch_report(rpt, b);
  	}
  
- 	fputc('\n', rpt);
-+	fputs("Marks\n", rpt);
-+	fputs("-----\n", rpt);
-+	if (mark_file)
-+		fprintf(rpt, "  exported to %s\n", mark_file);
-+	else
-+		dump_marks_helper(rpt, 0, marks);
++	if (first_tag) {
++		struct tag *tg;
++		fputc('\n', rpt);
++		fputs("Annotated Tags\n", rpt);
++		fputs("--------------\n", rpt);
++		for (tg = first_tag; tg; tg = tg->next_tag) {
++			fputs(sha1_to_hex(tg->sha1), rpt);
++			fputc(' ', rpt);
++			fputs(tg->name, rpt);
++			fputc('\n', rpt);
++		}
++	}
 +
-+	fputc('\n', rpt);
+ 	fputc('\n', rpt);
  	fputs("-------------------\n", rpt);
  	fputs("END OF CRASH REPORT\n", rpt);
- 	fclose(rpt);
 -- 
 1.5.4.1.1309.g833c2
