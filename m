@@ -1,52 +1,67 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH] builtin-checkout: use struct lock_file correctly
-Date: Thu, 14 Feb 2008 13:22:39 -0500 (EST)
-Message-ID: <alpine.LNX.1.00.0802141319380.13593@iabervon.org>
-References: <alpine.LNX.1.00.0802071137490.13593@iabervon.org> <alpine.LSU.1.00.0802141816120.30505@racer.site>
+From: Sergei Organov <osv@javad.com>
+Subject: Re: git clone through http bug?
+Date: Thu, 14 Feb 2008 21:28:14 +0300
+Message-ID: <87r6fftmtd.fsf@osv.gnss.ru>
+References: <873arvv479.fsf@osv.gnss.ru>
+	<ee77f5c20802140936y28be9b39i59753af66e1a5e36@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Feb 14 19:23:41 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "David Symonds" <dsymonds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 14 19:29:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JPik1-0003SH-Qh
-	for gcvg-git-2@gmane.org; Thu, 14 Feb 2008 19:23:26 +0100
+	id 1JPipQ-0005yM-9t
+	for gcvg-git-2@gmane.org; Thu, 14 Feb 2008 19:29:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753253AbYBNSWv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Feb 2008 13:22:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752555AbYBNSWv
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Feb 2008 13:22:51 -0500
-Received: from iabervon.org ([66.92.72.58]:45021 "EHLO iabervon.org"
+	id S1755378AbYBNS2Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Feb 2008 13:28:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754019AbYBNS2Y
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Feb 2008 13:28:24 -0500
+Received: from javad.com ([216.122.176.236]:2156 "EHLO javad.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753253AbYBNSWu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Feb 2008 13:22:50 -0500
-Received: (qmail 6112 invoked by uid 1000); 14 Feb 2008 18:22:39 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 14 Feb 2008 18:22:39 -0000
-In-Reply-To: <alpine.LSU.1.00.0802141816120.30505@racer.site>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1754729AbYBNS2X (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Feb 2008 13:28:23 -0500
+Received: from osv ([87.236.81.130])
+	by javad.com (8.11.6/8.11.0) with ESMTP id m1EISKd74242;
+	Thu, 14 Feb 2008 18:28:21 GMT
+	(envelope-from s.organov@javad.com)
+Received: from osv by osv with local (Exim 4.63)
+	(envelope-from <s.organov@javad.com>)
+	id 1JPiog-0001HE-SH; Thu, 14 Feb 2008 21:28:14 +0300
+In-Reply-To: <ee77f5c20802140936y28be9b39i59753af66e1a5e36@mail.gmail.com> (David Symonds's message of "Thu\, 14 Feb 2008 09\:36\:22 -0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73902>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73903>
 
-On Thu, 14 Feb 2008, Johannes Schindelin wrote:
+"David Symonds" <dsymonds@gmail.com> writes:
+> On Thu, Feb 14, 2008 at 9:27 AM, Sergei Organov <osv@javad.com> wrote:
+>> Hello,
+>>
+>>  I've just cloned the public repo (it's rather small):
+>>
+>>  $ git clone http://ydirson.free.fr/soft/git/cvsps.git
+>>
+>>  and it has created cvsps/.git, but no working copy.
+>
+> That's because the remote side doesn't have a HEAD. Just run "git
+> checkout --track -b master origin/master" to create a local branch the
+> tracks the origin/master branch.
 
-> A lock_file instance must not be cleaned up, since an atexit() handler
-> will try to access even correctly committed lock_files, since it has
-> to make sure that they were correctly committed.
+Thanks, that works:
 
-I think the lock_file API changed between when I wrote this code (using 
-other code as reference) and now; could you check that there aren't other 
-things I have to change as well, since I think you were following the 
-lock_file changes at the time, and I wasn't? I got the most obvious one 
-(calling close() on the fd yourself is no longer right, but I didn't know 
-about this one, and I don't know about any further ones, if there are 
-any.)
+$ git checkout --track -b master origin/master
+warning: You appear to be on a branch yet to be born.
+warning: Forcing checkout of origin/master.
+Already on branch "master"
+$
 
-	-Daniel
-*This .sig left intentionally blank*
+Couldn't GIT be more clever and just do this for me? Besides, the fact
+that it has created HEAD that points nowhere still seems wrong.
+
+-- Sergei.
