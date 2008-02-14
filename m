@@ -1,138 +1,63 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Keeping reflogs on branch deletion
-Date: Thu, 14 Feb 2008 12:32:07 -0500 (EST)
-Message-ID: <alpine.LFD.1.00.0802141147200.2732@xanadu.home>
-References: <76718490802131739n22c56cadn39c1871ea1762dc3@mail.gmail.com>
- <ee77f5c20802131745p23aa1db3j47207f1e6538b0e@mail.gmail.com>
- <18355.42595.377377.433309@lisa.zopyra.com>
- <ee77f5c20802131903i45b1629fpcb4a5c6e4f483052@mail.gmail.com>
- <7vr6fgkxt2.fsf@gitster.siamese.dyndns.org> <20080214140152.GT27535@lavos.net>
- <alpine.LFD.1.00.0802140945520.2732@xanadu.home>
- <20080214151752.GB3889@coredump.intra.peff.net>
- <alpine.LFD.1.00.0802141103280.2732@xanadu.home>
- <20080214163101.GA24673@coredump.intra.peff.net>
+From: "David Symonds" <dsymonds@gmail.com>
+Subject: Re: git clone through http bug?
+Date: Thu, 14 Feb 2008 09:36:22 -0800
+Message-ID: <ee77f5c20802140936y28be9b39i59753af66e1a5e36@mail.gmail.com>
+References: <873arvv479.fsf@osv.gnss.ru>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Brian Downing <bdowning@lavos.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	David Symonds <dsymonds@gmail.com>,
-	Bill Lear <rael@zopyra.com>,
-	Jay Soffian <jaysoffian@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Feb 14 18:33:32 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Sergei Organov" <osv@javad.com>
+X-From: git-owner@vger.kernel.org Thu Feb 14 18:37:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JPhxM-00082D-0e
-	for gcvg-git-2@gmane.org; Thu, 14 Feb 2008 18:33:08 +0100
+	id 1JPi14-0001N8-Nc
+	for gcvg-git-2@gmane.org; Thu, 14 Feb 2008 18:36:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758809AbYBNRcL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Feb 2008 12:32:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753348AbYBNRcK
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Feb 2008 12:32:10 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:62253 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758559AbYBNRcI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Feb 2008 12:32:08 -0500
-Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR001.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JW800HZROPJ9MA0@VL-MO-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 14 Feb 2008 12:32:07 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <20080214163101.GA24673@coredump.intra.peff.net>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+	id S1754364AbYBNRgY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Feb 2008 12:36:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754075AbYBNRgY
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Feb 2008 12:36:24 -0500
+Received: from rv-out-0910.google.com ([209.85.198.184]:37991 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753886AbYBNRgX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Feb 2008 12:36:23 -0500
+Received: by rv-out-0910.google.com with SMTP id k20so274227rvb.1
+        for <git@vger.kernel.org>; Thu, 14 Feb 2008 09:36:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=+IgHKPEJN9d0mLVbaz3U37NjLgx2axiFE7Pz5AWOEKg=;
+        b=sSvveTJRwoI2yDiXctx41IuiF0+ovZAMVr5pBx0m0AirdSCGFQzzOOfrnZ9LiKyGFD2kHPh9jmIacU0kfsHsTf8KsvP9SE4KncMlUwdvbo7oB8/14luBqpLOTdlt3K8+GQNYgSP/k8i9KJyrOeBZOzCumgVPZOY7bmQsAa5/RDY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=lwe5vhy7AA2k3aqrtNk6Y8bhWMshbrH6kvyXa1NuK+wSCHoU4NYUiqFAEPZbCIE177CcNOxkmm6pg3huJYNLLcQWVyYh4vAVP45coXrY83SxdW7MR7D3lvyLOCE7443GeZs3hl8Ln11FW7adeh7cUdC6ElWij3YbXDSpN7TQ0YU=
+Received: by 10.141.122.20 with SMTP id z20mr1145988rvm.239.1203010582131;
+        Thu, 14 Feb 2008 09:36:22 -0800 (PST)
+Received: by 10.140.135.17 with HTTP; Thu, 14 Feb 2008 09:36:22 -0800 (PST)
+In-Reply-To: <873arvv479.fsf@osv.gnss.ru>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73897>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73898>
 
-On Thu, 14 Feb 2008, Jeff King wrote:
+On Thu, Feb 14, 2008 at 9:27 AM, Sergei Organov <osv@javad.com> wrote:
+> Hello,
+>
+>  I've just cloned the public repo (it's rather small):
+>
+>  $ git clone http://ydirson.free.fr/soft/git/cvsps.git
+>
+>  and it has created cvsps/.git, but no working copy.
 
-> On Thu, Feb 14, 2008 at 11:16:20AM -0500, Nicolas Pitre wrote:
-> 
-> > > How is that any different than accumulating old entries in reflog files
-> > > for branches that _do_ exist? In both cases, they should be dealt with
-> > > via time-based pruning.
-> > 
-> > Branches that do exist are more likely to be interesting to you than 
-> > branches that, hopefully in 99% of all cases, you willfully deleted.
-> 
-> I agree that they tend to be more interesting, but the point of reflogs
-> is to have a log of operations performed for later examination. We
-> already have a well-defined boundary for "interesting": things that are
-> older than N days. Why introduce another such boundary? Are your reflogs
-> for deleted branches so large that you aren't willing to keep them?
-
-I typically have lots of branches.  Many of those are fairly dynamic -- 
-they come and go.  Keeping reflogs for them would only clutter the 
-reflog space, especially when the same names are reused.  I prefer to 
-have a clean reflog for the currently alive branch of a given name 
-rather than having a log of anything that occurred under that name.  And 
-if I really want to find out about that old branch then there is always 
-the HEAD reflog.
-
-> (There is actually one reason I can think of to get rid of reflogs for
-> deleted branches. Branch naming rules depend on which branches exist.
-> Thus I can have "foo/bar" only if "foo" does not exist, which means that
-> I can only have a reflog for "foo/bar" if the one for "foo" has been
-> deleted. But that is a limitation of the current scheme for storing
-> reflogs).
-
-Sure, and that limitation is IMHO quite sane.  I don't think it is worth 
-stretching it just for the convenience of having refs for deleted 
-branches elsewhere than from the HEAD reflog.
-
-> For one thing, just because a modification wasn't _yours_ doesn't mean
-> it isn't valuable. It entered your repository, and therefore it may be
-> of interest.
-
-And if you delete it then you can retrieve it again from its origin.  
-If, on the other hand, you _checkout_ that branch (it now entered the 
-HEAD reflog), and _commit_ to it (which commit would be unreachable 
-from other sources) then _that_ is a ref worth keeping a log of.
-
-> Secondly, you _can_ change a ref without it being the HEAD. Try
-> 
->   git branch -f foo bar
-
-Sure.  And what information would become unreachable if you delete 'foo' 
-at that point?  The 'bar' commit is not lost, and likely to still exist 
-in some other reflog.
-
-> > > In other words, I don't see "oops, I deleted this branch and its history
-> > > is valuable to me" as significantly less likely than "oops, I got rid of
-> > > this commit and its history is valuable to me."
-> > 
-> > But you still have it, in the HEAD reflog, at least for your own 
-> > changes. I therefore don't see the value of having to keep named branch 
-> > reflogs around just for the small convenience, especially with the 
-> > semantic issues that comes with it.
-> 
-> My HEAD reflog has almost 1000 items in it. Finding out which commit
-> would have been branch@{0} in there is non-trivial.
-
-This is trivial.
-
-$ git log -g HEAD | grep -C2 "^Reflog.*moving from branch to"
-
-If the first hit is HEAD@{x} then your branch@{0} is just HEAD@{x+1}.
-
-> I agree that this information is less likely to be interesting than the
-> usual use of reflogs. But I don't agree that the semantics are that
-> difficult. What issues are you talking about?
-
-The naming of deleted reflogs when new branches with same name are 
-created, or the concatenation of entries for unrelated branches that 
-might happen to have existed under the same name.
-
-And because the relevant entries are already in the HEAD reflog anyway, 
-and trivially retrieved as demonstrated above, I don't think it is worth 
-adding any additional complexity for what is only a convenience feature 
-that is not supposed to be used many times a day after all.
+That's because the remote side doesn't have a HEAD. Just run "git
+checkout --track -b master origin/master" to create a local branch the
+tracks the origin/master branch.
 
 
-Nicolas
+Dave.
