@@ -1,113 +1,89 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <Uwe.Kleine-Koenig@digi.com>
-Subject: Re: another git rebase -i problem
-Date: Thu, 14 Feb 2008 14:02:28 +0100
-Message-ID: <20080214130228.GB28472@digi.com>
-References: <20080214093730.GA20408@digi.com> <alpine.LSU.1.00.0802141232070.30505@racer.site>
+From: bdowning@lavos.net (Brian Downing)
+Subject: Keeping reflogs on branch deletion
+Date: Thu, 14 Feb 2008 08:01:52 -0600
+Message-ID: <20080214140152.GT27535@lavos.net>
+References: <76718490802131739n22c56cadn39c1871ea1762dc3@mail.gmail.com> <ee77f5c20802131745p23aa1db3j47207f1e6538b0e@mail.gmail.com> <18355.42595.377377.433309@lisa.zopyra.com> <ee77f5c20802131903i45b1629fpcb4a5c6e4f483052@mail.gmail.com> <7vr6fgkxt2.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Feb 14 14:03:29 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: David Symonds <dsymonds@gmail.com>, Bill Lear <rael@zopyra.com>,
+	Jay Soffian <jaysoffian@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 14 15:02:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JPdkN-00025U-RM
-	for gcvg-git-2@gmane.org; Thu, 14 Feb 2008 14:03:28 +0100
+	id 1JPefX-0004oO-P0
+	for gcvg-git-2@gmane.org; Thu, 14 Feb 2008 15:02:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759152AbYBNNCx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Feb 2008 08:02:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759605AbYBNNCx
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Feb 2008 08:02:53 -0500
-Received: from mail29.messagelabs.com ([216.82.249.147]:55627 "HELO
-	mail29.messagelabs.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1759034AbYBNNCw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Feb 2008 08:02:52 -0500
-X-VirusChecked: Checked
-X-Env-Sender: Uwe.Kleine-Koenig@digi.com
-X-Msg-Ref: server-7.tower-29.messagelabs.com!1202994124!5969738!7
-X-StarScan-Version: 5.5.12.14.2; banners=-,-,-
-X-Originating-IP: [66.77.174.21]
-Received: (qmail 24570 invoked from network); 14 Feb 2008 13:02:46 -0000
-Received: from unknown (HELO owa.digi.com) (66.77.174.21)
-  by server-7.tower-29.messagelabs.com with SMTP; 14 Feb 2008 13:02:46 -0000
-Received: from mtk-sms-mail01.digi.com ([10.10.8.120]) by owa.digi.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Thu, 14 Feb 2008 07:02:32 -0600
-Received: from dor-sms-mail1.digi.com ([10.49.1.105]) by mtk-sms-mail01.digi.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Thu, 14 Feb 2008 07:02:31 -0600
-Received: from zentaur.digi.com ([10.100.10.144]) by dor-sms-mail1.digi.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Thu, 14 Feb 2008 14:02:28 +0100
-Received: by zentaur.digi.com (Postfix, from userid 1080)
-	id 972361B27B; Thu, 14 Feb 2008 14:02:28 +0100 (CET)
+	id S1752719AbYBNOBz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Feb 2008 09:01:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753142AbYBNOBy
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Feb 2008 09:01:54 -0500
+Received: from mxsf07.insightbb.com ([74.128.0.77]:38665 "EHLO
+	mxsf07.insightbb.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752251AbYBNOBy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Feb 2008 09:01:54 -0500
+X-IronPort-AV: E=Sophos;i="4.25,352,1199682000"; 
+   d="scan'208";a="247393072"
+Received: from unknown (HELO asav01.insightbb.com) ([172.31.249.124])
+  by mxsf07.insightbb.com with ESMTP; 14 Feb 2008 09:01:52 -0500
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Ah4FAGrYs0dKhvkY/2dsb2JhbACBWa0o
+X-IronPort-AV: E=Sophos;i="4.25,352,1199682000"; 
+   d="scan'208";a="116833185"
+Received: from 74-134-249-24.dhcp.insightbb.com (HELO mail.lavos.net) ([74.134.249.24])
+  by asav01.insightbb.com with ESMTP; 14 Feb 2008 09:01:52 -0500
+Received: by mail.lavos.net (Postfix, from userid 1000)
+	id 7D130309F21; Thu, 14 Feb 2008 08:01:52 -0600 (CST)
 Content-Disposition: inline
-In-Reply-To: <alpine.LSU.1.00.0802141232070.30505@racer.site>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-OriginalArrivalTime: 14 Feb 2008 13:02:28.0926 (UTC) FILETIME=[DA6155E0:01C86F09]
-X-TM-AS-Product-Ver: SMEX-8.0.0.1181-5.000.1023-15728.003
-X-TM-AS-Result: No--17.290800-8.000000-31
-X-TM-AS-User-Approved-Sender: No
-X-TM-AS-User-Blocked-Sender: No
+In-Reply-To: <7vr6fgkxt2.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73876>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73877>
 
-Johannes Schindelin wrote:
-> Hi,
->=20
-> On Thu, 14 Feb 2008, Uwe Kleine-K=F6nig wrote:
->=20
-> > After applying the patch below, the test fails. [describes a case w=
-here=20
-> > all patches were applied upstream already]
->=20
-> This is by design.  If no patches are to be applied, there is nothing=
- you=20
-> can do interactively.  And git rebase -i should tell you as much:
->=20
-> 	Nothing to do
->=20
-> Maybe it should say
->=20
-> 	There is nothing you can rebase interactively
->=20
-> But I don't like that.
->
-> Alternatively, git rebase -i could reset --hard to upstream, but I do=
-n't=20
-> like that either: if I rebase -i, it is because I want to reorder/arr=
-ange=20
-> patches.  If there is no patch to be rearranged, I did something wron=
-g.
-Ah, OK this disqualifies my test case, but the problem is real:
+On Wed, Feb 13, 2008 at 07:43:21PM -0800, Junio C Hamano wrote:
+> People often mistake that the safety of "branch -d" is to not
+> lose the commit (i.e. not making it unreachable), but that is
+> not the case.  That safety already exists in HEAD reflogs.
+> 
+> The "branch -d" safety is about not losing the particular point.
+> The information we really are trying to protect is "this branch
+> points at _that commit_", which is just as important if not
+> more.
 
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive=
-=2Esh
-index e5ed745..f0499e6 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -362,4 +362,11 @@ test_expect_success 'rebase with a file named HEAD=
- in worktree' '
-=20
- '
-=20
-+test_expect_success 'rebase patch already merged' '
-+
-+	git checkout -b branch4 twerp &&
-+	FAKE_LINES=3D"1 2 4 3" git rebase -i branch3
-+
-+'
-+
- test_done
+This actually brings up something I've been intending to ask.
 
-Best regards
-Uwe
+When deleting a branch, is there any reason we can't add a deletion
+entry into the reflog and keep the reflog around?  This would seem to be
+a lot safer; I know I've been burned by expecting the reflog safety net
+to be there, and surprised that it's not when I've deleted a branch.
 
---=20
-Uwe Kleine-K=F6nig, Software Engineer
-Digi International GmbH Branch Breisach, K=FCferstrasse 8, 79206 Breisa=
-ch, Germany
-Tax: 315/5781/0242 / VAT: DE153662976 / Reg. Amtsgericht Dortmund HRB 1=
-3962
+I expect that the reflog entry would look something like this:
+
+0000000000000000000000000000000000000000 4685dfedd47683a476e75166b5c273c0269b7e54 Brian Downing <bdowning@lavos.net> 1202996833 -0600   branch: Created from ubuntu-dapper
+4685dfedd47683a476e75166b5c273c0269b7e54 0000000000000000000000000000000000000000 Brian Downing <bdowning@lavos.net> 1202996863 -0600   branch: Deleted
+
+A couple of problems I've noticed that would have to be fixed for this
+to work:
+
+* git log -g (and anything else that can take a reflog) would have to be
+  fixed or modified to allow for taking branches that no longer exist:
+
+  :; ls .git/logs/refs/heads/foo
+  .git/logs/refs/heads/foo
+  :; git log -g foo
+  fatal: ambiguous argument 'foo': unknown revision or path not in the working tree.
+  Use '--' to separate paths from revisions
+
+  My uneducated suspicion is that this may be somewhat hard.
+
+* If the above did work, it would be nice for the deletion entry to
+  result in a nice "branch was deleted" entry in log -g output.  Today,
+  that entry is missing in its entirety.
+
+-bcd
