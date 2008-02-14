@@ -1,77 +1,60 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] RFC: git lazy clone proof-of-concept
-Date: Thu, 14 Feb 2008 15:16:35 -0500 (EST)
-Message-ID: <alpine.LFD.1.00.0802141512580.2732@xanadu.home>
-References: <200802081828.43849.kendy@suse.cz>
- <m3ejbngtnn.fsf@localhost.localdomain> <200802091627.25913.kendy@suse.cz>
- <alpine.LFD.1.00.0802092200350.2732@xanadu.home>
- <alpine.LSU.1.00.0802101640570.11591@racer.site>
- <alpine.LSU.1.00.0802101845320.11591@racer.site>
- <alpine.LSU.1.00.0802122036150.3870@racer.site>
- <alpine.LSU.1.00.0802141917420.30505@racer.site>
- <m3y79nb8xk.fsf@localhost.localdomain>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Brandon Casey <casey@nrlssc.navy.mil>,
-	Jan Holesovsky <kendy@suse.cz>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 14 21:17:15 2008
+From: Wincent Colaiuta <win@wincent.com>
+Subject: Re: Keeping reflogs on branch deletion
+Date: Thu, 14 Feb 2008 21:17:00 +0100
+Message-ID: <238738C7-960C-4847-A7F0-137712F7A7E8@wincent.com>
+References: <ee77f5c20802131745p23aa1db3j47207f1e6538b0e@mail.gmail.com> <18355.42595.377377.433309@lisa.zopyra.com> <ee77f5c20802131903i45b1629fpcb4a5c6e4f483052@mail.gmail.com> <7vr6fgkxt2.fsf@gitster.siamese.dyndns.org> <20080214140152.GT27535@lavos.net> <alpine.LFD.1.00.0802140945520.2732@xanadu.home> <20080214151752.GB3889@coredump.intra.peff.net> <alpine.LFD.1.00.0802141103280.2732@xanadu.home> <20080214163101.GA24673@coredump.intra.peff.net> <alpine.LFD.1.00.0802141147200.2732@xanadu.home> <20080214175724.GA30689@coredump.intra.peff.net>
+Mime-Version: 1.0 (Apple Message framework v915)
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed	delsp=yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Nicolas Pitre <nico@cam.org>, Brian Downing <bdowning@lavos.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	David Symonds <dsymonds@gmail.com>,
+	Bill Lear <rael@zopyra.com>,
+	Jay Soffian <jaysoffian@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Feb 14 21:19:36 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JPkW8-0008IX-8s
-	for gcvg-git-2@gmane.org; Thu, 14 Feb 2008 21:17:12 +0100
+	id 1JPkY7-0000fQ-5L
+	for gcvg-git-2@gmane.org; Thu, 14 Feb 2008 21:19:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757362AbYBNUQi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Feb 2008 15:16:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757215AbYBNUQi
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Feb 2008 15:16:38 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:18737 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754781AbYBNUQh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Feb 2008 15:16:37 -0500
-Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR003.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JW80010VWBN3F90@VL-MO-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 14 Feb 2008 15:16:36 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <m3y79nb8xk.fsf@localhost.localdomain>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+	id S932592AbYBNUSF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Feb 2008 15:18:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760668AbYBNUSE
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Feb 2008 15:18:04 -0500
+Received: from wincent.com ([72.3.236.74]:53818 "EHLO s69819.wincent.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1763601AbYBNUSB convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 14 Feb 2008 15:18:01 -0500
+Received: from cuzco.lan (localhost [127.0.0.1])
+	(authenticated bits=0)
+	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id m1EKH1rK017796;
+	Thu, 14 Feb 2008 14:17:02 -0600
+In-Reply-To: <20080214175724.GA30689@coredump.intra.peff.net>
+X-Mailer: Apple Mail (2.915)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73913>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73914>
 
-On Thu, 14 Feb 2008, Jakub Narebski wrote:
+El 14/2/2008, a las 18:57, Jeff King escribi=F3:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > The result is:
-> > 
-> > $ ls -la objects/pack/pack-e4dc6da0a10888ec4345490575efc587b7523b45.pack
-> > -rwxrwxrwx 1 root root 1638490531 2008-02-14 17:51 
-> > objects/pack/pack-e4dc6da0a10888ec4345490575efc587b7523b45.pack
-> > 
-> > 1.6G looks much better than 2.4G, wouldn't you say?  Jan, if you want it, 
-> > please give me a place to upload it to.
-> 
-> Brandon Casey wrote:
-> 
-> > I have successfully repacked this repo a few times on a 2.1GHz
-> > system with 16G.
-> > 
-> > The smallest attained pack was about 1.45G (1556569742B).
-> 
-> Hmmm... I wonder if packv4 would help...
+> Of course the 'bar' commit is not lost. My point is not that you are
+> losing commits this way, it is that finding the commit you wanted
+> becomes more difficult (e.g., asking "what was at the tip of the =20
+> branch
+> when it was deleted").
 
-No.  Well, it would help a bit, maybe in the 10-20% range, but nothing 
-as significant as going from 2.6G to 1.5G, or like in the GCC case, from 
-1.3G to 230M.
+I agree that keeping around reflogs for deleted branches would be a =20
+nice convenience, provided they were pruned after an appropriate =20
+interval. Space isn't really the concern, but clutter is, and that can =
+=20
+be fixed with pruning.
 
-
-Nicolas
+Cheers,
+Wincent
