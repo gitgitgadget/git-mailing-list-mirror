@@ -1,55 +1,141 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: "Vincent Legoll" <vincent.legoll@gmail.com>
 Subject: Re: [PATCH][EGIT] README typo fixes
-Date: Thu, 14 Feb 2008 23:18:46 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802142318240.30505@racer.site>
+Date: Fri, 15 Feb 2008 00:19:12 +0100
+Message-ID: <4727185d0802141519q39cc8f89yc9da993244e71cab@mail.gmail.com>
 References: <4727185d0802141447j4b34958eg5dea5daf52346345@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: spearce@spearce.org, git@vger.kernel.org
-To: Vincent Legoll <vincent.legoll@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 15 00:19:25 2008
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_4734_31255028.1203031152768"
+To: spearce@spearce.org, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 15 00:19:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JPnMT-00070W-AX
-	for gcvg-git-2@gmane.org; Fri, 15 Feb 2008 00:19:25 +0100
+	id 1JPnMu-00077s-JR
+	for gcvg-git-2@gmane.org; Fri, 15 Feb 2008 00:19:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756337AbYBNXSv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Feb 2008 18:18:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756389AbYBNXSv
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Feb 2008 18:18:51 -0500
-Received: from mail.gmx.net ([213.165.64.20]:48967 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756309AbYBNXSu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Feb 2008 18:18:50 -0500
-Received: (qmail invoked by alias); 14 Feb 2008 23:18:48 -0000
-Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO [192.168.1.75]) [86.138.198.40]
-  by mail.gmx.net (mp020) with SMTP; 15 Feb 2008 00:18:48 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/hgu4kF0Lh5pBFZvqjQGibfl0twgz4iv+1QSUmiR
-	LWOKz7i8iN1pmu
-X-X-Sender: gene099@racer.site
+	id S1756456AbYBNXTS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Feb 2008 18:19:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756326AbYBNXTS
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Feb 2008 18:19:18 -0500
+Received: from rn-out-0910.google.com ([64.233.170.189]:10605 "EHLO
+	rn-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755479AbYBNXTR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Feb 2008 18:19:17 -0500
+Received: by rn-out-0910.google.com with SMTP id i24so2349670rng.19
+        for <git@vger.kernel.org>; Thu, 14 Feb 2008 15:19:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:references;
+        bh=40AMdAl5StCPxOUKNrZ+atjDLER2DWMIt/ifsIxHAIs=;
+        b=FIMdbD6HySRPpL8ia5xNwbRg5Qurqh7w7rlxijRWhM8ysSkGGvV/QS5106VTx/A+Z+KSISyJO38O2Yo0Hvp/yYZdbSaFBI6nVjW7vQ4LOnZTzZD4iXcURHjut3i6UdNYSEL+N18tvuphs5dnaXUqG6KdHdqEzDbt0aUsP3kSZJE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:in-reply-to:mime-version:content-type:references;
+        b=WdvQrKsAHjj/H5rT/jHTycBHKrVZ3t5X98os3cuq8Ni959yiWC+I26aeM6kb1QQZNHwUZMb6ddkRdcycoQr19N2/yU+rcskmLGdB5wfyz9KcW18SaOY92dUVlrhXUBA7Gkk9Z3A6m0/spO5qLRepymdHzeaEr6iLF5StyNkiL/E=
+Received: by 10.142.48.14 with SMTP id v14mr1716019wfv.133.1203031152901;
+        Thu, 14 Feb 2008 15:19:12 -0800 (PST)
+Received: by 10.70.84.14 with HTTP; Thu, 14 Feb 2008 15:19:12 -0800 (PST)
 In-Reply-To: <4727185d0802141447j4b34958eg5dea5daf52346345@mail.gmail.com>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73921>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73922>
 
-Hi,
+------=_Part_4734_31255028.1203031152768
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 
-On Thu, 14 Feb 2008, Vincent Legoll wrote:
+Looks like I forgot the patch, here it is...
 
-> Reading egit README file I fixed a bunch of typos, random
-> whitespace and such small things, and produced the attached
-> patch, could you integrate it in your repository ?
+-- 
+Vincent Legoll
 
-Umm, which attached patch?
+------=_Part_4734_31255028.1203031152768
+Content-Type: application/octet-stream;
+ name=0001-Fix-typos-whitespace-etc.patch
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_fcnxnh940
+Content-Disposition: attachment;
+ filename=0001-Fix-typos-whitespace-etc.patch
 
-And shouldn't you rather direct this at Robin Rosenberg?
+RnJvbSA5Y2M4YjIwZjc1ZWIxMGNiNDk3ZDZkZmJiMDE1OTEzZTA5MzE3ZTI2IE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBWaW5jZW50IExlZ29sbCA8dmluY2VudC5sZWdvbGxAZ21haWwu
+Y29tPgpEYXRlOiBUaHUsIDE0IEZlYiAyMDA4IDIzOjE1OjI2ICswMTAwClN1YmplY3Q6IFtQQVRD
+SF0gLSBGaXggdHlwb3MsIHdoaXRlc3BhY2UsIGV0Yy4uLgoKLS0tCiBSRUFETUUgfCAgIDI1ICsr
+KysrKysrKysrKystLS0tLS0tLS0tLS0KIDEgZmlsZXMgY2hhbmdlZCwgMTMgaW5zZXJ0aW9ucygr
+KSwgMTIgZGVsZXRpb25zKC0pCgpkaWZmIC0tZ2l0IGEvUkVBRE1FIGIvUkVBRE1FCmluZGV4IDdm
+NmQxNmEuLjVlZjg0YmUgMTAwNjQ0Ci0tLSBhL1JFQURNRQorKysgYi9SRUFETUUKQEAgLTkxLDcg
+KzkxLDcgQEAgdGhyZWUgZm9yIHBhY2thZ2luZy4KICAgaW4gZnV0dXJlIHZlcnNpb25zLgogCiAt
+IE5ld2VyIHZlcnNpb24gb2YgRUdpdC9KR2l0IG1heSBpbXBsZW1lbnQgbmV3IGZ1bmN0aW9uYWxp
+dHksIHJlbW92ZQotICBleGlzdGluZyBmdW5jdGlvcyBhbmQgY2hhbmdlIG90aGVycyB3aXRob3V0
+IG90aGVyIG5vdGljZSB0aGFuIHdoYXQKKyAgZXhpc3RpbmcgZnVuY3Rpb25zIGFuZCBjaGFuZ2Ug
+b3RoZXJzIHdpdGhvdXQgb3RoZXIgbm90aWNlIHRoYW4gd2hhdAogICBpcyB3cml0dGVuIGluIHRo
+ZSBjb21taXQgbG9nIGFuZCBzb3VyY2UgZmlsZXMgdGhlbXNlbHZlcy4KIAogCkBAIC0xMjQsOCAr
+MTI0LDggQEAgdGhyZWUgZm9yIHBhY2thZ2luZy4KIAogICAgICogQ2hlY2tvdXQgaW4gZGlydHkg
+d29ya2luZyBkaXJlY3RvcnkgaWYgdHJpdmlhbC4KIAotICAgICogV2FsayBhIHRoZSBoaXN0b3J5
+IGZyb20gYSBnaXZlbiBzZXQgb2YgY29tbWl0cyBsb29raW5nIGZvciBjb21taXRzCi0gICAgICBp
+bnRyb2R1Y2luZyBjaGFuZ2VkIGluIGEgcGF0aC4KKyAgICAqIFdhbGsgdGhlIGhpc3RvcnkgZnJv
+bSBhIGdpdmVuIHNldCBvZiBjb21taXRzIGxvb2tpbmcgZm9yIGNvbW1pdHMKKyAgICAgIGludHJv
+ZHVjaW5nIGNoYW5nZXMgaW4gZmlsZXMgdW5kZXIgYSBzcGVjaWZpZWQgcGF0aC4KIAogICBvcmcu
+c3BlYXJjZS5lZ2l0LmNvcmUvCiAKQEAgLTE1NCw3ICsxNTQsNyBAQCB0aHJlZSBmb3IgcGFja2Fn
+aW5nLgogICAgICAgZm9yIGV4aXN0aW5nIHJlcG9zaXRvcnkgZGlyZWN0b3JpZXMuCiAKICAgICAq
+IFRlYW0gYWN0aW9uczogdHJhY2sgKGFkZCksIHVudHJhY2sgKHJlbW92ZSksIGRpc2Nvbm5lY3Qs
+IHNob3cKLSAgICAgIGhpc3RvcnksIGNvbXBhcmUgdmVyc2lvbiwgc2hvdyBoaXN0b3J5LgorICAg
+ICAgaGlzdG9yeSwgY29tcGFyZSB2ZXJzaW9uLgogCiAgICAgKiBSZXNvdXJjZSBkZWNvcmF0b3Ig
+c2hvd3MgZmlsZS9kaXJlY3Rvcnkgc3RhdGUgaW4gdGhlIHBhY2thZ2UKICAgICAgIGV4cGxvcmVy
+IGFuZCBvdGhlciB2aWV3cy4KQEAgLTE2Niw3ICsxNjYsNyBAQCB0aHJlZSBmb3IgcGFja2FnaW5n
+LgogCiAgICAgICAgICAgICA9PSBNaXNzaW5nIEZlYXR1cmVzICAgICAgICAgICAgICAgID09CiAK
+LVRoZXJlIGFyZSBhIGxvdCBvZiBtaXNzaWcgZmVhdHVyZXMuIFlvdSBuZWVkIHRoZSByZWFsIEdp
+dCBmb3IgdGhpcy4KK1RoZXJlIGFyZSBhIGxvdCBvZiBtaXNzaW5nIGZlYXR1cmVzLiBZb3UgbmVl
+ZCB0aGUgcmVhbCBHaXQgZm9yIHRoaXMuCiBGb3Igc29tZSBvcGVyYXRpb25zIGl0IG1heSBqdXN0
+IGJlIHRoZSBwcmVmZXJyZWQgc29sdXRpb24gYWxzby4gVGhlcmUKIGFyZSBub3QganVzdCBhIGNv
+bW1hbmQgbGluZSwgdGhlcmUgaXMgZS5nLiBnaXQtZ3VpIHRoYXQgbWFrZXMgY29tbWl0dGluZwog
+cGFydGlhbCBmaWxlcyBzaW1wbGUuCkBAIC0xNzYsMTUgKzE3NiwxNSBAQCBwYXJ0aWFsIGZpbGVz
+IHNpbXBsZS4KIAogLSBNZXJnaW5nLiAKIAotLSBSZXBhY2tpbmcgZnJvbSB3aXRoaW5lIHRoZSBw
+bHVnaW4uCistIFJlcGFja2luZyBmcm9tIHdpdGhpbiB0aGUgcGx1Z2luLgogCiAtIEdlbmVyYXRl
+IGEgR0lUIGZvcm1hdCBwYXRjaC4KIAogLSBBcHBseSBhIEdJVCBmb3JtYXQgcGF0Y2guCiAKLS0g
+RG9jdW1lbnRhdGlvbi4gIDotKQorLSBEb2N1bWVudGF0aW9uLiA6LSkKIAotLSBXaW5kb3dzIHN1
+cHBvcnQgaXMgbmV3IGFuZCB2ZXJ5IGxpdHRsZSB0ZXN0ZWQuIERvIG5vdCBibGFtZSB1cyBpZgor
+LSBXaW5kb3dzIHN1cHBvcnQgaXMgbmV3IGFuZCB2ZXJ5IGxpZ3RobHkgdGVzdGVkLiBEbyBub3Qg
+YmxhbWUgdXMgaWYKICAgaXQgYmxvd3MsIGJ1dCB0ZWxsIHVzIGFib3V0IGl0IGFuZCB3aGF0IHlv
+dSBkaWQuIERvdWJsZSBjaGVjawogICBldmVyeXRoaW5nLgogCkBAIC0xOTUsNyArMTk1LDcgQEAg
+cGFydGlhbCBmaWxlcyBzaW1wbGUuCiAtIHN1Ym1vZHVsZSBzdXBwb3J0CiAgIFN1Ym1vZHVsZXMg
+YXJlIG5vdCBzdXBwb3J0ZWQgb3IgZXZlbiByZWNvZ25pemVkLgogCi0tIFRoZSBFY2xpcHNlIHBs
+eWdpbiBjYW5ub3QgaGFuZGxlIGZpbGVzIG91dHNpZGUgYW55IEVjbGlwc2UgcHJvamVjdC4gWW91
+CistIFRoZSBFY2xpcHNlIHBsdWdpbiBjYW5ub3QgaGFuZGxlIGZpbGVzIG91dHNpZGUgYW55IEVj
+bGlwc2UgcHJvamVjdC4gWW91CiAgIG5lZWQgY29tbWl0IGNoYW5nZXMgdG8gc3VjaCBmaWxlcyBv
+dXRzaWRlIG9mIEVjbGlwc2UuCiAKIC0gU3BlZWQgaW4gc29tZSBhcmVhcwpAQCAtMjA4LDcgKzIw
+OCw3IEBAIHBhcnRpYWwgZmlsZXMgc2ltcGxlLgogICB0aGUgcGx1Z2luIGhhdmUgYmVlbiBvcHRp
+bWl6ZWQgYnV0IG5vdCBhbGwgYW5kIG5vdCBjb25jbHVzaXZlbHkuIEluIGdlbmVyYWwKICAgaG93
+ZXZlciBKYXZhIGFsbW9zdCBhbHdheXMgbmVlZHMgbW9yZSBtZW1vcnkgdGhhbiBhbiBhcHBsaWNh
+dGlvbiB3cml0dGVuIGluIAogICBlLmcuIEMuIEluIHBhcnRpY3VsYXIgdGhlcmUgaXMgYW4gb3Zl
+cmhlYWQgZnJvbSB0aGUgcmF0aGVyIGxhcmdlIHN0YW5kYXJkCi0gIGxpYnJhcmllcyB0aGF0IGEg
+bm9ybWFsIEphdmEgaW5zdGFsbGF0aW9ucyBjb21lcyB3aXRoLiBTZWUgdGhlIEFDTSByZXBvcnQ6
+CisgIGxpYnJhcmllcyB0aGF0IGEgbm9ybWFsIEphdmEgaW5zdGFsbGF0aW9uIGNvbWVzIHdpdGgu
+IFNlZSB0aGUgQUNNIHJlcG9ydDoKIAogCVByZWNoZWx0LCBMLiAxOTk5LiBUZWNobmljYWwgb3Bp
+bmlvbjogY29tcGFyaW5nIEphdmEgdnMuIEMvQysrCiAgICAgICAgIGVmZmljaWVuY3kgZGlmZmVy
+ZW5jZXMgdG8gaW50ZXJwZXJzb25hbCBkaWZmZXJlbmNlcy4gQ29tbXVuLiBBQ00gNDIsIApAQCAt
+MjIyLDcgKzIyMiw3IEBAIHBhcnRpYWwgZmlsZXMgc2ltcGxlLgogICBUaGUgY29uY2x1c2lvbiBm
+cm9tIGhhdmluZyBhYm91dCAzMCBwcm9ncmFtbWVycyB3cml0ZSBhIHByb2dyYW0gdG8gdGhlIHNh
+bWUKICAgc3BlY2lmaWNhdGlvbiB1c2luZyB0aGVpciBvd24gY2hvaWNlIG9mIGxhbmd1YWdlIChm
+cm9tIEMsQysrIGFuZCBKYXZhKSBpcwogICB0aGF0IHRoZSBza2lsbHMgb2YgdGhlIHByb2dyYW1t
+ZXIgaXMgd2hhdCBkZXRlcm1pbmVzIHRoZSBwZXJmb3JtYW5jZSBvZiB0aGUKLSAgY29kZSByYXRo
+ZXIgdGhhbiBjaG9pY2UgIG9mIHByb2dyYW1taW5nIGxhbmd1YWdlLgorICBjb2RlIHJhdGhlciB0
+aGFuIGNob2ljZSBvZiBwcm9ncmFtbWluZyBsYW5ndWFnZS4KIAogICBKR2l0IGlzIG11Y2ggc2xv
+d2VyIChtZWFzdXJlZCB1cCB0byBlaWdodCB0aW1lcyBmb3Igc29tZSByYW5kb20gY2FzZXMpLCBi
+dXQKICAgdGhlbiB0aGUgcmVhbCBHaXQgaXMgcmlkaWNpbG91c2x5IGZhc3QuCkBAIC0yMzAsNyAr
+MjMwLDcgQEAgcGFydGlhbCBmaWxlcyBzaW1wbGUuCiAKICAgICAgICAgICAgID09IFN1cHBvcnQg
+ICAgICAgICAgICAgICAgICAgICAgICAgPT0KIAotICBQb3N0IHF1ZXN0aW9uLCBjb21tZW50cyBw
+YXRjaGVzIHRvIHRoZSBnaXRAdmdlci5rZXJuZWwub3JnIG1haWxpbmcgbGlzdC4KKyAgUG9zdCBx
+dWVzdGlvbiwgY29tbWVudHMgb3IgcGF0Y2hlcyB0byB0aGUgZ2l0QHZnZXIua2VybmVsLm9yZyBt
+YWlsaW5nIGxpc3QuCiAKIAogICAgICAgICAgICAgPT0gQ29udHJpYnV0aW5nICAgICAgICAgICAg
+ICAgICAgICA9PQpAQCAtMjQ3LDMgKzI0Nyw0IEBAIEMgYmFzZWQgaW1wbGVtZW50YXRpb24gY2Fu
+IGJlIG9idGFpbmVkIGZyb20gdGhlIEdJVCB3ZWJzaXRlczoKICAgaHR0cDovL2dpdC5vci5jei8K
+ICAgaHR0cDovL3d3dy5rZXJuZWwub3JnL3B1Yi9zb2Z0d2FyZS9zY20vZ2l0LwogICBodHRwOi8v
+d3d3Lmtlcm5lbC5vcmcvcHViL3NvZnR3YXJlL3NjbS9naXQvZG9jcy8KKwotLSAKMS41LjQKCg==
 
-Ciao,
-Dscho
+------=_Part_4734_31255028.1203031152768--
