@@ -1,73 +1,88 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Keeping reflogs on branch deletion
-Date: Thu, 14 Feb 2008 10:17:52 -0500
-Message-ID: <20080214151752.GB3889@coredump.intra.peff.net>
-References: <76718490802131739n22c56cadn39c1871ea1762dc3@mail.gmail.com> <ee77f5c20802131745p23aa1db3j47207f1e6538b0e@mail.gmail.com> <18355.42595.377377.433309@lisa.zopyra.com> <ee77f5c20802131903i45b1629fpcb4a5c6e4f483052@mail.gmail.com> <7vr6fgkxt2.fsf@gitster.siamese.dyndns.org> <20080214140152.GT27535@lavos.net> <alpine.LFD.1.00.0802140945520.2732@xanadu.home>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: another git rebase -i problem
+Date: Thu, 14 Feb 2008 15:39:35 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0802141537000.30505@racer.site>
+References: <20080214093730.GA20408@digi.com> <alpine.LSU.1.00.0802141232070.30505@racer.site> <20080214130228.GB28472@digi.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Brian Downing <bdowning@lavos.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	David Symonds <dsymonds@gmail.com>,
-	Bill Lear <rael@zopyra.com>,
-	Jay Soffian <jaysoffian@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Thu Feb 14 16:18:35 2008
+Content-Type: MULTIPART/MIXED; BOUNDARY="-1463811741-1894166973-1203003576=:30505"
+Cc: git@vger.kernel.org
+To: =?ISO-8859-15?Q?Uwe_Kleine-K=F6nig?= <Uwe.Kleine-Koenig@digi.com>
+X-From: git-owner@vger.kernel.org Thu Feb 14 16:41:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JPfr8-00026f-Ke
-	for gcvg-git-2@gmane.org; Thu, 14 Feb 2008 16:18:35 +0100
+	id 1JPgD7-0002SB-6q
+	for gcvg-git-2@gmane.org; Thu, 14 Feb 2008 16:41:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753003AbYBNPR5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Feb 2008 10:17:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753384AbYBNPR5
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Feb 2008 10:17:57 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4704 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753003AbYBNPRz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Feb 2008 10:17:55 -0500
-Received: (qmail 7565 invoked by uid 111); 14 Feb 2008 15:17:53 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Thu, 14 Feb 2008 10:17:53 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Feb 2008 10:17:52 -0500
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.1.00.0802140945520.2732@xanadu.home>
+	id S1756433AbYBNPjl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Feb 2008 10:39:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756292AbYBNPjk
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Feb 2008 10:39:40 -0500
+Received: from mail.gmx.net ([213.165.64.20]:45060 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753250AbYBNPji (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Feb 2008 10:39:38 -0500
+Received: (qmail invoked by alias); 14 Feb 2008 15:39:36 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp038) with SMTP; 14 Feb 2008 16:39:36 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19r2l0596lrCpNw4+IFti46PWzXbk+v2QlPFN/IIm
+	xPy66Rc6X0G4Xh
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20080214130228.GB28472@digi.com>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73881>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73882>
 
-On Thu, Feb 14, 2008 at 10:00:58AM -0500, Nicolas Pitre wrote:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> > When deleting a branch, is there any reason we can't add a deletion
-> > entry into the reflog and keep the reflog around?  This would seem to be
-> > a lot safer; I know I've been burned by expecting the reflog safety net
-> > to be there, and surprised that it's not when I've deleted a branch.
+---1463811741-1894166973-1203003576=:30505
+Content-Type: TEXT/PLAIN; charset=iso-8859-1
+Content-Transfer-Encoding: 8BIT
+
+Hi,
+
+On Thu, 14 Feb 2008, Uwe Kleine-König wrote:
+
+> Ah, OK this disqualifies my test case, but the problem is real:
 > 
-> No.  That would only accumulate dead reflog files in the repository.
+> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+> index e5ed745..f0499e6 100755
+> --- a/t/t3404-rebase-interactive.sh
+> +++ b/t/t3404-rebase-interactive.sh
+> @@ -362,4 +362,11 @@ test_expect_success 'rebase with a file named HEAD in worktree' '
+>  
+>  '
+>  
+> +test_expect_success 'rebase patch already merged' '
+> +
+> +	git checkout -b branch4 twerp &&
+> +	FAKE_LINES="1 2 4 3" git rebase -i branch3
+> +
+> +'
+> +
+>  test_done
 
-How is that any different than accumulating old entries in reflog files
-for branches that _do_ exist? In both cases, they should be dealt with
-via time-based pruning.
+Since the patches were already applied, but git (as well as you!) failed 
+to remove them from the patch list, the user has to be asked to skip the 
+patch.
 
-> And as Junio said above, the "HEAD" reflog contains everything you moved 
-> to, including detached heads, and of course branch heads that might now 
-> be deleted.  You can easily retrieve a deleted branch head from there.
+Unfortunately, I have no time to look into this, and I do not even think 
+that cherry-pick tells me if a patch was already applied (as opposed to a 
+failed patch application), so I doubt that the message can be made more 
+meaningful.
 
-By that rationale, why do we bother keeping any reflog besides HEAD in
-the first place? I can think of two reasons:
+Anyway, your "problem" is that you have to say "git rebase --skip", 
+because the patch has been applied to upstream already (but looked 
+differently enough that the patch id was different).
 
-  1. it's much more convenient to type branch@{1} than to sift through
-     HEAD's reflog looking for checkout events and guessing which branch
-     we were on
-  2. it's possible to change a ref without it being on the HEAD, in
-     which case the HEAD reflog doesn't contain the change.
+Ciao,
+Dscho
 
-In other words, I don't see "oops, I deleted this branch and its history
-is valuable to me" as significantly less likely than "oops, I got rid of
-this commit and its history is valuable to me."
-
--Peff
+---1463811741-1894166973-1203003576=:30505--
