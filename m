@@ -1,70 +1,67 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH] diff.c: replace a 'strdup' with 'xstrdup'.
-Date: Thu, 14 Feb 2008 06:50:00 +0100
-Message-ID: <20080214065000.083c3617.chriscool@tuxfamily.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [RFC Patch] Preventing corrupt objects from entering the repository
+Date: Thu, 14 Feb 2008 01:16:51 -0500
+Message-ID: <20080214061651.GH24004@spearce.org>
+References: <20080210175812.GB12162@auto.tuwien.ac.at> <7vmyq8cqfn.fsf@gitster.siamese.dyndns.org> <alpine.LFD.1.00.0802101929310.2732@xanadu.home> <20080211195623.GA21878@auto.tuwien.ac.at> <alpine.LFD.1.00.0802111513360.2732@xanadu.home> <20080211215806.GA24971@auto.tuwien.ac.at> <alpine.LFD.1.00.0802120937330.2732@xanadu.home> <20080213074209.GG24004@spearce.org> <20080213081128.GA27730@auto.tuwien.ac.at> <alpine.LSU.1.00.0802131200410.30505@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Thu Feb 14 06:44:56 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Martin Koegler <mkoegler@auto.tuwien.ac.at>,
+	Nicolas Pitre <nico@cam.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Feb 14 07:17:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JPWtz-0003Gr-It
-	for gcvg-git-2@gmane.org; Thu, 14 Feb 2008 06:44:56 +0100
+	id 1JPXPu-0001tV-Ez
+	for gcvg-git-2@gmane.org; Thu, 14 Feb 2008 07:17:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751686AbYBNFoG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Feb 2008 00:44:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752211AbYBNFoG
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Feb 2008 00:44:06 -0500
-Received: from smtp1-g19.free.fr ([212.27.42.27]:36296 "EHLO smtp1-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751686AbYBNFoF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Feb 2008 00:44:05 -0500
-Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id D3DFD1AB2BF;
-	Thu, 14 Feb 2008 06:44:02 +0100 (CET)
-Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp1-g19.free.fr (Postfix) with SMTP id 98A921AB2C4;
-	Thu, 14 Feb 2008 06:44:02 +0100 (CET)
-X-Mailer: Sylpheed 2.4.8 (GTK+ 2.12.5; i486-pc-linux-gnu)
+	id S1756256AbYBNGRS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Feb 2008 01:17:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756057AbYBNGRS
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Feb 2008 01:17:18 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:57189 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755503AbYBNGRQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Feb 2008 01:17:16 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1JPXOw-0003Nh-Oe; Thu, 14 Feb 2008 01:16:54 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 7336A20FBAE; Thu, 14 Feb 2008 01:16:52 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <alpine.LSU.1.00.0802131200410.30505@racer.site>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73847>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73848>
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- diff.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> On Wed, 13 Feb 2008, Martin Koegler wrote:
+> 
+> > This would mean, that we must make git-rev-list and git-pack-objects not 
+> > segfault on incorrect links between objects.
 
-	By the way perhaps the 
-
- 		return error("%s: lacks value", var);
-
-	should also be changed to
-
-		return config_error_nonbool(var);
-
-	or the check could be removed because there is
-	already a check line 171 just before
-	'parse_lldiff_command' is called.
-
-diff --git a/diff.c b/diff.c
-index cd8bc4d..e5db293 100644
---- a/diff.c
-+++ b/diff.c
-@@ -88,7 +88,7 @@ static int parse_lldiff_command(const char *var, const char *ep, const char *val
+My proposal suggested that malformed objects not be allowed
+into the repository, so rev-list wouldn't see them in the
+first place.
  
- 	if (!value)
- 		return error("%s: lacks value", var);
--	drv->cmd = strdup(value);
-+	drv->cmd = xstrdup(value);
- 	return 0;
- }
- 
+> We should do that anyway.  It may error out, but segfaulting is no option.
+> 
+> So if you have a test case, please make it public so we can fix the 
+> breakage.
+
+But Dscho has a really good point here.  rev-list should be failing
+with a proper exit code, not SIGSEGV.  :)
+
 -- 
-1.5.4.20.gc135a-dirty
+Shawn.
