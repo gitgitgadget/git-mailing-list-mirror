@@ -1,56 +1,53 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] xdl_merge(): introduce XDL_MERGE_ZEALOUS_ALNUM
-Date: Fri, 15 Feb 2008 18:23:42 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802151823110.30505@racer.site>
-References: <A21B3CA8-6240-434F-87A9-C6F76DA15265@gmail.com> <alpine.LFD.1.00.0802121544370.2920@woody.linux-foundation.org> <alpine.LSU.1.00.0802130003370.3870@racer.site> <alpine.LSU.1.00.0802130108060.3870@racer.site> <7v3arxzlke.fsf@gitster.siamese.dyndns.org>
- <alpine.LSU.1.00.0802131113360.30505@racer.site> <7vlk5mgm5y.fsf@gitster.siamese.dyndns.org> <alpine.LFD.1.00.0802151012380.3066@woody.linux-foundation.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/2] hard-code the empty tree object
+Date: Fri, 15 Feb 2008 13:25:42 -0500
+Message-ID: <20080215182542.GA25167@sigill.intra.peff.net>
+References: <20080214103256.GA17951@coredump.intra.peff.net> <7vabm2i1pf.fsf@gitster.siamese.dyndns.org> <20080215172043.GA24221@sigill.intra.peff.net> <7vhcgaglq5.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Voltage Spike <voltspike@gmail.com>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri Feb 15 19:24:29 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Kate Rhodes <masukomi@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 15 19:26:18 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JQ5EV-00034f-37
-	for gcvg-git-2@gmane.org; Fri, 15 Feb 2008 19:24:23 +0100
+	id 1JQ5GL-0003me-PA
+	for gcvg-git-2@gmane.org; Fri, 15 Feb 2008 19:26:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754223AbYBOSXs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Feb 2008 13:23:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754820AbYBOSXs
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Feb 2008 13:23:48 -0500
-Received: from mail.gmx.net ([213.165.64.20]:42391 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752901AbYBOSXr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Feb 2008 13:23:47 -0500
-Received: (qmail invoked by alias); 15 Feb 2008 18:23:45 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp013) with SMTP; 15 Feb 2008 19:23:45 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18lOJ8lBFklNOqwMVpzUmkArhQaJpM/na78wgOJWi
-	dzEukk6WnyAzbr
-X-X-Sender: gene099@racer.site
-In-Reply-To: <alpine.LFD.1.00.0802151012380.3066@woody.linux-foundation.org>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1755695AbYBOSZp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Feb 2008 13:25:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755844AbYBOSZp
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Feb 2008 13:25:45 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3107 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755695AbYBOSZo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Feb 2008 13:25:44 -0500
+Received: (qmail 24675 invoked by uid 111); 15 Feb 2008 18:25:43 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Fri, 15 Feb 2008 13:25:43 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 15 Feb 2008 13:25:42 -0500
+Content-Disposition: inline
+In-Reply-To: <7vhcgaglq5.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73970>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73971>
 
-Hi,
+On Fri, Feb 15, 2008 at 09:42:26AM -0800, Junio C Hamano wrote:
 
-On Fri, 15 Feb 2008, Linus Torvalds wrote:
+> > Should I re-send, or do you want to just markup the existing patches?
+> 
+> Shouldn't the previous one that uses the hardcoded empty tree
+> object name good enough that is already on 'pu'?
 
-> In fact, in many ways, maybe we'd be better off counting (non-space) 
-> bytes rather than lines. That gets the "complexity" argument mostly 
-> right.
+Yes, they are fine (I hadn't looked at them that carefully before, but
+it looks like you cleaned up the ordering sensibly already).
 
-I don't like it.  It's not simple enough.  Let's stay with 3 lines, and if 
-it turns out to be a bad choice, change it to two.
+The last paragraph in the commit message of the add--interactive patch
+should be removed (the implementation is no longer "hack-ish").
 
-Ciao,
-Dscho
+-Peff
