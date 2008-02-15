@@ -1,145 +1,117 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: [PATCH 1/2] mailinfo: support rfc3676 (format=flowed) text/plain messages
-Date: Thu, 14 Feb 2008 21:21:16 -0500
-Message-ID: <1203042077-11385-1-git-send-email-jaysoffian@gmail.com>
-Cc: Jay Soffian <jaysoffian@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 15 03:22:00 2008
+From: Pete/Piet Delaney <pete@bluelane.com>
+Subject: Joining two development histories together and then splitting them
+ back apart.
+Date: Thu, 14 Feb 2008 21:41:00 -0800
+Organization: Bluelane
+Message-ID: <47B525EC.2090508@bluelane.com>
+Reply-To: pete@bluelane.com
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Marco Costalba <mcostalba@gmail.com>,
+	Piet Delaney <piet.delaney@gmail.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Feb 15 06:58:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JPqD8-0003db-Bv
-	for gcvg-git-2@gmane.org; Fri, 15 Feb 2008 03:21:58 +0100
+	id 1JPtaD-0005Cs-Ti
+	for gcvg-git-2@gmane.org; Fri, 15 Feb 2008 06:58:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758591AbYBOCVX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Feb 2008 21:21:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759362AbYBOCVX
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Feb 2008 21:21:23 -0500
-Received: from an-out-0708.google.com ([209.85.132.248]:63343 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758168AbYBOCVW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Feb 2008 21:21:22 -0500
-Received: by an-out-0708.google.com with SMTP id d31so109815and.103
-        for <git@vger.kernel.org>; Thu, 14 Feb 2008 18:21:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date:message-id:x-mailer;
-        bh=AjzZmFvewg0E9N8nrqFVq5Bk+Fcx6BoYdTzx2KNVr0U=;
-        b=ac0YbPPNwnnaJmXtX3EFZEN3TwACY78wKnDDdryPDY94YMO9cUOp2OgUOoklzwnRercuFVM6ZM5gxkDmHABu+7ukWNq61jWkUAskYlWDtv5u0RoCdl3sYj77iTYrrKkH5g1YE6Dd+1TgpEiOUVxNyeuop01DIGfoP4NjQuh+IcU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=bNiJ4GDFfU4BYVVnzKYxCD9oiG+Q8phjUoAu9Kugj3bAECUZdabUpaybI2JL6/RYRueAa6ETamxsOEr358qRcRmkuX36IN/8VCuIeGuSr5SXGDSQdCocVgDGSO+pH7fQlj9mwpaJIntFN915SHstJtJC4BN+CtKX79sAYwZB//g=
-Received: by 10.100.241.17 with SMTP id o17mr2364475anh.106.1203042081410;
-        Thu, 14 Feb 2008 18:21:21 -0800 (PST)
-Received: from localhost ( [75.189.159.45])
-        by mx.google.com with ESMTPS id b19sm5494936ana.18.2008.02.14.18.21.20
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 14 Feb 2008 18:21:20 -0800 (PST)
-X-Mailer: git-send-email 1.5.4.1.1281.g75df
+	id S1753912AbYBOF5U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Feb 2008 00:57:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751988AbYBOF5U
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Feb 2008 00:57:20 -0500
+Received: from outbound.mse2.exchange.ms ([69.25.50.247]:2658 "EHLO
+	mse2fe1.mse2.exchange.ms" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751770AbYBOF5T (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 15 Feb 2008 00:57:19 -0500
+X-Greylist: delayed 973 seconds by postgrey-1.27 at vger.kernel.org; Fri, 15 Feb 2008 00:57:19 EST
+Received: from piet2.bluelane.com ([64.94.92.242]) by mse2fe1.mse2.exchange.ms with Microsoft SMTPSVC(6.0.3790.3959);
+	 Fri, 15 Feb 2008 00:41:05 -0500
+User-Agent: Thunderbird 2.0.0.9 (X11/20071031)
+X-Enigmail-Version: 0.95.6
+X-OriginalArrivalTime: 15 Feb 2008 05:41:05.0803 (UTC) FILETIME=[5B9F35B0:01C86F95]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73939>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73940>
 
-RFC 3676 establishes two parameters (Format and DelSP) to be used with
-the Text/Plain media type. In the presence of these parameters, trailing
-whitespace is used to indicate flowed lines and a canonical quote
-indicator is used to indicate quoted lines.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-mailinfo now unfolds, unquotes, and un-space-stuffs such messages.
+Hi:
 
-Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
----
-It's been a while since I hacked C, so mucho scrutiny appreciated. The
-mailinfo testsuite still passes, and this patch is followed by one which
-adds a new test for this code, which also passes.
+I thought I'd check on the right procedure for merging two branches and
+then forking them off from that merged point. It's been a while since I
+set up git, I've been hacking on the kernel for a couple of months and
+now want to merge it with our old CVS repository that I imported into git.
 
-This is based off next, but mailinfo hasn't changed in a while, so it should apply cleanly to master (didn't test that though).
 
- builtin-mailinfo.c |   40 ++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 40 insertions(+), 0 deletions(-)
+First, on a remote machine I pull the repo and then check out a
+tracking branch; right? Ex:
 
-diff --git a/builtin-mailinfo.c b/builtin-mailinfo.c
-index 2600847..deaf92b 100644
---- a/builtin-mailinfo.c
-+++ b/builtin-mailinfo.c
-@@ -20,6 +20,13 @@ static enum  {
- static enum  {
- 	TYPE_TEXT, TYPE_OTHER,
- } message_type;
-+/* RFC 3676 Text/Plain Format and DelSp Parameters */
-+static enum {
-+	FORMAT_NONE, FORMAT_FIXED, FORMAT_FLOWED,
-+} tp_format;
-+static enum {
-+	DELSP_NONE, DELSP_YES, DELSP_NO,
-+} tp_delsp;
- 
- static char charset[256];
- static int patch_lines;
-@@ -193,6 +200,18 @@ static int handle_content_type(char *line)
- 
- 	if (strcasestr(line, "text/") == NULL)
- 		 message_type = TYPE_OTHER;
-+	else if (strcasestr(line, "text/plain")) {
-+		char attr[256];
-+		if (slurp_attr(line, "format=", attr) && !strcasecmp(attr, "flowed")) {
-+			tp_format = FORMAT_FLOWED;
-+			if (slurp_attr(line, "delsp=", attr) && !strcasecmp(attr, "yes"))
-+				tp_delsp = DELSP_YES;
-+			else
-+				tp_delsp = DELSP_NO;
-+		}
-+		else
-+			tp_format = FORMAT_FIXED;
-+	}
- 	if (slurp_attr(line, "boundary=", boundary + 2)) {
- 		memcpy(boundary, "--", 2);
- 		if (content_top++ >= &content[MAX_BOUNDARIES]) {
-@@ -681,6 +700,8 @@ again:
- 	transfer_encoding = TE_DONTCARE;
- 	charset[0] = 0;
- 	message_type = TYPE_TEXT;
-+	tp_format = FORMAT_NONE;
-+	tp_delsp = DELSP_NONE;
- 
- 	/* slurp in this section's info */
- 	while (read_one_header_line(line, sizeof(line), fin))
-@@ -770,6 +791,24 @@ static int handle_filter(char *line, unsigned linesize)
- {
- 	static int filter = 0;
- 
-+	if (tp_format == FORMAT_FLOWED && !!strcmp(line, "-- \n")) {
-+		char *cp = line;
-+		while (*cp == '>' && *cp != 0)
-+			cp++;
-+		if (*cp == ' ')
-+			cp++;
-+		line = cp;
-+		if (!!strcmp(line, "-- \n")) {
-+			while (*cp != '\n' && *cp !=0)
-+				cp++;
-+			if (cp > line && *cp == '\n' && *(cp-1) == ' ') {
-+				if (tp_delsp == DELSP_YES)
-+					*(cp-1) = '\0';
-+				else
-+					*cp = '\0';
-+			}
-+		}
-+	}
- 	/* filter tells us which part we left off on
- 	 * a non-zero return indicates we hit a filter point
- 	 */
-@@ -818,6 +857,7 @@ static void handle_body(void)
- 
- 		switch (transfer_encoding) {
- 		case TE_BASE64:
-+		case TE_QP:
- 		{
- 			char *op = line;
- 
--- 
-1.5.4.1.1281.g75df
+~  git clone git.bluelane.com:/home/git/blux
+
+~  git checkout -b engg origin/engg
+~  Branch engg set up to track remote branch refs/remotes/origin/engg.
+~  Switched to a new branch "engg"
+
+
+Now I'd like to merge it with another branch, which is kinda
+of like the master branch, but it's actually not the master/head.
+So in my case I want to merge with origin/rel2_branch from the
+master git repo.
+
+So as I recall I set up my .git/config with:
+
+	[diff]
+~        	external = "/usr/bin/kompare"
+~        	renames = true
+
+	[merge]
+~        	tool = "/usr/bin/kdiff3"
+
+Next I do a:
+
+	git-merge origin/rel2_branch
+
+hopefully kcompare will then pop up for the merge resolution.
+
+
+Now that the two branches are in sync I'd like to split the
+two branches and then push that up the the remote repository
+and hopeful all new changes to the engg branch will not be
+seen if someone pulls out the rel2_branch.
+
+I'm not sure if git will let me do all of this. I recall
+some security stuff preventing the code from being easily
+push up to the top repository. Also I'm not sure if this
+part can be done in the local repo on my workstation.
+
+I suppose it will all start coming back to me as I mess
+with it tomarrow.
+
+I thought it would likely be worthwhile to check with the git
+mailing list to get a few pointers to hopefully save some time
+tomarrow with the merge. I had the trees merged a few months
+ago but the repo got a bit weird with my copying my merged
+repo to the git repo and getting origins in the branch names
+on the main repository.
+
+- -piet
+
+
+
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+
+iD8DBQFHtSXrJICwm/rv3hoRAmE5AJ96z755CwbwrUdHIENVUUEQk0xhEgCdE3TO
+8jFrAqYbWZsD00nKcZs+XJU=
+=Wtbg
+-----END PGP SIGNATURE-----
