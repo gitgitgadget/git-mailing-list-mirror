@@ -1,98 +1,79 @@
-From: Johannes Sixt <johannes.sixt@telecom.at>
-Subject: Re: [PATCH 2/6] Automatically close stderr pipes created by run_command
-Date: Fri, 15 Feb 2008 20:45:37 +0100
-Message-ID: <200802152045.37755.johannes.sixt@telecom.at>
-References: <20080214062229.GB30516@spearce.org> <47B3F51C.3060002@viscovery.net> <7vfxvui1pz.fsf@gitster.siamese.dyndns.org>
+From: "Jay Soffian" <jaysoffian@gmail.com>
+Subject: diff --check line number bug
+Date: Fri, 15 Feb 2008 15:18:45 -0500
+Message-ID: <76718490802151218s62c4f884u39353b66540b347a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 15 20:46:18 2008
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Feb 15 21:19:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JQ6Vl-0001YS-Kv
-	for gcvg-git-2@gmane.org; Fri, 15 Feb 2008 20:46:18 +0100
+	id 1JQ71x-0005TB-9N
+	for gcvg-git-2@gmane.org; Fri, 15 Feb 2008 21:19:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753642AbYBOTpn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Feb 2008 14:45:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753270AbYBOTpn
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Feb 2008 14:45:43 -0500
-Received: from smtp3.srv.eunet.at ([193.154.160.89]:36817 "EHLO
-	smtp3.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753135AbYBOTpm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Feb 2008 14:45:42 -0500
-Received: from dx.sixt.local (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
-	by smtp3.srv.eunet.at (Postfix) with ESMTP id B863D10ADFD;
-	Fri, 15 Feb 2008 20:45:39 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by dx.sixt.local (Postfix) with ESMTP id CD9794E8A1;
-	Fri, 15 Feb 2008 20:45:38 +0100 (CET)
-User-Agent: KMail/1.9.3
-In-Reply-To: <7vfxvui1pz.fsf@gitster.siamese.dyndns.org>
+	id S1760636AbYBOUSv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Feb 2008 15:18:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759796AbYBOUSu
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Feb 2008 15:18:50 -0500
+Received: from wa-out-1112.google.com ([209.85.146.181]:44906 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1763278AbYBOUSs (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Feb 2008 15:18:48 -0500
+Received: by wa-out-1112.google.com with SMTP id v27so1337435wah.23
+        for <git@vger.kernel.org>; Fri, 15 Feb 2008 12:18:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=d2SJiJee0ljRDJjdcybDuo4CwlM9+2ccO/WUamXU9E4=;
+        b=cn2pMZlNjJJaUvN+6G6fe4+LXWAhbKKsI4twPG/9HG4Nu2ZLei7mU3xIc9bGn5REoZiF7AL3EjVO+G9KA8LiUoEJmZGpkWg7xUuYFEuKNkmTFXuHEa1cJJbDjCAsN6Dyz/g/msGqrWUKZtqNqqptKsLD5UimwDs85k6Seswn97Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=eQmQfZlDCDXtgB+BH9es/O/2b/z+sDHbKNFtLiTs9iJLXuD52hUlVD3qSK0rosDjHgd/LNkYVQ/DW9XOYtA/7jL7c5TWNaq+hxHMKTPU92BYIhw5oJkkH71O/TAi+NVlxIjRN3HF7FA1x5TTb0BJYnyXwcS9X7aQObGOvi3i2NM=
+Received: by 10.114.61.1 with SMTP id j1mr3411619waa.62.1203106725821;
+        Fri, 15 Feb 2008 12:18:45 -0800 (PST)
+Received: by 10.114.255.11 with HTTP; Fri, 15 Feb 2008 12:18:45 -0800 (PST)
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73979>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73980>
 
-On Friday 15 February 2008 18:11, Junio C Hamano wrote:
-> Johannes Sixt <j.sixt@viscovery.net> writes:
-> > Shawn O. Pearce schrieb:
-> >> Like the out pipe and in pipe, we now automatically close the err
-> >> pipe if it was requested by the caller and it hasn't been closed
-> >> by the caller.  This simplifies anyone who wants to get a pipe to
-> >> the stderr stream for another process.
-> >
-> > IMHO, this is backwards.
-> >
-> > The .in, .out, .err members of struct child_process serve two different
-> > purposes:
-> >
-> > 1. Caller sets them to some fd > 0. This means:
-> >    "Here is a readable (.in) or writable (.out, .err) fd; use it."
-> >
-> > 2. Caller sets them to -1: This means:
-> >    "Create a pipe and give me the writable (.in) or readable (.out,
-> >    .err) end of it back."
-> >
-> > Notice that in a clean implementation:
-> >
-> > - case 1. would imply that the fd is "given away", i.e.
-> >   start_command/finish_command take ownership and close it;
-> >
-> > - case 2. would imply that the caller takes ownership of the returned
-> >   fd and has to close it.
->
-> I am puzzled.  In a clean implementation perhaps the fds belong
-> to the caller in both cases.  Or belong to the callee in both
-> cases.  Or perhaps sometimes belong to the caller and someimes
-> to the callee as you wrote above, but that seems arbitrary.
+% mkdir git-ws
+% cd git-ws
+% git init
+% touch foo
+% git add foo
+% printf '\n\nline 3 \n\nline 5 \nline 6\n' > foo
+% cat -n foo
+     1	
+     2	
+     3	line 3
+     4	
+     5	line 5
+     6	line 6
+% sed -ne l foo
+$
+$
+line 3 $
+$
+line 5 $
+line 6$
+% git diff --check foo
+foo:1: trailing whitespace.
++line 3
+foo:2: trailing whitespace.
++line 5
+% git version
+git version 1.5.4.1.1281.g75df
 
-Heh. In a clean implementation you also don't use the same thing to do two 
-completely different things. For example, note how in one case .in contains a 
-readable, in the other a writable fd, and how fds are used in completely 
-different ways.
+Apparently somewhere in the bowels of the "Crazy xdl interfaces", empty
+lines are skipped over, thus the line number counting in
+checkdiff_consume() is off? I dunno, I briefly looked into fixing it but
+it didn't seem like a quick fix.
 
-> I suspect from the caller's point of view, if we can always make
-> them owned by the caller, that would be the most consistent and
-> convenient.  "Here is a fd --- I lend it to you so use it but do
-> not close --- I may have other uses for it later".
-
-Well, I think we could do that, theoretically. But practically in the case 
-where a fd > 0 is assigned to .in/.out/.err:
-
-- case .out, .err: the caller is required to close the fd early after 
-start_command() because (if this is a pipe) the child won't see EOF;
-
-- case .in: the caller must not read from the fd anyway, else the child gets 
-inconsistent input.
-
-So, while there *is* some inconsistency, the inconsistent cases can be clearly 
-separated into the cases fd > 0 and fd == -1.
-
--- Hannes
+j.
