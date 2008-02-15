@@ -1,136 +1,70 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: gitweb bug: broken "next" and other links
-Date: Fri, 15 Feb 2008 22:16:41 +0100
-Message-ID: <200802152216.42533.jnareb@gmail.com>
-References: <B0EC9FB3-DDDE-4BC5-92D8-20487CBD6725@wincent.com> <200802111630.29159.jnareb@gmail.com> <E16BED2E-C146-44D8-BD90-ECF0DF89CA35@wincent.com>
+From: Stelian Pop <stelian@popies.net>
+Subject: [PATCH] hg-to-git: fix parent analysis
+Date: Fri, 15 Feb 2008 22:20:44 +0100
+Message-ID: <1203110444.5579.23.camel@galileo>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>, Petr Baudis <pasky@suse.cz>
-To: Wincent Colaiuta <win@wincent.com>
-X-From: git-owner@vger.kernel.org Fri Feb 15 22:17:33 2008
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 15 22:21:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JQ7w3-0001qo-NF
-	for gcvg-git-2@gmane.org; Fri, 15 Feb 2008 22:17:32 +0100
+	id 1JQ7zo-0003C6-CL
+	for gcvg-git-2@gmane.org; Fri, 15 Feb 2008 22:21:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757108AbYBOVQ5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Feb 2008 16:16:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757051AbYBOVQ5
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Feb 2008 16:16:57 -0500
-Received: from nf-out-0910.google.com ([64.233.182.191]:55022 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754216AbYBOVQz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Feb 2008 16:16:55 -0500
-Received: by nf-out-0910.google.com with SMTP id g13so441299nfb.21
-        for <git@vger.kernel.org>; Fri, 15 Feb 2008 13:16:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=ZpQTjgLyKNGPteoXoMAHP41wJ/3gQTSo6f68hpFVdOw=;
-        b=To2rtQ4h9qVjpvdZdVQjInZMqln8WpolrrlJ+OCpzUTRjjPbeFZTMY6fNcgNbsX9Z2qjQ9mNz7LqDXH8hauQdWobhp41sgvji3gpLay8gKBx7/gA+xvWbiLYqIBzJL+fdYrlVb0GsWd9J4hzAxzItjHZHSiQnIYGiooTck0RlMY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=Ma7nHaX7NO6OkX+RCLmczCZOofG93E1md94Eca6/dYKqvm7VeQEw78I700bOj7Wo6GiHTJjScgmv2aqcs8vcpCW7EXFwu82BOHKpujyJG+dyQ6V1ytHzMrd0ctrSnznwVXo1s4mN7OruJy1OiaJ2Nk1JqXEEC5B5LGl/LG9tUCM=
-Received: by 10.78.186.9 with SMTP id j9mr4340982huf.75.1203110213858;
-        Fri, 15 Feb 2008 13:16:53 -0800 (PST)
-Received: from ?192.168.1.11? ( [83.8.221.186])
-        by mx.google.com with ESMTPS id 34sm1654526nfu.31.2008.02.15.13.16.51
-        (version=SSLv3 cipher=OTHER);
-        Fri, 15 Feb 2008 13:16:52 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <E16BED2E-C146-44D8-BD90-ECF0DF89CA35@wincent.com>
-Content-Disposition: inline
+	id S1761361AbYBOVUt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Feb 2008 16:20:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760935AbYBOVUs
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Feb 2008 16:20:48 -0500
+Received: from sd-11162.dedibox.fr ([88.191.70.230]:38304 "EHLO
+	sd-11162.dedibox.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758963AbYBOVUr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Feb 2008 16:20:47 -0500
+Received: from sd-11162.dedibox.fr (localhost.localdomain [127.0.0.1])
+	by sd-11162.dedibox.fr (Postfix) with ESMTP id D424892E97
+	for <git@vger.kernel.org>; Fri, 15 Feb 2008 22:20:46 +0100 (CET)
+Received: from [192.168.6.8] (voyager.popies.net [62.147.231.2])
+	(using SSLv3 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by sd-11162.dedibox.fr (Postfix) with ESMTP id 9662592CF2
+	for <git@vger.kernel.org>; Fri, 15 Feb 2008 22:20:46 +0100 (CET)
+X-Mailer: Evolution 2.12.1 
+X-AV-Checked: ClamAV using ClamSMTP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73982>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73983>
 
-On Tue, 12 Feb 2008, Wincent Colaiuta wrote:
-> El 11/2/2008, a las 16:30, Jakub Narebski escribi=C3=B3:
+Fix a bug in the hg-to-git convertor introduced by commit
+1bc7c13af9f936aa80893100120b542338a10bf4: when searching the changeset
+parents, 'hg log' returns an extra space at the end of the line, which
+confuses the .split(' ') based tokenizer:
 
->> Below there is a fix for that; actully only second part mentioned
->> (and first in patch) is needed, i.e. moving setting $params{'project=
-'}
->> before dealing with -replay is needed I think to fix this bug.
+    Traceback (most recent call last):
+      File "hg-to-git.py", line 123, in <module>
+          hgchildren[mparent] += ( str(cset), )
+      KeyError: ''
 
-Below there is minimal patch which I am using, which only
-moves setting $params{'project'}, and does not affect replay.
+Signed-off-by: Stelian Pop <stelian@popies.net>
 
->> Could you test it please?
->=20
-> Your patch fixes the "next" links in the shortlog and log views.
->=20
-> It doesn't fix the broken "raw" links in the commitdiff view. I'm =20
-> still seeing links like:
->=20
-> http://example.com/ARRAY(0x8c97f64)?a=3Dcommitdiff_plain;h=3Df29d5626=
-9a1c3bd4a970897397470f41553a64f9
-
-WORKSFORME. I could not reproduce this error with the patch
-below applied. I think that the previous version of patch should
-give the same result; should also fix this bug.
-
-Besides, both "next" and "raw" links are generated using the same
-mechanism. It would be strange if one of them broke and other didn't.
-
--- >8 --
-=46rom: Jakub Narebski <jnareb@gmail.com>
-Date: Thu, 14 Feb 2008 09:22:30 +0100
-Subject: [PATCH] gitweb: Fix bug in href(..., -replay=3D>1) when using =
-'pathinfo' form
-
-URLs generated by href(..., -replay=3D>1) (which includes 'next page'
-links and alternate view links) didn't set project info correctly
-when current page URL is in pathinfo form.
-
-This resulted in broken links such like:
-  http://www.example.com/w/ARRAY(0x85a5318)?a=3Dshortlog;pg=3D1
-if the 'pathinfo' feature was used, or
-  http://www.example.com/w/?a=3Dshortlog;pg=3D1
-if it wasn't, instead of correct:
-  http://www.example.com/w/project.git?a=3Dshortlog;pg=3D1
-
-This was caused by the fact that href() always replays params in the
-arrayref form, were they multivalued or singlevalued, and the code
-dealing with 'pathinfo' feature couldn't deal with $params{'project'}
-being arrayref.
-
-Setting $params{'project'} is moved before replaying params; this
-ensures that 'project' parameter is processed correctly.
-
-Noticed-by: Peter Oberndorfer <kumbayo84@arcor.de>
-Noticed-by: Wincent Colaiuta <win@wincent.com>
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
 ---
- gitweb/gitweb.perl |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 5e88637..a89b478 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -611,6 +611,8 @@ sub href(%) {
- 	);
- 	my %mapping =3D @mapping;
-=20
-+	$params{'project'} =3D $project unless exists $params{'project'};
-+
- 	if ($params{-replay}) {
- 		while (my ($name, $symbol) =3D each %mapping) {
- 			if (!exists $params{$name}) {
-@@ -620,8 +622,6 @@ sub href(%) {
- 		}
- 	}
-=20
--	$params{'project'} =3D $project unless exists $params{'project'};
--
- 	my ($use_pathinfo) =3D gitweb_check_feature('pathinfo');
- 	if ($use_pathinfo) {
- 		# use PATH_INFO for project name
---=20
-1.5.4
+diff --git a/contrib/hg-to-git/hg-to-git.py b/contrib/hg-to-git/hg-to-git.py
+index c35b158..d72ffbb 100755
+--- a/contrib/hg-to-git/hg-to-git.py
++++ b/contrib/hg-to-git/hg-to-git.py
+@@ -111,7 +111,7 @@ hgparents["0"] = (None, None)
+ hgbranch["0"] = "master"
+ for cset in range(1, int(tip) + 1):
+     hgchildren[str(cset)] = ()
+-    prnts = os.popen('hg log -r %d --template "{parents}"' % cset).read().split(' ')
++    prnts = os.popen('hg log -r %d --template "{parents}"' % cset).read().strip().split(' ')
+     prnts = map(lambda x: x[:x.find(':')], prnts)
+     if prnts[0] != '':
+         parent = prnts[0].strip()
+
+-- 
+Stelian Pop <stelian@popies.net>
