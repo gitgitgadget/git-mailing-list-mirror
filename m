@@ -1,61 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Validate nicknames of remote branches to prohibit
- confusing ones
-Date: Fri, 15 Feb 2008 14:22:16 -0800
-Message-ID: <7vskztg8rr.fsf@gitster.siamese.dyndns.org>
-References: <alpine.LNX.1.00.0802151412390.13593@iabervon.org>
+From: Jan Hudec <bulb@ucw.cz>
+Subject: Re: [Feature Request] Better Subversion integration
+Date: Fri, 15 Feb 2008 23:38:17 +0100
+Message-ID: <20080215223817.GA13178@efreet.light.src>
+References: <FC5B6F22-27A9-4F0F-85EE-0B72B94C69E2@gmail.com> <20080210035611.GA2454@atjola.homenet> <20080211084704.GB20741@albany.tokkee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Fri Feb 15 23:23:07 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?utf-8?B?QmrDtnJu?= Steinbrink <B.Steinbrink@gmx.de>,
+	Sam Granieri Jr <sjgdev@gmail.com>,
+	Git Users List <git@vger.kernel.org>
+To: Sebastian Harl <sh@tokkee.org>
+X-From: git-owner@vger.kernel.org Fri Feb 15 23:39:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JQ8xR-0000qZ-Pe
-	for gcvg-git-2@gmane.org; Fri, 15 Feb 2008 23:23:02 +0100
+	id 1JQ9D0-0006fz-Bi
+	for gcvg-git-2@gmane.org; Fri, 15 Feb 2008 23:39:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756761AbYBOWW2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Feb 2008 17:22:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756657AbYBOWW2
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Feb 2008 17:22:28 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:53268 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754569AbYBOWW1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Feb 2008 17:22:27 -0500
-Received: from a-sasl-quonix.pobox.com (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 333941B67;
-	Fri, 15 Feb 2008 17:22:26 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.pobox.com (Postfix) with ESMTP id
- 98A921B65; Fri, 15 Feb 2008 17:22:23 -0500 (EST)
-In-Reply-To: <alpine.LNX.1.00.0802151412390.13593@iabervon.org> (Daniel
- Barkalow's message of "Fri, 15 Feb 2008 14:14:18 -0500 (EST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1761165AbYBOWie convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Feb 2008 17:38:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760807AbYBOWid
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Feb 2008 17:38:33 -0500
+Received: from ns1.bluetone.cz ([212.158.128.13]:58431 "EHLO ns1.bluetone.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932271AbYBOWi2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Feb 2008 17:38:28 -0500
+Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
+	by ns1.bluetone.cz (Postfix) with ESMTP id 3AE21572FA;
+	Fri, 15 Feb 2008 23:38:26 +0100 (CET)
+Received: from ns1.bluetone.cz ([192.168.13.1])
+	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
+	with ESMTP id tyZHoewZGD48; Fri, 15 Feb 2008 23:38:22 +0100 (CET)
+Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
+	by ns1.bluetone.cz (Postfix) with ESMTP id 450E157348;
+	Fri, 15 Feb 2008 23:38:21 +0100 (CET)
+Received: from bulb by efreet.light.src with local (Exim 4.69)
+	(envelope-from <bulb@ucw.cz>)
+	id 1JQ9CD-0006pm-3W; Fri, 15 Feb 2008 23:38:17 +0100
+Content-Disposition: inline
+In-Reply-To: <20080211084704.GB20741@albany.tokkee.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73991>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73992>
 
-Daniel Barkalow <barkalow@iabervon.org> writes:
-
-> The original problem was that the parsers for configuration files were
-> getting confused by seeing as nicknames remotes that involved
-> directory-changing characters. In particular, the branches config file
-> for ".." was particularly mystifying on platforms that can open
-> directories and read odd data from them.
+On Mon, Feb 11, 2008 at 09:47:04 +0100, Sebastian Harl wrote:
+> Hi,
+>=20
+> On Sun, Feb 10, 2008 at 04:56:11AM +0100, Bj=C3=B6rn Steinbrink wrote=
+:
+> > SVN tags aren't like git tags. A "tag" in SVN is just another direc=
+tory,
+> > which you can modify at will.
 >
-> The validation function was written by Junio Hamano (with a typo
-> corrected).
->
-> Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
-> ---
-> I was sort of expecting you to just put this in yourself, but since you 
-> haven't, I wrote it up as an actual patch and fixed the polarity of the 
-> test for slashes.
+> Well, a SVN tag could be represented as a Git branch _and_ a Git tag
+> pointing to the head of that branch. Whenever any such "tag branch"
+> advances, the user should be notified, the user responsible for the
+> further commits to the SVN "tag" should be seriously hurt and the Git
+> tag should be overwritten (git tag -f).
 
-Thanks.  I am bogged down in day-job these days and have been
-down-sick for the past 36 hours.
+There's no need to have a Git _branch_ together with the tag -- tag is =
+also
+a ref.
+
+=46or the rest, the user definitely has to be notified, because git pus=
+h will
+_not_ push out the updated tag if the previous version of it was alread=
+y
+pushed. So the user will have to deal with that manually.
+
+If there was to be a support for tags in git-svn, I would actually sugg=
+est to
+simply make the name mapping more flexible and simply say, that branche=
+s in
+tags/ should be imported to refs/tags (while the rest going to
+refs/remotes/svn). You see, subversion tags are not annotated (so they =
+don't
+need special handling) and git-update-ref will update tags just fine.
+
+--=20
+						 Jan 'Bulb' Hudec <bulb@ucw.cz>
