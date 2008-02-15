@@ -1,92 +1,136 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH] Rename git-core rpm to just git and rename the meta-pacakge
- to git-all.
-Date: Fri, 15 Feb 2008 22:08:39 +0100
-Message-ID: <47B5FF57.5080204@op5.se>
-References: <1203100163-17509-1-git-send-email-krh@redhat.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: gitweb bug: broken "next" and other links
+Date: Fri, 15 Feb 2008 22:16:41 +0100
+Message-ID: <200802152216.42533.jnareb@gmail.com>
+References: <B0EC9FB3-DDDE-4BC5-92D8-20487CBD6725@wincent.com> <200802111630.29159.jnareb@gmail.com> <E16BED2E-C146-44D8-BD90-ECF0DF89CA35@wincent.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15;
-	format=flowed
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?ISO-8859-15?Q?Kristian_H=F8gsberg?= <krh@redhat.com>
-X-From: git-owner@vger.kernel.org Fri Feb 15 22:09:35 2008
+Cc: Git Mailing List <git@vger.kernel.org>, Petr Baudis <pasky@suse.cz>
+To: Wincent Colaiuta <win@wincent.com>
+X-From: git-owner@vger.kernel.org Fri Feb 15 22:17:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JQ7oH-00077h-1f
-	for gcvg-git-2@gmane.org; Fri, 15 Feb 2008 22:09:29 +0100
+	id 1JQ7w3-0001qo-NF
+	for gcvg-git-2@gmane.org; Fri, 15 Feb 2008 22:17:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759730AbYBOVIv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Feb 2008 16:08:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757355AbYBOVIv
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Feb 2008 16:08:51 -0500
-Received: from mail.op5.se ([193.201.96.20]:58367 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932593AbYBOVIt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Feb 2008 16:08:49 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 49BD21F08022;
-	Fri, 15 Feb 2008 22:08:48 +0100 (CET)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -2.499
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
-	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id sVIZONvOknpP; Fri, 15 Feb 2008 22:08:47 +0100 (CET)
-Received: from clix.int.op5.se (unknown [172.27.78.26])
-	by mail.op5.se (Postfix) with ESMTP id A8F441F08007;
-	Fri, 15 Feb 2008 22:08:45 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.9 (X11/20071115)
-In-Reply-To: <1203100163-17509-1-git-send-email-krh@redhat.com>
+	id S1757108AbYBOVQ5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Feb 2008 16:16:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757051AbYBOVQ5
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Feb 2008 16:16:57 -0500
+Received: from nf-out-0910.google.com ([64.233.182.191]:55022 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754216AbYBOVQz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Feb 2008 16:16:55 -0500
+Received: by nf-out-0910.google.com with SMTP id g13so441299nfb.21
+        for <git@vger.kernel.org>; Fri, 15 Feb 2008 13:16:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        bh=ZpQTjgLyKNGPteoXoMAHP41wJ/3gQTSo6f68hpFVdOw=;
+        b=To2rtQ4h9qVjpvdZdVQjInZMqln8WpolrrlJ+OCpzUTRjjPbeFZTMY6fNcgNbsX9Z2qjQ9mNz7LqDXH8hauQdWobhp41sgvji3gpLay8gKBx7/gA+xvWbiLYqIBzJL+fdYrlVb0GsWd9J4hzAxzItjHZHSiQnIYGiooTck0RlMY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=Ma7nHaX7NO6OkX+RCLmczCZOofG93E1md94Eca6/dYKqvm7VeQEw78I700bOj7Wo6GiHTJjScgmv2aqcs8vcpCW7EXFwu82BOHKpujyJG+dyQ6V1ytHzMrd0ctrSnznwVXo1s4mN7OruJy1OiaJ2Nk1JqXEEC5B5LGl/LG9tUCM=
+Received: by 10.78.186.9 with SMTP id j9mr4340982huf.75.1203110213858;
+        Fri, 15 Feb 2008 13:16:53 -0800 (PST)
+Received: from ?192.168.1.11? ( [83.8.221.186])
+        by mx.google.com with ESMTPS id 34sm1654526nfu.31.2008.02.15.13.16.51
+        (version=SSLv3 cipher=OTHER);
+        Fri, 15 Feb 2008 13:16:52 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <E16BED2E-C146-44D8-BD90-ECF0DF89CA35@wincent.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73981>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73982>
 
-Kristian H=F8gsberg wrote:
-> ---
->=20
-> So here's change to fix my favorite annoyance with the git rpm
-> packaging: don't pull in tla when I say yum install git!  The decisio=
-n
-> to make 'git' a metapackage is to say the least unconventional and
-> continues to surprise people (here's today discussion:
-> http://marc.info/?t=3D120309228600004&r=3D1&w=3D2).
->=20
-> I know it's late and most people who use the git rpms are used to ins=
-talling
-> git-core by now, but myself and most of my Red Hat co-workers (who sh=
-ould
-> know a thing or two about rpm packaging) have been fooled by the 'git=
-'
-> rpm that pulls in everything.  There's really no precendence for this=
-, quite
-> the opposite: you wouldn't expect yum install gcc to pull in fortran,=
- right?
->=20
-> The patch below only affects people who know that 'git' is a metapack=
-age
-> and actually use that to pull in everything (but who does?).  The pat=
-ch
-> renames the 'git-core' rpm to just 'git', but adds a 'Provides: git-c=
-ore'
-> there so people who have trained themselves to say yum install git-co=
-re
-> wont get burned.
->=20
+On Tue, 12 Feb 2008, Wincent Colaiuta wrote:
+> El 11/2/2008, a las 16:30, Jakub Narebski escribi=C3=B3:
 
-Neat, and very nicely done. However, why not add "git-extras" package a=
-s
-meta-package that does what just plain "git" package used to do, and
-mentioning the git-extras rpm in the %description of git's package?
+>> Below there is a fix for that; actully only second part mentioned
+>> (and first in patch) is needed, i.e. moving setting $params{'project=
+'}
+>> before dealing with -replay is needed I think to fix this bug.
 
+Below there is minimal patch which I am using, which only
+moves setting $params{'project'}, and does not affect replay.
+
+>> Could you test it please?
+>=20
+> Your patch fixes the "next" links in the shortlog and log views.
+>=20
+> It doesn't fix the broken "raw" links in the commitdiff view. I'm =20
+> still seeing links like:
+>=20
+> http://example.com/ARRAY(0x8c97f64)?a=3Dcommitdiff_plain;h=3Df29d5626=
+9a1c3bd4a970897397470f41553a64f9
+
+WORKSFORME. I could not reproduce this error with the patch
+below applied. I think that the previous version of patch should
+give the same result; should also fix this bug.
+
+Besides, both "next" and "raw" links are generated using the same
+mechanism. It would be strange if one of them broke and other didn't.
+
+-- >8 --
+=46rom: Jakub Narebski <jnareb@gmail.com>
+Date: Thu, 14 Feb 2008 09:22:30 +0100
+Subject: [PATCH] gitweb: Fix bug in href(..., -replay=3D>1) when using =
+'pathinfo' form
+
+URLs generated by href(..., -replay=3D>1) (which includes 'next page'
+links and alternate view links) didn't set project info correctly
+when current page URL is in pathinfo form.
+
+This resulted in broken links such like:
+  http://www.example.com/w/ARRAY(0x85a5318)?a=3Dshortlog;pg=3D1
+if the 'pathinfo' feature was used, or
+  http://www.example.com/w/?a=3Dshortlog;pg=3D1
+if it wasn't, instead of correct:
+  http://www.example.com/w/project.git?a=3Dshortlog;pg=3D1
+
+This was caused by the fact that href() always replays params in the
+arrayref form, were they multivalued or singlevalued, and the code
+dealing with 'pathinfo' feature couldn't deal with $params{'project'}
+being arrayref.
+
+Setting $params{'project'} is moved before replaying params; this
+ensures that 'project' parameter is processed correctly.
+
+Noticed-by: Peter Oberndorfer <kumbayo84@arcor.de>
+Noticed-by: Wincent Colaiuta <win@wincent.com>
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+ gitweb/gitweb.perl |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 5e88637..a89b478 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -611,6 +611,8 @@ sub href(%) {
+ 	);
+ 	my %mapping =3D @mapping;
+=20
++	$params{'project'} =3D $project unless exists $params{'project'};
++
+ 	if ($params{-replay}) {
+ 		while (my ($name, $symbol) =3D each %mapping) {
+ 			if (!exists $params{$name}) {
+@@ -620,8 +622,6 @@ sub href(%) {
+ 		}
+ 	}
+=20
+-	$params{'project'} =3D $project unless exists $params{'project'};
+-
+ 	my ($use_pathinfo) =3D gitweb_check_feature('pathinfo');
+ 	if ($use_pathinfo) {
+ 		# use PATH_INFO for project name
 --=20
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+1.5.4
