@@ -1,59 +1,65 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/6] Automatically close stderr pipes created by
- run_command
-Date: Fri, 15 Feb 2008 14:14:40 -0800
-Message-ID: <7v1w7dhnov.fsf@gitster.siamese.dyndns.org>
-References: <20080214062229.GB30516@spearce.org>
- <47B3F51C.3060002@viscovery.net> <7vfxvui1pz.fsf@gitster.siamese.dyndns.org>
- <200802152045.37755.johannes.sixt@telecom.at>
+Subject: Re: [BUG] git filter-branch failed to suppress a file with an
+ accentuated letter in the filename
+Date: Fri, 15 Feb 2008 14:21:07 -0800
+Message-ID: <7vwsp5g8to.fsf@gitster.siamese.dyndns.org>
+References: <87bq6iw42w.dlv@maison.homelinux.org>
+ <7vd4qygld8.fsf@gitster.siamese.dyndns.org>
+ <alpine.LSU.1.00.0802151811240.30505@racer.site>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Johannes Sixt <johannes.sixt@telecom.at>
-X-From: git-owner@vger.kernel.org Fri Feb 15 23:15:42 2008
+Cc: Remi Vanicat <vanicat@debian.org>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Feb 15 23:22:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JQ8qK-0006iV-9k
-	for gcvg-git-2@gmane.org; Fri, 15 Feb 2008 23:15:40 +0100
+	id 1JQ8wW-0000Ux-H0
+	for gcvg-git-2@gmane.org; Fri, 15 Feb 2008 23:22:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755950AbYBOWPF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Feb 2008 17:15:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756551AbYBOWPF
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Feb 2008 17:15:05 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:51138 "EHLO
+	id S1756180AbYBOWVa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Feb 2008 17:21:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755495AbYBOWVa
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Feb 2008 17:21:30 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:53013 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753648AbYBOWPD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Feb 2008 17:15:03 -0500
+	with ESMTP id S1755462AbYBOWV3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Feb 2008 17:21:29 -0500
 Received: from a-sasl-quonix.pobox.com (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 4A74718E6;
-	Fri, 15 Feb 2008 17:14:56 -0500 (EST)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 57DC11B4C;
+	Fri, 15 Feb 2008 17:21:28 -0500 (EST)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
  certificate requested) by a-sasl-quonix.pobox.com (Postfix) with ESMTP id
- 1AB9018E3; Fri, 15 Feb 2008 17:14:47 -0500 (EST)
-In-Reply-To: <200802152045.37755.johannes.sixt@telecom.at> (Johannes Sixt's
- message of "Fri, 15 Feb 2008 20:45:37 +0100")
+ 679391B42; Fri, 15 Feb 2008 17:21:20 -0500 (EST)
+In-Reply-To: <alpine.LSU.1.00.0802151811240.30505@racer.site> (Johannes
+ Schindelin's message of "Fri, 15 Feb 2008 18:12:57 +0000 (GMT)")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73989>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73990>
 
-Johannes Sixt <johannes.sixt@telecom.at> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> ... But practically in the case 
-> where a fd > 0 is assigned to .in/.out/.err:
+>> I have to wonder in what century filter-branch was written ;-)
+>> 
+>> Shouldn't those two lines be:
+>> 
+>> 	git diff-index -r --name-only $commit |
+>>         git update-index --add --replace --remove --stdin
+>> 
+>> these days, without any of the cut and cruft?
 >
-> - case .out, .err: the caller is required to close the fd early after 
-> start_command() because (if this is a pipe) the child won't see EOF;
+> Maybe even using "-z" in both cases?
 >
-> - case .in: the caller must not read from the fd anyway, else the child gets 
-> inconsistent input.
->
-> So, while there *is* some inconsistency, the inconsistent cases can be clearly 
-> separated into the cases fd > 0 and fd == -1.
+> Having said that, I do not understand why the old code did not work.  Will 
+> have a look later today.
 
-Ok, sold.
+The reason mine does not have to use -z is because both end
+knows how to C-quote paths under non-z mode.
+
+Now you mention it, it certainly is a bit puzzling why the old
+one did not work.
