@@ -1,79 +1,92 @@
-From: "Jay Soffian" <jaysoffian@gmail.com>
-Subject: diff --check line number bug
-Date: Fri, 15 Feb 2008 15:18:45 -0500
-Message-ID: <76718490802151218s62c4f884u39353b66540b347a@mail.gmail.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH] Rename git-core rpm to just git and rename the meta-pacakge
+ to git-all.
+Date: Fri, 15 Feb 2008 22:08:39 +0100
+Message-ID: <47B5FF57.5080204@op5.se>
+References: <1203100163-17509-1-git-send-email-krh@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Feb 15 21:19:40 2008
+Content-Type: text/plain; charset=ISO-8859-15;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?ISO-8859-15?Q?Kristian_H=F8gsberg?= <krh@redhat.com>
+X-From: git-owner@vger.kernel.org Fri Feb 15 22:09:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JQ71x-0005TB-9N
-	for gcvg-git-2@gmane.org; Fri, 15 Feb 2008 21:19:33 +0100
+	id 1JQ7oH-00077h-1f
+	for gcvg-git-2@gmane.org; Fri, 15 Feb 2008 22:09:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760636AbYBOUSv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Feb 2008 15:18:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759796AbYBOUSu
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Feb 2008 15:18:50 -0500
-Received: from wa-out-1112.google.com ([209.85.146.181]:44906 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1763278AbYBOUSs (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Feb 2008 15:18:48 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so1337435wah.23
-        for <git@vger.kernel.org>; Fri, 15 Feb 2008 12:18:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=d2SJiJee0ljRDJjdcybDuo4CwlM9+2ccO/WUamXU9E4=;
-        b=cn2pMZlNjJJaUvN+6G6fe4+LXWAhbKKsI4twPG/9HG4Nu2ZLei7mU3xIc9bGn5REoZiF7AL3EjVO+G9KA8LiUoEJmZGpkWg7xUuYFEuKNkmTFXuHEa1cJJbDjCAsN6Dyz/g/msGqrWUKZtqNqqptKsLD5UimwDs85k6Seswn97Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=eQmQfZlDCDXtgB+BH9es/O/2b/z+sDHbKNFtLiTs9iJLXuD52hUlVD3qSK0rosDjHgd/LNkYVQ/DW9XOYtA/7jL7c5TWNaq+hxHMKTPU92BYIhw5oJkkH71O/TAi+NVlxIjRN3HF7FA1x5TTb0BJYnyXwcS9X7aQObGOvi3i2NM=
-Received: by 10.114.61.1 with SMTP id j1mr3411619waa.62.1203106725821;
-        Fri, 15 Feb 2008 12:18:45 -0800 (PST)
-Received: by 10.114.255.11 with HTTP; Fri, 15 Feb 2008 12:18:45 -0800 (PST)
-Content-Disposition: inline
+	id S1759730AbYBOVIv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Feb 2008 16:08:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757355AbYBOVIv
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Feb 2008 16:08:51 -0500
+Received: from mail.op5.se ([193.201.96.20]:58367 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932593AbYBOVIt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Feb 2008 16:08:49 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 49BD21F08022;
+	Fri, 15 Feb 2008 22:08:48 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.499
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
+	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id sVIZONvOknpP; Fri, 15 Feb 2008 22:08:47 +0100 (CET)
+Received: from clix.int.op5.se (unknown [172.27.78.26])
+	by mail.op5.se (Postfix) with ESMTP id A8F441F08007;
+	Fri, 15 Feb 2008 22:08:45 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.9 (X11/20071115)
+In-Reply-To: <1203100163-17509-1-git-send-email-krh@redhat.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73980>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73981>
 
-% mkdir git-ws
-% cd git-ws
-% git init
-% touch foo
-% git add foo
-% printf '\n\nline 3 \n\nline 5 \nline 6\n' > foo
-% cat -n foo
-     1	
-     2	
-     3	line 3
-     4	
-     5	line 5
-     6	line 6
-% sed -ne l foo
-$
-$
-line 3 $
-$
-line 5 $
-line 6$
-% git diff --check foo
-foo:1: trailing whitespace.
-+line 3
-foo:2: trailing whitespace.
-+line 5
-% git version
-git version 1.5.4.1.1281.g75df
+Kristian H=F8gsberg wrote:
+> ---
+>=20
+> So here's change to fix my favorite annoyance with the git rpm
+> packaging: don't pull in tla when I say yum install git!  The decisio=
+n
+> to make 'git' a metapackage is to say the least unconventional and
+> continues to surprise people (here's today discussion:
+> http://marc.info/?t=3D120309228600004&r=3D1&w=3D2).
+>=20
+> I know it's late and most people who use the git rpms are used to ins=
+talling
+> git-core by now, but myself and most of my Red Hat co-workers (who sh=
+ould
+> know a thing or two about rpm packaging) have been fooled by the 'git=
+'
+> rpm that pulls in everything.  There's really no precendence for this=
+, quite
+> the opposite: you wouldn't expect yum install gcc to pull in fortran,=
+ right?
+>=20
+> The patch below only affects people who know that 'git' is a metapack=
+age
+> and actually use that to pull in everything (but who does?).  The pat=
+ch
+> renames the 'git-core' rpm to just 'git', but adds a 'Provides: git-c=
+ore'
+> there so people who have trained themselves to say yum install git-co=
+re
+> wont get burned.
+>=20
 
-Apparently somewhere in the bowels of the "Crazy xdl interfaces", empty
-lines are skipped over, thus the line number counting in
-checkdiff_consume() is off? I dunno, I briefly looked into fixing it but
-it didn't seem like a quick fix.
+Neat, and very nicely done. However, why not add "git-extras" package a=
+s
+meta-package that does what just plain "git" package used to do, and
+mentioning the git-extras rpm in the %description of git's package?
 
-j.
+--=20
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
