@@ -1,67 +1,59 @@
-From: Jan Holesovsky <kendy@suse.cz>
-Subject: Re: [PATCH] RFC: git lazy clone proof-of-concept
-Date: Fri, 15 Feb 2008 10:43:20 +0100
-Message-ID: <200802151043.21508.kendy@suse.cz>
-References: <200802081828.43849.kendy@suse.cz> <alpine.LSU.1.00.0802142054080.30505@racer.site> <200802142300.01615.jnareb@gmail.com>
+From: Paul Gardiner <osronline@glidos.net>
+Subject: Re: Clean up after git-filter-branch
+Date: Fri, 15 Feb 2008 10:03:35 +0000
+Message-ID: <47B56377.3070608@glidos.net>
+References: <47B55536.1010900@glidos.net> <47B55C72.5000105@users.sourceforge.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Brandon Casey <casey@nrlssc.navy.mil>,
-	Nicolas Pitre <nico@cam.org>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Brian Downing <bdowning@lavos.net>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 15 10:43:59 2008
+Cc: osronline@glidos.net, git@vger.kernel.org
+To: Adam Piatyszek <ediap@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Fri Feb 15 11:04:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JPx6s-0004oq-IS
-	for gcvg-git-2@gmane.org; Fri, 15 Feb 2008 10:43:58 +0100
+	id 1JPxQa-0002Qq-EU
+	for gcvg-git-2@gmane.org; Fri, 15 Feb 2008 11:04:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755048AbYBOJnZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Feb 2008 04:43:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756598AbYBOJnY
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Feb 2008 04:43:24 -0500
-Received: from styx.suse.cz ([82.119.242.94]:49611 "EHLO mail.suse.cz"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1754996AbYBOJnX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Feb 2008 04:43:23 -0500
-Received: from one.suse.cz (one.suse.cz [10.20.1.79])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.suse.cz (Postfix) with ESMTP id 67096628096;
-	Fri, 15 Feb 2008 10:43:15 +0100 (CET)
-User-Agent: KMail/1.9.6 (enterprise 20070904.708012)
-In-Reply-To: <200802142300.01615.jnareb@gmail.com>
-Content-Disposition: inline
+	id S1752924AbYBOKDq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Feb 2008 05:03:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756763AbYBOKDq
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Feb 2008 05:03:46 -0500
+Received: from mk-outboundfilter-1.mail.uk.tiscali.com ([212.74.114.37]:51668
+	"EHLO mk-outboundfilter-1.mail.uk.tiscali.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752268AbYBOKDp (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 15 Feb 2008 05:03:45 -0500
+X-Trace: 41316630/mk-outboundfilter-1.mail.uk.tiscali.com/PIPEX/$MX-ACCEPTED/pipex-infrastructure/62.241.163.7
+X-SBRS: None
+X-RemoteIP: 62.241.163.7
+X-IP-MAIL-FROM: osronline@glidos.net
+X-IP-BHB: Once
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Ao8CAGzytEc+8aMH/2dsb2JhbACudA
+X-IP-Direction: IN
+Received: from blaster.systems.pipex.net ([62.241.163.7])
+  by smtp.pipex.tiscali.co.uk with ESMTP; 15 Feb 2008 10:03:41 +0000
+Received: from [10.0.0.24] (81-86-57-226.dsl.pipex.com [81.86.57.226])
+	by blaster.systems.pipex.net (Postfix) with ESMTP id 8DBB1E0000B5;
+	Fri, 15 Feb 2008 10:03:36 +0000 (GMT)
+User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
+In-Reply-To: <47B55C72.5000105@users.sourceforge.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73949>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73950>
 
-Hi Jakub,
+Adam Piatyszek wrote:
+> * Paul Gardiner [15 II 2008 10:02]:
+>> What's the simplest clean up command after a git-filter-branch --all
+>> to remove all the branches in refs/original, so that you can do
+>> another git-filter-branch?
+> 
+> % rm -rf refs/original        ???
 
-On Thursday 14 of February 2008, Jakub Narebski wrote:
+:-) Great thanks. I didn't realise that all the branch specific info
+were in these files. That's neat.
 
-> >> What is the size of checkout, by the way?
-> >
-> > 2.4G
->
-> That's huuuuge tree. Compared to that 1.6G (or 1.4G) packfile doesn't
-> look large.
->
-> I wonder if proper subdivision into submodules (which should encourage
-> better code by the way, see TAOUP), and perhaps partial checkouts
-> wouldn't be better solution than lazy clone. But it is nice to have
-> long discussed about feature, even if at RFC stage, but with some code.
-
-Yes, I'd love to see the OOo tree split into several parts, I've already 
-proposed a division (http://www.nabble.com/OOo-source-split-td13096065.html), 
-but it'll take some more time I'm afraid :-(
-
-Regards,
-Jan
+P.
