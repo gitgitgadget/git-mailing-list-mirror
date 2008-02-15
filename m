@@ -1,74 +1,90 @@
-From: Remi Vanicat <vanicat@debian.org>
-Subject: [BUG] git filter-branch failed to suppress a file with an accentuated letter in the filename
-Date: Fri, 15 Feb 2008 17:56:55 +0100
-Message-ID: <87bq6iw42w.dlv@maison.homelinux.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] mailinfo: support rfc3676 (format=flowed) text/plain
+ messages
+Date: Fri, 15 Feb 2008 09:10:19 -0800
+Message-ID: <7vr6fei1s4.fsf@gitster.siamese.dyndns.org>
+References: <1203042077-11385-1-git-send-email-jaysoffian@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 15 17:57:47 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 15 18:11:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JQ3sb-0002No-Pu
-	for gcvg-git-2@gmane.org; Fri, 15 Feb 2008 17:57:42 +0100
+	id 1JQ45y-0007xI-Gg
+	for gcvg-git-2@gmane.org; Fri, 15 Feb 2008 18:11:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751723AbYBOQ5G convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Feb 2008 11:57:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751683AbYBOQ5F
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Feb 2008 11:57:05 -0500
-Received: from neuf-infra-smtp-out-sp604006av.neufgp.fr ([84.96.92.121]:37508
-	"EHLO neuf-infra-smtp-out-sp604006av.neufgp.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751604AbYBOQ5E convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Feb 2008 11:57:04 -0500
-Received: from neuf-infra-smtp-out-sp604011av.neufgp.fr ([84.96.92.116])
-	by neuf-infra-smtp-out-sp604006av.neufgp.fr with neuf telecom
-	id pswv1Y0062We0qU0600300; Fri, 15 Feb 2008 17:56:59 +0100
-Received: from maison.homelinux.org ([84.103.71.93])
-	by neuf-infra-smtp-out-sp604011av.neufgp.fr with neuf telecom
-	id pswy1Y00920lBGc0B00000; Fri, 15 Feb 2008 17:56:58 +0100
-Received: from moi by maison.homelinux.org with local (Exim 4.69)
-	(envelope-from <moi@vanicat.homelinux.org>)
-	id 1JQ3rs-0004sH-61
-	for git@vger.kernel.org; Fri, 15 Feb 2008 17:56:57 +0100
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: moi@vanicat.homelinux.org
-X-Spam-Checker-Version: SpamAssassin 3.2.3 (2007-08-08) on maison.homelinux.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-0.0 required=5.0 tests=NO_RELAYS autolearn=ham
-	version=3.2.3
-X-SA-Exim-Version: 4.2.1 (built Tue, 21 Aug 2007 23:39:36 +0000)
-X-SA-Exim-Scanned: Yes (on maison.homelinux.org)
+	id S1751957AbYBORKq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Feb 2008 12:10:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751691AbYBORKq
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Feb 2008 12:10:46 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:59395 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751552AbYBORKp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Feb 2008 12:10:45 -0500
+Received: from a-sasl-quonix.pobox.com (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id CDF40227B;
+	Fri, 15 Feb 2008 12:10:43 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.pobox.com (Postfix) with ESMTP id
+ AAF1A2278; Fri, 15 Feb 2008 12:10:37 -0500 (EST)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73958>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73959>
 
-git filter-branch --tree-filter has a problem with filename with
-accentuated letter:
+I really do not like this.
 
-$ git add foo/bar=C3=A9
-$ git commit -m "adding a file with an accent"
-Created initial commit b27ae97: adding a file with an accent
- 0 files changed, 0 insertions(+), 0 deletions(-)
- create mode 100644 "foo/bar\303\251"
-$ git filter-branch --tree-filter "rm -rf foo"
-Rewrite b27ae977459379e4e7eee1a3d523f908903ea6ae (1/1)
-WARNING: Ref 'refs/heads/master' is unchanged
+format=flowed instructs the receivers MUA that it is Ok to
+reflow the text when the message is presented to the user.  That
+is exactly what we do _NOT_ want to happen to patches.  Your
+implementation may cleanly salvage what the sender intended to
+send, but salvaging when applying the patch is too late.
 
-there the foo/bar=C3=A9 file still exists, but:
-$ git filter-branch --tree-filter "rm -rf foo; git add -u"
-will suppress the said file from history.
+You review the patch, decide to apply or reject, and then
+finally apply.  Unmangling of corrupt contents should be done
+before you review, not before you apply.
 
-The culprit seem to be those line of filter-branch: (around line 279)=20
-		git diff-index -r $commit | cut -f 2- | tr '\012' '\000' | \
-			xargs -0 git update-index --add --replace --remove
-git diff-index giving the filename as "foo/bar\303\251"
+We have similar hacks to clean-up MIME attachments and CTE.
+They are useful when your mailpath is not clean and can corrupt
+contents even if you try to send it as text/plain in-line patch
+as a fallback measure to ensure the contents not to get
+corrupted.  format=flowed is completely opposite --- you are
+giving your and recipients MUA freedom to reflow the text, but
+there is no valid reason to allow that when sending patches.
 
+We do not even encourage MIME attachments and ask senders to try
+sending uncorrupt patch in-line, _even though_ MIME attachments
+is a way to try harder not to corrupt the payload.  Why should
+we encourage format=flowed which is meant to do the opposite
+(i.e. we do not care about the exact content, we care more about
+how better the paragraph looks and easier to read on screens
+with different width)?
 
---=20
-R=C3=A9mi Vanicat
+The format is not meant for the exact transmission of text (like
+"patch") but more for paragraphed prose that can be re-fit on
+narrower display like phones.  Section 5. even goes to say
+"Hand-aligned text, such as ASCII tables or art, source code,
+etc., SHOULD be sent as fixed, not flowed lines."
+
+Side note.  I did not look at the patch very carefully, but can
+you salvage a deleted text in the patch that removes a line that
+consists of "- " (minus followed by a single space and then
+end-of-line), or any deleted or added text that ends with a SP
+without making them misinterpreted as "flowed" line for that
+matter?
+
+I even suspect that the sending MUA client may misbehave for
+such a patch line.  In fact, doesn't section 4.2 say "a
+generating agant should trim spaces before user-inserted hard
+line breaks."?  It implies to me that you cannot have a fixed
+line that ends with SP.
+
+So just reject the patch when somebody sends you format=flowed
+and ask them to re-send without =flowed, and the world will be
+a much better place.
