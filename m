@@ -1,152 +1,132 @@
-From: Len Brown <lenb@kernel.org>
-Subject: Re: warning: no common commits - slow pull
-Date: Fri, 15 Feb 2008 16:43:30 -0500
-Organization: Intel Open Source Technology Center
-Message-ID: <200802151643.30232.lenb@kernel.org>
-References: <200802102007.38838.lenb@kernel.org> <7v4pcgcimw.fsf@gitster.siamese.dyndns.org> <20080211035501.GB26205@mit.edu>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Theodore Tso <tytso@mit.edu>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 15 22:45:35 2008
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: [PATCH 2/3] mailinfo: support rfc3676 (format=flowed) text/plain messages
+Date: Fri, 15 Feb 2008 16:53:37 -0500
+Message-ID: <1203112418-25199-2-git-send-email-jaysoffian@gmail.com>
+References: 1203042077-11385-1-git-send-email-jaysoffian@gmail.com
+ <1203112418-25199-1-git-send-email-jaysoffian@gmail.com>
+Cc: Jay Soffian <jaysoffian@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 15 22:54:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JQ8N6-0004G7-Ih
-	for gcvg-git-2@gmane.org; Fri, 15 Feb 2008 22:45:29 +0100
+	id 1JQ8Vg-0007Pw-1x
+	for gcvg-git-2@gmane.org; Fri, 15 Feb 2008 22:54:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753518AbYBOVoy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Feb 2008 16:44:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753465AbYBOVoy
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Feb 2008 16:44:54 -0500
-Received: from hera.kernel.org ([140.211.167.34]:51048 "EHLO hera.kernel.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751382AbYBOVox convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 15 Feb 2008 16:44:53 -0500
-Received: from d975xbx2 (c-65-96-213-102.hsd1.ma.comcast.net [65.96.213.102])
-	(authenticated bits=0)
-	by hera.kernel.org (8.13.8/8.13.8) with ESMTP id m1FLhZ4w024788
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 15 Feb 2008 21:43:37 GMT
-User-Agent: KMail/1.9.5
-In-Reply-To: <20080211035501.GB26205@mit.edu>
-Content-Disposition: inline
-X-Virus-Scanned: ClamAV 0.88.7/5832/Fri Feb 15 16:26:21 2008 on hera.kernel.org
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-1.1 required=5.0 tests=AWL,BAYES_00,RCVD_IN_PBL,
-	RCVD_IN_SORBS_DUL,RDNS_DYNAMIC,TRACKER_ID autolearn=no version=3.2.3
-X-Spam-Checker-Version: SpamAssassin 3.2.3 (2007-08-08) on hera.kernel.org
+	id S1758095AbYBOVxs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Feb 2008 16:53:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757982AbYBOVxr
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Feb 2008 16:53:47 -0500
+Received: from an-out-0708.google.com ([209.85.132.250]:34814 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757340AbYBOVxp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Feb 2008 16:53:45 -0500
+Received: by an-out-0708.google.com with SMTP id d31so183897and.103
+        for <git@vger.kernel.org>; Fri, 15 Feb 2008 13:53:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=dJzFIurGzFmb3FEetPZLf6wApIhH+0ZqkELe2Xo4jeY=;
+        b=lyqRU2GIhXMKJV4QdnJzAoh2oPxqEIS2t2K5JjPnwocZF/Tjua2xseeX5VRcltjwa8f/L/SUzrsTQIxJrIwZ9uokFPuSiElEyGJfg157Ki5z6R1KF913Dw4wIZ3m1nj57z2vtPhngm968msfyh7N0ycir9vFn+3Gtrm3wJSHK3M=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=vilPMKXXe+DUMzt3r5635Tt+gzkOMQiWpeLalKbxLK5lNqmoWkNVfeRNXZrQb9bjWn9YUUyw0CIzvdhUOEjE+bu6Hym6jtjlzucgiYowUsJVRMHT45DtGAquRBaUV2Us/b4E0AVZgDnFboeUY/Tx0JtKsWHp8bix/HYKywEWpNw=
+Received: by 10.100.94.14 with SMTP id r14mr4734176anb.62.1203112424599;
+        Fri, 15 Feb 2008 13:53:44 -0800 (PST)
+Received: from localhost ( [75.189.159.45])
+        by mx.google.com with ESMTPS id c1sm8939352ana.36.2008.02.15.13.53.43
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 15 Feb 2008 13:53:43 -0800 (PST)
+X-Mailer: git-send-email 1.5.4.1.1281.g75df
+In-Reply-To: <1203112418-25199-1-git-send-email-jaysoffian@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73985>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73986>
 
-it happened again.
+RFC 3676 establishes two parameters (Format and DelSP) to be used with
+the Text/Plain media type. In the presence of these parameters, trailing
+whitespace is used to indicate flowed lines and a canonical quote
+indicator is used to indicate quoted lines.
 
-this morning I pulled linus' tree up through 
-4ee29f6a52158cea526b16a44ae38643946103ec
+mailinfo now unfolds, unquotes, and un-space-stuffs such messages.
 
-then during the day, linus declared "rc2".
+Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
+---
+This is a bit simpler than the previous patch and incorporates most of
+Johannes' feedback. I also switched from enum's to int's since enum's
+were really overkill.
 
-and now I pulled linus' tree again,
-which has a HEAD now of 
+ builtin-mailinfo.c |   31 +++++++++++++++++++++++++++++++
+ 1 files changed, 31 insertions(+), 0 deletions(-)
 
-101142c37be8e5af9b847860219217e6b958c739
-
-and the pull sucked down 172 MB even though the uncompressed
-diff between the two is 0.3 MB.
-
--Len
-
-[lenb@d975xbx2 linus (master)]$ git pull
-remote: Counting objects: 649, done.
-remote: Compressing objects: 100% (106/106), done.
-remote: Total 513 (delta 417), reused 503 (delta 407)
-Receiving objects: 100% (513/513), 116.67 KiB, done.
-Resolving deltas: 100% (417/417), completed with 103 local objects.
-warning: no common commits
-remote: Counting objects: 710725, done.
-remote: Compressing objects: 100% (125738/125738), done.
-remote: Total 710725 (delta 589584), reused 704450 (delta 584029)
-Receiving objects: 100% (710725/710725), 172.71 MiB | 1073 KiB/s, done.
-Resolving deltas: 100% (589584/589584), done.
-From git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6
- * [new tag]         v2.6.25-rc2 -> v2.6.25-rc2
-Updating 4ee29f6..101142c
-Fast forward
- Makefile                               |    4 +-
- drivers/bluetooth/hci_ldisc.c          |    1 +
- drivers/net/8139too.c                  |    2 +-
- drivers/net/Kconfig                    |   18 +
- drivers/net/Makefile                   |    3 +-
- drivers/net/cxgb3/l2t.c                |    2 +-
- drivers/net/cxgb3/sge.c                |   35 +-
- drivers/net/dm9000.c                   |  654 +++++---
- drivers/net/e1000/e1000_main.c         |   18 +-
- drivers/net/forcedeth.c                |  132 +-
- drivers/net/netconsole.c               |    4 +-
- drivers/net/ni52.c                     | 1142 +++++++-------
- drivers/net/ni52.h                     |  158 +-
- drivers/net/pcnet32.c                  |   48 +-
- drivers/net/phy/fixed.c                |    4 +-
- drivers/net/ps3_gelic_net.c            | 1215 ++++++++------
- drivers/net/ps3_gelic_net.h            |  415 ++++--
- drivers/net/ps3_gelic_wireless.c       | 2753 ++++++++++++++++++++++++++++++++
- drivers/net/ps3_gelic_wireless.h       |  329 ++++
- drivers/net/r6040.c                    |  233 ++--
- drivers/net/sis190.c                   |    3 +-
- drivers/s390/net/claw.h                |   19 +-
- drivers/s390/net/lcs.c                 |    2 +-
- drivers/s390/net/lcs.h                 |   16 +-
- drivers/s390/net/netiucv.c             |   29 +-
- fs/compat.c                            |    3 -
- fs/nfs/callback.c                      |   18 +-
- fs/nfs/dir.c                           |    8 +-
- fs/nfs/nfs4state.c                     |    4 +-
- fs/nfs/super.c                         |    4 +
- include/linux/dm9000.h                 |    2 +
- include/linux/netdevice.h              |    8 +-
- include/net/ax25.h                     |    2 +
- include/net/ndisc.h                    |    1 -
- include/net/xfrm.h                     |    5 +-
- net/ax25/af_ax25.c                     |   12 +-
- net/ax25/ax25_dev.c                    |    2 +-
- net/ax25/ax25_ds_timer.c               |   12 +-
- net/ax25/ax25_route.c                  |   28 +-
- net/ax25/ax25_timer.c                  |   60 +-
- net/core/dev.c                         |    4 +-
- net/core/neighbour.c                   |   12 +-
- net/core/rtnetlink.c                   |   36 +-
- net/core/skbuff.c                      |    3 +-
- net/ipv4/ah4.c                         |    2 +-
- net/ipv4/arp.c                         |    3 -
- net/ipv4/esp4.c                        |    5 +-
- net/ipv4/fib_trie.c                    |   99 +-
- net/ipv4/inet_hashtables.c             |    3 -
- net/ipv4/ip_sockglue.c                 |    5 -
- net/ipv6/ah6.c                         |    2 +-
- net/ipv6/esp6.c                        |    5 +-
- net/ipv6/ip6_output.c                  |    6 +-
- net/ipv6/xfrm6_output.c                |    2 +-
- net/key/af_key.c                       |    1 +
- net/netfilter/nf_conntrack_proto_tcp.c |    2 +-
- net/netfilter/xt_SECMARK.c             |    2 +-
- net/netlabel/netlabel_domainhash.c     |    6 +-
- net/netlabel/netlabel_unlabeled.c      |   30 +-
- net/netlabel/netlabel_user.c           |    3 +-
- net/netlink/genetlink.c                |    6 +-
- net/socket.c                           |    3 +
- net/xfrm/Kconfig                       |    2 +-
- net/xfrm/xfrm_input.c                  |    4 +-
- net/xfrm/xfrm_output.c                 |    2 +-
- net/xfrm/xfrm_user.c                   |    1 +
- 66 files changed, 5686 insertions(+), 1971 deletions(-)
- create mode 100644 drivers/net/ps3_gelic_wireless.c
- create mode 100644 drivers/net/ps3_gelic_wireless.h
-[lenb@d975xbx2 linus (master)]$            
-[lenb@d975xbx2 linus (master)]$ git --version
-git version 1.5.4.1.122.gaa8d
-                
+diff --git a/builtin-mailinfo.c b/builtin-mailinfo.c
+index 11f154b..0492baf 100644
+--- a/builtin-mailinfo.c
++++ b/builtin-mailinfo.c
+@@ -21,6 +21,10 @@ static enum  {
+ 	TYPE_TEXT, TYPE_OTHER,
+ } message_type;
+ 
++/* RFC 3676 Text/Plain Format and DelSp Parameters */
++static int message_format_is_flowed;
++static int message_delsp_is_yes;
++
+ static char charset[256];
+ static int patch_lines;
+ static char **p_hdr_data, **s_hdr_data;
+@@ -193,6 +197,15 @@ static int handle_content_type(char *line)
+ 
+ 	if (strcasestr(line, "text/") == NULL)
+ 		 message_type = TYPE_OTHER;
++	else if (strcasestr(line, "text/plain")) {
++		char attr[256];
++		if ((message_format_is_flowed = (
++			slurp_attr(line, "format=", attr) &&
++			!strcasecmp(attr, "flowed"))))
++			message_delsp_is_yes = (
++				slurp_attr(line, "delsp=", attr) &&
++				!strcasecmp(attr, "yes"));
++	}
+ 	if (slurp_attr(line, "boundary=", boundary + 2)) {
+ 		memcpy(boundary, "--", 2);
+ 		if (content_top++ >= &content[MAX_BOUNDARIES]) {
+@@ -681,6 +694,8 @@ again:
+ 	transfer_encoding = TE_DONTCARE;
+ 	charset[0] = 0;
+ 	message_type = TYPE_TEXT;
++	message_format_is_flowed = 0;
++	message_delsp_is_yes = 0;
+ 
+ 	/* slurp in this section's info */
+ 	while (read_one_header_line(line, sizeof(line), fin))
+@@ -770,6 +785,22 @@ static int handle_filter(char *line, unsigned linesize)
+ {
+ 	static int filter = 0;
+ 
++	if (message_format_is_flowed && strcmp(line, "-- \n")) {
++		/* strip quote markers */
++		while (*line && *line == '>')
++			line++;
++		/* undo space-stuffing */
++		if (*line == ' ')
++			line++;
++		if (strcmp(line, "-- \n")) {
++			char *cp = strchrnul(line, '\n');
++			if (cp > line && *(cp-1) == ' ' && *cp == '\n')
++				/* line is flowed (wrapped); remove
++				 * the \n or <space>\n if delsp is yes
++				 */
++				*(cp-(message_delsp_is_yes?1:0)) = '\0';
++		}
++	}
+ 	/* filter tells us which part we left off on
+ 	 * a non-zero return indicates we hit a filter point
+ 	 */
+-- 
+1.5.4.1.1281.g75df
