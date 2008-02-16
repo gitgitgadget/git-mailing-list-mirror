@@ -1,73 +1,72 @@
-From: Remi Vanicat <vanicat@debian.org>
-Subject: Re: [BUG] git filter-branch failed to suppress a file with an accentuated letter in the filename
-Date: Sat, 16 Feb 2008 07:34:29 +0100
-Message-ID: <87tzk9tnnu.dlv@maison.homelinux.org>
-References: <87bq6iw42w.dlv@maison.homelinux.org>
-	<7vd4qygld8.fsf@gitster.siamese.dyndns.org>
+From: "Jay Soffian" <jaysoffian@gmail.com>
+Subject: Re: [PATCH 1/3] mailinfo: ensure handle_filter gets only one line at a time
+Date: Sat, 16 Feb 2008 01:51:45 -0500
+Message-ID: <76718490802152251x20102ecep383fb76ce0c96b64@mail.gmail.com>
+References: <1203112418-25199-1-git-send-email-jaysoffian@gmail.com>
+	 <7vodahg5w4.fsf@gitster.siamese.dyndns.org>
+	 <76718490802151537r7658e109o3c981832ae32154d@mail.gmail.com>
+	 <7vmyq1e86n.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Remi Vanicat <vanicat@debian.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 16 07:35:21 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Feb 16 07:52:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JQGdr-00038T-JX
-	for gcvg-git-2@gmane.org; Sat, 16 Feb 2008 07:35:20 +0100
+	id 1JQGud-0005XS-UR
+	for gcvg-git-2@gmane.org; Sat, 16 Feb 2008 07:52:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752615AbYBPGeo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 16 Feb 2008 01:34:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752808AbYBPGeo
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Feb 2008 01:34:44 -0500
-Received: from neuf-infra-smtp-out-sp604007av.neufgp.fr ([84.96.92.120]:37926
-	"EHLO neuf-infra-smtp-out-sp604007av.neufgp.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752449AbYBPGen convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Feb 2008 01:34:43 -0500
-Received: from neuf-infra-smtp-out-sp604001av.neufgp.fr ([84.96.92.125])
-	by neuf-infra-smtp-out-sp604007av.neufgp.fr with neuf telecom
-	id q46z1Y00E2iH3ss0706f00; Sat, 16 Feb 2008 07:34:40 +0100
-Received: from maison.homelinux.org ([84.103.71.93])
-	by neuf-infra-smtp-out-sp604001av.neufgp.fr with neuf telecom
-	id q6aa1Y00A20lBGc0100000; Sat, 16 Feb 2008 07:34:40 +0100
-Received: from moi by maison.homelinux.org with local (Exim 4.69)
-	(envelope-from <moi@vanicat.homelinux.org>)
-	id 1JQGd6-0000gx-9j; Sat, 16 Feb 2008 07:34:34 +0100
-In-Reply-To: <7vd4qygld8.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's message of "Fri\, 15 Feb 2008 09\:50\:11 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: moi@vanicat.homelinux.org
-X-Spam-Checker-Version: SpamAssassin 3.2.3 (2007-08-08) on maison.homelinux.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-0.0 required=5.0 tests=NO_RELAYS autolearn=ham
-	version=3.2.3
-X-SA-Exim-Version: 4.2.1 (built Tue, 21 Aug 2007 23:39:36 +0000)
-X-SA-Exim-Scanned: Yes (on maison.homelinux.org)
+	id S1750915AbYBPGvs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 Feb 2008 01:51:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750877AbYBPGvr
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Feb 2008 01:51:47 -0500
+Received: from wa-out-1112.google.com ([209.85.146.183]:31955 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750799AbYBPGvq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Feb 2008 01:51:46 -0500
+Received: by wa-out-1112.google.com with SMTP id v27so1569755wah.23
+        for <git@vger.kernel.org>; Fri, 15 Feb 2008 22:51:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=SGanHZfEjbaO5LKon2NgjoCFXY0degDiSCm9eNVEJwc=;
+        b=ruszWoMaLVLnrEgK6/mlUzFpBaY+rx8qg5JwvwrSkR4KYOxfpaSPGbRPSVKvQ3kf3G9+1JDzvyFLKbW4DP7GDdByRFwSCoBh8Gt0r2CdK99ES1H3r0/UR7Dx++NsJ6TJ5NCvdZtFf5SLjCumpGUp/InFYeAN3Fs7TgdJR2txsZI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=OXyC/HrUKIVUAvyx57ebtANcD8WNboTBX3Uyb5h7rXDAYg2tmN+Y8KAyvXI6b1oARTpbLLw2g6bHfTx/Wb8BLd+YW3UBZatxi2Y9Fc5EqvdECy8GNF5gMOQ12WlsTyWjqOUScK/i7ZPLX2UuXHlhb0XNu0ogptnItH8NlcHl9F4=
+Received: by 10.114.195.19 with SMTP id s19mr2392595waf.58.1203144705972;
+        Fri, 15 Feb 2008 22:51:45 -0800 (PST)
+Received: by 10.114.255.11 with HTTP; Fri, 15 Feb 2008 22:51:45 -0800 (PST)
+In-Reply-To: <7vmyq1e86n.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74018>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74019>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Feb 16, 2008 1:17 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> "Jay Soffian" <jaysoffian@gmail.com> writes:
+>
+> > On Feb 15, 2008 6:24 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> >> Care to provide a test case for this one?
+> >
+> > I'll see what I can do. I'm not sure it makes a difference...
+>
+> Of course it does; otherwise I wouldn't have asked.
 
-> Remi Vanicat <vanicat@debian.org> writes:
->
->> The culprit seem to be those line of filter-branch: (around line 279=
-)=20
->> 		git diff-index -r $commit | cut -f 2- | tr '\012' '\000' | \
->> 			xargs -0 git update-index --add --replace --remove
->> git diff-index giving the filename as "foo/bar\303\251"
->
-> I have to wonder in what century filter-branch was written ;-)
->
-> Shouldn't those two lines be:
->
-> 	git diff-index -r --name-only $commit |
->         git update-index --add --replace --remove --stdin
+What I meant was, I wasn't sure if the output of mailinfo
+would have been incorrect w/o the patch. I noticed it only
+when I added the format=flowed code which relied on
+handle_filter() getting a single line at a time. I hadn't
+looked at whether handle_commit_msg() and/or handle_patch()
+(downstream of handle_filter) would care.
 
-That solve the bug for me.
---=20
-R=C3=A9mi Vanicat
+I wasn't trying to shirk off adding a test case. :-)
+
+j.
