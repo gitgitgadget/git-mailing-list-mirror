@@ -1,74 +1,103 @@
-From: "Jay Soffian" <jaysoffian@gmail.com>
-Subject: Re: [PATCH 1/2] mailinfo: support rfc3676 (format=flowed) text/plain messages
-Date: Sat, 16 Feb 2008 02:43:41 -0500
-Message-ID: <76718490802152343g6a987c8ay80493187d0a3ccba@mail.gmail.com>
-References: <1203042077-11385-1-git-send-email-jaysoffian@gmail.com>
-	 <7vr6fei1s4.fsf@gitster.siamese.dyndns.org>
-	 <76718490802151037m87995c2gacf29667259eae41@mail.gmail.com>
-	 <7vodahcrrl.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [BUG] git filter-branch failed to suppress a file with an
+ accentuated letter in the filename
+Date: Fri, 15 Feb 2008 23:54:47 -0800
+Message-ID: <7v63wpcp4o.fsf@gitster.siamese.dyndns.org>
+References: <87bq6iw42w.dlv@maison.homelinux.org>
+ <7vd4qygld8.fsf@gitster.siamese.dyndns.org>
+ <87tzk9tnnu.dlv@maison.homelinux.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 16 08:44:19 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Remi Vanicat <vanicat@debian.org>
+X-From: git-owner@vger.kernel.org Sat Feb 16 08:56:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JQHic-0006CK-7n
-	for gcvg-git-2@gmane.org; Sat, 16 Feb 2008 08:44:18 +0100
+	id 1JQHu6-0008FO-GC
+	for gcvg-git-2@gmane.org; Sat, 16 Feb 2008 08:56:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751426AbYBPHno (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 Feb 2008 02:43:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751401AbYBPHno
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Feb 2008 02:43:44 -0500
-Received: from qb-out-0506.google.com ([72.14.204.233]:43794 "EHLO
-	qb-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751254AbYBPHnn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Feb 2008 02:43:43 -0500
-Received: by qb-out-0506.google.com with SMTP id e11so385940qbe.15
-        for <git@vger.kernel.org>; Fri, 15 Feb 2008 23:43:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=eP+4tWT3FvSLJPVpXltuKq4IwBr5isI9DPcHWx4HAq8=;
-        b=FAR2yOugs+BdlZG5zCzWwo5CL+cNR3mVCUQzA2wYesOt+X91i27jBRA5NDaDZRv398MGnaGLcPccCoSU6WiPqCKlM27npPFJOr6umq5Xemyn8LgBrOPMifzG0VcXCDYDeSB112HkvJ7Ds3jKnY2r8NQQjDVOXpJdjgEboX2defo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Dl8ejP4ue1nOE2PV3KT8m8N25DPloeptaubi7xh46JvxJm/cAPToPzEYmdo29u/Btq4KyWYLPUkCIzz4/g7UB96453S+BcI9joHBP7UxCc0Zy3ITxB59z7ffRB6qw+9jDlIPyFznweCWCP/C/4Y/LqkImtOW9FOLHuZ3AipM2JU=
-Received: by 10.114.192.1 with SMTP id p1mr3978457waf.47.1203147821839;
-        Fri, 15 Feb 2008 23:43:41 -0800 (PST)
-Received: by 10.114.255.11 with HTTP; Fri, 15 Feb 2008 23:43:41 -0800 (PST)
-In-Reply-To: <7vodahcrrl.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1751469AbYBPHzS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 16 Feb 2008 02:55:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751401AbYBPHzS
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Feb 2008 02:55:18 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:41354 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751459AbYBPHzR convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 16 Feb 2008 02:55:17 -0500
+Received: from a-sasl-quonix.pobox.com (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 162FA3939;
+	Sat, 16 Feb 2008 02:55:13 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.pobox.com (Postfix) with ESMTP id
+ CA5F53938; Sat, 16 Feb 2008 02:55:05 -0500 (EST)
+In-Reply-To: <87tzk9tnnu.dlv@maison.homelinux.org> (Remi Vanicat's message of
+ "Sat, 16 Feb 2008 07:34:29 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74025>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74026>
 
-On Feb 16, 2008 1:57 AM, Junio C Hamano <gitster@pobox.com> wrote:
+Not just those two lines but the next two lines were also very
+old fashioned.
 
-> But format=flowed is different.  It loses information.  Not just
-> one space at the end of the original line, but if you have very
-> long line that has more than one spaces at an unfortunate place,
-> the sending MUA can cut the line there and leave a single
-> trailing space for the receiving end to reflow.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-Well, according to the RFC, that shouldn't be the case. The only
-lost information should be trailing whitespace. Embedded
-whitespace should not be altered.
+ * Could you try this one?
 
-> RFC3676 may be a good text communication medium.  It is just not
-> suitable for patch transfer.  Just don't use it.
+ git-filter-branch.sh     |    9 +++++----
+ t/t7003-filter-branch.sh |   14 ++++++++++++++
+ 2 files changed, 19 insertions(+), 4 deletions(-)
 
-Would you consider making this configurable. Something like:
-
-applymail.allowed_flowed = true/false/warn
-
-If you're completely opposed though, we should modify git-am
-(and/or mailinfo) to reject format=flowed messages entirely, no?
-
-j.
+diff --git a/git-filter-branch.sh b/git-filter-branch.sh
+index ff716ca..49e13f0 100755
+--- a/git-filter-branch.sh
++++ b/git-filter-branch.sh
+@@ -276,10 +276,11 @@ while read commit parents; do
+ 		eval "$filter_tree" < /dev/null ||
+ 			die "tree filter failed: $filter_tree"
+=20
+-		git diff-index -r $commit | cut -f 2- | tr '\012' '\000' | \
+-			xargs -0 git update-index --add --replace --remove
+-		git ls-files -z --others | \
+-			xargs -0 git update-index --add --replace --remove
++		(
++			git diff-index -r --name-only $commit
++			git ls-files --others
++		) |
++		git update-index --add --replace --remove --stdin
+ 	fi
+=20
+ 	eval "$filter_index" < /dev/null ||
+diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
+index 5f60b22..868babc 100755
+--- a/t/t7003-filter-branch.sh
++++ b/t/t7003-filter-branch.sh
+@@ -165,4 +165,18 @@ test_expect_success '"map" works in commit filter'=
+ '
+ 	git rev-parse --verify master
+ '
+=20
++test_expect_success 'Name needing quotes' '
++
++	git checkout -b rerere A &&
++	mkdir foo &&
++	name=3D"=E3=82=8C=E3=82=8C=E3=82=8C" &&
++	>foo/$name &&
++	git add foo &&
++	git commit -m "Adding a file" &&
++	git filter-branch --tree-filter "rm -fr foo" &&
++	! git ls-files --error-unmatch "foo/$name" &&
++	test $(git rev-parse --verify rerere) !=3D $(git rev-parse --verify A=
+)
++
++'
++
+ test_done
