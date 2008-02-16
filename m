@@ -1,87 +1,79 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: [PATCH 1/3] http-push: avoid invalid memory accesses
-Date: Sat, 16 Feb 2008 09:13:17 +0100
-Organization: glandium.org
-Message-ID: <20080216081317.GA5350@glandium.org>
-References: <alpine.LSU.1.00.0802142319340.30505@racer.site> <alpine.LSU.1.00.0802142325120.30505@racer.site> <7vabm1cqkd.fsf@gitster.siamese.dyndns.org>
+From: =?UTF-8?B?TmFneSBCYWzDoXpz?= <js@iksz.hu>
+Subject: Re: [PATCH] Correct git-pull documentation
+Date: Sat, 16 Feb 2008 09:20:43 +0100
+Message-ID: <47B69CDB.7070908@iksz.hu>
+References: <1203137441-52448-1-git-send-email-jaysoffian@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 16 09:12:52 2008
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 16 09:20:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JQIAF-0002ui-BT
-	for gcvg-git-2@gmane.org; Sat, 16 Feb 2008 09:12:51 +0100
+	id 1JQIHc-0004FR-9s
+	for gcvg-git-2@gmane.org; Sat, 16 Feb 2008 09:20:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751596AbYBPIMR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 Feb 2008 03:12:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751498AbYBPIMR
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Feb 2008 03:12:17 -0500
-Received: from vuizook.err.no ([85.19.215.103]:41396 "EHLO vuizook.err.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751474AbYBPIMQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Feb 2008 03:12:16 -0500
-Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
-	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.67)
-	(envelope-from <mh@glandium.org>)
-	id 1JQI9X-0006iU-TT; Sat, 16 Feb 2008 09:12:14 +0100
-Received: from mh by jigen with local (Exim 4.69)
-	(envelope-from <mh@jigen>)
-	id 1JQIAf-0001bD-9Q; Sat, 16 Feb 2008 09:13:17 +0100
-Content-Disposition: inline
-In-Reply-To: <7vabm1cqkd.fsf@gitster.siamese.dyndns.org>
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.3
+	id S1750967AbYBPITk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 Feb 2008 03:19:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750961AbYBPITk
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Feb 2008 03:19:40 -0500
+Received: from smtp.aranyoroszlan.hu ([195.56.77.57]:64477 "EHLO
+	smtp.aranyoroszlan.hu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750811AbYBPITj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Feb 2008 03:19:39 -0500
+Received: (qmail 38868 invoked by uid 263); 16 Feb 2008 08:29:02 -0000
+Received: from 213.178.103.79 (js@iksz.hu@213.178.103.79) by tcb.aranyoroszlan.hu (envelope-from <js@iksz.hu>, uid 256) with qmail-scanner-2.02st 
+ (clamdscan: 0.92/5779. spamassassin: 3.2.4. perlscan: 2.02st.  
+ Clear:RC:0(213.178.103.79):SA:0(-1.9/5.0):. 
+ Processed in 2.214876 secs); 16 Feb 2008 08:29:02 -0000
+X-Spam-Status: No, hits=-1.9 required=5.0
+X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on tcb.aranyoroszlan.hu
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.9 required=5.0 tests=AWL,BAYES_00,RCVD_IN_PBL,
+	RDNS_NONE autolearn=no version=3.2.4
+X-Envelope-From: js@iksz.hu
+Received: from unknown (HELO ?192.168.1.100?) (js@iksz.hu@213.178.103.79)
+  by tcb.aranyoroszlan.hu with SMTP; 16 Feb 2008 08:28:59 -0000
+User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
+In-Reply-To: <1203137441-52448-1-git-send-email-jaysoffian@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74028>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74029>
 
-On Fri, Feb 15, 2008 at 11:23:46PM -0800, Junio C Hamano wrote:
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > Before objects are sent, the respective ref is locked.  However,
-> > without this patch, the lock is lifted before the last object for
-> > that ref was sent.  As a consequence, the lock data was accessed
-> > after the lock structure was free()d.
-> >
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> >  http-push.c |    5 ++++-
-> >  1 files changed, 4 insertions(+), 1 deletions(-)
-> >
-> > diff --git a/http-push.c b/http-push.c
-> > index b2b410d..7a6c669 100644
-> > --- a/http-push.c
-> > +++ b/http-push.c
-> > @@ -2398,7 +2398,10 @@ int main(int argc, char **argv)
-> >  		fill_active_slots();
-> >  		add_fill_function(NULL, fill_active_slot);
-> >  #endif
-> > -		finish_all_active_slots();
-> > +		do {
-> > +			finish_all_active_slots();
-> #ifdef CURL_MULTI
-> > +			fill_active_slots();
-> #endif
-> > +		} while (request_queue_head && !aborted);
-> >  
-> >  		/* Update the remote branch if all went well */
-> >  		if (aborted || !update_remote(ref->new_sha1, ref_lock)) {
-> > -- 
-> > 1.5.4.1.1353.g0d5dd
-> 
-> I wonder if we should define a no-op function fill_active_slots()
-> for non MULTI case...
-
-Or a #define... but all this slot thing is probably going to change
-anyway, when I'll be done with it (but this is not planned for tomorrow).
-
-Mike
+Jay Soffian wrote:
+> diff --git a/Documentation/git-pull.txt b/Documentation/git-pull.txt
+> index 179bdfc..f734f18 100644
+> --- a/Documentation/git-pull.txt
+> +++ b/Documentation/git-pull.txt
+>   
+...
+> @@ -28,17 +29,12 @@ include::merge-options.txt[]
+>  :git-pull: 1
+>  include::fetch-options.txt[]
+>  
+> -include::pull-fetch-param.txt[]
+> -
+> -include::urls-remotes.txt[]
+> -
+> -include::merge-strategies.txt[]
+> -
+>  \--rebase::
+>  	Instead of a merge, perform a rebase after fetching.  If
+>  	there is a remote ref for the upstream branch, and this branch
+>  	was rebased since last fetched, the rebase uses that information
+> -	to avoid rebasing non-local changes.
+> +	to avoid rebasing non-local changes. This if the default if
+>   
+... This *is* the default if
+> +	`branch.<name>.rebase` is set.
+>  +
+>  *NOTE:* This is a potentially _dangerous_ mode of operation.
+>  It rewrites history, which does not bode well when you
+>   
+-- 
+-jul-
