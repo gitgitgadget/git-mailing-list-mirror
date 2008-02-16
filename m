@@ -1,64 +1,76 @@
-From: "Jay Soffian" <jaysoffian@gmail.com>
-Subject: Re: [PATCH 1/3] mailinfo: ensure handle_filter gets only one line at a time
-Date: Fri, 15 Feb 2008 18:37:06 -0500
-Message-ID: <76718490802151537r7658e109o3c981832ae32154d@mail.gmail.com>
-References: <1203112418-25199-1-git-send-email-jaysoffian@gmail.com>
-	 <7vodahg5w4.fsf@gitster.siamese.dyndns.org>
+From: =?windows-1250?Q?Jurko_Gospodneti=E6?= <jurko.gospodnetic@docte.hr>
+Subject: git-gui not working in a non-default Cygwin installation.
+Date: Sat, 16 Feb 2008 02:48:38 +0100
+Message-ID: <fp5fdj$5fi$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 16 00:37:47 2008
+Content-Type: text/plain; charset=windows-1250;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 16 02:51:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JQA7k-0001Ke-KF
-	for gcvg-git-2@gmane.org; Sat, 16 Feb 2008 00:37:45 +0100
+	id 1JQCD5-0002pq-Qh
+	for gcvg-git-2@gmane.org; Sat, 16 Feb 2008 02:51:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754324AbYBOXhK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Feb 2008 18:37:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753519AbYBOXhK
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Feb 2008 18:37:10 -0500
-Received: from hs-out-0708.google.com ([64.233.178.251]:8038 "EHLO
-	hs-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753804AbYBOXhI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Feb 2008 18:37:08 -0500
-Received: by hs-out-0708.google.com with SMTP id 54so616641hsz.5
-        for <git@vger.kernel.org>; Fri, 15 Feb 2008 15:37:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=RF5FkpKfVYnkJ30E2eE0D/vc1GsX7pSjPOX+3/Uy0jE=;
-        b=gMxg+5F8UzZd+t0nNaVJWIxks34FqW/BNLVqsfnMM4iOJ4HWcCtmHqLbGHqyorWOs7lH2vSRGK/+HkhSem3yxelk2/PyPhWYM8O3XsIdct5XqfS+8Wd+V4bLcwu81gM96PnO2kjxbIpMiwzL6QxmUzCN7pQWMrYaL7QmkCUflXk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=QDtnjHXBWNuQ4+ZPkvCx8DX9M31C1t1NoU7CL8P/FRt7HWuosiwS2K/Jwea1VImJJrSzDmZ7CQ79JPbNGWxMJ0HdbA1ZOPTaf2NGg/ZK65i0qjPnJDZl8kCdAZDaAWWnlE3GDZVd4oxWqGQU7PX//HMh7QltKofHoDz/vsYfRrQ=
-Received: by 10.114.52.1 with SMTP id z1mr3583267waz.123.1203118626128;
-        Fri, 15 Feb 2008 15:37:06 -0800 (PST)
-Received: by 10.114.255.11 with HTTP; Fri, 15 Feb 2008 15:37:06 -0800 (PST)
-In-Reply-To: <7vodahg5w4.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1758821AbYBPBuQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Feb 2008 20:50:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753372AbYBPBuP
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Feb 2008 20:50:15 -0500
+Received: from main.gmane.org ([80.91.229.2]:50659 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1763500AbYBPBuI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Feb 2008 20:50:08 -0500
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1JQCBm-0003wB-QH
+	for git@vger.kernel.org; Sat, 16 Feb 2008 01:50:02 +0000
+Received: from 87.252.132.227 ([87.252.132.227])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 16 Feb 2008 01:50:02 +0000
+Received: from jurko.gospodnetic by 87.252.132.227 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 16 Feb 2008 01:50:02 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 87.252.132.227
+User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73998>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/73999>
 
-On Feb 15, 2008 6:24 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> And it appears to be an obvious fix that should even go to
-> 'maint' where no new features will land.
+   Hi all.
 
-Yes.
+   I am unsure whether this is the right group for asking this question=
+=20
+and if it is not please excuse me and/or redirect me to a more suitable=
+ one.
 
-> Care to provide a test case for this one?
+   We are looking into using git for our source control needs but ran=20
+into some problems.
 
-I'll see what I can do. I'm not sure it makes a difference w/o my
-format=flowed additions, so there may not be a test case, but I'll poke
-it with a stick some more.
+   One of these is that it seems that with the latest git release the=20
+git-gui script changed and started hardcoding some absolute paths in it=
+=20
+during its build (git-gui/Makefile replaces @@GITGUI_SCRIPT@@ with a=20
+hardcoded path). However, this causes the prebuilt Cygwin package to no=
+t=20
+work in case Cygwin is not installed in its default location at=20
+C:\Cygwin (e.g. D:\Cygwin or C:\Program Files\Cygwin).
 
--- 
-j.
+   Everything works fine if you manually edit the git-gui script and=20
+change the hard-coded path defined there.
+
+   Is there something I'm missing here? E.g. is there any way for the=20
+Cygwin installation to set the correct path here? Or is the user=20
+supposed to modify this by hand on every installation? If this is so,=20
+then what other such files are expected to be modified?
+
+   Many thanks.
+
+   Best regards,
+     Jurko Gospodneti=E6
