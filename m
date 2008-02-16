@@ -1,217 +1,194 @@
 From: Johannes Sixt <johannes.sixt@telecom.at>
-Subject: [PATCH] start_command(), if .in/.out > 0, closes file descriptors, not the callers
-Date: Sat, 16 Feb 2008 18:36:39 +0100
-Message-ID: <1203183399-4813-2-git-send-email-johannes.sixt@telecom.at>
+Subject: [PATCH] start_command(), .in/.out/.err = -1: Callers must close the file descriptor
+Date: Sat, 16 Feb 2008 18:36:38 +0100
+Message-ID: <1203183399-4813-1-git-send-email-johannes.sixt@telecom.at>
 References: <7v1w7dhnov.fsf@gitster.siamese.dyndns.org>
- <1203183399-4813-1-git-send-email-johannes.sixt@telecom.at>
 Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
 	Johannes Sixt <johannes.sixt@telecom.at>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 16 18:37:20 2008
+X-From: git-owner@vger.kernel.org Sat Feb 16 18:37:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JQQyU-00036J-Kx
-	for gcvg-git-2@gmane.org; Sat, 16 Feb 2008 18:37:19 +0100
+	id 1JQQyV-00036J-Ig
+	for gcvg-git-2@gmane.org; Sat, 16 Feb 2008 18:37:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755644AbYBPRgn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 Feb 2008 12:36:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755604AbYBPRgn
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Feb 2008 12:36:43 -0500
-Received: from smtp2.srv.eunet.at ([193.154.160.116]:57163 "EHLO
+	id S1755664AbYBPRgp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 Feb 2008 12:36:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755641AbYBPRgo
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Feb 2008 12:36:44 -0500
+Received: from smtp2.srv.eunet.at ([193.154.160.116]:57160 "EHLO
 	smtp2.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755182AbYBPRgl (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1755528AbYBPRgl (ORCPT <rfc822;git@vger.kernel.org>);
 	Sat, 16 Feb 2008 12:36:41 -0500
 Received: from localhost.localdomain (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
-	by smtp2.srv.eunet.at (Postfix) with ESMTP id 17096BF1DE;
-	Sat, 16 Feb 2008 18:36:40 +0100 (CET)
+	by smtp2.srv.eunet.at (Postfix) with ESMTP id 7D98EBF1D6;
+	Sat, 16 Feb 2008 18:36:39 +0100 (CET)
 X-Mailer: git-send-email 1.5.4.1.126.ge5a7d
-In-Reply-To: <1203183399-4813-1-git-send-email-johannes.sixt@telecom.at>
+In-Reply-To: <7v1w7dhnov.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74050>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74051>
 
-Callers of start_command() can set the members .in and .out of struct
-child_process to a value > 0 to specify that this descriptor is used as
-the stdin or stdout of the child process.
+By setting .in, .out, or .err members of struct child_process to -1, the
+callers of start_command() can request that a pipe is allocated that talks
+to the child process and one end is returned by replacing -1 with the
+file descriptor.
 
-Previously, if start_command() was successful, this descriptor was closed
-upon return. Here we now make sure that the descriptor is also closed in
-case of failures. All callers are updated not to close the file descriptor
-themselves after start_command() was called.
+Previously, a flag was set (for .in and .out, but not .err) to signal
+finish_command() to close the pipe end that start_command() had handed out,
+so it was optional for callers to close the pipe, and many already do so.
+Now we make it mandatory to close the pipe.
 
 Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
 ---
- builtin-send-pack.c  |   14 ++++++++------
+ builtin-fetch-pack.c |    4 +++-
+ builtin-send-pack.c  |    1 +
+ builtin-tag.c        |    3 ++-
  builtin-verify-tag.c |    1 -
- bundle.c             |    5 +++--
- run-command.c        |   20 +++++++++++++++++++-
- run-command.h        |   17 +++++++++++++++++
- 5 files changed, 47 insertions(+), 10 deletions(-)
+ bundle.c             |    1 +
+ receive-pack.c       |    2 ++
+ run-command.c        |    6 ------
+ run-command.h        |    2 --
+ 8 files changed, 9 insertions(+), 11 deletions(-)
 
-diff --git a/builtin-send-pack.c b/builtin-send-pack.c
-index ba9bc91..b0cfae8 100644
---- a/builtin-send-pack.c
-+++ b/builtin-send-pack.c
-@@ -404,12 +404,15 @@ static int do_send_pack(int in, int out, struct remote *remote, const char *dest
- 	if (!remote_tail)
- 		remote_tail = &remote_refs;
- 	if (match_refs(local_refs, remote_refs, &remote_tail,
--					       nr_refspec, refspec, flags))
-+		       nr_refspec, refspec, flags)) {
-+		close(out);
- 		return -1;
+diff --git a/builtin-fetch-pack.c b/builtin-fetch-pack.c
+index f401352..5ea48ca 100644
+--- a/builtin-fetch-pack.c
++++ b/builtin-fetch-pack.c
+@@ -538,8 +538,10 @@ static int get_pack(int xd[2], char **pack_lockfile)
+ 	cmd.git_cmd = 1;
+ 	if (start_command(&cmd))
+ 		die("fetch-pack: unable to fork off %s", argv[0]);
+-	if (do_keep && pack_lockfile)
++	if (do_keep && pack_lockfile) {
+ 		*pack_lockfile = index_pack_lockfile(cmd.out);
++		close(cmd.out);
 +	}
  
- 	if (!remote_refs) {
- 		fprintf(stderr, "No refs in common and none specified; doing nothing.\n"
- 			"Perhaps you should specify a branch such as 'master'.\n");
-+		close(out);
- 		return 0;
+ 	if (finish_command(&cmd))
+ 		die("%s failed", argv[0]);
+diff --git a/builtin-send-pack.c b/builtin-send-pack.c
+index 8afb1d0..ba9bc91 100644
+--- a/builtin-send-pack.c
++++ b/builtin-send-pack.c
+@@ -71,6 +71,7 @@ static int pack_objects(int fd, struct ref *refs)
+ 		refs = refs->next;
  	}
  
-@@ -496,12 +499,11 @@ static int do_send_pack(int in, int out, struct remote *remote, const char *dest
++	close(po.in);
+ 	if (finish_command(&po))
+ 		return error("pack-objects died with strange error");
+ 	return 0;
+diff --git a/builtin-tag.c b/builtin-tag.c
+index 4a4a88c..8f7936d 100644
+--- a/builtin-tag.c
++++ b/builtin-tag.c
+@@ -226,12 +226,13 @@ static int do_sign(struct strbuf *buffer)
  
- 	packet_flush(out);
- 	if (new_refs && !args.dry_run) {
--		if (pack_objects(out, remote_refs) < 0) {
--			close(out);
-+		if (pack_objects(out, remote_refs) < 0)
- 			return -1;
--		}
+ 	if (write_in_full(gpg.in, buffer->buf, buffer->len) != buffer->len) {
+ 		close(gpg.in);
++		close(gpg.out);
+ 		finish_command(&gpg);
+ 		return error("gpg did not accept the tag data");
  	}
--	close(out);
-+	else
-+		close(out);
+ 	close(gpg.in);
+-	gpg.close_in = 0;
+ 	len = strbuf_read(buffer, gpg.out, 1024);
++	close(gpg.out);
  
- 	if (expect_status_report)
- 		ret = receive_status(in, remote_refs);
-@@ -649,7 +651,7 @@ int send_pack(struct send_pack_args *my_args,
- 	conn = git_connect(fd, dest, args.receivepack, args.verbose ? CONNECT_VERBOSE : 0);
- 	ret = do_send_pack(fd[0], fd[1], remote, dest, nr_heads, heads);
- 	close(fd[0]);
--	close(fd[1]);
-+	/* do_send_pack always closes fd[1] */
- 	ret |= finish_connect(conn);
- 	return !!ret;
- }
+ 	if (finish_command(&gpg) || !len || len < 0)
+ 		return error("gpg failed to sign the tag");
 diff --git a/builtin-verify-tag.c b/builtin-verify-tag.c
-index b3010f9..f3ef11f 100644
+index cc4c55d..b3010f9 100644
 --- a/builtin-verify-tag.c
 +++ b/builtin-verify-tag.c
-@@ -45,7 +45,6 @@ static int run_gpg_verify(const char *buf, unsigned long size, int verbose)
- 	memset(&gpg, 0, sizeof(gpg));
- 	gpg.argv = args_gpg;
- 	gpg.in = -1;
--	gpg.out = 1;
- 	args_gpg[2] = path;
- 	if (start_command(&gpg))
- 		return error("could not run gpg.");
+@@ -52,7 +52,6 @@ static int run_gpg_verify(const char *buf, unsigned long size, int verbose)
+ 
+ 	write_in_full(gpg.in, buf, len);
+ 	close(gpg.in);
+-	gpg.close_in = 0;
+ 	ret = finish_command(&gpg);
+ 
+ 	unlink(path);
 diff --git a/bundle.c b/bundle.c
-index f150c19..eac7350 100644
+index 5c95eca..f150c19 100644
 --- a/bundle.c
 +++ b/bundle.c
-@@ -335,8 +335,9 @@ int create_bundle(struct bundle_header *header, const char *path,
- 	close(rls.in);
+@@ -332,6 +332,7 @@ int create_bundle(struct bundle_header *header, const char *path,
+ 		write_or_die(rls.in, sha1_to_hex(object->sha1), 40);
+ 		write_or_die(rls.in, "\n", 1);
+ 	}
++	close(rls.in);
  	if (finish_command(&rls))
  		return error ("pack-objects died");
--
--	return bundle_to_stdout ? close(bundle_fd) : commit_lock_file(&lock);
-+	if (!bundle_to_stdout)
-+		commit_lock_file(&lock);
-+	return 0;
+ 
+diff --git a/receive-pack.c b/receive-pack.c
+index 3267495..a971433 100644
+--- a/receive-pack.c
++++ b/receive-pack.c
+@@ -132,6 +132,7 @@ static int run_hook(const char *hook_name)
+ 				break;
+ 		}
+ 	}
++	close(proc.in);
+ 	return hook_status(finish_command(&proc), hook_name);
  }
  
- int unbundle(struct bundle_header *header, int bundle_fd)
+@@ -414,6 +415,7 @@ static const char *unpack(void)
+ 		if (start_command(&ip))
+ 			return "index-pack fork failed";
+ 		pack_lockfile = index_pack_lockfile(ip.out);
++		close(ip.out);
+ 		status = finish_command(&ip);
+ 		if (!status) {
+ 			reprepare_packed_git();
 diff --git a/run-command.c b/run-command.c
-index 2919330..6c35d3c 100644
+index 476d00c..2919330 100644
 --- a/run-command.c
 +++ b/run-command.c
-@@ -20,10 +20,18 @@ int start_command(struct child_process *cmd)
- 	int need_in, need_out, need_err;
- 	int fdin[2], fdout[2], fderr[2];
- 
-+	/*
-+	 * In case of errors we must keep the promise to close FDs
-+	 * that have been passed in in ->in, ->out, and ->err.
-+	 */
-+
- 	need_in = !cmd->no_stdin && cmd->in < 0;
- 	if (need_in) {
--		if (pipe(fdin) < 0)
-+		if (pipe(fdin) < 0) {
-+			if (cmd->out > 1)
-+				close(cmd->out);
+@@ -25,7 +25,6 @@ int start_command(struct child_process *cmd)
+ 		if (pipe(fdin) < 0)
  			return -ERR_RUN_COMMAND_PIPE;
-+		}
  		cmd->in = fdin[1];
+-		cmd->close_in = 1;
  	}
  
-@@ -34,6 +42,8 @@ int start_command(struct child_process *cmd)
- 		if (pipe(fdout) < 0) {
- 			if (need_in)
- 				close_pair(fdin);
-+			else if (cmd->in)
-+				close(cmd->in);
+ 	need_out = !cmd->no_stdout
+@@ -38,7 +37,6 @@ int start_command(struct child_process *cmd)
  			return -ERR_RUN_COMMAND_PIPE;
  		}
  		cmd->out = fdout[0];
-@@ -44,8 +54,12 @@ int start_command(struct child_process *cmd)
- 		if (pipe(fderr) < 0) {
- 			if (need_in)
- 				close_pair(fdin);
-+			else if (cmd->in)
-+				close(cmd->in);
- 			if (need_out)
- 				close_pair(fdout);
-+			else if (cmd->out > 1)
-+				close(cmd->out);
- 			return -ERR_RUN_COMMAND_PIPE;
- 		}
- 		cmd->err = fderr[0];
-@@ -55,8 +69,12 @@ int start_command(struct child_process *cmd)
- 	if (cmd->pid < 0) {
- 		if (need_in)
- 			close_pair(fdin);
-+		else if (cmd->in > 0)
-+			close(cmd->in);
- 		if (need_out)
- 			close_pair(fdout);
-+		else if (cmd->out > 1)
-+			close(cmd->out);
- 		if (need_err)
- 			close_pair(fderr);
- 		return -ERR_RUN_COMMAND_FORK;
+-		cmd->close_out = 1;
+ 	}
+ 
+ 	need_err = !cmd->no_stderr && cmd->err < 0;
+@@ -157,10 +155,6 @@ static int wait_or_whine(pid_t pid)
+ 
+ int finish_command(struct child_process *cmd)
+ {
+-	if (cmd->close_in)
+-		close(cmd->in);
+-	if (cmd->close_out)
+-		close(cmd->out);
+ 	return wait_or_whine(cmd->pid);
+ }
+ 
 diff --git a/run-command.h b/run-command.h
-index e9c84d0..0e67472 100644
+index 1fc781d..e9c84d0 100644
 --- a/run-command.h
 +++ b/run-command.h
-@@ -14,6 +14,23 @@ enum {
- struct child_process {
- 	const char **argv;
- 	pid_t pid;
-+	/*
-+	 * Using .in, .out, .err:
-+	 * - Specify 0 to inherit stdin, stdout, stderr from parent.
-+	 * - Specify -1 to have a pipe allocated as follows:
-+	 *     .in: returns the writable pipe end; parent writes to it,
-+	 *          the readable pipe end becomes child's stdin
-+	 *     .out, .err: returns the readable pipe end; parent reads from
-+	 *          it, the writable pipe end becomes child's stdout/stderr
-+	 *   The caller of start_command() must close the returned FDs
-+	 *   after it has completed reading from/writing to it!
-+	 * - Specify > 0 to give away a FD as follows:
-+	 *     .in: a readable FD, becomes child's stdin
-+	 *     .out: a writable FD, becomes child's stdout/stderr
-+	 *     .err > 0 not supported
-+	 *   The specified FD is closed by start_command(), even in case
-+	 *   of errors!
-+	 */
- 	int in;
- 	int out;
+@@ -19,8 +19,6 @@ struct child_process {
  	int err;
+ 	const char *dir;
+ 	const char *const *env;
+-	unsigned close_in:1;
+-	unsigned close_out:1;
+ 	unsigned no_stdin:1;
+ 	unsigned no_stdout:1;
+ 	unsigned no_stderr:1;
 -- 
 1.5.4.1.126.ge5a7d
