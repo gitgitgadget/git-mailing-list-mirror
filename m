@@ -1,87 +1,102 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC/PATCH] Teach git mergetool to use custom commands defined at config time
-Date: Sat, 16 Feb 2008 13:11:59 -0800 (PST)
-Message-ID: <m3hcg8bo9f.fsf@localhost.localdomain>
-References: <20080216185349.GA29177@hashpling.org>
+From: Robert Schiele <rschiele@gmail.com>
+Subject: Re: Invalid html output repo.or.cz (alt-git.git)
+Date: Sat, 16 Feb 2008 22:12:17 +0100
+Message-ID: <20080216211216.GL30676@schiele.dyndns.org>
+References: <20080216130037.GA14571@auto.tuwien.ac.at> <m3lk5kbry3.fsf@localhost.localdomain>
+Reply-To: Robert Schiele <rschiele@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Charles Bailey <charles@hashpling.org>
-X-From: git-owner@vger.kernel.org Sat Feb 16 22:12:57 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="EU5xizdSiRFq8q2U"
+Cc: Martin Koegler <mkoegler@auto.tuwien.ac.at>,
+	Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 16 22:13:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JQUL9-00079d-F5
-	for gcvg-git-2@gmane.org; Sat, 16 Feb 2008 22:12:55 +0100
+	id 1JQULA-00079d-3Y
+	for gcvg-git-2@gmane.org; Sat, 16 Feb 2008 22:12:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758524AbYBPVMF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 Feb 2008 16:12:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758526AbYBPVMF
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Feb 2008 16:12:05 -0500
-Received: from fk-out-0910.google.com ([209.85.128.185]:59054 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758474AbYBPVMC (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Feb 2008 16:12:02 -0500
-Received: by fk-out-0910.google.com with SMTP id z23so1196875fkz.5
-        for <git@vger.kernel.org>; Sat, 16 Feb 2008 13:12:00 -0800 (PST)
+	id S1756722AbYBPVMX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 Feb 2008 16:12:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756728AbYBPVMW
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Feb 2008 16:12:22 -0500
+Received: from ug-out-1314.google.com ([66.249.92.173]:44597 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756666AbYBPVMV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Feb 2008 16:12:21 -0500
+Received: by ug-out-1314.google.com with SMTP id z38so83609ugc.16
+        for <git@vger.kernel.org>; Sat, 16 Feb 2008 13:12:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
-        bh=ulJMFmyt2oU5P3HzA++qnkn/A6t/xAavThkiMDswIns=;
-        b=G0W/zHLWC/NSVjE9m5M9aR6BRVstV/N3Q0MtA9uVX81rDavz/bQLuDCJrWdDYzjMeNYSY9ZStzEEfQzouQ+Hb5HQiG+Amrqg5cKfRL3KMUnbzTXFitFwhLfcofyJIV8H3F5awR+QF64RcdKjPzTa9l7V1vBJ9yHfTYkH+dnsUDk=
+        h=domainkey-signature:received:received:received:date:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:from:reply-to;
+        bh=T0h7dYFtMhUi0wiLmmYaLGQewVnrt5On4FkAwoM/O30=;
+        b=jp45QLe7cqUhIbtV/t5m9NA3jFGEZWcofrm0J97jgYiPeF0cvggPMWpKvgM1vyZ9eMViWl1hKnmB9AYS/qEIjw/DcbE015OCxbCPuIsUvcUZpEGKII8V771GncyQErjjowVFAPXocXzbGlru16IcBkQVU78NIV87nJbPk/H3ZJ8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
-        b=euak3ocTQI/Yf/qm04uHg+/Q27JFrqH7rlhWeviYKH9IzR0CEmUS4emfHPIGrMC05iPdJ+JuIpq/4YP1yQv5ZprSjTejcFWq5rZbdymeKFXsYxX4SqHdzIHzNP+b75lLf7uKv/wl9QKwxTIQepY2YqnKmPz0ZcPHvFtn+FKNMWs=
-Received: by 10.78.37.7 with SMTP id k7mr6167597huk.30.1203196320086;
-        Sat, 16 Feb 2008 13:12:00 -0800 (PST)
-Received: from localhost.localdomain ( [83.8.197.33])
-        by mx.google.com with ESMTPS id d27sm11687857nfh.34.2008.02.16.13.11.58
+        h=date:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:from:reply-to;
+        b=UwtaSRTyUenUktBhz9ga4GY7WivUPBTAaa/6uFZrjOc8dqdOr2WrROcnGfiIoTGbFGREfAAKTGSzhumXe1tMnzEEq/cq2xKF7BJXKDR6VEaG/4rmb/RL+Of6C5ZO+rxuESfL3BhuFtf3JUZRvoXqbiS2iu32EmMEmfb/CI+TUqw=
+Received: by 10.67.15.15 with SMTP id s15mr1089223ugi.27.1203196340003;
+        Sat, 16 Feb 2008 13:12:20 -0800 (PST)
+Received: from sigkill.schiele.dyndns.org ( [91.18.105.53])
+        by mx.google.com with ESMTPS id p38sm10591071fke.13.2008.02.16.13.12.18
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 16 Feb 2008 13:11:59 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m1GLBTnf014268;
-	Sat, 16 Feb 2008 22:11:39 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m1GLB9dA014262;
-	Sat, 16 Feb 2008 22:11:09 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <20080216185349.GA29177@hashpling.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        Sat, 16 Feb 2008 13:12:19 -0800 (PST)
+Received: by sigkill.schiele.dyndns.org (Postfix, from userid 1000)
+	id 2964A2A8D5; Sat, 16 Feb 2008 22:12:17 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <m3lk5kbry3.fsf@localhost.localdomain>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74078>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74079>
 
-Charles Bailey <charles@hashpling.org> writes:
 
-> Currently git mergetool is restricted to a set of commands defined
-> in the script. You can subvert the mergetool.<tool>.path to force
-> git mergetool to use a different command, but if you have a command
-> whose invocation syntax does not match one of the current tools then
-> you would have to write a wrapper script for it.
-> 
-> This patch adds three git config variable patterns which allow a more
-> flexible choice of merge tool.
+--EU5xizdSiRFq8q2U
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-[...]
+On Sat, Feb 16, 2008 at 11:52:42AM -0800, Jakub Narebski wrote:
+> Martin Koegler <mkoegler@auto.tuwien.ac.at> writes:
+>=20
+> > http://repo.or.cz/w/alt-git.git?a=3Dshortlog
+> >=20
+> > fails to load in my Seamonkey browser (Debian stable):
+> >=20
+> > XML Parsing Error: not well-formed
+> > Location: http://repo.or.cz/w/alt-git.git?a=3Dshortlog
+> > Line Number 561, Column 33:<td><i><span title=3D"Uwe Kleine-K<span clas=
+s=3D"cntrl">\e</span>,Av<span class=3D"cntrl">\e</span>(Bnig">Uwe Kleine ..=
+=2E</span></i></td>
+> > --------------------------------^
+>=20
+> It looks like gitweb uses esc_html instead of esc_param (or leaving it
 
-> It follows filter-branch's 'eval a user shell snippet' philosophy to
-> provide the flexibility and here in lies an ugliness. It exposes
-> git-mergetool.sh's private variables to the user script. The variables
-> are BASE, REMOTE, LOCAL and path.
+Huh?  Isn't that the wrong escaping?  esc_param is for URLs not for XML
+attributes in general, isn't it?
 
-Another solution would be to use StGit merger / i2merge / i3merge
-format, similar to git-for-each-ref format, namely to expand
-%(branch1), %(branch2), %(ancestor), %(output) (well, StGit uses
-for some reason %(ancestor)s etc.; git-for-each-ref doesn't).
+Robert
 
-Although for this would be better if git-mergetool was rewritten
-in C, in Perl (or even in Python).
+--=20
+Robert Schiele
+Dipl.-Wirtsch.informatiker	mailto:rschiele@gmail.com
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+"Quidquid latine dictum sit, altum sonatur."
+
+--EU5xizdSiRFq8q2U
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.4-svn0 (GNU/Linux)
+
+iD8DBQFHt1GwxcDFxyGNGNcRAuziAKCMyQ4xQw11hhc5DLNpkNsd+RFSDwCg00j3
+yH4zh1cFvHn5N5cTH4EZgxI=
+=SeUx
+-----END PGP SIGNATURE-----
+
+--EU5xizdSiRFq8q2U--
