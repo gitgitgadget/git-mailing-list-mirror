@@ -1,79 +1,76 @@
-From: "Rhodes, Kate" <masukomi@gmail.com>
-Subject: Re: Wishlist: Please add --author to git-tag
-Date: Sat, 16 Feb 2008 14:49:58 -0500
-Message-ID: <420D37FF-C808-47CA-A3C8-38E1F8578FAC@gmail.com>
-References: <47A20503.2000603@debian.org>
-Mime-Version: 1.0 (Apple Message framework v915)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 16 20:51:04 2008
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Invalid html output repo.or.cz (alt-git.git)
+Date: Sat, 16 Feb 2008 11:52:42 -0800 (PST)
+Message-ID: <m3lk5kbry3.fsf@localhost.localdomain>
+References: <20080216130037.GA14571@auto.tuwien.ac.at>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
+To: mkoegler@auto.tuwien.ac.at (Martin Koegler)
+X-From: git-owner@vger.kernel.org Sat Feb 16 20:53:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JQT3s-0001V6-OK
-	for gcvg-git-2@gmane.org; Sat, 16 Feb 2008 20:51:01 +0100
+	id 1JQT68-00028B-PL
+	for gcvg-git-2@gmane.org; Sat, 16 Feb 2008 20:53:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757354AbYBPTuH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 Feb 2008 14:50:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757303AbYBPTuG
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Feb 2008 14:50:06 -0500
-Received: from an-out-0708.google.com ([209.85.132.250]:38692 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756863AbYBPTuE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Feb 2008 14:50:04 -0500
-Received: by an-out-0708.google.com with SMTP id d31so250143and.103
-        for <git@vger.kernel.org>; Sat, 16 Feb 2008 11:50:02 -0800 (PST)
+	id S1752507AbYBPTwq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 Feb 2008 14:52:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753041AbYBPTwq
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Feb 2008 14:52:46 -0500
+Received: from fk-out-0910.google.com ([209.85.128.189]:64231 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752383AbYBPTwp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Feb 2008 14:52:45 -0500
+Received: by fk-out-0910.google.com with SMTP id z23so1175644fkz.5
+        for <git@vger.kernel.org>; Sat, 16 Feb 2008 11:52:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:from:to:in-reply-to:content-type:content-transfer-encoding:mime-version:subject:date:references:x-mailer;
-        bh=5RkBiHmTe2OexX/ECqKBOk5vSp5YwBYjIV8hHEdP7g4=;
-        b=ed7y7jmyyfLOg5NABBQ0TlIMnxo8UP2dYpwj2XiiIxQRjCzZIfkFI+ZYpqBZtEvy8FD7aYiOR0uk6KibAwtyRb1w0YyaEHp41BVfIC8jxEsxFtrNOMfpww6JJB3PeXbNtpo+Xv030MudYToY9heQwa6I+XASIZRs43WwTvTU4/Q=
+        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
+        bh=Atgxz3ukvf0QIltYsi0hFnf22rc8gd9iuEO/TGKSasI=;
+        b=hcgWu7S6uAiJJZV6gPEYuF/UJMKZ1uqtUQxEfXMdAp1Xm968tVY6EvUp8FLBCPJQoZSSBFvbiRLhQaS6PYgafGPvfqwCJ6pSZffaoZtLrLop9B+4e/V+41PbB14K3ctp/qB60DOXirkSoO96XsVRpXd2M8xK4f0gsaieaJyRdCg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:from:to:in-reply-to:content-type:content-transfer-encoding:mime-version:subject:date:references:x-mailer;
-        b=e3Er+3VFIkmVL+Wjyt33iRYuJz3bAabfLogjvXF+jYsLxsVAANxwCGFqbqFTMDtAgW0YFRss/fcGxGIi+uhuvAtv+ygptRxvjI0QQI9ZhumdHVzKbkZgQicvGilR9nxnrsuBvONYuUFGDsJLtHWrmsNR3aTJiOz24fI5p18CLcw=
-Received: by 10.100.254.18 with SMTP id b18mr6968950ani.98.1203191402588;
-        Sat, 16 Feb 2008 11:50:02 -0800 (PST)
-Received: from ?192.168.1.103? ( [71.126.230.85])
-        by mx.google.com with ESMTPS id b45sm9180812hsa.7.2008.02.16.11.50.00
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
+        b=oOOezTYNfpFR5/lyazd07V/tzi20Nb8GlbhQPpFUcoRwDo1cO2tFuNxE9e7/kVLFXk57LpcUggM70DyFbbfqwTY9Kv9HUJG04xi7f8V5F3QPBxEB/oZP4kn6pB6CveI0EWqLX78VWKhLXGbmascQkt3CC/Rm4Zal5Z+9avGwrlk=
+Received: by 10.78.187.17 with SMTP id k17mr6080637huf.38.1203191563632;
+        Sat, 16 Feb 2008 11:52:43 -0800 (PST)
+Received: from localhost.localdomain ( [83.8.197.33])
+        by mx.google.com with ESMTPS id 34sm2471124nfu.31.2008.02.16.11.52.36
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 16 Feb 2008 11:50:00 -0800 (PST)
-In-Reply-To: <47A20503.2000603@debian.org>
-X-Mailer: Apple Mail (2.915)
+        Sat, 16 Feb 2008 11:52:42 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m1GJptPg013708;
+	Sat, 16 Feb 2008 20:52:06 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m1GJpXAm013704;
+	Sat, 16 Feb 2008 20:51:33 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <20080216130037.GA14571@auto.tuwien.ac.at>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74070>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74071>
 
+Martin Koegler <mkoegler@auto.tuwien.ac.at> writes:
 
-On Jan 31, 2008, at 12:27 PM, Daniel Baumann wrote:
+> http://repo.or.cz/w/alt-git.git?a=shortlog
+> 
+> fails to load in my Seamonkey browser (Debian stable):
+> 
+> XML Parsing Error: not well-formed
+> Location: http://repo.or.cz/w/alt-git.git?a=shortlog
+> Line Number 561, Column 33:<td><i><span title="Uwe Kleine-K<span class="cntrl">\e</span>,Av<span class="cntrl">\e</span>(Bnig">Uwe Kleine ...</span></i></td>
+> --------------------------------^
 
-> git commit supports --author to overwrite the author information on a
-> particular commit; it would be nice if git tag would offer the same.
+It looks like gitweb uses esc_html instead of esc_param (or leaving it
+to CGI module) title attribute of span (?) element in a shortlog.
 
-What are the implications of this on the GPG signature aspect of git- 
-tag (desired or otherwise)?
-
-If you were committing someone else's tag wouldn't you want to sign  
-not only the commit, but their signature on the commit?
-
-Ignoring the GPG issue, I'm just not seeing the benefit to having an  
-author AND a committer on a tag. I mean... it's a *tag*. The only  
-value I see in having any name associated with a tag is knowing who to  
-point the finger at when the wrong thing gets tagged. But, I don't see  
-any authorship aspect to the concept of a tag. To me it's more: "Bob"  
-set it and it points to this. The end.
-
-What you're proposing sounds more like: "Bob" said to set it and then  
-"Mary" did, because Bob said to.
-
-P.S.  When the right thing is tagged there's generally no need to know  
-who did it. I don't care if Linus tags the latest kernel release or  
-one of his lieutenants. All I care is that everyone's in agreement  
-that whatever that tag points to is the next release. Who tags  
-something doesn't change the value of what was tagged.
-
--masukomi
+I'd try to fix this bug.
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
