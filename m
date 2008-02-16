@@ -1,73 +1,128 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: warning: no common commits - slow pull
-Date: Sat, 16 Feb 2008 21:22:43 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802162115030.30505@racer.site>
-References: <200802102007.38838.lenb@kernel.org> <7v4pcgcimw.fsf@gitster.siamese.dyndns.org> <20080211035501.GB26205@mit.edu> <200802151643.30232.lenb@kernel.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH] gitweb: Fix displaying unchopped argument in chop_and_escape_str
+Date: Sat, 16 Feb 2008 23:07:46 +0100
+Message-ID: <200802162307.47323.jnareb@gmail.com>
+References: <20080216130037.GA14571@auto.tuwien.ac.at> <m3lk5kbry3.fsf@localhost.localdomain> <7vve4o7jhz.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, Theodore Tso <tytso@mit.edu>,
-	git@vger.kernel.org
-To: Len Brown <lenb@kernel.org>
-X-From: git-owner@vger.kernel.org Sat Feb 16 22:23:37 2008
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Martin Koegler <mkoegler@auto.tuwien.ac.at>,
+	Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Feb 16 23:08:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JQUVT-0001cp-5W
-	for gcvg-git-2@gmane.org; Sat, 16 Feb 2008 22:23:35 +0100
+	id 1JQVD4-0006sV-9W
+	for gcvg-git-2@gmane.org; Sat, 16 Feb 2008 23:08:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756820AbYBPVWy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 Feb 2008 16:22:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756798AbYBPVWy
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Feb 2008 16:22:54 -0500
-Received: from mail.gmx.net ([213.165.64.20]:38078 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756773AbYBPVWx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Feb 2008 16:22:53 -0500
-Received: (qmail invoked by alias); 16 Feb 2008 21:22:51 -0000
-Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
-  by mail.gmx.net (mp026) with SMTP; 16 Feb 2008 22:22:51 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19xlm8PRj5xlpd5QOWPwwo1eEiBIRDXj27xx/pWr9
-	+dqlR2lPOybWG+
-X-X-Sender: gene099@racer.site
-In-Reply-To: <200802151643.30232.lenb@kernel.org>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1752380AbYBPWID (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 Feb 2008 17:08:03 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751720AbYBPWIC
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Feb 2008 17:08:02 -0500
+Received: from ug-out-1314.google.com ([66.249.92.168]:9388 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750797AbYBPWIA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Feb 2008 17:08:00 -0500
+Received: by ug-out-1314.google.com with SMTP id z38so87863ugc.16
+        for <git@vger.kernel.org>; Sat, 16 Feb 2008 14:07:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        bh=hcjxRkLLFQkOTyOSuu03qklGGgaln9WYrQ6X0sRU9fI=;
+        b=oZsX8cDfut86Na/z1LMszmml9v5XSCVdOYF7JSgcRiOZbMsGvBl9s/QHfgUtoayt5FV8mI88b5A6BcjWY3jfwcEbN0hSq3UJY7gTPdketSW9bQmOTIA/8gEnDAsh8oRhX+VPNL0buvvrU2ZzeQZCGvINPmc12RK8IVGiJFK9KsA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=RKnEPmMf2WjUNLhVOl6otMOxjJ9cm6TOnPuzy0h/cmARDF3JauL7pixWrfrDIfcUf/gIUiaOu6+Q3RBGEyvdGIesjBOP2aSxZli7RIYna+aJtCfR2ocLQLPhwxTzBFmR2firvML1cN7E0pZCWEoKKmALfv/tqlOq3kXA0bCB2j4=
+Received: by 10.66.251.3 with SMTP id y3mr1097850ugh.88.1203199678559;
+        Sat, 16 Feb 2008 14:07:58 -0800 (PST)
+Received: from ?192.168.1.11? ( [83.8.197.33])
+        by mx.google.com with ESMTPS id a1sm1795065ugf.78.2008.02.16.14.07.56
+        (version=SSLv3 cipher=OTHER);
+        Sat, 16 Feb 2008 14:07:57 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vve4o7jhz.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74080>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74081>
 
-Hi,
+Do not use esc_html to escape [title] _attribute_ of a HTML element,
+and quote unprintable characters.  Replace unprintable characters by
+'?' and use CGI method to generate HTML element and do the escaping.
 
-On Fri, 15 Feb 2008, Len Brown wrote:
+This caused bug noticed by Martin Koegler,
+  Message-ID: <20080216130037.GA14571@auto.tuwien.ac.at>
+that for bad commit encoding in author name, the title attribute (here
+to show full, not shortened name) had embedded HTML code in it, result
+of quoting unprintable characters the gitweb/HTML way. This of course
+broke the HTML, causing page being not displayed in XML validating web
+browsers.
 
-> [lenb@d975xbx2 linus (master)]$ git pull
-> remote: Counting objects: 649, done.
-> remote: Compressing objects: 100% (106/106), done.
-> remote: Total 513 (delta 417), reused 503 (delta 407)
-> Receiving objects: 100% (513/513), 116.67 KiB, done.
-> Resolving deltas: 100% (417/417), completed with 103 local objects.
-> warning: no common commits
-> remote: Counting objects: 710725, done.
-> remote: Compressing objects: 100% (125738/125738), done.
-> remote: Total 710725 (delta 589584), reused 704450 (delta 584029)
-> Receiving objects: 100% (710725/710725), 172.71 MiB | 1073 KiB/s, done.
-> Resolving deltas: 100% (589584/589584), done.
-> >From git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6
->  * [new tag]         v2.6.25-rc2 -> v2.6.25-rc2
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
 
-Now, this is funny.  Apparently, everything worked fine for the master 
-branch (I suppose it is the master branch, anyway), but went wrong for 
-fetching the _tag_.
+Junio C Hamano wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
+>> Martin Koegler <mkoegler@auto.tuwien.ac.at> writes:
+>>
+>>> http://repo.or.cz/w/alt-git.git?a=shortlog
+>>> 
+>>> fails to load in my Seamonkey browser (Debian stable):
+>>> 
+>>> XML Parsing Error: not well-formed
+>>> Location: http://repo.or.cz/w/alt-git.git?a=shortlog
+>>> Line Number 561, Column 33:<td><i><span title="Uwe Kleine-K<span class="cntrl">\e</span>,Av<span class="cntrl">\e</span>(Bnig">Uwe Kleine ...</span></i></td>
+>>> --------------------------------^
+>>
+>> It looks like gitweb uses esc_html instead of esc_param (or leaving it
+>> to CGI module) title attribute of span (?) element in a shortlog.
+>>
+>> I'd try to fix this bug.
+> 
+> Thanks.
 
-> [lenb@d975xbx2 linus (master)]$ git --version
-> git version 1.5.4.1.122.gaa8d
+And here it is. It fixes this bug; I hope there aren't any similar bugs,
+but I have not checked this. 
 
-I do not have that git version, but something is fishy there, so I guess 
-it depends on your particular version.
+Robert Schiele wrote:
+> On Sat, Feb 16, 2008 at 11:52:42AM -0800, Jakub Narebski wrote:
+>> 
+>> It looks like gitweb uses esc_html instead of esc_param (or leaving it
+> 
+> Huh?  Isn't that the wrong escaping?  esc_param is for URLs not for XML
+> attributes in general, isn't it?
 
-Ciao,
-Dscho
+True, esc_param is for escaping values of CGI parameters, not for
+escaping (and quoting) attributes of HTML element.
+
+
+P.S. I am sorely dissapointed by the fact that CGI version 3.10 doesn't
+do escaping / quoting of unprintable (control) characters in attributes
+(characters outside specified character set).
+
+ gitweb/gitweb.perl |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index a89b478..acf155c 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -866,8 +866,8 @@ sub chop_and_escape_str {
+ 	if ($chopped eq $str) {
+ 		return esc_html($chopped);
+ 	} else {
+-		return qq{<span title="} . esc_html($str) . qq{">} .
+-			esc_html($chopped) . qq{</span>};
++		$str =~ s/([[:cntrl:]])/?/g;
++		return $cgi->span({-title=>$str}, esc_html($chopped));
+ 	}
+ }
+ 
+-- 
+1.5.4
