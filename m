@@ -1,77 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/3] http-push: avoid invalid memory accesses
-Date: Fri, 15 Feb 2008 23:23:46 -0800
-Message-ID: <7vabm1cqkd.fsf@gitster.siamese.dyndns.org>
-References: <alpine.LSU.1.00.0802142319340.30505@racer.site>
- <alpine.LSU.1.00.0802142325120.30505@racer.site>
+From: "Jay Soffian" <jaysoffian@gmail.com>
+Subject: Re: [PATCH 1/2] mailinfo: support rfc3676 (format=flowed) text/plain messages
+Date: Sat, 16 Feb 2008 02:43:41 -0500
+Message-ID: <76718490802152343g6a987c8ay80493187d0a3ccba@mail.gmail.com>
+References: <1203042077-11385-1-git-send-email-jaysoffian@gmail.com>
+	 <7vr6fei1s4.fsf@gitster.siamese.dyndns.org>
+	 <76718490802151037m87995c2gacf29667259eae41@mail.gmail.com>
+	 <7vodahcrrl.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, mh@glandium.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Feb 16 08:24:59 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Feb 16 08:44:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JQHPt-0002FB-Ip
-	for gcvg-git-2@gmane.org; Sat, 16 Feb 2008 08:24:58 +0100
+	id 1JQHic-0006CK-7n
+	for gcvg-git-2@gmane.org; Sat, 16 Feb 2008 08:44:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751288AbYBPHYV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 Feb 2008 02:24:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751234AbYBPHYV
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Feb 2008 02:24:21 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:33793 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751170AbYBPHYV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Feb 2008 02:24:21 -0500
-Received: from a-sasl-quonix.pobox.com (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 0126033A7;
-	Sat, 16 Feb 2008 02:24:07 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.pobox.com (Postfix) with ESMTP id
- 3441833A5; Sat, 16 Feb 2008 02:23:58 -0500 (EST)
-In-Reply-To: <alpine.LSU.1.00.0802142325120.30505@racer.site> (Johannes
- Schindelin's message of "Thu, 14 Feb 2008 23:25:33 +0000 (GMT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751426AbYBPHno (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 Feb 2008 02:43:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751401AbYBPHno
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Feb 2008 02:43:44 -0500
+Received: from qb-out-0506.google.com ([72.14.204.233]:43794 "EHLO
+	qb-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751254AbYBPHnn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Feb 2008 02:43:43 -0500
+Received: by qb-out-0506.google.com with SMTP id e11so385940qbe.15
+        for <git@vger.kernel.org>; Fri, 15 Feb 2008 23:43:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=eP+4tWT3FvSLJPVpXltuKq4IwBr5isI9DPcHWx4HAq8=;
+        b=FAR2yOugs+BdlZG5zCzWwo5CL+cNR3mVCUQzA2wYesOt+X91i27jBRA5NDaDZRv398MGnaGLcPccCoSU6WiPqCKlM27npPFJOr6umq5Xemyn8LgBrOPMifzG0VcXCDYDeSB112HkvJ7Ds3jKnY2r8NQQjDVOXpJdjgEboX2defo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Dl8ejP4ue1nOE2PV3KT8m8N25DPloeptaubi7xh46JvxJm/cAPToPzEYmdo29u/Btq4KyWYLPUkCIzz4/g7UB96453S+BcI9joHBP7UxCc0Zy3ITxB59z7ffRB6qw+9jDlIPyFznweCWCP/C/4Y/LqkImtOW9FOLHuZ3AipM2JU=
+Received: by 10.114.192.1 with SMTP id p1mr3978457waf.47.1203147821839;
+        Fri, 15 Feb 2008 23:43:41 -0800 (PST)
+Received: by 10.114.255.11 with HTTP; Fri, 15 Feb 2008 23:43:41 -0800 (PST)
+In-Reply-To: <7vodahcrrl.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74024>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74025>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Feb 16, 2008 1:57 AM, Junio C Hamano <gitster@pobox.com> wrote:
 
-> Before objects are sent, the respective ref is locked.  However,
-> without this patch, the lock is lifted before the last object for
-> that ref was sent.  As a consequence, the lock data was accessed
-> after the lock structure was free()d.
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  http-push.c |    5 ++++-
->  1 files changed, 4 insertions(+), 1 deletions(-)
->
-> diff --git a/http-push.c b/http-push.c
-> index b2b410d..7a6c669 100644
-> --- a/http-push.c
-> +++ b/http-push.c
-> @@ -2398,7 +2398,10 @@ int main(int argc, char **argv)
->  		fill_active_slots();
->  		add_fill_function(NULL, fill_active_slot);
->  #endif
-> -		finish_all_active_slots();
-> +		do {
-> +			finish_all_active_slots();
-#ifdef CURL_MULTI
-> +			fill_active_slots();
-#endif
-> +		} while (request_queue_head && !aborted);
->  
->  		/* Update the remote branch if all went well */
->  		if (aborted || !update_remote(ref->new_sha1, ref_lock)) {
-> -- 
-> 1.5.4.1.1353.g0d5dd
+> But format=flowed is different.  It loses information.  Not just
+> one space at the end of the original line, but if you have very
+> long line that has more than one spaces at an unfortunate place,
+> the sending MUA can cut the line there and leave a single
+> trailing space for the receiving end to reflow.
 
-I wonder if we should define a no-op function fill_active_slots()
-for non MULTI case...
+Well, according to the RFC, that shouldn't be the case. The only
+lost information should be trailing whitespace. Embedded
+whitespace should not be altered.
+
+> RFC3676 may be a good text communication medium.  It is just not
+> suitable for patch transfer.  Just don't use it.
+
+Would you consider making this configurable. Something like:
+
+applymail.allowed_flowed = true/false/warn
+
+If you're completely opposed though, we should modify git-am
+(and/or mailinfo) to reject format=flowed messages entirely, no?
+
+j.
