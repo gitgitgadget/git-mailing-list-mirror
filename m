@@ -1,79 +1,71 @@
-From: =?UTF-8?B?TmFneSBCYWzDoXpz?= <js@iksz.hu>
-Subject: Re: [PATCH] Correct git-pull documentation
-Date: Sat, 16 Feb 2008 09:20:43 +0100
-Message-ID: <47B69CDB.7070908@iksz.hu>
-References: <1203137441-52448-1-git-send-email-jaysoffian@gmail.com>
+From: Remi Vanicat <vanicat@debian.org>
+Subject: Re: [BUG] git filter-branch failed to suppress a file with an accentuated letter in the filename
+Date: Sat, 16 Feb 2008 09:26:57 +0100
+Message-ID: <87pruxtige.dlv@maison.homelinux.org>
+References: <87bq6iw42w.dlv@maison.homelinux.org>
+	<7vd4qygld8.fsf@gitster.siamese.dyndns.org>
+	<87tzk9tnnu.dlv@maison.homelinux.org>
+	<7v63wpcp4o.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 16 09:20:29 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Remi Vanicat <vanicat@debian.org>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Feb 16 09:28:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JQIHc-0004FR-9s
-	for gcvg-git-2@gmane.org; Sat, 16 Feb 2008 09:20:28 +0100
+	id 1JQIP9-0005fV-Ud
+	for gcvg-git-2@gmane.org; Sat, 16 Feb 2008 09:28:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750967AbYBPITk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 Feb 2008 03:19:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750961AbYBPITk
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Feb 2008 03:19:40 -0500
-Received: from smtp.aranyoroszlan.hu ([195.56.77.57]:64477 "EHLO
-	smtp.aranyoroszlan.hu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750811AbYBPITj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Feb 2008 03:19:39 -0500
-Received: (qmail 38868 invoked by uid 263); 16 Feb 2008 08:29:02 -0000
-Received: from 213.178.103.79 (js@iksz.hu@213.178.103.79) by tcb.aranyoroszlan.hu (envelope-from <js@iksz.hu>, uid 256) with qmail-scanner-2.02st 
- (clamdscan: 0.92/5779. spamassassin: 3.2.4. perlscan: 2.02st.  
- Clear:RC:0(213.178.103.79):SA:0(-1.9/5.0):. 
- Processed in 2.214876 secs); 16 Feb 2008 08:29:02 -0000
-X-Spam-Status: No, hits=-1.9 required=5.0
-X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on tcb.aranyoroszlan.hu
+	id S1751695AbYBPI1O convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 16 Feb 2008 03:27:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751784AbYBPI1O
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Feb 2008 03:27:14 -0500
+Received: from neuf-infra-smtp-out-sp604007av.neufgp.fr ([84.96.92.120]:55583
+	"EHLO neuf-infra-smtp-out-sp604007av.neufgp.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751695AbYBPI1N convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Feb 2008 03:27:13 -0500
+Received: from neuf-infra-smtp-out-sp604012av.neufgp.fr ([84.96.92.115])
+	by neuf-infra-smtp-out-sp604007av.neufgp.fr with neuf telecom
+	id q73o1Y0042VLLWC070C700; Sat, 16 Feb 2008 09:27:06 +0100
+Received: from maison.homelinux.org ([84.103.71.93])
+	by neuf-infra-smtp-out-sp604012av.neufgp.fr with neuf telecom
+	id q8Sz1Y00520lBGc0C00000; Sat, 16 Feb 2008 09:27:06 +0100
+Received: from moi by maison.homelinux.org with local (Exim 4.69)
+	(envelope-from <moi@vanicat.homelinux.org>)
+	id 1JQINt-0001II-8k; Sat, 16 Feb 2008 09:26:58 +0100
+In-Reply-To: <7v63wpcp4o.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's message of "Fri\, 15 Feb 2008 23\:54\:47 -0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: moi@vanicat.homelinux.org
+X-Spam-Checker-Version: SpamAssassin 3.2.3 (2007-08-08) on maison.homelinux.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.9 required=5.0 tests=AWL,BAYES_00,RCVD_IN_PBL,
-	RDNS_NONE autolearn=no version=3.2.4
-X-Envelope-From: js@iksz.hu
-Received: from unknown (HELO ?192.168.1.100?) (js@iksz.hu@213.178.103.79)
-  by tcb.aranyoroszlan.hu with SMTP; 16 Feb 2008 08:28:59 -0000
-User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
-In-Reply-To: <1203137441-52448-1-git-send-email-jaysoffian@gmail.com>
+X-Spam-Status: No, score=-0.0 required=5.0 tests=NO_RELAYS autolearn=ham
+	version=3.2.3
+X-SA-Exim-Version: 4.2.1 (built Tue, 21 Aug 2007 23:39:36 +0000)
+X-SA-Exim-Scanned: Yes (on maison.homelinux.org)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74029>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74030>
 
-Jay Soffian wrote:
-> diff --git a/Documentation/git-pull.txt b/Documentation/git-pull.txt
-> index 179bdfc..f734f18 100644
-> --- a/Documentation/git-pull.txt
-> +++ b/Documentation/git-pull.txt
->   
-...
-> @@ -28,17 +29,12 @@ include::merge-options.txt[]
->  :git-pull: 1
->  include::fetch-options.txt[]
->  
-> -include::pull-fetch-param.txt[]
-> -
-> -include::urls-remotes.txt[]
-> -
-> -include::merge-strategies.txt[]
-> -
->  \--rebase::
->  	Instead of a merge, perform a rebase after fetching.  If
->  	there is a remote ref for the upstream branch, and this branch
->  	was rebased since last fetched, the rebase uses that information
-> -	to avoid rebasing non-local changes.
-> +	to avoid rebasing non-local changes. This if the default if
->   
-... This *is* the default if
-> +	`branch.<name>.rebase` is set.
->  +
->  *NOTE:* This is a potentially _dangerous_ mode of operation.
->  It rewrites history, which does not bode well when you
->   
--- 
--jul-
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Not just those two lines but the next two lines were also very
+> old fashioned.
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>
+>  * Could you try this one?
+
+It work both on my real word case and on my tests git repositories.=20
+
+
+--=20
+R=C3=A9mi Vanicat
