@@ -1,60 +1,78 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC PATCH 1/2] git-branch: allow --track to work w/local
- branches
-Date: Sat, 16 Feb 2008 11:45:26 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802161143290.30505@racer.site>
-References: <1203133557-50013-1-git-send-email-jaysoffian@gmail.com> <7v7ih5fpve.fsf@gitster.siamese.dyndns.org>
+Subject: Re: Git rebase/pull questions
+Date: Sat, 16 Feb 2008 11:50:30 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0802161147470.30505@racer.site>
+References: <76718490802152010udd11567v25ae456db0a59f3b@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 16 12:46:31 2008
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 16 12:51:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JQLUv-0000R0-A0
-	for gcvg-git-2@gmane.org; Sat, 16 Feb 2008 12:46:25 +0100
+	id 1JQLZY-0001kf-W4
+	for gcvg-git-2@gmane.org; Sat, 16 Feb 2008 12:51:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753498AbYBPLpw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 Feb 2008 06:45:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753494AbYBPLpw
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Feb 2008 06:45:52 -0500
-Received: from mail.gmx.net ([213.165.64.20]:37236 "HELO mail.gmx.net"
+	id S1757407AbYBPLuj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 Feb 2008 06:50:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753721AbYBPLui
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Feb 2008 06:50:38 -0500
+Received: from mail.gmx.net ([213.165.64.20]:52692 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753447AbYBPLpp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Feb 2008 06:45:45 -0500
-Received: (qmail invoked by alias); 16 Feb 2008 11:45:42 -0000
+	id S1757407AbYBPLuh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Feb 2008 06:50:37 -0500
+Received: (qmail invoked by alias); 16 Feb 2008 11:50:35 -0000
 Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
-  by mail.gmx.net (mp039) with SMTP; 16 Feb 2008 12:45:42 +0100
+  by mail.gmx.net (mp048) with SMTP; 16 Feb 2008 12:50:35 +0100
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18Jknoyfe4JpsAZ0UR8lQj3+WV5QvnruEAwiEP9XP
-	wbi0DcUxCQGLEH
+X-Provags-ID: V01U2FsdGVkX1/y/foxpunytZXr6VZYGU/Xbq5bIndsF9lsb/zZt/
+	IEeYsmVG1VyfYr
 X-X-Sender: gene099@racer.site
-In-Reply-To: <7v7ih5fpve.fsf@gitster.siamese.dyndns.org>
+In-Reply-To: <76718490802152010udd11567v25ae456db0a59f3b@mail.gmail.com>
 User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74037>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74038>
 
 Hi,
 
-On Fri, 15 Feb 2008, Junio C Hamano wrote:
+On Fri, 15 Feb 2008, Jay Soffian wrote:
 
-> This area was last cleaned up in 6f084a5 (branch --track: code cleanup 
-> and saner handling of local branches).  I do not know if the original 
-> intention of the code was to allow a hack like this to work, or it is 
-> just an unintended accident that it happens to work.  Dscho, any ideas?
+> Second, git-pull completely ignores -s/--strategy if also give --rebase, 
+> but I wonder if it shouldn't just pass the strategy along to git-rebase.
 
-AFAIR the problem was that you were (rightfully) annoyed when you were 
-setting up your local branches, and all of a sudden, they were set up with 
-loads of tracking information, cluttering your config.
+That is just an oversight.  Could you test if this works for you 
+(completely untested by me...)?
 
-Basically, that is the reason why we disallowed tracking information to be 
-set up for local branching.
+-- snip --
+[PATCH] pull --rebase: respect merge strategy options
+
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+
+---
+
+ git-pull.sh |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+diff --git a/git-pull.sh b/git-pull.sh
+index 46da0f4..e0bf582 100755
+--- a/git-pull.sh
++++ b/git-pull.sh
+@@ -174,6 +174,7 @@ fi
+ 
+ merge_name=$(git fmt-merge-msg <"$GIT_DIR/FETCH_HEAD") || exit
+ test true = "$rebase" &&
+-	exec git-rebase --onto $merge_head ${oldremoteref:-$merge_head}
++	exec git-rebase $strategy_args \
++		--onto $merge_head ${oldremoteref:-$merge_head}
+ exec git-merge $no_summary $no_commit $squash $no_ff $strategy_args \
+ 	"$merge_name" HEAD $merge_head
+-- snap --
 
 Ciao,
 Dscho
