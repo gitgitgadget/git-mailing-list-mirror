@@ -1,109 +1,132 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Rename git-core rpm to just git and rename the
- meta-pacakge to git-all.
-Date: Sat, 16 Feb 2008 23:57:28 -0800
-Message-ID: <7vskzs2exj.fsf@gitster.siamese.dyndns.org>
-References: <1203100163-17509-1-git-send-email-krh@redhat.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Kristian =?utf-8?Q?H=C3=B8gsberg?= <krh@redhat.com>
-X-From: git-owner@vger.kernel.org Sun Feb 17 08:58:43 2008
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Re: [RFC/PATCH] Teach git mergetool to use custom commands defined at config time
+Date: Sun, 17 Feb 2008 08:59:31 +0100
+Message-ID: <FBA2E61E-5CAF-49E3-A917-ACDD10586928@zib.de>
+References: <20080216185349.GA29177@hashpling.org> <CD749541-1B3B-4EA7-82A5-0DFC67B953BE@zib.de> <20080217002029.GA504@hashpling.org> <alpine.LSU.1.00.0802170045210.30505@racer.site> <20080217005620.GB504@hashpling.org> <7vbq6g758h.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v753)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>,
+	Charles Bailey <charles@hashpling.org>
+X-From: git-owner@vger.kernel.org Sun Feb 17 09:00:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JQeQ6-0007Pe-7e
-	for gcvg-git-2@gmane.org; Sun, 17 Feb 2008 08:58:42 +0100
+	id 1JQeRb-0007he-Cg
+	for gcvg-git-2@gmane.org; Sun, 17 Feb 2008 09:00:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752794AbYBQH6I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Feb 2008 02:58:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751947AbYBQH6H
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Feb 2008 02:58:07 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:45739 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751765AbYBQH6D (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Feb 2008 02:58:03 -0500
-Received: from a-sasl-quonix.pobox.com (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 2270A3F74;
-	Sun, 17 Feb 2008 02:58:02 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.pobox.com (Postfix) with ESMTP id
- 1D09F3F71; Sun, 17 Feb 2008 02:57:56 -0500 (EST)
-In-Reply-To: <1203100163-17509-1-git-send-email-krh@redhat.com> (Kristian
- =?utf-8?Q?H=C3=B8gsberg's?= message of "Fri, 15 Feb 2008 13:29:23 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752611AbYBQH7l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Feb 2008 02:59:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753036AbYBQH7l
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Feb 2008 02:59:41 -0500
+Received: from mailer.zib.de ([130.73.108.11]:41245 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751947AbYBQH7k (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Feb 2008 02:59:40 -0500
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id m1H7wueZ002174;
+	Sun, 17 Feb 2008 08:59:16 +0100 (CET)
+Received: from [192.168.178.21] (brln-4db95475.pool.einsundeins.de [77.185.84.117])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m1H7wYo5009283
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Sun, 17 Feb 2008 08:58:34 +0100 (MET)
+In-Reply-To: <7vbq6g758h.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.753)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74100>
-
-Thanks for updates to the spec file, but I need a bit of help
-here on two problems.
-
-If I understand you correctly, it should now create "git"
-package, instead of "git-core", that contains the really core
-parts, and other pieces such as "git-svn" and friends will stay
-pretty much the same.  In addition, the new "git" package will
-also say "this provides git-core, so install this when the user
-asks to install git-core".
-
-Where does "git-all" you talked about in your message come into
-the picture?  The "make rpm" procedure produced these files for
-me:
-
-Wrote: /home/junio/rpms/SRPMS/git-1.5.4.2-1.src.rpm
-Wrote: /home/junio/rpms/RPMS/i386/git-1.5.4.2-1.i386.rpm
-Wrote: /home/junio/rpms/RPMS/i386/git-svn-1.5.4.2-1.i386.rpm
-Wrote: /home/junio/rpms/RPMS/i386/git-cvs-1.5.4.2-1.i386.rpm
-Wrote: /home/junio/rpms/RPMS/i386/git-arch-1.5.4.2-1.i386.rpm
-Wrote: /home/junio/rpms/RPMS/i386/git-email-1.5.4.2-1.i386.rpm
-Wrote: /home/junio/rpms/RPMS/i386/git-gui-1.5.4.2-1.i386.rpm
-Wrote: /home/junio/rpms/RPMS/i386/gitk-1.5.4.2-1.i386.rpm
-Wrote: /home/junio/rpms/RPMS/i386/perl-Git-1.5.4.2-1.i386.rpm
-Wrote: /home/junio/rpms/RPMS/i386/git-debuginfo-1.5.4.2-1.i386.rpm
-
-After I throw in these 9 i386.rpm files in my local yum
-repository and say "yum install git-all", I get "No Match for
-argument: git-all".  This is problem #1.
-
-"yum install git" and "yum install git-core" do not give such an
-error but the latter gives quite a bunch of errors ("yum install
-git" goes alright).  This is problem #2.
-
-Note that I want to make sure that the upgrade to go smoothly,
-so I populated both 1.5.4 RPM and 1.5.4.2 RPM in the repository,
-which is to emulate what we do on k.org machines.
-
-The errors start like this.  It looks to me that "Provides:
-git-core" is not being honored.
-
-Dependencies Resolved
-
-=============================================================================
- Package                 Arch       Version          Repository        Size
-=============================================================================
-Installing:
- git-core                i386       1.5.4-1          local             3.6 M
-Installing for dependencies:
- git                     i386       1.5.4.2-1        local             3.6 M
- perl-Git                i386       1.5.4.2-1        local              14 k
-
-Transaction Summary
-=============================================================================
-Install      3 Package(s)
-Update       0 Package(s)
-Remove       0 Package(s)
-Total download size: 7.3 M
-Is this ok [y/N]: y
-Downloading Packages:
-Running Transaction Test
-Finished Transaction Test
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74101>
 
 
-Transaction Check Error:   file /usr/bin/git conflicts between attempted installs of git-1.5.4.2-1 and git-core-1.5.4-1
-  file /usr/bin/git-add conflicts between attempted installs of git-1.5.4.2-1 and git-core-1.5.4-1
-  file /usr/bin/git-am conflicts between attempted installs of git-1.5.4.2-1 and git-core-1.5.4-1
-  ...
+On Feb 17, 2008, at 2:15 AM, Junio C Hamano wrote:
+
+> Charles Bailey <charles@hashpling.org> writes:
+>
+>> On Sun, Feb 17, 2008 at 12:46:15AM +0000, Johannes Schindelin wrote:
+>>>
+>>> So you'd rather have the end users do the same work for the same  
+>>> tool over
+>>> and over again?
+>>
+>> I'm sorry, I should have made myself clearer. I disagree that the
+>> approach of adding new tool support to the source code as and when  
+>> they
+>> are encountered is optimal. I believe that it is preferable to have a
+>> solution that allows users to configure, rather then code, support  
+>> for
+>> their own tools that do not to have native support.
+>>
+>> I do not disagree that there is benefit to having a wide range of
+>> tools that are supported natively.
+>>
+>> I thought I made a reasonable argument for this in the rest of my
+>> email that you took the headline from, but evidently I came across as
+>> muddled.
+>
+> I do not understand why people are so upset about this.  I think
+> the approach Charles's patch takes is reasonable, with example
+> configurations to coax a few of his tools to be driven by
+> mergetool as backends, that demonstrate the customizing
+> framework works well.
+
+I am not upset at all and I really appreciate Charles work for
+adding a generic mechanism.  I was just wondering why not taking
+the direct way of adding tools to git-mergetool one by one until
+we eventually have a rather complete list of supported tools.
+This would be the easiest solution for end users if their
+preferred tool is supported.  It is also easier to add support
+for a specific tool than a generic mechanism.
+
+Maybe it is sufficient to refactor "git mergetool" to make it
+really easy to add another tool.  Our users are developers who
+should know how to add a new tool directly to git mergetool if
+they find some guidance in the source.
+
+I see two benefits of the direct approach
+
+  - the source code of git mergetool could be kept simpler without
+    a generic configuration mechanism for unknown tools.
+
+  - users would be forced to integrate their tool into git mergetool
+    and hopefully they would send patches and eventually we'd have
+    rather complete arge number of tools supported.
+    (I know at least one case where this pressure helps and I expect
+     to see patches that we would not see if a generic mechanism
+     was available.)
+
+
+> It of course would also be good to throw in the native support
+> for the tools he used as examples but I'd say that they are
+> topics of separate patches.
+
+
+I believe this is more important than a generic mechanism.
+
+However, I am not opposed to a generic mechanism, ...
+
+
+On Feb 17, 2008, at 1:20 AM, Charles Bailey wrote:
+>>
+>> I don't believe that git installs a system config by default, but one
+>> idea I had was to rip out all of the native tools support in git
+>> mergetool and replace it with a list of predefined custom tools
+>> configs. This would put all merge tools on an equal footing and  
+>> should
+>> make extra tool support patches simpler and easier to integrate. This
+>> doesn't have any legs without a system default config, though.
+
+... but I am slightly opposed to this idea.  Note that at least
+in one case there is a trick needed to launch the tool.  Such a
+trick can easily be coded if the tool is directly added in
+"git mergetool"; but it would be much harder to capture by a
+generic mechanism via config variables.  The example I mean is
+opendiff that needs to be piped to cat (opendiff ... | cat).
+Otherwise opendiff detaches FileMerge and returns immediately
+without waiting for the user to complete the merge.
+
+		Steffen
