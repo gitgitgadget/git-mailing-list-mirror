@@ -1,86 +1,88 @@
-From: Johannes Sixt <johannes.sixt@telecom.at>
-Subject: Re: [PATCH] start_command(), if .in/.out > 0, closes file descriptors, not the callers
-Date: Sun, 17 Feb 2008 10:29:17 +0100
-Message-ID: <200802171029.17850.johannes.sixt@telecom.at>
-References: <7v1w7dhnov.fsf@gitster.siamese.dyndns.org> <1203183399-4813-2-git-send-email-johannes.sixt@telecom.at> <7vmyq07bqe.fsf@gitster.siamese.dyndns.org>
+From: Charles Bailey <charles@hashpling.org>
+Subject: Re: [RFC/PATCH] Teach git mergetool to use custom commands defined at config time
+Date: Sun, 17 Feb 2008 10:15:38 +0000
+Message-ID: <20080217101538.GA21823@hashpling.org>
+References: <20080216185349.GA29177@hashpling.org> <CD749541-1B3B-4EA7-82A5-0DFC67B953BE@zib.de> <20080217002029.GA504@hashpling.org> <alpine.LSU.1.00.0802170045210.30505@racer.site> <20080217005620.GB504@hashpling.org> <7vbq6g758h.fsf@gitster.siamese.dyndns.org> <FBA2E61E-5CAF-49E3-A917-ACDD10586928@zib.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 17 10:30:00 2008
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Sun Feb 17 11:16:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JQfqR-0000ZX-Iy
-	for gcvg-git-2@gmane.org; Sun, 17 Feb 2008 10:30:00 +0100
+	id 1JQgZU-0002lT-Jp
+	for gcvg-git-2@gmane.org; Sun, 17 Feb 2008 11:16:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752970AbYBQJ3Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Feb 2008 04:29:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753450AbYBQJ3Y
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Feb 2008 04:29:24 -0500
-Received: from smtp3.srv.eunet.at ([193.154.160.89]:43147 "EHLO
-	smtp3.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752970AbYBQJ3U (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Feb 2008 04:29:20 -0500
-Received: from dx.sixt.local (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
-	by smtp3.srv.eunet.at (Postfix) with ESMTP id 4366110A8C1;
-	Sun, 17 Feb 2008 10:29:18 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by dx.sixt.local (Postfix) with ESMTP id 0FAA714A93;
-	Sun, 17 Feb 2008 10:29:18 +0100 (CET)
-User-Agent: KMail/1.9.3
-In-Reply-To: <7vmyq07bqe.fsf@gitster.siamese.dyndns.org>
+	id S1754707AbYBQKPz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Feb 2008 05:15:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754666AbYBQKPy
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Feb 2008 05:15:54 -0500
+Received: from pih-relay06.plus.net ([212.159.14.133]:48102 "EHLO
+	pih-relay06.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754679AbYBQKPx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Feb 2008 05:15:53 -0500
+Received: from [212.159.69.125] (helo=hashpling.plus.com)
+	 by pih-relay06.plus.net with esmtp (Exim) id 1JQgYl-0001uk-7c; Sun, 17 Feb 2008 10:15:47 +0000
+Received: from fermat.hashpling.org (fermat.hashpling.org [127.0.0.1])
+	by hashpling.plus.com (8.13.8/8.13.6) with ESMTP id m1HAFdXO022319;
+	Sun, 17 Feb 2008 10:15:39 GMT
+Received: (from charles@localhost)
+	by fermat.hashpling.org (8.13.8/8.13.6/Submit) id m1HAFc2E022318;
+	Sun, 17 Feb 2008 10:15:38 GMT
 Content-Disposition: inline
+In-Reply-To: <FBA2E61E-5CAF-49E3-A917-ACDD10586928@zib.de>
+User-Agent: Mutt/1.4.2.1i
+X-Plusnet-Relay: ff152c449f9e67754aaced1608e8c4f8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74109>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74110>
 
-On Saturday 16 February 2008 23:55, Junio C Hamano wrote:
-> Johannes Sixt <johannes.sixt@telecom.at> writes:
-> >  	need_in = !cmd->no_stdin && cmd->in < 0;
-> >  	if (need_in) {
-> > -		if (pipe(fdin) < 0)
-> > +		if (pipe(fdin) < 0) {
-> > +			if (cmd->out > 1)
-> > +				close(cmd->out);
->
-> Why check for "2 or more"?
+On Sun, Feb 17, 2008 at 08:59:31AM +0100, Steffen Prohaska wrote:
+> On Feb 17, 2008, at 1:20 AM, Charles Bailey wrote:
+> >>
+> >>I don't believe that git installs a system config by default, but one
+> >>idea I had was to rip out all of the native tools support in git
+> >>mergetool and replace it with a list of predefined custom tools
+> >>configs. This would put all merge tools on an equal footing and  
+> >>should
+> >>make extra tool support patches simpler and easier to integrate. This
+> >>doesn't have any legs without a system default config, though.
+> 
+> ... but I am slightly opposed to this idea.  Note that at least
+> in one case there is a trick needed to launch the tool.  Such a
+> trick can easily be coded if the tool is directly added in
+> "git mergetool"; but it would be much harder to capture by a
+> generic mechanism via config variables.  The example I mean is
+> opendiff that needs to be piped to cat (opendiff ... | cat).
+> Otherwise opendiff detaches FileMerge and returns immediately
+> without waiting for the user to complete the merge.
 
-Later in the code, where we set up the redirections in the child process, we 
-have this:
-		...
-		} else if (cmd->out > 1) {
-			dup2(cmd->out, 1);
-			close(cmd->out);
-		}
+I just wanted to say that in my patch, as the configuration is a
+sub-shell, that it is perfectly possible to do this in a custom
+mergetool as well.
 
-and I thought it was good to also compare cmd->out > 1 in other situations. 
-But now that I think about it, this > 1 is to be understood like this:
+I have different reasons for not liking a default system config file,
+namely the whole customize vs. updgrade conflict issues.
 
-		if (cmd->out > 0)
-			dup2(cmd->out, 1) unless cmd->out == 1;
+An alternative that I have considered is to include a
+$(sharedir)/gitcore/mergetools.gitconfig which could contain the
+default native mergetool configs (both the commands and the
+'trustExitCode' settings.
 
-so it's an optimization - an unnecessary one since dup2(1, 1) is supposed to 
-succeed and be a noop.
+Submitting a new merge tool patch becomes a simple matter of: "I've
+used and tested this in my system (or global) gitconfig, please add to
+the git distribution mergetool.gitconfig."
 
-> > +	 * - Specify > 0 to give away a FD as follows:
-> > +	 *     .in: a readable FD, becomes child's stdin
-> > +	 *     .out: a writable FD, becomes child's stdout/stderr
-> > +	 *     .err > 0 not supported
-> > +	 *   The specified FD is closed by start_command(), even in case
-> > +	 *   of errors!
->
-> Perhaps you would need to spell out the semantic differences you
-> are assigning to "inherit" vs "give away".  I presume the former
-> is something run_command() would not touch vs the latter is
-> closed by run_command()?
+I know that most git developers are just as at ease (if not more so)
+editing a git shell script as they are at using git config but I still
+believe that there is a significant group of users and potential users
+for whom there is an import barrier between configuring software and
+'having' to hack it to get it to work.
 
-I'll clearify it.
-
--- Hannes
+Charles.
