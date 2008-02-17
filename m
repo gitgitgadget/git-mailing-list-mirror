@@ -1,56 +1,72 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: [RFC] Issues around C rebase--interactive
-Date: Sun, 17 Feb 2008 14:15:48 -0500 (EST)
-Message-ID: <alpine.LNX.1.00.0802171347060.5816@iabervon.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: warning: no common commits - slow pull
+Date: Sun, 17 Feb 2008 19:27:16 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0802171925330.30505@racer.site>
+References: <200802102007.38838.lenb@kernel.org> <7vd4r4clnb.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0802162239090.5496@iabervon.org> <alpine.LSU.1.00.0802171449230.30505@racer.site> <7vhcg71n9u.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 17 20:16:27 2008
+Cc: Daniel Barkalow <barkalow@iabervon.org>,
+	Len Brown <lenb@kernel.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Feb 17 20:28:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JQozx-0008NW-OR
-	for gcvg-git-2@gmane.org; Sun, 17 Feb 2008 20:16:26 +0100
+	id 1JQpBD-0003ck-EN
+	for gcvg-git-2@gmane.org; Sun, 17 Feb 2008 20:28:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751950AbYBQTPu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Feb 2008 14:15:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751967AbYBQTPu
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Feb 2008 14:15:50 -0500
-Received: from iabervon.org ([66.92.72.58]:36790 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751708AbYBQTPt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Feb 2008 14:15:49 -0500
-Received: (qmail 8532 invoked by uid 1000); 17 Feb 2008 19:15:48 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 17 Feb 2008 19:15:48 -0000
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1751116AbYBQT12 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Feb 2008 14:27:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751312AbYBQT12
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Feb 2008 14:27:28 -0500
+Received: from mail.gmx.net ([213.165.64.20]:46484 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750980AbYBQT11 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Feb 2008 14:27:27 -0500
+Received: (qmail invoked by alias); 17 Feb 2008 19:27:25 -0000
+Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
+  by mail.gmx.net (mp011) with SMTP; 17 Feb 2008 20:27:25 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/yJN1j4HTyEEtoXvE8q9VCDrcHYOopOq+yrKk/Ty
+	GbO0QNDxv6ZXXk
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7vhcg71n9u.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74169>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74170>
 
-I'm working on porting rebase--interactive to C. This has a number of 
-interesting issues:
+Hi,
 
-This will be the first C command which stops in the middle and then gets 
-resumed. I've been thinking it would be nice if all of the commands like 
-that shared handling of the process in some way. I think it would be good 
-to have a "git abort" that would reset a conflicted merge, abort a rebase, 
-etc., and probably "git checkout" should either require that there's 
-nothing in progress or should abort anything that is in progress. (You can 
-presently get lots of fun confusion by starting a rebase, checking out a 
-different branch, deleting the branch that you were rebasing, attempting 
-another rebase and trying to clean up.)
+On Sun, 17 Feb 2008, Junio C Hamano wrote:
 
-It would also be nice to have a "git resume" that would continue whatever 
-needed user attention after you've done it. (But you'd still need "git 
-rebase skip" to do that command-specific first step before resuming.)
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > On Sat, 16 Feb 2008, Daniel Barkalow wrote:
+> >
+> >> I wonder if the problem is that something isn't getting reinitialized 
+> >> for the second connection. It's not a separate invocation of 
+> >> fetch-pack, and I can't say for sure that it's sending the right info 
+> >> to the server when the statics in builtin-fetch-pack.c are left over 
+> >> from the earlier call. This would particularly explain the 
+> >> information that hitting ctrl-c and trying again fixes it.
+> >
+> > Oh, that should be it!  After all, the code in get_rev() in 
+> > builtin-fetch-pack.c marks commits as SEEN and COMMON and POPPED.
+> 
+> I seem to be slow today, but how does that explain that the problem is 
+> reported only by Len so far?
 
-There's a lot of stuff stored presently in ways that are convenient for 
-shell scripts and inconvenient for C. Is anything else depending on the 
-contents or location of ".git/.dotest-merge"?
+Hmm.  The code I was referencing is only in "next" so far, right?  And 
+AFAICT it only occurs when you are fetching something which autofetches 
+tags, right?
 
-	-Daniel
-*This .sig left intentionally blank*
+But thinking about this again: do we reuse the connection also for 
+automatic tag fetching?  If not, my whole reasoning is wrong.
+
+Ciao,
+Dscho
