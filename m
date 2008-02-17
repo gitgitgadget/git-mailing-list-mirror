@@ -1,213 +1,110 @@
 From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [RFC] checkout to notice forks (Re: Minor annoyance with git
- push)
-Date: Sat, 16 Feb 2008 22:31:26 -0500 (EST)
-Message-ID: <alpine.LNX.1.00.0802162202310.5496@iabervon.org>
-References: <46a038f90802072044u3329fd33w575c689cba2917ee@mail.gmail.com> <20080209030046.GA10470@coredump.intra.peff.net> <7vtzkihkx5.fsf@gitster.siamese.dyndns.org> <46a038f90802090350rc4780d1ted60c03b9abf1fc0@mail.gmail.com> <7vwspd5z1d.fsf@gitster.siamese.dyndns.org>
- <7vfxvs75kp.fsf_-_@gitster.siamese.dyndns.org>
+Subject: Re: warning: no common commits - slow pull
+Date: Sat, 16 Feb 2008 22:52:07 -0500 (EST)
+Message-ID: <alpine.LNX.1.00.0802162239090.5496@iabervon.org>
+References: <200802102007.38838.lenb@kernel.org> <7vd4r4clnb.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Martin Langhoff <martin.langhoff@gmail.com>,
-	Jeff King <peff@peff.net>, Steffen Prohaska <prohaska@zib.de>,
-	Git Mailing List <git@vger.kernel.org>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc: Len Brown <lenb@kernel.org>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Feb 17 04:32:01 2008
+X-From: git-owner@vger.kernel.org Sun Feb 17 04:52:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JQaG0-0001hO-80
-	for gcvg-git-2@gmane.org; Sun, 17 Feb 2008 04:32:00 +0100
+	id 1JQaa5-0005d8-FK
+	for gcvg-git-2@gmane.org; Sun, 17 Feb 2008 04:52:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755461AbYBQDb2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 Feb 2008 22:31:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751212AbYBQDb2
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Feb 2008 22:31:28 -0500
-Received: from iabervon.org ([66.92.72.58]:41939 "EHLO iabervon.org"
+	id S1752183AbYBQDwL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 Feb 2008 22:52:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752382AbYBQDwK
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Feb 2008 22:52:10 -0500
+Received: from iabervon.org ([66.92.72.58]:50948 "EHLO iabervon.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755459AbYBQDb1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Feb 2008 22:31:27 -0500
-Received: (qmail 9371 invoked by uid 1000); 17 Feb 2008 03:31:26 -0000
+	id S1752247AbYBQDwJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Feb 2008 22:52:09 -0500
+Received: (qmail 9912 invoked by uid 1000); 17 Feb 2008 03:52:07 -0000
 Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 17 Feb 2008 03:31:26 -0000
-In-Reply-To: <7vfxvs75kp.fsf_-_@gitster.siamese.dyndns.org>
+  by localhost with SMTP; 17 Feb 2008 03:52:07 -0000
+In-Reply-To: <7vd4r4clnb.fsf@gitster.siamese.dyndns.org>
 User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74090>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74091>
 
-On Sat, 16 Feb 2008, Junio C Hamano wrote:
+On Sun, 10 Feb 2008, Junio C Hamano wrote:
 
-> Junio C Hamano <gitster@pobox.com> writes:
+> Len Brown <lenb@kernel.org> writes:
 > 
-> > Perhaps making "git-checkout" to notice this and offer (or
-> > suggest) fast-forwarding at that point may be safer and make
-> > more sense.  You cannot grow your local branch unless you check
-> > them out, and your remote tracking will keep growing without the
-> > auto-ff you are suggesting, so it is not like people will lose
-> > anchoring point to compare between branches if we do not
-> > auto-ff.
+> > A couple of hours ago I pulled my reference copy of Linux tree,
+> > which brought the tip here:
+> >
+> > commit 7cf712db6087342e5e7e259d3883a7b5ac3212d1
+> > Merge: 58a14ee... 30ddb15...
+> > Author: Linus Torvalds <torvalds@woody.linux-foundation.org>
+> > Date:   Sun Feb 10 12:03:57 2008 -0800
+> >
+> >     Merge git://git.kernel.org/pub/scm/linux/kernel/git/davem/net-2.6
+> >
+> > Then, 10 minutes ago I did a pull to bring the head here:
+> >
+> > commit 19af35546de68c872dcb687613e0902a602cb20e
+> > Author: Linus Torvalds <torvalds@woody.linux-foundation.org>
+> > Date:   Sun Feb 10 14:18:14 2008 -0800
+> >
+> >     Linux 2.6.25-rc1
+> >
+> > But this second pull seems to have re-downloaded 172MB,
+> > when it should have only needed the last few commits.
+> >
+> > thanks,
 > 
-> So I did this.
+> Thanks.  This is very puzzling.
 > 
-> When you are switching to a branch that is marked to merge from
-> somewhere else, e.g. when you have:
+> > [lenb@d975xbx2 linus (master)]$ git pull
+> > remote: Counting objects: 447, done.
+> > remote: Compressing objects: 100% (39/39), done.
+> > remote: Total 328 (delta 291), reused 325 (delta 289)
 > 
->     [branch "next"]
->             remote = upstream
->             merge = refs/heads/next
->     [remote "upstream"]
->             url = ...
->             fetch = refs/heads/*:refs/remotes/linus/*
+> This part looks quite sane.
 > 
-> and you say "git checkout next", then after we switch the branch
-> we check the upstream (in this case, refs/remotes/linus/next)
-> and our branch, and:
+> 	$ git rev-list --objects ^7cf712d v2.6.25-rc1^0 | wc -l
+> 	328
 > 
->     (1) if they match, nothing happens;
+> > Receiving objects: 100% (328/328), 60.81 KiB, done.
+> > Resolving deltas: 100% (291/291), completed with 97 local objects.
 > 
->     (2) if you are ahead (i.e. the upstream is a strict ancestor
->         of you), one line message tells you so;
+> and the number of received objects exactly match.
 > 
->     (3) otherwise, you are either behind or you and the upstream
->         have forked.  One line message will tell you which and
->         then you will see a "log --pretty=oneline --left-right".
+> > warning: no common commits
+> 
+> This is however very unexpected.  The sequence internally should
+> be doing the equivalent of:
+> 
+>   - fetch the objects to complete the branches we track
+>     (i.e. what the above "rev-list" that fetches to complete the
+>     commit pointed by the v2.6.25-rc1 tag based on your earlier
+>     tip 7cf712d);
+> 
+>   - store the tip (19af355 = v2.6.25-rc1^0) to the tracking
+>     branch;
+> 
+>   - run another "git fetch" to retrieve objects to complete the
+>     v2.6.25-rc1 tag itself, based on our available refs (which
+>     includes the commit 19af355).
 
-I like this idea a lot. I'd actually also like it for commit, although (1) 
-and (3a) obviously don't happen there. It would help to combat my tendency 
-to forget to push when I mean to.
+I wonder if the problem is that something isn't getting reinitialized for 
+the second connection. It's not a separate invocation of fetch-pack, and I 
+can't say for sure that it's sending the right info to the server when the 
+statics in builtin-fetch-pack.c are left over from the earlier call. This 
+would particularly explain the information that hitting ctrl-c and trying 
+again fixes it.
 
-Note that, in addition to "should I merge before starting to work now", 
-this also answers "if I turn off this computer, what can't I get at".
-
-> We could enhance this with an option that tells the command to
-> check if there is no local change, and automatically fast
-> forward when you are truly behind.  But I ripped out that change
-> because I was unsure what the right way should be to allow users
-> to control it (issues include that checkout should not become
-> automatically interactive).
-
-I suppose you could use a config option to enable it per-branch.
-
-It would be really clever to make it happen if you do:
-
-$ git checkout next
-(fast-forward info)
-$ git checkout
-
-But that's probably a bit too clever.
-
-> diff --git a/builtin-checkout.c b/builtin-checkout.c
-> index 59a0ef4..9370ba0 100644
-> --- a/builtin-checkout.c
-> +++ b/builtin-checkout.c
-> @@ -12,6 +12,7 @@
->  #include "branch.h"
->  #include "diff.h"
->  #include "revision.h"
-> +#include "remote.h"
->  
->  static const char * const checkout_usage[] = {
->  	"git checkout [options] <branch>",
-> @@ -290,6 +291,139 @@ static int merge_working_tree(struct checkout_opts *opts,
->  	return 0;
->  }
->  
-> +/*
-> + * We really should allow cb_data... Yuck
-> + */
-> +static const char *branch_name;
-> +static int branch_name_len;
-> +static char *found_remote;
-> +static char *found_merge;
-> +static int read_branch_config(const char *var, const char *value)
-> +{
-
-...
-
-I think you want branch_get(), which handles all the config file stuff up 
-to approximately here:
-
-> +	remote = remote_get(found_remote);
-> +	memset(&spec, 0, sizeof(spec));
-> +	spec.src = found_merge;
-> +	if (remote_find_tracking(remote, &spec))
-> +		goto cleanup;
-> +	*base = spec.dst;
-> +	return 1;
-> +}
-> +
-> +static void adjust_to_tracking(struct branch_info *new, struct checkout_opts *opts)
-> +{
-> +	/*
-> +	 * We have switched to a new branch; is it building on
-> +	 * top of another branch, and if so does that other branch
-> +	 * have changes we do not have yet?
-> +	 */
-> +	char *base;
-> +	unsigned char sha1[20];
-> +	struct commit *ours, *theirs;
-> +	const char *msgfmt;
-> +	char symmetric[84];
-> +	int show_log;
-> +
-> +	if (!resolve_ref(new->path, sha1, 1, NULL))
-> +		return;
-> +	ours = lookup_commit(sha1);
-> +
-> +	if (!find_build_base(new->path, &base))
-> +		return;
-> +
-> +	sprintf(symmetric, "%s", sha1_to_hex(sha1));
-> +
-> +	/*
-> +	 * Ok, it is tracking base; is it ahead of us?
-> +	 */
-> +	if (!resolve_ref(base, sha1, 1, NULL))
-> +		return;
-> +	theirs = lookup_commit(sha1);
-> +
-> +	sprintf(symmetric + 40, "...%s", sha1_to_hex(sha1));
-> +
-> +	if (!hashcmp(sha1, ours->object.sha1))
-> +		return; /* we are the same */
-> +
-> +	show_log = 1;
-> +	if (in_merge_bases(theirs, &ours, 1)) {
-> +		msgfmt = "You are ahead of the tracked branch '%s'\n";
-> +		show_log = 0;
-> +	}
-> +	else if (in_merge_bases(ours, &theirs, 1))
-> +		msgfmt = "Your branch can be fast-forwarded to the tracked branch '%s'\n";
-> +	else
-> +		msgfmt = "Both your branch and the tracked branch '%s' have own changes, you would eventually need to merge\n";
-> +
-> +	if (!prefixcmp(base, "refs/remotes/"))
-> +		base += strlen("refs/remotes/");
-> +	fprintf(stderr, msgfmt, base);
-> +
-> +	if (show_log) {
-> +		const char *args[32];
-> +		int ac;
-> +
-> +		ac = 0;
-> +		args[ac++] = "log";
-> +		args[ac++] = "--pretty=oneline";
-> +		args[ac++] = "--abbrev-commit";
-> +		args[ac++] = "--left-right";
-> +		args[ac++] = "--boundary";
-> +		args[ac++] = symmetric;
-> +		args[ac++] = "--";
-> +		args[ac] = NULL;
-> +
-> +		run_command_v_opt(args, RUN_GIT_CMD);
-
-We really should be able to do this in-process, although I'm not sure if 
-we really can. I don't think I've marked up the history in 
-builtin-checkout for anything else yet, anyway.
+I don't really know the builtin-fetch-pack code all that well, but I'll 
+see if I can reproduce the problem and if I can figure out anything 
+obviously wrong.
 
 	-Daniel
 *This .sig left intentionally blank*
