@@ -1,88 +1,109 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [RFC] sending errors to stdout under $PAGER
-Date: Sun, 17 Feb 2008 02:50:33 -0500
-Message-ID: <20080217075033.GP24004@spearce.org>
-References: <7vbq6g90gy.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Rename git-core rpm to just git and rename the
+ meta-pacakge to git-all.
+Date: Sat, 16 Feb 2008 23:57:28 -0800
+Message-ID: <7vskzs2exj.fsf@gitster.siamese.dyndns.org>
+References: <1203100163-17509-1-git-send-email-krh@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Feb 17 08:51:30 2008
+To: Kristian =?utf-8?Q?H=C3=B8gsberg?= <krh@redhat.com>
+X-From: git-owner@vger.kernel.org Sun Feb 17 08:58:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JQeJ6-0006FA-GX
-	for gcvg-git-2@gmane.org; Sun, 17 Feb 2008 08:51:28 +0100
+	id 1JQeQ6-0007Pe-7e
+	for gcvg-git-2@gmane.org; Sun, 17 Feb 2008 08:58:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751857AbYBQHuh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Feb 2008 02:50:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751735AbYBQHuh
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Feb 2008 02:50:37 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:49431 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751452AbYBQHug (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Feb 2008 02:50:36 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1JQeID-0007Lg-PR; Sun, 17 Feb 2008 02:50:33 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id B120520FBAE; Sun, 17 Feb 2008 02:50:33 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <7vbq6g90gy.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1752794AbYBQH6I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Feb 2008 02:58:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751947AbYBQH6H
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Feb 2008 02:58:07 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:45739 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751765AbYBQH6D (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Feb 2008 02:58:03 -0500
+Received: from a-sasl-quonix.pobox.com (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 2270A3F74;
+	Sun, 17 Feb 2008 02:58:02 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.pobox.com (Postfix) with ESMTP id
+ 1D09F3F71; Sun, 17 Feb 2008 02:57:56 -0500 (EST)
+In-Reply-To: <1203100163-17509-1-git-send-email-krh@redhat.com> (Kristian
+ =?utf-8?Q?H=C3=B8gsberg's?= message of "Fri, 15 Feb 2008 13:29:23 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74099>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74100>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> Because we spawn the pager as the foreground process and feed
-> its input via pipe from the real command, we cannot affect the
-> exit status the shell sees from git command when the pager is in
-> use (I think there is not much gain we can have by working it
-> around, though).  But at least it may make sense to show the
-> error message to the user sitting in front of the pager, perhaps
-> like this.
-> 
-> What do people think?  Have I overlooked any downsides?
+Thanks for updates to the spec file, but I need a bit of help
+here on two problems.
 
-I think this is a good idea.
+If I understand you correctly, it should now create "git"
+package, instead of "git-core", that contains the really core
+parts, and other pieces such as "git-svn" and friends will stay
+pretty much the same.  In addition, the new "git" package will
+also say "this provides git-core, so install this when the user
+asks to install git-core".
 
-If you are using an interactive pager, you have asked for the content
-to come to you through that.  Not unlike how I have chosen to have
-the content come to me through a virtual pty and not a printer with
-green-and-white bar paper.  :)
+Where does "git-all" you talked about in your message come into
+the picture?  The "make rpm" procedure produced these files for
+me:
 
-I've been bitten by this in the past a few times, but I have also
-been knowledgable enough about git, the command I ran, and the
-project I ran it on to realize something wasn't right with the
-output I am seeing in the pager and retry without the pager to see
-the real error(s).
+Wrote: /home/junio/rpms/SRPMS/git-1.5.4.2-1.src.rpm
+Wrote: /home/junio/rpms/RPMS/i386/git-1.5.4.2-1.i386.rpm
+Wrote: /home/junio/rpms/RPMS/i386/git-svn-1.5.4.2-1.i386.rpm
+Wrote: /home/junio/rpms/RPMS/i386/git-cvs-1.5.4.2-1.i386.rpm
+Wrote: /home/junio/rpms/RPMS/i386/git-arch-1.5.4.2-1.i386.rpm
+Wrote: /home/junio/rpms/RPMS/i386/git-email-1.5.4.2-1.i386.rpm
+Wrote: /home/junio/rpms/RPMS/i386/git-gui-1.5.4.2-1.i386.rpm
+Wrote: /home/junio/rpms/RPMS/i386/gitk-1.5.4.2-1.i386.rpm
+Wrote: /home/junio/rpms/RPMS/i386/perl-Git-1.5.4.2-1.i386.rpm
+Wrote: /home/junio/rpms/RPMS/i386/git-debuginfo-1.5.4.2-1.i386.rpm
 
-> +++ b/usage.c
-> @@ -4,12 +4,15 @@
->   * Copyright (C) Linus Torvalds, 2005
->   */
->  #include "git-compat-util.h"
-> +#include "cache.h"
->  
->  static void report(const char *prefix, const char *err, va_list params)
->  {
->  	char msg[256];
-> +	FILE *outto = (pager_in_use() ? stdout : stderr);
-> +
->  	vsnprintf(msg, sizeof(msg), err, params);
-> -	fprintf(stderr, "%s%s\n", prefix, msg);
-> +	fprintf(outto, "%s%s\n", prefix, msg);
->  }
+After I throw in these 9 i386.rpm files in my local yum
+repository and say "yum install git-all", I get "No Match for
+argument: git-all".  This is problem #1.
 
--- 
-Shawn.
+"yum install git" and "yum install git-core" do not give such an
+error but the latter gives quite a bunch of errors ("yum install
+git" goes alright).  This is problem #2.
+
+Note that I want to make sure that the upgrade to go smoothly,
+so I populated both 1.5.4 RPM and 1.5.4.2 RPM in the repository,
+which is to emulate what we do on k.org machines.
+
+The errors start like this.  It looks to me that "Provides:
+git-core" is not being honored.
+
+Dependencies Resolved
+
+=============================================================================
+ Package                 Arch       Version          Repository        Size
+=============================================================================
+Installing:
+ git-core                i386       1.5.4-1          local             3.6 M
+Installing for dependencies:
+ git                     i386       1.5.4.2-1        local             3.6 M
+ perl-Git                i386       1.5.4.2-1        local              14 k
+
+Transaction Summary
+=============================================================================
+Install      3 Package(s)
+Update       0 Package(s)
+Remove       0 Package(s)
+Total download size: 7.3 M
+Is this ok [y/N]: y
+Downloading Packages:
+Running Transaction Test
+Finished Transaction Test
+
+
+Transaction Check Error:   file /usr/bin/git conflicts between attempted installs of git-1.5.4.2-1 and git-core-1.5.4-1
+  file /usr/bin/git-add conflicts between attempted installs of git-1.5.4.2-1 and git-core-1.5.4-1
+  file /usr/bin/git-am conflicts between attempted installs of git-1.5.4.2-1 and git-core-1.5.4-1
+  ...
