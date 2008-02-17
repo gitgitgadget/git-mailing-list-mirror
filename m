@@ -1,179 +1,75 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: What's cooking in git.git (topics)
-Date: Sun, 17 Feb 2008 23:01:29 +0100
-Message-ID: <200802172301.30380.jnareb@gmail.com>
-References: <7v7ihmuwzi.fsf@gitster.siamese.dyndns.org> <m38x1jbsjb.fsf@localhost.localdomain> <7vejbbz9x5.fsf@gitster.siamese.dyndns.org>
+From: "David Symonds" <dsymonds@gmail.com>
+Subject: Re: [PATCH] Remove useless if-before-free tests.
+Date: Sun, 17 Feb 2008 14:09:48 -0800
+Message-ID: <ee77f5c20802171409k2dee2c87v8d84eba111c3d506@mail.gmail.com>
+References: <871w7bz1ly.fsf@rho.meyering.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Bruno Ribas <ribas@c3sl.ufpr.br>,
-	"J.H." <warthog9@kernel.org>, Petr Baudis <pasky@suse.cz>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Feb 17 23:02:21 2008
+Cc: "git list" <git@vger.kernel.org>
+To: "Jim Meyering" <jim@meyering.net>
+X-From: git-owner@vger.kernel.org Sun Feb 17 23:10:27 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JQraR-0008Ib-GJ
-	for gcvg-git-2@gmane.org; Sun, 17 Feb 2008 23:02:16 +0100
+	id 1JQriM-0002RA-CZ
+	for gcvg-git-2@gmane.org; Sun, 17 Feb 2008 23:10:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753217AbYBQWBl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Feb 2008 17:01:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753281AbYBQWBk
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Feb 2008 17:01:40 -0500
-Received: from ik-out-1112.google.com ([66.249.90.182]:63073 "EHLO
-	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753053AbYBQWBj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Feb 2008 17:01:39 -0500
-Received: by ik-out-1112.google.com with SMTP id c28so550036ika.5
-        for <git@vger.kernel.org>; Sun, 17 Feb 2008 14:01:37 -0800 (PST)
+	id S1755368AbYBQWJv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Feb 2008 17:09:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755240AbYBQWJv
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Feb 2008 17:09:51 -0500
+Received: from rv-out-0910.google.com ([209.85.198.186]:27957 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754625AbYBQWJt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Feb 2008 17:09:49 -0500
+Received: by rv-out-0910.google.com with SMTP id k20so1070654rvb.1
+        for <git@vger.kernel.org>; Sun, 17 Feb 2008 14:09:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=FiIdwGmVadynD1YN/+LB5RJSWbggWAsshCZxIoid0E8=;
-        b=Ov/V9wEaOqs3SGaAohHRpNgC8PZQtvHLkTICBBlgKbyKP3vrTIfBKGJXvVR38QZNzmFukBOnOkYCD1JoB3sxKLOldlGIf+/p/TkRaqmsUCf7EyOWTSagNpuaTwLodcQYKt9SG1NkUANS6TYImw5I7evySQm19z533HQccg2pv0I=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=iEp/7fAkczLnn2y5n0V8tagSGSSToQYK8/46/vfkz94=;
+        b=RlPpTXCtJ7jndvoxXzlx/nlRmY93wsKn5swJs5PtDyBdUvqrPns5QEJiqv2JaFeYwa50+MuqfgLBWWGpw9tzrxKTspWnqGhpdKG6xRegRVVNSrhF+vNZ7TbWo4iRmrhavJ2966wyGs/qU5+GKJ3lgOQasxic4LPPYVNTiC830gg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=my+oquwLKH4hWMU0sDPDhayiNqxMX7C/iQ2f7qxURyQt5n94PWe/yD2Du/lhFcZkBo7ao5SeYgQxyDUuCA4f4qcvhtFPYXQqq5Gtq7JzvU4buw4IYeM4DZsqqRM65x4kyjaKxorUueKhk/SFgJvn16Q6ILk+1zqPCXBG8nqjxsU=
-Received: by 10.78.46.14 with SMTP id t14mr7804124hut.19.1203285696799;
-        Sun, 17 Feb 2008 14:01:36 -0800 (PST)
-Received: from ?192.168.1.11? ( [83.8.248.52])
-        by mx.google.com with ESMTPS id 1sm13845756nfv.3.2008.02.17.14.01.33
-        (version=SSLv3 cipher=OTHER);
-        Sun, 17 Feb 2008 14:01:35 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <7vejbbz9x5.fsf@gitster.siamese.dyndns.org>
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=PAjQtfyIruVg2Qv1QRYHcnPnRuUP0McdYudGiy0jykikaq7//Xai1fOLoI6xSrTsiyniuPf6DEiTQnIG5k9bPeslagPKvDYSWporoEsx9eRXFYdxZrFp+yGYa/GH8Lc4R/U13QZc1MnAgQPlvtieKdvZU1uxA2owo9Rg90ci/M4=
+Received: by 10.141.87.13 with SMTP id p13mr3385787rvl.163.1203286188851;
+        Sun, 17 Feb 2008 14:09:48 -0800 (PST)
+Received: by 10.140.135.17 with HTTP; Sun, 17 Feb 2008 14:09:48 -0800 (PST)
+In-Reply-To: <871w7bz1ly.fsf@rho.meyering.net>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74188>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74189>
 
-On Sun, 17 Feb 2008, Junio C Hamano <gitster@pobox.com> wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
-> > Junio C Hamano <gitster@pobox.com> writes:
-> 
->>> * br/gitweb (Fri Feb 8 14:38:04 2008 -0200) 1 commit
->>>  + gitweb: Use the config file to set repository owner's name.
->>> 
->>> On hold per Jakub's reluctance.
->> 
->> It was tested by the author (Bruno Ribas) that it doesn't affect
->> performance, although IMHO for a bit superficial test (1000 identical
->> repositories, gitweb run as a script, dd or git-for-each-ref as an
->> additional load).  I'd like to heard from larger gitweb deployments
->> how it works with a webserver (ApacheBench or similar), with a real
->> set of repositories, and perhaps in real load conditions... of course
->> on test gitweb, not on live one.
-> 
-> I personally think the patch is Ok.  It would not affect really
-> large and loaded sites, because the top-level project list is
-> unusable for them without caching like John 'Warthog9' Hawley
-> does for k.org, due to other performance bottleneck (namely,
-> "the last changed timestamp") anyway.
+On Feb 17, 2008 1:58 PM, Jim Meyering <jim@meyering.net> wrote:
+> This change removes all useless if-before-free tests.
+> E.g., it replace code like this
+>
+>         if (some_expression)
+>                 free (some_expression);
+>
+> with the now-equivalent
+>
+>         free (some_expression);
+>
+> It is equivalent not just because POSIX has required free(NULL)
+> to work for a long time, but simply because it has worked for
+> so long that no reasonable porting target fails the test.
+> Here's some evidence from nearly 1.5 years ago:
+>
+>     http://www.winehq.org/pipermail/wine-patches/2006-October/031544.html
 
-I was worrying that it would affect gitweb performance badly, in spite 
-of (slightly superficial) benchmarks[*1*] testing it is not the case.
-Benchmarks were as far as I can understand for Linux, and I worry a bit 
-about other operating systems (MacOS X, MS Windows,...) with a higher 
-fork cost... although I have slight suspicion that finding owner (not 
-just an id of an owner) of a file (from Perl) is of similar cost.
+That's not great evidence. It only tests 9 systems, and misses several
+targets that Git already runs on. It seems like a fairly minor cleanup
+for a definite loss of portability.
 
-BTW. after reading the thread again the load in benchmark was always 
-generated by dd, not by running bunch of git-for-each-ref on different 
-refs in parallel.
-
-[*1*] Whose benchmarks should be at least mentioned IMHO in commit 
-message; also update to gitweb/README should be IMHO in the same commit 
-(while $path/$project -> $git_dir could, but not necessarily should, be 
-in separate cleanup patch).
- 
-> By the way, I think "real load conditions" and "test gitweb not
-> live" are unfortunately mutually exclusive.  If it is known to
-> be "test", it will not attract the same set of "real" people as
-> the real one.
-
-You can always stat, and generate test load with the same stats,
-perhaps cut to the page / feature you are benchmarking / profiling.
-
-By "read load conditions" I meant here running second gitweb with or 
-without the gitweb.owner patch on the same server as live gitweb. But 
-that would affect repetability of benchmark, although I'm not sure if 
-it matters; it probably depends on how variable load is, on how 
-sensitive benchmark is to detailed load, etc.
- 
->> I also wonder if it would make sense to make it a feature,
-> 
-> It might make sense, but it would not probably not help much in
-> practice.  It is overengineering, and I think it is spending
-> efforts in wrong place in the first place.
-
-I guess that after waiting a bit for comments you could either apply 
-patches, apply patches squashed, or ask Bruno Ribas for resend.
-
-I would then send patch making it a "feature" (where the important bit 
-is 'override' part, and 'defaults' does not matter), you would then 
-reject it because it is overengineering ;-) or not; but it would be in 
-achives.
- 
-> What I personally think the most important thing that should
-> happen to gitweb is to help cleaning up and updating John's
-> caching version that powers k.org, and update our version to
-> that.  John's version has seen a lot more real-life loads than
-> any other installation of the vanilla version in git.git, and we
-> should take advantage of his effort by slurping improvements
-> from his.  People who are both interested and have been involved
-> in gitweb might want to form a "gitweb-ng strike force" group,
-> and make a consolidated effort, just like msysgit folks do to
-> port our mess to Windows ;-).
-
-This would be really nice. IIRC John said that he would try to find time 
-to update kernel.org gitweb to latest, I guess sending caching patches 
-for gitweb to the list (or a please pull request).
-
-It was a bit unfortunate that J.H. split gitweb into many smaller 
-modules to better understand code when adding caching support, the move 
-which was not accepted for "mainline" gitweb, thus effectively creating 
-a fork.
+It's also somewhat useful for indicating that the particular pointer
+*might* be NULL.
 
 
-BTW it would be nice to have benchmark of different web interfaces under 
-heavly load: gitweb, repo.or.cz gitweb, kernel.org gitweb, cgit, wit 
-(the Ruby one), git-php, gitarella (if it is developed),...
-
-
->>> * nd/dashless (Wed Nov 28 23:21:57 2007 +0700) 1 commit
->>>  - Move all dashed-form commands to libexecdir
->>>
->>> Scheduled for 1.6.0.  I am not sure if we should merge this to
->>> 'next' before 1.5.5.  Most active people will be on 'next' and
->>> if we have this there, the resulting 1.5.5 release might end up
->>> having issues that come from differences this one introduces.
->>
->> What about making separate libexecdir and moving _helper_ scripts
->> (*--*) there first?
-> 
-> Why keep suggesting adding _more_ work, without any code nor
-> discussion of how that would help?
-
-I'm sorry. 
-
-To start discussion: :-)
-
-1. Currently tests check _built_ version:
-
-   # Test the binaries we have just built.  The tests are kept in
-   # t/ subdirectory and are run in trash subdirectory.
-
-   It would be nice if there were a switch which would allow to test
-   _installed_ (somewhere) version of git, to check for errors like
-   some script not finding some command etc.
-
-2. Where to put gitexecdir? /usr/libexec is not in FHS...
-
--- 
-Jakub Narebski
-Poland
+Dave.
