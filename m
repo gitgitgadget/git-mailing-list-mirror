@@ -1,88 +1,184 @@
 From: Charles Bailey <charles@hashpling.org>
-Subject: Re: [RFC/PATCH] Teach git mergetool to use custom commands defined at config time
-Date: Sun, 17 Feb 2008 10:15:38 +0000
-Message-ID: <20080217101538.GA21823@hashpling.org>
-References: <20080216185349.GA29177@hashpling.org> <CD749541-1B3B-4EA7-82A5-0DFC67B953BE@zib.de> <20080217002029.GA504@hashpling.org> <alpine.LSU.1.00.0802170045210.30505@racer.site> <20080217005620.GB504@hashpling.org> <7vbq6g758h.fsf@gitster.siamese.dyndns.org> <FBA2E61E-5CAF-49E3-A917-ACDD10586928@zib.de>
+Subject: [PATCH 1/4] Teach git mergetool to use custom commands defined at config time
+Date: Sun, 17 Feb 2008 10:23:08 +0000
+Message-ID: <b63a66ef2a97cd3e791476a74bdb7081bcd57637.1203242325.git.charles@hashpling.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Sun Feb 17 11:16:33 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Feb 17 11:23:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JQgZU-0002lT-Jp
-	for gcvg-git-2@gmane.org; Sun, 17 Feb 2008 11:16:33 +0100
+	id 1JQggc-0004eg-PB
+	for gcvg-git-2@gmane.org; Sun, 17 Feb 2008 11:23:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754707AbYBQKPz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Feb 2008 05:15:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754666AbYBQKPy
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Feb 2008 05:15:54 -0500
-Received: from pih-relay06.plus.net ([212.159.14.133]:48102 "EHLO
-	pih-relay06.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754679AbYBQKPx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Feb 2008 05:15:53 -0500
+	id S1754791AbYBQKXU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Feb 2008 05:23:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754746AbYBQKXU
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Feb 2008 05:23:20 -0500
+Received: from pih-relay05.plus.net ([212.159.14.132]:50091 "EHLO
+	pih-relay05.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754666AbYBQKXT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Feb 2008 05:23:19 -0500
 Received: from [212.159.69.125] (helo=hashpling.plus.com)
-	 by pih-relay06.plus.net with esmtp (Exim) id 1JQgYl-0001uk-7c; Sun, 17 Feb 2008 10:15:47 +0000
+	 by pih-relay05.plus.net with esmtp (Exim) id 1JQgg0-0001NO-GJ
+	for git@vger.kernel.org; Sun, 17 Feb 2008 10:23:16 +0000
 Received: from fermat.hashpling.org (fermat.hashpling.org [127.0.0.1])
-	by hashpling.plus.com (8.13.8/8.13.6) with ESMTP id m1HAFdXO022319;
-	Sun, 17 Feb 2008 10:15:39 GMT
+	by hashpling.plus.com (8.13.8/8.13.6) with ESMTP id m1HAN8UB022727
+	for <git@vger.kernel.org>; Sun, 17 Feb 2008 10:23:08 GMT
 Received: (from charles@localhost)
-	by fermat.hashpling.org (8.13.8/8.13.6/Submit) id m1HAFc2E022318;
-	Sun, 17 Feb 2008 10:15:38 GMT
+	by fermat.hashpling.org (8.13.8/8.13.6/Submit) id m1HAN82W022726
+	for git@vger.kernel.org; Sun, 17 Feb 2008 10:23:08 GMT
 Content-Disposition: inline
-In-Reply-To: <FBA2E61E-5CAF-49E3-A917-ACDD10586928@zib.de>
 User-Agent: Mutt/1.4.2.1i
-X-Plusnet-Relay: ff152c449f9e67754aaced1608e8c4f8
+X-Plusnet-Relay: 9109b3acf6b9ffea7ee1d01b0154097a
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74110>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74111>
 
-On Sun, Feb 17, 2008 at 08:59:31AM +0100, Steffen Prohaska wrote:
-> On Feb 17, 2008, at 1:20 AM, Charles Bailey wrote:
-> >>
-> >>I don't believe that git installs a system config by default, but one
-> >>idea I had was to rip out all of the native tools support in git
-> >>mergetool and replace it with a list of predefined custom tools
-> >>configs. This would put all merge tools on an equal footing and  
-> >>should
-> >>make extra tool support patches simpler and easier to integrate. This
-> >>doesn't have any legs without a system default config, though.
-> 
-> ... but I am slightly opposed to this idea.  Note that at least
-> in one case there is a trick needed to launch the tool.  Such a
-> trick can easily be coded if the tool is directly added in
-> "git mergetool"; but it would be much harder to capture by a
-> generic mechanism via config variables.  The example I mean is
-> opendiff that needs to be piped to cat (opendiff ... | cat).
-> Otherwise opendiff detaches FileMerge and returns immediately
-> without waiting for the user to complete the merge.
+Currently git mergetool is restricted to a set of commands defined
+in the script. You can subvert the mergetool.<tool>.path to force
+git mergetool to use a different command, but if you have a command
+whose invocation syntax does not match one of the current tools then
+you would have to write a wrapper script for it.
 
-I just wanted to say that in my patch, as the configuration is a
-sub-shell, that it is perfectly possible to do this in a custom
-mergetool as well.
+This patch adds three git config variable patterns which allow a more
+flexible choice of merge tool.
 
-I have different reasons for not liking a default system config file,
-namely the whole customize vs. updgrade conflict issues.
+If you run git mergetool with -t/--tool or the merge.tool config
+variable set to an unrecognized tool then git mergetool will query the
+mergetool.<tool>.cmd config variable. If this variable exists, then
+git mergetool will treat the specified tool as a custom command and
+will use a shell eval to run the command so that the appropriate shell
+variables can be used to find the merge temporary files.
 
-An alternative that I have considered is to include a
-$(sharedir)/gitcore/mergetools.gitconfig which could contain the
-default native mergetool configs (both the commands and the
-'trustExitCode' settings.
+mergetool.<tool>.trustExitCode can be used to indicate that the exit
+code of the custom command can be used to determine the success of the
+merge. mergetool.<tool>.keepBackup can be used to specify whether the
+original pre-merge file with conflict markers should be kept as a
+'.orig' file after the merge tool completes.
 
-Submitting a new merge tool patch becomes a simple matter of: "I've
-used and tested this in my system (or global) gitconfig, please add to
-the git distribution mergetool.gitconfig."
+Signed-off-by: Charles Bailey <charles@hashpling.org>
+---
 
-I know that most git developers are just as at ease (if not more so)
-editing a git shell script as they are at using git config but I still
-believe that there is a significant group of users and potential users
-for whom there is an import barrier between configuring software and
-'having' to hack it to get it to work.
+This series of patches are a cleaned and improved version of the
+earlier RFC patch that I sent.
 
-Charles.
+They are in decreasing order of how much I care about / like them, and
+I'm happy to have them squashed or to submit a squashed set of 2,3 or 4
+of the patches.
+
+ Documentation/config.txt |   25 +++++++++++++++++++++++--
+ git-mergetool.sh         |   29 +++++++++++++++++++++++++++--
+ 2 files changed, 50 insertions(+), 4 deletions(-)
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index f9bdb16..12d87d4 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -689,8 +689,10 @@ merge.summary::
+ 
+ merge.tool::
+ 	Controls which merge resolution program is used by
+-	linkgit:git-mergetool[1].  Valid values are: "kdiff3", "tkdiff",
+-	"meld", "xxdiff", "emerge", "vimdiff", "gvimdiff", and "opendiff".
++	linkgit:git-mergetool[1].  Valid built-in values are: "kdiff3",
++	"tkdiff", "meld", "xxdiff", "emerge", "vimdiff", "gvimdiff", and
++	"opendiff".  Any other value is treated is custom merge tool
++	and there must be a corresponing mergetool.<tool>.cmd option.
+ 
+ merge.verbosity::
+ 	Controls the amount of output shown by the recursive merge
+@@ -717,6 +719,25 @@ mergetool.<tool>.path::
+ 	Override the path for the given tool.  This is useful in case
+ 	your tool is not in the PATH.
+ 
++mergetool.<tool>.cmd::
++	Specify the command to invoke the specified merge tool.  The
++	specified command is evaluated in shell with the following
++	variables available: 'BASE' is the name of a temporary file
++	containing the common base of the files to be merged, if available;
++	'LOCAL' is the name of a temporary file containing the contents of
++	the file on the current branch; 'REMOTE' is the name of a temporary
++	file containing the contents of the file from the branch being
++	merged; 'path' contains the name of the file to which the merge
++	tool should write the results of a successful merge.
++
++mergetool.<tool>.trustExitCode::
++	For a custom merge command, specify whether the exit code of
++	the merge command can be used to determine whether the merge was
++	successful.  If this is not set to true then the merge target file
++	timestamp is checked and the merge assumed to have been successful
++	if the file has been updated, otherwise the user is prompted to
++	indicate the success of the merge.
++
+ pack.window::
+ 	The size of the window used by linkgit:git-pack-objects[1] when no
+ 	window size is given on the command line. Defaults to 10.
+diff --git a/git-mergetool.sh b/git-mergetool.sh
+index cbbb707..cf30e21 100755
+--- a/git-mergetool.sh
++++ b/git-mergetool.sh
+@@ -271,6 +271,19 @@ merge_file () {
+ 	    status=$?
+ 	    save_backup
+ 	    ;;
++	*)
++	    if test -n "$merge_tool_cmd"; then
++		if test "$merge_tool_trust_exit_code" = "false"; then
++		    touch "$BACKUP"
++		    ( eval $merge_tool_cmd )
++		    check_unchanged
++		else
++		    ( eval $merge_tool_cmd )
++		    status=$?
++		fi
++		save_backup
++	    fi
++	    ;;
+     esac
+     if test "$status" -ne 0; then
+ 	echo "merge of $path failed" 1>&2
+@@ -309,12 +322,20 @@ do
+     shift
+ done
+ 
++valid_custom_tool()
++{
++    merge_tool_cmd="$(git config mergetool.$1.cmd)"
++    test -n "$merge_tool_cmd"
++}
++
+ valid_tool() {
+ 	case "$1" in
+ 		kdiff3 | tkdiff | xxdiff | meld | opendiff | emerge | vimdiff | gvimdiff | ecmerge)
+ 			;; # happy
+ 		*)
+-			return 1
++			if ! valid_custom_tool "$1"; then
++				return 1
++			fi
+ 			;;
+ 	esac
+ }
+@@ -380,10 +401,14 @@ else
+ 
+     init_merge_tool_path "$merge_tool"
+ 
+-    if ! type "$merge_tool_path" > /dev/null 2>&1; then
++    if test -z "$merge_tool_cmd" && ! type "$merge_tool_path" > /dev/null 2>&1; then
+         echo "The merge tool $merge_tool is not available as '$merge_tool_path'"
+         exit 1
+     fi
++
++    if ! test -z "$merge_tool_cmd"; then
++        merge_tool_trust_exit_code="$(git config --bool mergetool.$merge_tool.trustExitCode || echo false)"
++    fi
+ fi
+ 
+ 
+-- 
+1.5.4.1.34.g94bf
