@@ -1,64 +1,93 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: What's in git.git (stable)
-Date: Sun, 17 Feb 2008 20:51:38 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802172050090.30505@racer.site>
-References: <7v8x27iui1.fsf@gitster.siamese.dyndns.org> <7vd4r24ox6.fsf@gitster.siamese.dyndns.org> <7vir0o44mt.fsf_-_@gitster.siamese.dyndns.org> <m3d4qvbt40.fsf@localhost.localdomain> <7vtzk7xqg3.fsf@gitster.siamese.dyndns.org>
+From: Onno Kortmann <onno@gmx.net>
+Subject: [StGit PATCH] Allow renaming of the top-most branch by just calling stg rename <new-patch-name>
+Date: Sun, 17 Feb 2008 22:03:55 +0100
+Message-ID: <200802172203.55533.onno@gmx.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Feb 17 21:52:30 2008
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Feb 17 22:04:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JQqUr-0003lz-Sc
-	for gcvg-git-2@gmane.org; Sun, 17 Feb 2008 21:52:26 +0100
+	id 1JQqgr-0007v2-7r
+	for gcvg-git-2@gmane.org; Sun, 17 Feb 2008 22:04:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753026AbYBQUvv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Feb 2008 15:51:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752893AbYBQUvu
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Feb 2008 15:51:50 -0500
-Received: from mail.gmx.net ([213.165.64.20]:46724 "HELO mail.gmx.net"
+	id S1752893AbYBQVD7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Feb 2008 16:03:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752831AbYBQVD7
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Feb 2008 16:03:59 -0500
+Received: from mail.gmx.net ([213.165.64.20]:33339 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752691AbYBQUvu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Feb 2008 15:51:50 -0500
-Received: (qmail invoked by alias); 17 Feb 2008 20:51:48 -0000
-Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
-  by mail.gmx.net (mp048) with SMTP; 17 Feb 2008 21:51:48 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+xl2Rzk5SxRyyZCXU8BHk6UIGKEjpdRoTIrbsqzK
-	8aqtGvoEvUQdol
-X-X-Sender: gene099@racer.site
-In-Reply-To: <7vtzk7xqg3.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+	id S1752790AbYBQVD6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Feb 2008 16:03:58 -0500
+Received: (qmail invoked by alias); 17 Feb 2008 21:03:56 -0000
+Received: from 151-245-dsl.kielnet.net (EHLO noodle.okhome) [89.27.245.151]
+  by mail.gmx.net (mp044) with SMTP; 17 Feb 2008 22:03:56 +0100
+X-Authenticated: #482760
+X-Provags-ID: V01U2FsdGVkX19CMV4ySzdCrS2YWaV2GiHLB1cmUcAT2St8hfptep
+	gQWo9f0VelB2OD
+User-Agent: StGIT/0.14.1
+X-TUID: 1f5d5ce872e339f3
+X-Length: 2106
+X-UID: 5
+Content-Disposition: inline
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74182>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74183>
 
-Hi,
+instead of stg rename <old> <new>.
+This is for example helpful for those people who always have a typo or two in 
+their
+patch names.
+---
 
-On Sun, 17 Feb 2008, Junio C Hamano wrote:
+ stgit/commands/rename.py |   20 +++++++++++++++-----
+ 1 files changed, 15 insertions(+), 5 deletions(-)
 
-> Jakub Narebski <jnareb@gmail.com> writes:
-> 
-> >>   commit: discard index after setting up partial commit
-> >
-> > IIRC there was also request for proper solution; this was more a hack.
-> 
-> It is not a hack at all.
-> 
-> The more fundamental improvement was along the lines of what I suggested 
-> soon after Kristian's initial round was posted, but what the current 
-> code does is not wrong nor hack.  It is about a partial commit after all 
-> and is not performance critical either.
-
-You mean: at this point, it is not necessary to be careful about the 
-index, as the index that will be reloaded will already have the most 
-recent timestamps, right?
-
-Ciao,
-Dscho
+diff --git a/stgit/commands/rename.py b/stgit/commands/rename.py
+index e2b0fa4..acdf962 100644
+--- a/stgit/commands/rename.py
++++ b/stgit/commands/rename.py
+@@ -25,9 +25,10 @@ from stgit import stack, git
+ 
+ 
+ help = 'rename a patch in the series'
+-usage = """%prog [options] <oldpatch> <newpatch>
++usage = """%prog [options] [oldpatch] <newpatch>
+ 
+-Rename <oldpatch> into <newpatch> in a series."""
++Rename <oldpatch> into <newpatch> in a series. If <oldpatch> is not given, 
+the
++top-most patch will be renamed. """
+ 
+ directory = DirectoryHasRepository()
+ options = [make_option('-b', '--branch',
+@@ -37,9 +38,18 @@ options = [make_option('-b', '--branch',
+ def func(parser, options, args):
+     """Rename a patch in the series
+     """
+-    if len(args) != 2:
+-        parser.error('incorrect number of arguments')
++    crt=crt_series.get_current()
++
++    if len(args) == 2:
++        out.start('Renaming patch "%s" to "%s"' % (args[0], args[1]))
++
++    elif len(args) == 1:
++        if not crt:
++            raise CmdException, "No applied top patch to rename exists."
++        args=[crt]+args
++        out.start('Renaming top-most patch "%s" to "%s"' % (args[0], 
+args[1]))
++    
++    else: parser.error('incorrect number of arguments')
+ 
+-    out.start('Renaming patch "%s" to "%s"' % (args[0], args[1]))
+     crt_series.rename_patch(args[0], args[1])
+     out.done()
