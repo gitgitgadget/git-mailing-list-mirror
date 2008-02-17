@@ -1,59 +1,79 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Odd logic in rebase--interactive
-Date: Sun, 17 Feb 2008 21:41:41 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802172139370.30505@racer.site>
-References: <alpine.LNX.1.00.0802171620060.5816@iabervon.org>
+From: Theodore Tso <tytso@MIT.EDU>
+Subject: Re: [RFC/PATCH] Teach git mergetool to use custom commands defined
+	at config time
+Date: Sun, 17 Feb 2008 16:49:42 -0500
+Message-ID: <20080217214942.GJ8905@mit.edu>
+References: <20080216185349.GA29177@hashpling.org> <CD749541-1B3B-4EA7-82A5-0DFC67B953BE@zib.de> <20080217002029.GA504@hashpling.org> <alpine.LSU.1.00.0802170045210.30505@racer.site> <20080217005620.GB504@hashpling.org> <7vbq6g758h.fsf@gitster.siamese.dyndns.org> <FBA2E61E-5CAF-49E3-A917-ACDD10586928@zib.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Sun Feb 17 22:42:31 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Charles Bailey <charles@hashpling.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Sun Feb 17 22:51:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JQrHH-0002V5-Sg
-	for gcvg-git-2@gmane.org; Sun, 17 Feb 2008 22:42:28 +0100
+	id 1JQrQS-000541-Ui
+	for gcvg-git-2@gmane.org; Sun, 17 Feb 2008 22:51:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751356AbYBQVlw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Feb 2008 16:41:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751054AbYBQVlw
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Feb 2008 16:41:52 -0500
-Received: from mail.gmx.net ([213.165.64.20]:45634 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750852AbYBQVlw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Feb 2008 16:41:52 -0500
-Received: (qmail invoked by alias); 17 Feb 2008 21:41:50 -0000
-Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
-  by mail.gmx.net (mp014) with SMTP; 17 Feb 2008 22:41:50 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18orp9qFXcoCjB9vRO/kY0QQbzkGLLfl1smNSlfls
-	tHoWG38xs1NwyF
-X-X-Sender: gene099@racer.site
-In-Reply-To: <alpine.LNX.1.00.0802171620060.5816@iabervon.org>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1752215AbYBQVvW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Feb 2008 16:51:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751645AbYBQVvW
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Feb 2008 16:51:22 -0500
+Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:39469 "EHLO
+	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751122AbYBQVvV (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 17 Feb 2008 16:51:21 -0500
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id m1HLntDU027202;
+	Sun, 17 Feb 2008 16:49:56 -0500 (EST)
+Received: from closure.thunk.org (c-66-30-1-139.hsd1.ma.comcast.net [66.30.1.139])
+	(authenticated bits=0)
+        (User authenticated as tytso@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id m1HLnqXk024410
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Sun, 17 Feb 2008 16:49:53 -0500 (EST)
+Received: from tytso by closure.thunk.org with local (Exim 4.67)
+	(envelope-from <tytso@mit.edu>)
+	id 1JQrON-0001qt-7L; Sun, 17 Feb 2008 16:49:47 -0500
+Content-Disposition: inline
+In-Reply-To: <FBA2E61E-5CAF-49E3-A917-ACDD10586928@zib.de>
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
+X-Scanned-By: MIMEDefang 2.42
+X-Spam-Flag: NO
+X-Spam-Score: 0.00
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74185>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74186>
 
-Hi,
+On Sun, Feb 17, 2008 at 08:59:31AM +0100, Steffen Prohaska wrote:
+>
+> I am not upset at all and I really appreciate Charles work for
+> adding a generic mechanism.  I was just wondering why not taking
+> the direct way of adding tools to git-mergetool one by one until
+> we eventually have a rather complete list of supported tools.
+> This would be the easiest solution for end users if their
+> preferred tool is supported.  It is also easier to add support
+> for a specific tool than a generic mechanism.
 
-On Sun, 17 Feb 2008, Daniel Barkalow wrote:
+I have no objection to a generic mechanism, but I don't see the value
+of Charles suggestion to rip out support for the existing tools
+supported by git-mergetool.
 
-> In 1d25c8cf, you made pick_one not use the code for current and parent 
-> being the same if no_ff is set, which is true if -n is given. This looks 
-> like it makes the "git reset --soft $current_sha1" line dead code. Did 
-> you just forget to remove it, is there some other situation in which it 
-> would be wanted, or am I misunderstanding the code somehow?
+I think it *would* be better to use %(foo) extrapolation that
+environment variables, so that it's not required for users to write
+shell scripts unless absolutely necessary.
 
-No, you're correct, I just forgot to remove it.
+When we get around to rewriting git-mergetool in C, it might make
+sense to put the tool support in the various shell scripts that are
+installed in the git helper binary directory (i.e.,
+git-mergetool-kdiff3, git-mergetool-meld, etc.)  That would make it
+easier for users to create new shell scripts to support new tools if
+necessary.
 
-The reset tried to have a fast track for the fast-forwarding case in the 
-case of squash.  But that was not enough, and 1d25c8cf really fixed the 
-issue, making the reset code path unreachable.
-
-Thanks,
-Dscho
+					- Ted
