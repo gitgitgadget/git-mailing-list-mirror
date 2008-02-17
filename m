@@ -1,85 +1,68 @@
-From: Tilman Schmidt <tilman@imap.cc>
-Subject: git bisect start silently quits on bad revision arg
-Date: Sun, 17 Feb 2008 21:06:30 +0100
-Organization: me - organized??
-Message-ID: <47B893C6.1020802@imap.cc>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [Announce] 'next' rewound and rebased
+Date: Sun, 17 Feb 2008 12:28:09 -0800
+Message-ID: <7v1w7bz5t2.fsf_-_@gitster.siamese.dyndns.org>
+References: <7v7ihmuwzi.fsf@gitster.siamese.dyndns.org>
+ <7vodavd9qw.fsf@gitster.siamese.dyndns.org>
+ <7vbq6tset4.fsf@gitster.siamese.dyndns.org>
+ <7vmyq9gk94.fsf@gitster.siamese.dyndns.org>
+ <7vk5la4oxq.fsf@gitster.siamese.dyndns.org>
+ <7vejbc44hu.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enig4F47C6863F13CF63FA2FD48A"
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 17 21:07:09 2008
+X-From: git-owner@vger.kernel.org Sun Feb 17 21:28:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JQpn1-0006Vp-Vn
-	for gcvg-git-2@gmane.org; Sun, 17 Feb 2008 21:07:08 +0100
+	id 1JQq88-0004Rl-Os
+	for gcvg-git-2@gmane.org; Sun, 17 Feb 2008 21:28:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752246AbYBQUGe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Feb 2008 15:06:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752021AbYBQUGe
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Feb 2008 15:06:34 -0500
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:51318 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751940AbYBQUGd (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 17 Feb 2008 15:06:33 -0500
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id B085490E67
-	for <git@vger.kernel.org>; Sun, 17 Feb 2008 15:06:32 -0500 (EST)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Sun, 17 Feb 2008 15:06:32 -0500
-X-Sasl-enc: w1ILXrDvn7lMIIorAzdLp6L/Twhf3gMekq61xoJGIPBx 1203278792
-Received: from [192.168.59.127] (pD9E85DD3.dip.t-dialin.net [217.232.93.211])
-	by mail.messagingengine.com (Postfix) with ESMTP id 3290A114A0
-	for <git@vger.kernel.org>; Sun, 17 Feb 2008 15:06:32 -0500 (EST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.0; de-AT; rv:1.8.1.12) Gecko/20080201 SeaMonkey/1.1.8 Mnenhy/0.7.5.666
-X-Enigmail-Version: 0.95.6
+	id S1756523AbYBQU2T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Feb 2008 15:28:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753324AbYBQU2S
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Feb 2008 15:28:18 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:34121 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756463AbYBQU2R (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Feb 2008 15:28:17 -0500
+Received: from a-sasl-quonix.pobox.com (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 4A19D6557;
+	Sun, 17 Feb 2008 15:28:15 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.pobox.com (Postfix) with ESMTP id
+ B22956555; Sun, 17 Feb 2008 15:28:12 -0500 (EST)
+In-Reply-To: <7vejbc44hu.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Sat, 16 Feb 2008 19:59:57 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74177>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74178>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig4F47C6863F13CF63FA2FD48A
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: quoted-printable
+Junio C Hamano <gitster@pobox.com> writes:
 
-Just ran
+> ...  As announced, I'll rewind
+> and rebuild "next" with the surviving topics on top of "master",
+> sometime tomorrow.
 
-% git bisect start v2.6.25-rc1 v2.6.24.2 e5dd1278
+... which just happened.  The old history leading to "next" used
+to be 1323 commits ahead of v1.5.4.2 but the rebased one now is
+only 182 commits ahead, mostly due to old merge commits that
+never went out of "next" to "master" and a handful reverts.
 
-on a clone of Linus' tree in order to localize a regression I am
-hitting, and wondered why it did nothing at all, until I realized
-that there is no label v2.6.24.2 in that tree. It sure would be
-nice if git would emit an error message in that case.
+On k.org and repo.or.cz repo, I pushed out a branch "old-next"
+whose ancestry is connected to the old "next" and whose tip-tree
+matches that of the tip of "next", so if any of you have been
+building on top of 'next', you may want a one-time conversion to
+do:
 
-ts@xenon:~/kernel/linux-2.6> git --version
-git version 1.5.4.7.gd8534-dirty
+	$ git fetch
+        $ git rebase --onto origin/next origin/old-next my-branch-on-next
 
-HTH
-T.
-
---=20
-Tilman Schmidt                          E-Mail: tilman@imap.cc
-Bonn, Germany
-Diese Nachricht besteht zu 100% aus wiederverwerteten Bits.
-Unge=F6ffnet mindestens haltbar bis: (siehe R=FCckseite)
-
-
---------------enig4F47C6863F13CF63FA2FD48A
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.3rc1 (MingW32)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
-
-iD8DBQFHuJPGMdB4Whm86/kRAhSUAJ9GHL6s0Ya3guQWvdr8lnjdMFLjywCfcA/U
-+ul0j41/uBhxPrvUkbuuW5E=
-=MM/z
------END PGP SIGNATURE-----
-
---------------enig4F47C6863F13CF63FA2FD48A--
+Recent "git pull --rebase" may be good enough by consulting
+your remotes/origin/next@{1} to find the base without using the
+old-next trick, though I haven't checked.
