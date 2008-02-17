@@ -1,75 +1,61 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Remove useless if-before-free tests.
-Date: Sun, 17 Feb 2008 22:16:47 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802172210470.30505@racer.site>
-References: <871w7bz1ly.fsf@rho.meyering.net>
+Subject: Re: Intoducing the .git file (again)
+Date: Sun, 17 Feb 2008 22:20:55 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0802172219190.30505@racer.site>
+References: <1203286456-26033-1-git-send-email-hjemli@gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git list <git@vger.kernel.org>
-To: Jim Meyering <jim@meyering.net>
-X-From: git-owner@vger.kernel.org Sun Feb 17 23:17:53 2008
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Lars Hjemli <hjemli@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 17 23:21:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JQrpT-0004bN-9G
-	for gcvg-git-2@gmane.org; Sun, 17 Feb 2008 23:17:47 +0100
+	id 1JQrtI-0005ee-Q0
+	for gcvg-git-2@gmane.org; Sun, 17 Feb 2008 23:21:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756133AbYBQWRA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Feb 2008 17:17:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753832AbYBQWRA
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Feb 2008 17:17:00 -0500
-Received: from mail.gmx.net ([213.165.64.20]:50156 "HELO mail.gmx.net"
+	id S1753908AbYBQWVK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Feb 2008 17:21:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753891AbYBQWVI
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Feb 2008 17:21:08 -0500
+Received: from mail.gmx.net ([213.165.64.20]:33439 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754586AbYBQWQ7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Feb 2008 17:16:59 -0500
-Received: (qmail invoked by alias); 17 Feb 2008 22:16:57 -0000
+	id S1753867AbYBQWVH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Feb 2008 17:21:07 -0500
+Received: (qmail invoked by alias); 17 Feb 2008 22:21:04 -0000
 Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
-  by mail.gmx.net (mp027) with SMTP; 17 Feb 2008 23:16:57 +0100
+  by mail.gmx.net (mp046) with SMTP; 17 Feb 2008 23:21:04 +0100
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18I4RAdzJwIlZDfR94KqhgsC8eTKoIquSAozxYmr7
-	gN27jxvMsY4YlA
+X-Provags-ID: V01U2FsdGVkX19ZbmwCb69ZjkR3pb2uiIV5yOZpuzibv9Fn9Ju7rP
+	o4SwSEzZt4ENHI
 X-X-Sender: gene099@racer.site
-In-Reply-To: <871w7bz1ly.fsf@rho.meyering.net>
+In-Reply-To: <1203286456-26033-1-git-send-email-hjemli@gmail.com>
 User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74196>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74197>
 
 Hi,
 
-On Sun, 17 Feb 2008, Jim Meyering wrote:
+On Sun, 17 Feb 2008, Lars Hjemli wrote:
 
-> It is equivalent not just because POSIX has required free(NULL) to work 
-> for a long time, but simply because it has worked for so long that no 
-> reasonable porting target fails the test. Here's some evidence from 
-> nearly 1.5 years ago:
-> 
->     http://www.winehq.org/pipermail/wine-patches/2006-October/031544.html
+> PPS: If included, the .git file should probably be used by git-submodule 
+> to clone submodule repositories into something like 
+> $GIT_DIR/submodules/<name>, as that would make local submodule changes 
+> more resistant to dataloss due to checkout/reset in the containing 
+> repository.
 
->From this mail, we see that there is at least one target where this leads 
-to a crash (remember, git should run on more platforms than Wine).
+I don't buy that argument.  For the moment, the submodules are 
+self-contained repositories.  The superproject does not even have to have 
+a single object contained in a submodule.  I'd try to keep that 
+separation.
 
-However, such a crash is pretty obvious in our test-suite, I guess, and 
-thus we could easily introduce something like this into git-compat-util.h 
-should the need ever arise:
-
-#ifdef FREE_NULL_CRASHES
-inline void gitfree(void *ptr)
-{
-	if (ptr)
-		free(ptr);
-}
-#define free gitfree
-#endif
-
-IOW I like that type of cleanup.
-
-FWIW I tested MinGW (which is the only system I have access to that I 
-suspect of misbehaving), and it groks free(NULL) just fine.
+As for data loss, again, as a submodule is self-contained, the same rules 
+apply to it as for any repository.
 
 Ciao,
 Dscho
