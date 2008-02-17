@@ -1,203 +1,220 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: What's in git.git (stable)
-Date: Sat, 16 Feb 2008 19:56:58 -0800
-Message-ID: <7vir0o44mt.fsf_-_@gitster.siamese.dyndns.org>
-References: <7v8x27iui1.fsf@gitster.siamese.dyndns.org>
- <7vd4r24ox6.fsf@gitster.siamese.dyndns.org>
+Subject: What's cooking in git.git (topics)
+Date: Sat, 16 Feb 2008 19:59:57 -0800
+Message-ID: <7vejbc44hu.fsf@gitster.siamese.dyndns.org>
+References: <7v7ihmuwzi.fsf@gitster.siamese.dyndns.org>
+ <7vodavd9qw.fsf@gitster.siamese.dyndns.org>
+ <7vbq6tset4.fsf@gitster.siamese.dyndns.org>
+ <7vmyq9gk94.fsf@gitster.siamese.dyndns.org>
+ <7vk5la4oxq.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 17 04:58:08 2008
+X-From: git-owner@vger.kernel.org Sun Feb 17 05:00:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JQafG-0006S7-Dt
-	for gcvg-git-2@gmane.org; Sun, 17 Feb 2008 04:58:06 +0100
+	id 1JQahn-0006ph-2U
+	for gcvg-git-2@gmane.org; Sun, 17 Feb 2008 05:00:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755170AbYBQD5b convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 16 Feb 2008 22:57:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754589AbYBQD5a
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Feb 2008 22:57:30 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:44582 "EHLO
+	id S1753013AbYBQEAI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 Feb 2008 23:00:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753091AbYBQEAH
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Feb 2008 23:00:07 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:45394 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752382AbYBQD52 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 16 Feb 2008 22:57:28 -0500
+	with ESMTP id S1753013AbYBQEAF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Feb 2008 23:00:05 -0500
 Received: from a-sasl-quonix.pobox.com (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 573486321;
-	Sat, 16 Feb 2008 22:57:26 -0500 (EST)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 0C1F263E4;
+	Sat, 16 Feb 2008 23:00:03 -0500 (EST)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
  certificate requested) by a-sasl-quonix.pobox.com (Postfix) with ESMTP id
- EA3BA6320; Sat, 16 Feb 2008 22:57:21 -0500 (EST)
-X-maint-at: 965053b09a2de5687b9098cb05edc9bfbf1d26b3
-X-master-at: f8732c5596eb58d0daafdd61355e59831a95ae2e
-In-Reply-To: <7vd4r24ox6.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
- message of "Mon, 11 Feb 2008 23:25:09 -0800")
+ ED9B863E1; Sat, 16 Feb 2008 22:59:59 -0500 (EST)
+In-Reply-To: <7vk5la4oxq.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Mon, 11 Feb 2008 23:24:49 -0800")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74092>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74093>
 
-I'll hopefully soon apply the RPM spec patch from Kristian
-H=C3=B8gsberg to 'maint' and cut 1.5.4.2.  It will have bunch of
-config parser related fixes among others.
+Here are the topics that have been kept out of 'master'.
+Commits prefixed with '-' are only in 'pu' while commits
+prefixed with '+' are in 'next'.
 
-On the 'master' front, a handful topics have graduated:
+The topics list the commits in reverse chronological order.
 
- - Brian Downing's compat/qsort;
- - Crhstian Couder's browser wrapper;
- - Paolo Bonzini's prepare-commit-msg hook;
- - Steffen Prohaska's safe-crlf;
- - "foo/" in .gitignore matches directory "foo".
-
-Also, updated versions of gitk and git-gui are included.
-
-Have fun.
+Many topics graduated to 'master'.  As announced, I'll rewind
+and rebuild "next" with the surviving topics on top of "master",
+sometime tomorrow.
 
 ----------------------------------------------------------------
+[New Topics]
 
-* The 'maint' branch has these fixes since the last announcement.
+* lt/dirstat (Tue Feb 12 17:06:58 2008 -0800) 2 commits
+ - diff: make --dirstat binary-file safe
+ + Add "--dirstat" for some directory statistics
 
-Christian Couder (8):
-  config: add test cases for empty value and no value config variables.
-  diff.c: replace a 'strdup' with 'xstrdup'.
-  diff.c: remove useless check for value !=3D NULL
-  config: add 'git_config_string' to refactor string config variables.
-  Add "const" qualifier to "char *pager_program".
-  Add "const" qualifier to "char *editor_program".
-  Add "const" qualifier to "char *excludes_file".
-  diff.c: add "const" qualifier to "char *cmd" member of "struct
-    ll_diff_driver"
+The first one already in 'next' is the latest toy Linus showed
+off in his 2.6.25-rc2 announcement.  The other one on top is a
+rework to make it work more sensibly with a tree with binary
+contents.
 
-Daniel Barkalow (1):
-  Validate nicknames of remote branches to prohibit confusing ones
+* gp/hash-stdin (Thu Feb 14 20:13:55 2008 +0000) 1 commit
+ - hash-object: cleanup handling of command line options
 
-Gerrit Pape (1):
-  cvsimport: have default merge regex also match beginning of commit
-    message
+I've touched Gerrit's original up somewhat and am waiting for a
+feedback.
 
-Jay Soffian (1):
-  mailinfo: feed only one line to handle_filter() for QP input
+* bc/fopen (Fri Feb 8 20:32:47 2008 -0600) 1 commit
+ + Add compat/fopen.c which returns NULL on attempt to open directory
 
-Jeff King (2):
-  status: suggest "git rm --cached" to unstage for initial commit
-  commit: discard index after setting up partial commit
+We would want fread(3) from fopen(3)'ed directory to fail but
+some systems don't.  This adds a compatibility wrapper for
+fopen(3) that fails on directories.
 
-Johannes Schindelin (1):
-  bisect: use verbatim commit subject in the bisect log
+* js/maint-http-push (Thu Feb 14 23:26:12 2008 +0000) 3 commits
+ + http-push: avoid a needless goto
+ + http-push: do not get confused by submodules
+ + http-push: avoid invalid memory accesses
 
-Johannes Sixt (1):
-  upload-pack: Initialize the exec-path.
+This forks off of 'maint' in the hope of having a fixed
+http-push in future 1.5.4.X.  Will wait for success stories.
 
-Junio C Hamano (6):
-  Revert "pack-objects: only throw away data during memory pressure"
-  Protect get_author_ident_from_commit() from filenames in work tree
-  diff.c: fixup garding of config parser from value=3DNULL
-  diff: Fix miscounting of --check output
-  filter-branch: handle filenames that need quoting
-  Documentation/git-reset:
+* js/run-command (Sat Feb 16 18:36:39 2008 +0100) 2 commits
+ - start_command(), if .in/.out > 0, closes file descriptors, not the
+   callers
+ - start_command(), .in/.out/.err = -1: Callers must close the file
+   descriptor
 
-Miklos Vajna (1):
-  git clone -s documentation: force a new paragraph for the NOTE
+* jc/bulk-allocate (Wed Feb 13 18:37:27 2008 -0800) 2 commits
+ - Bulk allocate diff_filepair
+ - patch freeable-bulk-alloc
 
-Pieter de Bie (2):
-  Documentation/git-reset: don't mention --mixed for selected-paths res=
-et
-  Documentation/git-reset: Add an example of resetting selected paths
+* jk/empty-tree (Wed Feb 13 05:50:51 2008 -0500) 2 commits
+ + add--interactive: handle initial commit better
+ + hard-code the empty tree object
 
-Sergei Organov (1):
-  git-cvsimport.txt: fix '-M' description.
-
-Shawn O. Pearce (1):
-  fast-import: check return value from unpack_entry()
-
-Stelian Pop (1):
-  hg-to-git: fix parent analysis
+Jeff added code to deal with the initial commit case better in
+"git-add -i".  Personally I wonder why we bother (if it is an
+initial commit, the user _knows_ there is nothing to diff in the
+HEAD as there is no HEAD yet, heavens), but the code is already
+there so why not.
 
 ----------------------------------------------------------------
+[Merged to 'master']
 
-* The 'master' branch has these since the last announcement
-  in addition to the above.
+* jc/submittingpatches (Sun Feb 3 17:02:28 2008 -0800)
 
-Brian Downing (1):
-  compat: Add simplified merge sort implementation from glibc
+* jk/noetcconfig (Wed Feb 6 05:11:53 2008 -0500)
 
-Christian Couder (7):
-  help: make 'git-help--browse' usable outside 'git-help'.
-  help--browse: add '--config' option to check a config option for a
-    browser.
-  Rename 'git-help--browse.sh' to 'git-web--browse.sh'.
-  instaweb: use 'git-web--browse' to launch browser.
-  Documentation: instaweb: add 'git-web--browse' information.
-  web--browse: Add a few quotes in 'init_browser_path'.
-  Documentation: add 'git-web--browse.txt' and simplify other docs.
+* pb/prepare-commit-msg (Tue Feb 5 08:04:18 2008 +0100)
 
-Christian Stimming (2):
-  git-gui: (i18n) Fix a bunch of still untranslated strings.
-  git-gui: Update German translation.
+* jc/gitignore-ends-with-slash (Thu Jan 31 20:23:25 2008 -0800)
 
-Dmitry Potapov (1):
-  git-web--browse: do not start the browser with nohup
+* bd/qsort (Tue Feb 5 15:10:44 2008 -0600)
 
-Gerrit Pape (1):
-  gitk: properly deal with tag names containing / (slash)
+* cc/browser (Mon Feb 11 10:57:34 2008 -0500)
 
-Jay Soffian (3):
-  git-gui: support Git Gui.app under OS X 10.5
-  git-help--browse: improve browser support under OS X
-  git-web--browse: fix misplaced quote in init_browser_path()
+* sp/safecrlf (Wed Feb 6 12:25:58 2008 +0100)
 
-Jeff King (2):
-  allow suppressing of global and system config
-  fix config reading in tests
+----------------------------------------------------------------
+[Actively Cooking]
 
-Johan Herland (2):
-  Add testcase for 'git cvsexportcommit -w $cvsdir ...' with relative
-    $GIT_DIR
-  Fix 'git cvsexportcommit -w $cvsdir ...' when used with relative $GIT=
-_DIR
+* jc/setup (Sun Feb 3 23:59:17 2008 -0800) 4 commits
+ + builtin-mv: minimum fix to avoid losing files
+ + git-add: adjust to the get_pathspec() changes.
+ + Make blame accept absolute paths
+ + setup: sanitize absolute and funny paths in get_pathspec()
 
-Johannes Schindelin (1):
-  Adjust .gitignore for 5884f1(Rename 'git-help--browse.sh'...)
+* lt/revision-walker (Sat Feb 9 14:02:07 2008 -0800) 1 commit
+ + Add "--show-all" revision walker flag for debugging
 
-Johannes Sixt (1):
-  gitk: Heed the lines of context in merge commits
+* mc/prefix (Sat Feb 9 15:40:19 2008 +0100) 1 commit
+ + Avoid a useless prefix lookup in strbuf_expand()
 
-Junio C Hamano (7):
-  Documentation/SubmittingPatches: Instruct how to use [PATCH] Subject
-    header
-  Documentation/SubmittingPatches: discuss first then submit
-  Documentation/SubmittingPatches: What's Acked-by and Tested-by?
-  gitignore(5): Allow "foo/" in ignore list to match directory "foo"
-  gitignore: lazily find dtype
-  .mailmap: adjust to a recent patch application glitch.
-  Documentation/SubmittingPatches - a suggested patch flow
+* db/checkout (Sat Feb 16 17:17:09 2008 -0800) 12 commits
+ + checkout: notice when the switched branch is behind or forked
+ + Build in checkout
+ + Move code to clean up after a branch change to branch.c
+ + Library function to check for unmerged index entries
+ + Use diff -u instead of diff in t7201
+ + Move create_branch into a library file
+ + Build-in merge-recursive
+ + Add "skip_unmerged" option to unpack_trees.
+ + Discard "deleted" cache entries after using them to update the
+   working tree
+ + Send unpack-trees debugging output to stderr
+ + Add flag to make unpack_trees() not print errors.
+ + Allow callers of unpack_trees() to handle failure
 
-Linus Torvalds (1):
-  gitk: learn --show-all output
+Checkout rewritten in C.
 
-Michele Ballabio (1):
-  gitk: Fix "Key bindings" message
+* jc/apply-whitespace (Mon Feb 11 15:32:29 2008 -0800) 14 commits
+ + apply: do not barf on patch with too large an offset
+ + core.whitespace: cr-at-eol
+ + git-apply --whitespace=fix: fix whitespace fuzz introduced by
+   previous run
+ + builtin-apply.c: pass ws_rule down to match_fragment()
+ + builtin-apply.c: move copy_wsfix() function a bit higher.
+ + builtin-apply.c: do not feed copy_wsfix() leading '+'
+ + builtin-apply.c: simplify calling site to apply_line()
+ + builtin-apply.c: clean-up apply_one_fragment()
+ + builtin-apply.c: mark common context lines in lineinfo structure.
+ + builtin-apply.c: optimize match_beginning/end processing a bit.
+ + builtin-apply.c: make it more line oriented
+ + builtin-apply.c: push match-beginning/end logic down
+ + builtin-apply.c: restructure "offset" matching
+ + builtin-apply.c: refactor small part that matches context
 
-Paolo Bonzini (4):
-  git-commit: support variable number of hook arguments
-  git-commit: set GIT_EDITOR=3D: if editor will not be launched
-  git-commit: Refactor creation of log message.
-  git-commit: add a prepare-commit-msg hook
+Further work on "apply --whitespace=fix".
 
-Shawn O. Pearce (7):
-  git-gui: Automatically spell check commit messages as the user types
-  git-gui: Paper bag fix bad string length call in spellchecker
-  git-gui: Correct size of dictionary name widget in options dialog
-  Include annotated tags in fast-import crash reports
-  Include the fast-import marks table in crash reports
-  Finish current packfile during fast-import crash handler
-  Update fast-import documentation to discuss crash reports
+* jc/diff-relative (Wed Feb 13 00:34:39 2008 -0800) 2 commits
+ + diff --relative: help working in a bare repository
+ + diff --relative: output paths as relative to the current
+   subdirectory
 
-Steffen Prohaska (2):
-  safecrlf: Add mechanism to warn about irreversible crlf conversions
-  gitk: Add checkbutton to ignore space changes
+* jc/rename (Tue Jan 29 20:54:56 2008 -0800) 1 commit
+ + Optimize rename detection for a huge diff
+
+----------------------------------------------------------------
+[On Hold]
+
+* br/gitweb (Fri Feb 8 14:38:04 2008 -0200) 1 commit
+ + gitweb: Use the config file to set repository owner's name.
+
+On hold per Jakub's reluctance.
+
+* js/reflog-delete (Fri Jan 4 19:11:37 2008 -0600) 2 commits
+ + builtin-reflog.c: fix typo that accesses an unset variable
+ + Teach "git reflog" a subcommand to delete single entries
+
+There was a patch that uses this to implement "git-stash drop",
+which I didn't queue, as the command name and the UI was
+undecided yet.  Dscho was in favor of "pop" without "drop".
+
+* nd/dashless (Wed Nov 28 23:21:57 2007 +0700) 1 commit
+ - Move all dashed-form commands to libexecdir
+
+Scheduled for 1.6.0.  I am not sure if we should merge this to
+'next' before 1.5.5.  Most active people will be on 'next' and
+if we have this there, the resulting 1.5.5 release might end up
+having issues that come from differences this one introduces.
+
+* jc/dashless (Sat Dec 1 22:09:22 2007 -0800) 2 commits
+ - Prepare execv_git_cmd() for removal of builtins from the
+   filesystem
+ - git-shell: accept "git foo" form
+
+We do not plan to remove git-foo form completely from the filesystem at
+this point, but git-shell may need to be updated.
+
+* jc/sha1-lookup (Sun Dec 30 03:13:27 2007 -0800) 2 commits
+ - sha1-lookup: make selection of 'middle' less aggressive
+ - sha1-lookup: more memory efficient search in sorted list of SHA-1
+
+Micro-optimization whose real world benefit is not proven.
