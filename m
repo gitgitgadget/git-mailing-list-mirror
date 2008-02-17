@@ -1,116 +1,71 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [RFC] checkout to notice forks (Re: Minor annoyance with git
- push)
-Date: Sun, 17 Feb 2008 01:39:27 -0500 (EST)
-Message-ID: <alpine.LNX.1.00.0802170114440.5496@iabervon.org>
-References: <46a038f90802072044u3329fd33w575c689cba2917ee@mail.gmail.com> <20080209030046.GA10470@coredump.intra.peff.net> <7vtzkihkx5.fsf@gitster.siamese.dyndns.org> <46a038f90802090350rc4780d1ted60c03b9abf1fc0@mail.gmail.com> <7vwspd5z1d.fsf@gitster.siamese.dyndns.org>
- <7vfxvs75kp.fsf_-_@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0802162202310.5496@iabervon.org> <7v4pc843yg.fsf@gitster.siamese.dyndns.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] git-gui: Update German translation.
+Date: Sun, 17 Feb 2008 02:27:26 -0500
+Message-ID: <20080217072726.GN24004@spearce.org>
+References: <200802162156.23436.stimming@tuhh.de> <200802162158.22924.stimming@tuhh.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Martin Langhoff <martin.langhoff@gmail.com>,
-	Jeff King <peff@peff.net>, Steffen Prohaska <prohaska@zib.de>,
-	Git Mailing List <git@vger.kernel.org>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Feb 17 07:40:21 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Christian Stimming <stimming@tuhh.de>
+X-From: git-owner@vger.kernel.org Sun Feb 17 08:28:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JQdCF-0004iX-Er
-	for gcvg-git-2@gmane.org; Sun, 17 Feb 2008 07:40:19 +0100
+	id 1JQdwh-0002sS-I3
+	for gcvg-git-2@gmane.org; Sun, 17 Feb 2008 08:28:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752956AbYBQGja (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Feb 2008 01:39:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752897AbYBQGja
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Feb 2008 01:39:30 -0500
-Received: from iabervon.org ([66.92.72.58]:32872 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752828AbYBQGj3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Feb 2008 01:39:29 -0500
-Received: (qmail 4734 invoked by uid 1000); 17 Feb 2008 06:39:27 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 17 Feb 2008 06:39:27 -0000
-In-Reply-To: <7v4pc843yg.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1750987AbYBQH1e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Feb 2008 02:27:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751001AbYBQH1d
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Feb 2008 02:27:33 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:46407 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750969AbYBQH1c (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Feb 2008 02:27:32 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1JQdvr-00068w-CR; Sun, 17 Feb 2008 02:27:27 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id EF26D20FBAE; Sun, 17 Feb 2008 02:27:26 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <200802162158.22924.stimming@tuhh.de>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74095>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74096>
 
-On Sat, 16 Feb 2008, Junio C Hamano wrote:
+Christian Stimming <stimming@tuhh.de> wrote:
+> Signed-off-by: Christian Stimming <stimming@tuhh.de>
+> ---
+> Attached this and previous patch as tarball because of 
+> whitespace yadda yadda :-)
 
-> Daniel Barkalow <barkalow@iabervon.org> writes:
-> 
-> > I like this idea a lot. I'd actually also like it for commit, although (1) 
-> > and (3a) obviously don't happen there. It would help to combat my tendency 
-> > to forget to push when I mean to.
-> 
-> Thanks.
-> 
-> >> +/*
-> >> + * We really should allow cb_data... Yuck
-> >> + */
-> >> +static const char *branch_name;
-> >> +static int branch_name_len;
-> >> +static char *found_remote;
-> >> +static char *found_merge;
-> >> +static int read_branch_config(const char *var, const char *value)
-> >> +{
-> >
-> > ...
-> >
-> > I think you want branch_get(), which handles all the config file stuff up 
-> > to approximately here:
-> 
-> Fixups are very much welcomed.  This was more or less a proof of
-> concept.
+I really don't mind getting i18n patches to the po/*.po files as
+compressed attachments, because the whitespace and or character
+encodings often do get messed up and the patch doesn't apply.
+Better to just work with the attachment that I know is good.
 
-I'm also in part worried about the lack of publicity "struct branch" has 
-gotten; it would have saved you having to write 64 of 136 lines, so it's 
-worth you knowing about.
+But please don't tar it.  I spent waaaay too much time tonight
+because I kept missing the fact that git-am won't accept a .tgz.
+Maybe I'm just really tired.  :)
 
-> >> +	if (show_log) {
-> >> +		const char *args[32];
-> >> +		int ac;
-> >> +
-> >> +		ac = 0;
-> >> +		args[ac++] = "log";
-> >> +		args[ac++] = "--pretty=oneline";
-> >> +		args[ac++] = "--abbrev-commit";
-> >> +		args[ac++] = "--left-right";
-> >> +		args[ac++] = "--boundary";
-> >> +		args[ac++] = symmetric;
-> >> +		args[ac++] = "--";
-> >> +		args[ac] = NULL;
-> >> +
-> >> +		run_command_v_opt(args, RUN_GIT_CMD);
-> >
-> > We really should be able to do this in-process, although I'm not sure if 
-> > we really can.
-> 
-> The code runs in_merge_bases() twice, between our branch head
-> and the base, but if we really care about the performance, we
-> can have a single merge-base traversal and the resulting object
-> pool will have everything necessary to emit the log output
-> without a separate traversal.
-> 
-> Because I think that is reasonably easy, I just did not bother
-> to.  This is not a performance critical piece of code anyway.
-> 
-> One thing I thought about was to limit the output to latest N
-> entries from both sides.  That would also be easier to implement
-> if we do a single merge-base traversal and reuse the result.
+Usually just attached .patch works, or gzip the .patch.  But please
+don't tar it if you are going to the trouble of sending one patch
+per email anyway.  Thanks.
+ 
+>  po/de.po          |   70 +++++++++++++++++++++++++++++++++++-----------------
+>  po/glossary/de.po |    4 +-
+>  2 files changed, 49 insertions(+), 25 deletions(-)
 
-Yeah, the real advantage to doing it in-process is being able to give a 
-particularly useful overview. Also, I think spawning a pager for it is 
-distracting.
-
-I've also got a change to make it do this report for "git checkout" and 
-"git checkout HEAD" so you can find out if the current branch needs 
-anything, but I want to look at it again while not so sleepy before 
-sending it, and also write some tests.
-
-	-Daniel
-*This .sig left intentionally blank*
+-- 
+Shawn.
