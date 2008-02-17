@@ -1,78 +1,56 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: warning: no common commits - slow pull
-Date: Sun, 17 Feb 2008 15:41:49 -0500 (EST)
-Message-ID: <alpine.LNX.1.00.0802171437460.5816@iabervon.org>
-References: <200802102007.38838.lenb@kernel.org> <7vd4r4clnb.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0802162239090.5496@iabervon.org> <alpine.LSU.1.00.0802171449230.30505@racer.site> <7vhcg71n9u.fsf@gitster.siamese.dyndns.org>
- <alpine.LSU.1.00.0802171925330.30505@racer.site>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's in git.git (stable)
+Date: Sun, 17 Feb 2008 12:45:16 -0800
+Message-ID: <7vtzk7xqg3.fsf@gitster.siamese.dyndns.org>
+References: <7v8x27iui1.fsf@gitster.siamese.dyndns.org>
+ <7vd4r24ox6.fsf@gitster.siamese.dyndns.org>
+ <7vir0o44mt.fsf_-_@gitster.siamese.dyndns.org>
+ <m3d4qvbt40.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, Len Brown <lenb@kernel.org>,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Feb 17 21:42:36 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 17 21:46:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JQqLC-0000gh-Ct
-	for gcvg-git-2@gmane.org; Sun, 17 Feb 2008 21:42:26 +0100
+	id 1JQqOm-0001nY-OK
+	for gcvg-git-2@gmane.org; Sun, 17 Feb 2008 21:46:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754690AbYBQUlv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Feb 2008 15:41:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754381AbYBQUlv
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Feb 2008 15:41:51 -0500
-Received: from iabervon.org ([66.92.72.58]:53741 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753039AbYBQUlu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Feb 2008 15:41:50 -0500
-Received: (qmail 11438 invoked by uid 1000); 17 Feb 2008 20:41:49 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 17 Feb 2008 20:41:49 -0000
-In-Reply-To: <alpine.LSU.1.00.0802171925330.30505@racer.site>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1752297AbYBQUpe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Feb 2008 15:45:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752401AbYBQUpe
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Feb 2008 15:45:34 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:39377 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752297AbYBQUpd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Feb 2008 15:45:33 -0500
+Received: from a-sasl-quonix.pobox.com (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 88BC16BA6;
+	Sun, 17 Feb 2008 15:45:32 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.pobox.com (Postfix) with ESMTP id
+ A39A46BA5; Sun, 17 Feb 2008 15:45:25 -0500 (EST)
+In-Reply-To: <m3d4qvbt40.fsf@localhost.localdomain> (Jakub Narebski's message
+ of "Sun, 17 Feb 2008 05:39:26 -0800 (PST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74180>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74181>
 
-On Sun, 17 Feb 2008, Johannes Schindelin wrote:
+Jakub Narebski <jnareb@gmail.com> writes:
 
-> Hi,
-> 
-> On Sun, 17 Feb 2008, Junio C Hamano wrote:
-> 
-> > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> > 
-> > > On Sat, 16 Feb 2008, Daniel Barkalow wrote:
-> > >
-> > >> I wonder if the problem is that something isn't getting reinitialized 
-> > >> for the second connection. It's not a separate invocation of 
-> > >> fetch-pack, and I can't say for sure that it's sending the right info 
-> > >> to the server when the statics in builtin-fetch-pack.c are left over 
-> > >> from the earlier call. This would particularly explain the 
-> > >> information that hitting ctrl-c and trying again fixes it.
-> > >
-> > > Oh, that should be it!  After all, the code in get_rev() in 
-> > > builtin-fetch-pack.c marks commits as SEEN and COMMON and POPPED.
-> > 
-> > I seem to be slow today, but how does that explain that the problem is 
-> > reported only by Len so far?
-> 
-> Hmm.  The code I was referencing is only in "next" so far, right?  And 
-> AFAICT it only occurs when you are fetching something which autofetches 
-> tags, right?
+>>   commit: discard index after setting up partial commit
+>
+> IIRC there was also request for proper solution; this was more a hack.
 
-I think the code you referenced is quite old; the new thing is having it 
-called twice in the same process, and that's also in "master" along with 
-builtin-fetch, I think.
+It is not a hack at all.
 
-> But thinking about this again: do we reuse the connection also for 
-> automatic tag fetching?  If not, my whole reasoning is wrong.
-
-No, the way the protocol works, you can't request more stuff after you've 
-received stuff on a connection, so we have to start a second one for that 
-case.
-
-	-Daniel
-*This .sig left intentionally blank*
+The more fundamental improvement was along the lines of what I
+suggested soon after Kristian's initial round was posted, but
+what the current code does is not wrong nor hack.  It is about a
+partial commit after all and is not performance critical either.
