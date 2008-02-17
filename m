@@ -1,75 +1,51 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC] sending errors to stdout under $PAGER
-Date: Sun, 17 Feb 2008 19:38:23 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802171937070.30505@racer.site>
-References: <7vbq6g90gy.fsf@gitster.siamese.dyndns.org> <20080217144854.56fcb98d.froese@gmx.de> <7vd4qv1n78.fsf@gitster.siamese.dyndns.org> <20080217181523.GA4818@coredump.intra.peff.net> <7vr6fbzbky.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC] Issues around C rebase--interactive
+Date: Sun, 17 Feb 2008 11:42:00 -0800
+Message-ID: <7vablzz7xz.fsf@gitster.siamese.dyndns.org>
+References: <alpine.LNX.1.00.0802171347060.5816@iabervon.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jeff King <peff@peff.net>, Edgar Toernig <froese@gmx.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Feb 17 20:39:30 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Sun Feb 17 20:43:18 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JQpMH-0007Ht-E3
-	for gcvg-git-2@gmane.org; Sun, 17 Feb 2008 20:39:29 +0100
+	id 1JQpPs-0008Sp-PQ
+	for gcvg-git-2@gmane.org; Sun, 17 Feb 2008 20:43:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752924AbYBQTif (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Feb 2008 14:38:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751712AbYBQTif
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Feb 2008 14:38:35 -0500
-Received: from mail.gmx.net ([213.165.64.20]:40193 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753133AbYBQTie (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Feb 2008 14:38:34 -0500
-Received: (qmail invoked by alias); 17 Feb 2008 19:38:32 -0000
-Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
-  by mail.gmx.net (mp051) with SMTP; 17 Feb 2008 20:38:32 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+NxLNedyCN2CczKOWoueiXt4n+hniXPwclVhajsd
-	h4D4V1UiAVW1lN
-X-X-Sender: gene099@racer.site
-In-Reply-To: <7vr6fbzbky.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1755327AbYBQTmL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Feb 2008 14:42:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753007AbYBQTmK
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Feb 2008 14:42:10 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:52935 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752606AbYBQTmI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Feb 2008 14:42:08 -0500
+Received: from a-sasl-quonix.pobox.com (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id D1B8F495B;
+	Sun, 17 Feb 2008 14:42:05 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.pobox.com (Postfix) with ESMTP id
+ 5586A495A; Sun, 17 Feb 2008 14:42:03 -0500 (EST)
+In-Reply-To: <alpine.LNX.1.00.0802171347060.5816@iabervon.org> (Daniel
+ Barkalow's message of "Sun, 17 Feb 2008 14:15:48 -0500 (EST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74173>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74174>
 
-Hi,
+Daniel Barkalow <barkalow@iabervon.org> writes:
 
-On Sun, 17 Feb 2008, Junio C Hamano wrote:
+> ... I think it would be good 
+> to have a "git abort" that would reset a conflicted merge, abort a rebase, 
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > On Sun, Feb 17, 2008 at 09:56:27AM -0800, Junio C Hamano wrote:
-> >
-> >> > Wouldn't it be better/safer to redirect stderr to the pager in the 
-> >> > first place?
-> >> >
-> >> > So, instead of the current
-> >> >
-> >> > 	foo | less
-> >> > use
-> >> > 	foo 2>&1 | less
-> >> 
-> >> I like it.  Much nicer.  Thanks.
-> >
-> > This will also put the stderr of any sub-programs into the pager, 
-> > which is probably worse if you have, e.g., a chatty external diff 
-> > program. I don't know if we care enough about that.
-> 
-> We'll soon find out and the change would be a single liner that is very 
-> easy to back out, so let's put it in and see what happens ;-).
-
-I think this is a non-problem.  External diff programs are virtually all 
-scripts written for git, because of the calling convention.  So all this 
-does is tell the people who use external diff wrappers (and let them be 
-chatty) to fix their scripts.
-
-Ciao,
-Dscho
+Yes, we would want a consolidated "git sequencer" that can be
+reused by "am" and "rebase".  The command set to the sequencer
+would be a slight superset to what rebase--interactive uses in
+its todo file, I would imagine.  To support "am" (and non-merge
+version of "rebase") it would add "apply <filename>" command.
