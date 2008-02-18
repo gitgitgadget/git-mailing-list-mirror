@@ -1,75 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/4] Add a --cover-letter option to format-patch
-Date: Sun, 17 Feb 2008 19:45:26 -0800
-Message-ID: <7v4pc7udux.fsf@gitster.siamese.dyndns.org>
-References: <alpine.LNX.1.00.0802171335520.5816@iabervon.org>
+From: Bruno Cesar Ribas <ribas@c3sl.ufpr.br>
+Subject: Re: [PATCH] contrib/hooks/post-receive-email:  checks for
+	gitweb.description
+Date: Mon, 18 Feb 2008 00:46:59 -0300
+Message-ID: <20080218034659.GA21776@c3sl.ufpr.br>
+References: <1202786746-12890-1-git-send-email-ribas@c3sl.ufpr.br> <m3wspad1xd.fsf@localhost.localdomain> <20080213002439.GA31455@c3sl.ufpr.br>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Mon Feb 18 04:46:22 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 18 04:47:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JQwxR-00014w-C6
-	for gcvg-git-2@gmane.org; Mon, 18 Feb 2008 04:46:21 +0100
+	id 1JQwyj-0001KL-RB
+	for gcvg-git-2@gmane.org; Mon, 18 Feb 2008 04:47:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752389AbYBRDpo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Feb 2008 22:45:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753214AbYBRDpo
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Feb 2008 22:45:44 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:34711 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750899AbYBRDpn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Feb 2008 22:45:43 -0500
-Received: from a-sasl-quonix.pobox.com (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 74AE455FF;
-	Sun, 17 Feb 2008 22:45:42 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.pobox.com (Postfix) with ESMTP id
- D62EB55FE; Sun, 17 Feb 2008 22:45:39 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1757425AbYBRDrG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Feb 2008 22:47:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757126AbYBRDrF
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Feb 2008 22:47:05 -0500
+Received: from mx.c3sl.ufpr.br ([200.17.202.3]:33915 "EHLO
+	urquell.c3sl.ufpr.br" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756818AbYBRDrE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Feb 2008 22:47:04 -0500
+Received: from localhost (unknown [201.21.136.136])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	(Authenticated sender: ribas)
+	by urquell.c3sl.ufpr.br (Postfix) with ESMTP id 49852700003C3;
+	Mon, 18 Feb 2008 00:47:00 -0300 (BRT)
+Content-Disposition: inline
+In-Reply-To: <20080213002439.GA31455@c3sl.ufpr.br>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74225>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74226>
 
-Daniel Barkalow <barkalow@iabervon.org> writes:
+Forgoten?! 8^)
+On Tue, Feb 12, 2008 at 10:24:40PM -0200, Bruno Cesar Ribas wrote:
+> I can resend with no problem =)
+> 
+> On Tue, Feb 12, 2008 at 12:17:57AM -0800, Jakub Narebski wrote:
+> > Bruno Ribas <ribas@c3sl.ufpr.br> writes:
+> > 
+> > > -projectdesc=$(sed -ne '1p' "$GIT_DIR/description")
+> > > +if [ -f "$GIT_DIR/description" ]; then
+> > > +	projectdesc=$(sed -ne '1p' "$GIT_DIR/description")
+> > > +else
+> > > +	projectdesc=$(git-config gitweb.description)
+> > 
+> >   +	projectdesc=$(git config gitweb.description)
+> > 
+> > > +fi
+> > >  # Check if the description is unchanged from it's default, and shorten it to
+> > >  # a more manageable length if it is
+> > >  if expr "$projectdesc" : "Unnamed repository.*$" >/dev/null
+> > > -- 
+> > > 1.5.4.24.gce08d
+> > 
+> > (but this can be fixed when applying).
+> > 
+> > -- 
+> > Jakub Narebski
+> > Poland
+> > ShadeHawk on #git
+> > -
+> > To unsubscribe from this list: send the line "unsubscribe git" in
+> > the body of a message to majordomo@vger.kernel.org
+> > More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
+> -- 
+> Bruno Ribas - ribas@c3sl.ufpr.br
+> http://web.inf.ufpr.br/ribas
+> C3SL: http://www.c3sl.ufpr.br 
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
 
-> +	argv[0] = "shortlog";
-> +	argv[1] = head_sha1;
-> +	argv[2] = "--not";
-> +	argv[3] = origin_sha1;
-> +	argv[4] = NULL;
-> +	fflush(stdout);
-> +	run_command_v_opt(argv, RUN_GIT_CMD);
-
-Please make it a habit to always append "--" disambiguator for
-such command lines generated internally.  In this case you are
-not usinging short and common name like "master" or "HEAD" but
-40-letter-long hex string, so it is much less likely to get hit
-by the "ambiguous rev vs file" rule, but even then it is still
-possible that a work tree happens to have a file with the same
-name.
-
-> @@ -0,0 +1,101 @@
-> +$ git format-patch --stdout --cover-letter -n initial..master^
-> +From 9a6d4949b6b76956d9d5e26f2791ec2ceff5fdc0 Mon Sep 17 00:00:00 2001
-> +From: C O Mitter <committer@example.com>
-> +Date: Mon, 26 Jun 2006 00:05:00 +0000
-> +Subject: [DIFFERENT_PREFIX 0/2] *** SUBJECT HERE ***
-> +
-> +
-> +*** BLURB HERE ***
-> +
-> +A U Thor (2):
-> +      Second
-> +      Third
-> +
-
-This probably falls within the "personal taste" category, but
-I'd rather not to see two extra blank lines between Subject: and
-BLURB HERE.
+-- 
+Bruno Ribas - ribas@c3sl.ufpr.br
+http://web.inf.ufpr.br/ribas
+C3SL: http://www.c3sl.ufpr.br 
