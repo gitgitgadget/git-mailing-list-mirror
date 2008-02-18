@@ -1,84 +1,93 @@
-From: Charles Bailey <charles@hashpling.org>
-Subject: Re: [RFC/PATCH] Teach git mergetool to use custom commands defined at config time
-Date: Mon, 18 Feb 2008 08:14:46 +0000
-Message-ID: <20080218081446.GB12008@hashpling.org>
-References: <20080216185349.GA29177@hashpling.org> <CD749541-1B3B-4EA7-82A5-0DFC67B953BE@zib.de> <20080217002029.GA504@hashpling.org> <alpine.LSU.1.00.0802170045210.30505@racer.site> <20080217005620.GB504@hashpling.org> <7vbq6g758h.fsf@gitster.siamese.dyndns.org> <FBA2E61E-5CAF-49E3-A917-ACDD10586928@zib.de> <20080217214942.GJ8905@mit.edu> <7vir0nxg0c.fsf@gitster.siamese.dyndns.org>
+From: "Lars Hjemli" <hjemli@gmail.com>
+Subject: Re: [PATCH 1/5] Add platform-independent .git "symlink"
+Date: Mon, 18 Feb 2008 09:35:27 +0100
+Message-ID: <8c5c35580802180035q3d914720x54aa7e32d6e82108@mail.gmail.com>
+References: <1203286456-26033-1-git-send-email-hjemli@gmail.com>
+	 <1203286456-26033-2-git-send-email-hjemli@gmail.com>
+	 <7v7ih2u8e1.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Theodore Tso <tytso@MIT.EDU>, Steffen Prohaska <prohaska@zib.de>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 18 09:16:11 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 18 09:36:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JR1AW-0000dE-Lo
-	for gcvg-git-2@gmane.org; Mon, 18 Feb 2008 09:16:09 +0100
+	id 1JR1Tt-0005pe-Di
+	for gcvg-git-2@gmane.org; Mon, 18 Feb 2008 09:36:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753368AbYBRIPd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Feb 2008 03:15:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753574AbYBRIPd
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Feb 2008 03:15:33 -0500
-Received: from ptb-relay01.plus.net ([212.159.14.212]:58429 "EHLO
-	ptb-relay01.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753081AbYBRIPc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Feb 2008 03:15:32 -0500
-Received: from [212.159.69.125] (helo=hashpling.plus.com)
-	 by ptb-relay01.plus.net with esmtp (Exim) id 1JR19V-0003i7-1D; Mon, 18 Feb 2008 08:15:05 +0000
-Received: from fermat.hashpling.org (fermat.hashpling.org [127.0.0.1])
-	by hashpling.plus.com (8.13.8/8.13.6) with ESMTP id m1I8EkJf012422;
-	Mon, 18 Feb 2008 08:14:46 GMT
-Received: (from charles@localhost)
-	by fermat.hashpling.org (8.13.8/8.13.6/Submit) id m1I8Ek1B012421;
-	Mon, 18 Feb 2008 08:14:46 GMT
+	id S1754751AbYBRIf2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Feb 2008 03:35:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754430AbYBRIf2
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Feb 2008 03:35:28 -0500
+Received: from wa-out-1112.google.com ([209.85.146.177]:63405 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754250AbYBRIf1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Feb 2008 03:35:27 -0500
+Received: by wa-out-1112.google.com with SMTP id v27so2681143wah.23
+        for <git@vger.kernel.org>; Mon, 18 Feb 2008 00:35:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=Iw86ILcU93BSPm0y9WsnIEKJ9J8Bfqb18XfzGfTm74U=;
+        b=cXipit1/vTVeS7LkiQCzEqVYklZIEvr+kLlZ6uYQTB8UDgKGOQatRjO328QzoL2rsRGroh/HRsTfF2Alz4hJAecukkfbVR+vZ/HIkId24gVu99El15TppMM/g/iF5ZGpb7WZ+ysKzh0HzqmeT38ezHJroC98eH5Lc+RM4vXGWBo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=ZYitg/LiohxCyPXXJMPNPFt/QBGPmvAPJZpybUJnThF1ZoN9TethvASD6+DmZiYojEYxK4wta5g2OY9fQYFgZYlmEpb/B+h8jYrxiuZpfywl4+fsBnxQ2Iy6c5FhoZ5Db9tbVKp290/QnhYxDmmGWp8qSDvRoQjgXG9ZZyGiuKg=
+Received: by 10.114.120.1 with SMTP id s1mr1548343wac.125.1203323727369;
+        Mon, 18 Feb 2008 00:35:27 -0800 (PST)
+Received: by 10.115.92.8 with HTTP; Mon, 18 Feb 2008 00:35:27 -0800 (PST)
+In-Reply-To: <7v7ih2u8e1.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
-In-Reply-To: <7vir0nxg0c.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.4.2.1i
-X-Plusnet-Relay: b50a172760be2a39ef757964f9c860b8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74241>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74242>
 
-On Sun, Feb 17, 2008 at 04:30:43PM -0800, Junio C Hamano wrote:
-> Theodore Tso <tytso@MIT.EDU> writes:
-> 
-> > I have no objection to a generic mechanism, but I don't see the value
-> > of Charles suggestion to rip out support for the existing tools
-> > supported by git-mergetool.
-> 
-> I missed that suggestion but I agree removing existing support
-> would not make much sense.
+On Feb 18, 2008 6:43 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Lars Hjemli <hjemli@gmail.com> writes:
+>
+> > This patch allows .git to be a regular textfile containing the path of
+> > the real git directory (formatted like "gitdir: <path>\n"), which is
+> > useful on platforms lacking support for real symlinks.
+>
+> I think a sane simplification is to allow the file to have
+> any number of optional \r or \n at the end.
 
-As I said in an earlier reply this was really more of a thought
-exercise about my patch than a serious suggestion for integration.
+Agreed.
 
-> > I think it *would* be better to use %(foo) extrapolation that
-> > environment variables, so that it's not required for users to write
-> > shell scripts unless absolutely necessary.
-> 
-> Hmm, although I do not have strong opinions either way, I think
-> the necessary interface is narrow enough that we could use
-> environment variables here.  Charles's implementation does
-> "eval" but it is easy to replace it to run the custom command
-> after exporting the necessary variables, isn't it?
+> > +     len = read_in_full(fd, buf, sizeof(buf));
+> > +     close(fd);
+> > +     if (len != st.st_size)
+> > +             return NULL;
+> > +     if (!len || buf[len - 1] != '\n')
+> > +             return NULL;
+> > +     buf[len - 1] = '\0';
+> > +     if (prefixcmp(buf, "gitdir: "))
+> > +             return NULL;
+>
+> But I am not sure about this part.  We found what claims to be
+> the ".git" fake symlink but it is ill-formed.  Don't we want to
+> diagnose the possible breakage for the user?
 
-Do you mean instead of:
+Yes, I think I got to eager in my 'gentleness'. It's probably better
+to die() with an appropriate errormessage.
 
-( eval $tool )
+>
+> > +/*
+> > +     if (!is_git_directory(buf + 8))
+> > +             return NULL;
+> > +*/
+>
+> Likewise.
 
-something like:
-BASE="$BASE" LOCAL="$LOCAL" REMOTE="$REMOTE" MERGED="$MERGED" $tool
+True, I'll uncomment and die().
 
-In this case we can skip the whole s/path/MERGED/ patch as it is
-unnecessary, and should we now GIT_ prefix the variables as they will
-intrude on the environment of the spawned command (not just a specific
-sub-shell)? 
+Thanks for the review.
 
-Let me know what you think and I can integrate it into my next patch
-version.
-
-Charles.
+--
+larsh
