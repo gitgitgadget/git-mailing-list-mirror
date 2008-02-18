@@ -1,71 +1,54 @@
-From: Lars Hjemli <hjemli@gmail.com>
-Subject: [PATCH 1/5] Simplify setup of $GIT_DIR in git-sh-setup.sh
-Date: Mon, 18 Feb 2008 11:44:19 +0100
-Message-ID: <1203331463-13857-2-git-send-email-hjemli@gmail.com>
-References: <1203331463-13857-1-git-send-email-hjemli@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 18 11:48:18 2008
+From: Jeff King <peff@peff.net>
+Subject: Re: What's in git.git (stable)
+Date: Mon, 18 Feb 2008 06:15:04 -0500
+Message-ID: <20080218111504.GA7672@sigill.intra.peff.net>
+References: <7v8x27iui1.fsf@gitster.siamese.dyndns.org> <7vd4r24ox6.fsf@gitster.siamese.dyndns.org> <7vir0o44mt.fsf_-_@gitster.siamese.dyndns.org> <m3d4qvbt40.fsf@localhost.localdomain> <7vtzk7xqg3.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0802172050090.30505@racer.site> <7v3arrxd7q.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0802180133150.30505@racer.site> <20080218014301.GA6642@sigill.intra.peff.net> <7v3arrvtxm.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 18 12:15:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JR3XT-0004QX-1X
-	for gcvg-git-2@gmane.org; Mon, 18 Feb 2008 11:47:59 +0100
+	id 1JR3yL-0004SL-Bw
+	for gcvg-git-2@gmane.org; Mon, 18 Feb 2008 12:15:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759136AbYBRKqt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Feb 2008 05:46:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759137AbYBRKqt
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Feb 2008 05:46:49 -0500
-Received: from mail45.e.nsc.no ([193.213.115.45]:52828 "EHLO mail45.e.nsc.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759126AbYBRKqs (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Feb 2008 05:46:48 -0500
-Received: from localhost.localdomain (ti231210a341-0179.bb.online.no [88.88.168.179])
-	by mail45.nsc.no (8.13.8/8.13.5) with ESMTP id m1IAjYWJ026988;
-	Mon, 18 Feb 2008 11:45:37 +0100 (MET)
-X-Mailer: git-send-email 1.5.4.1.188.g3ea1f5
-In-Reply-To: <1203331463-13857-1-git-send-email-hjemli@gmail.com>
+	id S1756918AbYBRLPJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Feb 2008 06:15:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756151AbYBRLPJ
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Feb 2008 06:15:09 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1311 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756040AbYBRLPH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Feb 2008 06:15:07 -0500
+Received: (qmail 12070 invoked by uid 111); 18 Feb 2008 11:15:05 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Mon, 18 Feb 2008 06:15:05 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 18 Feb 2008 06:15:04 -0500
+Content-Disposition: inline
+In-Reply-To: <7v3arrvtxm.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74262>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74263>
 
-Using 'git rev-parse --git-dir' makes the code shorter and more future-
-proof.
+On Sun, Feb 17, 2008 at 07:12:53PM -0800, Junio C Hamano wrote:
 
-Signed-off-by: Lars Hjemli <hjemli@gmail.com>
----
- git-sh-setup.sh |    8 +-------
- 1 files changed, 1 insertions(+), 7 deletions(-)
+> Jeff King <peff@peff.net> writes:
+> 
+> > .... This is in contrast to the
+> > current 'master' and v1.5.4, which discard the cache _three_ times
+> > during the status process.
+> 
+> The current 'master' meaning before 959ba67 (commit: discard
+> index after setting up partial commit), right?
 
-diff --git a/git-sh-setup.sh b/git-sh-setup.sh
-index f388275..a44b1c7 100755
---- a/git-sh-setup.sh
-+++ b/git-sh-setup.sh
-@@ -127,20 +127,14 @@ get_author_ident_from_commit () {
- # if we require to be in a git repository.
- if test -z "$NONGIT_OK"
- then
-+	GIT_DIR=$(git rev-parse --git-dir) || exit
- 	if [ -z "$SUBDIRECTORY_OK" ]
- 	then
--		: ${GIT_DIR=.git}
- 		test -z "$(git rev-parse --show-cdup)" || {
- 			exit=$?
- 			echo >&2 "You need to run this command from the toplevel of the working tree."
- 			exit $exit
- 		}
--	else
--		GIT_DIR=$(git rev-parse --git-dir) || {
--		    exit=$?
--		    echo >&2 "Failed to find a valid git directory."
--		    exit $exit
--		}
- 	fi
- 	test -n "$GIT_DIR" && GIT_DIR=$(cd "$GIT_DIR" && pwd) || {
- 		echo >&2 "Unable to determine absolute path of git directory"
--- 
-1.5.4.1.188.g3ea1f5
+Heh. Yes. The current 'master' meaning 'the current master when I wrote
+that patch.' :)
+
+-Peff
