@@ -1,155 +1,104 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/5] Add platform-independent .git "symlink"
-Date: Mon, 18 Feb 2008 12:34:36 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802181217580.30505@racer.site>
-References: <1203331463-13857-1-git-send-email-hjemli@gmail.com> <1203331463-13857-2-git-send-email-hjemli@gmail.com> <1203331463-13857-3-git-send-email-hjemli@gmail.com>
+From: "Jay Soffian" <jaysoffian@gmail.com>
+Subject: Re: [PATCH] branch: optionally setup branch.*.merge from upstream local branches
+Date: Mon, 18 Feb 2008 07:40:45 -0500
+Message-ID: <76718490802180440o3041b1ffh4764199e2aeaa52b@mail.gmail.com>
+References: <1203336248-9308-1-git-send-email-jaysoffian@gmail.com>
+	 <alpine.LSU.1.00.0802181209210.30505@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Lars Hjemli <hjemli@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 18 13:35:35 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Junio C Hamano" <gitster@pobox.com>
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Feb 18 13:41:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JR5DS-0004fy-Ot
-	for gcvg-git-2@gmane.org; Mon, 18 Feb 2008 13:35:27 +0100
+	id 1JR5JB-0006Os-95
+	for gcvg-git-2@gmane.org; Mon, 18 Feb 2008 13:41:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758489AbYBRMeu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Feb 2008 07:34:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752344AbYBRMeu
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Feb 2008 07:34:50 -0500
-Received: from mail.gmx.net ([213.165.64.20]:44988 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752148AbYBRMet (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Feb 2008 07:34:49 -0500
-Received: (qmail invoked by alias); 18 Feb 2008 12:34:47 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp037) with SMTP; 18 Feb 2008 13:34:47 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18TZdFjsgsTVRlYxLjZiW9NpO3xuijPR+C6DRfIUk
-	KWzbyxPUEtqodP
-X-X-Sender: gene099@racer.site
-In-Reply-To: <1203331463-13857-3-git-send-email-hjemli@gmail.com>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1752410AbYBRMkr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Feb 2008 07:40:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758518AbYBRMkq
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Feb 2008 07:40:46 -0500
+Received: from wa-out-1112.google.com ([209.85.146.182]:43650 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752395AbYBRMkq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Feb 2008 07:40:46 -0500
+Received: by wa-out-1112.google.com with SMTP id v27so2781098wah.23
+        for <git@vger.kernel.org>; Mon, 18 Feb 2008 04:40:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=pdqOR2ImoxQKhV9uRAMc01KIkfMhh3o1ZC6XV63rk9Y=;
+        b=MAMNlnnWM3886OY9Jb3aQArYpBXIB8Fa7VJ7l59PYsoNuz20PNVtgOsYEubodTQkD6f+vmLvPVsCTehxPzAaL8BCZ3CO0a/oFU/4MvV8aWGGwOzuk+z3vGziRyzE/+Fh9bsfBGsOTQk/AsYyywIbEPAIH81wzVMFXShQyTLOg8o=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=oJxErJumzEmOHyeyYMKbGngaNITKEzEwAvIS9xVLz0eVdsNeeZMHgwL+y+J2vOFA3lqZ1cn0NLTVgqPDsMj6t0cQUWhAoJ5WcwiBj0ZboqoExGBJ54TRylvKTNd+MiI8e42IlWOGMMmN0Ii2soKTndLpWRvONxVRdqRrtX3ARk8=
+Received: by 10.114.161.11 with SMTP id j11mr2994200wae.127.1203338445430;
+        Mon, 18 Feb 2008 04:40:45 -0800 (PST)
+Received: by 10.114.255.11 with HTTP; Mon, 18 Feb 2008 04:40:45 -0800 (PST)
+In-Reply-To: <alpine.LSU.1.00.0802181209210.30505@racer.site>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74274>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74275>
 
-Hi,
+On Feb 18, 2008 7:14 AM, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
 
-On Mon, 18 Feb 2008, Lars Hjemli wrote:
+> On Mon, 18 Feb 2008, Jay Soffian wrote:
+>
+> > +enum branch_track {
+> > +     BRANCH_TRACK_FALSE = 0,
+> > +     BRANCH_TRACK_TRUE = 1,
+>
+> BRANCH_TRACK_REMOTES would be a better name here.  And you do not need the
+> "= 1" and "= 2".
 
-> diff --git a/environment.c b/environment.c
-> index 3527f16..8058e7b 100644
-> --- a/environment.c
-> +++ b/environment.c
-> @@ -49,6 +49,8 @@ static void setup_git_env(void)
->  {
->  	git_dir = getenv(GIT_DIR_ENVIRONMENT);
->  	if (!git_dir)
-> +		git_dir = read_gitfile_gently(DEFAULT_GIT_DIR_ENVIRONMENT);
-> +	if (!git_dir)
->  		git_dir = DEFAULT_GIT_DIR_ENVIRONMENT;
+I was just following along. Plenty of enum examples in the current code
+do this. Am I missing something subtle about when assigning explicit
+values should be done?
 
-I still maintain that the code (maybe not the diff) is easier to read like 
-this:
+> >
+> > -static int branch_track = 1;
+> > +static enum branch_track branch_track = BRANCH_TRACK_FALSE;
+>
+> That is a clear regression.
 
-  	if (!git_dir) {
-		git_dir = read_gitfile_gently(DEFAULT_GIT_DIR_ENVIRONMENT);
-		if (!git_dir)
-  			git_dir = DEFAULT_GIT_DIR_ENVIRONMENT;
-	}
+Perhaps. It's consistent with builtin-checkout.c though (which was
+initializing it to 0). Who to believe?
 
-> diff --git a/setup.c b/setup.c
-> index 4509598..20502be 100644
-> --- a/setup.c
-> +++ b/setup.c
-> @@ -239,6 +239,44 @@ static int check_repository_format_gently(int *nongit_ok)
->  }
->  
->  /*
-> + * Try to read the location of the git directory from the .git file,
-> + * return path to git directory if found.
-> + */
-> +const char *read_gitfile_gently(const char *path)
-> +{
-> +	char *buf;
-> +	struct stat st;
-> +	int fd;
-> +	size_t len;
-> +
-> +	if (stat(path, &st))
-> +		return NULL;
-> +	if (!S_ISREG(st.st_mode))
-> +		return NULL;
-> +	fd = open(path, O_RDONLY);
-> +	if (fd < 0)
-> +		die("Error opening %s: %s", path, strerror(errno));
+> > @@ -77,6 +77,10 @@ static int git_branch_config(const char *var, const char *value)
+> >               return 0;
+> >       }
+> >       if (!strcmp(var, "branch.autosetupmerge")) {
+> > +             if (value && !strcasecmp(value, "always")) {
+> > +                     branch_track = BRANCH_TRACK_ALWAYS;
+> > +                     return 0;
+> > +             }
+> >               branch_track = git_config_bool(var, value);
+> >               return 0;
+> >       }
+>
+> You have this in builtin-branch.c and builtin-checkout.c.  Duplicated
+> code.  IMHO it is time to move this into the git_default_config() function
+> (with "branch_track" being renamed to "git_branch_track", and moved to
+> environment.c).
 
-Hmm.  Like I said, in the "gently" case, we might want to just print a 
-warning and return NULL.
+Mkay, builtin-checkout.c author didn't do it, so...
 
-However, since you have 5 die()s in this function that would clutter the 
-code tremendously.  I briefly considered (shut your eyes now if you do 
-not like ugly code):
+> Personally, I have no problem with typing "git merge <branch>" in your
+> workflow.  I would even avoid saying "git pull" for obviously-local
+> branches, because I would have forgotten which branch it tracked
+> originally.
 
-	int (*show_error)(const char *format, ...) = nongit_ok ?
-		error : (int (*)(const char *format, ...))die;
+Um, well, apply this patch, set branch.autosetupmerge=always and then
+branch.*.merge will tell you which branch it tracked originally. :-)
 
-but now I think a better method would be
+Aside, then how do you figure out the upstream branch is if you've
+forgotten?
 
-static int show_error(int die_on_error, const char *format, ...)
-{
-        va_list params;
-
-        va_start(params, err);
-	if (die_on_error)
-		die_routine(err, params);
-	else
-	        error_routine(err, params);
-        va_end(params);
-        return -1;
-}
-
-This would even be a candidate for a global function die_or_error().
-
-Then you could use it like this:
-
-	if (fd < 0 && die("Error opening %s: %s", path, strerror(errno))
-		return NULL;
-
-Hmm.  Seeing what I wrote, it does not really feel elegant.
-
-So maybe we can just scratch all that, and I agree that an invalid .git 
-file means "no repository" (as opposed to "no valid repository").
-
-In that case, you might want to test for that, too...
-
-Speaking about tests:
-
-> +test_expect_success 'setup' '
-> +       REAL="$(pwd)/.real" &&
-> +       mv .git "$REAL" &&
-> +       echo "gitdir: $REAL" >.git
-> +'
-
-Let's not do this.  It would clutter the t/ directory unnecessarily.  
-Instead, do something like this:
-
-test_expect_success setup '
-
-	REAL="$(pwd)/.real" &&
-	mkdir test &&
-	cd test &&
-	echo "gitdir: $REAL" > .git
-
-'
-
-Hmm?
-
-Ciao,
-Dscho "who likes to write 'Hmm' three times in a mail"
+j.
