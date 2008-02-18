@@ -1,340 +1,105 @@
-From: Matthias Kestenholz <mk@spinlock.ch>
-Subject: [PATCH] Add color.ui variable which globally enables colorization
-	if set
-Date: Mon, 18 Feb 2008 08:26:03 +0100
-Message-ID: <1203319563.6721.7.camel@futex>
+From: Charles Bailey <charles@hashpling.org>
+Subject: Re: [PATCH 1/2] Tidy up git mergetool's backup file behaviour and variable names
+Date: Mon, 18 Feb 2008 08:08:41 +0000
+Message-ID: <20080218080841.GA12008@hashpling.org>
+References: <9543203388d64839de78822efb538903fc15bf7f.1203251306.git.charles@hashpling.org> <7vy79jsza1.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Feb 18 08:47:42 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, "Theodore Ts'o" <tytso@mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 18 09:10:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JR0iz-0002Au-To
-	for gcvg-git-2@gmane.org; Mon, 18 Feb 2008 08:47:42 +0100
+	id 1JR14t-0007e1-B3
+	for gcvg-git-2@gmane.org; Mon, 18 Feb 2008 09:10:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754100AbYBRHrH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Feb 2008 02:47:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753989AbYBRHrF
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Feb 2008 02:47:05 -0500
-Received: from mail11.bluewin.ch ([195.186.18.61]:34140 "EHLO
-	mail11.bluewin.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753895AbYBRHrE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Feb 2008 02:47:04 -0500
-X-Greylist: delayed 1257 seconds by postgrey-1.27 at vger.kernel.org; Mon, 18 Feb 2008 02:47:04 EST
-Received: from futex.feinheit.ch (213.3.44.95) by mail11.bluewin.ch (Bluewin 7.3.121)
-        id 476BDD7C00D40FDF; Mon, 18 Feb 2008 07:26:04 +0000
-Received: (nullmailer pid 26361 invoked by uid 1000);
-	Mon, 18 Feb 2008 07:26:03 -0000
-X-Mailer: Evolution 2.21.90 
+	id S1754567AbYBRIJo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Feb 2008 03:09:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754514AbYBRIJn
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Feb 2008 03:09:43 -0500
+Received: from pih-relay08.plus.net ([212.159.14.134]:58757 "EHLO
+	pih-relay08.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754150AbYBRIJn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Feb 2008 03:09:43 -0500
+Received: from [212.159.69.125] (helo=hashpling.plus.com)
+	 by pih-relay08.plus.net with esmtp (Exim) id 1JR14G-00048R-01; Mon, 18 Feb 2008 08:09:40 +0000
+Received: from fermat.hashpling.org (fermat.hashpling.org [127.0.0.1])
+	by hashpling.plus.com (8.13.8/8.13.6) with ESMTP id m1I88gQW012373;
+	Mon, 18 Feb 2008 08:08:42 GMT
+Received: (from charles@localhost)
+	by fermat.hashpling.org (8.13.8/8.13.6/Submit) id m1I88goW012372;
+	Mon, 18 Feb 2008 08:08:42 GMT
+Content-Disposition: inline
+In-Reply-To: <7vy79jsza1.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.4.2.1i
+X-Plusnet-Relay: e2648eb662abde8f69072da62ef9f5b6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74239>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74240>
 
-Signed-off-by: Matthias Kestenholz <mk@spinlock.ch>
----
+On Sun, Feb 17, 2008 at 07:45:42PM -0800, Junio C Hamano wrote:
+> Charles Bailey <charles@hashpling.org> writes:
+> 
+> > Currently a backup pre-merge file with conflict markers is sometimes
+> > kept with a .orig extenstion and sometimes removed depending on the
+> > particular merge tool used.
+> >
+> > This patch makes the handling consistent across all merge tools and
+> > configurable via a new mergetool.keepBackup config variable
+> >
+> > Changed the merge file path variable to MERGED for consistency with the
+> > names of the merge temporary filename variables. This done with the
+> > intention of having these variables used by user scripts in a subsequent
+> > custom merge tool patch.
+> 
+> I would have preferred two separate patches, one s/path/MERGED/
+> and the other save/remove clean-up, which would be much easier
+> way to review, but this is what we have, so let's work on this
+> version.
 
-Rebased on 'master' and tested. Thanks for all previous comments!
+Fair enough, I'll send an update.
+> 
+> > +mergetool.keepBackup::
+> > +	After performing a merge, the original file with conflict markers
+> > +	can be saved as a file with a `.orig` extension.  If this variable
+> > +	is set to `false` then this file is not preserved.
+> > +
+> 
+> s/$/  Defaults to true (i.e. keep the backup files)/.
 
+Noted.
 
- Documentation/config.txt |    7 +++++++
- builtin-branch.c         |   10 +++++++---
- builtin-commit.c         |    4 ++++
- builtin-diff.c           |    5 +++++
- builtin-log.c            |   17 +++++++++++++++++
- color.c                  |   12 ++++++++++++
- color.h                  |   11 +++++++++++
- diff.c                   |    6 +++---
- diff.h                   |    1 +
- wt-status.c              |    6 +++---
- 10 files changed, 70 insertions(+), 9 deletions(-)
+> We might also want a command line option to override the user's
+> usual default specified with this configuration but that can be
+> left for later rounds.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index f2f6a77..7b67671 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -489,6 +489,13 @@ color.status.<slot>::
- commit.template::
- 	Specify a file to use as the template for new commit messages.
- 
-+color.ui::
-+	When set to `always`, always use colors in all git commands which
-+	are capable of colored output. When false (or `never`), never. When
-+	set to `true` or `auto`, use colors only when the output is to the
-+	terminal. When more specific variables of color.* are set, they always
-+	take precedence over this setting. Defaults to false.
-+
- diff.autorefreshindex::
- 	When using `git diff` to compare with work tree
- 	files, do not consider stat-only change as changed.
-diff --git a/builtin-branch.c b/builtin-branch.c
-index e414c88..9edf2eb 100644
---- a/builtin-branch.c
-+++ b/builtin-branch.c
-@@ -31,7 +31,7 @@ static unsigned char head_sha1[20];
- 
- static int branch_track = 1;
- 
--static int branch_use_color;
-+static int branch_use_color = -1;
- static char branch_colors[][COLOR_MAXLEN] = {
- 	"\033[m",	/* reset */
- 	"",		/* PLAIN (normal) */
-@@ -79,12 +79,12 @@ static int git_branch_config(const char *var, const char *value)
- 		branch_track = git_config_bool(var, value);
- 		return 0;
- 	}
--	return git_default_config(var, value);
-+	return git_color_default_config(var, value);
- }
- 
- static const char *branch_get_color(enum color_branch ix)
- {
--	if (branch_use_color)
-+	if (branch_use_color > 0)
- 		return branch_colors[ix];
- 	return "";
- }
-@@ -588,6 +588,10 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 	};
- 
- 	git_config(git_branch_config);
-+
-+	if (branch_use_color == -1)
-+		branch_use_color = git_use_color_default;
-+
- 	track = branch_track;
- 	argc = parse_options(argc, argv, options, builtin_branch_usage, 0);
- 	if (!!delete + !!rename + !!force_create > 1)
-diff --git a/builtin-commit.c b/builtin-commit.c
-index 6612b4f..065e1f7 100644
---- a/builtin-commit.c
-+++ b/builtin-commit.c
-@@ -7,6 +7,7 @@
- 
- #include "cache.h"
- #include "cache-tree.h"
-+#include "color.h"
- #include "dir.h"
- #include "builtin.h"
- #include "diff.h"
-@@ -771,6 +772,9 @@ int cmd_status(int argc, const char **argv, const char *prefix)
- 
- 	git_config(git_status_config);
- 
-+	if (wt_status_use_color == -1)
-+		wt_status_use_color = git_use_color_default;
-+
- 	argc = parse_and_validate_options(argc, argv, builtin_status_usage);
- 
- 	index_file = prepare_index(argc, argv, prefix);
-diff --git a/builtin-diff.c b/builtin-diff.c
-index 8d7a569..8f53f52 100644
---- a/builtin-diff.c
-+++ b/builtin-diff.c
-@@ -4,6 +4,7 @@
-  * Copyright (c) 2006 Junio C Hamano
-  */
- #include "cache.h"
-+#include "color.h"
- #include "commit.h"
- #include "blob.h"
- #include "tag.h"
-@@ -229,6 +230,10 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
- 
- 	prefix = setup_git_directory_gently(&nongit);
- 	git_config(git_diff_ui_config);
-+
-+	if (diff_use_color_default == -1)
-+		diff_use_color_default = git_use_color_default;
-+
- 	init_revisions(&rev, prefix);
- 	rev.diffopt.skip_stat_unmatch = !!diff_auto_refresh_index;
- 
-diff --git a/builtin-log.c b/builtin-log.c
-index 99d69f0..f2216d3 100644
---- a/builtin-log.c
-+++ b/builtin-log.c
-@@ -5,6 +5,7 @@
-  *		 2006 Junio Hamano
-  */
- #include "cache.h"
-+#include "color.h"
- #include "commit.h"
- #include "diff.h"
- #include "revision.h"
-@@ -235,6 +236,10 @@ int cmd_whatchanged(int argc, const char **argv, const char *prefix)
- 	struct rev_info rev;
- 
- 	git_config(git_log_config);
-+
-+	if (diff_use_color_default == -1)
-+		diff_use_color_default = git_use_color_default;
-+
- 	init_revisions(&rev, prefix);
- 	rev.diff = 1;
- 	rev.simplify_history = 0;
-@@ -307,6 +312,10 @@ int cmd_show(int argc, const char **argv, const char *prefix)
- 	int i, count, ret = 0;
- 
- 	git_config(git_log_config);
-+
-+	if (diff_use_color_default == -1)
-+		diff_use_color_default = git_use_color_default;
-+
- 	init_revisions(&rev, prefix);
- 	rev.diff = 1;
- 	rev.combine_merges = 1;
-@@ -367,6 +376,10 @@ int cmd_log_reflog(int argc, const char **argv, const char *prefix)
- 	struct rev_info rev;
- 
- 	git_config(git_log_config);
-+
-+	if (diff_use_color_default == -1)
-+		diff_use_color_default = git_use_color_default;
-+
- 	init_revisions(&rev, prefix);
- 	init_reflog_walk(&rev.reflog_info);
- 	rev.abbrev_commit = 1;
-@@ -395,6 +408,10 @@ int cmd_log(int argc, const char **argv, const char *prefix)
- 	struct rev_info rev;
- 
- 	git_config(git_log_config);
-+
-+	if (diff_use_color_default == -1)
-+		diff_use_color_default = git_use_color_default;
-+
- 	init_revisions(&rev, prefix);
- 	rev.always_show_header = 1;
- 	cmd_log_init(argc, argv, prefix, &rev);
-diff --git a/color.c b/color.c
-index cb70340..12a6453 100644
---- a/color.c
-+++ b/color.c
-@@ -3,6 +3,8 @@
- 
- #define COLOR_RESET "\033[m"
- 
-+int git_use_color_default = 0;
-+
- static int parse_color(const char *name, int len)
- {
- 	static const char * const color_names[] = {
-@@ -143,6 +145,16 @@ int git_config_colorbool(const char *var, const char *value, int stdout_is_tty)
- 	return 0;
- }
- 
-+int git_color_default_config(const char *var, const char *value)
-+{
-+	if (!strcmp(var, "color.ui")) {
-+		git_use_color_default = git_config_colorbool(var, value, -1);
-+		return 0;
-+	}
-+
-+	return git_default_config(var, value);
-+}
-+
- static int color_vfprintf(FILE *fp, const char *color, const char *fmt,
- 		va_list args, const char *trail)
- {
-diff --git a/color.h b/color.h
-index ff63513..ecda556 100644
---- a/color.h
-+++ b/color.h
-@@ -4,6 +4,17 @@
- /* "\033[1;38;5;2xx;48;5;2xxm\0" is 23 bytes */
- #define COLOR_MAXLEN 24
- 
-+/*
-+ * This variable stores the value of color.ui
-+ */
-+extern int git_use_color_default;
-+
-+
-+/*
-+ * Use this instead of git_default_config if you need the value of color.ui.
-+ */
-+int git_color_default_config(const char *var, const char *value);
-+
- int git_config_colorbool(const char *var, const char *value, int stdout_is_tty);
- void color_parse(const char *var, const char *value, char *dst);
- int color_fprintf(FILE *fp, const char *color, const char *fmt, ...);
-diff --git a/diff.c b/diff.c
-index 58fe775..c30c252 100644
---- a/diff.c
-+++ b/diff.c
-@@ -20,7 +20,7 @@
- 
- static int diff_detect_rename_default;
- static int diff_rename_limit_default = 100;
--static int diff_use_color_default;
-+int diff_use_color_default = -1;
- static const char *external_diff_cmd_cfg;
- int diff_auto_refresh_index = 1;
- 
-@@ -191,7 +191,7 @@ int git_diff_basic_config(const char *var, const char *value)
- 		}
- 	}
- 
--	return git_default_config(var, value);
-+	return git_color_default_config(var, value);
- }
- 
- static char *quote_two(const char *one, const char *two)
-@@ -2055,7 +2055,7 @@ void diff_setup(struct diff_options *options)
- 
- 	options->change = diff_change;
- 	options->add_remove = diff_addremove;
--	if (diff_use_color_default)
-+	if (diff_use_color_default > 0)
- 		DIFF_OPT_SET(options, COLOR_DIFF);
- 	else
- 		DIFF_OPT_CLR(options, COLOR_DIFF);
-diff --git a/diff.h b/diff.h
-index 073d5cb..8e73f07 100644
---- a/diff.h
-+++ b/diff.h
-@@ -174,6 +174,7 @@ extern void diff_unmerge(struct diff_options *,
- 
- extern int git_diff_basic_config(const char *var, const char *value);
- extern int git_diff_ui_config(const char *var, const char *value);
-+extern int diff_use_color_default;
- extern void diff_setup(struct diff_options *);
- extern int diff_opt_parse(struct diff_options *, const char **, int);
- extern int diff_setup_done(struct diff_options *);
-diff --git a/wt-status.c b/wt-status.c
-index 0b06093..32d780a 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -9,7 +9,7 @@
- #include "diffcore.h"
- 
- int wt_status_relative_paths = 1;
--int wt_status_use_color = 0;
-+int wt_status_use_color = -1;
- static char wt_status_colors[][COLOR_MAXLEN] = {
- 	"",         /* WT_STATUS_HEADER: normal */
- 	"\033[32m", /* WT_STATUS_UPDATED: green */
-@@ -40,7 +40,7 @@ static int parse_status_slot(const char *var, int offset)
- 
- static const char* color(int slot)
- {
--	return wt_status_use_color ? wt_status_colors[slot] : "";
-+	return wt_status_use_color > 0 ? wt_status_colors[slot] : "";
- }
- 
- void wt_status_prepare(struct wt_status *s)
-@@ -401,5 +401,5 @@ int git_status_config(const char *k, const char *v)
- 		wt_status_relative_paths = git_config_bool(k, v);
- 		return 0;
- 	}
--	return git_default_config(k, v);
-+	return git_color_default_config(k, v);
- }
--- 
-1.5.4.2.124.gc25103
+Agreed, I'll tackle this later, given time.
+
+> > @@ -112,11 +112,11 @@ resolve_deleted_merge () {
+> >  }
+> >  
+> >  check_unchanged () {
+> > -    if test "$path" -nt "$BACKUP" ; then
+> > +    if test "$MERGED" -nt "$BACKUP" ; then
+> 
+> I think this is the cause of your automated test sometimes
+> needing 1 sec sleep.  This check should perhaps be done with a
+> "!  cmp $MERGED $BACKUP >/dev/null", which would succeed if the
+> user's interaction with the backend tool touched the file.
+
+I don't think that we should spend too much time on this seeing as I
+now fail to reproduce it, but as the code was avoiding the interactive
+path (i.e. trusting the exit code), it shouldn't have been this check.
+
+> 
+> The rest of the patch looked fine to me.
+> 
+> We might also want to add -y (assume "Yes" answer to "Did you
+> resolve it" question without actually asking) command line
+> option to the script, but that would be for later rounds.
+
+Yes, and this would help the automated tests.
