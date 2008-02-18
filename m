@@ -1,88 +1,133 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] branch: optionally setup branch.*.merge from upstream
- local branches
-Date: Mon, 18 Feb 2008 14:05:36 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802181403040.30505@racer.site>
-References: alpine.LSU.1.00.0802181328380.30505@racer.site <1203342817-19653-1-git-send-email-jaysoffian@gmail.com>
+From: sf <sf@b-i-t.de>
+Subject: BUG: rebase -p after cherry-pick does not work
+Date: Mon, 18 Feb 2008 15:06:52 +0100
+Message-ID: <47B990FC.9090600@b-i-t.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 18 15:06:25 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 18 15:07:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JR6dU-0001Ht-Tn
-	for gcvg-git-2@gmane.org; Mon, 18 Feb 2008 15:06:25 +0100
+	id 1JR6el-0001nQ-5n
+	for gcvg-git-2@gmane.org; Mon, 18 Feb 2008 15:07:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751583AbYBROFu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Feb 2008 09:05:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751517AbYBROFu
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Feb 2008 09:05:50 -0500
-Received: from mail.gmx.net ([213.165.64.20]:58649 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751462AbYBROFt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Feb 2008 09:05:49 -0500
-Received: (qmail invoked by alias); 18 Feb 2008 14:05:46 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp055) with SMTP; 18 Feb 2008 15:05:46 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19S8nZfYRNSTvXVv201v3XWgQxAUn6TxOHnCGn9fk
-	h5GUl4V3bYrok0
-X-X-Sender: gene099@racer.site
-In-Reply-To: <1203342817-19653-1-git-send-email-jaysoffian@gmail.com>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1751459AbYBROHI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Feb 2008 09:07:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751438AbYBROHH
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Feb 2008 09:07:07 -0500
+Received: from main.gmane.org ([80.91.229.2]:38095 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751459AbYBROHG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Feb 2008 09:07:06 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1JR6e4-0002ab-MD
+	for git@vger.kernel.org; Mon, 18 Feb 2008 14:07:00 +0000
+Received: from ip-213157015184.static.heagmedianet.de ([213.157.15.184])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 18 Feb 2008 14:07:00 +0000
+Received: from sf by ip-213157015184.static.heagmedianet.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 18 Feb 2008 14:07:00 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: ip-213157015184.static.heagmedianet.de
+User-Agent: Thunderbird 2.0.0.9 (X11/20071116)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74293>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74294>
 
-Hi,
+Hello,
 
-On Mon, 18 Feb 2008, Jay Soffian wrote:
+git-rebase -p does not work when one of the changes is cherry-picked
+before rebase. Test case:
 
->  Incorporated Johannes' second round of feedback.
+set -e -u
+mkdir git
+cd git
+git init
+for x in abc def ghi
+do
+  echo $x >$x
+  git add $x
+  git commit -m$x
+done
+git branch first
+git reset --hard first~2
+git cherry-pick first^
+git branch second
+EDITOR=: git rebase --verbose --interactive --preserve-merges \
+second first
+git status
 
-Not exactly.
+The result for me is:
 
-> diff --git a/branch.c b/branch.c
-> index 1fc8788..64f0a4a 100644
-> --- a/branch.c
-> +++ b/branch.c
-> @@ -37,7 +37,7 @@ static int find_tracked_branch(struct remote *remote, void *priv)
->   * to infer the settings for branch.<new_ref>.{remote,merge} from the
->   * config.
->   */
-> -static int setup_tracking(const char *new_ref, const char *orig_ref)
-> +static int setup_tracking(const char *new_ref, const char *orig_ref, int always)
->  {
->  	char key[1024];
->  	struct tracking tracking;
-> @@ -49,8 +49,12 @@ static int setup_tracking(const char *new_ref, const char *orig_ref)
->  	memset(&tracking, 0, sizeof(tracking));
->  	tracking.spec.dst = (char *)orig_ref;
->  	if (for_each_remote(find_tracked_branch, &tracking) ||
-> -			!tracking.matches)
-> -		return 1;
-> +			!tracking.matches) {
-> +		if (!always)
-> +			return 1;
-> +		tracking.matches = 1;
-> +		tracking.src = xstrdup(orig_ref);
-> +	}
->  
+Initialized empty Git repository in .git/
+Created initial commit fc8b37c: abc
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+ create mode 100644 abc
+Created commit 3d6ca20: def
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+ create mode 100644 def
+Created commit 4c5e07a: ghi
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+ create mode 100644 ghi
+HEAD is now at fc8b37c... abc
+Finished one cherry-pick.
+Created commit 3d6ca20: def
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+ create mode 100644 def
+Switched to branch "first"
+Note: moving to "3d6ca204f4823bde7273a4bb83676055ae415224" which isn't a
+local branch
+If you want to create a new branch from this checkout, you may do so
+(now or later) by using -b with the checkout command again. Example:
+  git checkout -b <new_branch_name>
+HEAD is now at 3d6ca20... def
+Rebasing (1/1)
+4c5e07a7107c87dec18244200ad1b52b76e71ea0
+Fast forward to 4c5e07a7107c87dec18244200ad1b52b76e71ea0
+Successfully rebased and updated refs/heads/first.
+# On branch first
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#       deleted:    ghi
+#
 
-This looks completely different than what I commented on.  And my comments 
-suggested a different solution.
+The problem area is function pick_one_preserving_merges in
+git-rebase--interactive.sh:
 
-Unfortunately, I will not have time for the rest of the day to review that 
-new thing (it is not at all obvious for me why this works as intended, and 
-does not break anything else).
+    # rewrite parents; if none were rewritten, we can fast-forward.
+    fast_forward=t
+    preserve=t
+    new_parents=
+    for p in $(git rev-list --parents -1 $sha1 | cut -d' ' -f2-)
+    do
+        if test -f "$REWRITTEN"/$p
+        then
+            preserve=f
+            new_p=$(cat "$REWRITTEN"/$p)
+            test $p != $new_p && fast_forward=f
+            case "$new_parents" in
+            *$new_p*)
+                ;; # do nothing; that parent is already there
+            *)
+                new_parents="$new_parents $new_p"
+                ;;
+            esac
+        fi
+    done
 
-But you can use the time to write some tests ;-)
+If a commit's parent is not applied during rebase (e.g. because it was
+cherry-picked already) then it is not rewritten either.
 
-Ciao,
-Dscho
+Regards
+
+Stephan
