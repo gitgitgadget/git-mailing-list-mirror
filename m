@@ -1,134 +1,70 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: [PATCH] http-push: push <remote> :<branch> deletes remote branch
-Date: Mon, 18 Feb 2008 16:55:46 +0100
-Message-ID: <20080218155546.GA8934@localhost>
-References: <20080218130726.GA26854@localhost> <alpine.LSU.1.00.0802181339470.30505@racer.site>
+From: Martin Langhoff <martin@catalyst.net.nz>
+Subject: Re: [PATCH] cvsexportcommit: be graceful when "cvs status" reorders
+ the arguments
+Date: Tue, 19 Feb 2008 04:25:08 +1300
+Message-ID: <47B9A354.7070905@catalyst.net.nz>
+References: <alpine.LSU.1.00.0802180127100.30505@racer.site> <7vbq6fvudp.fsf@gitster.siamese.dyndns.org> <7vwsp3uf0u.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Feb 18 16:56:39 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, Robin Rosenberg <robin.rosenberg@dewire.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 18 17:09:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JR8M0-0000Qn-TH
-	for gcvg-git-2@gmane.org; Mon, 18 Feb 2008 16:56:29 +0100
+	id 1JR8Ym-0005OO-I3
+	for gcvg-git-2@gmane.org; Mon, 18 Feb 2008 17:09:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753708AbYBRPzx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Feb 2008 10:55:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752926AbYBRPzx
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Feb 2008 10:55:53 -0500
-Received: from fg-out-1718.google.com ([72.14.220.155]:47085 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751121AbYBRPzw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Feb 2008 10:55:52 -0500
-Received: by fg-out-1718.google.com with SMTP id e21so1521091fga.17
-        for <git@vger.kernel.org>; Mon, 18 Feb 2008 07:55:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:sender;
-        bh=Dvvlx+Cz0YcPSXoV3s00O0GztJ8VLuzyJ/1/cXfGGlM=;
-        b=MrRSbkGQ0/0pGs41n/+ggkLALeDPmL6sfO0P521OUInz1ayn5vWTYrDWoDktmA2Xoox9KwnpBBAZzcfW1jZMkANl9PcSquHwGfv/jLB/EdwP5EqI061pcasjs4QZnZppRzNOyt1uerE351+T2p1bOZXs3elk+YM3zXskHJ2wyzw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:sender;
-        b=c35eVtuhxcHTOhl+NZia8zZ2tTMapGRCOg/dnHDl6NlBUXI+DZxsh3LXx7flTbogvn9bPDzBSfJV3MWXc4X6IKL5eyPCd6lX6N/hwMjllovq0TEENXm58D7t9Ob2qsgv6HlDFlTEE9VpN/lxQr5YvEzxFUXxo/nOT+FZq2t7Vtg=
-Received: by 10.86.62.3 with SMTP id k3mr6104435fga.8.1203350150190;
-        Mon, 18 Feb 2008 07:55:50 -0800 (PST)
-Received: from darc.dyndns.org ( [62.47.56.178])
-        by mx.google.com with ESMTPS id d4sm8603662fga.2.2008.02.18.07.55.47
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 18 Feb 2008 07:55:50 -0800 (PST)
-Received: from drizzd by darc.dyndns.org with local (Exim 4.68)
-	(envelope-from <drizzd@aon.at>)
-	id 1JR8LK-0002Lj-QD; Mon, 18 Feb 2008 16:55:46 +0100
-Content-Disposition: inline
-In-Reply-To: <alpine.LSU.1.00.0802181339470.30505@racer.site>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1753519AbYBRQJE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Feb 2008 11:09:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754448AbYBRQJE
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Feb 2008 11:09:04 -0500
+Received: from godel.catalyst.net.nz ([202.78.240.40]:44774 "EHLO
+	mail1.catalyst.net.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753039AbYBRQJC (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Feb 2008 11:09:02 -0500
+Received: from leibniz.catalyst.net.nz ([202.78.240.7] helo=[127.0.0.1])
+	by mail1.catalyst.net.nz with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <martin@catalyst.net.nz>)
+	id 1JR8Xp-0001hQ-Bs; Tue, 19 Feb 2008 05:08:41 +1300
+User-Agent: Thunderbird 2.0.0.6 (X11/20071022)
+In-Reply-To: <7vwsp3uf0u.fsf@gitster.siamese.dyndns.org>
+X-Enigmail-Version: 0.95.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74304>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74305>
 
-This mirrors current ssh/git push syntax.
----
-On Mon, Feb 18, 2008 at 01:45:08PM +0000, Johannes Schindelin wrote:
-> Besides, why don't you just try to imitate the code for "-d"?
+Junio C Hamano wrote:
+> A related naming guideline I failed to follow (because I was
+> mostly copying your code) suggests that the hash here should be
+> named %fullname, instead of %basename.  Then logically:
 
-I was hesitant to implement something that will only partially mirror the
-behavior of git/ssh push. For example, git/ssh push will also update the
-corresponding remote-tracking branches and give a status report
-(new/deleted/updated/rejected etc.) at the end.
+Double ACK on your logic and arguments - I was thinking "fullname" as I
+read your first email. Not sure how stable the output is across CVS
+versions/ports WRT leading slashes, might be a good idea to try to
+canonicalise the paths.
 
-After playing with the code a little I feel more confident that the other
-issues with http-push are unrelated to this patch and the differences between
-git/ssh push and http-push are acceptable for now.
+I am travelling at the moment, but I'll try and review the patch with
+the actual code. Some of the ugliness you're complaining about might be
+mine (plurals, and perhaps even the $#array) but I refuse to recognise
+the grep as mine.
 
-> So I think something like this should work, at the same place you added 
-> your code:
-> 
-> 		if (is_zero_sha1(ref->peer_ref->new_sha1)) {
-> 			if (delete_remote_branch(ref->peer_ref->name,
-> 					force_delete || ref->force) == -1) {
-> 				error("Could not remove %s",
-> 					ref->peer_ref->name);
-> 				rc = -4;
-> 			}
-> 			continue;
-> 		}
+Annotate might still put me to shame - perhaps I was drunk?
 
-Indeed. According to the rules listed in builtin-send-pack.c:442, I changed
-(force_delete || ref->force) to 1.
+cheers,
 
-Clemens
 
- http-push.c |   18 +++++++++++++-----
- 1 files changed, 13 insertions(+), 5 deletions(-)
-
-diff --git a/http-push.c b/http-push.c
-index f9b77d6..e98c52f 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -2138,6 +2138,8 @@ static int delete_remote_branch(char *pattern, int force)
- 
- 	/* Send delete request */
- 	fprintf(stderr, "Removing remote branch '%s'\n", remote_ref->name);
-+	if (dry_run)
-+		return 0;
- 	url = xmalloc(strlen(remote->url) + strlen(remote_ref->name) + 1);
- 	sprintf(url, "%s%s", remote->url, remote_ref->name);
- 	slot = get_active_slot();
-@@ -2311,6 +2313,17 @@ int main(int argc, char **argv)
- 
- 		if (!ref->peer_ref)
- 			continue;
-+
-+		if (is_zero_sha1(ref->peer_ref->new_sha1)) {
-+			if (delete_remote_branch(ref->name, 1) == -1) {
-+				error("Could not remove %s",
-+					ref->peer_ref->name);
-+				rc = -4;
-+			}
-+			new_refs++;
-+			continue;
-+		}
-+
- 		if (!hashcmp(ref->old_sha1, ref->peer_ref->new_sha1)) {
- 			if (push_verbosely || 1)
- 				fprintf(stderr, "'%s': up-to-date\n", ref->name);
-@@ -2342,11 +2355,6 @@ int main(int argc, char **argv)
- 			}
- 		}
- 		hashcpy(ref->new_sha1, ref->peer_ref->new_sha1);
--		if (is_zero_sha1(ref->new_sha1)) {
--			error("cannot happen anymore");
--			rc = -3;
--			continue;
--		}
- 		new_refs++;
- 		strcpy(old_hex, sha1_to_hex(ref->old_sha1));
- 		new_hex = sha1_to_hex(ref->new_sha1);
+m
 -- 
-1.5.4.2.183.g69d3
+-----------------------------------------------------------------------
+Martin @ Catalyst .Net .NZ  Ltd, PO Box 11-053, Manners St,  Wellington
+WEB: http://catalyst.net.nz/           PHYS: Level 2, 150-154 Willis St
+NZ: +64(4)916-7224    MOB: +64(21)364-017    UK: 0845 868 5733 ext 7224
+      Make things as simple as possible, but no simpler - Einstein
+-----------------------------------------------------------------------
