@@ -1,191 +1,117 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Add support for host aliases in config files
-Date: Sun, 17 Feb 2008 20:52:00 -0800
-Message-ID: <7vskzquarz.fsf@gitster.siamese.dyndns.org>
-References: <alpine.LNX.1.00.0802171337000.5816@iabervon.org>
+From: "Roger C. Soares" <rogersoares@intelinet.com.br>
+Subject: Re: [EGIT PATCH] Show diffs for changed files under a new or deleted
+ directory.
+Date: Mon, 18 Feb 2008 02:01:02 -0300
+Message-ID: <47B9110E.90707@intelinet.com.br>
+References: <1203263746-2924-1-git-send-email-rogersoares@intelinet.com.br> <200802171605.48250.robin.rosenberg@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Mon Feb 18 05:53:01 2008
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Mon Feb 18 06:01:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JQxzu-0003pi-BU
-	for gcvg-git-2@gmane.org; Mon, 18 Feb 2008 05:52:58 +0100
+	id 1JQy7q-0005Ex-Tg
+	for gcvg-git-2@gmane.org; Mon, 18 Feb 2008 06:01:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756391AbYBREwY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Feb 2008 23:52:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756308AbYBREwX
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Feb 2008 23:52:23 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:54107 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756199AbYBREwW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Feb 2008 23:52:22 -0500
-Received: from a-sasl-quonix.pobox.com (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id D8F9F6284;
-	Sun, 17 Feb 2008 23:52:18 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.pobox.com (Postfix) with ESMTP id
- 465626283; Sun, 17 Feb 2008 23:52:15 -0500 (EST)
-In-Reply-To: <alpine.LNX.1.00.0802171337000.5816@iabervon.org> (Daniel
- Barkalow's message of "Sun, 17 Feb 2008 13:38:51 -0500 (EST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751098AbYBRFAN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Feb 2008 00:00:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751026AbYBRFAN
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Feb 2008 00:00:13 -0500
+Received: from cvxbsd.convex.com.br ([200.152.177.10]:1476 "HELO
+	cvxbsd.convex.com.br" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1750825AbYBRFAL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Feb 2008 00:00:11 -0500
+Received: (qmail 35844 invoked by uid 0); 18 Feb 2008 02:02:56 -0300
+Received: from rogersoares@intelinet.com.br by cvxbsd.convex.com.br by uid 82 with qmail-scanner-1.20rc3 
+ (uvscan: v4.3.20/v4817.  Clear:RC:1:. 
+ Processed in 0.315423 secs); 18 Feb 2008 05:02:56 -0000
+Received: from unknown (HELO ?200.152.180.33?) (200.152.180.33)
+  by cvxbsd.convex.com.br with SMTP; 18 Feb 2008 05:02:56 -0000
+User-Agent: Thunderbird 1.5.0.12 (X11/20080213)
+In-Reply-To: <200802171605.48250.robin.rosenberg@dewire.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74228>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74229>
 
-Daniel Barkalow <barkalow@iabervon.org> writes:
+Hi Robin,
 
-> ..., but I'd like to get the 
-> code portion out there are reviewed, at least, since I think last time, 
-> the patch only got as far as a discussion of how I should explain what it 
-> does.
+Robin Rosenberg escreveu:
+> i.e. the tree 'a' is sorted as if there is a '/' at then end. For full path
+> names that is no problem and it is actually trivial, but when you order
+> things by partial names it is much messier and quite hard to test also. There
+> is a bug in the IndexTreeWalker and probably the differenser and you found it.
+> It seems most likely you fixed it for that particular case, but it could still 
+> be broken for another.
+>   
+Thanks for your explanation, it makes more sense now.
 
-I actually think that is the most important part to get it right
-first.  I usually do not have to read the patch text to reject
-an ill-conceived idea if the description is unclear and/or
-unconvincing.
+I didn't look in detail yet the parts where we need to interact with the 
+index and the workspace, but just thinking about it now. If we are using 
+an algorithm which requires that both trees are sorted using the same 
+order, and one of them can't be trusted to follow such order, them 
+sorting the trees the way we want looks like a simple solution...
 
-I think the documentation (I removed from the quote) shows the
-feature is unambiguously good.
+I intend to go back to this after I finish some more patches I'm working 
+on to add more info into the revision detail viewer. So, lets go in 
+steps and look at one distinct thing at a time. My patch doesn't change 
+sorting or ordering of things and isn't very complicated either, it just 
+adds missing functionality.
 
-> diff --git a/remote.c b/remote.c
-> index 6b56473..59338a3 100644
-> --- a/remote.c
-> +++ b/remote.c
-> @@ -2,6 +2,15 @@
->  #include "remote.h"
->  #include "refs.h"
->  
-> +struct host {
-> +	const char *name;
-> +
-> +	const char *base;
-> +
-> +	const char **alias;
-> +	int alias_nr;
-> +};
+So, if in the old tree we had:
 
-Extra blank lines?
+file1
 
-> @@ -11,9 +20,32 @@ static int allocated_branches;
->  static struct branch *current_branch;
->  static const char *default_remote_name;
->  
-> +static struct host **hosts;
-> +static int allocated_hosts;
+and in the new tree we have:
 
-The allocation in remote.c file is unusual from the rest of git
-that usually follow the technical/api-allocation-growing
-convention (the comment unfortunately applies to the code we
-already have there).
+file1
+dir1/file2
+dir1/file3
 
-> +static const char *alias_url(const char *url)
-> +{
-> +	int i, j;
-> +	for (i = 0; i < allocated_hosts; i++) {
-> +		if (!hosts[i])
-> +			continue;
-> +		for (j = 0; j < hosts[i]->alias_nr; j++) {
-> +			if (!prefixcmp(url, hosts[i]->alias[j])) {
-> +				char *ret = malloc(strlen(hosts[i]->base) -
-> +						   strlen(hosts[i]->alias[j]) +
-> +						   strlen(url) + 1);
-> +				strcpy(ret, hosts[i]->base);
-> +				strcat(ret, url + strlen(hosts[i]->alias[j]));
-> +				return ret;
-> +			}
+The compare viewer must show:
 
-First match semantics is fine during runtime but at some point
-we would want a "config file lint" that points out ambiguous
-aliases perhaps?
++ dir1/file2
++ dir1/file3
 
-> +static struct host *make_host(const char *name, int len)
-> +{
-> ...
-> +	if (empty < 0) {
-> +		empty = allocated_hosts;
-> +		allocated_hosts += allocated_hosts ? allocated_hosts : 1;
-> +		hosts = xrealloc(hosts,
-> +				 sizeof(*hosts) * allocated_hosts);
+The current code only notices that dir1 was added and shows:
 
-This hand-rolled allocation growing is quite different from the
-rest of our codebase.
++ dir1
 
-> +static void add_alias(struct host *host, const char *name)
-> +{
-> +	int nr = host->alias_nr + 1;
-> +	host->alias =
-> +		xrealloc(host->alias, nr * sizeof(char *));
-> +	host->alias[nr-1] = name;
-> +	host->alias_nr = nr;
-> +}
+which confuses people reviewing code because they can't see that file2 
+and file3 were added. What the patch does is take the next step and, if 
+the added or removed node is a directory and it has children, add all 
+the children to the compare viewer using the same Differencer from the 
+directory.
 
-And this "add one-by-one" allocation, too.
+The Differencer I changed was actually a bug. If you say that the files 
+left in the left pane are Differencer.ADDITION, then the ones left on 
+the right pane _must_ be Differencer.DELETION. It just doesn't make 
+sense to say that files not on the old tree but on the new tree are 
+addition, and at the same time that files on the old tree but not on the 
+new tree are also addition.
 
-> @@ -154,7 +233,7 @@ static void read_remotes_file(struct remote *remote)
->  
->  		switch (value_list) {
->  		case 0:
-> -			add_url(remote, xstrdup(s));
-> +			add_url_alias(remote, xstrdup(s));
->  			break;
->  		case 1:
->  			add_push_refspec(remote, xstrdup(s));
-> @@ -206,7 +285,7 @@ static void read_branches_file(struct remote *remote)
->  	} else {
->  		branch = "refs/heads/master";
->  	}
-> -	add_url(remote, p);
-> +	add_url_alias(remote, p);
->  	add_fetch_refspec(remote, branch);
->  	remote->fetch_tags = 1; /* always auto-follow */
->  }
+There is another check that must be added. If in a commit I delete a 
+directory and add a file with the same name of the directory and 
+vice-versa. This case is still failing, it shows an alert with an empty 
+message. But as I said, I intend to deal with it later, it is a more 
+uncommon case and nobody here complained about it yet... :)
 
-These two are logical and clean updates.
+I think it should be like this for all cases, even when comparing with 
+the index or the workspace, so if there is something else I'm missing 
+please let me know.
 
-> @@ -236,6 +315,20 @@ static int handle_config(const char *key, const char *value)
->  		}
->  		return 0;
->  	}
-> +	if (!prefixcmp(key, "host.")) {
-> +		struct host *host;
-> +		name = key + 5;
-> +		subkey = strrchr(name, '.');
-> +		if (!subkey)
-> +			return 0;
 
-This "ignore this entry" is good.  We might later want to add
-host.<var> that is not about a specific host, and we would want
-to be able to read a configuration that is written for such a
-future version of git.
+> I'd love to see a unit test for your code since, even if it works, it is very easy
+> to break again.
+>   
+Ok, I'll get a look on the test cases and probably write something when 
+I get back into these compare issues. That if somebody else doesn't do 
+it before me, of course :)
 
-> +		host = make_host(name, subkey - name);
-> +		if (!value)
-> +			return 0;
-
-This is not.
-
- (1) We should barf saying "host.<this-host>.<var> configuration
-     should be a string", for base and rewritebase, instead of
-     silently ignoring such a misconfiguration;
-
- (2) We should _not_ do such barfing for future variables that
-     are not base nor rewritebase, so this "return" is at a
-     wrong place.
-
-So the code should do this part (perhaps with git_config_string())
-first,...
-
-> +		if (!strcmp(subkey, ".base"))
-> +			host->base = xstrdup(value);
-> +		else if (!strcmp(subkey, ".rewritebase"))
-> +			add_alias(host, xstrdup(value));
-
-... and then ignore anything other than host.<this-host>.{base,rewritebase}
-that may mean something in future versions of git.
+[]s,
+Roger.
