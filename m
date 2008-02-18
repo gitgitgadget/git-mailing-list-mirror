@@ -1,289 +1,134 @@
-From: Lars Hjemli <hjemli@gmail.com>
-Subject: [PATCH 2/5] Add platform-independent .git "symlink"
-Date: Mon, 18 Feb 2008 15:44:26 +0100
-Message-ID: <1203345866-4881-1-git-send-email-hjemli@gmail.com>
-References: <alpine.LSU.1.00.0802181334010.30505@racer.site>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: [PATCH] http-push: push <remote> :<branch> deletes remote branch
+Date: Mon, 18 Feb 2008 16:55:46 +0100
+Message-ID: <20080218155546.GA8934@localhost>
+References: <20080218130726.GA26854@localhost> <alpine.LSU.1.00.0802181339470.30505@racer.site>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Feb 18 16:09:43 2008
+X-From: git-owner@vger.kernel.org Mon Feb 18 16:56:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JR7bw-00074r-UP
-	for gcvg-git-2@gmane.org; Mon, 18 Feb 2008 16:08:53 +0100
+	id 1JR8M0-0000Qn-TH
+	for gcvg-git-2@gmane.org; Mon, 18 Feb 2008 16:56:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752769AbYBRPIQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Feb 2008 10:08:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752780AbYBRPIQ
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Feb 2008 10:08:16 -0500
-Received: from mail45.e.nsc.no ([193.213.115.45]:41638 "EHLO mail45.e.nsc.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752659AbYBRPIP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Feb 2008 10:08:15 -0500
-Received: from localhost.localdomain (ti231210a341-0179.bb.online.no [88.88.168.179])
-	by mail45.nsc.no (8.13.8/8.13.5) with ESMTP id m1IEja6K006306;
-	Mon, 18 Feb 2008 15:45:36 +0100 (MET)
-X-Mailer: git-send-email 1.5.4.1.188.g3ea1f5
-In-Reply-To: <alpine.LSU.1.00.0802181334010.30505@racer.site>
+	id S1753708AbYBRPzx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Feb 2008 10:55:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752926AbYBRPzx
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Feb 2008 10:55:53 -0500
+Received: from fg-out-1718.google.com ([72.14.220.155]:47085 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751121AbYBRPzw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Feb 2008 10:55:52 -0500
+Received: by fg-out-1718.google.com with SMTP id e21so1521091fga.17
+        for <git@vger.kernel.org>; Mon, 18 Feb 2008 07:55:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:sender;
+        bh=Dvvlx+Cz0YcPSXoV3s00O0GztJ8VLuzyJ/1/cXfGGlM=;
+        b=MrRSbkGQ0/0pGs41n/+ggkLALeDPmL6sfO0P521OUInz1ayn5vWTYrDWoDktmA2Xoox9KwnpBBAZzcfW1jZMkANl9PcSquHwGfv/jLB/EdwP5EqI061pcasjs4QZnZppRzNOyt1uerE351+T2p1bOZXs3elk+YM3zXskHJ2wyzw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:sender;
+        b=c35eVtuhxcHTOhl+NZia8zZ2tTMapGRCOg/dnHDl6NlBUXI+DZxsh3LXx7flTbogvn9bPDzBSfJV3MWXc4X6IKL5eyPCd6lX6N/hwMjllovq0TEENXm58D7t9Ob2qsgv6HlDFlTEE9VpN/lxQr5YvEzxFUXxo/nOT+FZq2t7Vtg=
+Received: by 10.86.62.3 with SMTP id k3mr6104435fga.8.1203350150190;
+        Mon, 18 Feb 2008 07:55:50 -0800 (PST)
+Received: from darc.dyndns.org ( [62.47.56.178])
+        by mx.google.com with ESMTPS id d4sm8603662fga.2.2008.02.18.07.55.47
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 18 Feb 2008 07:55:50 -0800 (PST)
+Received: from drizzd by darc.dyndns.org with local (Exim 4.68)
+	(envelope-from <drizzd@aon.at>)
+	id 1JR8LK-0002Lj-QD; Mon, 18 Feb 2008 16:55:46 +0100
+Content-Disposition: inline
+In-Reply-To: <alpine.LSU.1.00.0802181339470.30505@racer.site>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74303>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74304>
 
-This patch allows .git to be a regular textfile containing the path of
-the real git directory (prefixed with "gitdir: "), which can be useful on
-platforms lacking support for real symlinks.
-
-Signed-off-by: Lars Hjemli <hjemli@gmail.com>
+This mirrors current ssh/git push syntax.
 ---
+On Mon, Feb 18, 2008 at 01:45:08PM +0000, Johannes Schindelin wrote:
+> Besides, why don't you just try to imitate the code for "-d"?
 
-On Feb 18, 2008 2:35 PM, Johannes Schindelin wrote:
-> I meant writing a readable, but invalid .git file.  Then testing that Git
-> die()s with the correct message.
+I was hesitant to implement something that will only partially mirror the
+behavior of git/ssh push. For example, git/ssh push will also update the
+corresponding remote-tracking branches and give a status report
+(new/deleted/updated/rejected etc.) at the end.
 
-Something like this?
+After playing with the code a little I feel more confident that the other
+issues with http-push are unrelated to this patch and the differences between
+git/ssh push and http-push are acceptable for now.
 
+> So I think something like this should work, at the same place you added 
+> your code:
+> 
+> 		if (is_zero_sha1(ref->peer_ref->new_sha1)) {
+> 			if (delete_remote_branch(ref->peer_ref->name,
+> 					force_delete || ref->force) == -1) {
+> 				error("Could not remove %s",
+> 					ref->peer_ref->name);
+> 				rc = -4;
+> 			}
+> 			continue;
+> 		}
 
- Documentation/repository-layout.txt |    5 ++-
- cache.h                             |    1 +
- environment.c                       |    2 +
- setup.c                             |   47 ++++++++++++++++
- t/t0002-gitfile.sh                  |  103 +++++++++++++++++++++++++++++++++++
- 5 files changed, 157 insertions(+), 1 deletions(-)
- create mode 100755 t/t0002-gitfile.sh
+Indeed. According to the rules listed in builtin-send-pack.c:442, I changed
+(force_delete || ref->force) to 1.
 
-diff --git a/Documentation/repository-layout.txt b/Documentation/repository-layout.txt
-index 6939130..bbaed2e 100644
---- a/Documentation/repository-layout.txt
-+++ b/Documentation/repository-layout.txt
-@@ -3,7 +3,10 @@ git repository layout
+Clemens
+
+ http-push.c |   18 +++++++++++++-----
+ 1 files changed, 13 insertions(+), 5 deletions(-)
+
+diff --git a/http-push.c b/http-push.c
+index f9b77d6..e98c52f 100644
+--- a/http-push.c
++++ b/http-push.c
+@@ -2138,6 +2138,8 @@ static int delete_remote_branch(char *pattern, int force)
  
- You may find these things in your git repository (`.git`
- directory for a repository associated with your working tree, or
--`'project'.git` directory for a public 'bare' repository).
-+`'project'.git` directory for a public 'bare' repository. It is
-+also possible to have a working tree where `.git` is a plain
-+ascii file containing `gitdir: <path>`, i.e. the path to the
-+real git repository).
+ 	/* Send delete request */
+ 	fprintf(stderr, "Removing remote branch '%s'\n", remote_ref->name);
++	if (dry_run)
++		return 0;
+ 	url = xmalloc(strlen(remote->url) + strlen(remote_ref->name) + 1);
+ 	sprintf(url, "%s%s", remote->url, remote_ref->name);
+ 	slot = get_active_slot();
+@@ -2311,6 +2313,17 @@ int main(int argc, char **argv)
  
- objects::
- 	Object store associated with this repository.  Usually
-diff --git a/cache.h b/cache.h
-index e1000bc..1ad822a 100644
---- a/cache.h
-+++ b/cache.h
-@@ -277,6 +277,7 @@ extern char *get_index_file(void);
- extern char *get_graft_file(void);
- extern int set_git_dir(const char *path);
- extern const char *get_git_work_tree(void);
-+extern const char *read_gitfile_gently(const char *path);
- 
- #define ALTERNATE_DB_ENVIRONMENT "GIT_ALTERNATE_OBJECT_DIRECTORIES"
- 
-diff --git a/environment.c b/environment.c
-index 3527f16..8058e7b 100644
---- a/environment.c
-+++ b/environment.c
-@@ -49,6 +49,8 @@ static void setup_git_env(void)
- {
- 	git_dir = getenv(GIT_DIR_ENVIRONMENT);
- 	if (!git_dir)
-+		git_dir = read_gitfile_gently(DEFAULT_GIT_DIR_ENVIRONMENT);
-+	if (!git_dir)
- 		git_dir = DEFAULT_GIT_DIR_ENVIRONMENT;
- 	git_object_dir = getenv(DB_ENVIRONMENT);
- 	if (!git_object_dir) {
-diff --git a/setup.c b/setup.c
-index 4509598..20502be 100644
---- a/setup.c
-+++ b/setup.c
-@@ -239,6 +239,44 @@ static int check_repository_format_gently(int *nongit_ok)
- }
- 
- /*
-+ * Try to read the location of the git directory from the .git file,
-+ * return path to git directory if found.
-+ */
-+const char *read_gitfile_gently(const char *path)
-+{
-+	char *buf;
-+	struct stat st;
-+	int fd;
-+	size_t len;
+ 		if (!ref->peer_ref)
+ 			continue;
 +
-+	if (stat(path, &st))
-+		return NULL;
-+	if (!S_ISREG(st.st_mode))
-+		return NULL;
-+	fd = open(path, O_RDONLY);
-+	if (fd < 0)
-+		die("Error opening %s: %s", path, strerror(errno));
-+	buf = xmalloc(st.st_size + 1);
-+	len = read_in_full(fd, buf, st.st_size);
-+	close(fd);
-+	if (len != st.st_size)
-+		die("Error reading %s", path);
-+	buf[len] = '\0';
-+	if (prefixcmp(buf, "gitdir: "))
-+		die("Invalid gitfile format: %s", path);
-+	while (buf[len - 1] == '\n' || buf[len - 1] == '\r')
-+		len--;
-+	if (len < 9)
-+		die("No path in gitfile: %s", path);
-+	buf[len] = '\0';
-+	if (!is_git_directory(buf + 8))
-+		die("Not a git repository: %s", buf + 8);
-+	path = make_absolute_path(buf + 8);
-+	free(buf);
-+	return path;
-+}
-+
-+/*
-  * We cannot decide in this function whether we are in the work tree or
-  * not, since the config can only be read _after_ this function was called.
-  */
-@@ -247,6 +285,7 @@ const char *setup_git_directory_gently(int *nongit_ok)
- 	const char *work_tree_env = getenv(GIT_WORK_TREE_ENVIRONMENT);
- 	static char cwd[PATH_MAX+1];
- 	const char *gitdirenv;
-+	const char *gitfile_dir;
- 	int len, offset;
- 
- 	/*
-@@ -293,8 +332,10 @@ const char *setup_git_directory_gently(int *nongit_ok)
- 
- 	/*
- 	 * Test in the following order (relative to the cwd):
-+	 * - .git (file containing "gitdir: <path>")
- 	 * - .git/
- 	 * - ./ (bare)
-+	 * - ../.git
- 	 * - ../.git/
- 	 * - ../ (bare)
- 	 * - ../../.git/
-@@ -302,6 +343,12 @@ const char *setup_git_directory_gently(int *nongit_ok)
- 	 */
- 	offset = len = strlen(cwd);
- 	for (;;) {
-+		gitfile_dir = read_gitfile_gently(DEFAULT_GIT_DIR_ENVIRONMENT);
-+		if (gitfile_dir) {
-+			if (set_git_dir(gitfile_dir))
-+				die("Repository setup failed");
-+			break;
++		if (is_zero_sha1(ref->peer_ref->new_sha1)) {
++			if (delete_remote_branch(ref->name, 1) == -1) {
++				error("Could not remove %s",
++					ref->peer_ref->name);
++				rc = -4;
++			}
++			new_refs++;
++			continue;
 +		}
- 		if (is_git_directory(DEFAULT_GIT_DIR_ENVIRONMENT))
- 			break;
- 		if (is_git_directory(".")) {
-diff --git a/t/t0002-gitfile.sh b/t/t0002-gitfile.sh
-new file mode 100755
-index 0000000..c5dbc72
---- /dev/null
-+++ b/t/t0002-gitfile.sh
-@@ -0,0 +1,103 @@
-+#!/bin/sh
 +
-+test_description='.git file
-+
-+Verify that plumbing commands work when .git is a file
-+'
-+. ./test-lib.sh
-+
-+objpath() {
-+    echo "$1" | sed -e 's|\(..\)|\1/|'
-+}
-+
-+objck() {
-+	p=$(objpath "$1")
-+	if test ! -f "$REAL/objects/$p"
-+	then
-+		echo "Object not found: $REAL/objects/$p"
-+		false
-+	fi
-+}
-+
-+
-+test_expect_success 'initial setup' '
-+	REAL="$(pwd)/.real" &&
-+	mv .git "$REAL"
-+'
-+
-+test_expect_success 'bad setup: invalid .git file format' '
-+	echo "gitdir $REAL" >.git &&
-+	if git rev-parse 2>.err
-+	then
-+		echo "git rev-parse accepted an invalid .git file"
-+		false
-+	fi &&
-+	if ! grep -qe "Invalid gitfile format" .err
-+	then
-+		echo "git rev-parse returned wrong error"
-+		false
-+	fi
-+'
-+
-+test_expect_success 'bad setup: invalid .git file path' '
-+	echo "gitdir: $REAL.not" >.git &&
-+	if git rev-parse 2>.err
-+	then
-+		echo "git rev-parse accepted an invalid .git file path"
-+		false
-+	fi &&
-+	if ! grep -qe "Not a git repository" .err
-+	then
-+		echo "git rev-parse returned wrong error"
-+		false
-+	fi
-+'
-+
-+test_expect_success 'final setup + check rev-parse --git-dir' '
-+	echo "gitdir: $REAL" >.git &&
-+	test "$REAL" = "$(git rev-parse --git-dir)"
-+'
-+
-+test_expect_success 'check hash-object' '
-+	echo "foo" >bar &&
-+	SHA=$(cat bar | git hash-object -w --stdin) &&
-+	objck $SHA
-+'
-+
-+test_expect_success 'check cat-file' '
-+	git cat-file blob $SHA >actual &&
-+	diff -u bar actual
-+'
-+
-+test_expect_success 'check update-index' '
-+	if test -f "$REAL/index"
-+	then
-+		echo "Hmm, $REAL/index exists?"
-+		false
-+	fi &&
-+	rm -f "$REAL/objects/$(objpath $SHA)" &&
-+	git update-index --add bar &&
-+	if ! test -f "$REAL/index"
-+	then
-+		echo "$REAL/index not found"
-+		false
-+	fi &&
-+	objck $SHA
-+'
-+
-+test_expect_success 'check write-tree' '
-+	SHA=$(git write-tree) &&
-+	objck $SHA
-+'
-+
-+test_expect_success 'check commit-tree' '
-+	SHA=$(echo "commit bar" | git commit-tree $SHA) &&
-+	objck $SHA
-+'
-+
-+test_expect_success 'check rev-list' '
-+	echo $SHA >"$REAL/HEAD" &&
-+	test "$SHA" = "$(git rev-list HEAD)"
-+'
-+
-+test_done
+ 		if (!hashcmp(ref->old_sha1, ref->peer_ref->new_sha1)) {
+ 			if (push_verbosely || 1)
+ 				fprintf(stderr, "'%s': up-to-date\n", ref->name);
+@@ -2342,11 +2355,6 @@ int main(int argc, char **argv)
+ 			}
+ 		}
+ 		hashcpy(ref->new_sha1, ref->peer_ref->new_sha1);
+-		if (is_zero_sha1(ref->new_sha1)) {
+-			error("cannot happen anymore");
+-			rc = -3;
+-			continue;
+-		}
+ 		new_refs++;
+ 		strcpy(old_hex, sha1_to_hex(ref->old_sha1));
+ 		new_hex = sha1_to_hex(ref->new_sha1);
 -- 
-1.5.4.1.188.g3ea1f5
+1.5.4.2.183.g69d3
