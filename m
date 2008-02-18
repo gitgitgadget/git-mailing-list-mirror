@@ -1,77 +1,70 @@
-From: Jim Meyering <jim@meyering.net>
-Subject: Re: [PATCH] Remove useless if-before-free tests.
-Date: Mon, 18 Feb 2008 10:18:40 +0100
-Message-ID: <87pruuy64v.fsf@rho.meyering.net>
-References: <871w7bz1ly.fsf@rho.meyering.net>
-	<ee77f5c20802171409k2dee2c87v8d84eba111c3d506@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] opening files in remote.c should ensure it is opening a
+ file
+Date: Mon, 18 Feb 2008 01:30:39 -0800
+Message-ID: <7v3arqr4qo.fsf@gitster.siamese.dyndns.org>
+References: <20080208174654.2e9e679c@pc09.procura.nl>
+ <e2b179460802080925s61270036q81896010c76236ae@mail.gmail.com>
+ <20080208210447.289022b6@pc09.procura.nl>
+ <20080218101026.6098667f@pc09.procura.nl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "git list" <git@vger.kernel.org>
-To: "David Symonds" <dsymonds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 18 10:19:28 2008
+Cc: "Mike Ralphson" <mike.ralphson@gmail.com>, git@vger.kernel.org
+To: "H.Merijn Brand" <h.m.brand@xs4all.nl>
+X-From: git-owner@vger.kernel.org Mon Feb 18 10:31:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JR29g-0000hz-Ro
-	for gcvg-git-2@gmane.org; Mon, 18 Feb 2008 10:19:21 +0100
+	id 1JR2LU-0004IZ-W1
+	for gcvg-git-2@gmane.org; Mon, 18 Feb 2008 10:31:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751311AbYBRJSs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Feb 2008 04:18:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751261AbYBRJSr
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Feb 2008 04:18:47 -0500
-Received: from smtp3-g19.free.fr ([212.27.42.29]:37733 "EHLO smtp3-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751301AbYBRJSm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Feb 2008 04:18:42 -0500
-Received: from smtp3-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id 3E9FA17B59D
-	for <git@vger.kernel.org>; Mon, 18 Feb 2008 10:18:41 +0100 (CET)
-Received: from mx.meyering.net (mx.meyering.net [82.230.74.64])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id 3169117B575
-	for <git@vger.kernel.org>; Mon, 18 Feb 2008 10:18:41 +0100 (CET)
-Received: from rho.meyering.net (localhost.localdomain [127.0.0.1])
-	by rho.meyering.net (Acme Bit-Twister) with ESMTP id E9A6F2609C;
-	Mon, 18 Feb 2008 10:18:40 +0100 (CET)
-In-Reply-To: <ee77f5c20802171409k2dee2c87v8d84eba111c3d506@mail.gmail.com>
-	(David Symonds's message of "Sun, 17 Feb 2008 14:09:48 -0800")
+	id S1751652AbYBRJa4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Feb 2008 04:30:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751494AbYBRJa4
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Feb 2008 04:30:56 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:63785 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751339AbYBRJaz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Feb 2008 04:30:55 -0500
+Received: from a-sasl-quonix.pobox.com (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id C1237419C;
+	Mon, 18 Feb 2008 04:30:53 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.pobox.com (Postfix) with ESMTP id
+ 03FD3419A; Mon, 18 Feb 2008 04:30:47 -0500 (EST)
+In-Reply-To: <20080218101026.6098667f@pc09.procura.nl> (H. Merijn Brand's
+ message of "Mon, 18 Feb 2008 10:10:26 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74252>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74253>
 
-"David Symonds" <dsymonds@gmail.com> wrote:
-> On Feb 17, 2008 1:58 PM, Jim Meyering <jim@meyering.net> wrote:
->> This change removes all useless if-before-free tests.
->> E.g., it replace code like this
->>
->>         if (some_expression)
->>                 free (some_expression);
->>
->> with the now-equivalent
->>
->>         free (some_expression);
->>
->> It is equivalent not just because POSIX has required free(NULL)
->> to work for a long time, but simply because it has worked for
->> so long that no reasonable porting target fails the test.
->> Here's some evidence from nearly 1.5 years ago:
->>
->>     http://www.winehq.org/pipermail/wine-patches/2006-October/031544.html
->
-> That's not great evidence. It only tests 9 systems, and misses several
+"H.Merijn Brand" <h.m.brand@xs4all.nl> writes:
 
-If you mean mingw, cygwin, and M$-based ones, they're all ok.
-As far as I know, you have to go back to SunOS4 to find a system on which
-free(NULL) fails.  That OS stopped being a reasonable porting target
-a couple years ago.
+> Most bizarre workaround found for clone (the first 4 failures):
+> --8<---
+> diff -pur /a5/pro/3gl/LINUX/git-1.5.4/git-clone.sh git-clone.sh
+> --- a/git-1.5.4/git-clone.sh  2008-02-02 05:09:01 +0100
+> +++ b/git-1.5.4/git-clone.sh  2008-02-18 10:03:26 +0100
+> @@ -368,7 +368,8 @@ yes)
+>                 '') git-fetch-pack --all -k $quiet $depth $no_progress "$repo";;
+>                 *) git-fetch-pack --all -k $quiet "$upload_pack" $depth $no_progress "$repo" ;;
+>                 esac >"$GIT_DIR/CLONE_HEAD" ||
+> -                       die "fetch-pack from '$repo' failed."
+> +                       exit 1
+> +                       # die "fetch-pack from '$repo' failed."
+>                 ;;
+>         esac
+>         ;;
 
-> targets that Git already runs on. It seems like a fairly minor cleanup
-> for a definite loss of portability.
+That sounds *very* broken.
 
-It's a definite loss of portability if you can find a reasonable porting
-target for which free(NULL) fails.  But even if you do, the fix is
-not to reject the clean-up, but to amend it with a wrapper function.
-That encapsulates the work-around in one place rather than polluting
-all of those files.
+Is your /bin/sh really a variant of Bourne?
+
+If HP-UX is broken in a similar way as Solaris is, in that it
+installs a non-POSIX shell under /bin/sh and offers a Korn in
+/bin/ksh, "make SHELL_PATH=/bin/ksh" may help.
