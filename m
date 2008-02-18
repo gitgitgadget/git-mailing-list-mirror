@@ -1,177 +1,98 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH] Add support for host aliases in config files
-Date: Mon, 18 Feb 2008 14:29:38 -0500 (EST)
-Message-ID: <alpine.LNX.1.00.0802181410120.5816@iabervon.org>
-References: <alpine.LNX.1.00.0802171337000.5816@iabervon.org> <7vskzquarz.fsf@gitster.siamese.dyndns.org>
+From: Kristian =?ISO-8859-1?Q?H=F8gsberg?= <krh@redhat.com>
+Subject: Re: [PATCH] Rename git-core rpm to just git and rename the
+	meta-pacakge to git-all.
+Date: Mon, 18 Feb 2008 14:00:47 -0500
+Message-ID: <1203361247.4082.8.camel@gaara.boston.redhat.com>
+References: <1203100163-17509-1-git-send-email-krh@redhat.com>
+	 <7vskzs2exj.fsf@gitster.siamese.dyndns.org>
+	 <76718490802180651h2ad61c4cg50bae97000957397@mail.gmail.com>
+	 <1203350676.4082.0.camel@gaara.boston.redhat.com>
+	 <7v7ih2p0wk.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 18 20:30:37 2008
+X-From: git-owner@vger.kernel.org Mon Feb 18 20:31:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JRBh5-0006X7-Hh
-	for gcvg-git-2@gmane.org; Mon, 18 Feb 2008 20:30:27 +0100
+	id 1JRBiP-000741-Dk
+	for gcvg-git-2@gmane.org; Mon, 18 Feb 2008 20:31:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752422AbYBRT3n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Feb 2008 14:29:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751483AbYBRT3n
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Feb 2008 14:29:43 -0500
-Received: from iabervon.org ([66.92.72.58]:48136 "EHLO iabervon.org"
+	id S1752707AbYBRTbP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 18 Feb 2008 14:31:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752723AbYBRTbP
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Feb 2008 14:31:15 -0500
+Received: from mx1.redhat.com ([66.187.233.31]:45313 "EHLO mx1.redhat.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752325AbYBRT3m (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Feb 2008 14:29:42 -0500
-Received: (qmail 29280 invoked by uid 1000); 18 Feb 2008 19:29:38 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 18 Feb 2008 19:29:38 -0000
-In-Reply-To: <7vskzquarz.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1752615AbYBRTbO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Feb 2008 14:31:14 -0500
+Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
+	by mx1.redhat.com (8.13.8/8.13.8) with ESMTP id m1IJ0rsj030752;
+	Mon, 18 Feb 2008 14:00:53 -0500
+Received: from pobox.corp.redhat.com (pobox.corp.redhat.com [10.11.255.20])
+	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id m1IJ0qeU024619;
+	Mon, 18 Feb 2008 14:00:52 -0500
+Received: from [192.168.1.105] (dhcp83-9.boston.redhat.com [172.16.83.9])
+	by pobox.corp.redhat.com (8.13.1/8.13.1) with ESMTP id m1IJ0q8O026802;
+	Mon, 18 Feb 2008 14:00:52 -0500
+In-Reply-To: <7v7ih2p0wk.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Evolution 2.21.4 (2.21.4-1.fc9) 
+X-Scanned-By: MIMEDefang 2.58 on 172.16.52.254
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74335>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74336>
 
-On Sun, 17 Feb 2008, Junio C Hamano wrote:
 
-> Daniel Barkalow <barkalow@iabervon.org> writes:
-> 
-> > ..., but I'd like to get the 
-> > code portion out there are reviewed, at least, since I think last time, 
-> > the patch only got as far as a discussion of how I should explain what it 
-> > does.
-> 
-> I actually think that is the most important part to get it right
-> first.  I usually do not have to read the patch text to reject
-> an ill-conceived idea if the description is unclear and/or
-> unconvincing.
-> 
-> I think the documentation (I removed from the quote) shows the
-> feature is unambiguously good.
+On Mon, 2008-02-18 at 10:36 -0800, Junio C Hamano wrote:
+> Kristian H=C3=B8gsberg <krh@redhat.com> writes:
+>=20
+> > On Mon, 2008-02-18 at 09:51 -0500, Jay Soffian wrote:
+> >> On Feb 17, 2008 2:57 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> >>=20
+> >> > "yum install git" and "yum install git-core" do not give such an
+> >> > error but the latter gives quite a bunch of errors ("yum install
+> >> > git" goes alright).  This is problem #2.
+> >>=20
+> >> You probably want "yum upgrade git-core".
+> >>=20
+> >> The "problem" is that yum by default doesn't process RPM renames (=
+obsoletes)
+> >> unless you either have obsoletes=3D1 in your yum.conf, use "yum --=
+obsoletes
+> >> update" or use "yum upgrade".
+> >
+> > Ah, that's what it is.  Thanks, I wasn't aware of this issue.
+>=20
+> Does that mean that the test I did and the problem I saw were
+> end-user errors and that there is no proble with your patch and
+> I can use it as-is to cut 1.5.4.3 and future ones?
+>=20
+> That's a great news.
+>=20
+> But perhaps we would need some description/warning to help end
+> users as clueless as I am with respect to yum in the release
+> notes and/or announcements?
 
-What I meant by that was that you'd asked for some change in how this 
-feature would get mentioned to people reading man pages on git commands 
-that can use it.
+We could, but could you provide a little more detail about the system
+you tested on?  I have=20
 
-> > diff --git a/remote.c b/remote.c
-> > index 6b56473..59338a3 100644
-> > --- a/remote.c
-> > +++ b/remote.c
-> > @@ -2,6 +2,15 @@
-> >  #include "remote.h"
-> >  #include "refs.h"
-> >  
-> > +struct host {
-> > +	const char *name;
-> > +
-> > +	const char *base;
-> > +
-> > +	const char **alias;
-> > +	int alias_nr;
-> > +};
-> 
-> Extra blank lines?
+  obsoletes=3D1
 
-I tend to like grouping related fields by having blank lines between 
-unrelated ones, but it's not needed here.
+in my /etc/yum.conf, which has been default in Fedora since October
+2004.
 
-> > @@ -11,9 +20,32 @@ static int allocated_branches;
-> >  static struct branch *current_branch;
-> >  static const char *default_remote_name;
-> >  
-> > +static struct host **hosts;
-> > +static int allocated_hosts;
-> 
-> The allocation in remote.c file is unusual from the rest of git
-> that usually follow the technical/api-allocation-growing
-> convention (the comment unfortunately applies to the code we
-> already have there).
+> Could you resend the patch with a commit log message that I can
+> later reuse parts from for such a purpose, with a sign-off
+> please?
 
-I think I originally used an older style that never got converted, and 
-this time matched the style of the rest of the file. I'll add an initial 
-patch to convert the rest of the file to the standard thing, and use that 
-style for this patch as well.
+Yup, I'm getting a new patch together to address the comments from your
+earlier mail.  Also, I had the git-all package in there, but it turns
+out that without a %files section, rpm doesn't create the rpm.  New
+patch coming up in a few minutes.
 
-> > +static const char *alias_url(const char *url)
-> > +{
-> > +	int i, j;
-> > +	for (i = 0; i < allocated_hosts; i++) {
-> > +		if (!hosts[i])
-> > +			continue;
-> > +		for (j = 0; j < hosts[i]->alias_nr; j++) {
-> > +			if (!prefixcmp(url, hosts[i]->alias[j])) {
-> > +				char *ret = malloc(strlen(hosts[i]->base) -
-> > +						   strlen(hosts[i]->alias[j]) +
-> > +						   strlen(url) + 1);
-> > +				strcpy(ret, hosts[i]->base);
-> > +				strcat(ret, url + strlen(hosts[i]->alias[j]));
-> > +				return ret;
-> > +			}
-> 
-> First match semantics is fine during runtime but at some point
-> we would want a "config file lint" that points out ambiguous
-> aliases perhaps?
-
-I think first match may actually be useful in dealing with sites where a 
-subset of the web-served space is git-served or something. But I'm really 
-not sure; maybe we want "longest base" or something.
-
-> > @@ -154,7 +233,7 @@ static void read_remotes_file(struct remote *remote)
-> >  
-> >  		switch (value_list) {
-> >  		case 0:
-> > -			add_url(remote, xstrdup(s));
-> > +			add_url_alias(remote, xstrdup(s));
-> >  			break;
-> >  		case 1:
-> >  			add_push_refspec(remote, xstrdup(s));
-> > @@ -206,7 +285,7 @@ static void read_branches_file(struct remote *remote)
-> >  	} else {
-> >  		branch = "refs/heads/master";
-> >  	}
-> > -	add_url(remote, p);
-> > +	add_url_alias(remote, p);
-> >  	add_fetch_refspec(remote, branch);
-> >  	remote->fetch_tags = 1; /* always auto-follow */
-> >  }
-> 
-> These two are logical and clean updates.
-> 
-> > @@ -236,6 +315,20 @@ static int handle_config(const char *key, const char *value)
-> >  		}
-> >  		return 0;
-> >  	}
-> > +	if (!prefixcmp(key, "host.")) {
-> > +		struct host *host;
-> > +		name = key + 5;
-> > +		subkey = strrchr(name, '.');
-> > +		if (!subkey)
-> > +			return 0;
-> 
-> This "ignore this entry" is good.  We might later want to add
-> host.<var> that is not about a specific host, and we would want
-> to be able to read a configuration that is written for such a
-> future version of git.
-> 
-> > +		host = make_host(name, subkey - name);
-> > +		if (!value)
-> > +			return 0;
-> 
-> This is not.
-> 
->  (1) We should barf saying "host.<this-host>.<var> configuration
->      should be a string", for base and rewritebase, instead of
->      silently ignoring such a misconfiguration;
-
-True. I'll look up the present best practices for config stuff.
-
->  (2) We should _not_ do such barfing for future variables that
->      are not base nor rewritebase, so this "return" is at a
->      wrong place.
-
-I was intentionally careful to ignore unknown options.
-
-	-Daniel
-*This .sig left intentionally blank*
+Kristian
