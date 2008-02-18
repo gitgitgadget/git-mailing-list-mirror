@@ -1,74 +1,57 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] xdl_merge(): make XDL_MERGE_ZEALOUS output simpler
-Date: Mon, 18 Feb 2008 00:35:57 -0800
-Message-ID: <7vy79ir79u.fsf@gitster.siamese.dyndns.org>
-References: <A21B3CA8-6240-434F-87A9-C6F76DA15265@gmail.com>
- <alpine.LFD.1.00.0802121544370.2920@woody.linux-foundation.org>
- <alpine.LSU.1.00.0802130003370.3870@racer.site>
- <alpine.LSU.1.00.0802130108060.3870@racer.site>
- <7v3arxzlke.fsf@gitster.siamese.dyndns.org>
- <alpine.LSU.1.00.0802131113360.30505@racer.site>
- <7vlk5mgm5y.fsf@gitster.siamese.dyndns.org>
- <alpine.LFD.1.00.0802151012380.3066@woody.linux-foundation.org>
- <alpine.LSU.1.00.0802171816150.30505@racer.site>
- <alpine.LSU.1.00.0802171906590.30505@racer.site>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Voltage Spike <voltspike@gmail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Feb 18 09:37:07 2008
+From: Dane Jensen <careo@fastmail.fm>
+Subject: [Bug] Segfault in git status
+Date: Mon, 18 Feb 2008 00:36:52 -0800
+Message-ID: <F8D3F7F0-3A98-4576-BD89-6E5C682B351C@fastmail.fm>
+Mime-Version: 1.0 (Apple Message framework v919.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 18 09:37:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JR1Uf-000656-Mx
-	for gcvg-git-2@gmane.org; Mon, 18 Feb 2008 09:36:58 +0100
+	id 1JR1VE-0006DE-3b
+	for gcvg-git-2@gmane.org; Mon, 18 Feb 2008 09:37:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754430AbYBRIgW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Feb 2008 03:36:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754612AbYBRIgW
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Feb 2008 03:36:22 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:48007 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754250AbYBRIgV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Feb 2008 03:36:21 -0500
-Received: from a-sasl-quonix.pobox.com (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 549D878CE;
-	Mon, 18 Feb 2008 03:36:20 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.pobox.com (Postfix) with ESMTP id
- 77F2A78CD; Mon, 18 Feb 2008 03:36:10 -0500 (EST)
-In-Reply-To: <alpine.LSU.1.00.0802171906590.30505@racer.site> (Johannes
- Schindelin's message of "Sun, 17 Feb 2008 19:07:19 +0000 (GMT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1755049AbYBRIg4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Feb 2008 03:36:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755058AbYBRIg4
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Feb 2008 03:36:56 -0500
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:52009 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754936AbYBRIg4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 18 Feb 2008 03:36:56 -0500
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by out1.messagingengine.com (Postfix) with ESMTP id 5120D91685
+	for <git@vger.kernel.org>; Mon, 18 Feb 2008 03:36:55 -0500 (EST)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute2.internal (MEProxy); Mon, 18 Feb 2008 03:36:55 -0500
+X-Sasl-enc: 0YRx+AECdBOBSMdHDGulMSKMMiBHP49qeJS6JkqtlqMq 1203323815
+Received: from [192.168.1.146] (unknown [208.71.31.193])
+	by mail.messagingengine.com (Postfix) with ESMTP id E812BA5E3
+	for <git@vger.kernel.org>; Mon, 18 Feb 2008 03:36:54 -0500 (EST)
+X-Mailer: Apple Mail (2.919.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74243>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74244>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hi all-
 
-> When a merge conflicts, there are often less than three common lines
-> between two conflicting regions.
->
-> Since a conflict takes up as many lines as are conflicting, plus three
-> lines for the commit markers,  the output will be shorter (and thus,
-> simpler) in this case, if the common lines will be merged into the
-> conflicting regions.
->
-> This patch merges up to three common lines into the conflicts.
+Somehow I've managed to create a repository that causes git status to  
+segfault. To be honest, I'm not entirely sure how just yet. This comes  
+after a weekend of splitting a repository into two separate  
+repositories, filtering out a directory from one, and then creating  
+grafts in those repositories to skip commits that now change nothing.
 
-I can give immediate positive feedback to this.
+This was in OS X 10.5.2 with git compiled from cf5c51e. Falling back  
+to 1.5.4.2 cleared it up, so with the help of git bisect I've narrowed  
+the bug down to cf55870.
 
-When I rebuilt "next" last night, I considered rebasing its
-constituent branches while I was at it (I ended up not doing
-that as I felt it was too much).
+I'll spend some time this week trying to find the exact point in my  
+filtering that git status went south and report back if I can  
+replicate it in a more-controlled test.
 
-The tip of js/reflog-delete used to be at cb97cc9.  Rebasing
-this on top of any recent master will give you unreadable
-conflicts in t/t1410-reflog.sh, but with these two patches (but
-the second one does not have chance to kick in for this
-particular case) the result is quite obvious and much cleaner.
+-Dane
