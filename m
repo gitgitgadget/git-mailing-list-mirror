@@ -1,77 +1,200 @@
-From: Martin Koegler <mkoegler@auto.tuwien.ac.at>
-Subject: [PATCH 10/12] revision.c: handle tag->tagged == NULL
-Date: Mon, 18 Feb 2008 21:48:01 +0100
-Message-ID: <12033676841373-git-send-email-mkoegler@auto.tuwien.ac.at>
-References: <12033676833730-git-send-email-mkoegler@auto.tuwien.ac.at>
- <12033676832769-git-send-email-mkoegler@auto.tuwien.ac.at>
- <12033676832231-git-send-email-mkoegler@auto.tuwien.ac.at>
- <12033676832653-git-send-email-mkoegler@auto.tuwien.ac.at>
- <12033676833341-git-send-email-mkoegler@auto.tuwien.ac.at>
- <12033676831961-git-send-email-mkoegler@auto.tuwien.ac.at>
- <1203367683563-git-send-email-mkoegler@auto.tuwien.ac.at>
- <12033676833893-git-send-email-mkoegler@auto.tuwien.ac.at>
- <12033676842301-git-send-email-mkoegler@auto.tuwien.ac.at>
-Cc: git@vger.kernel.org, Martin Koegler <mkoegler@auto.tuwien.ac.at>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 18 21:49:59 2008
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] branch: optionally setup branch.*.merge from upstream
+ local branches
+Date: Mon, 18 Feb 2008 12:59:13 -0800
+Message-ID: <7vir0mnfq6.fsf@gitster.siamese.dyndns.org>
+References: <1203342817-19653-1-git-send-email-jaysoffian@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 18 22:00:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JRCvi-0000iE-Er
-	for gcvg-git-2@gmane.org; Mon, 18 Feb 2008 21:49:38 +0100
+	id 1JRD61-0004dk-6s
+	for gcvg-git-2@gmane.org; Mon, 18 Feb 2008 22:00:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756263AbYBRUsb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Feb 2008 15:48:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755764AbYBRUsa
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Feb 2008 15:48:30 -0500
-Received: from thor.auto.tuwien.ac.at ([128.130.60.15]:40288 "EHLO
-	thor.auto.tuwien.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761459AbYBRUsI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Feb 2008 15:48:08 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by thor.auto.tuwien.ac.at (Postfix) with ESMTP id C24E5680BF93;
-	Mon, 18 Feb 2008 21:48:04 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at auto.tuwien.ac.at
-Received: from thor.auto.tuwien.ac.at ([127.0.0.1])
-	by localhost (thor.auto.tuwien.ac.at [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id EIUHmPInDLhs; Mon, 18 Feb 2008 21:48:04 +0100 (CET)
-Received: by thor.auto.tuwien.ac.at (Postfix, from userid 3001)
-	id 2DCAA6CF006A; Mon, 18 Feb 2008 21:48:04 +0100 (CET)
-X-Mailer: git-send-email 1.5.3.1
-In-Reply-To: <12033676842301-git-send-email-mkoegler@auto.tuwien.ac.at>
+	id S1753140AbYBRU7l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Feb 2008 15:59:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753254AbYBRU7l
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Feb 2008 15:59:41 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:35681 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753096AbYBRU7j (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Feb 2008 15:59:39 -0500
+Received: from a-sasl-quonix.pobox.com (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 8EF32796A;
+	Mon, 18 Feb 2008 15:59:35 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.pobox.com (Postfix) with ESMTP id
+ 371187968; Mon, 18 Feb 2008 15:59:30 -0500 (EST)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74352>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74353>
 
-Signed-off-by: Martin Koegler <mkoegler@auto.tuwien.ac.at>
----
- revision.c |    4 ++++
- 1 files changed, 4 insertions(+), 0 deletions(-)
+Jay Soffian <jaysoffian@gmail.com> writes:
 
-diff --git a/revision.c b/revision.c
-index 484e5e7..b1aebf8 100644
---- a/revision.c
-+++ b/revision.c
-@@ -177,6 +177,8 @@ static struct commit *handle_commit(struct rev_info *revs, struct object *object
- 		struct tag *tag = (struct tag *) object;
- 		if (revs->tag_objects && !(flags & UNINTERESTING))
- 			add_pending_object(revs, object, tag->tag);
-+		if (!tag->tagged)
-+			die("bad tag");
- 		object = parse_object(tag->tagged->sha1);
- 		if (!object)
- 			die("bad object %s", sha1_to_hex(tag->tagged->sha1));
-@@ -689,6 +691,8 @@ static int add_parents_only(struct rev_info *revs, const char *arg, int flags)
- 		it = get_reference(revs, arg, sha1, 0);
- 		if (it->type != OBJ_TAG)
- 			break;
-+		if (!((struct tag*)it)->tagged)
-+			return 0;
- 		hashcpy(sha1, ((struct tag*)it)->tagged->sha1);
- 	}
- 	if (it->type != OBJ_COMMIT)
--- 
-1.5.4.1.g96b77
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index fb6dae0..f15fe0a 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -378,11 +378,14 @@ apply.whitespace::
+>  	as the '--whitespace' option. See linkgit:git-apply[1].
+>  
+>  branch.autosetupmerge::
+> ...
+> +	Tells `git-branch` and `git-checkout` to setup `branch.*.remote`
+> +	and `branch.*.merge` for new branches so that linkgit:git-pull[1]
+> +	will appropriately merge from that upstream branch. Note that even
+> +	if this option is not set, this behavior can be chosen per-branch
+> +	using the `--track`	and `--no-track` options. This option defaults
+
+You have an unintended tab there.
+
+> +	to true, which will setup tracking for remote branches. Set it to
+> +	`always` to automatically setup the aforementioned options for local
+> +	upstream branches as well.
+
+I somehow find it easier to read if the default is always
+described at the end of the paragraph, i.e. "Setting this to
+value X does foo, Y does bar, Z does baz. Defaults to X.", but
+that may be just me.
+
+> diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
+> index 7e8874a..ce2fc64 100644
+> --- a/Documentation/git-branch.txt
+> +++ b/Documentation/git-branch.txt
+> @@ -105,20 +105,20 @@ OPTIONS
+>  	Display the full sha1s in output listing rather than abbreviating them.
+>  
+>  --track::
+> ...
+> +	Set up configuration so that git-pull will
+> +	automatically retrieve data from the upstream branch.  Use this if
+> +	you always pull from the same upstream branch into the new branch,
+> +	or if you don't want to use "git pull <repository> <refspec>"
+> +	explicitly. This behavior is the default for remote branches.
+> +	Set the branch.autosetupmerge configuration variable to false if you
+> +	want git-checkout and git-branch to always behave as if '--no-track'
+> +	were given. Set it to 'always' if you want git-checkout and git-branch
+> +	to always behave as if '--track' were given.
+
+Re-wrapping the
+paragraph at an unusual place.  It is Ok to do so if it is done
+to keep the unchanged part intact to minimize the diff text, but
+otherwise, please don't.
+
+You reworded "remote branch" to "upstream branch" here and other
+places.  I think that makes the intention easier to understand.
+It is "the branch this new branch intends to build on top of",
+so the earlier text should have said "remote tracking branch"
+but the intention has always been to mean "on top of whom will I
+be building".
+
+This is not a flaw in your patch, but I suspect "or if you
+don't want to" should have been "and if you don't want to".
+
+"This behaviour is the default for remote branches" feels a bit
+odd.  It confuses the first time reader as if you are saying "if
+you are creating a remote branch with "git-branch" command, this
+behaviour is the default", which is not what you are saying.  I
+think "... the default when forking off of a remote tracking
+branch" is what you meant.
+
+>  --no-track::
+> -	When a branch is created off a remote branch,
+> -	set up configuration so that git-pull will not retrieve data
+> -	from the remote branch, ignoring the branch.autosetupmerge
+> -	configuration variable.
+> +	Ignore the branch.autosetupmerge configuration variable. When
+> +	using git pull with the new branch, a <refspec> will have to be
+> +	given explicitly.
+
+This rewrite probably has made the description easier to understand.
+
+> diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
+> index b4cfa04..ad2ab51 100644
+> --- a/Documentation/git-checkout.txt
+> +++ b/Documentation/git-checkout.txt
+> @@ -48,21 +48,20 @@ OPTIONS
+>  	may restrict the characters allowed in a branch name.
+>  
+>  --track::
+> ...
+> +	When -b is given set up configuration so that git-pull will
+
+s/given/&,/;
+
+> +	automatically retrieve data from the upstream branch.  Use this if
+> +	you always pull from the same upstream branch into the new branch,
+> +	or if you don't want to use "git pull <repository> <refspec>"
+> +	explicitly. This behavior is the default for remote branches.
+
+The same comment on "or if you don't want to" applies.
+
+> @@ -49,8 +49,12 @@ static int setup_tracking(const char *new_ref, const char *orig_ref)
+>  	memset(&tracking, 0, sizeof(tracking));
+>  	tracking.spec.dst = (char *)orig_ref;
+>  	if (for_each_remote(find_tracked_branch, &tracking) ||
+> -			!tracking.matches)
+> -		return 1;
+> +			!tracking.matches) {
+> +		if (!always)
+> +			return 1;
+> +		tracking.matches = 1;
+> +		tracking.src = xstrdup(orig_ref);
+> +	}
+
+I suspect this is a clever fallback to pretend as if you have
+[remote "."] fetch=refs/*:refs/* when nothing else matches, but
+I think it needs an explanation why this is a good idea and
+would not break others.  Also I suspect this should be moved
+after you see for-each-remote returns without error and did not
+find any match.
+
+> @@ -71,7 +76,7 @@ static int setup_tracking(const char *new_ref, const char *orig_ref)
+>  
+>  void create_branch(const char *head,
+>  		   const char *name, const char *start_name,
+> -		   int force, int reflog, int track)
+> +		   int force, int reflog, enum branch_track track)
+>  {
+>  	struct ref_lock *lock;
+>  	struct commit *commit;
+> @@ -130,7 +135,7 @@ void create_branch(const char *head,
+>  	   automatically merges from there.  So far, this is only done for
+>  	   remotes registered via .git/config.  */
+>  	if (real_ref && track)
+> -		setup_tracking(name, real_ref);
+> +		setup_tracking(name, real_ref, (track == BRANCH_TRACK_ALWAYS));
+
+It probably is better to pass 'track' itself and have the
+special case logic inside setup_tracking() instead.  Maybe we
+would want to add new tracking mode that needs different
+matching logic there later.
+
+The move to default_config() is probably a good idea.
+
+> diff --git a/cache.h b/cache.h
+> index 2b59c44..90b3a9e 100644
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -393,6 +393,14 @@ enum safe_crlf {
+>  
+>  extern enum safe_crlf safe_crlf;
+>  
+> +enum branch_track {
+> +	BRANCH_TRACK_REMOTES_FALSE = 0,
+> +	BRANCH_TRACK_REMOTES_TRUE,
+> +	BRANCH_TRACK_ALWAYS,
+> +};
+
+Perhaps BRANCH_TRACK_{NEVER,REMOTE,ALWAYS} would be easier
+(although I cannot decide if s/NEVER/FALSE/ would be better)?
