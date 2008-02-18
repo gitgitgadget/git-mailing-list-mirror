@@ -1,178 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git help: sort commands by topi
-Date: Mon, 18 Feb 2008 02:15:35 -0800
-Message-ID: <7vlk5ipo3c.fsf@gitster.siamese.dyndns.org>
-References: <87hcg77i6i.fsf@gmail.com>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: [PATCH] builtin-checkout.c: fix usage segfault
+Date: Mon, 18 Feb 2008 05:20:20 -0500
+Message-ID: <1203330020-7007-1-git-send-email-jaysoffian@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Santi Bejar" <sbejar@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 18 11:16:39 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Jay Soffian <jaysoffian@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 18 11:21:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JR335-0001Bn-KN
-	for gcvg-git-2@gmane.org; Mon, 18 Feb 2008 11:16:36 +0100
+	id 1JR37L-0002WG-VB
+	for gcvg-git-2@gmane.org; Mon, 18 Feb 2008 11:21:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756494AbYBRKPu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Feb 2008 05:15:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756369AbYBRKPu
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Feb 2008 05:15:50 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:44053 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755822AbYBRKPt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Feb 2008 05:15:49 -0500
-Received: from a-sasl-quonix.pobox.com (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 58FB74B74;
-	Mon, 18 Feb 2008 05:15:46 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.pobox.com (Postfix) with ESMTP id
- 24FA64B71; Mon, 18 Feb 2008 05:15:43 -0500 (EST)
-In-Reply-To: <87hcg77i6i.fsf@gmail.com> (Santi Bejar's message of "Sun, 17
- Feb 2008 15:48:21 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1756999AbYBRKUZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Feb 2008 05:20:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756966AbYBRKUZ
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Feb 2008 05:20:25 -0500
+Received: from an-out-0708.google.com ([209.85.132.247]:44532 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756973AbYBRKUY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Feb 2008 05:20:24 -0500
+Received: by an-out-0708.google.com with SMTP id d31so373857and.103
+        for <git@vger.kernel.org>; Mon, 18 Feb 2008 02:20:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date:message-id:x-mailer:mime-version:content-type:content-transfer-encoding;
+        bh=qVSiYi5FUyQYhcX/kQTcPu/UewlpK5mYVBRaVwvbJ1U=;
+        b=e8yRuXaofBfClwFK9TA1r7TywSJh/Z/ZY89n/2acyH6wU5pu9PmjnhNQFOdq7PIbxaAMvL+GpkHghawsrHnOnt7A9k3Q4WMKP6L9BHRpL8atty8S8IeAw6ap5obfA4on7mazJgen+6uGPAfMGCw/7hT/L4kFx8ixMG7IS1AwcjQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version:content-type:content-transfer-encoding;
+        b=HULtYeRQt6AFTzFeow8T9A+tTS2xJ55xNcHFnGqK55390N/dVikrxY6lDkfTHHYWCE2oP5Ukzia23+vJdLr8rUwNoObtiYW1Qea7LTg0k6Kg+KRPXpZEeGO+lhf0t1G0uaDGUZ3F+H3WqfbX943IaDvB+t7RfXUh+NbEz6ol3z0=
+Received: by 10.100.121.12 with SMTP id t12mr10928127anc.114.1203330023350;
+        Mon, 18 Feb 2008 02:20:23 -0800 (PST)
+Received: from localhost ( [75.189.159.45])
+        by mx.google.com with ESMTPS id c23sm11240629ana.15.2008.02.18.02.20.22
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 18 Feb 2008 02:20:22 -0800 (PST)
+X-Mailer: git-send-email 1.5.4.2.183.g9fe5b
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74255>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74256>
 
-"Santi Bejar" <sbejar@gmail.com> writes:
+options was missing OPT_END
 
-> P.D: Does anyone know how can I know the reason for the drops?
+Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
+---
+ builtin-checkout.c |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
-I'd love to know that myself.
-
-It would be interesting to install the kernel's checkpatch.pl
-as anti-bogo-style filter on the mailing list ;-)
-
-> diff --git a/generate-cmdlist.sh b/generate-cmdlist.sh
-> index a2913c2..ec623dd 100755
-> --- a/generate-cmdlist.sh
-> +++ b/generate-cmdlist.sh
-> @@ -3,22 +3,36 @@
->  echo "/* Automatically generated by $0 */
->  struct cmdname_help
->  {
-> -    char name[16];
-> +    char name[23];
->      char help[80];
-> +    char topic[22];
-> +    char subtopic[10];
->  };
-
-These limits are very magic.  If you are generating them in the
-script perhaps you would want to count bytes?
-
-I dunno.  Honestly, I am not very interested in this patch
-myself.
-
-	Side Note: my not being interested does not mean I
-        strongly oppose to its inclusion (I do not even care).
-        It is just that I won't be the one who will be pushing
-        for its inclusion, and you would want supporters other
-        than me to push for it.
-
-> -static struct cmdname_help common_cmds[] = {"
-> +struct topicname_help
-> +{
-> +    char name[23];
-> +    char subtopic[10];
-> +    char help[80];
-> +};
-
-Likewise.
-
-> -sed -n -e 's/^git-\([^ 	]*\)[ 	].* common.*/\1/p' command-list.txt |
-> -sort |
-> -while read cmd
-> +static struct cmdname_help cmd_list[] = {"
-> +
-> +sed -n -e 's/^git-\([^ 	]*\)\(.*\)$/\1\2/p' command-list.txt |
-> +grep -v deprecated | sort |
-> +while read cmd topic subtopic
-
-I do not like this pipeline to send output of sed to an _overly_
-loose grep.  What happens when we introduce "git-deprecated"
-command later?
-
->  do
->       sed -n '
-> -     /NAME/,/git-'"$cmd"'/H
-> +     /^NAME$/,/git-'"$cmd"'/H
-
-Good tightening.
-
->       ${
->              x
-> -            s/.*git-'"$cmd"' - \(.*\)/  {"'"$cmd"'", "\1"},/
-> +            s/.*git-'"$cmd"' - \(.*\)/  {"'"$cmd"'", "\1",/
->  	    p
->       }' "Documentation/git-$cmd.txt"
-> +     echo  "\"$topic\", \"$subtopic\" },"
-
-Breaks nicely indented entries like:
-
-    {"add", "Add file contents...
-
-> diff --git a/help.c b/help.c
-> index 6e28ad9..0e3a350 100644
-> --- a/help.c
-> +++ b/help.c
-> @@ -262,20 +262,48 @@ static void list_commands(void)
-> ...
-
-> +	for (i = 0; i < ARRAY_SIZE(cmd_list); i++) {
-> +		if (strcmp(cmd_list[i].topic, topic)) continue;
-> +		if (!strcmp(topic_list[i].subtopic,"") &&
-> +		    strcmp(cmd_list[i].subtopic, subtopic)) continue;
-> +		if (longest < strlen(cmd_list[i].name))
-> +			longest = strlen(cmd_list[i].name);
->  	}
-
-Style.  A statement comes on its own line, even if it is a
-"continue" statement.
-
-> +	for (i = 0; i < ARRAY_SIZE(cmd_list); i++) {
-> +		if (strcmp(cmd_list[i].topic, topic)) continue;
-> +		if (!strcmp(topic_list[i].subtopic,"") &&
-> +		    strcmp(cmd_list[i].subtopic, subtopic)) continue;
-> +			printf("   %s   ", cmd_list[i].name);
-> +			mput_char(' ', longest - strlen(cmd_list[i].name));
-> +			puts(cmd_list[i].help);
-> +	}
-> +	putchar('\n');
-
-Likewise.
-
-> +void list_topics_help()
-> +{
-> +	int i;
-> +	for (i = 0; i < ARRAY_SIZE(topic_list); i++) {
-> +		if(strcmp(topic_list[i].subtopic,"")) continue;
-> +		list_topic_cmds_help(topic_list[i].name,"");
->  	}
->  }
-
-Style.  Have a SP before '(' if the previous token is not a
-function name.
-
-> diff --git a/topic-list.txt b/topic-list.txt
-> new file mode 100644
-> index 0000000..2ba11a9
-> --- /dev/null
-> +++ b/topic-list.txt
-> @@ -0,0 +1,12 @@
-> +# List of known git topics.
-> +# topic name				help
-> +common                                  The most commonly used commands
-> +mainporcelain                           Main porcelain commands
-> ...
-> +synchelpers				Synching helper commands
-> +purehelpers				Internal helper commands
-
-I wonder if this can be shared with the section headings of
-Documentation/git.txt; either generate the section headings from
-this file, or generate this file from the section headings.
+diff --git a/builtin-checkout.c b/builtin-checkout.c
+index 9370ba0..0d19835 100644
+--- a/builtin-checkout.c
++++ b/builtin-checkout.c
+@@ -545,6 +545,7 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
+ 		OPT_BOOLEAN( 0 , "track", &opts.track, "track"),
+ 		OPT_BOOLEAN('f', NULL, &opts.force, "force"),
+ 		OPT_BOOLEAN('m', NULL, &opts.merge, "merge"),
++		OPT_END(),
+ 	};
+ 
+ 	memset(&opts, 0, sizeof(opts));
+-- 
+1.5.4.2.183.g9fe5b
