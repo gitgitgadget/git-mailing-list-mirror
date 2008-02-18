@@ -1,105 +1,84 @@
 From: Charles Bailey <charles@hashpling.org>
-Subject: Re: [PATCH 1/2] Tidy up git mergetool's backup file behaviour and variable names
-Date: Mon, 18 Feb 2008 08:08:41 +0000
-Message-ID: <20080218080841.GA12008@hashpling.org>
-References: <9543203388d64839de78822efb538903fc15bf7f.1203251306.git.charles@hashpling.org> <7vy79jsza1.fsf@gitster.siamese.dyndns.org>
+Subject: Re: [RFC/PATCH] Teach git mergetool to use custom commands defined at config time
+Date: Mon, 18 Feb 2008 08:14:46 +0000
+Message-ID: <20080218081446.GB12008@hashpling.org>
+References: <20080216185349.GA29177@hashpling.org> <CD749541-1B3B-4EA7-82A5-0DFC67B953BE@zib.de> <20080217002029.GA504@hashpling.org> <alpine.LSU.1.00.0802170045210.30505@racer.site> <20080217005620.GB504@hashpling.org> <7vbq6g758h.fsf@gitster.siamese.dyndns.org> <FBA2E61E-5CAF-49E3-A917-ACDD10586928@zib.de> <20080217214942.GJ8905@mit.edu> <7vir0nxg0c.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Theodore Ts'o" <tytso@mit.edu>
+Cc: Theodore Tso <tytso@MIT.EDU>, Steffen Prohaska <prohaska@zib.de>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 18 09:10:19 2008
+X-From: git-owner@vger.kernel.org Mon Feb 18 09:16:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JR14t-0007e1-B3
-	for gcvg-git-2@gmane.org; Mon, 18 Feb 2008 09:10:19 +0100
+	id 1JR1AW-0000dE-Lo
+	for gcvg-git-2@gmane.org; Mon, 18 Feb 2008 09:16:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754567AbYBRIJo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Feb 2008 03:09:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754514AbYBRIJn
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Feb 2008 03:09:43 -0500
-Received: from pih-relay08.plus.net ([212.159.14.134]:58757 "EHLO
-	pih-relay08.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754150AbYBRIJn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Feb 2008 03:09:43 -0500
+	id S1753368AbYBRIPd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Feb 2008 03:15:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753574AbYBRIPd
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Feb 2008 03:15:33 -0500
+Received: from ptb-relay01.plus.net ([212.159.14.212]:58429 "EHLO
+	ptb-relay01.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753081AbYBRIPc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Feb 2008 03:15:32 -0500
 Received: from [212.159.69.125] (helo=hashpling.plus.com)
-	 by pih-relay08.plus.net with esmtp (Exim) id 1JR14G-00048R-01; Mon, 18 Feb 2008 08:09:40 +0000
+	 by ptb-relay01.plus.net with esmtp (Exim) id 1JR19V-0003i7-1D; Mon, 18 Feb 2008 08:15:05 +0000
 Received: from fermat.hashpling.org (fermat.hashpling.org [127.0.0.1])
-	by hashpling.plus.com (8.13.8/8.13.6) with ESMTP id m1I88gQW012373;
-	Mon, 18 Feb 2008 08:08:42 GMT
+	by hashpling.plus.com (8.13.8/8.13.6) with ESMTP id m1I8EkJf012422;
+	Mon, 18 Feb 2008 08:14:46 GMT
 Received: (from charles@localhost)
-	by fermat.hashpling.org (8.13.8/8.13.6/Submit) id m1I88goW012372;
-	Mon, 18 Feb 2008 08:08:42 GMT
+	by fermat.hashpling.org (8.13.8/8.13.6/Submit) id m1I8Ek1B012421;
+	Mon, 18 Feb 2008 08:14:46 GMT
 Content-Disposition: inline
-In-Reply-To: <7vy79jsza1.fsf@gitster.siamese.dyndns.org>
+In-Reply-To: <7vir0nxg0c.fsf@gitster.siamese.dyndns.org>
 User-Agent: Mutt/1.4.2.1i
-X-Plusnet-Relay: e2648eb662abde8f69072da62ef9f5b6
+X-Plusnet-Relay: b50a172760be2a39ef757964f9c860b8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74240>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74241>
 
-On Sun, Feb 17, 2008 at 07:45:42PM -0800, Junio C Hamano wrote:
-> Charles Bailey <charles@hashpling.org> writes:
+On Sun, Feb 17, 2008 at 04:30:43PM -0800, Junio C Hamano wrote:
+> Theodore Tso <tytso@MIT.EDU> writes:
 > 
-> > Currently a backup pre-merge file with conflict markers is sometimes
-> > kept with a .orig extenstion and sometimes removed depending on the
-> > particular merge tool used.
-> >
-> > This patch makes the handling consistent across all merge tools and
-> > configurable via a new mergetool.keepBackup config variable
-> >
-> > Changed the merge file path variable to MERGED for consistency with the
-> > names of the merge temporary filename variables. This done with the
-> > intention of having these variables used by user scripts in a subsequent
-> > custom merge tool patch.
+> > I have no objection to a generic mechanism, but I don't see the value
+> > of Charles suggestion to rip out support for the existing tools
+> > supported by git-mergetool.
 > 
-> I would have preferred two separate patches, one s/path/MERGED/
-> and the other save/remove clean-up, which would be much easier
-> way to review, but this is what we have, so let's work on this
-> version.
+> I missed that suggestion but I agree removing existing support
+> would not make much sense.
 
-Fair enough, I'll send an update.
+As I said in an earlier reply this was really more of a thought
+exercise about my patch than a serious suggestion for integration.
+
+> > I think it *would* be better to use %(foo) extrapolation that
+> > environment variables, so that it's not required for users to write
+> > shell scripts unless absolutely necessary.
 > 
-> > +mergetool.keepBackup::
-> > +	After performing a merge, the original file with conflict markers
-> > +	can be saved as a file with a `.orig` extension.  If this variable
-> > +	is set to `false` then this file is not preserved.
-> > +
-> 
-> s/$/  Defaults to true (i.e. keep the backup files)/.
+> Hmm, although I do not have strong opinions either way, I think
+> the necessary interface is narrow enough that we could use
+> environment variables here.  Charles's implementation does
+> "eval" but it is easy to replace it to run the custom command
+> after exporting the necessary variables, isn't it?
 
-Noted.
+Do you mean instead of:
 
-> We might also want a command line option to override the user's
-> usual default specified with this configuration but that can be
-> left for later rounds.
+( eval $tool )
 
-Agreed, I'll tackle this later, given time.
+something like:
+BASE="$BASE" LOCAL="$LOCAL" REMOTE="$REMOTE" MERGED="$MERGED" $tool
 
-> > @@ -112,11 +112,11 @@ resolve_deleted_merge () {
-> >  }
-> >  
-> >  check_unchanged () {
-> > -    if test "$path" -nt "$BACKUP" ; then
-> > +    if test "$MERGED" -nt "$BACKUP" ; then
-> 
-> I think this is the cause of your automated test sometimes
-> needing 1 sec sleep.  This check should perhaps be done with a
-> "!  cmp $MERGED $BACKUP >/dev/null", which would succeed if the
-> user's interaction with the backend tool touched the file.
+In this case we can skip the whole s/path/MERGED/ patch as it is
+unnecessary, and should we now GIT_ prefix the variables as they will
+intrude on the environment of the spawned command (not just a specific
+sub-shell)? 
 
-I don't think that we should spend too much time on this seeing as I
-now fail to reproduce it, but as the code was avoiding the interactive
-path (i.e. trusting the exit code), it shouldn't have been this check.
+Let me know what you think and I can integrate it into my next patch
+version.
 
-> 
-> The rest of the patch looked fine to me.
-> 
-> We might also want to add -y (assume "Yes" answer to "Did you
-> resolve it" question without actually asking) command line
-> option to the script, but that would be for later rounds.
-
-Yes, and this would help the automated tests.
+Charles.
