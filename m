@@ -1,93 +1,74 @@
-From: "Lars Hjemli" <hjemli@gmail.com>
-Subject: Re: [PATCH 1/5] Add platform-independent .git "symlink"
-Date: Mon, 18 Feb 2008 09:35:27 +0100
-Message-ID: <8c5c35580802180035q3d914720x54aa7e32d6e82108@mail.gmail.com>
-References: <1203286456-26033-1-git-send-email-hjemli@gmail.com>
-	 <1203286456-26033-2-git-send-email-hjemli@gmail.com>
-	 <7v7ih2u8e1.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] xdl_merge(): make XDL_MERGE_ZEALOUS output simpler
+Date: Mon, 18 Feb 2008 00:35:57 -0800
+Message-ID: <7vy79ir79u.fsf@gitster.siamese.dyndns.org>
+References: <A21B3CA8-6240-434F-87A9-C6F76DA15265@gmail.com>
+ <alpine.LFD.1.00.0802121544370.2920@woody.linux-foundation.org>
+ <alpine.LSU.1.00.0802130003370.3870@racer.site>
+ <alpine.LSU.1.00.0802130108060.3870@racer.site>
+ <7v3arxzlke.fsf@gitster.siamese.dyndns.org>
+ <alpine.LSU.1.00.0802131113360.30505@racer.site>
+ <7vlk5mgm5y.fsf@gitster.siamese.dyndns.org>
+ <alpine.LFD.1.00.0802151012380.3066@woody.linux-foundation.org>
+ <alpine.LSU.1.00.0802171816150.30505@racer.site>
+ <alpine.LSU.1.00.0802171906590.30505@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 18 09:36:10 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Voltage Spike <voltspike@gmail.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Feb 18 09:37:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JR1Tt-0005pe-Di
-	for gcvg-git-2@gmane.org; Mon, 18 Feb 2008 09:36:09 +0100
+	id 1JR1Uf-000656-Mx
+	for gcvg-git-2@gmane.org; Mon, 18 Feb 2008 09:36:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754751AbYBRIf2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Feb 2008 03:35:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754430AbYBRIf2
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Feb 2008 03:35:28 -0500
-Received: from wa-out-1112.google.com ([209.85.146.177]:63405 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754250AbYBRIf1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Feb 2008 03:35:27 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so2681143wah.23
-        for <git@vger.kernel.org>; Mon, 18 Feb 2008 00:35:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=Iw86ILcU93BSPm0y9WsnIEKJ9J8Bfqb18XfzGfTm74U=;
-        b=cXipit1/vTVeS7LkiQCzEqVYklZIEvr+kLlZ6uYQTB8UDgKGOQatRjO328QzoL2rsRGroh/HRsTfF2Alz4hJAecukkfbVR+vZ/HIkId24gVu99El15TppMM/g/iF5ZGpb7WZ+ysKzh0HzqmeT38ezHJroC98eH5Lc+RM4vXGWBo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=ZYitg/LiohxCyPXXJMPNPFt/QBGPmvAPJZpybUJnThF1ZoN9TethvASD6+DmZiYojEYxK4wta5g2OY9fQYFgZYlmEpb/B+h8jYrxiuZpfywl4+fsBnxQ2Iy6c5FhoZ5Db9tbVKp290/QnhYxDmmGWp8qSDvRoQjgXG9ZZyGiuKg=
-Received: by 10.114.120.1 with SMTP id s1mr1548343wac.125.1203323727369;
-        Mon, 18 Feb 2008 00:35:27 -0800 (PST)
-Received: by 10.115.92.8 with HTTP; Mon, 18 Feb 2008 00:35:27 -0800 (PST)
-In-Reply-To: <7v7ih2u8e1.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1754430AbYBRIgW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Feb 2008 03:36:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754612AbYBRIgW
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Feb 2008 03:36:22 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:48007 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754250AbYBRIgV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Feb 2008 03:36:21 -0500
+Received: from a-sasl-quonix.pobox.com (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 549D878CE;
+	Mon, 18 Feb 2008 03:36:20 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.pobox.com (Postfix) with ESMTP id
+ 77F2A78CD; Mon, 18 Feb 2008 03:36:10 -0500 (EST)
+In-Reply-To: <alpine.LSU.1.00.0802171906590.30505@racer.site> (Johannes
+ Schindelin's message of "Sun, 17 Feb 2008 19:07:19 +0000 (GMT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74242>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74243>
 
-On Feb 18, 2008 6:43 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Lars Hjemli <hjemli@gmail.com> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+
+> When a merge conflicts, there are often less than three common lines
+> between two conflicting regions.
 >
-> > This patch allows .git to be a regular textfile containing the path of
-> > the real git directory (formatted like "gitdir: <path>\n"), which is
-> > useful on platforms lacking support for real symlinks.
+> Since a conflict takes up as many lines as are conflicting, plus three
+> lines for the commit markers,  the output will be shorter (and thus,
+> simpler) in this case, if the common lines will be merged into the
+> conflicting regions.
 >
-> I think a sane simplification is to allow the file to have
-> any number of optional \r or \n at the end.
+> This patch merges up to three common lines into the conflicts.
 
-Agreed.
+I can give immediate positive feedback to this.
 
-> > +     len = read_in_full(fd, buf, sizeof(buf));
-> > +     close(fd);
-> > +     if (len != st.st_size)
-> > +             return NULL;
-> > +     if (!len || buf[len - 1] != '\n')
-> > +             return NULL;
-> > +     buf[len - 1] = '\0';
-> > +     if (prefixcmp(buf, "gitdir: "))
-> > +             return NULL;
->
-> But I am not sure about this part.  We found what claims to be
-> the ".git" fake symlink but it is ill-formed.  Don't we want to
-> diagnose the possible breakage for the user?
+When I rebuilt "next" last night, I considered rebasing its
+constituent branches while I was at it (I ended up not doing
+that as I felt it was too much).
 
-Yes, I think I got to eager in my 'gentleness'. It's probably better
-to die() with an appropriate errormessage.
-
->
-> > +/*
-> > +     if (!is_git_directory(buf + 8))
-> > +             return NULL;
-> > +*/
->
-> Likewise.
-
-True, I'll uncomment and die().
-
-Thanks for the review.
-
---
-larsh
+The tip of js/reflog-delete used to be at cb97cc9.  Rebasing
+this on top of any recent master will give you unreadable
+conflicts in t/t1410-reflog.sh, but with these two patches (but
+the second one does not have chance to kick in for this
+particular case) the result is quite obvious and much cleaner.
