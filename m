@@ -1,96 +1,83 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH 1/4] Improve message-id generation flow control for
- format-patch
-Date: Mon, 18 Feb 2008 12:43:09 -0500 (EST)
-Message-ID: <alpine.LNX.1.00.0802181229340.5816@iabervon.org>
-References: <alpine.LNX.1.00.0802171335240.5816@iabervon.org> <alpine.LSU.1.00.0802181238280.30505@racer.site>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] cvsexportcommit: be graceful when "cvs status" reorders
+ the arguments
+Date: Mon, 18 Feb 2008 17:43:08 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0802181739450.30505@racer.site>
+References: <alpine.LSU.1.00.0802180127100.30505@racer.site> <7vbq6fvudp.fsf@gitster.siamese.dyndns.org> <7vwsp3uf0u.fsf@gitster.siamese.dyndns.org> <47B9A354.7070905@catalyst.net.nz> <alpine.LSU.1.00.0802181624490.30505@racer.site>
+ <47B9B35B.7040200@catalyst.net.nz>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Feb 18 18:43:54 2008
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Robin Rosenberg <robin.rosenberg@dewire.com>
+To: Martin Langhoff <martin@catalyst.net.nz>
+X-From: git-owner@vger.kernel.org Mon Feb 18 18:44:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JRA1w-00083A-PN
-	for gcvg-git-2@gmane.org; Mon, 18 Feb 2008 18:43:53 +0100
+	id 1JRA2C-00088K-1W
+	for gcvg-git-2@gmane.org; Mon, 18 Feb 2008 18:44:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751980AbYBRRnS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Feb 2008 12:43:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751847AbYBRRnS
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Feb 2008 12:43:18 -0500
-Received: from iabervon.org ([66.92.72.58]:55510 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751473AbYBRRnR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Feb 2008 12:43:17 -0500
-Received: (qmail 23275 invoked by uid 1000); 18 Feb 2008 17:43:09 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 18 Feb 2008 17:43:09 -0000
-In-Reply-To: <alpine.LSU.1.00.0802181238280.30505@racer.site>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1752086AbYBRRnX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Feb 2008 12:43:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751847AbYBRRnX
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Feb 2008 12:43:23 -0500
+Received: from mail.gmx.net ([213.165.64.20]:45990 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752060AbYBRRnW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Feb 2008 12:43:22 -0500
+Received: (qmail invoked by alias); 18 Feb 2008 17:43:20 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp040) with SMTP; 18 Feb 2008 18:43:20 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/u6aRA96juWd8ryLAue308/gAsLWpi4AqlROQvfe
+	Kp0FCHmJCnPCo3
+X-X-Sender: gene099@racer.site
+In-Reply-To: <47B9B35B.7040200@catalyst.net.nz>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74320>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74321>
 
-On Mon, 18 Feb 2008, Johannes Schindelin wrote:
+Hi,
 
-> Hi,
-> 
-> On Sun, 17 Feb 2008, Daniel Barkalow wrote:
-> 
-> > diff --git a/builtin-log.c b/builtin-log.c
-> > index 99d69f0..867cc13 100644
-> > --- a/builtin-log.c
-> > +++ b/builtin-log.c
-> > @@ -575,16 +575,19 @@ static void get_patch_ids(struct rev_info *rev, struct patch_ids *ids, const cha
-> >  	o2->flags = flags2;
-> >  }
-> >  
-> > -static void gen_message_id(char *dest, unsigned int length, char *base)
-> > +static void gen_message_id(struct rev_info *info, char *base)
-> >  {
-> >  	const char *committer = git_committer_info(IDENT_WARN_ON_NO_NAME);
-> >  	const char *email_start = strrchr(committer, '<');
-> >  	const char *email_end = strrchr(committer, '>');
-> > -	if(!email_start || !email_end || email_start > email_end - 1)
-> > +	struct strbuf buf;
-> > +	if (!email_start || !email_end || email_start > email_end - 1)
-> >  		die("Could not extract email from committer identity.");
-> > -	snprintf(dest, length, "%s.%lu.git.%.*s", base,
-> > -		 (unsigned long) time(NULL),
-> > -		 (int)(email_end - email_start - 1), email_start + 1);
-> > +	strbuf_init(&buf, 0);
-> > +	strbuf_addf(&buf, "%s.%lu.git.%.*s", base,
-> > +		    (unsigned long) time(NULL),
-> > +		    (int)(email_end - email_start - 1), email_start + 1);
-> > +	info->message_id = strbuf_detach(&buf, NULL);
-> 
-> With this last line, and...
-> 
-> > @@ -809,15 +810,13 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
-> >  		rev.nr = total - nr + (start_number - 1);
-> >  		/* Make the second and subsequent mails replies to the first */
-> >  		if (thread) {
-> > -			if (nr == (total - 2)) {
-> > -				strncpy(ref_message_id, message_id,
-> > -					sizeof(ref_message_id));
-> > -				ref_message_id[sizeof(ref_message_id)-1]='\0';
-> > -				rev.ref_message_id = ref_message_id;
-> > +			if (rev.message_id) {
-> > +				if (rev.ref_message_id)
-> > +					free((char *) rev.message_id);
-> 
-> ... this one, you should make the message_id member of struct rev_info a 
-> "char *".  At least for this developer, "const char *" is a sign that the 
-> caller should clean up, and that the pointer _might_ point to a constant.
+On Tue, 19 Feb 2008, Martin Langhoff wrote:
 
-It's sort of like that, in that this *is* the caller, and it's using 
-gen_message_id to set it and cleaning it up, and it could put in a 
-constant (in which case it would have to know this and not free it), but I 
-agree that it's more suggestive of the right things as a "char *".
+> Johannes Schindelin wrote:
+>
+> > Note that for this reason, only the "File:" output -- which does not 
+> > show slashes, but only the basenames -- is used to match the files.  
+> > We need the full path in the git repository, though, to apply the 
+> > patches.
+> 
+> Yes - that's ugly. We have a couple of options
+> 
+>  - Run cvs status once per directory we touch. Use -l tomake it
+> non-recursive. It will be a tad slower/chattier.
 
-	-Daniel
-*This .sig left intentionally blank*
+I think that my approach is a bit faster: make lists with unique 
+basenames.  In the most common case, there will be only one list, I 
+suspect.
+
+>  - Parse the 'Repository revision:' line to find out what path on the
+> server matches our repo 'root'.
+
+I am not so sure.  It _should_ be reconstructible by CVS/Repository + 
+dirname + basename, but I guess that it makes us susceptible to other CVS 
+breakages.  Whereas I think that we will be fine, relying on the basename 
+in the File: line.
+
+> > Thanks.  I am confident that I will have posted another version by the 
+> > time you come around to review it.
+> 
+> Great! Careful, you might end up enjoying Perl ;-)
+
+Heh.  I always said that I like Perl, because it's easier to tell who's 
+an expert, than for, say, Python.  Unfortunately, that means that it is 
+easy to see that I am not an expert myself :-(
+
+Ciao,
+Dscho
