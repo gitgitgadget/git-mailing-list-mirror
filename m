@@ -1,94 +1,76 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/4] Improve message-id generation flow control for
- format-patch
-Date: Mon, 18 Feb 2008 12:41:10 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802181238280.30505@racer.site>
-References: <alpine.LNX.1.00.0802171335240.5816@iabervon.org>
+Subject: Re: [PATCH 2/4] Export some email and pretty-printing functions
+Date: Mon, 18 Feb 2008 12:44:48 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0802181241440.30505@racer.site>
+References: <alpine.LNX.1.00.0802171335460.5816@iabervon.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Mon Feb 18 13:42:02 2008
+X-From: git-owner@vger.kernel.org Mon Feb 18 13:45:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JR5Jm-0006bl-G4
-	for gcvg-git-2@gmane.org; Mon, 18 Feb 2008 13:41:58 +0100
+	id 1JR5NI-0007kj-H8
+	for gcvg-git-2@gmane.org; Mon, 18 Feb 2008 13:45:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758801AbYBRMlY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Feb 2008 07:41:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758786AbYBRMlX
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Feb 2008 07:41:23 -0500
-Received: from mail.gmx.net ([213.165.64.20]:39284 "HELO mail.gmx.net"
+	id S1758786AbYBRMpB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Feb 2008 07:45:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758641AbYBRMpA
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Feb 2008 07:45:00 -0500
+Received: from mail.gmx.net ([213.165.64.20]:50943 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1758672AbYBRMlX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Feb 2008 07:41:23 -0500
-Received: (qmail invoked by alias); 18 Feb 2008 12:41:21 -0000
+	id S1758606AbYBRMpA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Feb 2008 07:45:00 -0500
+Received: (qmail invoked by alias); 18 Feb 2008 12:44:58 -0000
 Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp016) with SMTP; 18 Feb 2008 13:41:21 +0100
+  by mail.gmx.net (mp050) with SMTP; 18 Feb 2008 13:44:58 +0100
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+XbhoXRHqXFuIjUUHV5aEEi0anEubWFgnUairQ/s
-	bd0Hi35/9DvNai
+X-Provags-ID: V01U2FsdGVkX18swakosW8sAbnwNY6BZ97nrQ3RNqwR+5PO6TUspA
+	Mv/nwvcJu9yrrC
 X-X-Sender: gene099@racer.site
-In-Reply-To: <alpine.LNX.1.00.0802171335240.5816@iabervon.org>
+In-Reply-To: <alpine.LNX.1.00.0802171335460.5816@iabervon.org>
 User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74276>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74277>
 
 Hi,
 
 On Sun, 17 Feb 2008, Daniel Barkalow wrote:
 
-> diff --git a/builtin-log.c b/builtin-log.c
-> index 99d69f0..867cc13 100644
-> --- a/builtin-log.c
-> +++ b/builtin-log.c
-> @@ -575,16 +575,19 @@ static void get_patch_ids(struct rev_info *rev, struct patch_ids *ids, const cha
->  	o2->flags = flags2;
->  }
->  
-> -static void gen_message_id(char *dest, unsigned int length, char *base)
-> +static void gen_message_id(struct rev_info *info, char *base)
->  {
->  	const char *committer = git_committer_info(IDENT_WARN_ON_NO_NAME);
->  	const char *email_start = strrchr(committer, '<');
->  	const char *email_end = strrchr(committer, '>');
-> -	if(!email_start || !email_end || email_start > email_end - 1)
-> +	struct strbuf buf;
-> +	if (!email_start || !email_end || email_start > email_end - 1)
->  		die("Could not extract email from committer identity.");
-> -	snprintf(dest, length, "%s.%lu.git.%.*s", base,
-> -		 (unsigned long) time(NULL),
-> -		 (int)(email_end - email_start - 1), email_start + 1);
-> +	strbuf_init(&buf, 0);
-> +	strbuf_addf(&buf, "%s.%lu.git.%.*s", base,
-> +		    (unsigned long) time(NULL),
-> +		    (int)(email_end - email_start - 1), email_start + 1);
-> +	info->message_id = strbuf_detach(&buf, NULL);
+> diff --git a/commit.h b/commit.h
+> index 10e2b5d..42b4825 100644
+> --- a/commit.h
+> +++ b/commit.h
+> @@ -71,6 +71,21 @@ extern void pretty_print_commit(enum cmit_fmt fmt, const struct commit*,
+>                                  int abbrev, const char *subject,
+>                                  const char *after_subject, enum date_mode,
+>  				int non_ascii_present);
+> +void add_user_info(const char *what, enum cmit_fmt fmt, struct strbuf *sb,
+> +		   const char *line, enum date_mode dmode,
+> +		   const char *encoding);
+> +void pp_title_line(enum cmit_fmt fmt,
+> +		   const char **msg_p,
+> +		   struct strbuf *sb,
+> +		   const char *subject,
+> +		   const char *after_subject,
+> +		   const char *encoding,
+> +		   int plain_non_ascii);
+> +void pp_remainder(enum cmit_fmt fmt,
+> +		  const char **msg_p,
+> +		  struct strbuf *sb,
+> +		  int indent);
+> +
 
-With this last line, and...
-
-> @@ -809,15 +810,13 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
->  		rev.nr = total - nr + (start_number - 1);
->  		/* Make the second and subsequent mails replies to the first */
->  		if (thread) {
-> -			if (nr == (total - 2)) {
-> -				strncpy(ref_message_id, message_id,
-> -					sizeof(ref_message_id));
-> -				ref_message_id[sizeof(ref_message_id)-1]='\0';
-> -				rev.ref_message_id = ref_message_id;
-> +			if (rev.message_id) {
-> +				if (rev.ref_message_id)
-> +					free((char *) rev.message_id);
-
-... this one, you should make the message_id member of struct rev_info a 
-"char *".  At least for this developer, "const char *" is a sign that the 
-caller should clean up, and that the pointer _might_ point to a constant.
+In addition to Junio's concern that add_user_info() really wants to be 
+called pp_add_user_info(), I cannot help myself but suspect that 
+pp_write_email_headers() -- which called for a new name, too -- also wants 
+to live in pretty.c.
 
 Ciao,
 Dscho
