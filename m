@@ -1,95 +1,96 @@
-From: Wink Saville <wink@saville.com>
-Subject: Re: asciidoc 8
-Date: Mon, 18 Feb 2008 09:37:27 -0800
-Message-ID: <47B9C257.5050109@saville.com>
-References: <47B8CFFF.6090902@saville.com> <54BC65FA-F388-458F-9610-76B7C1413AD3@wincent.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH 1/4] Improve message-id generation flow control for
+ format-patch
+Date: Mon, 18 Feb 2008 12:43:09 -0500 (EST)
+Message-ID: <alpine.LNX.1.00.0802181229340.5816@iabervon.org>
+References: <alpine.LNX.1.00.0802171335240.5816@iabervon.org> <alpine.LSU.1.00.0802181238280.30505@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Wincent Colaiuta <win@wincent.com>
-X-From: git-owner@vger.kernel.org Mon Feb 18 18:38:11 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Feb 18 18:43:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JR9wN-0005cO-03
-	for gcvg-git-2@gmane.org; Mon, 18 Feb 2008 18:38:07 +0100
+	id 1JRA1w-00083A-PN
+	for gcvg-git-2@gmane.org; Mon, 18 Feb 2008 18:43:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752251AbYBRRhc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 18 Feb 2008 12:37:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752206AbYBRRhb
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Feb 2008 12:37:31 -0500
-Received: from rv-out-0910.google.com ([209.85.198.184]:37859 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752060AbYBRRha (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Feb 2008 12:37:30 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so1331644rvb.1
-        for <git@vger.kernel.org>; Mon, 18 Feb 2008 09:37:29 -0800 (PST)
-Received: by 10.141.20.7 with SMTP id x7mr3990696rvi.207.1203356249730;
-        Mon, 18 Feb 2008 09:37:29 -0800 (PST)
-Received: from ?192.168.0.133? ( [70.91.206.233])
-        by mx.google.com with ESMTPS id b39sm9888458rvf.8.2008.02.18.09.37.28
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 18 Feb 2008 09:37:28 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.6 (X11/20071022)
-In-Reply-To: <54BC65FA-F388-458F-9610-76B7C1413AD3@wincent.com>
+	id S1751980AbYBRRnS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Feb 2008 12:43:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751847AbYBRRnS
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Feb 2008 12:43:18 -0500
+Received: from iabervon.org ([66.92.72.58]:55510 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751473AbYBRRnR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Feb 2008 12:43:17 -0500
+Received: (qmail 23275 invoked by uid 1000); 18 Feb 2008 17:43:09 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 18 Feb 2008 17:43:09 -0000
+In-Reply-To: <alpine.LSU.1.00.0802181238280.30505@racer.site>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74319>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74320>
 
-Wincent Colaiuta wrote:
-> El 18/2/2008, a las 1:23, Wink Saville escribi=F3:
->
->> I ran into the asciidoc 8 issue where some of the docs don't
->> get generated properly on my system with asciidoc 8.2.1.
->>
->> Should I just downgrade? What would be the "best" version
->> to use.
->
-> I ran into problems with 8 a while ago, poked around for a while,=20
-> couldn't find the cause of the problem, and so downgraded to the 7=20
-> series (don't recall the exact version, but it was the last release i=
-n=20
-> the 7 series). I figured this was just the simplest thing to do seein=
-g=20
-> as the official manual page archives are generated with 7, as far as =
-I=20
-> know.
->
-> I know that later a fix for the breakage that I was seeing was checke=
-d=20
-> in (see 5162e69), so in theory 8 should be fine now (at least, the=20
-> latest version of it, but I see you're using an older version which=20
-> probably isn't affected by the link problem). What problem are you=20
-> seeing? What version of Git are you using?
->
-> Cheers,
-> Wincent
->
->
->
-I'm seeing the missing "+" problem which, after reading INSTALL, was=20
-fixed by adding
-ASCIIDOC8=3DYesPlease to my command line. But after doing that I was st=
-ill=20
-seeing .ft C like
-this:
+On Mon, 18 Feb 2008, Johannes Schindelin wrote:
 
-           .ft C
-                   URL: one of the above URL format
-                   Push: <refspec>
-                   Pull: <refspec>
+> Hi,
+> 
+> On Sun, 17 Feb 2008, Daniel Barkalow wrote:
+> 
+> > diff --git a/builtin-log.c b/builtin-log.c
+> > index 99d69f0..867cc13 100644
+> > --- a/builtin-log.c
+> > +++ b/builtin-log.c
+> > @@ -575,16 +575,19 @@ static void get_patch_ids(struct rev_info *rev, struct patch_ids *ids, const cha
+> >  	o2->flags = flags2;
+> >  }
+> >  
+> > -static void gen_message_id(char *dest, unsigned int length, char *base)
+> > +static void gen_message_id(struct rev_info *info, char *base)
+> >  {
+> >  	const char *committer = git_committer_info(IDENT_WARN_ON_NO_NAME);
+> >  	const char *email_start = strrchr(committer, '<');
+> >  	const char *email_end = strrchr(committer, '>');
+> > -	if(!email_start || !email_end || email_start > email_end - 1)
+> > +	struct strbuf buf;
+> > +	if (!email_start || !email_end || email_start > email_end - 1)
+> >  		die("Could not extract email from committer identity.");
+> > -	snprintf(dest, length, "%s.%lu.git.%.*s", base,
+> > -		 (unsigned long) time(NULL),
+> > -		 (int)(email_end - email_start - 1), email_start + 1);
+> > +	strbuf_init(&buf, 0);
+> > +	strbuf_addf(&buf, "%s.%lu.git.%.*s", base,
+> > +		    (unsigned long) time(NULL),
+> > +		    (int)(email_end - email_start - 1), email_start + 1);
+> > +	info->message_id = strbuf_detach(&buf, NULL);
+> 
+> With this last line, and...
+> 
+> > @@ -809,15 +810,13 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+> >  		rev.nr = total - nr + (start_number - 1);
+> >  		/* Make the second and subsequent mails replies to the first */
+> >  		if (thread) {
+> > -			if (nr == (total - 2)) {
+> > -				strncpy(ref_message_id, message_id,
+> > -					sizeof(ref_message_id));
+> > -				ref_message_id[sizeof(ref_message_id)-1]='\0';
+> > -				rev.ref_message_id = ref_message_id;
+> > +			if (rev.message_id) {
+> > +				if (rev.ref_message_id)
+> > +					free((char *) rev.message_id);
+> 
+> ... this one, you should make the message_id member of struct rev_info a 
+> "char *".  At least for this developer, "const char *" is a sign that the 
+> caller should clean up, and that the pointer _might_ point to a constant.
 
-           .ft
+It's sort of like that, in that this *is* the caller, and it's using 
+gen_message_id to set it and cleaning it up, and it could put in a 
+constant (in which case it would have to know this and not free it), but I 
+agree that it's more suggestive of the right things as a "char *".
 
-where "<pre>" blocks in the html documentation show up. I was first=20
-seeing the problems
-with git 1.5.4 and then yesterday built 1.5.4.2 and still have the abov=
-e=20
-problem.
-
-Wink Saville
+	-Daniel
+*This .sig left intentionally blank*
