@@ -1,77 +1,88 @@
-From: "Lars Hjemli" <hjemli@gmail.com>
-Subject: Re: [PATCH 2/5] Add platform-independent .git "symlink"
-Date: Mon, 18 Feb 2008 15:04:27 +0100
-Message-ID: <8c5c35580802180604w13e28cfdqce7aaad6676346e6@mail.gmail.com>
-References: <1203331463-13857-1-git-send-email-hjemli@gmail.com>
-	 <1203331463-13857-2-git-send-email-hjemli@gmail.com>
-	 <1203331463-13857-3-git-send-email-hjemli@gmail.com>
-	 <alpine.LSU.1.00.0802181217580.30505@racer.site>
-	 <8c5c35580802180518x5c392bddya21c48ea4db9a7cd@mail.gmail.com>
-	 <alpine.LSU.1.00.0802181334010.30505@racer.site>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] branch: optionally setup branch.*.merge from upstream
+ local branches
+Date: Mon, 18 Feb 2008 14:05:36 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0802181403040.30505@racer.site>
+References: alpine.LSU.1.00.0802181328380.30505@racer.site <1203342817-19653-1-git-send-email-jaysoffian@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Junio C Hamano" <gitster@pobox.com>
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Feb 18 15:06:00 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 18 15:06:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JR6cL-0000th-Cj
-	for gcvg-git-2@gmane.org; Mon, 18 Feb 2008 15:05:41 +0100
+	id 1JR6dU-0001Ht-Tn
+	for gcvg-git-2@gmane.org; Mon, 18 Feb 2008 15:06:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751617AbYBROE2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Feb 2008 09:04:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751431AbYBROE2
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Feb 2008 09:04:28 -0500
-Received: from wa-out-1112.google.com ([209.85.146.181]:1605 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751401AbYBROE1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Feb 2008 09:04:27 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so2814908wah.23
-        for <git@vger.kernel.org>; Mon, 18 Feb 2008 06:04:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=09ZQAdgUKZFZwjVPBrTgiSsMJHLtZf0qAojVTX8pLtY=;
-        b=Sd3VrU64TXl6ou22si5Q0pGtDjyM16RipUDZqZeR49duJ2O1H95onAlv0e/WSg5n5U1z6Y4QIl2SRS/gD0hO0cpvotJqnCsay5JSJokovyNlUsmbAU2s8eV/BMsohKIBQBk+iARrtNqDwOi00DpMDM5NUn9efG0EJKre9ir3Iog=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=xndETt0GdHnu4/fJF5jHgHGmyfNuVdnVVjwta+2/FAkuC032bthxwUdOZn7l7N88IP+F8xEwPY92rfNNc7/0RwC+C0fYdtfamyYxSxypG9RfGl5YB2FTf2kzBc8WqXCBC/swpmqkeG4FUo6BEUXsu31E5/lM9MXx9dsfhxaIWlo=
-Received: by 10.114.153.18 with SMTP id a18mr5803664wae.82.1203343467085;
-        Mon, 18 Feb 2008 06:04:27 -0800 (PST)
-Received: by 10.115.92.8 with HTTP; Mon, 18 Feb 2008 06:04:27 -0800 (PST)
-In-Reply-To: <alpine.LSU.1.00.0802181334010.30505@racer.site>
-Content-Disposition: inline
+	id S1751583AbYBROFu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Feb 2008 09:05:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751517AbYBROFu
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Feb 2008 09:05:50 -0500
+Received: from mail.gmx.net ([213.165.64.20]:58649 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751462AbYBROFt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Feb 2008 09:05:49 -0500
+Received: (qmail invoked by alias); 18 Feb 2008 14:05:46 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp055) with SMTP; 18 Feb 2008 15:05:46 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19S8nZfYRNSTvXVv201v3XWgQxAUn6TxOHnCGn9fk
+	h5GUl4V3bYrok0
+X-X-Sender: gene099@racer.site
+In-Reply-To: <1203342817-19653-1-git-send-email-jaysoffian@gmail.com>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74292>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74293>
 
-On Feb 18, 2008 2:35 PM, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> Hi,
->
-> On Mon, 18 Feb 2008, Lars Hjemli wrote:
->
-> > On Feb 18, 2008 1:34 PM, Johannes Schindelin wrote:
-> > >
-> > > [* snip *]
-> > >
-> > > So maybe we can just scratch all that, and I agree that an invalid
-> > > .git file means "no repository" (as opposed to "no valid repository").
-> > >
-> > > In that case, you might want to test for that, too...
-> >
-> > I think I do, did you find a loophole in the testing?
->
-> I meant writing a readable, but invalid .git file.  Then testing that Git
-> die()s with the correct message.
+Hi,
 
-Ah, sorry for being slow, that's an excellent suggestion. I'll update
-the test-script and resend 2/5.
+On Mon, 18 Feb 2008, Jay Soffian wrote:
 
---
-larsh
+>  Incorporated Johannes' second round of feedback.
+
+Not exactly.
+
+> diff --git a/branch.c b/branch.c
+> index 1fc8788..64f0a4a 100644
+> --- a/branch.c
+> +++ b/branch.c
+> @@ -37,7 +37,7 @@ static int find_tracked_branch(struct remote *remote, void *priv)
+>   * to infer the settings for branch.<new_ref>.{remote,merge} from the
+>   * config.
+>   */
+> -static int setup_tracking(const char *new_ref, const char *orig_ref)
+> +static int setup_tracking(const char *new_ref, const char *orig_ref, int always)
+>  {
+>  	char key[1024];
+>  	struct tracking tracking;
+> @@ -49,8 +49,12 @@ static int setup_tracking(const char *new_ref, const char *orig_ref)
+>  	memset(&tracking, 0, sizeof(tracking));
+>  	tracking.spec.dst = (char *)orig_ref;
+>  	if (for_each_remote(find_tracked_branch, &tracking) ||
+> -			!tracking.matches)
+> -		return 1;
+> +			!tracking.matches) {
+> +		if (!always)
+> +			return 1;
+> +		tracking.matches = 1;
+> +		tracking.src = xstrdup(orig_ref);
+> +	}
+>  
+
+This looks completely different than what I commented on.  And my comments 
+suggested a different solution.
+
+Unfortunately, I will not have time for the rest of the day to review that 
+new thing (it is not at all obvious for me why this works as intended, and 
+does not break anything else).
+
+But you can use the time to write some tests ;-)
+
+Ciao,
+Dscho
