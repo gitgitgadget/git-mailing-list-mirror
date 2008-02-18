@@ -1,70 +1,57 @@
-From: Martin Langhoff <martin@catalyst.net.nz>
-Subject: Re: [PATCH] cvsexportcommit: be graceful when "cvs status" reorders
- the arguments
-Date: Tue, 19 Feb 2008 04:25:08 +1300
-Message-ID: <47B9A354.7070905@catalyst.net.nz>
-References: <alpine.LSU.1.00.0802180127100.30505@racer.site> <7vbq6fvudp.fsf@gitster.siamese.dyndns.org> <7vwsp3uf0u.fsf@gitster.siamese.dyndns.org>
+From: =?utf-8?Q?R=C3=A9mi?= Vanicat <vanicat@debian.org>
+Subject: [PATCH v3 00/03] switching, branch creating branch and merging within Emacs
+Date: Mon, 18 Feb 2008 17:24:04 +0100
+Message-ID: <87zltyp717.dlv@maison.homelinux.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, Robin Rosenberg <robin.rosenberg@dewire.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 18 17:09:42 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Alexandre Julliard <julliard@winehq.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 18 17:24:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JR8Ym-0005OO-I3
-	for gcvg-git-2@gmane.org; Mon, 18 Feb 2008 17:09:40 +0100
+	id 1JR8nX-0002Sq-Ky
+	for gcvg-git-2@gmane.org; Mon, 18 Feb 2008 17:24:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753519AbYBRQJE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Feb 2008 11:09:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754448AbYBRQJE
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Feb 2008 11:09:04 -0500
-Received: from godel.catalyst.net.nz ([202.78.240.40]:44774 "EHLO
-	mail1.catalyst.net.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753039AbYBRQJC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Feb 2008 11:09:02 -0500
-Received: from leibniz.catalyst.net.nz ([202.78.240.7] helo=[127.0.0.1])
-	by mail1.catalyst.net.nz with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <martin@catalyst.net.nz>)
-	id 1JR8Xp-0001hQ-Bs; Tue, 19 Feb 2008 05:08:41 +1300
-User-Agent: Thunderbird 2.0.0.6 (X11/20071022)
-In-Reply-To: <7vwsp3uf0u.fsf@gitster.siamese.dyndns.org>
-X-Enigmail-Version: 0.95.0
+	id S1754198AbYBRQYT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 18 Feb 2008 11:24:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754680AbYBRQYT
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Feb 2008 11:24:19 -0500
+Received: from neuf-infra-smtp-out-sp604007av.neufgp.fr ([84.96.92.120]:33583
+	"EHLO neuf-infra-smtp-out-sp604007av.neufgp.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753708AbYBRQYS convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Feb 2008 11:24:18 -0500
+Received: from neuf-infra-smtp-out-sp604002av.neufgp.fr ([84.96.92.126])
+	by neuf-infra-smtp-out-sp604007av.neufgp.fr with neuf telecom
+	id qt7V1Y0022jakD8070hx00; Mon, 18 Feb 2008 17:24:08 +0100
+Received: from maison.homelinux.org ([84.103.71.93])
+	by neuf-infra-smtp-out-sp604002av.neufgp.fr with neuf telecom
+	id r4Q71Y00C20lBGc0200000; Mon, 18 Feb 2008 17:24:07 +0100
+Received: from moi by maison.homelinux.org with local (Exim 4.69)
+	(envelope-from <moi@vanicat.homelinux.org>)
+	id 1JR8mi-0003UB-Ry; Mon, 18 Feb 2008 17:24:06 +0100
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: moi@vanicat.homelinux.org
+X-Spam-Checker-Version: SpamAssassin 3.2.3 (2007-08-08) on maison.homelinux.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.0 required=5.0 tests=NO_RELAYS autolearn=ham
+	version=3.2.3
+X-SA-Exim-Version: 4.2.1 (built Tue, 21 Aug 2007 23:39:36 +0000)
+X-SA-Exim-Scanned: Yes (on maison.homelinux.org)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74305>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74306>
 
-Junio C Hamano wrote:
-> A related naming guideline I failed to follow (because I was
-> mostly copying your code) suggests that the hash here should be
-> named %fullname, instead of %basename.  Then logically:
+So, I resend my patch series, with better keys binding, reworked refs
+reading (using git-for-each-ref), and a common framework for building
+menu for merge/checkout/rebase/branching (even if it is for now only
+use for checkout and merge).
 
-Double ACK on your logic and arguments - I was thinking "fullname" as I
-read your first email. Not sure how stable the output is across CVS
-versions/ports WRT leading slashes, might be a good idea to try to
-canonicalise the paths.
-
-I am travelling at the moment, but I'll try and review the patch with
-the actual code. Some of the ugliness you're complaining about might be
-mine (plurals, and perhaps even the $#array) but I refuse to recognise
-the grep as mine.
-
-Annotate might still put me to shame - perhaps I was drunk?
-
-cheers,
-
-
-m
--- 
------------------------------------------------------------------------
-Martin @ Catalyst .Net .NZ  Ltd, PO Box 11-053, Manners St,  Wellington
-WEB: http://catalyst.net.nz/           PHYS: Level 2, 150-154 Willis St
-NZ: +64(4)916-7224    MOB: +64(21)364-017    UK: 0845 868 5733 ext 7224
-      Make things as simple as possible, but no simpler - Einstein
------------------------------------------------------------------------
+--=20
+R=C3=A9mi Vanicat
