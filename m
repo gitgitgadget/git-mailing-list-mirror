@@ -1,59 +1,76 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] test cases: optionally setup branch.*.merge from upstream
- local branches
-Date: Mon, 18 Feb 2008 18:23:12 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802181822130.30505@racer.site>
-References: 1203342817-19653-1-git-send-email-jaysoffian@gmail.com <1203347245-23533-1-git-send-email-jaysoffian@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Rename git-core rpm to just git and rename the
+ meta-pacakge to git-all.
+Date: Mon, 18 Feb 2008 10:36:27 -0800
+Message-ID: <7v7ih2p0wk.fsf@gitster.siamese.dyndns.org>
+References: <1203100163-17509-1-git-send-email-krh@redhat.com>
+ <7vskzs2exj.fsf@gitster.siamese.dyndns.org>
+ <76718490802180651h2ad61c4cg50bae97000957397@mail.gmail.com>
+ <1203350676.4082.0.camel@gaara.boston.redhat.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 18 19:24:02 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org
+To: Kristian =?utf-8?Q?H=C3=B8gsberg?= <krh@redhat.com>
+X-From: git-owner@vger.kernel.org Mon Feb 18 19:37:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JRAen-0007Gc-Dy
-	for gcvg-git-2@gmane.org; Mon, 18 Feb 2008 19:24:01 +0100
+	id 1JRAs7-00048o-Dt
+	for gcvg-git-2@gmane.org; Mon, 18 Feb 2008 19:37:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752543AbYBRSX0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Feb 2008 13:23:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752245AbYBRSX0
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Feb 2008 13:23:26 -0500
-Received: from mail.gmx.net ([213.165.64.20]:44538 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751859AbYBRSXZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Feb 2008 13:23:25 -0500
-Received: (qmail invoked by alias); 18 Feb 2008 18:23:23 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp009) with SMTP; 18 Feb 2008 19:23:23 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18wJsZH9v8wdolf21CTWsjWOAqcUNWvvjEZyhxRlz
-	21ncGVikO+wM+F
-X-X-Sender: gene099@racer.site
-In-Reply-To: <1203347245-23533-1-git-send-email-jaysoffian@gmail.com>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1752707AbYBRShL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 18 Feb 2008 13:37:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751452AbYBRShL
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Feb 2008 13:37:11 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:36405 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751484AbYBRShK convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 18 Feb 2008 13:37:10 -0500
+Received: from a-sasl-quonix.pobox.com (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 8708848C0;
+	Mon, 18 Feb 2008 13:37:04 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.pobox.com (Postfix) with ESMTP id
+ 9D7E8471C; Mon, 18 Feb 2008 13:36:50 -0500 (EST)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74325>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74326>
 
-Hi,
+Kristian H=C3=B8gsberg <krh@redhat.com> writes:
 
-On Mon, 18 Feb 2008, Jay Soffian wrote:
+> On Mon, 2008-02-18 at 09:51 -0500, Jay Soffian wrote:
+>> On Feb 17, 2008 2:57 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>>=20
+>> > "yum install git" and "yum install git-core" do not give such an
+>> > error but the latter gives quite a bunch of errors ("yum install
+>> > git" goes alright).  This is problem #2.
+>>=20
+>> You probably want "yum upgrade git-core".
+>>=20
+>> The "problem" is that yum by default doesn't process RPM renames (ob=
+soletes)
+>> unless you either have obsoletes=3D1 in your yum.conf, use "yum --ob=
+soletes
+>> update" or use "yum upgrade".
+>
+> Ah, that's what it is.  Thanks, I wasn't aware of this issue.
 
-> Added test cases for new "optionally setup branch.*.merge from upstream 
-> local branches" functionality.
-> 
-> Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
-> ---
->  t/t3200-branch.sh |   21 +++++++++++++++++++--
+Does that mean that the test I did and the problem I saw were
+end-user errors and that there is no proble with your patch and
+I can use it as-is to cut 1.5.4.3 and future ones?
 
-You might want to add another patch, this time to t7201-co.sh, which 
-demonstrates that even a "branch.autosetupmerge false" does not prevent 
-"git checkout --track -b <name>" from working.
+That's a great news.
 
-Ciao,
-Dscho
+But perhaps we would need some description/warning to help end
+users as clueless as I am with respect to yum in the release
+notes and/or announcements?
+
+Could you resend the patch with a commit log message that I can
+later reuse parts from for such a purpose, with a sign-off
+please?
