@@ -1,84 +1,63 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] cvsexportcommit: be graceful when "cvs status" reorders
- the arguments
-Date: Mon, 18 Feb 2008 20:29:25 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802182025340.30505@racer.site>
-References: <alpine.LSU.1.00.0802180127100.30505@racer.site> <7vbq6fvudp.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0802181627340.30505@racer.site> <7v1w7ap0vo.fsf@gitster.siamese.dyndns.org> <47B9D484.1020304@catalyst.net.nz>
- <alpine.LSU.1.00.0802181942230.30505@racer.site> <47B9E561.8040605@catalyst.net.nz>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Robin Rosenberg <robin.rosenberg@dewire.com>
-To: Martin Langhoff <martin@catalyst.net.nz>
-X-From: git-owner@vger.kernel.org Mon Feb 18 21:30:24 2008
+From: Martin Koegler <mkoegler@auto.tuwien.ac.at>
+Subject: [PATCH 04/12] add_one_tree: handle NULL from lookup_tree
+Date: Mon, 18 Feb 2008 21:47:55 +0100
+Message-ID: <12033676832653-git-send-email-mkoegler@auto.tuwien.ac.at>
+References: <12033676833730-git-send-email-mkoegler@auto.tuwien.ac.at>
+ <12033676832769-git-send-email-mkoegler@auto.tuwien.ac.at>
+ <12033676832231-git-send-email-mkoegler@auto.tuwien.ac.at>
+Cc: git@vger.kernel.org, Martin Koegler <mkoegler@auto.tuwien.ac.at>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 18 21:48:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JRCcx-0002Cw-BL
-	for gcvg-git-2@gmane.org; Mon, 18 Feb 2008 21:30:15 +0100
+	id 1JRCuo-0000Mg-Ru
+	for gcvg-git-2@gmane.org; Mon, 18 Feb 2008 21:48:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751594AbYBRU3j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Feb 2008 15:29:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751435AbYBRU3j
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Feb 2008 15:29:39 -0500
-Received: from mail.gmx.net ([213.165.64.20]:45675 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751319AbYBRU3i (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Feb 2008 15:29:38 -0500
-Received: (qmail invoked by alias); 18 Feb 2008 20:29:36 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp013) with SMTP; 18 Feb 2008 21:29:36 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/AraY8T1bAfT+T85em5C1/SDeKZcOZVv/yAKL4ml
-	Mr4zb0RKBuXliS
-X-X-Sender: gene099@racer.site
-In-Reply-To: <47B9E561.8040605@catalyst.net.nz>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1760476AbYBRUsK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Feb 2008 15:48:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754089AbYBRUsI
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Feb 2008 15:48:08 -0500
+Received: from thor.auto.tuwien.ac.at ([128.130.60.15]:40270 "EHLO
+	thor.auto.tuwien.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760782AbYBRUsF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Feb 2008 15:48:05 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by thor.auto.tuwien.ac.at (Postfix) with ESMTP id 2D957680C0A5;
+	Mon, 18 Feb 2008 21:48:04 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at auto.tuwien.ac.at
+Received: from thor.auto.tuwien.ac.at ([127.0.0.1])
+	by localhost (thor.auto.tuwien.ac.at [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id I3Czg7Pyyguf; Mon, 18 Feb 2008 21:48:04 +0100 (CET)
+Received: by thor.auto.tuwien.ac.at (Postfix, from userid 3001)
+	id B3E0D680CD42; Mon, 18 Feb 2008 21:48:03 +0100 (CET)
+X-Mailer: git-send-email 1.5.3.1
+In-Reply-To: <12033676832231-git-send-email-mkoegler@auto.tuwien.ac.at>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74340>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74341>
 
-Hi,
+Signed-off-by: Martin Koegler <mkoegler@auto.tuwien.ac.at>
+---
+ reachable.c |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
 
-On Tue, 19 Feb 2008, Martin Langhoff wrote:
-
-> Johannes Schindelin wrote:
->
-> > Well, please try for yourself.  If it works for you, then I probably 
-> > had another error in my patch.
-> 
-> $ perl -MFile::Basename -e 'print basename("/foo/bar/baz");'
-> baz
-> 
-> Johannes, what are you smoking? No PUI here! ;-)
-
-Unfortunately, I am not smoking, because my throat is inflamed...
-
-Checked again, and sure enough, it works.  So, this is a replacement patch 
-to be squashed in... So: I'm sorry...
-
-Ciao,
-Dscho
-
--- snipsnap --
- git-cvsexportcommit.perl |    3 +--
- 1 files changed, 1 insertions(+), 2 deletions(-)
-
-diff --git a/git-cvsexportcommit.perl b/git-cvsexportcommit.perl
-index c00368b..b8114f7 100755
---- a/git-cvsexportcommit.perl
-+++ b/git-cvsexportcommit.perl
-@@ -207,8 +207,7 @@ if (@canstatusfiles) {
-       my @canstatusfiles2 = ();
-       my %fullname = ();
-       foreach my $name (keys %todo) {
--	my $basename = $name;
--	$basename =~ s/.*\///;
-+	my $basename = basename($name);
- 	$basename = "no file " . $basename if (exists($added{$basename}));
- 	chomp($basename);
+diff --git a/reachable.c b/reachable.c
+index 823e324..937af57 100644
+--- a/reachable.c
++++ b/reachable.c
+@@ -150,7 +150,8 @@ static int add_one_reflog(const char *path, const unsigned char *sha1, int flag,
+ static void add_one_tree(const unsigned char *sha1, struct rev_info *revs)
+ {
+ 	struct tree *tree = lookup_tree(sha1);
+-	add_pending_object(revs, &tree->object, "");
++	if (tree)
++		add_pending_object(revs, &tree->object, "");
+ }
  
+ static void add_cache_tree(struct cache_tree *it, struct rev_info *revs)
+-- 
+1.5.4.1.g96b77
