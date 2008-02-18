@@ -1,69 +1,46 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Wishlist: Please add --author to git-tag
-Date: Sun, 17 Feb 2008 19:00:07 -0500 (EST)
-Message-ID: <alpine.LFD.1.00.0802171859010.2732@xanadu.home>
-References: <47A20503.2000603@debian.org>
- <420D37FF-C808-47CA-A3C8-38E1F8578FAC@gmail.com>
+From: Wink Saville <wink@saville.com>
+Subject: asciidoc 8
+Date: Sun, 17 Feb 2008 16:23:27 -0800
+Message-ID: <47B8CFFF.6090902@saville.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: "Rhodes, Kate" <masukomi@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 18 01:00:57 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 18 01:24:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JQtRI-0006X6-Ip
-	for gcvg-git-2@gmane.org; Mon, 18 Feb 2008 01:00:57 +0100
+	id 1JQtnt-0003Ur-NF
+	for gcvg-git-2@gmane.org; Mon, 18 Feb 2008 01:24:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755358AbYBRAAK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Feb 2008 19:00:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755316AbYBRAAK
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Feb 2008 19:00:10 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:11829 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755282AbYBRAAI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Feb 2008 19:00:08 -0500
-Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR003.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JWE00IB4QO76NF0@VL-MO-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Sun, 17 Feb 2008 19:00:07 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <420D37FF-C808-47CA-A3C8-38E1F8578FAC@gmail.com>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+	id S1752959AbYBRAXc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Feb 2008 19:23:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752828AbYBRAXc
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Feb 2008 19:23:32 -0500
+Received: from rv-out-0910.google.com ([209.85.198.190]:21090 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751949AbYBRAXb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Feb 2008 19:23:31 -0500
+Received: by rv-out-0910.google.com with SMTP id k20so1092904rvb.1
+        for <git@vger.kernel.org>; Sun, 17 Feb 2008 16:23:29 -0800 (PST)
+Received: by 10.140.180.11 with SMTP id c11mr3419173rvf.248.1203294209333;
+        Sun, 17 Feb 2008 16:23:29 -0800 (PST)
+Received: from ?192.168.0.133? ( [70.91.206.233])
+        by mx.google.com with ESMTPS id b24sm8564381rvf.1.2008.02.17.16.23.28
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 17 Feb 2008 16:23:28 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.6 (X11/20071022)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74207>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74208>
 
-On Sat, 16 Feb 2008, Rhodes, Kate wrote:
+I ran into the asciidoc 8 issue where some of the docs don't
+get generated properly on my system with asciidoc 8.2.1.
 
-> 
-> On Jan 31, 2008, at 12:27 PM, Daniel Baumann wrote:
-> 
-> > git commit supports --author to overwrite the author information on a
-> > particular commit; it would be nice if git tag would offer the same.
-> 
-> What are the implications of this on the GPG signature aspect of git-tag
-> (desired or otherwise)?
-> 
-> If you were committing someone else's tag wouldn't you want to sign not only
-> the commit, but their signature on the commit?
-> 
-> Ignoring the GPG issue, I'm just not seeing the benefit to having an author
-> AND a committer on a tag. I mean... it's a *tag*. The only value I see in
-> having any name associated with a tag is knowing who to point the finger at
-> when the wrong thing gets tagged. But, I don't see any authorship aspect to
-> the concept of a tag. To me it's more: "Bob" set it and it points to this. The
-> end.
-> 
-> What you're proposing sounds more like: "Bob" said to set it and then "Mary"
-> did, because Bob said to.
+Should I just downgrade? What would be the "best" version
+to use.
 
-And in that case this information can be contained in the tag text body 
-itself.
-
-
-Nicolas
+Wink Saville
