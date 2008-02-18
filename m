@@ -1,88 +1,88 @@
-From: "Lars Hjemli" <hjemli@gmail.com>
-Subject: Re: [PATCH 0/5 v2] Introduce the .gitfile
-Date: Mon, 18 Feb 2008 13:56:37 +0100
-Message-ID: <8c5c35580802180456s75c9f857of1f727aca4673374@mail.gmail.com>
-References: <1203331463-13857-1-git-send-email-hjemli@gmail.com>
-	 <alpine.LSU.1.00.0802181214400.30505@racer.site>
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: [PATCH] http-push: Fix error message for push <remote> :<branch>
+Date: Mon, 18 Feb 2008 14:07:26 +0100
+Message-ID: <20080218130726.GA26854@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Junio C Hamano" <gitster@pobox.com>
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Feb 18 13:57:16 2008
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 18 14:08:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JR5YY-00036D-Ld
-	for gcvg-git-2@gmane.org; Mon, 18 Feb 2008 13:57:15 +0100
+	id 1JR5jF-00079w-D3
+	for gcvg-git-2@gmane.org; Mon, 18 Feb 2008 14:08:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751707AbYBRM4j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Feb 2008 07:56:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751185AbYBRM4j
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Feb 2008 07:56:39 -0500
-Received: from wa-out-1112.google.com ([209.85.146.182]:18890 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751443AbYBRM4i (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Feb 2008 07:56:38 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so2787097wah.23
-        for <git@vger.kernel.org>; Mon, 18 Feb 2008 04:56:37 -0800 (PST)
+	id S1759601AbYBRNHb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Feb 2008 08:07:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758869AbYBRNHa
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Feb 2008 08:07:30 -0500
+Received: from fk-out-0910.google.com ([209.85.128.190]:36656 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758838AbYBRNH3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Feb 2008 08:07:29 -0500
+Received: by fk-out-0910.google.com with SMTP id z23so1811330fkz.5
+        for <git@vger.kernel.org>; Mon, 18 Feb 2008 05:07:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=0yzPYz/f9aOGmBH0XNCIoZq7Uyyd5TDIL0ycEhxk3Qo=;
-        b=MvMbTJOclJOTDkQ/n6HROT2FWLwdahEXvRq2v7lWZxcEdYcIySXxX+GYhuE+wsGGbqQBF0NwMSrApkmxdDxeb8gteOdcL7EGMWTcpO6afgRfev+UQ9ad0+Ff+uk+TTXiXhAz9XXe2wH5grmgZqILWHjFScDGpFy4YzR4sUQawbA=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:received:date:from:to:subject:message-id:mime-version:content-type:content-disposition:user-agent:sender;
+        bh=qfgLSg7SThfk4cgReYlanhrYWFXpJeuJsj9u8YgKd9A=;
+        b=N8Sr/O9VDDRFjCEiI9Jd55ryOgQFiOArXWw+X6JqdLfMsZbasiU/onmVvm87bkPaKpfkuxBEm0DMWwtxVIuLsTyGEb580ipkt/rIQ6y1P2IDnmsIivv8Pd+BIA9+58qVrCFVfFjKO8jybQS/jD/0e3gYh6T8fQt/eGVsW1xdJaA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=HxLEGa9KHyxkrFzWL+5BHTF3AtgqfdYReCad7XkzwfCsvBumE6G5ycj5GmUs5AUh8en1SC6cl2wq5HvtEHs//USzMXvytyk+yX7jRFdulUfgCz5DjeSj8GOugXG9WOVyTzjGCcHFTiWeLI9lmqyxgYxDs2CrLaIe8OVuqmK5kPY=
-Received: by 10.115.90.1 with SMTP id s1mr3271568wal.50.1203339397521;
-        Mon, 18 Feb 2008 04:56:37 -0800 (PST)
-Received: by 10.115.92.8 with HTTP; Mon, 18 Feb 2008 04:56:37 -0800 (PST)
-In-Reply-To: <alpine.LSU.1.00.0802181214400.30505@racer.site>
+        d=googlemail.com; s=gamma;
+        h=date:from:to:subject:message-id:mime-version:content-type:content-disposition:user-agent:sender;
+        b=be2VOmdub6gqb9W+KGkKnnWEVmGmG8djCYpYt6+zWh7MUInZ330Z8lJDJCCjZvSDnw1D5R3tuCexixJD1010/Q+JjoUx47p+zpt2XlwMUT6MnovFxBuZuFbFJTsNQlRkKOIfui+TKU5+r5NRGGB7Q4cdtPJUarlMyS1gJokjRlE=
+Received: by 10.82.166.9 with SMTP id o9mr10072087bue.34.1203340047185;
+        Mon, 18 Feb 2008 05:07:27 -0800 (PST)
+Received: from darc.dyndns.org ( [62.47.56.178])
+        by mx.google.com with ESMTPS id 4sm8398591fge.3.2008.02.18.05.07.23
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 18 Feb 2008 05:07:24 -0800 (PST)
+Received: from drizzd by darc.dyndns.org with local (Exim 4.68)
+	(envelope-from <drizzd@aon.at>)
+	id 1JR5iQ-00070c-S6
+	for git@vger.kernel.org; Mon, 18 Feb 2008 14:07:26 +0100
 Content-Disposition: inline
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74278>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74279>
 
-On Feb 18, 2008 1:17 PM, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> On Mon, 18 Feb 2008, Lars Hjemli wrote:
->
-> > The patch-series has been reordered and updated according to comments on
-> > the earlier series.
->
-> It would be easier on a stupid reviewer like me, if you summarised what
-> you changed.
+git http-push <remote> :<branch> currently fails with the error message
+"cannot happen anymore". Print a more useful error message instead.
 
-Ok, I'll keep that in mind next time, and here's a quick summary (from
-the top of my head) of this series vs. the previous:
-* patch 1 and 2 are swapped, since the changes to git-sh-setup.sh can
-be applied onto master regardless of the rest of the patch series
-(while the other patches still rely on 1/5).
-* git-sh-setup.sh is simplified even further, and relies on
-git-rev-parse to produce the error message when no gitdir can be
-found.
-* read_gitfile_gently() is moved from environment.c into setup.c since
-it now invokes is_git_directory().
-* read_gitfile_gently() will gently ignore a 'missing' .git or a .git
-which isn't a regular file, but die()s on all other errors.
+Signed-off-by: Clemens Buchacher <drizzd@aon.at>
+---
 
+We should actually support this feature, of course. Unfortunately, a lot has
+changed since the version of send-pack which http-push is based on
+(v1.2.4-398-gaa1dbc9). I think http-push should be updated to reflect these
+changes at a larger scope. Is there any work going on in this direction?
 
-> In the case of patch "1/5 => 2/5", I would even have
-> appreciated an interdiff...
+ http-push.c |    9 +++++++++
+ 1 files changed, 9 insertions(+), 0 deletions(-)
 
-Sorry, but I don't think I understand what you mean by interdiff.
-
-
->
-> Oh, and I was kind of surprised to learn that it is the ".gitfile", not
-> the ".git file"... I ran to your patch straight away, and was relieved
-> when I found out that you still call it ".git".
-
-Yeah, I suck really bad on consistency ;-)
-
-
---
-lh
+diff --git a/http-push.c b/http-push.c
+index f9b77d6..8de091f 100644
+--- a/http-push.c
++++ b/http-push.c
+@@ -2311,6 +2311,15 @@ int main(int argc, char **argv)
+ 
+ 		if (!ref->peer_ref)
+ 			continue;
++
++		if (is_zero_sha1(ref->peer_ref->new_sha1)) {
++			error("Deleting remote branches via :<branch> is not "
++				"currently supported by http-push. Use git "
++				"http-push -d <remote-url> <branch> instead.");
++			rc = -2;
++			continue;
++		}
++
+ 		if (!hashcmp(ref->old_sha1, ref->peer_ref->new_sha1)) {
+ 			if (push_verbosely || 1)
+ 				fprintf(stderr, "'%s': up-to-date\n", ref->name);
+-- 
+1.5.4.2.183.g1ae81
