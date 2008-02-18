@@ -1,104 +1,94 @@
-From: "Jay Soffian" <jaysoffian@gmail.com>
-Subject: Re: [PATCH] branch: optionally setup branch.*.merge from upstream local branches
-Date: Mon, 18 Feb 2008 07:40:45 -0500
-Message-ID: <76718490802180440o3041b1ffh4764199e2aeaa52b@mail.gmail.com>
-References: <1203336248-9308-1-git-send-email-jaysoffian@gmail.com>
-	 <alpine.LSU.1.00.0802181209210.30505@racer.site>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/4] Improve message-id generation flow control for
+ format-patch
+Date: Mon, 18 Feb 2008 12:41:10 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0802181238280.30505@racer.site>
+References: <alpine.LNX.1.00.0802171335240.5816@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Junio C Hamano" <gitster@pobox.com>
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Feb 18 13:41:24 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Mon Feb 18 13:42:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JR5JB-0006Os-95
-	for gcvg-git-2@gmane.org; Mon, 18 Feb 2008 13:41:21 +0100
+	id 1JR5Jm-0006bl-G4
+	for gcvg-git-2@gmane.org; Mon, 18 Feb 2008 13:41:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752410AbYBRMkr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Feb 2008 07:40:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758518AbYBRMkq
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Feb 2008 07:40:46 -0500
-Received: from wa-out-1112.google.com ([209.85.146.182]:43650 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752395AbYBRMkq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Feb 2008 07:40:46 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so2781098wah.23
-        for <git@vger.kernel.org>; Mon, 18 Feb 2008 04:40:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=pdqOR2ImoxQKhV9uRAMc01KIkfMhh3o1ZC6XV63rk9Y=;
-        b=MAMNlnnWM3886OY9Jb3aQArYpBXIB8Fa7VJ7l59PYsoNuz20PNVtgOsYEubodTQkD6f+vmLvPVsCTehxPzAaL8BCZ3CO0a/oFU/4MvV8aWGGwOzuk+z3vGziRyzE/+Fh9bsfBGsOTQk/AsYyywIbEPAIH81wzVMFXShQyTLOg8o=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=oJxErJumzEmOHyeyYMKbGngaNITKEzEwAvIS9xVLz0eVdsNeeZMHgwL+y+J2vOFA3lqZ1cn0NLTVgqPDsMj6t0cQUWhAoJ5WcwiBj0ZboqoExGBJ54TRylvKTNd+MiI8e42IlWOGMMmN0Ii2soKTndLpWRvONxVRdqRrtX3ARk8=
-Received: by 10.114.161.11 with SMTP id j11mr2994200wae.127.1203338445430;
-        Mon, 18 Feb 2008 04:40:45 -0800 (PST)
-Received: by 10.114.255.11 with HTTP; Mon, 18 Feb 2008 04:40:45 -0800 (PST)
-In-Reply-To: <alpine.LSU.1.00.0802181209210.30505@racer.site>
-Content-Disposition: inline
+	id S1758801AbYBRMlY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Feb 2008 07:41:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758786AbYBRMlX
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Feb 2008 07:41:23 -0500
+Received: from mail.gmx.net ([213.165.64.20]:39284 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1758672AbYBRMlX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Feb 2008 07:41:23 -0500
+Received: (qmail invoked by alias); 18 Feb 2008 12:41:21 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp016) with SMTP; 18 Feb 2008 13:41:21 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+XbhoXRHqXFuIjUUHV5aEEi0anEubWFgnUairQ/s
+	bd0Hi35/9DvNai
+X-X-Sender: gene099@racer.site
+In-Reply-To: <alpine.LNX.1.00.0802171335240.5816@iabervon.org>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74275>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74276>
 
-On Feb 18, 2008 7:14 AM, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+Hi,
 
-> On Mon, 18 Feb 2008, Jay Soffian wrote:
->
-> > +enum branch_track {
-> > +     BRANCH_TRACK_FALSE = 0,
-> > +     BRANCH_TRACK_TRUE = 1,
->
-> BRANCH_TRACK_REMOTES would be a better name here.  And you do not need the
-> "= 1" and "= 2".
+On Sun, 17 Feb 2008, Daniel Barkalow wrote:
 
-I was just following along. Plenty of enum examples in the current code
-do this. Am I missing something subtle about when assigning explicit
-values should be done?
+> diff --git a/builtin-log.c b/builtin-log.c
+> index 99d69f0..867cc13 100644
+> --- a/builtin-log.c
+> +++ b/builtin-log.c
+> @@ -575,16 +575,19 @@ static void get_patch_ids(struct rev_info *rev, struct patch_ids *ids, const cha
+>  	o2->flags = flags2;
+>  }
+>  
+> -static void gen_message_id(char *dest, unsigned int length, char *base)
+> +static void gen_message_id(struct rev_info *info, char *base)
+>  {
+>  	const char *committer = git_committer_info(IDENT_WARN_ON_NO_NAME);
+>  	const char *email_start = strrchr(committer, '<');
+>  	const char *email_end = strrchr(committer, '>');
+> -	if(!email_start || !email_end || email_start > email_end - 1)
+> +	struct strbuf buf;
+> +	if (!email_start || !email_end || email_start > email_end - 1)
+>  		die("Could not extract email from committer identity.");
+> -	snprintf(dest, length, "%s.%lu.git.%.*s", base,
+> -		 (unsigned long) time(NULL),
+> -		 (int)(email_end - email_start - 1), email_start + 1);
+> +	strbuf_init(&buf, 0);
+> +	strbuf_addf(&buf, "%s.%lu.git.%.*s", base,
+> +		    (unsigned long) time(NULL),
+> +		    (int)(email_end - email_start - 1), email_start + 1);
+> +	info->message_id = strbuf_detach(&buf, NULL);
 
-> >
-> > -static int branch_track = 1;
-> > +static enum branch_track branch_track = BRANCH_TRACK_FALSE;
->
-> That is a clear regression.
+With this last line, and...
 
-Perhaps. It's consistent with builtin-checkout.c though (which was
-initializing it to 0). Who to believe?
+> @@ -809,15 +810,13 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+>  		rev.nr = total - nr + (start_number - 1);
+>  		/* Make the second and subsequent mails replies to the first */
+>  		if (thread) {
+> -			if (nr == (total - 2)) {
+> -				strncpy(ref_message_id, message_id,
+> -					sizeof(ref_message_id));
+> -				ref_message_id[sizeof(ref_message_id)-1]='\0';
+> -				rev.ref_message_id = ref_message_id;
+> +			if (rev.message_id) {
+> +				if (rev.ref_message_id)
+> +					free((char *) rev.message_id);
 
-> > @@ -77,6 +77,10 @@ static int git_branch_config(const char *var, const char *value)
-> >               return 0;
-> >       }
-> >       if (!strcmp(var, "branch.autosetupmerge")) {
-> > +             if (value && !strcasecmp(value, "always")) {
-> > +                     branch_track = BRANCH_TRACK_ALWAYS;
-> > +                     return 0;
-> > +             }
-> >               branch_track = git_config_bool(var, value);
-> >               return 0;
-> >       }
->
-> You have this in builtin-branch.c and builtin-checkout.c.  Duplicated
-> code.  IMHO it is time to move this into the git_default_config() function
-> (with "branch_track" being renamed to "git_branch_track", and moved to
-> environment.c).
+... this one, you should make the message_id member of struct rev_info a 
+"char *".  At least for this developer, "const char *" is a sign that the 
+caller should clean up, and that the pointer _might_ point to a constant.
 
-Mkay, builtin-checkout.c author didn't do it, so...
-
-> Personally, I have no problem with typing "git merge <branch>" in your
-> workflow.  I would even avoid saying "git pull" for obviously-local
-> branches, because I would have forgotten which branch it tracked
-> originally.
-
-Um, well, apply this patch, set branch.autosetupmerge=always and then
-branch.*.merge will tell you which branch it tracked originally. :-)
-
-Aside, then how do you figure out the upstream branch is if you've
-forgotten?
-
-j.
+Ciao,
+Dscho
