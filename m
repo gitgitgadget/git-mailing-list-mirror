@@ -1,64 +1,64 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/5] Fix setup of $GIT_DIR in git-sh-setup.sh
-Date: Sun, 17 Feb 2008 21:44:07 -0800
-Message-ID: <7v1w7au8d4.fsf@gitster.siamese.dyndns.org>
-References: <1203286456-26033-1-git-send-email-hjemli@gmail.com>
- <1203286456-26033-2-git-send-email-hjemli@gmail.com>
- <1203286456-26033-3-git-send-email-hjemli@gmail.com>
+Subject: Re: [PATCH] contrib/hooks/post-receive-email:  checks for
+ gitweb.description
+Date: Sun, 17 Feb 2008 22:03:41 -0800
+Message-ID: <7vwsp2ssw2.fsf@gitster.siamese.dyndns.org>
+References: <1202786746-12890-1-git-send-email-ribas@c3sl.ufpr.br>
+ <m3wspad1xd.fsf@localhost.localdomain> <20080213002439.GA31455@c3sl.ufpr.br>
+ <20080218034659.GA21776@c3sl.ufpr.br>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Lars Hjemli <hjemli@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 18 06:46:17 2008
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Bruno Cesar Ribas <ribas@c3sl.ufpr.br>
+X-From: git-owner@vger.kernel.org Mon Feb 18 07:04:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JQypM-0004Z3-B5
-	for gcvg-git-2@gmane.org; Mon, 18 Feb 2008 06:46:08 +0100
+	id 1JQz73-0007c4-7I
+	for gcvg-git-2@gmane.org; Mon, 18 Feb 2008 07:04:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751727AbYBRFpd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Feb 2008 00:45:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751751AbYBRFpd
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Feb 2008 00:45:33 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:35453 "EHLO
+	id S1752062AbYBRGDu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Feb 2008 01:03:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751687AbYBRGDu
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Feb 2008 01:03:50 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:39912 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751699AbYBRFpd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Feb 2008 00:45:33 -0500
+	with ESMTP id S1751392AbYBRGDt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Feb 2008 01:03:49 -0500
 Received: from a-sasl-quonix.pobox.com (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id C9A6E3700;
-	Mon, 18 Feb 2008 00:45:31 -0500 (EST)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 7AC503CD0;
+	Mon, 18 Feb 2008 01:03:48 -0500 (EST)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
  certificate requested) by a-sasl-quonix.pobox.com (Postfix) with ESMTP id
- DBE3636CF; Mon, 18 Feb 2008 00:45:25 -0500 (EST)
+ B357F3CCE; Mon, 18 Feb 2008 01:03:43 -0500 (EST)
+In-Reply-To: <20080218034659.GA21776@c3sl.ufpr.br> (Bruno Cesar Ribas's
+ message of "Mon, 18 Feb 2008 00:46:59 -0300")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74232>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74233>
 
-Lars Hjemli <hjemli@gmail.com> writes:
+Bruno Cesar Ribas <ribas@c3sl.ufpr.br> writes:
 
-> Since .git can be a file refering to the real GIT_DIR, git-sh-setup needs
-> to use 'git rev-parse --git-dir' to obtain the location of the git
-> repository.
+> Forgoten?! 8^)
+> On Tue, Feb 12, 2008 at 10:24:40PM -0200, Bruno Cesar Ribas wrote:
+>> I can resend with no problem =)
 
-I wonder if this depend on your [1/5].  Isn't this actually a
-simplification (removing 7 adding 5 lines) that applies to the
-mainline already?  IOW, is there a downside of doing this
-without any of the rest of the series?
+More like "not so much interested myself, although I did not
+have strong objection either".
 
-> @@ -127,20 +127,18 @@ get_author_ident_from_commit () {
->  # if we require to be in a git repository.
->  if test -z "$NONGIT_OK"
->  then
-> +	GIT_DIR=$(git rev-parse --git-dir) || {
-> +		exit=$?
-> +		echo >&2 "Failed to find a valid git directory."
-> +		exit $exit
+Typically original author or people who would see much value in
+the patch than myself have more incentive and motivation to keep
+pushing for inclusion of such a patch, so I tend to trust them
+to re-send saying "Here is the final for inclusion, the list
+concensus was favorable, and I addressed all the issues raised
+during the discussion." if they still care about the patch than
+actively fishing for old patches from my mailbox.
 
-rev-parse --git-dir would have said "fatal: Not a git
-repository" already.  Do we still need to say "Failed to
-find..."?
+On the other hand if such re-push never happens that is a good
+indication that nobody is convinced strongly enough to stand
+behind the patch, and my time is better spent elsewhere.
