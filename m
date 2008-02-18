@@ -1,61 +1,84 @@
-From: Martin Langhoff <martin@catalyst.net.nz>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [PATCH] cvsexportcommit: be graceful when "cvs status" reorders
  the arguments
-Date: Tue, 19 Feb 2008 09:06:57 +1300
-Message-ID: <47B9E561.8040605@catalyst.net.nz>
-References: <alpine.LSU.1.00.0802180127100.30505@racer.site> <7vbq6fvudp.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0802181627340.30505@racer.site> <7v1w7ap0vo.fsf@gitster.siamese.dyndns.org> <47B9D484.1020304@catalyst.net.nz> <alpine.LSU.1.00.0802181942230.30505@racer.site>
+Date: Mon, 18 Feb 2008 20:29:25 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0802182025340.30505@racer.site>
+References: <alpine.LSU.1.00.0802180127100.30505@racer.site> <7vbq6fvudp.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0802181627340.30505@racer.site> <7v1w7ap0vo.fsf@gitster.siamese.dyndns.org> <47B9D484.1020304@catalyst.net.nz>
+ <alpine.LSU.1.00.0802181942230.30505@racer.site> <47B9E561.8040605@catalyst.net.nz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
 	Robin Rosenberg <robin.rosenberg@dewire.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Feb 18 21:08:20 2008
+To: Martin Langhoff <martin@catalyst.net.nz>
+X-From: git-owner@vger.kernel.org Mon Feb 18 21:30:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JRCHj-0003cK-8V
-	for gcvg-git-2@gmane.org; Mon, 18 Feb 2008 21:08:19 +0100
+	id 1JRCcx-0002Cw-BL
+	for gcvg-git-2@gmane.org; Mon, 18 Feb 2008 21:30:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760902AbYBRUHn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Feb 2008 15:07:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760908AbYBRUHn
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Feb 2008 15:07:43 -0500
-Received: from godel.catalyst.net.nz ([202.78.240.40]:34678 "EHLO
-	mail1.catalyst.net.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760884AbYBRUHm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Feb 2008 15:07:42 -0500
-Received: from leibniz.catalyst.net.nz ([202.78.240.7] helo=[127.0.0.1])
-	by mail1.catalyst.net.nz with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <martin@catalyst.net.nz>)
-	id 1JRCGn-0003CD-8z; Tue, 19 Feb 2008 09:07:30 +1300
-User-Agent: Thunderbird 2.0.0.6 (X11/20071022)
-In-Reply-To: <alpine.LSU.1.00.0802181942230.30505@racer.site>
-X-Enigmail-Version: 0.95.0
+	id S1751594AbYBRU3j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Feb 2008 15:29:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751435AbYBRU3j
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Feb 2008 15:29:39 -0500
+Received: from mail.gmx.net ([213.165.64.20]:45675 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751319AbYBRU3i (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Feb 2008 15:29:38 -0500
+Received: (qmail invoked by alias); 18 Feb 2008 20:29:36 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp013) with SMTP; 18 Feb 2008 21:29:36 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/AraY8T1bAfT+T85em5C1/SDeKZcOZVv/yAKL4ml
+	Mr4zb0RKBuXliS
+X-X-Sender: gene099@racer.site
+In-Reply-To: <47B9E561.8040605@catalyst.net.nz>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74340>
 
-Johannes Schindelin wrote:
-> Well, please try for yourself.  If it works for you, then I probably had 
-> another error in my patch.
+Hi,
 
-$ perl -MFile::Basename -e 'print basename("/foo/bar/baz");'
-baz
+On Tue, 19 Feb 2008, Martin Langhoff wrote:
 
-Johannes, what are you smoking? No PUI here! ;-)
+> Johannes Schindelin wrote:
+>
+> > Well, please try for yourself.  If it works for you, then I probably 
+> > had another error in my patch.
+> 
+> $ perl -MFile::Basename -e 'print basename("/foo/bar/baz");'
+> baz
+> 
+> Johannes, what are you smoking? No PUI here! ;-)
 
+Unfortunately, I am not smoking, because my throat is inflamed...
 
+Checked again, and sure enough, it works.  So, this is a replacement patch 
+to be squashed in... So: I'm sorry...
 
-m
--- 
------------------------------------------------------------------------
-Martin @ Catalyst .Net .NZ  Ltd, PO Box 11-053, Manners St,  Wellington
-WEB: http://catalyst.net.nz/           PHYS: Level 2, 150-154 Willis St
-NZ: +64(4)916-7224    MOB: +64(21)364-017    UK: 0845 868 5733 ext 7224
-      Make things as simple as possible, but no simpler - Einstein
------------------------------------------------------------------------
+Ciao,
+Dscho
+
+-- snipsnap --
+ git-cvsexportcommit.perl |    3 +--
+ 1 files changed, 1 insertions(+), 2 deletions(-)
+
+diff --git a/git-cvsexportcommit.perl b/git-cvsexportcommit.perl
+index c00368b..b8114f7 100755
+--- a/git-cvsexportcommit.perl
++++ b/git-cvsexportcommit.perl
+@@ -207,8 +207,7 @@ if (@canstatusfiles) {
+       my @canstatusfiles2 = ();
+       my %fullname = ();
+       foreach my $name (keys %todo) {
+-	my $basename = $name;
+-	$basename =~ s/.*\///;
++	my $basename = basename($name);
+ 	$basename = "no file " . $basename if (exists($added{$basename}));
+ 	chomp($basename);
+ 
