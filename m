@@ -1,77 +1,72 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 2/3] Documentation/push: clarify matching refspec behavior
-Date: Tue, 19 Feb 2008 11:25:22 -0500
-Message-ID: <20080219162522.GB30451@sigill.intra.peff.net>
-References: <d9b18b1827a183e5b3b785a092605eab1ff4b6e7.1203438181.git.peff@peff.net>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH 2/5] Improve message-id generation flow control for
+ format-patch
+Date: Tue, 19 Feb 2008 11:26:41 -0500 (EST)
+Message-ID: <alpine.LNX.1.00.0802191108450.19024@iabervon.org>
+References: <cover.1203392527.git.barkalow@iabervon.org> <alpine.LNX.1.00.0802182254110.5816@iabervon.org> <alpine.LSU.1.00.0802191300510.30505@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jason Garber <jgarber@ionzoft.com>,
-	Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 19 17:26:32 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Feb 19 17:27:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JRVIF-0000GS-3N
-	for gcvg-git-2@gmane.org; Tue, 19 Feb 2008 17:26:07 +0100
+	id 1JRVJP-0000me-14
+	for gcvg-git-2@gmane.org; Tue, 19 Feb 2008 17:27:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751578AbYBSQZZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Feb 2008 11:25:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751712AbYBSQZY
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Feb 2008 11:25:24 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4254 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751305AbYBSQZY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Feb 2008 11:25:24 -0500
-Received: (qmail 22585 invoked by uid 111); 19 Feb 2008 16:25:22 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Tue, 19 Feb 2008 11:25:22 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 19 Feb 2008 11:25:22 -0500
-Content-Disposition: inline
-In-Reply-To: <d9b18b1827a183e5b3b785a092605eab1ff4b6e7.1203438181.git.peff@peff.net>
+	id S1752873AbYBSQ0n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Feb 2008 11:26:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753227AbYBSQ0n
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Feb 2008 11:26:43 -0500
+Received: from iabervon.org ([66.92.72.58]:47160 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752813AbYBSQ0m (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Feb 2008 11:26:42 -0500
+Received: (qmail 9026 invoked by uid 1000); 19 Feb 2008 16:26:41 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 19 Feb 2008 16:26:41 -0000
+In-Reply-To: <alpine.LSU.1.00.0802191300510.30505@racer.site>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74426>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74427>
 
-The previous text was correct, but it was easy to miss the
-fact that we are talking about "matching" refs. That is, the
-text can be parsed as "we push the union of the sets
-of remote and local heads" and not "we push the intersection
-of the sets of remote and local heads". (The former actually
-doesn't make sense if you think about it, since we don't
-even _have_ some of those heads). A careful reading would
-reveal the correct meaning, but it makes sense to be as
-explicit as possible in documentation.
+On Tue, 19 Feb 2008, Johannes Schindelin wrote:
 
-We also explicitly use and introduce the term "matching";
-this is a term discussed on the list, and it seems useful
-to for users to be able to refer to this behavior by name.
+> Hi,
+> 
+> On Mon, 18 Feb 2008, Daniel Barkalow wrote:
+> 
+> > diff --git a/revision.h b/revision.h
+> > index 8572315..e3559d0 100644
+> > --- a/revision.h
+> > +++ b/revision.h
+> > @@ -74,7 +74,7 @@ struct rev_info {
+> >  	struct log_info *loginfo;
+> >  	int		nr, total;
+> >  	const char	*mime_boundary;
+> > -	const char	*message_id;
+> > +	char		*message_id;
+> >  	const char	*ref_message_id;
+> >  	const char	*add_signoff;
+> >  	const char	*extra_headers;
+> 
+> Mini-nit: technically, ref_message_id should be "char *", too.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- Documentation/git-push.txt |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
+I'd intended ref_message_id to just reference the string owned by a 
+different message's message_id, but that doesn't really work with struct 
+rev_info. I bet you'd like me to not leak memory out through 
+ref_message_id, too. I think I want to see how the code to collect the set 
+of commits in the series (for more capable generation of cover letter 
+contents) goes before changing this either way.
 
-diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-index 5f24944..650ee91 100644
---- a/Documentation/git-push.txt
-+++ b/Documentation/git-push.txt
-@@ -47,9 +47,9 @@ even if it does not result in a fast forward update.
- +
- Note: If no explicit refspec is found, (that is neither
- on the command line nor in any Push line of the
--corresponding remotes file---see below), then all the
--heads that exist both on the local side and on the remote
--side are updated.
-+corresponding remotes file---see below), then "matching" heads are
-+pushed: for every head that exists on the local side, the remote side is
-+updated if a head of the same name already exists on the remote side.
- +
- `tag <tag>` means the same as `refs/tags/<tag>:refs/tags/<tag>`.
- +
--- 
-1.5.4.1.143.ge7e51-dirty
+(It's incidentally kind of amusing that you managed to convey the way you 
+thought the code should be designed, different from how I'd designed it, 
+through a note on whether a struct field should be const or not.)
+
+	-Daniel
+*This .sig left intentionally blank*
