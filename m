@@ -1,67 +1,79 @@
 From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: [PATCH 0/5] Cover letter for format-patch series
-Date: Mon, 18 Feb 2008 22:55:59 -0500 (EST)
-Message-ID: <alpine.LNX.1.00.0802182242300.5816@iabervon.org>
+Subject: [PATCH 4/5] Retain extra blank lines between the summary and the
+ body
+Date: Mon, 18 Feb 2008 22:56:10 -0500 (EST)
+Message-ID: <alpine.LNX.1.00.0802182254240.5816@iabervon.org>
+References: <cover.1203392527.git.barkalow@iabervon.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 19 04:57:13 2008
+X-From: git-owner@vger.kernel.org Tue Feb 19 04:57:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JRJbR-0002Fp-7z
-	for gcvg-git-2@gmane.org; Tue, 19 Feb 2008 04:57:09 +0100
+	id 1JRJbT-0002Fp-Qy
+	for gcvg-git-2@gmane.org; Tue, 19 Feb 2008 04:57:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753168AbYBSD4D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Feb 2008 22:56:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751576AbYBSD4D
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Feb 2008 22:56:03 -0500
-Received: from iabervon.org ([66.92.72.58]:54144 "EHLO iabervon.org"
+	id S1754290AbYBSD4b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Feb 2008 22:56:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754318AbYBSD42
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Feb 2008 22:56:28 -0500
+Received: from iabervon.org ([66.92.72.58]:54156 "EHLO iabervon.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751203AbYBSD4B (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Feb 2008 22:56:01 -0500
-Received: (qmail 22288 invoked by uid 1000); 19 Feb 2008 03:55:59 -0000
+	id S1754198AbYBSD4L (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Feb 2008 22:56:11 -0500
+Received: (qmail 22308 invoked by uid 1000); 19 Feb 2008 03:56:10 -0000
 Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 19 Feb 2008 03:55:59 -0000
+  by localhost with SMTP; 19 Feb 2008 03:56:10 -0000
+In-Reply-To: <cover.1203392527.git.barkalow@iabervon.org>
 User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74369>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74370>
 
-This should take care of all of the comments, so far as they're practical 
-to do in the initial series. Future work will include making the cover 
-letter include useful shortlog and diffstat (if possible) for arguments 
-that aren't a single linear and bounded series (at present, doing anything 
-too tricky results in a cover letter without shortlog or diffstat).
+This is so that it's possible to have a message that will generate an
+email with the first line blank. If the email you're generating is
+actually a template, you may have a single line filling in for a
+~3-line paragraph, meaning that the space starts with a blank line,
+which was impossible before as output from the message-splitting code.
 
-Also, I haven't done anything here about making format-patch give an error 
-if the series is empty, whether or not --cover-letter is used.
+Furthermore, extra blank lines that aren't at the beginning of the
+body portion aren't stripped, so this is more consistant overall.
 
-Note that [1/5] is new tests for format-patch, and independant of this 
-series except in so far as it demonstrates that I haven't broken these 
-things.
+Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
+---
+ pretty.c |    4 ----
+ 1 files changed, 0 insertions(+), 4 deletions(-)
 
-Daniel Barkalow (5):
-      Add more tests for format-patch
-      Improve message-id generation flow control for format-patch
-      Export some email and pretty-printing functions
-      Retain extra blank lines between the summary and the body
-      Add a --cover-letter option to format-patch
-
- Documentation/git-format-patch.txt                 |   20 +-
- builtin-log.c                                      |  261 ++++++++++++++------
- commit.h                                           |   15 ++
- log-tree.c                                         |  126 +++++-----
- log-tree.h                                         |    2 +
- pretty.c                                           |   38 ++--
- revision.h                                         |    2 +-
- t/t4013-diff-various.sh                            |    1 +
- ...tch_--stdout_--cover-letter_-n_initial..master^ |  101 ++++++++
- t/t4014-format-patch.sh                            |   71 ++++++
- 10 files changed, 477 insertions(+), 160 deletions(-)
- create mode 100644 t/t4013/diff.format-patch_--stdout_--cover-letter_-n_initial..master^
+diff --git a/pretty.c b/pretty.c
+index d5db1bd..1c57920 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -713,7 +713,6 @@ void pp_remainder(enum cmit_fmt fmt,
+ 		  struct strbuf *sb,
+ 		  int indent)
+ {
+-	int first = 1;
+ 	for (;;) {
+ 		const char *line = *msg_p;
+ 		int linelen = get_one_line(line);
+@@ -723,12 +722,9 @@ void pp_remainder(enum cmit_fmt fmt,
+ 			break;
+ 
+ 		if (is_empty_line(line, &linelen)) {
+-			if (first)
+-				continue;
+ 			if (fmt == CMIT_FMT_SHORT)
+ 				break;
+ 		}
+-		first = 0;
+ 
+ 		strbuf_grow(sb, linelen + indent + 20);
+ 		if (indent) {
+-- 
+1.5.4.1.191.gfbf10
