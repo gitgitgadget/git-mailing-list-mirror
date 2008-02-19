@@ -1,146 +1,138 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: new stacked git feature
-Date: Thu, 21 Feb 2008 08:45:43 +0100
-Message-ID: <20080221074543.GB8250@diana.vm.bytemark.co.uk>
-References: <20080111194946.GA7504@redhat.com> <1202834567.14175.68.camel@pc1117.cambridge.arm.com> <20080213000806.GB25839@diana.vm.bytemark.co.uk> <b0943d9e0802131429p76f0981cm6e54a6a07042f229@mail.gmail.com> <20080213235204.GA10335@diana.vm.bytemark.co.uk> <b0943d9e0802201506w353b5c05vece9f99730d7663c@mail.gmail.com>
+From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
+Subject: [PATCH] git.el: Add a git-grep command
+Date: Tue, 19 Feb 2008 14:03:18 +0100
+Message-ID: <87odaa4tcl.fsf@lysator.liu.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jason Baron <jbaron@redhat.com>,
-	David =?iso-8859-1?Q?K=E5gedal?= <davidk@lysator.liu.se>,
-	Yann Dirson <ydirson@altern.org>, git <git@vger.kernel.org>
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 21 08:47:31 2008
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Alexandre Julliard <julliard@winehq.org>
+X-From: git-owner@vger.kernel.org Thu Feb 21 09:18:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JS69O-0007xI-6E
-	for gcvg-git-2@gmane.org; Thu, 21 Feb 2008 08:47:26 +0100
+	id 1JS6cw-0007X4-Ck
+	for gcvg-git-2@gmane.org; Thu, 21 Feb 2008 09:17:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754103AbYBUHqu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 21 Feb 2008 02:46:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753992AbYBUHqu
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Feb 2008 02:46:50 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3414 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751198AbYBUHqt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Feb 2008 02:46:49 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1JS67j-0002Ez-00; Thu, 21 Feb 2008 07:45:43 +0000
-Content-Disposition: inline
-In-Reply-To: <b0943d9e0802201506w353b5c05vece9f99730d7663c@mail.gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1765314AbYBUIQg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 21 Feb 2008 03:16:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753123AbYBUIQg
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Feb 2008 03:16:36 -0500
+Received: from mail.lysator.liu.se ([130.236.254.3]:49376 "EHLO
+	mail.lysator.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762320AbYBUIQe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Feb 2008 03:16:34 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.lysator.liu.se (Postfix) with ESMTP id DC46B200A22D;
+	Thu, 21 Feb 2008 09:16:32 +0100 (CET)
+Received: from mail.lysator.liu.se ([127.0.0.1])
+	by localhost (lenin.lysator.liu.se [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 06228-01-53; Thu, 21 Feb 2008 09:16:32 +0100 (CET)
+Received: from krank (unknown [87.96.142.66])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.lysator.liu.se (Postfix) with ESMTP id 39E60200A222;
+	Thu, 21 Feb 2008 09:16:32 +0100 (CET)
+Received: by krank (Postfix, from userid 1000)
+	id 904477B4078; Thu, 21 Feb 2008 09:16:42 +0100 (CET)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at lysator.liu.se
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74606>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74607>
 
-On 2008-02-20 23:06:07 +0000, Catalin Marinas wrote:
+This allows easy access to git grep from Emacs.
 
-> On 13/02/2008, Karl Hasselstr=F6m <kha@treskal.com> wrote:
->
-> > On 2008-02-13 22:29:34 +0000, Catalin Marinas wrote:
-> >
-> > > On 13/02/2008, Karl Hasselstr=F6m <kha@treskal.com> wrote:
-> >
-> > I intend to get rid of the current per-patch log. It doesn't save
-> > enough information to be useful anyway.
->
-> I use it from time to time. The commit message gives you the commit
-> id of the patch at that time and the commit diff gives you the
-> changes made by a refresh. It's mainly useful if you ran refresh and
-> don't remember what changes you've added.
+Signed-off-by: David K=C3=A5gedal <davidk@lysator.liu.se>
+---
+ contrib/emacs/git.el |   50 ++++++++++++++++++++++++++++++++++++++++++=
+++++++++
+ 1 files changed, 50 insertions(+), 0 deletions(-)
 
-Ah, OK. Well, the per-branch log will be able to give you all of that.
+This works for me, but before including it someone else should try
+it. It might only work in Emacs 22, for instance.
 
-> > These simple create-an-object-from-data-on-stdin commands should
-> > be fast enough that this won't be a problem (and if a dozen extra
-> > calls to git is too expensive, we'll just have to build a git
-> > command that can take them all in one go).
->
-> As I said in the other e-mail, it needs a run through stg-prof to
-> see what the impact is with large number of patches.
+But when it works, it is really useful.
 
-Agreed.
+diff --git a/contrib/emacs/git.el b/contrib/emacs/git.el
+index f69b697..898e70a 100644
+--- a/contrib/emacs/git.el
++++ b/contrib/emacs/git.el
+@@ -49,6 +49,7 @@
+ (require 'ewoc)
+ (require 'log-edit)
+ (require 'easymenu)
++(require 'grep)
+=20
+=20
+ ;;;; Customizations
+@@ -1584,5 +1585,54 @@ Meant to be used in `after-save-hook'."
+   (interactive)
+   (describe-function 'git-status-mode))
+=20
++(defvar git-grep-history nil)
++
++(defun git-grep (regexp &optional files dir)
++  "Recursively grep for REGEXP in FILES in directory tree rooted at DI=
+R.
++The search is limited to file names matching shell pattern FILES.
++FILES may use abbreviations defined in `grep-files-aliases', e.g.
++entering `ch' is equivalent to `*.[ch]'.
++
++With \\[universal-argument] prefix, you can edit the constructed shell=
+ command line
++before it is executed.
++With two \\[universal-argument] prefixes, directly edit and run `git-g=
+rep-find-command'.
++
++Collect output in a buffer.  While find runs asynchronously, you
++can use \\[next-error] (M-x next-error), or \\<grep-mode-map>\\[compil=
+e-goto-error]
++in the grep output buffer, to go to the lines where grep found matches=
+=2E"
++  (interactive
++   (cond
++    ((equal current-prefix-arg '(16))
++     (list (read-from-minibuffer "Run: " "git grep "
++                                 nil nil 'git-grep-history)
++           nil))
++    (t (let* ((regexp (grep-read-regexp))
++              (files (grep-read-files regexp))
++              (dir (read-directory-name "Base directory: "
++                                        nil default-directory t)))
++         (list regexp files dir)))))
++  (when (and (stringp regexp) (> (length regexp) 0))
++    (if (null files)
++	(if (not (string=3D regexp grep-find-command))
++	    (compilation-start regexp 'grep-mode))
++      (setq dir (file-name-as-directory (expand-file-name dir)))
++      (let ((command (concat
++		      "git grep -n "
++		      "-e " (shell-quote-argument regexp)
++                      (if (string=3D files "*")
++                          ""
++                        (concat " -- " (shell-quote-argument files))))=
+))
++	(when command
++	  (if current-prefix-arg
++	      (setq command
++		    (read-from-minibuffer "Confirm: "
++					  command nil nil 'git-grep-history))
++	    (add-to-history 'git-grep-history command))
++	  (let ((default-directory dir))
++	    (compilation-start (concat "PAGER=3D " command) 'grep-mode))
++	  ;; Set default-directory if we started rgrep in the *grep* buffer.
++	  (if (eq next-error-last-buffer (current-buffer))
++	      (setq default-directory dir)))))))
++
+ (provide 'git)
+ ;;; git.el ends here
+--=20
+1.5.4.2.148.g410dc
 
-> > > A recursive merge with the HEAD of another stack containing
-> > > similar patches? If yes, when pushing it is likely that the
-> > > patches already in the base will be emptied during a three-way
-> > > merge.
-> >
-> > No, a merge of the stack _bases_, with all patches popped off. And
-> > this would be a regular git merge, so no emptying of patches.
->
-> OK, but we would need the StGIT information about stack bases to be
-> passed between repositories.
-
-Yes.
-
-> > > My idea is to merge each patch with the corresponding commit in
-> > > the other branch and leave the base unchanged (like "stg sync").
-> > > The difficulty is in identifying which commit from the other
-> > > branch has to be used. We could try guessing by the number of
-> > > changes or just using the subject line, assuming that it won't
-> > > change (or an extra id field in the commit text).
-> >
-> > I was thinking about the same thing: just match up the patches
-> > with the same name. If the user has renamed a patch, she can
-> > coalesce the two manually.
->
-> Ah, OK. But how do we pass the patch name information? I think the
-> commit log wouldn't be enough as it can be easily modified.
-
-The per-branch log will contain this information.
-
-> There is also a situation when patches on the remote stack were
-> reordered and with some conflicts fixed. In this case, merging gets
-> even more complicated (I think darcs solves this by making all the
-> patches immutable but the base feature of StGIT is that patches are
-> easily modifiable).
-
-The scheme I described should be able to handle this. When a patch is
-pushed, its base is set, and we can just make a normal 3-way merge.
-
-Consider a stack with two patches, a:A->B and b:B->C (A, B, and C are
-commits). In one branch, this is modified to a:A->B1 and b:B1->C1; and
-in the other, the patch order is changed so we get b:A->X and a:X->C.
-
-When we merge these, the base is unchanged (so still A), and the patch
-order is b, a (since it was changed in one branch but not the other).
-
-  1. First we push b. The A->X variant applies trivially, but the
-     B1->C1 variant needs the standard 3-way merge. The merge is
-     force-resolved (that is, any conflicts are ignored, and just
-     stored in the result tree); call the result Y. Then we make a
-     3-way merge with C as ancestor and X and Y as ours and theirs;
-     the result (possibly fixed up manually by the user) is stored as
-     the new patch top -- call it Z. So now we have pushed b:A->Z.
-
-  2. Then we push a. Both the A->B1 and the X->C variants need 3-way
-     merging, since we apply the patch on top of Z; call the resulting
-     (possibly force-resolved) trees P and Q. Then we make a 3-way
-     merge with B as ancestor and P and Q as ours and theirs; the
-     result (possibly fixed up manually by the user) is stored as the
-     new patch top -- call it R. So now we have pushed a:Z->R.
-
-> It would be nice to allow an easy workflow for people trying to
-> share the same repository and benefit from StGIT. There was a recent
-> thread on the Linux kernel lists about a new branch, linux-next,
-> which included some discussions on GIT, patch management, rebasing
-> etc. Some people mentioned that they ended up using classic patch
-> management (quilt) and storing the patches in a repository which can
-> be shared between developers.
-
-Yes, absolutely. And this is precisely what we'll get out of this if
-it pans out. But if it doesn't, the _same_ per-branch log format can
-be used with a different conflict resolution scheme -- for example, we
-could compute the diff text for each of the patches and just merge
-those, which gives the same result as if the user had stored patches
-in the repository.
 
 --=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+David K=C3=A5gedal
