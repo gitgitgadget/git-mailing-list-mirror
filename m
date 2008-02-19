@@ -1,62 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] Add support for host aliases in config files
-Date: Tue, 19 Feb 2008 13:35:32 -0800
-Message-ID: <7vy79ghbob.fsf@gitster.siamese.dyndns.org>
-References: <alpine.LNX.1.00.0802182317520.5816@iabervon.org>
- <47BAF18F.5040709@freescale.com>
- <alpine.LNX.1.00.0802191127080.19024@iabervon.org>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: cvs2svn 2.1.0 released
+Followup-To: gmane.comp.version-control.subversion.cvs2svn.user
+Date: Tue, 19 Feb 2008 22:37:32 +0100
+Message-ID: <47BB4C1C.3010907@alum.mit.edu>
+Reply-To: cvs2svn users <users@cvs2svn.tigris.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jon Loeliger <jdl@freescale.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Tue Feb 19 22:36:32 2008
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+To: announce@cvs2svn.tigris.org, Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Feb 19 22:38:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JRa8Y-0005rW-Ad
-	for gcvg-git-2@gmane.org; Tue, 19 Feb 2008 22:36:26 +0100
+	id 1JRaAW-0006hz-Bh
+	for gcvg-git-2@gmane.org; Tue, 19 Feb 2008 22:38:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754617AbYBSVfv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Feb 2008 16:35:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754550AbYBSVfv
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Feb 2008 16:35:51 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:65212 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754488AbYBSVfu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Feb 2008 16:35:50 -0500
-Received: from a-sasl-quonix.pobox.com (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 387147D0D;
-	Tue, 19 Feb 2008 16:35:49 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.pobox.com (Postfix) with ESMTP id
- 4BBCA7D08; Tue, 19 Feb 2008 16:35:39 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754648AbYBSVhy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Feb 2008 16:37:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754562AbYBSVhy
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Feb 2008 16:37:54 -0500
+Received: from einhorn.in-berlin.de ([192.109.42.8]:36412 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754550AbYBSVhx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Feb 2008 16:37:53 -0500
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.69.135] (kaiserty.in-dsl.de [217.197.85.174])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id m1JLbnXd013325
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 19 Feb 2008 22:37:49 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.8pre) Gecko/20071022 Thunderbird/2.0.0.6 Mnenhy/0.7.5.666
+X-Enigmail-Version: 0.95.0
+X-Enigmail-Version: 0.95.0
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74460>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74461>
 
-Daniel Barkalow <barkalow@iabervon.org> writes:
+cvs2svn 2.1.0 has been released.
 
-> On Tue, 19 Feb 2008, Jon Loeliger wrote:
->
->> Also, is "host" really the right config key?  Maybe "rewritehost"?
->> Or is this thought to be the basis of other (perhaps not rewrite
->> related) properties of the same host as well?
->
-> I think it's likely that other properties of the host could show up. I 
-> suspect that uploadpack and receivepack would be useful host-wide if you 
-> were using a lot of ad-hoc repository names on a big site. Rewriting the 
-> URLs is just the itch I had with this scope.
+cvs2svn is a tool for converting a CVS repository into a Subversion or
+git repository.  cvs2svn can convert just about any CVS repository we've
+ever seen, including gcc, Mozilla, FreeBSD, KDE, GNOME...
 
-I'd agree that per-host configuration may be useful, and your
-"paths to programs" may be a good example.  But I think it is
-plausible that a host needs multiple <rewritefrom,rewriteto>
-tuples.  Either your '[host "$this_url"] aka = $that_url' or
-Dscho's earlier '[rewrite "$this_url_to"] url = $that_url' shows
-that this is not about host but "prefix part of URL".
+Some highlights of release 2.1.0 are:
+
+  * First official release that supports conversions from CVS to git as
+well as CVS to Subversion.
+  * More flexible symbol transform and symbol strategy rules, including
+manual rules read from a symbol hints file.
+  * Allow an arbitrary SVN path to be set for each branch/tag directory.
+  * Improved conversion speed.
+  * Improved quality of conversion and toleration for more kinds of CVS
+repository corruption.
+  * Fixed a few minor bugs.
+
+For more information see:
+http://cvs2svn.tigris.org/source/browse/cvs2svn/tags/2.1.0/CHANGES?rev=4382&view=markup
+
+You can get it here:
+http://cvs2svn.tigris.org/files/documents/1462/41596/cvs2svn-2.1.0.tar.gz
+
+The MD5 checksum is df6d42c94f99aeedffa8c438dbb7ac3d
+
+Please send any bug reports and comments to users@cvs2svn.tigris.org.
+
+Michael Haggerty
