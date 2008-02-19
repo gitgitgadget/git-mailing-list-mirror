@@ -1,87 +1,71 @@
-From: Jon Loeliger <jdl@freescale.com>
-Subject: Re: [PATCH 2/2] Add support for host aliases in config files
-Date: Tue, 19 Feb 2008 09:11:11 -0600
-Message-ID: <47BAF18F.5040709@freescale.com>
-References: <alpine.LNX.1.00.0802182317520.5816@iabervon.org>
+From: "Jay Soffian" <jaysoffian@gmail.com>
+Subject: Re: git push [rejected] question
+Date: Tue, 19 Feb 2008 10:18:09 -0500
+Message-ID: <76718490802190718t5e70abb2x8f96fc7154576594@mail.gmail.com>
+References: <E7DE807861E8474E8AC3DC7AC2C75EE50542F2F1@34093-EVS2C1.exchange.rackspace.com>
+	 <20080219043353.GA23239@sigill.intra.peff.net>
+	 <76718490802190509k20225092o66853916f48e08b1@mail.gmail.com>
+	 <20080219150826.GA24499@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Tue Feb 19 16:13:26 2008
+Cc: "Jason Garber" <jgarber@ionzoft.com>, git@vger.kernel.org
+To: "Jeff King" <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Feb 19 16:18:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JRU9X-0002P9-Gx
-	for gcvg-git-2@gmane.org; Tue, 19 Feb 2008 16:13:03 +0100
+	id 1JRUF7-0004tE-B7
+	for gcvg-git-2@gmane.org; Tue, 19 Feb 2008 16:18:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754090AbYBSPM1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Feb 2008 10:12:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754190AbYBSPM1
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Feb 2008 10:12:27 -0500
-Received: from az33egw02.freescale.net ([192.88.158.103]:40518 "EHLO
-	az33egw02.freescale.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754090AbYBSPM0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Feb 2008 10:12:26 -0500
-Received: from az33smr02.freescale.net (az33smr02.freescale.net [10.64.34.200])
-	by az33egw02.freescale.net (8.12.11/az33egw02) with ESMTP id m1JFBCc5000248;
-	Tue, 19 Feb 2008 08:11:12 -0700 (MST)
-Received: from [10.214.72.212] (mvp-10-214-72-212.am.freescale.net [10.214.72.212])
-	by az33smr02.freescale.net (8.13.1/8.13.0) with ESMTP id m1JFBBsl004206;
-	Tue, 19 Feb 2008 09:11:11 -0600 (CST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <alpine.LNX.1.00.0802182317520.5816@iabervon.org>
+	id S1752340AbYBSPSM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Feb 2008 10:18:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752662AbYBSPSL
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Feb 2008 10:18:11 -0500
+Received: from wa-out-1112.google.com ([209.85.146.183]:13151 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752301AbYBSPSJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Feb 2008 10:18:09 -0500
+Received: by wa-out-1112.google.com with SMTP id v27so3532064wah.23
+        for <git@vger.kernel.org>; Tue, 19 Feb 2008 07:18:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=GDytwbpsd4iWsthAzx5eAOy5Ddd7oirW1q39/wQ6pwg=;
+        b=CiW7hhi8u+gtbXFZ2iJEshqKtkyJ1+w9ZnCHDGlTbGBmAF96E2SrgTbSdgutPje+0d3ktGHN4Z263erYpaDbLZEXQs9UY67i2UN5P7yq+8Ul/xZtwCbr18lPOEYNv4r/ci9ILpdk2eHfe2EE/+h0/3vSos8VobTJGzZ01v+UTmE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=HmpBm/laUzkhett+qXTlmq8verwuEAh13NvDQkBRO4L3kSlr7R4ZfJ0B5KA7UkrhB4P7vEmvhsxHvreqqZTeMs4Tp6sxjssYjNIg3d/Rg95Xm2mPiFbefHLz12jlznmq5SsQFlV268FKV4GsZnJD+9mVmRyJZx9N5mDwc8I583g=
+Received: by 10.115.14.1 with SMTP id r1mr4300944wai.31.1203434289313;
+        Tue, 19 Feb 2008 07:18:09 -0800 (PST)
+Received: by 10.114.145.13 with HTTP; Tue, 19 Feb 2008 07:18:09 -0800 (PST)
+In-Reply-To: <20080219150826.GA24499@sigill.intra.peff.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74414>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74415>
 
-Daniel Barkalow wrote:
-> This allows users with different preferences for access methods to the
-> same remote repositories to rewrite each other's URLs by pattern
-> matching across a large set of similiarly set up repositories to each
-> get the desired access.
-> 
-> For example, if you don't have a kernel.org account, you might want
-> settings like:
-> 
-> [host "kernel.org"]
->       base = git://git.kernel.org/pub/
->       rewritebase = master.kernel.org:/pub
-> 
-> Then, if you give git a URL like:
-> 
->   master.kernel.org:/pub/scm/linux/kernel/git/linville/wireless-2.6.git
-> 
-> it will act like you gave it:
-> 
->   git://git.kernel.org/pub/scm/linux/kernel/git/linville/wireless-2.6.git
-> 
-> and you can cut-and-paste pull requests in email without fixing them
-> by hand, for example.
-> 
-> Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
-> ---
+On Feb 19, 2008 10:08 AM, Jeff King <peff@peff.net> wrote:
+>
+> In the first case we push "matching" refs: any head which already exists
+> on both sides. In the second case, we push all heads which exist on the
+> sending send, whether or not a matching ref already exists on the remote
+> side.
 
-So, I may be dense, but I'm having a hard time distinguishing
-the names "base" and "rewritebase" just from a User Interface
-perspective.  It's not clear to me which of those is the A and
-which is the B part in s/A/B/.  "Rewritebase" might be the "from"
-basis, or it might be the "to" basis.  Can we come up with more
-descriptive property names here?
+I'd like to nominate you to rewrite all of the git documentation from
+scratch. :-) Your explanations are extremely clear.
 
-Is the rewrite always just prefix substitution/replacement?
-What if there was some generic path rewrite needed? (KISS? :-))
+> > It seems like the default should be to push just the current branch
+> > ... this would correspond to what a user of git pull expects (even
+> > though the converse of git-push is really git-fetch, for a new user,
+> > that might not be entirely clear).
+>
+> I agree with you, but others do not
 
-Also, is "host" really the right config key?  Maybe "rewritehost"?
-Or is this thought to be the basis of other (perhaps not rewrite
-related) properties of the same host as well?
+Sounds like an opportunity for a config option.
 
-Maybe it's just me.
-
-Thanks,
-jdl
+j.
