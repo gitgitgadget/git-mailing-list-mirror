@@ -1,88 +1,72 @@
-From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
-Subject: [PATCH] git.el: Set process-environment instead of invoking env
-Date: Tue, 19 Feb 2008 15:01:53 +0100
-Message-ID: <87r6f958k5.fsf@lysator.liu.se>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: [PATCH] Add "install-html" rule to top level Makefile
+Date: Tue, 19 Feb 2008 09:25:07 -0500
+Message-ID: <1203431107-60128-1-git-send-email-jaysoffian@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Alexandre Julliard <julliard@winehq.org>
-X-From: git-owner@vger.kernel.org Tue Feb 19 15:24:10 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Jay Soffian <jaysoffian@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 19 15:26:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JRTOD-0008E5-90
-	for gcvg-git-2@gmane.org; Tue, 19 Feb 2008 15:24:09 +0100
+	id 1JRTPr-0000Q7-4b
+	for gcvg-git-2@gmane.org; Tue, 19 Feb 2008 15:25:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756280AbYBSOXc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 Feb 2008 09:23:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753070AbYBSOXc
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Feb 2008 09:23:32 -0500
-Received: from mail.lysator.liu.se ([130.236.254.3]:47687 "EHLO
-	mail.lysator.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755198AbYBSOXb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Feb 2008 09:23:31 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.lysator.liu.se (Postfix) with ESMTP id 3F983200A1DF;
-	Tue, 19 Feb 2008 15:23:30 +0100 (CET)
-Received: from mail.lysator.liu.se ([127.0.0.1])
-	by localhost (lenin.lysator.liu.se [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 11352-01-85; Tue, 19 Feb 2008 15:23:29 +0100 (CET)
-Received: from krank (unknown [87.96.142.66])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.lysator.liu.se (Postfix) with ESMTP id AF8D8200A1D7;
-	Tue, 19 Feb 2008 15:23:29 +0100 (CET)
-Received: by krank (Postfix, from userid 1000)
-	id D2C2A7B4078; Tue, 19 Feb 2008 15:23:38 +0100 (CET)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at lysator.liu.se
+	id S1755254AbYBSOZO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Feb 2008 09:25:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754677AbYBSOZO
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Feb 2008 09:25:14 -0500
+Received: from an-out-0708.google.com ([209.85.132.241]:7898 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754355AbYBSOZL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Feb 2008 09:25:11 -0500
+Received: by an-out-0708.google.com with SMTP id d31so501331and.103
+        for <git@vger.kernel.org>; Tue, 19 Feb 2008 06:25:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date:message-id:x-mailer:cc:mime-version:content-type:content-transfer-encoding;
+        bh=43lPdyKSYATYeqh/m+XXg1e5U2fL5gSR5iZGgWd/cD0=;
+        b=fPotrdmpF/h7Kio97pJvlbYDb+k+W1gnClwnZxTWsctYC/FahA1mH6ad9krOPX4/zrA/Ja0IYKeMQo1aHOsnixLDlJV7lPL6dLkxDUy1HYNg2DnERwvc5d+KUHPqiw3ovHTjtzL2o1W4hy1Uf6xurCxdPlxgK5SFp5ON31IxsDU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version:content-type:content-transfer-encoding;
+        b=NvYoWqx6ToCmV582k13rA2sFwn0XOmhmZZzxuXVE+HfxWTOPDwpe+8DdlqEDsL7j4DsmVUqIeMc6UyLdqDhm0Jy4cxoZQIIAHqKPf45li+ARkQKL8RfMP1zuL2dtNXk2CVoSwd2k8JQ9m72ytwscJVI6srnNyRMIpkH+UJCjM/8=
+Received: by 10.100.195.15 with SMTP id s15mr14284934anf.61.1203431110578;
+        Tue, 19 Feb 2008 06:25:10 -0800 (PST)
+Received: from localhost ( [75.189.159.45])
+        by mx.google.com with ESMTPS id c9sm13313831ana.35.2008.02.19.06.25.09
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 19 Feb 2008 06:25:09 -0800 (PST)
+X-Mailer: git-send-email 1.5.4.2.203.g1b97.dirty
+CC: Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74410>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74411>
 
-This will make it a little less posix-dependent, and more efficient.
+Add "install-html" rule to top level Makefile
 
-Included is also a minor doc improvement.
-
-Signed-off-by: David K=C3=A5gedal <davidk@lysator.liu.se>
+Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
 ---
- contrib/emacs/git.el |    7 +++----
- 1 files changed, 3 insertions(+), 4 deletions(-)
+ Makefile |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
 
-diff --git a/contrib/emacs/git.el b/contrib/emacs/git.el
-index a8bf0ef..f69b697 100644
---- a/contrib/emacs/git.el
-+++ b/contrib/emacs/git.el
-@@ -185,9 +185,8 @@ if there is already one that displays the same dire=
-ctory."
-=20
- (defun git-call-process-env (buffer env &rest args)
-   "Wrapper for call-process that sets environment strings."
--  (if env
--      (apply #'call-process "env" nil buffer nil
--             (append (git-get-env-strings env) (list "git") args))
-+  (let ((process-environment (append (git-get-env-strings env)
-+                                     process-environment)))
-     (apply #'call-process "git" nil buffer nil args)))
-=20
- (defun git-call-process-display-error (&rest args)
-@@ -204,7 +203,7 @@ if there is already one that displays the same dire=
-ctory."
-=20
- (defun git-call-process-env-string (env &rest args)
-   "Wrapper for call-process that sets environment strings,
--and returns the process output as a string."
-+and returns the process output as a string, or nil if the git failed."
-   (with-temp-buffer
-     (and (eq 0 (apply #' git-call-process-env t env args))
-          (buffer-string))))
---=20
-1.5.4.2.148.g410dc
-
-
---=20
-David K=C3=A5gedal
+diff --git a/Makefile b/Makefile
+index 554e29f..8db0361 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1093,6 +1093,8 @@ install-info:
+ quick-install-doc:
+ 	$(MAKE) -C Documentation quick-install
+ 
++install-html:
++	$(MAKE) -C Documentation install-html
+ 
+ 
+ ### Maintainer's dist rules
+-- 
+1.5.4.2.203.g1b97.dirty
