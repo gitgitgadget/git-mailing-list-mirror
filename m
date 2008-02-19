@@ -1,160 +1,98 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: RE: [PATCH(TIC)] push: annoy all users by deprecating the default
- semantics
-Date: Tue, 19 Feb 2008 16:41:28 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802191638520.30505@racer.site>
-References: <E7DE807861E8474E8AC3DC7AC2C75EE50542F2F1@34093-EVS2C1.exchange.rackspace.com> <20080219043353.GA23239@sigill.intra.peff.net> <76718490802190509k20225092o66853916f48e08b1@mail.gmail.com> <20080219150826.GA24499@sigill.intra.peff.net>
- <76718490802190718t5e70abb2x8f96fc7154576594@mail.gmail.com> <20080219152549.GC24499@sigill.intra.peff.net> <alpine.LSU.1.00.0802191610480.30505@racer.site> <E7DE807861E8474E8AC3DC7AC2C75EE50542F7F6@34093-EVS2C1.exchange.rackspace.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH 2/2] Add support for host aliases in config files
+Date: Tue, 19 Feb 2008 11:45:03 -0500 (EST)
+Message-ID: <alpine.LNX.1.00.0802191127080.19024@iabervon.org>
+References: <alpine.LNX.1.00.0802182317520.5816@iabervon.org> <47BAF18F.5040709@freescale.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jeff King <peff@peff.net>, Jay Soffian <jaysoffian@gmail.com>,
-	git@vger.kernel.org
-To: Jason Garber <jgarber@ionzoft.com>
-X-From: git-owner@vger.kernel.org Tue Feb 19 17:42:31 2008
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Jon Loeliger <jdl@freescale.com>
+X-From: git-owner@vger.kernel.org Tue Feb 19 17:45:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JRVY4-0007H7-Rr
-	for gcvg-git-2@gmane.org; Tue, 19 Feb 2008 17:42:29 +0100
+	id 1JRVbC-000069-G5
+	for gcvg-git-2@gmane.org; Tue, 19 Feb 2008 17:45:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753996AbYBSQlo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Feb 2008 11:41:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755180AbYBSQlo
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Feb 2008 11:41:44 -0500
-Received: from mail.gmx.net ([213.165.64.20]:33212 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752944AbYBSQln (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Feb 2008 11:41:43 -0500
-Received: (qmail invoked by alias); 19 Feb 2008 16:41:41 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp048) with SMTP; 19 Feb 2008 17:41:41 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19pOQEBKJ1phRs9o0Ox96wOQ69nKP/3R5ZoFDPn3Z
-	BJFWfmE/yMdd0K
-X-X-Sender: gene099@racer.site
-In-Reply-To: <E7DE807861E8474E8AC3DC7AC2C75EE50542F7F6@34093-EVS2C1.exchange.rackspace.com>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1753154AbYBSQpH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Feb 2008 11:45:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753130AbYBSQpG
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Feb 2008 11:45:06 -0500
+Received: from iabervon.org ([66.92.72.58]:53854 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753010AbYBSQpF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Feb 2008 11:45:05 -0500
+Received: (qmail 9932 invoked by uid 1000); 19 Feb 2008 16:45:03 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 19 Feb 2008 16:45:03 -0000
+In-Reply-To: <47BAF18F.5040709@freescale.com>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74432>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74433>
 
-Hi,
+On Tue, 19 Feb 2008, Jon Loeliger wrote:
 
-On Tue, 19 Feb 2008, Jason Garber wrote:
-
-> +	if (!all && argc < 2)
-> +		warning("Pushing without branch names is deprecated.\n"
-> +			"Too many users just assumed what it should
-> do\n"
-> +			"according to them, got burned, and blamed
-> us,\n"
-> +			"the good git developers.\n\n"
-> +			"So everybody has to suffer now, and get used
-> to\n"
-> +			"new semantics.\n\n"
-> +			"Thank you for your time.\n");
+> Daniel Barkalow wrote:
+> > This allows users with different preferences for access methods to the
+> > same remote repositories to rewrite each other's URLs by pattern
+> > matching across a large set of similiarly set up repositories to each
+> > get the desired access.
+> > 
+> > For example, if you don't have a kernel.org account, you might want
+> > settings like:
+> > 
+> > [host "kernel.org"]
+> >       base = git://git.kernel.org/pub/
+> >       rewritebase = master.kernel.org:/pub
+> > 
+> > Then, if you give git a URL like:
+> > 
+> >   master.kernel.org:/pub/scm/linux/kernel/git/linville/wireless-2.6.git
+> > 
+> > it will act like you gave it:
+> > 
+> >   git://git.kernel.org/pub/scm/linux/kernel/git/linville/wireless-2.6.git
+> > 
+> > and you can cut-and-paste pull requests in email without fixing them
+> > by hand, for example.
+> > 
+> > Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
+> > ---
 > 
-> 
-> Quite accurate... lol.
+> So, I may be dense, but I'm having a hard time distinguishing
+> the names "base" and "rewritebase" just from a User Interface
+> perspective.  It's not clear to me which of those is the A and
+> which is the B part in s/A/B/.  "Rewritebase" might be the "from"
+> basis, or it might be the "to" basis.  Can we come up with more
+> descriptive property names here?
 
-Heh.  FWIW I think I might just go on with that patch, until those who 
-_should_ care deeply enough about it shut me up with code...
+rewritebase is the base you rewrite, which follows apache usage (which is 
+where somebody got the term to suggest in an earlier round). It seems like 
+it should be clear; am I obfuscating it by showing the options in the more 
+backwards order in the examples? If you've got an idea that people find 
+more clear, I'd be happy to change it (again).
 
-Note that even if I vent here a bit, there's a good side to it: my patch 
-should be a good start (actually, I think it is more than just a start, 
-but hey, it's not like I want my patch to _really_ go into mainline).
+> Is the rewrite always just prefix substitution/replacement?
+> What if there was some generic path rewrite needed? (KISS? :-))
 
-This is my current state:
+It's just prefix substitution. I suppose a future version could do 
+something more clever (but it would probably also use variables named 
+"pattern" instead of "base", so there shouldn't be any issues).
 
- Documentation/git-push.txt |   16 +++++++++++++---
- builtin-push.c             |   18 ++++++++++++++++++
- 2 files changed, 31 insertions(+), 3 deletions(-)
+> Also, is "host" really the right config key?  Maybe "rewritehost"?
+> Or is this thought to be the basis of other (perhaps not rewrite
+> related) properties of the same host as well?
 
-diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-index 5f24944..d373d05 100644
---- a/Documentation/git-push.txt
-+++ b/Documentation/git-push.txt
-@@ -9,8 +9,10 @@ git-push - Update remote refs along with associated objects
- SYNOPSIS
- --------
- [verse]
--'git-push' [--all] [--dry-run] [--tags] [--receive-pack=<git-receive-pack>]
--           [--repo=all] [-f | --force] [-v | --verbose] [<repository> <refspec>...]
-+'git-push' [--all] [-m | --matching] [--dry-run] [--tags]
-+	   [--receive-pack=<git-receive-pack>]
-+	   [--repo=all] [-f | --force] [-v | --verbose]
-+	   [<repository> <refspec>...]
- 
- DESCRIPTION
- -----------
-@@ -49,7 +51,8 @@ Note: If no explicit refspec is found, (that is neither
- on the command line nor in any Push line of the
- corresponding remotes file---see below), then all the
- heads that exist both on the local side and on the remote
--side are updated.
-+side are updated.  This behavior is DEPRECATED and will go
-+away in the future.  Use the `--matching` option in the future.
- +
- `tag <tag>` means the same as `refs/tags/<tag>:refs/tags/<tag>`.
- +
-@@ -63,6 +66,13 @@ the remote repository.
- 	Instead of naming each ref to push, specifies that all
- 	refs under `$GIT_DIR/refs/heads/` be pushed.
- 
-+-m, \--matching::
-+	Push all refs that are present both locally and remotely.
-+	This used to be the default action if no ref was specified,
-+	until a few users who cannot read man pages prevailed in
-+	their assumption that the default action should not be what
-+	it was documented to be.
-+
- \--mirror::
- 	Instead of naming each ref to push, specifies that all
- 	refs under `$GIT_DIR/refs/heads/` and `$GIT_DIR/refs/tags/`
-diff --git a/builtin-push.c b/builtin-push.c
-index c8cb63e..1194800 100644
---- a/builtin-push.c
-+++ b/builtin-push.c
-@@ -104,6 +104,7 @@ int cmd_push(int argc, const char **argv, const char *prefix)
- 	int dry_run = 0;
- 	int force = 0;
- 	int tags = 0;
-+	int matching = 0;
- 	const char *repo = NULL;	/* default repository */
- 
- 	struct option options[] = {
-@@ -117,6 +118,7 @@ int cmd_push(int argc, const char **argv, const char *prefix)
- 		OPT_BOOLEAN( 0 , "thin", &thin, "use thin pack"),
- 		OPT_STRING( 0 , "receive-pack", &receivepack, "receive-pack", "receive pack program"),
- 		OPT_STRING( 0 , "exec", &receivepack, "receive-pack", "receive pack program"),
-+		OPT_BOOLEAN('m', "matching", &matching, "push matching refs"),
- 		OPT_END()
- 	};
- 
-@@ -134,6 +136,22 @@ int cmd_push(int argc, const char **argv, const char *prefix)
- 		flags |= TRANSPORT_PUSH_ALL;
- 	if (mirror)
- 		flags |= (TRANSPORT_PUSH_MIRROR|TRANSPORT_PUSH_FORCE);
-+	if (all && argc > 1)
-+		die ("Do you want to push explicit refs or --all?");
-+	if (matching && all)
-+		die ("--matching and --all are mutually exclusive");
-+	if (matching && argc > 1)
-+		die ("--matching and explicit refs are mutually exclusive");
-+	if (!matching && !all && argc < 2)
-+		warning("Pushing without branch names is deprecated.\n"
-+			"Too many users just assumed what it should do\n"
-+			"according to them, got burned, and blamed us,\n"
-+			"the good git developers.\n\n"
-+			"So everybody has to suffer now, and get used to\n"
-+			"new semantics.\n\n"
-+			"What used to be default will need the --matching\n"
-+			"option in the future.\n\n"
-+			"Thank you for your time.\n");
- 
- 	if (argc > 0) {
- 		repo = argv[0];
+I think it's likely that other properties of the host could show up. I 
+suspect that uploadpack and receivepack would be useful host-wide if you 
+were using a lot of ad-hoc repository names on a big site. Rewriting the 
+URLs is just the itch I had with this scope.
+
+	-Daniel
+*This .sig left intentionally blank*
