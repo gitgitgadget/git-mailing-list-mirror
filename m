@@ -1,88 +1,104 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/5] Improve message-id generation flow control for
- format-patch
-Date: Tue, 19 Feb 2008 16:51:12 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802191646570.30505@racer.site>
-References: <cover.1203392527.git.barkalow@iabervon.org> <alpine.LNX.1.00.0802182254110.5816@iabervon.org> <alpine.LSU.1.00.0802191300510.30505@racer.site> <alpine.LNX.1.00.0802191108450.19024@iabervon.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH 2/2] Add support for host aliases in config files
+Date: Tue, 19 Feb 2008 11:52:51 -0500 (EST)
+Message-ID: <alpine.LNX.1.00.0802191146000.19024@iabervon.org>
+References: <alpine.LNX.1.00.0802182317520.5816@iabervon.org> <47BAF18F.5040709@freescale.com> <alpine.LSU.1.00.0802191547580.30505@racer.site>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Tue Feb 19 17:52:09 2008
+Cc: Jon Loeliger <jdl@freescale.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Feb 19 17:53:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JRVhN-0002cb-Ny
-	for gcvg-git-2@gmane.org; Tue, 19 Feb 2008 17:52:06 +0100
+	id 1JRVir-0003C6-Nx
+	for gcvg-git-2@gmane.org; Tue, 19 Feb 2008 17:53:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753571AbYBSQv3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Feb 2008 11:51:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754109AbYBSQv3
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Feb 2008 11:51:29 -0500
-Received: from mail.gmx.net ([213.165.64.20]:40090 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751578AbYBSQv2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Feb 2008 11:51:28 -0500
-Received: (qmail invoked by alias); 19 Feb 2008 16:51:26 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp052) with SMTP; 19 Feb 2008 17:51:26 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+9hJdjxda9JF7DOlK8aQxJHXMP68v/sXK/gymL28
-	1UiSgYF3v6LfRJ
-X-X-Sender: gene099@racer.site
-In-Reply-To: <alpine.LNX.1.00.0802191108450.19024@iabervon.org>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1754583AbYBSQw4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Feb 2008 11:52:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754628AbYBSQwz
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Feb 2008 11:52:55 -0500
+Received: from iabervon.org ([66.92.72.58]:40452 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754316AbYBSQwz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Feb 2008 11:52:55 -0500
+Received: (qmail 10217 invoked by uid 1000); 19 Feb 2008 16:52:51 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 19 Feb 2008 16:52:51 -0000
+In-Reply-To: <alpine.LSU.1.00.0802191547580.30505@racer.site>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74435>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74436>
 
-Hi,
+On Tue, 19 Feb 2008, Johannes Schindelin wrote:
 
-On Tue, 19 Feb 2008, Daniel Barkalow wrote:
-
-> On Tue, 19 Feb 2008, Johannes Schindelin wrote:
+> Hi,
 > 
-> > On Mon, 18 Feb 2008, Daniel Barkalow wrote:
+> On Tue, 19 Feb 2008, Jon Loeliger wrote:
+> 
+> > Daniel Barkalow wrote:
+> >
+> > > For example, if you don't have a kernel.org account, you might want 
+> > > settings like:
+> > > 
+> > > [host "kernel.org"]
+> > >       base = git://git.kernel.org/pub/
+> > >       rewritebase = master.kernel.org:/pub
+> > > 
+> > > Then, if you give git a URL like:
+> > > 
+> > >   master.kernel.org:/pub/scm/linux/kernel/git/linville/wireless-2.6.git
+> > > 
+> > > it will act like you gave it:
+> > > 
+> > >   git://git.kernel.org/pub/scm/linux/kernel/git/linville/wireless-2.6.git
+> > > 
+> > > and you can cut-and-paste pull requests in email without fixing them 
+> > > by hand, for example.
+> > > 
+> > > Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
+> > > ---
 > > 
-> > > diff --git a/revision.h b/revision.h
-> > > index 8572315..e3559d0 100644
-> > > --- a/revision.h
-> > > +++ b/revision.h
-> > > @@ -74,7 +74,7 @@ struct rev_info {
-> > >  	struct log_info *loginfo;
-> > >  	int		nr, total;
-> > >  	const char	*mime_boundary;
-> > > -	const char	*message_id;
-> > > +	char		*message_id;
-> > >  	const char	*ref_message_id;
-> > >  	const char	*add_signoff;
-> > >  	const char	*extra_headers;
+> > So, I may be dense, but I'm having a hard time distinguishing the names 
+> > "base" and "rewritebase" just from a User Interface perspective.  It's 
+> > not clear to me which of those is the A and which is the B part in 
+> > s/A/B/.  "Rewritebase" might be the "from" basis, or it might be the 
+> > "to" basis.  Can we come up with more descriptive property names here?
 > > 
-> > Mini-nit: technically, ref_message_id should be "char *", too.
+> > Is the rewrite always just prefix substitution/replacement?
+> > What if there was some generic path rewrite needed? (KISS? :-))
 > 
-> I'd intended ref_message_id to just reference the string owned by a 
-> different message's message_id, but that doesn't really work with struct 
-> rev_info. I bet you'd like me to not leak memory out through 
-> ref_message_id, too. I think I want to see how the code to collect the 
-> set of commits in the series (for more capable generation of cover 
-> letter contents) goes before changing this either way.
+> I just tried this:
 > 
-> (It's incidentally kind of amusing that you managed to convey the way 
-> you thought the code should be designed, different from how I'd designed 
-> it, through a note on whether a struct field should be const or not.)
+> $ git config rewrite."master.kernel.org:/pub".url \
+> 	git://git.kernel.org/pub/
+> 
+> and it worked.  IOW, the config will look like this:
+> 
+> [rewrite "master.kernel.org:/pub"]
+>         url = git://git.kernel.org/pub/
+> 
+> So maybe this is easier to grasp?
 
-Hehe!
+If you've also got people using http:// URLs, this would require giving 
+the preferred URL twice. And it doesn't help with possible future 
+host-based configuration, or a non-prefix pattern, if that came up some 
+day.
 
-You're right in that the revision machinery needs some cleaning up.  AFAIK 
-there is no method yet to release the memory allocated during one revision 
-walk (including the preparation).
+I suppose perhaps:
 
-And you're right that this should be done separately, so please kindly 
-accept my apologies while I retract my comment.
+[host "git://git.kernel.org/pub/"]
+	aka = "master.kernel.org:/pub/"
+	aka = "http://www.kernel.org/pub/"
 
-Ciao,
-Dscho
+I'm a little worried about putting URLs in keys, but I don't know if 
+that's a reasonable worry.
+
+	-Daniel
+*This .sig left intentionally blank*
