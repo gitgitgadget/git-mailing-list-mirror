@@ -1,54 +1,94 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [PATCH] hg-to-git: fix parent analysis
-Date: Tue, 19 Feb 2008 11:12:44 +0100
-Message-ID: <20080219101244.GA3825@diana.vm.bytemark.co.uk>
-References: <1203110444.5579.23.camel@galileo>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] branch: optionally setup branch.*.merge from upstream
+ local branches
+Date: Tue, 19 Feb 2008 10:55:21 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0802191054070.30505@racer.site>
+References: <1203386832-43969-1-git-send-email-jaysoffian@gmail.com> <76718490802181819o4cf742edi92bbcd9039f0cdac@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Stelian Pop <stelian@popies.net>
-X-From: git-owner@vger.kernel.org Tue Feb 19 11:13:56 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 19 11:56:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JRPU1-0000go-KK
-	for gcvg-git-2@gmane.org; Tue, 19 Feb 2008 11:13:54 +0100
+	id 1JRQ8z-0005ov-IW
+	for gcvg-git-2@gmane.org; Tue, 19 Feb 2008 11:56:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753024AbYBSKNJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 Feb 2008 05:13:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752897AbYBSKNI
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Feb 2008 05:13:08 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4323 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751900AbYBSKNH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Feb 2008 05:13:07 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1JRPSv-00014F-00; Tue, 19 Feb 2008 10:12:45 +0000
-Content-Disposition: inline
-In-Reply-To: <1203110444.5579.23.camel@galileo>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1752507AbYBSKzh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Feb 2008 05:55:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752468AbYBSKzh
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Feb 2008 05:55:37 -0500
+Received: from mail.gmx.net ([213.165.64.20]:56037 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752156AbYBSKzg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Feb 2008 05:55:36 -0500
+Received: (qmail invoked by alias); 19 Feb 2008 10:55:34 -0000
+Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
+  by mail.gmx.net (mp043) with SMTP; 19 Feb 2008 11:55:34 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX196Cc8jPX56LRHkY7RTWevhUKJpHIFf9tWDuARn0z
+	MV/ec988P4/Rp9
+X-X-Sender: gene099@racer.site
+In-Reply-To: <76718490802181819o4cf742edi92bbcd9039f0cdac@mail.gmail.com>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74391>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74392>
 
-On 2008-02-15 22:20:44 +0100, Stelian Pop wrote:
+Hi,
 
-> -    prnts =3D os.popen('hg log -r %d --template "{parents}"' % cset)=
-=2Eread().split(' ')
-> +    prnts =3D os.popen('hg log -r %d --template "{parents}"' % cset)=
-=2Eread().strip().split(' ')
+On Mon, 18 Feb 2008, Jay Soffian wrote:
 
-If it's not already too late, you could wrap this line when you're
-changing it anyway. Something like this maybe:
+> On Feb 18, 2008 9:07 PM, Jay Soffian <jaysoffian@gmail.com> wrote:
+> > diff --git a/branch.c b/branch.c
+> > index 1fc8788..9d7585e 100644
+> > --- a/branch.c
+> > +++ b/branch.c
+> > @@ -37,7 +37,8 @@ static int find_tracked_branch(struct remote *remote, void *priv)
+> >   * to infer the settings for branch.<new_ref>.{remote,merge} from the
+> >   * config.
+> >   */
+> > -static int setup_tracking(const char *new_ref, const char *orig_ref)
+> > +static int setup_tracking(const char *new_ref, const char *orig_ref,
+> > +                          enum branch_track track)
+> >  {
+> >         char key[1024];
+> >         struct tracking tracking;
+> > @@ -48,10 +49,14 @@ static int setup_tracking(const char *new_ref, const char *orig_ref)
+> >
+> >         memset(&tracking, 0, sizeof(tracking));
+> >         tracking.spec.dst = (char *)orig_ref;
+> > -       if (for_each_remote(find_tracked_branch, &tracking) ||
+> > -                       !tracking.matches)
+> > +       if (for_each_remote(find_tracked_branch, &tracking))
+> >                 return 1;
+> >
+> > +       if (!tracking.matches && track == BRANCH_TRACK_ALWAYS) {
+> > +               tracking.matches = 1;
+> > +               tracking.src = xstrdup(orig_ref);
+> > +       }
+> > +
+> 
+> Well that's obviously wrong (though it causes no problems, setup_tracking()
+> would return 0 when it should return 1, but its return value is currently
+> ignored). I changed it to:
+> 
+> 	if (!tracking.matches) {
+> 		if (track != BRANCH_TRACK_ALWAYS)
+> 			return 1;
+> 		tracking.matches = 1;
+> 		tracking.src = xstrdup(orig_ref);
+> 	}
 
-    prnts =3D os.popen('hg log -r %d --template "{parents}"' % cset
-                     ).read().strip().split(' ')
+Ah, yes.  But I still maintain that xstrdup()ing orig_ref only to free it 
+later is ugly.  Why not have the "tracking.src ? tracking.src : orig_ref" 
+as I suggested?  The free() obviously can stay, since it will say 
+"free(NULL)" in the case of tracking.matches == 0.
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+Ciao,
+Dscho
