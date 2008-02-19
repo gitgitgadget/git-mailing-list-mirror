@@ -1,113 +1,61 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: [PATCH] Correct git-pull documentation
-Date: Tue, 19 Feb 2008 14:24:32 -0500
-Message-ID: <1203449072-89011-1-git-send-email-jaysoffian@gmail.com>
+From: "Anatoly Yakovenko" <aeyakovenko@gmail.com>
+Subject: Re: cant get git to work over http
+Date: Tue, 19 Feb 2008 11:27:43 -0800
+Message-ID: <e26d18e40802191127v7cc9f051l7002b56b41dc9f86@mail.gmail.com>
+References: <e26d18e40802181649l3c03df82l4eb91c88bec47bf4@mail.gmail.com>
+	 <20080219063937.GB3819@glandium.org>
+	 <e26d18e40802182309l693b2099wb42573aca7348091@mail.gmail.com>
+	 <alpine.LSU.1.00.0802191115440.30505@racer.site>
+	 <e26d18e40802191019j48a1ceadk4887ffc35100ab0a@mail.gmail.com>
+	 <47BB1EC0.601@freescale.com>
+	 <e26d18e40802191106v51c907bdn6aa51acef5f530a3@mail.gmail.com>
+	 <alpine.LSU.1.00.0802191916020.7797@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Jay Soffian <jaysoffian@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 19 20:25:17 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Jon Loeliger" <jdl@freescale.com>,
+	"Mike Hommey" <mh@glandium.org>, git@vger.kernel.org
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Feb 19 20:28:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JRY5b-0003A0-Ht
-	for gcvg-git-2@gmane.org; Tue, 19 Feb 2008 20:25:15 +0100
+	id 1JRY8a-0004KV-Is
+	for gcvg-git-2@gmane.org; Tue, 19 Feb 2008 20:28:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755307AbYBSTYj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Feb 2008 14:24:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755254AbYBSTYj
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Feb 2008 14:24:39 -0500
-Received: from an-out-0708.google.com ([209.85.132.244]:3001 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751521AbYBSTYh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Feb 2008 14:24:37 -0500
-Received: by an-out-0708.google.com with SMTP id d31so530251and.103
-        for <git@vger.kernel.org>; Tue, 19 Feb 2008 11:24:36 -0800 (PST)
+	id S1755272AbYBST1q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Feb 2008 14:27:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754666AbYBST1p
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Feb 2008 14:27:45 -0500
+Received: from wa-out-1112.google.com ([209.85.146.180]:37291 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754640AbYBST1o (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Feb 2008 14:27:44 -0500
+Received: by wa-out-1112.google.com with SMTP id v27so3653975wah.23
+        for <git@vger.kernel.org>; Tue, 19 Feb 2008 11:27:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references:mime-version:content-type:content-transfer-encoding;
-        bh=kNwayEXRBTh0ToIQvLKuGTgvGqQ0srV8v7WwLRnubOg=;
-        b=DhD3SjDfY9QWHHbiicZ4Ks6M+JE+UR2/3VNcfmqGdVMmrBEzF0Md4vukLDIajTUW6sTFpusQUUj9VWxHnHp3HQJjIdZlc2c37sznldwP0WqraGyDg2tLwUSD84JPzZP8lbeoIkEMFu1Fr7yI8FbmfGLmKbDwqYoK3cFyUdDM0Tc=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=2K8CcJUoQYGUQIBh1WIa4bHBKZ08YVoWRR4Mwl3zgYM=;
+        b=H/wRO/CURHi+vbKb4dz23hyXUrhzdSEQDsMJQH86BX41p5dHjV15gYnagxDWgj2r55ptVLWVqFpDvygJ6KQ9A/0i9Sk4hRcDixrPs8EG5aoxnGPhlN0rAUL3I+wvkLxkmmI7xP9gVrhbV9ychUYQB2MnolN8rwDI6QVjoed+VBw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references:mime-version:content-type:content-transfer-encoding;
-        b=nRFvlqLrtgBdfPxxU8QQX8OuVQN3+SsQHFa4XrtpRAzImbvj2nP2C42fBIerrHXTmoUsNT8ojrw9QyDHlXczlox3JvSgOfn4/hA3dX3owELn2buPhgJtP34OsWwFjB8atJYDdYVR48Db3E4b7T/O4D0lj6Epu0GE2OXNuwpkCwk=
-Received: by 10.100.190.15 with SMTP id n15mr14925809anf.96.1203449076898;
-        Tue, 19 Feb 2008 11:24:36 -0800 (PST)
-Received: from localhost ( [75.189.159.45])
-        by mx.google.com with ESMTPS id b14sm16144146ana.26.2008.02.19.11.24.35
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 19 Feb 2008 11:24:36 -0800 (PST)
-X-Mailer: git-send-email 1.5.4.2.204.gbea87
-In-Reply-To: 1203137441-52448-1-git-send-email-jaysoffian@gmail.com
-References: 1203137441-52448-1-git-send-email-jaysoffian@gmail.com
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=NfJPR1CQPAOFtS824BQj+FIeku2z/0ZnUJkbk8IkP0bSYCCiXunGyZhExXuja77RuLpjVcq9JPy8Z67Uk4cBullWIH6ayERW5XH2+AaAUDLHA+6v4lwEwuTUIOpNFLhPtnVoKM0+eL01qyJCJ+4s68W9+a3hlHG5gZ7TS9oeNHQ=
+Received: by 10.115.46.9 with SMTP id y9mr4410288waj.129.1203449264015;
+        Tue, 19 Feb 2008 11:27:44 -0800 (PST)
+Received: by 10.114.167.5 with HTTP; Tue, 19 Feb 2008 11:27:43 -0800 (PST)
+In-Reply-To: <alpine.LSU.1.00.0802191916020.7797@racer.site>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74446>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74447>
 
-The --rebase option was documented in the wrong place (under MERGE
-STRATEGIES instead of OPTIONS). Noted the branch.<name>.rebase
-option.
+> You can.  But please understand that there is a difference from having
+> cloned from somewhere, or setting up an uncloned repository.
 
-Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
----
- Documentation/git-pull.txt |   20 ++++++++++++--------
- 1 files changed, 12 insertions(+), 8 deletions(-)
-
-diff --git a/Documentation/git-pull.txt b/Documentation/git-pull.txt
-index 179bdfc..7378943 100644
---- a/Documentation/git-pull.txt
-+++ b/Documentation/git-pull.txt
-@@ -15,6 +15,7 @@ DESCRIPTION
- -----------
- Runs `git-fetch` with the given parameters, and calls `git-merge`
- to merge the retrieved head(s) into the current branch.
-+With `--rebase`, calls `git-rebase` instead of `git-merge`.
- 
- Note that you can use `.` (current directory) as the
- <repository> to pull from the local repository -- this is useful
-@@ -26,19 +27,14 @@ OPTIONS
- include::merge-options.txt[]
- 
- :git-pull: 1
--include::fetch-options.txt[]
--
--include::pull-fetch-param.txt[]
--
--include::urls-remotes.txt[]
--
--include::merge-strategies.txt[]
- 
- \--rebase::
- 	Instead of a merge, perform a rebase after fetching.  If
- 	there is a remote ref for the upstream branch, and this branch
- 	was rebased since last fetched, the rebase uses that information
--	to avoid rebasing non-local changes.
-+	to avoid rebasing non-local changes. To make this the default
-+	for branch `<name>`, set configuration `branch.<name>.rebase`
-+	to `true`.
- +
- *NOTE:* This is a potentially _dangerous_ mode of operation.
- It rewrites history, which does not bode well when you
-@@ -48,6 +44,14 @@ unless you have read linkgit:git-rebase[1] carefully.
- \--no-rebase::
- 	Override earlier \--rebase.
- 
-+include::fetch-options.txt[]
-+
-+include::pull-fetch-param.txt[]
-+
-+include::urls-remotes.txt[]
-+
-+include::merge-strategies.txt[]
-+
- DEFAULT BEHAVIOUR
- -----------------
- 
--- 
-1.5.4.2.204.gbea87
+ok, so how do i set up an empty git repository over http, like i would
+over ssh of the fs?
