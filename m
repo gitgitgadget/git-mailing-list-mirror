@@ -1,71 +1,96 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Submodules and rewind
-Date: Wed, 20 Feb 2008 00:35:33 +0100 (CET)
-Message-ID: <alpine.LSU.1.00.0802200033530.8333@wbgn129.biozentrum.uni-wuerzburg.de>
-References: <20080219140604.04afc91f@extreme> <20080219223201.GE4703MdfPADPa@greensroom.kotnet.org> <20080219152357.5ab397cf@extreme>
+From: Jeff King <peff@peff.net>
+Subject: Re: Solaris test failure -- FAIL 61: invalid bool (set)
+Date: Tue, 19 Feb 2008 18:44:22 -0500
+Message-ID: <20080219234422.GA9987@coredump.intra.peff.net>
+References: <8ec76080802191322t2417ea48y1537011f1031dff8@mail.gmail.com> <alpine.LSU.1.00.0802192220440.7826@racer.site> <8ec76080802191517k5f070d45l497063d93e080272@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: skimo@liacs.nl, skimo@kotnet.org,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	git@vger.kernel.org
-To: Stephen Hemminger <shemminger@vyatta.com>
-X-From: git-owner@vger.kernel.org Wed Feb 20 00:36:14 2008
+To: Whit Armstrong <armstrong.whit@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 20 00:45:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JRc0S-0000Gb-Vb
-	for gcvg-git-2@gmane.org; Wed, 20 Feb 2008 00:36:13 +0100
+	id 1JRc8z-0002zm-Tw
+	for gcvg-git-2@gmane.org; Wed, 20 Feb 2008 00:45:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752114AbYBSXfi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Feb 2008 18:35:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752015AbYBSXfh
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Feb 2008 18:35:37 -0500
-Received: from mail.gmx.net ([213.165.64.20]:42400 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751808AbYBSXfh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Feb 2008 18:35:37 -0500
-Received: (qmail invoked by alias); 19 Feb 2008 23:35:35 -0000
-Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO wrzx67.rz.uni-wuerzburg.de) [132.187.25.128]
-  by mail.gmx.net (mp021) with SMTP; 20 Feb 2008 00:35:35 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/lVkh1kqvlKudnwAnZOcrlHK2ClhsMQ/V7UjdZqy
-	UYEQBgYDQwy7bh
-X-X-Sender: gene099@wbgn129.biozentrum.uni-wuerzburg.de
-In-Reply-To: <20080219152357.5ab397cf@extreme>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1754969AbYBSXo0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Feb 2008 18:44:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753708AbYBSXo0
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Feb 2008 18:44:26 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1774 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751774AbYBSXoZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Feb 2008 18:44:25 -0500
+Received: (qmail 26330 invoked by uid 111); 19 Feb 2008 23:44:23 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Tue, 19 Feb 2008 18:44:23 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 19 Feb 2008 18:44:22 -0500
+Content-Disposition: inline
+In-Reply-To: <8ec76080802191517k5f070d45l497063d93e080272@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74476>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74477>
 
-Hi,
+On Tue, Feb 19, 2008 at 06:17:42PM -0500, Whit Armstrong wrote:
 
-On Tue, 19 Feb 2008, Stephen Hemminger wrote:
+>         git config --bool bool.nobool foobar
+> t1300-repo-config.sh: line -176: 18181 Segmentation Fault      (core
+> dumped) git config --bool bool.nobool foobar
 
-> On Tue, 19 Feb 2008 23:32:01 +0100
-> Sven Verdoolaege <skimo@kotnet.org> wrote:
-> 
-> > On Tue, Feb 19, 2008 at 02:06:04PM -0800, Stephen Hemminger wrote:
-> > > Because of a bone headed merge, I had to rewind one project back
-> > > to a known good state, but the sub module stuff is now wedged and
-> > > brain stuck on the old commit id.
-> > > 
-> > > Isn't there some simple way to do 'git sub-module remove' followed
-> > > by 'git sub-module add' to reset the internal index?
-> > 
-> > Why doesn't "git submodule update" work for you?
-> > 
-> 
-> It didn't fix it, but recloning did.
+Ah. The problem is that we use git_config_int() to parse the command
+line option which, upon failure, attempts to print a message with
+config_file_name, which is NULL (since we're not parsing a config file
+currently). On most systems, printf simply prints "(null)", but on
+Solaris, it segfaults. But we shouldn't be passing NULL anyway on any
+system, since it makes the message ugly.
 
-That does not make sense.  But with your reluctance with regards to 
-revealing details, it is really impossible to tell what is going on.
+This patch fixes it.
 
-For example, you did not even once give us the output of "git submodule", 
-let alone "git diff <submodule>".
+-- >8 --
+git_config_*: don't assume we are parsing a config file
 
-Helpless,
-Dscho
+These functions get called by other code, including parsing config
+options from the command line. In that case, config_file_name is NULL,
+leading to an ugly message or even a segfault on some implementations of
+printf.
+
+---
+diff --git a/config.c b/config.c
+index 8064cae..c105c13 100644
+--- a/config.c
++++ b/config.c
+@@ -280,11 +280,18 @@ int git_parse_ulong(const char *value, unsigned long *ret)
+ 	return 0;
+ }
+ 
++static void die_bad_config(const char *name)
++{
++	if (config_file_name)
++		die("bad config value '%s' in %s", name, config_file_name);
++	die("bad config value for '%s'", name);
++}
++
+ int git_config_int(const char *name, const char *value)
+ {
+ 	long ret;
+ 	if (!git_parse_long(value, &ret))
+-		die("bad config value for '%s' in %s", name, config_file_name);
++		die_bad_config(name);
+ 	return ret;
+ }
+ 
+@@ -292,7 +299,7 @@ unsigned long git_config_ulong(const char *name, const char *value)
+ {
+ 	unsigned long ret;
+ 	if (!git_parse_ulong(value, &ret))
+-		die("bad config value for '%s' in %s", name, config_file_name);
++		die_bad_config(name);
+ 	return ret;
+ }
+ 
