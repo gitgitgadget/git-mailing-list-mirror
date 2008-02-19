@@ -1,76 +1,83 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: Builtin-clone?
-Date: Tue, 19 Feb 2008 08:08:33 +0100
-Message-ID: <200802190808.33611.johan@herland.net>
-References: <alpine.LNX.1.00.0802182341430.5816@iabervon.org>
+From: "Anatoly Yakovenko" <aeyakovenko@gmail.com>
+Subject: Re: cant get git to work over http
+Date: Mon, 18 Feb 2008 23:09:39 -0800
+Message-ID: <e26d18e40802182309l693b2099wb42573aca7348091@mail.gmail.com>
+References: <e26d18e40802181649l3c03df82l4eb91c88bec47bf4@mail.gmail.com>
+	 <20080219063937.GB3819@glandium.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	Kristian =?iso-8859-1?q?H=F8gsberg?= <krh@redhat.com>
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Tue Feb 19 08:09:53 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Mike Hommey" <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Tue Feb 19 08:10:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JRMbw-0007oH-9m
-	for gcvg-git-2@gmane.org; Tue, 19 Feb 2008 08:09:52 +0100
+	id 1JRMcL-0007sI-JD
+	for gcvg-git-2@gmane.org; Tue, 19 Feb 2008 08:10:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754703AbYBSHJP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 Feb 2008 02:09:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754560AbYBSHJO
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Feb 2008 02:09:14 -0500
-Received: from smtp.getmail.no ([84.208.20.33]:36823 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754297AbYBSHJN convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 Feb 2008 02:09:13 -0500
-Received: from pmxchannel-daemon.no-osl-m323-srv-009-z2.isp.get.no by
- no-osl-m323-srv-009-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- id <0JWH00J2B56XWD00@no-osl-m323-srv-009-z2.isp.get.no> for
- git@vger.kernel.org; Tue, 19 Feb 2008 08:08:57 +0100 (CET)
-Received: from smtp.getmail.no ([10.5.16.1])
- by no-osl-m323-srv-009-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JWH000TS569JY30@no-osl-m323-srv-009-z2.isp.get.no> for
- git@vger.kernel.org; Tue, 19 Feb 2008 08:08:33 +0100 (CET)
-Received: from alpha.herland ([84.215.102.95])
- by no-osl-m323-srv-009-z1.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JWH008885695Q60@no-osl-m323-srv-009-z1.isp.get.no> for
- git@vger.kernel.org; Tue, 19 Feb 2008 08:08:33 +0100 (CET)
-In-reply-to: <alpine.LNX.1.00.0802182341430.5816@iabervon.org>
-Content-disposition: inline
-User-Agent: KMail/1.9.7
+	id S1754733AbYBSHJl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Feb 2008 02:09:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755009AbYBSHJl
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Feb 2008 02:09:41 -0500
+Received: from wa-out-1112.google.com ([209.85.146.177]:54491 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754345AbYBSHJk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Feb 2008 02:09:40 -0500
+Received: by wa-out-1112.google.com with SMTP id v27so3281323wah.23
+        for <git@vger.kernel.org>; Mon, 18 Feb 2008 23:09:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=Iz6LwW6y/xdHACvZb3uPHIh5f1OfjSWvKzrwZ2FkEOE=;
+        b=NsTvdefwM0WTMBAwxrUv+rdyNtQSnNzQY35qyGh39jfDeGolcCiCo7WMBAJnmyT+Bgc4Btlp6DyE+F7rUIvM7nOARFZqaqiguPQArWqX4Qjg3YBI61zHF2xXBq7aEN1ckDy7vtOiEas44YfPtBgr4JJhGhAIy29N9B3StuAHRr4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=vvnNlUANDtZ5U5eS41lNYjeQomp7mGeod3tlViBEBLxEWE+X4ZoDLNkl/TtWdr+zDgly9gZJIJ3u/GQm319oKDL0o9wpcd98DZG3ImH66ugFwpbuPq1jP0tFJcYGNs+54ldhR1IR8vlJyiUdbpKimsvSld6wF5TzcoH7Q4X5LcM=
+Received: by 10.114.137.2 with SMTP id k2mr1799586wad.104.1203404979717;
+        Mon, 18 Feb 2008 23:09:39 -0800 (PST)
+Received: by 10.114.167.5 with HTTP; Mon, 18 Feb 2008 23:09:39 -0800 (PST)
+In-Reply-To: <20080219063937.GB3819@glandium.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74379>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74380>
 
-On Tuesday 19 February 2008, Daniel Barkalow wrote:
-> I remember some discussion of what was still needed in order to make =
-clone=20
-> a trivial caller of init, config, fetch, and (optionally) checkout, a=
-nd=20
-> that there was still something. But has anyone actually written the b=
-ulk=20
-> of builtin-clone.c?
+> > *.*.*.*- foobar [18/Feb/2008:16:40:12 -0800] "PROPFIND /git/repo
+> > HTTP/1.1" 301 320
+>
+> Try adding a / at the end of the url you use for your repo.
 
-I remember Kristian H=F8gsberg posted some WIP back in December:
-http://thread.gmane.org/gmane.comp.version-control.git/67915/
+ah cool, that was it.  The initial push seems to have worked,
 
-I recently sent him (and the list) an email asking about his progress (=
-and -=20
-once his work arrives - whether it's a good idea to make 'git clone'=20
-produce packed refs), but I have yet to hear from him...
+$ git push -v upload master
+Pushing to http://aeyakovenko@myserver.com/git/repo/
+Getting pack list
+Fetching remote heads...
+  refs/
+  refs/tags/
+  refs/heads/
+'refs/heads/master': up-to-date
 
 
-Have fun! :)
+but i cant clone or just normally push and pull the repo.
 
-=2E..Johan
+$ git-pull
+fatal: 'origin': unable to chdir or not a git archive
+fatal: The remote end hung up unexpectedly
 
---=20
-Johan Herland, <johan@herland.net>
-www.herland.net
+and
+
+$ git-clone http://aeyakovenko@myserver.com/git/repo/ foobar
+Initialized empty Git repository in /home/aeyakovenko/projects/foobar/.git/
+cat: /home/aeyakovenko/projects/foobar/.git/refs/remotes/origin/master:
+No such file or directory
+/usr/bin/git-clone: line 450: cd:
+/home/aeyakovenko/projects/foobar/.git/refs/remotes/origin: No such
+file or directory
+fatal: : not a valid SHA1
+fatal: Not a valid object name HEAD
