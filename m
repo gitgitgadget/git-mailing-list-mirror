@@ -1,71 +1,92 @@
-From: "Jay Soffian" <jaysoffian@gmail.com>
+From: Jeff King <peff@peff.net>
 Subject: Re: git push [rejected] question
-Date: Tue, 19 Feb 2008 10:18:09 -0500
-Message-ID: <76718490802190718t5e70abb2x8f96fc7154576594@mail.gmail.com>
-References: <E7DE807861E8474E8AC3DC7AC2C75EE50542F2F1@34093-EVS2C1.exchange.rackspace.com>
-	 <20080219043353.GA23239@sigill.intra.peff.net>
-	 <76718490802190509k20225092o66853916f48e08b1@mail.gmail.com>
-	 <20080219150826.GA24499@sigill.intra.peff.net>
+Date: Tue, 19 Feb 2008 10:21:54 -0500
+Message-ID: <20080219152154.GB24499@sigill.intra.peff.net>
+References: <E7DE807861E8474E8AC3DC7AC2C75EE50542F2F1@34093-EVS2C1.exchange.rackspace.com> <20080219043353.GA23239@sigill.intra.peff.net> <76718490802190509k20225092o66853916f48e08b1@mail.gmail.com> <E7DE807861E8474E8AC3DC7AC2C75EE50542F62D@34093-EVS2C1.exchange.rackspace.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Jason Garber" <jgarber@ionzoft.com>, git@vger.kernel.org
-To: "Jeff King" <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Feb 19 16:18:55 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org
+To: Jason Garber <jgarber@ionzoft.com>
+X-From: git-owner@vger.kernel.org Tue Feb 19 16:23:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JRUF7-0004tE-B7
-	for gcvg-git-2@gmane.org; Tue, 19 Feb 2008 16:18:49 +0100
+	id 1JRUIj-0006Wq-M8
+	for gcvg-git-2@gmane.org; Tue, 19 Feb 2008 16:22:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752340AbYBSPSM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Feb 2008 10:18:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752662AbYBSPSL
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Feb 2008 10:18:11 -0500
-Received: from wa-out-1112.google.com ([209.85.146.183]:13151 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752301AbYBSPSJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Feb 2008 10:18:09 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so3532064wah.23
-        for <git@vger.kernel.org>; Tue, 19 Feb 2008 07:18:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=GDytwbpsd4iWsthAzx5eAOy5Ddd7oirW1q39/wQ6pwg=;
-        b=CiW7hhi8u+gtbXFZ2iJEshqKtkyJ1+w9ZnCHDGlTbGBmAF96E2SrgTbSdgutPje+0d3ktGHN4Z263erYpaDbLZEXQs9UY67i2UN5P7yq+8Ul/xZtwCbr18lPOEYNv4r/ci9ILpdk2eHfe2EE/+h0/3vSos8VobTJGzZ01v+UTmE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=HmpBm/laUzkhett+qXTlmq8verwuEAh13NvDQkBRO4L3kSlr7R4ZfJ0B5KA7UkrhB4P7vEmvhsxHvreqqZTeMs4Tp6sxjssYjNIg3d/Rg95Xm2mPiFbefHLz12jlznmq5SsQFlV268FKV4GsZnJD+9mVmRyJZx9N5mDwc8I583g=
-Received: by 10.115.14.1 with SMTP id r1mr4300944wai.31.1203434289313;
-        Tue, 19 Feb 2008 07:18:09 -0800 (PST)
-Received: by 10.114.145.13 with HTTP; Tue, 19 Feb 2008 07:18:09 -0800 (PST)
-In-Reply-To: <20080219150826.GA24499@sigill.intra.peff.net>
+	id S1758227AbYBSPV6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Feb 2008 10:21:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758274AbYBSPV5
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Feb 2008 10:21:57 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2762 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752977AbYBSPV4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Feb 2008 10:21:56 -0500
+Received: (qmail 21708 invoked by uid 111); 19 Feb 2008 15:21:54 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Tue, 19 Feb 2008 10:21:54 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 19 Feb 2008 10:21:54 -0500
 Content-Disposition: inline
+In-Reply-To: <E7DE807861E8474E8AC3DC7AC2C75EE50542F62D@34093-EVS2C1.exchange.rackspace.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74415>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74416>
 
-On Feb 19, 2008 10:08 AM, Jeff King <peff@peff.net> wrote:
->
-> In the first case we push "matching" refs: any head which already exists
-> on both sides. In the second case, we push all heads which exist on the
-> sending send, whether or not a matching ref already exists on the remote
-> side.
+On Tue, Feb 19, 2008 at 08:45:32AM -0600, Jason Garber wrote:
 
-I'd like to nominate you to rewrite all of the git documentation from
-scratch. :-) Your explanations are extremely clear.
+> ### Push from Issue/1 with non-fast-forward Issue/3 k###
+> 
+>   [jason@neon wc1]$ git push
+>   Counting objects: 5, done.
+>   Writing objects: 100% (3/3), 242 bytes, done.
+>   Total 3 (delta 0), reused 0 (delta 0)
+>   Unpacking objects: 100% (3/3), done.
+>   To /var/var-home/jason/Code/test/git/repo/.git
+>      142e136..c85b3dc  Issue/1 -> Issue/1
+>    ! [rejected]        Issue/3 -> Issue/3 (non-fast forward)
+>   error: failed to push to '/var/var-home/jason/Code/test/git/repo/.git'
+> 
+> 
+> The issue with the above error message is that it indicates to the
+> user that the push failed - even though the push was partially
+> successful.
 
-> > It seems like the default should be to push just the current branch
-> > ... this would correspond to what a user of git pull expects (even
-> > though the converse of git-push is really git-fetch, for a new user,
-> > that might not be entirely clear).
->
-> I agree with you, but others do not
+Yes, the final line is somewhat ambiguous if read by itself. The
+transport mechanism is abstracted, and we don't pass back to "git push"
+the number of successful and error refs, so we know only that there was
+an error.
 
-Sounds like an opportunity for a config option.
+However, the idea is that the detailed status information on each ref
+has _already_ been output, and the user should look at that. And indeed,
+in your example, we can see that Issue/1 was pushed successfully, while
+Issue/3 was not.
 
-j.
+So I think it is a matter of:
+
+  1. The table's terseness did not make clear to you that Issue/1 was
+     not only attempted for push, but was successfully pushed. This
+     should probably be dealt with by a documentation update to
+     git-push.
+
+  2. The error message implies that the push failed, and a user might
+     expect an all-or-nothing behavior. It might be enough to change
+     this to just "error: failed to push some refs to ..." without
+     actually counting the refs (as you suggested).
+
+>   [jason@neon wc1]$ git push
+>   To /var/var-home/jason/Code/test/git/repo/.git
+>      c85b3dc..c85b3dc  Issue/1 -> Issue/1 (Everything up-to-date)
+>    ! [rejected]        Issue/3 -> Issue/3 (non-fast forward)
+>   error: some errors encountered during push to '/var/var-home/jason/Code/test/git/repo/.git'.  See above for detail.
+> 
+> (it would be nice to see the status of each attempted branch if --all
+> was specified or implied as the default behavior)
+
+Try "git push -v". We explicitly don't show up to date branches by
+default because they tend to clutter the output.
+
+-Peff
