@@ -1,104 +1,103 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH 2/2] Add support for host aliases in config files
-Date: Tue, 19 Feb 2008 11:52:51 -0500 (EST)
-Message-ID: <alpine.LNX.1.00.0802191146000.19024@iabervon.org>
-References: <alpine.LNX.1.00.0802182317520.5816@iabervon.org> <47BAF18F.5040709@freescale.com> <alpine.LSU.1.00.0802191547580.30505@racer.site>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH(TIC)] push: annoy all users by deprecating the default
+ semantics
+Date: Tue, 19 Feb 2008 16:54:14 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0802191651550.30505@racer.site>
+References: <E7DE807861E8474E8AC3DC7AC2C75EE50542F2F1@34093-EVS2C1.exchange.rackspace.com> <20080219043353.GA23239@sigill.intra.peff.net> <76718490802190509k20225092o66853916f48e08b1@mail.gmail.com> <20080219150826.GA24499@sigill.intra.peff.net>
+ <76718490802190718t5e70abb2x8f96fc7154576594@mail.gmail.com> <20080219152549.GC24499@sigill.intra.peff.net> <alpine.LSU.1.00.0802191610480.30505@racer.site> <20080219163743.GA31668@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jon Loeliger <jdl@freescale.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Feb 19 17:53:48 2008
+Cc: Jay Soffian <jaysoffian@gmail.com>,
+	Jason Garber <jgarber@ionzoft.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Feb 19 17:55:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JRVir-0003C6-Nx
-	for gcvg-git-2@gmane.org; Tue, 19 Feb 2008 17:53:38 +0100
+	id 1JRVkJ-0003kY-6M
+	for gcvg-git-2@gmane.org; Tue, 19 Feb 2008 17:55:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754583AbYBSQw4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Feb 2008 11:52:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754628AbYBSQwz
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Feb 2008 11:52:55 -0500
-Received: from iabervon.org ([66.92.72.58]:40452 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754316AbYBSQwz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Feb 2008 11:52:55 -0500
-Received: (qmail 10217 invoked by uid 1000); 19 Feb 2008 16:52:51 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 19 Feb 2008 16:52:51 -0000
-In-Reply-To: <alpine.LSU.1.00.0802191547580.30505@racer.site>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1754137AbYBSQyb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Feb 2008 11:54:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753755AbYBSQyb
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Feb 2008 11:54:31 -0500
+Received: from mail.gmx.net ([213.165.64.20]:56413 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753700AbYBSQya (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Feb 2008 11:54:30 -0500
+Received: (qmail invoked by alias); 19 Feb 2008 16:54:28 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp026) with SMTP; 19 Feb 2008 17:54:28 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18h6lUTc/8hfkFBKdJjZm3t1DpHnGpDZOne76auDW
+	vP9iCMA9hOQfxj
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20080219163743.GA31668@sigill.intra.peff.net>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74436>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74437>
 
-On Tue, 19 Feb 2008, Johannes Schindelin wrote:
+Hi,
 
-> Hi,
+On Tue, 19 Feb 2008, Jeff King wrote:
+
+> On Tue, Feb 19, 2008 at 04:14:35PM +0000, Johannes Schindelin wrote:
 > 
-> On Tue, 19 Feb 2008, Jon Loeliger wrote:
+> > Subject: [PATCH(TIC)] push: annoy all users by deprecating the default
 > 
-> > Daniel Barkalow wrote:
-> >
-> > > For example, if you don't have a kernel.org account, you might want 
-> > > settings like:
-> > > 
-> > > [host "kernel.org"]
-> > >       base = git://git.kernel.org/pub/
-> > >       rewritebase = master.kernel.org:/pub
-> > > 
-> > > Then, if you give git a URL like:
-> > > 
-> > >   master.kernel.org:/pub/scm/linux/kernel/git/linville/wireless-2.6.git
-> > > 
-> > > it will act like you gave it:
-> > > 
-> > >   git://git.kernel.org/pub/scm/linux/kernel/git/linville/wireless-2.6.git
-> > > 
-> > > and you can cut-and-paste pull requests in email without fixing them 
-> > > by hand, for example.
-> > > 
-> > > Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
-> > > ---
+> Heh. It is a good sign that git has made the patch-generation workflow 
+> so pleasant to use that we are willing to make patches for the sake of 
+> humor. :)
+
+Yeah, code talks... even humourously ;-)
+
+> > 	FWIW I would resist, just because that config option would change
+> > 	the _semantics_ of a git program.
 > > 
-> > So, I may be dense, but I'm having a hard time distinguishing the names 
-> > "base" and "rewritebase" just from a User Interface perspective.  It's 
-> > not clear to me which of those is the A and which is the B part in 
-> > s/A/B/.  "Rewritebase" might be the "from" basis, or it might be the 
-> > "to" basis.  Can we come up with more descriptive property names here?
-> > 
-> > Is the rewrite always just prefix substitution/replacement?
-> > What if there was some generic path rewrite needed? (KISS? :-))
+> > 	Just think about the IRC channel.  "How do I update only HEAD?" --
+> > 	"Just say 'git push'" -- "No, that updates nothing" -- "Well, 
+> > 	works here" -- "But not here!" ... "Can _nobody_ help me?"
 > 
-> I just tried this:
+> Just say "git push origin HEAD"?
+
+The point is: if that becomes the default (with a certain config option), 
+people will get used to typing "git push".  They will not even _know_ 
+about the explicit form.
+
+> > diff --git a/builtin-push.c b/builtin-push.c
+> > index c8cb63e..7bcb141 100644
+> > --- a/builtin-push.c
+> > +++ b/builtin-push.c
+> > @@ -134,6 +134,14 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+> >  		flags |= TRANSPORT_PUSH_ALL;
+> >  	if (mirror)
+> >  		flags |= (TRANSPORT_PUSH_MIRROR|TRANSPORT_PUSH_FORCE);
+> > +	if (!all && argc < 2)
+> > +		warning("Pushing without branch names is deprecated.\n"
+> > +			"Too many users just assumed what it should do\n"
+> > +			"according to them, got burned, and blamed us,\n"
+> > +			"the good git developers.\n\n"
+> > +			"So everybody has to suffer now, and get used to\n"
+> > +			"new semantics.\n\n"
+> > +			"Thank you for your time.\n");
+> >  
+> >  	if (argc > 0) {
+> >  		repo = argv[0];
 > 
-> $ git config rewrite."master.kernel.org:/pub".url \
-> 	git://git.kernel.org/pub/
-> 
-> and it worked.  IOW, the config will look like this:
-> 
-> [rewrite "master.kernel.org:/pub"]
->         url = git://git.kernel.org/pub/
-> 
-> So maybe this is easier to grasp?
+> You forgot to add a "--matching" option in case people want to
+> explicitly request the old behavior. ;P
 
-If you've also got people using http:// URLs, this would require giving 
-the preferred URL twice. And it doesn't help with possible future 
-host-based configuration, or a non-prefix pattern, if that came up some 
-day.
+See followup.
 
-I suppose perhaps:
+BTW if that is really the way to go, we will have to have a _long_ period 
+(I am talking about 6-12 _months_ if not more) where there _must not_ be a 
+default action for git-push.  Otherwise people _will_ get more confused 
+than necessary.
 
-[host "git://git.kernel.org/pub/"]
-	aka = "master.kernel.org:/pub/"
-	aka = "http://www.kernel.org/pub/"
-
-I'm a little worried about putting URLs in keys, but I don't know if 
-that's a reasonable worry.
-
-	-Daniel
-*This .sig left intentionally blank*
+Ciao,
+Dscho
