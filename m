@@ -1,103 +1,79 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH(TIC)] push: annoy all users by deprecating the default
- semantics
-Date: Tue, 19 Feb 2008 16:54:14 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802191651550.30505@racer.site>
-References: <E7DE807861E8474E8AC3DC7AC2C75EE50542F2F1@34093-EVS2C1.exchange.rackspace.com> <20080219043353.GA23239@sigill.intra.peff.net> <76718490802190509k20225092o66853916f48e08b1@mail.gmail.com> <20080219150826.GA24499@sigill.intra.peff.net>
- <76718490802190718t5e70abb2x8f96fc7154576594@mail.gmail.com> <20080219152549.GC24499@sigill.intra.peff.net> <alpine.LSU.1.00.0802191610480.30505@racer.site> <20080219163743.GA31668@sigill.intra.peff.net>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: [RFC] checkout to notice forks (Re: Minor annoyance with git push)
+Date: Wed, 20 Feb 2008 06:03:01 +1300
+Message-ID: <46a038f90802190903g1a19e38i30198b368a800a89@mail.gmail.com>
+References: <46a038f90802072044u3329fd33w575c689cba2917ee@mail.gmail.com>
+	 <20080209030046.GA10470@coredump.intra.peff.net>
+	 <7vtzkihkx5.fsf@gitster.siamese.dyndns.org>
+	 <46a038f90802090350rc4780d1ted60c03b9abf1fc0@mail.gmail.com>
+	 <7vwspd5z1d.fsf@gitster.siamese.dyndns.org>
+	 <7vfxvs75kp.fsf_-_@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jay Soffian <jaysoffian@gmail.com>,
-	Jason Garber <jgarber@ionzoft.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Feb 19 17:55:08 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Jeff King" <peff@peff.net>, "Steffen Prohaska" <prohaska@zib.de>,
+	"Git Mailing List" <git@vger.kernel.org>,
+	"Daniel Barkalow" <barkalow@iabervon.org>,
+	"Johannes Schindelin" <johannes.schindelin@gmx.de>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 19 18:04:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JRVkJ-0003kY-6M
-	for gcvg-git-2@gmane.org; Tue, 19 Feb 2008 17:55:07 +0100
+	id 1JRVsd-0006ur-FC
+	for gcvg-git-2@gmane.org; Tue, 19 Feb 2008 18:03:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754137AbYBSQyb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Feb 2008 11:54:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753755AbYBSQyb
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Feb 2008 11:54:31 -0500
-Received: from mail.gmx.net ([213.165.64.20]:56413 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753700AbYBSQya (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Feb 2008 11:54:30 -0500
-Received: (qmail invoked by alias); 19 Feb 2008 16:54:28 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp026) with SMTP; 19 Feb 2008 17:54:28 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18h6lUTc/8hfkFBKdJjZm3t1DpHnGpDZOne76auDW
-	vP9iCMA9hOQfxj
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20080219163743.GA31668@sigill.intra.peff.net>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1753840AbYBSRDG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Feb 2008 12:03:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752386AbYBSRDF
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Feb 2008 12:03:05 -0500
+Received: from ug-out-1314.google.com ([66.249.92.175]:4058 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751712AbYBSRDD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Feb 2008 12:03:03 -0500
+Received: by ug-out-1314.google.com with SMTP id z38so576713ugc.16
+        for <git@vger.kernel.org>; Tue, 19 Feb 2008 09:03:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=7b4c3SmJGJHMafBfE/EOtPt9WXXF3HbmznmvGfUQt7U=;
+        b=CnTrmM1+qcMJ9SQ9kD2SeQVRCBkdGZJ5e/28fkr5jNH5Dov2hz8J7LKEirU0hdrvUjZw/Kcog6nSk4HSPxrVQQ6DoiwNJXhORFmLXNegwnYsdFhI46BsyLAYnVCKLH8Xjo7V4INWFDI9kgY+URgUndyU40xR+zgHOe5qNYlieRg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=HCO5dME/tzhTiAA8c4c7HN5UhUgEsbeApxcSfaSUxMegaQoTiozApvP1y11Z7yc8R9Ob+6cvzuAu4Ea19MYnZz5uImAJMWQfniR4QPVld8+bz7StzZONTB0alXgR9PbPvojfDQRJ7PniZ6oJAW7SvPRUBiR2HdCvVyK4da62OcA=
+Received: by 10.66.216.9 with SMTP id o9mr1039368ugg.16.1203440581691;
+        Tue, 19 Feb 2008 09:03:01 -0800 (PST)
+Received: by 10.66.252.6 with HTTP; Tue, 19 Feb 2008 09:03:01 -0800 (PST)
+In-Reply-To: <7vfxvs75kp.fsf_-_@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74437>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74438>
 
-Hi,
+On Feb 17, 2008 2:08 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+> > Perhaps making "git-checkout" to notice this and offer (or
+> > suggest) fast-forwarding at that point may be safer and make
+> > more sense.  You cannot grow your local branch unless you check
+> > them out, and your remote tracking will keep growing without the
+> > auto-ff you are suggesting, so it is not like people will lose
+> > anchoring point to compare between branches if we do not
+> > auto-ff.
+>
+> So I did this.
 
-On Tue, 19 Feb 2008, Jeff King wrote:
+Great - *thanks*. I'm travelling ATM so lousy connectivity and
+shattered focus. I did a fetch of git.git and can't spot this in next,
+pu or master. Reading further down the thread I see that you're
+probably rewriting it to use tree struct. Will give your initial patch
+a whirl anyway.
 
-> On Tue, Feb 19, 2008 at 04:14:35PM +0000, Johannes Schindelin wrote:
-> 
-> > Subject: [PATCH(TIC)] push: annoy all users by deprecating the default
-> 
-> Heh. It is a good sign that git has made the patch-generation workflow 
-> so pleasant to use that we are willing to make patches for the sake of 
-> humor. :)
+cheers,
 
-Yeah, code talks... even humourously ;-)
 
-> > 	FWIW I would resist, just because that config option would change
-> > 	the _semantics_ of a git program.
-> > 
-> > 	Just think about the IRC channel.  "How do I update only HEAD?" --
-> > 	"Just say 'git push'" -- "No, that updates nothing" -- "Well, 
-> > 	works here" -- "But not here!" ... "Can _nobody_ help me?"
-> 
-> Just say "git push origin HEAD"?
-
-The point is: if that becomes the default (with a certain config option), 
-people will get used to typing "git push".  They will not even _know_ 
-about the explicit form.
-
-> > diff --git a/builtin-push.c b/builtin-push.c
-> > index c8cb63e..7bcb141 100644
-> > --- a/builtin-push.c
-> > +++ b/builtin-push.c
-> > @@ -134,6 +134,14 @@ int cmd_push(int argc, const char **argv, const char *prefix)
-> >  		flags |= TRANSPORT_PUSH_ALL;
-> >  	if (mirror)
-> >  		flags |= (TRANSPORT_PUSH_MIRROR|TRANSPORT_PUSH_FORCE);
-> > +	if (!all && argc < 2)
-> > +		warning("Pushing without branch names is deprecated.\n"
-> > +			"Too many users just assumed what it should do\n"
-> > +			"according to them, got burned, and blamed us,\n"
-> > +			"the good git developers.\n\n"
-> > +			"So everybody has to suffer now, and get used to\n"
-> > +			"new semantics.\n\n"
-> > +			"Thank you for your time.\n");
-> >  
-> >  	if (argc > 0) {
-> >  		repo = argv[0];
-> 
-> You forgot to add a "--matching" option in case people want to
-> explicitly request the old behavior. ;P
-
-See followup.
-
-BTW if that is really the way to go, we will have to have a _long_ period 
-(I am talking about 6-12 _months_ if not more) where there _must not_ be a 
-default action for git-push.  Otherwise people _will_ get more confused 
-than necessary.
-
-Ciao,
-Dscho
+martin
