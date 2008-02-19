@@ -1,113 +1,107 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Rewriting boundary parents when path-limiting
-Date: Tue, 19 Feb 2008 09:41:05 -0800 (PST)
-Message-ID: <alpine.LFD.1.00.0802190921460.7833@woody.linux-foundation.org>
-References: <18358.53933.747911.449078@cargo.ozlabs.ibm.com>
+From: "Anatoly Yakovenko" <aeyakovenko@gmail.com>
+Subject: Re: cant get git to work over http
+Date: Tue, 19 Feb 2008 10:19:06 -0800
+Message-ID: <e26d18e40802191019j48a1ceadk4887ffc35100ab0a@mail.gmail.com>
+References: <e26d18e40802181649l3c03df82l4eb91c88bec47bf4@mail.gmail.com>
+	 <20080219063937.GB3819@glandium.org>
+	 <e26d18e40802182309l693b2099wb42573aca7348091@mail.gmail.com>
+	 <alpine.LSU.1.00.0802191115440.30505@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Tue Feb 19 18:42:13 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Mike Hommey" <mh@glandium.org>, git@vger.kernel.org
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Feb 19 19:20:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JRWTn-0005O4-Sx
-	for gcvg-git-2@gmane.org; Tue, 19 Feb 2008 18:42:08 +0100
+	id 1JRX4R-0003cS-VT
+	for gcvg-git-2@gmane.org; Tue, 19 Feb 2008 19:20:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752217AbYBSRlc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Feb 2008 12:41:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752731AbYBSRlc
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Feb 2008 12:41:32 -0500
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:55999 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752217AbYBSRlb (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 Feb 2008 12:41:31 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m1JHf6ON030580
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 19 Feb 2008 09:41:07 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m1JHf5RP024374;
-	Tue, 19 Feb 2008 09:41:05 -0800
-In-Reply-To: <18358.53933.747911.449078@cargo.ozlabs.ibm.com>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
-X-Spam-Status: No, hits=-2.741 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1754583AbYBSSTM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Feb 2008 13:19:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754472AbYBSSTL
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Feb 2008 13:19:11 -0500
+Received: from wr-out-0506.google.com ([64.233.184.224]:47583 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754137AbYBSSTJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Feb 2008 13:19:09 -0500
+Received: by wr-out-0506.google.com with SMTP id c48so2136612wra.23
+        for <git@vger.kernel.org>; Tue, 19 Feb 2008 10:19:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=7SgBoWJu7dz4spW2KbyqujkXAVyNPbAja4h/nvrrhHk=;
+        b=IncSQ8n1t4oM3JcgYPGg/cRwpp7eGyYXBfwSC3qzDsEszrRi4wrQeQjcJD9trNK214/oI5KZ54hsQgYMFMZkXLe6Rf1R5Hl+U/PPKsHKuzBeibn7hmC1jAG/B/3HQFoLSxCHxkubI3kpMtT0RU82rY+bDGHZjh4jb5YWlRAfcxc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=CR9RSHlvzGXUJ7vLKgScZ77ri8zeNISOA8uLxW8wQmi6psU5cLJClmJJtxvne7d20I6bH71I3aQwi4Mlv4e0MAk+hZ6aCR3QMpp6oFaFHAcY8yBxiuOIFEIKk+1n9wtdCsSe5beDaAXL51T5fqSiZKbh3FqkhsNo+gboa4hvYvM=
+Received: by 10.114.171.1 with SMTP id t1mr3770386wae.83.1203445146517;
+        Tue, 19 Feb 2008 10:19:06 -0800 (PST)
+Received: by 10.114.167.5 with HTTP; Tue, 19 Feb 2008 10:19:06 -0800 (PST)
+In-Reply-To: <alpine.LSU.1.00.0802191115440.30505@racer.site>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74440>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74441>
 
-
-
-On Sat, 16 Feb 2008, Paul Mackerras wrote:
+> > $ git-pull
+> > fatal: 'origin': unable to chdir or not a git archive
+> > fatal: The remote end hung up unexpectedly
 >
-> When using both path and commit limiting, git log --parents --boundary
-> rewrites the parents that are actually in the graph but doesn't
-> rewrite the parents on the boundary, that is, the boundary parents may
-> be commits that don't modify any of the specified paths.  I'm
-> wondering if there is a way to get the boundary parents rewritten too.
+> Since you did not clone from anywhere, the remote "origin" is not set.
+> You will have to do that yourself:
+>
+>         git remote add -f origin http://aeyakovenko@myserver.com/git/repo/
 
-Hmm. Right now we never rewrite uninteresting parents. The reason is 
-rather simple: we simply haven't followed the chain down uninteresting 
-commits!
+Thanks, that worked.  but push still gives me an error:
 
-Changing that is pretty hard. The thing is, we do the commit range 
-limiting mostly separately from the commit parent simplification: one 
-happens while actually walking the commits, the other one happens 
-after-the-fact when you do the "simplify_commit()" thing.
+$ git pull
+You asked me to pull without telling me which branch you
+want to merge with, and 'branch.master.merge' in
+your configuration file does not tell me either.  Please
+name which branch you want to merge on the command line and
+try again (e.g. 'git pull <repository> <refspec>').
+See git-pull(1) for details on the refspec.
 
-In addition to that problem (which is likely solvable: we do actually do 
-a lot of the groundwork for the later simplification stage during the 
-first stage, so we might be able to just move more of that logic up), we 
-actually explicitly do *not* simplify uninteresting commits, ie we have:
+If you often merge with the same branch, you may want to
+configure the following variables in your configuration
+file:
 
-        if (!revs->simplify_history || (p->object.flags & UNINTERESTING)) {
-                /* Even if a merge with an uninteresting
-                 * side branch brought the entire change
-                 * we are interested in, we do not want
-                 * to lose the other branches of this
-                 * merge, so we just keep going.
-                 */
-                pp = &parent->next;
-                continue;
-        }
+    branch.master.remote = <nickname>
+    branch.master.merge = <remote-ref>
+    remote.<nickname>.url = <url>
+    remote.<nickname>.fetch = <refspec>
 
-in there, where the comment says it all: we literally *avoid* simplifying 
-uninteresting parents, and if the commit itself is uninteresting, we go 
-even further, and don't even compare the trees at all! (See the big 
-comment in revision.c: add_parents_to_list, and note how it checks for the 
-UNINTERESTING bit and returns early without even calling 
-try_to_simplify_commit() for such a commit).
+See git-config(1) for details
 
-So right now, not only is the code not really organized for what you ask, 
-it actually explicitly tries to avoid doing what you ask. 
+>
+> > $ git-clone http://aeyakovenko@myserver.com/git/repo/ foobar
+> > Initialized empty Git repository in /home/aeyakovenko/projects/foobar/.git/
+> > cat: /home/aeyakovenko/projects/foobar/.git/refs/remotes/origin/master:
+> > No such file or directory
+> > /usr/bin/git-clone: line 450: cd:
+> > /home/aeyakovenko/projects/foobar/.git/refs/remotes/origin: No such
+> > file or directory
+> > fatal: : not a valid SHA1
+> > fatal: Not a valid object name HEAD
+>
+> That smells like another "master"-less repository.  Why do people do that?
+> Isn't it just _easier_ and more _hassle-free_ to just accept that the
+> initial branch is called "master"?
 
-That said, I'm not sure either of these problems are really impossible (or 
-even hard) issues to avoid.
+what do you mean by master-less?  I would love to just be able to
+create a normal git repo with "git-init" and clone it over http the
+same way that i do over ssh and the filesystem.  but when I do that
+over http i get this error:
 
-We could simply move the "try_to_simplify_commit()" call up, and remove 
-some of the code that explicitly avoids simplifying negative commits. But 
-the logic on when to stop even traversing the list is fundamentally pretty 
-hard, and that might require splitting up UNINTERESTING into two separate 
-bits: a "fairly uninteresting" bit (which means that it is negative) and a 
-"_really_ uninteresting bit" (which means that not only was it negtive, 
-but it also changed the tree, so the parents of this commit are *really* 
-not interesting any more, even after simplification).
+$ git-clone http://aeyakovenko@myserver.com/git/repo/ repo
+Initialized empty Git repository in /home/aeyakovenko/projects/repo/.git/
+Cannot get remote repository information.
+Perhaps git-update-server-info needs to be run there?
 
-Then the "can we stop traversing the tree" code would have to look at the 
-"really uninteresting" bit rather than just the regular uninteresting one.
-
-Quite frankly, I suspect it's not worth it, and maybe you just shouldn't 
-do that optimization and limit the commits in other ways instead (ie you 
-might try to limit them *numerically* instead of by using negative 
-commits, and do one first run with the number of commits limited to <n>, 
-and then if that wasn't enough to re-connect the trees, you do the whole 
-thing)
-
-
-		Linus
+and running `git-update-server-info` does nothing.
