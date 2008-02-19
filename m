@@ -1,92 +1,73 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: rebase --onto might "loose" commits
-Date: Tue, 19 Feb 2008 09:43:15 -0500 (EST)
-Message-ID: <alpine.LFD.1.00.0802190939240.2732@xanadu.home>
-References: <20080219072359.GA752@atjola.homenet>
- <alpine.LSU.1.00.0802191102440.30505@racer.site>
- <20080219125216.GA10444@atjola.homenet>
+From: Jeff King <peff@peff.net>
+Subject: Re: git push [rejected] question
+Date: Tue, 19 Feb 2008 10:08:27 -0500
+Message-ID: <20080219150826.GA24499@sigill.intra.peff.net>
+References: <E7DE807861E8474E8AC3DC7AC2C75EE50542F2F1@34093-EVS2C1.exchange.rackspace.com> <20080219043353.GA23239@sigill.intra.peff.net> <76718490802190509k20225092o66853916f48e08b1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="Boundary_(ID_qHgYaUAtUrNCgtYVq8z9TA)"
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	gitster@pobox.com, git@vger.kernel.org
-To: =?ISO-8859-15?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Feb 19 15:44:05 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Jason Garber <jgarber@ionzoft.com>, git@vger.kernel.org
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 19 16:09:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JRThI-0007L4-HC
-	for gcvg-git-2@gmane.org; Tue, 19 Feb 2008 15:43:52 +0100
+	id 1JRU5f-0000Zf-VP
+	for gcvg-git-2@gmane.org; Tue, 19 Feb 2008 16:09:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757146AbYBSOnS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Feb 2008 09:43:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753335AbYBSOnS
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Feb 2008 09:43:18 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:15426 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757330AbYBSOnR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Feb 2008 09:43:17 -0500
-Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JWH00KJWQ84SN20@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 19 Feb 2008 09:43:16 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <20080219125216.GA10444@atjola.homenet>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+	id S1755676AbYBSPIb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Feb 2008 10:08:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755664AbYBSPIb
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Feb 2008 10:08:31 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2965 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752280AbYBSPIa (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Feb 2008 10:08:30 -0500
+Received: (qmail 21613 invoked by uid 111); 19 Feb 2008 15:08:27 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Tue, 19 Feb 2008 10:08:27 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 19 Feb 2008 10:08:27 -0500
+Content-Disposition: inline
+In-Reply-To: <76718490802190509k20225092o66853916f48e08b1@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74412>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74413>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Tue, Feb 19, 2008 at 08:09:36AM -0500, Jay Soffian wrote:
 
---Boundary_(ID_qHgYaUAtUrNCgtYVq8z9TA)
-Content-type: TEXT/PLAIN; charset=iso-8859-1
-Content-transfer-encoding: 8BIT
-
-On Tue, 19 Feb 2008, Björn Steinbrink wrote:
-
-> Hi,
+> git-push(1) is a bit confusing I think:
 > 
-> On 2008.02.19 11:05:40 +0000, Johannes Schindelin wrote:
-> > On Tue, 19 Feb 2008, Björn Steinbrink wrote:
-> > 
-> > > when there's nothing to rebase (ie. upstream..branch is empty), rebase 
-> > > fails to find any commits to rebase and correctly says "Nothing to do", 
-> > > but when --onto is given, we already did a "reset --hard" to newbase, so 
-> > > it already _did_ something.
-> > 
-> > Yes, it did something.  But if you had that:
-> > 
-> > A - B - C - D - E
-> >   \
-> >     F
-> > 
-> > your HEAD was E, and you said "git rebase --onto F E" what exactly do you
-> > want it to do?  There is no commit between E and E, so it rebases
-> > _nothing_ onto F.  Which means that F should be your new state.
+>   "Note: If no explicit refspec is found, (that is neither on the command line
+>   nor in any Push line of the corresponding remotes file---see below), then all
+>   the heads that exist both on the local side and on the remote side are
+>   updated."
 > 
-> Strictly, it's correct, but the "Nothing to do" message is a bit
-> misleading (IMHO) and the error message made me think, that it actually
-> didn't want to do anything.
+> is clear enough, but then:
+> 
+>   "--all Instead of naming each ref to push, specifies that all refs under
+>   $GIT_DIR/refs/heads/ be pushed."
+> 
+> So what is '--all' needed for then?
 
-Yes, the message should probably be changed in that case.
+In the first case we push "matching" refs: any head which already exists
+on both sides. In the second case, we push all heads which exist on the
+sending send, whether or not a matching ref already exists on the remote
+side.
 
-> I'm a bit unsure about rebase being degraded to a "reset --hard" in this
-> case is a good idea. Might be a nice user-protection to make rebase
-> abort when there's nothing to rebase and --onto is given. But I don't
-> care that much.
+I think the first statement could be made to emphasize the matching
+aspect a little more, since a quick read makes it seem like it's pushing
+the union of the two sets, not the intersection of the two sets.
 
-The "reset --hard" in that case is really the correct behavior.  Rebase 
-might be used like 'git pull --rebase', and if your local branch 
-contains no commits of your own then the 'git reset --hard' is really 
-what needs to happen.
+> It seems like the default should be to push just the current branch
+> ... this would correspond to what a user of git pull expects (even
+> though the converse of git-push is really git-fetch, for a new user,
+> that might not be entirely clear).
 
-The "user protection" lives in the reflog.
+I agree with you, but others do not; this has come up several times in
+the past (there was some discussion a week or two ago in the thread
+"Minor annoyance with git push").
 
-
-Nicolas
-
---Boundary_(ID_qHgYaUAtUrNCgtYVq8z9TA)--
+-Peff
