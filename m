@@ -1,72 +1,92 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: [PATCH] Add "install-html" rule to top level Makefile
-Date: Tue, 19 Feb 2008 09:25:07 -0500
-Message-ID: <1203431107-60128-1-git-send-email-jaysoffian@gmail.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: rebase --onto might "loose" commits
+Date: Tue, 19 Feb 2008 09:43:15 -0500 (EST)
+Message-ID: <alpine.LFD.1.00.0802190939240.2732@xanadu.home>
+References: <20080219072359.GA752@atjola.homenet>
+ <alpine.LSU.1.00.0802191102440.30505@racer.site>
+ <20080219125216.GA10444@atjola.homenet>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Jay Soffian <jaysoffian@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 19 15:26:07 2008
+Content-Type: multipart/mixed; boundary="Boundary_(ID_qHgYaUAtUrNCgtYVq8z9TA)"
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	gitster@pobox.com, git@vger.kernel.org
+To: =?ISO-8859-15?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Feb 19 15:44:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JRTPr-0000Q7-4b
-	for gcvg-git-2@gmane.org; Tue, 19 Feb 2008 15:25:51 +0100
+	id 1JRThI-0007L4-HC
+	for gcvg-git-2@gmane.org; Tue, 19 Feb 2008 15:43:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755254AbYBSOZO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Feb 2008 09:25:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754677AbYBSOZO
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Feb 2008 09:25:14 -0500
-Received: from an-out-0708.google.com ([209.85.132.241]:7898 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754355AbYBSOZL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Feb 2008 09:25:11 -0500
-Received: by an-out-0708.google.com with SMTP id d31so501331and.103
-        for <git@vger.kernel.org>; Tue, 19 Feb 2008 06:25:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date:message-id:x-mailer:cc:mime-version:content-type:content-transfer-encoding;
-        bh=43lPdyKSYATYeqh/m+XXg1e5U2fL5gSR5iZGgWd/cD0=;
-        b=fPotrdmpF/h7Kio97pJvlbYDb+k+W1gnClwnZxTWsctYC/FahA1mH6ad9krOPX4/zrA/Ja0IYKeMQo1aHOsnixLDlJV7lPL6dLkxDUy1HYNg2DnERwvc5d+KUHPqiw3ovHTjtzL2o1W4hy1Uf6xurCxdPlxgK5SFp5ON31IxsDU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version:content-type:content-transfer-encoding;
-        b=NvYoWqx6ToCmV582k13rA2sFwn0XOmhmZZzxuXVE+HfxWTOPDwpe+8DdlqEDsL7j4DsmVUqIeMc6UyLdqDhm0Jy4cxoZQIIAHqKPf45li+ARkQKL8RfMP1zuL2dtNXk2CVoSwd2k8JQ9m72ytwscJVI6srnNyRMIpkH+UJCjM/8=
-Received: by 10.100.195.15 with SMTP id s15mr14284934anf.61.1203431110578;
-        Tue, 19 Feb 2008 06:25:10 -0800 (PST)
-Received: from localhost ( [75.189.159.45])
-        by mx.google.com with ESMTPS id c9sm13313831ana.35.2008.02.19.06.25.09
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 19 Feb 2008 06:25:09 -0800 (PST)
-X-Mailer: git-send-email 1.5.4.2.203.g1b97.dirty
-CC: Junio C Hamano <gitster@pobox.com>
+	id S1757146AbYBSOnS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Feb 2008 09:43:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753335AbYBSOnS
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Feb 2008 09:43:18 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:15426 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757330AbYBSOnR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Feb 2008 09:43:17 -0500
+Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0JWH00KJWQ84SN20@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 19 Feb 2008 09:43:16 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <20080219125216.GA10444@atjola.homenet>
+User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74411>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74412>
 
-Add "install-html" rule to top level Makefile
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
----
- Makefile |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+--Boundary_(ID_qHgYaUAtUrNCgtYVq8z9TA)
+Content-type: TEXT/PLAIN; charset=iso-8859-1
+Content-transfer-encoding: 8BIT
 
-diff --git a/Makefile b/Makefile
-index 554e29f..8db0361 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1093,6 +1093,8 @@ install-info:
- quick-install-doc:
- 	$(MAKE) -C Documentation quick-install
- 
-+install-html:
-+	$(MAKE) -C Documentation install-html
- 
- 
- ### Maintainer's dist rules
--- 
-1.5.4.2.203.g1b97.dirty
+On Tue, 19 Feb 2008, Björn Steinbrink wrote:
+
+> Hi,
+> 
+> On 2008.02.19 11:05:40 +0000, Johannes Schindelin wrote:
+> > On Tue, 19 Feb 2008, Björn Steinbrink wrote:
+> > 
+> > > when there's nothing to rebase (ie. upstream..branch is empty), rebase 
+> > > fails to find any commits to rebase and correctly says "Nothing to do", 
+> > > but when --onto is given, we already did a "reset --hard" to newbase, so 
+> > > it already _did_ something.
+> > 
+> > Yes, it did something.  But if you had that:
+> > 
+> > A - B - C - D - E
+> >   \
+> >     F
+> > 
+> > your HEAD was E, and you said "git rebase --onto F E" what exactly do you
+> > want it to do?  There is no commit between E and E, so it rebases
+> > _nothing_ onto F.  Which means that F should be your new state.
+> 
+> Strictly, it's correct, but the "Nothing to do" message is a bit
+> misleading (IMHO) and the error message made me think, that it actually
+> didn't want to do anything.
+
+Yes, the message should probably be changed in that case.
+
+> I'm a bit unsure about rebase being degraded to a "reset --hard" in this
+> case is a good idea. Might be a nice user-protection to make rebase
+> abort when there's nothing to rebase and --onto is given. But I don't
+> care that much.
+
+The "reset --hard" in that case is really the correct behavior.  Rebase 
+might be used like 'git pull --rebase', and if your local branch 
+contains no commits of your own then the 'git reset --hard' is really 
+what needs to happen.
+
+The "user protection" lives in the reflog.
+
+
+Nicolas
+
+--Boundary_(ID_qHgYaUAtUrNCgtYVq8z9TA)--
