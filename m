@@ -1,67 +1,64 @@
-From: Stephen Hemminger <shemminger@vyatta.com>
-Subject: Re: Submodules and rewind
-Date: Tue, 19 Feb 2008 15:23:57 -0800
-Organization: Vyatta
-Message-ID: <20080219152357.5ab397cf@extreme>
-References: <20080219140604.04afc91f@extreme>
-	<20080219223201.GE4703MdfPADPa@greensroom.kotnet.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Solaris test failure -- FAIL 61: invalid bool (set)
+Date: Wed, 20 Feb 2008 00:31:27 +0100 (CET)
+Message-ID: <alpine.LSU.1.00.0802200030390.8333@wbgn129.biozentrum.uni-wuerzburg.de>
+References: <8ec76080802191322t2417ea48y1537011f1031dff8@mail.gmail.com>  <alpine.LSU.1.00.0802192220440.7826@racer.site> <8ec76080802191517k5f070d45l497063d93e080272@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: skimo@kotnet.org, Linus Torvalds <torvalds@linux-foundation.org>,
-	git@vger.kernel.org
-To: skimo@liacs.nl
-X-From: git-owner@vger.kernel.org Wed Feb 20 00:24:45 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Whit Armstrong <armstrong.whit@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 20 00:32:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JRbpL-00052P-QL
-	for gcvg-git-2@gmane.org; Wed, 20 Feb 2008 00:24:44 +0100
+	id 1JRbwS-0007Sv-Fb
+	for gcvg-git-2@gmane.org; Wed, 20 Feb 2008 00:32:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754057AbYBSXYH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Feb 2008 18:24:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751808AbYBSXYG
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Feb 2008 18:24:06 -0500
-Received: from mail.vyatta.com ([216.93.170.194]:44816 "EHLO mail.vyatta.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751393AbYBSXYE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Feb 2008 18:24:04 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.vyatta.com (Postfix) with ESMTP id C7CFD4F8054;
-	Tue, 19 Feb 2008 15:24:02 -0800 (PST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -2.325
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.325 tagged_above=-10 required=5 tests=[AWL=0.174,
-	BAYES_00=-2.599, RDNS_DYNAMIC=0.1]
-Received: from mail.vyatta.com ([127.0.0.1])
-	by localhost (mail.vyatta.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id uX5dVysIaOHb; Tue, 19 Feb 2008 15:23:59 -0800 (PST)
-Received: from extreme (75-175-36-117.ptld.qwest.net [75.175.36.117])
-	by mail.vyatta.com (Postfix) with ESMTP id 096684F804D;
-	Tue, 19 Feb 2008 15:23:58 -0800 (PST)
-In-Reply-To: <20080219223201.GE4703MdfPADPa@greensroom.kotnet.org>
-X-Mailer: Claws Mail 3.3.0 (GTK+ 2.12.8; x86_64-pc-linux-gnu)
+	id S1751703AbYBSXba (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Feb 2008 18:31:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751573AbYBSXba
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Feb 2008 18:31:30 -0500
+Received: from mail.gmx.net ([213.165.64.20]:40235 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751121AbYBSXb3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Feb 2008 18:31:29 -0500
+Received: (qmail invoked by alias); 19 Feb 2008 23:31:27 -0000
+Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO wrzx67.rz.uni-wuerzburg.de) [132.187.25.128]
+  by mail.gmx.net (mp039) with SMTP; 20 Feb 2008 00:31:27 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18WPYJzOtwWseO6oYIDntTw8ig+8HsKLCSFoIf6GY
+	gu/hEMoOiBH5Sd
+X-X-Sender: gene099@wbgn129.biozentrum.uni-wuerzburg.de
+In-Reply-To: <8ec76080802191517k5f070d45l497063d93e080272@mail.gmail.com>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74474>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74475>
 
-On Tue, 19 Feb 2008 23:32:01 +0100
-Sven Verdoolaege <skimo@kotnet.org> wrote:
+Hi,
 
-> On Tue, Feb 19, 2008 at 02:06:04PM -0800, Stephen Hemminger wrote:
-> > Because of a bone headed merge, I had to rewind one project back
-> > to a known good state, but the sub module stuff is now wedged and
-> > brain stuck on the old commit id.
-> > 
-> > Isn't there some simple way to do 'git sub-module remove' followed
-> > by 'git sub-module add' to reset the internal index?
+On Tue, 19 Feb 2008, Whit Armstrong wrote:
+
+> Yes, it's git-1.5.4.2.  Sorry for the omission.
 > 
-> Why doesn't "git submodule update" work for you?
+> output from  $ sh t1300-repo-config.sh -i -v (had to use bash instead
+> of sh, hope that's ok):
 > 
+> *   ok 60: invalid bool (--get)
+> 
+> * expecting failure:
+> 
+>         git config --bool bool.nobool foobar
+> t1300-repo-config.sh: line -176: 18181 Segmentation Fault      (core
+> dumped) git config --bool bool.nobool foobar
+> * FAIL 61: invalid bool (set)
 
-It didn't fix it, but recloning did.
+And?  Did you actually start that command line with a debugger in 
+t/trash/?
+
+Hth,
+Dscho
