@@ -1,66 +1,93 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git push [rejected] question
-Date: Tue, 19 Feb 2008 10:25:49 -0500
-Message-ID: <20080219152549.GC24499@sigill.intra.peff.net>
-References: <E7DE807861E8474E8AC3DC7AC2C75EE50542F2F1@34093-EVS2C1.exchange.rackspace.com> <20080219043353.GA23239@sigill.intra.peff.net> <76718490802190509k20225092o66853916f48e08b1@mail.gmail.com> <20080219150826.GA24499@sigill.intra.peff.net> <76718490802190718t5e70abb2x8f96fc7154576594@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 2/2] Add support for host aliases in config files
+Date: Tue, 19 Feb 2008 15:49:34 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0802191547580.30505@racer.site>
+References: <alpine.LNX.1.00.0802182317520.5816@iabervon.org> <47BAF18F.5040709@freescale.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jason Garber <jgarber@ionzoft.com>, git@vger.kernel.org
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 19 16:26:38 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Daniel Barkalow <barkalow@iabervon.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Jon Loeliger <jdl@freescale.com>
+X-From: git-owner@vger.kernel.org Tue Feb 19 16:50:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JRUMU-0008I2-NM
-	for gcvg-git-2@gmane.org; Tue, 19 Feb 2008 16:26:27 +0100
+	id 1JRUjq-0001gA-67
+	for gcvg-git-2@gmane.org; Tue, 19 Feb 2008 16:50:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753524AbYBSPZw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Feb 2008 10:25:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754049AbYBSPZw
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Feb 2008 10:25:52 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1520 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753003AbYBSPZv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Feb 2008 10:25:51 -0500
-Received: (qmail 21734 invoked by uid 111); 19 Feb 2008 15:25:50 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Tue, 19 Feb 2008 10:25:50 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 19 Feb 2008 10:25:49 -0500
-Content-Disposition: inline
-In-Reply-To: <76718490802190718t5e70abb2x8f96fc7154576594@mail.gmail.com>
+	id S1752988AbYBSPt5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Feb 2008 10:49:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752899AbYBSPt5
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Feb 2008 10:49:57 -0500
+Received: from mail.gmx.net ([213.165.64.20]:45660 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752986AbYBSPt4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Feb 2008 10:49:56 -0500
+Received: (qmail invoked by alias); 19 Feb 2008 15:49:49 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp054) with SMTP; 19 Feb 2008 16:49:49 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/rpG5W4KTrjBfp6U9SdA+ZxLSEb1sliOuh2U6IlE
+	Ciwp3WCfI/gY1p
+X-X-Sender: gene099@racer.site
+In-Reply-To: <47BAF18F.5040709@freescale.com>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74417>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74418>
 
-On Tue, Feb 19, 2008 at 10:18:09AM -0500, Jay Soffian wrote:
+Hi,
 
-> I'd like to nominate you to rewrite all of the git documentation from
-> scratch. :-) Your explanations are extremely clear.
+On Tue, 19 Feb 2008, Jon Loeliger wrote:
 
-Doh! This is why nobody writes clear explanations: it gets you nominated
-for more work. ;)
-
-> > > It seems like the default should be to push just the current branch
-> > > ... this would correspond to what a user of git pull expects (even
-> > > though the converse of git-push is really git-fetch, for a new user,
-> > > that might not be entirely clear).
-> >
-> > I agree with you, but others do not
+> Daniel Barkalow wrote:
+>
+> > For example, if you don't have a kernel.org account, you might want 
+> > settings like:
+> > 
+> > [host "kernel.org"]
+> >       base = git://git.kernel.org/pub/
+> >       rewritebase = master.kernel.org:/pub
+> > 
+> > Then, if you give git a URL like:
+> > 
+> >   master.kernel.org:/pub/scm/linux/kernel/git/linville/wireless-2.6.git
+> > 
+> > it will act like you gave it:
+> > 
+> >   git://git.kernel.org/pub/scm/linux/kernel/git/linville/wireless-2.6.git
+> > 
+> > and you can cut-and-paste pull requests in email without fixing them 
+> > by hand, for example.
+> > 
+> > Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
+> > ---
 > 
-> Sounds like an opportunity for a config option.
+> So, I may be dense, but I'm having a hard time distinguishing the names 
+> "base" and "rewritebase" just from a User Interface perspective.  It's 
+> not clear to me which of those is the A and which is the B part in 
+> s/A/B/.  "Rewritebase" might be the "from" basis, or it might be the 
+> "to" basis.  Can we come up with more descriptive property names here?
+> 
+> Is the rewrite always just prefix substitution/replacement?
+> What if there was some generic path rewrite needed? (KISS? :-))
 
-Again I agree, though I think there is some resistance to that (see the
-thread I mentioned). Junio's opinion seems to be "why can't they just
-use 'git push <remote> HEAD'?" (and he suggested a 'git push HEAD'
-shorthand syntax, as well).
+I just tried this:
 
-But then, nobody has put forth a patch, so I think if you wanted to
-argue it, the best way would be to do so (though I think it would be
-rejected, it would give those who wanted to try it something to play
-with).
+$ git config rewrite."master.kernel.org:/pub".url \
+	git://git.kernel.org/pub/
 
--Peff
+and it worked.  IOW, the config will look like this:
+
+[rewrite "master.kernel.org:/pub"]
+        url = git://git.kernel.org/pub/
+
+So maybe this is easier to grasp?
+
+Ciao,
+Dscho
