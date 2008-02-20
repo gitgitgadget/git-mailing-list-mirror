@@ -1,281 +1,110 @@
-From: Lars Hjemli <hjemli@gmail.com>
-Subject: [PATCH 1/4] Add platform-independent .git "symlink"
-Date: Wed, 20 Feb 2008 23:13:13 +0100
-Message-ID: <1203545596-6337-2-git-send-email-hjemli@gmail.com>
-References: <1203545596-6337-1-git-send-email-hjemli@gmail.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: git svn forking an awful lot of "git config"s
+Date: Wed, 20 Feb 2008 14:39:53 -0800
+Message-ID: <20080220223953.GA32663@hand.yhbt.net>
+References: <alpine.LSU.1.00.0802201520580.17164@racer.site>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 20 23:38:21 2008
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Feb 20 23:41:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JRxZk-0006PR-HP
-	for gcvg-git-2@gmane.org; Wed, 20 Feb 2008 23:38:04 +0100
+	id 1JRxcO-0007e4-Tj
+	for gcvg-git-2@gmane.org; Wed, 20 Feb 2008 23:40:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763359AbYBTWh2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Feb 2008 17:37:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762956AbYBTWh1
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Feb 2008 17:37:27 -0500
-Received: from mail43.e.nsc.no ([193.213.115.43]:50964 "EHLO mail43.e.nsc.no"
+	id S932448AbYBTWj4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Feb 2008 17:39:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765969AbYBTWj4
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Feb 2008 17:39:56 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:49843 "EHLO hand.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756986AbYBTWhZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Feb 2008 17:37:25 -0500
-Received: from localhost.localdomain (ti231210a341-0590.bb.online.no [88.88.170.78])
-	by mail43.nsc.no (8.13.8/8.13.5) with ESMTP id m1KMEQAJ024249;
-	Wed, 20 Feb 2008 23:14:28 +0100 (MET)
-X-Mailer: git-send-email 1.5.4.1.188.g3ea1f5
-In-Reply-To: <1203545596-6337-1-git-send-email-hjemli@gmail.com>
+	id S1758239AbYBTWjz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Feb 2008 17:39:55 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with ESMTP id 5EEFD7F4101;
+	Wed, 20 Feb 2008 14:39:54 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <alpine.LSU.1.00.0802201520580.17164@racer.site>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74557>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74558>
 
-This patch allows .git to be a regular textfile containing the path of
-the real git directory (prefixed with "gitdir: "), which can be useful on
-platforms lacking support for real symlinks.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> Hi,
+> 
+> we are approaching our first release of msysGit's installer with git-svn.  
+> However, I am experiencing a very bad performance, and an error:
+> 
+> $ git svn fetch
+> trace: exec: 'git-svn' 'fetch'
+> trace: built-in: git 'config' '--bool' '--get' 'svn.fetchall'
+> trace: built-in: git 'config' '--get' 'svn.username'
+> trace: built-in: git 'config' '--get' 'svn.repackflags'
+> trace: built-in: git 'config' '--bool' '--get' 'svn.quiet'
+> trace: built-in: git 'config' '--bool' '--get' 'svn.noauthcache'
+> trace: built-in: git 'config' '--get' 'svn.revision'
+> trace: built-in: git 'config' '--int' '--get' 'svn.repack'
+> trace: built-in: git 'config' '--int' '--get' 'svn.logwindowsize'
+> trace: built-in: git 'config' '--bool' '--get' 'svn.nocheckout'
+> trace: built-in: git 'config' '--get' 'svn.configdir'
+> trace: built-in: git 'config' '--bool' '--get' 'svn.noMetadata'
+> trace: built-in: git 'config' '--bool' '--get' 'svn.useSvnsyncProps'
+> trace: built-in: git 'config' '--bool' '--get' 'svn.followparent'
+> trace: built-in: git 'config' '--get' 'svn.authorsfile'
+> trace: built-in: git 'config' '--bool' '--get' 'svn.useSvmProps'
+> trace: built-in: git 'config' '--bool' '--get' 'svn.uselogauthor'
+> trace: built-in: git 'rev-parse' '--symbolic' '--all'
+> trace: built-in: git 'config' '-l'
+> trace: built-in: git 'config' '-l'
+> trace: built-in: git 'config' '-l'
+> trace: built-in: git 'config' '--int' '--get' 'svn-remote.svn.branches-maxRev'
+> trace: built-in: git 'config' '--int' '--get' 'svn-remote.svn.tags-maxRev'
+> trace: built-in: git 'config' '--get' 'svn-remote.svn.url'
+> trace: built-in: git 'config' '--get' 'svn-remote.svn.uuid'
+> trace: built-in: git 'config' 'svn-remote.svn.branches-maxRev' '8'
+> could not lock config file
+> config svn-remote.svn.branches-maxRev 8: command returned error: 255
+> 
+> I suspect that the locking problem is due to some strange anti-virus 
+> interaction, because issuing the same command on the command line 
+> succeeds.
 
-Signed-off-by: Lars Hjemli <hjemli@gmail.com>
----
- Documentation/repository-layout.txt |    5 ++-
- cache.h                             |    1 +
- environment.c                       |    2 +
- setup.c                             |   47 ++++++++++++++++
- t/t0002-gitfile.sh                  |  103 +++++++++++++++++++++++++++++++++++
- 5 files changed, 157 insertions(+), 1 deletions(-)
- create mode 100755 t/t0002-gitfile.sh
+I believe somebody on the list also had the same problem with file
+locking in Windows.  Unfortunately, I have little idea as to what could
+be wrong.  Could Windows not be releasing file locks properly?
 
-diff --git a/Documentation/repository-layout.txt b/Documentation/repository-layout.txt
-index 6939130..bbaed2e 100644
---- a/Documentation/repository-layout.txt
-+++ b/Documentation/repository-layout.txt
-@@ -3,7 +3,10 @@ git repository layout
- 
- You may find these things in your git repository (`.git`
- directory for a repository associated with your working tree, or
--`'project'.git` directory for a public 'bare' repository).
-+`'project'.git` directory for a public 'bare' repository. It is
-+also possible to have a working tree where `.git` is a plain
-+ascii file containing `gitdir: <path>`, i.e. the path to the
-+real git repository).
- 
- objects::
- 	Object store associated with this repository.  Usually
-diff --git a/cache.h b/cache.h
-index e1000bc..1ad822a 100644
---- a/cache.h
-+++ b/cache.h
-@@ -277,6 +277,7 @@ extern char *get_index_file(void);
- extern char *get_graft_file(void);
- extern int set_git_dir(const char *path);
- extern const char *get_git_work_tree(void);
-+extern const char *read_gitfile_gently(const char *path);
- 
- #define ALTERNATE_DB_ENVIRONMENT "GIT_ALTERNATE_OBJECT_DIRECTORIES"
- 
-diff --git a/environment.c b/environment.c
-index 3527f16..8058e7b 100644
---- a/environment.c
-+++ b/environment.c
-@@ -49,6 +49,8 @@ static void setup_git_env(void)
- {
- 	git_dir = getenv(GIT_DIR_ENVIRONMENT);
- 	if (!git_dir)
-+		git_dir = read_gitfile_gently(DEFAULT_GIT_DIR_ENVIRONMENT);
-+	if (!git_dir)
- 		git_dir = DEFAULT_GIT_DIR_ENVIRONMENT;
- 	git_object_dir = getenv(DB_ENVIRONMENT);
- 	if (!git_object_dir) {
-diff --git a/setup.c b/setup.c
-index 4509598..20502be 100644
---- a/setup.c
-+++ b/setup.c
-@@ -239,6 +239,44 @@ static int check_repository_format_gently(int *nongit_ok)
- }
- 
- /*
-+ * Try to read the location of the git directory from the .git file,
-+ * return path to git directory if found.
-+ */
-+const char *read_gitfile_gently(const char *path)
-+{
-+	char *buf;
-+	struct stat st;
-+	int fd;
-+	size_t len;
-+
-+	if (stat(path, &st))
-+		return NULL;
-+	if (!S_ISREG(st.st_mode))
-+		return NULL;
-+	fd = open(path, O_RDONLY);
-+	if (fd < 0)
-+		die("Error opening %s: %s", path, strerror(errno));
-+	buf = xmalloc(st.st_size + 1);
-+	len = read_in_full(fd, buf, st.st_size);
-+	close(fd);
-+	if (len != st.st_size)
-+		die("Error reading %s", path);
-+	buf[len] = '\0';
-+	if (prefixcmp(buf, "gitdir: "))
-+		die("Invalid gitfile format: %s", path);
-+	while (buf[len - 1] == '\n' || buf[len - 1] == '\r')
-+		len--;
-+	if (len < 9)
-+		die("No path in gitfile: %s", path);
-+	buf[len] = '\0';
-+	if (!is_git_directory(buf + 8))
-+		die("Not a git repository: %s", buf + 8);
-+	path = make_absolute_path(buf + 8);
-+	free(buf);
-+	return path;
-+}
-+
-+/*
-  * We cannot decide in this function whether we are in the work tree or
-  * not, since the config can only be read _after_ this function was called.
-  */
-@@ -247,6 +285,7 @@ const char *setup_git_directory_gently(int *nongit_ok)
- 	const char *work_tree_env = getenv(GIT_WORK_TREE_ENVIRONMENT);
- 	static char cwd[PATH_MAX+1];
- 	const char *gitdirenv;
-+	const char *gitfile_dir;
- 	int len, offset;
- 
- 	/*
-@@ -293,8 +332,10 @@ const char *setup_git_directory_gently(int *nongit_ok)
- 
- 	/*
- 	 * Test in the following order (relative to the cwd):
-+	 * - .git (file containing "gitdir: <path>")
- 	 * - .git/
- 	 * - ./ (bare)
-+	 * - ../.git
- 	 * - ../.git/
- 	 * - ../ (bare)
- 	 * - ../../.git/
-@@ -302,6 +343,12 @@ const char *setup_git_directory_gently(int *nongit_ok)
- 	 */
- 	offset = len = strlen(cwd);
- 	for (;;) {
-+		gitfile_dir = read_gitfile_gently(DEFAULT_GIT_DIR_ENVIRONMENT);
-+		if (gitfile_dir) {
-+			if (set_git_dir(gitfile_dir))
-+				die("Repository setup failed");
-+			break;
-+		}
- 		if (is_git_directory(DEFAULT_GIT_DIR_ENVIRONMENT))
- 			break;
- 		if (is_git_directory(".")) {
-diff --git a/t/t0002-gitfile.sh b/t/t0002-gitfile.sh
-new file mode 100755
-index 0000000..c5dbc72
---- /dev/null
-+++ b/t/t0002-gitfile.sh
-@@ -0,0 +1,103 @@
-+#!/bin/sh
-+
-+test_description='.git file
-+
-+Verify that plumbing commands work when .git is a file
-+'
-+. ./test-lib.sh
-+
-+objpath() {
-+    echo "$1" | sed -e 's|\(..\)|\1/|'
-+}
-+
-+objck() {
-+	p=$(objpath "$1")
-+	if test ! -f "$REAL/objects/$p"
-+	then
-+		echo "Object not found: $REAL/objects/$p"
-+		false
-+	fi
-+}
-+
-+
-+test_expect_success 'initial setup' '
-+	REAL="$(pwd)/.real" &&
-+	mv .git "$REAL"
-+'
-+
-+test_expect_success 'bad setup: invalid .git file format' '
-+	echo "gitdir $REAL" >.git &&
-+	if git rev-parse 2>.err
-+	then
-+		echo "git rev-parse accepted an invalid .git file"
-+		false
-+	fi &&
-+	if ! grep -qe "Invalid gitfile format" .err
-+	then
-+		echo "git rev-parse returned wrong error"
-+		false
-+	fi
-+'
-+
-+test_expect_success 'bad setup: invalid .git file path' '
-+	echo "gitdir: $REAL.not" >.git &&
-+	if git rev-parse 2>.err
-+	then
-+		echo "git rev-parse accepted an invalid .git file path"
-+		false
-+	fi &&
-+	if ! grep -qe "Not a git repository" .err
-+	then
-+		echo "git rev-parse returned wrong error"
-+		false
-+	fi
-+'
-+
-+test_expect_success 'final setup + check rev-parse --git-dir' '
-+	echo "gitdir: $REAL" >.git &&
-+	test "$REAL" = "$(git rev-parse --git-dir)"
-+'
-+
-+test_expect_success 'check hash-object' '
-+	echo "foo" >bar &&
-+	SHA=$(cat bar | git hash-object -w --stdin) &&
-+	objck $SHA
-+'
-+
-+test_expect_success 'check cat-file' '
-+	git cat-file blob $SHA >actual &&
-+	diff -u bar actual
-+'
-+
-+test_expect_success 'check update-index' '
-+	if test -f "$REAL/index"
-+	then
-+		echo "Hmm, $REAL/index exists?"
-+		false
-+	fi &&
-+	rm -f "$REAL/objects/$(objpath $SHA)" &&
-+	git update-index --add bar &&
-+	if ! test -f "$REAL/index"
-+	then
-+		echo "$REAL/index not found"
-+		false
-+	fi &&
-+	objck $SHA
-+'
-+
-+test_expect_success 'check write-tree' '
-+	SHA=$(git write-tree) &&
-+	objck $SHA
-+'
-+
-+test_expect_success 'check commit-tree' '
-+	SHA=$(echo "commit bar" | git commit-tree $SHA) &&
-+	objck $SHA
-+'
-+
-+test_expect_success 'check rev-list' '
-+	echo $SHA >"$REAL/HEAD" &&
-+	test "$SHA" = "$(git rev-list HEAD)"
-+'
-+
-+test_done
+It could be worth it to write a standalone Perl script that replicates
+the git-config calls without the rest of git-svn getting in the way...
+
+> However, did you notice the many calls to "git config"?  Especially the 
+> three ones which list all values anyway?
+> 
+> I am not really sure if that is the single reason of the slowness -- 
+> remember, Windows is mightily spawn()-challenged -- but it sure would help 
+> to have git-svn read the config once at the beginning, probably with "-z", 
+> too, and then just read from the cached values, no?
+
+Many months ago, I thought about implementing a transparent caching layer
+in Git.pm to work with git configs.  Of course, that requires
+cooperation from all readers/writers within the process...  Done
+correctly, it would help more than just git-svn. too.
+
+I think I had this idea around the time we made git-config output Perl
+hashes and arrays.
+
+> Ciao,
+> Dscho
+> 
+> P.S.: how far is the svn:external->submodule stuff?
+
+Yikes.  I've let other work pile up on my ever-growing todo-list :/
+I'll see if I can dig it out and wrap it up this weekend or next...
+
 -- 
-1.5.4.1.188.g3ea1f5
+Eric Wong
