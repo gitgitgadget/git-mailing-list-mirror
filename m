@@ -1,67 +1,89 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/2] Add support for host aliases in config files
-Date: Wed, 20 Feb 2008 02:01:34 +0100 (CET)
-Message-ID: <alpine.LSU.1.00.0802200156560.8333@wbgn129.biozentrum.uni-wuerzburg.de>
-References: <alpine.LNX.1.00.0802182317520.5816@iabervon.org> <47BAF18F.5040709@freescale.com> <alpine.LNX.1.00.0802191127080.19024@iabervon.org> <7vy79ghbob.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0802191856420.19024@iabervon.org>
+From: "Govind Salinas" <blix@sophiasuchtig.com>
+Subject: Re: [PATCH(TIC)] push: annoy all users by deprecating the default semantics
+Date: Tue, 19 Feb 2008 19:03:23 -0600
+Message-ID: <5d46db230802191703v1e273284k71817fcd8a2639a1@mail.gmail.com>
+References: <E7DE807861E8474E8AC3DC7AC2C75EE50542F2F1@34093-EVS2C1.exchange.rackspace.com>
+	 <20080219043353.GA23239@sigill.intra.peff.net>
+	 <76718490802190509k20225092o66853916f48e08b1@mail.gmail.com>
+	 <20080219150826.GA24499@sigill.intra.peff.net>
+	 <76718490802190718t5e70abb2x8f96fc7154576594@mail.gmail.com>
+	 <20080219152549.GC24499@sigill.intra.peff.net>
+	 <alpine.LSU.1.00.0802191610480.30505@racer.site>
+	 <20080219163743.GA31668@sigill.intra.peff.net>
+	 <alpine.LSU.1.00.0802191651550.30505@racer.site>
+	 <20080219170507.GA1144@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jon Loeliger <jdl@freescale.com>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Wed Feb 20 02:02:39 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Jay Soffian" <jaysoffian@gmail.com>,
+	"Jason Garber" <jgarber@ionzoft.com>, git@vger.kernel.org
+To: "Jeff King" <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Feb 20 02:04:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JRdLs-0007En-PY
-	for gcvg-git-2@gmane.org; Wed, 20 Feb 2008 02:02:25 +0100
+	id 1JRdNV-0007e6-A6
+	for gcvg-git-2@gmane.org; Wed, 20 Feb 2008 02:04:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762707AbYBTBBi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Feb 2008 20:01:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763679AbYBTBBi
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Feb 2008 20:01:38 -0500
-Received: from mail.gmx.net ([213.165.64.20]:42785 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757083AbYBTBBh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Feb 2008 20:01:37 -0500
-Received: (qmail invoked by alias); 20 Feb 2008 01:01:34 -0000
-Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO wrzx67.rz.uni-wuerzburg.de) [132.187.25.128]
-  by mail.gmx.net (mp025) with SMTP; 20 Feb 2008 02:01:34 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/LrKMqJY/LkLw/UxjHQRqtTOV5Ps4U0j1cYxlvke
-	Dgpr8AgfcBKopN
-X-X-Sender: gene099@wbgn129.biozentrum.uni-wuerzburg.de
-In-Reply-To: <alpine.LNX.1.00.0802191856420.19024@iabervon.org>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1756862AbYBTBD1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Feb 2008 20:03:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763985AbYBTBD0
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Feb 2008 20:03:26 -0500
+Received: from el-out-1112.google.com ([209.85.162.179]:53225 "EHLO
+	el-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1763682AbYBTBDZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Feb 2008 20:03:25 -0500
+Received: by el-out-1112.google.com with SMTP id v27so1171055ele.23
+        for <git@vger.kernel.org>; Tue, 19 Feb 2008 17:03:24 -0800 (PST)
+Received: by 10.142.194.1 with SMTP id r1mr5930901wff.197.1203469403451;
+        Tue, 19 Feb 2008 17:03:23 -0800 (PST)
+Received: by 10.150.156.18 with HTTP; Tue, 19 Feb 2008 17:03:23 -0800 (PST)
+In-Reply-To: <20080219170507.GA1144@sigill.intra.peff.net>
+Content-Disposition: inline
+X-Google-Sender-Auth: 5ec8bd7f820e8c29
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74489>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74490>
 
-Hi,
+On 2/19/08, Jeff King <peff@peff.net> wrote:
+> On Tue, Feb 19, 2008 at 04:54:14PM +0000, Johannes Schindelin wrote:
+>
+> > > Just say "git push origin HEAD"?
+> >
+> > The point is: if that becomes the default (with a certain config option),
+> > people will get used to typing "git push".  They will not even _know_
+> > about the explicit form.
+>
+> I guess I hoped that people giving answers on the IRC channel would be a
+> little less clueless. Perhaps that is just optimism.
+>
+> > See followup.
+>
+> I'm actually starting to like your patch now...;)
+>
+> > BTW if that is really the way to go, we will have to have a _long_ period
+> > (I am talking about 6-12 _months_ if not more) where there _must not_ be a
+> > default action for git-push.  Otherwise people _will_ get more confused
+> > than necessary.
+>
+> I agree that it would need a long deprecation period to change behavior.
+> It would almost be easier to have a "git <foo>" command where <foo> is
+> some sort of restricted, safe-for-certain-workflows version of push.
+>
 
-On Tue, 19 Feb 2008, Daniel Barkalow wrote:
+For those interested, this is how I plan to have the default for
+pyrite.  The default currently just calls "git push origin HEAD"
+Calling with another target repository and refspec would still be
+supported of course.
 
-> On Tue, 19 Feb 2008, Junio C Hamano wrote:
-> 
-> > Either your '[host "$this_url"] aka = $that_url' or
-> > Dscho's earlier '[rewrite "$this_url_to"] url = $that_url' shows
-> > that this is not about host but "prefix part of URL".
-> 
-> Well, it shows that it's *possible* to do this feature that way, 
-> although I'm not entirely convinced that it's best to do it like that. 
+In general, the plan it to take the most common work flows and simply
+the UI around those.  This includes silently doing "git add -u" before
+pushing a commit and "pyt diff" will diff between the working
+directory and HEAD because I have never been interested in the state
+of the index, only in the state of the working dir.
 
-I think in the interest of simplicity, you do not want to have an extra 
-(arbitrary) key.
-
-> Are there character set concerns with having urls in config keys?
-
-I think not.  AFAICT the "extended base var" is allowed anything except 
-for newlines.  Everything else you can get at least escaped with '\'.  If 
-in doubt, consult get_extended_base_var() in config.c.
-
-Hth,
-Dscho
+-Govind
