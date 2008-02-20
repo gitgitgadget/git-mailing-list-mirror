@@ -1,81 +1,62 @@
-From: "Jay Soffian" <jaysoffian@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH 2/2] Add support for url aliases in config files
-Date: Wed, 20 Feb 2008 14:54:42 -0500
-Message-ID: <76718490802201154t53ff4195xba055b5d42a3759c@mail.gmail.com>
+Date: Wed, 20 Feb 2008 11:58:30 -0800
+Message-ID: <7vfxvn4cyh.fsf@gitster.siamese.dyndns.org>
 References: <alpine.LNX.1.00.0802201337060.19024@iabervon.org>
-	 <7vzltv4ey8.fsf@gitster.siamese.dyndns.org>
-	 <alpine.LNX.1.00.0802201418590.19024@iabervon.org>
-	 <7vskzn4dpz.fsf@gitster.siamese.dyndns.org>
+ <7vzltv4ey8.fsf@gitster.siamese.dyndns.org>
+ <alpine.LNX.1.00.0802201418590.19024@iabervon.org>
+ <76718490802201149w5a7c0b88udef968f4083190ea@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Daniel Barkalow" <barkalow@iabervon.org>, git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 20 20:55:31 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: "Daniel Barkalow" <barkalow@iabervon.org>,
+	"Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+To: "Jay Soffian" <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 20 20:59:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JRv2N-0004rO-OC
-	for gcvg-git-2@gmane.org; Wed, 20 Feb 2008 20:55:28 +0100
+	id 1JRv6R-0006Xk-0z
+	for gcvg-git-2@gmane.org; Wed, 20 Feb 2008 20:59:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757606AbYBTTyq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Feb 2008 14:54:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757361AbYBTTyp
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Feb 2008 14:54:45 -0500
-Received: from el-out-1112.google.com ([209.85.162.180]:4678 "EHLO
-	el-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755089AbYBTTyo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Feb 2008 14:54:44 -0500
-Received: by el-out-1112.google.com with SMTP id v27so1337330ele.23
-        for <git@vger.kernel.org>; Wed, 20 Feb 2008 11:54:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=iulI+/aGULDkCAoj8R1nUCGbuxqIg2cEqXvjBYGJ2CE=;
-        b=qsVRTQJmTl3hr9wdeLcZGW3BCl6DcNQXUHZVVmixPjianNLHqaDcfo1qYGkePVipL1KK17l3Ng/dhU3my74zh/4DT3avdV7CnQhROSsa1XgpD8NZD/YrTrs0E8R11/U/IPRw6x9CwFgh3zh8VkKfLeo6lhKcXA5rv9CbMVK1B2U=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=E8COpXyFakom3D2v3V+YtcbfD7BvUsZx6I/sSxc9Wxxp7Hp8ee21TANArk0gplEKnCm5ShHPxk8uxDszREYMCIpfjrUDDXPqsKabK2ArWMFIzSq7OSTYuaCz3EiPOvFfazOJ7mJj3rBUByQbi9M5blYyRVg8CGbAi3+QglDDIwA=
-Received: by 10.115.33.1 with SMTP id l1mr5492733waj.137.1203537282462;
-        Wed, 20 Feb 2008 11:54:42 -0800 (PST)
-Received: by 10.114.145.13 with HTTP; Wed, 20 Feb 2008 11:54:42 -0800 (PST)
-In-Reply-To: <7vskzn4dpz.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1762660AbYBTT6s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Feb 2008 14:58:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762642AbYBTT6r
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Feb 2008 14:58:47 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:44572 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755626AbYBTT6q (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Feb 2008 14:58:46 -0500
+Received: from .pobox.com (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id DBAF4569E;
+	Wed, 20 Feb 2008 14:58:44 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.pobox.com (Postfix) with ESMTP id
+ E575F5699; Wed, 20 Feb 2008 14:58:32 -0500 (EST)
+In-Reply-To: <76718490802201149w5a7c0b88udef968f4083190ea@mail.gmail.com>
+ (Jay Soffian's message of "Wed, 20 Feb 2008 14:49:06 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74542>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74543>
 
-On Feb 20, 2008 2:42 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Yeah, that "aka" is still disturbing.
->
->         [url A]
->                 aka = B
->
-> would read to me: "A is also known as B" but that is clearly not
-> what it means here.  You would want this:
->
->         [url A]
->                 aka = B
->                 aka = C
->
-> to mean "B is also known as A.  C is also known as A."  IOW, you
-> are using it backwards, because their name is more official and
-> you are using your own unofficial name to call it.
->
-> Sorry, but I cannot think of a better way to resolve this, other
-> than by spelling the keyword backwards, but that still makes it
-> "aka".
+"Jay Soffian" <jaysoffian@gmail.com> writes:
 
-I dunno, I find this eminently clear:
+> On Feb 20, 2008 2:24 PM, Daniel Barkalow <barkalow@iabervon.org> wrote:
+>> This order of values is definitely the right thing, for the mapping
+>> reasons you saw. And I think "aka" is generally used to indicate
+>> additional non-canonical names for something with an official name (see,
+>> for example, IMDB's usage). I haven't been able to come up with anything
+>> better to indicate "this is a name that I will recognize but not use
+>> myself".
+>
+> I think the word you want is "alias", isn't it? I've never really seen
+> aka used in a technical sense, whereas alias is used quite often (URL
+> aliases, DNS aliases, etc). So:
+>
+> url.$canonical_name.alias = $local_name.
 
-        [url A]
-                alias = B
-                alias = C
-
-B and C are aliases for A. How else could you read that?
-
-j.
+Read the first line you quoted, and think again.
