@@ -1,57 +1,80 @@
-From: Alexandre Julliard <julliard@winehq.org>
-Subject: Re: [PATCH] git.el: Set process-environment instead of invoking env
-Date: Wed, 20 Feb 2008 12:21:28 +0100
-Message-ID: <87y79fvpon.fsf@wine.dyndns.org>
-References: <87r6f958k5.fsf@lysator.liu.se>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [PATCH] Documentation/git-stash: document options for git stash
+	list
+Date: Wed, 20 Feb 2008 12:31:35 +0100
+Message-ID: <20080220113135.GL31441@genesis.frugalware.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: David =?utf-8?Q?K=C3=A5gedal?= <davidk@lysator.liu.se>
-X-From: git-owner@vger.kernel.org Wed Feb 20 12:22:24 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 20 12:33:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JRn1i-0003EJ-Nv
-	for gcvg-git-2@gmane.org; Wed, 20 Feb 2008 12:22:15 +0100
+	id 1JRnC2-0007Az-Gj
+	for gcvg-git-2@gmane.org; Wed, 20 Feb 2008 12:32:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750970AbYBTLVj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 Feb 2008 06:21:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751020AbYBTLVj
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Feb 2008 06:21:39 -0500
-Received: from mail.codeweavers.com ([216.251.189.131]:33912 "EHLO
-	mail.codeweavers.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750897AbYBTLVi convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Feb 2008 06:21:38 -0500
-Received: from adsl-84-226-12-78.adslplus.ch ([84.226.12.78] helo=wine.dyndns.org)
-	by mail.codeweavers.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <julliard@winehq.org>)
-	id 1JRn11-00067H-KG; Wed, 20 Feb 2008 05:21:37 -0600
-Received: by wine.dyndns.org (Postfix, from userid 1000)
-	id D84931E715C; Wed, 20 Feb 2008 12:21:28 +0100 (CET)
-In-Reply-To: <87r6f958k5.fsf@lysator.liu.se> ("David =?utf-8?Q?K=C3=A5geda?=
- =?utf-8?Q?l=22's?= message of
-	"Tue, 19 Feb 2008 15:01:53 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.50 (gnu/linux)
-X-Spam-Score: -3.1
+	id S1751123AbYBTLcA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Feb 2008 06:32:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751119AbYBTLcA
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Feb 2008 06:32:00 -0500
+Received: from mx3.mail.elte.hu ([157.181.1.138]:48794 "EHLO mx3.mail.elte.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751056AbYBTLb7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Feb 2008 06:31:59 -0500
+Received: from frugalware.elte.hu ([157.181.177.34] helo=genesis.frugalware.org)
+	by mx3.mail.elte.hu with esmtp (Exim)
+	id 1JRnAv-0008Os-8t
+	from <vmiklos@frugalware.org>; Wed, 20 Feb 2008 12:31:56 +0100
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 91DB2119019F; Wed, 20 Feb 2008 12:31:35 +0100 (CET)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.16 (2007-06-09)
+X-ELTE-VirusStatus: clean
+X-ELTE-SpamScore: 0.5
+X-ELTE-SpamLevel: 
+X-ELTE-SpamCheck: no
+X-ELTE-SpamVersion: ELTE 2.0 
+X-ELTE-SpamCheck-Details: score=0.5 required=5.9 tests=BAYES_40 autolearn=no SpamAssassin version=3.2.3
+	0.5 BAYES_40               BODY: Bayesian spam probability is 20 to 40%
+	[score: 0.2491]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74509>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74510>
 
-David K=C3=A5gedal <davidk@lysator.liu.se> writes:
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+---
 
-> This will make it a little less posix-dependent, and more efficient.
->
-> Included is also a minor doc improvement.
->
-> Signed-off-by: David K=C3=A5gedal <davidk@lysator.liu.se>
+Noticed by dooglus on IRC.
 
-Acked-by: Alexandre Julliard <julliard@winehq.org>
+ Documentation/git-stash.txt |    5 ++++-
+ 1 files changed, 4 insertions(+), 1 deletions(-)
 
---=20
-Alexandre Julliard
-julliard@winehq.org
+diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
+index cd0dc1b..48e6f5a 100644
+--- a/Documentation/git-stash.txt
++++ b/Documentation/git-stash.txt
+@@ -43,7 +43,7 @@ save [<message>]::
+ 	subcommand is given. The <message> part is optional and gives
+ 	the description along with the stashed state.
+ 
+-list::
++list [<options>]::
+ 
+ 	List the stashes that you currently have.  Each 'stash' is listed
+ 	with its name (e.g. `stash@\{0}` is the latest stash, `stash@\{1}` is
+@@ -55,6 +55,9 @@ list::
+ stash@{0}: WIP on submit: 6ebd0e2... Update git-stash documentation
+ stash@{1}: On master: 9cc0589... Add git-stash
+ ----------------------------------------------------------------
+++
++The command takes options applicable to the linkgit:git-log[1]
++command to control what is shown and how.
+ 
+ show [<stash>]::
+ 
+-- 
+1.5.4
