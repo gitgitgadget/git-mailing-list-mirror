@@ -1,83 +1,92 @@
-From: =?ISO-8859-1?Q?Nagy_Bal=E1zs?= <js@iksz.hu>
-Subject: Re: git svn forking an awful lot of "git config"s
-Date: Thu, 21 Feb 2008 00:57:36 +0100
-Message-ID: <47BCBE70.8020706@iksz.hu>
-References: <alpine.LSU.1.00.0802201520580.17164@racer.site>	<20080220223953.GA32663@hand.yhbt.net> <m3ejb7tdbo.fsf@localhost.localdomain>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 0/3] solaris test results
+Date: Wed, 20 Feb 2008 18:59:44 -0500
+Message-ID: <20080220235944.GA6278@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Eric Wong <normalperson@yhbt.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 21 00:58:27 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Whit Armstrong <armstrong.whit@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 21 01:00:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JRypX-0000kR-BU
-	for gcvg-git-2@gmane.org; Thu, 21 Feb 2008 00:58:27 +0100
+	id 1JRyrN-0001F5-VK
+	for gcvg-git-2@gmane.org; Thu, 21 Feb 2008 01:00:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758194AbYBTX5x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Feb 2008 18:57:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753811AbYBTX5x
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Feb 2008 18:57:53 -0500
-Received: from smtp.aranyoroszlan.hu ([195.56.77.57]:54540 "EHLO
-	smtp.aranyoroszlan.hu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753344AbYBTX5w (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Feb 2008 18:57:52 -0500
-Received: (qmail 28614 invoked by uid 263); 21 Feb 2008 00:07:13 -0000
-Received: from 213.178.107.56 (js@iksz.hu@213.178.107.56) by tcb.aranyoroszlan.hu (envelope-from <js@iksz.hu>, uid 256) with qmail-scanner-2.02st 
- (clamdscan: 0.92/5779. spamassassin: 3.2.4. perlscan: 2.02st.  
- Clear:RC:0(213.178.107.56):SA:0(-2.0/5.0):. 
- Processed in 2.17495 secs); 21 Feb 2008 00:07:13 -0000
-X-Spam-Status: No, hits=-2.0 required=5.0
-X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on tcb.aranyoroszlan.hu
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.0 required=5.0 tests=AWL,BAYES_00,RCVD_IN_PBL,
-	RDNS_NONE autolearn=no version=3.2.4
-X-Envelope-From: js@iksz.hu
-Received: from unknown (HELO ?192.168.1.100?) (js@iksz.hu@213.178.107.56)
-  by tcb.aranyoroszlan.hu with SMTP; 21 Feb 2008 00:07:10 -0000
-User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
-In-Reply-To: <m3ejb7tdbo.fsf@localhost.localdomain>
+	id S1753811AbYBTX7r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Feb 2008 18:59:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753299AbYBTX7r
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Feb 2008 18:59:47 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3729 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752469AbYBTX7q (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Feb 2008 18:59:46 -0500
+Received: (qmail 9359 invoked by uid 111); 20 Feb 2008 23:59:45 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 20 Feb 2008 18:59:45 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 20 Feb 2008 18:59:44 -0500
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74573>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74574>
 
-Jakub Narebski wrote:
-> Take a look how gitweb uses "git config -z -l" to read all config
-> in one go, and save it to hash for later use, lazily.
-...
-> This is an alternate solution, better for simple scripts and one-off
-> scripts (you don't need to write "git config -z -l" parser), but
-> I think that additional eval might be not good for performance.
->   
+I have now run every test script <= t9001 using the current 'master' on
+the SunOS 5.8 box available to me. It _mostly_ passed. Following are
+three patches:
 
+  1/3: git_config_*: don't assume we are parsing a config file
 
-Maybe I'll finish my git-depot proof of concept script someday.  Here's 
-the configuration reader method I use (please note git-depot doesn't use 
-repositories -- yet):
+       This is an actual minor bug which was covered by most platforms'
+       ability to print (null) for NULL. I posted this earlier, but with
+       a typo.
 
-sub readConfig
-{
-	my $self = shift;
-	my ($cfg, @cfg, $cat, $key, $val);
+  2/3: t3404: use configured shell instead of /bin/sh
 
-	$cfg = Git::command(qw/config -z -l/);
-	@cfg = split(/\000/m, $cfg);
-	%{$self->{cfg}} = ();
-	foreach (@cfg) {
-		if (($cat, $key, $val) = (/\A(\S+)\.(\S+)[\n\r]+^(.+)\Z/ms)) {
-			next unless $cat eq 'depot';
-			$self->{cfg}->{$key} = $val;
-		}
-	}
-	return 1;
-}
+       This is a problem purely in the test script, not git itself.
 
-Works like a charm.
--- 
--jul-
+  3/3: diff: fix java funcname pattern for solaris
+
+       This is a Solaris-specific bug in git.
+
+With these fixes, everything passes for me with a few exceptions:
+
+  - Sun's diff doesn't understand "-u". I was able to use GNU diff.
+    Since comparing actual and expected output is so common, we could
+    potentially abstract this with a "test_cmp()" function and use
+    something platform specific. It's probably not worth the trouble, as
+    it impacts only the test suite, and only on systems with a totally
+    broken diff.
+
+  - t4020 fails without gnu grep, as it requires "grep -a"
+
+  - t4024 fails unless /usr/xpg4/bin is in your path, as the regular
+    version of 'expr' is unhappy with us (I didn't investigate too
+    closely)
+
+  - t4118, t4200, t8001, and t8002 fail unless you have GNU sed. The
+    xpg4 sed barfs if there's no newline at the end of input (and this
+    is specifically part of these tests)
+
+  - I couldn't personally run t5502, t5505, t5512, t5520, or t9001, all
+    of which require the Git.pm module; the version of perl on this
+    machine is old (5.005_02) and complained about the 'our' keyword
+
+  - t7505 uses a hook which hard-codes /bin/sh but uses syntax that
+    the Solaris /bin/sh doesn't like. Maybe hooks should get their
+    $SHELL value replaced?
+
+  - t3900 mostly passes, but fails to correctly convert between EUCJP
+    and ISO-2022-JP (in either direction). I didn't investigate very
+    far.
+
+  - git-filter-branch invokes "sh" for the commit filter, which invokes
+    the broken Solaris /bin/sh. This isn't wrong, exactly, but it might
+    make more sense to invoke $SHELL.
+
+Now I must go gouge out my eyes, so that I may never see the output of
+Solaris /bin/sh ever again.
+
+-Peff
