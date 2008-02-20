@@ -1,132 +1,95 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] branch: optionally setup branch.*.merge from upstream
- local branches
-Date: Tue, 19 Feb 2008 16:48:05 -0800
-Message-ID: <7v4pc4fo6y.fsf@gitster.siamese.dyndns.org>
-References: <1203386832-43969-1-git-send-email-jaysoffian@gmail.com>
- <20080219074423.GA3982@steel.home>
- <76718490802190549p549a34afo913efefebaf5fa97@mail.gmail.com>
- <20080220001339.GA16574@steel.home>
+From: Stephen Hemminger <shemminger@vyatta.com>
+Subject: Re: Submodules and rewind
+Date: Tue, 19 Feb 2008 16:52:43 -0800
+Organization: Vyatta
+Message-ID: <20080219165243.7de6cbf5@extreme>
+References: <20080219140604.04afc91f@extreme>
+	<20080219223201.GE4703MdfPADPa@greensroom.kotnet.org>
+	<20080219152357.5ab397cf@extreme>
+	<alpine.LSU.1.00.0802200033530.8333@wbgn129.biozentrum.uni-wuerzburg.de>
+	<20080219161517.34fd5878@extreme>
+	<alpine.LFD.1.00.0802191635010.7833@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 20 01:49:06 2008
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>, skimo@liacs.nl,
+	skimo@kotnet.org, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Feb 20 01:53:36 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JRd8z-0003kf-OA
-	for gcvg-git-2@gmane.org; Wed, 20 Feb 2008 01:49:06 +0100
+	id 1JRdDI-0004p7-72
+	for gcvg-git-2@gmane.org; Wed, 20 Feb 2008 01:53:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757997AbYBTAsa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Feb 2008 19:48:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757726AbYBTAsa
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Feb 2008 19:48:30 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:61732 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756760AbYBTAs3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Feb 2008 19:48:29 -0500
-Received: from a-sasl-quonix.pobox.com (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 8722B778F;
-	Tue, 19 Feb 2008 19:48:26 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.pobox.com (Postfix) with ESMTP id
- 499C97785; Tue, 19 Feb 2008 19:48:17 -0500 (EST)
-In-Reply-To: <20080220001339.GA16574@steel.home> (Alex Riesen's message of
- "Wed, 20 Feb 2008 01:13:39 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1761524AbYBTAw4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Feb 2008 19:52:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761206AbYBTAwz
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Feb 2008 19:52:55 -0500
+Received: from mail.vyatta.com ([216.93.170.194]:46652 "EHLO mail.vyatta.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1764548AbYBTAwt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Feb 2008 19:52:49 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.vyatta.com (Postfix) with ESMTP id 511284F8051;
+	Tue, 19 Feb 2008 16:52:49 -0800 (PST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.332
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.332 tagged_above=-10 required=5 tests=[AWL=0.167,
+	BAYES_00=-2.599, RDNS_DYNAMIC=0.1]
+Received: from mail.vyatta.com ([127.0.0.1])
+	by localhost (mail.vyatta.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id qRv07izH7K8g; Tue, 19 Feb 2008 16:52:46 -0800 (PST)
+Received: from extreme (75-175-36-117.ptld.qwest.net [75.175.36.117])
+	by mail.vyatta.com (Postfix) with ESMTP id 797B34F804D;
+	Tue, 19 Feb 2008 16:52:45 -0800 (PST)
+In-Reply-To: <alpine.LFD.1.00.0802191635010.7833@woody.linux-foundation.org>
+X-Mailer: Claws Mail 3.3.0 (GTK+ 2.12.8; x86_64-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74486>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74487>
 
-Alex Riesen <raa.lkml@gmail.com> writes:
+On Tue, 19 Feb 2008 16:47:15 -0800 (PST)
+Linus Torvalds <torvalds@linux-foundation.org> wrote:
 
-> Well, it could also mean that there is no rules yet, and you can
-> do the next sane thing of your choice.
->
->> enum color_branch {
->> 	COLOR_BRANCH_RESET = 0,
->> 	COLOR_BRANCH_PLAIN = 1,
->> 	COLOR_BRANCH_REMOTE = 2,
->> 	COLOR_BRANCH_LOCAL = 3,
->> 	COLOR_BRANCH_CURRENT = 4,
->> };
+> 
+> 
+> On Tue, 19 Feb 2008, Stephen Hemminger wrote:
+> > 
+> > Don't be stupid, I am not trying be obstreperous, just fix the problem.
+> 
+> Umm. Stephen - this is the first time you even *describe* the problem.
+> 
+> Your previous emails were just "hey, submodules don't work, fix it".
 
-This enum is used as an index into branch_colors[] array.  Of
-course, by omitting everything you will get the default "start
-with 0, incrementing by 1" which will be the right assignment
-anyway.  But we would want to leave a clue for people who would
-want to touch this later that individual values have some
-meaning, more than just that they have to be distinct.
+No I abused a submodule and broke it, it isn't git's fault directly.
 
->> enum {
->> 	TAGS_UNSET = 0,
->> 	TAGS_DEFAULT = 1,
->> 	TAGS_SET = 2
->> };
+> Why do you then call Dscho stupid for pointing out that you never even 
+> bothered to reveal any details of what your problem was?
 
-This one can be made unspecified or even shuffled, because
-nobody does:
+The cause was a accidental push of the wrong tree up into a public
+repository. So I manually went back and moved the original tree aside
+and replaced it with a new tree that was at the point before the errant
+push.
 
-	int function_that_acts_on_tag_setting(int tag) {
-                if (!tag) {
-                        ... do something ...
-                }
-                if (TAGS_DEFAULT <= tag) {
-                        ... do something else ...
-                }
-                return some_array[tag];
-	}
+> 
+> But it's not clear how you even got into that state to begin with. How did 
+> your index get that confused? You said "I had to rewind one project back 
+> to a known good state", but considering the output, it looks like you 
+> didn't actually rewind it, but left it in some half-way state. 
+> 
+> A "git reset" should have reset the index, or you could probably have done 
+> something like "git add <submodule>" to basically force the index entry 
+> for just that submodule to the current state it had.
+> 
+> At a guess, it *looks* like you reset the submodules themselves, but never 
+> reset the superproject.
+> 
+> 		Linus
 
-So there is no reason to spell out any of the values.
-
->> enum update_mode { BOTH = 0, WORKING_DIRECTORY, INDEX } *modes;
-
-Likewise.
-
->> enum exist_status {
->> 	index_nonexistent = 0,
->> 	index_directory,
->> 	index_gitdir,
->> };
-
-Likewise, modulo that making "nonexistent" explicitly to 0 is a
-very sensible thing whoever wrote that code has done.  This is
-used as a type of directory_exists_in_index() function, and
-callers can say:
-
-       	if (!directory_exists_in_index(dirname)) {
-        	... ah, there is no such directory ...
-	} else {
-        	... something exists, but I do not care what kind ...
-	}
-
-So spelling out that "nonexistent MUST BE 0" (even though C
-language will give value 0 to it anyway) is a good convention.
-
->> enum CAPABILITY {
->> 	NOLOGIN = 0,
->> 	UIDPLUS,
->> 	LITERALPLUS,
->> 	NAMESPACE,
->> };
-
-This seems to be meant to match the order in the corresponding
-cap_list[] array, so this cannot be reshuffled (iow, it is
-similar to color_branch).
-
-If you do not need to have any specific value assigned nor order
-among the enum tokens, (i.e. somebody later can add a new enum
-anywhere in the decl or even reshuffle the existing ones without
-breaking your code), it is a good idea to hint that fact by not
-having any "= value" in the decl.  If you do rely on specific
-one being zero (see "exist_status" example above), it is better
-to spell it out that it has to be zero even if it is the first
-entry to hint that fact.  Of course, if you need a set of values
-that are not sequential, you would need to spell out each and
-every one of them.
+The submodule is okay shape but the superproject isn't.
