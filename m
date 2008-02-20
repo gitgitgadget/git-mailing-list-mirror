@@ -1,73 +1,65 @@
-From: Gustaf Hendeby <hendeby@isy.liu.se>
-Subject: [PATCH] checkout: obey -q option
-Date: Thu, 21 Feb 2008 00:08:59 +0100
-Message-ID: <1203548939-17350-1-git-send-email-hendeby@isy.liu.se>
-Cc: gitster@pobox.com, Gustaf Hendeby <hendeby@isy.liu.se>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 21 00:09:42 2008
+From: Pete/Piet Delaney <pete@bluelane.com>
+Subject: can't read "treediffs(....)
+Date: Wed, 20 Feb 2008 15:18:50 -0800
+Organization: Bluelane
+Message-ID: <47BCB55A.4090308@bluelane.com>
+Reply-To: pete@bluelane.com
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Piet Delaney <piet.delaney@gmail.com>,
+	Piet Delaney <pdelaney@bluelane.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Feb 21 00:19:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JRy4M-00015s-9V
-	for gcvg-git-2@gmane.org; Thu, 21 Feb 2008 00:09:42 +0100
+	id 1JRyDy-0004VM-Qd
+	for gcvg-git-2@gmane.org; Thu, 21 Feb 2008 00:19:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754623AbYBTXJE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Feb 2008 18:09:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751006AbYBTXJE
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Feb 2008 18:09:04 -0500
-Received: from bogotron.isy.liu.se ([130.236.48.26]:53877 "EHLO
-	bogotron.isy.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750974AbYBTXJD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Feb 2008 18:09:03 -0500
-Received: from spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19])
-	by bogotron.isy.liu.se (Postfix) with ESMTP id C833B25AA7;
-	Thu, 21 Feb 2008 00:09:00 +0100 (MET)
-Received: from bogotron.isy.liu.se ([130.236.48.26])
- by spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19]) (amavisd-new, port 10022)
- with ESMTP id 29967-02; Thu, 21 Feb 2008 00:09:00 +0100 (MET)
-Received: from pluring.isy.liu.se (pluring.isy.liu.se [130.236.56.134])
-	by bogotron.isy.liu.se (Postfix) with ESMTP id 20ED025A9F;
-	Thu, 21 Feb 2008 00:09:00 +0100 (MET)
-Received: by pluring.isy.liu.se (Postfix, from userid 2087)
-	id 15477177A1; Thu, 21 Feb 2008 00:09:00 +0100 (CET)
-X-Mailer: git-send-email 1.5.4.2.232.g08e5
-X-Virus-Scanned: by amavisd-new at isy.liu.se
-X-Spam-Checker-Version: SpamAssassin 2.63-isy (2004-01-11) on spamotron.isy.liu.se
+	id S1764308AbYBTXS7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Feb 2008 18:18:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932650AbYBTXS6
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Feb 2008 18:18:58 -0500
+Received: from outbound.mse2.exchange.ms ([69.25.50.247]:46088 "EHLO
+	mse2fe1.mse2.exchange.ms" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1758893AbYBTXS4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Feb 2008 18:18:56 -0500
+Received: from piet2.bluelane.com ([64.94.92.242]) by mse2fe1.mse2.exchange.ms with Microsoft SMTPSVC(6.0.3790.3959);
+	 Wed, 20 Feb 2008 18:18:54 -0500
+User-Agent: Thunderbird 2.0.0.9 (X11/20071031)
+X-Enigmail-Version: 0.95.6
+X-OriginalArrivalTime: 20 Feb 2008 23:18:54.0828 (UTC) FILETIME=[F62C9AC0:01C87416]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74565>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74566>
 
-Signed-off-by: Gustaf Hendeby <hendeby@isy.liu.se>
----
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-This makes the new tracking output introduced by
-79a1e6b432d7d7ffaf2079d4cf895583502ca923 (checkout: notice when the
-switched branch is behind or forked) obey the silence option.  FWIW, I
-would really prefer only to get the one line informing me that I could
-do a fast-forward or will need a merge unless I specifically ask for
-more.  Is that something worth exploring?  Right now checkout is a bit
-too talkative for my taste.
+What does this mean?
+- -----------------------------------------------------------------------
+can't read "treediffs(1c977462d86c94cd20492c72f2be175a05aad0f4)": no
+such element in array
+can't read "treediffs(1c977462d86c94cd20492c72f2be175a05aad0f4)": no
+such element in array
+~    while executing
+"lindex $treediffs($diffids) [expr {$l-2}]"
+~    (procedure "pop_flist_menu" line 11)
+~    invoked from within
+"pop_flist_menu .bright.cfiles 977 652 54 105"
+~    (command bound to event)
+- -------------------------------------------------------------------------
 
-/Gustaf
+- -piet
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
 
- builtin-checkout.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/builtin-checkout.c b/builtin-checkout.c
-index b1820a4..104ce4f 100644
---- a/builtin-checkout.c
-+++ b/builtin-checkout.c
-@@ -402,7 +402,7 @@ static void update_refs_for_switch(struct checkout_opts *opts,
- 	}
- 	remove_branch_state();
- 	strbuf_release(&msg);
--	if (new->path || !strcmp(new->name, "HEAD"))
-+	if (!opts->quiet && (new->path || !strcmp(new->name, "HEAD")))
- 		adjust_to_tracking(new, opts);
- }
- 
--- 
-1.5.4.2.232.g08e5
+iD8DBQFHvLVaJICwm/rv3hoRAkjHAJ46mxx+CzdiWHnE5xE/oJ2DR3gNKgCdHSCg
+nPffcBjtolA1XIp3F7fWL1U=
+=wbMX
+-----END PGP SIGNATURE-----
