@@ -1,134 +1,112 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH 2/2] Add support for url aliases in config files
-Date: Wed, 20 Feb 2008 15:42:10 -0500 (EST)
-Message-ID: <alpine.LNX.1.00.0802201520450.19024@iabervon.org>
-References: <alpine.LNX.1.00.0802201337060.19024@iabervon.org> <7vzltv4ey8.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0802201418590.19024@iabervon.org> <7vskzn4dpz.fsf@gitster.siamese.dyndns.org>
+From: "Jay Soffian" <jaysoffian@gmail.com>
+Subject: mergetool local/remote improvements?
+Date: Wed, 20 Feb 2008 16:40:04 -0500
+Message-ID: <76718490802201340g5ce15c1fl3e4f6d4e655c96be@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 20 21:42:53 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Feb 20 22:41:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JRvmF-0005tL-LQ
-	for gcvg-git-2@gmane.org; Wed, 20 Feb 2008 21:42:52 +0100
+	id 1JRwgT-0001sT-Df
+	for gcvg-git-2@gmane.org; Wed, 20 Feb 2008 22:40:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932311AbYBTUmO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Feb 2008 15:42:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756667AbYBTUmO
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Feb 2008 15:42:14 -0500
-Received: from iabervon.org ([66.92.72.58]:47452 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1764717AbYBTUmL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Feb 2008 15:42:11 -0500
-Received: (qmail 6306 invoked by uid 1000); 20 Feb 2008 20:42:10 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 20 Feb 2008 20:42:10 -0000
-In-Reply-To: <7vskzn4dpz.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1757208AbYBTVkJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Feb 2008 16:40:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751847AbYBTVkI
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Feb 2008 16:40:08 -0500
+Received: from py-out-1112.google.com ([64.233.166.183]:37248 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755667AbYBTVkG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Feb 2008 16:40:06 -0500
+Received: by py-out-1112.google.com with SMTP id u52so3371051pyb.10
+        for <git@vger.kernel.org>; Wed, 20 Feb 2008 13:40:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=0wD1ggTlBC/n9C58p3e8YYAW72mWLx0OqFFBuUoXUnk=;
+        b=rGH8dPI2sDll58OH4HgvgMZcmXVUvG9x720UlucmHuMzm/chySm7zpSUZhuCA4gVbHj1zLznY81ov75pLtcJCBcoFf1mf3uAX8ReTxc1sOjAnOyn6kwfR8dnYfL8EJo7IMpMMAnCFaHVUktb7TMz6r/v+QxzonHAbtS7vn3opzU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=C7ohxNPJO6yKQdb+YnvryLH6w+R4bcKIgKFQMrPO1Uj/QWAZoiid9G7HJoFESnSlWey1gHyjBVM5ijwRZI6zbyFSxJU1/3Nzmpnc9LjdPwU7IAjbvydBVkLMmvhQEegfnRvAV/FNZLrs3cUREtB3bO5dbFfzGysqd1MJk4fZmPs=
+Received: by 10.115.22.1 with SMTP id z1mr6094392wai.33.1203543605015;
+        Wed, 20 Feb 2008 13:40:05 -0800 (PST)
+Received: by 10.114.145.13 with HTTP; Wed, 20 Feb 2008 13:40:04 -0800 (PST)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74546>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74547>
 
-On Wed, 20 Feb 2008, Junio C Hamano wrote:
+When in branch <mine> and doing "git rebase <upstream>", if there are
+any conflicts, the merge tool will come up with the version of the file
+from branch <mine> tagged with ".REMOTE" and the version from branch
+<upstream> tagged ".LOCAL".
 
-> Daniel Barkalow <barkalow@iabervon.org> writes:
-> 
-> > On Wed, 20 Feb 2008, Junio C Hamano wrote:
-> > ...
-> >> To me, "url.$this_is_what_I_use.aka = $how_they_might_call_it"
-> >> initially felt backwards, but the point of the facility is to
-> >> allow mapping many ways other people might call it to how you
-> >> would (and the other way would not make sense as allowing to map
-> >> one thing to multiple is only to introduce unnecessary
-> >> ambiguity), so it makes perfect sense.
-> >
-> > This order of values is definitely the right thing, for the mapping 
-> > reasons you saw. And I think "aka" is generally used to indicate 
-> > additional non-canonical names for something with an official name (see, 
-> > for example, IMDB's usage). I haven't been able to come up with anything 
-> > better to indicate "this is a name that I will recognize but not use 
-> > myself".
-> 
-> Yeah, that "aka" is still disturbing.
-> 
-> 	[url A]
->         	aka = B
-> 
-> would read to me: "A is also known as B" but that is clearly not
-> what it means here. 
+I understand the reason for this, but still, it seems backwards. So I
+was going to propose something like the patch below, but I realized that
+it might be more useful if mergetool took --local and --remote arguments
+so that the caller could provide more meaningful names, e.g. given
 
-But it is; the thing which we will call "A" is also known (and 
-sometimes called by other people, or us speaking informally) as "B".
+--local=mybranch
+--remote=theirbranch
 
-> You would want this:
-> 
-> 	[url A]
->         	aka = B 
-> 		aka = C
-> 
-> to mean "B is also known as A.  C is also known as A."  IOW, you
-> are using it backwards, because their name is more official and
-> you are using your own unofficial name to call it.
+mergetool would use mybranch/MYBRANCH in place of local/LOCAL and
+similarly theirbranch/THEIRBRANCH in place of remote/REMOTE.
 
-No, "A" is the *real* name, the one that actually works. B and C are 
-pseudonyms, of which there may be multiple, both from more "official" (but 
-git is decentralized, and doesn't care for officialness) and less official 
-sources.
+Of course, I then have to wonder if mergetool could use branch names by
+default in those cases where branch names can be determined
+unambiguously (not sure how to do that though other than for git-merge
+and git-rebase to leave a hint about the operation in progress).
 
-I think you're seeing this feature as taking "correct" URLs and rewriting 
-them to be local aliases, when the only thing that makes sense for a 
-system like git is really to say that whatever URL works for us is 
-"correct", and everybody else is speaking their own local dialect.
+Thoughts?
 
-In fact, one case I anticipate using extensively is:
+ git-mergetool.sh |   21 ++++++++++++++++-----
+ 1 files changed, 16 insertions(+), 5 deletions(-)
 
-[url "git://iabervon.org/~barkalow/"]
-	aka = ":"
+diff --git a/git-mergetool.sh b/git-mergetool.sh
+index cbbb707..c688858 100755
+--- a/git-mergetool.sh
++++ b/git-mergetool.sh
+@@ -20,6 +20,10 @@ is_symlink () {
+     test "$1" = 120000
+ }
 
-Such that, once clone is using remote.{c,h}, "git clone :git" would clone 
-my home git repository. Obviously ":" isn't the real name in this 
-rewriting.
++is_rebase_merge () {
++    test -d "$GIT_DIR/.dotest-merge"
++}
++
+ local_present () {
+     test -n "$local_mode"
+ }
+@@ -162,12 +166,19 @@ merge_file () {
+     cp -- "$BACKUP" "$path"
 
-> >> > diff --git a/Documentation/urls.txt b/Documentation/urls.txt
-> >> > index 81ac17f..0115af7 100644
-> >> > --- a/Documentation/urls.txt
-> >> > +++ b/Documentation/urls.txt
-> >> > @@ -44,3 +44,26 @@ endif::git-clone[]
-> >> > ...
-> >> > +If you have a section:
-> >> > +
-> >> > +------------
-> >> > +	[host "git://git.host.xz/"]
-> >> > +		aka = host.xz:/path/to/
-> >> > +		aka = work:
-> >> > +------------
-> >> > +
-> >> > +a URL like "work:repo.git" or like "host.xz:/path/to/repo.git" will be
-> >> > +rewritten in any context that takes a URL to be
-> >> > +"git://git.host.xz/repo.git".
-> >> 
-> >> This still stands???
-> >
-> > And missed the "host"->"url" bit while I fixed the rest of the example. 
-> 
-> So this part is not wanted, right?
+     base_mode=`git ls-files -u -- "$path" | awk '{if ($3==1) print $1;}'`
+-    local_mode=`git ls-files -u -- "$path" | awk '{if ($3==2) print $1;}'`
+-    remote_mode=`git ls-files -u -- "$path" | awk '{if ($3==3) print $1;}'`
++    base_present && git cat-file blob ":1:$prefix$path" >"$BASE" 2>/dev/null
 
-The first part (not quoted) is not wanted (it was left over from when I 
-combined the three entries into one and moved it under 'u' instead of 
-'h'). This part *is* wanted, but should say:
+-    base_present   && git cat-file blob ":1:$prefix$path" >"$BASE" 2>/dev/null
+-    local_present  && git cat-file blob ":2:$prefix$path" >"$LOCAL" 2>/dev/null
+-    remote_present && git cat-file blob ":3:$prefix$path" >"$REMOTE"
+2>/dev/null
++    if is_rebase_merge; then
++	local_mode=`git ls-files -u -- "$path" | awk '{if ($3==3) print $1;}'`
++	local_present  && git cat-file blob ":3:$prefix$path" >"$LOCAL" 2>/dev/null
++	remote_mode=`git ls-files -u -- "$path" | awk '{if ($3==2) print $1;}'`
++	remote_present && git cat-file blob ":2:$prefix$path" >"$REMOTE" 2>/dev/null
++    else
++	local_mode=`git ls-files -u -- "$path" | awk '{if ($3==2) print $1;}'`
++	local_present  && git cat-file blob ":2:$prefix$path" >"$LOCAL" 2>/dev/null
++	remote_mode=`git ls-files -u -- "$path" | awk '{if ($3==3) print $1;}'`
++	remote_present && git cat-file blob ":3:$prefix$path" >"$REMOTE" 2>/dev/null
++    fi
 
-+	[url "git://git.host.xz/"]
-
-instead of
-
-+	[host "git://git.host.xz/"]
-
-since I changed the option name.
-
-	-Daniel
-*This .sig left intentionally blank*
+     if test -z "$local_mode" -o -z "$remote_mode"; then
+ 	echo "Deleted merge conflict for '$path':"
