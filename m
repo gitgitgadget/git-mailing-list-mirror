@@ -1,181 +1,483 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Minor annoyance with git push
-Date: Wed, 20 Feb 2008 00:23:06 -0800
-Message-ID: <7vzltwavf9.fsf@gitster.siamese.dyndns.org>
-References: <46a038f90802072044u3329fd33w575c689cba2917ee@mail.gmail.com>
- <20080209030046.GA10470@coredump.intra.peff.net>
- <6B804F0D-9C3B-46F3-B922-7A5CBEF55522@zib.de>
- <alpine.LSU.1.00.0802091307160.11591@racer.site>
- <7v7ihd7ee1.fsf@gitster.siamese.dyndns.org>
- <alpine.LSU.1.00.0802100213330.11591@racer.site>
- <20080210101756.GB26568@coredump.intra.peff.net>
- <alpine.LSU.1.00.0802101219280.11591@racer.site>
- <20080210122321.GA31009@coredump.intra.peff.net>
- <alpine.LSU.1.00.0802101303140.11591@racer.site>
+From: Jim Meyering <jim@meyering.net>
+Subject: Re: [PATCH] Remove useless if-before-free tests.
+Date: Wed, 20 Feb 2008 11:26:17 +0100
+Message-ID: <87skznhqk6.fsf@rho.meyering.net>
+References: <871w7bz1ly.fsf@rho.meyering.net> <47B995CC.2000809@gmx.ch>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Steffen Prohaska <prohaska@zib.de>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Feb 20 09:24:15 2008
+Cc: git list <git@vger.kernel.org>
+To: Jean-Luc Herren <jlh@gmx.ch>
+X-From: git-owner@vger.kernel.org Wed Feb 20 11:27:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JRkFR-0003JI-RF
-	for gcvg-git-2@gmane.org; Wed, 20 Feb 2008 09:24:14 +0100
+	id 1JRmAF-00019i-Q5
+	for gcvg-git-2@gmane.org; Wed, 20 Feb 2008 11:27:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753820AbYBTIXi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Feb 2008 03:23:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753540AbYBTIXi
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Feb 2008 03:23:38 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:60706 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751233AbYBTIXg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Feb 2008 03:23:36 -0500
-Received: from a-sasl-quonix.pobox.com (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 3695DBD26;
-	Wed, 20 Feb 2008 03:23:33 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.pobox.com (Postfix) with ESMTP id
- 6DC9FBD1C; Wed, 20 Feb 2008 03:23:24 -0500 (EST)
-In-Reply-To: <alpine.LSU.1.00.0802101303140.11591@racer.site> (Johannes
- Schindelin's message of "Sun, 10 Feb 2008 13:04:03 +0000 (GMT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752961AbYBTK0W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Feb 2008 05:26:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752979AbYBTK0W
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Feb 2008 05:26:22 -0500
+Received: from smtp3-g19.free.fr ([212.27.42.29]:43034 "EHLO smtp3-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752873AbYBTK0T (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Feb 2008 05:26:19 -0500
+Received: from smtp3-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id 2A0CC17B545
+	for <git@vger.kernel.org>; Wed, 20 Feb 2008 11:26:18 +0100 (CET)
+Received: from mx.meyering.net (mx.meyering.net [82.230.74.64])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id E427617B56B
+	for <git@vger.kernel.org>; Wed, 20 Feb 2008 11:26:17 +0100 (CET)
+Received: from rho.meyering.net (localhost.localdomain [127.0.0.1])
+	by rho.meyering.net (Acme Bit-Twister) with ESMTP id A5DC41696;
+	Wed, 20 Feb 2008 11:26:17 +0100 (CET)
+In-Reply-To: <47B995CC.2000809@gmx.ch> (Jean-Luc Herren's message of "Mon, 18
+	Feb 2008 15:27:24 +0100")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74505>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74506>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Jean-Luc Herren <jlh@gmx.ch> wrote:
+> Jim Meyering wrote:
+>> This change removes all useless if-before-free tests.
+...
+> While you're at it, you might want to add this to your patch:
+>
+> diff --git a/imap-send.c b/imap-send.c
+> index 9025d9a..3b27bca 100644
+> --- a/imap-send.c
+> +++ b/imap-send.c
+> @@ -472,7 +472,7 @@ v_issue_imap_cmd( imap_store_t *ctx, struct imap_cmd_cb *cb,
+>        if (socket_write( &imap->buf.sock, buf, bufl ) != bufl) {
+>                free( cmd->cmd );
+>                free( cmd );
+> -               if (cb && cb->data)
+> +               if (cb)
+>                        free( cb->data );
+>                return NULL;
+>        }
+>
 
-> Hmm.  So that means that if an old-timer comes to help to a new-comer, 
-> the old-timer will be surprised?
+Well spotted.
+Here's an updated patch:
 
-Actually, after carefully examining what I have been doing, I
-think this "somebody cries 'git push ;# nothing else' does not
-work, and old timer needs to remember to check one extra thing
-to help" has been a bit overblown.
+-----------------
+From 21ff212582df9b6b51028de99837b924840f3b58 Mon Sep 17 00:00:00 2001
+From: Jim Meyering <meyering@redhat.com>
+Date: Thu, 31 Jan 2008 18:26:32 +0100
+Subject: [PATCH] Avoid unnecessary "if-before-free" tests.
 
-To diagnose "git push ;# nothing else", you would already need
-to ask the following _anyway_:
+This change removes all obvious useless if-before-free tests.
+E.g., it replaces code like this:
 
- - On what branch are you?
+        if (some_expression)
+                free (some_expression);
 
- - Do you have "branch.$current_branch.remote"?
+with the now-equivalent:
 
- - What is "branch.$current_branch.remote" set to?
+        free (some_expression);
 
- - Do you have remote.$that_remote.url?
+It is equivalent not just because POSIX has required free(NULL)
+to work for a long time, but simply because it has worked for
+so long that no reasonable porting target fails the test.
+Here's some evidence from nearly 1.5 years ago:
 
-   - If it is http://, do you have very new version of curl
-     library, often not even in distro?
+    http://www.winehq.org/pipermail/wine-patches/2006-October/031544.html
 
-   - If it is http://, does it end with '/'?
+FYI, the change below was prepared by running the following:
 
-   - If it is http://, do you have DAV enabled over there?
+  git ls-files -z | xargs -0 \
+  perl -0x3b -pi -e \
+    's/\bif\s*\(\s*(\S+?)(?:\s*!=\s*NULL)?\s*\)\s+(free\s*\(\s*\1\s*\))/$2/s'
 
-   - If it is host:path, does your non-interactive ssh get
-     appropriate PATH at the other end?
+Note however, that it doesn't handle brace-enclosed blocks like
+"if (x) { free (x); }".  But that's ok, since there were none like
+that in git sources.
 
-   - Is your username there the same as local?  Otherwise do you
-     have "User your_name_over_there" set up in your
-     $HOME/.ssh/config?
+Beware: if you do use the above snippet, note that it can
+produce syntactically invalid C code.  That happens when the
+affected "if"-statement has a matching "else".
+E.g., it would transform this
 
-   - 47 other questions about transfers.
+  if (x)
+    free (x);
+  else
+    foo ();
 
- - Do you have remote.$that_remote.push?
+into this:
 
- - What local branches do you have?
+  free (x);
+  else
+    foo ();
 
- - What local branches does $that_remote have?
+There were none of those here, either.
 
-So it is not _so_ unreasonable if we add an extra configuration
-or two to this mix.
+If you're interested in automating detection of the useless
+tests, you might like the useless-if-before-free script in gnulib:
+[it *does* detect brace-enclosed free statements, and has a --name=S
+ option to make it detect free-like functions with different names]
 
-What configuration semantics is reasonable is a different
-matter.  Let's back up a bit.
+  http://git.sv.gnu.org/gitweb/?p=gnulib.git;a=blob;f=build-aux/useless-if-before-free
 
-The "matching" semantics has been advertised as a convenient way
-to keep track of which branches you would want publish and which
-ones to keep private without having to have extra configuration.
-This is very true for people whose workflow is based on _owned_
-public distribution points.  The destination is controlled by
-you and you alone, and after pushing the branches you want to
-show out explicitly, the destination repository _remembers_
-which branches you are interested in publishing for later
-"matching" pushes.  When you are no longer interested in showing
-that work, you remove it from the remote and matching and that
-(1) stops publishing and at the same time (2) remembers you are
-no longer interested in publishing.
+Addendum:
+  Remove one more (in imap-send.c), spotted by Jean-Luc Herren <jlh@gmx.ch>.
 
-However, when you allow others to push into the destination, the
-set of branches there obviously cannot serve as your private
-configuration anymore.  So "matching" can never be a convenient
-way if your push is to a shared repository.
+Signed-off-by: Jim Meyering <meyering@redhat.com>
+---
+ builtin-blame.c        |    3 +--
+ builtin-branch.c       |    9 +++------
+ builtin-fast-export.c  |    3 +--
+ builtin-http-fetch.c   |    3 +--
+ builtin-pack-objects.c |    3 +--
+ builtin-revert.c       |    3 +--
+ connect.c              |    3 +--
+ diff.c                 |    9 +++------
+ dir.c                  |    3 +--
+ http-push.c            |   18 ++++++------------
+ imap-send.c            |    5 ++---
+ interpolate.c          |    3 +--
+ pretty.c               |    3 +--
+ remote.c               |    3 +--
+ setup.c                |    3 +--
+ sha1_name.c            |    6 ++----
+ xdiff-interface.c      |    3 +--
+ 17 files changed, 28 insertions(+), 55 deletions(-)
 
-Which would mean that "matching" is not a personal taste nor
-even per-repository matter.  I think it is reasonable to set
-this per-remote.
+diff --git a/builtin-blame.c b/builtin-blame.c
+index 2d4a3e1..3b49217 100644
+--- a/builtin-blame.c
++++ b/builtin-blame.c
+@@ -123,8 +123,7 @@ static inline struct origin *origin_incref(struct origin *o)
+ static void origin_decref(struct origin *o)
+ {
+ 	if (o && --o->refcnt <= 0) {
+-		if (o->file.ptr)
+-			free(o->file.ptr);
++		free(o->file.ptr);
+ 		free(o);
+ 	}
+ }
+diff --git a/builtin-branch.c b/builtin-branch.c
+index e414c88..93b78a7 100644
+--- a/builtin-branch.c
++++ b/builtin-branch.c
+@@ -126,8 +126,7 @@ static int delete_branches(int argc, const char **argv, int force, int kinds)
+ 			continue;
+ 		}
 
-    You may have a repository you use during daytime on your
-    desktop, and the repository may have more than one remotes
-    defined.  "origin" may point to a shared repository you push to
-    and fetch from in order to work together with others, "backup"
-    may point to another repository on your server you push your
-    work into, and "satellite" may point to yet another repository
-    on your notebook when you are done for the day and take your WIP
-    along with you.
+-		if (name)
+-			free(name);
++		free(name);
 
-    You may not want "matching" when interacting with the shared
-    repository (if you always want "current only" is a different
-    matter, but let's pretend you do), but you would want
-    "matching" when pushing back to "satellite", and you would
-    want "mirror" when pushing to "backup".
+ 		name = xstrdup(mkpath(fmt, argv[i]));
+ 		if (!resolve_ref(name, sha1, 1, NULL)) {
+@@ -172,8 +171,7 @@ static int delete_branches(int argc, const char **argv, int force, int kinds)
+ 		}
+ 	}
 
-So perhaps we can have "remote.*.push" that says "current" in
-some way.  Tentatively let's say the syntax is like this:
+-	if (name)
+-		free(name);
++	free(name);
 
-	[remote "origin"]
-        	url = server.oss.example.org:/pub/project.git/
-                push = HEAD
-                fetch = +refs/heads/*:refs/remotes/origin/*
-	[remote "backup"]
-        	url = server.example.com:/home/me/mine.git/
-                push = +refs/*:refs/*
-	[remote "satellite"]
-        	url = notebook.example.com:/home/me/mine.git/
+ 	return(ret);
+ }
+@@ -490,8 +488,7 @@ static void create_branch(const char *name, const char *start_name,
+ 	if (write_ref_sha1(lock, sha1, msg) < 0)
+ 		die("Failed to write ref: %s.", strerror(errno));
 
-	[branch "master"]
-        	remote = "origin"
-                merge = refs/heads/master
-	[branch "ticket-47"]
-               	remote = "origin"
-                merge = refs/heads/ticket-47
+-	if (real_ref)
+-		free(real_ref);
++	free(real_ref);
+ }
 
-While on "master", "git push" will say...
+ static void rename_branch(const char *oldname, const char *newname, int force)
+diff --git a/builtin-fast-export.c b/builtin-fast-export.c
+index f741df5..49b54de 100755
+--- a/builtin-fast-export.c
++++ b/builtin-fast-export.c
+@@ -196,8 +196,7 @@ static void handle_commit(struct commit *commit, struct rev_info *rev)
+ 			  ? strlen(reencoded) : message
+ 			  ? strlen(message) : 0),
+ 	       reencoded ? reencoded : message ? message : "");
+-	if (reencoded)
+-		free(reencoded);
++	free(reencoded);
 
-	Ah, you are too lazy to say where to push to.
-	branch.master.remote says "origin", so that is it.
+ 	for (i = 0, p = commit->parents; p; p = p->next) {
+ 		int mark = get_object_mark(&p->item->object);
+diff --git a/builtin-http-fetch.c b/builtin-http-fetch.c
+index 7f450c6..299093f 100644
+--- a/builtin-http-fetch.c
++++ b/builtin-http-fetch.c
+@@ -80,8 +80,7 @@ int cmd_http_fetch(int argc, const char **argv, const char *prefix)
 
-	And you are too lazy to say what to push either.
-	remote.origin.push says HEAD which is a special token
-	that means the current branch.
+ 	walker_free(walker);
 
-	Let's pretend you told me "git push origin master"
+-	if (rewritten_url)
+-		free(rewritten_url);
++	free(rewritten_url);
 
-I was hoping we can do without the "remote.*.push = HEAD" if we
-can detect the remote is a shared repository while talking to
-it, but I think it is a bit too much magic, because we cannot
-visualize what the pushing side and the receiving side  are
-negotiating.
+ 	return rc;
+ }
+diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
+index d2bb12e..7dff653 100644
+--- a/builtin-pack-objects.c
++++ b/builtin-pack-objects.c
+@@ -1428,8 +1428,7 @@ static int try_delta(struct unpacked *trg, struct unpacked *src,
+ 	 * accounting lock.  Compiler will optimize the strangeness
+ 	 * away when THREADED_DELTA_SEARCH is not defined.
+ 	 */
+-	if (trg_entry->delta_data)
+-		free(trg_entry->delta_data);
++	free(trg_entry->delta_data);
+ 	cache_lock();
+ 	if (trg_entry->delta_data) {
+ 		delta_cache_size -= trg_entry->delta_size;
+diff --git a/builtin-revert.c b/builtin-revert.c
+index e219859..b6dee6a 100644
+--- a/builtin-revert.c
++++ b/builtin-revert.c
+@@ -397,8 +397,7 @@ static int revert_or_cherry_pick(int argc, const char **argv)
+ 		else
+ 			return execl_git_cmd("commit", "-n", "-F", defmsg, NULL);
+ 	}
+-	if (reencoded_message)
+-		free(reencoded_message);
++	free(reencoded_message);
 
-Putting this "push = HEAD" by default when "git clone" and "git
-remote add" creates the [remote "$remote"] section is probably
-possible, and at that stage we may even be able to do the "if
-the other end is shared, then set this up automagically", as the
-result of the magic can be inspected in the resulting config
-file.
+ 	return 0;
+ }
+diff --git a/connect.c b/connect.c
+index 5ac3572..d12b105 100644
+--- a/connect.c
++++ b/connect.c
+@@ -68,8 +68,7 @@ struct ref **get_remote_heads(int in, struct ref **list,
+
+ 		name_len = strlen(name);
+ 		if (len != name_len + 41) {
+-			if (server_capabilities)
+-				free(server_capabilities);
++			free(server_capabilities);
+ 			server_capabilities = xstrdup(name + name_len + 1);
+ 		}
+
+diff --git a/diff.c b/diff.c
+index 58fe775..21a81ab 100644
+--- a/diff.c
++++ b/diff.c
+@@ -118,8 +118,7 @@ static int parse_funcname_pattern(const char *var, const char *ep, const char *v
+ 		pp->next = funcname_pattern_list;
+ 		funcname_pattern_list = pp;
+ 	}
+-	if (pp->pattern)
+-		free(pp->pattern);
++	free(pp->pattern);
+ 	pp->pattern = xstrdup(value);
+ 	return 0;
+ }
+@@ -492,10 +491,8 @@ static void free_diff_words_data(struct emit_callback *ecbdata)
+ 				ecbdata->diff_words->plus.text.size)
+ 			diff_words_show(ecbdata->diff_words);
+
+-		if (ecbdata->diff_words->minus.text.ptr)
+-			free (ecbdata->diff_words->minus.text.ptr);
+-		if (ecbdata->diff_words->plus.text.ptr)
+-			free (ecbdata->diff_words->plus.text.ptr);
++		free (ecbdata->diff_words->minus.text.ptr);
++		free (ecbdata->diff_words->plus.text.ptr);
+ 		free(ecbdata->diff_words);
+ 		ecbdata->diff_words = NULL;
+ 	}
+diff --git a/dir.c b/dir.c
+index 1f507da..edc458e 100644
+--- a/dir.c
++++ b/dir.c
+@@ -704,8 +704,7 @@ static struct path_simplify *create_simplify(const char **pathspec)
+
+ static void free_simplify(struct path_simplify *simplify)
+ {
+-	if (simplify)
+-		free(simplify);
++	free(simplify);
+ }
+
+ int read_directory(struct dir_struct *dir, const char *path, const char *base, int baselen, const char **pathspec)
+diff --git a/http-push.c b/http-push.c
+index 63ff218..d122ed0 100644
+--- a/http-push.c
++++ b/http-push.c
+@@ -664,8 +664,7 @@ static void release_request(struct transfer_request *request)
+ 		close(request->local_fileno);
+ 	if (request->local_stream)
+ 		fclose(request->local_stream);
+-	if (request->url != NULL)
+-		free(request->url);
++	free(request->url);
+ 	free(request);
+ }
+
+@@ -1283,10 +1282,8 @@ static struct remote_lock *lock_remote(const char *path, long timeout)
+ 	strbuf_release(&in_buffer);
+
+ 	if (lock->token == NULL || lock->timeout <= 0) {
+-		if (lock->token != NULL)
+-			free(lock->token);
+-		if (lock->owner != NULL)
+-			free(lock->owner);
++		free(lock->token);
++		free(lock->owner);
+ 		free(url);
+ 		free(lock);
+ 		lock = NULL;
+@@ -1344,8 +1341,7 @@ static int unlock_remote(struct remote_lock *lock)
+ 			prev->next = prev->next->next;
+ 	}
+
+-	if (lock->owner != NULL)
+-		free(lock->owner);
++	free(lock->owner);
+ 	free(lock->url);
+ 	free(lock->token);
+ 	free(lock);
+@@ -2028,8 +2024,7 @@ static void fetch_symref(const char *path, char **symref, unsigned char *sha1)
+ 	}
+ 	free(url);
+
+-	if (*symref != NULL)
+-		free(*symref);
++	free(*symref);
+ 	*symref = NULL;
+ 	hashclr(sha1);
+
+@@ -2426,8 +2421,7 @@ int main(int argc, char **argv)
+ 	}
+
+  cleanup:
+-	if (rewritten_url)
+-		free(rewritten_url);
++	free(rewritten_url);
+ 	if (info_ref_lock)
+ 		unlock_remote(info_ref_lock);
+ 	free(remote);
+diff --git a/imap-send.c b/imap-send.c
+index 9025d9a..10cce15 100644
+--- a/imap-send.c
++++ b/imap-send.c
+@@ -472,7 +472,7 @@ v_issue_imap_cmd( imap_store_t *ctx, struct imap_cmd_cb *cb,
+ 	if (socket_write( &imap->buf.sock, buf, bufl ) != bufl) {
+ 		free( cmd->cmd );
+ 		free( cmd );
+-		if (cb && cb->data)
++		if (cb)
+ 			free( cb->data );
+ 		return NULL;
+ 	}
+@@ -858,8 +858,7 @@ get_cmd_result( imap_store_t *ctx, struct imap_cmd *tcmd )
+ 		  normal:
+ 			if (cmdp->cb.done)
+ 				cmdp->cb.done( ctx, cmdp, resp );
+-			if (cmdp->cb.data)
+-				free( cmdp->cb.data );
++			free( cmdp->cb.data );
+ 			free( cmdp->cmd );
+ 			free( cmdp );
+ 			if (!tcmd || tcmd == cmdp)
+diff --git a/interpolate.c b/interpolate.c
+index 6ef53f2..7f03bd9 100644
+--- a/interpolate.c
++++ b/interpolate.c
+@@ -11,8 +11,7 @@ void interp_set_entry(struct interp *table, int slot, const char *value)
+ 	char *oldval = table[slot].value;
+ 	char *newval = NULL;
+
+-	if (oldval)
+-		free(oldval);
++	free(oldval);
+
+ 	if (value)
+ 		newval = xstrdup(value);
+diff --git a/pretty.c b/pretty.c
+index b987ff2..eca3ce1 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -30,8 +30,7 @@ enum cmit_fmt get_commit_format(const char *arg)
+ 	if (*arg == '=')
+ 		arg++;
+ 	if (!prefixcmp(arg, "format:")) {
+-		if (user_format)
+-			free(user_format);
++		free(user_format);
+ 		user_format = xstrdup(arg + 7);
+ 		return CMIT_FMT_USERFORMAT;
+ 	}
+diff --git a/remote.c b/remote.c
+index 6b56473..ae1ef57 100644
+--- a/remote.c
++++ b/remote.c
+@@ -506,8 +506,7 @@ void free_refs(struct ref *ref)
+ 	struct ref *next;
+ 	while (ref) {
+ 		next = ref->next;
+-		if (ref->peer_ref)
+-			free(ref->peer_ref);
++		free(ref->peer_ref);
+ 		free(ref);
+ 		ref = next;
+ 	}
+diff --git a/setup.c b/setup.c
+index 4509598..7917d7b 100644
+--- a/setup.c
++++ b/setup.c
+@@ -374,8 +374,7 @@ int check_repository_format_version(const char *var, const char *value)
+ 	} else if (strcmp(var, "core.worktree") == 0) {
+ 		if (!value)
+ 			return config_error_nonbool(var);
+-		if (git_work_tree_cfg)
+-			free(git_work_tree_cfg);
++		free(git_work_tree_cfg);
+ 		git_work_tree_cfg = xstrdup(value);
+ 		inside_work_tree = -1;
+ 	}
+diff --git a/sha1_name.c b/sha1_name.c
+index ed3c867..cec2234 100644
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -621,8 +621,7 @@ static int get_sha1_oneline(const char *prefix, unsigned char *sha1)
+
+ 		commit = pop_most_recent_commit(&list, ONELINE_SEEN);
+ 		parse_object(commit->object.sha1);
+-		if (temp_commit_buffer)
+-			free(temp_commit_buffer);
++		free(temp_commit_buffer);
+ 		if (commit->buffer)
+ 			p = commit->buffer;
+ 		else {
+@@ -639,8 +638,7 @@ static int get_sha1_oneline(const char *prefix, unsigned char *sha1)
+ 			break;
+ 		}
+ 	}
+-	if (temp_commit_buffer)
+-		free(temp_commit_buffer);
++	free(temp_commit_buffer);
+ 	free_commit_list(list);
+ 	for (l = backup; l; l = l->next)
+ 		clear_commit_marks(l->item, ONELINE_SEEN);
+diff --git a/xdiff-interface.c b/xdiff-interface.c
+index 4b8e5cc..bba2364 100644
+--- a/xdiff-interface.c
++++ b/xdiff-interface.c
+@@ -233,8 +233,7 @@ void xdiff_set_find_func(xdemitconf_t *xecfg, const char *value)
+ 			expression = value;
+ 		if (regcomp(&reg->re, expression, 0))
+ 			die("Invalid regexp to look for hunk header: %s", expression);
+-		if (buffer)
+-			free(buffer);
++		free(buffer);
+ 		value = ep + 1;
+ 	}
+ }
+--
+1.5.4.2.134.g82883
