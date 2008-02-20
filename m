@@ -1,48 +1,123 @@
-From: "Anatoly Yakovenko" <aeyakovenko@gmail.com>
-Subject: GIT_SSL_NO_VERIFY=1 over http doesn't ignore a different ip address for the signed certificate
-Date: Wed, 20 Feb 2008 15:35:54 -0800
-Message-ID: <e26d18e40802201535s7a5c12fbtd61d2445426f4018@mail.gmail.com>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [PATCH] git-clean: handle errors if removing files fails
+Date: Thu, 21 Feb 2008 00:41:54 +0100
+Message-ID: <20080220234154.GS31441@genesis.frugalware.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 21 00:36:51 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 21 00:43:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JRyUK-00022j-GA
-	for gcvg-git-2@gmane.org; Thu, 21 Feb 2008 00:36:32 +0100
+	id 1JRyab-0004SX-Uv
+	for gcvg-git-2@gmane.org; Thu, 21 Feb 2008 00:43:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752323AbYBTXf5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Feb 2008 18:35:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752153AbYBTXf5
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Feb 2008 18:35:57 -0500
-Received: from wx-out-0506.google.com ([66.249.82.224]:36525 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751958AbYBTXf4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Feb 2008 18:35:56 -0500
-Received: by wx-out-0506.google.com with SMTP id h31so2343959wxd.4
-        for <git@vger.kernel.org>; Wed, 20 Feb 2008 15:35:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=s5VKaJIWWLm0jmdesnzKjhpGahrv4ExpVHIo/AQEMnA=;
-        b=sgdsGi6jsnUNVQfm4csSgxlB144YhbHSCkK1KTUbBRwyDHIG1ohhy6mX/hBkGDJjVTiOFpoVSN4ulQTNRS3qwyAkRz048ERHygiB46Nu8DCJV1b+vYKh/Uz+5cbb5oUTFNb7kFU2tTIjEagQMfHKpityVxjHjR1ERSDNLwihv+0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=Z7IhofCv3LnyHb5VG3A5TqS0FL7gZen/Y8HGt7Oht5vx+FvkP0jmoXrOe7jxuE6JzgVAK0fPoP4wu+OJ9F4rt4fTdnZkGkOCfY5tGT0lYxUrDuiCYFFd73kKaOgJFzKnf5fyeZWKTUWFHUJJeUx5YlM/ucDEHnjpjArjeekP0Z0=
-Received: by 10.115.47.1 with SMTP id z1mr5182158waj.117.1203550554887;
-        Wed, 20 Feb 2008 15:35:54 -0800 (PST)
-Received: by 10.114.167.5 with HTTP; Wed, 20 Feb 2008 15:35:54 -0800 (PST)
+	id S1755020AbYBTXmZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Feb 2008 18:42:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755980AbYBTXmZ
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Feb 2008 18:42:25 -0500
+Received: from mx3.mail.elte.hu ([157.181.1.138]:43826 "EHLO mx3.mail.elte.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751625AbYBTXmY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Feb 2008 18:42:24 -0500
+Received: from frugalware.elte.hu ([157.181.177.34] helo=genesis.frugalware.org)
+	by mx3.mail.elte.hu with esmtp (Exim)
+	id 1JRyZh-0000hK-3o
+	from <vmiklos@frugalware.org>; Thu, 21 Feb 2008 00:42:21 +0100
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 917CC119019F; Thu, 21 Feb 2008 00:41:54 +0100 (CET)
 Content-Disposition: inline
+User-Agent: Mutt/1.5.16 (2007-06-09)
+X-ELTE-VirusStatus: clean
+X-ELTE-SpamScore: 1.0
+X-ELTE-SpamLevel: s
+X-ELTE-SpamCheck: no
+X-ELTE-SpamVersion: ELTE 2.0 
+X-ELTE-SpamCheck-Details: score=1.0 required=5.9 tests=BAYES_50 autolearn=no SpamAssassin version=3.2.3
+	1.0 BAYES_50               BODY: Bayesian spam probability is 40 to 60%
+	[score: 0.4691]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74569>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74570>
 
-I am not sure if its a bug in curl or git, but despite setting
-GIT_SSL_NO_VERIFY=1, if i use a different ip address or hostname then
-the certificate was signed for, git fails to push changes.
+Consider the following case:
+
+$ sudo mkdir foo
+$ sudo touch foo/bar
+
+This is the old output:
+
+$ git clean -f -d
+Removing foo/
+
+No error message.
+
+This is the new output:
+
+$ ~/git/git/git clean -f -d
+Removing foo/
+fatal: failed to remove 'foo/'
+
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+---
+ builtin-clean.c  |   14 ++++++++------
+ t/t7300-clean.sh |    9 +++++++++
+ 2 files changed, 17 insertions(+), 6 deletions(-)
+
+diff --git a/builtin-clean.c b/builtin-clean.c
+index eb853a3..c8753a5 100644
+--- a/builtin-clean.c
++++ b/builtin-clean.c
+@@ -137,12 +137,13 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
+ 			if (show_only && (remove_directories || matches)) {
+ 				printf("Would remove %s\n",
+ 				       directory.buf + prefix_offset);
+-			} else if (quiet && (remove_directories || matches)) {
+-				remove_dir_recursively(&directory, 0);
+ 			} else if (remove_directories || matches) {
+-				printf("Removing %s\n",
+-				       directory.buf + prefix_offset);
+-				remove_dir_recursively(&directory, 0);
++				if (!quiet)
++					printf("Removing %s\n",
++					       directory.buf + prefix_offset);
++				if (remove_dir_recursively(&directory, 0) != 0)
++					die("failed to remove '%s'",
++						directory.buf + prefix_offset);
+ 			} else if (show_only) {
+ 				printf("Would not remove %s\n",
+ 				       directory.buf + prefix_offset);
+@@ -162,7 +163,8 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
+ 				printf("Removing %s\n",
+ 				       ent->name + prefix_offset);
+ 			}
+-			unlink(ent->name);
++			if (unlink(ent->name) != 0)
++				die("failed to remove '%s'", ent->name);
+ 		}
+ 	}
+ 	free(seen);
+diff --git a/t/t7300-clean.sh b/t/t7300-clean.sh
+index dfd1188..bd0a814 100755
+--- a/t/t7300-clean.sh
++++ b/t/t7300-clean.sh
+@@ -316,4 +316,13 @@ test_expect_success 'core.excludesfile' '
+ 
+ '
+ 
++test_expect_success 'removal failure' '
++
++	mkdir foo &&
++	touch foo/bar &&
++	chmod 0 foo &&
++	! git clean -f -d
++
++'
++
+ test_done
+-- 
+1.5.4.1
