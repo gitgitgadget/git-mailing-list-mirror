@@ -1,71 +1,132 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Submodules and rewind
-Date: Tue, 19 Feb 2008 16:47:15 -0800 (PST)
-Message-ID: <alpine.LFD.1.00.0802191635010.7833@woody.linux-foundation.org>
-References: <20080219140604.04afc91f@extreme> <20080219223201.GE4703MdfPADPa@greensroom.kotnet.org> <20080219152357.5ab397cf@extreme> <alpine.LSU.1.00.0802200033530.8333@wbgn129.biozentrum.uni-wuerzburg.de> <20080219161517.34fd5878@extreme>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] branch: optionally setup branch.*.merge from upstream
+ local branches
+Date: Tue, 19 Feb 2008 16:48:05 -0800
+Message-ID: <7v4pc4fo6y.fsf@gitster.siamese.dyndns.org>
+References: <1203386832-43969-1-git-send-email-jaysoffian@gmail.com>
+ <20080219074423.GA3982@steel.home>
+ <76718490802190549p549a34afo913efefebaf5fa97@mail.gmail.com>
+ <20080220001339.GA16574@steel.home>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>, skimo@liacs.nl,
-	skimo@kotnet.org, git@vger.kernel.org
-To: Stephen Hemminger <shemminger@vyatta.com>
-X-From: git-owner@vger.kernel.org Wed Feb 20 01:48:51 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 20 01:49:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JRd8k-0003gF-OY
-	for gcvg-git-2@gmane.org; Wed, 20 Feb 2008 01:48:51 +0100
+	id 1JRd8z-0003kf-OA
+	for gcvg-git-2@gmane.org; Wed, 20 Feb 2008 01:49:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757069AbYBTAsQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Feb 2008 19:48:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756616AbYBTAsQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Feb 2008 19:48:16 -0500
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:56915 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751406AbYBTAsP (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 Feb 2008 19:48:15 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m1K0lk6g011120
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 19 Feb 2008 16:47:47 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m1K0lFUI008376;
-	Tue, 19 Feb 2008 16:47:28 -0800
-In-Reply-To: <20080219161517.34fd5878@extreme>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
-X-Spam-Status: No, hits=-2.74 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1757997AbYBTAsa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Feb 2008 19:48:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757726AbYBTAsa
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Feb 2008 19:48:30 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:61732 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756760AbYBTAs3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Feb 2008 19:48:29 -0500
+Received: from a-sasl-quonix.pobox.com (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 8722B778F;
+	Tue, 19 Feb 2008 19:48:26 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.pobox.com (Postfix) with ESMTP id
+ 499C97785; Tue, 19 Feb 2008 19:48:17 -0500 (EST)
+In-Reply-To: <20080220001339.GA16574@steel.home> (Alex Riesen's message of
+ "Wed, 20 Feb 2008 01:13:39 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74486>
 
+Alex Riesen <raa.lkml@gmail.com> writes:
 
+> Well, it could also mean that there is no rules yet, and you can
+> do the next sane thing of your choice.
+>
+>> enum color_branch {
+>> 	COLOR_BRANCH_RESET = 0,
+>> 	COLOR_BRANCH_PLAIN = 1,
+>> 	COLOR_BRANCH_REMOTE = 2,
+>> 	COLOR_BRANCH_LOCAL = 3,
+>> 	COLOR_BRANCH_CURRENT = 4,
+>> };
 
-On Tue, 19 Feb 2008, Stephen Hemminger wrote:
-> 
-> Don't be stupid, I am not trying be obstreperous, just fix the problem.
+This enum is used as an index into branch_colors[] array.  Of
+course, by omitting everything you will get the default "start
+with 0, incrementing by 1" which will be the right assignment
+anyway.  But we would want to leave a clue for people who would
+want to touch this later that individual values have some
+meaning, more than just that they have to be distinct.
 
-Umm. Stephen - this is the first time you even *describe* the problem.
+>> enum {
+>> 	TAGS_UNSET = 0,
+>> 	TAGS_DEFAULT = 1,
+>> 	TAGS_SET = 2
+>> };
 
-Your previous emails were just "hey, submodules don't work, fix it".
+This one can be made unspecified or even shuffled, because
+nobody does:
 
-Why do you then call Dscho stupid for pointing out that you never even 
-bothered to reveal any details of what your problem was?
+	int function_that_acts_on_tag_setting(int tag) {
+                if (!tag) {
+                        ... do something ...
+                }
+                if (TAGS_DEFAULT <= tag) {
+                        ... do something else ...
+                }
+                return some_array[tag];
+	}
 
-But it's not clear how you even got into that state to begin with. How did 
-your index get that confused? You said "I had to rewind one project back 
-to a known good state", but considering the output, it looks like you 
-didn't actually rewind it, but left it in some half-way state. 
+So there is no reason to spell out any of the values.
 
-A "git reset" should have reset the index, or you could probably have done 
-something like "git add <submodule>" to basically force the index entry 
-for just that submodule to the current state it had.
+>> enum update_mode { BOTH = 0, WORKING_DIRECTORY, INDEX } *modes;
 
-At a guess, it *looks* like you reset the submodules themselves, but never 
-reset the superproject.
+Likewise.
 
-		Linus
+>> enum exist_status {
+>> 	index_nonexistent = 0,
+>> 	index_directory,
+>> 	index_gitdir,
+>> };
+
+Likewise, modulo that making "nonexistent" explicitly to 0 is a
+very sensible thing whoever wrote that code has done.  This is
+used as a type of directory_exists_in_index() function, and
+callers can say:
+
+       	if (!directory_exists_in_index(dirname)) {
+        	... ah, there is no such directory ...
+	} else {
+        	... something exists, but I do not care what kind ...
+	}
+
+So spelling out that "nonexistent MUST BE 0" (even though C
+language will give value 0 to it anyway) is a good convention.
+
+>> enum CAPABILITY {
+>> 	NOLOGIN = 0,
+>> 	UIDPLUS,
+>> 	LITERALPLUS,
+>> 	NAMESPACE,
+>> };
+
+This seems to be meant to match the order in the corresponding
+cap_list[] array, so this cannot be reshuffled (iow, it is
+similar to color_branch).
+
+If you do not need to have any specific value assigned nor order
+among the enum tokens, (i.e. somebody later can add a new enum
+anywhere in the decl or even reshuffle the existing ones without
+breaking your code), it is a good idea to hint that fact by not
+having any "= value" in the decl.  If you do rely on specific
+one being zero (see "exist_status" example above), it is better
+to spell it out that it has to be zero even if it is the first
+entry to hint that fact.  Of course, if you need a set of values
+that are not sequential, you would need to spell out each and
+every one of them.
