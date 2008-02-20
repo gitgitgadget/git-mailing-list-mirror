@@ -1,94 +1,76 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/2] Add support for url aliases in config files
-Date: Wed, 20 Feb 2008 22:22:22 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802202221130.17164@racer.site>
-References: <200802202203.m1KM37aR012221@mi1.bluebottle.com>
+From: Pekka Kaitaniemi <kaitanie@cc.helsinki.fi>
+Subject: [PATCH] Clarified the meaning of git-add -u in the documentation
+Date: Thu, 21 Feb 2008 00:29:39 +0200
+Message-ID: <20080220222939.GA28724@localdomain>
+Reply-To: kaitanie@cc.helsinki.fi
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="-1463811741-243048860-1203546146=:17164"
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: =?ISO-2022-JP?Q?=1B$B$7$i$$$7$J$J$3=1B=28J?= 
-	<nanako3@bluebottle.com>
-X-From: git-owner@vger.kernel.org Wed Feb 20 23:23:44 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Wed Feb 20 23:30:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JRxLU-0000lk-6s
-	for gcvg-git-2@gmane.org; Wed, 20 Feb 2008 23:23:20 +0100
+	id 1JRxSa-0003V1-J5
+	for gcvg-git-2@gmane.org; Wed, 20 Feb 2008 23:30:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752471AbYBTWWp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Feb 2008 17:22:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752390AbYBTWWp
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Feb 2008 17:22:45 -0500
-Received: from mail.gmx.net ([213.165.64.20]:50659 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751141AbYBTWWo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Feb 2008 17:22:44 -0500
-Received: (qmail invoked by alias); 20 Feb 2008 22:22:42 -0000
-Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
-  by mail.gmx.net (mp004) with SMTP; 20 Feb 2008 23:22:42 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19VP/RzOctVCxXitbl+q4slp1O9vghPG4jNwU95KB
-	pY03JLeAIXsRBV
-X-X-Sender: gene099@racer.site
-In-Reply-To: <200802202203.m1KM37aR012221@mi1.bluebottle.com>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1752390AbYBTWaF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Feb 2008 17:30:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752267AbYBTWaF
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Feb 2008 17:30:05 -0500
+Received: from fg-out-1718.google.com ([72.14.220.152]:8048 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752100AbYBTWaA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Feb 2008 17:30:00 -0500
+Received: by fg-out-1718.google.com with SMTP id e21so2298340fga.17
+        for <git@vger.kernel.org>; Wed, 20 Feb 2008 14:29:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject:message-id:reply-to:mime-version:content-type:content-disposition:user-agent:sender;
+        bh=38FFPJyKf1Ve5X2FeCZG3RIbnYyOukIOsvHpzmqvxkU=;
+        b=LtmYuuu2dkO6/MA/CijFN2NGKpl1QAEt6V+mMeR2XmQi4YEUsJDSjNBKkcmacIV7Qk+F/Uxq8Xvb0vM7QyfZbpw3KwI2SL6erXNapgzEJaDmlUhLiPLS5UqpZDwyPEFO9o+u92nPrTjTo30/NV2Po+MxMWZ3eJqvXl/eubg52yQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:reply-to:mime-version:content-type:content-disposition:user-agent:sender;
+        b=GUEl8PkY00uOFpcmv+BML7Nu7QV92HVUMw5D5RMv/ZKDjclaOmxjEr/wNCD4wLh4xbMmOj72HZSSMcHHI9L7uKuxNILoCTih35+rF6i2UocVR15rAqud4jlGyTF+3Eg5NBDTr0gEp5ZHlcTXr2d1WP8JSUAS0lwVNKVJVaAOeJA=
+Received: by 10.86.68.20 with SMTP id q20mr8738074fga.59.1203546599452;
+        Wed, 20 Feb 2008 14:29:59 -0800 (PST)
+Received: from shadow ( [217.30.191.90])
+        by mx.google.com with ESMTPS id d4sm11561955fga.2.2008.02.20.14.29.57
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 20 Feb 2008 14:29:58 -0800 (PST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74554>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74555>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+The git-add documentation did not state clearly that the -u switch
+updates only the tracked files that are in the current directory and
+its subdirectories.
 
----1463811741-243048860-1203546146=:17164
-Content-Type: TEXT/PLAIN; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+Signed-off-by: Pekka Kaitaniemi <kaitanie@cc.helsinki.fi>
+---
+ Documentation/git-add.txt |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-Hi,
-
-On Thu, 21 Feb 2008, しらいしななこ wrote:
-
-> Quoting Junio C Hamano <gitster@pobox.com>:
-> 
-> > Yeah, that "aka" is still disturbing.
-> >
-> > 	[url A]
-> >         	aka = B
-> >
-> > would read to me: "A is also known as B" but that is clearly not
-> > what it means here.  You would want this:
-> >
-> > 	[url A]
-> >         	aka = B 
-> > 		aka = C
-> >
-> > to mean "B is also known as A.  C is also known as A."  IOW, you
-> > are using it backwards, because their name is more official and
-> > you are using your own unofficial name to call it.
-> >
-> > Sorry, but I cannot think of a better way to resolve this, other
-> > than by spelling the keyword backwards, but that still makes it
-> > "aka".
-> 
-> Isn't what you mean to say "A stands for B and C"?
-
-So you mean
-
-[url A]
-	standsFor = B
-	standsFor = C
-
-? ;-)
-
-This might be seen as bike-shedding by some, but I think that it is 
-actually worthwhile to kick back and forth some ideas, and pick the best 
-one.
-
-Ciao,
-Dscho
-
----1463811741-243048860-1203546146=:17164--
+diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
+index 9d2ac86..4779909 100644
+--- a/Documentation/git-add.txt
++++ b/Documentation/git-add.txt
+@@ -74,8 +74,8 @@ OPTIONS
+ 	Update only files that git already knows about. This is similar
+ 	to what "git commit -a" does in preparation for making a commit,
+ 	except that the update is limited to paths specified on the
+-	command line. If no paths are specified, all tracked files are
+-	updated.
++	command line. If no paths are specified, all tracked files in the
++	current directory and its subdirectories are updated.
+ 
+ \--refresh::
+ 	Don't add the file(s), but only refresh their stat()
+-- 
+1.5.4.2
