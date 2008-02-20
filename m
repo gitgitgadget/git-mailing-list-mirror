@@ -1,114 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 5/5] Add a --cover-letter option to format-patch
-Date: Tue, 19 Feb 2008 20:36:41 -0800
-Message-ID: <7vfxvodz1i.fsf@gitster.siamese.dyndns.org>
-References: <cover.1203392527.git.barkalow@iabervon.org>
- <alpine.LNX.1.00.0802182254310.5816@iabervon.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: Solaris test failure -- FAIL 61: invalid bool (set)
+Date: Wed, 20 Feb 2008 00:04:20 -0500
+Message-ID: <20080220050420.GA16745@coredump.intra.peff.net>
+References: <8ec76080802191322t2417ea48y1537011f1031dff8@mail.gmail.com> <alpine.LSU.1.00.0802192220440.7826@racer.site> <8ec76080802191517k5f070d45l497063d93e080272@mail.gmail.com> <20080219234422.GA9987@coredump.intra.peff.net> <20080219234945.GB9987@coredump.intra.peff.net> <20080219235250.GA12979@coredump.intra.peff.net> <8ec76080802191611s3348beb1icd0b24db8b0a9556@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Wed Feb 20 05:37:54 2008
+To: Whit Armstrong <armstrong.whit@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 20 06:04:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JRgiO-0004x1-PF
-	for gcvg-git-2@gmane.org; Wed, 20 Feb 2008 05:37:53 +0100
+	id 1JRh8c-0001r9-Px
+	for gcvg-git-2@gmane.org; Wed, 20 Feb 2008 06:04:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757068AbYBTEhM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Feb 2008 23:37:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751889AbYBTEhL
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Feb 2008 23:37:11 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:35334 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751841AbYBTEhK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Feb 2008 23:37:10 -0500
-Received: from a-sasl-quonix.pobox.com (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id EC80E800C;
-	Tue, 19 Feb 2008 23:37:07 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.pobox.com (Postfix) with ESMTP id
- DDA4B8009; Tue, 19 Feb 2008 23:36:59 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1750873AbYBTFEY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Feb 2008 00:04:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750840AbYBTFEX
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Feb 2008 00:04:23 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4074 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750810AbYBTFEX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Feb 2008 00:04:23 -0500
+Received: (qmail 27910 invoked by uid 111); 20 Feb 2008 05:04:21 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 20 Feb 2008 00:04:21 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 20 Feb 2008 00:04:20 -0500
+Content-Disposition: inline
+In-Reply-To: <8ec76080802191611s3348beb1icd0b24db8b0a9556@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74501>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74502>
 
-Daniel Barkalow <barkalow@iabervon.org> writes:
+On Tue, Feb 19, 2008 at 07:11:01PM -0500, Whit Armstrong wrote:
 
-> +	const char *body = "*** SUBJECT HERE ***\n\n\n*** BLURB HERE ***\n";
-> ...
-> diff --git a/t/t4013/diff.format-patch_--stdout_--cover-letter_-n_initial..master^ b/t/t4013/diff.format-patch_--stdout_--cover-letter_-n_initial..master^
-> new file mode 100644
-> index 0000000..311e207
-> --- /dev/null
-> +++ b/t/t4013/diff.format-patch_--stdout_--cover-letter_-n_initial..master^
-> @@ -0,0 +1,101 @@
-> +$ git format-patch --stdout --cover-letter -n initial..master^
-> +From 9a6d4949b6b76956d9d5e26f2791ec2ceff5fdc0 Mon Sep 17 00:00:00 2001
-> +From: C O Mitter <committer@example.com>
-> +Date: Mon, 26 Jun 2006 00:05:00 +0000
-> +Subject: [DIFFERENT_PREFIX 0/2] *** SUBJECT HERE ***
-> +
-> +
-> +*** BLURB HERE ***
-> +
-> +A U Thor (2):
-> +      Second
-> +      Third
+> That certainly fixes t1300-repo-config.sh.
+> 
+> I must be seeing the same failures as you ( in t3404-rebase-interactive.sh ).
 
-I still disagree with your earlier point on the extra blank line
-here.
+I actually was seeing errors later in t1300, but they were fixed by
+putting GNU coreutils at the front of my path (btw, we had discussed
+previously using "diff -u" to compare actual and expected output in many
+tests -- Solaris diff doesn't understand "-u").
 
-When we give commit log template, we do leave an extra blank line
-before we start the template material "# Please enter ...", to
-ease typing, but it is different.  The template material does
-not have to be removed by the end-user, so giving a blank line
-upfront and starting the editor at that line is a usability
-improvement, compared to the case where there is none.
+I see the errors in t3404. They are caused by the Solaris /bin/sh not
+understanding $() syntax. We create a "fake-editor" script to simulate
+the editor during interactive rebase, and it is hard-coded to /bin/sh.
 
-But this "*** BLURB HERE ***" needs to be removed when the user
-edits the cover-letter, and I really do not see any reason to
-have an extra blank line in front of it.
+So we should probably do something like:
 
-Incidentally, I strongly suspect that if you do not have that
-extra blank line, we would not even need to have the [PATCH 4/5]
-(which is a slight regression) in the series.
-
-So how about this squashed in, with [PATCH 4/5] skipped?
-
-
- builtin-log.c                                      |    2 +-
- ...tch_--stdout_--cover-letter_-n_initial..master^ |    1 -
- 2 files changed, 1 insertions(+), 2 deletions(-)
-
-diff --git a/builtin-log.c b/builtin-log.c
-index e26c986..0b348eb 100644
---- a/builtin-log.c
-+++ b/builtin-log.c
-@@ -629,7 +629,7 @@ static void make_cover_letter(struct rev_info *rev,
- 	const char *origin_sha1, *head_sha1;
- 	const char *argv[7];
- 	const char *subject_start = NULL;
--	const char *body = "*** SUBJECT HERE ***\n\n\n*** BLURB HERE ***\n";
-+	const char *body = "*** SUBJECT HERE ***\n\n*** BLURB HERE ***\n";
- 	const char *msg;
- 	const char *extra_headers = rev->extra_headers;
- 	struct strbuf sb;
-diff --git a/t/t4013/diff.format-patch_--stdout_--cover-letter_-n_initial..master^ b/t/t4013/diff.format-patch_--stdout_--cover-letter_-n_initial..master^
-index 311e207..0151453 100644
---- a/t/t4013/diff.format-patch_--stdout_--cover-letter_-n_initial..master^
-+++ b/t/t4013/diff.format-patch_--stdout_--cover-letter_-n_initial..master^
-@@ -4,7 +4,6 @@ From: C O Mitter <committer@example.com>
- Date: Mon, 26 Jun 2006 00:05:00 +0000
- Subject: [DIFFERENT_PREFIX 0/2] *** SUBJECT HERE ***
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index e5ed745..62e65d7 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -61,8 +61,8 @@ test_expect_success 'setup' '
+ 	git tag I
+ '
  
--
- *** BLURB HERE ***
- 
- A U Thor (2):
+-cat > fake-editor.sh <<\EOF
+-#!/bin/sh
++echo "#!$SHELL" >fake-editor
++cat >> fake-editor.sh <<\EOF
+ case "$1" in
+ */COMMIT_EDITMSG)
+ 	test -z "$FAKE_COMMIT_MESSAGE" || echo "$FAKE_COMMIT_MESSAGE" > "$1"
+
+There are probably more instances of this problem, but I haven't
+checked. I had high hopes of running the testsuite to completion
+tonight, but I am getting stuck now in t3900.
+
+-Peff
