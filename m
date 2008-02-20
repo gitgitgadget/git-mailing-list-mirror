@@ -1,57 +1,58 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] send-email: squelch warning due to comparing undefined
- $_ to ""
-Date: Wed, 20 Feb 2008 10:37:29 -0800
-Message-ID: <7vmypv5v9y.fsf@gitster.siamese.dyndns.org>
-References: <1203486907-12304-1-git-send-email-jaysoffian@gmail.com>
+Subject: Re: [PATCH] Test case for a problem with git add -u from subdirectory
+Date: Wed, 20 Feb 2008 10:37:36 -0800
+Message-ID: <7vhcg35v9r.fsf@gitster.siamese.dyndns.org>
+References: <20080220143215.GA23053@localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 20 19:38:22 2008
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: kaitanie@cc.helsinki.fi
+X-From: git-owner@vger.kernel.org Wed Feb 20 19:38:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JRtpe-00086b-AH
-	for gcvg-git-2@gmane.org; Wed, 20 Feb 2008 19:38:14 +0100
+	id 1JRtpt-0008DC-Pu
+	for gcvg-git-2@gmane.org; Wed, 20 Feb 2008 19:38:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752362AbYBTShj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Feb 2008 13:37:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752373AbYBTShi
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Feb 2008 13:37:38 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:49276 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752246AbYBTShh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Feb 2008 13:37:37 -0500
-Received: from .pobox.com (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 3F00342A5;
-	Wed, 20 Feb 2008 13:37:36 -0500 (EST)
+	id S1753608AbYBTShv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Feb 2008 13:37:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752869AbYBTShv
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Feb 2008 13:37:51 -0500
+Received: from rune.pobox.com ([208.210.124.79]:44811 "EHLO rune.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753480AbYBTShu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Feb 2008 13:37:50 -0500
+Received: from rune.listbox.com (localhost [127.0.0.1])
+	by rune.pobox.com (Postfix) with ESMTP id 2F89A19E54B;
+	Wed, 20 Feb 2008 13:38:11 -0500 (EST)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.pobox.com (Postfix) with ESMTP id
- 8F22F42A2; Wed, 20 Feb 2008 13:37:32 -0500 (EST)
+ certificate requested) by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id
+ A774D19E4CF; Wed, 20 Feb 2008 13:38:05 -0500 (EST)
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74533>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74534>
 
-Jay Soffian <jaysoffian@gmail.com> writes:
+Pekka Kaitaniemi <kaitanie@cc.helsinki.fi> writes:
 
-> The check to see if initial_reply_to is defined was also comparing $_ to
-> "" for a reason I cannot ascertain (looking at the commit which made the
-> change didn't provide enlightenment), but if $_ is undefined, perl
-> generates a warning.
->
-> Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
-> ---
-> Junio, the commit which introduced the change was yours, but I don't
-> see why you were comparing $_ to "". 
+> The key sentence being: "If no paths are specified, all tracked files
+> are updated."
 
-I think it was meant to check for $initial_reply_to being empty
-(i.e. not compare $_ but the variable), but even if that is the
-case I do not think the check would make a difference.
+My recollection is that the current behaviour was requested
+specifically by the users.  Although I do not remember offhand,
+the first implementation might have even been doing the whole
+tree unconditionally, and surprised users by stepping outside of
+the current subdirectory.
 
-So the patch looks good.  Thanks.
+Sometimes I am annoyed that it does not do the whole tree
+(i.e. you have to go to the top), but some other times (which
+happens to be majority for me but it would depend on the
+project) I find the current behaviour a lot more convenient, and
+personally I do not think it is a good idea to change the
+current behaviour.
+
+Please send in documentation clarifications.
