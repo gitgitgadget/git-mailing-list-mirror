@@ -1,105 +1,106 @@
-From: Pekka Kaitaniemi <kaitanie@cc.helsinki.fi>
-Subject: [PATCH] Test case for a problem with git add -u from subdirectory
-Date: Wed, 20 Feb 2008 16:32:15 +0200
-Message-ID: <20080220143215.GA23053@localdomain>
-Reply-To: kaitanie@cc.helsinki.fi
+From: Gerrit Pape <pape@smarden.org>
+Subject: [PATCH] git-clone.sh: properly configure remote even if remote's
+	head is dangling
+Date: Wed, 20 Feb 2008 15:10:17 +0000
+Message-ID: <20080220151017.17840.qmail@767a223c93e1c8.315fe32.mid.smarden.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Feb 20 15:33:34 2008
+To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 20 16:10:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JRq0Z-0005Iz-WD
-	for gcvg-git-2@gmane.org; Wed, 20 Feb 2008 15:33:16 +0100
+	id 1JRqaj-00044m-JP
+	for gcvg-git-2@gmane.org; Wed, 20 Feb 2008 16:10:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754324AbYBTOcj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Feb 2008 09:32:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753663AbYBTOcj
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Feb 2008 09:32:39 -0500
-Received: from ug-out-1314.google.com ([66.249.92.169]:64627 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752039AbYBTOci (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Feb 2008 09:32:38 -0500
-Received: by ug-out-1314.google.com with SMTP id z38so749803ugc.16
-        for <git@vger.kernel.org>; Wed, 20 Feb 2008 06:32:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject:message-id:reply-to:mime-version:content-type:content-disposition:user-agent:sender;
-        bh=OPVAeUIlgCaWf+QCNTaujPCi8AdL+t1elM5dSOP6ggo=;
-        b=xtyrzrvX3OaFhtplk6gKqLuYv5qfQ+7kAstzhBgKxvMdxUqkeSUxDPPD2x3VQ3ySUViiH4n23RYFi7T8As1Sxm8fmmRlBWmDQa5bHlXl6zfRyaqQF4kQfMq0sYEwXFqHly0+pDGFJqPYTQmeavmtnv2AW1b2BtZCv5/yP9WyTV4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:reply-to:mime-version:content-type:content-disposition:user-agent:sender;
-        b=TkrPMutmtsngnKJnEju3vFP/U7n+mxrHiw3pvgHC8o7xCxuxnVFFQrp8QERV0FTb2k+iV0Gb6GP/D/V+KMjlNnolBqUVaQSUTvNO222/7BhJynTWFBxpO7pIMZq6NH6X0W+kYLsLPUoY+3IHyg42Ho7jYxcFZr3MXKumKsuyCh4=
-Received: by 10.66.237.9 with SMTP id k9mr3802296ugh.13.1203517956575;
-        Wed, 20 Feb 2008 06:32:36 -0800 (PST)
-Received: from shadow ( [128.214.182.234])
-        by mx.google.com with ESMTPS id j1sm9180355ugf.74.2008.02.20.06.32.34
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 20 Feb 2008 06:32:35 -0800 (PST)
+	id S1752266AbYBTPKA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Feb 2008 10:10:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752028AbYBTPJ7
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Feb 2008 10:09:59 -0500
+Received: from a.ns.smarden.org ([212.42.242.37]:53937 "HELO a.mx.smarden.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751988AbYBTPJ7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Feb 2008 10:09:59 -0500
+Received: (qmail 17841 invoked by uid 1000); 20 Feb 2008 15:10:17 -0000
 Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74515>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74516>
 
-Manual page for "git-add -u" says:
-Update only files that git already knows about. This is similar to
-what "git commit -a" does in preparation for making a commit, except
-that the update is limited to paths specified on the command line. If
-no paths are specified, all tracked files are updated.
+When cloning a remote repository which's HEAD refers to a nonexistent
+ref, git-clone cloned all existing refs, but failed to write the
+configuration for 'remote'.  Now it detects the dangling remote HEAD,
+refuses to checkout any local branch since HEAD refers to nowhere, but
+properly writes the configuration for 'remote', so that subsequent
+'git fetch's don't fail.
 
-The key sentence being: "If no paths are specified, all tracked files
-are updated." If one modifies a file in subdir1, then goes to subdir2
-and performs "git add -u" the modified file in subdir1 is not added to
-the index. This test case demonstrates the problem.
+The problem was reported by Daniel Jacobowitz through
+ http://bugs.debian.org/466581
 
-Signed-off-by: Pekka Kaitaniemi <kaitanie@cc.helsinki.fi>
+Signed-off-by: Gerrit Pape <pape@smarden.org>
 ---
+ git-clone.sh           |   18 +++++++++++++-----
+ t/t5701-clone-local.sh |    8 ++++++++
+ 2 files changed, 21 insertions(+), 5 deletions(-)
 
-I found a possible problem in "git add -u" command without any
-paths. Modified files located in a different subdirectory are not
-added to the index even though the documentation says that in this
-case all tracked files should be. Maybe this is caused by a bug in
-"git add"? Or is the problem in the documentation?
-
-In any case, this patch contains a test case that demonstrates the
-problem.
-
- t/t2200-add-update.sh |   16 ++++++++++++++++
- 1 files changed, 16 insertions(+), 0 deletions(-)
-
-diff --git a/t/t2200-add-update.sh b/t/t2200-add-update.sh
-index 24f892f..5815ec5 100755
---- a/t/t2200-add-update.sh
-+++ b/t/t2200-add-update.sh
-@@ -80,6 +80,22 @@ test_expect_success 'change gets noticed' '
+diff --git a/git-clone.sh b/git-clone.sh
+index b4e858c..0d686c3 100755
+--- a/git-clone.sh
++++ b/git-clone.sh
+@@ -409,11 +409,12 @@ else
+ 	cd "$D" || exit
+ fi
  
+-if test -z "$bare" && test -f "$GIT_DIR/REMOTE_HEAD"
++if test -z "$bare"
+ then
+ 	# a non-bare repository is always in separate-remote layout
+ 	remote_top="refs/remotes/$origin"
+-	head_sha1=`cat "$GIT_DIR/REMOTE_HEAD"`
++	head_sha1=
++	test ! -r "$GIT_DIR/REMOTE_HEAD" || head_sha1=`cat "$GIT_DIR/REMOTE_HEAD"`
+ 	case "$head_sha1" in
+ 	'ref: refs/'*)
+ 		# Uh-oh, the remote told us (http transport done against
+@@ -470,9 +471,16 @@ then
+ 		git config branch."$head_points_at".merge "refs/heads/$head_points_at"
+ 		;;
+ 	'')
+-		# Source had detached HEAD pointing nowhere
+-		git update-ref --no-deref HEAD "$head_sha1" &&
+-		rm -f "refs/remotes/$origin/HEAD"
++		if test -z "$head_sha1"
++		then
++			# Source had nonexistent ref in HEAD
++			echo >&2 "Warning: Remote HEAD refers to nonexistent ref, unable to checkout."
++			no_checkout=t
++		else
++			# Source had detached HEAD pointing nowhere
++			git update-ref --no-deref HEAD "$head_sha1" &&
++			rm -f "refs/remotes/$origin/HEAD"
++		fi
+ 		;;
+ 	esac
+ 
+diff --git a/t/t5701-clone-local.sh b/t/t5701-clone-local.sh
+index 822ac8c..59a165a 100755
+--- a/t/t5701-clone-local.sh
++++ b/t/t5701-clone-local.sh
+@@ -63,4 +63,12 @@ test_expect_success 'Even without -l, local will make a hardlink' '
+ 	test 0 = $copied
  '
  
-+test_expect_success 'update from a different subdirectory' '
-+	(
-+		cd dir1 &&
-+		echo addmore >sub2 &&
-+                cd ../dir2 &&
-+                git add -u
-+	)
++test_expect_success 'local clone of repo with nonexistent ref in HEAD' '
++	cd "$D" &&
++	echo "ref: refs/heads/nonexistent" > a.git/HEAD &&
++	git clone a d &&
++	cd d &&
++	git fetch &&
++	test ! -e .git/refs/remotes/origin/HEAD'
 +
-+'
-+
-+test_expect_success 'change gets noticed' '
-+
-+	test "$(git diff-files --name-status dir1)" = ""
-+
-+'
-+
- test_expect_success 'replace a file with a symlink' '
- 
- 	rm foo &&
+ test_done
 -- 
 1.5.4.2
