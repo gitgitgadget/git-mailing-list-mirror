@@ -1,114 +1,65 @@
-From: Stephen Hemminger <shemminger@vyatta.com>
-Subject: Re: Submodules and rewind
-Date: Tue, 19 Feb 2008 18:25:47 -0800
-Organization: Vyatta
-Message-ID: <20080219182547.57ac6cc7@extreme>
-References: <20080219140604.04afc91f@extreme>
-	<20080219223201.GE4703MdfPADPa@greensroom.kotnet.org>
-	<20080219152357.5ab397cf@extreme>
-	<alpine.LSU.1.00.0802200033530.8333@wbgn129.biozentrum.uni-wuerzburg.de>
-	<20080219161517.34fd5878@extreme>
-	<alpine.LSU.1.00.0802200203440.8333@wbgn129.biozentrum.uni-wuerzburg.de>
-	<20080219171301.53893f2c@extreme>
-	<alpine.LSU.1.00.0802200217080.8333@wbgn129.biozentrum.uni-wuerzburg.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH(TIC)] push: annoy all users by deprecating the default
+ semantics
+Date: Tue, 19 Feb 2008 19:15:18 -0800
+Message-ID: <7vmypwe2t5.fsf@gitster.siamese.dyndns.org>
+References: <E7DE807861E8474E8AC3DC7AC2C75EE50542F2F1@34093-EVS2C1.exchange.rackspace.com> <20080219150826.GA24499@sigill.intra.peff.net> <76718490802190718t5e70abb2x8f96fc7154576594@mail.gmail.com> <20080219152549.GC24499@sigill.intra.peff.net> <alpine.LSU.1.00.0802191610480.30505@racer.site> <20080219163743.GA31668@sigill.intra.peff.net> <alpine.LSU.1.00.0802191651550.30505@racer.site> <20080219170507.GA1144@sigill.intra.peff.net> <5d46db230802191703v1e273284k71817fcd8a2639a1@mail.gmail.com> <7vr6f8e8lx.fsf@gitster.siamese.dyndns.org> <5d46db230802191721p527c0a85k362c7b364c7e99c4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: skimo@liacs.nl, skimo@kotnet.org,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Feb 20 03:26:30 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: "Jeff King" <peff@peff.net>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Jay Soffian" <jaysoffian@gmail.com>,
+	"Jason Garber" <jgarber@ionzoft.com>, git@vger.kernel.org
+To: "Govind Salinas" <blix@sophiasuchtig.com>
+X-From: git-owner@vger.kernel.org Wed Feb 20 04:16:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JRefF-0001dP-Ex
-	for gcvg-git-2@gmane.org; Wed, 20 Feb 2008 03:26:29 +0100
+	id 1JRfRY-0003mt-44
+	for gcvg-git-2@gmane.org; Wed, 20 Feb 2008 04:16:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755153AbYBTCZz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Feb 2008 21:25:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755027AbYBTCZz
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Feb 2008 21:25:55 -0500
-Received: from mail.vyatta.com ([216.93.170.194]:48372 "EHLO mail.vyatta.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753226AbYBTCZx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Feb 2008 21:25:53 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.vyatta.com (Postfix) with ESMTP id 3B2F04F804E;
-	Tue, 19 Feb 2008 18:25:53 -0800 (PST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -2.33
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.33 tagged_above=-10 required=5 tests=[AWL=0.169,
-	BAYES_00=-2.599, RDNS_DYNAMIC=0.1]
-Received: from mail.vyatta.com ([127.0.0.1])
-	by localhost (mail.vyatta.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id DdGRoSSrk4b5; Tue, 19 Feb 2008 18:25:49 -0800 (PST)
-Received: from extreme (75-175-36-117.ptld.qwest.net [75.175.36.117])
-	by mail.vyatta.com (Postfix) with ESMTP id 4FDAF4F804D;
-	Tue, 19 Feb 2008 18:25:49 -0800 (PST)
-In-Reply-To: <alpine.LSU.1.00.0802200217080.8333@wbgn129.biozentrum.uni-wuerzburg.de>
-X-Mailer: Claws Mail 3.3.0 (GTK+ 2.12.8; x86_64-pc-linux-gnu)
+	id S1751143AbYBTDPt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Feb 2008 22:15:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751055AbYBTDPt
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Feb 2008 22:15:49 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:42793 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750900AbYBTDPs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Feb 2008 22:15:48 -0500
+Received: from a-sasl-quonix.pobox.com (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id B229E2A48;
+	Tue, 19 Feb 2008 22:15:45 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.pobox.com (Postfix) with ESMTP id
+ CB4862A44; Tue, 19 Feb 2008 22:15:35 -0500 (EST)
+In-Reply-To: <5d46db230802191721p527c0a85k362c7b364c7e99c4@mail.gmail.com>
+ (Govind Salinas's message of "Tue, 19 Feb 2008 19:21:08 -0600")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74499>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74500>
 
-On Wed, 20 Feb 2008 02:22:14 +0100 (CET)
-Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+"Govind Salinas" <blix@sophiasuchtig.com> writes:
 
-> Hi,
-> 
-> On Tue, 19 Feb 2008, Stephen Hemminger wrote:
-> 
-> > On Wed, 20 Feb 2008 02:06:36 +0100 (CET)
-> > Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > 
-> > > On Tue, 19 Feb 2008, Stephen Hemminger wrote:
-> > > 
-> > > > $ git-submodule init
-> > > > Submodule 'pkgs/linux-image-2.6.23-1-486-vyatta' (http://git.vyatta.com/linux-vyatta.git) registered for path 'pkgs/linux-image-2.6.23-1-486-vyatta'
-> > > 
-> > > AFAICT this is your problem.  Your urls are http:// url, and do not 
-> > > end in a slash.
-> > > 
-> > > Yes, there was a fix recently, but apparently it was not enough.  
-> > > With the slash, it should even work on older git.
-> > 
-> > That is a different issue.  It worked before my messing around with the 
-> > vyatta-iproute.git repository.
-> 
-> From your description:
-> 
-> -- snip --
-> In old repository
-> $ git-submodule update
+> On 2/19/08, Junio C Hamano <gitster@pobox.com> wrote:
 > ...
-> Getting pack list for
-> http://git.vyatta.com/home/shemminger/vyatta-iproute/.git/
-> error: The requested URL returned error: 403
-> error: Unable to find 8d971aff46015fc156d5b74254d21831d275963c under
-> http://git.vyatta.com/vyatta-iproute.git
-> Cannot obtain needed object 8d971aff46015fc156d5b74254d21831d275963c
-> Unable to checkout '79b4dbe51b84fdf37fdc9cb8b17819526508a60c' in submodule
-> path 'pkgs/vyatta-iproute'
-> -- snap --
-> 
-> So there was some type of invalid HTTP request, and then the hin tat 8d971 
-> was not found under http://.../vyatta-iproute.git (note the absence of the 
-> trailing slash).  Of course, since it is 403 ("forbidden"), and not 30x 
-> (which I thought I read), it could be a different error altogether.
-> 
-> In any case, this means that your submodule is not at all fine.
-> 
-> Ciao,
-> Dscho
-> 
+>> I would not comment on "the most common" adjective, but I am
+>> still a big believer of "core git gives common foundation for
+>> Porcelains that support different workflows to talk with each
+>> other" ideal, and I really like that you are building a
+>> Porcelain that would suit your favorite workflow.
+>>
+> ...  I don't want it to _just_ be for my
+> workflow.  I want something that appeals to the common user.
 
-The problem was that the rebuilt repository had an alternate file pointing to a
-different and inaccessible location.  Rebuilding again fixed the problem.
+Oh, I did not mean "your private workflow that is not common to
+anybody else".  That's certainly useless and there is no reason
+I would have said "I really like" to something like that (on the
+other hand, of course I would not stop such an attempt either).
 
-Thanks for your help.
+That's why I said "your _favorite_ workflow".  Your favorite
+could certainly be shared by other people.
