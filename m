@@ -1,95 +1,92 @@
-From: Stephen Hemminger <shemminger@vyatta.com>
-Subject: Re: Submodules and rewind
-Date: Tue, 19 Feb 2008 16:52:43 -0800
-Organization: Vyatta
-Message-ID: <20080219165243.7de6cbf5@extreme>
-References: <20080219140604.04afc91f@extreme>
-	<20080219223201.GE4703MdfPADPa@greensroom.kotnet.org>
-	<20080219152357.5ab397cf@extreme>
-	<alpine.LSU.1.00.0802200033530.8333@wbgn129.biozentrum.uni-wuerzburg.de>
-	<20080219161517.34fd5878@extreme>
-	<alpine.LFD.1.00.0802191635010.7833@woody.linux-foundation.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] branch: optionally setup branch.*.merge from upstream
+ local branches
+Date: Tue, 19 Feb 2008 16:55:31 -0800
+Message-ID: <7vzltwe9a4.fsf@gitster.siamese.dyndns.org>
+References: <1203386832-43969-1-git-send-email-jaysoffian@gmail.com>
+ <20080219074423.GA3982@steel.home>
+ <76718490802190549p549a34afo913efefebaf5fa97@mail.gmail.com>
+ <20080220001339.GA16574@steel.home>
+ <7v4pc4fo6y.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>, skimo@liacs.nl,
-	skimo@kotnet.org, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Feb 20 01:53:36 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 20 01:56:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JRdDI-0004p7-72
-	for gcvg-git-2@gmane.org; Wed, 20 Feb 2008 01:53:32 +0100
+	id 1JRdGI-0005XJ-82
+	for gcvg-git-2@gmane.org; Wed, 20 Feb 2008 01:56:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761524AbYBTAw4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Feb 2008 19:52:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761206AbYBTAwz
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Feb 2008 19:52:55 -0500
-Received: from mail.vyatta.com ([216.93.170.194]:46652 "EHLO mail.vyatta.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1764548AbYBTAwt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Feb 2008 19:52:49 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.vyatta.com (Postfix) with ESMTP id 511284F8051;
-	Tue, 19 Feb 2008 16:52:49 -0800 (PST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -2.332
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.332 tagged_above=-10 required=5 tests=[AWL=0.167,
-	BAYES_00=-2.599, RDNS_DYNAMIC=0.1]
-Received: from mail.vyatta.com ([127.0.0.1])
-	by localhost (mail.vyatta.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id qRv07izH7K8g; Tue, 19 Feb 2008 16:52:46 -0800 (PST)
-Received: from extreme (75-175-36-117.ptld.qwest.net [75.175.36.117])
-	by mail.vyatta.com (Postfix) with ESMTP id 797B34F804D;
-	Tue, 19 Feb 2008 16:52:45 -0800 (PST)
-In-Reply-To: <alpine.LFD.1.00.0802191635010.7833@woody.linux-foundation.org>
-X-Mailer: Claws Mail 3.3.0 (GTK+ 2.12.8; x86_64-pc-linux-gnu)
+	id S1754303AbYBTA4D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Feb 2008 19:56:03 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753214AbYBTA4C
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Feb 2008 19:56:02 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:63948 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752064AbYBTA4A (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Feb 2008 19:56:00 -0500
+Received: from a-sasl-quonix.pobox.com (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 12BD77D5B;
+	Tue, 19 Feb 2008 19:55:59 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.pobox.com (Postfix) with ESMTP id
+ 6347E7D56; Tue, 19 Feb 2008 19:55:50 -0500 (EST)
+In-Reply-To: <7v4pc4fo6y.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Tue, 19 Feb 2008 16:48:05 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74487>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74488>
 
-On Tue, 19 Feb 2008 16:47:15 -0800 (PST)
-Linus Torvalds <torvalds@linux-foundation.org> wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> 
-> 
-> On Tue, 19 Feb 2008, Stephen Hemminger wrote:
-> > 
-> > Don't be stupid, I am not trying be obstreperous, just fix the problem.
-> 
-> Umm. Stephen - this is the first time you even *describe* the problem.
-> 
-> Your previous emails were just "hey, submodules don't work, fix it".
+> Alex Riesen <raa.lkml@gmail.com> writes:
+>
+>> Well, it could also mean that there is no rules yet, and you can
+>> do the next sane thing of your choice.
+>>
+>>> enum color_branch {
+>>> 	COLOR_BRANCH_RESET = 0,
+>>> 	COLOR_BRANCH_PLAIN = 1,
+>>> 	COLOR_BRANCH_REMOTE = 2,
+>>> 	COLOR_BRANCH_LOCAL = 3,
+>>> 	COLOR_BRANCH_CURRENT = 4,
+>>> };
+>
+> This enum is used as an index into branch_colors[] array.  ...
+> ...  But we would want to leave a clue for people who would
+> want to touch this later that individual values have some
+> meaning, more than just that they have to be distinct.
+> ...
+>>> enum CAPABILITY {
+>>> 	NOLOGIN = 0,
+>>> 	UIDPLUS,
+>>> 	LITERALPLUS,
+>>> 	NAMESPACE,
+>>> };
+>
+> This seems to be meant to match the order in the corresponding
+> cap_list[] array, so this cannot be reshuffled (iow, it is
+> similar to color_branch).
 
-No I abused a submodule and broke it, it isn't git's fault directly.
-
-> Why do you then call Dscho stupid for pointing out that you never even 
-> bothered to reveal any details of what your problem was?
-
-The cause was a accidental push of the wrong tree up into a public
-repository. So I manually went back and moved the original tree aside
-and replaced it with a new tree that was at the point before the errant
-push.
-
-> 
-> But it's not clear how you even got into that state to begin with. How did 
-> your index get that confused? You said "I had to rewind one project back 
-> to a known good state", but considering the output, it looks like you 
-> didn't actually rewind it, but left it in some half-way state. 
-> 
-> A "git reset" should have reset the index, or you could probably have done 
-> something like "git add <submodule>" to basically force the index entry 
-> for just that submodule to the current state it had.
-> 
-> At a guess, it *looks* like you reset the submodules themselves, but never 
-> reset the superproject.
-> 
-> 		Linus
-
-The submodule is okay shape but the superproject isn't.
+Side note.  My preference for enum that indexes an array is to
+use the latter, not spelling everything out like "color_branch"
+does.  The first one being 0 and everybody else increments by 1
+is a good enough clue that you cannot arbitrarily reshuffle them
+(as opposed to everbody left to the default).  After being
+warned with the clue, somebody who is adding new elements to the
+array and defining a symbolic index to the element will know to
+append to the list, not just insert into an arbitrary place.
+Spelling out all the rest explicitly like "color_branch" one
+does is wasteful (new entries would need to carry "= (n+1)"),
+pointless (you cannot write anything but "= (n+1)" because it is
+an array index), and misleading (it makes you wonder if the
+specific values have meaning other than being used for an array
+index).
