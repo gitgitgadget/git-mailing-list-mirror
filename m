@@ -1,88 +1,79 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Minor annoyance with git push
-Date: Wed, 20 Feb 2008 15:38:31 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802201535250.17164@racer.site>
-References: <46a038f90802072044u3329fd33w575c689cba2917ee@mail.gmail.com>  <alpine.LSU.1.00.0802091307160.11591@racer.site>  <7v7ihd7ee1.fsf@gitster.siamese.dyndns.org>  <alpine.LSU.1.00.0802100213330.11591@racer.site>  <20080210101756.GB26568@coredump.intra.peff.net>
-  <alpine.LSU.1.00.0802101219280.11591@racer.site>  <20080210122321.GA31009@coredump.intra.peff.net>  <alpine.LSU.1.00.0802101303140.11591@racer.site>  <7vzltwavf9.fsf@gitster.siamese.dyndns.org>  <alpine.LSU.1.00.0802201305350.17164@racer.site>
- <76718490802200720w4dd89dc1lf7b19d546d3bfd00@mail.gmail.com>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: git talk at FOSDEM 2008
+Date: Wed, 20 Feb 2008 16:40:01 +0100
+Message-ID: <20080220154001.GC2784@artemis.madism.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Steffen Prohaska <prohaska@zib.de>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 20 16:40:34 2008
+Content-Type: multipart/signed; boundary="Qbvjkv9qwOGw/5Fx";
+	protocol="application/pgp-signature"; micalg=SHA1
+To: Git ML <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Feb 20 16:42:36 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JRr3b-0008Pf-OB
-	for gcvg-git-2@gmane.org; Wed, 20 Feb 2008 16:40:28 +0100
+	id 1JRr5f-0000v6-JW
+	for gcvg-git-2@gmane.org; Wed, 20 Feb 2008 16:42:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1765387AbYBTPiv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Feb 2008 10:38:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933415AbYBTPiu
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Feb 2008 10:38:50 -0500
-Received: from mail.gmx.net ([213.165.64.20]:53779 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S933407AbYBTPis (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Feb 2008 10:38:48 -0500
-Received: (qmail invoked by alias); 20 Feb 2008 15:38:46 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp005) with SMTP; 20 Feb 2008 16:38:46 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+Qc2xTnYuQixhkSAuRfDneGRnOSNXsYvDRi2oGd+
-	CjhkQBXYAAj0zZ
-X-X-Sender: gene099@racer.site
-In-Reply-To: <76718490802200720w4dd89dc1lf7b19d546d3bfd00@mail.gmail.com>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S933590AbYBTPkK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Feb 2008 10:40:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933584AbYBTPkJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Feb 2008 10:40:09 -0500
+Received: from pan.madism.org ([88.191.52.104]:57258 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933586AbYBTPkF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Feb 2008 10:40:05 -0500
+Received: from madism.org (def92-2-81-57-219-236.fbx.proxad.net [81.57.219.236])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id 37FAB2DCA6
+	for <git@vger.kernel.org>; Wed, 20 Feb 2008 16:40:02 +0100 (CET)
+Received: by madism.org (Postfix, from userid 1000)
+	id 8AC7C451F05; Wed, 20 Feb 2008 16:40:01 +0100 (CET)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Git ML <git@vger.kernel.org>
+Content-Disposition: inline
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74520>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74521>
 
-Hi,
 
-On Wed, 20 Feb 2008, Jay Soffian wrote:
+--Qbvjkv9qwOGw/5Fx
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> On Feb 20, 2008 8:06 AM, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> >
-> > On Wed, 20 Feb 2008, Junio C Hamano wrote:
-> >
-> > > Putting this "push = HEAD" by default when "git clone" and "git 
-> > > remote add" creates the [remote "$remote"] section is probably 
-> > > possible, and at that stage we may even be able to do the "if the 
-> > > other end is shared, then set this up automagically", as the result 
-> > > of the magic can be inspected in the resulting config file.
-> >
-> > I think this is too magic, both of it.  Once people get used to "git 
-> > push" being implicitly "git push origin HEAD", why should they not 
-> > expect "git push <somewhere-else>" to push "HEAD" implicitly, too?
-> 
-> Well then, how about (don't cringe too much now...)
-> 
->   push.conservative = true
-> 
-> If enabled and "git push" is run w/o arguments, it will first emit what 
-> it plans to push and then prompt with "yes/no." I'm kinda opposed to 
-> silly prompts -- folks just always go right past them -- so I dunno.
-> 
-> But it does make the operation a bit more safe I guess.
+  I realized I didn't announced that on the git list, and it could be
+somehow clever to do so ;P
 
-That depends awfully on your definition of "safe".
+  I'm giving a talk on git at FOSDEM 2008 (a .eu Open Source event).
+It's not meant as an introduction to git, and aims at demonstrating how
+git can help in the Debian Developper's everyday's life[0]. It's not a
+Main Track talk, but a talk in the Debian Talk Room.
 
-I, for one, hate the idea already, that I am "safe" when "git push" does 
-not do the thing I asked it to, and which it has done for a couple of 
-years now without complaint, and which I have gotten used to.
+  Sadly, slides remains to be done, materials should be put online after
+the talk only I guess.
 
-And then, there will be a great confusion for me, since I work on 5 
-different machines on an average day, with 5 different git versions, and 
-having different config settings.
+  [0] http://www.fosdem.org/2008/schedule/events/debian_packaging_with_git
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
 
-That is not "safe" for me.
+--Qbvjkv9qwOGw/5Fx
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-Thankyouverymuch,
-Dscho
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBHvEnRvGr7W6HudhwRAoycAJ9IQW5pYOsf2GR9SXN0wvZ56jPdPACggvty
+AmdiTffNuTtqzIg27D9QZ4Q=
+=kpwy
+-----END PGP SIGNATURE-----
+
+--Qbvjkv9qwOGw/5Fx--
