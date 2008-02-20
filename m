@@ -1,73 +1,281 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: Built-in checkout: wrong behaviour in subdirectories
-Date: Wed, 20 Feb 2008 23:35:20 +0100
-Message-ID: <20080220223520.GA23642@localhost>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+From: Lars Hjemli <hjemli@gmail.com>
+Subject: [PATCH 1/4] Add platform-independent .git "symlink"
+Date: Wed, 20 Feb 2008 23:13:13 +0100
+Message-ID: <1203545596-6337-2-git-send-email-hjemli@gmail.com>
+References: <1203545596-6337-1-git-send-email-hjemli@gmail.com>
 Cc: git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Wed Feb 20 23:36:08 2008
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 20 23:38:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JRxXr-0005ao-Ev
-	for gcvg-git-2@gmane.org; Wed, 20 Feb 2008 23:36:07 +0100
+	id 1JRxZk-0006PR-HP
+	for gcvg-git-2@gmane.org; Wed, 20 Feb 2008 23:38:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753488AbYBTWf1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Feb 2008 17:35:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753715AbYBTWf1
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Feb 2008 17:35:27 -0500
-Received: from fg-out-1718.google.com ([72.14.220.154]:17386 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752536AbYBTWfZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Feb 2008 17:35:25 -0500
-Received: by fg-out-1718.google.com with SMTP id e21so2299300fga.17
-        for <git@vger.kernel.org>; Wed, 20 Feb 2008 14:35:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:received:date:from:to:cc:subject:message-id:mime-version:content-type:content-disposition:user-agent:sender;
-        bh=V6Oi3BDDdba41KqilA972GmYYXq3HakPEdna4H7DLS8=;
-        b=TeYuzK8jub8Pwhdmlc1BjEJN+VqB2VlPKgbUy5U6RlPeYemjQel1g7tvNL+3hEI2bmxhn4wysDHczVAyQRdIVt/8LNWk+mu3XiscYfyCpezJXUn80qiqB+NN5gaVYkXmd/6xC4OeHXHctdoP5eZq+FFixaGin+y/QTHXPy6R1eo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:mime-version:content-type:content-disposition:user-agent:sender;
-        b=nDiPoV+cW4dS6zU2h+pjkXcCjW7zxY/LuQgJ/hLK+P4VyvW0zd4lxaM8oSYdM2Dfg+Gj3IyDx29OFVgC+Gyha3NARLOhbyHvdpcK/hhZipoCtovWercd8SYqfnl21wwVeh47FQfoYuNmXpjhOuKlQO/m3L/m6IZ/bJgbEItGNK0=
-Received: by 10.86.3.4 with SMTP id 4mr8724074fgc.69.1203546922531;
-        Wed, 20 Feb 2008 14:35:22 -0800 (PST)
-Received: from darc.dyndns.org ( [88.117.114.124])
-        by mx.google.com with ESMTPS id 3sm14522506fge.7.2008.02.20.14.35.19
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 20 Feb 2008 14:35:20 -0800 (PST)
-Received: from drizzd by darc.dyndns.org with local (Exim 4.68)
-	(envelope-from <drizzd@aon.at>)
-	id 1JRxX6-0006Cb-Bi; Wed, 20 Feb 2008 23:35:20 +0100
-Content-Disposition: inline
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1763359AbYBTWh2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Feb 2008 17:37:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762956AbYBTWh1
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Feb 2008 17:37:27 -0500
+Received: from mail43.e.nsc.no ([193.213.115.43]:50964 "EHLO mail43.e.nsc.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756986AbYBTWhZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Feb 2008 17:37:25 -0500
+Received: from localhost.localdomain (ti231210a341-0590.bb.online.no [88.88.170.78])
+	by mail43.nsc.no (8.13.8/8.13.5) with ESMTP id m1KMEQAJ024249;
+	Wed, 20 Feb 2008 23:14:28 +0100 (MET)
+X-Mailer: git-send-email 1.5.4.1.188.g3ea1f5
+In-Reply-To: <1203545596-6337-1-git-send-email-hjemli@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74556>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74557>
 
-Hi,
+This patch allows .git to be a regular textfile containing the path of
+the real git directory (prefixed with "gitdir: "), which can be useful on
+platforms lacking support for real symlinks.
 
-The following test shows a problem since commit 782c2d6 (Build in checkout):
+Signed-off-by: Lars Hjemli <hjemli@gmail.com>
+---
+ Documentation/repository-layout.txt |    5 ++-
+ cache.h                             |    1 +
+ environment.c                       |    2 +
+ setup.c                             |   47 ++++++++++++++++
+ t/t0002-gitfile.sh                  |  103 +++++++++++++++++++++++++++++++++++
+ 5 files changed, 157 insertions(+), 1 deletions(-)
+ create mode 100755 t/t0002-gitfile.sh
 
-mkdir testrep
-cd testrep
-git init
-
-: >file1
-git add file1
-git commit -m 'initial'
-
-git branch dev
-
-mkdir dir1
-cd dir1
-# this creates dir1/file1
-git checkout dev
-
-Regards,
-Clemens
+diff --git a/Documentation/repository-layout.txt b/Documentation/repository-layout.txt
+index 6939130..bbaed2e 100644
+--- a/Documentation/repository-layout.txt
++++ b/Documentation/repository-layout.txt
+@@ -3,7 +3,10 @@ git repository layout
+ 
+ You may find these things in your git repository (`.git`
+ directory for a repository associated with your working tree, or
+-`'project'.git` directory for a public 'bare' repository).
++`'project'.git` directory for a public 'bare' repository. It is
++also possible to have a working tree where `.git` is a plain
++ascii file containing `gitdir: <path>`, i.e. the path to the
++real git repository).
+ 
+ objects::
+ 	Object store associated with this repository.  Usually
+diff --git a/cache.h b/cache.h
+index e1000bc..1ad822a 100644
+--- a/cache.h
++++ b/cache.h
+@@ -277,6 +277,7 @@ extern char *get_index_file(void);
+ extern char *get_graft_file(void);
+ extern int set_git_dir(const char *path);
+ extern const char *get_git_work_tree(void);
++extern const char *read_gitfile_gently(const char *path);
+ 
+ #define ALTERNATE_DB_ENVIRONMENT "GIT_ALTERNATE_OBJECT_DIRECTORIES"
+ 
+diff --git a/environment.c b/environment.c
+index 3527f16..8058e7b 100644
+--- a/environment.c
++++ b/environment.c
+@@ -49,6 +49,8 @@ static void setup_git_env(void)
+ {
+ 	git_dir = getenv(GIT_DIR_ENVIRONMENT);
+ 	if (!git_dir)
++		git_dir = read_gitfile_gently(DEFAULT_GIT_DIR_ENVIRONMENT);
++	if (!git_dir)
+ 		git_dir = DEFAULT_GIT_DIR_ENVIRONMENT;
+ 	git_object_dir = getenv(DB_ENVIRONMENT);
+ 	if (!git_object_dir) {
+diff --git a/setup.c b/setup.c
+index 4509598..20502be 100644
+--- a/setup.c
++++ b/setup.c
+@@ -239,6 +239,44 @@ static int check_repository_format_gently(int *nongit_ok)
+ }
+ 
+ /*
++ * Try to read the location of the git directory from the .git file,
++ * return path to git directory if found.
++ */
++const char *read_gitfile_gently(const char *path)
++{
++	char *buf;
++	struct stat st;
++	int fd;
++	size_t len;
++
++	if (stat(path, &st))
++		return NULL;
++	if (!S_ISREG(st.st_mode))
++		return NULL;
++	fd = open(path, O_RDONLY);
++	if (fd < 0)
++		die("Error opening %s: %s", path, strerror(errno));
++	buf = xmalloc(st.st_size + 1);
++	len = read_in_full(fd, buf, st.st_size);
++	close(fd);
++	if (len != st.st_size)
++		die("Error reading %s", path);
++	buf[len] = '\0';
++	if (prefixcmp(buf, "gitdir: "))
++		die("Invalid gitfile format: %s", path);
++	while (buf[len - 1] == '\n' || buf[len - 1] == '\r')
++		len--;
++	if (len < 9)
++		die("No path in gitfile: %s", path);
++	buf[len] = '\0';
++	if (!is_git_directory(buf + 8))
++		die("Not a git repository: %s", buf + 8);
++	path = make_absolute_path(buf + 8);
++	free(buf);
++	return path;
++}
++
++/*
+  * We cannot decide in this function whether we are in the work tree or
+  * not, since the config can only be read _after_ this function was called.
+  */
+@@ -247,6 +285,7 @@ const char *setup_git_directory_gently(int *nongit_ok)
+ 	const char *work_tree_env = getenv(GIT_WORK_TREE_ENVIRONMENT);
+ 	static char cwd[PATH_MAX+1];
+ 	const char *gitdirenv;
++	const char *gitfile_dir;
+ 	int len, offset;
+ 
+ 	/*
+@@ -293,8 +332,10 @@ const char *setup_git_directory_gently(int *nongit_ok)
+ 
+ 	/*
+ 	 * Test in the following order (relative to the cwd):
++	 * - .git (file containing "gitdir: <path>")
+ 	 * - .git/
+ 	 * - ./ (bare)
++	 * - ../.git
+ 	 * - ../.git/
+ 	 * - ../ (bare)
+ 	 * - ../../.git/
+@@ -302,6 +343,12 @@ const char *setup_git_directory_gently(int *nongit_ok)
+ 	 */
+ 	offset = len = strlen(cwd);
+ 	for (;;) {
++		gitfile_dir = read_gitfile_gently(DEFAULT_GIT_DIR_ENVIRONMENT);
++		if (gitfile_dir) {
++			if (set_git_dir(gitfile_dir))
++				die("Repository setup failed");
++			break;
++		}
+ 		if (is_git_directory(DEFAULT_GIT_DIR_ENVIRONMENT))
+ 			break;
+ 		if (is_git_directory(".")) {
+diff --git a/t/t0002-gitfile.sh b/t/t0002-gitfile.sh
+new file mode 100755
+index 0000000..c5dbc72
+--- /dev/null
++++ b/t/t0002-gitfile.sh
+@@ -0,0 +1,103 @@
++#!/bin/sh
++
++test_description='.git file
++
++Verify that plumbing commands work when .git is a file
++'
++. ./test-lib.sh
++
++objpath() {
++    echo "$1" | sed -e 's|\(..\)|\1/|'
++}
++
++objck() {
++	p=$(objpath "$1")
++	if test ! -f "$REAL/objects/$p"
++	then
++		echo "Object not found: $REAL/objects/$p"
++		false
++	fi
++}
++
++
++test_expect_success 'initial setup' '
++	REAL="$(pwd)/.real" &&
++	mv .git "$REAL"
++'
++
++test_expect_success 'bad setup: invalid .git file format' '
++	echo "gitdir $REAL" >.git &&
++	if git rev-parse 2>.err
++	then
++		echo "git rev-parse accepted an invalid .git file"
++		false
++	fi &&
++	if ! grep -qe "Invalid gitfile format" .err
++	then
++		echo "git rev-parse returned wrong error"
++		false
++	fi
++'
++
++test_expect_success 'bad setup: invalid .git file path' '
++	echo "gitdir: $REAL.not" >.git &&
++	if git rev-parse 2>.err
++	then
++		echo "git rev-parse accepted an invalid .git file path"
++		false
++	fi &&
++	if ! grep -qe "Not a git repository" .err
++	then
++		echo "git rev-parse returned wrong error"
++		false
++	fi
++'
++
++test_expect_success 'final setup + check rev-parse --git-dir' '
++	echo "gitdir: $REAL" >.git &&
++	test "$REAL" = "$(git rev-parse --git-dir)"
++'
++
++test_expect_success 'check hash-object' '
++	echo "foo" >bar &&
++	SHA=$(cat bar | git hash-object -w --stdin) &&
++	objck $SHA
++'
++
++test_expect_success 'check cat-file' '
++	git cat-file blob $SHA >actual &&
++	diff -u bar actual
++'
++
++test_expect_success 'check update-index' '
++	if test -f "$REAL/index"
++	then
++		echo "Hmm, $REAL/index exists?"
++		false
++	fi &&
++	rm -f "$REAL/objects/$(objpath $SHA)" &&
++	git update-index --add bar &&
++	if ! test -f "$REAL/index"
++	then
++		echo "$REAL/index not found"
++		false
++	fi &&
++	objck $SHA
++'
++
++test_expect_success 'check write-tree' '
++	SHA=$(git write-tree) &&
++	objck $SHA
++'
++
++test_expect_success 'check commit-tree' '
++	SHA=$(echo "commit bar" | git commit-tree $SHA) &&
++	objck $SHA
++'
++
++test_expect_success 'check rev-list' '
++	echo $SHA >"$REAL/HEAD" &&
++	test "$SHA" = "$(git rev-list HEAD)"
++'
++
++test_done
+-- 
+1.5.4.1.188.g3ea1f5
