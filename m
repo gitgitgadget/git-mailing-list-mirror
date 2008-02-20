@@ -1,79 +1,101 @@
-From: "Whit Armstrong" <armstrong.whit@gmail.com>
-Subject: Re: Solaris test failure -- FAIL 61: invalid bool (set)
-Date: Tue, 19 Feb 2008 19:11:01 -0500
-Message-ID: <8ec76080802191611s3348beb1icd0b24db8b0a9556@mail.gmail.com>
-References: <8ec76080802191322t2417ea48y1537011f1031dff8@mail.gmail.com>
-	 <alpine.LSU.1.00.0802192220440.7826@racer.site>
-	 <8ec76080802191517k5f070d45l497063d93e080272@mail.gmail.com>
-	 <20080219234422.GA9987@coredump.intra.peff.net>
-	 <20080219234945.GB9987@coredump.intra.peff.net>
-	 <20080219235250.GA12979@coredump.intra.peff.net>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] branch: optionally setup branch.*.merge from upstream
+	local branches
+Date: Wed, 20 Feb 2008 01:13:39 +0100
+Message-ID: <20080220001339.GA16574@steel.home>
+References: <1203386832-43969-1-git-send-email-jaysoffian@gmail.com> <20080219074423.GA3982@steel.home> <76718490802190549p549a34afo913efefebaf5fa97@mail.gmail.com>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: "Jeff King" <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Feb 20 01:11:53 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 20 01:14:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JRcYl-0002WY-E6
-	for gcvg-git-2@gmane.org; Wed, 20 Feb 2008 01:11:39 +0100
+	id 1JRcbM-0003J4-He
+	for gcvg-git-2@gmane.org; Wed, 20 Feb 2008 01:14:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753039AbYBTALF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Feb 2008 19:11:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752769AbYBTALE
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Feb 2008 19:11:04 -0500
-Received: from rv-out-0910.google.com ([209.85.198.191]:14354 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754680AbYBTALB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Feb 2008 19:11:01 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so1768707rvb.1
-        for <git@vger.kernel.org>; Tue, 19 Feb 2008 16:11:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=THbS7/Z2s5DACRvjP7AzwlxCVdW+9SmP8b9xh3ZZihU=;
-        b=Mnm1aGsWHBw7hra8AZcklcPjtCuIiy/B9ZEH19dZkAd8FMyq9KJhkERO4+1tWqxjgosnEAZX260qlVVRuOt42YMf4KpN5JTc4n54NFE6kijaQETFSN2tvyw4td9peFSTYhY5lCaVJschfVMfaboQmL6iQZwDDVARmhPYFGzKx3Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=L4++gia+KNrxYlqXFeAOE6oFlkLY8vlN0nLHF7ViRlpzZJJNECcgJyKqMHlH2FHpiFa7FlJiduG7UXr+c71d1+7WZstr7BzZYlfZzBbiafdmv+YEr/kqp6wQuaHM/gOKEVKvgFkRYPEF3HGLzoRrEtMl1USqBjBPupfmMGXVQI8=
-Received: by 10.140.126.14 with SMTP id y14mr5186089rvc.96.1203466261455;
-        Tue, 19 Feb 2008 16:11:01 -0800 (PST)
-Received: by 10.141.195.19 with HTTP; Tue, 19 Feb 2008 16:11:01 -0800 (PST)
-In-Reply-To: <20080219235250.GA12979@coredump.intra.peff.net>
+	id S1752511AbYBTANp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Feb 2008 19:13:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751244AbYBTANp
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Feb 2008 19:13:45 -0500
+Received: from mo-p07-ob.rzone.de ([81.169.146.190]:36665 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751237AbYBTANo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Feb 2008 19:13:44 -0500
+X-RZG-CLASS-ID: mo07
+X-RZG-AUTH: z4gQVF2k5XWuW3CculzyClWJug==
+Received: from tigra.home (Fad34.f.strato-dslnet.de [195.4.173.52])
+	by post.webmailer.de (mrclete mo50) (RZmta 16.5)
+	with ESMTP id z00313k1JKcDfH ; Wed, 20 Feb 2008 01:13:42 +0100 (MET)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 21620277BD;
+	Wed, 20 Feb 2008 01:13:40 +0100 (CET)
+Received: by steel.home (Postfix, from userid 1000)
+	id 70FE956D24; Wed, 20 Feb 2008 01:13:39 +0100 (CET)
 Content-Disposition: inline
+In-Reply-To: <76718490802190549p549a34afo913efefebaf5fa97@mail.gmail.com>
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74482>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74483>
 
-Thanks for the quick patch, Jeff.
+Jay Soffian, Tue, Feb 19, 2008 14:49:17 +0100:
+> On Feb 19, 2008 2:44 AM, Alex Riesen <raa.lkml@gmail.com> wrote:
+> > Jay Soffian, Tue, Feb 19, 2008 03:07:12 +0100:
+> > > +enum branch_track {
+> > > +     BRANCH_TRACK_NEVER = 0,
+> >
+> > enums start at 0 anyway, don't they?
+> 
+> I don't know, but guys, give me a break on the enums already. What's
+> the preferred syntax already because the existing code is not
+> consistent:
 
-That certainly fixes t1300-repo-config.sh.
+Well, it could also mean that there is no rules yet, and you can
+do the next sane thing of your choice.
 
-I must be seeing the same failures as you ( in t3404-rebase-interactive.sh ).
-
-Thanks for your help, everyone.
-
--Whit
-
-
-On Feb 19, 2008 6:52 PM, Jeff King <peff@peff.net> wrote:
-> On Tue, Feb 19, 2008 at 06:49:45PM -0500, Jeff King wrote:
+> enum color_branch {
+> 	COLOR_BRANCH_RESET = 0,
+> 	COLOR_BRANCH_PLAIN = 1,
+> 	COLOR_BRANCH_REMOTE = 2,
+> 	COLOR_BRANCH_LOCAL = 3,
+> 	COLOR_BRANCH_CURRENT = 4,
+> };
 >
-> > Otherwise, test t1300:58 fails when trying to match the text. It's
-> > just a typo in my previous patch.
->
-> Bah, and there are even more errors at the end of the test (though I am
-> not sure if they are related to the fix, or were there already). I don't
-> have time to look at this anymore right now, but I will try to run the
-> full test suite on Solaris later tonight.
->
-> -Peff
->
+> enum {
+> 	TAGS_UNSET = 0,
+> 	TAGS_DEFAULT = 1,
+> 	TAGS_SET = 2
+> };
+
+Which is just as useless. It is not useful even for documentation,
+as the verbatim values are not used anywere else (i.e. they are not
+a part of file format, where they could stand out as the numbers
+listed).
+
+It looks like someone was just too paranoid or suffered a mental
+damage from too long exposure to proprietary code.
+
+> enum update_mode { BOTH = 0, WORKING_DIRECTORY, INDEX } *modes;
+> 
+> enum exist_status {
+> 	index_nonexistent = 0,
+> 	index_directory,
+> 	index_gitdir,
+> };
+> 
+> enum CAPABILITY {
+> 	NOLOGIN = 0,
+> 	UIDPLUS,
+> 	LITERALPLUS,
+> 	NAMESPACE,
+> };
+
+All the same...
