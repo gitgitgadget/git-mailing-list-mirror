@@ -1,91 +1,87 @@
-From: Anton Gladkov <agladkov@parallels.com>
-Subject: Re: cant get git to work over http
-Date: Wed, 20 Feb 2008 16:46:33 +0300
-Message-ID: <20080220134633.GA4220@atn.sw.ru>
-References: <e26d18e40802191106v51c907bdn6aa51acef5f530a3@mail.gmail.com> <alpine.LSU.1.00.0802191916020.7797@racer.site> <e26d18e40802191127v7cc9f051l7002b56b41dc9f86@mail.gmail.com> <alpine.LSU.1.00.0802191940260.7826@racer.site> <e26d18e40802191153w691ac5fcl3fa972ca6503b9fb@mail.gmail.com> <47BB3691.9040809@freescale.com> <e26d18e40802191305y5f7b8fdfr3113c84612c53189@mail.gmail.com> <47BB5037.5090302@freescale.com> <e26d18e40802191359r4c435818n4ae7b357d452d51e@mail.gmail.com> <e26d18e40802191413w48fe4a71hd7895b09d15cb44e@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Minor annoyance with git push
+Date: Wed, 20 Feb 2008 09:03:07 -0500
+Message-ID: <20080220140306.GA6928@sigill.intra.peff.net>
+References: <20080209030046.GA10470@coredump.intra.peff.net> <6B804F0D-9C3B-46F3-B922-7A5CBEF55522@zib.de> <alpine.LSU.1.00.0802091307160.11591@racer.site> <7v7ihd7ee1.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0802100213330.11591@racer.site> <20080210101756.GB26568@coredump.intra.peff.net> <alpine.LSU.1.00.0802101219280.11591@racer.site> <20080210122321.GA31009@coredump.intra.peff.net> <alpine.LSU.1.00.0802101303140.11591@racer.site> <7vzltwavf9.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=koi8-r
-Cc: Jon Loeliger <jdl@freescale.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Mike Hommey <mh@glandium.org>, git@vger.kernel.org
-To: Anatoly Yakovenko <aeyakovenko@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 20 14:41:55 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Steffen Prohaska <prohaska@zib.de>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 20 15:03:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JRpCY-0001nQ-HN
-	for gcvg-git-2@gmane.org; Wed, 20 Feb 2008 14:41:34 +0100
+	id 1JRpY3-0002Fm-Ho
+	for gcvg-git-2@gmane.org; Wed, 20 Feb 2008 15:03:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752817AbYBTNky (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Feb 2008 08:40:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754813AbYBTNkx
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Feb 2008 08:40:53 -0500
-Received: from mailhub.sw.ru ([195.214.232.25]:41737 "EHLO relay.sw.ru"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752214AbYBTNkx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Feb 2008 08:40:53 -0500
-Received: from atn.sw.ru ([10.30.3.212])
-	by relay.sw.ru (8.13.4/8.13.4) with ESMTP id m1KDePXp011812
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 20 Feb 2008 16:40:26 +0300 (MSK)
-Received: from atn.sw.ru (localhost.localdomain [127.0.0.1])
-	by atn.sw.ru (8.14.2/8.14.1) with ESMTP id m1KDkX6k004439;
-	Wed, 20 Feb 2008 16:46:33 +0300
-Received: (from anton@localhost)
-	by atn.sw.ru (8.14.2/8.14.2/Submit) id m1KDkXk1004438;
-	Wed, 20 Feb 2008 16:46:33 +0300
-X-Authentication-Warning: atn.sw.ru: anton set sender to agladkov@parallels.com using -f
+	id S1756620AbYBTODM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Feb 2008 09:03:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756728AbYBTODM
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Feb 2008 09:03:12 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2305 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756305AbYBTODL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Feb 2008 09:03:11 -0500
+Received: (qmail 5807 invoked by uid 111); 20 Feb 2008 14:03:08 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Wed, 20 Feb 2008 09:03:08 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 20 Feb 2008 09:03:07 -0500
 Content-Disposition: inline
-In-Reply-To: <e26d18e40802191413w48fe4a71hd7895b09d15cb44e@mail.gmail.com>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+In-Reply-To: <7vzltwavf9.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74513>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74514>
 
-On Tue, Feb 19, 2008 at 02:13:30PM -0800, Anatoly Yakovenko wrote:
-> On Feb 19, 2008 1:59 PM, Anatoly Yakovenko <aeyakovenko@gmail.com> wrote:
-> > > Something is fishy here.  Is your repository bare or not?
-> >
-> > no, why does it need to be bare?
-> >
-> so bare or not ssh works but http doesnt:
-> 
-> $ git-clone ssh://aeyakovenko@localhost/var/www/localhost/htdocs/git/bare
-> bare-ssh
-> Initialized empty Git repository in /home/aeyakovenko/projects/bare-ssh/.git/
-> Receiving objects: 100% (3/3), done.
-> remote: Counting objects: 3, done.
-> remote: Total 3 (delta 0), reused 0 (delta 0)
-> 
-> 
-> 
-> and running over a bare directory doesn't work:
-> 
-> 
-> $ git-clone http://aeyakovenko@localhost/git/bare bare
+On Wed, Feb 20, 2008 at 12:23:06AM -0800, Junio C Hamano wrote:
 
-'Bare' means cloning with '--bare' option.
+> [long description of shared repository workflow]
+> So perhaps we can have "remote.*.push" that says "current" in
+> some way.  Tentatively let's say the syntax is like this:
 
-> Initialized empty Git repository in /home/aeyakovenko/projects/bare/.git/
-> Cannot get remote repository information.
-> Perhaps git-update-server-info needs to be run there?
-> 
-> apache acess log:
-> 
-> 127.0.0.1 - - [19/Feb/2008:14:10:19 -0800] "GET /git/bare/info/refs
-> HTTP/1.1" 401 460
-> 
-> i feel like i am taking crazy pills, why is apache looking for
-> /git/bare/info/refs, and no the directory from the doc root?
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+I think everything you said here makes perfect sense; changing the push
+refspec to say "push the current" for a particular remote is much more
+sensible than an overall default. In fact, I half-expected this to
+just work without a patch, since "git push origin HEAD" already works.
+However, we don't treat command line refspecs and config refspecs the
+same way, which IMHO is a needless inconsistency. How about this:
 
--- 
-Best regards,
-		anton
-mailto:agladkov@sw.ru
+diff --git a/builtin-push.c b/builtin-push.c
+index 9f727c0..ca90150 100644
+--- a/builtin-push.c
++++ b/builtin-push.c
+@@ -68,8 +68,7 @@ static int do_push(const char *repo, int flags)
+ 	if (!refspec
+ 		&& !(flags & TRANSPORT_PUSH_ALL)
+ 		&& remote->push_refspec_nr) {
+-		refspec = remote->push_refspec;
+-		refspec_nr = remote->push_refspec_nr;
++		set_refspecs(remote->push_refspec, remote->push_refspec_nr);
+ 	}
+ 	errs = 0;
+ 	for (i = 0; i < remote->url_nr; i++) {
+
+At which point this now works as you described:
+
+  git config remote.origin.push HEAD
+
+> I was hoping we can do without the "remote.*.push = HEAD" if we
+> can detect the remote is a shared repository while talking to
+> it, but I think it is a bit too much magic, because we cannot
+> visualize what the pushing side and the receiving side  are
+> negotiating.
+
+How are you detecting that the remote is a shared repository? By the
+core.sharedrepository config option? I use several shared repositories,
+and I never set that variable; instead I use filesystem ACLs (which we
+could at least detect). It is my understanding that some people even
+have repositories where multiple users share the same filesystem uid but
+connect with different ssh keys.  I don't think that is even detectable.
+
+-Peff
