@@ -1,79 +1,95 @@
-From: "Jay Soffian" <jaysoffian@gmail.com>
-Subject: Re: git-send-email getting filtered as spam by vger.kernel.org
-Date: Thu, 21 Feb 2008 16:41:08 -0500
-Message-ID: <76718490802211341o1ddc36bbne4e6d551712e7cd0@mail.gmail.com>
-References: <200802210429.58353.lenb@kernel.org>
-	 <200802210721.29188.lenb@kernel.org>
-	 <20080221205104.GA14247@informatik.uni-freiburg.de>
-	 <7vejb6t3kk.fsf@gitster.siamese.dyndns.org>
+From: Onno Kortmann <onno@gmx.net>
+Subject: [PATCH 1/2] Simple rename of top-most patch
+Date: Thu, 21 Feb 2008 22:42:51 +0100
+Message-ID: <200802212242.51866.onno@gmx.net>
+References: <20080218140005.GA18668@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain;
+  charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Cc: "=?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?=" 
-	<ukleinek@informatik.uni-freiburg.de>,
-	"Len Brown" <lenb@kernel.org>, git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 21 22:41:48 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 21 22:43:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JSJAq-0008BI-33
-	for gcvg-git-2@gmane.org; Thu, 21 Feb 2008 22:41:48 +0100
+	id 1JSJCV-0000Kq-H5
+	for gcvg-git-2@gmane.org; Thu, 21 Feb 2008 22:43:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757231AbYBUVlM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Feb 2008 16:41:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756552AbYBUVlL
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Feb 2008 16:41:11 -0500
-Received: from wr-out-0506.google.com ([64.233.184.232]:56211 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754171AbYBUVlK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Feb 2008 16:41:10 -0500
-Received: by wr-out-0506.google.com with SMTP id c48so292073wra.23
-        for <git@vger.kernel.org>; Thu, 21 Feb 2008 13:41:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=tCttEi+sPGZX+e7PQgdh+Cz6EO2WnA1aL9p4tXM8avU=;
-        b=Mzl4GwK3TjqriWsQbh7Ae59c11AJiSs6CAgtdQY1C7CB4D65rrS0JNgleBZd3lT1fVW61Hz8WSw3mpsSmHMjgTN9HSLC+x4fNgVKyzNpYTXxUSrItMSzHA3o2ZcS1oCjRXolvFQaHVnL2vLexyeLYUbZy58n5Dwy/+ohIQVT0pg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Q2tmPNWwPiD6H9kuDLPcug2HI9eJ7qNggQczQELuNfANAnfGoe9RpkkXfk25qHZst/kq6Ihn0Wi8lL9reuTZQqfjgD2Ft3T19OaiYDO/It8qGQIeTTG+hwpr3fgtcFLtndVZdcdfFd562uas4NDTJB1qtnXAEPE37tyu61W6TD8=
-Received: by 10.114.81.1 with SMTP id e1mr1642014wab.11.1203630068381;
-        Thu, 21 Feb 2008 13:41:08 -0800 (PST)
-Received: by 10.114.145.13 with HTTP; Thu, 21 Feb 2008 13:41:08 -0800 (PST)
-In-Reply-To: <7vejb6t3kk.fsf@gitster.siamese.dyndns.org>
+	id S1756140AbYBUVmz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Feb 2008 16:42:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755507AbYBUVmz
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Feb 2008 16:42:55 -0500
+Received: from mail.gmx.net ([213.165.64.20]:53310 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755149AbYBUVmy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Feb 2008 16:42:54 -0500
+Received: (qmail invoked by alias); 21 Feb 2008 21:42:52 -0000
+Received: from 14-235-dsl.kielnet.net (EHLO noodle.okhome) [89.27.235.14]
+  by mail.gmx.net (mp058) with SMTP; 21 Feb 2008 22:42:52 +0100
+X-Authenticated: #482760
+X-Provags-ID: V01U2FsdGVkX1++TTZk66i+OcVQ5HKwTlzwVxw8bqZxit8gYNlkLo
+	UkYZGssolaYSYp
+In-Reply-To: <20080218140005.GA18668@diana.vm.bytemark.co.uk>
+User-Agent: StGIT/0.14.1
+X-TUID: 2c521aa475b247e9
+X-Length: 2264
+X-UID: 17
 Content-Disposition: inline
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74663>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74664>
 
-On Thu, Feb 21, 2008 at 4:14 PM, Junio C Hamano <gitster@pobox.com> wrote:
->  Perhaps we should fix it up like this...
+Allow renaming of the top-most patch just by calling stg rename <new-patch-name>,
+instead of stg rename <old> <new>. This is for example helpful for those people who
+always have a typo or two in their patch names.
 
-Doh, my bad...
+Signed-off-by: Onno Kortmann <onno@gmx.net>
+---
 
->  diff --git a/git-send-email.perl b/git-send-email.perl
->  index ccb87a2..c9f8c6b 100755
->  --- a/git-send-email.perl
->  +++ b/git-send-email.perl
->  @@ -475,7 +475,7 @@ if ($thread && !defined $initial_reply_to && $prompting) {
->
->         $initial_reply_to = $_;
->   }
->  -if (defined $initial_reply_to) {
->  +if (defined $initial_reply_to && $initial_reply_to ne '') {
->         $initial_reply_to =~ s/^\s*<?/</;
->         $initial_reply_to =~ s/>?\s*$/>/;
->   }
+ stgit/commands/rename.py |   23 ++++++++++++++++-------
+ 1 files changed, 16 insertions(+), 7 deletions(-)
 
-Actually:
-
-if ($initial_reply_to) { ...
-
-should be all that's needed.
-
-j.
+diff --git a/stgit/commands/rename.py b/stgit/commands/rename.py
+index e2b0fa4..c687455 100644
+--- a/stgit/commands/rename.py
++++ b/stgit/commands/rename.py
+@@ -25,9 +25,10 @@ from stgit import stack, git
+ 
+ 
+ help = 'rename a patch in the series'
+-usage = """%prog [options] <oldpatch> <newpatch>
++usage = """%prog [options] [oldpatch] <newpatch>
+ 
+-Rename <oldpatch> into <newpatch> in a series."""
++Rename <oldpatch> into <newpatch> in a series. If <oldpatch> is not given, the
++top-most patch will be renamed. """
+ 
+ directory = DirectoryHasRepository()
+ options = [make_option('-b', '--branch',
+@@ -37,9 +38,17 @@ options = [make_option('-b', '--branch',
+ def func(parser, options, args):
+     """Rename a patch in the series
+     """
+-    if len(args) != 2:
+-        parser.error('incorrect number of arguments')
+-
+-    out.start('Renaming patch "%s" to "%s"' % (args[0], args[1]))
+-    crt_series.rename_patch(args[0], args[1])
++    crt=crt_series.get_current()
++
++    if len(args) == 2:
++        old, new=args
++    elif len(args) == 1:
++        if not crt:
++            raise CmdException, "No applied top patch to rename exists."
++        old, [new]=crt, args
++    else: parser.error('incorrect number of arguments')
++
++    out.start('Renaming patch "%s" to "%s"' % (old, new))
++    crt_series.rename_patch(old, new)
++    
+     out.done()
