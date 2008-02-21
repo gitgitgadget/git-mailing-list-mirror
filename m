@@ -1,93 +1,96 @@
-From: "H.Merijn Brand" <h.m.brand@xs4all.nl>
-Subject: Re: Merge git repositories
-Date: Thu, 21 Feb 2008 14:58:23 +0100
-Message-ID: <20080221145823.019b8b7e@pc09.procura.nl>
-References: <20080220175901.71e7acc2@pc09.procura.nl>
-	<47BD7DEC.7040708@brefemail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: t2a2e9z8ncbs9qg@brefemail.com
-X-From: git-owner@vger.kernel.org Thu Feb 21 14:59:24 2008
+From: "Philippe Bruhat (BooK)" <book@cpan.org>
+Subject: [PATCH] cvsimport: allow for multiple -M options
+Date: Thu, 21 Feb 2008 15:25:49 +0100
+Message-ID: <1203603949-27790-1-git-send-email-book@cpan.org>
+Cc: gitster@pobox.com, "Philippe Bruhat (BooK)" <book@cpan.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 21 15:26:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JSBx8-0007tC-PC
-	for gcvg-git-2@gmane.org; Thu, 21 Feb 2008 14:59:11 +0100
+	id 1JSCNr-0002C4-Pp
+	for gcvg-git-2@gmane.org; Thu, 21 Feb 2008 15:26:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751679AbYBUN63 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 21 Feb 2008 08:58:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751687AbYBUN63
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Feb 2008 08:58:29 -0500
-Received: from smtp-vbr7.xs4all.nl ([194.109.24.27]:2858 "EHLO
-	smtp-vbr7.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751563AbYBUN62 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 21 Feb 2008 08:58:28 -0500
-Received: from pc09.procura.nl (procura.xs4all.nl [82.95.216.29])
-	(authenticated bits=0)
-	by smtp-vbr7.xs4all.nl (8.13.8/8.13.8) with ESMTP id m1LDwOei034086
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 21 Feb 2008 14:58:24 +0100 (CET)
-	(envelope-from h.m.brand@xs4all.nl)
-In-Reply-To: <47BD7DEC.7040708@brefemail.com>
-X-Mailer: Claws Mail 3.3.0cvs18 (GTK+ 2.10.6; x86_64-unknown-linux-gnu)
-Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwEAIAAACI8LKTAAAACXBIWXMAAABIAAAASABGyWs+AAAC
- JElEQVRo3u2aMY4CMQxFczZ6RItEzRm4DBINDbRUSPRInIRbsNK6+dJfezN4kokn48IaCSjysL8d
- e9Knoj2fr9f9/gllqQ6U9/vxWK3EdwdIEGjRIVCu18NhuxUfK46SH81+fzrdbuKPx/P5ctHQdAdI
- TKAgpvV6s9ntBEfXEYSGgMQzIHnuFBBjkshCNJ2KtJZ04hHNAugP8bZr3NIHhbcF0AKoK0CoaHXU
- LUWBIs1n+jV+Fl8CVqOApEXAwyMO/DSR4XVntoAYDR7eBjQupuYAYTMph8Rj21D4m7MChN02tpqs
- NSnb/KqU2oHCXu5xDCgflj/RAgBiKBIXnICzAsSjWBsTz5K4/HeXYvb8yK5lY3VGEwPi2aONKT+5
- AlcxrTPOwcTiraGRChgMEKJh0bVVifGVTq6qgBiNVl8QE29EsK6VE+YJAOG2wz5AvsqUS6uqgHCA
- n4NGvBYpnJ64Jgg27sCtxtBk1CJIA4S/GhdWKh07QxUB48jWGhZ4jKamRRr/T8/M0AaEyctry6YB
- 4dTGj9iWZNs3DahES5kPCJOu0RQbF/fQOBprsB9gaO9JtPDzII9U5ySXX7AnuIt91y54AAW7rPpT
- LCe5gt3F+CLqr2UarGB3MXvMylWGq4+9RCx3TW1oJq1t3HPQlFs6N1fFNEB4s8dn7Ne7ACSm7TPQ
- I5quAWmw6qBpulHM33B0Csge4Nd8JTTYG2b1XyRe3lH8x34ABJ6aePuQ2N4AAAAASUVORK5CYII=
-X-Virus-Scanned: by XS4ALL Virus Scanner
+	id S1753023AbYBUO0L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Feb 2008 09:26:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752285AbYBUO0L
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Feb 2008 09:26:11 -0500
+Received: from zlonk.bruhat.net ([91.121.102.217]:53083 "EHLO
+	ks354402.kimsufi.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751261AbYBUO0K (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Feb 2008 09:26:10 -0500
+Received: from localhost ([127.0.0.1] helo=plop.home.bruhat.net)
+	by ks354402.kimsufi.com with esmtp (Exim 4.63)
+	(envelope-from <philippe.bruhat@free.fr>)
+	id 1JSCIH-0004eu-K4; Thu, 21 Feb 2008 15:21:01 +0100
+Received: from book by plop.home.bruhat.net with local (Exim 4.69)
+	(envelope-from <philippe.bruhat@free.fr>)
+	id 1JSCN0-0007Ec-E9; Thu, 21 Feb 2008 15:25:54 +0100
+X-Mailer: git-send-email 1.5.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74616>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74617>
 
-On Thu, 21 Feb 2008 14:34:36 +0100, Jerome Lovy
-<t2a2e9z8ncbs9qg@brefemail.com> wrote:
+Use Getopt::Long instead of Getopt::Std to handle multiple -M options,
+for all the cases when having a single custom regex is not enough.
 
-> Hello,
->=20
-> On 02/20/2008 05:59 PM, H.Merijn Brand wrote:
-> > I have a whole bunch of git repositories that are conversions from =
-SCCS.
-> > SCCS is a VCS that only deals with a single directory, and cannot c=
-ope
-> > with directory hierarchies.
-> [SNIP]
->=20
-> > is it possible to merge git repos from sub-folders into the current=
- repo?
->=20
-> Doesn't maybe the subtree merge strategy help ?
-> See=20
-> http://www.kernel.org/pub/software/scm/git/docs/howto/using-merge-sub=
-tree.html
+For example, "merged (\w+)" and "(\w+) merged" can't be easily turned
+into a single regular expression capturing the branch name in $1.
 
-Does seem to fit the need.
+Signed-off-by: Philippe Bruhat (BooK) <book@cpan.org>
+---
+ git-cvsimport.perl |   15 ++++++++++-----
+ 1 files changed, 10 insertions(+), 5 deletions(-)
 
-> My 2 cents
-
-Probably worth much more! Thanks.
-
-> J=C3=A9r=C3=B4me
-
---=20
-H.Merijn Brand         Amsterdam Perl Mongers (http://amsterdam.pm.org/=
-)
-using & porting perl 5.6.2, 5.8.x, 5.10.x  on HP-UX 10.20, 11.00, 11.11=
-,
-& 11.23, SuSE 10.1 & 10.2, AIX 5.2, and Cygwin.       http://qa.perl.or=
-g
-http://mirrors.develooper.com/hpux/            http://www.test-smoke.or=
-g
-                        http://www.goldmark.org/jeff/stupid-disclaimers=
-/
+diff --git a/git-cvsimport.perl b/git-cvsimport.perl
+index 3d013a7..f138a01 100755
+--- a/git-cvsimport.perl
++++ b/git-cvsimport.perl
+@@ -15,7 +15,7 @@
+ 
+ use strict;
+ use warnings;
+-use Getopt::Std;
++use Getopt::Long;
+ use File::Spec;
+ use File::Temp qw(tempfile tmpnam);
+ use File::Path qw(mkpath);
+@@ -29,7 +29,7 @@ use IPC::Open2;
+ $SIG{'PIPE'}="IGNORE";
+ $ENV{'TZ'}="UTC";
+ 
+-our ($opt_h,$opt_o,$opt_v,$opt_k,$opt_u,$opt_d,$opt_p,$opt_C,$opt_z,$opt_i,$opt_P, $opt_s,$opt_m,$opt_M,$opt_A,$opt_S,$opt_L, $opt_a, $opt_r);
++our ($opt_h,$opt_o,$opt_v,$opt_k,$opt_u,$opt_d,$opt_p,$opt_C,$opt_z,$opt_i,$opt_P, $opt_s,$opt_m,@opt_M,$opt_A,$opt_S,$opt_L, $opt_a, $opt_r);
+ my (%conv_author_name, %conv_author_email);
+ 
+ sub usage(;$) {
+@@ -112,7 +112,12 @@ sub read_repo_config {
+ 
+ my $opts = "haivmkuo:d:p:r:C:z:s:M:P:A:S:L:";
+ read_repo_config($opts);
+-getopts($opts) or usage();
++Getopt::Long::Configure( 'no_ignore_case' );
++
++# turn the Getopt::Std specification in a Getopt::Long one,
++# with support for multiple -M options
++GetOptions( map { s/:/=s/; /M/ ? "$_\@" : $_ } split( /(?!:)/, $opts ) )
++    or usage();
+ usage if $opt_h;
+ 
+ if (@ARGV == 0) {
+@@ -166,8 +171,8 @@ our @mergerx = ();
+ if ($opt_m) {
+ 	@mergerx = ( qr/\b(?:from|of|merge|merging|merged) ([-\w]+)/i );
+ }
+-if ($opt_M) {
+-	push (@mergerx, qr/$opt_M/);
++if (@opt_M) {
++	push (@mergerx, map { qr/$_/ } @opt_M);
+ }
+ 
+ # Remember UTC of our starting time
+-- 
+1.5.4.1
