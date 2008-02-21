@@ -1,102 +1,71 @@
-From: Pieter de Bie <pdebie@ai.rug.nl>
-Subject: Re: [Bug] Segfault in git status
-Date: Thu, 21 Feb 2008 17:01:10 +0100
-Message-ID: <D3C27E63-329D-4509-830A-099A7BCB72B7@ai.rug.nl>
-References: <F8D3F7F0-3A98-4576-BD89-6E5C682B351C@fastmail.fm>
-Mime-Version: 1.0 (Apple Message framework v919.2)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org
-To: Dane Jensen <careo@fastmail.fm>
-X-From: git-owner@vger.kernel.org Thu Feb 21 17:02:36 2008
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [RFH] CE_REMOVE conversion
+Date: Thu, 21 Feb 2008 08:05:42 -0800 (PST)
+Message-ID: <alpine.LFD.1.00.0802210746410.7833@woody.linux-foundation.org>
+References: <7v7igywvnj.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 21 17:12:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JSDsO-0000gX-DK
-	for gcvg-git-2@gmane.org; Thu, 21 Feb 2008 17:02:24 +0100
+	id 1JSE2G-0004vQ-Gv
+	for gcvg-git-2@gmane.org; Thu, 21 Feb 2008 17:12:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933539AbYBUQBU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Feb 2008 11:01:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759965AbYBUQBR
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Feb 2008 11:01:17 -0500
-Received: from smtp-2.orange.nl ([193.252.22.242]:12034 "EHLO smtp-2.orange.nl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934050AbYBUQBO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Feb 2008 11:01:14 -0500
-Received: from me-wanadoo.net (localhost [127.0.0.1])
-	by mwinf6101.orange.nl (SMTP Server) with ESMTP id 0DD141C0008D
-	for <git@vger.kernel.org>; Thu, 21 Feb 2008 17:01:12 +0100 (CET)
-Received: from [192.168.1.11] (s5591931c.adsl.wanadoo.nl [85.145.147.28])
-	by mwinf6101.orange.nl (SMTP Server) with ESMTP id B9ECE1C00083;
-	Thu, 21 Feb 2008 17:01:11 +0100 (CET)
-X-ME-UUID: 20080221160111761.B9ECE1C00083@mwinf6101.orange.nl
-In-Reply-To: <F8D3F7F0-3A98-4576-BD89-6E5C682B351C@fastmail.fm>
-X-Mailer: Apple Mail (2.919.2)
+	id S1755482AbYBUQMA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Feb 2008 11:12:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758893AbYBUQMA
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Feb 2008 11:12:00 -0500
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:40811 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755482AbYBUQL7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 21 Feb 2008 11:11:59 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m1LG5hSV011014
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 21 Feb 2008 08:05:44 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m1LG5gAt029540;
+	Thu, 21 Feb 2008 08:05:42 -0800
+In-Reply-To: <7v7igywvnj.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+X-Spam-Status: No, hits=-3.238 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74624>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74625>
 
 
-On Feb 18, 2008, at 9:36 AM, Dane Jensen wrote:
 
-> Hi all-
->
-> Somehow I've managed to create a repository that causes git status  
-> to segfault. To be honest, I'm not entirely sure how just yet. This  
-> comes after a weekend of splitting a repository into two separate  
-> repositories, filtering out a directory from one, and then creating  
-> grafts in those repositories to skip commits that now change nothing.
+On Thu, 21 Feb 2008, Junio C Hamano wrote:
+> 
+> but I am wondering if we should instead really _remove_ entries
+> from the index instead, just like the attached patch.
 
-I have the same problem, also on OS X.
+Absolutely. I think that your patch is "ObviouslyCorrect(tm)", and that 
+code should never have used CE_REMOVE in the first place. The fact that 
+the old code worked was perhaps intentional, but still very subtle and 
+lucky.
 
-Vienna:Project pieter$ git --version
-git version 1.5.4.2.263.g5729
+The whole (and only) point of CE_REMOVE was and is to do the "-u" handling 
+when resolving a merge, and keep the thing in the index in order to later 
+still do work with it (ie remove it) when we have verified that the index 
+is complete. But that's not what "read_cache_unmerged()" is about: it's 
+very explicitly documented to just ignore the unmerged entries.
 
-which is 'next' + 2 patches
+So your patch looks very good to me. Basically, the merge code absolutely 
+does not want to be called with some entries already marked as CE_REMOVE 
+(it's supposed to *add* those markers as part of resolving the merge, but 
+it is not able to handle them in the source).
 
-Vienna:Project pieter$ gdb --args git status
-GNU gdb 6.3.50-20050815 (Apple version gdb-768) (Tue Oct  2 04:07:49  
-UTC 2007)
-Copyright 2004 Free Software Foundation, Inc.
-GDB is free software, covered by the GNU General Public License, and  
-you are
-welcome to change it and/or distribute copies of it under certain  
-conditions.
-Type "show copying" to see the conditions.
-There is absolutely no warranty for GDB.  Type "show warranty" for  
-details.
-This GDB was configured as "i386-apple-darwin"...Reading symbols for  
-shared libraries ........ done
+So ack, ack, ack.
 
-(gdb) r
-Starting program: /opt/pieter/bin/git status
-Reading symbols for shared libraries +++++++. done
-# On branch master
-# Changed but not updated:
-#   (use "git add <file>..." to update what will be committed)
-#
-#	modified:   Data/Metadata/redirects.xml
-#	modified:   protege/ontologie.owl
-#	modified:   protege/ontologie.pprj
-#	modified:   protege/ontologie.repository
-#	modified:   protege/swirl_data.owl
-#	modified:   test-po2s.db
-#	modified:   test-so2p.db
-#	modified:   test-sp2o.db
-#
 
-Program received signal EXC_BAD_ACCESS, Could not access memory.
-Reason: KERN_INVALID_ADDRESS at address: 0x004a2010
-index_name_exists (istate=0xeba80, name=0xbfffdc27 "Data/Cache/ 
-Template/Peter_II_of_Yugoslavia.html", namelen=47) at read-cache.c:101
-101			if (!(ce->ce_flags & CE_UNHASHED)) {
-(gdb) print *ce
-Cannot access memory at address 0x4a1fec
-
-This happens in at least one repository, most others are just fine.
-
-- Pieter
+			Linus
