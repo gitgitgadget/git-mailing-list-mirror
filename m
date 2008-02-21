@@ -1,63 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Object Permissions - trying git-init --shared=group parameters
-Date: Thu, 21 Feb 2008 14:16:04 -0800
-Message-ID: <7vzlturm57.fsf@gitster.siamese.dyndns.org>
-References: <47BDF5EF.9030707@bluelane.com>
+From: Steven Walter <stevenrwalter@gmail.com>
+Subject: Re: Minor annoyance with git push
+Date: Thu, 21 Feb 2008 17:35:49 -0500
+Message-ID: <20080221223549.GA26266@dervierte>
+References: <7v7ihd7ee1.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0802100213330.11591@racer.site> <20080210101756.GB26568@coredump.intra.peff.net> <alpine.LSU.1.00.0802101219280.11591@racer.site> <20080210122321.GA31009@coredump.intra.peff.net> <alpine.LSU.1.00.0802101303140.11591@racer.site> <7vzltwavf9.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0802201305350.17164@racer.site> <76718490802200720w4dd89dc1lf7b19d546d3bfd00@mail.gmail.com> <alpine.LSU.1.00.0802201535250.17164@racer.site>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	piet.delaney@gmail.piet.net, Piet Delaney <piet.delaney@gmail.com>
-To: pete@bluelane.com
-X-From: git-owner@vger.kernel.org Thu Feb 21 23:17:16 2008
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Feb 21 23:36:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JSJiy-00056o-Ff
-	for gcvg-git-2@gmane.org; Thu, 21 Feb 2008 23:17:04 +0100
+	id 1JSK1x-0003y3-H4
+	for gcvg-git-2@gmane.org; Thu, 21 Feb 2008 23:36:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763712AbYBUWQ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Feb 2008 17:16:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757535AbYBUWQ1
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Feb 2008 17:16:27 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:49686 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1763398AbYBUWQ0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Feb 2008 17:16:26 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 6B3AD2EC2;
-	Thu, 21 Feb 2008 17:16:22 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 93C3C2EBD; Thu, 21 Feb 2008 17:16:14 -0500 (EST)
-In-Reply-To: <47BDF5EF.9030707@bluelane.com> (pete@bluelane.com's message of
- "Thu, 21 Feb 2008 14:06:39 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1765222AbYBUWgI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Feb 2008 17:36:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757142AbYBUWgH
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Feb 2008 17:36:07 -0500
+Received: from ik-out-1112.google.com ([66.249.90.176]:39942 "EHLO
+	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757202AbYBUWgF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Feb 2008 17:36:05 -0500
+Received: by ik-out-1112.google.com with SMTP id c28so206897ika.5
+        for <git@vger.kernel.org>; Thu, 21 Feb 2008 14:36:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
+        bh=8qPC9l7eY1LNiyK7oKrqZ41CPLFjhc6UAdlRqRokbck=;
+        b=LbM8fzCei/0sPrLGmd/Ap8O/Tibxvvr0RY+smocYMHgpScsoF1+hqQJF6jlcDy7MaCZPr0Xh00RJiNNH7NUgibtouQzyrXtLMn3LN/ThCbX0n6GIljwwVnTQKeTY2u7mr64FQ3iajgY5+w6SIbpFErMj5seEzvXM1OKdCZ9WUYs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
+        b=nbjTKKRnTdqIicak0MNd0P7DEYyb8Y0XmsvXb/xVtgqm3AVDe230tww7Zzppb/S3bKfeMy7RdvCI+RGbfNr+NiLHk5t0haD1zKCe+F68apm7I87P2WRs12ZK9xQgdTShMEnlxW5qeRsS6sh0cKY5HvC1mbLBu/JmKqdDabTtnW0=
+Received: by 10.142.187.2 with SMTP id k2mr5627255wff.25.1203633352979;
+        Thu, 21 Feb 2008 14:35:52 -0800 (PST)
+Received: from dasbrennen.isa-geek.org ( [76.177.39.93])
+        by mx.google.com with ESMTPS id l22sm943503wrl.38.2008.02.21.14.35.51
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 21 Feb 2008 14:35:52 -0800 (PST)
+Received: by dasbrennen.isa-geek.org (Postfix, from userid 1000)
+	id 0D74D234D3; Thu, 21 Feb 2008 17:35:49 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <alpine.LSU.1.00.0802201535250.17164@racer.site>
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74671>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74672>
 
-Pete/Piet Delaney <pete@bluelane.com> writes:
+On Wed, Feb 20, 2008 at 03:38:31PM +0000, Johannes Schindelin wrote:
+> That depends awfully on your definition of "safe".
+> 
+> I, for one, hate the idea already, that I am "safe" when "git push" does 
+> not do the thing I asked it to, and which it has done for a couple of 
+> years now without complaint, and which I have gotten used to.
+> 
+> And then, there will be a great confusion for me, since I work on 5 
+> different machines on an average day, with 5 different git versions, and 
+> having different config settings.
 
-> So I looked int the meaning of these config prams and
-> thought I tried adding:
->
-> 	sharedrepository = 1
->
-> 	denyNonFastforwards = true
->
-> to the bare repo on the git server. I'm not sure if
-> existing repo that have been cloned will have to be
-> updated, hopefully not.
-
-You would at least make sure the directories there that was
-created while the repository was misconfigured can be writable
-by group members (i.e. permissions no stricter than drwxrws---)
-and owned by the group.  Something like
-
-	mode=2775 ;# 2770 if closed to non-members
-	chgrp -R $group $GIT_DIR
-	find $GIT_DIR -type d -print0 | xargs -0 chmod $mode
+Which is worse: pushing more refs than you intended (requiring rewinding
+refs on a repository that other people may pull from), or pushing fewer
+refs than you intended, requiring you to run the command a second time?
+-- 
+-Steven Walter <stevenrwalter@gmail.com>
+Freedom is the freedom to say that 2 + 2 = 4
+B2F1 0ECC E605 7321 E818  7A65 FC81 9777 DC28 9E8F 
