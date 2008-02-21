@@ -1,83 +1,87 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: [PATCH] Improve documentation for git-sh-setup.
-Date: Fri, 22 Feb 2008 00:01:28 +0100
-Message-ID: <20080221230101.27644.49229.stgit@gandelf.nowhere.earth>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Don't verify host name in SSL certs when
+ GIT_SSL_NO_VERIFY is set
+Date: Thu, 21 Feb 2008 15:10:37 -0800
+Message-ID: <7vd4qpsy6q.fsf@gitster.siamese.dyndns.org>
+References: <Pine.LNX.4.64.0802212003140.14691@yvahk3.pbagnpgbe.fr>
+ <1203621790-1415-1-git-send-email-mh@glandium.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 22 00:01:30 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Fri Feb 22 00:11:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JSKPn-0004rI-RZ
-	for gcvg-git-2@gmane.org; Fri, 22 Feb 2008 00:01:20 +0100
+	id 1JSKZe-0008LY-An
+	for gcvg-git-2@gmane.org; Fri, 22 Feb 2008 00:11:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753944AbYBUXAo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Feb 2008 18:00:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753571AbYBUXAo
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Feb 2008 18:00:44 -0500
-Received: from smtp3-g19.free.fr ([212.27.42.29]:57428 "EHLO smtp3-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753405AbYBUXAn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Feb 2008 18:00:43 -0500
-Received: from smtp3-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id 82B2D17B56B
-	for <git@vger.kernel.org>; Fri, 22 Feb 2008 00:00:42 +0100 (CET)
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id 6366317B55F
-	for <git@vger.kernel.org>; Fri, 22 Feb 2008 00:00:42 +0100 (CET)
-Received: from gandelf.nowhere.earth (localhost [127.0.0.1])
-	by gandelf.nowhere.earth (Postfix) with ESMTP id 90AFE1F025
-	for <git@vger.kernel.org>; Fri, 22 Feb 2008 00:01:28 +0100 (CET)
-User-Agent: StGIT/0.14.1
+	id S1756369AbYBUXKz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Feb 2008 18:10:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755154AbYBUXKy
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Feb 2008 18:10:54 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:37155 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754507AbYBUXKx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Feb 2008 18:10:53 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 226CF1464;
+	Thu, 21 Feb 2008 18:10:52 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 16DC51463; Thu, 21 Feb 2008 18:10:45 -0500 (EST)
+In-Reply-To: <1203621790-1415-1-git-send-email-mh@glandium.org> (Mike
+ Hommey's message of "Thu, 21 Feb 2008 20:23:10 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74675>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74676>
 
-Signed-off-by: Yann Dirson <ydirson@altern.org>
-Cc: Pierre Habouzit <madcoder@debian.org>
----
+Mike Hommey <mh@glandium.org> writes:
 
- Documentation/git-sh-setup.txt |   23 ++++++++++++++++++-----
- 1 files changed, 18 insertions(+), 5 deletions(-)
+> Signed-off-by: Mike Hommey <mh@glandium.org>
+> ---
+>  http.c |    1 +
+>  1 files changed, 1 insertions(+), 0 deletions(-)
+>
+> diff --git a/http.c b/http.c
+> index 5925d07..519621a 100644
+> --- a/http.c
+> +++ b/http.c
+> @@ -177,6 +177,7 @@ static CURL* get_curl_handle(void)
+>  	CURL* result = curl_easy_init();
+>  
+>  	curl_easy_setopt(result, CURLOPT_SSL_VERIFYPEER, curl_ssl_verify);
+> +	curl_easy_setopt(result, CURLOPT_SSL_VERIFYHOST, curl_ssl_verify * 2);
+>  #if LIBCURL_VERSION_NUM >= 0x070907
+>  	curl_easy_setopt(result, CURLOPT_NETRC, CURL_NETRC_OPTIONAL);
+>  #endif
 
+Is it just me who finds that "* 2" is extremely magical?
 
-diff --git a/Documentation/git-sh-setup.txt b/Documentation/git-sh-setup.txt
-index 16b8b75..75e6846 100644
---- a/Documentation/git-sh-setup.txt
-+++ b/Documentation/git-sh-setup.txt
-@@ -19,12 +19,25 @@ Porcelain-ish scripts and/or are writing new ones.
- The `git-sh-setup` scriptlet is designed to be sourced (using
- `.`) by other shell scripts to set up some variables pointing at
- the normal git directories and a few helper shell functions.
-+It also provides help messages, and some amount of command-line
-+parsing.
+diff --git a/http.c b/http.c
+index 5925d07..8dce820 100644
+--- a/http.c
++++ b/http.c
+@@ -176,7 +176,16 @@ static CURL* get_curl_handle(void)
+ {
+ 	CURL* result = curl_easy_init();
  
--Before sourcing it, your script should set up a few variables;
--`USAGE` (and `LONG_USAGE`, if any) is used to define message
--given by `usage()` shell function.  `SUBDIRECTORY_OK` can be set
--if the script can run from a subdirectory of the working tree
--(some commands do not).
-+Before sourcing it, your script should set up a few variables.
+-	curl_easy_setopt(result, CURLOPT_SSL_VERIFYPEER, curl_ssl_verify);
++	if (!curl_ssl_verify) {
++		curl_easy_setopt(result, CURLOPT_SSL_VERIFYPEER, 0);
++		curl_easy_setopt(result, CURLOPT_SSL_VERIFYHOST, 0);
++	} else {
++		/* Verify authenticity of the peer's certificate */
++		curl_easy_setopt(result, CURLOPT_SSL_VERIFYPEER, 1);
++		/* The name in the cert must match whom we tried to connect */
++		curl_easy_setopt(result, CURLOPT_SSL_VERIFYHOST, 2);
++	}
 +
-+`OPTIONS_SPEC` allows to declare the options so that the command-line
-+can be pre-processed, and the usage message autogenerated.  It must
-+follow the rules which apply to arguments to `git rev-parse
-+--parseopt`.  If you need `git-rev-parse --parseopt` to keep the `--`
-+the user may have passed to your command, you should also set
-+`OPTIONS_KEEPDASHDASH` to a non empty value.
-+
-+If the constraints imposed by the use of `git rev-parse` do not fit
-+for a particular tool, `USAGE` (and `LONG_USAGE`, if any) can be used
-+to define message given by `usage()` shell function; no command-line
-+pre-processing occurs, the script has entire control over it.
-+
-+`SUBDIRECTORY_OK` can be set if the script can run from a subdirectory
-+of the working tree (some commands do not).
- 
- The scriptlet sets `GIT_DIR` and `GIT_OBJECT_DIRECTORY` shell
- variables, but does *not* export them to the environment.
+ #if LIBCURL_VERSION_NUM >= 0x070907
+ 	curl_easy_setopt(result, CURLOPT_NETRC, CURL_NETRC_OPTIONAL);
+ #endif
