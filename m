@@ -1,71 +1,55 @@
-From: Mike Galbraith <efault@gmx.de>
-Subject: Re: bisect: "won't bisect on seeked tree"
-Date: Thu, 21 Feb 2008 07:00:24 +0100
-Message-ID: <1203573624.20492.12.camel@homer.simson.net>
-References: <1203571214.24456.6.camel@homer.simson.net>
-	 <20080221053307.GA2887@spearce.org>
-	 <1203572388.20492.0.camel@homer.simson.net>
-	 <20080221054332.GB2887@spearce.org>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: GIT_SSL_NO_VERIFY=1 over http doesn't ignore a different ip
+	address for the signed certificate
+Date: Thu, 21 Feb 2008 07:42:52 +0100
+Organization: glandium.org
+Message-ID: <20080221064252.GA16036@glandium.org>
+References: <e26d18e40802201535s7a5c12fbtd61d2445426f4018@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Feb 21 07:01:03 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Anatoly Yakovenko <aeyakovenko@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 21 07:41:27 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JS4UP-00034s-Oz
-	for gcvg-git-2@gmane.org; Thu, 21 Feb 2008 07:01:02 +0100
+	id 1JS57U-0001th-J5
+	for gcvg-git-2@gmane.org; Thu, 21 Feb 2008 07:41:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752842AbYBUGA0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Feb 2008 01:00:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751865AbYBUGA0
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Feb 2008 01:00:26 -0500
-Received: from mail.gmx.net ([213.165.64.20]:53018 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750776AbYBUGAZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Feb 2008 01:00:25 -0500
-Received: (qmail invoked by alias); 21 Feb 2008 06:00:23 -0000
-Received: from p54B5BA9E.dip0.t-ipconnect.de (EHLO [192.168.178.23]) [84.181.186.158]
-  by mail.gmx.net (mp058) with SMTP; 21 Feb 2008 07:00:23 +0100
-X-Authenticated: #14349625
-X-Provags-ID: V01U2FsdGVkX18Zs5VHAk8ZO8QcrxFXQrFGHE+iUyAWzbLoIWIPA2
-	p5uXwz+Cz11WaC
-In-Reply-To: <20080221054332.GB2887@spearce.org>
-X-Mailer: Evolution 2.12.0 
-X-Y-GMX-Trusted: 0
+	id S1753113AbYBUGkt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Feb 2008 01:40:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752747AbYBUGkt
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Feb 2008 01:40:49 -0500
+Received: from vuizook.err.no ([85.19.215.103]:37345 "EHLO vuizook.err.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750706AbYBUGks (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Feb 2008 01:40:48 -0500
+Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
+	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.67)
+	(envelope-from <mh@glandium.org>)
+	id 1JS56m-0003KP-Fo; Thu, 21 Feb 2008 07:40:47 +0100
+Received: from mh by jigen with local (Exim 4.69)
+	(envelope-from <mh@jigen>)
+	id 1JS58u-0004U1-2W; Thu, 21 Feb 2008 07:42:52 +0100
+Content-Disposition: inline
+In-Reply-To: <e26d18e40802201535s7a5c12fbtd61d2445426f4018@mail.gmail.com>
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74602>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74603>
 
+On Wed, Feb 20, 2008 at 03:35:54PM -0800, Anatoly Yakovenko wrote:
+> I am not sure if its a bug in curl or git, but despite setting
+> GIT_SSL_NO_VERIFY=1, if i use a different ip address or hostname then
+> the certificate was signed for, git fails to push changes.
 
-On Thu, 2008-02-21 at 00:43 -0500, Shawn O. Pearce wrote:
-> Mike Galbraith <efault@gmx.de> wrote:
-> > On Thu, 2008-02-21 at 00:33 -0500, Shawn O. Pearce wrote:
-> > > Mike Galbraith <efault@gmx.de> wrote:
-> > > > I have no idea how tree became "seeked", but would love to know how to
-> > > > "un-seek" it so I can proceed with a bisection.  Help?
-> > > 
-> > > I think you are already in the middle of a bisect.
-> > > 
-> > > Try "git bisect reset" first to get out of the current bisect before
-> > > starting another one.
-> > 
-> > It says "We are not bisecting".
-> 
-> Your repository is in a funny state.  The file .git/BISECT_NAMES
-> was removed but .git/head-name was not.  Deleting .git/head-name
-> should resolve the issue.  But it would be interesting to know how
-> the repository came into this state.
+Can you try with GIT_CURL_VERBOSE=1 ? The trace message will probably
+help understanding what happens.
 
-Bingo, thanks!
-
-There's only one git user here, so I have a good idea who to blame...
-but he (me) is claiming innocence.  The content of head-name was
-"master" fwiw.
-
-	-Mike
+Mike
