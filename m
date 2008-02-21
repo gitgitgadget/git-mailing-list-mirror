@@ -1,69 +1,117 @@
-From: "Jay Soffian" <jaysoffian@gmail.com>
-Subject: Re: [Bug] Segfault in git status
-Date: Thu, 21 Feb 2008 10:34:47 -0500
-Message-ID: <76718490802210734o43e7eb2fid3f4677d5570ac2a@mail.gmail.com>
-References: <F8D3F7F0-3A98-4576-BD89-6E5C682B351C@fastmail.fm>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: Built-in checkout: wrong behaviour in subdirectories
+Date: Thu, 21 Feb 2008 10:50:42 -0500 (EST)
+Message-ID: <alpine.LNX.1.00.0802211041190.19024@iabervon.org>
+References: <20080220223520.GA23642@localhost> <alpine.LNX.1.00.0802201740050.19024@iabervon.org> <7vhcg32p0i.fsf@gitster.siamese.dyndns.org> <7vd4qr2o03.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Dane Jensen" <careo@fastmail.fm>
-X-From: git-owner@vger.kernel.org Thu Feb 21 16:35:36 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Clemens Buchacher <drizzd@aon.at>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 21 16:52:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JSDSG-0005sb-He
-	for gcvg-git-2@gmane.org; Thu, 21 Feb 2008 16:35:24 +0100
+	id 1JSDiQ-0004Yt-Oe
+	for gcvg-git-2@gmane.org; Thu, 21 Feb 2008 16:52:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753759AbYBUPet (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Feb 2008 10:34:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753792AbYBUPet
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Feb 2008 10:34:49 -0500
-Received: from wa-out-1112.google.com ([209.85.146.181]:38055 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753645AbYBUPes (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Feb 2008 10:34:48 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so73223wah.23
-        for <git@vger.kernel.org>; Thu, 21 Feb 2008 07:34:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=rCTrVQRW8iLVuErTtXFC52G+ydQ3cC7Hq9PyYKwpMsw=;
-        b=WeaHD117nChO7K/DaCfEfB0s+pqjKuxXQxyKFJT985ydZUkKP04R6Qc93aE4zDICH0EUUxZh+OtzfZRAHMIbjBhtJTrkMThdBx4aa2mTqqtmv5x+sarWNkJ/QHeDH/B3cbJ/StGlvmQ1JqCaB1vXy5qpjlspuumxiWTSpPCOlUU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Ha06QXA4gstQDssIox5XnbXe9rZR1UBcJ2K+5PCUn3dPVLLilzt4W1cL0TJh46xr4EjBTdaaUAJzmtkV1Q1IfSEHncLtfKZza2LlT6b05ptkFlfGROC8ycAJBkwo8HwBmx2yFmlkkl6r2xfpuuvpkGwklO6E5igIeOlFMCLL7xY=
-Received: by 10.115.54.1 with SMTP id g1mr4594237wak.132.1203608087874;
-        Thu, 21 Feb 2008 07:34:47 -0800 (PST)
-Received: by 10.114.145.13 with HTTP; Thu, 21 Feb 2008 07:34:47 -0800 (PST)
-In-Reply-To: <F8D3F7F0-3A98-4576-BD89-6E5C682B351C@fastmail.fm>
-Content-Disposition: inline
+	id S1752263AbYBUPvI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Feb 2008 10:51:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764565AbYBUPux
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Feb 2008 10:50:53 -0500
+Received: from iabervon.org ([66.92.72.58]:55612 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1760361AbYBUPur (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Feb 2008 10:50:47 -0500
+Received: (qmail 16618 invoked by uid 1000); 21 Feb 2008 15:50:42 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 21 Feb 2008 15:50:42 -0000
+In-Reply-To: <7vd4qr2o03.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74622>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74623>
 
-On Mon, Feb 18, 2008 at 3:36 AM, Dane Jensen <careo@fastmail.fm> wrote:
-> Hi all-
->
->  Somehow I've managed to create a repository that causes git status to
->  segfault. To be honest, I'm not entirely sure how just yet. This comes
->  after a weekend of splitting a repository into two separate
->  repositories, filtering out a directory from one, and then creating
->  grafts in those repositories to skip commits that now change nothing.
->
->  This was in OS X 10.5.2 with git compiled from cf5c51e. Falling back
->  to 1.5.4.2 cleared it up, so with the help of git bisect I've narrowed
->  the bug down to cf55870.
->
->  I'll spend some time this week trying to find the exact point in my
->  filtering that git status went south and report back if I can
->  replicate it in a more-controlled test.
+On Wed, 20 Feb 2008, Junio C Hamano wrote:
 
-BTW - you should have a crash log in ~/Library/Logs/CrashReporter and
-that should list the function in which the crash occurred.
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+> > Daniel Barkalow <barkalow@iabervon.org> writes:
+> >
+> >> Junio: it looks like something used to cause read-tree to be run with 
+> >> pwd being the working tree root in git-checkout.sh.
+> >
+> > "Something"?  I think we explicitly cdup when switching
+> > branches, and we should do the same in C rewrite.
+> >
+> >         # We are switching branches and checking out trees, so
+> >         # we *NEED* to be at the toplevel.
+> >         cd_to_toplevel
+> 
+> Isn't it just the matter of not passing prefix to topts in
+> merge_working_tree()?  Your other calls to unpack_trees() do not
+> seem to pass bogus prefix to it.
 
-j.
+You're absolutely right; I think I initially misunderstood the way the 
+wrapper sets things up beforehand, and did the later parts of the 
+conversion correctly. But we should also drop the bunch of 
+now-unused arguments, too:
+
+--------------
+commit 267d68e24111bc9054d1f3356842f58106c76f49
+Author: Daniel Barkalow <barkalow@iabervon.org>
+Date:   Thu Feb 21 10:48:46 2008 -0500
+
+    Remove unused prefix arguments in switch_branches path
+    
+    This path doesn't actually care where in the tree you started out,
+    since it must change the whole thing anyway. With the gratuitous bug
+    removed, the argument is unused.
+    
+    Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
+---
+ builtin-checkout.c |   10 ++++------
+ 1 files changed, 4 insertions(+), 6 deletions(-)
+
+diff --git a/builtin-checkout.c b/builtin-checkout.c
+index cddd3a9..46cb362 100644
+--- a/builtin-checkout.c
++++ b/builtin-checkout.c
+@@ -205,8 +205,7 @@ static void setup_branch_path(struct branch_info *branch)
+ }
+ 
+ static int merge_working_tree(struct checkout_opts *opts,
+-			      struct branch_info *old, struct branch_info *new,
+-			      const char *prefix)
++			      struct branch_info *old, struct branch_info *new)
+ {
+ 	int ret;
+ 	struct lock_file *lock_file = xcalloc(1, sizeof(struct lock_file));
+@@ -429,8 +428,7 @@ static void update_refs_for_switch(struct checkout_opts *opts,
+ 		adjust_to_tracking(new, opts);
+ }
+ 
+-static int switch_branches(struct checkout_opts *opts,
+-			   struct branch_info *new, const char *prefix)
++static int switch_branches(struct checkout_opts *opts, struct branch_info *new)
+ {
+ 	int ret = 0;
+ 	struct branch_info old;
+@@ -471,7 +469,7 @@ static int switch_branches(struct checkout_opts *opts,
+ 		opts->force = 1;
+ 	}
+ 
+-	ret = merge_working_tree(opts, &old, new, prefix);
++	ret = merge_working_tree(opts, &old, new);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -565,5 +563,5 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
+ 		die("Cannot switch branch to a non-commit.");
+ 	}
+ 
+-	return switch_branches(&opts, &new, prefix);
++	return switch_branches(&opts, &new);
+ }
