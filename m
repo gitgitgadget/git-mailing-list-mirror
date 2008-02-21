@@ -1,61 +1,69 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 3/3] diff: fix java funcname pattern for solaris
-Date: Wed, 20 Feb 2008 19:01:16 -0500
-Message-ID: <20080221000115.GC6429@coredump.intra.peff.net>
-References: <20080220235944.GA6278@coredump.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-clean: handle errors if removing files fails
+Date: Wed, 20 Feb 2008 16:12:16 -0800
+Message-ID: <7vodab182n.fsf@gitster.siamese.dyndns.org>
+References: <20080220234154.GS31441@genesis.frugalware.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Whit Armstrong <armstrong.whit@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 21 01:02:04 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Thu Feb 21 01:13:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JRysw-0001pV-Gq
-	for gcvg-git-2@gmane.org; Thu, 21 Feb 2008 01:01:58 +0100
+	id 1JRz3v-0004y3-6u
+	for gcvg-git-2@gmane.org; Thu, 21 Feb 2008 01:13:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764021AbYBUABT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Feb 2008 19:01:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763404AbYBUABT
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Feb 2008 19:01:19 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3741 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1762091AbYBUABS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Feb 2008 19:01:18 -0500
-Received: (qmail 9422 invoked by uid 111); 21 Feb 2008 00:01:17 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 20 Feb 2008 19:01:17 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 20 Feb 2008 19:01:16 -0500
-Content-Disposition: inline
-In-Reply-To: <20080220235944.GA6278@coredump.intra.peff.net>
+	id S1752368AbYBUAMo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Feb 2008 19:12:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752430AbYBUAMn
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Feb 2008 19:12:43 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:34360 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752351AbYBUAMn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Feb 2008 19:12:43 -0500
+Received: from .pobox.com (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id C4D6561ED;
+	Wed, 20 Feb 2008 19:12:41 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.pobox.com (Postfix) with ESMTP id
+ 1F24961EC; Wed, 20 Feb 2008 19:12:36 -0500 (EST)
+In-Reply-To: <20080220234154.GS31441@genesis.frugalware.org> (Miklos Vajna's
+ message of "Thu, 21 Feb 2008 00:41:54 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74577>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74578>
 
-The Solaris regex library doesn't like having the '$' anchor
-inside capture parentheses. It rejects the match, causing
-t4018 to fail.
+Miklos Vajna <vmiklos@frugalware.org> writes:
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- diff.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+> Consider the following case:
+>
+> $ sudo mkdir foo
+> $ sudo touch foo/bar
+>
+> This is the old output:
+>
+> $ git clean -f -d
+> Removing foo/
+>
+> No error message.
+>
+> This is the new output:
+>
+> $ ~/git/git/git clean -f -d
+> Removing foo/
+> fatal: failed to remove 'foo/'
 
-diff --git a/diff.c b/diff.c
-index 58fe775..0f18ee9 100644
---- a/diff.c
-+++ b/diff.c
-@@ -1199,7 +1199,7 @@ static struct builtin_funcname_pattern {
- 			"new\\|return\\|switch\\|throw\\|while\\)\n"
- 			"^[ 	]*\\(\\([ 	]*"
- 			"[A-Za-z_][A-Za-z_0-9]*\\)\\{2,\\}"
--			"[ 	]*([^;]*$\\)" },
-+			"[ 	]*([^;]*\\)$" },
- 	{ "tex", "^\\(\\\\\\(sub\\)*section{.*\\)$" },
- };
- 
--- 
-1.5.4.2.247.g107bd
+That's quite different style from the other commit log messages
+in the project, isn't it?
+
+While I agree reporting an error is definitely an improvement, I
+do not think dying in the middle is the right thing to do.
+
+Shouldn't it note the error, remove other cruft, and then
+finally signal the error by exiting non-zero?
