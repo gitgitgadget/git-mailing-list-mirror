@@ -1,77 +1,69 @@
-From: =?ISO-8859-1?Q?Jean-Fran=E7ois_Veillette?= 
-	<jean_francois_veillette@yahoo.ca>
-Subject: problem with git-browser
-Date: Thu, 21 Feb 2008 09:52:38 -0500
-Message-ID: <51DDC697-9567-44AC-92D9-FD3E82C4279E@yahoo.ca>
-Mime-Version: 1.0 (Apple Message framework v753)
-Content-Type: text/plain; charset=ISO-8859-1;
-	delsp=yes	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Feb 21 15:58:53 2008
+From: "Jay Soffian" <jaysoffian@gmail.com>
+Subject: Re: [Bug] Segfault in git status
+Date: Thu, 21 Feb 2008 10:34:47 -0500
+Message-ID: <76718490802210734o43e7eb2fid3f4677d5570ac2a@mail.gmail.com>
+References: <F8D3F7F0-3A98-4576-BD89-6E5C682B351C@fastmail.fm>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Dane Jensen" <careo@fastmail.fm>
+X-From: git-owner@vger.kernel.org Thu Feb 21 16:35:36 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JSCsu-0007tb-Oq
-	for gcvg-git-2@gmane.org; Thu, 21 Feb 2008 15:58:53 +0100
+	id 1JSDSG-0005sb-He
+	for gcvg-git-2@gmane.org; Thu, 21 Feb 2008 16:35:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753759AbYBUO6R convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 21 Feb 2008 09:58:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753792AbYBUO6Q
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Feb 2008 09:58:16 -0500
-Received: from n14.bullet.mail.mud.yahoo.com ([68.142.201.237]:31405 "HELO
-	n14.bullet.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1753692AbYBUO6P convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Feb 2008 09:58:15 -0500
-X-Greylist: delayed 327 seconds by postgrey-1.27 at vger.kernel.org; Thu, 21 Feb 2008 09:58:15 EST
-Received: from [209.191.108.96] by n14.bullet.mail.mud.yahoo.com with NNFMP; 21 Feb 2008 14:52:47 -0000
-Received: from [68.142.201.68] by t3.bullet.mud.yahoo.com with NNFMP; 21 Feb 2008 14:52:47 -0000
-Received: from [127.0.0.1] by omp420.mail.mud.yahoo.com with NNFMP; 21 Feb 2008 14:52:47 -0000
-X-Yahoo-Newman-Id: 915845.83031.bm@omp420.mail.mud.yahoo.com
-Received: (qmail 34901 invoked from network); 21 Feb 2008 14:52:45 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.ca;
-  h=Received:X-YMail-OSG:X-Yahoo-Newman-Property:Mime-Version:Content-Transfer-Encoding:Message-Id:Content-Type:To:From:Subject:Date:X-Mailer;
-  b=MG2tjbJp1SlvlyX3CPDy7J+1t30aF7f0wEChFmuTBp752r72m2EMcV4jU2PG+fRY6lP9UJnTMYS+Md00LiUz5Qa3ZKNZ3SKp4WmeiS9XHLPp2DrrR02C725wQ0QqoudaM8VJPxJZCc1CqD7XYMI6W5BkWgZtIvP+QJq8TEk0qE0=  ;
-Received: from unknown (HELO ?10.0.1.3?) (jean_francois_veillette@66.130.96.245 with plain)
-  by smtp101.mail.mud.yahoo.com with SMTP; 21 Feb 2008 14:52:45 -0000
-X-YMail-OSG: fqtgI8gVM1kCELT89XWkbKKZCC_cjhmjuoNNYZ4BGtaggwybhybvNJFYuudbLRwfGQZfRZjcBwpV5qJCh5v2oib3uI1aAZU.mRLYApc18MjA8gBX0F077WZEo5CQPr6tO_sqOWXaztSjJ0upN6TBmUjPSNc-
-X-Yahoo-Newman-Property: ymail-3
-X-Mailer: Apple Mail (2.753)
+	id S1753759AbYBUPet (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Feb 2008 10:34:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753792AbYBUPet
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Feb 2008 10:34:49 -0500
+Received: from wa-out-1112.google.com ([209.85.146.181]:38055 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753645AbYBUPes (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Feb 2008 10:34:48 -0500
+Received: by wa-out-1112.google.com with SMTP id v27so73223wah.23
+        for <git@vger.kernel.org>; Thu, 21 Feb 2008 07:34:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=rCTrVQRW8iLVuErTtXFC52G+ydQ3cC7Hq9PyYKwpMsw=;
+        b=WeaHD117nChO7K/DaCfEfB0s+pqjKuxXQxyKFJT985ydZUkKP04R6Qc93aE4zDICH0EUUxZh+OtzfZRAHMIbjBhtJTrkMThdBx4aa2mTqqtmv5x+sarWNkJ/QHeDH/B3cbJ/StGlvmQ1JqCaB1vXy5qpjlspuumxiWTSpPCOlUU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Ha06QXA4gstQDssIox5XnbXe9rZR1UBcJ2K+5PCUn3dPVLLilzt4W1cL0TJh46xr4EjBTdaaUAJzmtkV1Q1IfSEHncLtfKZza2LlT6b05ptkFlfGROC8ycAJBkwo8HwBmx2yFmlkkl6r2xfpuuvpkGwklO6E5igIeOlFMCLL7xY=
+Received: by 10.115.54.1 with SMTP id g1mr4594237wak.132.1203608087874;
+        Thu, 21 Feb 2008 07:34:47 -0800 (PST)
+Received: by 10.114.145.13 with HTTP; Thu, 21 Feb 2008 07:34:47 -0800 (PST)
+In-Reply-To: <F8D3F7F0-3A98-4576-BD89-6E5C682B351C@fastmail.fm>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74621>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74622>
 
+On Mon, Feb 18, 2008 at 3:36 AM, Dane Jensen <careo@fastmail.fm> wrote:
+> Hi all-
+>
+>  Somehow I've managed to create a repository that causes git status to
+>  segfault. To be honest, I'm not entirely sure how just yet. This comes
+>  after a weekend of splitting a repository into two separate
+>  repositories, filtering out a directory from one, and then creating
+>  grafts in those repositories to skip commits that now change nothing.
+>
+>  This was in OS X 10.5.2 with git compiled from cf5c51e. Falling back
+>  to 1.5.4.2 cleared it up, so with the help of git bisect I've narrowed
+>  the bug down to cf55870.
+>
+>  I'll spend some time this week trying to find the exact point in my
+>  filtering that git status went south and report back if I can
+>  replicate it in a more-controlled test.
 
-I've installed gitweb with the git-browser extension.  But when I try =20
-to access the =AB graphic log =BB, it doesn't show up.
-I get: =AB closeError: invisible_get: timeout requesting /cgi-bin/git-=20
-browser.pl?sub=3Dcommits_from_refs&repo=3DcvsConvertedRepo.git&ref=3Dr%=
-=20
-2Call&shortcomment=3D1 =BB
+BTW - you should have a crash log in ~/Library/Logs/CrashReporter and
+that should list the function in which the crash occurred.
 
-I tried to debug (Firebugs), and surprisingly, this call (above) does =20
-return a content (and does look valid).
-
-I've put breakpoint in the javascript code, but can't get to fix it.
-Is it a known bug ?  Is there a workaround ?
-
-Some more info :
-: uname -a
-	Darwin xxx.local 8.11.0 Darwin Kernel Version 8.11.0: Wed Oct 10 =20
-18:26:00 PDT 2007; root:xnu-792.24.17~1/RELEASE_PPC Power Macintosh =20
-powerpc
-
-: perl -v
-	This is perl, v5.8.6 built for darwin-thread-multi-2level
-	(with 4 registered patches, see perl -V for more detail)
-
-: httpd -v
-Server version: Apache/1.3.33 (Darwin)
-Server built:   Mar 20 2005 15:08:27
-
-- jfv
+j.
