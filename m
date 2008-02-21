@@ -1,61 +1,58 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] A test for commit --amend allowing changing of a very
- empty commit message
-Date: Thu, 21 Feb 2008 20:57:15 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802212056320.17164@racer.site>
-References: <20080221195438.GA6973@steel.home> <7vwsoyt5xt.fsf@gitster.siamese.dyndns.org> <20080221203506.GA20143@steel.home>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Object Permissions
+Date: Thu, 21 Feb 2008 12:58:50 -0800
+Message-ID: <7vir0it4ad.fsf@gitster.siamese.dyndns.org>
+References: <47BDDF27.2030603@bluelane.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 21 21:58:39 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>, piet.delaney@gmail.piet.net
+To: pete@bluelane.com
+X-From: git-owner@vger.kernel.org Thu Feb 21 22:00:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JSIUu-0000Jy-5d
-	for gcvg-git-2@gmane.org; Thu, 21 Feb 2008 21:58:28 +0100
+	id 1JSIWB-0000sL-Bx
+	for gcvg-git-2@gmane.org; Thu, 21 Feb 2008 21:59:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933688AbYBUU5j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Feb 2008 15:57:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760867AbYBUU5h
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Feb 2008 15:57:37 -0500
-Received: from mail.gmx.net ([213.165.64.20]:49006 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S934326AbYBUU5f (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Feb 2008 15:57:35 -0500
-Received: (qmail invoked by alias); 21 Feb 2008 20:57:33 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp043) with SMTP; 21 Feb 2008 21:57:33 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19HNoJQgGJHggqsQzBJNhIVkesjiHORq5StXE+wuT
-	TodqlTiMlccS8A
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20080221203506.GA20143@steel.home>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S933988AbYBUU7G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Feb 2008 15:59:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765849AbYBUU7F
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Feb 2008 15:59:05 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:50433 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933925AbYBUU7D (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Feb 2008 15:59:03 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 1351026AF;
+	Thu, 21 Feb 2008 15:59:02 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 5BCE926AD; Thu, 21 Feb 2008 15:58:57 -0500 (EST)
+In-Reply-To: <47BDDF27.2030603@bluelane.com> (pete@bluelane.com's message of
+ "Thu, 21 Feb 2008 12:29:27 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74657>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74658>
 
-Hi,
+Pete/Piet Delaney <pete@bluelane.com> writes:
 
-On Thu, 21 Feb 2008, Alex Riesen wrote:
+> I've been trying to us the git repo in a
+> centralize pull, push model where the
+> developers pull the repo, checkout a
+> branch, commit and then push back to the
+> common repo.
+>
+> Problem is that the objects get set with
+> the ownership of the user (at least when
+> pulling with this format:
+>
+> ~    git clone git:/home/git/blux
+>
+> Amy suggestions on how to do this?
 
-> Junio C Hamano, Thu, Feb 21, 2008 21:23:10 +0100:
-> > Alex Riesen <raa.lkml@gmail.com> writes:
-> > >
-> > > Well, it fails... In current master
-> > 
-> > Then please mark it with test_expect_failure.
-> 
-> That's because I expect it to be fixed (in the next mail)
-
-AFAICT the preferred procedure is to add a patch demonstrating the 
-failure, with test_expect_failure, and another patch fixing it, replacing 
-the _failure with _success.
-
-Ciao,
-Dscho
+"man git-config" and look for core.sharedrepository, perhaps?
