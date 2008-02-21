@@ -1,305 +1,174 @@
 From: Charles Bailey <charles@hashpling.org>
-Subject: [PATCH 2/4] Changed an internal variable of mergetool to support custom commands
-Date: Thu, 21 Feb 2008 23:30:34 +0000
-Message-ID: <73391eb9efe812da00fe049b97a13d28a5605777.1203636096.git.charles@hashpling.org>
+Subject: [PATCH 3/4] Teach git mergetool to use custom commands defined at config time
+Date: Thu, 21 Feb 2008 23:31:12 +0000
+Message-ID: <0e0179231be0e23cc83fb72269def2f3de3ba420.1203636096.git.charles@hashpling.org>
 References: <e6d984bbbb5d4dab54c38caa5c0c71b060d69156.1203636096.git.charles@hashpling.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 22 00:31:27 2008
+X-From: git-owner@vger.kernel.org Fri Feb 22 00:33:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JSKsu-0006wD-Vb
-	for gcvg-git-2@gmane.org; Fri, 22 Feb 2008 00:31:25 +0100
+	id 1JSKuV-0007TL-PT
+	for gcvg-git-2@gmane.org; Fri, 22 Feb 2008 00:33:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755881AbYBUXar (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Feb 2008 18:30:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755713AbYBUXar
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Feb 2008 18:30:47 -0500
-Received: from ptb-relay02.plus.net ([212.159.14.213]:48840 "EHLO
-	ptb-relay02.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754806AbYBUXaq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Feb 2008 18:30:46 -0500
+	id S935444AbYBUXcT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Feb 2008 18:32:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762994AbYBUXcS
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Feb 2008 18:32:18 -0500
+Received: from pih-relay08.plus.net ([212.159.14.134]:42628 "EHLO
+	pih-relay08.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S935403AbYBUXcQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Feb 2008 18:32:16 -0500
 Received: from [212.159.69.125] (helo=hashpling.plus.com)
-	 by ptb-relay02.plus.net with esmtp (Exim) id 1JSKsH-0006oS-2A; Thu, 21 Feb 2008 23:30:45 +0000
+	 by pih-relay08.plus.net with esmtp (Exim) id 1JSKtf-0003Ea-3P; Thu, 21 Feb 2008 23:32:11 +0000
 Received: from fermat.hashpling.org (fermat.hashpling.org [127.0.0.1])
-	by hashpling.plus.com (8.13.8/8.13.6) with ESMTP id m1LNUYHt011852;
-	Thu, 21 Feb 2008 23:30:34 GMT
+	by hashpling.plus.com (8.13.8/8.13.6) with ESMTP id m1LNVDIA012200;
+	Thu, 21 Feb 2008 23:31:13 GMT
 Received: (from charles@localhost)
-	by fermat.hashpling.org (8.13.8/8.13.6/Submit) id m1LNUYIt011851;
-	Thu, 21 Feb 2008 23:30:34 GMT
+	by fermat.hashpling.org (8.13.8/8.13.6/Submit) id m1LNVDCx012199;
+	Thu, 21 Feb 2008 23:31:13 GMT
 Content-Disposition: inline
 In-Reply-To: <e6d984bbbb5d4dab54c38caa5c0c71b060d69156.1203636096.git.charles@hashpling.org>
 User-Agent: Mutt/1.4.2.1i
-X-Plusnet-Relay: b7908a0cf17b77219bbf3da1323ae7ca
+X-Plusnet-Relay: 363b3d64a2904ef8b09f7e65e5fbf144
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74679>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74680>
 
-The variable $path changes to $MERGED so that it is more consistent
-with $BASE, $LOCAL and $REMOTE for future custom command lines.
+Currently git mergetool is restricted to a set of commands defined
+in the script. You can subvert the mergetool.<tool>.path to force
+git mergetool to use a different command, but if you have a command
+whose invocation syntax does not match one of the current tools then
+you would have to write a wrapper script for it.
+
+This patch adds two git config variable patterns which allow a more
+flexible choice of merge tool.
+
+If you run git mergetool with -t/--tool or the merge.tool config
+variable set to an unrecognized tool then git mergetool will query the
+mergetool.<tool>.cmd config variable. If this variable exists, then git
+mergetool will treat the specified tool as a custom command and will use
+a shell eval to run the command with the documented shell variables set.
+
+mergetool.<tool>.trustExitCode can be used to indicate that the exit
+code of the custom command can be used to determine the success of the
+merge.
 
 Signed-off-by: Charles Bailey <charles@hashpling.org>
 ---
- git-mergetool.sh |  102 +++++++++++++++++++++++++++---------------------------
- 1 files changed, 51 insertions(+), 51 deletions(-)
+ Documentation/config.txt |   25 +++++++++++++++++++++++--
+ git-mergetool.sh         |   28 ++++++++++++++++++++++++++--
+ 2 files changed, 49 insertions(+), 4 deletions(-)
 
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 4e17fd2..33b7ce9 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -741,8 +741,10 @@ merge.summary::
+ 
+ merge.tool::
+ 	Controls which merge resolution program is used by
+-	linkgit:git-mergetool[1].  Valid values are: "kdiff3", "tkdiff",
+-	"meld", "xxdiff", "emerge", "vimdiff", "gvimdiff", and "opendiff".
++	linkgit:git-mergetool[1].  Valid built-in values are: "kdiff3",
++	"tkdiff", "meld", "xxdiff", "emerge", "vimdiff", "gvimdiff", and
++	"opendiff".  Any other value is treated is custom merge tool
++	and there must be a corresponing mergetool.<tool>.cmd option.
+ 
+ merge.verbosity::
+ 	Controls the amount of output shown by the recursive merge
+@@ -769,6 +771,25 @@ mergetool.<tool>.path::
+ 	Override the path for the given tool.  This is useful in case
+ 	your tool is not in the PATH.
+ 
++mergetool.<tool>.cmd::
++	Specify the command to invoke the specified merge tool.  The
++	specified command is evaluated in shell with the following
++	variables available: 'BASE' is the name of a temporary file
++	containing the common base of the files to be merged, if available;
++	'LOCAL' is the name of a temporary file containing the contents of
++	the file on the current branch; 'REMOTE' is the name of a temporary
++	file containing the contents of the file from the branch being
++	merged; 'MERGED' contains the name of the file to which the merge
++	tool should write the results of a successful merge.
++
++mergetool.<tool>.trustExitCode::
++	For a custom merge command, specify whether the exit code of
++	the merge command can be used to determine whether the merge was
++	successful.  If this is not set to true then the merge target file
++	timestamp is checked and the merge assumed to have been successful
++	if the file has been updated, otherwise the user is prompted to
++	indicate the success of the merge.
++
+ mergetool.keepBackup::
+ 	After performing a merge, the original file with conflict markers
+ 	can be saved as a file with a `.orig` extension.  If this variable
 diff --git a/git-mergetool.sh b/git-mergetool.sh
-index e27bb7b..d3dd7f8 100755
+index d3dd7f8..d12bedf 100755
 --- a/git-mergetool.sh
 +++ b/git-mergetool.sh
-@@ -34,7 +34,7 @@ base_present () {
- 
- cleanup_temp_files () {
-     if test "$1" = --save-backup ; then
--	mv -- "$BACKUP" "$path.orig"
-+	mv -- "$BACKUP" "$MERGED.orig"
- 	rm -f -- "$LOCAL" "$REMOTE" "$BASE"
-     else
- 	rm -f -- "$LOCAL" "$REMOTE" "$BASE" "$BACKUP"
-@@ -67,14 +67,14 @@ resolve_symlink_merge () {
- 	read ans
- 	case "$ans" in
- 	    [lL]*)
--		git checkout-index -f --stage=2 -- "$path"
--		git add -- "$path"
-+		git checkout-index -f --stage=2 -- "$MERGED"
-+		git add -- "$MERGED"
- 		cleanup_temp_files --save-backup
- 		return
- 		;;
- 	    [rR]*)
--		git checkout-index -f --stage=3 -- "$path"
--		git add -- "$path"
-+		git checkout-index -f --stage=3 -- "$MERGED"
-+		git add -- "$MERGED"
- 		cleanup_temp_files --save-backup
- 		return
- 		;;
-@@ -95,12 +95,12 @@ resolve_deleted_merge () {
- 	read ans
- 	case "$ans" in
- 	    [mMcC]*)
--		git add -- "$path"
-+		git add -- "$MERGED"
- 		cleanup_temp_files --save-backup
- 		return
- 		;;
- 	    [dD]*)
--		git rm -- "$path" > /dev/null
-+		git rm -- "$MERGED" > /dev/null
- 		cleanup_temp_files
- 		return
- 		;;
-@@ -112,11 +112,11 @@ resolve_deleted_merge () {
- }
- 
- check_unchanged () {
--    if test "$path" -nt "$BACKUP" ; then
-+    if test "$MERGED" -nt "$BACKUP" ; then
- 	status=0;
-     else
- 	while true; do
--	    echo "$path seems unchanged."
-+	    echo "$MERGED seems unchanged."
- 	    printf "Was the merge successful? [y/n] "
- 	    read answer < /dev/tty
- 	    case "$answer" in
-@@ -129,7 +129,7 @@ check_unchanged () {
- 
- save_backup () {
-     if test "$status" -eq 0; then
--	mv -- "$BACKUP" "$path.orig"
-+	mv -- "$BACKUP" "$MERGED.orig"
-     fi
- }
- 
-@@ -140,37 +140,37 @@ remove_backup () {
- }
- 
- merge_file () {
--    path="$1"
-+    MERGED="$1"
- 
--    f=`git ls-files -u -- "$path"`
-+    f=`git ls-files -u -- "$MERGED"`
-     if test -z "$f" ; then
--	if test ! -f "$path" ; then
--	    echo "$path: file not found"
-+	if test ! -f "$MERGED" ; then
-+	    echo "$MERGED: file not found"
- 	else
--	    echo "$path: file does not need merging"
-+	    echo "$MERGED: file does not need merging"
- 	fi
- 	exit 1
-     fi
- 
--    ext="$$$(expr "$path" : '.*\(\.[^/]*\)$')"
--    BACKUP="$path.BACKUP.$ext"
--    LOCAL="$path.LOCAL.$ext"
--    REMOTE="$path.REMOTE.$ext"
--    BASE="$path.BASE.$ext"
-+    ext="$$$(expr "$MERGED" : '.*\(\.[^/]*\)$')"
-+    BACKUP="$MERGED.BACKUP.$ext"
-+    LOCAL="$MERGED.LOCAL.$ext"
-+    REMOTE="$MERGED.REMOTE.$ext"
-+    BASE="$MERGED.BASE.$ext"
- 
--    mv -- "$path" "$BACKUP"
--    cp -- "$BACKUP" "$path"
-+    mv -- "$MERGED" "$BACKUP"
-+    cp -- "$BACKUP" "$MERGED"
- 
--    base_mode=`git ls-files -u -- "$path" | awk '{if ($3==1) print $1;}'`
--    local_mode=`git ls-files -u -- "$path" | awk '{if ($3==2) print $1;}'`
--    remote_mode=`git ls-files -u -- "$path" | awk '{if ($3==3) print $1;}'`
-+    base_mode=`git ls-files -u -- "$MERGED" | awk '{if ($3==1) print $1;}'`
-+    local_mode=`git ls-files -u -- "$MERGED" | awk '{if ($3==2) print $1;}'`
-+    remote_mode=`git ls-files -u -- "$MERGED" | awk '{if ($3==3) print $1;}'`
- 
--    base_present   && git cat-file blob ":1:$prefix$path" >"$BASE" 2>/dev/null
--    local_present  && git cat-file blob ":2:$prefix$path" >"$LOCAL" 2>/dev/null
--    remote_present && git cat-file blob ":3:$prefix$path" >"$REMOTE" 2>/dev/null
-+    base_present   && git cat-file blob ":1:$prefix$MERGED" >"$BASE" 2>/dev/null
-+    local_present  && git cat-file blob ":2:$prefix$MERGED" >"$LOCAL" 2>/dev/null
-+    remote_present && git cat-file blob ":3:$prefix$MERGED" >"$REMOTE" 2>/dev/null
- 
-     if test -z "$local_mode" -o -z "$remote_mode"; then
--	echo "Deleted merge conflict for '$path':"
-+	echo "Deleted merge conflict for '$MERGED':"
- 	describe_file "$local_mode" "local" "$LOCAL"
- 	describe_file "$remote_mode" "remote" "$REMOTE"
- 	resolve_deleted_merge
-@@ -178,14 +178,14 @@ merge_file () {
-     fi
- 
-     if is_symlink "$local_mode" || is_symlink "$remote_mode"; then
--	echo "Symbolic link merge conflict for '$path':"
-+	echo "Symbolic link merge conflict for '$MERGED':"
- 	describe_file "$local_mode" "local" "$LOCAL"
- 	describe_file "$remote_mode" "remote" "$REMOTE"
- 	resolve_symlink_merge
- 	return
-     fi
- 
--    echo "Normal merge conflict for '$path':"
-+    echo "Normal merge conflict for '$MERGED':"
-     describe_file "$local_mode" "local" "$LOCAL"
-     describe_file "$remote_mode" "remote" "$REMOTE"
-     printf "Hit return to start merge resolution tool (%s): " "$merge_tool"
-@@ -194,30 +194,30 @@ merge_file () {
-     case "$merge_tool" in
- 	kdiff3)
- 	    if base_present ; then
--		("$merge_tool_path" --auto --L1 "$path (Base)" --L2 "$path (Local)" --L3 "$path (Remote)" \
--		    -o "$path" -- "$BASE" "$LOCAL" "$REMOTE" > /dev/null 2>&1)
-+		("$merge_tool_path" --auto --L1 "$MERGED (Base)" --L2 "$MERGED (Local)" --L3 "$MERGED (Remote)" \
-+		    -o "$MERGED" -- "$BASE" "$LOCAL" "$REMOTE" > /dev/null 2>&1)
- 	    else
--		("$merge_tool_path" --auto --L1 "$path (Local)" --L2 "$path (Remote)" \
--		    -o "$path" -- "$LOCAL" "$REMOTE" > /dev/null 2>&1)
-+		("$merge_tool_path" --auto --L1 "$MERGED (Local)" --L2 "$MERGED (Remote)" \
-+		    -o "$MERGED" -- "$LOCAL" "$REMOTE" > /dev/null 2>&1)
+@@ -263,6 +263,18 @@ merge_file () {
  	    fi
  	    status=$?
  	    ;;
- 	tkdiff)
- 	    if base_present ; then
--		"$merge_tool_path" -a "$BASE" -o "$path" -- "$LOCAL" "$REMOTE"
-+		"$merge_tool_path" -a "$BASE" -o "$MERGED" -- "$LOCAL" "$REMOTE"
- 	    else
--		"$merge_tool_path" -o "$path" -- "$LOCAL" "$REMOTE"
-+		"$merge_tool_path" -o "$MERGED" -- "$LOCAL" "$REMOTE"
- 	    fi
- 	    status=$?
- 	    ;;
- 	meld|vimdiff)
- 	    touch "$BACKUP"
--	    "$merge_tool_path" -- "$LOCAL" "$path" "$REMOTE"
-+	    "$merge_tool_path" -- "$LOCAL" "$MERGED" "$REMOTE"
- 	    check_unchanged
- 	    ;;
- 	gvimdiff)
- 	    touch "$BACKUP"
--	    "$merge_tool_path" -f -- "$LOCAL" "$path" "$REMOTE"
-+	    "$merge_tool_path" -f -- "$LOCAL" "$MERGED" "$REMOTE"
- 	    check_unchanged
- 	    ;;
- 	xxdiff)
-@@ -227,56 +227,56 @@ merge_file () {
- 		    -R 'Accel.SaveAsMerged: "Ctrl-S"' \
- 		    -R 'Accel.Search: "Ctrl+F"' \
- 		    -R 'Accel.SearchForward: "Ctrl-G"' \
--		    --merged-file "$path" -- "$LOCAL" "$BASE" "$REMOTE"
-+		    --merged-file "$MERGED" -- "$LOCAL" "$BASE" "$REMOTE"
- 	    else
- 		"$merge_tool_path" -X --show-merged-pane \
- 		    -R 'Accel.SaveAsMerged: "Ctrl-S"' \
- 		    -R 'Accel.Search: "Ctrl+F"' \
- 		    -R 'Accel.SearchForward: "Ctrl-G"' \
--		    --merged-file "$path" -- "$LOCAL" "$REMOTE"
-+		    --merged-file "$MERGED" -- "$LOCAL" "$REMOTE"
- 	    fi
- 	    check_unchanged
- 	    ;;
- 	opendiff)
- 	    touch "$BACKUP"
- 	    if base_present; then
--		"$merge_tool_path" "$LOCAL" "$REMOTE" -ancestor "$BASE" -merge "$path" | cat
-+		"$merge_tool_path" "$LOCAL" "$REMOTE" -ancestor "$BASE" -merge "$MERGED" | cat
- 	    else
--		"$merge_tool_path" "$LOCAL" "$REMOTE" -merge "$path" | cat
-+		"$merge_tool_path" "$LOCAL" "$REMOTE" -merge "$MERGED" | cat
- 	    fi
- 	    check_unchanged
- 	    ;;
- 	ecmerge)
- 	    touch "$BACKUP"
- 	    if base_present; then
--		"$merge_tool_path" "$BASE" "$LOCAL" "$REMOTE" --mode=merge3 --to="$path"
-+		"$merge_tool_path" "$BASE" "$LOCAL" "$REMOTE" --mode=merge3 --to="$MERGED"
- 	    else
--		"$merge_tool_path" "$LOCAL" "$REMOTE" --mode=merge2 --to="$path"
-+		"$merge_tool_path" "$LOCAL" "$REMOTE" --mode=merge2 --to="$MERGED"
- 	    fi
- 	    check_unchanged
- 	    ;;
- 	emerge)
- 	    if base_present ; then
--		"$merge_tool_path" -f emerge-files-with-ancestor-command "$LOCAL" "$REMOTE" "$BASE" "$(basename "$path")"
-+		"$merge_tool_path" -f emerge-files-with-ancestor-command "$LOCAL" "$REMOTE" "$BASE" "$(basename "$MERGED")"
- 	    else
--		"$merge_tool_path" -f emerge-files-command "$LOCAL" "$REMOTE" "$(basename "$path")"
-+		"$merge_tool_path" -f emerge-files-command "$LOCAL" "$REMOTE" "$(basename "$MERGED")"
- 	    fi
- 	    status=$?
- 	    ;;
++	*)
++	    if test -n "$merge_tool_cmd"; then
++		if test "$merge_tool_trust_exit_code" = "false"; then
++		    touch "$BACKUP"
++		    ( eval $merge_tool_cmd )
++		    check_unchanged
++		else
++		    ( eval $merge_tool_cmd )
++		    status=$?
++		fi
++	    fi
++	    ;;
      esac
      if test "$status" -ne 0; then
--	echo "merge of $path failed" 1>&2
--	mv -- "$BACKUP" "$path"
-+	echo "merge of $MERGED failed" 1>&2
-+	mv -- "$BACKUP" "$MERGED"
- 	exit 1
-     fi
+ 	echo "merge of $MERGED failed" 1>&2
+@@ -308,12 +320,20 @@ do
+     shift
+ done
  
-     if test "$merge_keep_backup" = "true"; then
--	mv -- "$BACKUP" "$path.orig"
-+	mv -- "$BACKUP" "$MERGED.orig"
-     else
- 	rm -- "$BACKUP"
-     fi
- 
--    git add -- "$path"
-+    git add -- "$MERGED"
-     cleanup_temp_files
++valid_custom_tool()
++{
++    merge_tool_cmd="$(git config mergetool.$1.cmd)"
++    test -n "$merge_tool_cmd"
++}
++
+ valid_tool() {
+ 	case "$1" in
+ 		kdiff3 | tkdiff | xxdiff | meld | opendiff | emerge | vimdiff | gvimdiff | ecmerge)
+ 			;; # happy
+ 		*)
+-			return 1
++			if ! valid_custom_tool "$1"; then
++				return 1
++			fi
+ 			;;
+ 	esac
  }
+@@ -381,10 +401,14 @@ else
+ 
+     merge_keep_backup="$(git config --bool merge.keepBackup || echo true)"
+ 
+-    if ! type "$merge_tool_path" > /dev/null 2>&1; then
++    if test -z "$merge_tool_cmd" && ! type "$merge_tool_path" > /dev/null 2>&1; then
+         echo "The merge tool $merge_tool is not available as '$merge_tool_path'"
+         exit 1
+     fi
++
++    if ! test -z "$merge_tool_cmd"; then
++        merge_tool_trust_exit_code="$(git config --bool mergetool.$merge_tool.trustExitCode || echo false)"
++    fi
+ fi
+ 
  
 -- 
 1.5.4.2.133.g3d51e
