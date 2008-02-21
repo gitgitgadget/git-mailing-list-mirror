@@ -1,64 +1,70 @@
-From: Pete/Piet Delaney <pete@bluelane.com>
-Subject: Object Permissions
-Date: Thu, 21 Feb 2008 12:29:27 -0800
-Organization: Bluelane
-Message-ID: <47BDDF27.2030603@bluelane.com>
-Reply-To: pete@bluelane.com
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] A test for commit --amend allowing changing of a very
+	empty commit message
+Date: Thu, 21 Feb 2008 21:35:06 +0100
+Message-ID: <20080221203506.GA20143@steel.home>
+References: <20080221195438.GA6973@steel.home> <7vwsoyt5xt.fsf@gitster.siamese.dyndns.org>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: piet.delaney@gmail.piet.net
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Feb 21 21:30:31 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 21 21:36:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JSI3k-0007OH-9Z
-	for gcvg-git-2@gmane.org; Thu, 21 Feb 2008 21:30:24 +0100
+	id 1JSI90-00013n-47
+	for gcvg-git-2@gmane.org; Thu, 21 Feb 2008 21:35:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932426AbYBUU3f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Feb 2008 15:29:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932364AbYBUU3e
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Feb 2008 15:29:34 -0500
-Received: from outbound.mse2.exchange.ms ([69.25.50.247]:2611 "EHLO
-	mse2fe1.mse2.exchange.ms" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S932172AbYBUU3c (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 21 Feb 2008 15:29:32 -0500
-Received: from piet2.bluelane.com ([64.94.92.242]) by mse2fe1.mse2.exchange.ms with Microsoft SMTPSVC(6.0.3790.3959);
-	 Thu, 21 Feb 2008 15:29:31 -0500
-User-Agent: Thunderbird 2.0.0.9 (X11/20071031)
-X-Enigmail-Version: 0.95.6
-X-OriginalArrivalTime: 21 Feb 2008 20:29:31.0253 (UTC) FILETIME=[769FE250:01C874C8]
+	id S1760554AbYBUUfM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Feb 2008 15:35:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760299AbYBUUfM
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Feb 2008 15:35:12 -0500
+Received: from mo-p07-ob.rzone.de ([81.169.146.188]:42930 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760295AbYBUUfK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Feb 2008 15:35:10 -0500
+X-RZG-CLASS-ID: mo07
+X-RZG-AUTH: z4gQVF2k5XWuW3CculzyClFhynk=
+Received: from tigra.home (Fad6a.f.strato-dslnet.de [195.4.173.106])
+	by post.webmailer.de (klopstock mo39) (RZmta 16.8)
+	with ESMTP id q03f9ek1LJrhia ; Thu, 21 Feb 2008 21:35:07 +0100 (MET)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 61D92277BD;
+	Thu, 21 Feb 2008 21:35:07 +0100 (CET)
+Received: by steel.home (Postfix, from userid 1000)
+	id B9BDE56D24; Thu, 21 Feb 2008 21:35:06 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <7vwsoyt5xt.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74652>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74653>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Junio C Hamano, Thu, Feb 21, 2008 21:23:10 +0100:
+> Alex Riesen <raa.lkml@gmail.com> writes:
+> >
+> > Well, it fails... In current master
+> 
+> Then please mark it with test_expect_failure.
 
-I've been trying to us the git repo in a
-centralize pull, push model where the
-developers pull the repo, checkout a
-branch, commit and then push back to the
-common repo.
+That's because I expect it to be fixed (in the next mail)
 
-Problem is that the objects get set with
-the ownership of the user (at least when
-pulling with this format:
+> > +test_expect_success 'allow amend of an empty message' '
+> > +
+> > +	git reset --hard &&
+> > +	sha=$(:|git commit-tree HEAD^{tree} -p HEAD) &&
+> 
+> You do not have to pipe; </dev/null would do ;-).
 
-~    git clone git:/home/git/blux
+Sadly: no. There are very challenged systems. Like, for instance, ones
+having no idea of what "/dev/null" is. Windows/Cygwin/ActiveState Perl
+in a bloody stupid corporate combination.
 
-Amy suggestions on how to do this?
-
-- -piet
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
-
-iD8DBQFHvd8nJICwm/rv3hoRAm8lAKCIql7mCd1rU5ZdS/w/dzNUZLA++gCfYy90
-nzIA0vqSgwTh0EYUz70/Uxo=
-=RAIY
------END PGP SIGNATURE-----
+I'm trying to minimize differences between my tree for my system at
+work and the main tree. It is honestly the only purpose for this
+construct.
