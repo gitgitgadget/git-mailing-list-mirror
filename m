@@ -1,95 +1,63 @@
-From: Pete/Piet Delaney <pete@bluelane.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: Object Permissions - trying git-init --shared=group parameters
-Date: Thu, 21 Feb 2008 14:06:39 -0800
-Organization: Bluelane
-Message-ID: <47BDF5EF.9030707@bluelane.com>
-Reply-To: pete@bluelane.com
+Date: Thu, 21 Feb 2008 14:16:04 -0800
+Message-ID: <7vzlturm57.fsf@gitster.siamese.dyndns.org>
+References: <47BDF5EF.9030707@bluelane.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
 	piet.delaney@gmail.piet.net, Piet Delaney <piet.delaney@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 21 23:07:40 2008
+To: pete@bluelane.com
+X-From: git-owner@vger.kernel.org Thu Feb 21 23:17:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JSJZY-0001C5-90
-	for gcvg-git-2@gmane.org; Thu, 21 Feb 2008 23:07:20 +0100
+	id 1JSJiy-00056o-Ff
+	for gcvg-git-2@gmane.org; Thu, 21 Feb 2008 23:17:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753708AbYBUWGo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Feb 2008 17:06:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755146AbYBUWGo
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Feb 2008 17:06:44 -0500
-Received: from outbound.mse2.exchange.ms ([69.25.50.247]:2646 "EHLO
-	mse2fe1.mse2.exchange.ms" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1753708AbYBUWGn (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 21 Feb 2008 17:06:43 -0500
-Received: from piet2.bluelane.com ([64.94.92.242]) by mse2fe1.mse2.exchange.ms with Microsoft SMTPSVC(6.0.3790.3959);
-	 Thu, 21 Feb 2008 17:06:42 -0500
-User-Agent: Thunderbird 2.0.0.9 (X11/20071031)
-X-Enigmail-Version: 0.95.6
-X-OriginalArrivalTime: 21 Feb 2008 22:06:42.0415 (UTC) FILETIME=[0A4497F0:01C874D6]
+	id S1763712AbYBUWQ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Feb 2008 17:16:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757535AbYBUWQ1
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Feb 2008 17:16:27 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:49686 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1763398AbYBUWQ0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Feb 2008 17:16:26 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 6B3AD2EC2;
+	Thu, 21 Feb 2008 17:16:22 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 93C3C2EBD; Thu, 21 Feb 2008 17:16:14 -0500 (EST)
+In-Reply-To: <47BDF5EF.9030707@bluelane.com> (pete@bluelane.com's message of
+ "Thu, 21 Feb 2008 14:06:39 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74670>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74671>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Pete/Piet Delaney <pete@bluelane.com> writes:
 
-Junio C Hamano wrote:
-| Pete/Piet Delaney <pete@bluelane.com> writes:
-|
-|> I've been trying to us the git repo in a
-|> centralize pull, push model where the
-|> developers pull the repo, checkout a
-|> branch, commit and then push back to the
-|> common repo.
-|>
-|> Problem is that the objects get set with
-|> the ownership of the user (at least when
-|> pulling with this format:
-|>
-|> ~    git clone git:/home/git/blux
-|>
-|> Amy suggestions on how to do this?
-|
-| "man git-config" and look for core.sharedrepository, perhaps?
+> So I looked int the meaning of these config prams and
+> thought I tried adding:
+>
+> 	sharedrepository = 1
+>
+> 	denyNonFastforwards = true
+>
+> to the bare repo on the git server. I'm not sure if
+> existing repo that have been cloned will have to be
+> updated, hopefully not.
 
-That's kinda what I'm trying. I did a git-init --shared=group
-and found that it set:
+You would at least make sure the directories there that was
+created while the repository was misconfigured can be writable
+by group members (i.e. permissions no stricter than drwxrws---)
+and owned by the group.  Something like
 
-
-	[core]
-~        	repositoryformatversion = 0
-~        	filemode = true
-~        	bare = false
-~        	logallrefupdates = true
-~        	sharedrepository = 1
-
-	[receive]
-~        	denyNonFastforwards = true
-
-So I looked int the meaning of these config prams and
-thought I tried adding:
-
-	sharedrepository = 1
-
-	denyNonFastforwards = true
-
-to the bare repo on the git server. I'm not sure if
-existing repo that have been cloned will have to be
-updated, hopefully not.
-
-- -piet
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
-
-iD8DBQFHvfXuJICwm/rv3hoRAl+PAJ9M/dRAuWRjs8gUvq1w3JqeH8/tNgCdFbto
-iaqrDyOefH4zTEK8Zzximu4=
-=xJM3
------END PGP SIGNATURE-----
+	mode=2775 ;# 2770 if closed to non-members
+	chgrp -R $group $GIT_DIR
+	find $GIT_DIR -type d -print0 | xargs -0 chmod $mode
