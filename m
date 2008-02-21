@@ -1,66 +1,108 @@
-From: "Anatoly Yakovenko" <aeyakovenko@gmail.com>
-Subject: Re: GIT_SSL_NO_VERIFY=1 over http doesn't ignore a different ip address for the signed certificate
-Date: Thu, 21 Feb 2008 10:57:58 -0800
-Message-ID: <e26d18e40802211057o255246f3p31800c73eb8391ec@mail.gmail.com>
-References: <e26d18e40802201535s7a5c12fbtd61d2445426f4018@mail.gmail.com>
-	 <20080221064252.GA16036@glandium.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+From: Pieter de Bie <pdebie@ai.rug.nl>
+Subject: Re: [Linus Torvalds] Re: [RFH] index_name_exists() conversion
+Date: Thu, 21 Feb 2008 20:00:48 +0100
+Message-ID: <98AF5144-5FA8-4465-B128-9146FA53681B@ai.rug.nl>
+References: <7v63wiuqdq.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v919.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Mike Hommey" <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Thu Feb 21 19:58:37 2008
+Cc: Dane Jensen <careo@fastmail.fm>,
+	Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Feb 21 20:01:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JSGct-0006Jx-F6
-	for gcvg-git-2@gmane.org; Thu, 21 Feb 2008 19:58:35 +0100
+	id 1JSGfe-0007HZ-VA
+	for gcvg-git-2@gmane.org; Thu, 21 Feb 2008 20:01:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752240AbYBUS6A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Feb 2008 13:58:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752064AbYBUS57
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Feb 2008 13:57:59 -0500
-Received: from wa-out-1112.google.com ([209.85.146.183]:61267 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751311AbYBUS57 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Feb 2008 13:57:59 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so148302wah.23
-        for <git@vger.kernel.org>; Thu, 21 Feb 2008 10:57:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=zR3+gLqSpa0Duah4zwfi/yr6YyOINpfVUXotlDGMsKE=;
-        b=NdebEQBTklmmVO3k3PjamB8k6am6DzV0P9R3BgDnEwFa/qTpWBYJRejq6W12AA8gC2xXsMvyIHmmm5Tx1bADJ47Jt8yUhL6oMOgYpO1a3GwMdSndIM/hh2jd0Q6Ty2Ms4clFmmiUS5s4sgx+LqOb8kS5E72Fh8w4IvOIqa3shig=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=HCjaZEk8WgLAtPJRBpA3SEfAZBJxJ9iU9M9haP8E39KG4v4aLsLFbedTKSRzdut15x8c/6j636yK4bNDvObMYp8uYwaSGpaKuDY03XiTvRN83papPvZcQhCd1bICZkSDSmMu2ljPxdLT1YnYbOYRHdQ1E98sifekwA5WEDsXUvs=
-Received: by 10.115.106.7 with SMTP id i7mr7370976wam.18.1203620278371;
-        Thu, 21 Feb 2008 10:57:58 -0800 (PST)
-Received: by 10.114.167.5 with HTTP; Thu, 21 Feb 2008 10:57:58 -0800 (PST)
-In-Reply-To: <20080221064252.GA16036@glandium.org>
-Content-Disposition: inline
+	id S1752352AbYBUTAw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Feb 2008 14:00:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752064AbYBUTAv
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Feb 2008 14:00:51 -0500
+Received: from smtp-4.orange.nl ([193.252.22.249]:40302 "EHLO smtp-4.orange.nl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751773AbYBUTAv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Feb 2008 14:00:51 -0500
+Received: from me-wanadoo.net (localhost [127.0.0.1])
+	by mwinf6306.orange.nl (SMTP Server) with ESMTP id 4292E700008D
+	for <git@vger.kernel.org>; Thu, 21 Feb 2008 20:00:49 +0100 (CET)
+Received: from [192.168.1.11] (s5591931c.adsl.wanadoo.nl [85.145.147.28])
+	by mwinf6306.orange.nl (SMTP Server) with ESMTP id DE69C7000084;
+	Thu, 21 Feb 2008 20:00:48 +0100 (CET)
+X-ME-UUID: 20080221190048911.DE69C7000084@mwinf6306.orange.nl
+In-Reply-To: <7v63wiuqdq.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.919.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74641>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74642>
 
-yep, it tells me that the certificate is rejected because it was
-signed for a different ip then the one i am connected too.  while this
-is a security threat, browsers will let you ignore it, so i expect
-that libcurl or git should be able to ignore that error as well.
 
-On Wed, Feb 20, 2008 at 10:42 PM, Mike Hommey <mh@glandium.org> wrote:
+On Feb 21, 2008, at 7:16 PM, Junio C Hamano wrote:
+
+> This was posted to the list.  Could you try to see if this fixes
+> the issue for you?
 >
-> On Wed, Feb 20, 2008 at 03:35:54PM -0800, Anatoly Yakovenko wrote:
->  > I am not sure if its a bug in curl or git, but despite setting
->  > GIT_SSL_NO_VERIFY=1, if i use a different ip address or hostname then
->  > the certificate was signed for, git fails to push changes.
+> Date: Thu, 21 Feb 2008 09:00:55 -0800 (PST)
+> From: Linus Torvalds <torvalds@linux-foundation.org>
 >
->  Can you try with GIT_CURL_VERBOSE=1 ? The trace message will probably
->  help understanding what happens.
+> Ahh. I think I may have found it.
 >
->  Mike
+> See if this fixes it.
 >
+> +	ce->next = NULL;
+
+Unfortunately this did not fix it (I applied this on 'next'). Below is  
+the GDB output again, so Linus can see it too.
+
+- Pieter
+
+Vienna:Project pieter$ gdb --args git status
+[...]
+Program received signal EXC_BAD_ACCESS, Could not access memory.
+Reason: KERN_INVALID_ADDRESS at address: 0x004a2010
+index_name_exists (istate=0xeba80, name=0xbfffdc27 "Data/Cache/ 
+Template/Peter_II_of_Yugoslavia.html", namelen=47) at read-cache.c:102
+102			if (!(ce->ce_flags & CE_UNHASHED)) {
+(gdb) print *ce
+Cannot access memory at address 0x4a1fec
+(gdb) bt
+#0  index_name_exists (istate=0xeba80, name=0xbfffdc27 "Data/Cache/ 
+Template/Peter_II_of_Yugoslavia.html", namelen=47) at read-cache.c:102
+#1  0x0006fc04 in dir_add_name (dir=0xbfffef68, pathname=0xbfffdc27  
+"Data/Cache/Template/Peter_II_of_Yugoslavia.html", len=47) at dir.c:374
+#2  0x00070d11 in read_directory_recursive (dir=0xbfffef68,  
+path=<value temporarily unavailable, due to optimizations>,  
+base=<value temporarily unavailable, due to optimizations>,  
+baselen=20, check_only=0, simplify=0x8072cc) at dir.c:642
+#3  0x00070baf in read_directory_recursive (dir=0xbfffef68,  
+path=<value temporarily unavailable, due to optimizations>,  
+base=<value temporarily unavailable, due to optimizations>,  
+baselen=11, check_only=0, simplify=<value temporarily unavailable, due  
+to optimizations>) at dir.c:627
+#4  0x00070baf in read_directory_recursive (dir=0xbfffef68,  
+path=<value temporarily unavailable, due to optimizations>,  
+base=<value temporarily unavailable, due to optimizations>, baselen=5,  
+check_only=0, simplify=<value temporarily unavailable, due to  
+optimizations>) at dir.c:627
+#5  0x00070baf in read_directory_recursive (dir=0xbfffef68,  
+path=<value temporarily unavailable, due to optimizations>,  
+base=<value temporarily unavailable, due to optimizations>, baselen=0,  
+check_only=0, simplify=<value temporarily unavailable, due to  
+optimizations>) at dir.c:627
+#6  0x00070ed3 in read_directory (dir=0xbfffef68, path=0xc4470 ".",  
+base=0xbb084 "", baselen=4857836, pathspec=0x0) at dir.c:715
+#7  0x0009d4d6 in wt_status_print (s=0xbffff5ac) at wt-status.c:282
+#8  0x000167b3 in run_status (fp=0xa015f5f8, index_file=0x500300 "/ 
+Users/pieter/Documents/Studie/2007-2008/AWT/Project/.git/index",  
+prefix=0x0, nowarn=4857836) at builtin-commit.c:347
+#9  0x0001719f in cmd_status (argc=1, argv=0x0, prefix=0x500300 "/ 
+Users/pieter/Documents/Studie/2007-2008/AWT/Project/.git/index") at  
+builtin-commit.c:783
+#10 0x00002250 in handle_internal_command (argc=1, argv=0xbffff7b8) at  
+git.c:259
+#11 0x0000245f in main (argc=1, argv=0xbffff7b8) at git.c:451
