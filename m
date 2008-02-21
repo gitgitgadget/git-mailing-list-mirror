@@ -1,66 +1,149 @@
-From: "Jay Soffian" <jaysoffian@gmail.com>
-Subject: Re: [PATCH 2/2] Add support for url aliases in config files
-Date: Wed, 20 Feb 2008 20:26:07 -0500
-Message-ID: <76718490802201726t677b1498ma3bdb3dbf25dd781@mail.gmail.com>
-References: <200802202203.m1KM37aR012221@mi1.bluebottle.com>
-	 <alpine.LSU.1.00.0802202221130.17164@racer.site>
-	 <7v4pc316gq.fsf@gitster.siamese.dyndns.org>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [PATCH] git-clean: handle errors if removing files fails
+Date: Thu, 21 Feb 2008 02:44:46 +0100
+Message-ID: <20080221014446.GT31441@genesis.frugalware.org>
+References: <20080220234154.GS31441@genesis.frugalware.org> <7vodab182n.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"=?UTF-8?B?44GX44KJ44GE44GX44Gq44Gq44GT?=" <nanako3@bluebottle.com>,
-	git@vger.kernel.org, "Daniel Barkalow" <barkalow@iabervon.org>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 21 02:26:52 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 21 02:46:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JS0D4-000679-6U
-	for gcvg-git-2@gmane.org; Thu, 21 Feb 2008 02:26:50 +0100
+	id 1JS0Vl-00022a-Mz
+	for gcvg-git-2@gmane.org; Thu, 21 Feb 2008 02:46:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933682AbYBUB0L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Feb 2008 20:26:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759083AbYBUB0K
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Feb 2008 20:26:10 -0500
-Received: from wa-out-1112.google.com ([209.85.146.183]:50174 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755940AbYBUB0I (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Feb 2008 20:26:08 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so4261707wah.23
-        for <git@vger.kernel.org>; Wed, 20 Feb 2008 17:26:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=CulGQYJeERr2d19jq/RxnhUfvHGv//zhV+3X3+8oFMg=;
-        b=nzYhhkYcrMBWCQPpaUHYQ/KsgBMOox4Nuo1xgyC7O0yZ2WEJEIW8zUALIanrEtt+e/ftoTnvxMhmqxEh28XISZYUkeDKwTs9BF4N+Mk8o6qXeM13V15aQX8mVSok1goCQDEgCkd5Gw6RxwnComGVnkzxPFnlVXft7ZpShW5VpaQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=QbHKJObUTUoKy1kg5pxIR6QSediYcz0azFeMwm7gM6Urw8/mitDsVsHX61klAVC+HcBlBtW6u6FdM7fw0OhUZcy0LyhJksK6t/xGeG8h3SWSReYAVXsFBtG8FnUg2qyB+jOMOwlhT2Jq/vxICNAz0jr1gwTMX2FOIRVk4awrmi8=
-Received: by 10.114.137.2 with SMTP id k2mr49645wad.104.1203557167099;
-        Wed, 20 Feb 2008 17:26:07 -0800 (PST)
-Received: by 10.114.145.13 with HTTP; Wed, 20 Feb 2008 17:26:07 -0800 (PST)
-In-Reply-To: <7v4pc316gq.fsf@gitster.siamese.dyndns.org>
+	id S1754156AbYBUBpC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Feb 2008 20:45:02 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751890AbYBUBpB
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Feb 2008 20:45:01 -0500
+Received: from mx3.mail.elte.hu ([157.181.1.138]:40257 "EHLO mx3.mail.elte.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751783AbYBUBpA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Feb 2008 20:45:00 -0500
+Received: from frugalware.elte.hu ([157.181.177.34] helo=genesis.frugalware.org)
+	by mx3.mail.elte.hu with esmtp (Exim)
+	id 1JS0UW-0000X5-D4
+	from <vmiklos@frugalware.org>; Thu, 21 Feb 2008 02:44:58 +0100
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id B13B5119019F; Thu, 21 Feb 2008 02:44:46 +0100 (CET)
 Content-Disposition: inline
+In-Reply-To: <7vodab182n.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.16 (2007-06-09)
+X-ELTE-VirusStatus: clean
+X-ELTE-SpamScore: -1.5
+X-ELTE-SpamLevel: 
+X-ELTE-SpamCheck: no
+X-ELTE-SpamVersion: ELTE 2.0 
+X-ELTE-SpamCheck-Details: score=-1.5 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.2.3
+	-1.5 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
+	[score: 0.0000]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74583>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74584>
 
-On Wed, Feb 20, 2008 at 7:47 PM, Junio C Hamano <gitster@pobox.com> wrote:
+git-clean simply ignored errors if removing a file or directory failed. This
+patch makes it raise a warning and the exit code also greater than zero if
+there are remaining files.
+
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+---
+
+On Wed, Feb 20, 2008 at 04:12:16PM -0800, Junio C Hamano <gitster@pobox.com> wrote:
+> That's quite different style from the other commit log messages
+> in the project, isn't it?
+
+right, i rewrote it.
+
+> While I agree reporting an error is definitely an improvement, I
+> do not think dying in the middle is the right thing to do.
 >
->  In either case, I think a good approach to take is to find a
->  wording that conveys the notion "I will use A to mean what some
->  other people might call B or C" unambiguously.
+> Shouldn't it note the error, remove other cruft, and then
+> finally signal the error by exiting non-zero?
 
-[url A]
-  other_people_call_it = B
-  other_people_call_it = C
+something like this?
 
-[local_url A]
-  external_url = B
-  external_url = C
-j.
+i also noticed that we need a chmod 755 after the last test, otherwise
+removing the trash directory will not be possible. i haven't hit this
+bug by running the test only once.
+
+ builtin-clean.c  |   22 ++++++++++++++--------
+ t/t7300-clean.sh |   10 ++++++++++
+ 2 files changed, 24 insertions(+), 8 deletions(-)
+
+diff --git a/builtin-clean.c b/builtin-clean.c
+index eb853a3..5ed57d7 100644
+--- a/builtin-clean.c
++++ b/builtin-clean.c
+@@ -29,7 +29,7 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
+ {
+ 	int i;
+ 	int show_only = 0, remove_directories = 0, quiet = 0, ignored = 0;
+-	int ignored_only = 0, baselen = 0, config_set = 0;
++	int ignored_only = 0, baselen = 0, config_set = 0, errors = 0;
+ 	struct strbuf directory;
+ 	struct dir_struct dir;
+ 	const char *path, *base;
+@@ -137,12 +137,15 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
+ 			if (show_only && (remove_directories || matches)) {
+ 				printf("Would remove %s\n",
+ 				       directory.buf + prefix_offset);
+-			} else if (quiet && (remove_directories || matches)) {
+-				remove_dir_recursively(&directory, 0);
+ 			} else if (remove_directories || matches) {
+-				printf("Removing %s\n",
+-				       directory.buf + prefix_offset);
+-				remove_dir_recursively(&directory, 0);
++				if (!quiet)
++					printf("Removing %s\n",
++					       directory.buf + prefix_offset);
++				if (remove_dir_recursively(&directory, 0) != 0) {
++					warning("failed to remove '%s'",
++						directory.buf + prefix_offset);
++					errors++;
++				}
+ 			} else if (show_only) {
+ 				printf("Would not remove %s\n",
+ 				       directory.buf + prefix_offset);
+@@ -162,11 +165,14 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
+ 				printf("Removing %s\n",
+ 				       ent->name + prefix_offset);
+ 			}
+-			unlink(ent->name);
++			if (unlink(ent->name) != 0) {
++				warning("failed to remove '%s'", ent->name);
++				errors++;
++			}
+ 		}
+ 	}
+ 	free(seen);
+ 
+ 	strbuf_release(&directory);
+-	return 0;
++	return errors;
+ }
+diff --git a/t/t7300-clean.sh b/t/t7300-clean.sh
+index dfd1188..3840364 100755
+--- a/t/t7300-clean.sh
++++ b/t/t7300-clean.sh
+@@ -316,4 +316,14 @@ test_expect_success 'core.excludesfile' '
+ 
+ '
+ 
++test_expect_success 'removal failure' '
++
++	mkdir foo &&
++	touch foo/bar &&
++	chmod 0 foo &&
++	! git clean -f -d
++
++'
++chmod 755 foo
++
+ test_done
+-- 
+1.5.4.1
