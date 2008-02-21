@@ -1,51 +1,70 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFH] index_name_exists() conversion
-Date: Thu, 21 Feb 2008 16:29:46 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802211629070.17164@racer.site>
-References: <7v7igywvnj.fsf@gitster.siamese.dyndns.org> <7vy79evfsn.fsf@gitster.siamese.dyndns.org> <alpine.LFD.1.00.0802210806540.7833@woody.linux-foundation.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Feb 21 17:31:03 2008
+From: Jon Loeliger <jdl@jdl.com>
+Subject: Git and Web Content Tricks?
+Date: Thu, 21 Feb 2008 10:00:07 -0600
+Message-ID: <E1JSDqB-00050w-75@jdl.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 21 17:32:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JSEK0-0004x7-El
-	for gcvg-git-2@gmane.org; Thu, 21 Feb 2008 17:30:56 +0100
+	id 1JSEKm-0005Hi-7I
+	for gcvg-git-2@gmane.org; Thu, 21 Feb 2008 17:31:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759133AbYBUQaO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Feb 2008 11:30:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758141AbYBUQaN
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Feb 2008 11:30:13 -0500
-Received: from mail.gmx.net ([213.165.64.20]:51453 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757964AbYBUQaL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Feb 2008 11:30:11 -0500
-Received: (qmail invoked by alias); 21 Feb 2008 16:30:04 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp051) with SMTP; 21 Feb 2008 17:30:04 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+k69I+WxOkN2qeJ2LIJJtnSAftLzVow5pVoVjdfD
-	rKcw8MbTwguPMU
-X-X-Sender: gene099@racer.site
-In-Reply-To: <alpine.LFD.1.00.0802210806540.7833@woody.linux-foundation.org>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1760751AbYBUQbI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Feb 2008 11:31:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758905AbYBUQbH
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Feb 2008 11:31:07 -0500
+Received: from jdl.com ([208.123.74.7]:49172 "EHLO jdl.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758021AbYBUQbG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Feb 2008 11:31:06 -0500
+X-Greylist: delayed 1855 seconds by postgrey-1.27 at vger.kernel.org; Thu, 21 Feb 2008 11:31:06 EST
+Received: from jdl (helo=jdl.com)
+	by jdl.com with local-esmtp (Exim 4.63)
+	(envelope-from <jdl@jdl.com>)
+	id 1JSDqB-00050w-75
+	for git@vger.kernel.org; Thu, 21 Feb 2008 10:00:08 -0600
+X-Spam-Score: -2.6 (--)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74629>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74630>
 
-Hi,
+Folks,
 
-On Thu, 21 Feb 2008, Linus Torvalds wrote:
+I am interested in hearing about any tricks or
+scripts you have that help you manage your website
+content on a daily basis.
 
-> I think the new code is much more correct,
+While I am aware of the post-update hooks that assure
+a properly checked-out content after a push, I'm also
+wondering if anyone has dealt with this issue in the
+face of either beta-test site pre-testing requirements or
+additional support files such as database files as well.
 
-Heh.  So much truthiness in this half-sentence ;-)
+Specifically, if you had web content that needed to be
+published only after it has gone through a qual cycle
+on a beta test platform, how do you account for any minor
+changes in content before converting it to your production
+site?  Do you run a separate branch for beta differences
+and merge them up or down to a production branch?  Do you
+run a post- or pre- hook to alter or create config files
+during the {beta,production} install?
 
-Ciao,
-Dscho
+If you had content in your complete git repository that
+included stuff that wasn't to be deployed to your HTDOC
+root, how do you account for only a "partial" or subset
+deployment of your files?  For example, if you kept a
+copy of your backend database scehmas as well as your
+actual web pages under two separate directories of the
+same repository, how do you deploy just the web pages
+and not the schema files?  Do you checkout with path
+limiters?  Do you run a Manifest install file and script?
+Do you rely on some Makefile target scheme?
+
+Any tips or tricks here for the weary?
+
+Thanks!
+jdl
