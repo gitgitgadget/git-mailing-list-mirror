@@ -1,138 +1,186 @@
-From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
-Subject: [PATCH] git.el: Add a git-grep command
-Date: Tue, 19 Feb 2008 14:03:18 +0100
-Message-ID: <87odaa4tcl.fsf@lysator.liu.se>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [RFH] CE_REMOVE conversion
+Date: Thu, 21 Feb 2008 00:39:28 -0800
+Message-ID: <7v7igywvnj.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Alexandre Julliard <julliard@winehq.org>
-X-From: git-owner@vger.kernel.org Thu Feb 21 09:18:00 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Feb 21 09:40:27 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JS6cw-0007X4-Ck
-	for gcvg-git-2@gmane.org; Thu, 21 Feb 2008 09:17:58 +0100
+	id 1JS6yg-0005OS-E4
+	for gcvg-git-2@gmane.org; Thu, 21 Feb 2008 09:40:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1765314AbYBUIQg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 21 Feb 2008 03:16:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753123AbYBUIQg
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Feb 2008 03:16:36 -0500
-Received: from mail.lysator.liu.se ([130.236.254.3]:49376 "EHLO
-	mail.lysator.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762320AbYBUIQe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Feb 2008 03:16:34 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.lysator.liu.se (Postfix) with ESMTP id DC46B200A22D;
-	Thu, 21 Feb 2008 09:16:32 +0100 (CET)
-Received: from mail.lysator.liu.se ([127.0.0.1])
-	by localhost (lenin.lysator.liu.se [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 06228-01-53; Thu, 21 Feb 2008 09:16:32 +0100 (CET)
-Received: from krank (unknown [87.96.142.66])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.lysator.liu.se (Postfix) with ESMTP id 39E60200A222;
-	Thu, 21 Feb 2008 09:16:32 +0100 (CET)
-Received: by krank (Postfix, from userid 1000)
-	id 904477B4078; Thu, 21 Feb 2008 09:16:42 +0100 (CET)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at lysator.liu.se
+	id S1751397AbYBUIji (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Feb 2008 03:39:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751979AbYBUIji
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Feb 2008 03:39:38 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:35394 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751027AbYBUIjh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Feb 2008 03:39:37 -0500
+Received: from a-sasl-quonix.pobox.com (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id A72A9264B;
+	Thu, 21 Feb 2008 03:39:35 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.pobox.com (Postfix) with ESMTP id
+ 77DC5264A; Thu, 21 Feb 2008 03:39:30 -0500 (EST)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74607>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74608>
 
-This allows easy access to git grep from Emacs.
+You converted "ce->ce_mode = 0" to "ce->ce_flags |= CE_REMOVE" in an
+earlier commit 7a51ed6 (Make on-disk index representation
+separate from in-core one).
 
-Signed-off-by: David K=C3=A5gedal <davidk@lysator.liu.se>
----
- contrib/emacs/git.el |   50 ++++++++++++++++++++++++++++++++++++++++++=
-++++++++
- 1 files changed, 50 insertions(+), 0 deletions(-)
+I am having two issues with this conversion, related to read-tree.
 
-This works for me, but before including it someone else should try
-it. It might only work in Emacs 22, for instance.
+If you say "git reset --hard" with an unmerged path in the
+index, the entry does not get resurrected from the HEAD.  It
+instead just goes away (i.e. you lose a path in the index).
+If you run "git reset --hard" twice, the second run will
+resurrect it, of course, as the first one removed the unmerged
+paths.
 
-But when it works, it is really useful.
+"git reset --hard" internally runs "read-tree -u --reset HEAD",
+and the oneway_merge() misbehaves.
 
-diff --git a/contrib/emacs/git.el b/contrib/emacs/git.el
-index f69b697..898e70a 100644
---- a/contrib/emacs/git.el
-+++ b/contrib/emacs/git.el
-@@ -49,6 +49,7 @@
- (require 'ewoc)
- (require 'log-edit)
- (require 'easymenu)
-+(require 'grep)
-=20
-=20
- ;;;; Customizations
-@@ -1584,5 +1585,54 @@ Meant to be used in `after-save-hook'."
-   (interactive)
-   (describe-function 'git-status-mode))
-=20
-+(defvar git-grep-history nil)
+        commit 7a51ed66f653c248993b3c4a61932e47933d835e
+        Author: Linus Torvalds <torvalds@linux-foundation.org>
+        Date:   Mon Jan 14 16:03:17 2008 -0800
+
+            Make on-disk index representation separate from in-core one
+
+        diff --git a/builtin-read-tree.c b/builtin-read-tree.c
+        index c0ea034..5785401 100644
+        --- a/builtin-read-tree.c
+        +++ b/builtin-read-tree.c
+        @@ -45,8 +45,7 @@ static int read_cache_unmerged(void)
+                                        continue;
+                                cache_tree_invalidate_path(active_cache_tree, ce->name);
+                                last = ce;
+        -			ce->ce_mode = 0;
+        -			ce->ce_flags &= ~htons(CE_STAGEMASK);
+        +			ce->ce_flags |= CE_REMOVE;
+                        }
+                        *dst++ = ce;
+                }
+
+One issue is somewhat apparent.  The conversion forgot to drop
+the stage information (i.e. it does not tell "that stage#0 path
+is to be removed" anymore).
+
+Another thing is a bit trickier.  Now because you do not smudge
+ce->ce_mode, when oneway_merge in unpack-trees.c compares it
+(which comes as *old) with what is read from HEAD, it triggers
+this codepath:
+
+	if (old && same(old, a)) {
+		if (o->reset) {
+			struct stat st;
+			if (lstat(old->name, &st) ||
+			    ce_match_stat(old, &st, CE_MATCH_IGNORE_VALID))
+				old->ce_flags |= CE_UPDATE;
+		}
+		return keep_entry(old, o);
+	}
+
+Here, same(old, a) yields true, old->ce_flags gets CE_UPDATE,
+and then keep_entry(old, o) keeps that old entry, which is at
+stage #1 and has (CE_REMOVE|CE_UPDATE) flags set.  This index is
+written out, making the resulting index empty.
+
+The reason we keep an index entry with ce_mode = 0 (and now
+CE_REMOVE) when we want to remive it is because we would want to
+be able to say "propagate this change to the work tree" when run
+with CE_UPDATE.  But I think the reason read_cache_unmerged()
+says "this unmerged entry is gone" is _not_ because we would
+want to remove the corresponding path from the work tree.
+
+The old code happened to work because "ce_mode = 0" entries
+would have never matched with what was read from the HEAD tree,
+and we would never have triggered the keep_entry() codepath.
+
+We could of course hack read_cache_unmerged() to:
+
+	if (ce_stage(ce)) {
+		if (last && !strcmp(ce->name, last->name))
+			continue;
+		cache_tree_invalidate_path(active_cache_tree, ce->name);
+		last = ce;
+		ce->ce_flags &= ~CE_STAGEMASK;
+		/* Do not match with entries from trees! */
+		ce->ce_mode = 0;
+	}
+	*dst++ = ce;
+
+but I am wondering if we should instead really _remove_ entries
+from the index instead, just like the attached patch.
+
+Thoughts?
+
+ builtin-read-tree.c |    2 +-
+ t/t7104-reset.sh    |   35 +++++++++++++++++++++++++++++++++++
+ 2 files changed, 36 insertions(+), 1 deletions(-)
+
+diff --git a/builtin-read-tree.c b/builtin-read-tree.c
+index 5785401..726fb0b 100644
+--- a/builtin-read-tree.c
++++ b/builtin-read-tree.c
+@@ -45,7 +45,7 @@ static int read_cache_unmerged(void)
+ 				continue;
+ 			cache_tree_invalidate_path(active_cache_tree, ce->name);
+ 			last = ce;
+-			ce->ce_flags |= CE_REMOVE;
++			continue;
+ 		}
+ 		*dst++ = ce;
+ 	}
+diff --git a/t/t7104-reset.sh b/t/t7104-reset.sh
+new file mode 100755
+index 0000000..831078c
+--- /dev/null
++++ b/t/t7104-reset.sh
+@@ -0,0 +1,35 @@
++#!/bin/sh
 +
-+(defun git-grep (regexp &optional files dir)
-+  "Recursively grep for REGEXP in FILES in directory tree rooted at DI=
-R.
-+The search is limited to file names matching shell pattern FILES.
-+FILES may use abbreviations defined in `grep-files-aliases', e.g.
-+entering `ch' is equivalent to `*.[ch]'.
++test_description='reset --hard unmerged'
 +
-+With \\[universal-argument] prefix, you can edit the constructed shell=
- command line
-+before it is executed.
-+With two \\[universal-argument] prefixes, directly edit and run `git-g=
-rep-find-command'.
++. ./test-lib.sh
 +
-+Collect output in a buffer.  While find runs asynchronously, you
-+can use \\[next-error] (M-x next-error), or \\<grep-mode-map>\\[compil=
-e-goto-error]
-+in the grep output buffer, to go to the lines where grep found matches=
-=2E"
-+  (interactive
-+   (cond
-+    ((equal current-prefix-arg '(16))
-+     (list (read-from-minibuffer "Run: " "git grep "
-+                                 nil nil 'git-grep-history)
-+           nil))
-+    (t (let* ((regexp (grep-read-regexp))
-+              (files (grep-read-files regexp))
-+              (dir (read-directory-name "Base directory: "
-+                                        nil default-directory t)))
-+         (list regexp files dir)))))
-+  (when (and (stringp regexp) (> (length regexp) 0))
-+    (if (null files)
-+	(if (not (string=3D regexp grep-find-command))
-+	    (compilation-start regexp 'grep-mode))
-+      (setq dir (file-name-as-directory (expand-file-name dir)))
-+      (let ((command (concat
-+		      "git grep -n "
-+		      "-e " (shell-quote-argument regexp)
-+                      (if (string=3D files "*")
-+                          ""
-+                        (concat " -- " (shell-quote-argument files))))=
-))
-+	(when command
-+	  (if current-prefix-arg
-+	      (setq command
-+		    (read-from-minibuffer "Confirm: "
-+					  command nil nil 'git-grep-history))
-+	    (add-to-history 'git-grep-history command))
-+	  (let ((default-directory dir))
-+	    (compilation-start (concat "PAGER=3D " command) 'grep-mode))
-+	  ;; Set default-directory if we started rgrep in the *grep* buffer.
-+	  (if (eq next-error-last-buffer (current-buffer))
-+	      (setq default-directory dir)))))))
++test_expect_success setup '
 +
- (provide 'git)
- ;;; git.el ends here
---=20
-1.5.4.2.148.g410dc
-
-
---=20
-David K=C3=A5gedal
++	>hello &&
++	git add hello &&
++	git commit -m world &&
++
++	H=$(git rev-parse :hello) &&
++	git rm --cached hello &&
++	for i in 1 2 3
++	do
++		echo "100644 $H $i	hello"
++	done | git update-index --index-info &&
++
++	rm -f hello &&
++	mkdir -p hello &&
++	>hello/world &&
++	test "$(git ls-files -o)" = hello/world
++
++'
++
++test_expect_failure 'reset --hard loses the index' '
++
++	git reset --hard &&
++	git ls-files --error-unmatch hello &&
++	test -f hello
++
++'
++
++test_done
