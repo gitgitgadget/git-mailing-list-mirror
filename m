@@ -1,108 +1,94 @@
-From: Jon Loeliger <jdl@freescale.com>
-Subject: Re: [PATCH 2/2] Add support for url aliases in config files
-Date: Thu, 21 Feb 2008 10:31:09 -0600
-Message-ID: <47BDA74D.8080608@freescale.com>
-References: <200802202203.m1KM37aR012221@mi1.bluebottle.com>  <alpine.LSU.1.00.0802202221130.17164@racer.site>  <7v4pc316gq.fsf@gitster.siamese.dyndns.org> <76718490802201726t677b1498ma3bdb3dbf25dd781@mail.gmail.com> <alpine.LFD.1.00.0802201735030.7833@woody.linux-foundation.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (topics)
+Date: Thu, 21 Feb 2008 08:47:30 -0800
+Message-ID: <7vejb6uuhp.fsf@gitster.siamese.dyndns.org>
+References: <7v7ihmuwzi.fsf@gitster.siamese.dyndns.org>
+ <7vodavd9qw.fsf@gitster.siamese.dyndns.org>
+ <7vbq6tset4.fsf@gitster.siamese.dyndns.org>
+ <7vmyq9gk94.fsf@gitster.siamese.dyndns.org>
+ <7vk5la4oxq.fsf@gitster.siamese.dyndns.org>
+ <7vejbc44hu.fsf@gitster.siamese.dyndns.org>
+ <7v8x1fymei.fsf@gitster.siamese.dyndns.org>
+ <alpine.LSU.1.00.0802211024200.17164@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Jay Soffian <jaysoffian@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	=?UTF-8?B?44GX44KJ44GE?= =?UTF-8?B?44GX44Gq44Gq44GT?= 
-	<nanako3@bluebottle.com>, git@vger.kernel.org,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Feb 21 17:48:14 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Feb 21 17:48:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JSEaJ-0003uw-QZ
-	for gcvg-git-2@gmane.org; Thu, 21 Feb 2008 17:47:48 +0100
+	id 1JSEb9-0004Jk-H9
+	for gcvg-git-2@gmane.org; Thu, 21 Feb 2008 17:48:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759390AbYBUQrL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Feb 2008 11:47:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752806AbYBUQrJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Feb 2008 11:47:09 -0500
-Received: from az33egw01.freescale.net ([192.88.158.102]:54075 "EHLO
-	az33egw01.freescale.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751143AbYBUQrI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Feb 2008 11:47:08 -0500
-Received: from az33smr02.freescale.net (az33smr02.freescale.net [10.64.34.200])
-	by az33egw01.freescale.net (8.12.11/az33egw01) with ESMTP id m1LGVCCV013136;
-	Thu, 21 Feb 2008 09:31:13 -0700 (MST)
-Received: from [10.214.72.61] (mvp-10-214-72-61.am.freescale.net [10.214.72.61])
-	by az33smr02.freescale.net (8.13.1/8.13.0) with ESMTP id m1LGVBxj001641;
-	Thu, 21 Feb 2008 10:31:11 -0600 (CST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <alpine.LFD.1.00.0802201735030.7833@woody.linux-foundation.org>
+	id S934059AbYBUQr6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Feb 2008 11:47:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759949AbYBUQr6
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Feb 2008 11:47:58 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:61232 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934015AbYBUQrz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Feb 2008 11:47:55 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 40EBA351C;
+	Thu, 21 Feb 2008 11:47:53 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.pobox.com (Postfix) with ESMTP id
+ 7E775351B; Thu, 21 Feb 2008 11:47:48 -0500 (EST)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74632>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74633>
 
-Linus Torvalds wrote:
-> 
-> The only really sane use of this is the one that Daniel started out with: 
-> you may have a "external" representation of a name, but for your own 
-> purely local configuration reasons, you may want to map that name into 
-> another one that works for you.
-> 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-[ snip ]
+>> * js/merge (Sun Feb 17 19:07:40 2008 +0000) 2 commits
+>>  + xdl_merge(): introduce XDL_MERGE_ZEALOUS_ALNUM
+>>  + xdl_merge(): make XDL_MERGE_ZEALOUS output simpler
+>> 
+>> This makes conflicting merges that have hunks separated by only
+>> a few common lines much easier to read.
+>
+> The question is: what to do about ALNUM.  Use it in merge-recursive?  Make 
+> it a config variable?
 
-> So it's generally *not* that it's an "alias" for another site, since it 
-> isn't that in general - it may just be a very local configuration thing. 
-> It's also not really that you would call it one thing and others would 
-> call it another thing: you want to call it the *same* thing as others call 
-> it, but you want to work around some specific site issue (or just use a 
-> cache that is closer without having to think about it).
+I'd say we'll leave it as is for now and use it everywhere later
+after making sure things work out Ok.
 
-I totally agree with all that.
+>> * db/push-single-with-HEAD (Wed Feb 20 12:54:05 2008 -0500) 1 commit
+>>  + Resolve value supplied for no-colon push refspecs
+>> 
+>> Kills two birds with a commit by (1) fixing "git push $there +HEAD"
+>> to force the single push, and (2) allowing you to set
+>> "remote.$there.push = HEAD" so that "git push $there" will push
+>> only the current branch.
+>
+> The question is now: should we initialise remote.origin.push to HEAD like 
+> you said?  And if so, shouldn't we have git-remote's "add" do the same?
 
-> 	[access "git://git.kernel.org/*"]
-> 		proxy = proxy-program
-> 		url = "ssh://master.kernel.org/*"
-> 
-> which admittedly looks rather strange too, but at the same time it does 
-> make sense from a "what do we really want to do?" standpoint.
-> 
-> Of course, in this case Daniel didn't actually do that "proxy" part, but I 
-> think the argument that we should try to make the config file syntax 
-> describe what the user wants to do is still very true. So skip that 
-> "proxy" part (maybe somebody wants to do that too some day), and leave the 
-> 
-> 	[access "original"]
-> 		url = "rewritten"
-> 
-> kind of syntax.
-> 
-> (And no, I'm not at all married to the "access" and "url" parts - I don't 
-> care. I'm just saying that syntax should be tied to what people want to 
-> do, not anything else.
+Perhaps we do not do anything further for now, other than
+telling shared repository people to put it in their config and
+see how well the behaviour matches their expectation.  Protocol
+extensions to let clone notice what the other end is can come
+later (and we would need to do that anyway to set up HEAD symref
+as well).  The same mechanism would be used in "git remote add",
+and at that point clone could be implemented as "init/remote
+add/fetch/checkout".
 
-Right.  And I think part of the issue is, which of the two forms will
-be present in the user's git requests?  He'd _like_ to use the same,
-canonical name everyone else does, but for whatever reason, it has to
-be rewritten for the actual transportation implementation to work.
-Sort of like virtual/physical address definitions here?
+>> * js/reflog-delete (Fri Jan 4 19:11:37 2008 -0600) 2 commits
+>>  + builtin-reflog.c: fix typo that accesses an unset variable
+>>  + Teach "git reflog" a subcommand to delete single entries
+>> 
+>> There was a patch that uses this to implement "git-stash drop",
+>> which I didn't queue, as the command name and the UI was
+>> undecided yet.  Dscho was in favor of "pop" without "drop".
+>
+> Maybe it is time to "drop" this topic?
 
-    [virtual_url "git://git.kernel.org/"]
-        physical_url = "ssh://master.kernel.org/"
-
-But maybe it needs to be:
-
-    physical_url ["ssh://master.kernel.org/"]
-        virtual_url = "git://git.kernel.org/"
-        virtual_url = "git://kernel.org/"
-
-The git user would use the virtual_url, but it would be translated
-to the physical_url for the underlying implementation to work.
-
-I think it is more than paint coloring at work here.  The important
-part is to convey the concepts properly with the names.  The reader
-of the config file has to be able to tell which way the mapping is run.
-
-jdl
+I've been waiting for somebody to come up with a clean "pop", as
+it probably is easy enough and would be an itch people other
+than you and me can scratch.
