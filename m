@@ -1,57 +1,64 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] A test for commit --amend allowing changing of a very
- empty commit message
-Date: Thu, 21 Feb 2008 12:23:10 -0800
-Message-ID: <7vwsoyt5xt.fsf@gitster.siamese.dyndns.org>
-References: <20080221195438.GA6973@steel.home>
+From: Pete/Piet Delaney <pete@bluelane.com>
+Subject: Object Permissions
+Date: Thu, 21 Feb 2008 12:29:27 -0800
+Organization: Bluelane
+Message-ID: <47BDDF27.2030603@bluelane.com>
+Reply-To: pete@bluelane.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 21 21:24:14 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: piet.delaney@gmail.piet.net
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Feb 21 21:30:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JSHxc-00057m-Qe
-	for gcvg-git-2@gmane.org; Thu, 21 Feb 2008 21:24:05 +0100
+	id 1JSI3k-0007OH-9Z
+	for gcvg-git-2@gmane.org; Thu, 21 Feb 2008 21:30:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756285AbYBUUX2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Feb 2008 15:23:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756241AbYBUUX2
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Feb 2008 15:23:28 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:37741 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755436AbYBUUX1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Feb 2008 15:23:27 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 1A5FA242C;
-	Thu, 21 Feb 2008 15:23:24 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 77BB0242B; Thu, 21 Feb 2008 15:23:19 -0500 (EST)
-In-Reply-To: <20080221195438.GA6973@steel.home> (Alex Riesen's message of
- "Thu, 21 Feb 2008 20:54:38 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932426AbYBUU3f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Feb 2008 15:29:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932364AbYBUU3e
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Feb 2008 15:29:34 -0500
+Received: from outbound.mse2.exchange.ms ([69.25.50.247]:2611 "EHLO
+	mse2fe1.mse2.exchange.ms" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S932172AbYBUU3c (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 21 Feb 2008 15:29:32 -0500
+Received: from piet2.bluelane.com ([64.94.92.242]) by mse2fe1.mse2.exchange.ms with Microsoft SMTPSVC(6.0.3790.3959);
+	 Thu, 21 Feb 2008 15:29:31 -0500
+User-Agent: Thunderbird 2.0.0.9 (X11/20071031)
+X-Enigmail-Version: 0.95.6
+X-OriginalArrivalTime: 21 Feb 2008 20:29:31.0253 (UTC) FILETIME=[769FE250:01C874C8]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74651>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74652>
 
-Alex Riesen <raa.lkml@gmail.com> writes:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
-> ---
->
-> Well, it fails... In current master
+I've been trying to us the git repo in a
+centralize pull, push model where the
+developers pull the repo, checkout a
+branch, commit and then push back to the
+common repo.
 
-Then please mark it with test_expect_failure.
+Problem is that the objects get set with
+the ownership of the user (at least when
+pulling with this format:
 
-> +test_expect_success 'allow amend of an empty message' '
-> +
-> +	git reset --hard &&
-> +	sha=$(:|git commit-tree HEAD^{tree} -p HEAD) &&
+~    git clone git:/home/git/blux
 
-You do not have to pipe; </dev/null would do ;-).
+Amy suggestions on how to do this?
+
+- -piet
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+
+iD8DBQFHvd8nJICwm/rv3hoRAm8lAKCIql7mCd1rU5ZdS/w/dzNUZLA++gCfYy90
+nzIA0vqSgwTh0EYUz70/Uxo=
+=RAIY
+-----END PGP SIGNATURE-----
