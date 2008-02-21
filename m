@@ -1,74 +1,77 @@
-From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
-Subject: Re: [PATCH] git.el: Add a git-grep command
-Date: Thu, 21 Feb 2008 15:55:15 +0100
-Message-ID: <873armbbqk.fsf@lysator.liu.se>
-References: <87odaa4tcl.fsf@lysator.liu.se>
-	<87ve4itpw0.dlv@maison.homelinux.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+From: =?ISO-8859-1?Q?Jean-Fran=E7ois_Veillette?= 
+	<jean_francois_veillette@yahoo.ca>
+Subject: problem with git-browser
+Date: Thu, 21 Feb 2008 09:52:38 -0500
+Message-ID: <51DDC697-9567-44AC-92D9-FD3E82C4279E@yahoo.ca>
+Mime-Version: 1.0 (Apple Message framework v753)
+Content-Type: text/plain; charset=ISO-8859-1;
+	delsp=yes	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Alexandre Julliard <julliard@winehq.org>
-To: Remi Vanicat <vanicat@debian.org>
-X-From: git-owner@vger.kernel.org Thu Feb 21 15:55:51 2008
+To: Git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Feb 21 15:58:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JSCpt-0006ZQ-Gb
-	for gcvg-git-2@gmane.org; Thu, 21 Feb 2008 15:55:45 +0100
+	id 1JSCsu-0007tb-Oq
+	for gcvg-git-2@gmane.org; Thu, 21 Feb 2008 15:58:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752471AbYBUOzK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 21 Feb 2008 09:55:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753422AbYBUOzJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Feb 2008 09:55:09 -0500
-Received: from mail.lysator.liu.se ([130.236.254.3]:53871 "EHLO
-	mail.lysator.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752285AbYBUOzH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Feb 2008 09:55:07 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.lysator.liu.se (Postfix) with ESMTP id 6782E200A220;
-	Thu, 21 Feb 2008 15:55:05 +0100 (CET)
-Received: from mail.lysator.liu.se ([127.0.0.1])
-	by localhost (lenin.lysator.liu.se [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 00882-01-34; Thu, 21 Feb 2008 15:55:04 +0100 (CET)
-Received: from krank (vtab.com [62.20.90.195])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.lysator.liu.se (Postfix) with ESMTP id BEE33200A1F6;
-	Thu, 21 Feb 2008 15:55:04 +0100 (CET)
-Received: by krank (Postfix, from userid 1000)
-	id 161DA7B4078; Thu, 21 Feb 2008 15:55:15 +0100 (CET)
-In-Reply-To: <87ve4itpw0.dlv@maison.homelinux.org> (Remi Vanicat's message of "Thu\, 21 Feb 2008 14\:12\:15 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at lysator.liu.se
+	id S1753759AbYBUO6R convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 21 Feb 2008 09:58:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753792AbYBUO6Q
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Feb 2008 09:58:16 -0500
+Received: from n14.bullet.mail.mud.yahoo.com ([68.142.201.237]:31405 "HELO
+	n14.bullet.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1753692AbYBUO6P convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Feb 2008 09:58:15 -0500
+X-Greylist: delayed 327 seconds by postgrey-1.27 at vger.kernel.org; Thu, 21 Feb 2008 09:58:15 EST
+Received: from [209.191.108.96] by n14.bullet.mail.mud.yahoo.com with NNFMP; 21 Feb 2008 14:52:47 -0000
+Received: from [68.142.201.68] by t3.bullet.mud.yahoo.com with NNFMP; 21 Feb 2008 14:52:47 -0000
+Received: from [127.0.0.1] by omp420.mail.mud.yahoo.com with NNFMP; 21 Feb 2008 14:52:47 -0000
+X-Yahoo-Newman-Id: 915845.83031.bm@omp420.mail.mud.yahoo.com
+Received: (qmail 34901 invoked from network); 21 Feb 2008 14:52:45 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.ca;
+  h=Received:X-YMail-OSG:X-Yahoo-Newman-Property:Mime-Version:Content-Transfer-Encoding:Message-Id:Content-Type:To:From:Subject:Date:X-Mailer;
+  b=MG2tjbJp1SlvlyX3CPDy7J+1t30aF7f0wEChFmuTBp752r72m2EMcV4jU2PG+fRY6lP9UJnTMYS+Md00LiUz5Qa3ZKNZ3SKp4WmeiS9XHLPp2DrrR02C725wQ0QqoudaM8VJPxJZCc1CqD7XYMI6W5BkWgZtIvP+QJq8TEk0qE0=  ;
+Received: from unknown (HELO ?10.0.1.3?) (jean_francois_veillette@66.130.96.245 with plain)
+  by smtp101.mail.mud.yahoo.com with SMTP; 21 Feb 2008 14:52:45 -0000
+X-YMail-OSG: fqtgI8gVM1kCELT89XWkbKKZCC_cjhmjuoNNYZ4BGtaggwybhybvNJFYuudbLRwfGQZfRZjcBwpV5qJCh5v2oib3uI1aAZU.mRLYApc18MjA8gBX0F077WZEo5CQPr6tO_sqOWXaztSjJ0upN6TBmUjPSNc-
+X-Yahoo-Newman-Property: ymail-3
+X-Mailer: Apple Mail (2.753)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74620>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74621>
 
-Remi Vanicat <vanicat@debian.org> writes:
 
-> David K=C3=A5gedal <davidk@lysator.liu.se> writes:
->
->> This allows easy access to git grep from Emacs.
->>
->
->
-> You might want to add a menu:
+I've installed gitweb with the git-browser extension.  But when I try =20
+to access the =AB graphic log =BB, it doesn't show up.
+I get: =AB closeError: invisible_get: timeout requesting /cgi-bin/git-=20
+browser.pl?sub=3Dcommits_from_refs&repo=3DcvsConvertedRepo.git&ref=3Dr%=
+=20
+2Call&shortcomment=3D1 =BB
 
-Note that git-grep is completely independent of git-status. But a menu
-entry in git-status might still be a good idea.
+I tried to debug (Firebugs), and surprisingly, this call (above) does =20
+return a content (and does look valid).
 
-> @@ -1497,6 +1497,7 @@ amended version of it."
->        ["Diff File" git-diff-file t]
->        ["Interactive Diff File" git-diff-file-idiff t]
->        ["Log" git-log-file t]
-> +      ["Grep" git-grep t]
->        "--------"
->        ["Mark" git-mark-file t]
->        ["Mark All" git-mark-all t]
+I've put breakpoint in the javascript code, but can't get to fix it.
+Is it a known bug ?  Is there a workaround ?
 
---=20
-David K=C3=A5gedal
+Some more info :
+: uname -a
+	Darwin xxx.local 8.11.0 Darwin Kernel Version 8.11.0: Wed Oct 10 =20
+18:26:00 PDT 2007; root:xnu-792.24.17~1/RELEASE_PPC Power Macintosh =20
+powerpc
+
+: perl -v
+	This is perl, v5.8.6 built for darwin-thread-multi-2level
+	(with 4 registered patches, see perl -V for more detail)
+
+: httpd -v
+Server version: Apache/1.3.33 (Darwin)
+Server built:   Mar 20 2005 15:08:27
+
+- jfv
