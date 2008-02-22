@@ -1,70 +1,154 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Minor annoyance with git push
-Date: Fri, 22 Feb 2008 00:11:25 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802220010260.17164@racer.site>
-References: <7v7ihd7ee1.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0802100213330.11591@racer.site> <20080210101756.GB26568@coredump.intra.peff.net> <alpine.LSU.1.00.0802101219280.11591@racer.site> <20080210122321.GA31009@coredump.intra.peff.net>
- <alpine.LSU.1.00.0802101303140.11591@racer.site> <7vzltwavf9.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0802201305350.17164@racer.site> <76718490802200720w4dd89dc1lf7b19d546d3bfd00@mail.gmail.com> <alpine.LSU.1.00.0802201535250.17164@racer.site>
- <20080221223549.GA26266@dervierte>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: [PATCH] send-email: fix In-Reply-To regression
+Date: Thu, 21 Feb 2008 19:16:04 -0500
+Message-ID: <1203639364-91817-1-git-send-email-jaysoffian@gmail.com>
+References: <76718490802211351n1f0a6c36nb84902a624ee2120@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Steven Walter <stevenrwalter@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 22 01:12:27 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Jay Soffian <jaysoffian@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Mike Hommey <mh@glandium.org>,
+	Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
+	<ukleinek@informatik.uni-freiburg.de>, Len Brown <lenb@kernel.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 22 01:17:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JSLWa-0002Ol-51
-	for gcvg-git-2@gmane.org; Fri, 22 Feb 2008 01:12:24 +0100
+	id 1JSLbE-0003gS-IG
+	for gcvg-git-2@gmane.org; Fri, 22 Feb 2008 01:17:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759888AbYBVALs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Feb 2008 19:11:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756476AbYBVALs
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Feb 2008 19:11:48 -0500
-Received: from mail.gmx.net ([213.165.64.20]:45206 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755333AbYBVALr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Feb 2008 19:11:47 -0500
-Received: (qmail invoked by alias); 22 Feb 2008 00:11:45 -0000
-Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
-  by mail.gmx.net (mp031) with SMTP; 22 Feb 2008 01:11:45 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19IJSYx1IBI3W4LV08AX9I9jzbQfKWPr4fq6I+cK7
-	j5xsTfjSvQ2eVs
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20080221223549.GA26266@dervierte>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1765406AbYBVAQO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Feb 2008 19:16:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760515AbYBVAQM
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Feb 2008 19:16:12 -0500
+Received: from wx-out-0506.google.com ([66.249.82.238]:55898 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760706AbYBVAQK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Feb 2008 19:16:10 -0500
+Received: by wx-out-0506.google.com with SMTP id h31so204354wxd.4
+        for <git@vger.kernel.org>; Thu, 21 Feb 2008 16:16:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:mime-version:content-type:content-transfer-encoding;
+        bh=kJk/qZ0YJZ+4/PICoBtW7pXVHHxqwETh1onEeBVZD0I=;
+        b=ESzlxRhsLXpGL4apAllhfCQZrtqhybKXvBmuJhd/MSLDAHoPaKr6xedjIWAK62aW/te3JoZh1soMi2PeIL4tqUcxs7r9FvBhn+ixWYkcRtWI20w5/5AxWL1ytUaW/4jEk+dd2YLL6eqvcjh1Snlgh0OGnei81viT5BBLoCrUlj8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:mime-version:content-type:content-transfer-encoding;
+        b=tWZFD/VYpyguYXwdRXQTG9Xzoq8hMkJ6qsaZkhcplVNs267T/V204BttZBDGW2WJgkJjRlLaSgBPtbi03oV5OwNNsNLdyhsLzUMgY2DMfOpBPJBov07qxyM3WChXKS3xDDZPUvl591QLCBSl/kRHy1Y982T4ZdchutAy1pg2zqI=
+Received: by 10.100.107.7 with SMTP id f7mr21444457anc.35.1203639367898;
+        Thu, 21 Feb 2008 16:16:07 -0800 (PST)
+Received: from localhost ( [75.189.159.45])
+        by mx.google.com with ESMTPS id c4sm1145453anc.29.2008.02.21.16.16.06
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 21 Feb 2008 16:16:07 -0800 (PST)
+X-Mailer: git-send-email 1.5.4.2.236.g77b4.dirty
+In-Reply-To: <76718490802211351n1f0a6c36nb84902a624ee2120@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74684>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74685>
 
-Hi,
+Fix a regression introduced by
 
-On Thu, 21 Feb 2008, Steven Walter wrote:
+1ca3d6e (send-email: squelch warning due to comparing undefined $_ to "")
 
-> On Wed, Feb 20, 2008 at 03:38:31PM +0000, Johannes Schindelin wrote:
-> > That depends awfully on your definition of "safe".
-> > 
-> > I, for one, hate the idea already, that I am "safe" when "git push" 
-> > does not do the thing I asked it to, and which it has done for a 
-> > couple of years now without complaint, and which I have gotten used 
-> > to.
-> > 
-> > And then, there will be a great confusion for me, since I work on 5 
-> > different machines on an average day, with 5 different git versions, 
-> > and having different config settings.
-> 
-> Which is worse: pushing more refs than you intended (requiring rewinding 
-> refs on a repository that other people may pull from), or pushing fewer 
-> refs than you intended, requiring you to run the command a second time? 
+where if the user was prompted for an initial In-Reply-To and didn't
+provide one, messages would be sent out with an invalid In-Reply-To of
+"<>"
 
-Sorry to say, but I find this argumentation lacking.
+Also add test cases for the regression and the fix. A small modification
+was needed to allow send-email to take its replies from stdin if the
+environment variable GIT_SEND_EMAIL_NOTTY is set.
 
-Is it worse to suffer, or is it worse to suffer?  We should try to make it 
-_safe_ not "less painful, but still painful nevertheless".
+Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
+---
 
-Hth,
-Dscho
+An issue cropped up with testing the regression: it only occured if
+initial_reply_to was "", and the only way to do that is to respond to
+the Initial-Reply-To prompt with "\n". But send-email uses readline,
+which insists on /dev/tty.
+
+So, I initially simulated the breakage by using --initial-reply-to=" ",
+but this isn't quite the same thing. However, it turns out this can also
+cause an invalid In-Reply-To, which wasn't fixed by Junio's suggestion
+of checking that initial_reply_to ne "". So I did a slightly different
+fix that handles initial_reply_to eq  " ".
+
+Anyway, back to testing the original problem. I didn't want to use
+expect or Expect.pm, so I made a small change to send-email where if
+GIT_SEND_EMAIL_NOTTY is set, it will read from stdin instead of
+/dev/tty.
+
+But, I wonder if in the future we'll want to enhance the testing
+framework to be able to do expect-type stuff?
+
+j.
+
+ git-send-email.perl   |    9 ++++++---
+ t/t9001-send-email.sh |   21 +++++++++++++++++++++
+ 2 files changed, 27 insertions(+), 3 deletions(-)
+
+diff --git a/git-send-email.perl b/git-send-email.perl
+index ccb87a2..29b1105 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -170,7 +170,9 @@ my $envelope_sender;
+ 
+ my $repo = Git->repository();
+ my $term = eval {
+-	new Term::ReadLine 'git-send-email';
++	$ENV{"GIT_SEND_EMAIL_NOTTY"}
++		? new Term::ReadLine 'git-send-email', \*STDIN, \*STDOUT
++		: new Term::ReadLine 'git-send-email';
+ };
+ if ($@) {
+ 	$term = new FakeTerm "$@: going non-interactive";
+@@ -476,8 +478,9 @@ if ($thread && !defined $initial_reply_to && $prompting) {
+ 	$initial_reply_to = $_;
+ }
+ if (defined $initial_reply_to) {
+-	$initial_reply_to =~ s/^\s*<?/</;
+-	$initial_reply_to =~ s/>?\s*$/>/;
++	$initial_reply_to =~ s/^\s*<?//;
++	$initial_reply_to =~ s/>?\s*$//;
++	$initial_reply_to = "<$initial_reply_to>" if $initial_reply_to ne '';
+ }
+ 
+ if (!defined $smtp_server) {
+diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+index 08f7c3d..1422e9f 100755
+--- a/t/t9001-send-email.sh
++++ b/t/t9001-send-email.sh
+@@ -108,4 +108,25 @@ test_expect_success 'allow long lines with --no-validate' '
+ 		2>errors
+ '
+ 
++test_expect_failure 'Invalid In-Reply-To' '
++	git send-email \
++		--from="Example <nobody@example.com>" \
++		--to=nobody@example.com \
++		--in-reply-to=" " \
++		--smtp-server="$(pwd)/fake.sendmail" \
++		$patches
++		2>errors
++	! grep "^In-Reply-To: < *>" msgtxt
++'
++
++test_expect_success 'Valid In-Reply-To when prompting' '
++	(echo "From Example <from@example.com>"
++	 echo "To Example <to@example.com>"
++	 echo ""
++	) | env GIT_SEND_EMAIL_NOTTY=1 git send-email \
++		--smtp-server="$(pwd)/fake.sendmail" \
++		$patches 2>errors &&
++	! grep "^In-Reply-To: < *>" msgtxt
++'
++
+ test_done
+-- 
+1.5.4.2.236.g77b4.dirty
