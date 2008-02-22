@@ -1,103 +1,119 @@
 From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: new stacked git feature
-Date: Fri, 22 Feb 2008 13:54:12 +0000
-Message-ID: <b0943d9e0802220554x4c0a6c98q39e8b253bb108f1e@mail.gmail.com>
-References: <20080111194946.GA7504@redhat.com>
-	 <1202834567.14175.68.camel@pc1117.cambridge.arm.com>
-	 <20080213000806.GB25839@diana.vm.bytemark.co.uk>
-	 <b0943d9e0802131429p76f0981cm6e54a6a07042f229@mail.gmail.com>
-	 <20080213235204.GA10335@diana.vm.bytemark.co.uk>
-	 <b0943d9e0802201506w353b5c05vece9f99730d7663c@mail.gmail.com>
-	 <20080221074543.GB8250@diana.vm.bytemark.co.uk>
+Subject: Re: [StGit PATCH 2/2] Write to a stack log when stack is modified
+Date: Fri, 22 Feb 2008 14:05:55 +0000
+Message-ID: <b0943d9e0802220605t56257718p850c677a59671862@mail.gmail.com>
+References: <20080214012119.22365.54526.stgit@yoghurt>
+	 <20080214012912.22365.83207.stgit@yoghurt>
+	 <b0943d9e0802201446g2840c3d9v576f840936253525@mail.gmail.com>
+	 <20080221071819.GA8250@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Jason Baron" <jbaron@redhat.com>,
-	"=?ISO-8859-1?Q?David_K=E5gedal?=" <davidk@lysator.liu.se>,
-	"Yann Dirson" <ydirson@altern.org>, git <git@vger.kernel.org>
+Cc: git@vger.kernel.org
 To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Fri Feb 22 14:54:59 2008
+X-From: git-owner@vger.kernel.org Fri Feb 22 15:06:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JSYMY-00085w-2e
-	for gcvg-git-2@gmane.org; Fri, 22 Feb 2008 14:54:54 +0100
+	id 1JSYXr-0003cp-B5
+	for gcvg-git-2@gmane.org; Fri, 22 Feb 2008 15:06:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759178AbYBVNyQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 Feb 2008 08:54:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760792AbYBVNyP
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Feb 2008 08:54:15 -0500
-Received: from wx-out-0506.google.com ([66.249.82.227]:40906 "EHLO
+	id S935982AbYBVOGA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 Feb 2008 09:06:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936135AbYBVOF7
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Feb 2008 09:05:59 -0500
+Received: from wx-out-0506.google.com ([66.249.82.236]:49561 "EHLO
 	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756993AbYBVNyO convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 22 Feb 2008 08:54:14 -0500
-Received: by wx-out-0506.google.com with SMTP id h31so380485wxd.4
-        for <git@vger.kernel.org>; Fri, 22 Feb 2008 05:54:13 -0800 (PST)
+	with ESMTP id S1765533AbYBVOF5 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 22 Feb 2008 09:05:57 -0500
+Received: by wx-out-0506.google.com with SMTP id h31so383451wxd.4
+        for <git@vger.kernel.org>; Fri, 22 Feb 2008 06:05:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=8C07t7NNB/NH64b4kOWPhNcViJqkHxHVXGNm/aHkZY8=;
-        b=v1LaFi4olfHo2gLPpMRSY4lwcgQzkMhrYN65bsJfYMZ0ZzYSDTe+AGaZhpmCGVY9R+Lo2z1J8LjpCWDQ7U7hh0/Ayf/pdKFIYaEELybDVTF64lJHBlGkcswGwyGE02ClhPiYDyhkvMsoGZREJ0TGg21nIK9yF+9ILwmf2j8ejeM=
+        bh=MmhswRY48mZ2vpT+Oja8ejY3L0O75jwP299/tfJSa2s=;
+        b=qzAd8IsM3uXTuBQbsoqk8pq3Qgek2qiEcrHs6xea1AG4nJja1rGtSWlazTPgtra/PI9DwRxvzXf8RpJBrcQMmyHj1Zjnny7DUxtOvDl6m32fPKvVQtJ3ceMECjVMjPGR0FIb7hvKiBqSB4uFM+VqNcCpMEejS1DCTzhM5jmsspY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=COJEaPy13goTuNKJ52obekuwiHPvfrDAgxChQiehjxKgbRO96wlESGtSzLw+r9zFLKdpxlrV1m1Ipybhzp4kumwf/hU6ovQfbVjVLsCcRdo3dWzABH3Yzfqok2uJxufnmoVAKD43UiTOCmOLdZJ7I216Y85nZCtpqhNiHWLONHo=
-Received: by 10.141.202.12 with SMTP id e12mr7678778rvq.65.1203688452158;
-        Fri, 22 Feb 2008 05:54:12 -0800 (PST)
-Received: by 10.140.193.5 with HTTP; Fri, 22 Feb 2008 05:54:12 -0800 (PST)
-In-Reply-To: <20080221074543.GB8250@diana.vm.bytemark.co.uk>
+        b=I/qNwIgQcxIiX9fBuKBXz5dyJFUoxUFmnqyuoZH9srq0Z9X7nfVXMonTzhjq5q65Srx0wHm+Ik1EQtVs8m37k5I8aIdAjX5g5+/XV34yPyVK4hKG4yssG/bKosfDi1NltEU1PLGjpp7e1twnUzdSeALphHaDZLhRsco6zAUa08A=
+Received: by 10.140.251.1 with SMTP id y1mr7627690rvh.292.1203689155076;
+        Fri, 22 Feb 2008 06:05:55 -0800 (PST)
+Received: by 10.140.193.5 with HTTP; Fri, 22 Feb 2008 06:05:55 -0800 (PST)
+In-Reply-To: <20080221071819.GA8250@diana.vm.bytemark.co.uk>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74723>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74724>
 
 On 21/02/2008, Karl Hasselstr=F6m <kha@treskal.com> wrote:
-> On 2008-02-20 23:06:07 +0000, Catalin Marinas wrote:
->  > There is also a situation when patches on the remote stack were
->  > reordered and with some conflicts fixed. In this case, merging get=
+> On 2008-02-20 22:46:48 +0000, Catalin Marinas wrote:
+>
+>  > The abstractions are really nice (and I still wonder how StGIT
+>  > codebase increased that much when all I needed two years ago was a
+>  > simple script-like application to reorder commits :-)).
+>
+>
+> :-) I'll take some of the blame, but StGit was quite large already
+>  when I started submitting patches to it.
+
+Anyway, the new restructuring is much cleaner, though heavily OO and
+some people might not like it (me not included).
+
+>
+>
+>  > Anyway, I don't really like the idea of an additional commit (I
+>  > don't even like the old patch log implementation) when the stack i=
 s
->  > even more complicated (I think darcs solves this by making all the
->  > patches immutable but the base feature of StGIT is that patches ar=
-e
->  > easily modifiable).
+>  > modified. It needs some profiling but it has a visible impact on
+>  > stacks with a big number of patches (my last kernel release at
+>  > www.linux-arm.org/git had 80 patches and it takes a lot of time to
+>  > push them).
 >
 >
-> The scheme I described should be able to handle this. When a patch is
->  pushed, its base is set, and we can just make a normal 3-way merge.
+> One thing to remember is that my patch stack log gets one new commit
+>  per StGit operation, not one per changed patch. So if you push 80
+>  patches with one command, that will give you just one commit on the
+>  log. (If someone makes a scripts that calls push 80 times this won't
+>  help, of course.)
+
+Ah, I got it now. Indeed, it would be faster than the current
+per-patch log. I no longer that worried :-)
+
+>  > In my kernel repository I have several branches with many patches
+>  > and, even after "git gc" and repacking, it is still slow (mainly
+>  > because of git-read-tree but I'd like to reduce the number of call=
+s
+>  > to GIT).
 >
->  Consider a stack with two patches, a:A->B and b:B->C (A, B, and C ar=
-e
->  commits). In one branch, this is modified to a:A->B1 and b:B1->C1; a=
-nd
->  in the other, the patch order is changed so we get b:A->X and a:X->C=
-=2E
 >
->  When we merge these, the base is unchanged (so still A), and the pat=
-ch
->  order is b, a (since it was changed in one branch but not the other)=
-=2E
+> When you say "it's still slow", are you referring to the existing
+>  per-patch log, my per-branch log, or just StGit in general?
 
-"stg sync" does pretty much the same now but in a more manual way. I
-don't really like the way the conflicts are presented - i.e. you don't
-know which patch was modified afterwards because the patches lose this
-information (they are not topic branches).
+I think it's more GIT in general. Checking the tree status takes some
+time and a 3-way merge on a 512MB RAM machine with GIT using over
+200MB gets a bit slow.
 
->   1. First we push b. The A->X variant applies trivially, but the
->      B1->C1 variant needs the standard 3-way merge.
+>  Have you noticed any difference between commands using the old and n=
+ew
+>  infrastructure (say, stg push vs. stg goto)? The latter should be
+>  taking less time, due to touching the worktree only when necessary.
 
-3-way merge with X and B1 as base? This leads to the current "sync"
-issue, you can't tell which patch was original and which was modified.
+In the patch pushing functions, it now first calls simple_merge()
+which is still a 3-way merge but without rename detection. The old
+StGIT implementation was using "git-diff | git-apply" and falling back
+to the recursive merge. Most of the patches apply cleanly and we don't
+need the three-way merge which uses more RAM.
 
-Just a thought (not that I'd like this feature in StGIT). Someone
-tried a project some time ago, similar to StGIT, but using topic
-branches rather than individual commits per patch. The GIT history
-looked very ugly, especially after re-ordering, but the advantage was
-that you can avoid rebasing patches and simply merging changes from
-bottom patches into top ones. This would make synchronisation of
-patches between branches much easier.
+The "(modified)" information was also displayed for a three-way merge
+(either read-tree or recursive-merge) but now it is only shown for the
+recursive one. Correctly, merging git-read-tree modifies a patch as
+well since it no longer applied cleanly. We could use this "modified"
+feature to automatically export patches (some people asked for this in
+the past, as means for backup in case of StGIT failures).
 
 --=20
 Catalin
