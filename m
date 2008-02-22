@@ -1,74 +1,92 @@
-From: "C. E. Ball" <ceball@users.sourceforge.net>
-Subject: Re: Interrupted git-svn dcommit, now I get segmentation faults
-Date: Fri, 22 Feb 2008 17:20:00 +0800
-Message-ID: <4e2a3a120802220120s36fcdd31i9d0a18800d0a0349@mail.gmail.com>
-References: <loom.20080221T062522-821@post.gmane.org>
-	 <47BDD096.7040606@vilain.net>
-	 <4e2a3a120802220113q4df473c0xcaad4760aea7f49b@mail.gmail.com>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [PATCH] Improve documentation for git-sh-setup.
+Date: Fri, 22 Feb 2008 10:35:58 +0100
+Message-ID: <20080222093558.GC29114@artemis.madism.org>
+References: <20080221230101.27644.49229.stgit@gandelf.nowhere.earth>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; boundary="kVXhAStRUZ/+rrGn";
+	protocol="application/pgp-signature"; micalg=SHA1
 Cc: git@vger.kernel.org
-To: "Sam Vilain" <sam@vilain.net>
-X-From: git-owner@vger.kernel.org Fri Feb 22 10:20:51 2008
+To: Yann Dirson <ydirson@altern.org>
+X-From: git-owner@vger.kernel.org Fri Feb 22 10:36:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JSU5J-00019r-7M
-	for gcvg-git-2@gmane.org; Fri, 22 Feb 2008 10:20:49 +0100
+	id 1JSUKe-00066E-9J
+	for gcvg-git-2@gmane.org; Fri, 22 Feb 2008 10:36:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757956AbYBVJUJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Feb 2008 04:20:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758707AbYBVJUH
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Feb 2008 04:20:07 -0500
-Received: from fg-out-1718.google.com ([72.14.220.153]:24408 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751236AbYBVJUC (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Feb 2008 04:20:02 -0500
-Received: by fg-out-1718.google.com with SMTP id e21so255120fga.17
-        for <git@vger.kernel.org>; Fri, 22 Feb 2008 01:20:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        bh=fvCCg+pQLIOVXpBJTTn7ddF5ih2IUeHpwIaQevlrE+Y=;
-        b=k+2n2rBx52SDPBA46N4GwTUrwFlb27XjvK9G7ok1khpB2W7qfhxiQne+Rxe9trdIyVqSzRjcLDhcZLk58Y5SOruLHjIqUcAhMf3fsmchb5HtqFPCLrdqhGc6Thd8YKQZHU0KfP0EAG91FUO8+AcCgLk6fyZYGznHNoPmtLrJ02Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=kfuQDXwqwS0x1G2ZBooL4e0DKFZPPcEa5sdtcmA9MBRltfI+dZh/vP/xLhE2h+auuXlFRPFz1HAjAP0Bmr3idnG3glEAHCVP/F8KqJ0RC/j7vq8bOhB3NV8qUKGaoYqAoq2xQ/VPy98Z9b4snd34DI8PbrEoSbUXhQiRwaQA9kY=
-Received: by 10.86.72.15 with SMTP id u15mr10584722fga.11.1203672000426;
-        Fri, 22 Feb 2008 01:20:00 -0800 (PST)
-Received: by 10.86.79.1 with HTTP; Fri, 22 Feb 2008 01:20:00 -0800 (PST)
-In-Reply-To: <4e2a3a120802220113q4df473c0xcaad4760aea7f49b@mail.gmail.com>
+	id S1751715AbYBVJgE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Feb 2008 04:36:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751719AbYBVJgD
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Feb 2008 04:36:03 -0500
+Received: from pan.madism.org ([88.191.52.104]:41769 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751715AbYBVJgA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Feb 2008 04:36:00 -0500
+Received: from madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id D6C6011D5F;
+	Fri, 22 Feb 2008 10:35:58 +0100 (CET)
+Received: by madism.org (Postfix, from userid 1000)
+	id 68383533368; Fri, 22 Feb 2008 10:35:58 +0100 (CET)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Yann Dirson <ydirson@altern.org>, git@vger.kernel.org
 Content-Disposition: inline
-X-Google-Sender-Auth: 7da3b5ad7926358b
+In-Reply-To: <20080221230101.27644.49229.stgit@gandelf.nowhere.earth>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74709>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74710>
 
-On Fri, Feb 22, 2008 at 5:13 PM, C. E. Ball
-<ceball@users.sourceforge.net> wrote:
-> >  If you get stuff like that you can move the git-svn state out of the
->  >  way, and re-run git-svn fetch; it will rebuild the metadata.
->  >
->  >   $ mv .git/svn .git/svn.bad
->  >   $ git-svn fetch
->  >
->  >  Not a fix I know, but might work for you ;)
->
->  Thank you very much, that did work for me!
 
-Please ignore my previous email - I was in the wrong place on my
-filesystem! Sorry about that.
+--kVXhAStRUZ/+rrGn
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-After following your suggestion on my broken repository, I still get
-the same error (a segmentation fault just after the commit is
-successfully sent to svn) when I 'git-svn dommit'.
+On Thu, Feb 21, 2008 at 11:01:28PM +0000, Yann Dirson wrote:
+> Signed-off-by: Yann Dirson <ydirson@altern.org>
+> Cc: Pierre Habouzit <madcoder@debian.org>
 
-Any other suggestions?
 
-Thanks,
-Chris
+> +If the constraints imposed by the use of `git rev-parse` do not fit
+> +for a particular tool, `USAGE` (and `LONG_USAGE`, if any) can be used
+> +to define message given by `usage()` shell function; no command-line
+> +pre-processing occurs, the script has entire control over it.
+
+  Actually, new scripts should be written using git rev-parse if
+possible, the USAGE/LONG_USAGE were there _before_ and I'd like to call
+them the deprecated interface if other git hackers don't mind.
+
+  git rev-parse --parseopt gives consistency in how git parses options,
+and it's A Good Thing=E2=84=A2
+
+  That makes me think that git-sh-setup(1) use should be documented in
+gitcli(5), maybe even included, and git-sh-setup(1) should *definitely*
+link to gitcli(5). We wondered where to link gitcli from, this is
+definitely the place !
+
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+
+--kVXhAStRUZ/+rrGn
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBHvpd+vGr7W6HudhwRAjNWAKCCgq1lIoLJgmOesuE/gWDddsdh0gCcDcDB
+r/OHGuYffsXbOa630ZFU85I=
+=wLej
+-----END PGP SIGNATURE-----
+
+--kVXhAStRUZ/+rrGn--
