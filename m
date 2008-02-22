@@ -1,74 +1,69 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [Fwd: [ANNOUNCE] bzr-fastimport plugin, yet another Bazaar import
-	option]
-Date: Fri, 22 Feb 2008 10:33:57 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802221031550.17164@racer.site>
-References: <47BE167A.4060005@internode.on.net>
-	<20080222073228.GF8410@spearce.org>
+ option]
+Date: Fri, 22 Feb 2008 10:36:41 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0802221034140.17164@racer.site>
+References: <47BE167A.4060005@internode.on.net> <20080222073228.GF8410@spearce.org> <47BE7E1C.4040303@internode.on.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Bazaar <bazaar@lists.canonical.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: bazaar-bounces@lists.canonical.com Fri Feb 22 11:35:03 2008
-Return-path: <bazaar-bounces@lists.canonical.com>
-Envelope-to: gcvbg-bazaar-ng@m.gmane.org
-Received: from chlorine.canonical.com ([91.189.94.204])
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Bazaar <bazaar@lists.canonical.com>, git@vger.kernel.org
+To: Ian Clatworthy <ian.clatworthy@internode.on.net>
+X-From: git-owner@vger.kernel.org Fri Feb 22 11:37:45 2008
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JSVF8-0007D8-In
-	for gcvbg-bazaar-ng@m.gmane.org; Fri, 22 Feb 2008 11:35:02 +0100
-Received: from localhost ([127.0.0.1] helo=chlorine.canonical.com)
-	by chlorine.canonical.com with esmtp (Exim 4.60)
-	(envelope-from <bazaar-bounces@lists.canonical.com>)
-	id 1JSVEU-0007Ic-BB; Fri, 22 Feb 2008 10:34:22 +0000
-Received: from mail.gmx.net ([213.165.64.20])
-	by chlorine.canonical.com with smtp (Exim 4.60)
-	(envelope-from <Johannes.Schindelin@gmx.de>) id 1JSVEQ-0007I6-SF
-	for bazaar@lists.canonical.com; Fri, 22 Feb 2008 10:34:19 +0000
-Received: (qmail invoked by alias); 22 Feb 2008 10:34:18 -0000
-Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO
-	racer.home) [86.138.198.40]
-	by mail.gmx.net (mp011) with SMTP; 22 Feb 2008 11:34:18 +0100
+	id 1JSVHi-0007xx-5L
+	for gcvg-git-2@gmane.org; Fri, 22 Feb 2008 11:37:42 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1753329AbYBVKhG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Feb 2008 05:37:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750762AbYBVKhG
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Feb 2008 05:37:06 -0500
+Received: from mail.gmx.net ([213.165.64.20]:35788 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753329AbYBVKhD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Feb 2008 05:37:03 -0500
+Received: (qmail invoked by alias); 22 Feb 2008 10:37:01 -0000
+Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
+  by mail.gmx.net (mp007) with SMTP; 22 Feb 2008 11:37:01 +0100
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+b97MvkcabBzSRQ4SkgKOx2P/BXISyyIa6Up0d80
-	6gYWXy3V4tFp/M
+X-Provags-ID: V01U2FsdGVkX1+qF/pD0O2q18tKZcnNU+sxis6LABF14pjn2xiIwe
+	kJdi4vftgieuEU
 X-X-Sender: gene099@racer.site
-In-Reply-To: <20080222073228.GF8410@spearce.org>
+In-Reply-To: <47BE7E1C.4040303@internode.on.net>
 User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
 X-Y-GMX-Trusted: 0
-X-BeenThere: bazaar@lists.canonical.com
-X-Mailman-Version: 2.1.8
-Precedence: list
-List-Id: bazaar discussion <bazaar.lists.canonical.com>
-List-Unsubscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar>,
-	<mailto:bazaar-request@lists.canonical.com?subject=unsubscribe>
-List-Archive: <https://lists.ubuntu.com/archives/bazaar>
-List-Post: <mailto:bazaar@lists.canonical.com>
-List-Help: <mailto:bazaar-request@lists.canonical.com?subject=help>
-List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar>,
-	<mailto:bazaar-request@lists.canonical.com?subject=subscribe>
-Sender: bazaar-bounces@lists.canonical.com
-Errors-To: bazaar-bounces@lists.canonical.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74713>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74714>
 
 Hi,
 
-On Fri, 22 Feb 2008, Shawn O. Pearce wrote:
+On Fri, 22 Feb 2008, Ian Clatworthy wrote:
 
-> Ian Clatworthy <ian.clatworthy@internode.on.net> wrote:
->  
-> > BTW, you might want to either extend the specification (a little) or 
-> > fix git-fast-export so they match. :-) See doc/notes.txt under 
-> > http://bazaar.launchpad.net/~bzr/bzr-fastimport/fastimport.dev/files 
-> > for details. For example, running git-fast-export on 64-bit Hardy 
-> > Heron produces file modes longer than permitted if the spec was 
-> > strictly interpreted.
+> Shawn O. Pearce wrote:
 > 
-> We may need to take a small hammer to git-fast-export and fix its 
-> output.  Generating long mode strings like your notes suggest is 
-> incorrect.
+> > Heh.  OOo is _huge_.  I think the best import into Git thus far is 
+> > taking up about 1.5G of disk space once fully repacked.  I don't 
+> > recall how they did the import, but coming from SVN I think they used 
+> > git-svn, which is not based on git-fast-import.
+> > 
+> > What frontend are you using to go from SVN -> fast-import?
+> 
+> The pack file in the Git clone I have is 2.4G. I thought that was large 
+> but it's quite small compared to the 82G svn dump that creates a 55G svn 
+> repo!
 
-Indeed.  Raising the issue with the original author of git-fast-export 
-would not have hurt either.
+The 2.4G have been compressed (loss-lessly ;-) to less than 1.5G.  Unlike 
+other SCMs, git has transparent access to the object database, which means 
+that we can actually repack _expensively_ for a better compression.
+
+So yes, the Git clone you have _is_ 2.4G, but that size is not the best 
+size you _can_ have.
 
 Ciao,
 Dscho
