@@ -1,48 +1,56 @@
-From: Joe Perches <joe@perches.com>
-Subject: Re: [RFC/PATCH] Update coding standard to avoid ungrepable printk
-	format strings
-Date: Fri, 22 Feb 2008 08:58:30 -0800
-Message-ID: <1203699510.19319.56.camel@localhost>
-References: <20080222132612.GA11717@basil.nowhere.org>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [PATCH 1/4] git.el: Support for showing unknown/ignored directories.
+Date: Fri, 22 Feb 2008 18:10:52 +0100
+Message-ID: <20080222171052.GA23012@diana.vm.bytemark.co.uk>
+References: <87zludorqs.fsf@wine.dyndns.org> <20080222153051.GA20984@diana.vm.bytemark.co.uk> <8763whkmxf.fsf@wine.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: linux-kernel@vger.kernel.org, torvalds@osdl.org,
-	git <git@vger.kernel.org>
-To: Andi Kleen <andi@firstfloor.org>
-X-From: git-owner@vger.kernel.org Fri Feb 22 17:59:49 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Alexandre Julliard <julliard@winehq.org>
+X-From: git-owner@vger.kernel.org Fri Feb 22 18:11:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JSbFP-0004Zz-Hd
-	for gcvg-git-2@gmane.org; Fri, 22 Feb 2008 17:59:43 +0100
+	id 1JSbR4-0000we-GG
+	for gcvg-git-2@gmane.org; Fri, 22 Feb 2008 18:11:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759424AbYBVQ65 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Feb 2008 11:58:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757731AbYBVQ64
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Feb 2008 11:58:56 -0500
-Received: from 136-022.dsl.labridge.com ([206.117.136.22]:3529 "EHLO
-	mail.perches.com" rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org
-	with ESMTP id S1753981AbYBVQ6z (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Feb 2008 11:58:55 -0500
-Received: from [192.168.1.129] (192-168-1-129.labridge.com [192.168.1.129] (may be forged))
-	by mail.perches.com (8.9.3/8.9.3) with ESMTP id IAA26287;
-	Fri, 22 Feb 2008 08:54:59 -0800
-In-Reply-To: <20080222132612.GA11717@basil.nowhere.org>
-X-Mailer: Evolution 2.12.0-2mdv2008.0 
+	id S1754131AbYBVRLJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 Feb 2008 12:11:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754677AbYBVRLI
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Feb 2008 12:11:08 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4865 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754131AbYBVRLH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Feb 2008 12:11:07 -0500
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1JSbQC-000617-00; Fri, 22 Feb 2008 17:10:52 +0000
+Content-Disposition: inline
+In-Reply-To: <8763whkmxf.fsf@wine.dyndns.org>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74734>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74735>
 
-On Fri, 2008-02-22 at 14:26 +0100, Andi Kleen wrote:
-> RFC: Update coding standard to avoid split up printk format strings
+On 2008-02-22 16:53:16 +0100, Alexandre Julliard wrote:
 
-Perhaps it's more useful to have git become more content aware.
+> Karl Hasselstr=F6m <kha@treskal.com> writes:
+>
+> > I have a bunch of directories in my tree with only ignored files
+> > in them. They used to not show up at all, but now they do.
+>
+> It probably needs something like this:
 
-If git could track user specified file glob pattern ("*.[ch]$")
-changes by statement terminator (";") and git could format
-output by a user specified pass (lindent), many of the bike shed
-paint discussions and a lot of commits would never occur.
+That fixed the problem. Thanks!
+
+> Signed-off-by: Alexandre Julliard <julliard@winehq.org>
+
+Tested-by: Karl Hasselstr=F6m <kha@treskal.com>
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
