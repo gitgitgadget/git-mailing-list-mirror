@@ -1,69 +1,88 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [Fwd: [ANNOUNCE] bzr-fastimport plugin, yet another Bazaar import
- option]
-Date: Fri, 22 Feb 2008 10:36:41 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802221034140.17164@racer.site>
-References: <47BE167A.4060005@internode.on.net> <20080222073228.GF8410@spearce.org> <47BE7E1C.4040303@internode.on.net>
+From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
+Subject: Re: [PATCH] git.el: Add a git-grep command
+Date: Fri, 22 Feb 2008 11:44:30 +0100
+Message-ID: <87ir0h9soh.fsf@lysator.liu.se>
+References: <87odaa4tcl.fsf@lysator.liu.se>
+	<m3myptcqji.fsf@localhost.localdomain> <87tzk19wn5.fsf@lysator.liu.se>
+	<200802221121.35706.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Bazaar <bazaar@lists.canonical.com>, git@vger.kernel.org
-To: Ian Clatworthy <ian.clatworthy@internode.on.net>
-X-From: git-owner@vger.kernel.org Fri Feb 22 11:37:45 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Alexandre Julliard <julliard@winehq.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 22 11:45:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JSVHi-0007xx-5L
-	for gcvg-git-2@gmane.org; Fri, 22 Feb 2008 11:37:42 +0100
+	id 1JSVOl-0001jZ-J7
+	for gcvg-git-2@gmane.org; Fri, 22 Feb 2008 11:45:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753329AbYBVKhG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Feb 2008 05:37:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750762AbYBVKhG
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Feb 2008 05:37:06 -0500
-Received: from mail.gmx.net ([213.165.64.20]:35788 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753329AbYBVKhD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Feb 2008 05:37:03 -0500
-Received: (qmail invoked by alias); 22 Feb 2008 10:37:01 -0000
-Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
-  by mail.gmx.net (mp007) with SMTP; 22 Feb 2008 11:37:01 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+qF/pD0O2q18tKZcnNU+sxis6LABF14pjn2xiIwe
-	kJdi4vftgieuEU
-X-X-Sender: gene099@racer.site
-In-Reply-To: <47BE7E1C.4040303@internode.on.net>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1756159AbYBVKoX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 Feb 2008 05:44:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756174AbYBVKoX
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Feb 2008 05:44:23 -0500
+Received: from mail.lysator.liu.se ([130.236.254.3]:36115 "EHLO
+	mail.lysator.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754710AbYBVKoW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Feb 2008 05:44:22 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.lysator.liu.se (Postfix) with ESMTP id 20D0D200A1E0;
+	Fri, 22 Feb 2008 11:44:21 +0100 (CET)
+Received: from mail.lysator.liu.se ([127.0.0.1])
+	by localhost (lenin.lysator.liu.se [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 09197-01-15; Fri, 22 Feb 2008 11:44:20 +0100 (CET)
+Received: from krank (oden.vtab.com [62.20.90.195])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.lysator.liu.se (Postfix) with ESMTP id 9A537200A1FE;
+	Fri, 22 Feb 2008 11:44:20 +0100 (CET)
+Received: by krank (Postfix, from userid 1000)
+	id E9F137B4078; Fri, 22 Feb 2008 11:44:30 +0100 (CET)
+In-Reply-To: <200802221121.35706.jnareb@gmail.com> (Jakub Narebski's message of "Fri\, 22 Feb 2008 11\:21\:34 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at lysator.liu.se
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74714>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74715>
 
-Hi,
+Jakub Narebski <jnareb@gmail.com> writes:
 
-On Fri, 22 Feb 2008, Ian Clatworthy wrote:
+> On Fri, 22 Feb 2008, David K=C3=A5gedal wrote:
+>> Jakub Narebski <jnareb@gmail.com> writes:
+>>> David K=C3=A5gedal <davidk@lysator.liu.se> writes:
+>>>
+>>>> This works for me, but before including it someone else should try
+>>>> it. It might only work in Emacs 22, for instance.
+>>>
+>>> emacs -batch -f batch-byte-compile git.el
+>>> [...]
+>>> While compiling toplevel forms in file git/contrib/emacs/git.el:
+>>>   !! File error (("Cannot open load file" "grep"))
+>>> Done
+>>> make: *** [git.elc] Error 1
+>>>
+>>> 1078:[emacs@git/contrib/emacs]# emacs --version
+>>> GNU Emacs 21.4.1
+>>=20
+>> As I suspected. The problem is that the grep commands were rewritten
+>> for Emacs 22, and lots of it can be reused. So to write a similar
+>> command for Emacs 21 probably requires a bit more work. And since I
+>> use Emacs 22 I'm not sure I will feel motivated enough...
+>
+> Could you make it at least conditional on the Emacs version used,
+> or even better depending on the fact if "grep" 'library' is available=
+?
 
-> Shawn O. Pearce wrote:
-> 
-> > Heh.  OOo is _huge_.  I think the best import into Git thus far is 
-> > taking up about 1.5G of disk space once fully repacked.  I don't 
-> > recall how they did the import, but coming from SVN I think they used 
-> > git-svn, which is not based on git-fast-import.
-> > 
-> > What frontend are you using to go from SVN -> fast-import?
-> 
-> The pack file in the Git clone I have is 2.4G. I thought that was large 
-> but it's quite small compared to the 82G svn dump that creates a 55G svn 
-> repo!
+Sure. We could e.g. put it in its own file, git-grep.el.
 
-The 2.4G have been compressed (loss-lessly ;-) to less than 1.5G.  Unlike 
-other SCMs, git has transparent access to the object database, which means 
-that we can actually repack _expensively_ for a better compression.
+> I'd like to be able to use git.el with my Emacs, even without some
+> functionality. TIA.
 
-So yes, the Git clone you have _is_ 2.4G, but that size is not the best 
-size you _can_ have.
+Absolutely, I hope this doesn't get included until this is resolved.=20
 
-Ciao,
-Dscho
+--=20
+David K=C3=A5gedal
