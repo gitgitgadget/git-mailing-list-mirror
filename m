@@ -1,113 +1,80 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: [PATCH] reflog-delete: parse standard reflog options
-Date: Fri, 22 Feb 2008 15:08:59 -0600
-Message-ID: <47BF39EB.5040603@nrlssc.navy.mil>
-References: <47BF1AF2.8070506@nrlssc.navy.mil>
+From: =?utf-8?Q?R=C3=A9mi?= Vanicat <vanicat@debian.org>
+Subject: [PATCH] git.el: find the git-status buffer whatever its name is
+Date: Fri, 22 Feb 2008 22:45:17 +0100
+Message-ID: <87hcg0fyxe.dlv@maison.homelinux.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Feb 22 22:09:59 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: julliard@winehq.org
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 22 22:46:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JSf9W-0000uN-EK
-	for gcvg-git-2@gmane.org; Fri, 22 Feb 2008 22:09:54 +0100
+	id 1JSfii-0006od-So
+	for gcvg-git-2@gmane.org; Fri, 22 Feb 2008 22:46:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755731AbYBVVJS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Feb 2008 16:09:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755685AbYBVVJR
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Feb 2008 16:09:17 -0500
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:51486 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755178AbYBVVJR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Feb 2008 16:09:17 -0500
-Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
-	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id m1ML90bc029686;
-	Fri, 22 Feb 2008 15:09:00 -0600
-Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 22 Feb 2008 15:08:59 -0600
-User-Agent: Thunderbird 2.0.0.9 (X11/20071031)
-In-Reply-To: <47BF1AF2.8070506@nrlssc.navy.mil>
-X-OriginalArrivalTime: 22 Feb 2008 21:08:59.0801 (UTC) FILETIME=[24CD6090:01C87597]
-X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-5.0.0.1023-15736001
-X-TM-AS-Result: : Yes--16.354000-0-31-1
-X-TM-AS-Category-Info: : 31:0.000000
-X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNjQzLTcwNDQyMS03MDY1?=
-	=?us-ascii?B?NjEtNzA2MjQ5LTcwMDE2MC03MDIwMTYtNzAyNjM4LTcwMDk0OS03?=
-	=?us-ascii?B?MDQyNTctMTg4MDE5LTcwNjI5MC03MDQ3NDctNzAxNzM1LTcwOTAy?=
-	=?us-ascii?B?MS03MDUxNzgtMTIxNzA5LTcwMjYwOS03MDIxMTgtNzA5MTM3LTE4?=
-	=?us-ascii?B?ODE5OS03MDIwMzgtMTIxNjI0LTcwNzc1MC0xNDgwMzktMTQ4MDUx?=
+	id S933533AbYBVVph convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 Feb 2008 16:45:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753943AbYBVVpg
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Feb 2008 16:45:36 -0500
+Received: from neuf-infra-smtp-out-sp604007av.neufgp.fr ([84.96.92.120]:46047
+	"EHLO neuf-infra-smtp-out-sp604007av.neufgp.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1764113AbYBVVpc convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Feb 2008 16:45:32 -0500
+Received: from neuf-infra-smtp-out-sp604012av.neufgp.fr ([84.96.92.115])
+	by neuf-infra-smtp-out-sp604007av.neufgp.fr with neuf telecom
+	id sYSc1Y0012VLLWC072HP00; Fri, 22 Feb 2008 22:45:22 +0100
+Received: from maison.homelinux.org ([84.103.71.93])
+	by neuf-infra-smtp-out-sp604012av.neufgp.fr with neuf telecom
+	id sllL1Y00B20lBGc0C00000; Fri, 22 Feb 2008 22:45:21 +0100
+Received: from moi by maison.homelinux.org with local (Exim 4.69)
+	(envelope-from <moi@vanicat.homelinux.org>)
+	id 1JSfhl-0004wu-RN; Fri, 22 Feb 2008 22:45:20 +0100
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: moi@vanicat.homelinux.org
+X-Spam-Checker-Version: SpamAssassin 3.2.3 (2007-08-08) on maison.homelinux.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.0 required=5.0 tests=NO_RELAYS autolearn=ham
+	version=3.2.3
+X-SA-Exim-Version: 4.2.1 (built Tue, 21 Aug 2007 23:39:36 +0000)
+X-SA-Exim-Scanned: Yes (on maison.homelinux.org)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74760>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74761>
 
-Add support for some standard reflog options such as --dry-run and
---verbose to the reflog delete subcommand.
 
-Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
+git-status used the buffer name to find git-status buffers, and that
+could failed if the buffer had another name, for example when multiple
+working directories was tracked.
+Signed-off-by: R=C3=A9mi Vanicat <vanicat@debian.org>
 ---
+ contrib/emacs/git.el |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/contrib/emacs/git.el b/contrib/emacs/git.el
+index f69b697..14a1601 100644
+--- a/contrib/emacs/git.el
++++ b/contrib/emacs/git.el
+@@ -1545,7 +1545,7 @@ Commands:
+         (with-current-buffer buffer
+           (when (and list-buffers-directory
+                      (string-equal fulldir (expand-file-name list-buff=
+ers-directory))
+-                     (string-match "\\*git-status\\*$" (buffer-name bu=
+ffer)))
++		     (eq major-mode 'git-status-mode))
+             (setq found buffer))))
+       (setq list (cdr list)))
+     found))
+--=20
+1.5.4.2.191.g7b407
 
 
-Oops.
-I forgot to send this patch. The reflog patch set I sent should be
-applied on top of this one. Sorry.
-
--brandon
-
-
- builtin-reflog.c |   24 +++++++++++++++++++++---
- 1 files changed, 21 insertions(+), 3 deletions(-)
-
-diff --git a/builtin-reflog.c b/builtin-reflog.c
-index 8af75bc..77f70a6 100644
---- a/builtin-reflog.c
-+++ b/builtin-reflog.c
-@@ -14,6 +14,8 @@
- 
- static const char reflog_expire_usage[] =
- "git-reflog (show|expire) [--verbose] [--dry-run] [--stale-fix] [--expire=<time>] [--expire-unreachable=<time>] [--all] <refs>...";
-+static const char reflog_delete_usage[] =
-+"git-reflog delete [--verbose] [--dry-run] <refs>...";
- 
- static unsigned long default_reflog_expire;
- static unsigned long default_reflog_expire_unreachable;
-@@ -425,12 +427,28 @@ static int cmd_reflog_delete(int argc, const char **argv, const char *prefix)
- 	struct cmd_reflog_expire_cb cb;
- 	int i, status = 0;
- 
--	if (argc < 2)
--		return error("Nothing to delete?");
--
- 	memset(&cb, 0, sizeof(cb));
- 
- 	for (i = 1; i < argc; i++) {
-+		const char *arg = argv[i];
-+		if (!strcmp(arg, "--dry-run") || !strcmp(arg, "-n"))
-+			cb.dry_run = 1;
-+		else if (!strcmp(arg, "--verbose"))
-+			cb.verbose = 1;
-+		else if (!strcmp(arg, "--")) {
-+			i++;
-+			break;
-+		}
-+		else if (arg[0] == '-')
-+			usage(reflog_delete_usage);
-+		else
-+			break;
-+	}
-+
-+	if (argc - i < 1)
-+		return error("Nothing to delete?");
-+
-+	for ( ; i < argc; i++) {
- 		const char *spec = strstr(argv[i], "@{");
- 		unsigned char sha1[20];
- 		char *ep, *ref;
--- 
-1.5.4.2.267.g38ea
+--=20
+R=C3=A9mi Vanicat
