@@ -1,101 +1,140 @@
-From: Alexandre Julliard <julliard@winehq.org>
-Subject: Re: [PATCH 1/4] git.el: Support for showing unknown/ignored directories.
-Date: Fri, 22 Feb 2008 16:53:16 +0100
-Message-ID: <8763whkmxf.fsf@wine.dyndns.org>
-References: <87zludorqs.fsf@wine.dyndns.org>
-	<20080222153051.GA20984@diana.vm.bytemark.co.uk>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: [StGit PATCH 2/2] Write to a stack log when stack is modified
+Date: Fri, 22 Feb 2008 15:58:25 +0000
+Message-ID: <b0943d9e0802220758j76248cf3rb4dbb86f03b57b16@mail.gmail.com>
+References: <20080214012119.22365.54526.stgit@yoghurt>
+	 <20080214012912.22365.83207.stgit@yoghurt>
+	 <b0943d9e0802201446g2840c3d9v576f840936253525@mail.gmail.com>
+	 <20080221071819.GA8250@diana.vm.bytemark.co.uk>
+	 <b0943d9e0802220605t56257718p850c677a59671862@mail.gmail.com>
+	 <20080222145609.GA19172@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Karl =?utf-8?Q?Hasselstr=C3=B6m?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Fri Feb 22 16:54:33 2008
+To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Fri Feb 22 16:59:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JSaDu-0003Qp-F2
-	for gcvg-git-2@gmane.org; Fri, 22 Feb 2008 16:54:06 +0100
+	id 1JSaJN-0005tg-EB
+	for gcvg-git-2@gmane.org; Fri, 22 Feb 2008 16:59:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754491AbYBVPx1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 Feb 2008 10:53:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753963AbYBVPx1
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Feb 2008 10:53:27 -0500
-Received: from mail.codeweavers.com ([216.251.189.131]:54179 "EHLO
-	mail.codeweavers.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754185AbYBVPx0 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 22 Feb 2008 10:53:26 -0500
-Received: from adsl-84-226-29-199.adslplus.ch ([84.226.29.199] helo=wine.dyndns.org)
-	by mail.codeweavers.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <julliard@winehq.org>)
-	id 1JSaD8-0000yB-Sa; Fri, 22 Feb 2008 09:53:25 -0600
-Received: by wine.dyndns.org (Postfix, from userid 1000)
-	id 486291E715D; Fri, 22 Feb 2008 16:53:16 +0100 (CET)
-In-Reply-To: <20080222153051.GA20984@diana.vm.bytemark.co.uk> ("Karl
-	=?utf-8?Q?Hasselstr=C3=B6m=22's?= message of "Fri, 22 Feb 2008 16:30:51
- +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.50 (gnu/linux)
-X-Spam-Score: -3.1
+	id S1754939AbYBVP6c convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 Feb 2008 10:58:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754280AbYBVP6b
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Feb 2008 10:58:31 -0500
+Received: from rv-out-0910.google.com ([209.85.198.191]:7328 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757310AbYBVP62 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 22 Feb 2008 10:58:28 -0500
+Received: by rv-out-0910.google.com with SMTP id k20so289705rvb.1
+        for <git@vger.kernel.org>; Fri, 22 Feb 2008 07:58:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=E8bivrSiTrcSomRMpmk9x+3JAdxFXyhe70sQviTg564=;
+        b=vP9U5E1i6pb/8C5ySmVBJZoPVJVCXZaCPRZ/Y3e48qK6jTHot47StZ4VPL9SdezXYwxXJAUuwZQuG3mtgvalgCNCovHYx+SMqgORlmyxf5obsBNIZ14NQaLZnWWckoqg7w6Sh6iqLAzkSwPVnvtLks+O53oH2/CM5X9XV/talTg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=nXN85/LT+YwChY78LVE7AL/VCbLL1zZm+8/wGLCVKuT9wB/0Sz1V26nlQNVKBhm2ra/XzsAvOve6L+H2aA89W/ZcH+pNETeOrg2ADB/dy1FMMaPotXuhUFATtxstYRuu2i6uWdmGtM7CjoEBwMtW03JPe9yZc1yigo4E5P0Lm7U=
+Received: by 10.141.167.5 with SMTP id u5mr66795rvo.220.1203695905880;
+        Fri, 22 Feb 2008 07:58:25 -0800 (PST)
+Received: by 10.140.193.5 with HTTP; Fri, 22 Feb 2008 07:58:25 -0800 (PST)
+In-Reply-To: <20080222145609.GA19172@diana.vm.bytemark.co.uk>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74730>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74731>
 
-Karl Hasselstr=C3=B6m <kha@treskal.com> writes:
-
-> On 2008-02-07 13:50:19 +0100, Alexandre Julliard wrote:
+On 22/02/2008, Karl Hasselstr=F6m <kha@treskal.com> wrote:
+> On 2008-02-22 14:05:55 +0000, Catalin Marinas wrote:
 >
->> Instead of recursing into directories that only contain unknown
->> files, display only the directory itself. Its contents can be
->> expanded with git-find-file (bound to C-m).
+>  > On 21/02/2008, Karl Hasselstr=F6m <kha@treskal.com> wrote:
+>  >
+>  > > On 2008-02-20 22:46:48 +0000, Catalin Marinas wrote:
+>  > >
+>  > >  > The abstractions are really nice (and I still wonder how StGI=
+T
+>  > >  > codebase increased that much when all I needed two years ago
+>  > >  > was a simple script-like application to reorder commits :-)).
+>  > >
+>  > > :-) I'll take some of the blame, but StGit was quite large alrea=
+dy
+>  > >  when I started submitting patches to it.
+>  >
+>  > Anyway, the new restructuring is much cleaner, though heavily OO a=
+nd
+>  > some people might not like it (me not included).
 >
-> I have a bunch of directories in my tree with only ignored files in
-> them. They used to not show up at all, but now they do. If I press
-> return with the cursor on top of one of them, it vanishes (which is
-> equivalent to expanding to all the 0 non-ignored files in that
-> directory, I guess).
 >
-> I presume this wasn't the intended behavior? I like the idea for
-> subdirectories that actually contain non-ignored files, but
-> directories with only ignored files should really not be shown at all=
-=2E
+> That it's conceptually OO is unavoidable, I think (the only way to
+>  avoid that would be through obfuscation). And using Python's OO
+>  features to write code for such a model is the least bad you can do =
+in
+>  Python. IMHO.
 
-It probably needs something like this:
+I agree.
 
-=46rom b32a397a64eec64d433aa0ee00147003723cfeee Mon Sep 17 00:00:00 200=
-1
-=46rom: Alexandre Julliard <julliard@winehq.org>
-Date: Fri, 22 Feb 2008 16:48:53 +0100
-Subject: [PATCH] git.el: Do not display empty directories.
+>  > > When you say "it's still slow", are you referring to the existin=
+g
+>  > > per-patch log, my per-branch log, or just StGit in general?
+>  >
+>  > I think it's more GIT in general. Checking the tree status takes
+>  > some time and a 3-way merge on a 512MB RAM machine with GIT using
+>  > over 200MB gets a bit slow.
+>
+>
+> I just upgraded my laptop from 512 MB to 2 GB, so I'll start
+>  neglecting this kind of problem, I fear. :-/
 
-Signed-off-by: Alexandre Julliard <julliard@winehq.org>
----
- contrib/emacs/git.el |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+You can boot with mem=3D512MB (or even less) :-).
 
-diff --git a/contrib/emacs/git.el b/contrib/emacs/git.el
-index d91fbb8..7cb86df 100644
---- a/contrib/emacs/git.el
-+++ b/contrib/emacs/git.el
-@@ -753,7 +753,7 @@ Return the list of files that haven't been handled.=
-"
- (defun git-run-ls-files-with-excludes (status files default-state &res=
-t options)
-   "Run git-ls-files on FILES with appropriate --exclude-from options."
-   (let ((exclude-files (git-get-exclude-files)))
--    (apply #'git-run-ls-files status files default-state "--directory"
-+    (apply #'git-run-ls-files status files default-state "--directory"=
- "--no-empty-directory"
-            (concat "--exclude-per-directory=3D" git-per-dir-ignore-fil=
-e)
-            (append options (mapcar (lambda (f) (concat "--exclude-from=
-=3D" f)) exclude-files)))))
-=20
+>  > >  Have you noticed any difference between commands using the old
+>  > >  and new infrastructure (say, stg push vs. stg goto)? The latter
+>  > >  should be taking less time, due to touching the worktree only
+>  > >  when necessary.
+>  >
+>  > In the patch pushing functions, it now first calls simple_merge()
+>  > which is still a 3-way merge but without rename detection. The old
+>  > StGIT implementation was using "git-diff | git-apply" and falling
+>  > back to the recursive merge. Most of the patches apply cleanly and
+>  > we don't need the three-way merge which uses more RAM.
+>
+>
+> I didn't include patch application because it wasn't necessary to get
+>  things working, and is easy to add at any later point.
+>
+>  I'd be curious to see how much of a difference it makes.
+
+It makes a difference if you don't have much RAM available. I think
+once a patch falls back to three-way merge, Linux already makes room
+available for the subsequent merges. But, as I said, most of the time
+the patches just apply cleanly.
+
+>  > We could use this "modified" feature to automatically export patch=
+es
+>  > (some people asked for this in the past, as means for backup in ca=
+se
+>  > of StGIT failures).
+>
+>
+> You mean automatically export only the changed patches?
+
+Yes, at refresh and pushing, but for the latter, only if a patch was mo=
+dified.
+
+>  One cool thing we could do is export the patches as files in a git
+>  branch -- the log machinery I'm building should make it trivial. Tha=
+t
+>  way, you'd get the history of the patches too.
+
+Yes, I don't think it is difficult to do (it just need to be optional
+as some people might not need it).
+
 --=20
-1.5.4.1.132.gd85f75
-
---=20
-Alexandre Julliard
-julliard@winehq.org
+Catalin
