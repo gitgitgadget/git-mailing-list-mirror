@@ -1,60 +1,85 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [StGit PATCH] Allow renaming of the top-most branch by just calling stg rename <new-patch-name>
-Date: Fri, 22 Feb 2008 08:38:11 +0100
-Message-ID: <20080222073811.GB6630@diana.vm.bytemark.co.uk>
-References: <200802172203.55533.onno@gmx.net> <20080218140005.GA18668@diana.vm.bytemark.co.uk> <200802212230.56646.onno@gmx.net>
+From: Ian Clatworthy <ian.clatworthy@internode.on.net>
+Subject: Re: [Fwd: [ANNOUNCE] bzr-fastimport plugin, yet another Bazaar import
+	option]
+Date: Fri, 22 Feb 2008 17:47:40 +1000
+Message-ID: <47BE7E1C.4040303@internode.on.net>
+References: <47BE167A.4060005@internode.on.net>
+	<20080222073228.GF8410@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Onno Kortmann <onno@gmx.net>
-X-From: git-owner@vger.kernel.org Fri Feb 22 08:39:15 2008
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Bazaar <bazaar@lists.canonical.com>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: bazaar-bounces@lists.canonical.com Fri Feb 22 08:48:23 2008
+Return-path: <bazaar-bounces@lists.canonical.com>
+Envelope-to: gcvbg-bazaar-ng@m.gmane.org
+Received: from chlorine.canonical.com ([91.189.94.204])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JSSUx-0006B9-Uv
-	for gcvg-git-2@gmane.org; Fri, 22 Feb 2008 08:39:12 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756121AbYBVHiV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 Feb 2008 02:38:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755537AbYBVHiV
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Feb 2008 02:38:21 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4235 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754793AbYBVHiT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Feb 2008 02:38:19 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1JSSTz-0001rC-00; Fri, 22 Feb 2008 07:38:11 +0000
-Content-Disposition: inline
-In-Reply-To: <200802212230.56646.onno@gmx.net>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74700>
+	id 1JSSdp-0008GG-OQ
+	for gcvbg-bazaar-ng@m.gmane.org; Fri, 22 Feb 2008 08:48:21 +0100
+Received: from localhost ([127.0.0.1] helo=chlorine.canonical.com)
+	by chlorine.canonical.com with esmtp (Exim 4.60)
+	(envelope-from <bazaar-bounces@lists.canonical.com>)
+	id 1JSSdI-0002of-5q; Fri, 22 Feb 2008 07:47:48 +0000
+Received: from ipmail05.adl2.internode.on.net ([203.16.214.145])
+	by chlorine.canonical.com with esmtp (Exim 4.60)
+	(envelope-from <ian.clatworthy@internode.on.net>) id 1JSSdG-0002oY-0c
+	for bazaar@lists.canonical.com; Fri, 22 Feb 2008 07:47:46 +0000
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AgAAAE4Mvkd5Lc6oWmdsb2JhbAAIkE0BIIE7niU
+X-IronPort-AV: E=Sophos;i="4.25,390,1199626200"; d="scan'208";a="60029485"
+Received: from ppp121-45-206-168.lns1.bne1.internode.on.net (HELO
+	[192.168.1.6]) ([121.45.206.168])
+	by ipmail05.adl2.internode.on.net with ESMTP; 22 Feb 2008 18:17:42 +1030
+User-Agent: Thunderbird 2.0.0.6 (X11/20071022)
+In-Reply-To: <20080222073228.GF8410@spearce.org>
+X-Enigmail-Version: 0.95.0
+X-BeenThere: bazaar@lists.canonical.com
+X-Mailman-Version: 2.1.8
+Precedence: list
+List-Id: bazaar discussion <bazaar.lists.canonical.com>
+List-Unsubscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar>,
+	<mailto:bazaar-request@lists.canonical.com?subject=unsubscribe>
+List-Archive: <https://lists.ubuntu.com/archives/bazaar>
+List-Post: <mailto:bazaar@lists.canonical.com>
+List-Help: <mailto:bazaar-request@lists.canonical.com?subject=help>
+List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar>,
+	<mailto:bazaar-request@lists.canonical.com?subject=subscribe>
+Sender: bazaar-bounces@lists.canonical.com
+Errors-To: bazaar-bounces@lists.canonical.com
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74701>
 
-On 2008-02-21 22:30:56 +0100, Onno Kortmann wrote:
+Shawn O. Pearce wrote:
 
-> Ok, I tried to do this, I'm not used at all to sending patches with
-> (st)git :-) Thanks for the pointer and the assistance.
+> If we are heading in the direction of making this a common stream
+> format I'd like to try and work it out such that any additional
+> extensions aren't VCS specific, at least as much as we can avoid it.
+> That way exports from a source into this format can be loaded into
+> any VCS that recognizes it, and have little or no loss.  So yes,
+> I am interested in trying to work with you and anyone else who wants
+> to extend the format further.
 
-No problem. Thanks for writing the patches!
+Excellent. That sounds the right way to go. I'll contact you if and when
+I want to add stuff.
 
-> Hopefully, --refid works as I understand it and the new patches
-> appear in this thread.
+> Heh.  OOo is _huge_.  I think the best import into Git thus far is
+> taking up about 1.5G of disk space once fully repacked.  I don't
+> recall how they did the import, but coming from SVN I think they
+> used git-svn, which is not based on git-fast-import.
+> 
+> What frontend are you using to go from SVN -> fast-import?
 
-Mailing patches to yourself is a good way to try things out if you're
-not sure they're going to work (but you seem to have had no problems
-with it).
+The pack file in the Git clone I have is 2.4G. I thought that was large
+but it's quite small compared to the 82G svn dump that creates a 55G svn
+repo!
 
-> I'll send out another patch, a test case for the stg rename command.
+I'm using svn-fast-export.c currently. I'd rather enhance the Python one
+but my Subversion binding knowledge is slim and there's a bug wrt "too
+many open files" that causes it to crash almost immediately on the OOo
+repo. It's not obvious to me how to fix that unfortunately. It worked
+fine for Wordpress OTOH.
 
-Thanks, I'll pick both of them up, probably tomorrow (unless Catalin
-does so first).
+The svn-all-fast-export tool sounds interesting but is completely
+undocumented to my knowledge.
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+Ian C.
