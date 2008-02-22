@@ -1,137 +1,150 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: [PATCH 4/4] git-stash: add new 'drop' subcommand
-Date: Fri, 22 Feb 2008 13:04:54 -0600
-Message-ID: <47BF1CD6.70500@nrlssc.navy.mil>
-References: <47BF18DF.6050100@nrlssc.navy.mil> <1203706541-21719-1-git-send-email-casey@nrlssc.navy.mil> <1203706541-21719-2-git-send-email-casey@nrlssc.navy.mil> <1203706541-21719-3-git-send-email-casey@nrlssc.navy.mil>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: Better chopping in commit search results
+Date: Fri, 22 Feb 2008 20:14:12 +0100
+Message-ID: <200802222014.13205.jnareb@gmail.com>
+References: <7vbq6kprql.fsf@gitster.siamese.dyndns.org> <7voda8ap6r.fsf@gitster.siamese.dyndns.org> <200802221849.44054.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Feb 22 20:08:50 2008
+Cc: git@vger.kernel.org, Jean-Baptiste Quenot <jbq@caraldi.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 22 20:18:27 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JSdE7-0002mJ-4r
-	for gcvg-git-2@gmane.org; Fri, 22 Feb 2008 20:06:31 +0100
+	id 1JSdMM-00069t-LI
+	for gcvg-git-2@gmane.org; Fri, 22 Feb 2008 20:15:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757090AbYBVTFx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Feb 2008 14:05:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757049AbYBVTFw
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Feb 2008 14:05:52 -0500
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:43898 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753602AbYBVTFu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Feb 2008 14:05:50 -0500
-Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
-	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id m1MJ4s2h027494;
-	Fri, 22 Feb 2008 13:04:54 -0600
-Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 22 Feb 2008 13:04:53 -0600
-User-Agent: Thunderbird 2.0.0.9 (X11/20071031)
-In-Reply-To: <1203706541-21719-3-git-send-email-casey@nrlssc.navy.mil>
-X-OriginalArrivalTime: 22 Feb 2008 19:04:53.0848 (UTC) FILETIME=[CEAB1D80:01C87585]
-X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-5.0.0.1023-15736001
-X-TM-AS-Result: : Yes--6.696800-0-31-1
-X-TM-AS-Category-Info: : 31:0.000000
-X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNjQzLTcwNzM5NS03MDM3?=
-	=?us-ascii?B?MjAtNzEwOTg5LTcwMDE2MC03MDQ0MTAtMTg4MDE5LTcwMzQ1NC0x?=
-	=?us-ascii?B?MDY0NzAtNzAwNDc2LTcwNDU2OC0xMDY0MjAtNzAzNzQwLTcwMzc4?=
-	=?us-ascii?B?OC03MDE5MzctNzEwOTcwLTcwMjAzOC03MDA5NzAtNzA3NzUwLTcw?=
-	=?us-ascii?B?MDM3My03MDAzMjQtNzA1MDY5LTcwNDg1Mi03MDc0NTEtNzAzNzEy?=
-	=?us-ascii?B?LTE0ODAzOS0xNDgwNTE=?=
+	id S1758293AbYBVTO0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Feb 2008 14:14:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757265AbYBVTO0
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Feb 2008 14:14:26 -0500
+Received: from nf-out-0910.google.com ([64.233.182.188]:6357 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756894AbYBVTOY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Feb 2008 14:14:24 -0500
+Received: by nf-out-0910.google.com with SMTP id g13so322821nfb.21
+        for <git@vger.kernel.org>; Fri, 22 Feb 2008 11:14:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        bh=FeUTv+/v+SH0WvU9hAgDzzR07z14Db2/Q294IGBqtcY=;
+        b=rBZNGfxfLN89hz6pAYKRlKShW95uzCQmelnsBH14FcpFYF64eC2ffm7oj7RO3kxjKR7vVT/ouuCpfVlsmQPmglLf624w3x3ge9zqtygHuAFpe/VPyBZI+sSz9QGUHYXrpte5kAYjT7ojmP8FqrqJ10F4NP1QbZBWlVzv5N4bPGQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=vXCSCXvlmvyAog7lmsYCuz4ptZA3bfTyFKHevpN8ncfUwISxpEDMgS1VSkIrXI9P86z8i11glBD2iRNsXABOoGLCCzpGd2RmtkiP57WRPHE6qXHP7HvIyD0MyRE07k2Ld5XGrnAVTtdIouxlPKpkVvfXCpc8a55wfwTHBjREYXk=
+Received: by 10.78.130.6 with SMTP id c6mr745680hud.13.1203707660548;
+        Fri, 22 Feb 2008 11:14:20 -0800 (PST)
+Received: from ?192.168.1.11? ( [83.8.207.245])
+        by mx.google.com with ESMTPS id 34sm1410922nfu.2.2008.02.22.11.14.15
+        (version=SSLv3 cipher=OTHER);
+        Fri, 22 Feb 2008 11:14:18 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <200802221849.44054.jnareb@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74750>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74751>
 
-This allows a single stash entry to be deleted. It takes an
-optional argument which is a stash reflog entry. If no
-arguments are supplied, it drops the most recent stash entry.
+Jakub Narebski wrote:
+> On Fri, 22 Feb 2008, Junio C Hamano wrote:
 
-Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
----
- Documentation/git-stash.txt |    7 ++++++-
- git-stash.sh                |   25 ++++++++++++++++++++++++-
- 2 files changed, 30 insertions(+), 2 deletions(-)
+>> For example, if you are looking for "very long ... and how"
+>> in the first paragraph of message (if it were all on a single
+>> line), wouldn't you want to see:
+>> 
+>>     ...st this with <<very long ... and how>> the actual out...
+>> 
+>> rather than:
+>> 
+>>     Could som... <<very long search stri...>> the actual out...
+>> 
+>> in the result?
+> 
+> ...but I think it is better left for another patch.
 
-diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
-index 48e6f5a..f50c24c 100644
---- a/Documentation/git-stash.txt
-+++ b/Documentation/git-stash.txt
-@@ -8,7 +8,7 @@ git-stash - Stash the changes in a dirty working directory away
- SYNOPSIS
- --------
- [verse]
--'git-stash' (list | show [<stash>] | apply [<stash>] | clear)
-+'git-stash' (list | show [<stash>] | apply [<stash>] | clear | drop [<stash>])
- 'git-stash' [save [<message>]]
- 
- DESCRIPTION
-@@ -85,6 +85,11 @@ clear::
- 	Remove all the stashed states. Note that those states will then
- 	be subject to pruning, and may be difficult or impossible to recover.
- 
-+drop [<stash>]::
-+
-+	Remove a single stashed state from the stash list. When no `<stash>`
-+	is given, it removes the latest one. i.e. `stash@\{0}`
-+
- 
- DISCUSSION
- ----------
-diff --git a/git-stash.sh b/git-stash.sh
-index b00f888..caa0258 100755
---- a/git-stash.sh
-+++ b/git-stash.sh
-@@ -1,7 +1,7 @@
- #!/bin/sh
- # Copyright (c) 2007, Nanako Shiraishi
- 
--USAGE='[  | save | list | show | apply | clear | create ]'
-+USAGE='[  | save | list | show | apply | clear | drop | create ]'
- 
- SUBDIRECTORY_OK=Yes
- OPTIONS_SPEC=
-@@ -196,6 +196,25 @@ apply_stash () {
- 	fi
- }
- 
-+drop_stash () {
-+	have_stash || die 'No stash entries to drop'
-+
-+	test $# = 0 && set -- "$ref_stash@{0}"
-+
-+	# Verify supplied argument looks like a stash entry
-+	s=$(git rev-parse --revs-only --no-flags "$@") &&
-+	git rev-parse --verify "$s:"   > /dev/null 2>&1 &&
-+	git rev-parse --verify "$s^1:" > /dev/null 2>&1 &&
-+	git rev-parse --verify "$s^2:" > /dev/null 2>&1 ||
-+		die "$*: not a valid stashed state"
-+
-+	git reflog delete --updateref --rewrite "$@" &&
-+		echo "Dropped $* ($s)" || die "$*: Could not drop stash entry"
-+
-+	# clear_stash if we just dropped the last stash entry
-+	git rev-parse --verify "$ref_stash@{0}" > /dev/null 2>&1 || clear_stash
-+}
-+
- # Main command set
- case "$1" in
- list)
-@@ -230,6 +249,10 @@ create)
- 	fi
- 	create_stash "$*" && echo "$w_commit"
- 	;;
-+drop)
-+	shift
-+	drop_stash "$@"
-+	;;
- *)
- 	if test $# -eq 0
- 	then
+End here is proposed improved chop_str which can do chopping at
+beginning, in the middle, and (as it used to do) at the end.
+
+Some questions about the code:
+ * should we divide slop in two also when chopping in the middle?
+ * what should extra option be named, and what should be names of
+   posible values of this option (the option deciding where to chop)
+ * $add_len has default value if not provided, or if 0 (!), or if '';
+   you have to use chop_str($str, 20, undef, -pos=>'center') trick
+   to use it with extra options.
+ * can the code be improved? I'm not Perl expert.
+
+
+-- >8 --
+sub chop_str {
+	my $str = shift;
+	my $len = shift;
+	my $add_len = shift || 10;
+	# supported opts:
+	# * -pos => 'left' | 'center' | 'right', defaults to 'right'
+	#   denotes where (which part) to chop
+	my %opts = @_;
+
+	# allow only $len chars, but don't cut a word if it would fit in $add_len
+	# if it doesn't fit, cut it if it's still longer than the dots we would add
+	# remove chopped character entities entirely
+
+	# when chopping in the middle, distribute $len into left and right part
+	if (defined $opts{'-pos'} && $opts{'-pos'} eq 'center') {
+		$len = int($len/2);
+	}
+
+	# regexps: ending and beginning with word part up to $add_len
+	my $endre = qr/.{0,$len}[^ \/\-_:\.@]{0,$add_len}/;
+	my $begre = qr/[^ \/\-_:\.@]{0,$add_len}.{0,$len}/;
+
+	if (defined $opts{'-pos'} && $opts{'-pos'} eq 'left') {
+		$str =~ m/^(.*?)($begre)$/;
+		my ($lead, $body) = ($1, $2);
+		if (length($lead) > 4) {
+			if ($lead =~ m/&[^;]*$/) {
+				$body =~ s/^[^;]*;//; 
+			}
+			$lead = "... ";
+		}
+		return "$lead$body";
+
+	} elsif (defined $opts{'-pos'} && $opts{'-pos'} eq 'center') {
+		$str =~ m/^($endre)(.*)$/;
+		my ($left, $str)  = ($1, $2);
+		$str =~ m/^(.*?)($begre)$/;
+		my ($mid, $right) = ($1, $2);
+		if (length($mid) > 5) {
+			$left =~ s/&[^;]*$//;
+			if ($mid =~ m/&[^;]*$/) {
+				$right =~ s/^[^;]*;//;
+			}
+			$mid = " ... ";
+		}
+		return "$left$mid$right";
+
+	} else {
+		$str =~ m/^($endre)(.*)$/;
+		my $body = $1;
+		my $tail = $2;
+		if (length($tail) > 4) {
+			$body =~ s/&[^;]*$//;
+			$tail = " ...";
+		}
+		return "$body$tail";
+	}
+}
+-- >8 --
+
+Example usage:
+  chop_str($str, 15, 5, -pos=>'center')
+
 -- 
-1.5.4.2.267.g38ea
+Jakub Narebski
+Poland
