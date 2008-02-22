@@ -1,78 +1,74 @@
-From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
-Subject: Re: [PATCH] git.el: Add a git-grep command
-Date: Fri, 22 Feb 2008 10:18:54 +0100
-Message-ID: <87tzk19wn5.fsf@lysator.liu.se>
-References: <87odaa4tcl.fsf@lysator.liu.se>
-	<m3myptcqji.fsf@localhost.localdomain>
+From: "C. E. Ball" <ceball@users.sourceforge.net>
+Subject: Re: Interrupted git-svn dcommit, now I get segmentation faults
+Date: Fri, 22 Feb 2008 17:20:00 +0800
+Message-ID: <4e2a3a120802220120s36fcdd31i9d0a18800d0a0349@mail.gmail.com>
+References: <loom.20080221T062522-821@post.gmane.org>
+	 <47BDD096.7040606@vilain.net>
+	 <4e2a3a120802220113q4df473c0xcaad4760aea7f49b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Alexandre Julliard <julliard@winehq.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 22 10:19:23 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Sam Vilain" <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Fri Feb 22 10:20:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JSU3t-0000kv-Kv
-	for gcvg-git-2@gmane.org; Fri, 22 Feb 2008 10:19:22 +0100
+	id 1JSU5J-00019r-7M
+	for gcvg-git-2@gmane.org; Fri, 22 Feb 2008 10:20:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751171AbYBVJSr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 Feb 2008 04:18:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750971AbYBVJSq
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Feb 2008 04:18:46 -0500
-Received: from mail.lysator.liu.se ([130.236.254.3]:34901 "EHLO
-	mail.lysator.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751000AbYBVJSp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Feb 2008 04:18:45 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.lysator.liu.se (Postfix) with ESMTP id 24217200A207;
-	Fri, 22 Feb 2008 10:18:44 +0100 (CET)
-Received: from mail.lysator.liu.se ([127.0.0.1])
-	by localhost (lenin.lysator.liu.se [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 25845-01-15; Fri, 22 Feb 2008 10:18:43 +0100 (CET)
-Received: from krank (dns.vtab.com [62.20.90.195])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.lysator.liu.se (Postfix) with ESMTP id D721D200A1FE;
-	Fri, 22 Feb 2008 10:18:43 +0100 (CET)
-Received: by krank (Postfix, from userid 1000)
-	id 699727B4078; Fri, 22 Feb 2008 10:18:54 +0100 (CET)
-In-Reply-To: <m3myptcqji.fsf@localhost.localdomain> (Jakub Narebski's message of "Fri\, 22 Feb 2008 01\:03\:35 -0800 \(PST\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at lysator.liu.se
+	id S1757956AbYBVJUJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Feb 2008 04:20:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758707AbYBVJUH
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Feb 2008 04:20:07 -0500
+Received: from fg-out-1718.google.com ([72.14.220.153]:24408 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751236AbYBVJUC (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Feb 2008 04:20:02 -0500
+Received: by fg-out-1718.google.com with SMTP id e21so255120fga.17
+        for <git@vger.kernel.org>; Fri, 22 Feb 2008 01:20:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        bh=fvCCg+pQLIOVXpBJTTn7ddF5ih2IUeHpwIaQevlrE+Y=;
+        b=k+2n2rBx52SDPBA46N4GwTUrwFlb27XjvK9G7ok1khpB2W7qfhxiQne+Rxe9trdIyVqSzRjcLDhcZLk58Y5SOruLHjIqUcAhMf3fsmchb5HtqFPCLrdqhGc6Thd8YKQZHU0KfP0EAG91FUO8+AcCgLk6fyZYGznHNoPmtLrJ02Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=kfuQDXwqwS0x1G2ZBooL4e0DKFZPPcEa5sdtcmA9MBRltfI+dZh/vP/xLhE2h+auuXlFRPFz1HAjAP0Bmr3idnG3glEAHCVP/F8KqJ0RC/j7vq8bOhB3NV8qUKGaoYqAoq2xQ/VPy98Z9b4snd34DI8PbrEoSbUXhQiRwaQA9kY=
+Received: by 10.86.72.15 with SMTP id u15mr10584722fga.11.1203672000426;
+        Fri, 22 Feb 2008 01:20:00 -0800 (PST)
+Received: by 10.86.79.1 with HTTP; Fri, 22 Feb 2008 01:20:00 -0800 (PST)
+In-Reply-To: <4e2a3a120802220113q4df473c0xcaad4760aea7f49b@mail.gmail.com>
+Content-Disposition: inline
+X-Google-Sender-Auth: 7da3b5ad7926358b
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74708>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74709>
 
-Jakub Narebski <jnareb@gmail.com> writes:
-
-> David K=C3=A5gedal <davidk@lysator.liu.se> writes:
+On Fri, Feb 22, 2008 at 5:13 PM, C. E. Ball
+<ceball@users.sourceforge.net> wrote:
+> >  If you get stuff like that you can move the git-svn state out of the
+>  >  way, and re-run git-svn fetch; it will rebuild the metadata.
+>  >
+>  >   $ mv .git/svn .git/svn.bad
+>  >   $ git-svn fetch
+>  >
+>  >  Not a fix I know, but might work for you ;)
 >
->> This works for me, but before including it someone else should try
->> it. It might only work in Emacs 22, for instance.
->
-> 1077:[emacs@git/contrib/emacs]# LC_ALL=3Den_EN make
-> emacs -batch -f batch-byte-compile git.el
-> Loading /usr/share/emacs/site-lisp/site-start.d/php-mode-init.el (sou=
-rce)...
-> [...]
-> While compiling toplevel forms in file /home/jnareb/git/contrib/emacs=
-/git.el:
->   !! File error (("Cannot open load file" "grep"))
-> Done
-> make: *** [git.elc] Error 1
->
-> 1078:[emacs@git/contrib/emacs]# emacs --version
-> GNU Emacs 21.4.1
+>  Thank you very much, that did work for me!
 
-As I suspected. The problem is that the grep commands were rewritten
-for Emacs 22, and lots of it can be reused. So to write a similar
-command for Emacs 21 probably requires a bit more work. And since I
-use Emacs 22 I'm not sure I will feel motivated enough...
+Please ignore my previous email - I was in the wrong place on my
+filesystem! Sorry about that.
 
---=20
-David K=C3=A5gedal
+After following your suggestion on my broken repository, I still get
+the same error (a segmentation fault just after the commit is
+successfully sent to svn) when I 'git-svn dommit'.
+
+Any other suggestions?
+
+Thanks,
+Chris
