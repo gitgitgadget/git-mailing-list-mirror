@@ -1,67 +1,101 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: msgmft segfaulting on tiger
-Date: Sat, 23 Feb 2008 06:57:49 +1300
-Message-ID: <46a038f90802220957y7db67d8nb6b7ad784124546a@mail.gmail.com>
-References: <46a038f90802211553g735215c6q260ddc49ac149bb5@mail.gmail.com>
-	 <46a038f90802211559w457c5460k7447ba8b38352713@mail.gmail.com>
-	 <20080222065836.GE8410@spearce.org>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [PATCH] Improve documentation for git-sh-setup.
+Date: Fri, 22 Feb 2008 19:19:28 +0100
+Message-ID: <20080222181927.GA4555@artemis.madism.org>
+References: <20080221230101.27644.49229.stgit@gandelf.nowhere.earth> <20080222093558.GC29114@artemis.madism.org> <7vbq68ap1c.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>,
-	"=?WINDOWS-1252?Q?Basilio_Brice=96=F1o_H.?=" <bbh@tampico.org.mx>,
-	gsaldana@gmail.com
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Feb 22 18:58:28 2008
+Content-Type: multipart/signed; boundary="qDbXVdCdHGoSgWSk";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: Yann Dirson <ydirson@altern.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 22 19:20:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JScAG-0002Ii-1Q
-	for gcvg-git-2@gmane.org; Fri, 22 Feb 2008 18:58:28 +0100
+	id 1JScVH-0002AC-Mi
+	for gcvg-git-2@gmane.org; Fri, 22 Feb 2008 19:20:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752238AbYBVR5w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Feb 2008 12:57:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754635AbYBVR5w
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Feb 2008 12:57:52 -0500
-Received: from ug-out-1314.google.com ([66.249.92.174]:60191 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751699AbYBVR5v (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Feb 2008 12:57:51 -0500
-Received: by ug-out-1314.google.com with SMTP id z38so1360692ugc.16
-        for <git@vger.kernel.org>; Fri, 22 Feb 2008 09:57:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=J95oyF6/NUO7hsNANbi+gGC406VcIpZgQ1PcpP8g5oo=;
-        b=aGMa19YN6ORvHWDoIgD/sbWNOpqsNgGa94xIStrzFoHc3aFjgcDM7QcDAZ1YUXCRVcnCdshXJpPDWqesiUJ5i5jWPMg2tvM+vwUARvZWJSOTupxni8lnepJYxsgeDmjSGAQas8J8iwFCFT2dA606W65K430ENZk4UGipdN1uf5k=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Q5wgY+yuIRixUmuiE5m5jFqwynQBWQCfjTK2BFGU7ecLlmmKldtp54ubN3NxFNAvPHmOBYdUO8S/a3NSHvDzMIJxAELWCRW49k87cKjH6n7oi1DxGwTz6ZfjXLznmk81lwhyHi4e/X0fsV2pMrwX4EgBlyJ0EYByjwUI1C5QTcU=
-Received: by 10.66.221.5 with SMTP id t5mr2641185ugg.83.1203703069319;
-        Fri, 22 Feb 2008 09:57:49 -0800 (PST)
-Received: by 10.66.252.6 with HTTP; Fri, 22 Feb 2008 09:57:49 -0800 (PST)
-In-Reply-To: <20080222065836.GE8410@spearce.org>
+	id S1754864AbYBVSTf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Feb 2008 13:19:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755147AbYBVSTf
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Feb 2008 13:19:35 -0500
+Received: from pan.madism.org ([88.191.52.104]:36720 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754361AbYBVSTc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Feb 2008 13:19:32 -0500
+Received: from madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id A9D541835F;
+	Fri, 22 Feb 2008 19:19:29 +0100 (CET)
+Received: by madism.org (Postfix, from userid 1000)
+	id 4302E385D; Fri, 22 Feb 2008 19:19:28 +0100 (CET)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Yann Dirson <ydirson@altern.org>, git@vger.kernel.org
 Content-Disposition: inline
+In-Reply-To: <7vbq68ap1c.fsf@gitster.siamese.dyndns.org>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74743>
-
-On Fri, Feb 22, 2008 at 7:58 PM, Shawn O. Pearce <spearce@spearce.org> wrote:
->  Did you try building with `make V=1` to look at the full output and
->  not the prettied up simplified output the Makefile uses by default?
->  It won't fix your issue but it may be interesting to see if msgfmt
->  is failing with a particular message or not.
-
-I'll track down Basilio (it's his laptop) today and try, I think he's
-still at the conference. I also suspect that OSX's own build tools may
-include a different msgfmt, but the fink one is earlier in the path.
-
-cheers,
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74744>
 
 
+--qDbXVdCdHGoSgWSk
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-m
+On Fri, Feb 22, 2008 at 05:17:51PM +0000, Junio C Hamano wrote:
+> Pierre Habouzit <madcoder@debian.org> writes:
+>=20
+> >   Actually, new scripts should be written using git rev-parse if
+> > possible, the USAGE/LONG_USAGE were there _before_ and I'd like to call
+> > them the deprecated interface if other git hackers don't mind.
+> >
+> >   git rev-parse --parseopt gives consistency in how git parses options,
+> > and it's A Good Thing=E2=84=A2
+>=20
+> I certainly think encouraging use of parse-options in new
+> scripts is a good idea, even though I suspect "deprecated" above
+> might be a bit too strong.
+
+  Okay.
+
+> I did not find accessible from the command line variant was the
+> parse-opt-hidden feature, which was frustrating.
+
+  Well, it's probably doable using some more magic flags, I can hack
+something if you need to, I'll try to work something out during FOSDEM's
+talks :)
+
+> >   That makes me think that git-sh-setup(1) use should be documented in
+> > gitcli(5), maybe even included, and git-sh-setup(1) should *definitely*
+> > link to gitcli(5). We wondered where to link gitcli from, this is
+> > definitely the place !
+>=20
+> Sounds good.  Please make it so.
+
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+
+--qDbXVdCdHGoSgWSk
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBHvxIvvGr7W6HudhwRAoBpAJ94F1Fg94fKQo2N8RzPaB+udDsLdQCeK5gP
+kjvNhBwka/4JjNTqGhw2A8Q=
+=zlEc
+-----END PGP SIGNATURE-----
+
+--qDbXVdCdHGoSgWSk--
