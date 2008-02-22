@@ -1,55 +1,88 @@
-From: Pieter de Bie <pdebie@ai.rug.nl>
-Subject: Re: [PATCH] hash: fix lookup_hash semantics
-Date: Fri, 22 Feb 2008 23:13:42 +0100
-Message-ID: <2A7FA5AD-555E-480F-924F-68BB340E1753@ai.rug.nl>
-References: <20080222194726.GA24532@sigill.intra.peff.net>
-Mime-Version: 1.0 (Apple Message framework v919.2)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Feb 22 23:15:16 2008
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (topics)
+Date: Fri, 22 Feb 2008 14:26:18 -0800
+Message-ID: <7vhcg07hmd.fsf@gitster.siamese.dyndns.org>
+References: <7v7ihmuwzi.fsf@gitster.siamese.dyndns.org>
+ <7vodavd9qw.fsf@gitster.siamese.dyndns.org>
+ <7vbq6tset4.fsf@gitster.siamese.dyndns.org>
+ <7vmyq9gk94.fsf@gitster.siamese.dyndns.org>
+ <7vk5la4oxq.fsf@gitster.siamese.dyndns.org>
+ <7vejbc44hu.fsf@gitster.siamese.dyndns.org>
+ <7v8x1fymei.fsf@gitster.siamese.dyndns.org>
+ <alpine.LSU.1.00.0802211024200.17164@racer.site>
+ <47BF18DF.6050100@nrlssc.navy.mil>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Brandon Casey <casey@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Fri Feb 22 23:27:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JSgAk-0008TL-8y
-	for gcvg-git-2@gmane.org; Fri, 22 Feb 2008 23:15:14 +0100
+	id 1JSgMn-0004JF-IM
+	for gcvg-git-2@gmane.org; Fri, 22 Feb 2008 23:27:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S936233AbYBVWO3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Feb 2008 17:14:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935962AbYBVWO2
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Feb 2008 17:14:28 -0500
-Received: from lvps87-230-85-232.dedicated.hosteurope.de ([87.230.85.232]:47299
-	"EHLO lvps87-230-85-232.dedicated.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S936226AbYBVWO0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 22 Feb 2008 17:14:26 -0500
-Received: from s55918ba6.adsl.wanadoo.nl ([85.145.139.166] helo=[192.168.1.11])
-	by lvps87-230-85-232.dedicated.hosteurope.de with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.63)
-	(envelope-from <pdebie@ai.rug.nl>)
-	id 1JSg9M-0006DH-NJ; Fri, 22 Feb 2008 23:14:23 +0100
-In-Reply-To: <20080222194726.GA24532@sigill.intra.peff.net>
-X-Mailer: Apple Mail (2.919.2)
+	id S936790AbYBVW0l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Feb 2008 17:26:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936784AbYBVW0k
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Feb 2008 17:26:40 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:52902 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S936933AbYBVW0h (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Feb 2008 17:26:37 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id CF7EA52D8;
+	Fri, 22 Feb 2008 17:26:35 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id CCF4B52D7; Fri, 22 Feb 2008 17:26:26 -0500 (EST)
+In-Reply-To: <47BF18DF.6050100@nrlssc.navy.mil> (Brandon Casey's message of
+ "Fri, 22 Feb 2008 12:47:59 -0600")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74763>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74764>
 
+Brandon Casey <casey@nrlssc.navy.mil> writes:
 
-On Feb 22, 2008, at 8:47 PM, Jeff King wrote:
+> Johannes Schindelin wrote:
+>> Hi,
+>> 
+>> On Wed, 20 Feb 2008, Junio C Hamano wrote:
+>
+>>> * js/reflog-delete (Fri Jan 4 19:11:37 2008 -0600) 2 commits
+>>>  + builtin-reflog.c: fix typo that accesses an unset variable
+>>>  + Teach "git reflog" a subcommand to delete single entries
+>>>
+>>> There was a patch that uses this to implement "git-stash drop",
+>>> which I didn't queue, as the command name and the UI was
+>>> undecided yet.  Dscho was in favor of "pop" without "drop".
+>> 
+>> Maybe it is time to "drop" this topic?
+>
+> The issue with drop or pop (for me) was that deleting a reflog
+> entry was causing error messages to be printed.
 
-> This shuts up the valgrind errors I see under Linux; it would be  
-> nice to
-> get confirmation from OS X people that this fixes their "git status"
-> segfaults.
+I agree with your analysis, and I am tempted to suggest just the
+simplest option.
 
-I think my original message may not have come through as it was in  
-HTML accidentally.
+The thing is, unless it is a reflog used to implement stash,
+removing an entry in the middle and adjusting an entry before
+and after it, just to fool and squelch the consistency mechanism
+we explicitly have for safety, feels quite wrong.  Especially
+given that the whole point of the reflog is to allow you to
+recover your branch to a particular point in time safely.
 
-Anyway, I tested the patch and it works. Thanks!
+So I'd rather see us remove "reflog delete" and add "reflog pop"
+which resets the ref itself to the previous point and deletes
+the last reflog entry.  Then "stash pop" would become simply
+"stash apply" followed by "reflog pop".
 
-Tested-by: Pieter de Bie <pdebie@ai.rug.nl>
-
-- Pieter
+We might need to introduce "stash push" which would be a synonym
+for "stash pop" for symmetry.  Also we may want to introduce a
+stash per branch if we do this.
