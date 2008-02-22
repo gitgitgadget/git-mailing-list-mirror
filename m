@@ -1,95 +1,108 @@
-From: Aidan Van Dyk <aidan@highrise.ca>
-Subject: Re: [Fwd: [ANNOUNCE] bzr-fastimport plugin, yet another Bazaar import option]
-Date: Fri, 22 Feb 2008 09:44:15 -0500
-Message-ID: <20080222144415.GA19974@yugib.highrise.ca>
-References: <47BE167A.4060005@internode.on.net> <20080222073228.GF8410@spearce.org> <20080222113737.GA18581@artemis.madism.org>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [StGit PATCH 2/2] Write to a stack log when stack is modified
+Date: Fri, 22 Feb 2008 15:56:09 +0100
+Message-ID: <20080222145609.GA19172@diana.vm.bytemark.co.uk>
+References: <20080214012119.22365.54526.stgit@yoghurt> <20080214012912.22365.83207.stgit@yoghurt> <b0943d9e0802201446g2840c3d9v576f840936253525@mail.gmail.com> <20080221071819.GA8250@diana.vm.bytemark.co.uk> <b0943d9e0802220605t56257718p850c677a59671862@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="EVF5PPMfhYS0aIcm"
-To: Pierre Habouzit <madcoder@debian.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Ian Clatworthy <ian.clatworthy@internode.on.net>,
-	Bazaar <bazaar@lists.canonical.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 22 15:44:59 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 22 15:57:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JSZ8w-0001HP-E6
-	for gcvg-git-2@gmane.org; Fri, 22 Feb 2008 15:44:54 +0100
+	id 1JSZKc-000665-UN
+	for gcvg-git-2@gmane.org; Fri, 22 Feb 2008 15:56:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752720AbYBVOoS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Feb 2008 09:44:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752634AbYBVOoS
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Feb 2008 09:44:18 -0500
-Received: from yugib.highrise.ca ([205.150.199.213]:43914 "EHLO
-	yugib.highrise.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751804AbYBVOoR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Feb 2008 09:44:17 -0500
-Received: from localhost (yugib.highrise.ca [205.150.199.213])
-	by yugib.highrise.ca (Postfix) with ESMTP id EEF70111E3A;
-	Fri, 22 Feb 2008 09:44:15 -0500 (EST)
+	id S1753783AbYBVO4V convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 Feb 2008 09:56:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753447AbYBVO4V
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Feb 2008 09:56:21 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2424 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753320AbYBVO4U (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Feb 2008 09:56:20 -0500
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1JSZJp-0005FD-00; Fri, 22 Feb 2008 14:56:09 +0000
 Content-Disposition: inline
-In-Reply-To: <20080222113737.GA18581@artemis.madism.org>
-User-Agent: Mutt/1.5.12-2006-07-14
+In-Reply-To: <b0943d9e0802220605t56257718p850c677a59671862@mail.gmail.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74725>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74726>
 
+On 2008-02-22 14:05:55 +0000, Catalin Marinas wrote:
 
---EVF5PPMfhYS0aIcm
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> On 21/02/2008, Karl Hasselstr=F6m <kha@treskal.com> wrote:
+>
+> > On 2008-02-20 22:46:48 +0000, Catalin Marinas wrote:
+> >
+> >  > The abstractions are really nice (and I still wonder how StGIT
+> >  > codebase increased that much when all I needed two years ago
+> >  > was a simple script-like application to reorder commits :-)).
+> >
+> > :-) I'll take some of the blame, but StGit was quite large already
+> >  when I started submitting patches to it.
+>
+> Anyway, the new restructuring is much cleaner, though heavily OO and
+> some people might not like it (me not included).
 
-* Pierre Habouzit <madcoder@debian.org> [080201 08:20]:
-=20
->   /me opens bigs ears and eyes: does this mean that we have an
-> incremental importer of CVS based on git-fast-import ? I mean I'm really
-> interested into that, as git-cvsimport is really broken with the glibc
-> CVS tree, and as the glibc CVSROOT is rsync-able, an incremental
-> importer that has access to the CVSROOT RCS files is probably the most
-> efficient way.
+That it's conceptually OO is unavoidable, I think (the only way to
+avoid that would be through obfuscation). And using Python's OO
+features to write code for such a model is the least bad you can do in
+Python. IMHO.
 
-In the repository I convert (PostgreSQL), I'm using the ruby
-=66romcvs/togit converter, which has worked well, because git-cvsimport
-doesn't work.
+> > When you say "it's still slow", are you referring to the existing
+> > per-patch log, my per-branch log, or just StGit in general?
+>
+> I think it's more GIT in general. Checking the tree status takes
+> some time and a 3-way merge on a 512MB RAM machine with GIT using
+> over 200MB gets a bit slow.
 
-I actually found the problem with the PostgreSQL CVS repository - it is
-a TAG, which seems to have some cyclic dependencies which throws cvsps
-into a loop.  Unfortuntely, I have neither time nor energy to be able to
-look into fixing cvsps, especially since fromcvs "just works" on it.
+I just upgraded my laptop from 512 MB to 2 GB, so I'll start
+neglecting this kind of problem, I fear. :-/
 
-	http://mid.gmane.org/20080220220014.GB16099@yugib.highrise.ca
+> >  Have you noticed any difference between commands using the old
+> >  and new infrastructure (say, stg push vs. stg goto)? The latter
+> >  should be taking less time, due to touching the worktree only
+> >  when necessary.
+>
+> In the patch pushing functions, it now first calls simple_merge()
+> which is still a 3-way merge but without rename detection. The old
+> StGIT implementation was using "git-diff | git-apply" and falling
+> back to the recursive merge. Most of the patches apply cleanly and
+> we don't need the three-way merge which uses more RAM.
 
-I don't know what the problem with the glibc CVSROOT, but if it's the
-same, that might be something to look at.
+I didn't include patch application because it wasn't necessary to get
+things working, and is easy to add at any later point.
 
-Note that fromcvs doesn't import tags (that's probably why it didn't
-have any trouble with the PostgreSQL CVS) but that doesn't bother me,
-since CVS tags carry none of the authority git tags do, and the git
-commit ids provide a stable way to refer to particular commits anyways.
+I'd be curious to see how much of a difference it makes.
 
-a.
+> The "(modified)" information was also displayed for a three-way
+> merge (either read-tree or recursive-merge) but now it is only shown
+> for the recursive one. Correctly, merging git-read-tree modifies a
+> patch as well since it no longer applied cleanly.
+
+Ah, so the precise meaning of a patch being "modified" is that git
+apply failed to apply it. I didn't know that.
+
+> We could use this "modified" feature to automatically export patches
+> (some people asked for this in the past, as means for backup in case
+> of StGIT failures).
+
+You mean automatically export only the changed patches? (Otherwise stg
+export would do the job -- I used to use that before I got confident
+enough with StGit.)
+
+One cool thing we could do is export the patches as files in a git
+branch -- the log machinery I'm building should make it trivial. That
+way, you'd get the history of the patches too.
 
 --=20
-Aidan Van Dyk                                             Create like a god,
-aidan@highrise.ca                                       command like a king,
-http://www.highrise.ca/                                   work like a slave.
-
---EVF5PPMfhYS0aIcm
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFHvt+/uVxNPsxNPScRAgE4AJwLAmIp23O83YqAFJoQNkQHNxCCMQCgmhG/
-MD4+veiyB9Y+kCgrE+1+CII=
-=0Ox4
------END PGP SIGNATURE-----
-
---EVF5PPMfhYS0aIcm--
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
