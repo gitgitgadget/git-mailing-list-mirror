@@ -1,119 +1,95 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: [StGit PATCH 2/2] Write to a stack log when stack is modified
-Date: Fri, 22 Feb 2008 14:05:55 +0000
-Message-ID: <b0943d9e0802220605t56257718p850c677a59671862@mail.gmail.com>
-References: <20080214012119.22365.54526.stgit@yoghurt>
-	 <20080214012912.22365.83207.stgit@yoghurt>
-	 <b0943d9e0802201446g2840c3d9v576f840936253525@mail.gmail.com>
-	 <20080221071819.GA8250@diana.vm.bytemark.co.uk>
+From: Aidan Van Dyk <aidan@highrise.ca>
+Subject: Re: [Fwd: [ANNOUNCE] bzr-fastimport plugin, yet another Bazaar import option]
+Date: Fri, 22 Feb 2008 09:44:15 -0500
+Message-ID: <20080222144415.GA19974@yugib.highrise.ca>
+References: <47BE167A.4060005@internode.on.net> <20080222073228.GF8410@spearce.org> <20080222113737.GA18581@artemis.madism.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Fri Feb 22 15:06:51 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="EVF5PPMfhYS0aIcm"
+To: Pierre Habouzit <madcoder@debian.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Ian Clatworthy <ian.clatworthy@internode.on.net>,
+	Bazaar <bazaar@lists.canonical.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 22 15:44:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JSYXr-0003cp-B5
-	for gcvg-git-2@gmane.org; Fri, 22 Feb 2008 15:06:35 +0100
+	id 1JSZ8w-0001HP-E6
+	for gcvg-git-2@gmane.org; Fri, 22 Feb 2008 15:44:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935982AbYBVOGA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 Feb 2008 09:06:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936135AbYBVOF7
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Feb 2008 09:05:59 -0500
-Received: from wx-out-0506.google.com ([66.249.82.236]:49561 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1765533AbYBVOF5 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 22 Feb 2008 09:05:57 -0500
-Received: by wx-out-0506.google.com with SMTP id h31so383451wxd.4
-        for <git@vger.kernel.org>; Fri, 22 Feb 2008 06:05:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=MmhswRY48mZ2vpT+Oja8ejY3L0O75jwP299/tfJSa2s=;
-        b=qzAd8IsM3uXTuBQbsoqk8pq3Qgek2qiEcrHs6xea1AG4nJja1rGtSWlazTPgtra/PI9DwRxvzXf8RpJBrcQMmyHj1Zjnny7DUxtOvDl6m32fPKvVQtJ3ceMECjVMjPGR0FIb7hvKiBqSB4uFM+VqNcCpMEejS1DCTzhM5jmsspY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=I/qNwIgQcxIiX9fBuKBXz5dyJFUoxUFmnqyuoZH9srq0Z9X7nfVXMonTzhjq5q65Srx0wHm+Ik1EQtVs8m37k5I8aIdAjX5g5+/XV34yPyVK4hKG4yssG/bKosfDi1NltEU1PLGjpp7e1twnUzdSeALphHaDZLhRsco6zAUa08A=
-Received: by 10.140.251.1 with SMTP id y1mr7627690rvh.292.1203689155076;
-        Fri, 22 Feb 2008 06:05:55 -0800 (PST)
-Received: by 10.140.193.5 with HTTP; Fri, 22 Feb 2008 06:05:55 -0800 (PST)
-In-Reply-To: <20080221071819.GA8250@diana.vm.bytemark.co.uk>
+	id S1752720AbYBVOoS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Feb 2008 09:44:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752634AbYBVOoS
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Feb 2008 09:44:18 -0500
+Received: from yugib.highrise.ca ([205.150.199.213]:43914 "EHLO
+	yugib.highrise.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751804AbYBVOoR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Feb 2008 09:44:17 -0500
+Received: from localhost (yugib.highrise.ca [205.150.199.213])
+	by yugib.highrise.ca (Postfix) with ESMTP id EEF70111E3A;
+	Fri, 22 Feb 2008 09:44:15 -0500 (EST)
 Content-Disposition: inline
+In-Reply-To: <20080222113737.GA18581@artemis.madism.org>
+User-Agent: Mutt/1.5.12-2006-07-14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74724>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74725>
 
-On 21/02/2008, Karl Hasselstr=F6m <kha@treskal.com> wrote:
-> On 2008-02-20 22:46:48 +0000, Catalin Marinas wrote:
->
->  > The abstractions are really nice (and I still wonder how StGIT
->  > codebase increased that much when all I needed two years ago was a
->  > simple script-like application to reorder commits :-)).
->
->
-> :-) I'll take some of the blame, but StGit was quite large already
->  when I started submitting patches to it.
 
-Anyway, the new restructuring is much cleaner, though heavily OO and
-some people might not like it (me not included).
+--EVF5PPMfhYS0aIcm
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
->
->
->  > Anyway, I don't really like the idea of an additional commit (I
->  > don't even like the old patch log implementation) when the stack i=
-s
->  > modified. It needs some profiling but it has a visible impact on
->  > stacks with a big number of patches (my last kernel release at
->  > www.linux-arm.org/git had 80 patches and it takes a lot of time to
->  > push them).
->
->
-> One thing to remember is that my patch stack log gets one new commit
->  per StGit operation, not one per changed patch. So if you push 80
->  patches with one command, that will give you just one commit on the
->  log. (If someone makes a scripts that calls push 80 times this won't
->  help, of course.)
+* Pierre Habouzit <madcoder@debian.org> [080201 08:20]:
+=20
+>   /me opens bigs ears and eyes: does this mean that we have an
+> incremental importer of CVS based on git-fast-import ? I mean I'm really
+> interested into that, as git-cvsimport is really broken with the glibc
+> CVS tree, and as the glibc CVSROOT is rsync-able, an incremental
+> importer that has access to the CVSROOT RCS files is probably the most
+> efficient way.
 
-Ah, I got it now. Indeed, it would be faster than the current
-per-patch log. I no longer that worried :-)
+In the repository I convert (PostgreSQL), I'm using the ruby
+=66romcvs/togit converter, which has worked well, because git-cvsimport
+doesn't work.
 
->  > In my kernel repository I have several branches with many patches
->  > and, even after "git gc" and repacking, it is still slow (mainly
->  > because of git-read-tree but I'd like to reduce the number of call=
-s
->  > to GIT).
->
->
-> When you say "it's still slow", are you referring to the existing
->  per-patch log, my per-branch log, or just StGit in general?
+I actually found the problem with the PostgreSQL CVS repository - it is
+a TAG, which seems to have some cyclic dependencies which throws cvsps
+into a loop.  Unfortuntely, I have neither time nor energy to be able to
+look into fixing cvsps, especially since fromcvs "just works" on it.
 
-I think it's more GIT in general. Checking the tree status takes some
-time and a 3-way merge on a 512MB RAM machine with GIT using over
-200MB gets a bit slow.
+	http://mid.gmane.org/20080220220014.GB16099@yugib.highrise.ca
 
->  Have you noticed any difference between commands using the old and n=
-ew
->  infrastructure (say, stg push vs. stg goto)? The latter should be
->  taking less time, due to touching the worktree only when necessary.
+I don't know what the problem with the glibc CVSROOT, but if it's the
+same, that might be something to look at.
 
-In the patch pushing functions, it now first calls simple_merge()
-which is still a 3-way merge but without rename detection. The old
-StGIT implementation was using "git-diff | git-apply" and falling back
-to the recursive merge. Most of the patches apply cleanly and we don't
-need the three-way merge which uses more RAM.
+Note that fromcvs doesn't import tags (that's probably why it didn't
+have any trouble with the PostgreSQL CVS) but that doesn't bother me,
+since CVS tags carry none of the authority git tags do, and the git
+commit ids provide a stable way to refer to particular commits anyways.
 
-The "(modified)" information was also displayed for a three-way merge
-(either read-tree or recursive-merge) but now it is only shown for the
-recursive one. Correctly, merging git-read-tree modifies a patch as
-well since it no longer applied cleanly. We could use this "modified"
-feature to automatically export patches (some people asked for this in
-the past, as means for backup in case of StGIT failures).
+a.
 
 --=20
-Catalin
+Aidan Van Dyk                                             Create like a god,
+aidan@highrise.ca                                       command like a king,
+http://www.highrise.ca/                                   work like a slave.
+
+--EVF5PPMfhYS0aIcm
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFHvt+/uVxNPsxNPScRAgE4AJwLAmIp23O83YqAFJoQNkQHNxCCMQCgmhG/
+MD4+veiyB9Y+kCgrE+1+CII=
+=0Ox4
+-----END PGP SIGNATURE-----
+
+--EVF5PPMfhYS0aIcm--
