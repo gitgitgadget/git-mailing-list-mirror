@@ -1,88 +1,61 @@
-From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
-Subject: Re: [PATCH] git.el: Add a git-grep command
-Date: Fri, 22 Feb 2008 11:44:30 +0100
-Message-ID: <87ir0h9soh.fsf@lysator.liu.se>
-References: <87odaa4tcl.fsf@lysator.liu.se>
-	<m3myptcqji.fsf@localhost.localdomain> <87tzk19wn5.fsf@lysator.liu.se>
-	<200802221121.35706.jnareb@gmail.com>
+From: Daniel Stenberg <daniel@haxx.se>
+Subject: Re: GIT_SSL_NO_VERIFY=1 over http doesn't ignore a different ip
+ address for the signed certificate
+Date: Fri, 22 Feb 2008 11:53:39 +0100 (CET)
+Message-ID: <Pine.LNX.4.64.0802221149210.13958@yvahk3.pbagnpgbe.fr>
+References: <e26d18e40802201535s7a5c12fbtd61d2445426f4018@mail.gmail.com> 
+ <20080221064252.GA16036@glandium.org>  <e26d18e40802211057o255246f3p31800c73eb8391ec@mail.gmail.com>
+  <20080221190954.GA24759@glandium.org> <e26d18e40802211727w4f7f5b37vc73a756f6b384289@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Alexandre Julliard <julliard@winehq.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 22 11:45:01 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: git@vger.kernel.org
+To: Anatoly Yakovenko <aeyakovenko@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 22 11:54:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JSVOl-0001jZ-J7
-	for gcvg-git-2@gmane.org; Fri, 22 Feb 2008 11:45:00 +0100
+	id 1JSVY5-0004do-BP
+	for gcvg-git-2@gmane.org; Fri, 22 Feb 2008 11:54:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756159AbYBVKoX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 Feb 2008 05:44:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756174AbYBVKoX
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Feb 2008 05:44:23 -0500
-Received: from mail.lysator.liu.se ([130.236.254.3]:36115 "EHLO
-	mail.lysator.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754710AbYBVKoW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Feb 2008 05:44:22 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.lysator.liu.se (Postfix) with ESMTP id 20D0D200A1E0;
-	Fri, 22 Feb 2008 11:44:21 +0100 (CET)
-Received: from mail.lysator.liu.se ([127.0.0.1])
-	by localhost (lenin.lysator.liu.se [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 09197-01-15; Fri, 22 Feb 2008 11:44:20 +0100 (CET)
-Received: from krank (oden.vtab.com [62.20.90.195])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.lysator.liu.se (Postfix) with ESMTP id 9A537200A1FE;
-	Fri, 22 Feb 2008 11:44:20 +0100 (CET)
-Received: by krank (Postfix, from userid 1000)
-	id E9F137B4078; Fri, 22 Feb 2008 11:44:30 +0100 (CET)
-In-Reply-To: <200802221121.35706.jnareb@gmail.com> (Jakub Narebski's message of "Fri\, 22 Feb 2008 11\:21\:34 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at lysator.liu.se
+	id S1755084AbYBVKxp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Feb 2008 05:53:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754886AbYBVKxp
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Feb 2008 05:53:45 -0500
+Received: from kluster1.contactor.se ([91.191.140.11]:60792 "EHLO
+	kluster1.contactor.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754531AbYBVKxo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Feb 2008 05:53:44 -0500
+Received: from linux3.contactor.se (linux3.contactor.se [91.191.140.23])
+	by kluster1.contactor.se (8.13.8/8.13.8/Debian-3) with ESMTP id m1MArdA2006739;
+	Fri, 22 Feb 2008 11:53:39 +0100
+X-X-Sender: dast@linux3.contactor.se
+In-Reply-To: <e26d18e40802211727w4f7f5b37vc73a756f6b384289@mail.gmail.com>
+X-fromdanielhimself: yes
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74715>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74716>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+On Thu, 21 Feb 2008, Anatoly Yakovenko wrote:
 
-> On Fri, 22 Feb 2008, David K=C3=A5gedal wrote:
->> Jakub Narebski <jnareb@gmail.com> writes:
->>> David K=C3=A5gedal <davidk@lysator.liu.se> writes:
->>>
->>>> This works for me, but before including it someone else should try
->>>> it. It might only work in Emacs 22, for instance.
->>>
->>> emacs -batch -f batch-byte-compile git.el
->>> [...]
->>> While compiling toplevel forms in file git/contrib/emacs/git.el:
->>>   !! File error (("Cannot open load file" "grep"))
->>> Done
->>> make: *** [git.elc] Error 1
->>>
->>> 1078:[emacs@git/contrib/emacs]# emacs --version
->>> GNU Emacs 21.4.1
->>=20
->> As I suspected. The problem is that the grep commands were rewritten
->> for Emacs 22, and lots of it can be reused. So to write a similar
->> command for Emacs 21 probably requires a bit more work. And since I
->> use Emacs 22 I'm not sure I will feel motivated enough...
+> $ GIT_SSL_NO_VERIFY=1 GIT_CURL_VERBOSE=1 git clone
+> https://aeyakovenko@127.0.0.1/git
 >
-> Could you make it at least conditional on the Emacs version used,
-> or even better depending on the fact if "grep" 'library' is available=
-?
+> i get this as an error:
+>
+> error: SSL: certificate subject name 'localhost' does not match target
+> host name '127.0.0.1' (curl_result = 51, http_code = 0, sha1 =
+> 4590de71622f1a90f906413fd7f63d5553cd5f93)
 
-Sure. We could e.g. put it in its own file, git-grep.el.
+That's the very problem Mike Hommey's recent patch addresses. Verifying a 
+peer's certificate is done with two different libcurl options:
 
-> I'd like to be able to use git.el with my Emacs, even without some
-> functionality. TIA.
+* VERIFYPEER verifies the server's certificate against a local CA cert bundle
 
-Absolutely, I hope this doesn't get included until this is resolved.=20
+* VERIFYHOST verifies that the name in the server certificate matches the host
+   you're talking to
 
---=20
-David K=C3=A5gedal
+For this particular case, you can in fact also make it work by making sure the 
+server's certificate has the IP address as a "subjectAltName".
