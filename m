@@ -1,105 +1,99 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/3] t3404: use configured shell instead of /bin/sh
-Date: Sat, 23 Feb 2008 18:12:53 -0500
-Message-ID: <20080223231253.GA14320@coredump.intra.peff.net>
-References: <20080220235944.GA6278@coredump.intra.peff.net> <200802232113.40100.johannes.sixt@telecom.at> <7v63wf2yzt.fsf@gitster.siamese.dyndns.org> <200802232209.41428.johannes.sixt@telecom.at> <20080223211536.GA13280@coredump.intra.peff.net> <7vmypr1gmh.fsf@gitster.siamese.dyndns.org> <20080223223933.GA13683@coredump.intra.peff.net> <7vve4fz3y1.fsf@gitster.siamese.dyndns.org> <20080223224938.GA14231@coredump.intra.peff.net> <7vir0fz3ip.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Sixt <johannes.sixt@telecom.at>, git@vger.kernel.org,
-	Whit Armstrong <armstrong.whit@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Feb 24 00:13:33 2008
+From: Xavier Maillard <xma@gnu.org>
+Subject: Re: [PATCH] git.el: Add a git-grep command
+Date: Sat, 23 Feb 2008 23:41:35 +0100
+Organization: GNU's Not UNIX!
+Message-ID: <200802232241.m1NMfZpg014264@localhost.localdomain>
+References: <87odaa4tcl.fsf@lysator.liu.se>
+	<m3myptcqji.fsf@localhost.localdomain> <87tzk19wn5.fsf@lysator.liu.se>
+	<200802221121.35706.jnareb@gmail.com> <87ir0h9soh.fsf@lysator.liu.se>
+	<87d4qpgs9y.dlv@maison.homelinux.org>
+	<200802230200.m1N202Y7007392@localhost.localdomain> <8763wfwjg6.dlv@maison.homelinux.org>
+Reply-To: Xavier Maillard <xma@gnu.org>
+Cc: vanicat@debian.org, davidk@lysator.liu.se, jnareb@gmail.com,
+	julliard@winehq.org, git@vger.kernel.org
+To: Remi Vanicat <vanicat@debian.org>
+X-From: git-owner@vger.kernel.org Sun Feb 24 00:33:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JT3Yi-00009G-O1
-	for gcvg-git-2@gmane.org; Sun, 24 Feb 2008 00:13:33 +0100
+	id 1JT3sM-0004t3-LI
+	for gcvg-git-2@gmane.org; Sun, 24 Feb 2008 00:33:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751377AbYBWXM5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Feb 2008 18:12:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751371AbYBWXM4
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Feb 2008 18:12:56 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3529 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751190AbYBWXM4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Feb 2008 18:12:56 -0500
-Received: (qmail 11864 invoked by uid 111); 23 Feb 2008 23:12:54 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Sat, 23 Feb 2008 18:12:54 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 23 Feb 2008 18:12:53 -0500
-Content-Disposition: inline
-In-Reply-To: <7vir0fz3ip.fsf@gitster.siamese.dyndns.org>
+	id S1754995AbYBWXdR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Feb 2008 18:33:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755001AbYBWXdQ
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Feb 2008 18:33:16 -0500
+Received: from master.uucpssh.org ([193.218.105.66]:54009 "EHLO
+	master.uucpssh.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754227AbYBWXdP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Feb 2008 18:33:15 -0500
+Received: by master.uucpssh.org (Postfix, from userid 10)
+	id 59854C7053; Sun, 24 Feb 2008 00:32:35 +0100 (CET)
+Received: from localhost.localdomain (IDENT:1000@localhost [127.0.0.1])
+	by localhost.localdomain (8.14.1/8.13.8) with ESMTP id m1NMfaE7014267;
+	Sat, 23 Feb 2008 23:41:36 +0100
+Received: (from xma@localhost)
+	by localhost.localdomain (8.14.1/8.13.8/Submit) id m1NMfZpg014264;
+	Sat, 23 Feb 2008 23:41:35 +0100
+In-reply-to: <8763wfwjg6.dlv@maison.homelinux.org> (message from Remi Vanicat
+	on Sat, 23 Feb 2008 20:39:53 +0100)
+User-Agent: Rmail in GNU Emacs 23.0.60.2 on GNU/Linux
+Jabber-ID: xma01@jabber.fr
+X-uucpssh: Found to be clean
+X-uucpssh-SpamCheck: not spam, SpamAssassin (not cached, score=-4.36,
+	required 4.6, autolearn=not spam, ALL_TRUSTED -1.80, AWL 0.04,
+	BAYES_00 -2.60, SPF_HELO_PASS -0.00)
+X-uucpssh-From: xma@gnu.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74879>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74880>
 
-On Sat, Feb 23, 2008 at 02:55:42PM -0800, Junio C Hamano wrote:
 
-> I think the basic goal should be to come up with a way to make
-> sure that "cd t/ && make" and "cd t/ && sh -x tXXXX-name.sh"
-> would get an environment as close as possible to what happens
-> when you run "make test" at the toplevel.
+   Xavier Maillard <xma@gnu.org> writes:
 
-I was thinking of something like this:
+   > Hi,
+   >
+   >    Here is a modification with inclusion of git-grep only when the grep
+   >    library is available. 
+   >
+   >    +(require 'grep () t)
+   >
+   >    +(when (featurep 'grep)
+   >    +  (defvar git-grep-history nil)
+   >    +
+   >    +  (defun git-grep (regexp &optional files dir)
+   >
+   > Why not just do something like this ?
+   >
+   > (when (require 'grep () t)
+   >       (defvar ...)
+   >       (defun git-grep ...))
 
----
-diff --git a/Makefile b/Makefile
-index d33a556..9046b43 100644
---- a/Makefile
-+++ b/Makefile
-@@ -808,7 +808,7 @@ export TAR INSTALL DESTDIR SHELL_PATH
- 
- ### Build rules
- 
--all:: $(ALL_PROGRAMS) $(BUILT_INS) $(OTHER_PROGRAMS)
-+all:: $(ALL_PROGRAMS) $(BUILT_INS) $(OTHER_PROGRAMS) GIT-BUILD-OPTIONS
- ifneq (,$X)
- 	$(foreach p,$(patsubst %$X,%,$(filter %$X,$(ALL_PROGRAMS) $(BUILT_INS) git$X)), $(RM) '$p';)
- endif
-@@ -1010,6 +1010,9 @@ GIT-CFLAGS: .FORCE-GIT-CFLAGS
- 		echo "$$FLAGS" >GIT-CFLAGS; \
-             fi
- 
-+GIT-BUILD-OPTIONS: .FORCE-GIT-BUILD-OPTIONS
-+	@echo SHELL_PATH='$(SHELL_PATH_SQ)' >$@
-+
- ### Detect Tck/Tk interpreter path changes
- ifndef NO_TCLTK
- TRACK_VARS = $(subst ','\'',-DTCLTK_PATH='$(TCLTK_PATH_SQ)')
-@@ -1169,6 +1172,7 @@ endif
- 
- .PHONY: all install clean strip
- .PHONY: .FORCE-GIT-VERSION-FILE TAGS tags cscope .FORCE-GIT-CFLAGS
-+.PHONY: .FORCE-GIT-BUILD-OPTIONS
- 
- ### Check documentation
- #
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index 62e65d7..049aa37 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -61,7 +61,7 @@ test_expect_success 'setup' '
- 	git tag I
- '
- 
--echo "#!$SHELL" >fake-editor
-+echo "#!$SHELL_PATH" >fake-editor.sh
- cat >> fake-editor.sh <<\EOF
- case "$1" in
- */COMMIT_EDITMSG)
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 83889c4..3c4e21f 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -342,6 +342,8 @@ if ! test -x ../test-chmtime; then
- 	exit 1
- fi
- 
-+. ../GIT-BUILD-OPTIONS
-+
- # Test repository
- test=trash
- rm -fr "$test"
+   Because I wanted require to stay on top of the file, but I didn't want
+   to put the rest of the git-grep stuff there.
+
+Good point. Though, you can still "embed" the require form
+directly into the defun. This is thing I have already seen in the
+past. Dunno if it is a convention or a coding style but something
+like:
+
+(defun git-grep ()
+ "Docstring"
+ (interactive)
+ (when (require 'grep nil t)
+       here the rest
+  ))
+
+is doable too. Maybe the if-else form would be better though with
+an else clause to (error "No grep package foud.").
+
+Well just kidding, your patch is okay ;)
+
+	Xavier
+-- 
+http://www.gnu.org
+http://www.april.org
+http://www.lolica.org
