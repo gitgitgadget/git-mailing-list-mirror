@@ -1,100 +1,85 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: Interrupted git-svn dcommit, now I get segmentation faults
-Date: Sat, 23 Feb 2008 16:18:22 +1300
-Message-ID: <47BF907E.2090904@vilain.net>
-References: <loom.20080221T062522-821@post.gmane.org>	 <47BDD096.7040606@vilain.net>	 <4e2a3a120802220113q4df473c0xcaad4760aea7f49b@mail.gmail.com> <4e2a3a120802220120s36fcdd31i9d0a18800d0a0349@mail.gmail.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: Question about your git habits
+Date: Fri, 22 Feb 2008 23:10:48 -0500 (EST)
+Message-ID: <alpine.LNX.1.00.0802222249480.19024@iabervon.org>
+References: <200802221837.37680.chase.venters@clientec.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "C. E. Ball" <ceball@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Sat Feb 23 04:17:23 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: linux-kernel@vger.kernel.org, git@vger.kernel.org
+To: Chase Venters <chase.venters@clientec.com>
+X-From: git-owner@vger.kernel.org Sat Feb 23 05:11:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JSkt8-0003Bc-O9
-	for gcvg-git-2@gmane.org; Sat, 23 Feb 2008 04:17:23 +0100
+	id 1JSljq-00048w-NI
+	for gcvg-git-2@gmane.org; Sat, 23 Feb 2008 05:11:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756811AbYBWDQq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Feb 2008 22:16:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756093AbYBWDQq
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Feb 2008 22:16:46 -0500
-Received: from watts.utsl.gen.nz ([202.78.240.73]:50964 "EHLO mail.utsl.gen.nz"
+	id S1751435AbYBWEKv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Feb 2008 23:10:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751312AbYBWEKv
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Feb 2008 23:10:51 -0500
+Received: from iabervon.org ([66.92.72.58]:41185 "EHLO iabervon.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755997AbYBWDQo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Feb 2008 22:16:44 -0500
-Received: by mail.utsl.gen.nz (Postfix, from userid 65534)
-	id B39A7FD44E; Sat, 23 Feb 2008 16:16:34 +1300 (NZDT)
-X-Spam-Checker-Version: SpamAssassin 3.1.7-deb (2006-10-05) on 
-	mail.musashi.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.4 required=5.0 tests=ALL_TRUSTED autolearn=failed 
-	version=3.1.7-deb
-Received: from [192.168.69.233] (203-97-235-49.cable.telstraclear.net [203.97.235.49])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.utsl.gen.nz (Postfix) with ESMTP id 535D121CEDE;
-	Sat, 23 Feb 2008 16:16:29 +1300 (NZDT)
-User-Agent: Thunderbird 2.0.0.6 (X11/20071022)
-In-Reply-To: <4e2a3a120802220120s36fcdd31i9d0a18800d0a0349@mail.gmail.com>
-X-Enigmail-Version: 0.95.0
+	id S1751266AbYBWEKu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Feb 2008 23:10:50 -0500
+Received: (qmail 29399 invoked by uid 1000); 23 Feb 2008 04:10:48 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 23 Feb 2008 04:10:48 -0000
+In-Reply-To: <200802221837.37680.chase.venters@clientec.com>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74792>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74793>
 
-C. E. Ball wrote:
-> On Fri, Feb 22, 2008 at 5:13 PM, C. E. Ball
-> <ceball@users.sourceforge.net> wrote:
->>>  If you get stuff like that you can move the git-svn state out of the
->>  >  way, and re-run git-svn fetch; it will rebuild the metadata.
->>  >
->>  >   $ mv .git/svn .git/svn.bad
->>  >   $ git-svn fetch
->>  >
->>  >  Not a fix I know, but might work for you ;)
->>
->>  Thank you very much, that did work for me!
+On Fri, 22 Feb 2008, Chase Venters wrote:
+
+> I've been making myself more familiar with git lately and I'm curious what 
+> habits others have adopted. (I know there are a few documents in circulation 
+> that deal with using git to work on the kernel but I don't think this has 
+> been specifically covered).
 > 
-> Please ignore my previous email - I was in the wrong place on my
-> filesystem! Sorry about that.
+> My question is: If you're working on multiple things at once, do you tend to 
+> clone the entire repository repeatedly into a series of separate working 
+> directories and do your work there, then pull that work (possibly comprising 
+> a series of "temporary" commits) back into a separate local master 
+> respository with --squash, either into "master" or into a branch containing 
+> the new feature?
 > 
-> After following your suggestion on my broken repository, I still get
-> the same error (a segmentation fault just after the commit is
-> successfully sent to svn) when I 'git-svn dommit'.
-> 
-> Any other suggestions?
+> Or perhaps you create a temporary topical branch for each thing you are 
+> working on, and commit arbitrary changes then checkout another branch when 
+> you need to change gears, finally --squashing the intermediate commits when a 
+> particular piece of work is done?
 
-Well this is where the fun starts.  Make sure you're on a new version of
-git - latest stable or built from "master" if possible.  Start perl (or
-even debugperl if you have one built with debug symbols) with gdb, and
-get it to run git-svn and use "bt" to get a backtrace when you get the
-fault.
+I find that the sequence of changes I make is pretty much unrelated to the 
+sequence of changes that end up in the project's history, because my 
+changes as I make them involve writing a lot of stubs (so I can build) and 
+then filling them out. It's beneficial to have version control on this so 
+that, if I screw up filling out a stub, I can get back to where I was.
 
-  $ gdb /usr/bin/debugperl
-  ...
-  > run ~/bin/git-svn dcommit
-  ...
-  --- SEGV ---
-  > bt
+Having made a complete series, I then generate a new series of commits, 
+each of which does one thing, without any bugs that I've resolved, such 
+that the net result is the end of the messy history, except with any 
+debugging or useless stuff skipped. It's this series that gets merged into 
+the project history, and I discard the other history.
 
-That's the default place to start looking for clues.  Otherwise it's a
-pretty much open-ended problem ... you would have to figure out (perhaps
-using the perl debugger, perhaps using test cases) what triggers it,
-what's not passing the correct thing to the SVN API, whether it's a
-version-specific SVN bug, etc.  It's certainly not very common which
-makes me suspect the SVN::Core bindings and/or the stack beneath that
-part of it.  The SVN API is ... fragile, and the codebase is bulky and
-poorly thought out.  So, you get weird behaviour like the exception
-handler has to die() or you get a segfault, etc.
+The real trick is that the early patches in a lot of series often refactor 
+existing code in ways that are generally good and necessary for your 
+eventual outcome, but which you'd never think of until you've written more 
+of the series. Generating a new commit sequence is necessary to end up 
+with a history where it looks from the start like you know where you're 
+going and have everything done that needs to be done when you get to the 
+point of needing it. Furthermore, you want to be able to test these 
+commits in isolation, without the distraction of the changes that actually 
+prompted them, which means that you want to have your working tree is a 
+state that you never actually had it in as you were developing the end 
+result.
 
-If that seems too daunting, perhaps just respond with the versions of
-everything you are using (eg perl -MSVN::Core -le 'print
-$SVN::Core::VERSION', git --version etc) find out if it's specific to
-the repository you're committing to, or (if you can) your system, etc,
-and perhaps someone else will have a better clue.
+This means that you'll usually want to rewrite commits for any series that 
+isn't a single obvious patch, so it's not a big deal to commit any time 
+you want to work on some different branch.
 
-Good luck,
-Sam.
+	-Daniel
+*This .sig left intentionally blank*
