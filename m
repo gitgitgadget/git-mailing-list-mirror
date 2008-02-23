@@ -1,122 +1,78 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Be more verbose when checkout takes a long time
-Date: Sat, 23 Feb 2008 13:36:08 -0800 (PST)
-Message-ID: <alpine.LFD.1.00.0802231323590.21332@woody.linux-foundation.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH] gitweb: Fix bugs in git_search_grep_body: it's length(),
+	not len()
+Date: Sat, 23 Feb 2008 22:37:08 +0100
+Message-ID: <20080223213449.16213.42233.stgit@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Feb 23 22:37:10 2008
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: Jean-Baptiste Quenot <jbq@caraldi.com>,
+	Jakub Narebski <jnareb@gmail.com>
+To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Feb 23 22:38:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JT23Q-0006M6-Mg
-	for gcvg-git-2@gmane.org; Sat, 23 Feb 2008 22:37:09 +0100
+	id 1JT248-0006Zq-U1
+	for gcvg-git-2@gmane.org; Sat, 23 Feb 2008 22:37:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755737AbYBWVgd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Feb 2008 16:36:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755397AbYBWVgd
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Feb 2008 16:36:33 -0500
-Received: from smtp1.linux-foundation.org ([207.189.120.13]:60965 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755250AbYBWVgc (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 23 Feb 2008 16:36:32 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m1NLa9bU010352
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 23 Feb 2008 13:36:11 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m1NLa82h016134;
-	Sat, 23 Feb 2008 13:36:09 -0800
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
-X-Spam-Status: No, hits=-3.099 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 207.189.120.13
+	id S1755967AbYBWVhR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Feb 2008 16:37:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755397AbYBWVhR
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Feb 2008 16:37:17 -0500
+Received: from py-out-1112.google.com ([64.233.166.176]:57949 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755189AbYBWVhO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Feb 2008 16:37:14 -0500
+Received: by py-out-1112.google.com with SMTP id u52so1572117pyb.10
+        for <git@vger.kernel.org>; Sat, 23 Feb 2008 13:37:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:from:subject:to:cc:date:message-id:user-agent:mime-version:content-type:content-transfer-encoding;
+        bh=qWEm2i5OJ9UIVG+2ZIWuXmTOdLIJQ5KIqSo0A7tjDKI=;
+        b=qZ8X9isozi3E1PDW1Nj8IrXVaklkJ56ISuOl3qrE6VYeXalzKsHG00A3bdbJRdN60e0wcNxh3F+JlkU5JhUScnoEbrPyxMcEzUzV6nrLDGyo01FgTlTK1wuI1nPW+zWFMZez5Qv29Z1VAia+QGTk9gQbzBotimXvScJtlg/Pb7A=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:subject:to:cc:date:message-id:user-agent:mime-version:content-type:content-transfer-encoding;
+        b=ooUt55JjPNI5fUPbNLGC577jK+EE8A59dLYE2vnn3j1Hs4CcJic13UNpVKNvuD8hf7i4oyT3EMl27oMJVNgCgMKiKiibhfBEX0Z0fDVqTsGYm8kChVSCj0Opfuo3TyreWpquJ6SEsQbGfLVUxHPNaj3EC81asjFan3MhFHMuzII=
+Received: by 10.65.213.4 with SMTP id p4mr1958793qbq.83.1203802633702;
+        Sat, 23 Feb 2008 13:37:13 -0800 (PST)
+Received: from localhost.localdomain ( [83.8.255.83])
+        by mx.google.com with ESMTPS id b30sm5198882ika.11.2008.02.23.13.37.10
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 23 Feb 2008 13:37:11 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m1NLb8wo016253;
+	Sat, 23 Feb 2008 22:37:09 +0100
+User-Agent: StGIT/0.14.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74856>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74857>
 
 
-So I find it irritating when git thinks for a long time without telling me 
-what's taking so long. And by "long time" I definitely mean less than two 
-seconds, which is already way too long for me.
+Use int(<expr>/2) to get integer value for a substring length.
 
-This hits me when doing a large pull and the checkout takes a long time, 
-or when just switching to another branch that is old and again checkout 
-takes a while.
-
-Now, git read-tree already had support for the "-v" flag that does nice 
-updates about what's going on, but it was delayed by two seconds, and if 
-the thing had already done more than half by then it would be quiet even 
-after that, so in practice it meant that we migth be quiet for up to four 
-seconds. Much too long.
-
-So this patch changes the timeout to just one second, which makes it much 
-more palatable to me.
-
-The other thing this patch does is that "git checkout" now doesn't disable 
-the "-v" flag when doing its thing, and only disables the output when 
-given the -q flag. Quite frankly, I'm not really sure why it disabled 
-error messages in the first place: it used to do
-
-	merge_error=$(git read-tree .. 2>&1) || (
-		case "$merge" in
-		'')
-			echo >&2 "$merge_error"
-			exit 1 ;;
-		...
-
-which obviously meant that the "-v" flag was useless, because it was 
-suppressed by the fact that any outpu just went to "merge_error" and then 
-printed just once if we didn't do a merge.
-
-Now, I'm sure this had a good reason (for the "git checkout -m" case), but 
-it did make the common case of git-checkout really annoying. So I just 
-removed that whole "suppress error messages from git-read-tree" thing. 
-People who use -m all the time probably disagree with this patch. I dunno.
-
-Anyway, with this I no longer get that annoying pregnant pause when doing 
-big branch switches.
-
-Comments?
-
-		Linus
-
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
 ---
- git-checkout.sh |    3 +--
- unpack-trees.c  |    2 +-
- 2 files changed, 2 insertions(+), 3 deletions(-)
+I'm very very sorry. I though I have tested this, but somehow it
+slipped through; most probably I have tested older version.
 
-diff --git a/git-checkout.sh b/git-checkout.sh
-index bd74d70..4b07fc4 100755
---- a/git-checkout.sh
-+++ b/git-checkout.sh
-@@ -210,10 +210,9 @@ then
-     git read-tree $v --reset -u $new
- else
-     git update-index --refresh >/dev/null
--    merge_error=$(git read-tree -m -u --exclude-per-directory=.gitignore $old $new 2>&1) || (
-+    git read-tree $v -m -u --exclude-per-directory=.gitignore $old $new || (
- 	case "$merge" in
- 	'')
--		echo >&2 "$merge_error"
- 		exit 1 ;;
- 	esac
- 
-diff --git a/unpack-trees.c b/unpack-trees.c
-index ec558f9..0f62609 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -301,7 +301,7 @@ static void check_updates(struct cache_entry **src, int nr,
- 		}
- 
- 		progress = start_progress_delay("Checking out files",
--						total, 50, 2);
-+						total, 50, 1);
- 		cnt = 0;
- 	}
- 
+ gitweb/gitweb.perl |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 326e27c..e8226b1 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -3792,7 +3792,7 @@ sub git_search_grep_body {
+ 			if ($line =~ m/^(.*)($search_regexp)(.*)$/i) {
+ 				my ($lead, $match, $trail) = ($1, $2, $3);
+ 				$match = chop_str($match, 70, 5);       # in case match is very long
+-				my $contextlen = (80 - len($match))/2;  # is left for the remainder
++				my $contextlen = int((80 - length($match))/2); # for the remainder
+ 				$contextlen = 30 if ($contextlen > 30); # but not too much
+ 				$lead  = chop_str($lead,  $contextlen, 10);
+ 				$trail = chop_str($trail, $contextlen, 10);
