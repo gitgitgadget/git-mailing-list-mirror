@@ -1,62 +1,72 @@
-From: "Adam Mercer" <ramercer@gmail.com>
-Subject: Re: Setting SVN properties with git-svn, and removing empty directories
-Date: Sat, 23 Feb 2008 13:23:37 -0500
-Message-ID: <799406d60802231023p709cb53ay1a2ecf6b8865b943@mail.gmail.com>
-References: <799406d60802230938s559168f8lc9b1f640f2c07fee@mail.gmail.com>
-	 <20080223181840.GA30325@atjola.homenet>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] t4014: Replace sed's non-standard 'Q' by standard 'q'
+Date: Sat, 23 Feb 2008 10:27:10 -0800
+Message-ID: <7vy79b34w1.fsf@gitster.siamese.dyndns.org>
+References: <12037561161987-git-send-email-prohaska@zib.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "=?ISO-8859-1?Q?Bj=F6rn_Steinbrink?=" <B.Steinbrink@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Feb 23 19:24:17 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Daniel Barkalow <barkalow@iabervon.org>
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Sat Feb 23 19:28:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JSz2m-0007Ko-Na
-	for gcvg-git-2@gmane.org; Sat, 23 Feb 2008 19:24:17 +0100
+	id 1JSz6Q-0008Nm-2K
+	for gcvg-git-2@gmane.org; Sat, 23 Feb 2008 19:28:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756654AbYBWSXj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 23 Feb 2008 13:23:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756209AbYBWSXj
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Feb 2008 13:23:39 -0500
-Received: from wf-out-1314.google.com ([209.85.200.174]:3826 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754153AbYBWSXi convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 23 Feb 2008 13:23:38 -0500
-Received: by wf-out-1314.google.com with SMTP id 28so469885wff.4
-        for <git@vger.kernel.org>; Sat, 23 Feb 2008 10:23:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=PitDYqm7bHQEoC5+6bJDSaMjhGvvGJsdePH79qUGRXo=;
-        b=YEqWhWXo9mhQQXUSBQjXgu3AHY/8Tub6U1xtdAjKlz0/6qgfOWnTzK00b/reknq32u78s5FHRUHcoT+raOn2R+MEyouVzFEHwhVAWer3rHzwK26k0qhc6YPqcmlwOkU4woMH25Ohz2S91lEN2qNfMt76Quv+sjljv505A790MKo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=HgrUicxfA5EzLRRoVcHBzLz48J4ZYtBsp5mZqxwJFA3TvjRU+txNNEM5rC/Wd6s9xuwX0y3MDRdDdQyLU+v7X0vxQDALLnI2pzP2EeJw64crVqEunPHhlIDF/+GQqgP7Huv68Dd1H6e+X7NMR74QZvLQsnYZH/mAtBSgdkAxA+4=
-Received: by 10.142.128.6 with SMTP id a6mr543045wfd.74.1203791017051;
-        Sat, 23 Feb 2008 10:23:37 -0800 (PST)
-Received: by 10.143.174.2 with HTTP; Sat, 23 Feb 2008 10:23:37 -0800 (PST)
-In-Reply-To: <20080223181840.GA30325@atjola.homenet>
-Content-Disposition: inline
+	id S1755832AbYBWS10 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Feb 2008 13:27:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755109AbYBWS10
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Feb 2008 13:27:26 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:60935 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755832AbYBWS1Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Feb 2008 13:27:25 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 2CCBE11C5;
+	Sat, 23 Feb 2008 13:27:24 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 1E56111C3; Sat, 23 Feb 2008 13:27:19 -0500 (EST)
+In-Reply-To: <12037561161987-git-send-email-prohaska@zib.de> (Steffen
+ Prohaska's message of "Sat, 23 Feb 2008 09:41:56 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74834>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74835>
 
-On Sat, Feb 23, 2008 at 1:18 PM, Bj=F6rn Steinbrink <B.Steinbrink@gmx.d=
-e> wrote:
+Steffen Prohaska <prohaska@zib.de> writes:
 
->  Acccording to the man page, you can pass --rmdir to dcommit or set
->  svn.rmdir in the configuration to have git-svn delete empty director=
-ies
->  in the SVN repo.
+> This commit should be applied on top of db/cover-letter.
+>
+> -- >8 --
+>
+> This commit avoids sed's 'Q' operator.  The Open Group's sed
+> man page [1] does not mention 'Q'.  sed on Mac OS X 10.4
+> does not accept Q.  'q' is sufficient for our purpose.
 
-=46antastic, thanks I didn't see that option!
+Thanks.
 
-Cheers
+> diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+> index a39e786..16aa99d 100755
+> --- a/t/t4014-format-patch.sh
+> +++ b/t/t4014-format-patch.sh
+> @@ -95,7 +95,7 @@ test_expect_success 'extra headers' '
+>  	git config --add format.headers "Cc: S. E. Cipient <scipient@example.com>
+>  " &&
+>  	git format-patch --stdout master..side > patch2 &&
+> -	sed -e "/^$/Q" patch2 > hdrs2 &&
+> +	sed -e "/^$/q" patch2 > hdrs2 &&
+>  	grep "^To: R. E. Cipient <rcipient@example.com>$" hdrs2 &&
+>  	grep "^Cc: S. E. Cipient <scipient@example.com>$" hdrs2
+>  	
 
-Adam
+I usually try to be pretty careful about these kind of things,
+but these somehow slipped in.  Changing them to 'q' means the
+output will now have an additional blank line at the end, but
+that would not affect the result the later tests inspect, so
+it's a good change.
