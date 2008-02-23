@@ -1,64 +1,65 @@
-From: "J.C. Pizarro" <jcpiza@gmail.com>
-Subject: Re: How small is git-packed mailing list vs zipped mailing list?
-Date: Sat, 23 Feb 2008 06:34:54 +0100
-Message-ID: <998d0e4a0802222134r1c96b39bt2d34f3fb2289c67f@mail.gmail.com>
-References: <998d0e4a0802222103x7b42b849q950a2a3c9b0d3550@mail.gmail.com>
+From: Len Brown <lenb@kernel.org>
+Subject: Re: git-send-email getting filtered as spam by vger.kernel.org
+Date: Sat, 23 Feb 2008 01:23:52 -0500
+Organization: Intel Open Source Technology Center
+Message-ID: <200802230123.52390.lenb@kernel.org>
+References: <200802210429.58353.lenb@kernel.org> <200802210721.29188.lenb@kernel.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 23 06:36:10 2008
+X-From: git-owner@vger.kernel.org Sat Feb 23 07:24:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JSn3L-0001N2-Df
-	for gcvg-git-2@gmane.org; Sat, 23 Feb 2008 06:36:03 +0100
+	id 1JSnoc-0000wo-6y
+	for gcvg-git-2@gmane.org; Sat, 23 Feb 2008 07:24:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750873AbYBWFe4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Feb 2008 00:34:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750872AbYBWFe4
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Feb 2008 00:34:56 -0500
-Received: from wx-out-0506.google.com ([66.249.82.239]:15819 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750858AbYBWFez (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Feb 2008 00:34:55 -0500
-Received: by wx-out-0506.google.com with SMTP id h31so609758wxd.4
-        for <git@vger.kernel.org>; Fri, 22 Feb 2008 21:34:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=42HkWNmbnYMIdwUFbAA3eIrofhzUU56HUn+by6yCBcw=;
-        b=a2Q6IsakNyiXeOyG8AEOERWDlTm2nS/xvtUlBJncSQfBecd8RCmc3GxLOMrQBFu87ozzvowmeg3XV/7ppt0Kn+DlUMuRh4IEk/jWToZBB4L/PXEZjsw2pewWs4w0SnMcypIlihl1uSYSkVJUmwKQwqbJjvJ8GfruLrZqnoXSQek=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=FNZ9BUmu8p0A57qr9wc665vLJ2MWWCq+b0UCzv2EODsFDkygVYvTFAbgP4nTt+h5h9FPwaPWzyPfGu0dAZ2z/MaGMTagIHY+rTXXUnnatttRo3IOysMAc6E+44E1le9sCZyxHIuZ97QOFYH824MicvQcgMQC8+56ZBZHCy4bY1A=
-Received: by 10.70.17.1 with SMTP id 1mr17522wxq.28.1203744894597;
-        Fri, 22 Feb 2008 21:34:54 -0800 (PST)
-Received: by 10.70.40.12 with HTTP; Fri, 22 Feb 2008 21:34:54 -0800 (PST)
-In-Reply-To: <998d0e4a0802222103x7b42b849q950a2a3c9b0d3550@mail.gmail.com>
+	id S1752748AbYBWGYQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Feb 2008 01:24:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751560AbYBWGYQ
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Feb 2008 01:24:16 -0500
+Received: from hera.kernel.org ([140.211.167.34]:58474 "EHLO hera.kernel.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751408AbYBWGYP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Feb 2008 01:24:15 -0500
+Received: from d975xbx2 (c-65-96-213-102.hsd1.ma.comcast.net [65.96.213.102])
+	(authenticated bits=0)
+	by hera.kernel.org (8.13.8/8.13.8) with ESMTP id m1N6Nv4B006261
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
+	for <git@vger.kernel.org>; Sat, 23 Feb 2008 06:24:08 GMT
+User-Agent: KMail/1.9.5
+In-Reply-To: <200802210721.29188.lenb@kernel.org>
 Content-Disposition: inline
+X-Virus-Scanned: ClamAV 0.88.7/5941/Fri Feb 22 22:18:46 2008 on hera.kernel.org
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-2.1 required=5.0 tests=AWL,BAYES_00,RCVD_IN_PBL,
+	RCVD_IN_SORBS_DUL,RDNS_DYNAMIC autolearn=no version=3.2.3
+X-Spam-Checker-Version: SpamAssassin 3.2.3 (2007-08-08) on hera.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74801>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74802>
 
-On 2008/2/23, J.C. Pizarro <jcpiza@gmail.com>, i wrote:
-> Not all inside of git repository data is source code used for
->  versioning control, but the mailing lists are pushed too into git repo!
->
->  Is there any idea of
->
->  How small is a git packed mailing list vs zipped mailing list?
->
->    ;)
->
+On Thursday 21 February 2008 07:21, Len Brown wrote:
+> It looks like the same patches formatted and set with git 1.5.4.2
+> made it through to the list.
+> 
+> -Len
+> 
+> On Thursday 21 February 2008 04:29, Len Brown wrote:
+> > git-send-email is getting filtered by vger.kernel.org
+> > 
+> > git --version
+> > git version 1.5.4.2.184.gb23b
+> > 
 
-It thanks to the delta scheme, minimum spanning tree and zlib of the git packer.
+The top of tree,
+git version 1.5.4.2.197.g22c43
+is working.
 
-1. For git, it's better to commit splitted monthly-files
-     (the atomic messages have some redundancy in the replies and forwards).
-
-2. For zip, it's better to zip non-splitted monthly-files.
+thanks for the quick response.
+-Len
