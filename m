@@ -1,96 +1,75 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Be more verbose when checkout takes a long time
-Date: Sat, 23 Feb 2008 14:20:25 -0800
-Message-ID: <7v8x1b1fiu.fsf@gitster.siamese.dyndns.org>
-References: <alpine.LFD.1.00.0802231323590.21332@woody.linux-foundation.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Improved Google trends comparison
+Date: Sat, 23 Feb 2008 14:21:56 -0800 (PST)
+Message-ID: <alpine.LFD.1.00.0802231407210.21332@woody.linux-foundation.org>
+References: <332FA266-4D12-4ED4-9B38-44577E1E540B@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sat Feb 23 23:21:19 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: "Rhodes, Kate" <masukomi@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 23 23:23:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JT2kA-0002bA-Dl
-	for gcvg-git-2@gmane.org; Sat, 23 Feb 2008 23:21:18 +0100
+	id 1JT2lr-00038Z-M1
+	for gcvg-git-2@gmane.org; Sat, 23 Feb 2008 23:23:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753540AbYBWWUm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Feb 2008 17:20:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752759AbYBWWUm
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Feb 2008 17:20:42 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:61766 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751414AbYBWWUl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Feb 2008 17:20:41 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 0561A1648;
-	Sat, 23 Feb 2008 17:20:39 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 243901646; Sat, 23 Feb 2008 17:20:34 -0500 (EST)
-In-Reply-To: <alpine.LFD.1.00.0802231323590.21332@woody.linux-foundation.org>
- (Linus Torvalds's message of "Sat, 23 Feb 2008 13:36:08 -0800 (PST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1756430AbYBWWWH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Feb 2008 17:22:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756496AbYBWWWF
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Feb 2008 17:22:05 -0500
+Received: from smtp1.linux-foundation.org ([207.189.120.13]:60241 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756216AbYBWWWE (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 23 Feb 2008 17:22:04 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m1NMLv97031404
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 23 Feb 2008 14:21:58 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m1NMLuUc017611;
+	Sat, 23 Feb 2008 14:21:56 -0800
+In-Reply-To: <332FA266-4D12-4ED4-9B38-44577E1E540B@gmail.com>
+User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+X-Spam-Status: No, hits=-2.495 required=5 tests=AWL,BAYES_05
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 207.189.120.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74863>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74864>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> So I find it irritating when git thinks for a long time without telling me 
-> what's taking so long. And by "long time" I definitely mean less than two 
-> seconds, which is already way too long for me.
 
-Do you mean more than two or less than two?
+On Sat, 23 Feb 2008, Rhodes, Kate wrote:
+>
+> Jakub was commenting on relative VCS popularity just after the 1.5.4 release.
+> This is just an improved (i hope) version of his Google trends link that
+> includes the alternate names for subversion, mercurial, and bazaar.
+> 
+> http://www.google.com/trends?q=svn%7Csubversion%2C+git%2C+mercurial%7Chg%2C+bzr%7Cbazaar%2C+darcs&ctab=0&geo=all&date=all&sort=0
 
-> Now, git read-tree already had support for the "-v" flag that does nice 
-> updates about what's going on, but it was delayed by two seconds, and if 
-> the thing had already done more than half by then it would be quiet even 
-> after that, so in practice it meant that we migth be quiet for up to four 
-> seconds. Much too long.
+LOL. Most of these seem totally unrelated to VCS's.
 
-Geez you are impatient ;-).
+Most of the news that it finds for those "trends" for git are for things 
+like Larry the cable guy's "git-r-done" thing (and "Two more Git-N-GO 
+stores robbed". I'm not sure that's really relevant to the SCM ;)
 
-The other user of start_progress_delay uses 95% as cutoff.  and
-probably 50% was too low, but that may just be bikeshedding.
+Similarly, your bzr|bazaar seems to be all about the "bazaar" part, not 
+about the SCM itself (drop "bazaar" from there, and the trends are very 
+different, especially for that huge peak in India).
 
-> ... Quite frankly, I'm not really sure why it disabled 
-> error messages in the first place: ...
-> ...
-> Now, I'm sure this had a good reason (for the "git checkout -m" case), but 
-> it did make the common case of git-checkout really annoying.
+And "hg" seems to be about HG Wells and HG BISSINGER and Sandisk/Sony 
+"Memory Stick Pro-HG" Format, based on the news hits and on the fact that 
+the "trend" has actually stayed fairly constant since 2004, and since hg 
+the VCS was started in 2005, it's either a sign of finding something else, 
+_or_ about the incredible prescient powers of internet users.
 
-I agree.  Perhaps we can add some message when "-m" codepath
-falls back to the three-way merge to make "merge-error" less
-scary.  Perhaps like:
+But the SVN hits might actually be about subversion.
 
- git-checkout.sh |   11 +++++++----
- 1 files changed, 7 insertions(+), 4 deletions(-)
+So if you do just the trend for bzr and svn, I think you have something. 
 
-diff --git a/git-checkout.sh b/git-checkout.sh
-index bd74d70..5e36136 100755
---- a/git-checkout.sh
-+++ b/git-checkout.sh
-@@ -210,11 +210,14 @@ then
-     git read-tree $v --reset -u $new
- else
-     git update-index --refresh >/dev/null
--    merge_error=$(git read-tree -m -u --exclude-per-directory=.gitignore $old $new 2>&1) || (
--	case "$merge" in
--	'')
--		echo >&2 "$merge_error"
-+    git read-tree -$v m -u --exclude-per-directory=.gitignore $old $new || (
-+	case "$merge,$v" in
-+	,*)
- 		exit 1 ;;
-+	1,)
-+		;; # quiet
-+	*)
-+		echo >&2 "Falling back to 3-way merge..." ;;
- 	esac
- 
- 	# Match the index to the working tree, and do a three-way.
+			Linus
