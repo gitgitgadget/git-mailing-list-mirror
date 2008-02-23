@@ -1,81 +1,49 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: Question about your git habits
-Date: Sat, 23 Feb 2008 10:18:55 +0100
-Organization: glandium.org
-Message-ID: <20080223091855.GA18942@glandium.org>
-References: <200802221837.37680.chase.venters@clientec.com> <alpine.LNX.1.00.0802222249480.19024@iabervon.org>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [PATCH] Eliminate confusing "won't bisect on seeked tree" failure
+Date: Sat, 23 Feb 2008 10:21:23 +0100
+Message-ID: <20080223092123.GA1390@diana.vm.bytemark.co.uk>
+References: <1203571214.24456.6.camel@homer.simson.net> <87pruqfc59.wl%cworth@cworth.org> <7v63wgap10.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Chase Venters <chase.venters@clientec.com>,
-	linux-kernel@vger.kernel.org, git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Sat Feb 23 10:19:44 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Carl Worth <cworth@cworth.org>, Mike Galbraith <efault@gmx.de>,
+	git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Feb 23 10:22:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JSqXg-0000qK-TK
-	for gcvg-git-2@gmane.org; Sat, 23 Feb 2008 10:19:37 +0100
+	id 1JSqai-0001h8-VP
+	for gcvg-git-2@gmane.org; Sat, 23 Feb 2008 10:22:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756580AbYBWJSy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Feb 2008 04:18:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753927AbYBWJSx
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Feb 2008 04:18:53 -0500
-Received: from vuizook.err.no ([85.19.215.103]:47644 "EHLO vuizook.err.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758941AbYBWJSZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Feb 2008 04:18:25 -0500
-Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
-	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.67)
-	(envelope-from <mh@glandium.org>)
-	id 1JSqWN-0002r1-Bx; Sat, 23 Feb 2008 10:18:21 +0100
-Received: from mh by jigen with local (Exim 4.69)
-	(envelope-from <mh@jigen>)
-	id 1JSqX1-0005U8-Cb; Sat, 23 Feb 2008 10:18:55 +0100
+	id S1750805AbYBWJWG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 23 Feb 2008 04:22:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755304AbYBWJWF
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Feb 2008 04:22:05 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1596 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755030AbYBWJWD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Feb 2008 04:22:03 -0500
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1JSqZQ-0000P9-00; Sat, 23 Feb 2008 09:21:24 +0000
 Content-Disposition: inline
-In-Reply-To: <alpine.LNX.1.00.0802222249480.19024@iabervon.org>
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.3
+In-Reply-To: <7v63wgap10.fsf@gitster.siamese.dyndns.org>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74809>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74810>
 
-On Fri, Feb 22, 2008 at 11:10:48PM -0500, Daniel Barkalow wrote:
-> I find that the sequence of changes I make is pretty much unrelated to the 
-> sequence of changes that end up in the project's history, because my 
-> changes as I make them involve writing a lot of stubs (so I can build) and 
-> then filling them out. It's beneficial to have version control on this so 
-> that, if I screw up filling out a stub, I can get back to where I was.
-> 
-> Having made a complete series, I then generate a new series of commits, 
-> each of which does one thing, without any bugs that I've resolved, such 
-> that the net result is the end of the messy history, except with any 
-> debugging or useless stuff skipped. It's this series that gets merged into 
-> the project history, and I discard the other history.
-> 
-> The real trick is that the early patches in a lot of series often refactor 
-> existing code in ways that are generally good and necessary for your 
-> eventual outcome, but which you'd never think of until you've written more 
-> of the series. Generating a new commit sequence is necessary to end up 
-> with a history where it looks from the start like you know where you're 
-> going and have everything done that needs to be done when you get to the 
-> point of needing it. Furthermore, you want to be able to test these 
-> commits in isolation, without the distraction of the changes that actually 
-> prompted them, which means that you want to have your working tree is a 
-> state that you never actually had it in as you were developing the end 
-> result.
-> 
-> This means that you'll usually want to rewrite commits for any series that 
-> isn't a single obvious patch, so it's not a big deal to commit any time 
-> you want to work on some different branch.
+On 2008-02-22 09:18:03 -0800, Junio C Hamano wrote:
 
-I do that so much that I have this alias:
-        reorder = !sh -c 'git rebase -i --onto $0 $0 $1'
+> While I think the patch itself is Ok for us, we may want to wait a
+> bit for a while. until Cogito users all die out.
 
-... and actually pass it only one argument most of the time.
+Or until they stop use Cogito. Whichever happens first. ;-)
 
-Mike
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
