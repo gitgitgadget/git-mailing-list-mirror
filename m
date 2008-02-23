@@ -1,94 +1,100 @@
-From: "J.C. Pizarro" <jcpiza@gmail.com>
-Subject: Re: Question about your git habits
-Date: Sat, 23 Feb 2008 03:47:07 +0100
-Message-ID: <998d0e4a0802221847m431aa136xa217333b0517b962@mail.gmail.com>
-References: <200802221837.37680.chase.venters@clientec.com>
-	 <Pine.LNX.4.64.0802230221140.21077@fbirervta.pbzchgretzou.qr>
-	 <20080223014445.GK27894@ZenIV.linux.org.uk>
-	 <7vfxvk4f07.fsf@gitster.siamese.dyndns.org>
-	 <20080223020913.GL27894@ZenIV.linux.org.uk>
-	 <998d0e4a0802221823h3ba53097gf64fcc2ea826302b@mail.gmail.com>
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: Interrupted git-svn dcommit, now I get segmentation faults
+Date: Sat, 23 Feb 2008 16:18:22 +1300
+Message-ID: <47BF907E.2090904@vilain.net>
+References: <loom.20080221T062522-821@post.gmane.org>	 <47BDD096.7040606@vilain.net>	 <4e2a3a120802220113q4df473c0xcaad4760aea7f49b@mail.gmail.com> <4e2a3a120802220120s36fcdd31i9d0a18800d0a0349@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 23 03:47:47 2008
+Cc: git@vger.kernel.org
+To: "C. E. Ball" <ceball@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Sat Feb 23 04:17:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JSkQU-0006TD-PS
-	for gcvg-git-2@gmane.org; Sat, 23 Feb 2008 03:47:47 +0100
+	id 1JSkt8-0003Bc-O9
+	for gcvg-git-2@gmane.org; Sat, 23 Feb 2008 04:17:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755744AbYBWCrL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Feb 2008 21:47:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755743AbYBWCrK
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Feb 2008 21:47:10 -0500
-Received: from wx-out-0506.google.com ([66.249.82.236]:29004 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755707AbYBWCrI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Feb 2008 21:47:08 -0500
-Received: by wx-out-0506.google.com with SMTP id h31so572989wxd.4
-        for <git@vger.kernel.org>; Fri, 22 Feb 2008 18:47:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=YI1gxVOhIiC46hWaUQDgh07mdvLsIdB3e8Td/XKZkeY=;
-        b=SjfrELrMSeI0lM+HYIYhxxnn3VWYBipMSf1XfNxGsjTlhssiONCdqhcsxmzCaZQVroJ2dubM2d1K96y2IthsUr4a6YuZg5g0/ZLYWcd3fKPBti309uxmawTsHjFgGUWJ/RUVM+G5HwTuZ1k2nZPaO2gjM6FVwRi+uqHxdLRQm7U=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=OgCwEFRqggOVB8+1JA0dm2sHcoJPmYX87RhIxaHlJLV72SUlxEVvATxjELVufmVj/AmHEjVF8t1bGSqoY8AGJRrGH5YkB418GILq5SVr1SK5Oqmm3WDyIk19n+gvxFYgwOew1yGJcl76XGRviBA2asEKRG9Aj5F8LyvWcz2ikfE=
-Received: by 10.70.32.10 with SMTP id f10mr516132wxf.20.1203734827656;
-        Fri, 22 Feb 2008 18:47:07 -0800 (PST)
-Received: by 10.70.40.12 with HTTP; Fri, 22 Feb 2008 18:47:07 -0800 (PST)
-In-Reply-To: <998d0e4a0802221823h3ba53097gf64fcc2ea826302b@mail.gmail.com>
-Content-Disposition: inline
+	id S1756811AbYBWDQq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Feb 2008 22:16:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756093AbYBWDQq
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Feb 2008 22:16:46 -0500
+Received: from watts.utsl.gen.nz ([202.78.240.73]:50964 "EHLO mail.utsl.gen.nz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755997AbYBWDQo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Feb 2008 22:16:44 -0500
+Received: by mail.utsl.gen.nz (Postfix, from userid 65534)
+	id B39A7FD44E; Sat, 23 Feb 2008 16:16:34 +1300 (NZDT)
+X-Spam-Checker-Version: SpamAssassin 3.1.7-deb (2006-10-05) on 
+	mail.musashi.utsl.gen.nz
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.4 required=5.0 tests=ALL_TRUSTED autolearn=failed 
+	version=3.1.7-deb
+Received: from [192.168.69.233] (203-97-235-49.cable.telstraclear.net [203.97.235.49])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.utsl.gen.nz (Postfix) with ESMTP id 535D121CEDE;
+	Sat, 23 Feb 2008 16:16:29 +1300 (NZDT)
+User-Agent: Thunderbird 2.0.0.6 (X11/20071022)
+In-Reply-To: <4e2a3a120802220120s36fcdd31i9d0a18800d0a0349@mail.gmail.com>
+X-Enigmail-Version: 0.95.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74791>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74792>
 
-On 2008/2/23, Al Viro <viro@zeniv.linux.org.uk> wrote:
- > On Fri, Feb 22, 2008 at 05:51:04PM -0800, Junio C Hamano wrote:
- >  > Al Viro <viro@ZenIV.linux.org.uk> writes:
- >  >
- >  > > On Sat, Feb 23, 2008 at 02:37:00AM +0100, Jan Engelhardt wrote:
- >  > >
- >  > >> >do you tend to clone the entire repository repeatedly into a series
- >  > >> >of separate working directories
- >  > >>
- >  > >> Too time consuming on consumer drives with projects the size of Linux.
- >  > >
- >  > > git clone -l -s
- >  > >
- >  > > is not particulary slow...
- >  >
- >  > How big is a checkout of a single revision of kernel these days,
- >  > compared to a well-packed history since v2.6.12-rc2?
- >  >
- >  > The cost of writing out the work tree files isn't ignorable and
- >  > probably more than writing out the repository data (which -s
- >  > saves for you).
- >
- >
- > Depends...  I'm using ext2 for that and noatime everywhere, so that might
- >  change the picture, but IME it's fast enough...  As for the size, it gets
- >  to ~320Mb on disk, which is comparable to the pack size (~240-odd Mb).
+C. E. Ball wrote:
+> On Fri, Feb 22, 2008 at 5:13 PM, C. E. Ball
+> <ceball@users.sourceforge.net> wrote:
+>>>  If you get stuff like that you can move the git-svn state out of the
+>>  >  way, and re-run git-svn fetch; it will rebuild the metadata.
+>>  >
+>>  >   $ mv .git/svn .git/svn.bad
+>>  >   $ git-svn fetch
+>>  >
+>>  >  Not a fix I know, but might work for you ;)
+>>
+>>  Thank you very much, that did work for me!
+> 
+> Please ignore my previous email - I was in the wrong place on my
+> filesystem! Sorry about that.
+> 
+> After following your suggestion on my broken repository, I still get
+> the same error (a segmentation fault just after the commit is
+> successfully sent to svn) when I 'git-svn dommit'.
+> 
+> Any other suggestions?
 
+Well this is where the fun starts.  Make sure you're on a new version of
+git - latest stable or built from "master" if possible.  Start perl (or
+even debugperl if you have one built with debug symbols) with gdb, and
+get it to run git-svn and use "bt" to get a backtrace when you get the
+fault.
 
-Yesterday, i had git cloned git://foo.com/bar.git   ( 777 MiB )
- Today, i've git cloned git://foo.com/bar.git   ( 779 MiB )
+  $ gdb /usr/bin/debugperl
+  ...
+  > run ~/bin/git-svn dcommit
+  ...
+  --- SEGV ---
+  > bt
 
- Both repos are different binaries , and i used 777 MiB + 779 MiB = 1556 MiB
- of bandwidth in two days. It's much!
+That's the default place to start looking for clues.  Otherwise it's a
+pretty much open-ended problem ... you would have to figure out (perhaps
+using the perl debugger, perhaps using test cases) what triggers it,
+what's not passing the correct thing to the SVN API, whether it's a
+version-specific SVN bug, etc.  It's certainly not very common which
+makes me suspect the SVN::Core bindings and/or the stack beneath that
+part of it.  The SVN API is ... fragile, and the codebase is bulky and
+poorly thought out.  So, you get weird behaviour like the exception
+handler has to die() or you get a segfault, etc.
 
- Why don't we implement "binary delta between old git repo and recent git repo"
- with "SHA1 built git repo verifier"?
+If that seems too daunting, perhaps just respond with the versions of
+everything you are using (eg perl -MSVN::Core -le 'print
+$SVN::Core::VERSION', git --version etc) find out if it's specific to
+the repository you're committing to, or (if you can) your system, etc,
+and perhaps someone else will have a better clue.
 
- Suppose the size cost of this binary delta is e.g. around 52 MiB instead of
- 2 MiB due to numerous mismatching of binary parts, then the bandwidth
- in two days will be 777 MiB + 52 MiB = 829 MiB instead of 1556 MiB.
-
- Unfortunately, this "binary delta of repos" is not implemented yet :|
+Good luck,
+Sam.
