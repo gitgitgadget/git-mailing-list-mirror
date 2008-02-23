@@ -1,93 +1,53 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: [PATCH] t4014: Replace sed's non-standard 'Q' by standard 'q'
-Date: Sat, 23 Feb 2008 09:41:56 +0100
-Message-ID: <12037561161987-git-send-email-prohaska@zib.de>
-Cc: git@vger.kernel.org, Daniel Barkalow <barkalow@iabervon.org>,
-	Steffen Prohaska <prohaska@zib.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 23 09:43:20 2008
+From: Willy Tarreau <w@1wt.eu>
+Subject: Re: Question about your git habits
+Date: Sat, 23 Feb 2008 09:56:34 +0100
+Message-ID: <20080223085634.GW8953@1wt.eu>
+References: <200802221837.37680.chase.venters@clientec.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: linux-kernel@vger.kernel.org, git@vger.kernel.org
+To: Chase Venters <chase.venters@clientec.com>
+X-From: git-owner@vger.kernel.org Sat Feb 23 09:57:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JSpyY-0000jI-9h
-	for gcvg-git-2@gmane.org; Sat, 23 Feb 2008 09:43:18 +0100
+	id 1JSqCB-0004MP-1g
+	for gcvg-git-2@gmane.org; Sat, 23 Feb 2008 09:57:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754645AbYBWIml (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Feb 2008 03:42:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754533AbYBWIml
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Feb 2008 03:42:41 -0500
-Received: from mailer.zib.de ([130.73.108.11]:62009 "EHLO mailer.zib.de"
+	id S1756018AbYBWI4p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Feb 2008 03:56:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752665AbYBWI4p
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Feb 2008 03:56:45 -0500
+Received: from 1wt.eu ([62.212.114.60]:2099 "EHLO 1wt.eu"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751825AbYBWImk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Feb 2008 03:42:40 -0500
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id m1N8gDYA008455;
-	Sat, 23 Feb 2008 09:42:14 +0100 (CET)
-Received: from localhost.localdomain (vss6.zib.de [130.73.69.7])
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m1N8fvnL010583;
-	Sat, 23 Feb 2008 09:42:13 +0100 (MET)
-X-Mailer: git-send-email 1.5.2.4
+	id S1752522AbYBWI4o (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Feb 2008 03:56:44 -0500
+Content-Disposition: inline
+In-Reply-To: <200802221837.37680.chase.venters@clientec.com>
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74805>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74806>
 
-This commit should be applied on top of db/cover-letter.
+On Fri, Feb 22, 2008 at 06:37:14PM -0600, Chase Venters wrote:
+> It seems to me that having multiple working trees (effectively, cloning 
+> the "master" repository every time I need to make anything but a trivial 
+> change) would be most effective under git as well as it doesn't require 
+> creating messy, intermediate commits in the first place (but allows for them 
+> if they are used). But I wonder how that approach would scale with a project 
+> whose git repo weighed hundreds of megs or more. (With a centralized rcs, of 
+> course, you don't have to lug around a copy of the whole project history in 
+> each working tree.)
 
--- >8 --
+Take a look at git-new-workdir in git's contrib directory. I'm using it a
+lot now. It makes it possible to set up as many workdirs as you want, sharing
+the same repo. It's very dangerous if you're not rigorous, but it saves a lot
+of time when you work on several branches at a time, which is even more true
+for a project's documentation. The real thing to care about is not to have
+the same branch checked out at several places.
 
-This commit avoids sed's 'Q' operator.  The Open Group's sed
-man page [1] does not mention 'Q'.  sed on Mac OS X 10.4
-does not accept Q.  'q' is sufficient for our purpose.
-
-[1] http://opengroup.org/onlinepubs/007908799/xcu/sed.html
-
-Signed-off-by: Steffen Prohaska <prohaska@zib.de>
----
- t/t4014-format-patch.sh |    8 ++++----
- 1 files changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-index a39e786..16aa99d 100755
---- a/t/t4014-format-patch.sh
-+++ b/t/t4014-format-patch.sh
-@@ -95,7 +95,7 @@ test_expect_success 'extra headers' '
- 	git config --add format.headers "Cc: S. E. Cipient <scipient@example.com>
- " &&
- 	git format-patch --stdout master..side > patch2 &&
--	sed -e "/^$/Q" patch2 > hdrs2 &&
-+	sed -e "/^$/q" patch2 > hdrs2 &&
- 	grep "^To: R. E. Cipient <rcipient@example.com>$" hdrs2 &&
- 	grep "^Cc: S. E. Cipient <scipient@example.com>$" hdrs2
- 	
-@@ -106,7 +106,7 @@ test_expect_success 'extra headers without newlines' '
- 	git config --replace-all format.headers "To: R. E. Cipient <rcipient@example.com>" &&
- 	git config --add format.headers "Cc: S. E. Cipient <scipient@example.com>" &&
- 	git format-patch --stdout master..side >patch3 &&
--	sed -e "/^$/Q" patch3 > hdrs3 &&
-+	sed -e "/^$/q" patch3 > hdrs3 &&
- 	grep "^To: R. E. Cipient <rcipient@example.com>$" hdrs3 &&
- 	grep "^Cc: S. E. Cipient <scipient@example.com>$" hdrs3
- 	
-@@ -117,7 +117,7 @@ test_expect_success 'extra headers with multiple To:s' '
- 	git config --replace-all format.headers "To: R. E. Cipient <rcipient@example.com>" &&
- 	git config --add format.headers "To: S. E. Cipient <scipient@example.com>" &&
- 	git format-patch --stdout master..side > patch4 &&
--	sed -e "/^$/Q" patch4 > hdrs4 &&
-+	sed -e "/^$/q" patch4 > hdrs4 &&
- 	grep "^To: R. E. Cipient <rcipient@example.com>,$" hdrs4 &&
- 	grep "^ *S. E. Cipient <scipient@example.com>$" hdrs4
- '
-@@ -125,7 +125,7 @@ test_expect_success 'extra headers with multiple To:s' '
- test_expect_success 'additional command line cc' '
- 
- 	git config --replace-all format.headers "Cc: R. E. Cipient <rcipient@example.com>" &&
--	git format-patch --cc="S. E. Cipient <scipient@example.com>" --stdout master..side | sed -e "/^$/Q" >patch5 &&
-+	git format-patch --cc="S. E. Cipient <scipient@example.com>" --stdout master..side | sed -e "/^$/q" >patch5 &&
- 	grep "^Cc: R. E. Cipient <rcipient@example.com>,$" patch5 &&
- 	grep "^ *S. E. Cipient <scipient@example.com>$" patch5
- '
--- 
-1.5.4.2.199.gb454ad
+Regards,
+Willy
