@@ -1,99 +1,57 @@
-From: Xavier Maillard <xma@gnu.org>
-Subject: Re: [PATCH] git.el: Add a git-grep command
-Date: Sat, 23 Feb 2008 23:41:35 +0100
-Organization: GNU's Not UNIX!
-Message-ID: <200802232241.m1NMfZpg014264@localhost.localdomain>
-References: <87odaa4tcl.fsf@lysator.liu.se>
-	<m3myptcqji.fsf@localhost.localdomain> <87tzk19wn5.fsf@lysator.liu.se>
-	<200802221121.35706.jnareb@gmail.com> <87ir0h9soh.fsf@lysator.liu.se>
-	<87d4qpgs9y.dlv@maison.homelinux.org>
-	<200802230200.m1N202Y7007392@localhost.localdomain> <8763wfwjg6.dlv@maison.homelinux.org>
-Reply-To: Xavier Maillard <xma@gnu.org>
-Cc: vanicat@debian.org, davidk@lysator.liu.se, jnareb@gmail.com,
-	julliard@winehq.org, git@vger.kernel.org
-To: Remi Vanicat <vanicat@debian.org>
-X-From: git-owner@vger.kernel.org Sun Feb 24 00:33:55 2008
+From: Paul Mackerras <paulus@samba.org>
+Subject: Re: [PATCH] gitk: don't save the geometry to rc file on exit
+Date: Sun, 24 Feb 2008 09:49:50 +1100
+Message-ID: <18368.41742.689290.877767@cargo.ozlabs.ibm.com>
+References: <47AAA254.2020008@thorn.ws>
+	<20080207063020.GP24004@spearce.org>
+	<200802071056.19370.robin.rosenberg.lists@dewire.com>
+	<20080207101051.19459.qmail@fcb20609bc7c07.315fe32.mid.smarden.org>
+	<20080223113759.12854.qmail@6a8737aa4695b2.315fe32.mid.smarden.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Mark Levedahl <mlevedahl@gmail.com>
+To: Gerrit Pape <pape@smarden.org>
+X-From: git-owner@vger.kernel.org Sun Feb 24 00:34:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JT3sM-0004t3-LI
-	for gcvg-git-2@gmane.org; Sun, 24 Feb 2008 00:33:51 +0100
+	id 1JT3sy-00054P-43
+	for gcvg-git-2@gmane.org; Sun, 24 Feb 2008 00:34:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754995AbYBWXdR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Feb 2008 18:33:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755001AbYBWXdQ
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Feb 2008 18:33:16 -0500
-Received: from master.uucpssh.org ([193.218.105.66]:54009 "EHLO
-	master.uucpssh.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754227AbYBWXdP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Feb 2008 18:33:15 -0500
-Received: by master.uucpssh.org (Postfix, from userid 10)
-	id 59854C7053; Sun, 24 Feb 2008 00:32:35 +0100 (CET)
-Received: from localhost.localdomain (IDENT:1000@localhost [127.0.0.1])
-	by localhost.localdomain (8.14.1/8.13.8) with ESMTP id m1NMfaE7014267;
-	Sat, 23 Feb 2008 23:41:36 +0100
-Received: (from xma@localhost)
-	by localhost.localdomain (8.14.1/8.13.8/Submit) id m1NMfZpg014264;
-	Sat, 23 Feb 2008 23:41:35 +0100
-In-reply-to: <8763wfwjg6.dlv@maison.homelinux.org> (message from Remi Vanicat
-	on Sat, 23 Feb 2008 20:39:53 +0100)
-User-Agent: Rmail in GNU Emacs 23.0.60.2 on GNU/Linux
-Jabber-ID: xma01@jabber.fr
-X-uucpssh: Found to be clean
-X-uucpssh-SpamCheck: not spam, SpamAssassin (not cached, score=-4.36,
-	required 4.6, autolearn=not spam, ALL_TRUSTED -1.80, AWL 0.04,
-	BAYES_00 -2.60, SPF_HELO_PASS -0.00)
-X-uucpssh-From: xma@gnu.org
+	id S1755237AbYBWXdh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Feb 2008 18:33:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755241AbYBWXdh
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Feb 2008 18:33:37 -0500
+Received: from ozlabs.org ([203.10.76.45]:39030 "EHLO ozlabs.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753632AbYBWXdg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Feb 2008 18:33:36 -0500
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id 0C00EDDDF3; Sun, 24 Feb 2008 10:33:35 +1100 (EST)
+In-Reply-To: <20080223113759.12854.qmail@6a8737aa4695b2.315fe32.mid.smarden.org>
+X-Mailer: VM 7.19 under Emacs 21.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74880>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74881>
 
+Gerrit Pape writes:
 
-   Xavier Maillard <xma@gnu.org> writes:
+> Saving the geometry can cause several inconveniences, e.g. when using a
+> temporary dual screen setup, or sharing ~/.gitk between multiple
+> systems.  Additionally it can be argued that window placement and sizing
+> are the tasks of the window manager.  So don't do that anymore.
 
-   > Hi,
-   >
-   >    Here is a modification with inclusion of git-grep only when the grep
-   >    library is available. 
-   >
-   >    +(require 'grep () t)
-   >
-   >    +(when (featurep 'grep)
-   >    +  (defvar git-grep-history nil)
-   >    +
-   >    +  (defun git-grep (regexp &optional files dir)
-   >
-   > Why not just do something like this ?
-   >
-   > (when (require 'grep () t)
-   >       (defvar ...)
-   >       (defun git-grep ...))
+I myself find it useful to have gitk remember the size and layout of
+the various panes, so I won't be applying this patch.
 
-   Because I wanted require to stay on top of the file, but I didn't want
-   to put the rest of the git-grep stuff there.
+The saving/restoring of the window position was done by Mark Levedahl
+to make gitk work properly on Cygwin.  I agree it can be annoying on X
+and I would take a patch to inhibit the restoring of the window
+position when running under X.  I'd want an ack from Mark before
+making that change more generally.
 
-Good point. Though, you can still "embed" the require form
-directly into the defun. This is thing I have already seen in the
-past. Dunno if it is a convention or a coding style but something
-like:
-
-(defun git-grep ()
- "Docstring"
- (interactive)
- (when (require 'grep nil t)
-       here the rest
-  ))
-
-is doable too. Maybe the if-else form would be better though with
-an else clause to (error "No grep package foud.").
-
-Well just kidding, your patch is okay ;)
-
-	Xavier
--- 
-http://www.gnu.org
-http://www.april.org
-http://www.lolica.org
+Paul.
