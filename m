@@ -1,173 +1,122 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: [PATCH] http-push: add regression tests
-Date: Sat, 23 Feb 2008 22:28:44 +0100
-Message-ID: <20080223212843.GA30054@localhost>
-References: <20080218130726.GA26854@localhost> <alpine.LSU.1.00.0802181339470.30505@racer.site> <20080218155546.GA8934@localhost> <alpine.LSU.1.00.0802181733400.30505@racer.site>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Be more verbose when checkout takes a long time
+Date: Sat, 23 Feb 2008 13:36:08 -0800 (PST)
+Message-ID: <alpine.LFD.1.00.0802231323590.21332@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Feb 23 22:29:26 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Feb 23 22:37:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JT1vx-0003vj-Ta
-	for gcvg-git-2@gmane.org; Sat, 23 Feb 2008 22:29:26 +0100
+	id 1JT23Q-0006M6-Mg
+	for gcvg-git-2@gmane.org; Sat, 23 Feb 2008 22:37:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754316AbYBWV2t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Feb 2008 16:28:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753587AbYBWV2t
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Feb 2008 16:28:49 -0500
-Received: from fg-out-1718.google.com ([72.14.220.157]:62132 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753431AbYBWV2s (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Feb 2008 16:28:48 -0500
-Received: by fg-out-1718.google.com with SMTP id e21so688266fga.17
-        for <git@vger.kernel.org>; Sat, 23 Feb 2008 13:28:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:sender;
-        bh=YGhfJl7Y4flsS8fmj2GjZMPW4pZAUEbmL+5ul8o8NcI=;
-        b=PEyG4qnEG+8YadMKoDwQfC5PxLurfhEtlPVo59hUQXZ/s/WomCkAu1JA6jGQQUAFDfa3mkGNlAtdGv0m/NoHnh6a9mvymECtW9EPEgSiri624SN/w5vO5Ak2sFL38X0BqJtGCVQTR0FtT+4D7ZlSJfvnkVuI3qXni6sTWG2q+MQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:sender;
-        b=npxRM42wRHlY673mTqrLSgSof6a4/zt56q6MvhFiU0ropmWPudq4QKwbnRwQtPQWJfMMSMMthqlEvS3hYE9H8h1hYy+P51NDfgHydYlPq/3caku2WHayg7w213RjYFWDgwENQMMCyx+5+z/cwXupK8IyonjEIvxGHoZac/ft7RY=
-Received: by 10.86.1.1 with SMTP id 1mr842231fga.2.1203802125698;
-        Sat, 23 Feb 2008 13:28:45 -0800 (PST)
-Received: from darc.dyndns.org ( [88.117.111.126])
-        by mx.google.com with ESMTPS id l12sm3007722fgb.8.2008.02.23.13.28.43
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 23 Feb 2008 13:28:43 -0800 (PST)
-Received: from drizzd by darc.dyndns.org with local (Exim 4.68)
-	(envelope-from <drizzd@aon.at>)
-	id 1JT1vI-0007yt-2x; Sat, 23 Feb 2008 22:28:44 +0100
-Content-Disposition: inline
-In-Reply-To: <alpine.LSU.1.00.0802181733400.30505@racer.site>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1755737AbYBWVgd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Feb 2008 16:36:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755397AbYBWVgd
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Feb 2008 16:36:33 -0500
+Received: from smtp1.linux-foundation.org ([207.189.120.13]:60965 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755250AbYBWVgc (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 23 Feb 2008 16:36:32 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m1NLa9bU010352
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 23 Feb 2008 13:36:11 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m1NLa82h016134;
+	Sat, 23 Feb 2008 13:36:09 -0800
+User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+X-Spam-Status: No, hits=-3.099 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 207.189.120.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74855>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74856>
 
-These tests require a webserver. The executable path and listening port
-are configured using the environment variables
 
-HTTPD_PATH (default: /usr/sbin/apache2) and
-HTTPD_PORT (default: 8111),
+So I find it irritating when git thinks for a long time without telling me 
+what's taking so long. And by "long time" I definitely mean less than two 
+seconds, which is already way too long for me.
 
-respectively.
+This hits me when doing a large pull and the checkout takes a long time, 
+or when just switching to another branch that is old and again checkout 
+takes a while.
 
-Signed-off-by: Clemens Buchacher <drizzd@aon.at>
+Now, git read-tree already had support for the "-v" flag that does nice 
+updates about what's going on, but it was delayed by two seconds, and if 
+the thing had already done more than half by then it would be quiet even 
+after that, so in practice it meant that we migth be quiet for up to four 
+seconds. Much too long.
+
+So this patch changes the timeout to just one second, which makes it much 
+more palatable to me.
+
+The other thing this patch does is that "git checkout" now doesn't disable 
+the "-v" flag when doing its thing, and only disables the output when 
+given the -q flag. Quite frankly, I'm not really sure why it disabled 
+error messages in the first place: it used to do
+
+	merge_error=$(git read-tree .. 2>&1) || (
+		case "$merge" in
+		'')
+			echo >&2 "$merge_error"
+			exit 1 ;;
+		...
+
+which obviously meant that the "-v" flag was useless, because it was 
+suppressed by the fact that any outpu just went to "merge_error" and then 
+printed just once if we didn't do a merge.
+
+Now, I'm sure this had a good reason (for the "git checkout -m" case), but 
+it did make the common case of git-checkout really annoying. So I just 
+removed that whole "suppress error messages from git-read-tree" thing. 
+People who use -m all the time probably disagree with this patch. I dunno.
+
+Anyway, with this I no longer get that annoying pregnant pause when doing 
+big branch switches.
+
+Comments?
+
+		Linus
+
 ---
- t/t5540-http-push.sh |   97 ++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 97 insertions(+), 0 deletions(-)
- create mode 100644 t/t5540-http-push.sh
+ git-checkout.sh |    3 +--
+ unpack-trees.c  |    2 +-
+ 2 files changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/t/t5540-http-push.sh b/t/t5540-http-push.sh
-new file mode 100644
-index 0000000..60210ff
---- /dev/null
-+++ b/t/t5540-http-push.sh
-@@ -0,0 +1,97 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2008 Clemens Buchacher <drizzd@aon.at>
-+#
-+
-+test_description='test http-push
-+
-+This test runs various sanity checks on http-push.'
-+
-+. ./test-lib.sh
-+
-+HTTPD_PATH=${HTTPD_PATH-'/usr/sbin/apache2'}
-+HTTPD_PORT=${HTTPD_PORT-'8111'}
-+
-+if ! test -x "$HTTPD_PATH"
-+then
-+        test_expect_success 'skipping http-push tests, no suitable webserver' :
-+        test_done
-+        exit
-+fi
-+
-+TRASH_PATH=$PWD
-+
-+start_httpd() {
-+	cat > "$TRASH_PATH/httpd.conf" <<EOF
-+ServerRoot "$TRASH_PATH"
-+PidFile "$TRASH_PATH/httpd.pid"
-+DocumentRoot "$TRASH_PATH"
-+ErrorLog "$TRASH_PATH/error.log"
-+Listen 127.0.0.1:$HTTPD_PORT
-+LoadModule dav_module /usr/lib/apache2/modules/mod_dav.so
-+LoadModule dav_fs_module /usr/lib/apache2/modules/mod_dav_fs.so
-+DAVLockDB DAVLock
-+<Location />
-+	Dav on
-+</Location>
-+EOF
-+
-+	"$HTTPD_PATH" -f "$TRASH_PATH"/httpd.conf -k start
-+}
-+
-+stop_httpd() {
-+	"$HTTPD_PATH" -f "$TRASH_PATH"/httpd.conf -k stop
-+}
-+
-+test_expect_success 'setup webserver' '
-+	start_httpd
-+'
-+
-+test_expect_success 'setup remote repository' '
-+	cd "$TRASH_PATH" &&
-+	mkdir test_repo &&
-+	cd test_repo &&
-+	git init &&
-+	: >path1 &&
-+	git add path1 &&
-+	test_tick &&
-+	git commit -m initial &&
-+	cd - &&
-+	git clone --bare test_repo test_repo.git &&
-+	cd test_repo.git &&
-+	git --bare update-server-info &&
-+	chmod +x hooks/post-update
-+'
-+	
-+test_expect_success 'clone remote repository' '
-+	cd "$TRASH_PATH" &&
-+	git clone http://127.0.0.1:$HTTPD_PORT/test_repo.git test_repo_clone
-+'
-+
-+test_expect_success 'push to remote repository' '
-+	cd "$TRASH_PATH"/test_repo_clone &&
-+	: >path2 &&
-+	git add path2 &&
-+	test_tick &&
-+	git commit -m path2 &&
-+	git push
-+'
-+
-+test_expect_success 'create and delete remote branch' '
-+	cd "$TRASH_PATH"/test_repo_clone &&
-+	git checkout -b dev &&
-+	: >path3 &&
-+	git add path3 &&
-+	test_tick &&
-+	git commit -m dev &&
-+	git push origin dev &&
-+	git fetch &&
-+	git push origin :dev &&
-+	git branch -d -r origin/dev &&
-+	git fetch &&
-+	! git show-ref --verify refs/remotes/origin/dev
-+'
-+
-+stop_httpd
-+
-+test_done
--- 
-1.5.4.2.156.ge3c5
+diff --git a/git-checkout.sh b/git-checkout.sh
+index bd74d70..4b07fc4 100755
+--- a/git-checkout.sh
++++ b/git-checkout.sh
+@@ -210,10 +210,9 @@ then
+     git read-tree $v --reset -u $new
+ else
+     git update-index --refresh >/dev/null
+-    merge_error=$(git read-tree -m -u --exclude-per-directory=.gitignore $old $new 2>&1) || (
++    git read-tree $v -m -u --exclude-per-directory=.gitignore $old $new || (
+ 	case "$merge" in
+ 	'')
+-		echo >&2 "$merge_error"
+ 		exit 1 ;;
+ 	esac
+ 
+diff --git a/unpack-trees.c b/unpack-trees.c
+index ec558f9..0f62609 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -301,7 +301,7 @@ static void check_updates(struct cache_entry **src, int nr,
+ 		}
+ 
+ 		progress = start_progress_delay("Checking out files",
+-						total, 50, 2);
++						total, 50, 1);
+ 		cnt = 0;
+ 	}
+ 
