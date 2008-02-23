@@ -1,78 +1,56 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH] gitweb: Fix bugs in git_search_grep_body: it's length(),
-	not len()
-Date: Sat, 23 Feb 2008 22:37:08 +0100
-Message-ID: <20080223213449.16213.42233.stgit@localhost.localdomain>
-Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+From: "Rhodes, Kate" <masukomi@gmail.com>
+Subject: Improved Google trends comparison
+Date: Sat, 23 Feb 2008 16:37:54 -0500
+Message-ID: <332FA266-4D12-4ED4-9B38-44577E1E540B@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v915)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
-Cc: Jean-Baptiste Quenot <jbq@caraldi.com>,
-	Jakub Narebski <jnareb@gmail.com>
-To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 23 22:38:00 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 23 22:38:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JT248-0006Zq-U1
-	for gcvg-git-2@gmane.org; Sat, 23 Feb 2008 22:37:53 +0100
+	id 1JT24r-0006o2-Ao
+	for gcvg-git-2@gmane.org; Sat, 23 Feb 2008 22:38:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755967AbYBWVhR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Feb 2008 16:37:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755397AbYBWVhR
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Feb 2008 16:37:17 -0500
-Received: from py-out-1112.google.com ([64.233.166.176]:57949 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755189AbYBWVhO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Feb 2008 16:37:14 -0500
-Received: by py-out-1112.google.com with SMTP id u52so1572117pyb.10
-        for <git@vger.kernel.org>; Sat, 23 Feb 2008 13:37:14 -0800 (PST)
+	id S1756218AbYBWViA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Feb 2008 16:38:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756106AbYBWViA
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Feb 2008 16:38:00 -0500
+Received: from wf-out-1314.google.com ([209.85.200.170]:17740 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755397AbYBWVh7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Feb 2008 16:37:59 -0500
+Received: by wf-out-1314.google.com with SMTP id 28so497507wff.4
+        for <git@vger.kernel.org>; Sat, 23 Feb 2008 13:37:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:subject:to:cc:date:message-id:user-agent:mime-version:content-type:content-transfer-encoding;
-        bh=qWEm2i5OJ9UIVG+2ZIWuXmTOdLIJQ5KIqSo0A7tjDKI=;
-        b=qZ8X9isozi3E1PDW1Nj8IrXVaklkJ56ISuOl3qrE6VYeXalzKsHG00A3bdbJRdN60e0wcNxh3F+JlkU5JhUScnoEbrPyxMcEzUzV6nrLDGyo01FgTlTK1wuI1nPW+zWFMZez5Qv29Z1VAia+QGTk9gQbzBotimXvScJtlg/Pb7A=
+        h=domainkey-signature:received:received:message-id:from:to:content-type:content-transfer-encoding:mime-version:subject:date:x-mailer;
+        bh=zZHmBvuRemVcJKwbjAX82X8W87faSQj5GoaVsLzSR/4=;
+        b=gXydyFoRVPNHBU5iCqzqZPtn8OfE1N/XFdIoX8MsSluTL5jaimHa5dW3FWL69KuGMbGabWUOoChD2PiUGnI1IoMPYsUQ2Mxy2b8x0I9SCpgrtGGfhyWNqAfkbeMVnXh7hVY/Y+MXmDQPjne/GFLcfJV8UMMCf0fbdA9P/ZNs89w=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:subject:to:cc:date:message-id:user-agent:mime-version:content-type:content-transfer-encoding;
-        b=ooUt55JjPNI5fUPbNLGC577jK+EE8A59dLYE2vnn3j1Hs4CcJic13UNpVKNvuD8hf7i4oyT3EMl27oMJVNgCgMKiKiibhfBEX0Z0fDVqTsGYm8kChVSCj0Opfuo3TyreWpquJ6SEsQbGfLVUxHPNaj3EC81asjFan3MhFHMuzII=
-Received: by 10.65.213.4 with SMTP id p4mr1958793qbq.83.1203802633702;
-        Sat, 23 Feb 2008 13:37:13 -0800 (PST)
-Received: from localhost.localdomain ( [83.8.255.83])
-        by mx.google.com with ESMTPS id b30sm5198882ika.11.2008.02.23.13.37.10
+        h=message-id:from:to:content-type:content-transfer-encoding:mime-version:subject:date:x-mailer;
+        b=CANuo7D8kykbBCGzdY2EvFeG15SuGydIdxZjK3JLnk55A+/y0CSn4GEMLiy90opS8VZggFs4inyWRWVfp1F2DXGVHe2lVlMxuHkB8I6+FXPDqzWuZ7YvTUt7Ce3QKVoD9eyGIuaGUBl/WI8oa7etZn5xHEofBNMK6DeXy/Uklfc=
+Received: by 10.142.12.14 with SMTP id 14mr690179wfl.81.1203802678963;
+        Sat, 23 Feb 2008 13:37:58 -0800 (PST)
+Received: from ?192.168.1.103? ( [71.126.230.85])
+        by mx.google.com with ESMTPS id l22sm4851270wrl.38.2008.02.23.13.37.57
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 23 Feb 2008 13:37:11 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m1NLb8wo016253;
-	Sat, 23 Feb 2008 22:37:09 +0100
-User-Agent: StGIT/0.14.1
+        Sat, 23 Feb 2008 13:37:57 -0800 (PST)
+X-Mailer: Apple Mail (2.915)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74857>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74858>
 
+Jakub was commenting on relative VCS popularity just after the 1.5.4  
+release. This is just an improved (i hope) version of his Google  
+trends link that includes the alternate names for subversion,  
+mercurial, and bazaar.
 
-Use int(<expr>/2) to get integer value for a substring length.
+http://www.google.com/trends?q=svn%7Csubversion%2C+git%2C+mercurial%7Chg%2C+bzr%7Cbazaar%2C+darcs&ctab=0&geo=all&date=all&sort=0
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-I'm very very sorry. I though I have tested this, but somehow it
-slipped through; most probably I have tested older version.
-
- gitweb/gitweb.perl |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 326e27c..e8226b1 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -3792,7 +3792,7 @@ sub git_search_grep_body {
- 			if ($line =~ m/^(.*)($search_regexp)(.*)$/i) {
- 				my ($lead, $match, $trail) = ($1, $2, $3);
- 				$match = chop_str($match, 70, 5);       # in case match is very long
--				my $contextlen = (80 - len($match))/2;  # is left for the remainder
-+				my $contextlen = int((80 - length($match))/2); # for the remainder
- 				$contextlen = 30 if ($contextlen > 30); # but not too much
- 				$lead  = chop_str($lead,  $contextlen, 10);
- 				$trail = chop_str($trail, $contextlen, 10);
+-kate = masukomi
