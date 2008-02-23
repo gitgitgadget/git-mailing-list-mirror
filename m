@@ -1,163 +1,187 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: [PATCH] parse-opt: bring PARSE_OPT_HIDDEN to git-rev-parse --parseopt
-Date: Sat, 23 Feb 2008 15:09:26 +0100
-Message-ID: <20080223140926.GD10967@artemis.madism.org>
-References: <20080221230101.27644.49229.stgit@gandelf.nowhere.earth> <20080222093558.GC29114@artemis.madism.org> <7vbq68ap1c.fsf@gitster.siamese.dyndns.org> <20080222181927.GA4555@artemis.madism.org>
+From: "J.C. Pizarro" <jcpiza@gmail.com>
+Subject: Re: Question about your git habits
+Date: Sat, 23 Feb 2008 18:10:58 +0100
+Message-ID: <998d0e4a0802230910o1cd087f1y6b2398cfde4cfe08@mail.gmail.com>
+References: <Pine.LNX.4.64.0802230221140.21077@fbirervta.pbzchgretzou.qr>
+	 <7vfxvk4f07.fsf@gitster.siamese.dyndns.org>
+	 <20080223020913.GL27894@ZenIV.linux.org.uk>
+	 <998d0e4a0802221823h3ba53097gf64fcc2ea826302b@mail.gmail.com>
+	 <998d0e4a0802221847m431aa136xa217333b0517b962@mail.gmail.com>
+	 <20080223113952.GA4936@hashpling.org>
+	 <998d0e4a0802230508w12f236baiaf2d9ab5f364670a@mail.gmail.com>
+	 <20080223131749.GA5811@hashpling.org>
+	 <998d0e4a0802230536w74e93ec3s40c77d52b183a419@mail.gmail.com>
+	 <20080223140153.GB5811@hashpling.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="rz+pwK2yUstbofK6";
-	protocol="application/pgp-signature"; micalg=SHA1
-To: Junio C Hamano <gitster@pobox.com>,
-	Yann Dirson <ydirson@altern.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 23 15:10:17 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: "Charles Bailey" <charles@hashpling.org>,
+	LKML <linux-kernel@vger.kernel.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 23 18:12:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JSv4u-0005Xy-3b
-	for gcvg-git-2@gmane.org; Sat, 23 Feb 2008 15:10:12 +0100
+	id 1JSxvD-0002v8-4G
+	for gcvg-git-2@gmane.org; Sat, 23 Feb 2008 18:12:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759462AbYBWOJd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Feb 2008 09:09:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759734AbYBWOJc
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Feb 2008 09:09:32 -0500
-Received: from pan.madism.org ([88.191.52.104]:47595 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759475AbYBWOJ3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Feb 2008 09:09:29 -0500
-Received: from madism.org (ctse16.ulb.ac.be [164.15.3.4])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 41CE31EBEC;
-	Sat, 23 Feb 2008 15:09:28 +0100 (CET)
-Received: by madism.org (Postfix, from userid 1000)
-	id 53495452016; Sat, 23 Feb 2008 15:09:26 +0100 (CET)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Yann Dirson <ydirson@altern.org>, git@vger.kernel.org
+	id S1752399AbYBWRLI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Feb 2008 12:11:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751905AbYBWRLG
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Feb 2008 12:11:06 -0500
+Received: from ti-out-0910.google.com ([209.85.142.191]:4798 "EHLO
+	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751759AbYBWRLC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Feb 2008 12:11:02 -0500
+Received: by ti-out-0910.google.com with SMTP id 28so535388tif.23
+        for <git@vger.kernel.org>; Sat, 23 Feb 2008 09:10:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=m6Tz2jDNohbB33yWisH0pErKsnr++EmzvBqibHpTfzQ=;
+        b=BvXcZ/qKMlRtMs3ri9dp4jJVgRQvPU8vsVQJ0hJWkGbZUbCNsW0GmjZnineide49SBTHNpZoZNZiqrzaqAmwUT9PSlUB6PylRDW8M42NkqPp/mx4OUo6Wb/JHKm6SacWX/kkwR6Md2Ef0uTgOHoUXr/GBdPXUTqh3raeG/Q0Tws=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=kgNVBSESNmC8x7tIHIOYOoB5sjgSdIn5MvnEeWYro5tiFNH2ckYepKe+5zVe3kZXJN0E1slILTMZtmz6+NuHjDKhILEXJFieThWDNgghwFK1wSq3wLU/Chj0ruIBDqdC0lWimqBCozYQzSFz8EoYYRBYPp1T4azGcvWEnTvmyBo=
+Received: by 10.110.20.17 with SMTP id 17mr396824tit.47.1203786658782;
+        Sat, 23 Feb 2008 09:10:58 -0800 (PST)
+Received: by 10.70.40.12 with HTTP; Sat, 23 Feb 2008 09:10:58 -0800 (PST)
+In-Reply-To: <20080223140153.GB5811@hashpling.org>
 Content-Disposition: inline
-In-Reply-To: <20080222181927.GA4555@artemis.madism.org>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74827>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74828>
 
+On 2008/2/23, Charles Bailey <charles@hashpling.org> wrote:
+> On Sat, Feb 23, 2008 at 02:36:59PM +0100, J.C. Pizarro wrote:
+>  > On 2008/2/23, Charles Bailey <charles@hashpling.org> wrote:
+>  > >
+>
+> > > It shouldn't matter how aggressively the repositories are packed or what
+>  > >  the binary differences are between the pack files are. git clone
+>  > >  should (with the --reference option) generate a new pack for you with
+>  > >  only the missing objects. If these objects are ~52 MiB then a lot has
+>  > >  been committed to the repository, but you're not going to be able to
+>  > >  get around a big download any other way.
+>  >
+>  > You're wrong, nothing has to be commited ~52 MiB to the repository.
+>  >
+>  > I'm not saying "commit", i'm saying
+>  >
+>  > "Assume A & B binary git repos and delta_B-A another binary file, i
+>  > request built
+>  > B' = A + delta_B-A where is verified SHA1(B') = SHA1(B) for avoiding
+>  > corrupting".
+>  >
+>  > Assume B is the higher repacked version of "A + minor commits of the day"
+>  > as if B was optimizing 24 hours more the minimum spanning tree. Wow!!!
+>  >
+>
+>
+> I'm not sure that I understand where you are going with this.
+>  Originally, you stated that if you clone a 775 MiB repository on day
+>  one, and then you clone it again on day two when it was 777 MiB, then
+>  you currently have to download 775 + 777 MiB of data, whereas you
+>  could download a 52 MiB binary diff. I have no idea where that value
+>  of 52 MiB comes from, and I've no idea how many objects were committed
+>  between day one and day two. If we're going to talk about details,
+>  then you need to provide more details about your scenario.
 
---rz+pwK2yUstbofK6
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I don't said that "A & B binary git repos" are binary files, but i said that
+delta_B-A is a binary file.
 
-Signed-off-by: Pierre Habouzit <madcoder@debian.org>
----
-    On ven, f=C3=A9v 22, 2008 at 06:19:28 +0000, Pierre Habouzit wrote:
-    > On Fri, Feb 22, 2008 at 05:17:51PM +0000, Junio C Hamano wrote:
-    > > I did not find accessible from the command line variant was the
-    > > parse-opt-hidden feature, which was frustrating.
-    >=20
-    >   Well, it's probably doable using some more magic flags, I can hack
-    > something if you need to, I'll try to work something out during FOSDE=
-M's
-    > talks :)
+I said ago ~15 hours "Suppose the size cost of this binary delta is e.g. around
+52 MiB instead of 2 MiB due to numerous mismatching of binary parts ..."
 
-      Here it is =E2=80=A6
-      I also made the parsing more extensible wrt new flags if needed.
+The binary delta is different to the textual delta (between lines of texts)
+ used in the git scheme (the commits or changesets use textual deltas).
+The textual delta can be compressed resulting a smaller binary object.
+Collecting binary objects and some more is the git repository.
+You can't apply textual delta of git repository, only binary delta.
+You can apply binary delta of both git-repacked repositories if there
+is a program
+ that generates binary delta of both directories but it's not implement yet.
+The SHA1 verifier is useful for avoid the corrupting of the generated repository
+ (if it's corrupted then it has to be cloned again delta or whole
+until non-corrupted).
+An example of same SHA1 of both directories can be implemented as same SHA1
+ of sorted SHA1s of contents, filenames and properties. Anything
+alterated, added
+ or eliminated from them implies different SHA1.
 
-      We should definitely write tests too.
+Don't you understand i'm saying? I will give you a practical example.
+1. zip -r -8  foo1.zip foo1  # in foo1 there are tons of information
+as from git repo
+2. mv foo1 foo2 ; cp bar.txt foo2/
+3. zip -r -9 foo2.zip foo2   # still little bit more optimized (=
+higher repacked)
+4. Apply binary delta between foo1.zip & foo2.zip with a supposed program
+     deltaier and you get delta_foo1_foo2.bin. The size(delta_foo1_foo2.bin) is
+     not nearly ~( size(foo2.zip) - size(foo1.zip) )
+5. Apply hexadecimal diff and you will understand why it gives the exemplar
+     ~52 MiB instead of ~2 MiB that i said it.
+6. You will know some identical parts in both foo1.zip and foo2.zip.
+     Identical parts are good for smaller binary deltas. It's possible to get
+     still smaller binary deltas when their identical parts are in
+random offsets
+     or random locations depending of how deltaier program is advanced.
+7. Same above but instead of both files, apply binary delta of both directories.
 
- Documentation/git-rev-parse.txt |   15 ++++++++++-----
- builtin-rev-parse.c             |   25 ++++++++++++++-----------
- 2 files changed, 24 insertions(+), 16 deletions(-)
+>  Having said that, here is my original point in some more detail. git
+>  repositories are not binary blobs, they are object databases. Better
+>  than this, they are databases of immutable objects. This means that to
+>  get the difference between one database and another, you only need to
+>  add the objects that are missing from the other database.
 
-diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.=
-txt
-index f02f6bb..e961c20 100644
---- a/Documentation/git-rev-parse.txt
-+++ b/Documentation/git-rev-parse.txt
-@@ -325,7 +325,7 @@ The lines after the separator describe the options.
- Each line of options has this format:
-=20
- ------------
--<opt_spec><arg_spec>? SP+ help LF
-+<opt_spec><flags>? SP+ help LF
- ------------
-=20
- `<opt_spec>`::
-@@ -334,10 +334,15 @@ Each line of options has this format:
- 	is necessary. `h,help`, `dry-run` and `f` are all three correct
- 	`<opt_spec>`.
-=20
--`<arg_spec>`::
--	an `<arg_spec>` tells the option parser if the option has an argument
--	(`=3D`), an optional one (`?` though its use is discouraged) or none
--	(no `<arg_spec>` in that case).
-+`<flags>`::
-+	`<flags>` are any suite of `*`, `=3D` or `?`.
-+	* Use `=3D` if the option take an argument.
-+
-+	* Use `?` to mean that the option is optional (though its use is discoura=
-ged).
-+
-+	* Use `*` to mean that this option should not be listed in the usage
-+	  generated for the `-h` argument. It's shown for `--help-all` as
-+	  documented in linkgit:gitcli[5].
-=20
- The remainder of the line, after stripping the spaces, is used
- as the help associated to the option.
-diff --git a/builtin-rev-parse.c b/builtin-rev-parse.c
-index b9af1a5..5ffc4e0 100644
---- a/builtin-rev-parse.c
-+++ b/builtin-rev-parse.c
-@@ -322,18 +322,21 @@ static int cmd_parseopt(int argc, const char **argv, =
-const char *prefix)
- 		o->type =3D OPTION_CALLBACK;
- 		o->help =3D xstrdup(skipspaces(s));
- 		o->value =3D &parsed;
-+		o->flags =3D PARSE_OPT_NOARG;
- 		o->callback =3D &parseopt_dump;
--		switch (s[-1]) {
--		case '=3D':
--			s--;
--			break;
--		case '?':
--			o->flags =3D PARSE_OPT_OPTARG;
--			s--;
--			break;
--		default:
--			o->flags =3D PARSE_OPT_NOARG;
--			break;
-+		while (s > sb.buf && strchr("*=3D?", s[-1])) {
-+			switch (*--s) {
-+			case '=3D':
-+				o->flags &=3D ~PARSE_OPT_NOARG;
-+				break;
-+			case '?':
-+				o->flags &=3D ~PARSE_OPT_NOARG;
-+				o->flags |=3D PARSE_OPT_OPTARG;
-+				break;
-+			case '*':
-+				o->flags &=3D PARSE_OPT_HIDDEN;
-+				break;
-+			}
- 		}
-=20
- 		if (s - sb.buf =3D=3D 1) /* short option only */
---=20
-1.5.4.2.281.g28d0e
+Databases of immutable objects <--- You're wrong because you confuse.
+There are mutable objects as the better deltas of min. spanning tree.
 
+The missing objects are not only the missing sources that you're thinking,
+they can be any thing (blob, tree, commit, tag, etc.). The deltas of the
+minimum spanning tree too are objects of the database that can be erased
+or added when the spanning tree is alterated (because the alterated spanning
+tree is smaller than previous) for better repack. Best repack is still
+NP-problem
+and to solve this bigger NP-problem of each day is 24/365 (eternal computing).
 
---rz+pwK2yUstbofK6
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+The git database is the top-level ".git/" directory but it has repacked binary
+information and has always some size measured normally in MiBs that i was
+saying above.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
+>                                                                        If the two
+>  databases are actually a database and the same database at short time
+>  interval later, then almost all the objects are going to be common and
+>  the difference will be a small set of objects. Using git:// this set
+>  of objects can be efficiently transfered as a pack file.
 
-iD8DBQBHwCkWvGr7W6HudhwRAv3fAJ45s1Bgjvid23zvJhwyZK2vz/6roQCbBMEp
-nslHfR39ASh2E57DDq+pugw=
-=vWhf
------END PGP SIGNATURE-----
+You're saying    repacked(A) + new objects   with the bandwith cost of
+new objects
+but i'm saying  rerepacked(A+new objects)   with the bandwith cost of
+binary delta
+                                   where delta is repacked(A) -
+rerepacked(A+new objects)
+                                         and rerepacked(X) is more
+time repacking again X.
 
---rz+pwK2yUstbofK6--
+>                                                                                     You may have
+>  a corner case scenario where the following isn't true, but in my
+>  experience an incremental pack file will be a more compact
+>  representation of this difference than a binary difference of two
+>  aggressively repacked git repositories as generated by a generic
+>  binary difference engine.
+
+Yes, it's more simple and compact, but the eternal repacking 24/365 can do it
+ e.g. 30% smaller after few weeks when the incremental pack has made nothing.
+
+It's good idea that the weekly user picks the binary delta and the
+daily developer
+ picks the incremental pack. Put both modes working in the git server.
+
+>  I'm sorry if I've misunderstood your last point. Perhaps you could
+>  expand in the exact issue that are having if I have, as I'm not sure
+>  that I've really answered your last message.
+
+   Misunderstood can be dissappeared ;)
