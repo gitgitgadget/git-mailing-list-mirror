@@ -1,67 +1,68 @@
-From: Samuel Tardieu <sam@rfc1149.net>
-Subject: Re: Question about your git habits
-Date: Sat, 23 Feb 2008 11:39:23 +0100
-Organization: RFC 1149 (see http://www.rfc1149.net/)
-Message-ID: <2008-02-23-11-39-23+trackit+sam@rfc1149.net>
-References: <200802221837.37680.chase.venters@clientec.com>
-	<7vk5kw4fep.fsf@gitster.siamese.dyndns.org>
+From: Gerrit Pape <pape@smarden.org>
+Subject: [PATCH] gitk: don't save the geometry to rc file on exit
+Date: Sat, 23 Feb 2008 11:37:59 +0000
+Message-ID: <20080223113759.12854.qmail@6a8737aa4695b2.315fe32.mid.smarden.org>
+References: <47AAA254.2020008@thorn.ws> <20080207063020.GP24004@spearce.org> <200802071056.19370.robin.rosenberg.lists@dewire.com> <20080207101051.19459.qmail@fcb20609bc7c07.315fe32.mid.smarden.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8bit
-Cc: Chase Venters <chase.venters@clientec.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 23 11:51:15 2008
+To: git@vger.kernel.org, Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Sat Feb 23 12:38:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JSryK-0005Z9-DK
-	for gcvg-git-2@gmane.org; Sat, 23 Feb 2008 11:51:12 +0100
+	id 1JSsht-0000BU-TR
+	for gcvg-git-2@gmane.org; Sat, 23 Feb 2008 12:38:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751480AbYBWKue (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Feb 2008 05:50:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751749AbYBWKud
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Feb 2008 05:50:33 -0500
-Received: from anyanka.rfc1149.net ([81.56.47.149]:58697 "EHLO
-	mail2.rfc1149.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750927AbYBWKud (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Feb 2008 05:50:33 -0500
-X-Greylist: delayed 665 seconds by postgrey-1.27 at vger.kernel.org; Sat, 23 Feb 2008 05:50:32 EST
-Received: from localhost (localhost [127.0.0.1])
-	by mail2.rfc1149.net (Postfix) with ESMTP id 84238C405D;
-	Sat, 23 Feb 2008 11:39:24 +0100 (CET)
-Received: from mail2.rfc1149.net ([127.0.0.1])
-	by localhost (localhost [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id HVs2spgTElhj; Sat, 23 Feb 2008 11:39:23 +0100 (CET)
-Received: by mail2.rfc1149.net (Postfix, from userid 1000)
-	id D610AC4096; Sat, 23 Feb 2008 11:39:23 +0100 (CET)
-In-Reply-To: <7vk5kw4fep.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's message of "Fri\, 22 Feb 2008 17\:42\:22 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-WWW: http://www.rfc1149.net/sam
-X-Jabber: <sam@rfc1149.net> (see http://www.jabber.org/)
-X-OpenPGP-Fingerprint: 79C0 AE3C CEA8 F17B 0EF1  45A5 F133 2241 1B80 ADE6 (see http://www.gnupg.org/)
+	id S1752450AbYBWLhm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Feb 2008 06:37:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750838AbYBWLhm
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Feb 2008 06:37:42 -0500
+Received: from a.ns.smarden.org ([212.42.242.37]:51550 "HELO a.mx.smarden.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752450AbYBWLhl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Feb 2008 06:37:41 -0500
+Received: (qmail 12855 invoked by uid 1000); 23 Feb 2008 11:37:59 -0000
+Content-Disposition: inline
+In-Reply-To: <20080207101051.19459.qmail@fcb20609bc7c07.315fe32.mid.smarden.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74814>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74815>
 
->>>>> "Junio" == Junio C Hamano <gitster@pobox.com> writes:
+Saving the geometry can cause several inconveniences, e.g. when using a
+temporary dual screen setup, or sharing ~/.gitk between multiple
+systems.  Additionally it can be argued that window placement and sizing
+are the tasks of the window manager.  So don't do that anymore.
 
-Junio> Many people prefer to use topic branches, and working in a
-Junio> single repository with multiple branches and switching branches
-Junio> without ever cd'ing around is certainly a possible and very
-Junio> valid way to work.  As long as your build infrastructure is
-Junio> sane (e.g. your project does not have a central header file
-Junio> that any little subsystem change needs to modify and included
-Junio> by everybody, which tends to screw up make quite badly),
-Junio> switching branches would not incur too much recompilation
-Junio> either and it obviously will save disk space not having to
-Junio> leave multiple checkout around.
+This has been requested by martin f krafft and Josh Triplett through
+ http://bugs.debian.org/442253
+ http://bugs.debian.org/467121
 
-And even in this case (central header file), ccache will greatly
-decrease compilation time in the case of a C/C++ project.
+Signed-off-by: Gerrit Pape <pape@smarden.org>
+---
+ gitk-git/gitk |    8 --------
+ 1 files changed, 0 insertions(+), 8 deletions(-)
 
-  Sam
+diff --git a/gitk-git/gitk b/gitk-git/gitk
+index f1f21e9..8039d19 100644
+--- a/gitk-git/gitk
++++ b/gitk-git/gitk
+@@ -1188,14 +1188,6 @@ proc savestuff {w} {
+ 	puts $f [list set diffcontext $diffcontext]
+ 	puts $f [list set selectbgcolor $selectbgcolor]
+ 
+-	puts $f "set geometry(main) [wm geometry .]"
+-	puts $f "set geometry(topwidth) [winfo width .tf]"
+-	puts $f "set geometry(topheight) [winfo height .tf]"
+-        puts $f "set geometry(pwsash0) \"[.tf.histframe.pwclist sash coord 0]\""
+-        puts $f "set geometry(pwsash1) \"[.tf.histframe.pwclist sash coord 1]\""
+-	puts $f "set geometry(botwidth) [winfo width .bleft]"
+-	puts $f "set geometry(botheight) [winfo height .bleft]"
+-
+ 	puts -nonewline $f "set permviews {"
+ 	for {set v 0} {$v < $nextviewnum} {incr v} {
+ 	    if {$viewperm($v)} {
 -- 
-Samuel Tardieu -- sam@rfc1149.net -- http://www.rfc1149.net/
+1.5.4.2
