@@ -1,73 +1,53 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] checkout: error out when index is unmerged even with -m
-Date: Sat, 23 Feb 2008 15:45:19 -0800
-Message-ID: <7voda7xmnk.fsf_-_@gitster.siamese.dyndns.org>
-References: <alpine.LFD.1.00.0802231323590.21332@woody.linux-foundation.org>
- <7v8x1b1fiu.fsf@gitster.siamese.dyndns.org>
- <alpine.LFD.1.00.0802231430100.21332@woody.linux-foundation.org>
- <7vzltrz4cl.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sun Feb 24 00:46:10 2008
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: [EGIT] Sort order from hell fixes, take 2
+Date: Sun, 24 Feb 2008 00:50:33 +0100
+Message-ID: <1203810643-28819-1-git-send-email-robin.rosenberg@dewire.com>
+Cc: David Watson <dwatson@mimvista.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Feb 24 00:51:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JT44H-00080v-Lg
-	for gcvg-git-2@gmane.org; Sun, 24 Feb 2008 00:46:10 +0100
+	id 1JT49l-00013x-B9
+	for gcvg-git-2@gmane.org; Sun, 24 Feb 2008 00:51:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751459AbYBWXpe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Feb 2008 18:45:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752706AbYBWXpd
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Feb 2008 18:45:33 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:52489 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750806AbYBWXpd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Feb 2008 18:45:33 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 674101813;
-	Sat, 23 Feb 2008 18:45:29 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 82E0C1812; Sat, 23 Feb 2008 18:45:22 -0500 (EST)
-In-Reply-To: <7vzltrz4cl.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
- message of "Sat, 23 Feb 2008 14:37:46 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752656AbYBWXuy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Feb 2008 18:50:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752767AbYBWXux
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Feb 2008 18:50:53 -0500
+Received: from [83.140.172.130] ([83.140.172.130]:11189 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1752245AbYBWXux (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Feb 2008 18:50:53 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 5D20B802896;
+	Sun, 24 Feb 2008 00:50:51 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id taW1dszZTg5s; Sun, 24 Feb 2008 00:50:50 +0100 (CET)
+Received: from lathund.dewire.com (unknown [10.9.0.2])
+	by dewire.com (Postfix) with ESMTP id 4A3628027FE;
+	Sun, 24 Feb 2008 00:50:50 +0100 (CET)
+Received: by lathund.dewire.com (Postfix, from userid 500)
+	id 7D7AA2930B; Sun, 24 Feb 2008 00:50:43 +0100 (CET)
+X-Mailer: git-send-email 1.5.4.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74884>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74885>
 
-Even when -m is given to allow fallilng back to 3-way merge
-while switching branches, we should refuse if the original index
-is unmerged.
+Hi fans,
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
+My previous attempt to fix this failed, so here is another round, including
+some new infrastructure like a TreeIterator to support this fix and whatever
+will need it.
 
- * I think this bug was inherited from the scripted version.
-   Fixing it is much easier here.
+Feed free to scrutize and invent whatever evil test case might be missing.
 
- builtin-checkout.c |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+The reason I noticed the problem was introduced in c20142, where the unit
+tests for org.spearce.jgit was moved to the new project org.spearce.jgit.test .
 
-diff --git a/builtin-checkout.c b/builtin-checkout.c
-index 283831e..e028270 100644
---- a/builtin-checkout.c
-+++ b/builtin-checkout.c
-@@ -226,8 +226,8 @@ static int merge_working_tree(struct checkout_opts *opts,
- 		refresh_cache(REFRESH_QUIET);
- 
- 		if (unmerged_cache()) {
--			ret = opts->merge ? -1 :
--				error("you need to resolve your current index first");
-+			error("you need to resolve your current index first");
-+			return 1;
- 		} else {
- 			topts.update = 1;
- 			topts.merge = 1;
+-- robin
