@@ -1,51 +1,77 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/3] t3404: use configured shell instead of /bin/sh
-Date: Sat, 23 Feb 2008 17:28:37 -0500
-Message-ID: <20080223222837.GA13628@coredump.intra.peff.net>
-References: <20080220235944.GA6278@coredump.intra.peff.net> <20080221000044.GB6429@coredump.intra.peff.net> <200802232113.40100.johannes.sixt@telecom.at> <20080223204005.GA12502@coredump.intra.peff.net> <7v1w732y97.fsf@gitster.siamese.dyndns.org> <20080223211219.GA13178@coredump.intra.peff.net>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Be more verbose when checkout takes a long time
+Date: Sat, 23 Feb 2008 14:32:35 -0800 (PST)
+Message-ID: <alpine.LFD.1.00.0802231430100.21332@woody.linux-foundation.org>
+References: <alpine.LFD.1.00.0802231323590.21332@woody.linux-foundation.org> <7v8x1b1fiu.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Sixt <johannes.sixt@telecom.at>, git@vger.kernel.org,
-	Whit Armstrong <armstrong.whit@gmail.com>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 23 23:30:06 2008
+X-From: git-owner@vger.kernel.org Sat Feb 23 23:33:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JT2sc-00055D-VY
-	for gcvg-git-2@gmane.org; Sat, 23 Feb 2008 23:30:03 +0100
+	id 1JT2vz-0005ze-Ha
+	for gcvg-git-2@gmane.org; Sat, 23 Feb 2008 23:33:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755238AbYBWW3J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Feb 2008 17:29:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752797AbYBWW3F
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Feb 2008 17:29:05 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2274 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756409AbYBWW2k (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Feb 2008 17:28:40 -0500
-Received: (qmail 11465 invoked by uid 111); 23 Feb 2008 22:28:38 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Sat, 23 Feb 2008 17:28:38 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 23 Feb 2008 17:28:37 -0500
-Content-Disposition: inline
-In-Reply-To: <20080223211219.GA13178@coredump.intra.peff.net>
+	id S1753774AbYBWWc4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Feb 2008 17:32:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753843AbYBWWc4
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Feb 2008 17:32:56 -0500
+Received: from smtp1.linux-foundation.org ([207.189.120.13]:38574 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753578AbYBWWcz (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 23 Feb 2008 17:32:55 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m1NMWZL4004371
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 23 Feb 2008 14:32:37 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m1NMWZcC017942;
+	Sat, 23 Feb 2008 14:32:35 -0800
+In-Reply-To: <7v8x1b1fiu.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+X-Spam-Status: No, hits=-3.09 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 207.189.120.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74865>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74866>
 
-On Sat, Feb 23, 2008 at 04:12:19PM -0500, Jeff King wrote:
 
-> > shell there.  If you used $SHELL not $SHELL_PATH and wrote to
-> > fake-editor.sh, you would have noticed that using $SHELL there
-> > was wrong as it would have said "#!bash" for you ;-)
+
+On Sat, 23 Feb 2008, Junio C Hamano wrote:
+
+> Linus Torvalds <torvalds@linux-foundation.org> writes:
 > 
-> Actually, my $SHELL is "/usr/local/bin/bash" on the box in question.
+> > So I find it irritating when git thinks for a long time without telling me 
+> > what's taking so long. And by "long time" I definitely mean less than two 
+> > seconds, which is already way too long for me.
+> 
+> Do you mean more than two or less than two?
 
-Hmm. Actually, we just set SHELL_PATH to SHELL in the Makefile. So I
-really don't see the point of SHELL_PATH at all, unless there are some
-setups where it is already set outside of git.
+I mean that "long time" starts at a point that is less than two seconds.
 
--Peff
+Anything over a second is a long time for me.
+
+> Geez you are impatient ;-).
+
+I like to call it "discerning in my time usage".
+
+> The other user of start_progress_delay uses 95% as cutoff.  and
+> probably 50% was too low, but that may just be bikeshedding.
+
+I did think that 50% was a bit low, and considered upping it to 75, but 
+with the one-second thing it wasn't as much of a deal any more. 
+
+> I agree.  Perhaps we can add some message when "-m" codepath
+> falls back to the three-way merge to make "merge-error" less
+> scary.  Perhaps like:
+
+Sounds sane to me.
+
+		Linus
