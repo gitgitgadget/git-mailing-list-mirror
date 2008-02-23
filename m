@@ -1,121 +1,96 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: [PATCH] Documentation/git-filter-branch: add a new commit-filter
-	example
-Date: Sat, 23 Feb 2008 23:04:33 +0100
-Message-ID: <20080223220433.GG31441@genesis.frugalware.org>
-References: <20080223193058.GE31441@genesis.frugalware.org> <7vejb3319j.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Be more verbose when checkout takes a long time
+Date: Sat, 23 Feb 2008 14:20:25 -0800
+Message-ID: <7v8x1b1fiu.fsf@gitster.siamese.dyndns.org>
+References: <alpine.LFD.1.00.0802231323590.21332@woody.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 23 23:16:58 2008
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sat Feb 23 23:21:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JT2fx-0001ZH-EG
-	for gcvg-git-2@gmane.org; Sat, 23 Feb 2008 23:16:57 +0100
+	id 1JT2kA-0002bA-Dl
+	for gcvg-git-2@gmane.org; Sat, 23 Feb 2008 23:21:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753609AbYBWWQV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Feb 2008 17:16:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753356AbYBWWQV
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Feb 2008 17:16:21 -0500
-Received: from virgo.iok.hu ([193.202.89.103]:58094 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753154AbYBWWQU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Feb 2008 17:16:20 -0500
-X-Greylist: delayed 703 seconds by postgrey-1.27 at vger.kernel.org; Sat, 23 Feb 2008 17:16:20 EST
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id E1D671B24FA;
-	Sat, 23 Feb 2008 23:04:34 +0100 (CET)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id B69C244668;
-	Sat, 23 Feb 2008 23:02:06 +0100 (CET)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 4AB6411901F6; Sat, 23 Feb 2008 23:04:34 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <7vejb3319j.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1753540AbYBWWUm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Feb 2008 17:20:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752759AbYBWWUm
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Feb 2008 17:20:42 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:61766 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751414AbYBWWUl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Feb 2008 17:20:41 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 0561A1648;
+	Sat, 23 Feb 2008 17:20:39 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 243901646; Sat, 23 Feb 2008 17:20:34 -0500 (EST)
+In-Reply-To: <alpine.LFD.1.00.0802231323590.21332@woody.linux-foundation.org>
+ (Linus Torvalds's message of "Sat, 23 Feb 2008 13:36:08 -0800 (PST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74862>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74863>
 
-There is a commit-filter example already which skips commits but there is no
-example on how to edit commit messages.
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-One can figure out this example by carefully reading the git-filter-branch and
-git-commit-tree documentation but I think it isn't trivial so this example is
-helpful.
+> So I find it irritating when git thinks for a long time without telling me 
+> what's taking so long. And by "long time" I definitely mean less than two 
+> seconds, which is already way too long for me.
 
-Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
----
+Do you mean more than two or less than two?
 
-On Sat, Feb 23, 2008 at 11:45:28AM -0800, Junio C Hamano
-<gitster@pobox.com> wrote:
-> People who are not interested in git-svn at all may still want
-> to fix up their commit log messages, and I think starting a
-> paragraph with 'git-svn-blah' would risk them skipping it
-> without reading (I certainly would).  Probably we would want to
-> add a sentence before "To remove ...", like this:
->
->       You can rewrite the commit log messages using `--commit-filter`.
->       For example, `git-svn-id` strings in a repository created with
->       `git-svn` can be cleaned up this way:
+> Now, git read-tree already had support for the "-v" flag that does nice 
+> updates about what's going on, but it was delayed by two seconds, and if 
+> the thing had already done more than half by then it would be quiet even 
+> after that, so in practice it meant that we migth be quiet for up to four 
+> seconds. Much too long.
 
-second try follows :)
+Geez you are impatient ;-).
 
->
-> > +------------------------------------------------------------------------------
-> > +git filter-branch --commit-filter 'sed "/^git-svn-id:/d" |git
-> > commit-tree "$@"'
-> > +------------------------------------------------------------------------------
->
-> Please try to keep them a bit shorter for reviewing pleasure on
-> 80-column terminals after your message was quoted once or
-> perhaps a few times.  The example is easier to read if you write
-> like this, I think:
->
-> ----------------------------------------------------------------
-> git filter-branch --commit-filter '
->       sed -e "/^git-svn-id:/d" | git commit-tree "$@"
-> '
-> ----------------------------------------------------------------
->
+The other user of start_progress_delay uses 95% as cutoff.  and
+probably 50% was too low, but that may just be bikeshedding.
 
-ok. i used 72 in my mails and 80 in the code, but now i'm using 72 in
-the code as well.
+> ... Quite frankly, I'm not really sure why it disabled 
+> error messages in the first place: ...
+> ...
+> Now, I'm sure this had a good reason (for the "git checkout -m" case), but 
+> it did make the common case of git-checkout really annoying.
 
-> I am not sure if git-svn people condone or encourage such
-> removals, though.
+I agree.  Perhaps we can add some message when "-m" codepath
+falls back to the three-way merge to make "merge-error" less
+scary.  Perhaps like:
 
-i think it's only useful if you use git-svn for an svn -> git
-conversion, provided that the project switches to git (there will be no
-more svn commits and noone wants to push back git commits to svn).
+ git-checkout.sh |   11 +++++++----
+ 1 files changed, 7 insertions(+), 4 deletions(-)
 
- Documentation/git-filter-branch.txt |    9 +++++++++
- 1 files changed, 9 insertions(+), 0 deletions(-)
-
-diff --git a/Documentation/git-filter-branch.txt b/Documentation/git-filter-branch.txt
-index e22dfa5..367064b 100644
---- a/Documentation/git-filter-branch.txt
-+++ b/Documentation/git-filter-branch.txt
-@@ -240,6 +240,15 @@ committed a merge between P1 and P2, it will be propagated properly
- and all children of the merge will become merge commits with P1,P2
- as their parents instead of the merge commit.
+diff --git a/git-checkout.sh b/git-checkout.sh
+index bd74d70..5e36136 100755
+--- a/git-checkout.sh
++++ b/git-checkout.sh
+@@ -210,11 +210,14 @@ then
+     git read-tree $v --reset -u $new
+ else
+     git update-index --refresh >/dev/null
+-    merge_error=$(git read-tree -m -u --exclude-per-directory=.gitignore $old $new 2>&1) || (
+-	case "$merge" in
+-	'')
+-		echo >&2 "$merge_error"
++    git read-tree -$v m -u --exclude-per-directory=.gitignore $old $new || (
++	case "$merge,$v" in
++	,*)
+ 		exit 1 ;;
++	1,)
++		;; # quiet
++	*)
++		echo >&2 "Falling back to 3-way merge..." ;;
+ 	esac
  
-+You can rewrite the commit log messages using `--commit-filter`.  For
-+example, `git-svn-id` strings in a repository created by `git-svn` can
-+be removed this way:
-+
-+-------------------------------------------------------
-+git filter-branch --commit-filter '
-+	sed -e "/^git-svn-id:/d" | git commit-tree "$@"
-+'
-+-------------------------------------------------------
- 
- To restrict rewriting to only part of the history, specify a revision
- range in addition to the new branch name.  The new branch name will
--- 
-1.5.4.2
+ 	# Match the index to the working tree, and do a three-way.
