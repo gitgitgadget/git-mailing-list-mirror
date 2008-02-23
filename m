@@ -1,106 +1,89 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: [PATCH 2/2] pull: document usage via OPTIONS_SPEC
-Date: Fri, 22 Feb 2008 19:52:30 -0500
-Message-ID: <1203727950-14980-2-git-send-email-jaysoffian@gmail.com>
-References: <1203727950-14980-1-git-send-email-jaysoffian@gmail.com>
+From: Chase Venters <chase.venters@clientec.com>
+Subject: Question about your git habits
+Date: Fri, 22 Feb 2008 18:37:14 -0600
+Organization: Clientec, Inc.
+Message-ID: <200802221837.37680.chase.venters@clientec.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Jay Soffian <jaysoffian@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 23 01:53:50 2008
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: linux-kernel@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 23 02:01:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JSie5-0005OG-9k
-	for gcvg-git-2@gmane.org; Sat, 23 Feb 2008 01:53:41 +0100
+	id 1JSilr-0007TA-RY
+	for gcvg-git-2@gmane.org; Sat, 23 Feb 2008 02:01:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S937377AbYBWAwm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Feb 2008 19:52:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937609AbYBWAwl
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Feb 2008 19:52:41 -0500
-Received: from an-out-0708.google.com ([209.85.132.246]:34279 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S937377AbYBWAwh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Feb 2008 19:52:37 -0500
-Received: by an-out-0708.google.com with SMTP id d31so163542and.103
-        for <git@vger.kernel.org>; Fri, 22 Feb 2008 16:52:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references:mime-version:content-type:content-transfer-encoding;
-        bh=yIOkFAgT8ZgptiCjw89H4zGSYUFoZjKEAtgJQRxbuM0=;
-        b=R7/N6RrbqavPIGVmFYztyi/AdOKrFDJjbTkUcTLfrKx6bOTsQoIjujYF7nf8ZkY+C0VO3zJ8g4ebTkmTNLApZK9diyAcmIiM05nCw1Ldr3PYSgRRzdKbOJpBmmRvB+yCcJvpjZ0V3fFsQlYvesq8M0y2g3rDvBWVKQ8VmamihyU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references:mime-version:content-type:content-transfer-encoding;
-        b=dshS6KwArCbjKsNC0cZp2OlAHGaV/vNsCok8UAmvgZuiZEN3xaRSXibycRgDvOEaHuC4Zqefgy9/FtU+D0RiWwrDhV6RBKLGQYvDRnUTG2rHmqhLCp6wyRYWALxomSfENRnPS3rVJvsoSrhPTu+/rKpLl2VBOQM7l7JAhB216z0=
-Received: by 10.100.195.15 with SMTP id s15mr1435752anf.65.1203727956451;
-        Fri, 22 Feb 2008 16:52:36 -0800 (PST)
-Received: from localhost ( [75.189.159.45])
-        by mx.google.com with ESMTPS id c28sm3530623anc.32.2008.02.22.16.52.35
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 22 Feb 2008 16:52:35 -0800 (PST)
-X-Mailer: git-send-email 1.5.4.2.285.g1e9f
-In-Reply-To: <1203727950-14980-1-git-send-email-jaysoffian@gmail.com>
+	id S1754131AbYBWBBH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Feb 2008 20:01:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751751AbYBWBBG
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Feb 2008 20:01:06 -0500
+Received: from lotis.site5.com ([74.53.58.75]:32977 "EHLO lotis.site5.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751498AbYBWBBE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Feb 2008 20:01:04 -0500
+X-Greylist: delayed 1405 seconds by postgrey-1.27 at vger.kernel.org; Fri, 22 Feb 2008 20:01:04 EST
+Received: from cpe-76-185-130-42.tx.res.rr.com ([76.185.130.42] helo=[10.0.0.128])
+	by lotis.site5.com with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.68)
+	(envelope-from <chase.venters@clientec.com>)
+	id 1JSiOO-0006FX-8Q; Fri, 22 Feb 2008 18:37:28 -0600
+User-Agent: KMail/1.9.7
+Content-Disposition: inline
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - lotis.site5.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - clientec.com
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74774>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74775>
 
-document usage via OPTIONS_SPEC
+I've been making myself more familiar with git lately and I'm curious what 
+habits others have adopted. (I know there are a few documents in circulation 
+that deal with using git to work on the kernel but I don't think this has 
+been specifically covered).
 
-Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
----
- git-pull.sh |   32 +++++++++++++++++++++++++++++---
- 1 files changed, 29 insertions(+), 3 deletions(-)
+My question is: If you're working on multiple things at once, do you tend to 
+clone the entire repository repeatedly into a series of separate working 
+directories and do your work there, then pull that work (possibly comprising 
+a series of "temporary" commits) back into a separate local master 
+respository with --squash, either into "master" or into a branch containing 
+the new feature?
 
-diff --git a/git-pull.sh b/git-pull.sh
-index 3ce32b5..194c1d0 100755
---- a/git-pull.sh
-+++ b/git-pull.sh
-@@ -4,10 +4,36 @@
- #
- # Fetch one or more remote refs and merge it/them into the current HEAD.
- 
--USAGE='[-n | --no-summary] [--[no-]commit] [--[no-]squash] [--[no-]ff] [-s strategy]... [<fetch-options>] <repo> <head>...'
--LONG_USAGE='Fetch one or more remote refs and merge it/them into the current HEAD.'
- SUBDIRECTORY_OK=Yes
--OPTIONS_SPEC=
-+OPTIONS_SPEC="\
-+git pull [options] [<repo>] [<refspec>]
-+--
-+  fetch options
-+q,quiet          make the fetch process less verbose
-+v,verbose        make the fetch process more verbose
-+a,append         append to FETCH_HEAD instead of overwritting
-+upload-pack=,    specify path to git-fetch-pack on remote end
-+f,force          force local branch to be updated by remote branch
-+t,tags           fetch all remote tags
-+no-tags          do not fetch any remote tags
-+k,keep           keep downloaded pack
-+u,update-head-ok used internally between git pull and git fetch
-+depth=           deep shallow history by specified number of commits
-+  merge options
-+summary          show diffstat at end of merge
-+n,no-summary     do not show diff stat at end of merge
-+commit           commit the result after merging
-+no-commit        do not commit the result after merging
-+squash           update the index and working tree only
-+no-squash        override --squash, perform a normal merge and commit
-+ff               only update branch pointer if merge is a fast-forward
-+no-ff            do a merge commit even if the merge is a fast-forward
-+s,strategy=      use given merge strategy
-+  rebase options
-+rebase           rebase after fetching
-+no-rebase        merge after fetching
-+s,strategy=      use given merge strategy; implies -m to rebase
-+"
- . git-sh-setup
- set_reflog_action "pull $*"
- require_work_tree
--- 
-1.5.4.2.285.g1e9f
+Or perhaps you create a temporary topical branch for each thing you are 
+working on, and commit arbitrary changes then checkout another branch when 
+you need to change gears, finally --squashing the intermediate commits when a 
+particular piece of work is done?
+
+I'm using git to manage my project and I'm trying to determine the most 
+optimal workflow I can. I figure that I'm going to have an "official" master 
+repository for the project, and I want to keep the revision history clean in 
+that repository (ie, no messy intermediate commits that don't compile or only 
+implement a feature half way).
+
+On older projects I was using a certalized revision control system like 
+*cough* Subversion *cough* and I'd create separate branches which I'd check 
+out into their own working trees.
+
+It seems to me that having multiple working trees (effectively, cloning 
+the "master" repository every time I need to make anything but a trivial 
+change) would be most effective under git as well as it doesn't require 
+creating messy, intermediate commits in the first place (but allows for them 
+if they are used). But I wonder how that approach would scale with a project 
+whose git repo weighed hundreds of megs or more. (With a centralized rcs, of 
+course, you don't have to lug around a copy of the whole project history in 
+each working tree.)
+
+Insight appreciated, and I apologize if I've failed to RTFM somewhere.
+
+Thanks,
+Chase
