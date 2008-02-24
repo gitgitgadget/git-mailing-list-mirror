@@ -1,80 +1,151 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: Re: [PATCH] http-push: add regression tests
-Date: Sun, 24 Feb 2008 20:14:55 +0100
-Message-ID: <20080224191455.GA20884@localhost>
-References: <20080218130726.GA26854@localhost> <alpine.LSU.1.00.0802181339470.30505@racer.site> <20080218155546.GA8934@localhost> <alpine.LSU.1.00.0802181733400.30505@racer.site> <20080223212843.GA30054@localhost> <20080224085830.GD13416@glandium.org> <20080224180340.GA11515@localhost> <20080224184832.GA24240@glandium.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Instituting feature and infrastructure enhancement proposal window?
+Date: Sun, 24 Feb 2008 11:33:13 -0800
+Message-ID: <7v8x1ataiu.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Eric Wong <normalperson@yhbt.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Sun Feb 24 20:15:52 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Feb 24 20:34:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JTMKF-0000b2-6q
-	for gcvg-git-2@gmane.org; Sun, 24 Feb 2008 20:15:51 +0100
+	id 1JTMbu-0006Xv-KY
+	for gcvg-git-2@gmane.org; Sun, 24 Feb 2008 20:34:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753204AbYBXTO4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Feb 2008 14:14:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753244AbYBXTO4
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Feb 2008 14:14:56 -0500
-Received: from fg-out-1718.google.com ([72.14.220.153]:44322 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753096AbYBXTOz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Feb 2008 14:14:55 -0500
-Received: by fg-out-1718.google.com with SMTP id e21so1005336fga.17
-        for <git@vger.kernel.org>; Sun, 24 Feb 2008 11:14:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:sender;
-        bh=myynKL7/k0gXgCA/m0DrQCkp11OkqF35Jr3cOZm3g6A=;
-        b=PFzGtyFJbhTHUeL42hEOxgsLBeW7jDx1XzvnhVb/NZGyH7dGqy4WfAEgTezTvTX1q/hm6o14Zz5Z/v4Etyb0KTlgxr9vJRNwFtB443KPd0RxYlYx53pJbNSQuexjGHJ35obeGPCWPxuKSLvFwvynO6ZPHwmAHg0zLl7oik+yKXU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:sender;
-        b=DAC38KgDEKUFnaJLl5g/sdSBFkaZ+Sde7+DRdW/EtmpImDiEyNWuF6Oo3079asIB3kCE5y0xure/gFoadFYYKbhyhtrekbQJfOXd0q/OamX29i5OJeo5cVuqYym0b1MEutBUfHMShe0NXaSnZFS+qosa25F//cOhU0ogkwQdKCM=
-Received: by 10.86.81.14 with SMTP id e14mr1947192fgb.42.1203880494027;
-        Sun, 24 Feb 2008 11:14:54 -0800 (PST)
-Received: from darc.dyndns.org ( [88.117.114.241])
-        by mx.google.com with ESMTPS id d6sm5163923fga.9.2008.02.24.11.14.51
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 24 Feb 2008 11:14:52 -0800 (PST)
-Received: from drizzd by darc.dyndns.org with local (Exim 4.68)
-	(envelope-from <drizzd@aon.at>)
-	id 1JTMJM-0005UC-09; Sun, 24 Feb 2008 20:14:56 +0100
-Content-Disposition: inline
-In-Reply-To: <20080224184832.GA24240@glandium.org>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1751004AbYBXTda convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 24 Feb 2008 14:33:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751084AbYBXTda
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Feb 2008 14:33:30 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:50642 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751004AbYBXTd3 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 24 Feb 2008 14:33:29 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id B491618A3;
+	Sun, 24 Feb 2008 14:33:26 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 860C218A2; Sun, 24 Feb 2008 14:33:21 -0500 (EST)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74954>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74955>
 
-Hi,
+As I mentioned, I'd like to keep each cycle manageably shorter
+than 1.5.4 (which took 5 months that is 2 months too many).
 
-On Sun, Feb 24, 2008 at 07:48:32PM +0100, Mike Hommey wrote:
-> I took a quick but deeper look to your script, and I think it would be
-> better to have a httpd.conf with proper <IfDefine> directives, and
-> toggle the proper defines on the httpd command line.
+This is still "a weather balloon", but I'd like to establish for
+each development cycle a feature and infrastructure enhancement
+proposal window, just like the kernel folks have "merge window".
 
-I wanted to avoid that because I thought it would make it harder to adapt the
-script to different web servers. However, the script turned out to be very
-apache specific anyways. I'll have a look at those IfDefine's.
+ * These are outside of the scope:
 
-> Note the ServerRoot is used when paths are relative, so only the
-> ServerRoot need to be set, and it could be set with the -C argument to
-> httpd, avoiding the need of a .in file. If necessary, modules path could
-> be made relative to the ServerRoot by means of a symlink.
+   - Well-contained minor bugfixes,
+   - Documentation updates,
+   - Additional tests.
+   - Updates to contrib/ and (what I consider) non-core parts,
+     like gitweb.
 
-I see.
+ * Fixes to serious issues can delay and prolong the cycle.
 
-> Avoiding to have logs, dav lock, ssl mutex, etc. in the document
-> root would be better, too, but that is nitpicking.
+ * The mailing list discussions and patch reviews are expected
+   to continue as before, however:
 
-True. Maybe we should also make a separate working directory for the clones.
+   - Isolated new features that come after the window closes may
+     be merged to "next" but won't graduate until the new release.
 
-Clemens
+   - Infrastructure changes that have wider impact that come
+     after the window closes won't even hit "next" until the
+     new release.
+
+If this proposal is accepted favorably by the list and is
+implemented, a release cycle will look like this:
+
+ * A release from 'master' is made (e.g. v1.5.4 gets released on
+   Feb 1st).
+
+ * The release is merged to 'maint'.
+
+ * Fix-ups to v1.5.4 start flowing and get applied to 'maint',
+   and merged to 'master'.  At some point, the first maintenance
+   release is made (e.g. v1.5.4.1 was released on Feb 10th).
+
+ * The topics that have been cooking in 'next' may be rebased to
+   v1.5.4, and 'next' is rebuilt on top of 'master' with them
+   (e.g. this happened on Feb 17th for this cycle).
+
+ * New topics start appearing in 'next', cook and graduate to
+   'master' as before.
+
+ * The window closes.  We pick what topics we should have in the
+   new release.
+
+ * We continue as before, but with the understanding that some
+   topics in 'next' won't graduate before the new release.
+
+ * Tag -rc1.  'next' really closes and we go into feature
+   freeze.
+
+ * RC cycle continues.  Perhaps one or two RCs every week, as before.
+
+ * The new release is made (hopefully within 3 months since the
+   beginning of the cycle).
+
+The important dates in the above would be (in parentheses are my
+straw-mans):
+
+ * The first maintenance release (+1 week from the last release)
+
+ * The rebuilding of 'next' (immediately after the first maint)
+
+ * The close of the window (+6 weeks from the last release)
+
+ * The -rc1 (+8 weeks from the last release)
+
+ * The new release (+12 weeks from the last release)
+
+=46or 1.5.5, I'd like to make the above +6 weeks a bit short and
+make it by the end of this month, though, so upcoming dates
+would roughly be:
+
+ - By the end of February, the 1.5.5 window closes;
+ - By mid March, 1.5.5-rc1 is tagged;
+ - By early April, 1.5.5 is released.
+
+Which would make this week for the discussion to pick which
+topic should be in 1.5.5.
+
+Here are the current candidates I personally have in mind for
+topics that should be in 1.5.5:
+
+ * describe --exact (Shawn)
+ * checkout in C (Daniel)
+ * format-patch --cover-letter (Daniel)
+ * autodetect ncpu in threaded pack (Andreas Ericsson)
+ * stash delete / stash pop (Dscho, Brandon Casey)
+ * run-command API clean-ups (Johannes Sixt)
+ * local branch tracking (Jay Soffian)
+ * url rewriting (Daniel)
+ * low-level merge improvements (Dscho)
+ * apply --whitespace=3Dfix improvements (me)
+ * diff --relative (me)
+ * diff --dirstat (Linus)
+ - mergetool updates (Charles Bailey)
+ - bisect vs cg-seek (Carl Worth)
+ - worktree setup (Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy)
+ - tightened object parser and walker safety (Martin Koegler)
+
+One topic that is missing from the above list, which is queued
+in 'pu', worth mentioning is "gitdir: $path in .git" by Lars
+Hjemli.  The situation is like Dscho's "reflog delete" before we
+did v1.5.4 in that it is waiting for a real user to prove this
+is a good enhancement.  I am sure that later rounds would build
+enhancements to "git submodule" on top of this, and I think it
+is better to wait until that effort starts cooking.
+
+Thoughts?
