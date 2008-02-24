@@ -1,55 +1,102 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Use user.name and user.email in import-tars.perl
-Date: Sun, 24 Feb 2008 10:06:38 -0800
-Message-ID: <7v3arixm8h.fsf@gitster.siamese.dyndns.org>
-References: <1203857838-29505-1-git-send-email-mh@glandium.org>
+From: Jim Meyering <jim@meyering.net>
+Subject: Re: [PATCH] Remove useless if-before-free tests.
+Date: Sun, 24 Feb 2008 19:15:10 +0100
+Message-ID: <877igup6fl.fsf@rho.meyering.net>
+References: <871w7bz1ly.fsf@rho.meyering.net> <47B995CC.2000809@gmx.ch>
+	<87skznhqk6.fsf@rho.meyering.net>
+	<7vzlts9ag8.fsf@gitster.siamese.dyndns.org>
+	<87ir0gx5bn.fsf@rho.meyering.net>
+	<7vskzk99fd.fsf@gitster.siamese.dyndns.org>
+	<87tzk0tzjz.fsf@rho.meyering.net>
+	<7vd4qo7fsc.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Sun Feb 24 19:07:32 2008
+Cc: Jean-Luc Herren <jlh@gmx.ch>, git list <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Feb 24 19:15:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JTLG8-0004XI-8V
-	for gcvg-git-2@gmane.org; Sun, 24 Feb 2008 19:07:32 +0100
+	id 1JTLOE-00075Y-IS
+	for gcvg-git-2@gmane.org; Sun, 24 Feb 2008 19:15:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759544AbYBXSGy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Feb 2008 13:06:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759535AbYBXSGy
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Feb 2008 13:06:54 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:57465 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759521AbYBXSGx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Feb 2008 13:06:53 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id EBB8F2DD9;
-	Sun, 24 Feb 2008 13:06:51 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 269AA2DD6; Sun, 24 Feb 2008 13:06:47 -0500 (EST)
-In-Reply-To: <1203857838-29505-1-git-send-email-mh@glandium.org> (Mike
- Hommey's message of "Sun, 24 Feb 2008 13:57:18 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752384AbYBXSPQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Feb 2008 13:15:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752573AbYBXSPQ
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Feb 2008 13:15:16 -0500
+Received: from smtp3-g19.free.fr ([212.27.42.29]:60081 "EHLO smtp3-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751743AbYBXSPO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Feb 2008 13:15:14 -0500
+Received: from smtp3-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id B0D6417B592
+	for <git@vger.kernel.org>; Sun, 24 Feb 2008 19:15:12 +0100 (CET)
+Received: from mx.meyering.net (mx.meyering.net [82.230.74.64])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id 4F1C517B619
+	for <git@vger.kernel.org>; Sun, 24 Feb 2008 19:15:11 +0100 (CET)
+Received: from rho.meyering.net (localhost.localdomain [127.0.0.1])
+	by rho.meyering.net (Acme Bit-Twister) with ESMTP id E1976E3E;
+	Sun, 24 Feb 2008 19:15:10 +0100 (CET)
+In-Reply-To: <7vd4qo7fsc.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Fri, 22 Feb 2008 15:05:55 -0800")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74949>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74950>
 
-Mike Hommey <mh@glandium.org> writes:
-
-> Mimic what is done in git-import.sh and git-import.perl
+Junio C Hamano <gitster@pobox.com> wrote:
+...
+>> If you're interested in automating detection of the useless
+>> tests, you might like the useless-if-before-free script in gnulib:
+>> [it *does* detect brace-enclosed free statements, and has a --name=S
+>>  option to make it detect free-like functions with different names]
 >
-> Signed-off-by: Mike Hommey <mh@glandium.org>
-> ---
->
->  And that made me wonder if it wouldn't be worth, actually, to have
->  git config user.name and git config user.email return the "magic" values
->  gotten from guessing in ident.c when no value is in the config. That would
->  allow scripts, which have no other simple means to get the user name and
->  email, to have the same feature as builtins.
+> While I have your attention ;-)
 
-Or perhaps use "git var GIT_COMMITTER_IDENT"?
+Hi Jun,
+
+No excuse required ;-)
+
+> I am not interested in automating useless "if (x) free(x)" tests,
+
+Yeah, that particular one is not a big deal, but whenever I take
+the time to make a sweeping change, I find it's worth a little
+more to automate a check to preserve the goal state.
+
+> but one thing I recently wanted but did not know a handy
+> tool for was to find all the calls to free() that free a pointer
+> to an object of a particular type.
+...
+> I guess sparse could be hacked to do that, but do GNU folks have
+> some checker like that?
+
+A general purpose tool to do something like that would be very useful.
+I thought of cscope and eclipse, but as far as I know,
+neither of them can perform such a query.
+
+This made me think of the dwarves package/paper:
+
+    7 dwarves
+    https://ols2006.108.redhat.com/2007/Reprints/melo-Reprint.pdf
+
+This looked promising at first, but it annotates function _definitions_
+for run-time data collection, while you want to look at uses, which
+can be done statically:
+
+    3.4   ctracer
+
+    A class tracer, ctracer is an experiment in creating valid source
+    code from the DWARF information.  For ctracer a method is any
+    function that receives as one of its parameters a pointer to a
+    specified struct. It looks for all such methods and generates
+    kprobes entry and exit functions. At these probe points it
+    collects information about the data structure internal state,
+    saving the values in its members in that point in time, and
+    records it in a relay buffer. The data is later collected in
+    userspace and post-processed, generating html + CSS callgraphs.
+
+Too bad coverity is closed-source.  I'll bet it could do this easily.
+
+Maybe hacking sparse is the way to go, after all.
