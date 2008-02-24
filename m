@@ -1,81 +1,67 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH] checkout: error out when index is unmerged even with
- -m
-Date: Sun, 24 Feb 2008 01:29:26 -0500 (EST)
-Message-ID: <alpine.LNX.1.00.0802240121170.19024@iabervon.org>
-References: <alpine.LFD.1.00.0802231323590.21332@woody.linux-foundation.org> <7v8x1b1fiu.fsf@gitster.siamese.dyndns.org> <alpine.LFD.1.00.0802231430100.21332@woody.linux-foundation.org> <7vzltrz4cl.fsf@gitster.siamese.dyndns.org>
- <7voda7xmnk.fsf_-_@gitster.siamese.dyndns.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [PATCH 1/6] Protect peel_ref fallback case from NULL parse_object result
+Date: Sun, 24 Feb 2008 03:07:19 -0500
+Message-ID: <20080224080719.GA22587@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Feb 24 07:30:33 2008
+X-From: git-owner@vger.kernel.org Sun Feb 24 09:08:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JTANZ-0003XN-O5
-	for gcvg-git-2@gmane.org; Sun, 24 Feb 2008 07:30:30 +0100
+	id 1JTBuM-0004Lv-O0
+	for gcvg-git-2@gmane.org; Sun, 24 Feb 2008 09:08:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751170AbYBXG33 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Feb 2008 01:29:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751033AbYBXG33
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Feb 2008 01:29:29 -0500
-Received: from iabervon.org ([66.92.72.58]:41093 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750948AbYBXG32 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Feb 2008 01:29:28 -0500
-Received: (qmail 26544 invoked by uid 1000); 24 Feb 2008 06:29:26 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 24 Feb 2008 06:29:26 -0000
-In-Reply-To: <7voda7xmnk.fsf_-_@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1751048AbYBXIHs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Feb 2008 03:07:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750938AbYBXIHr
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Feb 2008 03:07:47 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:42950 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751033AbYBXIHX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Feb 2008 03:07:23 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1JTBtI-0001fB-3s; Sun, 24 Feb 2008 03:07:20 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id CB4BE20FBAE; Sun, 24 Feb 2008 03:07:19 -0500 (EST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74904>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74905>
 
-On Sat, 23 Feb 2008, Junio C Hamano wrote:
+If the SHA-1 we are requesting the object for does not exist in
+the object database we get a NULL back.  Accessing the type from
+that is not likely to succeed on any system.
 
-> Even when -m is given to allow fallilng back to 3-way merge
-> while switching branches, we should refuse if the original index
-> is unmerged.
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ refs.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-Acked-by: Daniel Barkalow <barkalow@iabervon.org>
-
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
-> 
->  * I think this bug was inherited from the scripted version.
->    Fixing it is much easier here.
-
-I'm pretty sure it was. I wasn't clear on all the motivations for checkout 
--m behavior, so I tried to make it exactly the same.
-
->  builtin-checkout.c |    4 ++--
->  1 files changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/builtin-checkout.c b/builtin-checkout.c
-> index 283831e..e028270 100644
-> --- a/builtin-checkout.c
-> +++ b/builtin-checkout.c
-> @@ -226,8 +226,8 @@ static int merge_working_tree(struct checkout_opts *opts,
->  		refresh_cache(REFRESH_QUIET);
->  
->  		if (unmerged_cache()) {
-> -			ret = opts->merge ? -1 :
-> -				error("you need to resolve your current index first");
-> +			error("you need to resolve your current index first");
-> +			return 1;
->  		} else {
->  			topts.update = 1;
->  			topts.merge = 1;
-
-Ditch the "else" now that it's not needed? And, actually, I think you can 
-ditch most of the use of "ret" when there's only one case for getting to 
-needing a real merge.
-
-	-Daniel
-*This .sig left intentionally blank*
+diff --git a/refs.c b/refs.c
+index 67d2a50..fb33da1 100644
+--- a/refs.c
++++ b/refs.c
+@@ -506,7 +506,7 @@ int peel_ref(const char *ref, unsigned char *sha1)
+ 
+ 	/* fallback - callers should not call this for unpacked refs */
+ 	o = parse_object(base);
+-	if (o->type == OBJ_TAG) {
++	if (o && o->type == OBJ_TAG) {
+ 		o = deref_tag(o, ref, 0);
+ 		if (o) {
+ 			hashcpy(sha1, o->sha1);
+-- 
+1.5.4.3.295.g6b554
