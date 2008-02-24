@@ -1,115 +1,135 @@
-From: Martin Koegler <mkoegler@auto.tuwien.ac.at>
-Subject: [PATCH v3] builtin-fsck: reports missing parent commits
-Date: Sun, 24 Feb 2008 21:58:56 +0100
-Message-ID: <12038867362489-git-send-email-mkoegler@auto.tuwien.ac.at>
-Cc: git@vger.kernel.org, Martin Koegler <mkoegler@auto.tuwien.ac.at>
-To: Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sun Feb 24 21:59:45 2008
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] t9001: enhance fake sendmail test harness
+Date: Sun, 24 Feb 2008 16:03:52 -0500
+Message-ID: <20080224210352.GA9150@coredump.intra.peff.net>
+References: <20080224205720.GA7085@coredump.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Feb 24 22:05:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JTNwn-0005zs-13
-	for gcvg-git-2@gmane.org; Sun, 24 Feb 2008 21:59:45 +0100
+	id 1JTO1r-0007Kz-UR
+	for gcvg-git-2@gmane.org; Sun, 24 Feb 2008 22:05:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758551AbYBXU67 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Feb 2008 15:58:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756379AbYBXU67
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Feb 2008 15:58:59 -0500
-Received: from thor.auto.tuwien.ac.at ([128.130.60.15]:59641 "EHLO
-	thor.auto.tuwien.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753240AbYBXU66 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Feb 2008 15:58:58 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by thor.auto.tuwien.ac.at (Postfix) with ESMTP id 807B168018C6;
-	Sun, 24 Feb 2008 21:58:56 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at auto.tuwien.ac.at
-Received: from thor.auto.tuwien.ac.at ([127.0.0.1])
-	by localhost (thor.auto.tuwien.ac.at [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ktkMSWvu5NYH; Sun, 24 Feb 2008 21:58:56 +0100 (CET)
-Received: by thor.auto.tuwien.ac.at (Postfix, from userid 3001)
-	id 615616800676; Sun, 24 Feb 2008 21:58:56 +0100 (CET)
-X-Mailer: git-send-email 1.5.3.1
+	id S1758864AbYBXVD4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Feb 2008 16:03:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753315AbYBXVDz
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Feb 2008 16:03:55 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4541 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757214AbYBXVDz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Feb 2008 16:03:55 -0500
+Received: (qmail 1853 invoked by uid 111); 24 Feb 2008 21:03:53 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Sun, 24 Feb 2008 16:03:53 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 24 Feb 2008 16:03:52 -0500
+Content-Disposition: inline
+In-Reply-To: <20080224205720.GA7085@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74961>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74962>
 
-Signed-off-by: Martin Koegler <mkoegler@auto.tuwien.ac.at>
+Previously, the fake.sendmail test harness would write its
+output to a hardcoded file, allowing only a single message
+to be tested. Instead, let's have it save the messages for
+all of its invocations so that we can see which messages
+were sent, and in which order.
+
+Signed-off-by: Jeff King <peff@peff.net>
 ---
- builtin-fsck.c |   24 ++++++++++++++++++++++++
- commit.c       |    2 +-
- commit.h       |    1 +
- 3 files changed, 26 insertions(+), 1 deletions(-)
+ t/t9001-send-email.sh |   22 +++++++++++++++-------
+ 1 files changed, 15 insertions(+), 7 deletions(-)
 
-diff --git a/builtin-fsck.c b/builtin-fsck.c
-index 512346a..fae7e22 100644
---- a/builtin-fsck.c
-+++ b/builtin-fsck.c
-@@ -394,6 +394,8 @@ static int fsck_commit(struct commit *commit)
- {
- 	char *buffer = commit->buffer;
- 	unsigned char tree_sha1[20], sha1[20];
-+	struct commit_graft *graft;
-+	int parents = 0;
+diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+index 2efaed4..4975048 100755
+--- a/t/t9001-send-email.sh
++++ b/t/t9001-send-email.sh
+@@ -15,16 +15,22 @@ test_expect_success \
+     'Setup helper tool' \
+     '(echo "#!/bin/sh"
+       echo shift
++      echo output=1
++      echo "while test -f commandline\$output; do output=\$((\$output+1)); done"
+       echo for a
+       echo do
+       echo "  echo \"!\$a!\""
+-      echo "done >commandline"
+-      echo "cat > msgtxt"
++      echo "done >commandline\$output"
++      echo "cat > msgtxt\$output"
+       ) >fake.sendmail &&
+      chmod +x ./fake.sendmail &&
+      git add fake.sendmail &&
+      GIT_AUTHOR_NAME="A" git commit -a -m "Second."'
  
- 	if (verbose)
- 		fprintf(stderr, "Checking commit %s\n",
-@@ -411,6 +413,28 @@ static int fsck_commit(struct commit *commit)
- 		if (get_sha1_hex(buffer+7, sha1) || buffer[47] != '\n')
- 			return objerror(&commit->object, "invalid 'parent' line format - bad sha1");
- 		buffer += 48;
-+		parents++;
-+	}
-+	graft = lookup_commit_graft(commit->object.sha1);
-+	if (graft) {
-+		struct commit_list *p = commit->parents;
-+		parents = 0;
-+		while (p) {
-+			p = p->next;
-+			parents++;
-+		}
-+		if (graft->nr_parent == -1 && !parents)
-+			; /* shallow commit */
-+		else if (graft->nr_parent != parents)
-+			return objerror(&commit->object, "graft objects missing");
-+	} else {
-+		struct commit_list *p = commit->parents;
-+		while (p && parents) {
-+			p = p->next;
-+			parents--;
-+		}
-+		if (p || parents)
-+			return objerror(&commit->object, "parent objects missing");
- 	}
- 	if (memcmp(buffer, "author ", 7))
- 		return objerror(&commit->object, "invalid format - expected 'author' line");
-diff --git a/commit.c b/commit.c
-index 6684c4e..94d5b3d 100644
---- a/commit.c
-+++ b/commit.c
-@@ -193,7 +193,7 @@ static void prepare_commit_graft(void)
- 	commit_graft_prepared = 1;
- }
++clean_fake_sendmail() {
++	rm -f commandline* msgtxt*
++}
++
+ test_expect_success 'Extract patches' '
+     patches=`git format-patch -n HEAD^1`
+ '
+@@ -39,7 +45,7 @@ cat >expected <<\EOF
+ EOF
+ test_expect_success \
+     'Verify commandline' \
+-    'diff commandline expected'
++    'diff commandline1 expected'
  
--static struct commit_graft *lookup_commit_graft(const unsigned char *sha1)
-+struct commit_graft *lookup_commit_graft(const unsigned char *sha1)
- {
- 	int pos;
- 	prepare_commit_graft();
-diff --git a/commit.h b/commit.h
-index 80d65b9..a1e9591 100644
---- a/commit.h
-+++ b/commit.h
-@@ -116,6 +116,7 @@ struct commit_graft {
- struct commit_graft *read_graft_line(char *buf, int len);
- int register_commit_graft(struct commit_graft *, int);
- int read_graft_file(const char *graft_file);
-+struct commit_graft *lookup_commit_graft(const unsigned char *sha1);
+ cat >expected-show-all-headers <<\EOF
+ 0001-Second.patch
+@@ -82,7 +88,7 @@ z8=zzzzzzzz
+ z64=$z8$z8$z8$z8$z8$z8$z8$z8
+ z512=$z64$z64$z64$z64$z64$z64$z64$z64
+ test_expect_success 'reject long lines' '
+-	rm -f commandline &&
++	clean_fake_sendmail &&
+ 	cp $patches longline.patch &&
+ 	echo $z512$z512 >>longline.patch &&
+ 	! git send-email \
+@@ -95,7 +101,7 @@ test_expect_success 'reject long lines' '
+ '
  
- extern struct commit_list *get_merge_bases(struct commit *rev1, struct commit *rev2, int cleanup);
+ test_expect_success 'no patch was sent' '
+-	! test -e commandline
++	! test -e commandline1
+ '
  
+ test_expect_success 'allow long lines with --no-validate' '
+@@ -109,6 +115,7 @@ test_expect_success 'allow long lines with --no-validate' '
+ '
+ 
+ test_expect_success 'Invalid In-Reply-To' '
++	clean_fake_sendmail &&
+ 	git send-email \
+ 		--from="Example <nobody@example.com>" \
+ 		--to=nobody@example.com \
+@@ -116,17 +123,18 @@ test_expect_success 'Invalid In-Reply-To' '
+ 		--smtp-server="$(pwd)/fake.sendmail" \
+ 		$patches
+ 		2>errors
+-	! grep "^In-Reply-To: < *>" msgtxt
++	! grep "^In-Reply-To: < *>" msgtxt1
+ '
+ 
+ test_expect_success 'Valid In-Reply-To when prompting' '
++	clean_fake_sendmail &&
+ 	(echo "From Example <from@example.com>"
+ 	 echo "To Example <to@example.com>"
+ 	 echo ""
+ 	) | env GIT_SEND_EMAIL_NOTTY=1 git send-email \
+ 		--smtp-server="$(pwd)/fake.sendmail" \
+ 		$patches 2>errors &&
+-	! grep "^In-Reply-To: < *>" msgtxt
++	! grep "^In-Reply-To: < *>" msgtxt1
+ '
+ 
+ test_done
 -- 
-1.5.4.2.g01825.dirty
+1.5.4.3.307.gacd7
