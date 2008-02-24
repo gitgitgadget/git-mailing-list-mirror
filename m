@@ -1,119 +1,87 @@
-From: =?utf-8?q?Santi=20B=C3=A9jar?= <sbejar@gmail.com>
-Subject: [PATCH] Teach git-describe --long to output always the long format
-Date: Sun, 24 Feb 2008 15:46:52 +0100
-Message-ID: <1203864412-27977-1-git-send-email-sbejar@gmail.com>
+From: Remi Vanicat <vanicat@debian.org>
+Subject: Re: [Q] Tell Git to follow symlinks?
+Date: Sun, 24 Feb 2008 16:08:28 +0100
+Message-ID: <87zltq2xzn.dlv@maison.homelinux.org>
+References: <c6c947f60802240305w40a7af96yc47f90e573384c04@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?q?Santi=20B=C3=A9jar?= <sbejar@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 24 15:47:48 2008
+Cc: git@vger.kernel.org
+To: "Alexander Gladysh" <agladysh@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 24 16:09:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JTI8p-0004lI-2v
-	for gcvg-git-2@gmane.org; Sun, 24 Feb 2008 15:47:47 +0100
+	id 1JTITY-0002N5-AZ
+	for gcvg-git-2@gmane.org; Sun, 24 Feb 2008 16:09:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751694AbYBXOrL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 24 Feb 2008 09:47:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751537AbYBXOrK
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Feb 2008 09:47:10 -0500
-Received: from fg-out-1718.google.com ([72.14.220.152]:53339 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751425AbYBXOrI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Feb 2008 09:47:08 -0500
-Received: by fg-out-1718.google.com with SMTP id e21so942216fga.17
-        for <git@vger.kernel.org>; Sun, 24 Feb 2008 06:47:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date:message-id:x-mailer:mime-version:content-type:content-transfer-encoding;
-        bh=G2GGx240teaQ96Prpnvq0qy4TdIR8JVhq6oHdDK6gSo=;
-        b=YasvJZUXtMPr9wYSolwbiX9rHEBsRcVSgcOS28U/JBlumlDsFSmo+gjoVmT6co6JPZ/dM/4JVtVnphHnnwSENDhh/1sYVBvn8Wjb5zN4jMWESJejKSeUNy2nPYM11M6KcLc6+phndgyEq1xzlhD8DY8UF1hKi47fXSi7+dGQRdc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version:content-type:content-transfer-encoding;
-        b=jag8JdFdTa35EGopwOBOlmBK0DRjr/iLOt7c43schlm+KmvBJkEC88oVXkQXs9mpcRyJyIzUTGZ+uM1ZXJJKW2tv1dNppGJ4qzXOWRYLRKSFPRyxjuIH3VsMi795U90bbY7G5dpTuJv17fhw3EMJbgGdZuAWjD05kboUZOCE20I=
-Received: by 10.82.111.8 with SMTP id j8mr3351281buc.2.1203864427430;
-        Sun, 24 Feb 2008 06:47:07 -0800 (PST)
-Received: from localhost ( [91.13.69.136])
-        by mx.google.com with ESMTPS id l19sm4863443fgb.0.2008.02.24.06.46.59
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 24 Feb 2008 06:47:00 -0800 (PST)
-X-Mailer: git-send-email 1.5.4.3.293.gac81
+	id S1751011AbYBXPIf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 24 Feb 2008 10:08:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751125AbYBXPIf
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Feb 2008 10:08:35 -0500
+Received: from neuf-infra-smtp-out-sp604003av.neufgp.fr ([84.96.92.124]:60909
+	"EHLO neuf-infra-smtp-out-sp604003av.neufgp.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750962AbYBXPIf convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Feb 2008 10:08:35 -0500
+Received: from neuf-infra-smtp-out-sp604011av.neufgp.fr ([84.96.92.116])
+	by neuf-infra-smtp-out-sp604003av.neufgp.fr with neuf telecom
+	id tJ1n1Y0042We0qU030uQ00; Sun, 24 Feb 2008 15:08:33 +0000
+Received: from maison.homelinux.org ([84.103.71.93])
+	by neuf-infra-smtp-out-sp604011av.neufgp.fr with neuf telecom
+	id tT8Y1Y00Q20lBGc0B00000; Sun, 24 Feb 2008 16:08:33 +0100
+Received: from moi by maison.homelinux.org with local (Exim 4.69)
+	(envelope-from <moi@vanicat.homelinux.org>)
+	id 1JTISs-0003ug-CF; Sun, 24 Feb 2008 16:08:32 +0100
+In-Reply-To: <c6c947f60802240305w40a7af96yc47f90e573384c04@mail.gmail.com> (Alexander Gladysh's message of "Sun\, 24 Feb 2008 14\:05\:36 +0300")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: moi@vanicat.homelinux.org
+X-Spam-Checker-Version: SpamAssassin 3.2.3 (2007-08-08) on maison.homelinux.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.0 required=5.0 tests=NO_RELAYS autolearn=ham
+	version=3.2.3
+X-SA-Exim-Version: 4.2.1 (built Tue, 21 Aug 2007 23:39:36 +0000)
+X-SA-Exim-Scanned: Yes (on maison.homelinux.org)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74937>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74938>
 
-Sometimes it is convenient to have the sha1 of a commit even
-if it matches a tag.
+"Alexander Gladysh" <agladysh@gmail.com> writes:
 
-Signed-off-by: Santi B=C3=A9jar <sbejar@gmail.com>
----
- builtin-describe.c  |   11 ++++++++++-
- t/t6120-describe.sh |    2 ++
- 2 files changed, 12 insertions(+), 1 deletions(-)
+> I thought to construct my repo of the number of symlinks to other
+> places, but apparently Git does not follow any simlinks.
 
-diff --git a/builtin-describe.c b/builtin-describe.c
-index 3428483..e46105a 100644
---- a/builtin-describe.c
-+++ b/builtin-describe.c
-@@ -17,6 +17,7 @@ static const char * const describe_usage[] =3D {
- static int debug;	/* Display lots of verbose info */
- static int all;	/* Default to annotated tags only */
- static int tags;	/* But allow any tags if --tags is specified */
-+static int longformat;
- static int abbrev =3D DEFAULT_ABBREV;
- static int max_candidates =3D 10;
- const char *pattern =3D NULL;
-@@ -155,7 +156,11 @@ static void describe(const char *arg, int last_one=
-)
-=20
- 	n =3D cmit->util;
- 	if (n) {
--		printf("%s\n", n->path);
-+		if (!longformat)
-+			printf("%s\n", n->path );
-+		else
-+			printf("%s-0-g%s\n", n->path,
-+				find_unique_abbrev(cmit->object.sha1, abbrev));
- 		return;
- 	}
-=20
-@@ -254,6 +259,7 @@ int cmd_describe(int argc, const char **argv, const=
- char *prefix)
- 		OPT_BOOLEAN(0, "debug",      &debug, "debug search strategy on stder=
-r"),
- 		OPT_BOOLEAN(0, "all",        &all, "use any ref in .git/refs"),
- 		OPT_BOOLEAN(0, "tags",       &tags, "use any tag in .git/refs/tags")=
-,
-+		OPT_BOOLEAN(0, "long",       &longformat, "always use long format"),
- 		OPT__ABBREV(&abbrev),
- 		OPT_INTEGER(0, "candidates", &max_candidates,
- 			    "consider <n> most recent tags (default: 10)"),
-@@ -270,6 +276,9 @@ int cmd_describe(int argc, const char **argv, const=
- char *prefix)
-=20
- 	save_commit_buffer =3D 0;
-=20
-+	if (longformat && abbrev =3D=3D 0)
-+		die("--long is incompatible with --abbrev=3D0");
-+
- 	if (contains) {
- 		const char **args =3D xmalloc((6 + argc) * sizeof(char*));
- 		int i =3D 0;
-diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
-index ae8ee11..a7557bd 100755
---- a/t/t6120-describe.sh
-+++ b/t/t6120-describe.sh
-@@ -94,4 +94,6 @@ check_describe D-* --tags HEAD^^
- check_describe A-* --tags HEAD^^2
- check_describe B --tags HEAD^^2^
-=20
-+check_describe B-0-* --long HEAD^^2^
-+
- test_done
+Hope so, I use this feature, for example to manage my debian
+alternatives.=20
+
+> Please give me some directions on the building such dumb backup
+> system I want :)
+
+I use "reverse" symlinks: the files i want to manage are replaced by
+symlink to the file that is in then git repository:
+
+my home contain:
+
+=2Eabbrev_defs -> .myconfig/abbrev_defs
+=2Ebash_logout -> .myconfig/bash_logout
+=2Ebash_profile -> .myconfig/bash_profile
+=2Ebashrc -> .myconfig/bashrc
+=2Ecustom -> .myconfig/custom
+=2Edircolors -> .myconfig/dircolors
+=2Eemacs -> .myconfig/emacs
+=2Egnomerc -> .myconfig/gnomerc
+=2Egnus -> .myconfig/gnus
+=2Eirssi -> .myconfig/irssi/
+=2Eprofile -> .myconfig/profile
+=2EScrollZ -> .myconfig/ScrollZ/
+=2Escrollzrc -> .myconfig/scrollzrc
+=2Exchat2 -> .myconfig/xchat2/
+
+and a .myconfig git repository that manage those file.
+
 --=20
-1.5.4.3.293.gac81
+R=C3=A9mi Vanicat
