@@ -1,151 +1,150 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Instituting feature and infrastructure enhancement proposal window?
-Date: Sun, 24 Feb 2008 11:33:13 -0800
-Message-ID: <7v8x1ataiu.fsf@gitster.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/3] t3404: use configured shell instead of /bin/sh
+Date: Sun, 24 Feb 2008 14:40:45 -0500
+Message-ID: <20080224194045.GA27606@coredump.intra.peff.net>
+References: <7v63wf2yzt.fsf@gitster.siamese.dyndns.org> <200802232209.41428.johannes.sixt@telecom.at> <20080223211536.GA13280@coredump.intra.peff.net> <7vmypr1gmh.fsf@gitster.siamese.dyndns.org> <20080223223933.GA13683@coredump.intra.peff.net> <7vve4fz3y1.fsf@gitster.siamese.dyndns.org> <20080223224938.GA14231@coredump.intra.peff.net> <7vir0fz3ip.fsf@gitster.siamese.dyndns.org> <20080223231253.GA14320@coredump.intra.peff.net> <7vfxvjxlsv.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 24 20:34:13 2008
+Cc: Johannes Sixt <johannes.sixt@telecom.at>, git@vger.kernel.org,
+	Whit Armstrong <armstrong.whit@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Feb 24 20:41:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JTMbu-0006Xv-KY
-	for gcvg-git-2@gmane.org; Sun, 24 Feb 2008 20:34:07 +0100
+	id 1JTMiz-0000OP-Kt
+	for gcvg-git-2@gmane.org; Sun, 24 Feb 2008 20:41:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751004AbYBXTda convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 24 Feb 2008 14:33:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751084AbYBXTda
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Feb 2008 14:33:30 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:50642 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751004AbYBXTd3 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 24 Feb 2008 14:33:29 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id B491618A3;
-	Sun, 24 Feb 2008 14:33:26 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 860C218A2; Sun, 24 Feb 2008 14:33:21 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751502AbYBXTks (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Feb 2008 14:40:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751379AbYBXTks
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Feb 2008 14:40:48 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4408 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751315AbYBXTks (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Feb 2008 14:40:48 -0500
+Received: (qmail 1352 invoked by uid 111); 24 Feb 2008 19:40:46 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Sun, 24 Feb 2008 14:40:46 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 24 Feb 2008 14:40:45 -0500
+Content-Disposition: inline
+In-Reply-To: <7vfxvjxlsv.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74955>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74956>
 
-As I mentioned, I'd like to keep each cycle manageably shorter
-than 1.5.4 (which took 5 months that is 2 months too many).
+On Sat, Feb 23, 2008 at 04:03:44PM -0800, Junio C Hamano wrote:
 
-This is still "a weather balloon", but I'd like to establish for
-each development cycle a feature and infrastructure enhancement
-proposal window, just like the kernel folks have "merge window".
+> Sounds sane to me.
 
- * These are outside of the scope:
+OK, here it is cleaned up a little (adding some missing quotation marks
+and the proper gitignore) and with a commit message.
 
-   - Well-contained minor bugfixes,
-   - Documentation updates,
-   - Additional tests.
-   - Updates to contrib/ and (what I consider) non-core parts,
-     like gitweb.
+Possibly t/Makefile should also be getting this information to actually
+run the test scripts. That would require either:
+  - making the GIT-BUILD-OPTIONS both make and shell parseable, meaning
+    changing SHELL_PATH='$(SHELL_PATH_SQ)' into SHELL_PATH=$(SHELL_PATH)
+    and hoping nobody uses metacharacters
+  - writing two separate files, one for shell and one for make
+  - working some Makefile magic to set variables from the shell; this is
+    not possible in ordinary make, but I suspect there are some GNU-isms
+    we could use
 
- * Fixes to serious issues can delay and prolong the cycle.
+-- >8 --
+use build-time SHELL_PATH in test scripts
 
- * The mailing list discussions and patch reviews are expected
-   to continue as before, however:
+The top-level Makefile now creates a GIT-BUILD-OPTIONS file
+which stores any options selected by the make process that
+may be of use to further parts of the build process.
+Specifically, we store the SHELL_PATH so that it can be used
+by tests to construct shell scripts on the fly.
 
-   - Isolated new features that come after the window closes may
-     be merged to "next" but won't graduate until the new release.
+The format of the GIT-BUILD-OPTIONS file is Bourne shell,
+and it is sourced by test-lib.sh; all tests can rely on just
+having $SHELL_PATH correctly set in the environment.
 
-   - Infrastructure changes that have wider impact that come
-     after the window closes won't even hit "next" until the
-     new release.
+The GIT-BUILD-OPTIONS file is written every time the
+toplevel 'make' is invoked. Since the only users right now
+are the test scripts, there's no drawback to updating its
+timestamp. If something build-related depends on this, we
+can do a trick similar to the one used by GIT-CFLAGS.
 
-If this proposal is accepted favorably by the list and is
-implemented, a release cycle will look like this:
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ .gitignore                    |    1 +
+ Makefile                      |    6 +++++-
+ t/t3404-rebase-interactive.sh |    2 +-
+ t/test-lib.sh                 |    2 ++
+ 4 files changed, 9 insertions(+), 2 deletions(-)
 
- * A release from 'master' is made (e.g. v1.5.4 gets released on
-   Feb 1st).
-
- * The release is merged to 'maint'.
-
- * Fix-ups to v1.5.4 start flowing and get applied to 'maint',
-   and merged to 'master'.  At some point, the first maintenance
-   release is made (e.g. v1.5.4.1 was released on Feb 10th).
-
- * The topics that have been cooking in 'next' may be rebased to
-   v1.5.4, and 'next' is rebuilt on top of 'master' with them
-   (e.g. this happened on Feb 17th for this cycle).
-
- * New topics start appearing in 'next', cook and graduate to
-   'master' as before.
-
- * The window closes.  We pick what topics we should have in the
-   new release.
-
- * We continue as before, but with the understanding that some
-   topics in 'next' won't graduate before the new release.
-
- * Tag -rc1.  'next' really closes and we go into feature
-   freeze.
-
- * RC cycle continues.  Perhaps one or two RCs every week, as before.
-
- * The new release is made (hopefully within 3 months since the
-   beginning of the cycle).
-
-The important dates in the above would be (in parentheses are my
-straw-mans):
-
- * The first maintenance release (+1 week from the last release)
-
- * The rebuilding of 'next' (immediately after the first maint)
-
- * The close of the window (+6 weeks from the last release)
-
- * The -rc1 (+8 weeks from the last release)
-
- * The new release (+12 weeks from the last release)
-
-=46or 1.5.5, I'd like to make the above +6 weeks a bit short and
-make it by the end of this month, though, so upcoming dates
-would roughly be:
-
- - By the end of February, the 1.5.5 window closes;
- - By mid March, 1.5.5-rc1 is tagged;
- - By early April, 1.5.5 is released.
-
-Which would make this week for the discussion to pick which
-topic should be in 1.5.5.
-
-Here are the current candidates I personally have in mind for
-topics that should be in 1.5.5:
-
- * describe --exact (Shawn)
- * checkout in C (Daniel)
- * format-patch --cover-letter (Daniel)
- * autodetect ncpu in threaded pack (Andreas Ericsson)
- * stash delete / stash pop (Dscho, Brandon Casey)
- * run-command API clean-ups (Johannes Sixt)
- * local branch tracking (Jay Soffian)
- * url rewriting (Daniel)
- * low-level merge improvements (Dscho)
- * apply --whitespace=3Dfix improvements (me)
- * diff --relative (me)
- * diff --dirstat (Linus)
- - mergetool updates (Charles Bailey)
- - bisect vs cg-seek (Carl Worth)
- - worktree setup (Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy)
- - tightened object parser and walker safety (Martin Koegler)
-
-One topic that is missing from the above list, which is queued
-in 'pu', worth mentioning is "gitdir: $path in .git" by Lars
-Hjemli.  The situation is like Dscho's "reflog delete" before we
-did v1.5.4 in that it is waiting for a real user to prove this
-is a good enhancement.  I am sure that later rounds would build
-enhancements to "git submodule" on top of this, and I think it
-is better to wait until that effort starts cooking.
-
-Thoughts?
+diff --git a/.gitignore b/.gitignore
+index 165b256..4ff2fec 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -1,3 +1,4 @@
++GIT-BUILD-OPTIONS
+ GIT-CFLAGS
+ GIT-GUI-VARS
+ GIT-VERSION-FILE
+diff --git a/Makefile b/Makefile
+index d33a556..ba1aaf8 100644
+--- a/Makefile
++++ b/Makefile
+@@ -808,7 +808,7 @@ export TAR INSTALL DESTDIR SHELL_PATH
+ 
+ ### Build rules
+ 
+-all:: $(ALL_PROGRAMS) $(BUILT_INS) $(OTHER_PROGRAMS)
++all:: $(ALL_PROGRAMS) $(BUILT_INS) $(OTHER_PROGRAMS) GIT-BUILD-OPTIONS
+ ifneq (,$X)
+ 	$(foreach p,$(patsubst %$X,%,$(filter %$X,$(ALL_PROGRAMS) $(BUILT_INS) git$X)), $(RM) '$p';)
+ endif
+@@ -1010,6 +1010,9 @@ GIT-CFLAGS: .FORCE-GIT-CFLAGS
+ 		echo "$$FLAGS" >GIT-CFLAGS; \
+             fi
+ 
++GIT-BUILD-OPTIONS: .FORCE-GIT-BUILD-OPTIONS
++	@echo SHELL_PATH='$(SHELL_PATH_SQ)' >$@
++
+ ### Detect Tck/Tk interpreter path changes
+ ifndef NO_TCLTK
+ TRACK_VARS = $(subst ','\'',-DTCLTK_PATH='$(TCLTK_PATH_SQ)')
+@@ -1169,6 +1172,7 @@ endif
+ 
+ .PHONY: all install clean strip
+ .PHONY: .FORCE-GIT-VERSION-FILE TAGS tags cscope .FORCE-GIT-CFLAGS
++.PHONY: .FORCE-GIT-BUILD-OPTIONS
+ 
+ ### Check documentation
+ #
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index 62e65d7..049aa37 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -61,7 +61,7 @@ test_expect_success 'setup' '
+ 	git tag I
+ '
+ 
+-echo "#!$SHELL" >fake-editor
++echo "#!$SHELL_PATH" >fake-editor.sh
+ cat >> fake-editor.sh <<\EOF
+ case "$1" in
+ */COMMIT_EDITMSG)
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 83889c4..3c4e21f 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -342,6 +342,8 @@ if ! test -x ../test-chmtime; then
+ 	exit 1
+ fi
+ 
++. ../GIT-BUILD-OPTIONS
++
+ # Test repository
+ test=trash
+ rm -fr "$test"
+-- 
+1.5.4.2.276.g0ede
