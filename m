@@ -1,185 +1,236 @@
 From: Martin Koegler <mkoegler@auto.tuwien.ac.at>
-Subject: [PATCH 1/4] add generic, type aware object chain walker
-Date: Sun, 24 Feb 2008 15:43:54 +0100
-Message-ID: <12038642373342-git-send-email-mkoegler@auto.tuwien.ac.at>
+Subject: [PATCH 2/4] builtin-fsck: move away from object-refs
+Date: Sun, 24 Feb 2008 15:43:55 +0100
+Message-ID: <1203864237774-git-send-email-mkoegler@auto.tuwien.ac.at>
+References: <12038642373342-git-send-email-mkoegler@auto.tuwien.ac.at>
 Cc: git@vger.kernel.org, Martin Koegler <mkoegler@auto.tuwien.ac.at>
 To: Junio C Hamano <gitster@pobox.com>,
 	"Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sun Feb 24 15:45:08 2008
+X-From: git-owner@vger.kernel.org Sun Feb 24 15:45:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JTI6G-00042C-0B
-	for gcvg-git-2@gmane.org; Sun, 24 Feb 2008 15:45:08 +0100
+	id 1JTI6F-00042C-4y
+	for gcvg-git-2@gmane.org; Sun, 24 Feb 2008 15:45:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751582AbYBXOoJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Feb 2008 09:44:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751537AbYBXOoB
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Feb 2008 09:44:01 -0500
-Received: from thor.auto.tuwien.ac.at ([128.130.60.15]:34917 "EHLO
+	id S1751440AbYBXOoB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Feb 2008 09:44:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751276AbYBXOoA
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Feb 2008 09:44:00 -0500
+Received: from thor.auto.tuwien.ac.at ([128.130.60.15]:34915 "EHLO
 	thor.auto.tuwien.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751119AbYBXOn7 (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1751197AbYBXOn7 (ORCPT <rfc822;git@vger.kernel.org>);
 	Sun, 24 Feb 2008 09:43:59 -0500
 Received: from localhost (localhost [127.0.0.1])
-	by thor.auto.tuwien.ac.at (Postfix) with ESMTP id 8ECC36CF0060;
+	by thor.auto.tuwien.ac.at (Postfix) with ESMTP id A293D680BB31;
 	Sun, 24 Feb 2008 15:43:57 +0100 (CET)
 X-Virus-Scanned: Debian amavisd-new at auto.tuwien.ac.at
 Received: from thor.auto.tuwien.ac.at ([127.0.0.1])
 	by localhost (thor.auto.tuwien.ac.at [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id MsHv2whaHEkD; Sun, 24 Feb 2008 15:43:57 +0100 (CET)
+	with ESMTP id K+cPfu8Q6dML; Sun, 24 Feb 2008 15:43:57 +0100 (CET)
 Received: by thor.auto.tuwien.ac.at (Postfix, from userid 3001)
-	id 62AB5680BB31; Sun, 24 Feb 2008 15:43:57 +0100 (CET)
+	id 7476D680BF8C; Sun, 24 Feb 2008 15:43:57 +0100 (CET)
 X-Mailer: git-send-email 1.5.3.1
+In-Reply-To: <12038642373342-git-send-email-mkoegler@auto.tuwien.ac.at>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74933>
-
-The requirements are:
-* it may not crash on NULL pointers
-* a callback function is needed, as index-pack/unpack-objects
-  need to do different things
-* the type information is needed to check the expected <-> real type
-  and print better error messages
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74934>
 
 Signed-off-by: Martin Koegler <mkoegler@auto.tuwien.ac.at>
 ---
- Makefile |    4 +-
- fsck.c   |   84 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- fsck.h   |   10 +++++++
- 3 files changed, 96 insertions(+), 2 deletions(-)
- create mode 100644 fsck.c
- create mode 100644 fsck.h
+reachable.c is not the optimal thing for checking a repository.
+Some problems are ignored by it while it bails out on other errors.
 
-diff --git a/Makefile b/Makefile
-index a9b5a67..3b356f8 100644
---- a/Makefile
-+++ b/Makefile
-@@ -303,7 +303,7 @@ LIB_H = \
- 	run-command.h strbuf.h tag.h tree.h git-compat-util.h revision.h \
- 	tree-walk.h log-tree.h dir.h path-list.h unpack-trees.h builtin.h \
- 	utf8.h reflog-walk.h patch-ids.h attr.h decorate.h progress.h \
--	mailmap.h remote.h parse-options.h transport.h diffcore.h hash.h ll-merge.h
-+	mailmap.h remote.h parse-options.h transport.h diffcore.h hash.h ll-merge.h fsck.h
- 
- DIFF_OBJS = \
- 	diff.o diff-lib.o diffcore-break.o diffcore-order.o \
-@@ -327,7 +327,7 @@ LIB_OBJS = \
- 	color.o wt-status.o archive-zip.o archive-tar.o shallow.o utf8.o \
- 	convert.o attr.o decorate.o progress.o mailmap.o symlinks.o remote.o \
- 	transport.o bundle.o walker.o parse-options.o ws.o archive.o branch.o \
--	ll-merge.o
-+	ll-merge.o fsck.o
- 
- BUILTIN_OBJS = \
- 	builtin-add.o \
-diff --git a/fsck.c b/fsck.c
-new file mode 100644
-index 0000000..92254fb
---- /dev/null
-+++ b/fsck.c
-@@ -0,0 +1,84 @@
-+#include "cache.h"
-+#include "object.h"
-+#include "blob.h"
-+#include "tree.h"
-+#include "tree-walk.h"
-+#include "commit.h"
-+#include "tag.h"
+fsck should not bail out at the first error (well, there are some
+die in tree-walk.c), so the fsck_walk callbacks return 0, even in
+the case of an error. The error is propagated via errors_found.
+
+The patch is slightly tested.
+
+ builtin-fsck.c |   95 +++++++++++++++++++++++++++++++++++++++----------------
+ 1 files changed, 67 insertions(+), 28 deletions(-)
+
+diff --git a/builtin-fsck.c b/builtin-fsck.c
+index cc7524b..512346a 100644
+--- a/builtin-fsck.c
++++ b/builtin-fsck.c
+@@ -8,6 +8,7 @@
+ #include "pack.h"
+ #include "cache-tree.h"
+ #include "tree-walk.h"
 +#include "fsck.h"
-+
-+static int fsck_walk_tree(struct tree *tree, fsck_walk_func walk, void *data)
+ #include "parse-options.h"
+ 
+ #define REACHABLE 0x0001
+@@ -63,13 +64,70 @@ static int objwarning(struct object *obj, const char *err, ...)
+ 	return -1;
+ }
+ 
++static int mark_object(struct object *obj, int type, void *data)
 +{
-+	struct tree_desc desc;
-+	struct name_entry entry;
++	struct tree *tree = NULL;
++	struct object *parent = data;
 +
-+	if(parse_tree(tree))
-+		return -1;
++	if (!obj) {
++		printf("broken link from %7s %s\n",
++			   typename(parent->type), sha1_to_hex(parent->sha1));
++		printf("broken link from %7s %s\n",
++			   (type==OBJ_ANY?"unknown":typename(type)), "unknown");
++		errors_found |= ERROR_REACHABLE;
++		return 0;
++	}
 +
-+	init_tree_desc(&desc, tree->buffer, tree->size);
-+	while(tree_entry(&desc, &entry)) {
-+		int result;
-+		
-+		if (S_ISGITLINK(entry.mode))
-+			continue;
-+		if (S_ISDIR(entry.mode))
-+			result = walk(&lookup_tree(entry.sha1)->object, OBJ_TREE, data);
-+		else if (S_ISREG(entry.mode) || S_ISLNK(entry.mode))
-+			result = walk(&lookup_blob(entry.sha1)->object, OBJ_BLOB, data);
-+		else {
-+			error("in tree %s: entry %s has bad mode %.6o\n",
-+			      sha1_to_hex(tree->object.sha1), entry.path, entry.mode);
-+			result = -1;
++	if (type != OBJ_ANY && obj->type != type) {
++		objerror(parent, "wrong object type in link");
++	}
++
++	if (obj->flags & REACHABLE)
++		return 0;
++	obj->flags |= REACHABLE;
++	if (!obj->parsed) {
++		if (parent && !has_sha1_file(obj->sha1)) {
++			printf("broken link from %7s %s\n",
++				 typename(parent->type), sha1_to_hex(parent->sha1));
++			printf("              to %7s %s\n",
++				 typename(obj->type), sha1_to_hex(obj->sha1));
++			errors_found |= ERROR_REACHABLE;
 +		}
-+		if (result)
-+			return result;
++		return 0;
++	}
++
++	if (obj->type == OBJ_TREE) {
++		obj->parsed = 0;
++		tree = (struct tree*)obj;
++		if (parse_tree(tree) < 0)
++			return 0; /* error already displayed */
++	}
++	fsck_walk(obj, mark_object, obj);
++	if (tree) {
++		free(tree->buffer);
++		tree->buffer=NULL;
 +	}
 +	return 0;
 +}
 +
-+static int fsck_walk_commit(struct commit *commit, fsck_walk_func walk, void *data)
++static void mark_object_reachable(struct object *obj)
 +{
-+	struct commit_list *parents = commit->parents;
-+	int result;
-+
-+	if(parse_commit(commit))
-+		return -1;
-+
-+	result = walk((struct object*)commit->tree, OBJ_TREE, data);
-+	if (result)
-+		return result;
-+
-+	while (parents) {
-+		result = walk((struct object*)parents->item, OBJ_COMMIT, data);
-+		if (result)
-+			return result;
-+		parents = parents->next;
-+	}
-+	return 0;
++	mark_object(obj, OBJ_ANY, 0);
 +}
 +
-+static int fsck_walk_tag(struct tag *tag, fsck_walk_func walk, void *data)
-+{
-+	if(parse_tag(tag))
-+		return -1;
-+	return walk(tag->tagged, OBJ_ANY, data);
-+}
-+
-+int fsck_walk(struct object *obj, fsck_walk_func walk, void *data)
++static int mark_used(struct object *obj, int type, void *data)
 +{
 +	if (!obj)
-+		return -1;
-+	switch(obj->type) {
-+	case OBJ_BLOB:
 +		return 0;
-+	case OBJ_TREE:
-+		return fsck_walk_tree((struct tree*)obj, walk, data);
-+	case OBJ_COMMIT:
-+		return fsck_walk_commit((struct commit*)obj, walk, data);
-+	case OBJ_TAG:
-+		return fsck_walk_tag((struct tag*)obj, walk, data);
-+	default:
-+		error("Unknown object type for %s", sha1_to_hex(obj->sha1));
-+		return -1;
-+	}
++	obj->used = 1;
++	return 0;
 +}
-diff --git a/fsck.h b/fsck.h
-new file mode 100644
-index 0000000..fccc89f
---- /dev/null
-+++ b/fsck.h
-@@ -0,0 +1,10 @@
-+#ifndef GIT_FSCK_H
-+#define GIT_FSCK_H
 +
-+#define OBJ_ANY OBJ_BAD
-+
-+typedef int (*fsck_walk_func)(struct object *obj, int type, void *data);
-+
-+int fsck_walk(struct object *obj, fsck_walk_func walk, void *data);
-+
-+#endif
+ /*
+  * Check a single reachable object
+  */
+ static void check_reachable_object(struct object *obj)
+ {
+-	const struct object_refs *refs;
+-
+ 	/*
+ 	 * We obviously want the object to be parsed,
+ 	 * except if it was in a pack-file and we didn't
+@@ -82,25 +140,6 @@ static void check_reachable_object(struct object *obj)
+ 		errors_found |= ERROR_REACHABLE;
+ 		return;
+ 	}
+-
+-	/*
+-	 * Check that everything that we try to reference is also good.
+-	 */
+-	refs = lookup_object_refs(obj);
+-	if (refs) {
+-		unsigned j;
+-		for (j = 0; j < refs->count; j++) {
+-			struct object *ref = refs->ref[j];
+-			if (ref->parsed ||
+-			    (has_sha1_file(ref->sha1)))
+-				continue;
+-			printf("broken link from %7s %s\n",
+-			       typename(obj->type), sha1_to_hex(obj->sha1));
+-			printf("              to %7s %s\n",
+-			       typename(ref->type), sha1_to_hex(ref->sha1));
+-			errors_found |= ERROR_REACHABLE;
+-		}
+-	}
+ }
+ 
+ /*
+@@ -414,6 +453,7 @@ static int fsck_sha1(const unsigned char *sha1)
+ 	if (obj->flags & SEEN)
+ 		return 0;
+ 	obj->flags |= SEEN;
++	fsck_walk (obj, mark_used, 0);
+ 	if (obj->type == OBJ_BLOB)
+ 		return 0;
+ 	if (obj->type == OBJ_TREE)
+@@ -538,13 +578,13 @@ static int fsck_handle_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
+ 		obj = lookup_object(osha1);
+ 		if (obj) {
+ 			obj->used = 1;
+-			mark_reachable(obj, REACHABLE);
++			mark_object_reachable(obj);
+ 		}
+ 	}
+ 	obj = lookup_object(nsha1);
+ 	if (obj) {
+ 		obj->used = 1;
+-		mark_reachable(obj, REACHABLE);
++		mark_object_reachable(obj);
+ 	}
+ 	return 0;
+ }
+@@ -574,7 +614,7 @@ static int fsck_handle_ref(const char *refname, const unsigned char *sha1, int f
+ 		error("%s: not a commit", refname);
+ 	default_refs++;
+ 	obj->used = 1;
+-	mark_reachable(obj, REACHABLE);
++	mark_object_reachable(obj);
+ 
+ 	return 0;
+ }
+@@ -660,7 +700,7 @@ static int fsck_cache_tree(struct cache_tree *it)
+ 			      sha1_to_hex(it->sha1));
+ 			return 1;
+ 		}
+-		mark_reachable(obj, REACHABLE);
++		mark_object_reachable(obj);
+ 		obj->used = 1;
+ 		if (obj->type != OBJ_TREE)
+ 			err |= objerror(obj, "non-tree in cache-tree");
+@@ -693,7 +733,6 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
+ {
+ 	int i, heads;
+ 
+-	track_object_refs = 1;
+ 	errors_found = 0;
+ 
+ 	argc = parse_options(argc, argv, fsck_opts, fsck_usage, 0);
+@@ -741,7 +780,7 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
+ 				continue;
+ 
+ 			obj->used = 1;
+-			mark_reachable(obj, REACHABLE);
++			mark_object_reachable(obj);
+ 			heads++;
+ 			continue;
+ 		}
+@@ -773,7 +812,7 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
+ 				continue;
+ 			obj = &blob->object;
+ 			obj->used = 1;
+-			mark_reachable(obj, REACHABLE);
++			mark_object_reachable(obj);
+ 		}
+ 		if (active_cache_tree)
+ 			fsck_cache_tree(active_cache_tree);
 -- 
 1.5.4.2.gf624.dirty
