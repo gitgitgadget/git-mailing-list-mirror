@@ -1,52 +1,58 @@
-From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-Subject: on subtree checkout
-Date: Sun, 24 Feb 2008 16:34:58 +0700
-Message-ID: <fcaeb9bf0802240134i46e276ajfe83071e0b18ce61@mail.gmail.com>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: on subtree checkout
+Date: Sun, 24 Feb 2008 10:59:59 +0100
+Message-ID: <200802241100.00107.robin.rosenberg.lists@dewire.com>
+References: <fcaeb9bf0802240134i46e276ajfe83071e0b18ce61@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: "git mailing list" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Feb 24 10:35:41 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "git mailing list" <git@vger.kernel.org>
+To: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 24 11:00:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JTDGl-0002br-KY
-	for gcvg-git-2@gmane.org; Sun, 24 Feb 2008 10:35:40 +0100
+	id 1JTDf6-00084h-0t
+	for gcvg-git-2@gmane.org; Sun, 24 Feb 2008 11:00:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752477AbYBXJfD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Feb 2008 04:35:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752527AbYBXJfD
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Feb 2008 04:35:03 -0500
-Received: from fg-out-1718.google.com ([72.14.220.155]:56808 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750926AbYBXJfA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Feb 2008 04:35:00 -0500
-Received: by fg-out-1718.google.com with SMTP id e21so856713fga.17
-        for <git@vger.kernel.org>; Sun, 24 Feb 2008 01:34:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=vTlG1q6R7MMGEyW+2qEHJZ9Yrpp41EbRJFOlf+mrsx4=;
-        b=HagBUpqLDfqltEHDBE8wVs9ZmrqQf6kil8lzjxz6hoz58JRkbGZH/HwThtI7RQiGmXhkmZ4dA6dytMCK+iwbvuPSYFs0QJgiPmeombCqv28lE7pIrABxVPMIliKSR30z2P1oCOFpyC5LOW7APCleKzYKDxAFknBE5laIGffwV+Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=BuqZwPMMxoab4WXKJkC8Dhldl4oEfffwSQZVbFpeVL62UoHIKS9BX0zjgTyEWEFG9RsHTsQOdZI1cUPS1/RmWGKf3lipxYJZiVYCzLr5v0u/b3DDVuTdi5FTiFrWQagqTcM86dAdqIZoQlBuC2TPqwSxmazkaIeuFBC67F8jOrU=
-Received: by 10.86.72.15 with SMTP id u15mr1439835fga.11.1203845698157;
-        Sun, 24 Feb 2008 01:34:58 -0800 (PST)
-Received: by 10.86.83.3 with HTTP; Sun, 24 Feb 2008 01:34:58 -0800 (PST)
+	id S1753106AbYBXKAL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 24 Feb 2008 05:00:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753002AbYBXKAL
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Feb 2008 05:00:11 -0500
+Received: from [83.140.172.130] ([83.140.172.130]:12260 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1752774AbYBXKAJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Feb 2008 05:00:09 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 22CAE802677;
+	Sun, 24 Feb 2008 11:00:07 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id eqNpEGpfvQyb; Sun, 24 Feb 2008 11:00:07 +0100 (CET)
+Received: from [10.9.0.2] (unknown [10.9.0.2])
+	by dewire.com (Postfix) with ESMTP id 80A1F8006BB;
+	Sun, 24 Feb 2008 11:00:07 +0100 (CET)
+User-Agent: KMail/1.9.9
+In-Reply-To: <fcaeb9bf0802240134i46e276ajfe83071e0b18ce61@mail.gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74915>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74916>
 
-I'm going to implement subtree checkout. The plan is to save "index
-prefix" in GIT_DIR/prefix and update git commands to use index prefix
-when accessing the index. If I'm heading a wrong way, stop me now.
+s=C3=B6ndagen den 24 februari 2008 skrev Nguyen Thai Ngoc Duy:
+> I'm going to implement subtree checkout. The plan is to save "index
+> prefix" in GIT_DIR/prefix and update git commands to use index prefix
+> when accessing the index. If I'm heading a wrong way, stop me now.
 
-Thanks
--- 
-Duy
+Make it multivalue as having more than one directory checked out is qui=
+te reasonable in for example Eclipse, where there are hundreds of plugi=
+ns all
+listed at the top level, but you only need a checkout for those that yo=
+u actually want to change. KDE would be another example where you want =
+to mention multiple roots.
+
+-- robin
