@@ -1,52 +1,69 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 0/3] show alias definitions in help
-Date: Sun, 24 Feb 2008 17:23:31 -0500
-Message-ID: <20080224222331.GA6712@coredump.intra.peff.net>
-References: <20080224221559.GA31309@coredump.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Sun Feb 24 23:24:11 2008
+From: John Goerzen <jgoerzen@complete.org>
+Subject: git-email automatic --to detection?
+Date: Sun, 24 Feb 2008 16:29:56 -0600
+Message-ID: <slrnfs3rv4.aqm.jgoerzen@katherina.lan.complete.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Feb 24 23:31:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JTPGU-0004dc-NT
-	for gcvg-git-2@gmane.org; Sun, 24 Feb 2008 23:24:11 +0100
+	id 1JTPNL-0006Xo-33
+	for gcvg-git-2@gmane.org; Sun, 24 Feb 2008 23:31:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751802AbYBXWXf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Feb 2008 17:23:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751806AbYBXWXf
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Feb 2008 17:23:35 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4106 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751655AbYBXWXe (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Feb 2008 17:23:34 -0500
-Received: (qmail 2449 invoked by uid 111); 24 Feb 2008 22:23:33 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Sun, 24 Feb 2008 17:23:33 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 24 Feb 2008 17:23:31 -0500
-Content-Disposition: inline
-In-Reply-To: <20080224221559.GA31309@coredump.intra.peff.net>
+	id S1750858AbYBXWaP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Feb 2008 17:30:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750712AbYBXWaP
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Feb 2008 17:30:15 -0500
+Received: from main.gmane.org ([80.91.229.2]:53911 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750708AbYBXWaN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Feb 2008 17:30:13 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1JTPMK-00087E-B2
+	for git@vger.kernel.org; Sun, 24 Feb 2008 22:30:12 +0000
+Received: from 63-245-179-205.kitusa.com ([63.245.179.205])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 24 Feb 2008 22:30:12 +0000
+Received: from jgoerzen by 63-245-179-205.kitusa.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 24 Feb 2008 22:30:12 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 63-245-179-205.kitusa.com
+User-Agent: slrn/0.9.8.1pl1 (Debian)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74971>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74972>
 
-On Sun, Feb 24, 2008 at 05:16:00PM -0500, Jeff King wrote:
+One of my favorite features of Darcs is that users can submit patches
+by typing:
 
->  Makefile |    3 +-
->  alias.c  |   22 +++++++++
->  cache.h  |    2 +
->  git.c    |   17 +------
->  help.c   |  152 ++++++++++++++++++++++++++++++++++++--------------------
->  5 files changed, 118 insertions(+), 78 deletions(-)
->  create mode 100644 alias.c
+  darcs send -a
 
-BTW, Daniel, I have used your --cover-letter work several times today,
-and it is terrific. It has saved me a lot of error-prone cutting and
-pasting of message-ids and commit titles. Thanks.
+This will look at the repo the local copy was cloned from, find all
+local changesets that aren't on the remote, and email off a set of
+patches to the remote maintainer.  It finds the email address to send
+to by looking at _darcs/prefs/email *on the remote*, which is roughly
+the same as setting an option in .git/config.
 
--Peff
+There are a couple of nice things about this:
+
+1) Patch submitters don't have to keep track of where to send patches
+for each project they work on
+
+2) Potential submitters don't have to be notified if the submission
+address changes
+
+As far as I can tell from looking at git-send-email(1),
+git-format-patch(1), and git-config(1), git doesn't have this
+capability.  Is that correct?  If so, is it possible to add something
+like this?  Would it also be possible to unify git-format-patch and
+git-send-email into a single command that generates and sends the patch(es)?
+
+Thanks,
+
+-- John
