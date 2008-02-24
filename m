@@ -1,60 +1,65 @@
-From: John Goerzen <jgoerzen@complete.org>
-Subject: git-push with --all --tags
-Date: Sun, 24 Feb 2008 16:12:36 -0600
-Message-ID: <slrnfs3quk.aqm.jgoerzen@katherina.lan.complete.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 24 23:13:35 2008
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 0/3] show alias definitions in help
+Date: Sun, 24 Feb 2008 17:16:00 -0500
+Message-ID: <20080224221559.GA31309@coredump.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Feb 24 23:16:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JTP6D-0001p4-L4
-	for gcvg-git-2@gmane.org; Sun, 24 Feb 2008 23:13:34 +0100
+	id 1JTP9F-0002gC-8y
+	for gcvg-git-2@gmane.org; Sun, 24 Feb 2008 23:16:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751636AbYBXWM6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Feb 2008 17:12:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751721AbYBXWM5
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Feb 2008 17:12:57 -0500
-Received: from main.gmane.org ([80.91.229.2]:42836 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751038AbYBXWM5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Feb 2008 17:12:57 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1JTP5a-0007SJ-AY
-	for git@vger.kernel.org; Sun, 24 Feb 2008 22:12:54 +0000
-Received: from 63-245-179-205.kitusa.com ([63.245.179.205])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 24 Feb 2008 22:12:54 +0000
-Received: from jgoerzen by 63-245-179-205.kitusa.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 24 Feb 2008 22:12:54 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 63-245-179-205.kitusa.com
-User-Agent: slrn/0.9.8.1pl1 (Debian)
+	id S1752172AbYBXWQF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Feb 2008 17:16:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751636AbYBXWQE
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Feb 2008 17:16:04 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4537 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750802AbYBXWQD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Feb 2008 17:16:03 -0500
+Received: (qmail 2328 invoked by uid 111); 24 Feb 2008 22:16:01 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Sun, 24 Feb 2008 17:16:01 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 24 Feb 2008 17:16:00 -0500
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74966>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74967>
 
-Hi,
+This was requested during the freeze period, and I posted a "like this?"
+patch with a promise to follow-up post-1.5.4. So here is the follow-up.
 
-I am using git 1.5.4.2, and noticed that this command:
+The objections to my quick patch were:
 
-git push --all --tags
+  - (Dscho) the parsing code was ugly and needed cleanup; the first
+    patch refactors cmd_help to use parseopt
+  - (Duy) help lookup should respect the usual "commands before alias"
+    rule that we use for execution; the third patch takes this into
+    account
 
-exits with a syntax display.  However, that display -- and the
-git-push manpage -- don't tell me why this is invalid.  Moreover, git
-push with one of --all or --tags works.  It seems it would be more
-efficient when pushing to a remote, when I want to to both, to be able
-to specify --all --tags.
+      1/3: help: use parseopt
+           This is parseopt plus general cleanup.
 
-Also, is there a way I can specify that certain args are the default
-to push for a given repo?  I looked in git-config(1) but didn't find
-anything.  I may want --all or --mirror as a default on some repos.
+      2/3: make alias lookup a public, procedural function
+           Another cleanup to factor out alias lookup from git.c (which
+           we will also need in help now).
 
-Thanks,
+      help: respect aliases
+           The actual patch.
 
--- John
+ Makefile |    3 +-
+ alias.c  |   22 +++++++++
+ cache.h  |    2 +
+ git.c    |   17 +------
+ help.c   |  152 ++++++++++++++++++++++++++++++++++++--------------------------
+ 5 files changed, 118 insertions(+), 78 deletions(-)
+ create mode 100644 alias.c
