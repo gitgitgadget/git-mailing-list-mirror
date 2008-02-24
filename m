@@ -1,7 +1,7 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH 4/6] Avoid accessing non-tag refs in git-describe unless --all is requested
-Date: Sun, 24 Feb 2008 03:07:28 -0500
-Message-ID: <20080224080728.GD22587@spearce.org>
+Subject: [PATCH 5/6] Teach git-describe --exact-match to avoid expensive tag searches
+Date: Sun, 24 Feb 2008 03:07:31 -0500
+Message-ID: <20080224080731.GE22587@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
@@ -11,23 +11,23 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JTBua-0004Lv-57
-	for gcvg-git-2@gmane.org; Sun, 24 Feb 2008 09:08:40 +0100
+	id 1JTBua-0004Lv-R8
+	for gcvg-git-2@gmane.org; Sun, 24 Feb 2008 09:08:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751362AbYBXIHz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Feb 2008 03:07:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751321AbYBXIHy
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Feb 2008 03:07:54 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:42975 "EHLO
+	id S1751869AbYBXIH6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Feb 2008 03:07:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751401AbYBXIH4
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Feb 2008 03:07:56 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:42981 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751179AbYBXIHa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Feb 2008 03:07:30 -0500
+	with ESMTP id S1751180AbYBXIHe (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Feb 2008 03:07:34 -0500
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.68)
 	(envelope-from <spearce@spearce.org>)
-	id 1JTBtQ-0001fZ-9e; Sun, 24 Feb 2008 03:07:28 -0500
+	id 1JTBtT-0001g0-KU; Sun, 24 Feb 2008 03:07:31 -0500
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 1E6C920FBC9; Sun, 24 Feb 2008 03:07:28 -0500 (EST)
+	id 70DEA20FBAE; Sun, 24 Feb 2008 03:07:31 -0500 (EST)
 Content-Disposition: inline
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
@@ -39,47 +39,79 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74909>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74910>
 
-If we aren't going to use a ref there is no reason for us to open
-its object from the object database.  This avoids opening any of
-the head commits reachable from refs/heads/ unless they are also
-reachable through the commit we have been asked to describe and
-we need to walk through it to find a tag.
+Sometimes scripts want (or need) the annotated tag name that exactly
+matches a specific commit, or no tag at all.  In such cases it can be
+difficult to determine if the output of `git describe $commit` is a
+real tag name or a tag+abbreviated commit.  A common idiom is to run
+git-describe twice:
+
+  if test $(git describe $commit) = $(git describe --abbrev=0 $commit)
+  ...
+
+but this is a huge waste of time if the caller is just going to pick a
+different method to describe $commit or abort because it is not exactly
+an annotated tag.
+
+Setting the maximum number of candidates to 0 allows the caller to ask
+for only a tag that directly points at the supplied commit, or to have
+git-describe abort if no such item exists.
 
 Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
- builtin-describe.c |    6 +++++-
- 1 files changed, 5 insertions(+), 1 deletions(-)
+ Documentation/git-describe.txt |    5 +++++
+ builtin-describe.c             |    8 ++++++--
+ 2 files changed, 11 insertions(+), 2 deletions(-)
 
+diff --git a/Documentation/git-describe.txt b/Documentation/git-describe.txt
+index 1c3dfb4..fbb40a2 100644
+--- a/Documentation/git-describe.txt
++++ b/Documentation/git-describe.txt
+@@ -45,6 +45,11 @@ OPTIONS
+ 	candidates to describe the input committish consider
+ 	up to <n> candidates.  Increasing <n> above 10 will take
+ 	slightly longer but may produce a more accurate result.
++	An <n> of 0 will cause only exact matches to be output.
++
++--exact-match::
++	Only output exact matches (a tag directly references the
++	supplied commit).  This is a synonym for --candidates=0.
+ 
+ --debug::
+ 	Verbosely display information about the searching strategy
 diff --git a/builtin-describe.c b/builtin-describe.c
-index bfd25e2..9c958bd 100644
+index 9c958bd..05e309f 100644
 --- a/builtin-describe.c
 +++ b/builtin-describe.c
-@@ -46,11 +46,15 @@ static void add_to_known_names(const char *path,
+@@ -174,6 +174,8 @@ static void describe(const char *arg, int last_one)
+ 		return;
+ 	}
  
- static int get_name(const char *path, const unsigned char *sha1, int flag, void *cb_data)
- {
-+	int might_be_tag = !prefixcmp(path, "refs/tags/");
- 	struct commit *commit;
- 	struct object *object;
- 	unsigned char peeled[20];
- 	int is_tag, prio;
++	if (!max_candidates)
++		die("no tag exactly matches '%s'", sha1_to_hex(cmit->object.sha1));
+ 	if (debug)
+ 		fprintf(stderr, "searching to describe %s\n", arg);
  
-+	if (!all && !might_be_tag)
-+		return 0;
-+
- 	if (!peel_ref(path, peeled) && !is_null_sha1(peeled)) {
- 		commit = lookup_commit_reference_gently(peeled, 1);
- 		if (!commit)
-@@ -68,7 +72,7 @@ static int get_name(const char *path, const unsigned char *sha1, int flag, void
- 	 * If --tags, then any tags are used.
- 	 * Otherwise only annotated tags are used.
- 	 */
--	if (!prefixcmp(path, "refs/tags/")) {
-+	if (might_be_tag) {
- 		if (is_tag) {
- 			prio = 2;
- 			if (pattern && fnmatch(pattern, path + 10, 0))
+@@ -270,6 +272,8 @@ int cmd_describe(int argc, const char **argv, const char *prefix)
+ 		OPT_BOOLEAN(0, "all",        &all, "use any ref in .git/refs"),
+ 		OPT_BOOLEAN(0, "tags",       &tags, "use any tag in .git/refs/tags"),
+ 		OPT__ABBREV(&abbrev),
++		OPT_SET_INT(0, "exact-match", &max_candidates,
++			    "only output exact matches", 0),
+ 		OPT_INTEGER(0, "candidates", &max_candidates,
+ 			    "consider <n> most recent tags (default: 10)"),
+ 		OPT_STRING(0, "match",       &pattern, "pattern",
+@@ -278,8 +282,8 @@ int cmd_describe(int argc, const char **argv, const char *prefix)
+ 	};
+ 
+ 	argc = parse_options(argc, argv, options, describe_usage, 0);
+-	if (max_candidates < 1)
+-		max_candidates = 1;
++	if (max_candidates < 0)
++		max_candidates = 0;
+ 	else if (max_candidates > MAX_TAGS)
+ 		max_candidates = MAX_TAGS;
+ 
 -- 
 1.5.4.3.295.g6b554
