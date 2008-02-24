@@ -1,76 +1,58 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH 6/6] Use git-describe --exact-match in bash prompt on detached HEAD
-Date: Sun, 24 Feb 2008 03:07:33 -0500
-Message-ID: <20080224080733.GF22587@spearce.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] parse-opt: bring PARSE_OPT_HIDDEN to git-rev-parse
+ --parseopt
+Date: Sun, 24 Feb 2008 00:42:26 -0800
+Message-ID: <7vbq66ycct.fsf@gitster.siamese.dyndns.org>
+References: <20080221230101.27644.49229.stgit@gandelf.nowhere.earth>
+ <20080222093558.GC29114@artemis.madism.org>
+ <7vbq68ap1c.fsf@gitster.siamese.dyndns.org>
+ <20080222181927.GA4555@artemis.madism.org>
+ <20080223140926.GD10967@artemis.madism.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Feb 24 09:09:10 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Yann Dirson <ydirson@altern.org>, git@vger.kernel.org
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Sun Feb 24 09:43:36 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JTBv4-0004Uj-6n
-	for gcvg-git-2@gmane.org; Sun, 24 Feb 2008 09:09:10 +0100
+	id 1JTCSM-0001Zp-7h
+	for gcvg-git-2@gmane.org; Sun, 24 Feb 2008 09:43:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753721AbYBXIIJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Feb 2008 03:08:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751994AbYBXIIA
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Feb 2008 03:08:00 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:42992 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751226AbYBXIHg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Feb 2008 03:07:36 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1JTBtW-0001g6-4P; Sun, 24 Feb 2008 03:07:34 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id EC9FD20FBAE; Sun, 24 Feb 2008 03:07:33 -0500 (EST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1752092AbYBXImh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Feb 2008 03:42:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752076AbYBXImg
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Feb 2008 03:42:36 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:33164 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752058AbYBXImg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Feb 2008 03:42:36 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id AF60A1AD3;
+	Sun, 24 Feb 2008 03:42:34 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id F34F81AD1; Sun, 24 Feb 2008 03:42:30 -0500 (EST)
+In-Reply-To: <20080223140926.GD10967@artemis.madism.org> (Pierre Habouzit's
+ message of "Sat, 23 Feb 2008 15:09:26 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74911>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74912>
 
-Most of the time when I am on a detached HEAD and I am not doing
-a rebase or bisect operation the working directory is sitting on a
-tagged release of the repository.  Showing the tag name instead of
-the commit SHA-1 is much more descriptive and a much better reminder
-of the state of this working directory.
+Pierre Habouzit <madcoder@debian.org> writes:
 
-Now that git-describe --exact-match is available as a cheap means
-of obtaining the exact annotated tag or nothing at all, we can
-favor the annotated tag name over the abbreviated commit SHA-1.
+>       I also made the parsing more extensible wrt new flags if needed.
+>
+>       We should definitely write tests too.
+> ...
+> +			case '*':
+> +				o->flags &= PARSE_OPT_HIDDEN;
+> +				break;
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- contrib/completion/git-completion.bash |    5 ++++-
- 1 files changed, 4 insertions(+), 1 deletions(-)
-
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 4ea727b..8722a68 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -91,7 +91,10 @@ __git_ps1 ()
- 			fi
- 			if ! b="$(git symbolic-ref HEAD 2>/dev/null)"
- 			then
--				b="$(cut -c1-7 $g/HEAD)..."
-+				if ! b="$(git describe --exact-match HEAD 2>/dev/null)"
-+				then
-+					b="$(cut -c1-7 $g/HEAD)..."
-+				fi
- 			fi
- 		fi
- 
--- 
-1.5.4.3.295.g6b554
+I have a slight suspicion that this is not what you meant.
+You probably meant either |= or perhaps ^=.
