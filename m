@@ -1,85 +1,61 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 2/2] send-email: test compose functionality
-Date: Sun, 24 Feb 2008 16:04:14 -0500
-Message-ID: <20080224210414.GB9150@coredump.intra.peff.net>
-References: <20080224205720.GA7085@coredump.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Feb 24 22:05:02 2008
+From: "Roger C. Soares" <rogersoares@intelinet.com.br>
+Subject: [EGIT PATCH] Refresh history when "Refresh" is clicked in the history viewer.
+Date: Sun, 24 Feb 2008 18:18:17 -0500
+Message-ID: <1203895097-3742-1-git-send-email-rogersoares@intelinet.com.br>
+Cc: robin.rosenberg@dewire.com,
+	"Roger C. Soares" <rogersoares@intelinet.com.br>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Feb 24 22:20:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JTO1s-0007Kz-It
-	for gcvg-git-2@gmane.org; Sun, 24 Feb 2008 22:05:01 +0100
+	id 1JTOGb-0003R6-5p
+	for gcvg-git-2@gmane.org; Sun, 24 Feb 2008 22:20:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753771AbYBXVER (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Feb 2008 16:04:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753572AbYBXVER
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Feb 2008 16:04:17 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4544 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753315AbYBXVEQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Feb 2008 16:04:16 -0500
-Received: (qmail 1857 invoked by uid 111); 24 Feb 2008 21:04:15 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Sun, 24 Feb 2008 16:04:15 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 24 Feb 2008 16:04:14 -0500
-Content-Disposition: inline
-In-Reply-To: <20080224205720.GA7085@coredump.intra.peff.net>
+	id S1753779AbYBXVTS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Feb 2008 16:19:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753661AbYBXVTS
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Feb 2008 16:19:18 -0500
+Received: from cvxbsd.convex.com.br ([200.152.177.10]:1188 "HELO
+	cvxbsd.convex.com.br" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1753254AbYBXVTR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Feb 2008 16:19:17 -0500
+Received: (qmail 32911 invoked by uid 0); 24 Feb 2008 18:21:29 -0300
+Received: from rogersoares@intelinet.com.br by cvxbsd.convex.com.br by uid 82 with qmail-scanner-1.20rc3 
+ (uvscan: v4.3.20/v4817.  Clear:RC:1:. 
+ Processed in 0.85762 secs); 24 Feb 2008 21:21:29 -0000
+Received: from unknown (HELO localhost.localdomain) (189.5.203.41)
+  by cvxbsd.convex.com.br with SMTP; 24 Feb 2008 21:21:28 -0000
+X-Mailer: git-send-email 1.5.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74963>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74964>
 
-This is just a basic sanity check that --compose works at
-all.
-
-Signed-off-by: Jeff King <peff@peff.net>
 ---
- t/t9001-send-email.sh |   29 +++++++++++++++++++++++++++++
- 1 files changed, 29 insertions(+), 0 deletions(-)
+ .../src/org/spearce/egit/ui/GitHistoryPage.java    |    8 ++++++--
+ 1 files changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index 4975048..cbbfa9c 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -137,4 +137,33 @@ test_expect_success 'Valid In-Reply-To when prompting' '
- 	! grep "^In-Reply-To: < *>" msgtxt1
- '
+diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/GitHistoryPage.java b/org.spearce.egit.ui/src/org/spearce/egit/ui/GitHistoryPage.java
+index 2fc7afa..268a6ba 100644
+--- a/org.spearce.egit.ui/src/org/spearce/egit/ui/GitHistoryPage.java
++++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/GitHistoryPage.java
+@@ -1207,8 +1207,12 @@ public class GitHistoryPage extends HistoryPage implements IAdaptable,
+ 	}
  
-+test_expect_success 'setup fake editor' '
-+	(echo "#!/bin/sh" &&
-+	 echo "echo fake edit >>\$1"
-+	) >fake-editor &&
-+	chmod +x fake-editor
-+'
-+
-+test_expect_success '--compose works' '
-+	clean_fake_sendmail &&
-+	echo y | \
-+		GIT_EDITOR=$(pwd)/fake-editor \
-+		GIT_SEND_EMAIL_NOTTY=1 \
-+		git send-email \
-+		--compose --subject foo \
-+		--from="Example <nobody@example.com>" \
-+		--to=nobody@example.com \
-+		--smtp-server="$(pwd)/fake.sendmail" \
-+		$patches \
-+		2>errors
-+'
-+
-+test_expect_success 'first message is compose text' '
-+	grep "^fake edit" msgtxt1
-+'
-+
-+test_expect_success 'second message is patch' '
-+	grep "Subject:.*Second" msgtxt2
-+'
-+
- test_done
+ 	public void refresh() {
+-		// TODO Auto-generated method stub
+-
++		if (historyRefreshJob.cancel()) {
++			System.out.println("rescheduling");
++			historyRefreshJob.schedule();
++		} else {
++			System.out.println("failed to cancel?");
++		}
+ 	}
+ 
+ 	public Object getAdapter(Class adapter) {
 -- 
-1.5.4.3.307.gacd7
+1.5.4.1
