@@ -1,85 +1,117 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: on subtree checkout
-Date: Sun, 24 Feb 2008 16:59:30 +0100
-Message-ID: <vpqve4efiql.fsf@bauges.imag.fr>
-References: <fcaeb9bf0802240134i46e276ajfe83071e0b18ce61@mail.gmail.com>
-	<m31w72d63a.fsf@localhost.localdomain>
-	<fcaeb9bf0802240712u5bc7173du1fe67c3bcd89d1a4@mail.gmail.com>
-	<200802241645.49718.jnareb@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>,
-	"git mailing list" <git@vger.kernel.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 24 17:01:35 2008
+From: Martin Koegler <mkoegler@auto.tuwien.ac.at>
+Subject: [PATCH 4/4 v2] builtin-fsck: reports missing parent commits
+Date: Sun, 24 Feb 2008 17:14:47 +0100
+Message-ID: <12038696874197-git-send-email-mkoegler@auto.tuwien.ac.at>
+Cc: git@vger.kernel.org, Martin Koegler <mkoegler@auto.tuwien.ac.at>
+To: Junio C Hamano <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sun Feb 24 17:15:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JTJIE-00008p-Qy
-	for gcvg-git-2@gmane.org; Sun, 24 Feb 2008 17:01:35 +0100
+	id 1JTJVi-00042A-3c
+	for gcvg-git-2@gmane.org; Sun, 24 Feb 2008 17:15:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752482AbYBXQAy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Feb 2008 11:00:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752489AbYBXQAy
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Feb 2008 11:00:54 -0500
-Received: from imag.imag.fr ([129.88.30.1]:42392 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752276AbYBXQAx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Feb 2008 11:00:53 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id m1OFxUNn014926
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sun, 24 Feb 2008 16:59:30 +0100 (CET)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1JTJGE-0002q2-7p; Sun, 24 Feb 2008 16:59:30 +0100
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1JTJGE-0002pE-5b; Sun, 24 Feb 2008 16:59:30 +0100
-In-Reply-To: <200802241645.49718.jnareb@gmail.com> (Jakub Narebski's message of "Sun\, 24 Feb 2008 16\:45\:47 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Sun, 24 Feb 2008 16:59:31 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1752394AbYBXQOu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Feb 2008 11:14:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752354AbYBXQOu
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Feb 2008 11:14:50 -0500
+Received: from thor.auto.tuwien.ac.at ([128.130.60.15]:33512 "EHLO
+	thor.auto.tuwien.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751233AbYBXQOt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Feb 2008 11:14:49 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by thor.auto.tuwien.ac.at (Postfix) with ESMTP id 23BF068018E5;
+	Sun, 24 Feb 2008 17:14:48 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at auto.tuwien.ac.at
+Received: from thor.auto.tuwien.ac.at ([127.0.0.1])
+	by localhost (thor.auto.tuwien.ac.at [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id YUWwA2buxoMs; Sun, 24 Feb 2008 17:14:48 +0100 (CET)
+Received: by thor.auto.tuwien.ac.at (Postfix, from userid 3001)
+	id 063E36800676; Sun, 24 Feb 2008 17:14:47 +0100 (CET)
+X-Mailer: git-send-email 1.5.3.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74944>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Signed-off-by: Martin Koegler <mkoegler@auto.tuwien.ac.at>
+---
+Sorry, I found a bug in the last version.
 
-> Nguyen Thai Ngoc Duy wrote:
->> On Sun, Feb 24, 2008 at 5:03 PM, Jakub Narebski <jnareb@gmail.com> wrote:
->>>
->>> "Nguyen Thai Ngoc Duy" <pclouds@gmail.com> writes:
->>>
->>>> I'm going to implement subtree checkout. [...]
->>>
->>>  As far as I can see the problem lies in merging...
->> 
->> Can you elaborate? I'm really noob at merging.
->
-> What to do if when merging, or rebasing, there is conflict _outside_
-> checked out subtree?
+ builtin-fsck.c |   24 ++++++++++++++++++++++++
+ commit.c       |    2 +-
+ commit.h       |    1 +
+ 3 files changed, 26 insertions(+), 1 deletions(-)
 
-I suppose you have to forbid merges where anything non-trivial happens
-outside the tree (i.e. allow it only if the set of renamed or changed
-files is disjoint outside the tree, or only if only one of the
-branches to merge have changes outside the tree).
-
-That's probably not such a big limitation in practice for the user,
-since by definition the user won't modify the files outside its tree,
-so he can at least still merge with the branch he branched from.
-
-I can see another problem: partial checkout is really interesting only
-if you can do a partial clone ("partial" here in the sense "subtree").
-Otherwise, your .git/ still eats your disk space and "clone" still
-needs your bandwidth for something you won't use.
-
+diff --git a/builtin-fsck.c b/builtin-fsck.c
+index 512346a..98d81d9 100644
+--- a/builtin-fsck.c
++++ b/builtin-fsck.c
+@@ -394,6 +394,8 @@ static int fsck_commit(struct commit *commit)
+ {
+ 	char *buffer = commit->buffer;
+ 	unsigned char tree_sha1[20], sha1[20];
++	struct commit_graft *graft;
++	int parents = 0;
+ 
+ 	if (verbose)
+ 		fprintf(stderr, "Checking commit %s\n",
+@@ -411,6 +413,28 @@ static int fsck_commit(struct commit *commit)
+ 		if (get_sha1_hex(buffer+7, sha1) || buffer[47] != '\n')
+ 			return objerror(&commit->object, "invalid 'parent' line format - bad sha1");
+ 		buffer += 48;
++		parents++;
++	}
++	graft = lookup_commit_graft(commit->object.sha1);
++	if (graft) {
++		struct commit_list *p = commit->parents;
++		parents = 0;
++		while (p && parents) {
++			p = p->next;
++			parents++;
++		}
++		if (graft->nr_parent == -1 && !parents)
++			; /* shallow commit */
++		else if (graft->nr_parent != parents)
++			return objerror(&commit->object, "graft objects missing");
++	} else {
++		struct commit_list *p = commit->parents;
++		while (p && parents) {
++			p = p->next;
++			parents--;
++		}
++		if (p || parents)
++			return objerror(&commit->object, "parent objects missing");
+ 	}
+ 	if (memcmp(buffer, "author ", 7))
+ 		return objerror(&commit->object, "invalid format - expected 'author' line");
+diff --git a/commit.c b/commit.c
+index 6684c4e..94d5b3d 100644
+--- a/commit.c
++++ b/commit.c
+@@ -193,7 +193,7 @@ static void prepare_commit_graft(void)
+ 	commit_graft_prepared = 1;
+ }
+ 
+-static struct commit_graft *lookup_commit_graft(const unsigned char *sha1)
++struct commit_graft *lookup_commit_graft(const unsigned char *sha1)
+ {
+ 	int pos;
+ 	prepare_commit_graft();
+diff --git a/commit.h b/commit.h
+index 80d65b9..a1e9591 100644
+--- a/commit.h
++++ b/commit.h
+@@ -116,6 +116,7 @@ struct commit_graft {
+ struct commit_graft *read_graft_line(char *buf, int len);
+ int register_commit_graft(struct commit_graft *, int);
+ int read_graft_file(const char *graft_file);
++struct commit_graft *lookup_commit_graft(const unsigned char *sha1);
+ 
+ extern struct commit_list *get_merge_bases(struct commit *rev1, struct commit *rev2, int cleanup);
+ 
 -- 
-Matthieu
+1.5.4.2.g12981.dirty
