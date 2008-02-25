@@ -1,66 +1,66 @@
-From: Bryan Donlan <bdonlan@fushizen.net>
-Subject: [PATCH] Documentation/git-am.txt: Pass -r in the example
-	invocation of rm -f .dotest
-Date: Mon, 25 Feb 2008 17:43:40 -0500
-Message-ID: <20080225224340.GA8860@shion.is.fushizen.net>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [PATCH] gitk: don't save the geometry to rc file on exit
+Date: Tue, 26 Feb 2008 00:08:34 +0100
+Message-ID: <200802260008.36360.robin.rosenberg.lists@dewire.com>
+References: <47AAA254.2020008@thorn.ws> <30e4a070802250535g72b59106yb1e4478eb9b9f47a@mail.gmail.com> <46a038f90802251159j591c16c2g1e5b5aa20e9edb00@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: gitster@pobox.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 25 23:54:45 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Mark Levedahl" <mlevedahl@gmail.com>,
+	"Paul Mackerras" <paulus@samba.org>,
+	"martin f krafft" <madduck@madduck.net>,
+	"Gerrit Pape" <pape@smarden.org>, git@vger.kernel.org
+To: "Martin Langhoff" <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 26 00:10:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JTmDa-0002gR-FU
-	for gcvg-git-2@gmane.org; Mon, 25 Feb 2008 23:54:42 +0100
+	id 1JTmSn-0000UO-T1
+	for gcvg-git-2@gmane.org; Tue, 26 Feb 2008 00:10:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758866AbYBYWyE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Feb 2008 17:54:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758527AbYBYWyD
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Feb 2008 17:54:03 -0500
-Received: from satoko.is.fushizen.net ([64.71.152.231]:48697 "EHLO
-	satoko.is.fushizen.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758184AbYBYWyB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Feb 2008 17:54:01 -0500
-X-Greylist: delayed 617 seconds by postgrey-1.27 at vger.kernel.org; Mon, 25 Feb 2008 17:54:01 EST
-Received: from bryan-donlan.um.maine.edu ([130.111.184.236] helo=shion)
-	by satoko.is.fushizen.net with esmtpa (Exim 4.69)
-	(envelope-from <bdonlan@fushizen.net>)
-	id 1JTm2w-0005e3-1f; Mon, 25 Feb 2008 22:43:42 +0000
-Received: from bd by shion with local (Exim 4.69)
-	(envelope-from <bdonlan@fushizen.net>)
-	id 1JTm2u-0002Kn-O1; Mon, 25 Feb 2008 17:43:40 -0500
+	id S1754267AbYBYXJt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 Feb 2008 18:09:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754034AbYBYXJt
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Feb 2008 18:09:49 -0500
+Received: from [83.140.172.130] ([83.140.172.130]:25926 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1753126AbYBYXJs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Feb 2008 18:09:48 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 7AB89802816;
+	Tue, 26 Feb 2008 00:09:45 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id OKmTC7NW5YK2; Tue, 26 Feb 2008 00:09:44 +0100 (CET)
+Received: from [10.9.0.2] (unknown [10.9.0.2])
+	by dewire.com (Postfix) with ESMTP id AA1EA80019B;
+	Tue, 26 Feb 2008 00:09:44 +0100 (CET)
+User-Agent: KMail/1.9.9
+In-Reply-To: <46a038f90802251159j591c16c2g1e5b5aa20e9edb00@mail.gmail.com>
 Content-Disposition: inline
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75084>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75085>
 
->From 7cd3c1e333a5176dbae209630d6fac15539777c0 Mon Sep 17 00:00:00 2001
-From: Bryan Donlan <bdonlan@fushizen.net>
-Date: Mon, 25 Feb 2008 17:40:19 -0500
-Subject: [PATCH] Documentation/git-am.txt: Pass -r in the example invocation of rm -f .dotest
- Signed-off-by: Bryan Donlan <bdonlan@fushizen.net>
+m=E5ndagen den 25 februari 2008 skrev Martin Langhoff:
+> On Tue, Feb 26, 2008 at 2:35 AM, Mark Levedahl <mlevedahl@gmail.com> =
+wrote:
+> >  2) Perform a screen geometry check at load time to see if the corn=
+ers
+> >  of the main window would be visible before applying the main windo=
+w
+> >  geometry.
+>=20
+> As a multi-screen-layouts, multi-machine user, this approach has my
+> vote. I see a proto-patch from Edgar too. Even if the wm has similar
+> capabilities, those will be limited to main window geometry, not
+> inner-panel geometry so this is still useful.
 
----
- Documentation/git-am.txt |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+The annoying part is that it remembers the position. Remembering siz
+I can live with, but I don't want it popping up the wrong screen.
 
-diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
-index 2ffba21..8c96b53 100644
---- a/Documentation/git-am.txt
-+++ b/Documentation/git-am.txt
-@@ -138,7 +138,7 @@ aborts in the middle,.  You can recover from this in one of two ways:
- 
- The command refuses to process new mailboxes while `.dotest`
- directory exists, so if you decide to start over from scratch,
--run `rm -f .dotest` before running the command with mailbox
-+run `rm -rf .dotest` before running the command with mailbox
- names.
- 
- 
--- 
-1.5.3.8
+-- robin
