@@ -1,60 +1,92 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] builtin-fsck: reports missing parent commits
-Date: Sun, 24 Feb 2008 19:08:52 -0800
-Message-ID: <7vlk59pwaj.fsf@gitster.siamese.dyndns.org>
-References: <12038867362489-git-send-email-mkoegler@auto.tuwien.ac.at>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: Instituting feature and infrastructure enhancement proposal
+ window?
+Date: Sun, 24 Feb 2008 22:25:37 -0500 (EST)
+Message-ID: <alpine.LNX.1.00.0802242055330.19024@iabervon.org>
+References: <7v8x1ataiu.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Martin Koegler <mkoegler@auto.tuwien.ac.at>
-X-From: git-owner@vger.kernel.org Mon Feb 25 04:09:46 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 25 04:26:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JTTir-0003ox-Qk
-	for gcvg-git-2@gmane.org; Mon, 25 Feb 2008 04:09:46 +0100
+	id 1JTTzC-00076V-0a
+	for gcvg-git-2@gmane.org; Mon, 25 Feb 2008 04:26:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751107AbYBYDJI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Feb 2008 22:09:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751732AbYBYDJH
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Feb 2008 22:09:07 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:55720 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750964AbYBYDJG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Feb 2008 22:09:06 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 52F2A15B6;
-	Sun, 24 Feb 2008 22:09:05 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 7A7E415B5; Sun, 24 Feb 2008 22:09:00 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752380AbYBYDZj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Feb 2008 22:25:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752614AbYBYDZj
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Feb 2008 22:25:39 -0500
+Received: from iabervon.org ([66.92.72.58]:41415 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752380AbYBYDZi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Feb 2008 22:25:38 -0500
+Received: (qmail 28849 invoked by uid 1000); 25 Feb 2008 03:25:37 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 25 Feb 2008 03:25:37 -0000
+In-Reply-To: <7v8x1ataiu.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74987>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74988>
 
-Martin Koegler <mkoegler@auto.tuwien.ac.at> writes:
+On Sun, 24 Feb 2008, Junio C Hamano wrote:
 
-> Signed-off-by: Martin Koegler <mkoegler@auto.tuwien.ac.at>
+> If this proposal is accepted favorably by the list and is
+> implemented, a release cycle will look like this:
+> 
+>  * A release from 'master' is made (e.g. v1.5.4 gets released on
+>    Feb 1st).
+> 
+>  * The release is merged to 'maint'.
+> 
+>  * Fix-ups to v1.5.4 start flowing and get applied to 'maint',
+>    and merged to 'master'.  At some point, the first maintenance
+>    release is made (e.g. v1.5.4.1 was released on Feb 10th).
+> 
+>  * The topics that have been cooking in 'next' may be rebased to
+>    v1.5.4, and 'next' is rebuilt on top of 'master' with them
+>    (e.g. this happened on Feb 17th for this cycle).
 
-As far as I can tell, the new test is not testing the commit
-object we are looking at from the object database.  What it is
-testing is if the code that parsed and prepared the information
-in "struct commit" found the same number of parents an extra
-check we are doing here by hand (if not grafted --- but
-presumably whoever gave the struct commit we are handling here
-would have obtained that information by doing the same parsing),
-or the parsing of the graft file (when grafted --- but
-presumably whoever gave the struct commit we are handling here
-would have obtained that information by calling the same
-llokup_commit_graft()).
+I'd actually like to have topics that don't make a release reverted in 
+'next' and reapplied in 'pu'. That way, from the release to the rebuild of 
+'next', 'next' and 'master' have identical trees, and it's therefore 
+trivial to rebase off of 'next'. Topics that were moved out to 'pu' in 
+this period would presumably be merged back into the rebased 'next' early.
 
-So I am not sure what problems in the repository objects these
-new checks are designed to catch.
+Or maybe, when 'next' closes, anything not in 'master' moves out to 'pu' 
+until the rebuild.
 
-This needs a lot of explanation than what's in your commit log
-message.
+>  * New topics start appearing in 'next', cook and graduate to
+>    'master' as before.
+> 
+>  * The window closes.  We pick what topics we should have in the
+>    new release.
+> 
+>  * We continue as before, but with the understanding that some
+>    topics in 'next' won't graduate before the new release.
+> 
+>  * Tag -rc1.  'next' really closes and we go into feature
+>    freeze.
+> 
+>  * RC cycle continues.  Perhaps one or two RCs every week, as before.
+> 
+>  * The new release is made (hopefully within 3 months since the
+>    beginning of the cycle).
+
+So what would be the 'pu' policy through this? I think one of the reasons 
+that the kernel manages to do well with a short cycle is that stuff sits 
+in -mm for some time, in general, before hitting mainline. This both means 
+that people can get their code exposure without hurrying it into the merge 
+window and that code can cook as long as necessary before starting to 
+impact end users.
+
+In any case, I like the short cycle idea.
+
+	-Daniel
+*This .sig left intentionally blank*
