@@ -1,105 +1,81 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: [PATCH 2/2] daemon: Verify base-path and interpolated-path early
-Date: Mon, 25 Feb 2008 14:27:25 +0100
-Message-ID: <47C2C23D.1030609@viscovery.net>
+From: "Mark Levedahl" <mlevedahl@gmail.com>
+Subject: Re: [PATCH] gitk: don't save the geometry to rc file on exit
+Date: Mon, 25 Feb 2008 08:35:43 -0500
+Message-ID: <30e4a070802250535g72b59106yb1e4478eb9b9f47a@mail.gmail.com>
+References: <47AAA254.2020008@thorn.ws> <20080207063020.GP24004@spearce.org>
+	 <200802071056.19370.robin.rosenberg.lists@dewire.com>
+	 <20080207101051.19459.qmail@fcb20609bc7c07.315fe32.mid.smarden.org>
+	 <20080223113759.12854.qmail@6a8737aa4695b2.315fe32.mid.smarden.org>
+	 <18368.41742.689290.877767@cargo.ozlabs.ibm.com>
+	 <20080225080739.GA13610@piper.oerlikon.madduck.net>
+	 <18370.45020.940192.10482@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Feb 25 14:28:05 2008
+Cc: "martin f krafft" <madduck@madduck.net>,
+	"Gerrit Pape" <pape@smarden.org>, git@vger.kernel.org
+To: "Paul Mackerras" <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Mon Feb 25 14:36:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JTdNE-0000P0-Vn
-	for gcvg-git-2@gmane.org; Mon, 25 Feb 2008 14:28:05 +0100
+	id 1JTdVJ-0002tU-Bj
+	for gcvg-git-2@gmane.org; Mon, 25 Feb 2008 14:36:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751691AbYBYN12 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Feb 2008 08:27:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751544AbYBYN12
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Feb 2008 08:27:28 -0500
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:29296 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751378AbYBYN11 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Feb 2008 08:27:27 -0500
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1JTdM4-0006Gs-TE; Mon, 25 Feb 2008 14:26:53 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 734AF4E4; Mon, 25 Feb 2008 14:27:25 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1752333AbYBYNfr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Feb 2008 08:35:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751978AbYBYNfr
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Feb 2008 08:35:47 -0500
+Received: from gv-out-0910.google.com ([216.239.58.189]:12548 "EHLO
+	gv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751781AbYBYNfq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Feb 2008 08:35:46 -0500
+Received: by gv-out-0910.google.com with SMTP id s4so529877gve.37
+        for <git@vger.kernel.org>; Mon, 25 Feb 2008 05:35:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=4kBjbkfTUmnurEAlY1d6Tt/WhoONqe7Ug2CgpSbJWso=;
+        b=U6wLZblOiseSbjQlcgsMi5CjBEVpQKzKW9iltHHpRHnHJzhC9cfgEJHXu0E03c4gnQTkM/rlQ+f41KmMghfzIsgNN2MAma1SZQFhH0kXLcsz8kUsVwDQyPzrtDuvT6mAuaWBK2shUHeMjalbOaOTgpY4710J8o8Z1efgBvQz9Sk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=YficaN1+0h9OtZ1OKWgtRG5MofBKrnuja6PsigHeAY+AL2hYnOzupFbfmq0GUTLEscDIkSY5W2TTnJWgjAG81T8eVO+v44YS4DTNQnmhPIWiY1HzrA7OG2PZEUk71V+q8o3ixv0++/p8ZR2wANcFR1fK8lP+9fGDvtxwMOy+jTs=
+Received: by 10.142.230.11 with SMTP id c11mr2227744wfh.86.1203946543540;
+        Mon, 25 Feb 2008 05:35:43 -0800 (PST)
+Received: by 10.143.159.5 with HTTP; Mon, 25 Feb 2008 05:35:43 -0800 (PST)
+In-Reply-To: <18370.45020.940192.10482@cargo.ozlabs.ibm.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75027>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75028>
 
-Any request to the daemon would fail if either interpolated-path or
-base-path (if specified) would not be absolute. Hence, we can check those
-paths for validity upfront and not start the daemon at all if the paths are
-invalid.
+On Mon, Feb 25, 2008 at 7:09 AM, Paul Mackerras <paulus@samba.org> wrote:
+> martin f krafft writes:
+>
+>  > May I suggest that such a patch actually disables writing of the
+>  > config file, so that we won't get conflicts every time you sync
+>  > config files via home-in-git?
+>
+>  Then various other bits of config won't be persistent, such as font
+>  settings.  So I don't think that's a good idea.
+>
+>  It would be possible to make the config file be per-repository rather
+>  than global, I guess, if that is something people want.  I personally
+>  would find it annoying to have to change the font separately in each
+>  repository, but tastes differ, I guess.
+>
+>  Paul.
+>
+Two things we could do:
 
-Additionally, we now check that the base-path is an existing directory.
+1) Add a "save config now" button and a "save config on exit"
+checkbox/option to the options dialog.
+2) Perform a screen geometry check at load time to see if the corners
+of the main window would be visible before applying the main window
+geometry.
 
-Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
----
- daemon.c |   24 +++++++++++++-----------
- 1 files changed, 13 insertions(+), 11 deletions(-)
-
-diff --git a/daemon.c b/daemon.c
-index dd0177f..64c7fff 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -220,12 +220,6 @@ static char *path_ok(struct interp *itable)
- 		}
- 	}
- 	else if (interpolated_path && saw_extended_args) {
--		if (*dir != '/') {
--			/* Allow only absolute */
--			logerror("'%s': Non-absolute path denied (interpolated-path active)", dir);
--			return NULL;
--		}
--
- 		interpolate(interp_path, PATH_MAX, interpolated_path,
- 			    interp_table, ARRAY_SIZE(interp_table));
- 		loginfo("Interpolated dir '%s'", interp_path);
-@@ -233,11 +227,6 @@ static char *path_ok(struct interp *itable)
- 		dir = interp_path;
- 	}
- 	else if (base_path) {
--		if (*dir != '/') {
--			/* Allow only absolute */
--			logerror("'%s': Non-absolute path denied (base-path active)", dir);
--			return NULL;
--		}
- 		snprintf(rpath, PATH_MAX, "%s%s", base_path, dir);
- 		dir = rpath;
- 	}
-@@ -1184,6 +1173,19 @@ int main(int argc, char **argv)
- 	if (strict_paths && (!ok_paths || !*ok_paths))
- 		die("option --strict-paths requires a whitelist");
-
-+	if (base_path) {
-+		struct stat st;
-+
-+		if (!is_absolute_path(base_path))
-+			die("base-path must be absolute");
-+		if (stat(base_path, &st) || !S_ISDIR(st.st_mode))
-+			die("base-path '%s' does not exist or "
-+			    "is not a directory", base_path);
-+	}
-+
-+	if (interpolated_path && !is_absolute_path(interpolated_path))
-+		die("interpolated-path must be absolute");
-+
- 	if (inetd_mode) {
- 		struct sockaddr_storage ss;
- 		struct sockaddr *peer = (struct sockaddr *)&ss;
--- 
-1.5.4.3.229.g5c72
+Mark
