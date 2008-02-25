@@ -1,77 +1,83 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: how to apply diff between A and B to a file?
-Date: Mon, 25 Feb 2008 10:58:03 -0800 (PST)
-Message-ID: <m3fxvgc18q.fsf@localhost.localdomain>
-References: <20080225214326.353d0e95@wizard.volgograd.ru>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: git-email automatic --to detection?
+Date: Mon, 25 Feb 2008 19:57:13 +0100
+Message-ID: <vpqoda43lva.fsf@bauges.imag.fr>
+References: <slrnfs3rv4.aqm.jgoerzen@katherina.lan.complete.org>
+	<20080225183413.GA15131@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Denis Shaposhnikov <dsh@wizard.volgograd.ru>
-X-From: git-owner@vger.kernel.org Mon Feb 25 19:58:58 2008
+Cc: John Goerzen <jgoerzen@complete.org>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Feb 25 19:59:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JTiXL-0002jr-J6
-	for gcvg-git-2@gmane.org; Mon, 25 Feb 2008 19:58:52 +0100
+	id 1JTiXm-0002uB-Ge
+	for gcvg-git-2@gmane.org; Mon, 25 Feb 2008 19:59:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756049AbYBYS6M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Feb 2008 13:58:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751010AbYBYS6L
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Feb 2008 13:58:11 -0500
-Received: from fk-out-0910.google.com ([209.85.128.189]:34268 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756066AbYBYS6I (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Feb 2008 13:58:08 -0500
-Received: by fk-out-0910.google.com with SMTP id z23so2365425fkz.5
-        for <git@vger.kernel.org>; Mon, 25 Feb 2008 10:58:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
-        bh=hDNy2EEyZIzcHvq0KsDhjOYEaar23fWdDdVRGVgSJF4=;
-        b=AFX0UGzOq3R8ie8bGgbmzf7iw5a7GbktcmD1Nzffztcq9d8CracRQrAo0D5wsY42B2OxOcKqUehYDPHpVZXwo7VdZxrD/wyZ+cEl0hiKEP0YjBoUUzgfbfseNhIp3lbOJfhgYVZPPu5vrZBRN76c4FmMIOq2MjPcmsu5e6krQ5Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
-        b=Xp4wFoQ++U59yovFJr/fu1NI5fD6bs9TYMPBqfo1cfCRNzUqTQ/TIBveFmPuClqLIzxSiuO4y9eoCPW3xDNsQe3pppsUh8fg3i8UoDZtietK26u2LVRXiTHDWVuYaWcUX5sVl5dTIOhsUl3Woqcz3lImpn5CGv4UNb7h9GsKcjc=
-Received: by 10.82.189.6 with SMTP id m6mr6659755buf.16.1203965885422;
-        Mon, 25 Feb 2008 10:58:05 -0800 (PST)
-Received: from localhost.localdomain ( [83.8.199.10])
-        by mx.google.com with ESMTPS id b36sm9351827ika.2.2008.02.25.10.58.02
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 25 Feb 2008 10:58:03 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m1PIvxJ4012521;
-	Mon, 25 Feb 2008 19:57:59 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m1PIvvu9012517;
-	Mon, 25 Feb 2008 19:57:57 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <20080225214326.353d0e95@wizard.volgograd.ru>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1755714AbYBYS6j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Feb 2008 13:58:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755653AbYBYS6j
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Feb 2008 13:58:39 -0500
+Received: from imag.imag.fr ([129.88.30.1]:61606 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754825AbYBYS6i (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Feb 2008 13:58:38 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id m1PIvG2K018506
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 25 Feb 2008 19:57:16 +0100 (CET)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1JTiVl-000707-Gy; Mon, 25 Feb 2008 19:57:13 +0100
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1JTiVl-0005c0-Eg; Mon, 25 Feb 2008 19:57:13 +0100
+In-Reply-To: <20080225183413.GA15131@sigill.intra.peff.net> (Jeff King's message of "Mon\, 25 Feb 2008 13\:34\:14 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 25 Feb 2008 19:57:17 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75045>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75046>
 
-Denis Shaposhnikov <dsh@wizard.volgograd.ru> writes:
+Jeff King <peff@peff.net> writes:
 
-> Hello,
-> 
-> With svn I used a command "svn merge -r A:B some/file" to apply diff
-> between revisions A and B to file some/file. I done it in one branch,
-> in trunk for example. Is it possible to do such thing with git?
+>   - there's more than _one_ maintainer for the repo; in fact, who you
+>     email depends on what part of the code you are touching
 
-Not using "git merge", which is by design whole tree opration in
-Git. It must be, to support rename detection.
+Yes, but a sane default address to send to can be given by the
+repository you make your original clone from.
 
-You can, however, do the following:
+The really nice thing with the way darcs does it is that it makes it
+extremely easy for an occasional contribution. If the maintainer
+configured his stuff correctly, it's really "darcs get; ... ; darcs
+record; darcs send". git-send-email is nice, but harder to use for a
+first-timer.
 
-  $ git diff A B -- some/file | git apply --index
+>   - this information could be shipped as part of the repo (i.e., under
+>     version control like the rest of the project, as it changes with the
+>     project)
 
-(not tested!).
+True, but for the case of multiple maintainers, that would break
+merging between maintainers on that particular part.
+
+You can have a maintainer A advertizing for A@domain.com, and a
+"sub-maintainer" B advertizing for B@domain.com. If A merges from B,
+he doesn't want his advertized adress to become the one of B.
+
+>   - this information can potentially be inferred from git shortlog
+>     and/or blame; this addresses the problem of data becoming stale
+
+Yes and no. git@vger.kernel.org won't appear anywhere in these for
+example.
+
 -- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Matthieu
