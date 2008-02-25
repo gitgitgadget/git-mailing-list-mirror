@@ -1,73 +1,89 @@
-From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
-Subject: Re: [PATCH] Teach git-describe --long to output always the long format
-Date: Mon, 25 Feb 2008 09:34:31 +0100
-Message-ID: <8aa486160802250034ncdf20b6s13856ca8612bc2ea@mail.gmail.com>
-References: <1203864412-27977-1-git-send-email-sbejar@gmail.com>
-	 <20080225023634.GK8410@spearce.org>
-	 <7vwsotpwbr.fsf@gitster.siamese.dyndns.org>
+From: "Alxneit-Kamber Ivo" <ivo.alxneit@psi.ch>
+Subject: Re: unexpected behavior of 'git rebase'
+Date: Mon, 25 Feb 2008 09:37:16 +0100
+Message-ID: <1203928636.29205.2.camel@pc6411.psi.ch>
+References: <1203693047.6429.11.camel@pc6411.psi.ch> <m3ejb3dejg.fsf@localhost.localdomain>
+Reply-To: "Alxneit-Kamber Ivo" <ivo.alxneit@psi.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 25 09:35:15 2008
+Content-Type: multipart/signed;
+	boundary="=-uf9CLnBKZHtIzwgjOLqU";
+	protocol="application/pgp-signature";
+	micalg=pgp-sha1
+Cc: <git@vger.kernel.org>
+To: "Jakub Narebski" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 25 09:37:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JTYno-0000jA-3Y
-	for gcvg-git-2@gmane.org; Mon, 25 Feb 2008 09:35:12 +0100
+	id 1JTYqS-0001MS-Ge
+	for gcvg-git-2@gmane.org; Mon, 25 Feb 2008 09:37:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753628AbYBYIeg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Feb 2008 03:34:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752997AbYBYIeg
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Feb 2008 03:34:36 -0500
-Received: from el-out-1112.google.com ([209.85.162.176]:13599 "EHLO
-	el-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752833AbYBYIef (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Feb 2008 03:34:35 -0500
-Received: by el-out-1112.google.com with SMTP id v27so1216923ele.23
-        for <git@vger.kernel.org>; Mon, 25 Feb 2008 00:34:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=mueUtNO8S+64KYFzeA3RdAuzCP46NUYNvJE3Frb/hZQ=;
-        b=p1OOP4BOouavxEhRACabXq+D8bkC2G1DAbEQ9fCjnhBg9JoC0aFeSulETaMKApVnud/wGnhve+Pf+PU/yaekeVi6tN5HH++99h0K0I1R6edbIv+RkfLkkWjm05a03CtBblG+Pu/OQ4neMHh9c0vn8fRvM9aAgVsDMYZwh34BSng=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=gxbSjIQbstTZdsJqGBEZpqQixLiPXeQz+Z7L1W+pDb5y84Ol7k7XoJPBMP+X64UwhHrgcirk+gUpjqU2X2nR9T4s8YhQXsO/RHF9vk8sK8r41he2xwIZQ930N9wAflD2eGVedE6s5+KnMn8f16YnPDo8PZHkwFAMfgfDpwIc9x4=
-Received: by 10.150.230.2 with SMTP id c2mr965711ybh.161.1203928471833;
-        Mon, 25 Feb 2008 00:34:31 -0800 (PST)
-Received: by 10.150.205.9 with HTTP; Mon, 25 Feb 2008 00:34:31 -0800 (PST)
-In-Reply-To: <7vwsotpwbr.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1753792AbYBYIhV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Feb 2008 03:37:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753809AbYBYIhU
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Feb 2008 03:37:20 -0500
+Received: from mailsend02.psi.ch ([129.129.191.54]:20140 "EHLO
+	MAILSEND02.psi.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752997AbYBYIhT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Feb 2008 03:37:19 -0500
+Received: from MAILBOX0A.psi.ch ([129.129.190.193]) by MAILSEND02.psi.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 25 Feb 2008 09:37:17 +0100
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Received: from 129.129.206.141 ([129.129.206.141]) by MAILBOX0A.psi.ch ([129.129.190.181]) via Exchange Front-End Server mail.psi.ch ([129.129.191.53]) with Microsoft Exchange Server HTTP-DAV ; Mon, 25 Feb 2008 08:37:16 +0000
+Received: from pc6411 by mail.psi.ch; 25 Feb 2008 09:37:16 +0100
+Content-class: urn:content-classes:message
+In-Reply-To: <m3ejb3dejg.fsf@localhost.localdomain>
+X-MS-Has-Attach: yes
+X-MS-TNEF-Correlator: 
+Thread-Topic: unexpected behavior of 'git rebase'
+thread-index: Ach3iaCCv/ln1yNsQemnniBe7eRmQw==
+X-OriginalArrivalTime: 25 Feb 2008 08:37:17.0355 (UTC) FILETIME=[A0E387B0:01C87789]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75012>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75013>
 
-On Mon, Feb 25, 2008 at 4:08 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> "Shawn O. Pearce" <spearce@spearce.org> writes:
->
->  >> +            else
->  >> +                    printf("%s-0-g%s\n", n->path,
->  >> +                            find_unique_abbrev(cmit->object.sha1, abbrev));
->  >
->  > Is this really that useful?  Where is having the tag and the commit
->  > SHA-1 both useful?
->
->  I had the same question.  The only place that I find this could
->  be useful is when you tag, build and install, and then find
->  glitches before pushing the results out and rewind, rebuild and
->  re-tag.  I unfortunately have this issue almost all the time.
->
->  But even then, I would probably not rely on this patch.
->
 
-This can be usefull when more than one person can make "official" tags
-(or nobody), and then you have a uniqe idendifier with a descriptive
-name.
+--=-uf9CLnBKZHtIzwgjOLqU
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-Santi
+On Sat, 2008-02-23 at 04:48 -0800, Jakub Narebski wrote:
+> "Alxneit-Kamber Ivo" <ivo.alxneit@psi.ch> writes:
+>=20
+> > I found that 'git rebase' does not include stashed stuff.
+>=20
+> This, I think, is caused mainly by the fact that stash is currently
+> global per repository, and not per-branch thing.
+>=20
+> You can always rebase stash on top of after-rebase branch.
+>=20
+
+ok, thanks. so it sounds like an intended behavior (maybe the
+documentation should mention this explicitly).
+
+moving the stashed stuff to the correct place and removing the
+left-behind unnamed brach is no problem.
+
+--=20
+Dr. Ivo Alxneit
+Laboratory for Solar Technology   phone: +41 56 310 4092
+Paul Scherrer Institute             fax: +41 56 310 2688
+CH-5232 Villigen                   http://solar.web.psi.ch
+Switzerland                   gnupg key: 0x515E30C7
+
+--=-uf9CLnBKZHtIzwgjOLqU
+Content-Type: application/pgp-signature; name=signature.asc
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.5 (GNU/Linux)
+
+iD8DBQBHwn48Ad7CE1FeMMcRAhLqAJ9j8dZ1TwFIz2TTqZIP+Wij2anZnwCgnWpX
+zv3llqvTOZyUBn9ZSs6JHBg=
+=05vp
+-----END PGP SIGNATURE-----
+
+--=-uf9CLnBKZHtIzwgjOLqU--
