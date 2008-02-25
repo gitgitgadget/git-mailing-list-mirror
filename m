@@ -1,342 +1,317 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: [PATCH 1/2] Add API access to shortlog
-Date: Mon, 25 Feb 2008 18:24:14 -0500 (EST)
-Message-ID: <alpine.LNX.1.00.0802251822120.19024@iabervon.org>
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: [PATCH] http-push: add regression tests
+Date: Tue, 26 Feb 2008 00:28:20 +0100
+Message-ID: <20080225232820.GA18254@localhost>
+References: <20080218130726.GA26854@localhost> <alpine.LSU.1.00.0802181339470.30505@racer.site> <20080218155546.GA8934@localhost> <alpine.LSU.1.00.0802181733400.30505@racer.site> <20080223212843.GA30054@localhost> <20080224085830.GD13416@glandium.org> <20080224180340.GA11515@localhost> <20080224184832.GA24240@glandium.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 26 00:25:17 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Eric Wong <normalperson@yhbt.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Tue Feb 26 00:29:27 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JTmh4-0005qy-Kh
-	for gcvg-git-2@gmane.org; Tue, 26 Feb 2008 00:25:11 +0100
+	id 1JTmkr-0006zB-5O
+	for gcvg-git-2@gmane.org; Tue, 26 Feb 2008 00:29:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756483AbYBYXYR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Feb 2008 18:24:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756299AbYBYXYR
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Feb 2008 18:24:17 -0500
-Received: from iabervon.org ([66.92.72.58]:59582 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756366AbYBYXYP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Feb 2008 18:24:15 -0500
-Received: (qmail 21592 invoked by uid 1000); 25 Feb 2008 23:24:14 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 25 Feb 2008 23:24:14 -0000
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1755581AbYBYX23 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Feb 2008 18:28:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755297AbYBYX22
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Feb 2008 18:28:28 -0500
+Received: from wr-out-0506.google.com ([64.233.184.238]:25157 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754034AbYBYX21 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Feb 2008 18:28:27 -0500
+Received: by wr-out-0506.google.com with SMTP id c48so2799721wra.23
+        for <git@vger.kernel.org>; Mon, 25 Feb 2008 15:28:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:sender;
+        bh=0rJaqO1HXGhJFK2efoof3NmJF+QybxR+hMtYI4MS8rY=;
+        b=cIYf/UYpl627D+cwismt1mIUHQ6RGwYO8BHsXoPo29kSpJkSMYohmLUYfdCAMxxodM63q6/evTkYfE1Yl3ZrPDn4qsYV9HoYiizaCuGviEYETAZZUFhOuvzV+iB8FP/BGm/9dqR5GL29QRbMSIgZ7ROCB4By/zDzu1BZ+2I0sIc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:sender;
+        b=c9API1mEuqdNYu8vo4/MhloP0AxHkyYnaRqf75QTqG1T/PcIeG8ieqbte+7/YDMrxBgVStFTh79/I11WcpP5tjtWF2sfeNMsjSLexYHkvdl8fvriAsd1lgxHv7o8rMFwWpyicvwYFgkcrcSy/m4ROPhps/efsTjM+QzXMAEVx2g=
+Received: by 10.78.90.10 with SMTP id n10mr971051hub.79.1203982104802;
+        Mon, 25 Feb 2008 15:28:24 -0800 (PST)
+Received: from darc.dyndns.org ( [84.154.127.94])
+        by mx.google.com with ESMTPS id u9sm7716718muf.4.2008.02.25.15.28.21
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 25 Feb 2008 15:28:23 -0800 (PST)
+Received: from drizzd by darc.dyndns.org with local (Exim 4.68)
+	(envelope-from <drizzd@aon.at>)
+	id 1JTmk8-0004lX-Ag; Tue, 26 Feb 2008 00:28:20 +0100
+Content-Disposition: inline
+In-Reply-To: <20080224184832.GA24240@glandium.org>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75089>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75090>
 
-Shortlog is gives a pretty simple API for cases where you're already
-identifying all of the individual commits. Make this available to
-other code instead of requiring them to use the revision API and
-command line.
+http-push tests require a web server with WebDAV support.
 
-Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
+This commit introduces a HTTPD test library, which can be configured using
+the following environment variables.
+
+LIB_HTTPD_PATH		web server path
+LIB_HTTPD_MODULE_PATH	web server modules path
+LIB_HTTPD_PORT		listening port
+LIB_HTTPD_DAV		enable DAV
+LIB_HTTPD_SVN		enable SVN
+LIB_HTTPD_SSL		enable SSL
+
+Signed-off-by: Clemens Buchacher <drizzd@aon.at>
 ---
- builtin-shortlog.c |  149 ++++++++++++++++++++++++++++------------------------
- shortlog.h         |   26 +++++++++
- 2 files changed, 106 insertions(+), 69 deletions(-)
- create mode 100644 shortlog.h
 
-diff --git a/builtin-shortlog.c b/builtin-shortlog.c
-index 0055a57..af31aba 100644
---- a/builtin-shortlog.c
-+++ b/builtin-shortlog.c
-@@ -6,13 +6,11 @@
- #include "revision.h"
- #include "utf8.h"
- #include "mailmap.h"
-+#include "shortlog.h"
- 
- static const char shortlog_usage[] =
- "git-shortlog [-n] [-s] [-e] [<commit-id>... ]";
- 
--static char *common_repo_prefix;
--static int email;
--
- static int compare_by_number(const void *a1, const void *a2)
- {
- 	const struct path_list_item *i1 = a1, *i2 = a2;
-@@ -26,13 +24,11 @@ static int compare_by_number(const void *a1, const void *a2)
- 		return -1;
- }
- 
--static struct path_list mailmap = {NULL, 0, 0, 0};
--
--static void insert_one_record(struct path_list *list,
-+static void insert_one_record(struct shortlog *log,
- 			      const char *author,
- 			      const char *oneline)
- {
--	const char *dot3 = common_repo_prefix;
-+	const char *dot3 = log->common_repo_prefix;
- 	char *buffer, *p;
- 	struct path_list_item *item;
- 	struct path_list *onelines;
-@@ -47,7 +43,7 @@ static void insert_one_record(struct path_list *list,
- 	eoemail = strchr(boemail, '>');
- 	if (!eoemail)
- 		return;
--	if (!map_email(&mailmap, boemail+1, namebuf, sizeof(namebuf))) {
-+	if (!map_email(&log->mailmap, boemail+1, namebuf, sizeof(namebuf))) {
- 		while (author < boemail && isspace(*author))
- 			author++;
- 		for (len = 0;
-@@ -61,14 +57,14 @@ static void insert_one_record(struct path_list *list,
- 	else
- 		len = strlen(namebuf);
- 
--	if (email) {
-+	if (log->email) {
- 		size_t room = sizeof(namebuf) - len - 1;
- 		int maillen = eoemail - boemail + 1;
- 		snprintf(namebuf + len, room, " %.*s", maillen, boemail);
- 	}
- 
- 	buffer = xstrdup(namebuf);
--	item = path_list_insert(buffer, list);
-+	item = path_list_insert(buffer, &log->list);
- 	if (item->util == NULL)
- 		item->util = xcalloc(1, sizeof(struct path_list));
- 	else
-@@ -114,7 +110,7 @@ static void insert_one_record(struct path_list *list,
- 	onelines->items[onelines->nr++].path = buffer;
- }
- 
--static void read_from_stdin(struct path_list *list)
-+static void read_from_stdin(struct shortlog *log)
- {
- 	char author[1024], oneline[1024];
- 
-@@ -128,39 +124,43 @@ static void read_from_stdin(struct path_list *list)
- 		while (fgets(oneline, sizeof(oneline), stdin) &&
- 		       oneline[0] == '\n')
- 			; /* discard blanks */
--		insert_one_record(list, author + 8, oneline);
-+		insert_one_record(log, author + 8, oneline);
- 	}
- }
- 
--static void get_from_rev(struct rev_info *rev, struct path_list *list)
-+void shortlog_add_commit(struct shortlog *log, struct commit *commit)
- {
--	struct commit *commit;
--
--	if (prepare_revision_walk(rev))
--		die("revision walk setup failed");
--	while ((commit = get_revision(rev)) != NULL) {
--		const char *author = NULL, *buffer;
-+	const char *author = NULL, *buffer;
- 
--		buffer = commit->buffer;
--		while (*buffer && *buffer != '\n') {
--			const char *eol = strchr(buffer, '\n');
-+	buffer = commit->buffer;
-+	while (*buffer && *buffer != '\n') {
-+		const char *eol = strchr(buffer, '\n');
- 
--			if (eol == NULL)
--				eol = buffer + strlen(buffer);
--			else
--				eol++;
-+		if (eol == NULL)
-+			eol = buffer + strlen(buffer);
-+		else
-+			eol++;
- 
--			if (!prefixcmp(buffer, "author "))
--				author = buffer + 7;
--			buffer = eol;
--		}
--		if (!author)
--			die("Missing author: %s",
--			    sha1_to_hex(commit->object.sha1));
--		if (*buffer)
--			buffer++;
--		insert_one_record(list, author, !*buffer ? "<none>" : buffer);
-+		if (!prefixcmp(buffer, "author "))
-+			author = buffer + 7;
-+		buffer = eol;
- 	}
-+	if (!author)
-+		die("Missing author: %s",
-+		    sha1_to_hex(commit->object.sha1));
-+	if (*buffer)
-+		buffer++;
-+	insert_one_record(log, author, !*buffer ? "<none>" : buffer);
-+}
-+
-+static void get_from_rev(struct rev_info *rev, struct shortlog *log)
-+{
-+	struct commit *commit;
-+
-+	if (prepare_revision_walk(rev))
-+		die("revision walk setup failed");
-+	while ((commit = get_revision(rev)) != NULL)
-+		shortlog_add_commit(log, commit);
- }
- 
- static int parse_uint(char const **arg, int comma)
-@@ -212,29 +212,38 @@ static void parse_wrap_args(const char *arg, int *in1, int *in2, int *wrap)
- 		die(wrap_arg_usage);
- }
- 
-+void shortlog_init(struct shortlog *log)
-+{
-+	memset(log, 0, sizeof(*log));
-+
-+	read_mailmap(&log->mailmap, ".mailmap", &log->common_repo_prefix);
-+
-+	log->list.strdup_paths = 1;
-+	log->wrap = DEFAULT_WRAPLEN;
-+	log->in1 = DEFAULT_INDENT1;
-+	log->in2 = DEFAULT_INDENT2;
-+}
-+
- int cmd_shortlog(int argc, const char **argv, const char *prefix)
- {
-+	struct shortlog log;
- 	struct rev_info rev;
--	struct path_list list = { NULL, 0, 0, 1 };
--	int i, j, sort_by_number = 0, summary = 0;
--	int wrap_lines = 0;
--	int wrap = DEFAULT_WRAPLEN;
--	int in1 = DEFAULT_INDENT1;
--	int in2 = DEFAULT_INDENT2;
-+
-+	shortlog_init(&log);
- 
- 	/* since -n is a shadowed rev argument, parse our args first */
- 	while (argc > 1) {
- 		if (!strcmp(argv[1], "-n") || !strcmp(argv[1], "--numbered"))
--			sort_by_number = 1;
-+			log.sort_by_number = 1;
- 		else if (!strcmp(argv[1], "-s") ||
- 				!strcmp(argv[1], "--summary"))
--			summary = 1;
-+			log.summary = 1;
- 		else if (!strcmp(argv[1], "-e") ||
- 			 !strcmp(argv[1], "--email"))
--			email = 1;
-+			log.email = 1;
- 		else if (!prefixcmp(argv[1], "-w")) {
--			wrap_lines = 1;
--			parse_wrap_args(argv[1], &in1, &in2, &wrap);
-+			log.wrap_lines = 1;
-+			parse_wrap_args(argv[1], &log.in1, &log.in2, &log.wrap);
- 		}
- 		else if (!strcmp(argv[1], "-h") || !strcmp(argv[1], "--help"))
- 			usage(shortlog_usage);
-@@ -248,34 +257,38 @@ int cmd_shortlog(int argc, const char **argv, const char *prefix)
- 	if (argc > 1)
- 		die ("unrecognized argument: %s", argv[1]);
- 
--	read_mailmap(&mailmap, ".mailmap", &common_repo_prefix);
--
- 	/* assume HEAD if from a tty */
- 	if (!rev.pending.nr && isatty(0))
- 		add_head_to_pending(&rev);
- 	if (rev.pending.nr == 0) {
--		read_from_stdin(&list);
-+		read_from_stdin(&log);
- 	}
- 	else
--		get_from_rev(&rev, &list);
-+		get_from_rev(&rev, &log);
- 
--	if (sort_by_number)
--		qsort(list.items, list.nr, sizeof(struct path_list_item),
--			compare_by_number);
-+	shortlog_output(&log);
-+	return 0;
-+}
- 
--	for (i = 0; i < list.nr; i++) {
--		struct path_list *onelines = list.items[i].util;
-+void shortlog_output(struct shortlog *log)
-+{
-+	int i, j;
-+	if (log->sort_by_number)
-+		qsort(log->list.items, log->list.nr, sizeof(struct path_list_item),
-+			compare_by_number);
-+	for (i = 0; i < log->list.nr; i++) {
-+		struct path_list *onelines = log->list.items[i].util;
- 
--		if (summary) {
--			printf("%6d\t%s\n", onelines->nr, list.items[i].path);
-+		if (log->summary) {
-+			printf("%6d\t%s\n", onelines->nr, log->list.items[i].path);
- 		} else {
--			printf("%s (%d):\n", list.items[i].path, onelines->nr);
-+			printf("%s (%d):\n", log->list.items[i].path, onelines->nr);
- 			for (j = onelines->nr - 1; j >= 0; j--) {
- 				const char *msg = onelines->items[j].path;
- 
--				if (wrap_lines) {
--					int col = print_wrapped_text(msg, in1, in2, wrap);
--					if (col != wrap)
-+				if (log->wrap_lines) {
-+					int col = print_wrapped_text(msg, log->in1, log->in2, log->wrap);
-+					if (col != log->wrap)
- 						putchar('\n');
- 				}
- 				else
-@@ -287,13 +300,11 @@ int cmd_shortlog(int argc, const char **argv, const char *prefix)
- 		onelines->strdup_paths = 1;
- 		path_list_clear(onelines, 1);
- 		free(onelines);
--		list.items[i].util = NULL;
-+		log->list.items[i].util = NULL;
- 	}
- 
--	list.strdup_paths = 1;
--	path_list_clear(&list, 1);
--	mailmap.strdup_paths = 1;
--	path_list_clear(&mailmap, 1);
--
--	return 0;
-+	log->list.strdup_paths = 1;
-+	path_list_clear(&log->list, 1);
-+	log->mailmap.strdup_paths = 1;
-+	path_list_clear(&log->mailmap, 1);
- }
-diff --git a/shortlog.h b/shortlog.h
+On Sun, Feb 24, 2008 at 07:48:32PM +0100, Mike Hommey wrote:
+> I took a quick but deeper look to your script, and I think it would be
+> better to have a httpd.conf with proper <IfDefine> directives, and
+> toggle the proper defines on the httpd command line.
+
+Alright, here we go.
+
+ t/lib-httpd.sh          |   88 +++++++++++++++++++++++++++++++++++++++++++++++
+ t/lib-httpd/apache.conf |   34 ++++++++++++++++++
+ t/lib-httpd/ssl.cnf     |    8 ++++
+ t/t5540-http-push.sh    |   73 +++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 203 insertions(+), 0 deletions(-)
+ create mode 100644 t/lib-httpd.sh
+ create mode 100644 t/lib-httpd/apache.conf
+ create mode 100644 t/lib-httpd/ssl.cnf
+ create mode 100644 t/t5540-http-push.sh
+
+diff --git a/t/lib-httpd.sh b/t/lib-httpd.sh
 new file mode 100644
-index 0000000..31ff491
+index 0000000..2c621c4
 --- /dev/null
-+++ b/shortlog.h
-@@ -0,0 +1,26 @@
-+#ifndef SHORTLOG_H
-+#define SHORTLOG_H
++++ b/t/lib-httpd.sh
+@@ -0,0 +1,88 @@
++#!/bin/sh
++#
++# Copyright (c) 2008 Clemens Buchacher <drizzd@aon.at>
++#
 +
-+#include "path-list.h"
++LIB_HTTPD_PATH=${LIB_HTTPD_PATH-'/usr/sbin/apache2'}
++LIB_HTTPD_PORT=${LIB_HTTPD_PORT-'8111'}
 +
-+struct shortlog {
-+	struct path_list list;
-+	int summary;
-+	int wrap_lines;
-+	int sort_by_number;
-+	int wrap;
-+	int in1;
-+	int in2;
++TEST_PATH="$PWD"/../lib-httpd
++HTTPD_ROOT_PATH="$PWD"/httpd
++HTTPD_DOCUMENT_ROOT_PATH="$PWD"/httpd/www
 +
-+	char *common_repo_prefix;
-+	int email;
-+	struct path_list mailmap;
-+};
++if ! test -x "$LIB_HTTPD_PATH"
++then
++        say_color "" "skipping test, no web server found at $LIB_HTTPD_PATH"
++        test_done
++        exit
++fi
 +
-+void shortlog_init(struct shortlog *log);
++HTTPD_VERSION=`$LIB_HTTPD_PATH -v | \
++	sed -n 's/^Server version: Apache\/\([0-9]*\)\..*$/\1/p; q'`
 +
-+void shortlog_add_commit(struct shortlog *log, struct commit *commit);
++if test -n "$HTTPD_VERSION"
++then
++	if test -z "$LIB_HTTPD_MODULE_PATH"
++	then
++		if ! test $HTTPD_VERSION -ge 2
++		then
++			say_color "" "skipping test, at least Apache version 2 is required"
++			test_done
++			exit
++		fi
 +
-+void shortlog_output(struct shortlog *log);
++		LIB_HTTPD_MODULE_PATH='/usr/lib/apache2/modules'
++	fi
++else
++	error "Could not identify web server '$LIB_HTTPD_PATH'"
++fi
 +
-+#endif
++HTTPD_PARA="-d $HTTPD_ROOT_PATH -f $TEST_PATH/apache.conf"
++
++prepare_httpd() {
++	mkdir $HTTPD_ROOT_PATH
++	mkdir $HTTPD_DOCUMENT_ROOT_PATH
++
++	ln -s $LIB_HTTPD_MODULE_PATH $HTTPD_ROOT_PATH/modules
++
++	if test -n "$LIB_HTTPD_SSL"
++	then
++		HTTPD_URL=https://127.0.0.1:$LIB_HTTPD_PORT
++	else
++		HTTPD_URL=http://127.0.0.1:$LIB_HTTPD_PORT
++	fi
++
++	if test "$LIB_HTTPD_SSL" != ""
++	then
++		openssl req \
++			-config $TEST_PATH/ssl.cnf \
++			-new -x509 -nodes \
++			-out $HTTPD_ROOT_PATH/httpd.pem \
++			-keyout $HTTPD_ROOT_PATH/httpd.pem
++		export GIT_SSL_NO_VERIFY=t
++		HTTPD_PARA="$HTTPD_PARA -DSSL"
++	fi
++			
++	if test "$LIB_HTTPD_DAV" != "" -o "$LIB_HTTPD_SVN" != ""
++	then
++		HTTPD_PARA="$HTTPD_PARA -DDAV"
++
++		if test "$LIB_HTTPD_SVN" != ""
++		then
++			HTTPD_PARA="$HTTPD_PARA -DSVN"
++			rawsvnrepo="$HTTPD_ROOT_PATH/svnrepo"
++			svnrepo="http://127.0.0.1:$LIB_HTTPD_PORT/svn"
++		fi
++	fi
++}
++
++start_httpd() {
++	prepare_httpd
++
++	"$LIB_HTTPD_PATH" $HTTPD_PARA \
++		-c "Listen 127.0.0.1:$LIB_HTTPD_PORT" -k start
++}
++
++stop_httpd() {
++	"$LIB_HTTPD_PATH" $HTTPD_PARA -k stop
++}
+diff --git a/t/lib-httpd/apache.conf b/t/lib-httpd/apache.conf
+new file mode 100644
+index 0000000..a447346
+--- /dev/null
++++ b/t/lib-httpd/apache.conf
+@@ -0,0 +1,34 @@
++PidFile httpd.pid
++DocumentRoot www
++ErrorLog error.log
++
++<IfDefine SSL>
++LoadModule ssl_module modules/mod_ssl.so
++
++SSLCertificateFile httpd.pem
++SSLCertificateKeyFile httpd.pem
++SSLRandomSeed startup file:/dev/urandom 512
++SSLRandomSeed connect file:/dev/urandom 512
++SSLSessionCache none
++SSLMutex file:ssl_mutex
++SSLEngine On
++</IfDefine>
++
++<IfDefine DAV>
++	LoadModule dav_module modules/mod_dav.so
++	LoadModule dav_fs_module modules/mod_dav_fs.so
++
++	DAVLockDB DAVLock
++	<Location />
++		Dav on
++	</Location>
++</IfDefine>
++
++<IfDefine SVN>
++	LoadModule dav_svn_module modules/mod_dav_svn.so
++
++	<Location /svn>
++		DAV svn
++		SVNPath svnrepo
++	</Location>
++</IfDefine>
+diff --git a/t/lib-httpd/ssl.cnf b/t/lib-httpd/ssl.cnf
+new file mode 100644
+index 0000000..8d89a05
+--- /dev/null
++++ b/t/lib-httpd/ssl.cnf
+@@ -0,0 +1,8 @@
++RANDFILE                = $ENV::HOME/.rnd
++
++[ req ]
++default_bits            = 1024
++distinguished_name      = req_distinguished_name
++prompt                  = no
++[ req_distinguished_name ]
++commonName              = 127.0.0.1
+diff --git a/t/t5540-http-push.sh b/t/t5540-http-push.sh
+new file mode 100644
+index 0000000..c12e2ad
+--- /dev/null
++++ b/t/t5540-http-push.sh
+@@ -0,0 +1,73 @@
++#!/bin/sh
++#
++# Copyright (c) 2008 Clemens Buchacher <drizzd@aon.at>
++#
++
++test_description='test http-push
++
++This test runs various sanity checks on http-push.'
++
++. ./test-lib.sh
++
++ROOT_PATH="$PWD"
++LIB_HTTPD_DAV=t
++
++. ../lib-httpd.sh
++
++if ! start_httpd >&3 2>&4
++then
++	say_color "" "skipping test, web server setup failed"
++	test_done
++	exit
++fi
++
++test_expect_success 'setup remote repository' '
++	cd "$ROOT_PATH" &&
++	mkdir test_repo &&
++	cd test_repo &&
++	git init &&
++	: >path1 &&
++	git add path1 &&
++	test_tick &&
++	git commit -m initial &&
++	cd - &&
++	git clone --bare test_repo test_repo.git &&
++	cd test_repo.git &&
++	git --bare update-server-info &&
++	chmod +x hooks/post-update &&
++	cd - &&
++	mv test_repo.git $HTTPD_DOCUMENT_ROOT_PATH
++'
++	
++test_expect_success 'clone remote repository' '
++	cd "$ROOT_PATH" &&
++	git clone $HTTPD_URL/test_repo.git test_repo_clone
++'
++
++test_expect_success 'push to remote repository' '
++	cd "$ROOT_PATH"/test_repo_clone &&
++	: >path2 &&
++	git add path2 &&
++	test_tick &&
++	git commit -m path2 &&
++	git push
++'
++
++test_expect_success 'create and delete remote branch' '
++	cd "$ROOT_PATH"/test_repo_clone &&
++	git checkout -b dev &&
++	: >path3 &&
++	git add path3 &&
++	test_tick &&
++	git commit -m dev &&
++	git push origin dev &&
++	git fetch &&
++	git push origin :dev &&
++	git branch -d -r origin/dev &&
++	git fetch &&
++	! git show-ref --verify refs/remotes/origin/dev
++'
++
++stop_httpd
++
++test_done
 -- 
-1.5.4.3.330.g53ab.dirty
+1.5.4.2.156.ge3c5
