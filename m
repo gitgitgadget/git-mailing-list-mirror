@@ -1,77 +1,57 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: git-email automatic --to detection?
-Date: Mon, 25 Feb 2008 21:55:05 +0100
-Message-ID: <20080225205505.GY31441@genesis.frugalware.org>
-References: <slrnfs3rv4.aqm.jgoerzen@katherina.lan.complete.org> <20080225183413.GA15131@sigill.intra.peff.net> <vpqoda43lva.fsf@bauges.imag.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv2] clone: support cloning full bundles
+Date: Mon, 25 Feb 2008 13:00:32 -0800
+Message-ID: <7vk5kshhu7.fsf@gitster.siamese.dyndns.org>
+References: <1203934349-12125-1-git-send-email-sbejar@gmail.com>
+ <7vlk58j0k1.fsf@gitster.siamese.dyndns.org>
+ <8aa486160802251229x778c7427nd51093bc23ec6c8c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="jnCIwN96y15MEy/K"
-Cc: Jeff King <peff@peff.net>, John Goerzen <jgoerzen@complete.org>,
-	git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Mon Feb 25 21:55:50 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?Q?Santi_B=C3=A9jar?= <sbejar@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 25 22:01:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JTkMU-0001rs-CK
-	for gcvg-git-2@gmane.org; Mon, 25 Feb 2008 21:55:46 +0100
+	id 1JTkRu-0003pO-Ob
+	for gcvg-git-2@gmane.org; Mon, 25 Feb 2008 22:01:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751676AbYBYUzJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Feb 2008 15:55:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753093AbYBYUzI
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Feb 2008 15:55:08 -0500
-Received: from virgo.iok.hu ([193.202.89.103]:10773 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751556AbYBYUzH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Feb 2008 15:55:07 -0500
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 8F9771B2524;
-	Mon, 25 Feb 2008 21:55:05 +0100 (CET)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id EDEA544668;
-	Mon, 25 Feb 2008 21:52:34 +0100 (CET)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 178E211901F5; Mon, 25 Feb 2008 21:55:05 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <vpqoda43lva.fsf@bauges.imag.fr>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1751463AbYBYVAq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 Feb 2008 16:00:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751052AbYBYVAq
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Feb 2008 16:00:46 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:54592 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750834AbYBYVAq convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 Feb 2008 16:00:46 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id CF468181D;
+	Mon, 25 Feb 2008 16:00:44 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 23CD7181A; Mon, 25 Feb 2008 16:00:40 -0500 (EST)
+In-Reply-To: <8aa486160802251229x778c7427nd51093bc23ec6c8c@mail.gmail.com>
+ (Santi =?utf-8?Q?B=C3=A9jar's?= message of "Mon, 25 Feb 2008 21:29:22 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75068>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75069>
 
+"Santi B=C3=A9jar" <sbejar@gmail.com> writes:
 
---jnCIwN96y15MEy/K
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+> ...
+> you need to reorganize other things (not the same output, to download
+> all the refs you need to write a config with refs/heads/*:..., "git
+> fetch" does not have a --no-progress), so I opted for
+> a minimal path (and not break the most used path :-).
 
-On Mon, Feb 25, 2008 at 07:57:13PM +0100, Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
-> The really nice thing with the way darcs does it is that it makes it
-> extremely easy for an occasional contribution. If the maintainer
-> configured his stuff correctly, it's really "darcs get; ... ; darcs
-> record; darcs send". git-send-email is nice, but harder to use for a
-> first-timer.
+That sounds like a sensible explanation.  As the external
+interface won't change even if we later do so, let's take this
+version for 1.5.5.
 
-that's true, while the practice can be the opposite. darcs forces you to
-have an smtpd on localhost, while git allows you to send the patch from
-your mail client. this _is_ easier for people sometimes. (especially
-these days when everybody blocks dhcp address ranges and an avarage user
-doesn't configure a proxy smtpd on localhost usually i think.)
-
-- VMiklos
-
---jnCIwN96y15MEy/K
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (GNU/Linux)
-
-iD8DBQFHwyspe81tAgORUJYRAj8+AKCDxFJvmEunje42WKPj0LuZqXPC7ACfcbvq
-Mwo//8amvj7wehzAkP0rEvQ=
-=LmI/
------END PGP SIGNATURE-----
-
---jnCIwN96y15MEy/K--
+Thanks.
