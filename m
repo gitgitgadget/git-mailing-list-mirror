@@ -1,66 +1,75 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: [PATCH] gitk: don't save the geometry to rc file on exit
-Date: Tue, 26 Feb 2008 00:08:34 +0100
-Message-ID: <200802260008.36360.robin.rosenberg.lists@dewire.com>
-References: <47AAA254.2020008@thorn.ws> <30e4a070802250535g72b59106yb1e4478eb9b9f47a@mail.gmail.com> <46a038f90802251159j591c16c2g1e5b5aa20e9edb00@mail.gmail.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: [RFC] Support TEST_GIT_PATH variable for the path for the git to
+ test
+Date: Mon, 25 Feb 2008 18:21:34 -0500 (EST)
+Message-ID: <alpine.LNX.1.00.0802251600220.19024@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Mark Levedahl" <mlevedahl@gmail.com>,
-	"Paul Mackerras" <paulus@samba.org>,
-	"martin f krafft" <madduck@madduck.net>,
-	"Gerrit Pape" <pape@smarden.org>, git@vger.kernel.org
-To: "Martin Langhoff" <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 26 00:10:35 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 26 00:22:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JTmSn-0000UO-T1
-	for gcvg-git-2@gmane.org; Tue, 26 Feb 2008 00:10:26 +0100
+	id 1JTmeF-0004v0-Az
+	for gcvg-git-2@gmane.org; Tue, 26 Feb 2008 00:22:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754267AbYBYXJt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 Feb 2008 18:09:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754034AbYBYXJt
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Feb 2008 18:09:49 -0500
-Received: from [83.140.172.130] ([83.140.172.130]:25926 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1753126AbYBYXJs (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Feb 2008 18:09:48 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 7AB89802816;
-	Tue, 26 Feb 2008 00:09:45 +0100 (CET)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id OKmTC7NW5YK2; Tue, 26 Feb 2008 00:09:44 +0100 (CET)
-Received: from [10.9.0.2] (unknown [10.9.0.2])
-	by dewire.com (Postfix) with ESMTP id AA1EA80019B;
-	Tue, 26 Feb 2008 00:09:44 +0100 (CET)
-User-Agent: KMail/1.9.9
-In-Reply-To: <46a038f90802251159j591c16c2g1e5b5aa20e9edb00@mail.gmail.com>
-Content-Disposition: inline
+	id S1754306AbYBYXVg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Feb 2008 18:21:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754209AbYBYXVg
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Feb 2008 18:21:36 -0500
+Received: from iabervon.org ([66.92.72.58]:33776 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754077AbYBYXVf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Feb 2008 18:21:35 -0500
+Received: (qmail 21382 invoked by uid 1000); 25 Feb 2008 23:21:34 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 25 Feb 2008 23:21:34 -0000
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75085>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75086>
 
-m=E5ndagen den 25 februari 2008 skrev Martin Langhoff:
-> On Tue, Feb 26, 2008 at 2:35 AM, Mark Levedahl <mlevedahl@gmail.com> =
-wrote:
-> >  2) Perform a screen geometry check at load time to see if the corn=
-ers
-> >  of the main window would be visible before applying the main windo=
-w
-> >  geometry.
->=20
-> As a multi-screen-layouts, multi-machine user, this approach has my
-> vote. I see a proto-patch from Edgar too. Even if the wm has similar
-> capabilities, those will be limited to main window geometry, not
-> inner-panel geometry so this is still useful.
+This is useful if you want to see how some other version of git
+handles the tests for some reason. (For example, see how a working
+version manages to work while a broken one doesn't)
 
-The annoying part is that it remembers the position. Remembering siz
-I can live with, but I don't want it popping up the wrong screen.
+This version only sort of works, but it's enough to have been helpful in 
+debugging builtin-clone, and most of what's left I don't really understand 
+at all (the perl code, for example).
 
--- robin
+Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
+---
+ t/test-lib.sh |    7 ++++---
+ 1 files changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 83889c4..5300549 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -281,7 +281,8 @@ test_create_repo () {
+ 	cd "$repo" || error "Cannot setup test environment"
+ 	"$GIT_EXEC_PATH/git" init --template=$GIT_EXEC_PATH/templates/blt/ >/dev/null 2>&1 ||
+ 	error "cannot run git init -- have you built things yet?"
+-	mv .git/hooks .git/hooks-disabled
++	[ ! -e .git/hooks ] || mv .git/hooks .git/hooks-disabled
++	[ -e .git/info ] || mkdir .git/info
+ 	cd "$owd"
+ }
+ 
+@@ -321,8 +322,8 @@ test_done () {
+ 
+ # Test the binaries we have just built.  The tests are kept in
+ # t/ subdirectory and are run in trash subdirectory.
+-PATH=$(pwd)/..:$PATH
+-GIT_EXEC_PATH=$(pwd)/..
++GIT_EXEC_PATH=${TEST_GIT_PATH:-$(pwd)/..}
++PATH=$GIT_EXEC_PATH:$(pwd)/..:$PATH
+ GIT_TEMPLATE_DIR=$(pwd)/../templates/blt
+ unset GIT_CONFIG
+ unset GIT_CONFIG_LOCAL
+-- 
+1.5.4.2.261.g851a5.dirty
