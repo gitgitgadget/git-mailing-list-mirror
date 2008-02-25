@@ -1,55 +1,49 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git-email automatic --to detection?
-Date: Mon, 25 Feb 2008 13:35:48 -0500
-Message-ID: <20080225183547.GB15131@sigill.intra.peff.net>
-References: <slrnfs3rv4.aqm.jgoerzen@katherina.lan.complete.org> <4d8e3fd30802241456l6c02a040te21643c830cf0e46@mail.gmail.com>
+From: Denis Shaposhnikov <dsh@wizard.volgograd.ru>
+Subject: how to apply diff between A and B to a file?
+Date: Mon, 25 Feb 2008 21:43:26 +0300
+Message-ID: <20080225214326.353d0e95@wizard.volgograd.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: John Goerzen <jgoerzen@complete.org>, git@vger.kernel.org
-To: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 25 19:37:38 2008
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 25 19:44:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JTiCZ-0002wd-3b
-	for gcvg-git-2@gmane.org; Mon, 25 Feb 2008 19:37:23 +0100
+	id 1JTiJ9-0005Zq-EF
+	for gcvg-git-2@gmane.org; Mon, 25 Feb 2008 19:44:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759290AbYBYSfw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Feb 2008 13:35:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759275AbYBYSfv
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Feb 2008 13:35:51 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4890 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759265AbYBYSfu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Feb 2008 13:35:50 -0500
-Received: (qmail 11612 invoked by uid 111); 25 Feb 2008 18:35:49 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Mon, 25 Feb 2008 13:35:49 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 25 Feb 2008 13:35:48 -0500
-Content-Disposition: inline
-In-Reply-To: <4d8e3fd30802241456l6c02a040te21643c830cf0e46@mail.gmail.com>
+	id S1755413AbYBYSnf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Feb 2008 13:43:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755250AbYBYSnf
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Feb 2008 13:43:35 -0500
+Received: from alias.rigel.internal.vlink.ru ([85.172.168.14]:54285 "EHLO
+	sagitta.internal.vlink.ru" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1755214AbYBYSne (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 Feb 2008 13:43:34 -0500
+Received: from sagitta.internal.vlink.ru (localhost [127.0.0.1])
+	by sagitta.internal.vlink.ru (Postfix) with ESMTP id B02E41F4920
+	for <git@vger.kernel.org>; Mon, 25 Feb 2008 21:43:31 +0300 (MSK)
+Received: from localhost (wizard.vlink.ru [85.172.168.67])
+	by sagitta.internal.vlink.ru (Postfix) with ESMTPSA id CA6BC1F48C7
+	for <git@vger.kernel.org>; Mon, 25 Feb 2008 21:43:30 +0300 (MSK)
+X-Mailer: Claws Mail 3.3.0 (GTK+ 2.12.8; i386-portbld-freebsd6.3)
+X-Virus-Scanned: ClamAV using ClamSMTP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75041>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75042>
 
-On Mon, Feb 25, 2008 at 02:26:03AM +0330, Paolo Ciarrocchi wrote:
+Hello,
 
-> I can't think of how to unify the commands from the ui point of view.
-> What do you suggest?
-> 
-> However, i like the idea of a --send commad line option to
-> git-format-patch that calls git-send-email to create and send the
-> patch series.
+With svn I used a command "svn merge -r A:B some/file" to apply diff
+between revisions A and B to file some/file. I done it in one branch,
+in trunk for example. Is it possible to do such thing with git?
 
-I think it makes sense the other way around: have git-send-email invoke
-git-format-patch.
+Thanks!
 
-My reasoning is that git-send-email users almost always use
-git-format-patch, but git-format-patch users frequently do not use
-git-send-email.
-
--Peff
+-- 
+DSS5-RIPE DSS-RIPN mailto:dsh@wizard.volgograd.ru xmpp:dsh@vlink.ru
+http://wizard.volgograd.ru/ 2:550/5068@fidonet 2:550/5069@fidonet
