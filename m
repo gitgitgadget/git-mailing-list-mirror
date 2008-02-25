@@ -1,104 +1,73 @@
-From: martin f krafft <madduck@madduck.net>
-Subject: Re: [PATCH] gitk: don't save the geometry to rc file on exit
-Date: Mon, 25 Feb 2008 09:07:39 +0100
-Message-ID: <20080225080739.GA13610@piper.oerlikon.madduck.net>
-References: <47AAA254.2020008@thorn.ws> <20080207063020.GP24004@spearce.org> <200802071056.19370.robin.rosenberg.lists@dewire.com> <20080207101051.19459.qmail@fcb20609bc7c07.315fe32.mid.smarden.org> <20080223113759.12854.qmail@6a8737aa4695b2.315fe32.mid.smarden.org> <18368.41742.689290.877767@cargo.ozlabs.ibm.com>
+From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
+Subject: Re: [PATCH] Teach git-describe --long to output always the long format
+Date: Mon, 25 Feb 2008 09:34:31 +0100
+Message-ID: <8aa486160802250034ncdf20b6s13856ca8612bc2ea@mail.gmail.com>
+References: <1203864412-27977-1-git-send-email-sbejar@gmail.com>
+	 <20080225023634.GK8410@spearce.org>
+	 <7vwsotpwbr.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="mYCpIKhGyMATD0i+"
-Cc: Gerrit Pape <pape@smarden.org>, git@vger.kernel.org,
-	Mark Levedahl <mlevedahl@gmail.com>
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Mon Feb 25 09:34:05 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 25 09:35:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JTYmj-0000YX-2Q
-	for gcvg-git-2@gmane.org; Mon, 25 Feb 2008 09:34:05 +0100
+	id 1JTYno-0000jA-3Y
+	for gcvg-git-2@gmane.org; Mon, 25 Feb 2008 09:35:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753747AbYBYId2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Feb 2008 03:33:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752997AbYBYId2
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Feb 2008 03:33:28 -0500
-Received: from seamus.madduck.net ([213.203.238.82]:49233 "EHLO
-	seamus.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752636AbYBYId1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Feb 2008 03:33:27 -0500
-X-Greylist: delayed 1500 seconds by postgrey-1.27 at vger.kernel.org; Mon, 25 Feb 2008 03:33:27 EST
-Received: from wall.oerlikon.madduck.net (84-75-158-163.dclient.hispeed.ch [84.75.158.163])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "wall.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by seamus.madduck.net (postfix) with ESMTP id CADCB4064C3;
-	Mon, 25 Feb 2008 09:08:36 +0100 (CET)
-Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [192.168.14.3])
-	by wall.oerlikon.madduck.net (Postfix) with ESMTP id E86D69F13A;
-	Mon, 25 Feb 2008 09:07:39 +0100 (CET)
-Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
-	id 832E34400; Mon, 25 Feb 2008 09:07:39 +0100 (CET)
+	id S1753628AbYBYIeg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Feb 2008 03:34:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752997AbYBYIeg
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Feb 2008 03:34:36 -0500
+Received: from el-out-1112.google.com ([209.85.162.176]:13599 "EHLO
+	el-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752833AbYBYIef (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Feb 2008 03:34:35 -0500
+Received: by el-out-1112.google.com with SMTP id v27so1216923ele.23
+        for <git@vger.kernel.org>; Mon, 25 Feb 2008 00:34:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=mueUtNO8S+64KYFzeA3RdAuzCP46NUYNvJE3Frb/hZQ=;
+        b=p1OOP4BOouavxEhRACabXq+D8bkC2G1DAbEQ9fCjnhBg9JoC0aFeSulETaMKApVnud/wGnhve+Pf+PU/yaekeVi6tN5HH++99h0K0I1R6edbIv+RkfLkkWjm05a03CtBblG+Pu/OQ4neMHh9c0vn8fRvM9aAgVsDMYZwh34BSng=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=gxbSjIQbstTZdsJqGBEZpqQixLiPXeQz+Z7L1W+pDb5y84Ol7k7XoJPBMP+X64UwhHrgcirk+gUpjqU2X2nR9T4s8YhQXsO/RHF9vk8sK8r41he2xwIZQ930N9wAflD2eGVedE6s5+KnMn8f16YnPDo8PZHkwFAMfgfDpwIc9x4=
+Received: by 10.150.230.2 with SMTP id c2mr965711ybh.161.1203928471833;
+        Mon, 25 Feb 2008 00:34:31 -0800 (PST)
+Received: by 10.150.205.9 with HTTP; Mon, 25 Feb 2008 00:34:31 -0800 (PST)
+In-Reply-To: <7vwsotpwbr.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
-In-Reply-To: <18368.41742.689290.877767@cargo.ozlabs.ibm.com>
-X-Motto: Keep the good times rollin'
-X-OS: Debian GNU/Linux lenny/sid kernel 2.6.24-1-amd64 x86_64
-X-Spamtrap: madduck.bogus@madduck.net
-X-Subliminal-Message: debian/rules!
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-X-Virus-Scanned: ClamAV 0.92.1/5980/Mon Feb 25 08:24:21 2008 on seamus.madduck.net
-X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75011>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75012>
 
+On Mon, Feb 25, 2008 at 4:08 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> "Shawn O. Pearce" <spearce@spearce.org> writes:
+>
+>  >> +            else
+>  >> +                    printf("%s-0-g%s\n", n->path,
+>  >> +                            find_unique_abbrev(cmit->object.sha1, abbrev));
+>  >
+>  > Is this really that useful?  Where is having the tag and the commit
+>  > SHA-1 both useful?
+>
+>  I had the same question.  The only place that I find this could
+>  be useful is when you tag, build and install, and then find
+>  glitches before pushing the results out and rewind, rebuild and
+>  re-tag.  I unfortunately have this issue almost all the time.
+>
+>  But even then, I would probably not rely on this patch.
+>
 
---mYCpIKhGyMATD0i+
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This can be usefull when more than one person can make "official" tags
+(or nobody), and then you have a uniqe idendifier with a descriptive
+name.
 
-also sprach Paul Mackerras <paulus@samba.org> [2008.02.23.2349 +0100]:
-> > Saving the geometry can cause several inconveniences, e.g. when
-> > using a temporary dual screen setup, or sharing ~/.gitk between
-> > multiple systems.  Additionally it can be argued that window
-> > placement and sizing are the tasks of the window manager.  So
-> > don't do that anymore.
->=20
-> I myself find it useful to have gitk remember the size and layout
-> of the various panes, so I won't be applying this patch.
->=20
-> The saving/restoring of the window position was done by Mark
-> Levedahl to make gitk work properly on Cygwin.  I agree it can be
-> annoying on X and I would take a patch to inhibit the restoring of
-> the window position when running under X.  I'd want an ack from
-> Mark before making that change more generally.
-
-May I suggest that such a patch actually disables writing of the
-config file, so that we won't get conflicts every time you sync
-config files via home-in-git?
-
-Of course I offer to look into this once Mark approves.
-
---=20
-martin | http://madduck.net/ | http://two.sentenc.es/
-=20
-"if there's anything more important than my ego,
- i want it caught and shot now."
-                                                -- zaphod beeblebrox
-=20
-spamtraps: madduck.bogus@madduck.net
-
---mYCpIKhGyMATD0i+
-Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
-Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFHwndLIgvIgzMMSnURAijCAJ9BjtuX+JEQv07qFEmqdRpF7hNhvACglzf3
-8rnTzNnN3S82ZoP4zwW0QU4=
-=pbe5
------END PGP SIGNATURE-----
-
---mYCpIKhGyMATD0i+--
+Santi
