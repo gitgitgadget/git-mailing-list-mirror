@@ -1,53 +1,73 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/3] help: use parseopt
-Date: Mon, 25 Feb 2008 01:57:10 -0500
-Message-ID: <20080225065710.GA3765@coredump.intra.peff.net>
-References: <cover.1203890846.git.peff@peff.net> <20080224221655.GB31309@coredump.intra.peff.net> <200802250750.53047.chriscool@tuxfamily.org>
+From: mkoegler@auto.tuwien.ac.at (Martin Koegler)
+Subject: Re: [PATCH v3] builtin-fsck: reports missing parent commits
+Date: Mon, 25 Feb 2008 08:16:42 +0100
+Message-ID: <20080225071642.GA15761@auto.tuwien.ac.at>
+References: <12038867362489-git-send-email-mkoegler@auto.tuwien.ac.at> <7vlk59pwaj.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	git@vger.kernel.org
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Mon Feb 25 08:04:31 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 25 08:17:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JTXO3-0006QQ-3W
-	for gcvg-git-2@gmane.org; Mon, 25 Feb 2008 08:04:31 +0100
+	id 1JTXaT-0000Pl-SG
+	for gcvg-git-2@gmane.org; Mon, 25 Feb 2008 08:17:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751117AbYBYHDy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Feb 2008 02:03:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750950AbYBYHDy
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Feb 2008 02:03:54 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3704 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750747AbYBYHDx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Feb 2008 02:03:53 -0500
-Received: (qmail 7742 invoked by uid 111); 25 Feb 2008 06:57:11 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Mon, 25 Feb 2008 01:57:11 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 25 Feb 2008 01:57:10 -0500
+	id S1751986AbYBYHQo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 Feb 2008 02:16:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752168AbYBYHQo
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Feb 2008 02:16:44 -0500
+Received: from thor.auto.tuwien.ac.at ([128.130.60.15]:33428 "EHLO
+	thor.auto.tuwien.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751453AbYBYHQn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Feb 2008 02:16:43 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by thor.auto.tuwien.ac.at (Postfix) with ESMTP id BCFEF680B59A;
+	Mon, 25 Feb 2008 08:16:42 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at auto.tuwien.ac.at
+Received: from thor.auto.tuwien.ac.at ([127.0.0.1])
+	by localhost (thor.auto.tuwien.ac.at [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 0k+-2-ztJDTf; Mon, 25 Feb 2008 08:16:42 +0100 (CET)
+Received: by thor.auto.tuwien.ac.at (Postfix, from userid 3001)
+	id 9F48068018E5; Mon, 25 Feb 2008 08:16:42 +0100 (CET)
 Content-Disposition: inline
-In-Reply-To: <200802250750.53047.chriscool@tuxfamily.org>
+In-Reply-To: <7vlk59pwaj.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74996>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74997>
 
-On Mon, Feb 25, 2008 at 07:50:52AM +0100, Christian Couder wrote:
+On Sun, Feb 24, 2008 at 07:08:52PM -0800, Junio C Hamano wrote:
+> Martin Koegler <mkoegler@auto.tuwien.ac.at> writes:
+> As far as I can tell, the new test is not testing the commit
+> object we are looking at from the object database.  What it is
+> testing is if the code that parsed and prepared the information
+> in "struct commit" found the same number of parents an extra
+> check we are doing here by hand (if not grafted --- but
+> presumably whoever gave the struct commit we are handling here
+> would have obtained that information by doing the same parsing),
+> or the parsing of the graft file (when grafted --- but
+> presumably whoever gave the struct commit we are handling here
+> would have obtained that information by calling the same
+> llokup_commit_graft()).
+>=20
+> So I am not sure what problems in the repository objects these
+> new checks are designed to catch.
+>=20
+> This needs a lot of explanation than what's in your commit log
+> message.
 
-> > Sorry, the diff turned out quite messy because of the cleanups. It's
-> > probably easier to just read the result.
-> 
-> Or could you send the cleanups in some separated patches ?
+If we have already parsed a non-commit object and parse_commit_buffer
+hits such a sha1 in a parent line, it simply drops it (same for grafts)=
+=2E
 
-Looking at it again, it's actually not too bad except for the cmd_help()
-function itself, which isn't due to the cleanups at all, but because the
-flow changes quite a bit. So I don't think splitting it actually will
-make the diff any friendlier.
+I hope that you agree with me, that fsck should catch such an error.
 
--Peff
+As you don't want to tighten parse_commit_buffer, it must be in fsck.
+
+mfg Martin K=F6gler
