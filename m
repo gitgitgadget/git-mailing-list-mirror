@@ -1,36 +1,36 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] Teach git-describe --long to output always the long format
-Date: Sun, 24 Feb 2008 21:36:34 -0500
-Message-ID: <20080225023634.GK8410@spearce.org>
-References: <1203864412-27977-1-git-send-email-sbejar@gmail.com>
+Subject: Re: [PATCH 1/4] add generic, type aware object chain walker
+Date: Sun, 24 Feb 2008 22:04:04 -0500
+Message-ID: <20080225030404.GL8410@spearce.org>
+References: <12038642373342-git-send-email-mkoegler@auto.tuwien.ac.at>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Santi =?utf-8?B?QsOpamFy?= <sbejar@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 25 03:37:21 2008
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Martin Koegler <mkoegler@auto.tuwien.ac.at>
+X-From: git-owner@vger.kernel.org Mon Feb 25 04:04:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JTTDT-0005Xp-Tq
-	for gcvg-git-2@gmane.org; Mon, 25 Feb 2008 03:37:20 +0100
+	id 1JTTe4-0002hh-BV
+	for gcvg-git-2@gmane.org; Mon, 25 Feb 2008 04:04:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754033AbYBYCgi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Feb 2008 21:36:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753931AbYBYCgi
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Feb 2008 21:36:38 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:49995 "EHLO
+	id S1754495AbYBYDEM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Feb 2008 22:04:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754528AbYBYDEM
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Feb 2008 22:04:12 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:60302 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752923AbYBYCgh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Feb 2008 21:36:37 -0500
+	with ESMTP id S1753908AbYBYDEL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Feb 2008 22:04:11 -0500
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.68)
 	(envelope-from <spearce@spearce.org>)
-	id 1JTTCb-0002L3-9j; Sun, 24 Feb 2008 21:36:25 -0500
+	id 1JTTdE-0005xs-1J; Sun, 24 Feb 2008 22:03:56 -0500
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id D35EC20FBAE; Sun, 24 Feb 2008 21:36:34 -0500 (EST)
+	id 85F0420FBAE; Sun, 24 Feb 2008 22:04:05 -0500 (EST)
 Content-Disposition: inline
-In-Reply-To: <1203864412-27977-1-git-send-email-sbejar@gmail.com>
+In-Reply-To: <12038642373342-git-send-email-mkoegler@auto.tuwien.ac.at>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -41,36 +41,27 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74983>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/74984>
 
-Santi Bjar <sbejar@gmail.com> wrote:
-> @@ -155,7 +156,11 @@ static void describe(const char *arg, int last_one)
->  
->  	n = cmit->util;
->  	if (n) {
-> -		printf("%s\n", n->path);
-> +		if (!longformat)
-> +			printf("%s\n", n->path );
+Martin Koegler <mkoegler@auto.tuwien.ac.at> wrote:
+> +static int fsck_walk_commit(struct commit *commit, fsck_walk_func walk, void *data)
+> +{
+> +	struct commit_list *parents = commit->parents;
+> +	int result;
+> +
+> +	if(parse_commit(commit))
+> +		return -1;
 
-Extra whitespace after the "path".
+Hmm.  Don't you need to get commit->parenst *after* it is parsed,
+and not before?
 
-> +		else
-> +			printf("%s-0-g%s\n", n->path,
-> +				find_unique_abbrev(cmit->object.sha1, abbrev));
+> @@ -0,0 +1,10 @@
+> +#ifndef GIT_FSCK_H
+> +#define GIT_FSCK_H
+> +
+> +#define OBJ_ANY OBJ_BAD
 
-Is this really that useful?  Where is having the tag and the commit
-SHA-1 both useful?
-
->  		return;
->  	}
->  
-> @@ -254,6 +259,7 @@ int cmd_describe(int argc, const char **argv, const char *prefix)
->  		OPT_BOOLEAN(0, "debug",      &debug, "debug search strategy on stderr"),
->  		OPT_BOOLEAN(0, "all",        &all, "use any ref in .git/refs"),
->  		OPT_BOOLEAN(0, "tags",       &tags, "use any tag in .git/refs/tags"),
-> +		OPT_BOOLEAN(0, "long",       &longformat, "always use long format"),
-
-Documentation?
+Its unclear why this macro is necessary.
 
 -- 
 Shawn.
