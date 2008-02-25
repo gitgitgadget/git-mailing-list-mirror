@@ -1,90 +1,57 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
+From: mkoegler@auto.tuwien.ac.at (Martin Koegler)
 Subject: Re: [PATCH 1/4] add generic, type aware object chain walker
-Date: Mon, 25 Feb 2008 03:04:45 -0500
-Message-ID: <20080225080445.GM8410@spearce.org>
-References: <12038642373342-git-send-email-mkoegler@auto.tuwien.ac.at> <20080225030404.GL8410@spearce.org> <20080225072658.GB15761@auto.tuwien.ac.at> <7vwsotmqq2.fsf@gitster.siamese.dyndns.org> <20080225075242.GD15761@auto.tuwien.ac.at>
+Date: Mon, 25 Feb 2008 09:06:53 +0100
+Message-ID: <20080225080653.GA20048@auto.tuwien.ac.at>
+References: <12038642373342-git-send-email-mkoegler@auto.tuwien.ac.at> <20080225030404.GL8410@spearce.org> <20080225072658.GB15761@auto.tuwien.ac.at> <7vwsotmqq2.fsf@gitster.siamese.dyndns.org> <20080225075242.GD15761@auto.tuwien.ac.at> <7vmyppmpko.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Martin Koegler <mkoegler@auto.tuwien.ac.at>
-X-From: git-owner@vger.kernel.org Mon Feb 25 09:06:20 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 25 09:07:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JTYLS-0002ZJ-OW
-	for gcvg-git-2@gmane.org; Mon, 25 Feb 2008 09:05:55 +0100
+	id 1JTYN0-00032I-DK
+	for gcvg-git-2@gmane.org; Mon, 25 Feb 2008 09:07:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751989AbYBYIFS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Feb 2008 03:05:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752495AbYBYIFQ
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Feb 2008 03:05:16 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:51118 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752614AbYBYIFM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Feb 2008 03:05:12 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1JTYKM-0006BW-PU; Mon, 25 Feb 2008 03:04:46 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 4781D20FBAE; Mon, 25 Feb 2008 03:04:46 -0500 (EST)
+	id S1752380AbYBYIGz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 Feb 2008 03:06:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752250AbYBYIGz
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Feb 2008 03:06:55 -0500
+Received: from thor.auto.tuwien.ac.at ([128.130.60.15]:44076 "EHLO
+	thor.auto.tuwien.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752306AbYBYIGy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Feb 2008 03:06:54 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by thor.auto.tuwien.ac.at (Postfix) with ESMTP id BD81A680B59E;
+	Mon, 25 Feb 2008 09:06:53 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at auto.tuwien.ac.at
+Received: from thor.auto.tuwien.ac.at ([127.0.0.1])
+	by localhost (thor.auto.tuwien.ac.at [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id wkH81J7Ct2ui; Mon, 25 Feb 2008 09:06:53 +0100 (CET)
+Received: by thor.auto.tuwien.ac.at (Postfix, from userid 3001)
+	id A1F12680B59A; Mon, 25 Feb 2008 09:06:53 +0100 (CET)
 Content-Disposition: inline
-In-Reply-To: <20080225075242.GD15761@auto.tuwien.ac.at>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+In-Reply-To: <7vmyppmpko.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75006>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75007>
 
-Martin Koegler <mkoegler@auto.tuwien.ac.at> wrote:
-> 
-> What about
-> #define OBJ_BAD -2
+On Mon, Feb 25, 2008 at 12:02:15AM -0800, Junio C Hamano wrote:
+> mkoegler@auto.tuwien.ac.at (Martin Koegler) writes:
+>=20
+> > What about
+> > #define OBJ_BAD -2
+>=20
+> You mean "#define OBJ_ANY -2"?
 
-All of the other OBJ_* constants are declared in the enum
-object_type, not as #defines.
+Yes.
 
-See below for why this should not be <0.
- 
-> > After all, if the walker callback was told with
-> > OBJ_ANY that any type of object is Ok, it should still say
-> > "oops" if the given object said it actually is of type OBJ_BAD.
-> > E.g. in your [2/4] patch:
-> > 
-> >         +static int mark_object(struct object *obj, int type, void *data)
-> >         +{
-> >         + ...
-> >         +	if (type != OBJ_ANY && obj->type != type) {
-> >         +		objerror(parent, "wrong object type in link");
-> >         +	}
-> > 
-> > if you use the above #define, a tagged object that has a bad
-> > type will pass this check unnoticed, won't it?
-> 
-> No, it wouldn't, as object->type is never initialized to OBJ_BAD:
-> $ grep "OBJ_BAD" *.c *.h
-> cache.h:        OBJ_BAD = -1,
+Should it go into cache.h or should it stay in fsck.h?
 
-Today that may be true.  OBJ_BAD was created for cases where the
-internal object header parsing code in say sha1_file.c finds a type
-code it doesn't recognize and wants to return it back to the caller.
-This grew out of some of the early pack v4 work.
-
-It actually happens today when a function that returns an object
-type enum returns failure.  sha1_object_info() is one such function.
-It returns "int" but that int is also really an enum object_type.
-When that function fails it returns -1, which has it happens
-is OBJ_BAD.
-
-Subtle, yes.  But OBJ_BAD has meaning and is in use today.  Please do
-not use it for "we don't care what it is".
-
--- 
-Shawn.
+mfg Martin K=F6gler
