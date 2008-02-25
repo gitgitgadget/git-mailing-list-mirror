@@ -1,93 +1,118 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: mkoegler@auto.tuwien.ac.at (Martin Koegler)
 Subject: Re: [PATCH 1/4] add generic, type aware object chain walker
-Date: Sun, 24 Feb 2008 23:37:25 -0800
-Message-ID: <7vwsotmqq2.fsf@gitster.siamese.dyndns.org>
-References: <12038642373342-git-send-email-mkoegler@auto.tuwien.ac.at>
- <20080225030404.GL8410@spearce.org>
- <20080225072658.GB15761@auto.tuwien.ac.at>
+Date: Mon, 25 Feb 2008 08:46:11 +0100
+Message-ID: <20080225074611.GC15761@auto.tuwien.ac.at>
+References: <12038642373342-git-send-email-mkoegler@auto.tuwien.ac.at> <7vr6f1pwaw.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: mkoegler@auto.tuwien.ac.at (Martin Koegler)
-X-From: git-owner@vger.kernel.org Mon Feb 25 08:38:15 2008
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 25 08:46:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JTXug-0004d0-Cc
-	for gcvg-git-2@gmane.org; Mon, 25 Feb 2008 08:38:14 +0100
+	id 1JTY2z-0006WF-59
+	for gcvg-git-2@gmane.org; Mon, 25 Feb 2008 08:46:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751825AbYBYHhi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Feb 2008 02:37:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751626AbYBYHhi
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Feb 2008 02:37:38 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:39893 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750909AbYBYHhh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Feb 2008 02:37:37 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 786C114F3;
-	Mon, 25 Feb 2008 02:37:34 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 68E6314F2; Mon, 25 Feb 2008 02:37:28 -0500 (EST)
-In-Reply-To: <20080225072658.GB15761@auto.tuwien.ac.at> (Martin Koegler's
- message of "Mon, 25 Feb 2008 08:26:58 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753466AbYBYHqN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 Feb 2008 02:46:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753400AbYBYHqN
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Feb 2008 02:46:13 -0500
+Received: from thor.auto.tuwien.ac.at ([128.130.60.15]:45679 "EHLO
+	thor.auto.tuwien.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753397AbYBYHqM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Feb 2008 02:46:12 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by thor.auto.tuwien.ac.at (Postfix) with ESMTP id 55747680B59A;
+	Mon, 25 Feb 2008 08:46:11 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at auto.tuwien.ac.at
+Received: from thor.auto.tuwien.ac.at ([127.0.0.1])
+	by localhost (thor.auto.tuwien.ac.at [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id HopjBnPtzAUT; Mon, 25 Feb 2008 08:46:11 +0100 (CET)
+Received: by thor.auto.tuwien.ac.at (Postfix, from userid 3001)
+	id 3970D68018E5; Mon, 25 Feb 2008 08:46:11 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <7vr6f1pwaw.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75001>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75002>
 
-mkoegler@auto.tuwien.ac.at (Martin Koegler) writes:
+On Sun, Feb 24, 2008 at 07:08:39PM -0800, Junio C Hamano wrote:
+> > diff --git a/Makefile b/Makefile
+> > index a9b5a67..3b356f8 100644
+> > --- a/Makefile
+> > +++ b/Makefile
+> > @@ -303,7 +303,7 @@ LIB_H =3D \
+> >  	run-command.h strbuf.h tag.h tree.h git-compat-util.h revision.h =
+\
+> >  	tree-walk.h log-tree.h dir.h path-list.h unpack-trees.h builtin.h=
+ \
+> >  	utf8.h reflog-walk.h patch-ids.h attr.h decorate.h progress.h \
+> > -	mailmap.h remote.h parse-options.h transport.h diffcore.h hash.h =
+ll-merge.h
+> > +	mailmap.h remote.h parse-options.h transport.h diffcore.h hash.h =
+ll-merge.h fsck.h
+>=20
+> I'd rather see a series does not depend on things in next that
+> you do not have to depend on, pretty please?
 
-> On Sun, Feb 24, 2008 at 10:04:04PM -0500, Shawn O. Pearce wrote:
->> Martin Koegler <mkoegler@auto.tuwien.ac.at> wrote:
->> Hmm.  Don't you need to get commit->parenst *after* it is parsed,
->> and not before?
->
-> Thanks, fixed.
->
->> > @@ -0,0 +1,10 @@
->> > +#ifndef GIT_FSCK_H
->> > +#define GIT_FSCK_H
->> > +
->> > +#define OBJ_ANY OBJ_BAD
->> 
->> Its unclear why this macro is necessary.
->
-> There are cases (eg. a tag->tagged), where the object type does not
-> matter. In this case, the callback gets this value for the expected
-> type.
->
-> The value of OBJ_BAD (-1) is not used anywhere in git, so its
-> free. OBJ_ANY is just a better name.
->
-> If somebody has a better idea, please tell me.
+I usually develop my patch on next. I can offer you two things:
+* base my patches on something different (master?)
+* add fsck.h/o some lines above
 
-As I mentioned in my previous review comment, the token is used
-to tell the walker callback function that this type of object
-was expected where it was found, in order to allow the callback
-to check the type of the object.  I think OBJ_ANY is a very good
-name for the token you would use to tell the callback that any
-type of object can appear (because that is a taggee).
+What do you prefer?
 
-So I do not have objection to OBJ_ANY (but again, this kind of
-thing needs to be explained in your commit log message), but
-giving the token the same value as OBJ_BAD may not be such a
-cool idea.  After all, if the walker callback was told with
-OBJ_ANY that any type of object is Ok, it should still say
-"oops" if the given object said it actually is of type OBJ_BAD.
-E.g. in your [2/4] patch:
+> > +static int fsck_walk_commit(struct commit *commit, fsck_walk_func =
+walk, void *data)
+> > +{
+> > +	struct commit_list *parents =3D commit->parents;
+> > +	int result;
+> > +
+> > +	if(parse_commit(commit))
+> > +		return -1;
+> > +
+> > +	result =3D walk((struct object*)commit->tree, OBJ_TREE, data);
+> > +	if (result)
+> > +		return result;
+> > +
+> > +	while (parents) {
+> > +		result =3D walk((struct object*)parents->item, OBJ_COMMIT, data)=
+;
+> > +		if (result)
+> > +			return result;
+> > +		parents =3D parents->next;
+> > +	}
+> > +	return 0;
+> > +}
+>=20
+> Hmm.  For the purpose of proving there is _no_ error (or an
+> error or more), it would be Ok to return early like this, but
+> won't there be cases where you would want to get as many
+> coverage as possible?
+>=20
+> For example, I do not think you can use this to mark reachable
+> objects.  Even if you find error walking the first parent
+> history, you would want to still mark a healthy second parent
+> history reachable.
 
-        +static int mark_object(struct object *obj, int type, void *data)
-        +{
-        + ...
-        +	if (type != OBJ_ANY && obj->type != type) {
-        +		objerror(parent, "wrong object type in link");
-        +	}
+How should I define the return value of fsck_walk in the presence of
+multiple errors?
 
-if you use the above #define, a tagged object that has a bad
-type will pass this check unnoticed, won't it?
+It would not be necessary for all my users:
+
+* in unpack-object and index-pack (I'll send an updated patch in the
+  next days), any error means that we can abort. Further checking would
+  mean wasting of resources.
+
+* in fsck (patch 2) the error is signaled by the errors_found variable,=
+ so
+  all callbacks can return 0, even in the case of an error. Checking th=
+e
+  return value of fsck_walk would mean duplicate error messages.
+
+mfg Martin K=F6gler
