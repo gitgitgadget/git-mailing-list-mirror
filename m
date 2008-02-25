@@ -1,7 +1,7 @@
 From: Martin Koegler <mkoegler@auto.tuwien.ac.at>
-Subject: [PATCH 08/10] unpack-objects: prevent writing of inconsistent objects
-Date: Mon, 25 Feb 2008 22:54:58 +0100
-Message-ID: <12039765003644-git-send-email-mkoegler@auto.tuwien.ac.at>
+Subject: [PATCH 09/10] index-pack: introduce checking mode
+Date: Mon, 25 Feb 2008 22:54:59 +0100
+Message-ID: <12039765001906-git-send-email-mkoegler@auto.tuwien.ac.at>
 References: <12039765002329-git-send-email-mkoegler@auto.tuwien.ac.at>
  <12039765004039-git-send-email-mkoegler@auto.tuwien.ac.at>
  <12039765003484-git-send-email-mkoegler@auto.tuwien.ac.at>
@@ -9,243 +9,209 @@ References: <12039765002329-git-send-email-mkoegler@auto.tuwien.ac.at>
  <12039765002397-git-send-email-mkoegler@auto.tuwien.ac.at>
  <12039765001192-git-send-email-mkoegler@auto.tuwien.ac.at>
  <12039765002534-git-send-email-mkoegler@auto.tuwien.ac.at>
+ <12039765003644-git-send-email-mkoegler@auto.tuwien.ac.at>
 Cc: Martin Koegler <mkoegler@auto.tuwien.ac.at>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 25 22:58:18 2008
+X-From: git-owner@vger.kernel.org Mon Feb 25 22:58:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JTlKl-0007Dt-PG
-	for gcvg-git-2@gmane.org; Mon, 25 Feb 2008 22:58:04 +0100
+	id 1JTlKm-0007Dt-KY
+	for gcvg-git-2@gmane.org; Mon, 25 Feb 2008 22:58:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757166AbYBYVzc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Feb 2008 16:55:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759606AbYBYVzb
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Feb 2008 16:55:31 -0500
-Received: from thor.auto.tuwien.ac.at ([128.130.60.15]:55613 "EHLO
+	id S1759608AbYBYVzf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Feb 2008 16:55:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759032AbYBYVze
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Feb 2008 16:55:34 -0500
+Received: from thor.auto.tuwien.ac.at ([128.130.60.15]:55614 "EHLO
 	thor.auto.tuwien.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758659AbYBYVzG (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1759608AbYBYVzG (ORCPT <rfc822;git@vger.kernel.org>);
 	Mon, 25 Feb 2008 16:55:06 -0500
 Received: from localhost (localhost [127.0.0.1])
-	by thor.auto.tuwien.ac.at (Postfix) with ESMTP id 3B647680BF99;
+	by thor.auto.tuwien.ac.at (Postfix) with ESMTP id 4287F6870AA0;
 	Mon, 25 Feb 2008 22:55:01 +0100 (CET)
 X-Virus-Scanned: Debian amavisd-new at auto.tuwien.ac.at
 Received: from thor.auto.tuwien.ac.at ([127.0.0.1])
 	by localhost (thor.auto.tuwien.ac.at [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id JcUAgkcJqVcb; Mon, 25 Feb 2008 22:55:01 +0100 (CET)
+	with ESMTP id hEBRYO97giBx; Mon, 25 Feb 2008 22:55:01 +0100 (CET)
 Received: by thor.auto.tuwien.ac.at (Postfix, from userid 3001)
-	id 74EB6680B59A; Mon, 25 Feb 2008 22:55:00 +0100 (CET)
+	id 85FF7680B59E; Mon, 25 Feb 2008 22:55:00 +0100 (CET)
 X-Mailer: git-send-email 1.5.3.1
-In-Reply-To: <12039765002534-git-send-email-mkoegler@auto.tuwien.ac.at>
+In-Reply-To: <12039765003644-git-send-email-mkoegler@auto.tuwien.ac.at>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75080>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75081>
 
-This patch introduces a strict mode, which ensures that:
-- no malformed object will be written
-- no object with broken links will be written
-
-The patch ensures this by delaying the write of all non blob object.
-These object are written, after all objects they link to are written.
-
-An error can only result in unreferenced objects.
+Adds strict option, which bails out if the pack would
+introduces broken object or links in the repository.
 
 Signed-off-by: Martin Koegler <mkoegler@auto.tuwien.ac.at>
 ---
- Documentation/git-unpack-objects.txt |    3 +
- builtin-unpack-objects.c             |  100 +++++++++++++++++++++++++++++++---
- 2 files changed, 96 insertions(+), 7 deletions(-)
+The resource usage for (!strict) is the same.
+For (strict) we need the struct blob/tree/commit/tag for
+each object (without any data).
 
-diff --git a/Documentation/git-unpack-objects.txt b/Documentation/git-unpack-objects.txt
-index b79be3f..3697896 100644
---- a/Documentation/git-unpack-objects.txt
-+++ b/Documentation/git-unpack-objects.txt
-@@ -40,6 +40,9 @@ OPTIONS
- 	and make the best effort to recover as many objects as
- 	possible.
+ Documentation/git-index-pack.txt |    3 +
+ index-pack.c                     |   86 +++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 88 insertions(+), 1 deletions(-)
+
+diff --git a/Documentation/git-index-pack.txt b/Documentation/git-index-pack.txt
+index 72b5d00..a7825b6 100644
+--- a/Documentation/git-index-pack.txt
++++ b/Documentation/git-index-pack.txt
+@@ -75,6 +75,9 @@ OPTIONS
+ 	to force the version for the generated pack index, and to force
+ 	64-bit index entries on objects located above the given offset.
  
 +--strict::
-+	Don't write objects with broken content or links.
++	Die, if the pack contains broken objects or links.
 +
  
- Author
- ------
-diff --git a/builtin-unpack-objects.c b/builtin-unpack-objects.c
-index f18c7e8..ec262d5 100644
---- a/builtin-unpack-objects.c
-+++ b/builtin-unpack-objects.c
-@@ -7,11 +7,13 @@
- #include "commit.h"
+ Note
+ ----
+diff --git a/index-pack.c b/index-pack.c
+index 9fd6982..0bbf42e 100644
+--- a/index-pack.c
++++ b/index-pack.c
+@@ -7,9 +7,10 @@
  #include "tag.h"
  #include "tree.h"
-+#include "tree-walk.h"
  #include "progress.h"
- #include "decorate.h"
 +#include "fsck.h"
  
--static int dry_run, quiet, recover, has_errors;
--static const char unpack_usage[] = "git-unpack-objects [-n] [-q] [-r] < pack-file";
-+static int dry_run, quiet, recover, has_errors, strict;
-+static const char unpack_usage[] = "git-unpack-objects [-n] [-q] [-r] [--strict] < pack-file";
+ static const char index_pack_usage[] =
+-"git-index-pack [-v] [-o <index-file>] [{ ---keep | --keep=<msg> }] { <pack-file> | --stdin [--fix-thin] [<pack-file>] }";
++"git-index-pack [-v] [-o <index-file>] [{ ---keep | --keep=<msg> }] [--strict] { <pack-file> | --stdin [--fix-thin] [<pack-file>] }";
  
- /* We always read in 4kB chunks. */
- static unsigned char buffer[4096];
-@@ -144,9 +146,58 @@ static void add_delta_to_list(unsigned nr, unsigned const char *base_sha1,
- struct obj_info {
- 	off_t offset;
- 	unsigned char sha1[20];
-+	struct object * obj;
- };
+ struct object_entry
+ {
+@@ -31,6 +32,9 @@ union delta_base {
+  */
+ #define UNION_BASE_SZ	20
  
-+#define FLAG_OPEN (1u<<20)
-+#define FLAG_WRITTEN (1u<<21)
++#define FLAG_LINK (1u<<20)
++#define FLAG_CHECKED (1u<<21)
 +
- static struct obj_info *obj_list;
-+unsigned nr_objects;
-+
-+static void write_cached_object(struct object* obj)
-+{
-+	unsigned char sha1[20];
-+	struct obj_buffer *obj_buf = lookup_object_buffer(obj);
-+	if (write_sha1_file(obj_buf->buffer, obj_buf->size, typename(obj->type), sha1) < 0)
-+		die("failed to write object %s", sha1_to_hex(obj->sha1));
-+	obj->flags |= FLAG_WRITTEN;
-+}
-+
-+static int check_object(struct object *obj, int type, void *data)
+ struct delta_entry
+ {
+ 	union delta_base base;
+@@ -44,6 +48,7 @@ static int nr_deltas;
+ static int nr_resolved_deltas;
+ 
+ static int from_stdin;
++static int strict;
+ static int verbose;
+ 
+ static struct progress *progress;
+@@ -56,6 +61,48 @@ static SHA_CTX input_ctx;
+ static uint32_t input_crc32;
+ static int input_fd, output_fd, pack_fd;
+ 
++static int mark_link(struct object* obj, int type, void *data)
 +{
 +	if (!obj)
-+		return 0;
-+	
-+	if (obj->flags & FLAG_WRITTEN)
-+		return 1;
-+	
++		return -1;
++
 +	if (type != OBJ_ANY && obj->type != type)
-+		die("object type mismatch");
++		die("object type mismatch at %s", sha1_to_hex(obj->sha1));
++
++	obj->flags |= FLAG_LINK;
++	return 0;
++}
++
++/* The content of each linked object must have been checked
++   or it must be already present in the object database */
++static void check_object(struct object* obj)
++{
++	if (!obj)
++		return;
 +	
-+	if (!(obj->flags & FLAG_OPEN)) {
++	if (!(obj->flags & FLAG_LINK))
++		return;
++	
++	if (!(obj->flags & FLAG_CHECKED)) {
 +		unsigned long size;
 +		int type = sha1_object_info (obj->sha1, &size);
 +		if (type != obj->type || type <= 0)
 +			die("object of unexpected type");
-+		obj->flags |= FLAG_WRITTEN;
-+		return 1;
++		obj->flags |= FLAG_CHECKED;
++		return;
 +	}
-+	
-+	if (fsck_object(obj, 1, fsck_error_function))
-+		die("Error in object");
-+	if (!fsck_walk(obj, check_object, 0))
-+		die("Error on reachable objects of %s", sha1_to_hex(obj->sha1));
-+	write_cached_object(obj);
-+	return 1;
 +}
 +
-+static void write_rest()
++static void check_objects()
 +{
-+	unsigned i;
-+	for (i = 0; i < nr_objects; i++)
-+		check_object(obj_list[i].obj, OBJ_ANY, 0);
-+}
- 
- static void added_object(unsigned nr, enum object_type type,
- 			 void *data, unsigned long size);
-@@ -154,9 +205,36 @@ static void added_object(unsigned nr, enum object_type type,
- static void write_object(unsigned nr, enum object_type type,
- 			 void *buf, unsigned long size)
- {
--	if (write_sha1_file(buf, size, typename(type), obj_list[nr].sha1) < 0)
--		die("failed to write object");
- 	added_object(nr, type, buf, size);
-+	if (!strict) {
-+		if (write_sha1_file(buf, size, typename(type), obj_list[nr].sha1) < 0)
-+			die("failed to write object");
-+		free(buf);
-+		obj_list[nr].obj = 0;
-+	} else if (type == OBJ_BLOB) {
-+		struct blob * blob;
-+		if (write_sha1_file(buf, size, typename(type), obj_list[nr].sha1) < 0)
-+			die("failed to write object");
-+		free(buf);
++	unsigned i, max;
 +
-+		blob = lookup_blob (obj_list[nr].sha1);
-+		if (blob)
-+			blob->object.flags |= FLAG_WRITTEN;
-+		else
-+			die("invalid blob object");
-+		obj_list[nr].obj = 0;
-+	} else {
-+		struct object * obj;
-+		int eaten;
-+		hash_sha1_file(buf, size, typename(type), obj_list[nr].sha1);
-+		obj = parse_object_buffer(obj_list[nr].sha1, type, size, buf, &eaten);
-+		if (!obj)
-+			die ("invalid %s", typename(type));
-+		/* buf is stored via add_object_buffer and in obj, if its a tree or commit */
-+		add_object_buffer (obj, buf, size);
-+		obj->flags |= FLAG_OPEN;
-+		obj_list[nr].obj = obj;
++	max = get_max_object_index();
++	for (i = 0; i < max; i++)
++		check_object(get_indexed_object(i));
++}
++
++
+ /* Discard current buffer used content. */
+ static void flush(void)
+ {
+@@ -341,6 +388,39 @@ static void sha1_object(const void *data, unsigned long size,
+ 			die("SHA1 COLLISION FOUND WITH %s !", sha1_to_hex(sha1));
+ 		free(has_data);
+ 	}
++	if (strict) {
++		if (type == OBJ_BLOB) {
++			struct blob * blob = lookup_blob(sha1);
++			if (blob)
++				blob->object.flags |= FLAG_CHECKED;
++			else
++				die("invalid blob object %s", sha1_to_hex(sha1));
++		} else {
++			struct object * obj;
++			int eaten;
++			void *buf = data;
++			
++			/* we do not need to free the memory here, as the buf is deleted
++			   by the caller */
++			obj = parse_object_buffer(sha1, type, size, buf, &eaten);
++			if (!obj)
++				die("invalid %s", typename(type));
++		        if (fsck_object(obj, 1, fsck_error_function))
++				die("Error in object");
++			if (fsck_walk(obj, mark_link, 0))
++				die("Not all child objects of %s are reachable", sha1_to_hex(obj->sha1));
++
++			if (obj->type == OBJ_TREE) {
++				struct tree *item = (struct item*) obj;
++				item->buffer = NULL;
++			}
++			if (obj->type == OBJ_COMMIT) {
++				struct commit *commit = (struct commit*) obj;
++				commit->buffer = NULL;
++			}
++			obj->flags |= FLAG_CHECKED;
++		}
 +	}
  }
  
- static void resolve_delta(unsigned nr, enum object_type type,
-@@ -173,7 +251,6 @@ static void resolve_delta(unsigned nr, enum object_type type,
- 		die("failed to apply delta");
- 	free(delta);
- 	write_object(nr, type, result, result_size);
--	free(result);
- }
- 
- static void added_object(unsigned nr, enum object_type type,
-@@ -203,7 +280,8 @@ static void unpack_non_delta_entry(enum object_type type, unsigned long size,
- 
- 	if (!dry_run && buf)
- 		write_object(nr, type, buf, size);
--	free(buf);
-+	else
-+		free(buf);
- }
- 
- static void unpack_delta_entry(enum object_type type, unsigned long delta_size,
-@@ -345,7 +423,8 @@ static void unpack_all(void)
- 	int i;
- 	struct progress *progress = NULL;
- 	struct pack_header *hdr = fill(sizeof(struct pack_header));
--	unsigned nr_objects = ntohl(hdr->hdr_entries);
-+
-+	nr_objects = ntohl(hdr->hdr_entries);
- 
- 	if (ntohl(hdr->hdr_signature) != PACK_SIGNATURE)
- 		die("bad pack file");
-@@ -356,6 +435,7 @@ static void unpack_all(void)
- 	if (!quiet)
- 		progress = start_progress("Unpacking objects", nr_objects);
- 	obj_list = xmalloc(nr_objects * sizeof(*obj_list));
-+	memset(obj_list, 0, nr_objects * sizeof(*obj_list));
- 	for (i = 0; i < nr_objects; i++) {
- 		unpack_one(i);
- 		display_progress(progress, i + 1);
-@@ -391,6 +471,10 @@ int cmd_unpack_objects(int argc, const char **argv, const char *prefix)
- 				recover = 1;
- 				continue;
- 			}
-+			if (!strcmp(arg, "--strict")) {
+ static void resolve_delta(struct object_entry *delta_obj, void *base_data,
+@@ -714,6 +794,8 @@ int main(int argc, char **argv)
+ 				from_stdin = 1;
+ 			} else if (!strcmp(arg, "--fix-thin")) {
+ 				fix_thin_pack = 1;
++			} else if (!strcmp(arg, "--strict")) {
 +				strict = 1;
-+				continue;
-+			}
- 			if (!prefixcmp(arg, "--pack_header=")) {
- 				struct pack_header *hdr;
- 				char *c;
-@@ -416,6 +500,8 @@ int cmd_unpack_objects(int argc, const char **argv, const char *prefix)
- 	unpack_all();
- 	SHA1_Update(&ctx, buffer, offset);
- 	SHA1_Final(sha1, &ctx);
+ 			} else if (!strcmp(arg, "--keep")) {
+ 				keep_msg = "";
+ 			} else if (!prefixcmp(arg, "--keep=")) {
+@@ -812,6 +894,8 @@ int main(int argc, char **argv)
+ 			    nr_deltas - nr_resolved_deltas);
+ 	}
+ 	free(deltas);
 +	if (strict)
-+		write_rest();
- 	if (hashcmp(fill(20), sha1))
- 		die("final sha1 did not match");
- 	use(20);
++		check_objects();
+ 
+ 	idx_objects = xmalloc((nr_objects) * sizeof(struct pack_idx_entry *));
+ 	for (i = 0; i < nr_objects; i++)
 -- 
 1.5.4.3.g3c5f
