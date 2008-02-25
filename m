@@ -5,61 +5,60 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=1.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
-Received: (qmail 12268 invoked by uid 111); 21 Feb 2008 11:21:27 -0000
+Received: (qmail 12415 invoked by uid 111); 25 Feb 2008 19:45:29 -0000
 Received: from vger.kernel.org (HELO vger.kernel.org) (209.132.176.167)
-    by peff.net (qpsmtpd/0.32) with ESMTP; Thu, 21 Feb 2008 06:21:26 -0500
+    by peff.net (qpsmtpd/0.32) with ESMTP; Mon, 25 Feb 2008 14:45:25 -0500
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757940AbYBULVW (ORCPT <rfc822;peff@peff.net>);
-	Thu, 21 Feb 2008 06:21:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757859AbYBULVW
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Feb 2008 06:21:22 -0500
-Received: from zlonk.bruhat.net ([91.121.102.217]:52179 "EHLO
-	ks354402.kimsufi.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753761AbYBULVV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Feb 2008 06:21:21 -0500
-X-Greylist: delayed 1919 seconds by postgrey-1.27 at vger.kernel.org; Thu, 21 Feb 2008 06:21:21 EST
-Received: from localhost ([127.0.0.1] helo=plop.home.bruhat.net)
-	by ks354402.kimsufi.com with esmtp (Exim 4.63)
-	(envelope-from <philippe.bruhat@free.fr>)
-	id 1JS8uQ-0002fP-46; Thu, 21 Feb 2008 11:44:10 +0100
-Received: from book by plop.home.bruhat.net with local (Exim 4.69)
-	(envelope-from <philippe.bruhat@free.fr>)
-	id 1JS8z7-0006j0-5t; Thu, 21 Feb 2008 11:49:01 +0100
-From:	"Philippe Bruhat (BooK)" <book@cpan.org>
+	id S1755577AbYBYTpW (ORCPT <rfc822;peff@peff.net>);
+	Mon, 25 Feb 2008 14:45:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755560AbYBYTpW
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Feb 2008 14:45:22 -0500
+Received: from mailbigip.dreamhost.com ([208.97.132.5]:57013 "EHLO
+	randymail-a1.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1755191AbYBYTpV (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 Feb 2008 14:45:21 -0500
+Received: from localhost.localdomain (KBALLARD.RES.WPI.NET [130.215.239.91])
+	by randymail-a1.g.dreamhost.com (Postfix) with ESMTP id 6156A18DA98;
+	Mon, 25 Feb 2008 11:45:19 -0800 (PST)
+From:	Kevin Ballard <kevin@sb.org>
 To:	git@vger.kernel.org
-Cc:	gitster@pobox.com, "Philippe Bruhat (BooK)" <book@cpan.org>
-Subject: [PATCH] cvsimport: have default merge regex allow for dashes in the branch name
-Date:	Thu, 21 Feb 2008 11:48:56 +0100
-Message-Id: <1203590936-25827-1-git-send-email-book@cpan.org>
-X-Mailer: git-send-email 1.5.4.1
-To:	philippe.bruhat@free.fr
+Cc:	Kevin Ballard <kevin@sb.org>
+Subject: [PATCH] Add test for filter-branch on a subdirectory that's been added and deleted and re-added
+Date:	Mon, 25 Feb 2008 14:45:18 -0500
+Message-Id: <1203968718-88226-1-git-send-email-kevin@sb.org>
+X-Mailer: git-send-email 1.5.4.3.222.gb0bf5
+To:	Junio C Hamano <gitster@pobox.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-The default value of @mergerx uses \w, which matches word
-character; a branch name like policy-20050608-br will not be
-matched.
-
-Signed-off-by: Philippe Bruhat (BooK) <book@cpan.org>
 ---
- git-cvsimport.perl |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ t/t7003-filter-branch.sh |   13 +++++++++++++
+ 1 files changed, 13 insertions(+), 0 deletions(-)
 
-diff --git a/git-cvsimport.perl b/git-cvsimport.perl
-index 9516242..3d013a7 100755
---- a/git-cvsimport.perl
-+++ b/git-cvsimport.perl
-@@ -164,7 +164,7 @@ if ($#ARGV == 0) {
+diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
+index 868babc..9972343 100755
+--- a/t/t7003-filter-branch.sh
++++ b/t/t7003-filter-branch.sh
+@@ -179,4 +179,17 @@ test_expect_success 'Name needing quotes' '
  
- our @mergerx = ();
- if ($opt_m) {
--	@mergerx = ( qr/\b(?:from|of|merge|merging|merged) (\w+)/i );
-+	@mergerx = ( qr/\b(?:from|of|merge|merging|merged) ([-\w]+)/i );
- }
- if ($opt_M) {
- 	push (@mergerx, qr/$opt_M/);
+ '
+ 
++test_expect_success 'Subdirectory filter on non-contiguous folder' '
++	mkdir foo &&
++	touch foo/bar &&
++	git add foo &&
++	git commit -m "Adding foo" &&
++	git rm -r foo &&
++	git commit -m "Removing foo" &&
++	mkdir foo &&
++	touch foo/bar &&
++	git commit -m "Re-adding foo" &&
++	git filter-branch --subdirectory-filter foo
++'
++
+ test_done
 -- 
-1.5.3.8
+1.5.4.3.222.gb0bf5
 
