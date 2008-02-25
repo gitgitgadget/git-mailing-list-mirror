@@ -1,171 +1,149 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: "Contributors never merge" and preserving history
-Date: Mon, 25 Feb 2008 12:31:26 -0800 (PST)
-Message-ID: <alpine.LFD.1.00.0802251202380.14934@woody.linux-foundation.org>
-References: <slrnfs5pfh.lkc.jgoerzen@katherina.lan.complete.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Add tests for filesystem challenges (case and unicode
+ normalization)
+Date: Mon, 25 Feb 2008 12:44:30 -0800
+Message-ID: <7voda4hikx.fsf@gitster.siamese.dyndns.org>
+References: <7vlk5vjpi4.fsf@gitster.siamese.dyndns.org>
+ <1203873549507-git-send-email-prohaska@zib.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: John Goerzen <jgoerzen@complete.org>
-X-From: git-owner@vger.kernel.org Mon Feb 25 21:32:52 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, mitcht.git@gmail.com
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Mon Feb 25 21:45:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JTk0J-0002ip-As
-	for gcvg-git-2@gmane.org; Mon, 25 Feb 2008 21:32:51 +0100
+	id 1JTkCV-0006uw-71
+	for gcvg-git-2@gmane.org; Mon, 25 Feb 2008 21:45:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756543AbYBYUcN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Feb 2008 15:32:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756441AbYBYUcN
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Feb 2008 15:32:13 -0500
-Received: from smtp1.linux-foundation.org ([207.189.120.13]:47984 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756112AbYBYUcM (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 25 Feb 2008 15:32:12 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m1PKVRLf015728
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 25 Feb 2008 12:31:28 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m1PKVQJG018136;
-	Mon, 25 Feb 2008 12:31:27 -0800
-In-Reply-To: <slrnfs5pfh.lkc.jgoerzen@katherina.lan.complete.org>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
-X-Spam-Status: No, hits=-3.065 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 207.189.120.13
+	id S1757569AbYBYUou (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Feb 2008 15:44:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757475AbYBYUou
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Feb 2008 15:44:50 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:47799 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756738AbYBYUot (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Feb 2008 15:44:49 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 3973B2E4B;
+	Mon, 25 Feb 2008 15:44:42 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id EEA1A2E49; Mon, 25 Feb 2008 15:44:33 -0500 (EST)
+In-Reply-To: <1203873549507-git-send-email-prohaska@zib.de> (Steffen
+ Prohaska's message of "Sun, 24 Feb 2008 18:19:09 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75064>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75065>
 
+Steffen Prohaska <prohaska@zib.de> writes:
 
+> Unfortunately, I had no time to start the real work of fixing the
+> issues that are tested below.
 
-On Mon, 25 Feb 2008, John Goerzen wrote:
-> 
-> The canonical answer from #git seems to be "never pull", always use
-> fetch and rebase when submitting patches upstream using
-> git-format-patch.
+That's fine.  We are not in a hurry.
 
-If you're going to submit them as patches, that is the correct answer, 
-because what you want to do is basically keep your patch-queue up-to-date 
-(which is exactly what "git rebase" does).
+> But at least the tests should be in
+> good shape now and could be applied.
 
-And no, you must never mix merging and rebasing - not because it's 
-technically impossible (it *can* make sense in some circumstances), but 
-because the two flows really are very different. Either you keep history 
-and submit it as such (git-to-git merges up and down the chain) or you 
-work with a "set of patches" model. Mixing the two in the same tree just 
-leads to insanity (although mixing the two int he same project among 
-different repositories can be a very good way to handle things).
+I do not think we would want to see "FIXED" on systems that
+already behave sanely, so we would want a fix-up like this on
+top of your patch, and it would be a good to go.
 
-But "never pull" isn't quite true either. 
+I do not have a handy way to test this, though, so can you try
+it out and make sure test_case and test_unicode are set to
+test_expect_failure correctly on problematic filesystems?
 
-Basically, the way to think about development is to try to keep things in 
-"topic branches", which git is really good at. And the rule really 
-shouldn' be "never pull" as much as "try to keep those topic-branches 
-separate".
+Thanks.
 
-So pulling generally by definition mixes different branches (that's the 
-merge part) in a way that a rebase does not. That's *especially* true 
-about pulling from "upstream", because - pretty much by definition - that 
-upstream is generally not even a well-defined topic branch that you want 
-to merge, but simply the sum of all the *other* topic branches that have 
-been merged upstream.
+--
 
-So the reason you should generally pull from downstream rather than 
-upstream is that it keeps your development branch "focused" or "on target" 
-or whatever you want to call it. And that's always a good idea, because 
-now anybody who works together with you knows what he is getting.
+ t/t0050-filesystem.sh |   38 ++++++++++++++++++++++++++++++++------
+ 1 files changed, 32 insertions(+), 6 deletions(-)
 
-So think of it as a cleanliness issue - it may not matter all that much if 
-the only person you expect to ever pull your tree is always that same 
-upstream (so even if you pull from your upstream, your upstream isn't 
-really getting any mixed-up new code when he in turn pulls from you), but 
-one thign I personally hoped for as a "design" was that what git really 
-allows you to do (and _should_ encourage) is to have a less than perfectly 
-hierarchical development stream.
-
-And yes, in practice, pretty much every project ends up being pretty 
-hierarchical after all, and that may be because of how people work (they 
-want clarity, they want a simple "which tree is in charge" kind of model), 
-but I still suspect it's at least partly - and perhaps mostly - simply due 
-to historical patterns that it's just really hard to break.
-
-So if you think of different git repositories as different branches (and 
-that's what they really are!), then the "avoid pulling from upstream" is 
-really about that "keep the topic branch focused and clean!".
-
-And quite frankly, as "the upstream" for the kernel, I really appreciate 
-people who ask me to pull, and that keep their histories clean, so that 
-when I do a "gitk ORIG_HEAD.." after a pull, I get something that just 
-looks real and not too messy. IOW, I like seeing myself pulling clear and 
-well-defined topic branches (even if the "topics" I pull tend to be pretty 
-big-picture topics, ie they may encompass "everything networking" or 
-similar).
-
-BUT!
-
-There's always a but. In some cases, I will literally _ask_ a downstream 
-person to pull from me. Havign the downstream doing a merge makes sense if 
-the merge is non-trivial, and then the conflicting changes in a topic 
-branch should generally be resolved by the side that has (a) the knowledge 
-to do so (obviously) but also (b) the one who has the more specific 
-changes (ie the side that has less work, and more targeted knowledge, of 
-the things that conflict).
-
-IOW, in the case of non-trivial conflicts, suddenly downstream is usually 
-the one that has more knowledge, and now they should do the merge. And 
-quite often, downstream may well know that ahead of time and be proactive, 
-and just do the pull the "wrong way" and when asking me as an upstream 
-member to merge, they'll let me know that they've already resolved the 
-conflicts with what was in my tree.
-
-The latter case is also something where a really long-lived topic branch 
-may simply be doing those pulls over time every once in a while to just 
-make sure that the topic branch never gets *too* far out of sync. However, 
-if that's the reason for doing a merge, I'd almost suggest not just doing 
-a "git pull" from upstream, but fetching and then merging at 
-well-specified points (ie releases or release candidates).
-
-That way you can also make a better and more useful merge message: not 
-just "merged with upstream", but actually make it be "Synchronized with 
-release v1.7.9". Which now makes a whole lot of conceptual sense at a 
-higher level.
-
-To recap:
-
- - from a purely technical sense it doesn't make any difference 
-   what-so-ever who pulls and who doesn't, although you don't want it to 
-   be *too* rare so that the different branches diverge so far as to make 
-   it technically hard to synchronize later!
-
- - from a cleanliness angle - and *especially* if you want to work not 
-   just in strict "upstream" and "downstream" patterns, but expect to 
-   maybe have multiple upstreams (think "stable branch" or "vendor X wants 
-   to pull this too"), a clean and clear topic banch is a really really 
-   good idea.
-
-   For example, let's say that you're developing a driver. If you start at 
-   some specific kernel version (say, 2.6.24) and you do *not* generally 
-   merge from my development tree, now suddenly other people can happily 
-   pull from your tree to get the driver, even if they are stable kernels 
-   or vendor kernels that don't want all the development crud that is in 
-   my tree!
-
-   See? Keeping a clean history actually makes your tree more useful!
-
- - But there are cases where pulling from up-stream really makes sense. 
-   There may be specific points at upstream that you simply want to 
-   synchronize with, or there may be conflicts that you want to resolve 
-   simply because others aren't as knowledgeable about your topic branch
-   etc.
-
-So don't believe in "never pull from upstream". But *do* believe in "try 
-to keep your branches on topic, because it will make everybody happier, 
-and you'll be more easily able to read your own history too!".
-
-			Linus
+diff --git a/t/t0050-filesystem.sh b/t/t0050-filesystem.sh
+index a0ab02e..b395c22 100755
+--- a/t/t0050-filesystem.sh
++++ b/t/t0050-filesystem.sh
+@@ -4,6 +4,34 @@ test_description='Various filesystem issues'
+ 
+ . ./test-lib.sh
+ 
++auml=`perl -CO -e 'print pack("U",0x00E4)'`
++aumlcdiar=`perl -CO -e 'print pack("U",0x0061).pack("U",0x0308)'`
++
++test_expect_success 'see if we expect ' '
++
++	test_case=test_expect_success
++	test_unicode=test_expect_success
++	mkdir junk &&
++	echo good >junk/CamelCase &&
++	echo bad >junk/camelcase &&
++	if test "$(cat junk/CamelCase)" != good
++	then
++		test_camel=test_expect_failure
++		say "will test on a case insensitive filesystem"
++	fi &&
++	rm -fr junk &&
++	mkdir junk &&
++	>junk/"$auml" &&
++	case "$(cd junk && echo *)" in
++	"$aumlcdiar")
++		test_unicode=test_expect_failure
++		say "will test on a unicode corrupting filesystem"
++		;;
++	*)	;;
++	esac &&
++	rm -fr junk
++'
++
+ test_expect_success "setup case tests" '
+ 
+ 	touch camelcase &&
+@@ -18,22 +46,20 @@ test_expect_success "setup case tests" '
+ 
+ '
+ 
+-test_expect_failure 'rename (case change)' '
++$test_case 'rename (case change)' '
+ 
+ 	git mv camelcase CamelCase &&
+ 	git commit -m "rename"
+ 
+ '
+ 
+-test_expect_failure 'merge (case change)' '
++$test_case 'merge (case change)' '
+ 
+ 	git reset --hard initial &&
+ 	git merge topic
+ 
+ '
+ 
+-auml=`perl -CO -e 'print pack("U",0x00E4)'`
+-aumlcdiar=`perl -CO -e 'print pack("U",0x0061).pack("U",0x0308)'`
+ test_expect_success "setup unicode normalization tests" "
+ 
+   test_create_repo unicode &&
+@@ -50,14 +76,14 @@ test_expect_success "setup unicode normalization tests" "
+ 
+ "
+ 
+-test_expect_failure 'rename (silent unicode normalization)' "
++$test_unicode 'rename (silent unicode normalization)' "
+ 
+  git mv $aumlcdiar $auml &&
+  git commit -m \"rename\"
+ 
+ "
+ 
+-test_expect_failure 'merge (silent unicode normalization)' '
++$test_unicode 'merge (silent unicode normalization)' '
+ 
+  git reset --hard initial &&
+  git merge topic
