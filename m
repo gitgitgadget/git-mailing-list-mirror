@@ -1,152 +1,67 @@
-From: =?utf-8?q?Santi=20B=C3=A9jar?= <sbejar@gmail.com>
-Subject: [PATCH] Teach git-describe --long to output always the long format
-Date: Mon, 25 Feb 2008 10:43:33 +0100
-Message-ID: <1203932613-7759-1-git-send-email-sbejar@gmail.com>
-References: <1203864412-27977-1-git-send-email-sbejar@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: [Q] Tell Git to follow symlinks?
+Date: Mon, 25 Feb 2008 11:06:28 +0100
+Message-ID: <vpqtzjxbba3.fsf@bauges.imag.fr>
+References: <c6c947f60802240305w40a7af96yc47f90e573384c04@mail.gmail.com>
+	<m3k5ktbep1.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?q?Santi=20B=C3=A9jar?= <sbejar@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 25 10:44:31 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: "Alexander Gladysh" <agladysh@gmail.com>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 25 11:09:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JTZsl-0001FZ-4H
-	for gcvg-git-2@gmane.org; Mon, 25 Feb 2008 10:44:23 +0100
+	id 1JTaGp-0008Qh-B0
+	for gcvg-git-2@gmane.org; Mon, 25 Feb 2008 11:09:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751010AbYBYJnr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 Feb 2008 04:43:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750913AbYBYJnq
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Feb 2008 04:43:46 -0500
-Received: from fk-out-0910.google.com ([209.85.128.189]:11524 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750763AbYBYJnp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Feb 2008 04:43:45 -0500
-Received: by fk-out-0910.google.com with SMTP id z23so2096487fkz.5
-        for <git@vger.kernel.org>; Mon, 25 Feb 2008 01:43:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references:mime-version:content-type:content-transfer-encoding;
-        bh=/bfwdCt8ge7N8VMPr4SdH0tj3zLHwRBzezfSQpN8e9c=;
-        b=GzgLxaw08gMWTWiTvxtgYKMzu+ymAjx2xGpkDzdKWW8Jl7Ch/tsckM/pLGgB3nBIRgZES2oQkaHBRa8ng+mzjTExvKGPCogrZzOJ3JrSCLtnYWsbFIzkNvAbsAtuZzv4JA1lSkxoXDa6RIT7cSMAG3MUpsY+3wptFhPs69bZM9k=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references:mime-version:content-type:content-transfer-encoding;
-        b=Rm3T8DyVDfd+l4tMLNBv2nmysi7mplXJeOQtE4KHILn5fIXxCDMhUauHWY8qm8I/+mjKI6vuOewFGqtreMrQ37UdHXKdrgTbHufd3JAFv4aMq+XePerRG6wxVzvbBoTek4OUu6P0PuEI0atubZZituV1BUllT0AfoTPVbnTuWzA=
-Received: by 10.82.134.12 with SMTP id h12mr5321590bud.34.1203932620798;
-        Mon, 25 Feb 2008 01:43:40 -0800 (PST)
-Received: from localhost ( [91.13.105.170])
-        by mx.google.com with ESMTPS id f31sm7661271fkf.15.2008.02.25.01.43.37
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 25 Feb 2008 01:43:38 -0800 (PST)
-X-Mailer: git-send-email 1.5.4.3.293.gac81
-In-Reply-To: <1203864412-27977-1-git-send-email-sbejar@gmail.com>
+	id S1753441AbYBYKIi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Feb 2008 05:08:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753382AbYBYKIh
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Feb 2008 05:08:37 -0500
+Received: from imag.imag.fr ([129.88.30.1]:36109 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751366AbYBYKIg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Feb 2008 05:08:36 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id m1PA6hXQ005965
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 25 Feb 2008 11:06:44 +0100 (CET)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1JTaE8-0002gF-E8; Mon, 25 Feb 2008 11:06:28 +0100
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1JTaE8-0003dD-Bt; Mon, 25 Feb 2008 11:06:28 +0100
+In-Reply-To: <m3k5ktbep1.fsf@localhost.localdomain> (Jakub Narebski's message of "Mon\, 25 Feb 2008 00\:52\:48 -0800 \(PST\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 25 Feb 2008 11:06:44 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75020>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75021>
 
-This can be useful when more than one person can make "official" tags
-(or nobody), but you want unique identifiers with a descriptive
-name. Or when parsing git-describe output if you want to avoid
-hardcoding the information about the form of tags in a project
-(tags can, and sometimes do, contain '-').
+Jakub Narebski <jnareb@gmail.com> writes:
 
-Signed-off-by: Santi B=C3=A9jar <sbejar@gmail.com>
----
-Hi,
+> "Alexander Gladysh" <agladysh@gmail.com> writes:
+>
+>> I thought to construct my repo of the number of symlinks to other
+>> places, but apparently Git does not follow any symlinks.
+>
+> Git stores symlinks as symlinks. Changing that (adding for example
+> core.followSymlinks) would require quite a bit of surgery.
 
-  this time with documentation and usecases (thanks Jakub)
+In particular, this would raise the question of what to do when
+writting to a symlink. Following symlinks when doing a checkout or a
+merge could mean to allow git to write outside its working tree, which
+is problematic security-wise.
 
-Santi
-
- Documentation/git-describe.txt |    9 +++++++++
- builtin-describe.c             |   11 ++++++++++-
- t/t6120-describe.sh            |    2 ++
- 3 files changed, 21 insertions(+), 1 deletions(-)
-
-diff --git a/Documentation/git-describe.txt b/Documentation/git-describ=
-e.txt
-index 1c3dfb4..f46fbdd 100644
---- a/Documentation/git-describe.txt
-+++ b/Documentation/git-describe.txt
-@@ -51,6 +51,15 @@ OPTIONS
- 	being employed to standard error.  The tag name will still
- 	be printed to standard out.
-=20
-+--long::
-+	Always output the long format (the tag, the number of commits
-+	and the abbreviated commit name) even when it matches a tag.
-+	This can be useful when more than one person can make "official" tags
-+	(or nobody), but you want unique identifiers with a descriptive
-+	name. Or when parsing git-describe output if you want to avoid
-+	hardcoding the information about the form of tags in a project
-+	(tags can, and sometimes do, contain '-').
-+
- --match <pattern>::
- 	Only consider tags matching the given pattern (can be used to avoid
- 	leaking private tags made from the repository).
-diff --git a/builtin-describe.c b/builtin-describe.c
-index 3428483..3fd2e73 100644
---- a/builtin-describe.c
-+++ b/builtin-describe.c
-@@ -17,6 +17,7 @@ static const char * const describe_usage[] =3D {
- static int debug;	/* Display lots of verbose info */
- static int all;	/* Default to annotated tags only */
- static int tags;	/* But allow any tags if --tags is specified */
-+static int longformat;
- static int abbrev =3D DEFAULT_ABBREV;
- static int max_candidates =3D 10;
- const char *pattern =3D NULL;
-@@ -155,7 +156,11 @@ static void describe(const char *arg, int last_one=
-)
-=20
- 	n =3D cmit->util;
- 	if (n) {
--		printf("%s\n", n->path);
-+		if (!longformat)
-+			printf("%s\n", n->path);
-+		else
-+			printf("%s-0-g%s\n", n->path,
-+				find_unique_abbrev(cmit->object.sha1, abbrev));
- 		return;
- 	}
-=20
-@@ -254,6 +259,7 @@ int cmd_describe(int argc, const char **argv, const=
- char *prefix)
- 		OPT_BOOLEAN(0, "debug",      &debug, "debug search strategy on stder=
-r"),
- 		OPT_BOOLEAN(0, "all",        &all, "use any ref in .git/refs"),
- 		OPT_BOOLEAN(0, "tags",       &tags, "use any tag in .git/refs/tags")=
-,
-+		OPT_BOOLEAN(0, "long",       &longformat, "always use long format"),
- 		OPT__ABBREV(&abbrev),
- 		OPT_INTEGER(0, "candidates", &max_candidates,
- 			    "consider <n> most recent tags (default: 10)"),
-@@ -270,6 +276,9 @@ int cmd_describe(int argc, const char **argv, const=
- char *prefix)
-=20
- 	save_commit_buffer =3D 0;
-=20
-+	if (longformat && abbrev =3D=3D 0)
-+		die("--long is incompatible with --abbrev=3D0");
-+
- 	if (contains) {
- 		const char **args =3D xmalloc((6 + argc) * sizeof(char*));
- 		int i =3D 0;
-diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
-index ae8ee11..a7557bd 100755
---- a/t/t6120-describe.sh
-+++ b/t/t6120-describe.sh
-@@ -94,4 +94,6 @@ check_describe D-* --tags HEAD^^
- check_describe A-* --tags HEAD^^2
- check_describe B --tags HEAD^^2^
-=20
-+check_describe B-0-* --long HEAD^^2^
-+
- test_done
---=20
-1.5.4.3.293.gac81
+-- 
+Matthieu
