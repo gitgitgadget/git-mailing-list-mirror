@@ -1,134 +1,170 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: [PATCH] rev-parse: fix potential bus error with --parseopt option spec handling
-Date: Mon, 25 Feb 2008 23:07:39 -0500
-Message-ID: <1203998859-86344-1-git-send-email-jaysoffian@gmail.com>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: help: add "man.viewer" config var to use "woman" or "konqueror"
+Date: Tue, 26 Feb 2008 07:06:48 +0100
+Message-ID: <20080226070648.5d799056.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Jay Soffian <jaysoffian@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Junio Hamano <junkio@cox.net>, Pascal Obry <pascal@obry.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 26 05:08:23 2008
+X-From: git-owner@vger.kernel.org Tue Feb 26 07:01:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JTr77-0000Ya-NJ
-	for gcvg-git-2@gmane.org; Tue, 26 Feb 2008 05:08:22 +0100
+	id 1JTssu-0007I7-7p
+	for gcvg-git-2@gmane.org; Tue, 26 Feb 2008 07:01:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756930AbYBZEHo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Feb 2008 23:07:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755730AbYBZEHo
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Feb 2008 23:07:44 -0500
-Received: from an-out-0708.google.com ([209.85.132.244]:26084 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754743AbYBZEHn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Feb 2008 23:07:43 -0500
-Received: by an-out-0708.google.com with SMTP id d31so450456and.103
-        for <git@vger.kernel.org>; Mon, 25 Feb 2008 20:07:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date:message-id:x-mailer:mime-version:content-type:content-transfer-encoding;
-        bh=Yl1+aIF2/7k6+N404NQdtlrDJGj4/J4YzjnzIW2O/Gk=;
-        b=SGfGuB3UtNrFbg22b3K1duv6hyPwbTNo8xZ1lOuCc4zpY9tyscjRSBLm/Ekc1EWK6dDR+wo+ZsDlpFelua7kB0Yp7US/dTXEAL2TQoWD8pCGZJJwtjVMCp9GyOwNpxhFIMkgdQJK+mxvOX1ipu5qQmWUbHN0tKOwh143Cus/n+4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version:content-type:content-transfer-encoding;
-        b=RXNeppUprxcEHLdPqv47uFeT/05Vfn4TNxIyBctVmUk3LFxRWLZJ8DTUdKZIhJ9vPCNzOn39cWabfUH+RKtqf6w6BRhXfr5/fQR8pZA7D0gq0nHPcBiTnees2JqR8Jan9KLHeOD5piYKfFHsCTr3dTbRCA//qwd+ijRSJR8Alnw=
-Received: by 10.100.228.17 with SMTP id a17mr3063570anh.42.1203998862519;
-        Mon, 25 Feb 2008 20:07:42 -0800 (PST)
-Received: from localhost ( [75.189.159.45])
-        by mx.google.com with ESMTPS id c2sm8127247ana.4.2008.02.25.20.07.41
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 25 Feb 2008 20:07:41 -0800 (PST)
-X-Mailer: git-send-email 1.5.4.3.331.ga714
+	id S1752068AbYBZGBK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Feb 2008 01:01:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751806AbYBZGBJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Feb 2008 01:01:09 -0500
+Received: from smtp1-g19.free.fr ([212.27.42.27]:46855 "EHLO smtp1-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751705AbYBZGBH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Feb 2008 01:01:07 -0500
+Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 41E361AB2B4;
+	Tue, 26 Feb 2008 07:01:06 +0100 (CET)
+Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with SMTP id A68C31AB2BD;
+	Tue, 26 Feb 2008 07:01:03 +0100 (CET)
+X-Mailer: Sylpheed 2.4.8 (GTK+ 2.12.5; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75104>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75105>
 
-A non-empty line containing no spaces should be treated by --parseopt as
-an option group header, but was causing a bus error. Also added a test
-script for rev-parse --parseopt.
+This patch makes it possible to view man pages using other tools
+than the "man" program. It also implements support for emacs'
+"woman" and konqueror with the man KIO slave to view man pages.
 
-Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
+Note that "emacsclient" is used with option "-e" to launch "woman"
+on emacs and this works only on versions >= 22.
+
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
-e.g.
-% printf "foo\n--\noption-group-header\n" | git rev-parse --parseopt -- -h
-Bus error
+ help.c |   80 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 files changed, 79 insertions(+), 1 deletions(-)
 
-Wasn't sure whether to add the --parseopt test to t0040-parse-options.sh or
-t1500-rev-parse.sh. I ended up creating a new test script. Hopefully calling
-it out will increase the likelihood of it growing additional --parseopt tests.
+	Junio wrote:
+	> I have to wonder if it makes sense to just define the interface
+	> to launch an external user-supplied command, and have that
+	> command line determine what actually should happen, e.g. inspect
+	> DISPLAY and check emacs version etc.
 
- builtin-rev-parse.c           |    2 +-
- t/t1502-rev-parse-parseopt.sh |   43 +++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 44 insertions(+), 1 deletions(-)
- create mode 100755 t/t1502-rev-parse-parseopt.sh
+	There is some work on git-mergetool to do this. When it's integrated
+	I will see if I can do something like that for git-help too.   
 
-diff --git a/builtin-rev-parse.c b/builtin-rev-parse.c
-index b9af1a5..90dbb9d 100644
---- a/builtin-rev-parse.c
-+++ b/builtin-rev-parse.c
-@@ -315,7 +315,7 @@ static int cmd_parseopt(int argc, const char **argv, const char *prefix)
- 		s = strchr(sb.buf, ' ');
- 		if (!s || *sb.buf == ' ') {
- 			o->type = OPTION_GROUP;
--			o->help = xstrdup(skipspaces(s));
-+			o->help = xstrdup(skipspaces(sb.buf));
- 			continue;
- 		}
+diff --git a/help.c b/help.c
+index e57a50e..d700681 100644
+--- a/help.c
++++ b/help.c
+@@ -8,6 +8,9 @@
+ #include "exec_cmd.h"
+ #include "common-cmds.h"
+ #include "parse-options.h"
++#include "run-command.h"
++
++static const char *man_viewer;
  
-diff --git a/t/t1502-rev-parse-parseopt.sh b/t/t1502-rev-parse-parseopt.sh
-new file mode 100755
-index 0000000..762af5f
---- /dev/null
-+++ b/t/t1502-rev-parse-parseopt.sh
-@@ -0,0 +1,43 @@
-+#!/bin/sh
+ enum help_format {
+ 	HELP_FORMAT_MAN,
+@@ -50,6 +53,8 @@ static int git_help_config(const char *var, const char *value)
+ 		help_format = parse_help_format(value);
+ 		return 0;
+ 	}
++	if (!strcmp(var, "man.viewer"))
++		return git_config_string(&man_viewer, var, value);
+ 	return git_default_config(var, value);
+ }
+ 
+@@ -345,11 +350,84 @@ static void setup_man_path(void)
+ 	strbuf_release(&new_path);
+ }
+ 
++static int check_emacsclient_version()
++{
++	struct strbuf buffer = STRBUF_INIT;
++	ssize_t size;
++	struct child_process ec_process;
++	const char *argv_ec[] = { "emacsclient", "--version", NULL };
++	int version;
 +
-+test_description='test git rev-parse --parseopt'
-+. ./test-lib.sh
++	/* emacsclient prints its version number on stderr */
++	memset(&ec_process, 0, sizeof(ec_process));
++	ec_process.argv = argv_ec;
++	ec_process.err = -1;
++	ec_process.stdout_to_stderr = 1;
++	if (start_command(&ec_process)) {
++		fprintf(stderr, "Failed to start emacsclient.\n");
++		return -1;
++	}
++	size = strbuf_read(&buffer, ec_process.err, 20);
++	close(ec_process.err);
 +
-+cat > expect.err <<EOF
-+usage: some-command [options] <args>...
-+    
-+    some-command does foo and bar!
++	/* Don't bother checking return value, because "emacsclient --version"
++	 * seems to always exits with code 1. */
++	finish_command(&ec_process);
 +
-+    -h, --help            show the help
-+    --foo                 some nifty option --foo
-+    --bar ...             some cool option --bar with an argument
++	if (prefixcmp(buffer.buf, "emacsclient")) {
++		fprintf(stderr, "Failed to parse emacsclient version.\n");
++		strbuf_release(&buffer);
++		return -1;
++	}
 +
-+An option group Header
-+    -C [...]              option C with an optional argument
++	strbuf_remove(&buffer, 0, strlen("emacsclient"));
++	version = atoi(buffer.buf);
 +
-+Extras
-+    --extra1              line above used to cause a segfault but no longer does
++	if (version < 22) {
++		fprintf(stderr,
++			"emacsclient version '%d' too old (< 22).\n",
++			version);
++		strbuf_release(&buffer);
++		return -1;
++	}
 +
-+EOF
++	strbuf_release(&buffer);
++	return 0;
++}
 +
-+test_expect_success 'test --parseopt help output' '
-+	git rev-parse --parseopt -- -h 2> output.err <<EOF
-+some-command [options] <args>...
++static void exec_woman_emacs(const char *page)
++{
++	if (!check_emacsclient_version()) {
++		/* This works only with emacsclient version >= 22. */
++		struct strbuf man_page = STRBUF_INIT;
++		strbuf_addf(&man_page, "(woman \"%s\")", page);
++		execlp("emacsclient", "emacsclient", "-e", man_page.buf, NULL);
++	} else
++		execlp("man", "man", page, NULL);
++}
 +
-+some-command does foo and bar!
-+--
-+h,help    show the help
++static void exec_man_konqueror(const char *page)
++{
++	const char *display = getenv("DISPLAY");
++	if (display && *display) {
++		struct strbuf man_page = STRBUF_INIT;
++		strbuf_addf(&man_page, "man:%s(1)", page);
++		execlp("kfmclient", "kfmclient", "newTab", man_page.buf, NULL);
++	} else
++		execlp("man", "man", page, NULL);
++}
 +
-+foo       some nifty option --foo
-+bar=      some cool option --bar with an argument
-+
-+ An option group Header
-+C?        option C with an optional argument
-+
-+Extras
-+extra1    line above used to cause a segfault but no longer does
-+EOF
-+	git diff expect.err output.err
-+'
-+
-+test_done
+ static void show_man_page(const char *git_cmd)
+ {
+ 	const char *page = cmd_to_page(git_cmd);
+ 	setup_man_path();
+-	execlp("man", "man", page, NULL);
++	if (!man_viewer || !strcmp(man_viewer, "man"))
++		execlp("man", "man", page, NULL);
++	if (!strcmp(man_viewer, "woman"))
++		exec_woman_emacs(page);
++	if (!strcmp(man_viewer, "konqueror"))
++		exec_man_konqueror(page);
++	die("'%s': unsupported man viewer.", man_viewer);
+ }
+ 
+ static void show_info_page(const char *git_cmd)
 -- 
-1.5.4.3.331.ga714
+1.5.4.3.328.gcaed.dirty
