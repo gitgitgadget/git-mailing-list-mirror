@@ -1,146 +1,221 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH 0/4] Improve gitweb search, and other things
-Date: Tue, 26 Feb 2008 13:22:04 +0100
-Message-ID: <1204028528-18941-1-git-send-email-jnareb@gmail.com>
-Cc: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH 4/4] gitweb: Clearly distinguish regexp / exact match searches
+Date: Tue, 26 Feb 2008 13:22:08 +0100
+Message-ID: <1204028528-18941-5-git-send-email-jnareb@gmail.com>
+References: <1204028528-18941-1-git-send-email-jnareb@gmail.com>
+Cc: Petr Baudis <pasky@ucw.cz>, Petr Baudis <pasky@suse.cz>,
+	Jakub Narebski <jnareb@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 26 13:23:40 2008
+X-From: git-owner@vger.kernel.org Tue Feb 26 13:23:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JTyqO-000223-Lj
-	for gcvg-git-2@gmane.org; Tue, 26 Feb 2008 13:23:37 +0100
+	id 1JTyqO-000223-0t
+	for gcvg-git-2@gmane.org; Tue, 26 Feb 2008 13:23:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751313AbYBZMWe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Feb 2008 07:22:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751266AbYBZMWd
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Feb 2008 07:22:33 -0500
-Received: from nf-out-0910.google.com ([64.233.182.185]:13287 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751016AbYBZMW2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Feb 2008 07:22:28 -0500
-Received: by nf-out-0910.google.com with SMTP id g13so1094884nfb.21
-        for <git@vger.kernel.org>; Tue, 26 Feb 2008 04:22:27 -0800 (PST)
+	id S1751206AbYBZMWb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Feb 2008 07:22:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750955AbYBZMWb
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Feb 2008 07:22:31 -0500
+Received: from ug-out-1314.google.com ([66.249.92.173]:60359 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750963AbYBZMW1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Feb 2008 07:22:27 -0500
+Received: by ug-out-1314.google.com with SMTP id z38so1231685ugc.16
+        for <git@vger.kernel.org>; Tue, 26 Feb 2008 04:22:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received:from:to:cc:subject:date:message-id:x-mailer;
-        bh=CuoMvXUpNkMb5TL1Xmo0+ht7BMpx+VYtXZEWrJy9F6c=;
-        b=xkpz00Hn2KusUOST1yKFWIgCNNHh33C7GIMal/hL1vCbJf5W2ZuqTf3Vs14Io5d/jdwCEEXgORmcvF+v3B+j4lCI9NKhrywX3hA20q29yamfVGRoGrb4/M6IgABiFzxNu8JeR34hPNOBFcX/jXKLPowRTHtbXIqZ7asY7sElFIs=
+        h=domainkey-signature:received:received:received:received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=VWSH0kK/7q4dhV8/iHHQp2Lc8KzQTQ0UBoUkzNUMVMw=;
+        b=AKFoU5Ifd1ZzqATII/fiQC0P8/yvTpRNcgZTlR0pq0HRrAxafpug8asPL2sJ5ah+3jv8OOI1XuOylk6+HjTzfWg8cZRz9R8GQDg3ckVz7OZfzWDjzqlVPxitNQACa0JFzmGhmCneWsCPF1nP+w60Suxo9XhT4ryrUjhCmbW6yGA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=jG3YhCuPvmdSqJBjQOVWH/AW1tmvOhy74upYxfRhQdbBTNFf+CpeJ6cuj7RM/dV4ErweSFIOYsqDY7gHLNMbk3kuvdcfUQgnuFBMH6BAHjOjThaWs7vuFUvlTkJLRAhAUUIz6VGPpuwxkpL36i2WOyqZFuvodyn8ZVBqu4uSv2Q=
-Received: by 10.82.106.14 with SMTP id e14mr8710300buc.3.1204028547159;
-        Tue, 26 Feb 2008 04:22:27 -0800 (PST)
-Received: from localhost.localdomain ( [83.8.218.226])
-        by mx.google.com with ESMTPS id z40sm10944210ikz.4.2008.02.26.04.22.19
-        (version=TLSv1/SSLv3 cipher=OTHER);
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=v/reaEDcCOBRDDY7banvTjHRI+u0HDUAf6q2GI0/ZGYxOYWyqYLXZVk1trbKO10A47DPvLVn93xqz3fGgiDY7GcUQnmJF7COrjkxJGCq/colVdkZYP+tlqd7Kw5CTtSxV5WKwUqizEw5BbrhrvgctIcNwMu32M85+oXtu6znzBk=
+Received: by 10.78.199.8 with SMTP id w8mr2476793huf.46.1204028543327;
         Tue, 26 Feb 2008 04:22:23 -0800 (PST)
+Received: from localhost.localdomain ( [83.8.218.226])
+        by mx.google.com with ESMTPS id 32sm10894309nfu.7.2008.02.26.04.22.20
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 26 Feb 2008 04:22:21 -0800 (PST)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m1QCM9qu018960;
-	Tue, 26 Feb 2008 13:22:09 +0100
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m1QCMICu018976;
+	Tue, 26 Feb 2008 13:22:18 +0100
 Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m1QCM9VG018959;
-	Tue, 26 Feb 2008 13:22:09 +0100
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m1QCMCJU018975;
+	Tue, 26 Feb 2008 13:22:12 +0100
 X-Mailer: git-send-email 1.5.4.2
+In-Reply-To: <1204028528-18941-1-git-send-email-jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75130>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75131>
 
-Table of contents:
-~~~~~~~~~~~~~~~~~~
- [PATCH 1/4] Add '--fixed-strings' option to "git log --grep" and friends
- [PATCH 2/4] gitweb: Change parse_commits signature to allow for
-             multiple options
- [PATCH 3/4] gitweb: Simplify fixed string search
- [PATCH 4/4] gitweb: Clearly distinguish regexp / exact match searches
+From: Petr Baudis <pasky@ucw.cz>
 
-Description of series:
-~~~~~~~~~~~~~~~~~~~~~~~
-When testing earlier improvements to gitweb commit search (searching
-commit messages), I have noticed that searching for "don't" didn't
-find anything from gitweb, while 'git log --grep="don't"' returns
-quite a number of commits.  After examination I have realized that it
-was caused by the fact that 'quotemeta' in Perl quotes also "'"
-(single quote character), and grep (which "git log --grep=<pattern>"
-uses) doesn't do the unquoting for unnecessary quoted characters.
+This patch does a couple of things:
 
-At first I have thought about implementing our own limited quoting
-subroutine, quoteregexmeta() to quote only regular expression
-meta-characters.  The "grep" search (using git-grep) by default uses
-extended POSIX regexps, so there would be need also for
-quoteextremeta() subroutine, unless gitweb would pass '-E' option to
-"git log" when searching/limiting output.  This unfortunately needs
-_three_ versions of search query: original search text, to be passed
-for "next page" links, fill default/current value of search form text
-(entry) field, and perhaps show in the page title; regexp quoted for
-grep, to be passed to "git log --grep" and friends or "git grep";
-regexp quoted for Perl (we can use quotemeta() here) for showing match
-info (matched fragment).  It is a bit complicated and error prone. 
-(Well, maybe all that is not really necessary...)
+* Makes commit/author/committer search case insensitive
 
-With git-grep search (tree search) and pickaxe search (diff search) it
-is easy, as pickaxe search is by default fixed strings search, and
-git-grep has -F / --fixed-strings option.  Option which 
-"git log --grep=<pattern>" was lacking...
+	To be consistent with the grep search; I see no convincing
+	reason for the search to be case sensitive, and you might
+	get in trouble especially with contributors e.g. from Japan
+	or France where they sometimes like to uppercase their last
+	name.
 
-First commit in series adds then -F / --fixed-strings option for
-searching commit messages by git-log / git-rev-list.  It was quite
-easy to do, thanks to well written infrastructure.  This patch can
-be seen as standalone patch (adding option for consistency), and I
-have even send it as
-  Message-Id: <200802241647.08871.jnareb@gmail.com>
-But I have thought the chance of it being accepted would be better
-if there were some use case for it.
+* Makes grep search by default search for fixed strings
 
-Therefore next commits in series makes use of just introduced ability
-to use --fixed-strings option to consider the limiting patterns to be
-fixed strings.
+	Since we will have a checkbox.
 
-For this we have to pass both --grep=$seachstring (or equivalent for
-other commit message search searchtypes) and --fixed-strings option.
-Therefore parse_commits() subroutine calling convention, which allowed
-to pass optionally only single extra option had to be changed.
+* Introduces 're' checkbox that enables POSIX extended regexp searches
 
-Meanwhile when looking at gitweb installed at http://repo.or.cz I seen
-that it includes checkbox to switch between fixed strings search, and
-regexp search.  (IIRC patch was send to git mailing list, and lost
-somehow, not being resent enough for inclusion[*1*]).  The repo.or.cz
-gitweb is based on 'next' branch of http://repo.or.cz/git/gitweb.git
-fork of git.  This change also required more than one pattern limiting
-option to be passed down to git-rev-list.
+	This works for all the search types. The idea comes from Jakub.
 
-So I have then extracted this change, and put it as second commit in
-this series.  This made it easy to implement fixed strings search in
-gitweb not by quoting regexp meta-characters, but by using just
-implemented --fixed-strings option.
+It does not make much sense (and is not easy at all) to untangle most
+of these changes from each other, thus they all go in a single patch.
 
-Finally I have though "why not", and cherry-picked Petr "Pasky" Baudis
-addition of fixed-strings/regexp search checkbox.  This made last,
-fourth commit in this series.
+[jn: Cherry-picked from Pasky's http://repo.or.cz/git/gitweb.git]
 
-[*1*] Petr "Pasky" Baudis is much less active on git mailing list lately.
+Signed-off-by: Petr Baudis <pasky@suse.cz>
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+Cherry-picked, and resolved conflict.
 
-Shortlog:
-~~~~~~~~~
-Jakub Narebski (3):
-      Add '--fixed-strings' option to "git log --grep" and friends
-      gitweb: Change parse_commits signature to allow for multiple options
-      gitweb: Simplify fixed string search
+ gitweb/gitweb.perl |   44 ++++++++++++++++++++++++++++++--------------
+ 1 files changed, 30 insertions(+), 14 deletions(-)
 
-Petr Baudis (1):
-      gitweb: Clearly distinguish regexp / exact match searches
-
-Diffstat:
-~~~~~~~~~
- Documentation/git-rev-list.txt     |    1 +
- Documentation/rev-list-options.txt |    5 +++
- gitweb/gitweb.perl                 |   58 +++++++++++++++++++++++------------
- revision.c                         |   10 +++++-
- 4 files changed, 53 insertions(+), 21 deletions(-)
-
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 90cf78e..20dc5d5 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -472,13 +472,15 @@ if (defined $searchtype) {
+ 	}
+ }
+ 
++our $search_use_regexp = $cgi->param('sr');
++
+ our $searchtext = $cgi->param('s');
+ our $search_regexp;
+ if (defined $searchtext) {
+ 	if (length($searchtext) < 2) {
+ 		die_error(undef, "At least two characters are required for search parameter");
+ 	}
+-	$search_regexp = quotemeta $searchtext;
++	$search_regexp = $search_use_regexp ? $searchtext : quotemeta $searchtext;
+ }
+ 
+ # now read PATH_INFO and use it as alternative to parameters
+@@ -608,6 +610,7 @@ sub href(%) {
+ 		searchtype => "st",
+ 		snapshot_format => "sf",
+ 		extra_options => "opt",
++		search_use_regexp => "sr",
+ 	);
+ 	my %mapping = @mapping;
+ 
+@@ -2584,6 +2587,10 @@ EOF
+ 		      $cgi->sup($cgi->a({-href => href(action=>"search_help")}, "?")) .
+ 		      " search:\n",
+ 		      $cgi->textfield(-name => "s", -value => $searchtext) . "\n" .
++		      "<span title=\"Extended regular expression\">" .
++		      $cgi->checkbox(-name => 'sr', -value => 1, -label => 're',
++		                     -checked => $search_use_regexp) .
++		      "</span>" .
+ 		      "</div>" .
+ 		      $cgi->end_form() . "\n";
+ 	}
+@@ -5256,7 +5263,8 @@ sub git_search {
+ 		}
+ 		$greptype .= $searchtext;
+ 		my @commitlist = parse_commits($hash, 101, (100 * $page), undef,
+-		                               $greptype, '--fixed-strings');
++		                               $greptype, '--regexp-ignore-case',
++		                               $search_use_regexp ? '--extended-regexp' : '--fixed-strings');
+ 
+ 		my $paging_nav = '';
+ 		if ($page > 0) {
+@@ -5300,8 +5308,9 @@ sub git_search {
+ 		my $git_command = git_cmd_str();
+ 		my $searchqtext = $searchtext;
+ 		$searchqtext =~ s/'/'\\''/;
++		my $pickaxe_flags = $search_use_regexp ? '--pickaxe-regex' : '';
+ 		open my $fd, "-|", "$git_command rev-list $hash | " .
+-			"$git_command diff-tree -r --stdin -S\'$searchqtext\'";
++			"$git_command diff-tree -r --stdin -S\'$searchqtext\' $pickaxe_flags";
+ 		undef %co;
+ 		my @files;
+ 		while (my $line = <$fd>) {
+@@ -5365,7 +5374,9 @@ sub git_search {
+ 		my $alternate = 1;
+ 		my $matches = 0;
+ 		$/ = "\n";
+-		open my $fd, "-|", git_cmd(), 'grep', '-n', '-i', '-E', $searchtext, $co{'tree'};
++		open my $fd, "-|", git_cmd(), 'grep', '-n',
++			$search_use_regexp ? ('-E', '-i') : '-F',
++			$searchtext, $co{'tree'};
+ 		my $lastfile = '';
+ 		while (my $line = <$fd>) {
+ 			chomp $line;
+@@ -5395,7 +5406,7 @@ sub git_search {
+ 				print "<div class=\"binary\">Binary file</div>\n";
+ 			} else {
+ 				$ltext = untabify($ltext);
+-				if ($ltext =~ m/^(.*)($searchtext)(.*)$/i) {
++				if ($ltext =~ m/^(.*)($search_regexp)(.*)$/i) {
+ 					$ltext = esc_html($1, -nbsp=>1);
+ 					$ltext .= '<span class="match">';
+ 					$ltext .= esc_html($2, -nbsp=>1);
+@@ -5430,27 +5441,31 @@ sub git_search_help {
+ 	git_header_html();
+ 	git_print_page_nav('','', $hash,$hash,$hash);
+ 	print <<EOT;
++<p><strong>Pattern</strong> is by default a normal string that is matched precisely (but without
++regard to case, except in the case of pickaxe). However, when you check the <em>re</em> checkbox,
++the pattern entered is recognized as the POSIX extended
++<a href="http://en.wikipedia.org/wiki/Regular_expression">regular expression</a> (also case
++insensitive).</p>
+ <dl>
+ <dt><b>commit</b></dt>
+-<dd>The commit messages and authorship information will be scanned for the given string.</dd>
++<dd>The commit messages and authorship information will be scanned for the given pattern.</dd>
+ EOT
+ 	my ($have_grep) = gitweb_check_feature('grep');
+ 	if ($have_grep) {
+ 		print <<EOT;
+ <dt><b>grep</b></dt>
+ <dd>All files in the currently selected tree (HEAD unless you are explicitly browsing
+-    a different one) are searched for the given
+-<a href="http://en.wikipedia.org/wiki/Regular_expression">regular expression</a>
+-(POSIX extended) and the matches are listed. On large
+-trees, this search can take a while and put some strain on the server, so please use it with
+-some consideration.</dd>
++    a different one) are searched for the given pattern. On large trees, this search can take
++a while and put some strain on the server, so please use it with some consideration. Note that
++due to git-grep peculiarity, currently if regexp mode is turned off, the matches are
++case-sensitive.</dd>
+ EOT
+ 	}
+ 	print <<EOT;
+ <dt><b>author</b></dt>
+-<dd>Name and e-mail of the change author and date of birth of the patch will be scanned for the given string.</dd>
++<dd>Name and e-mail of the change author and date of birth of the patch will be scanned for the given pattern.</dd>
+ <dt><b>committer</b></dt>
+-<dd>Name and e-mail of the committer and date of commit will be scanned for the given string.</dd>
++<dd>Name and e-mail of the committer and date of commit will be scanned for the given pattern.</dd>
+ EOT
+ 	my ($have_pickaxe) = gitweb_check_feature('pickaxe');
+ 	if ($have_pickaxe) {
+@@ -5458,7 +5473,8 @@ EOT
+ <dt><b>pickaxe</b></dt>
+ <dd>All commits that caused the string to appear or disappear from any file (changes that
+ added, removed or "modified" the string) will be listed. This search can take a while and
+-takes a lot of strain on the server, so please use it wisely.</dd>
++takes a lot of strain on the server, so please use it wisely. Note that since you may be
++interested even in changes just changing the case as well, this search is case sensitive.</dd>
+ EOT
+ 	}
+ 	print "</dl>\n";
 -- 
 1.5.4.2
