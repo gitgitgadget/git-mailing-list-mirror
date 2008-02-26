@@ -1,100 +1,91 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: "Contributors never merge" and preserving history
-Date: Tue, 26 Feb 2008 08:41:10 -0800 (PST)
-Message-ID: <alpine.LFD.1.00.0802260831220.14934@woody.linux-foundation.org>
-References: <slrnfs5pfh.lkc.jgoerzen@katherina.lan.complete.org> <alpine.LFD.1.00.0802251202380.14934@woody.linux-foundation.org> <slrnfs8749.prc.jgoerzen@katherina.lan.complete.org>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: stgit - continue rebase after merge conflict?
+Date: Tue, 26 Feb 2008 16:56:53 +0000
+Message-ID: <b0943d9e0802260856j6e9b0053ne4916149d8e4387c@mail.gmail.com>
+References: <20080226145725.GA24987@ldl.fc.hp.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: John Goerzen <jgoerzen@complete.org>
-X-From: git-owner@vger.kernel.org Tue Feb 26 17:42:12 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: "Alex Chiang" <achiang@hp.com>, catalin.marinas@gmail.com,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 26 17:58:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JU2sY-0005r8-83
-	for gcvg-git-2@gmane.org; Tue, 26 Feb 2008 17:42:06 +0100
+	id 1JU37p-00041A-2Y
+	for gcvg-git-2@gmane.org; Tue, 26 Feb 2008 17:57:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755229AbYBZQl1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Feb 2008 11:41:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753853AbYBZQl1
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Feb 2008 11:41:27 -0500
-Received: from smtp1.linux-foundation.org ([207.189.120.13]:55290 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754018AbYBZQl0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Feb 2008 11:41:26 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m1QGfAlm010596
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 26 Feb 2008 08:41:11 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m1QGfAFQ030413;
-	Tue, 26 Feb 2008 08:41:10 -0800
-In-Reply-To: <slrnfs8749.prc.jgoerzen@katherina.lan.complete.org>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
-X-Spam-Status: No, hits=-3.057 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 207.189.120.13
+	id S1756856AbYBZQ47 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Feb 2008 11:56:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756636AbYBZQ46
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Feb 2008 11:56:58 -0500
+Received: from wr-out-0506.google.com ([64.233.184.239]:16970 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754080AbYBZQ46 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Feb 2008 11:56:58 -0500
+Received: by wr-out-0506.google.com with SMTP id c48so3386740wra.23
+        for <git@vger.kernel.org>; Tue, 26 Feb 2008 08:56:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=SdjeAliKVsIRnVUfaRAGwAhp527O/brQ5/25t2eAFPU=;
+        b=JUnlGCstYsXE3u6IF0ZUlKEBzv54OgZFBqBgvBSh4Js3P6sbX9EFYU+qSVouqwg0y9OLPFnzO3XUfANJiegLDPyfcCIXVdQBdsVCKTb8v2Ow3um6KLEBxrD7jziYdxf7PoOh2tXIKCKKA59ckzGY0DEAD6LOOCBzRjyx+uGSrvg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=mlCe+GMc80TNr0QFpkBUVRGXNbNCjbHQWP9zemWurGh2Cj5lrVUOfP378xit9NyJBHXnKSveuQk4tax3OfGNZ/K1PHxbLAuKpsAlgZBYtuHluN6yOPMW1UV6OCujAwrG0pgJ1FVKNE3fBpcbHCcUtp1KaZ8EE9YHD3y2pmaQwsk=
+Received: by 10.141.153.16 with SMTP id f16mr3480419rvo.246.1204045013928;
+        Tue, 26 Feb 2008 08:56:53 -0800 (PST)
+Received: by 10.140.193.5 with HTTP; Tue, 26 Feb 2008 08:56:53 -0800 (PST)
+In-Reply-To: <20080226145725.GA24987@ldl.fc.hp.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75150>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75151>
 
+On 26/02/2008, Alex Chiang <achiang@hp.com> wrote:
+>  How does one do a stg rebase if there are merge conflicts?
 
+Basically, you solve the conflict, refresh the current patch and
+continue with 'stg push' or 'stg goto <top patch>'. The 'rebase'
+command does 'pop --all', 'git reset', 'push --all'. In your conflict,
+the base of the stack was already changed to the latest and hence only
+push/goto is needed. To fix it:
 
-On Tue, 26 Feb 2008, John Goerzen wrote:
-> 
-> I do have a question about the point you make above though.  I'm not
-> quite understanding what you're saying here.  Technically speaking,
-> the end result of a merge where you pulled from me would be identical
-> to a merge where I pulled from you.
+$ vi files   # or simply use 'resolved -i' below
+$ stg resolved -a [-i]
+$ stg refresh
+$ stg goto top-patch
 
-Yes. Except for where the end result is!
+or (if you want to skip that patch):
 
-That's kind of the point. If you're developing a driver, your tree is the 
-"driver tree". But if you keep pulling from me, now it's no longer a 
-driver tree, it's a "driver and Linus' code tree".
+$ stg push --undo
+$ stg push next-patch..
 
-> Moreover, say I'm pretty far down on the seniority list, kernel-wise.  
-> Do you expect subsystem maintainers to honor a request from me to pull 
-> from my tree, even if they've never heard of me before, or would you 
-> think they'd only want git format-patch output?
+The 'rebase' command doesn't store any information about the state of
+the stack and cannot continue it. Maybe we'll do something in the next
+release as the refactored code has support for transactions.
 
-It probably depends on the submaintainer. But you're absolutely right that 
-at least early on, most of them will want just emailed patches. And for 
-that, the "fetch + rebase" model is the better one.
+Yet another option is to enable the automatic interactive merge ('git
+config stgit.autoimerge yes') and, at a conflict, it calls your
+three-way merge tool (emacs, xxdiff etc.). If the merge tool succeeds,
+the rebase will simply continue.
 
-HOWEVER.
+>  This output tells you how to undo the rebase, but doesn't give
+>  any clues on how to continue it, like git would:
+>
+>  -------------------------------------------------------
+>  When you have resolved this problem run "git rebase --continue".
+>  If you would prefer to skip this patch, instead run "git rebase --skip".
+>  To restore the original branch and stop rebasing run "git rebase --abort".
+>  -------------------------------------------------------
+>
+>  Doing an 'stg help rebase' isn't so helpful.
 
-What happens with me is that I personally prefer patches from people if
+Yes, indeed. It could be made better.
 
- - they are "single" patches at a time (not necessarily just one, but at 
-   most a couple at a time)
-
- - I've really never worked with you before
-
-but if you have a real patch-series with more than (say) 4-5 patches, and 
-I've seen patches from you before, _and_ you have a clean git tree, at 
-that point I'd more likely actually already prefer a git pull if you can 
-just describe your patches well enough in the email.
-
-[ Of course, when it comes to me personally, another big requirement is 
-  that I don't feel like you're going past some subsystem maintainer.
-
-  It's not that I am a strict hierarchical person, it's that when it comes 
-  to most subsystems I often don't feel competent enough to make the 
-  decision, so I want things to go through submaintainers simply because 
-  it's an extra layer of "filters".
-
-  So the things I'd take through git are things that are either really 
-  obvious or things I'd take anyway for other reasons. Those things are 
-  seldom "patch series", but it happens.. ]
-
-So at least judging by my own preferences, I don't think the barrier to 
-doing a git merge is actually all that high. The *biggest* barrier may 
-indeed be that I can happily do a "git pull", but if it doesn't look like 
-a clean topic branch, I'd probably undo it.
-
-			Linus
+-- 
+Catalin
