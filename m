@@ -1,48 +1,48 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH 1/4] Add '--fixed-strings' option to "git log --grep" and friends
-Date: Tue, 26 Feb 2008 13:22:05 +0100
-Message-ID: <1204028528-18941-2-git-send-email-jnareb@gmail.com>
+Subject: [PATCH 2/4] gitweb: Change parse_commits signature to allow for multiple options
+Date: Tue, 26 Feb 2008 13:22:06 +0100
+Message-ID: <1204028528-18941-3-git-send-email-jnareb@gmail.com>
 References: <1204028528-18941-1-git-send-email-jnareb@gmail.com>
-Cc: Jakub Narebski <jnareb@gmail.com>
+Cc: Jakub Narebski <jnareb@gmail.com>, Petr Baudis <pasky@suse.cz>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 26 13:23:08 2008
+X-From: git-owner@vger.kernel.org Tue Feb 26 13:23:36 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JTypn-0001rJ-Kt
-	for gcvg-git-2@gmane.org; Tue, 26 Feb 2008 13:23:00 +0100
+	id 1JTyqN-000223-CA
+	for gcvg-git-2@gmane.org; Tue, 26 Feb 2008 13:23:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750924AbYBZMWZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Feb 2008 07:22:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750913AbYBZMWY
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Feb 2008 07:22:24 -0500
+	id S1751112AbYBZMW3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Feb 2008 07:22:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751054AbYBZMW2
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Feb 2008 07:22:28 -0500
 Received: from fk-out-0910.google.com ([209.85.128.186]:55675 "EHLO
 	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750893AbYBZMWW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Feb 2008 07:22:22 -0500
+	with ESMTP id S1750955AbYBZMW0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Feb 2008 07:22:26 -0500
 Received: by fk-out-0910.google.com with SMTP id z23so2857234fkz.5
-        for <git@vger.kernel.org>; Tue, 26 Feb 2008 04:22:20 -0800 (PST)
+        for <git@vger.kernel.org>; Tue, 26 Feb 2008 04:22:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=fl2Rxyj5LSsvr5FM4cuk9YYWE2MOQaZOz9eS4XYh5Ug=;
-        b=SfFbcEy2sYVBcMQIfIdgZNN4Zofie7TYO0/x6x+yZrXZRekOFNEEoUwosl40qCbshaXmWeNedRBrCEnlCKCOxA3djJYMs7hpiADjcvXdkHM3fMeEqSFAYgpuDmS2W0wE0xNfT5iWiPGc9Dr1kYATO8Rqv4cgT4mZGU5vyAL9/mA=
+        bh=RvPaplffLTciVWfj1Ep+vYLRAkzLPRX/7jjpPXDwyjs=;
+        b=D/BS8P4H6tliTFbQYtPYrWOOIAkoBgR7G6EJCYOLGLRHYviH9wFJ9Z2GnCXs9HEnyJq9IcFONVcBUDFnRPwebTzK/C8r+imGeBc4yhLtvR4blIFCPmHDu67mMk10NZNKtJk8Q87G4AS577W8DEp2uZbawDfHj6FFhFmDSaG1Ne8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=f+EucWgdcEvwe8CgKBx08rdlyzevLTBFKA1X+OjGjL1IbAoDeoCCbXxk6EITFbrvV77pLYp7l8rZvVPksDvITH1vqfvSO0Z52OTjfUK/OC7OGxJvub7wlaczRv6nYuIeQB636a7uuYcJpHZcXY2qh0uCv5CqygJke25EugVSm/E=
-Received: by 10.82.174.20 with SMTP id w20mr8678274bue.9.1204028540170;
-        Tue, 26 Feb 2008 04:22:20 -0800 (PST)
+        b=lYs2RSyaQE49qoVUY0F7YaIFPiBwgeYTc5G4XCs/SS8Gf3uDv1HKmix8DoWfInC0TVKOqpO8BJSaUO/8eWrDiLIhPplk5BhHZEZUugczbieqaViRgJNMH3phyoF/a4OUQXXyNqIW10E+/3dyKkd0D8FNj6uPDeYMYbkjDbULFao=
+Received: by 10.82.126.5 with SMTP id y5mr8639686buc.37.1204028545804;
+        Tue, 26 Feb 2008 04:22:25 -0800 (PST)
 Received: from localhost.localdomain ( [83.8.218.226])
-        by mx.google.com with ESMTPS id z37sm10915314ikz.1.2008.02.26.04.22.14
+        by mx.google.com with ESMTPS id b36sm10964128ika.2.2008.02.26.04.22.18
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 26 Feb 2008 04:22:17 -0800 (PST)
+        Tue, 26 Feb 2008 04:22:23 -0800 (PST)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m1QCMA73018964;
-	Tue, 26 Feb 2008 13:22:10 +0100
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m1QCMBqR018968;
+	Tue, 26 Feb 2008 13:22:11 +0100
 Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m1QCMAnr018963;
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m1QCMAPw018967;
 	Tue, 26 Feb 2008 13:22:10 +0100
 X-Mailer: git-send-email 1.5.4.2
 In-Reply-To: <1204028528-18941-1-git-send-email-jnareb@gmail.com>
@@ -50,99 +50,87 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75128>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75129>
 
-Add support for -F | --fixed-strings option to "git log --grep"
-and friends: "git log --author", "git log --committer=<pattern>".
-Code is based on implementation of this option in "git grep".
+Change order of parameters in parse_commits() to have $filename
+before @args (extra options), to allow for multiple extra options,
+for example both '--grep=<pattern>' and '--fixed-strings'.
 
+Change all callers to follow new calling convention.
+
+This is part of commit b98f0a7c in http://repo.or.cz/git/gitweb.git
+  gitweb: Clearly distinguish regexp / exact match searches
+by Petr "Pasky" Baudis.
+
+Signed-off-by: Petr Baudis <pasky@suse.cz>
 Signed-off-by: Jakub Narebski <jnareb@gmail.com>
 ---
-This would simplify ignore-case searching for a fixed string from
-within gitweb, as gitweb wouldn't then have to deal with differences
-in quoting and unquoting (if you quote character which doesn't need
-quoting, would git (grep) unquote it?) between searched phrase,
-basic/extended regular expression as understood by git/by grep,
-and regular expressions in Perl (when showing matched info).
-
-[I am not sure if the above paragraph should be added to commit
-message, so it is in patch comments. Feel free to add it.] 
-
-This patch can be also seen as "consistency" patch: git-grep
-implements --fixed-strings, but "git log --grep" didn't.
+The paragraph starting with "This is part of commit..." can be now,
+I think, safely removed, as the rest of mentioned commit is now fourth
+(last) part of this patch series.
 
 
-P.S. I see that neither git-log, nor git-grep are converted to
-parseopt interface. What are plans for it, if any?
+BTW. I'm not quite sure about authorship and DCO (signoff) for this
+patch. It was a part of commit by pasky, but this commit was not
+written by him. I have written it based on parts of mentioned commit,
+following variable naming and such; therefore I assumed authorship for
+this commit.
 
- Documentation/git-rev-list.txt     |    1 +
- Documentation/rev-list-options.txt |    5 +++++
- revision.c                         |   10 +++++++++-
- 3 files changed, 15 insertions(+), 1 deletions(-)
+Original commit was signed off by pasky, and IMHO this signoff applies
+also to the part of it, therefore I have used also pasky signoff.
 
-diff --git a/Documentation/git-rev-list.txt b/Documentation/git-rev-list.txt
-index 5b96eab..a8d489f 100644
---- a/Documentation/git-rev-list.txt
-+++ b/Documentation/git-rev-list.txt
-@@ -31,6 +31,7 @@ SYNOPSIS
- 	     [ \--(author|committer|grep)=<pattern> ]
- 	     [ \--regexp-ignore-case | \-i ]
- 	     [ \--extended-regexp | \-E ]
-+	     [ \--fixed-strings | \-F ]
- 	     [ \--date={local|relative|default|iso|rfc|short} ]
- 	     [ [\--objects | \--objects-edge] [ \--unpacked ] ]
- 	     [ \--pretty | \--header ]
-diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-index a8138e2..259072c 100644
---- a/Documentation/rev-list-options.txt
-+++ b/Documentation/rev-list-options.txt
-@@ -153,6 +153,11 @@ limiting may be applied.
- 	Consider the limiting patterns to be extended regular expressions
- 	instead of the default basic regular expressions.
+
+ gitweb/gitweb.perl |   10 +++++-----
+ 1 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index fc95e2c..3b4b15a 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -2079,7 +2079,7 @@ sub parse_commit {
+ }
  
-+-F, --fixed-strings::
-+
-+	Consider the limiting patterns to be fixed strings (don't interpret
-+	pattern as a regular expression).
-+
- --remove-empty::
+ sub parse_commits {
+-	my ($commit_id, $maxcount, $skip, $arg, $filename) = @_;
++	my ($commit_id, $maxcount, $skip, $filename, @args) = @_;
+ 	my @cos;
  
- 	Stop when a given path disappears from the tree.
-diff --git a/revision.c b/revision.c
-index d3e8658..5df7961 100644
---- a/revision.c
-+++ b/revision.c
-@@ -942,6 +942,7 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, const ch
- 	int left = 1;
- 	int all_match = 0;
- 	int regflags = 0;
-+	int fixed = 0;
+ 	$maxcount ||= 1;
+@@ -2089,7 +2089,7 @@ sub parse_commits {
  
- 	/* First, search for "--" */
- 	seen_dashdash = 0;
-@@ -1238,6 +1239,11 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, const ch
- 				regflags |= REG_ICASE;
- 				continue;
- 			}
-+			if (!strcmp(arg, "--fixed-strings") ||
-+			    !strcmp(arg, "-F")) {
-+				fixed = 1;
-+				continue;
-+			}
- 			if (!strcmp(arg, "--all-match")) {
- 				all_match = 1;
- 				continue;
-@@ -1293,8 +1299,10 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, const ch
- 		}
+ 	open my $fd, "-|", git_cmd(), "rev-list",
+ 		"--header",
+-		($arg ? ($arg) : ()),
++		@args,
+ 		("--max-count=" . $maxcount),
+ 		("--skip=" . $skip),
+ 		@extra_options,
+@@ -5172,7 +5172,7 @@ sub git_history {
+ 		$ftype = git_get_type($hash);
  	}
  
--	if (revs->grep_filter)
-+	if (revs->grep_filter) {
- 		revs->grep_filter->regflags |= regflags;
-+		revs->grep_filter->fixed = fixed;
-+	}
+-	my @commitlist = parse_commits($hash_base, 101, (100 * $page), "--full-history", $file_name);
++	my @commitlist = parse_commits($hash_base, 101, (100 * $page), $file_name, "--full-history");
  
- 	if (show_merge)
- 		prepare_show_merge(revs);
+ 	my $paging_nav = '';
+ 	if ($page > 0) {
+@@ -5255,7 +5255,7 @@ sub git_search {
+ 			$greptype = "--committer=";
+ 		}
+ 		$greptype .= $search_regexp;
+-		my @commitlist = parse_commits($hash, 101, (100 * $page), $greptype);
++		my @commitlist = parse_commits($hash, 101, (100 * $page), undef, $greptype);
+ 
+ 		my $paging_nav = '';
+ 		if ($page > 0) {
+@@ -5507,7 +5507,7 @@ sub git_feed {
+ 
+ 	# log/feed of current (HEAD) branch, log of given branch, history of file/directory
+ 	my $head = $hash || 'HEAD';
+-	my @commitlist = parse_commits($head, 150, 0, undef, $file_name);
++	my @commitlist = parse_commits($head, 150, 0, $file_name);
+ 
+ 	my %latest_commit;
+ 	my %latest_date;
 -- 
 1.5.4.2
