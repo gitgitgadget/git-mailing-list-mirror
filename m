@@ -1,104 +1,110 @@
-From: Alex Chiang <achiang@hp.com>
-Subject: Re: stgit - continue rebase after merge conflict?
-Date: Tue, 26 Feb 2008 10:49:28 -0700
-Message-ID: <20080226174928.GA15862@ldl.fc.hp.com>
-References: <20080226145725.GA24987@ldl.fc.hp.com> <b0943d9e0802260856j6e9b0053ne4916149d8e4387c@mail.gmail.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [RFC] Support TEST_GIT_PATH variable for the path for the git
+ to test
+Date: Tue, 26 Feb 2008 13:02:04 -0500 (EST)
+Message-ID: <alpine.LNX.1.00.0802261242210.19024@iabervon.org>
+References: <alpine.LNX.1.00.0802251600220.19024@iabervon.org> <7v63wch9ia.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 26 18:50:10 2008
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 26 19:02:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JU3wQ-0001Zk-Cd
-	for gcvg-git-2@gmane.org; Tue, 26 Feb 2008 18:50:10 +0100
+	id 1JU48b-0006sh-Fb
+	for gcvg-git-2@gmane.org; Tue, 26 Feb 2008 19:02:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758796AbYBZRta (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Feb 2008 12:49:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761672AbYBZRta
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Feb 2008 12:49:30 -0500
-Received: from g4t0015.houston.hp.com ([15.201.24.18]:22082 "EHLO
-	g4t0015.houston.hp.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758796AbYBZRt3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Feb 2008 12:49:29 -0500
-Received: from g4t0015.houston.hp.com (localhost.localdomain [127.0.0.1])
-	by receive-from-antispam-filter (Postfix) with SMTP id B63A48B48;
-	Tue, 26 Feb 2008 17:49:28 +0000 (UTC)
-Received: from smtp1.fc.hp.com (smtp.fc.hp.com [15.15.136.127])
-	by g4t0015.houston.hp.com (Postfix) with ESMTP id 97310826C;
-	Tue, 26 Feb 2008 17:49:28 +0000 (UTC)
-Received: from ldl.fc.hp.com (ldl.fc.hp.com [15.11.146.30])
-	by smtp1.fc.hp.com (Postfix) with ESMTP id 6FDAE1E646B;
-	Tue, 26 Feb 2008 17:49:28 +0000 (UTC)
-Received: by ldl.fc.hp.com (Postfix, from userid 17609)
-	id 5A98B134006; Tue, 26 Feb 2008 10:49:28 -0700 (MST)
-Mail-Followup-To: Alex Chiang <achiang@hp.com>,
-	Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <b0943d9e0802260856j6e9b0053ne4916149d8e4387c@mail.gmail.com>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1759172AbYBZSCH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Feb 2008 13:02:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761672AbYBZSCH
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Feb 2008 13:02:07 -0500
+Received: from iabervon.org ([66.92.72.58]:47020 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759172AbYBZSCG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Feb 2008 13:02:06 -0500
+Received: (qmail 14552 invoked by uid 1000); 26 Feb 2008 18:02:04 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 26 Feb 2008 18:02:04 -0000
+In-Reply-To: <7v63wch9ia.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75156>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75157>
 
-* Catalin Marinas <catalin.marinas@gmail.com>:
-> On 26/02/2008, Alex Chiang <achiang@hp.com> wrote:
-> >  How does one do a stg rebase if there are merge conflicts?
+On Mon, 25 Feb 2008, Junio C Hamano wrote:
+
+> Daniel Barkalow <barkalow@iabervon.org> writes:
 > 
-> Basically, you solve the conflict, refresh the current patch and
-> continue with 'stg push' or 'stg goto <top patch>'.
-
-Thanks.
-
-> The 'rebase' command doesn't store any information about the state of
-> the stack and cannot continue it. Maybe we'll do something in the next
-> release as the refactored code has support for transactions.
-
-I see.
-
-> >  Doing an 'stg help rebase' isn't so helpful.
+> > @@ -281,7 +281,8 @@ test_create_repo () {
+> >  	cd "$repo" || error "Cannot setup test environment"
+> >  	"$GIT_EXEC_PATH/git" init --template=$GIT_EXEC_PATH/templates/blt/ >/dev/null 2>&1 ||
+> >  	error "cannot run git init -- have you built things yet?"
+> > -	mv .git/hooks .git/hooks-disabled
+> > +	[ ! -e .git/hooks ] || mv .git/hooks .git/hooks-disabled
+> > +	[ -e .git/info ] || mkdir .git/info
 > 
-> Yes, indeed. It could be made better.
+> This is just a style issue, but if you try to be old fashioned,
+> please say "test frotz || xyzzy".  If you prefer to be modern,
+> "if ! test frotz; then xyzzy; fi".  I'd prefer the former, but
+> in either case I really do not want to see [ ... ] that do not
+> make anything more readable.
+> 
+> Also we tend to avoid "test -e" unless absolutely needed.
 
-How about this?
+This is supposed to be: don't complain if .git/hooks already doesn't 
+exist; also, create .git/info if it doesn't exist. What is the right style 
+for that? I've been only reading git shell code and writing C, other than 
+this little bit.
 
-/ac
+> > @@ -321,8 +322,8 @@ test_done () {
+> >  
+> >  # Test the binaries we have just built.  The tests are kept in
+> >  # t/ subdirectory and are run in trash subdirectory.
+> > -PATH=$(pwd)/..:$PATH
+> > -GIT_EXEC_PATH=$(pwd)/..
+> > +GIT_EXEC_PATH=${TEST_GIT_PATH:-$(pwd)/..}
+> > +PATH=$GIT_EXEC_PATH:$(pwd)/..:$PATH
+> 
+> Hmmmm.
+> 
+> I have bunch of gits installed under $HOME/git-vX.Y.Z/bin and
+> when I need to test one from a different vintage, I just say:
+> 
+> 	PATH=$HOME/git-vX.Y.Z/bin:/usr/bin:/bin
+> 	... do git stuff which all use version X.Y.Z
+> 
+> and have $HOME/git-vX.Y.Z/bin/git find its corresponding friends
+> on the GIT_EXEC_PATH embedded in it.  Because you are interested
+> in testing installed versions, I suspect something like:
+> 
+> 	if test -z "$TEST_GIT_ON_PATH"
+> 	then
+>                 GIT_EXEC_PATH=$(pwd)/..
+>         	PATH=$GIT_EXEC_PATH:$PATH
+> 	else
+>         	: We do not do any customization
+> 	fi
+> 
+> would be easier to read and more to the point.  Perhaps the
+> tester even has his own GIT_EXEC_PATH that is unrelated to
+> TEST_GIT_PATH.
 
-From: Alex Chiang <achiang@hp.com>
+That doesn't make test_create_repo() work right. Is there some reason it's 
+currently using it with an explicit path, or is that just a legacy of when 
+it wasn't running the git that gets tested in general? With that 
+simplified, it seems to work this way, I think, and that's almost 
+certainly the right thing to do.
 
-Enhance rebase help string by providing guidance on merge
-conflict resolution during a rebase.
+There's additionally the problem that things which are built for testing 
+in the git directory won't be installed anywhere. One possibility would be 
+to put $(pwd)/.. at the end of the PATH (instead of the start), but I 
+think it would be cleanest to put the built test tools somewhere else and 
+include that directory in the PATH no matter what. Does this sound like 
+the right track?
 
-Based on text suggested by Catalin Marinas.
-
-Signed-off-by: Alex Chiang <achiang@hp.com>
----
-diff --git a/stgit/commands/rebase.py b/stgit/commands/rebase.py
-index 12faaf8..29d741b 100644
---- a/stgit/commands/rebase.py
-+++ b/stgit/commands/rebase.py
-@@ -27,7 +27,19 @@ help = 'move the stack base to another point in history'
- usage = """%prog [options] <new-base-id>
- 
- Pop all patches from current stack, move the stack base to the given
--<new-base-id> and push the patches back."""
-+<new-base-id> and push the patches back.
-+
-+If you experience merge conflicts, resolve the problem and continue
-+the rebase by executing the following sequence:
-+
-+	$ stg resolved -a [-i]
-+	$ stg refresh
-+	$ stg goto top-patch
-+
-+Or if you want to skip that patch:
-+
-+	$ stg push --undo
-+	$ stg push next-patch.."""
- 
- directory = DirectoryGotoToplevel()
- options = [make_option('-n', '--nopush',
+	-Daniel
+*This .sig left intentionally blank*
