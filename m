@@ -1,85 +1,104 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: git-email automatic --to detection?
-Date: Tue, 26 Feb 2008 18:44:42 +0100
-Message-ID: <20080226174442.GM31441@genesis.frugalware.org>
-References: <slrnfs3rv4.aqm.jgoerzen@katherina.lan.complete.org> <20080225183413.GA15131@sigill.intra.peff.net> <vpqoda43lva.fsf@bauges.imag.fr> <20080225205505.GY31441@genesis.frugalware.org> <slrnfs86qr.prc.jgoerzen@katherina.lan.complete.org>
+From: Alex Chiang <achiang@hp.com>
+Subject: Re: stgit - continue rebase after merge conflict?
+Date: Tue, 26 Feb 2008 10:49:28 -0700
+Message-ID: <20080226174928.GA15862@ldl.fc.hp.com>
+References: <20080226145725.GA24987@ldl.fc.hp.com> <b0943d9e0802260856j6e9b0053ne4916149d8e4387c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="i1KFSYFbl/HTybMx"
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: John Goerzen <jgoerzen@complete.org>
-X-From: git-owner@vger.kernel.org Tue Feb 26 18:46:42 2008
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 26 18:50:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JU3sx-0008Vl-Eq
-	for gcvg-git-2@gmane.org; Tue, 26 Feb 2008 18:46:35 +0100
+	id 1JU3wQ-0001Zk-Cd
+	for gcvg-git-2@gmane.org; Tue, 26 Feb 2008 18:50:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763968AbYBZRou (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Feb 2008 12:44:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763369AbYBZRot
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Feb 2008 12:44:49 -0500
-Received: from virgo.iok.hu ([193.202.89.103]:13286 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1763978AbYBZRos (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Feb 2008 12:44:48 -0500
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 9B10F1B253C;
-	Tue, 26 Feb 2008 18:44:46 +0100 (CET)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 1F18844668;
-	Tue, 26 Feb 2008 18:42:11 +0100 (CET)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id B3D631190217; Tue, 26 Feb 2008 18:44:42 +0100 (CET)
+	id S1758796AbYBZRta (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Feb 2008 12:49:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761672AbYBZRta
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Feb 2008 12:49:30 -0500
+Received: from g4t0015.houston.hp.com ([15.201.24.18]:22082 "EHLO
+	g4t0015.houston.hp.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758796AbYBZRt3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Feb 2008 12:49:29 -0500
+Received: from g4t0015.houston.hp.com (localhost.localdomain [127.0.0.1])
+	by receive-from-antispam-filter (Postfix) with SMTP id B63A48B48;
+	Tue, 26 Feb 2008 17:49:28 +0000 (UTC)
+Received: from smtp1.fc.hp.com (smtp.fc.hp.com [15.15.136.127])
+	by g4t0015.houston.hp.com (Postfix) with ESMTP id 97310826C;
+	Tue, 26 Feb 2008 17:49:28 +0000 (UTC)
+Received: from ldl.fc.hp.com (ldl.fc.hp.com [15.11.146.30])
+	by smtp1.fc.hp.com (Postfix) with ESMTP id 6FDAE1E646B;
+	Tue, 26 Feb 2008 17:49:28 +0000 (UTC)
+Received: by ldl.fc.hp.com (Postfix, from userid 17609)
+	id 5A98B134006; Tue, 26 Feb 2008 10:49:28 -0700 (MST)
+Mail-Followup-To: Alex Chiang <achiang@hp.com>,
+	Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <slrnfs86qr.prc.jgoerzen@katherina.lan.complete.org>
+In-Reply-To: <b0943d9e0802260856j6e9b0053ne4916149d8e4387c@mail.gmail.com>
 User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75155>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75156>
 
+* Catalin Marinas <catalin.marinas@gmail.com>:
+> On 26/02/2008, Alex Chiang <achiang@hp.com> wrote:
+> >  How does one do a stg rebase if there are merge conflicts?
+> 
+> Basically, you solve the conflict, refresh the current patch and
+> continue with 'stg push' or 'stg goto <top patch>'.
 
---i1KFSYFbl/HTybMx
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Thanks.
 
-On Tue, Feb 26, 2008 at 07:59:55AM -0600, John Goerzen <jgoerzen@complete.org> wrote:
-> Actually, both can do both, right?
+> The 'rebase' command doesn't store any information about the state of
+> the stack and cannot continue it. Maybe we'll do something in the next
+> release as the refactored code has support for transactions.
 
-right. afaik no commands read the remote git config atm, but it might be
-possible.
+I see.
 
->  darcs send -o will write the data
-> to send out to a file on disk, and git-send-email will transmit the
-> message.
+> >  Doing an 'stg help rebase' isn't so helpful.
+> 
+> Yes, indeed. It could be made better.
 
-true. what annoyed me is that i needed net access to generate the file,
-ie i was not able to do a 'darcs send -o file', copy the file to an usb
-stick and send it from some other box.
+How about this?
 
->  I don't so much care about the default as making it easy for
-> people that do have a local sendmail or smtpd or (ugh) MAPI client to
-> send patches automatically, if I tell them what flags to use.
+/ac
 
-but that's the case for git as well :) you should tell people (for
-example): use "git format-patch origin"; send the created *.patch files
-and use "git pull --rebase" to avoid an unnecessary merge.
+From: Alex Chiang <achiang@hp.com>
 
-- VMiklos
+Enhance rebase help string by providing guidance on merge
+conflict resolution during a rebase.
 
---i1KFSYFbl/HTybMx
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+Based on text suggested by Catalin Marinas.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (GNU/Linux)
-
-iD8DBQFHxFAKe81tAgORUJYRAoGAAJwIGMy7NTYJ5R55nyPz4I16ZqDHQgCfcIws
-rbOhOrPp6SbiWSyjfoZaReM=
-=icn1
------END PGP SIGNATURE-----
-
---i1KFSYFbl/HTybMx--
+Signed-off-by: Alex Chiang <achiang@hp.com>
+---
+diff --git a/stgit/commands/rebase.py b/stgit/commands/rebase.py
+index 12faaf8..29d741b 100644
+--- a/stgit/commands/rebase.py
++++ b/stgit/commands/rebase.py
+@@ -27,7 +27,19 @@ help = 'move the stack base to another point in history'
+ usage = """%prog [options] <new-base-id>
+ 
+ Pop all patches from current stack, move the stack base to the given
+-<new-base-id> and push the patches back."""
++<new-base-id> and push the patches back.
++
++If you experience merge conflicts, resolve the problem and continue
++the rebase by executing the following sequence:
++
++	$ stg resolved -a [-i]
++	$ stg refresh
++	$ stg goto top-patch
++
++Or if you want to skip that patch:
++
++	$ stg push --undo
++	$ stg push next-patch.."""
+ 
+ directory = DirectoryGotoToplevel()
+ options = [make_option('-n', '--nopush',
