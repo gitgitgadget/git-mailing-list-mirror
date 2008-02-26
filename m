@@ -1,87 +1,63 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCH] Fix premature free of ref_lists while writing temporary
- refs to file
-Date: Wed, 27 Feb 2008 00:11:07 +0100
-Message-ID: <200802270011.07733.johan@herland.net>
-References: <alpine.LNX.1.00.0802251604460.19024@iabervon.org>
- <alpine.LSU.1.00.0802261542080.22527@racer.site>
- <alpine.LNX.1.00.0802261752160.19665@iabervon.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Google Summer of Code 2008
+Date: Tue, 26 Feb 2008 23:39:53 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0802262337390.22527@racer.site>
+References: <200802262356.28971.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Kristian =?iso-8859-1?q?H=F8gsberg?= <krh@redhat.com>,
-	Santi =?iso-8859-1?q?B=E9jar?= <sbejar@gmail.com>
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Wed Feb 27 00:12:10 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 27 00:41:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JU8y0-0001se-OZ
-	for gcvg-git-2@gmane.org; Wed, 27 Feb 2008 00:12:09 +0100
+	id 1JU9Pw-0002Wz-Ny
+	for gcvg-git-2@gmane.org; Wed, 27 Feb 2008 00:41:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763370AbYBZXLa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Feb 2008 18:11:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762055AbYBZXLa
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Feb 2008 18:11:30 -0500
-Received: from smtp.getmail.no ([84.208.20.33]:49379 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1761611AbYBZXL3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Feb 2008 18:11:29 -0500
-Received: from pmxchannel-daemon.no-osl-m323-srv-009-z2.isp.get.no by
- no-osl-m323-srv-009-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- id <0JWV00G05CF2SW00@no-osl-m323-srv-009-z2.isp.get.no> for
- git@vger.kernel.org; Wed, 27 Feb 2008 00:11:26 +0100 (CET)
-Received: from smtp.getmail.no ([10.5.16.1])
- by no-osl-m323-srv-009-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JWV00D1OCEM5440@no-osl-m323-srv-009-z2.isp.get.no> for
- git@vger.kernel.org; Wed, 27 Feb 2008 00:11:10 +0100 (CET)
-Received: from alpha.herland ([84.215.102.95])
- by no-osl-m323-srv-004-z1.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JWV00617CEJQ7V7@no-osl-m323-srv-004-z1.isp.get.no> for
- git@vger.kernel.org; Wed, 27 Feb 2008 00:11:08 +0100 (CET)
-In-reply-to: <alpine.LNX.1.00.0802261752160.19665@iabervon.org>
-Content-disposition: inline
-User-Agent: KMail/1.9.9
+	id S1753350AbYBZXkY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Feb 2008 18:40:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752691AbYBZXkY
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Feb 2008 18:40:24 -0500
+Received: from mail.gmx.net ([213.165.64.20]:43382 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752591AbYBZXkX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Feb 2008 18:40:23 -0500
+Received: (qmail invoked by alias); 26 Feb 2008 23:40:21 -0000
+Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
+  by mail.gmx.net (mp049) with SMTP; 27 Feb 2008 00:40:21 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19a3QZaSNpaFWLM3lz//6u9TrTF5Kki6wK+doLlJb
+	KPSVzSGeHO2xSE
+X-X-Sender: gene099@racer.site
+In-Reply-To: <200802262356.28971.jnareb@gmail.com>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75190>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75191>
 
-On Wednesday 27 February 2008, Daniel Barkalow wrote:
-> On Tue, 26 Feb 2008, Johannes Schindelin wrote:
-> 
-> > Hi,
-> > 
-> > On Tue, 26 Feb 2008, Johan Herland wrote:
-> > 
-> > > We cannot call write_ref_sha1() from within a for_each_ref() callback, 
-> > > since it will free() the ref_list that the for_each_ref() is currently 
-> > > traversing.
-> > > 
-> > > Therefore rewrite setup_tmp_ref() to not call write_ref_sha1(), as 
-> > > already hinted at in a comment.
-> > 
-> > I guess the reason was to use a much of an API as possible.
-> > 
-> > If you already avoid that, why not write into .git/packed-refs directly?
-> 
-> Actually, it looks to me like the really right thing to do is tell 
-> for_each_ref() to also include these refs temporarily, and not actually 
-> write them to disk, read them back, and then delete them.
+Hi,
 
-I completely agree.
+On Tue, 26 Feb 2008, Jakub Narebski wrote:
 
+> I have just read (via Linux Today news[*1*]) that GSoC 2008 initiative 
+> starts early.  Applications for organizations open March 3 and close 
+> March 12.  Git development community participated in GSoC 2007 with two 
+> projects accepted[*2*]: builtinification and libification.  What do you 
+> think about their results for git? What do you think about participating 
+> in this year GSoC?
 
-...Johan
+I think that GSoC2007 was quite nice for us.  And with what we learnt, we 
+would do even better in 2008.
 
+However, I simply do not have the time to serve as primary contact.  I am 
+willing to be mentor again, though.
 
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+As for projects, I imagine that Gitorrent, further builtinification and 
+Windows support would be good candidates.
+
+Ciao,
+Dscho
