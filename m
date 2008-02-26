@@ -1,109 +1,85 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [RFC] Build in clone
-Date: Tue, 26 Feb 2008 12:36:51 -0500 (EST)
-Message-ID: <alpine.LNX.1.00.0802261128360.19024@iabervon.org>
-References: <alpine.LNX.1.00.0802251604460.19024@iabervon.org> <200802260321.14038.johan@herland.net>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: git-email automatic --to detection?
+Date: Tue, 26 Feb 2008 18:44:42 +0100
+Message-ID: <20080226174442.GM31441@genesis.frugalware.org>
+References: <slrnfs3rv4.aqm.jgoerzen@katherina.lan.complete.org> <20080225183413.GA15131@sigill.intra.peff.net> <vpqoda43lva.fsf@bauges.imag.fr> <20080225205505.GY31441@genesis.frugalware.org> <slrnfs86qr.prc.jgoerzen@katherina.lan.complete.org>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="1547844168-125312335-1204044431=:19024"
-Cc: git@vger.kernel.org,
-	=?ISO-8859-15?Q?Kristian_H=F8gsberg?= <krh@redhat.com>,
-	=?ISO-8859-15?Q?Santi_B=E9jar?= <sbejar@gmail.com>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Tue Feb 26 18:37:32 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="i1KFSYFbl/HTybMx"
+Cc: git@vger.kernel.org
+To: John Goerzen <jgoerzen@complete.org>
+X-From: git-owner@vger.kernel.org Tue Feb 26 18:46:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JU3kA-0004mq-Cl
-	for gcvg-git-2@gmane.org; Tue, 26 Feb 2008 18:37:30 +0100
+	id 1JU3sx-0008Vl-Eq
+	for gcvg-git-2@gmane.org; Tue, 26 Feb 2008 18:46:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763613AbYBZRgy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Feb 2008 12:36:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763617AbYBZRgy
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Feb 2008 12:36:54 -0500
-Received: from iabervon.org ([66.92.72.58]:35312 "EHLO iabervon.org"
+	id S1763968AbYBZRou (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Feb 2008 12:44:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763369AbYBZRot
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Feb 2008 12:44:49 -0500
+Received: from virgo.iok.hu ([193.202.89.103]:13286 "EHLO virgo.iok.hu"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1763609AbYBZRgx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Feb 2008 12:36:53 -0500
-Received: (qmail 12615 invoked by uid 1000); 26 Feb 2008 17:36:51 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 26 Feb 2008 17:36:51 -0000
-In-Reply-To: <200802260321.14038.johan@herland.net>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
-Content-ID: <alpine.LNX.1.00.0802261158380.19024@iabervon.org>
+	id S1763978AbYBZRos (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Feb 2008 12:44:48 -0500
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 9B10F1B253C;
+	Tue, 26 Feb 2008 18:44:46 +0100 (CET)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 1F18844668;
+	Tue, 26 Feb 2008 18:42:11 +0100 (CET)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id B3D631190217; Tue, 26 Feb 2008 18:44:42 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <slrnfs86qr.prc.jgoerzen@katherina.lan.complete.org>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75154>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75155>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
 
---1547844168-125312335-1204044431=:19024
-Content-Type: TEXT/PLAIN; CHARSET=ISO-8859-15
-Content-Transfer-Encoding: 8BIT
-Content-ID: <alpine.LNX.1.00.0802261158381.19024@iabervon.org>
+--i1KFSYFbl/HTybMx
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-On Tue, 26 Feb 2008, Johan Herland wrote:
+On Tue, Feb 26, 2008 at 07:59:55AM -0600, John Goerzen <jgoerzen@complete.org> wrote:
+> Actually, both can do both, right?
 
-> Other than the failing tests, it seems to work fairly well. I've been
-> playing around with it for a few minutes, and on a test repo I have with
-> 1001 branches and 10000 tags, it cuts down the runtime of a local git-clone
-> from 25 seconds to ~1.5 seconds. (simply by eliminating the overhead of
-> invoking git-update-ref for every single ref) :)
+right. afaik no commands read the remote git config atm, but it might be
+possible.
 
-Good to hear. A certain amount of the point is performance, and I've only 
-got relatively simple repositories on Linux to test with, where everything 
-is too fast to tell anyway.
+>  darcs send -o will write the data
+> to send out to a file on disk, and git-send-email will transmit the
+> message.
 
-> I've tried to test this by diffing a cloned repo against an equivalent
-> clone done by the old script. Below I pasted in a few immediate fixes I
-> found. With these fixes, the only remaining diff between the clones is
-> that refs/remotes/origin/HEAD used to be a symbolic ref (with no reflog),
-> but is now a "regular" ref (with reflog).
+true. what annoyed me is that i needed net access to generate the file,
+ie i was not able to do a 'darcs send -o file', copy the file to an usb
+stick and send it from some other box.
 
-I think that's just a call to the wrong function (and a lack of very very 
-explicit documentation).
+>  I don't so much care about the default as making it easy for
+> people that do have a local sendmail or smtpd or (ugh) MAPI client to
+> send patches automatically, if I tell them what flags to use.
 
-> The fixes are, in order of importance:
-> - Call git_config(git_default_config) in order to properly set up
->   user.name and user.email for reflogs (This BREAKS test #9 in
->   t1020-subdirectory.sh. Have yet to figure out why)
+but that's the case for git as well :) you should tell people (for
+example): use "git format-patch origin"; send the created *.patch files
+and use "git pull --rebase" to avoid an unnecessary merge.
 
-I should have read email last night; I could have identified a bunch of 
-the odd errors for you, but you've figured most of them out by now.
+- VMiklos
 
-I need to look into the config system further; things should be configured 
-such that the local config is in the new directory and the global config 
-is unchanged. If no environment variable is set and pwd is a certain way, 
-git_config_set() will write to the wrong file.
+--i1KFSYFbl/HTybMx
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-> - Fix "clone from $repo" reflog messages (using strbufs; something tells
->   me more of this code would benefit from using strbufs)
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (GNU/Linux)
 
-Most likely. I think Kristian wrote most of this before strbuf existed or 
-something of the sort.
+iD8DBQFHxFAKe81tAgORUJYRAoGAAJwIGMy7NTYJ5R55nyPz4I16ZqDHQgCfcIws
+rbOhOrPp6SbiWSyjfoZaReM=
+=icn1
+-----END PGP SIGNATURE-----
 
-> - Høgsberg's name should be in UTF-8 (not sure if this will survive this
->   mail)
-
-It is for me; I bet it didn't survive the mail from me to you. (That is, 
-your mailer got my UTF-8 message and converted it to Latin-1 on export, 
-and so applying it gave a Latin-1 ø in your tree, which you changed to 
-UTF-8, and then your mailer again thought your patch was changing 
-one Latin-1 character to two, and sent the patch like that.)
-
-> - The two whitespace errors you mentioned
-> 
-> I'm sorry that my patch below sucks from a style POV. Feel free to ignore.
-> Will redo when it's not in the middle of the night.
-
-I haven't gotten to the level of style in this code myself, so no worries 
-there. :) And whitespace noise is welcome at this point, since I'm still 
-incorporating changes and evaluating the resulting state, instead of 
-evaluating the changes themselves.
-
-	-Daniel
-*This .sig left intentionally blank*
---1547844168-125312335-1204044431=:19024--
+--i1KFSYFbl/HTybMx--
