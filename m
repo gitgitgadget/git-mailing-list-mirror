@@ -1,64 +1,67 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH] Fix premature call to git_config() causing t1020-subdirectory
- to fail
-Date: Tue, 26 Feb 2008 17:49:29 -0500 (EST)
-Message-ID: <alpine.LNX.1.00.0802261742260.19665@iabervon.org>
-References: <alpine.LNX.1.00.0802251604460.19024@iabervon.org> <200802260321.14038.johan@herland.net> <200802261640.48770.johan@herland.net> <alpine.LNX.1.00.0802261709180.19665@iabervon.org> <alpine.LSU.1.00.0802262239200.22527@racer.site>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Google Summer of Code 2008
+Date: Tue, 26 Feb 2008 23:56:27 +0100
+Message-ID: <200802262356.28971.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johan Herland <johan@herland.net>, git@vger.kernel.org,
-	=?ISO-8859-15?Q?Kristian_H=F8gsberg?= <krh@redhat.com>,
-	=?ISO-8859-15?Q?Santi_B=E9jar?= <sbejar@gmail.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Feb 26 23:50:22 2008
+Content-Type: Text/Plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 26 23:57:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JU8cq-0002Iv-II
-	for gcvg-git-2@gmane.org; Tue, 26 Feb 2008 23:50:16 +0100
+	id 1JU8jd-0004jN-G8
+	for gcvg-git-2@gmane.org; Tue, 26 Feb 2008 23:57:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763655AbYBZWtj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Feb 2008 17:49:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756128AbYBZWtj
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Feb 2008 17:49:39 -0500
-Received: from iabervon.org ([66.92.72.58]:40660 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1763428AbYBZWti (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Feb 2008 17:49:38 -0500
-Received: (qmail 32144 invoked by uid 1000); 26 Feb 2008 22:49:29 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 26 Feb 2008 22:49:29 -0000
-In-Reply-To: <alpine.LSU.1.00.0802262239200.22527@racer.site>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1753490AbYBZW4l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Feb 2008 17:56:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752885AbYBZW4l
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Feb 2008 17:56:41 -0500
+Received: from ug-out-1314.google.com ([66.249.92.174]:62197 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752017AbYBZW4k (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Feb 2008 17:56:40 -0500
+Received: by ug-out-1314.google.com with SMTP id z38so58809ugc.16
+        for <git@vger.kernel.org>; Tue, 26 Feb 2008 14:56:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:content-disposition:from:to:subject:date:user-agent:cc:mime-version:content-type:content-transfer-encoding:message-id;
+        bh=sjhMDKcp66Z0V42bioSxVZwQitP5cnccTOt2xvNkBRA=;
+        b=wZmxSN74/HWToRApux+kfVZuixEnFwACN11PUmszSgEmwqogjaNKEBrh4hKOzMQRA4X4TyfO3FYX9AEdl4w0EoT4kZCBXOUNkq+UqVmtsJ8CGx4f1z6eKHCLPYZj74fVU3/VUAtcRRpaTnGr9h6OpMs8PsIZXyDiO6ZQipOrIwU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=content-disposition:from:to:subject:date:user-agent:cc:mime-version:content-type:content-transfer-encoding:message-id;
+        b=vAI6tiwj3gjZdZD3MiRW2oFD2EPBK1sOj9qP46N5mZuiYQKuRssuXZoVm3f2uOTUz4fyYDdoww6PsMUdRRgFiWjto07KY6R3mAaaW7e3ot/ICr2fuMFrZTXDhLNyvqmn381DFPHQZChYquGC1KXQMbiDwDMM5kjaneC+xNae8+k=
+Received: by 10.78.156.6 with SMTP id d6mr4244447hue.23.1204066596881;
+        Tue, 26 Feb 2008 14:56:36 -0800 (PST)
+Received: from ?192.168.1.11? ( [83.8.204.229])
+        by mx.google.com with ESMTPS id 34sm215821nfu.2.2008.02.26.14.56.34
+        (version=SSLv3 cipher=OTHER);
+        Tue, 26 Feb 2008 14:56:35 -0800 (PST)
+Content-Disposition: inline
+User-Agent: KMail/1.9.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75185>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75186>
 
-On Tue, 26 Feb 2008, Johannes Schindelin wrote:
+I have just read (via Linux Today news[*1*]) that GSoC 2008
+initiative starts early.  Applications for organizations open
+March 3 and close March 12.  Git development community participated
+in GSoC 2007 with two projects accepted[*2*]: builtinification
+and libification.  What do you think about their results for git?
+What do you think about participating in this year GSoC?
 
-> Hi,
-> 
-> On Tue, 26 Feb 2008, Daniel Barkalow wrote:
-> 
-> > Actually, I think I'll be leaving CONFIG_ENVIRONMENT alone entirely; I 
-> > was only using it to override the setting that t5505 uses, but t5505 is 
-> > just wrong to set it. So this is the right placement of git_config(), 
-> > and the setenv and unsetenv aren't needed.
-> 
-> Well, existing git-clone.sh sets GIT_CONFIG.  So we have to unset any 
-> existing GIT_CONFIG at least.
+Cc: Shawn Pearce, who was promary contact for GSoC 2007.
 
-As far as I can tell, that's a flaw in git-clone.sh; if the user has set 
-GIT_CONFIG, it shouldn't be the case that every program other than 
-git-clone obeys it while git-clone ignores it. (On the other hand, 
-possibly every program other than git-config should ignore it, since it's 
-only documented as affecting git-config.) git-clone.sh only sets it, I 
-think, because it runs programs from the wrong context for them to do the 
-right thing by default, not because it's specifically trying to override a 
-user-provided setting.
-
-	-Daniel
-*This .sig left intentionally blank*.
+Footnotes:
+==========
+[1] http://blog.internetnews.com/skerner/2008/02/google-summer-of-code-2008-alr.html
+[2] http://git.or.cz/gitwiki/SoC2007Projects
+-- 
+Jakub Narebski
+Poland
