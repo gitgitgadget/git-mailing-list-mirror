@@ -1,104 +1,96 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [RFC] Support TEST_GIT_PATH variable for the path for the git
- to test
-Date: Tue, 26 Feb 2008 15:46:17 -0500 (EST)
-Message-ID: <alpine.LNX.1.00.0802261539130.19665@iabervon.org>
-References: <alpine.LNX.1.00.0802251600220.19024@iabervon.org> <7v63wch9ia.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0802261242210.19024@iabervon.org> <7v63wb5zec.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0802261350510.19024@iabervon.org>
- <7vpruj4ge1.fsf@gitster.siamese.dyndns.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: warning: no common commits - slow pull
+Date: Tue, 26 Feb 2008 15:47:28 -0500 (EST)
+Message-ID: <alpine.LFD.1.00.0802261546030.3167@xanadu.home>
+References: <200802102007.38838.lenb@kernel.org>
+ <20080211035501.GB26205@mit.edu> <200802151643.30232.lenb@kernel.org>
+ <200802261438.17014.lenb@kernel.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 26 21:47:11 2008
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <gitster@pobox.com>, Theodore Tso <tytso@mit.edu>,
+	git@vger.kernel.org
+To: Len Brown <lenb@kernel.org>
+X-From: git-owner@vger.kernel.org Tue Feb 26 21:49:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JU6hc-0004Pc-I7
-	for gcvg-git-2@gmane.org; Tue, 26 Feb 2008 21:47:04 +0100
+	id 1JU6jA-00054X-S1
+	for gcvg-git-2@gmane.org; Tue, 26 Feb 2008 21:48:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1765418AbYBZUqX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Feb 2008 15:46:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765153AbYBZUqW
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Feb 2008 15:46:22 -0500
-Received: from iabervon.org ([66.92.72.58]:43291 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1764875AbYBZUqV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Feb 2008 15:46:21 -0500
-Received: (qmail 22872 invoked by uid 1000); 26 Feb 2008 20:46:17 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 26 Feb 2008 20:46:17 -0000
-In-Reply-To: <7vpruj4ge1.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1752153AbYBZUr7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Feb 2008 15:47:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752121AbYBZUr6
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Feb 2008 15:47:58 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:47242 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751731AbYBZUr5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Feb 2008 15:47:57 -0500
+Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0JWV00A7Y5R4F060@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 26 Feb 2008 15:47:29 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <200802261438.17014.lenb@kernel.org>
+User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75171>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75172>
 
-On Tue, 26 Feb 2008, Junio C Hamano wrote:
+On Tue, 26 Feb 2008, Len Brown wrote:
 
-> Daniel Barkalow <barkalow@iabervon.org> writes:
+> On Friday 15 February 2008, Len Brown wrote:
+> > it happened again.
+> > 
+> > this morning I pulled linus' tree up through 
+> > 4ee29f6a52158cea526b16a44ae38643946103ec
+> > 
+> > then during the day, linus declared "rc2".
+> > 
+> > and now I pulled linus' tree again,
+> > which has a HEAD now of 
+> > 
+> > 101142c37be8e5af9b847860219217e6b958c739
+> > 
+> > and the pull sucked down 172 MB even though the uncompressed
+> > diff between the two is 0.3 MB.
+> > 
+> > -Len
+> > 
+> > [lenb@d975xbx2 linus (master)]$ git pull
+> > remote: Counting objects: 649, done.
+> > remote: Compressing objects: 100% (106/106), done.
+> > remote: Total 513 (delta 417), reused 503 (delta 407)
+> > Receiving objects: 100% (513/513), 116.67 KiB, done.
+> > Resolving deltas: 100% (417/417), completed with 103 local objects.
+> > warning: no common commits
+> > remote: Counting objects: 710725, done.
+> > remote: Compressing objects: 100% (125738/125738), done.
+> > remote: Total 710725 (delta 589584), reused 704450 (delta 584029)
+> > Receiving objects: 100% (710725/710725), 172.71 MiB | 1073 KiB/s, done.
+> > Resolving deltas: 100% (589584/589584), done.
+> > From git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6
+> >  * [new tag]         v2.6.25-rc2 -> v2.6.25-rc2
+> > Updating 4ee29f6..101142c
+> > Fast forward
+> >  Makefile                               |    4 +-
+> ...
+> > [lenb@d975xbx2 linus (master)]$            
+> > [lenb@d975xbx2 linus (master)]$ git --version
+> > git version 1.5.4.1.122.gaa8d
 > 
-> >> I did not mean to imply I was presenting the whole solution; I
-> >> was trying to hint at a different direction which may or may not
-> >> work.  I did not look at what test_create_repo() actually did
-> >> when I wrote the message, but you are right.  It too needs to
-> >> be made conditional, and when trying an installed version, it
-> >> should not do the "template" dance but let the installed "git init"
-> >> figure it out.
-> >
-> > Does it need to be conditional, or is simply "git init" right (where we've 
-> > already set environment variables for the local stuff if applicable)?
-> 
-> I suspect "uninstalled" cases (both "here" and "elsewhere")
-> needs to do the template magic, while "installed" case should be
-> just "git init".
+> It still happens with latest git. (linus has declared -rc3 this time)
 
-Ah, but that doesn't have to be here, since we can (and, AFAICT do) use 
-the GIT_TEMPLATE_DIR environment variable, and can set it as appropriate 
-in the setup code.
+So it happens everytime a new tag is fetched.
 
-> >> > There's additionally the problem that things which are built for testing 
-> >> > in the git directory won't be installed anywhere.
-> >> 
-> >> To test without installing, in order to make them call out their
-> >> siblings, I have this piece that I source to a new shell:
-> >> 
-> >>         GIT_EXEC_PATH=`pwd`
-> >>         PATH=`pwd`:/usr/bin:/bin
-> >>         GITPERLLIB=`pwd`/perl/blib/lib
-> >>         export GIT_EXEC_PATH PATH GITPERLLIB
-> >
-> > Might be nice to have a "sgitpath" (on the model of sg or su) in t/, since 
-> > this is handy in general.
-> 
-> I have them in ./+denv and after building if I want to see it
-> work in real repo elsewhere I do:
-> 
-> 	: gitster; sh
->         $ . ./+denv
->         $ cd ../elsewhere.git
->         $ do the real workload trial
->         $ ^D
+> unfortunately for me, i'm not on broadband this time so it is extremely painful --
+> to the point that i simply can't update this tree until i get home.
 
-I was thinking it would be handy to have around t/ in case you want to go 
-step-by-step through a failing test, using the git the test would use. For 
-that purpose, it would also be handy to pick up the environment variables 
-I'm introducing in this thread, I guess.
+What happens if you restart the pull after interrupting the first 
+attempt?
 
-> > You understood correctly the first time; I was unclear the second time. 
-> > The problem here is that, in order to run tests, we call 
-> > "test-absolute-path", "test-genrandom", etc., and we can't use these from 
-> > the user's $PATH because, being only for testing, they don't get installed 
-> > there. We need to get git-remote (for example) from $PATH, but 
-> > test-genrandom from $(pwd)/.. in order to make the tests run.
-> 
-> Ok, so even "installed" case need to rely on "test-blah" we build.
 
-Right. Would it be okay to build those into t/helpers/* or something, 
-instead of into the project root, so that they're just naturally separate 
-from the actual program?
-
-	-Daniel
-*This .sig left intentionally blank*
+Nicolas
