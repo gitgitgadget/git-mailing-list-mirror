@@ -1,104 +1,135 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: [PATCH] pack-objects: Print a message describing the number of
- threads for packing
-Date: Tue, 26 Feb 2008 09:53:00 -0600
-Message-ID: <47C435DC.2070508@nrlssc.navy.mil>
-References: <47B1BEC6.6080906@nrlssc.navy.mil> <1203732369-30314-1-git-send-email-casey@nrlssc.navy.mil> <47BF812A.4020205@nrlssc.navy.mil> <20080226074933.GA3485@coredump.intra.peff.net>
+From: Joshua Williams <joshua.williams@qlogic.com>
+Subject: git clone/push collision
+Date: Tue, 26 Feb 2008 12:59:21 -0600
+Message-ID: <47C46189.5050905@qlogic.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Andreas Ericsson <ae@op5.se>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Nicolas Pitre <nico@cam.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Feb 26 20:08:16 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 26 20:16:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JU59e-00011R-By
-	for gcvg-git-2@gmane.org; Tue, 26 Feb 2008 20:07:54 +0100
+	id 1JU5I2-0004Jf-2P
+	for gcvg-git-2@gmane.org; Tue, 26 Feb 2008 20:16:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753232AbYBZTHR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Feb 2008 14:07:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752656AbYBZTHQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Feb 2008 14:07:16 -0500
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:34564 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752064AbYBZTHP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Feb 2008 14:07:15 -0500
-Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
-	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id m1QFr1fm017372;
-	Tue, 26 Feb 2008 09:53:01 -0600
-Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
-	 Tue, 26 Feb 2008 09:53:00 -0600
-User-Agent: Thunderbird 2.0.0.9 (X11/20071031)
-In-Reply-To: <20080226074933.GA3485@coredump.intra.peff.net>
-X-OriginalArrivalTime: 26 Feb 2008 15:53:00.0868 (UTC) FILETIME=[AA0CC840:01C8788F]
-X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-5.0.0.1023-15750001
-X-TM-AS-Result: : Yes--16.978300-0-31-1
-X-TM-AS-Category-Info: : 31:0.000000
-X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNTY3LTcwMTE4Mi03MDAw?=
-	=?us-ascii?B?NzUtMTM5MDEwLTcxMDU3MS03MDM5NjUtNzAyMzc5LTcwMDQ3Ni03?=
-	=?us-ascii?B?MDM2MjAtNzEwOTcwLTcwMjE5MC03MDE4MTctNzA1NTgxLTcwMTU5?=
-	=?us-ascii?B?NC03MDIxNTctNzAyMTEzLTcwODQ0MC03MDE0MzMtNzAxODM3LTcw?=
-	=?us-ascii?B?MDc1Ni03MDMyODMtNzAzNzg4LTcwMzcxMi03MDUxMDItNzA0Njg5?=
-	=?us-ascii?B?LTcwNDYwNS03MDY5MTktNzAwNzI2LTcwMjA0Mi0xMDY0MjAtNzAy?=
-	=?us-ascii?B?MDEwLTcwMjM1OC03MDYwNDEtMTQ4MDM5LTIwMDQy?=
+	id S1763838AbYBZTPg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Feb 2008 14:15:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758788AbYBZTPg
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Feb 2008 14:15:36 -0500
+Received: from eppat.qlogic.com ([198.186.5.11]:10653 "EHLO EPEXCH1.qlogic.org"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1763842AbYBZTPf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Feb 2008 14:15:35 -0500
+X-Greylist: delayed 974 seconds by postgrey-1.27 at vger.kernel.org; Tue, 26 Feb 2008 14:15:35 EST
+Received: from Enki.local ([10.20.32.40]) by EPEXCH1.qlogic.org with Microsoft SMTPSVC(6.0.3790.1830);
+	 Tue, 26 Feb 2008 12:59:20 -0600
+User-Agent: Thunderbird 2.0.0.9 (Macintosh/20071031)
+X-OriginalArrivalTime: 26 Feb 2008 18:59:20.0482 (UTC) FILETIME=[B19E8020:01C878A9]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75161>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75162>
 
-Jeff King wrote:
-> On Fri, Feb 22, 2008 at 08:12:58PM -0600, Brandon Casey wrote:
-> 
->> +	if (progress)
->> +		fprintf(stderr, "Using %d pack threads.\n",
->> +			delta_search_threads);
-> 
-> I just noticed that this was in next. Do we really need to display this
-> message? A considerable amount of discussion went into reducing git's
-> chattiness and clutter during push and fetch, and I feel like this is a
-> step backwards (yes, I know most people won't see it if they don't build
-> with THREADED_DELTA_SEARCH).
-> 
-> Can we show it only if threads != 1? Only if we auto-detected the number
-> of threads and it wasn't 1?
+I'm unsure if this is a "problem" with git but the associated
+error/warning messages can be concerning to uninitiated users.
+It occurs when someone starts a clone and someone else does a
+push while the clone is processing.  In 1.5.3.8 we are seeing
+the following messages after the clone completes (the push was
+to the b2 branch):
 
-I like the message and thought it was useful especially for non-developers.
+=====
 
-Even if the number of threads was not auto-detected, it is a confirmation
-that the number of threads used is the number of threads configured.
+jwilliams> git clone /nfs_share/repo.git my_clone.git
+Initialized empty Git repository in 
+/export/jwilliams/test/my_clone.git/.git/
+5294402 blocks
+Checking 6156 files out...
+  100% (6156/6156) done
 
-For example, it seems easy to do this:
+jwilliams> cd my_clone.git/
 
-	git config pack.thread 4
-	git repack
+jwilliams> git branch
+error: refs/remotes/origin/b2 does not point to a valid object!
+* fwdev
 
-The user would immediately know something was wrong when they saw the
-message "Using 1 pack threads" instead of the "4" they thought they
-configured. Also, since it's only printed in the THREADED_DELTA_SEARCH
-case, it's also a confirmation that this option was indeed used for a
-particular build of git.
+jwilliams> git pull
+error: refs/remotes/origin/b2 does not point to a valid object!
+error: refs/remotes/origin/b2 does not point to a valid object!
+remote: Generating pack...
+remote: Counting objects: 1
+remote: Done counting 1831 objects.
+Result has 1288 objects.
+remote: Deltifying 1288 objects...
+remote:  100% (1288/1288) done
+Indexing 1288 objects...
+remote: Total 1288 (delta 855), reused 806 (delta 406)
+  100% (1288/1288) done
+Resolving 855 deltas...
+  100% (855/855) done
+127 objects were added to complete this thin pack.
+Already up-to-date.
 
-Mainly, I thought it was a harmless message that other users would "enjoy"
-seeing, but if others disagree, I won't argue. Notice I quoted "enjoy" to
-emphasize it.
+jwilliams> git branch
+* fwdev
 
-I'd also say that if the message is too noisy in the "user explicitly
-assigned number of threads" case, then it's just as noisy in the "auto assign"
-case, so just remove the message completely.
+jwilliams> git pull
+Already up-to-date.
 
-We're saying:
+=====
 
-If I set pack.threads to 4, I know git is using 4 threads to repack since
-I told it to use 4 threads. I don't need to see a noisy message telling
-me so.
+As you can see, the "does not point to a valid object" messages
+go away after the subsequent pull.  This apparently synced things
+up properly.  We clone a very large repo off of NFS which is slow
+so this particular collision happens frequently.  This type of
+message leaves users feeling uncomfortable.
 
-If I set pack.threads to 0, I know git is using 4 threads to repack since
-I have 4 cpus. I don't need to see a noisy message telling me so.
+In 1.5.4.2 this "window" appears much smaller.  When it does
+appear to hit, the messages and behavior are a little different:
 
--brandon
+=====
+
+jwilliams> git clone /nfs_share/repo.git my_clone.git
+Initialized empty Git repository in 
+/export/jwilliams/test/my_clone.git/.git/
+5294419 blocks
+error: Trying to write ref refs/remotes/origin/b2 with nonexistant 
+object 9bf5a068f8ba817b93e1ef4e3904323833c948d8
+fatal: Cannot update the ref 'refs/remotes/origin/b2'.
+Checking out files: 100% (6156/6156), done.
+
+jwilliams> cd my_clone.git/
+
+jwilliams> git branch
+* fwdev
+
+jwilliams> git pull
+remote: Counting objects: 1839, done.
+remote: Compressing objects: 100% (890/890), done.
+remote: Total 1296 (delta 902), reused 764 (delta 406)
+Receiving objects: 100% (1296/1296), 21.82 MiB | 8845 KiB/s, done.
+Resolving deltas: 100% (902/902), completed with 122 local objects.
+ From /nfs_share/repo.git/
+  * [new branch]      b2 -> origin/b2
+Already up-to-date.
+
+jwilliams> git branch
+* fwdev
+
+jwilliams> git pull
+Already up-to-date.
+
+=====
+
+In 1.5.4.2 the subsequent pull does seem to sync things up properly
+as well.
+
+In both the 1.5.3.8 and 1.5.4.2 cases the b2 branch is unavailable
+to work on until the subsequent pull.
+
+I'm just curious to know if this behavior is known and if it is
+considered "normal".
+
+- Josh
