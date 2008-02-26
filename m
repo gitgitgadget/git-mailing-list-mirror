@@ -1,57 +1,72 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: on subtree checkout
-Date: Tue, 26 Feb 2008 01:59:10 +0000 (GMT)
-Message-ID: <alpine.DEB.1.00.0802260156350.3322@eeepc-johanness>
-References: <fcaeb9bf0802240134i46e276ajfe83071e0b18ce61@mail.gmail.com>
+From: A Large Angry SCM <gitzilla@gmail.com>
+Subject: Re: [PATCH] gitk: don't save the geometry to rc file on exit
+Date: Mon, 25 Feb 2008 21:15:35 -0500
+Message-ID: <47C37647.90908@gmail.com>
+References: <47AAA254.2020008@thorn.ws>	<20080207063020.GP24004@spearce.org>	<200802071056.19370.robin.rosenberg.lists@dewire.com>	<20080207101051.19459.qmail@fcb20609bc7c07.315fe32.mid.smarden.org>	<20080223113759.12854.qmail@6a8737aa4695b2.315fe32.mid.smarden.org> <18368.41742.689290.877767@cargo.ozlabs.ibm.com>
+Reply-To: gitzilla@gmail.com
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git mailing list <git@vger.kernel.org>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 26 02:59:54 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Gerrit Pape <pape@smarden.org>, git@vger.kernel.org,
+	Mark Levedahl <mlevedahl@gmail.com>
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Tue Feb 26 03:16:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JTp6n-0006Ym-J9
-	for gcvg-git-2@gmane.org; Tue, 26 Feb 2008 02:59:54 +0100
+	id 1JTpMk-0001id-6t
+	for gcvg-git-2@gmane.org; Tue, 26 Feb 2008 03:16:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754373AbYBZB7P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Feb 2008 20:59:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754221AbYBZB7P
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Feb 2008 20:59:15 -0500
-Received: from mail.gmx.net ([213.165.64.20]:51075 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752505AbYBZB7O (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Feb 2008 20:59:14 -0500
-Received: (qmail invoked by alias); 26 Feb 2008 01:59:12 -0000
-Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO eeepc-johanness.home) [86.138.198.40]
-  by mail.gmx.net (mp016) with SMTP; 26 Feb 2008 02:59:12 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/u9GJbD1HuzEwQpgGvDPLH2ho2B2GK9mBMjZX4hv
-	UZ9ciQDTXs/JtB
-X-X-Sender: user@eeepc-johanness
-In-Reply-To: <fcaeb9bf0802240134i46e276ajfe83071e0b18ce61@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1757053AbYBZCPq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Feb 2008 21:15:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757334AbYBZCPq
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Feb 2008 21:15:46 -0500
+Received: from wr-out-0506.google.com ([64.233.184.239]:62175 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756928AbYBZCPp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Feb 2008 21:15:45 -0500
+Received: by wr-out-0506.google.com with SMTP id c48so2891147wra.23
+        for <git@vger.kernel.org>; Mon, 25 Feb 2008 18:15:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:disposition-notification-to:date:from:reply-to:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        bh=nAu3oPsHIsvdAWoUgFA1M2MAN1T3KyDRUxw72oAK378=;
+        b=b+CT8M3Rnd+4rZBa7HqUGhUrkXC1PiFevh38rQ8EstO00qMiEYZ99b3rpGDztcw8SuDZeSLnPrldvg7tVQK2IwNmEnJydKZp0MCpIsuMIknfISCleWgzf1v+VPg8n2DE8Q8pAKVAU+/5HKvS6oqBHCrt3wKnB/VhUg7L5qO2aAg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:disposition-notification-to:date:from:reply-to:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=ApyXB9FuUICQkFCdeVHazUi/cuShiUbyhK80r0P4BDjWoIq4MaRNDShdsIZED8GGxEKY3UC/70+EAMVGECg6cWBrnbD8/ttuN7TPH9NXo9BysM1MmW64jJVbP4It+SZEFMAShmawXpHxnzfO/YkAfCuCQEYA0OaXjaHwv2AriMc=
+Received: by 10.140.132.8 with SMTP id f8mr2763147rvd.198.1203992143163;
+        Mon, 25 Feb 2008 18:15:43 -0800 (PST)
+Received: from ?10.0.0.6? ( [66.177.19.100])
+        by mx.google.com with ESMTPS id h2sm7155426rnb.16.2008.02.25.18.15.41
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 25 Feb 2008 18:15:42 -0800 (PST)
+User-Agent: Thunderbird 1.5.0.10 (X11/20060911)
+In-Reply-To: <18368.41742.689290.877767@cargo.ozlabs.ibm.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75099>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75100>
 
-Hi,
+Paul Mackerras wrote:
+> Gerrit Pape writes:
+> 
+>> Saving the geometry can cause several inconveniences, e.g. when using a
+>> temporary dual screen setup, or sharing ~/.gitk between multiple
+>> systems.  Additionally it can be argued that window placement and sizing
+>> are the tasks of the window manager.  So don't do that anymore.
+> 
+> I myself find it useful to have gitk remember the size and layout of
+> the various panes, so I won't be applying this patch.
+> 
+> The saving/restoring of the window position was done by Mark Levedahl
+> to make gitk work properly on Cygwin.  I agree it can be annoying on X
+> and I would take a patch to inhibit the restoring of the window
+> position when running under X.  I'd want an ack from Mark before
+> making that change more generally.
 
-On Sun, 24 Feb 2008, Nguyen Thai Ngoc Duy wrote:
-
-> I'm going to implement subtree checkout. The plan is to save "index
-> prefix" in GIT_DIR/prefix and update git commands to use index prefix
-> when accessing the index. If I'm heading a wrong way, stop me now.
-
-As I wrote a long time ago already, I think the correct approach would be 
-to reuse the code for the core.ignoreStat feature.
-
-But I agree with others that you should think about sane implementations 
-of rebase/merge with partial checkouts.
-
-Ciao,
-Dscho
+I use gitk under X and like the saving/restoring of window 
+size/geometry. Please do not remove that feature.
