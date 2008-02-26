@@ -1,71 +1,100 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: t7300 "removal failure" broken on Windows
-Date: Tue, 26 Feb 2008 21:22:27 +0100
-Message-ID: <20080226202227.GA1245@steel.home>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC] Support TEST_GIT_PATH variable for the path for the git to
+ test
+Date: Tue, 26 Feb 2008 12:22:30 -0800
+Message-ID: <7vpruj4ge1.fsf@gitster.siamese.dyndns.org>
+References: <alpine.LNX.1.00.0802251600220.19024@iabervon.org>
+ <7v63wch9ia.fsf@gitster.siamese.dyndns.org>
+ <alpine.LNX.1.00.0802261242210.19024@iabervon.org>
+ <7v63wb5zec.fsf@gitster.siamese.dyndns.org>
+ <alpine.LNX.1.00.0802261350510.19024@iabervon.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 26 21:23:19 2008
+Cc: git@vger.kernel.org
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Tue Feb 26 21:23:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JU6KS-0003xV-SE
-	for gcvg-git-2@gmane.org; Tue, 26 Feb 2008 21:23:09 +0100
+	id 1JU6Kk-00043a-RT
+	for gcvg-git-2@gmane.org; Tue, 26 Feb 2008 21:23:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754456AbYBZUWc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Feb 2008 15:22:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753629AbYBZUWb
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Feb 2008 15:22:31 -0500
-Received: from mo-p07-ob.rzone.de ([81.169.146.188]:50178 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751342AbYBZUWa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Feb 2008 15:22:30 -0500
-X-RZG-CLASS-ID: mo07
-X-RZG-AUTH: z4gQVF2k5XWuW3Ccul2ggTSlDOQ=
-Received: from tigra.home (Fa882.f.strato-dslnet.de [195.4.168.130])
-	by post.webmailer.de (fruni mo52) (RZmta 16.8)
-	with ESMTP id B0731ak1QI22ej for <git@vger.kernel.org>;
-	Tue, 26 Feb 2008 21:22:27 +0100 (MET)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 9B329277BD
-	for <git@vger.kernel.org>; Tue, 26 Feb 2008 21:22:27 +0100 (CET)
-Received: by steel.home (Postfix, from userid 1000)
-	id 3853056D24; Tue, 26 Feb 2008 21:22:27 +0100 (CET)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
+	id S1752217AbYBZUWq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Feb 2008 15:22:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753629AbYBZUWq
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Feb 2008 15:22:46 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:40055 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751626AbYBZUWp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Feb 2008 15:22:45 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 5A1782801;
+	Tue, 26 Feb 2008 15:22:44 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 56D662800; Tue, 26 Feb 2008 15:22:38 -0500 (EST)
+In-Reply-To: <alpine.LNX.1.00.0802261350510.19024@iabervon.org> (Daniel
+ Barkalow's message of "Tue, 26 Feb 2008 14:16:13 -0500 (EST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75167>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75168>
 
-Just a heads-up.
+Daniel Barkalow <barkalow@iabervon.org> writes:
 
-The test is fails because it uses "chmod 0" to enforce an error while
-deleting files by "git clean -f -d". This does not work on windows,
-because the directories even without write permission on them can be
-freely modified (the contained names can be removed). Maybe even the
-removal of list permission does not mean a thing either to cygwin or
-windows (that last one being more likely the case: it is more wrong).
+>> I did not mean to imply I was presenting the whole solution; I
+>> was trying to hint at a different direction which may or may not
+>> work.  I did not look at what test_create_repo() actually did
+>> when I wrote the message, but you are right.  It too needs to
+>> be made conditional, and when trying an installed version, it
+>> should not do the "template" dance but let the installed "git init"
+>> figure it out.
+>
+> Does it need to be conditional, or is simply "git init" right (where we've 
+> already set environment variables for the local stuff if applicable)?
 
-So git-clean succeeds and the test fails.
+I suspect "uninstalled" cases (both "here" and "elsewhere")
+needs to do the template magic, while "installed" case should be
+just "git init".
 
-It probably can be worked around by opening the file and keeping it open.
+>> > There's additionally the problem that things which are built for testing 
+>> > in the git directory won't be installed anywhere.
+>> 
+>> To test without installing, in order to make them call out their
+>> siblings, I have this piece that I source to a new shell:
+>> 
+>>         GIT_EXEC_PATH=`pwd`
+>>         PATH=`pwd`:/usr/bin:/bin
+>>         GITPERLLIB=`pwd`/perl/blib/lib
+>>         export GIT_EXEC_PATH PATH GITPERLLIB
+>
+> Might be nice to have a "sgitpath" (on the model of sg or su) in t/, since 
+> this is handy in general.
 
-The patch below may fix it (haven't tested yet).
+I have them in ./+denv and after building if I want to see it
+work in real repo elsewhere I do:
 
-diff --git a/t/t7300-clean.sh b/t/t7300-clean.sh
-index 3840364..85341af 100755
---- a/t/t7300-clean.sh
-+++ b/t/t7300-clean.sh
-@@ -320,6 +320,7 @@ test_expect_success 'removal failure' '
- 
- 	mkdir foo &&
- 	touch foo/bar &&
-+	exec <foo/bar &&
- 	chmod 0 foo &&
- 	! git clean -f -d
- 
+	: gitster; sh
+        $ . ./+denv
+        $ cd ../elsewhere.git
+        $ do the real workload trial
+        $ ^D
+
+> You understood correctly the first time; I was unclear the second time. 
+> The problem here is that, in order to run tests, we call 
+> "test-absolute-path", "test-genrandom", etc., and we can't use these from 
+> the user's $PATH because, being only for testing, they don't get installed 
+> there. We need to get git-remote (for example) from $PATH, but 
+> test-genrandom from $(pwd)/.. in order to make the tests run.
+
+Ok, so even "installed" case need to rely on "test-blah" we build.
+
+> That sounds good (although only (2) is on my current path), but I also 
+> need a prerequisite patch for both, I believe, for simply making test 
+> helpers available independant of actual build products.
+
+Yeah, sounds like it.
