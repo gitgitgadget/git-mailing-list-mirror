@@ -1,73 +1,57 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<ukleinek@informatik.uni-freiburg.de>
-Subject: Re: [PATCH] Remove useless if-before-free tests.
-Date: Tue, 26 Feb 2008 07:59:53 +0100
-Organization: Universitaet Freiburg, Institut f. Informatik
-Message-ID: <20080226065953.GA25073@informatik.uni-freiburg.de>
-References: <871w7bz1ly.fsf@rho.meyering.net> <47B995CC.2000809@gmx.ch> <87skznhqk6.fsf@rho.meyering.net> <7vzlts9ag8.fsf@gitster.siamese.dyndns.org> <87ir0gx5bn.fsf@rho.meyering.net> <7vskzk99fd.fsf@gitster.siamese.dyndns.org> <87tzk0tzjz.fsf@rho.meyering.net> <7vd4qo7fsc.fsf@gitster.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] pack-objects: Print a message describing the number of
+	threads for packing
+Date: Tue, 26 Feb 2008 02:49:33 -0500
+Message-ID: <20080226074933.GA3485@coredump.intra.peff.net>
+References: <47B1BEC6.6080906@nrlssc.navy.mil> <1203732369-30314-1-git-send-email-casey@nrlssc.navy.mil> <47BF812A.4020205@nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jim Meyering <jim@meyering.net>, Jean-Luc Herren <jlh@gmx.ch>,
-	git list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 26 08:01:20 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Andreas Ericsson <ae@op5.se>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Nicolas Pitre <nico@cam.org>
+To: Brandon Casey <casey@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Tue Feb 26 08:50:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JTtoV-0002vW-6l
-	for gcvg-git-2@gmane.org; Tue, 26 Feb 2008 08:01:19 +0100
+	id 1JTuZs-0006IE-1y
+	for gcvg-git-2@gmane.org; Tue, 26 Feb 2008 08:50:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759081AbYBZHA0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 Feb 2008 02:00:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756563AbYBZHA0
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Feb 2008 02:00:26 -0500
-Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:50634 "EHLO
-	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1758759AbYBZHAZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Feb 2008 02:00:25 -0500
-Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
-	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:AES256-SHA:256)
-	(Exim 4.68)
-	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
-	id 1JTtnb-0000HC-Rq; Tue, 26 Feb 2008 08:00:23 +0100
-Received: from zeisberg by login.informatik.uni-freiburg.de with local (Exim 4.63)
-	(envelope-from <zeisberg@login.informatik.uni-freiburg.de>)
-	id 1JTtn7-0006dK-RG; Tue, 26 Feb 2008 07:59:53 +0100
-Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@informatik.uni-freiburg.de>,
-	Junio C Hamano <gitster@pobox.com>, Jim Meyering <jim@meyering.net>,
-	Jean-Luc Herren <jlh@gmx.ch>, git list <git@vger.kernel.org>
+	id S1756923AbYBZHth (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Feb 2008 02:49:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756514AbYBZHth
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Feb 2008 02:49:37 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4137 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756466AbYBZHtg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Feb 2008 02:49:36 -0500
+Received: (qmail 23893 invoked by uid 111); 26 Feb 2008 07:49:34 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Tue, 26 Feb 2008 02:49:34 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 26 Feb 2008 02:49:33 -0500
 Content-Disposition: inline
-In-Reply-To: <7vd4qo7fsc.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <47BF812A.4020205@nrlssc.navy.mil>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75106>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75107>
 
-Hello Junio,
+On Fri, Feb 22, 2008 at 08:12:58PM -0600, Brandon Casey wrote:
 
-> I am not interested in automating useless "if (x) free(x)"
-> tests, but one thing I recently wanted but did not know a handy
-> tool for was to find all the calls to free() that free a pointer
-> to an object of a particular type.  More specifically, we seem
-> to allocate and free many "struct commit_list", and I wanted to
-> introduce a custom bulk allocator.  Allocate many of them in a
-> block, hand out one by one, and tell callers to hand them back
-> not to free() but to the allocator so that it can keep the
-> returned ones on a linked list and hand them back again when the
-> next call wanted to allocate one without actually calling
-> xmalloc()).  But in order to do so, missed conversion from
-> malloc() to the custom allocator is not fatal (just wasteful),
-> but forgetting to convert free() really is.
-Maybe http://www.emn.fr/x-info/coccinelle/ can help you?
+> +	if (progress)
+> +		fprintf(stderr, "Using %d pack threads.\n",
+> +			delta_search_threads);
 
-I think it could automate if (x) free(x), too.
+I just noticed that this was in next. Do we really need to display this
+message? A considerable amount of discussion went into reducing git's
+chattiness and clutter during push and fetch, and I feel like this is a
+step backwards (yes, I know most people won't see it if they don't build
+with THREADED_DELTA_SEARCH).
 
-Best regards
-Uwe
+Can we show it only if threads != 1? Only if we auto-detected the number
+of threads and it wasn't 1?
 
---=20
-Uwe Kleine-K=F6nig
+-Peff
