@@ -1,58 +1,75 @@
-From: Daniel Stenberg <daniel@haxx.se>
-Subject: Re: FW: git via http protocol _and_ a proxy using NTLM authentication
- -- git 1.5.4.2 & curl 7.18.0
-Date: Tue, 26 Feb 2008 23:01:49 +0100 (CET)
-Message-ID: <Pine.LNX.4.64.0802262254240.13009@yvahk3.pbagnpgbe.fr>
-References: <AA28F077645B324881335614E4F7C428034C00@win-ex01.bench.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH] Fix premature call to git_config() causing t1020-subdirectory
+ to fail
+Date: Tue, 26 Feb 2008 17:12:50 -0500 (EST)
+Message-ID: <alpine.LNX.1.00.0802261709180.19665@iabervon.org>
+References: <alpine.LNX.1.00.0802251604460.19024@iabervon.org> <200802260321.14038.johan@herland.net> <200802261640.48770.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: git@vger.kernel.org
-To: Ken.Fuchs@bench.com
-X-From: git-owner@vger.kernel.org Tue Feb 26 23:02:36 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org,
+	=?ISO-8859-15?Q?Kristian_H=F8gsberg?= <krh@redhat.com>,
+	=?ISO-8859-15?Q?Santi_B=E9jar?= <sbejar@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Tue Feb 26 23:14:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JU7sh-0001Aw-U2
-	for gcvg-git-2@gmane.org; Tue, 26 Feb 2008 23:02:36 +0100
+	id 1JU83m-0005Oe-Tr
+	for gcvg-git-2@gmane.org; Tue, 26 Feb 2008 23:14:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763462AbYBZWB6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Feb 2008 17:01:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763840AbYBZWB6
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Feb 2008 17:01:58 -0500
-Received: from kluster1.contactor.se ([91.191.140.11]:45955 "EHLO
-	kluster1.contactor.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761702AbYBZWB5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Feb 2008 17:01:57 -0500
-Received: from linux3.contactor.se (linux3.contactor.se [91.191.140.23])
-	by kluster1.contactor.se (8.13.8/8.13.8/Debian-3) with ESMTP id m1QM1n9H020460;
-	Tue, 26 Feb 2008 23:01:49 +0100
-X-X-Sender: dast@linux3.contactor.se
-In-Reply-To: <AA28F077645B324881335614E4F7C428034C00@win-ex01.bench.com>
-X-fromdanielhimself: yes
+	id S1764257AbYBZWM5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Feb 2008 17:12:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764205AbYBZWM4
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Feb 2008 17:12:56 -0500
+Received: from iabervon.org ([66.92.72.58]:34526 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1763793AbYBZWMz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Feb 2008 17:12:55 -0500
+Received: (qmail 28330 invoked by uid 1000); 26 Feb 2008 22:12:50 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 26 Feb 2008 22:12:50 -0000
+In-Reply-To: <200802261640.48770.johan@herland.net>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75180>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75181>
 
-On Tue, 26 Feb 2008, Ken.Fuchs@bench.com wrote:
+On Tue, 26 Feb 2008, Johan Herland wrote:
 
-> +       curl_easy_setopt(result, CURLOPT_PROXYAUTH, (long)CURLAUTH_NTLM);
-> +       curl_easy_setopt(result, CURLOPT_PROXYUSERPWD,
-> +               "<user-id>:<password>");
+> We need to call git_config(git_default_config) in order to get user.name and
+> user.email (so that reflogs will be correct), but if we do it too early, it
+> interferes with the setup of reference repos. Therefore, move git_config()
+> call to _after_ the reference has been setup (but before we start writing
+> reflogs). However, in order for git_config() to read in the global
+> configuration at that point, we must unset CONFIG_ENVIRONMENT.
+> 
+> There are probably better ways of resolving this issue.
+> 
+> Signed-off-by: Johan Herland <johan@herland.net>
+> ---
+> 
+> On Tuesday 26 February 2008, Johan Herland wrote:
+> > - Call git_config(git_default_config) in order to properly set up
+> >   user.name and user.email for reflogs (This BREAKS test #9 in
+> >   t1020-subdirectory.sh. Have yet to figure out why)
+> 
+> Here is a fix for this breakage, although I think it's ugly as hell.
+> 
+> But with this fix, and the other one I just sent out for the
+> for_each_ref() corruption, the whole test suite finally passes on my
+> box.
+> 
+> Feel free to incorporate this into the further builtin-clone work,
+> or ignore it, and find better ways of solving these issues.
 
-First, you should rather allow any auth and not just the specific one you 
-want.
+Actually, I think I'll be leaving CONFIG_ENVIRONMENT alone entirely; I was 
+only using it to override the setting that t5505 uses, but t5505 is just 
+wrong to set it. So this is the right placement of git_config(), and the 
+setenv and unsetenv aren't needed.
 
-Then, the userid and password is probably better passed in embedded in the 
-proxy URL as that's given on the command line/environment already. Or as 
-separate arguments.
-
-> It seems that git fetch (via HTLM proxy) works until
->
->> fatal: Couldn't find remote ref HEAD
-
-Well, the CURLOPT_PROXY is set in transport.c as well which your patch didn't 
-address. If that's the case, I figure the verbose output should've shown some 
-auth failures with the proxy?
+	-Daniel
+*This .sig left intentionally blank*
