@@ -1,111 +1,65 @@
-From: <Ken.Fuchs@bench.com>
-Subject: RE: FW: git via http protocol _and_ a proxy using NTLMauthentication -- git 1.5.4.2 & curl 7.18.0
-Date: Wed, 27 Feb 2008 16:10:57 -0600
-Message-ID: <AA28F077645B324881335614E4F7C428034C08@win-ex01.bench.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: msgmft segfaulting on tiger
+Date: Wed, 27 Feb 2008 14:14:01 -0800
+Message-ID: <7vablmqc7q.fsf@gitster.siamese.dyndns.org>
+References: <46a038f90802211553g735215c6q260ddc49ac149bb5@mail.gmail.com>
+ <46a038f90802211559w457c5460k7447ba8b38352713@mail.gmail.com>
+ <20080222065836.GE8410@spearce.org>
+ <46a038f90802220957y7db67d8nb6b7ad784124546a@mail.gmail.com>
+ <47C5A974.7080207@gmail.com> <alpine.LSU.1.00.0802271825330.22527@racer.site>
+ <47C5AEFA.5020004@gmail.com> <alpine.LSU.1.00.0802272203270.22527@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: <git@vger.kernel.org>
-To: <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Wed Feb 27 23:13:09 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Gabriel =?utf-8?Q?Salda=C3=B1a?= <gsaldana@gmail.com>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Feb 27 23:15:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JUUWE-0004cU-2s
-	for gcvg-git-2@gmane.org; Wed, 27 Feb 2008 23:12:54 +0100
+	id 1JUUYV-0005T1-EC
+	for gcvg-git-2@gmane.org; Wed, 27 Feb 2008 23:15:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761133AbYB0WLA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Feb 2008 17:11:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761482AbYB0WLA
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Feb 2008 17:11:00 -0500
-Received: from tx-smtp01.bench.com ([12.163.172.137]:47616 "EHLO
-	tx-smtp01.bench.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761940AbYB0WK7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Feb 2008 17:10:59 -0500
-Received: from unknown (HELO smtp.corp.bench.com) ([167.67.199.67])
-  by tx-smtp01.bench.com with ESMTP; 27 Feb 2008 16:13:17 -0600
-Received: from win-ex01.bench.com ([167.67.1.16]) by smtp.corp.bench.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Wed, 27 Feb 2008 16:10:58 -0600
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-Content-class: urn:content-classes:message
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: FW: git via http protocol _and_ a proxy using NTLMauthentication -- git 1.5.4.2 & curl 7.18.0
-Thread-Index: Ach5ENQ6yw+0DO1lS4mogyF3vzQuOgAdThew
-X-OriginalArrivalTime: 27 Feb 2008 22:10:58.0201 (UTC) FILETIME=[A134F090:01C8798D]
+	id S1761962AbYB0WOX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Feb 2008 17:14:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759873AbYB0WOX
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Feb 2008 17:14:23 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:34245 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761913AbYB0WOW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Feb 2008 17:14:22 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 701C72148;
+	Wed, 27 Feb 2008 17:14:19 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 6A6D62132; Wed, 27 Feb 2008 17:14:06 -0500 (EST)
+In-Reply-To: <alpine.LSU.1.00.0802272203270.22527@racer.site> (Johannes
+ Schindelin's message of "Wed, 27 Feb 2008 22:04:34 +0000 (GMT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75308>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75309>
 
-> Ken Fuchs wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Current changes to http.c, get_curl_handle()
-        and transport.c, get_refs_via_curl():
+>> $ msgfmt --tcl; echo $?
+>> msgfmt: unrecognized option `--tcl'
+>> Try `msgfmt --help' for more information.
+>> 1
+>
+> Darn.  I think that's the same exit code as for any other invocation 
+> without filename.
+>
+> So it seems that there is no easy way to tell a --tcl aware msgfmt from 
+> the other.
 
-> > +       curl_easy_setopt(slot->curl, CURLOPT_PROXYAUTH,
-> > (long)CURLAUTH_NTLM);
-> > +       curl_easy_setopt(slot->curl, CURLOPT_PROXYUSERPWD,
-> > "<user-id>:<password>");
+How about...
 
-Mike Hommey wrote: 
- 
-> Starting with curl 7.14.1, you're supposed to be able to use the
-> http://user:pass@proxy/ syntax, though I'm not sure it deals well with
-> NTLM domains. You can probably leave CURLOPT_PROXYUSERPWD out if you
-> set your proxy url correctly.
-
-Leaving out the line above containing CURLOPT_PROXYUSERPWD in both
-http.c and transport.c and using curl 7.18.0 ...
-
-$ http_proxy=user-id:password@proxy.domain:<port> GIT_CURL_VERBOSE=1 \
-    git fetch http://www.kernel.org/pub/scm/git/git.git
-
-fails proxy NTLM authentication.  The correct user-id is used,
-but maybe the password wasn't correctly parsed.
-
-> As for CURLOPT_PROXYAUTH, it would be better to set it from another
-> config.
-From a later message:
-> Or we should set it to CURLOPT_AUTHANY by default.
-
-The code should probably do both.
-
-> > * Connection #0 to host <proxy domain> left intact
-> > fatal: Couldn't find remote ref HEAD
-> > 
-> > So, the proxy communication via NTLM authentication seems 
-> > to be working.
-> > The patch to transport.c did not change anything as far as 
-> > I can see.
-> > 
-> > The fatal error is from remote.c.  Perhaps, it also requires some
-> > changes.
-> 
-> Does your remote have a HEAD ref ?
-
-The command used to generate the above output is:
-
-$ GIT_CURL_VERBOSE=1 git fetch \
-  http://www.kernel.org/pub/scm/git/git.git
-
-I originally tried the following command as suggested by the git
-home page for getting "git by git".
-
-$ GIT_CURL_VERBOSE=1 git clone \
-  http://www.kernel.org/pub/scm/git/git.git
-Initialized empty Git repository in /mnt/s2u1/git/test-git/git/.git/
-Cannot get remote repository information.
-Perhaps git-update-server-info needs to be run there?
-$
-
-This seemed like a good test for validating my git installation,
-but this command doesn't access the proxy at all.  The fetch
-command does.  Why the difference?
-
-Thanks,
-
-Ken Fuchs
+    $ msgfmt --tcl -l C -d . /dev/null; echo $?
