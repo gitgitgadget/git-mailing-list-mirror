@@ -1,80 +1,84 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: FW: git via http protocol _and_ a proxy using NTLM
-	authentication -- git 1.5.4.2 & curl 7.18.0
-Date: Wed, 27 Feb 2008 08:29:52 +0100
-Organization: glandium.org
-Message-ID: <20080227072952.GA27806@glandium.org>
-References: <AA28F077645B324881335614E4F7C428034C01@win-ex01.bench.com> <20080227072012.GA23423@glandium.org>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: git-svn messing with timezones
+Date: Tue, 26 Feb 2008 23:32:44 -0800
+Message-ID: <20080227073244.GB24316@soma>
+References: <20080226124748.GH31792@mail.stoakes.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Ken.Fuchs@bench.com
-X-From: git-owner@vger.kernel.org Wed Feb 27 08:27:34 2008
+To: Tim Stoakes <tim@stoakes.net>
+X-From: git-owner@vger.kernel.org Wed Feb 27 08:33:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JUGhN-0001ww-Iu
-	for gcvg-git-2@gmane.org; Wed, 27 Feb 2008 08:27:30 +0100
+	id 1JUGnK-0003P3-Uh
+	for gcvg-git-2@gmane.org; Wed, 27 Feb 2008 08:33:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756072AbYB0H0u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Feb 2008 02:26:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754237AbYB0H0t
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Feb 2008 02:26:49 -0500
-Received: from vuizook.err.no ([85.19.215.103]:47505 "EHLO vuizook.err.no"
+	id S1751030AbYB0Hcr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Feb 2008 02:32:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751041AbYB0Hcr
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Feb 2008 02:32:47 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:53270 "EHLO hand.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755645AbYB0H0s (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Feb 2008 02:26:48 -0500
-Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
-	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.67)
-	(envelope-from <mh@glandium.org>)
-	id 1JUGgb-0002zp-3N; Wed, 27 Feb 2008 08:26:47 +0100
-Received: from mh by jigen with local (Exim 4.69)
-	(envelope-from <mh@jigen>)
-	id 1JUGjg-0007PT-7m; Wed, 27 Feb 2008 08:29:52 +0100
+	id S1751004AbYB0Hcq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Feb 2008 02:32:46 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with ESMTP id E532D7F4153;
+	Tue, 26 Feb 2008 23:32:44 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <20080227072012.GA23423@glandium.org>
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.3
+In-Reply-To: <20080226124748.GH31792@mail.stoakes.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75206>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75207>
 
-On Wed, Feb 27, 2008 at 08:20:12AM +0100, Mike Hommey wrote:
-> On Tue, Feb 26, 2008 at 05:46:21PM -0600, Ken.Fuchs@bench.com wrote:
-> > > Well, the CURLOPT_PROXY is set in transport.c as well which 
-> > > your patch didn't address.
-> > 
-> > Thanks, I just did a similar patch to transport.c:
-> > 
-> > $ diff -u ../git-1.5.4.2/transport.c.orig \
-> >           ../git-1.5.4.2/transport.c
-> > @@ -456,7 +456,8 @@
-> >         if (transport->remote->http_proxy)
-> >                 curl_easy_setopt(slot->curl, CURLOPT_PROXY,
-> >                                  transport->remote->http_proxy);
-> > -
-> > +       curl_easy_setopt(slot->curl, CURLOPT_PROXYAUTH,
-> > (long)CURLAUTH_NTLM);
-> > +       curl_easy_setopt(slot->curl, CURLOPT_PROXYUSERPWD,
-> > "<user-id>:<password>");
-> >         if (start_active_slot(slot)) {
-> >                 run_active_slot(slot);
-> >                 if (results.curl_result != CURLE_OK) {
-> > $
+Tim Stoakes <tim@stoakes.net> wrote:
+> Hi all,
 > 
-> Starting with curl 7.14.1, you're supposed to be able to use the
-> http://user:pass@proxy/ syntax, though I'm not sure it deals well with
-> NTLM domains. You can probably leave CURLOPT_PROXYUSERPWD out if you
-> set your proxy url correctly.
+> When I commit to git, the log shows the correct timezone:
+>   Date:   Tue Feb 26 23:10:24 2008 +1030
 > 
-> As for CURLOPT_PROXYAUTH, it would be better to set it from another
-> config.
+> However, when I then dcommit this to SVN with git-svn, the timezone gets
+> mangled. If I now 'git log', the same commit shows
+>   Date:   Tue Feb 26 12:40:24 2008 +0000
+> 
+> The 'svn log' of that same revision shows the correct timezone:
+> r151 | foo | 2008-02-26 23:10:24 +1030 (Tue, 26 Feb 2008) | 2 lines
+> so, I know it's git-svn doing it, not svn itself.
+> 
+> The same mangling has happened to commits that came through the original
+> git-svn import, and subsequent 'git-svn rebase's.
+> 
+> I've tried things like:
+> $ TZ=Australia/Adelaide git svn dcommit
+> all end in the same result - UTC appears in the logs.
+> 
+> I'm using:
+> git version 1.5.4.3
+> 
+> Can anyone help?
 
-Or we should set it to CURLOPT_AUTHANY by default.
+Hi Tim,
 
-Mike
+This is actually the intended behavior of git-svn.
+
+SVN itself only stores times in UTC and nothing else.  The SVN
+repository itself has no timezone information (unless the server it was
+on is misconfigured :)
+
+The regular svn client converts the UTC time to the local time (or
+based on the TZ= environment).  Using "git svn log" should mimic the
+timezone behavior of the regular svn client.
+
+git-svn will only import times as UTC because that's what SVN
+gives it.
+
+As a side effect, this also makes it easier for multiple users to
+independently create repositories that result in the same commit SHA1s
+(and one of the reasons for using dcommit over git svn set-tree).
+
+-- 
+Eric Wong
