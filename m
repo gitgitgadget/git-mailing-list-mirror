@@ -1,82 +1,92 @@
-From: =?ISO-8859-1?Q?Gabriel_Salda=F1a?= <gsaldana@gmail.com>
-Subject: Re: msgmft segfaulting on tiger
-Date: Wed, 27 Feb 2008 12:42:02 -0600
-Message-ID: <47C5AEFA.5020004@gmail.com>
-References: <46a038f90802211553g735215c6q260ddc49ac149bb5@mail.gmail.com>  <46a038f90802211559w457c5460k7447ba8b38352713@mail.gmail.com>  <20080222065836.GE8410@spearce.org> <46a038f90802220957y7db67d8nb6b7ad784124546a@mail.gmail.com> <47C5A974.7080207@gmail.com> <alpine.LSU.1.00.0802271825330.22527@racer.site>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Martin Langhoff <martin.langhoff@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Feb 27 19:40:23 2008
+From: Johannes Sixt <johannes.sixt@telecom.at>
+Subject: [PATCH 04/40] Windows: Use the Windows style PATH separator ';'.
+Date: Wed, 27 Feb 2008 19:54:27 +0100
+Message-ID: <1204138503-6126-5-git-send-email-johannes.sixt@telecom.at>
+References: <1204138503-6126-1-git-send-email-johannes.sixt@telecom.at>
+Cc: Johannes Sixt <johannes.sixt@telecom.at>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 27 19:56:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JURCY-0002dG-LQ
-	for gcvg-git-2@gmane.org; Wed, 27 Feb 2008 19:40:23 +0100
+	id 1JURRV-0000Km-1W
+	for gcvg-git-2@gmane.org; Wed, 27 Feb 2008 19:55:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756529AbYB0Sja convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 Feb 2008 13:39:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755776AbYB0Sja
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Feb 2008 13:39:30 -0500
-Received: from wx-out-0506.google.com ([66.249.82.229]:56137 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754635AbYB0Sj3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Feb 2008 13:39:29 -0500
-Received: by wx-out-0506.google.com with SMTP id h31so2975555wxd.4
-        for <git@vger.kernel.org>; Wed, 27 Feb 2008 10:39:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:x-enigmail-version:content-type:content-transfer-encoding;
-        bh=I0ItcbKIvhXG7A9u8YRvsyen9Ks98yjy22jCaGqVcDA=;
-        b=wuG6eIhMQGZDIl2xUeYg5xb4NWKpeiGP7cx+F7ZK6ZUypyTi8yPa74BHOCs/NJAAm2/fuAgU6CjhvwprDzQ8nMPqyN/lhQ109FmNoeQ5JySUMuj/BHEOiX7cjVp3dFmmIqr9Op0JN8XzvxF6ITsdkVrJWXoC0GiUasgMj5XtNgI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:x-enigmail-version:content-type:content-transfer-encoding;
-        b=EC8ASl+jKo4vzorBMgoOdGrkkVZsfFpUwqDPNNIz9/MK8OTuOkTna9KqnQmcGBxhrW2T0s+IB341U7Dzj4jWIJUfqGIxUEg993yQlcKBCZ1fYYx369sO6yyPfr1QetgXt2WtplLvC/CVd/AYulGM2h+bBJZrx81riSQrJgyszmQ=
-Received: by 10.141.193.1 with SMTP id v1mr4812533rvp.245.1204137567839;
-        Wed, 27 Feb 2008 10:39:27 -0800 (PST)
-Received: from ?192.168.0.121? ( [189.152.130.115])
-        by mx.google.com with ESMTPS id t1sm13718205poh.0.2008.02.27.10.39.26
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 27 Feb 2008 10:39:27 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.0 (X11/20070326)
-In-Reply-To: <alpine.LSU.1.00.0802271825330.22527@racer.site>
-X-Enigmail-Version: 0.95.6
+	id S1755657AbYB0SzL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Feb 2008 13:55:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755476AbYB0SzJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Feb 2008 13:55:09 -0500
+Received: from smtp4.srv.eunet.at ([193.154.160.226]:40419 "EHLO
+	smtp4.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753362AbYB0SzG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Feb 2008 13:55:06 -0500
+Received: from localhost.localdomain (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
+	by smtp4.srv.eunet.at (Postfix) with ESMTP id C1063974D9;
+	Wed, 27 Feb 2008 19:55:04 +0100 (CET)
+X-Mailer: git-send-email 1.5.4.1.126.ge5a7d
+In-Reply-To: <1204138503-6126-1-git-send-email-johannes.sixt@telecom.at>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75244>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75245>
 
-Here it is:
+Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
+---
+ Documentation/git.txt |    6 +++---
+ exec_cmd.c            |    4 ++++
+ sha1_file.c           |    4 ++++
+ 3 files changed, 11 insertions(+), 3 deletions(-)
 
-$ msgfmt --tcl; echo $?
-msgfmt: unrecognized option `--tcl'
-Try `msgfmt --help' for more information.
-1
-
-Gabriel
-
-Johannes Schindelin wrote:
-> Hi,
->=20
-> On Wed, 27 Feb 2008, Gabriel Salda=F1a wrote:
->=20
->> msgfmt --statistics --tcl -l de -d po/ po/de.po msgfmt: unrecognized=
- option
->> `--tcl'
->=20
-> Could you try this, please:
->=20
-> $ msgfmt --tcl; echo $?
->=20
-> Maybe we can have a clever autodetection of msgfmt which does not=20
-> understand --tcl?
->=20
-> Ciao,
-> Dscho
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index d57bed6..b2a5b60 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -382,9 +382,9 @@ git so take care if using Cogito etc.
+ 'GIT_ALTERNATE_OBJECT_DIRECTORIES'::
+ 	Due to the immutable nature of git objects, old objects can be
+ 	archived into shared, read-only directories. This variable
+-	specifies a ":" separated list of git object directories which
+-	can be used to search for git objects. New objects will not be
+-	written to these directories.
++	specifies a ":" separated (on Windows ";" separated) list
++	of git object directories which can be used to search for git
++	objects. New objects will not be written to these directories.
+ 
+ 'GIT_DIR'::
+ 	If the 'GIT_DIR' environment variable is set then it
+diff --git a/exec_cmd.c b/exec_cmd.c
+index e189cac..343545d 100644
+--- a/exec_cmd.c
++++ b/exec_cmd.c
+@@ -37,7 +37,11 @@ static void add_path(struct strbuf *out, const char *path)
+ 		else
+ 			strbuf_addstr(out, make_absolute_path(path));
+ 
++#ifdef __MINGW32__
++		strbuf_addch(out, ';');
++#else
+ 		strbuf_addch(out, ':');
++#endif
+ 	}
+ }
+ 
+diff --git a/sha1_file.c b/sha1_file.c
+index 1ddb96b..453bc43 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -389,7 +389,11 @@ void prepare_alt_odb(void)
+ 	if (!alt) alt = "";
+ 
+ 	alt_odb_tail = &alt_odb_list;
++#ifdef __MINGW32__
++	link_alt_odb_entries(alt, alt + strlen(alt), ';', NULL, 0);
++#else
+ 	link_alt_odb_entries(alt, alt + strlen(alt), ':', NULL, 0);
++#endif
+ 
+ 	read_info_alternates(get_object_directory(), 0);
+ }
+-- 
+1.5.4.1.126.ge5a7d
