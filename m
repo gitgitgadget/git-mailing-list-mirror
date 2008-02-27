@@ -1,92 +1,64 @@
-From: =?utf-8?q?=E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=81=AA=E3=81=93?= 
-	<nanako3@bluebottle.com>
-Subject: Re: [PATCH] Documentation: help: describe 'man.viewer' config variable.
-Date: Wed, 27 Feb 2008 22:22:43 +0900
-Message-ID: <200802271323.m1RDNGTQ025557@mi1.bluebottle.com>
-References: <20080227065535.8ac7883a.chriscool@tuxfamily.org>
+From: Seth Falcon <seth@userprimary.net>
+Subject: Re: git-svn messing with timezones
+Date: Wed, 27 Feb 2008 08:21:09 -0800
+Message-ID: <m2zltmnzey.fsf@userprimary.net>
+References: <20080226124748.GH31792@mail.stoakes.net>
+	<20080227073244.GB24316@soma>
+	<20080227102631.GJ30300@mail.stoakes.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: git@vger.kernel.org, Pascal Obry <pascal@obry.net>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Wed Feb 27 14:24:07 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
+To: Tim Stoakes <tim@stoakes.net>
+X-From: git-owner@vger.kernel.org Wed Feb 27 17:23:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JUMGL-0003HJ-1s
-	for gcvg-git-2@gmane.org; Wed, 27 Feb 2008 14:23:57 +0100
+	id 1JUP3J-0002GF-L8
+	for gcvg-git-2@gmane.org; Wed, 27 Feb 2008 17:22:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751060AbYB0NXS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Feb 2008 08:23:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751036AbYB0NXS
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Feb 2008 08:23:18 -0500
-Received: from mi1.bluebottle.com ([206.188.25.14]:42347 "EHLO
-	mi1.bluebottle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750939AbYB0NXR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Feb 2008 08:23:17 -0500
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by mi1.bluebottle.com (8.13.1/8.13.1) with ESMTP id m1RDNGTQ025557
-	for <git@vger.kernel.org>; Wed, 27 Feb 2008 05:23:17 -0800
-DomainKey-Signature: a=rsa-sha1; s=mail; d=bluebottle.com; c=nofws; q=dns;
-	h=received:from:to:cc:date:subject:in-reply-to:mime-version:
-	content-type:content-transfer-encoding:x-trusted-delivery;
-	b=mMQmqngG4I0IMaO3gUTKl8P5ZjW75IeuoN+BFnRwlPqbRTXgUvdNrHAMFTOcA/iuv
-	xLo8rkG66y0mTinjH2BBt6sDmB/pmVzZ33L3Nz9BSRHPaFvjjxI1X4vqm1MgoxC
-Received: from nanako3.mail.bluebottle.com ([212.62.97.23])
-	(authenticated bits=0)
-	by fe0.bluebottle.com (8.13.1/8.13.1) with ESMTP id m1RDN5L3006518
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 27 Feb 2008 05:23:10 -0800
-In-Reply-To: <20080227065535.8ac7883a.chriscool@tuxfamily.org>
-X-Trusted-Delivery: <8f42e22a7bea0384c2c0c0194ff44ea3>
+	id S1753843AbYB0QWE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Feb 2008 11:22:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754272AbYB0QWD
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Feb 2008 11:22:03 -0500
+Received: from qmta03.emeryville.ca.mail.comcast.net ([76.96.30.32]:45505 "EHLO
+	QMTA03.emeryville.ca.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753726AbYB0QWC (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Feb 2008 11:22:02 -0500
+Received: from OMTA05.emeryville.ca.mail.comcast.net ([76.96.30.43])
+	by QMTA03.emeryville.ca.mail.comcast.net with comcast
+	id ucNr1Y0020vp7WLA30Kw00; Wed, 27 Feb 2008 16:21:07 +0000
+Received: from ziti ([71.197.245.84])
+	by OMTA05.emeryville.ca.mail.comcast.net with comcast
+	id ugMz1Y0021pz2VT8R00000; Wed, 27 Feb 2008 16:22:00 +0000
+X-Authority-Analysis: v=1.0 c=1 a=Z4mJgif-AAAA:8 a=jIxqbozPlobd0DJxpHEA:9
+ a=dIgcHrIxYoROYXuyHWAN8irbpeIA:4 a=pzGREQu3uXMA:10 a=F-J2dRE9H3gA:10
+ a=9hlq2oIkD8gA:10
+In-Reply-To: <20080227102631.GJ30300@mail.stoakes.net> (Tim Stoakes's message of "Wed\, 27 Feb 2008 20\:56\:31 +1030")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.91 (darwin)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75230>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75231>
 
-Quoting Christian Couder <chriscool@tuxfamily.org>:
+Tim Stoakes <tim@stoakes.net> writes:
+> Ah indeed, `git-svn log` does show the correct TZ. How annoying!
+>
+> My workflow is to work with native git as much as possible, and interact
+> with svn as little as is required. This means I have to remember to run
+> one command to see sane logs of git commits that happen to also be svn
+> commits, and another one for the normal git commits. There is no
+> transparency here.
 
-> +man.viewer::
-> +	Specify the program that will be used to display help in the
-> +	'man' format. See linkgit:git-help[1].
-> +
->  -i|--info::
-> -	Use the 'info' program to display the manual page, instead of
-> -	the 'man' program that is used by default.
-> +	Display manual documentation about the command in Info
-> +	format. The 'info' program will be used for that purpose.
+You might find it convenient to set an alias in ~/gitconfig like:
 
-I am not a native speaker of the English language, but "manual documentation about" feels duplicatedly redundant, at least to me.  I think it is more common to say "the manual page for", or "the man page for".
+    [alias]
+            llog = log --date=local
 
->  -m|--man::
-> -	Use the 'man' program to display the manual page. This may be
-> -	used to override a value set in the 'help.format'
-> -	configuration variable.
-> +	Display manual documentation about the command in Man format.
+The you can review commits in your TZ via 'git llog'.
 
-An earlier description for man.viewer says "in the 'man' format".
-
-> +	This option may be used to override a value set in the
-> +	'help.format' configuration variable.
-> ++
-> +By default the 'man' program will be used to display the man pages,
-
-And this part says "the man pages".
-
->  -w|--web::
-> -	Use a web browser to display the HTML manual page, instead of
-> -	the 'man' program that is used by default.
-> +	Display manual documentation about the command in HTLM format.
-> +	A web browser will be used for that purpose.
-
-Is this a mistyped "HTML format"?
++ seth
 
 -- 
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
-
-----------------------------------------------------------------------
-Get a free email address with REAL anti-spam protection.
-http://www.bluebottle.com/tag/1
+Seth Falcon | seth@userprimary.net | blog: http://userprimary.net/user/
