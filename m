@@ -1,118 +1,114 @@
 From: Johannes Sixt <johannes.sixt@telecom.at>
-Subject: [PATCH 20/40] Windows: A rudimentary poll() emulation.
-Date: Wed, 27 Feb 2008 19:54:43 +0100
-Message-ID: <1204138503-6126-21-git-send-email-johannes.sixt@telecom.at>
+Subject: [PATCH 15/40] Windows: A work-around for a misbehaved vsnprintf.
+Date: Wed, 27 Feb 2008 19:54:38 +0100
+Message-ID: <1204138503-6126-16-git-send-email-johannes.sixt@telecom.at>
 References: <1204138503-6126-1-git-send-email-johannes.sixt@telecom.at>
 Cc: Johannes Sixt <johannes.sixt@telecom.at>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 27 20:00:38 2008
+X-From: git-owner@vger.kernel.org Wed Feb 27 20:00:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JURVW-00022R-SO
-	for gcvg-git-2@gmane.org; Wed, 27 Feb 2008 19:59:59 +0100
+	id 1JURVN-00022R-Nl
+	for gcvg-git-2@gmane.org; Wed, 27 Feb 2008 19:59:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756661AbYB0S4L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Feb 2008 13:56:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755700AbYB0S4J
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Feb 2008 13:56:09 -0500
-Received: from smtp4.srv.eunet.at ([193.154.160.226]:40450 "EHLO
+	id S1756131AbYB0Szh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Feb 2008 13:55:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755300AbYB0Szg
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Feb 2008 13:55:36 -0500
+Received: from smtp4.srv.eunet.at ([193.154.160.226]:40442 "EHLO
 	smtp4.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755547AbYB0SzK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Feb 2008 13:55:10 -0500
+	with ESMTP id S1755418AbYB0SzI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Feb 2008 13:55:08 -0500
 Received: from localhost.localdomain (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
-	by smtp4.srv.eunet.at (Postfix) with ESMTP id 8F2C3974E8;
-	Wed, 27 Feb 2008 19:55:07 +0100 (CET)
+	by smtp4.srv.eunet.at (Postfix) with ESMTP id 7A962973C8;
+	Wed, 27 Feb 2008 19:55:06 +0100 (CET)
 X-Mailer: git-send-email 1.5.4.1.126.ge5a7d
 In-Reply-To: <1204138503-6126-1-git-send-email-johannes.sixt@telecom.at>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75279>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75280>
 
-This emulation of poll() is by far not general. It assumes that the
-fds that are to be waited for are connected to pipes. The pipes are
-polled in a loop until data becomes available in at least one of them.
-If only a single fd is waited for, the implementation actually does
-not wait at all, but assumes that a subsequent read() will block.
+On Windows, vsnprintf deviates in two regards from the "usual" behavior
+that its callers in GIT expect:
 
-In order not to needlessly burn CPU time, the CPU is yielded to other
-processes before the next round in the poll loop using Sleep(0). Note that
-any sleep timeout greater than zero will reduce the efficiency by a
-magnitude.
+- It returns -1 if the buffer is too small instead of the number of
+  characters that the operation produces.
+
+- The size parameter is the number of characters to write, which does not
+  include the trailing NUL byte, instead of the available space.
+
+This wrapper computes the needed buffer size by trying various sizes with
+exponential growth. A large growth factor is used so as only few trials are
+required if a really large result needs to be stored.
 
 Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
 ---
- compat/mingw.c |   55 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 55 insertions(+), 0 deletions(-)
+ compat/mingw.c    |   34 ++++++++++++++++++++++++++++++++++
+ git-compat-util.h |    3 +++
+ 2 files changed, 37 insertions(+), 0 deletions(-)
 
 diff --git a/compat/mingw.c b/compat/mingw.c
-index fe6f6ce..837d741 100644
+index 4888a03..77e4b83 100644
 --- a/compat/mingw.c
 +++ b/compat/mingw.c
-@@ -102,6 +102,61 @@ int pipe(int filedes[2])
- 
- int poll(struct pollfd *ufds, unsigned int nfds, int timeout)
- {
-+	int i, pending;
-+
-+	if (timeout != -1)
-+		return errno = EINVAL, error("poll timeout not supported");
-+
-+	/* When there is only one fd to wait for, then we pretend that
-+	 * input is available and let the actual wait happen when the
-+	 * caller invokes read().
-+	 */
-+	if (nfds == 1) {
-+		if (!(ufds[0].events & POLLIN))
-+			return errno = EINVAL, error("POLLIN not set");
-+		ufds[0].revents = POLLIN;
-+		return 0;
-+	}
-+
-+repeat:
-+	pending = 0;
-+	for (i = 0; i < nfds; i++) {
-+		DWORD avail = 0;
-+		HANDLE h = (HANDLE) _get_osfhandle(ufds[i].fd);
-+		if (h == INVALID_HANDLE_VALUE)
-+			return -1;	/* errno was set */
-+
-+		if (!(ufds[i].events & POLLIN))
-+			return errno = EINVAL, error("POLLIN not set");
-+
-+		/* this emulation works only for pipes */
-+		if (!PeekNamedPipe(h, NULL, 0, NULL, &avail, NULL)) {
-+			int err = GetLastError();
-+			if (err == ERROR_BROKEN_PIPE) {
-+				ufds[i].revents = POLLHUP;
-+				pending++;
-+			} else {
-+				errno = EINVAL;
-+				return error("PeekNamedPipe failed,"
-+					" GetLastError: %u", err);
-+			}
-+		} else if (avail) {
-+			ufds[i].revents = POLLIN;
-+			pending++;
-+		} else
-+			ufds[i].revents = 0;
-+	}
-+	if (!pending) {
-+		/* The only times that we spin here is when the process
-+		 * that is connected through the pipes is waiting for
-+		 * its own input data to become available. But since
-+		 * the process (pack-objects) is itself CPU intensive,
-+		 * it will happily pick up the time slice that we are
-+		 * relinguishing here.
-+		 */
-+		Sleep(0);
-+		goto repeat;
-+	}
- 	return 0;
+@@ -115,6 +115,40 @@ int mingw_rename(const char *pold, const char *pnew)
+ 	return -1;
  }
+ 
++#undef vsnprintf
++/* Note that the size parameter specifies the available space, i.e.
++ * includes the trailing NUL byte; but Windows's vsnprintf expects the
++ * number of characters to write without the trailing NUL.
++ */
++
++/* This is out of line because it uses alloca() behind the scenes,
++ * which must not be called in a loop (alloca() reclaims the allocations
++ * only at function exit).
++ */
++static int try_vsnprintf(size_t size, const char *fmt, va_list args)
++{
++	char buf[size];	/* gcc-ism */
++	return vsnprintf(buf, size-1, fmt, args);
++}
++
++int mingw_vsnprintf(char *buf, size_t size, const char *fmt, va_list args)
++{
++	int len;
++	if (size > 0) {
++		len = vsnprintf(buf, size-1, fmt, args);
++		if (len >= 0)
++			return len;
++	}
++	/* ouch, buffer too small; need to compute the size */
++	if (size < 250)
++		size = 250;
++	do {
++		size *= 4;
++		len = try_vsnprintf(size, fmt, args);
++	} while (len < 0);
++	return len;
++}
++
+ struct passwd *getpwuid(int uid)
+ {
+ 	static char user_name[100];
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 483ace2..6fa93b6 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -602,6 +602,9 @@ char *mingw_getcwd(char *pointer, int len);
+ int mingw_rename(const char*, const char*);
+ #define rename mingw_rename
+ 
++int mingw_vsnprintf(char *buf, size_t size, const char *fmt, va_list args);
++#define vsnprintf mingw_vsnprintf
++
+ sig_handler_t mingw_signal(int sig, sig_handler_t handler);
+ #define signal mingw_signal
  
 -- 
 1.5.4.1.126.ge5a7d
