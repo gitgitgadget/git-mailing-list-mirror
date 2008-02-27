@@ -1,111 +1,125 @@
 From: Johannes Sixt <johannes.sixt@telecom.at>
-Subject: [PATCH 24/40] Windows: Work around incompatible sort and find.
-Date: Wed, 27 Feb 2008 19:54:47 +0100
-Message-ID: <1204138503-6126-25-git-send-email-johannes.sixt@telecom.at>
+Subject: [PATCH 34/40] Windows: Make the pager work.
+Date: Wed, 27 Feb 2008 19:54:57 +0100
+Message-ID: <1204138503-6126-35-git-send-email-johannes.sixt@telecom.at>
 References: <1204138503-6126-1-git-send-email-johannes.sixt@telecom.at>
 Cc: Johannes Sixt <johannes.sixt@telecom.at>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 27 20:00:17 2008
+X-From: git-owner@vger.kernel.org Wed Feb 27 20:00:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JURVQ-00022R-Cl
-	for gcvg-git-2@gmane.org; Wed, 27 Feb 2008 19:59:52 +0100
+	id 1JURVa-00022R-Om
+	for gcvg-git-2@gmane.org; Wed, 27 Feb 2008 20:00:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756219AbYB0Szs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Feb 2008 13:55:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755853AbYB0Szr
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Feb 2008 13:55:47 -0500
-Received: from smtp4.srv.eunet.at ([193.154.160.226]:40452 "EHLO
+	id S1756683AbYB0S4X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Feb 2008 13:56:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755649AbYB0S4V
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Feb 2008 13:56:21 -0500
+Received: from smtp4.srv.eunet.at ([193.154.160.226]:40439 "EHLO
 	smtp4.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755225AbYB0SzK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Feb 2008 13:55:10 -0500
+	with ESMTP id S1755476AbYB0SzM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Feb 2008 13:55:12 -0500
 Received: from localhost.localdomain (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
-	by smtp4.srv.eunet.at (Postfix) with ESMTP id 455DD97711;
-	Wed, 27 Feb 2008 19:55:08 +0100 (CET)
+	by smtp4.srv.eunet.at (Postfix) with ESMTP id 7733D9771F;
+	Wed, 27 Feb 2008 19:55:10 +0100 (CET)
 X-Mailer: git-send-email 1.5.4.1.126.ge5a7d
 In-Reply-To: <1204138503-6126-1-git-send-email-johannes.sixt@telecom.at>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75263>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75264>
 
-If the PATH lists the Windows system directories before the MSYS
-directories, Windows's own incompatible sort and find commands would be
-picked up. We implement these commands as functions and call the real
-tools by absolute path.
-
-Also add a dummy implementation of sync to avoid an error in git-repack.
+Since we have neither fork() nor exec(), we have to spawn the pager and
+feed it with the program's output.
 
 Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
 ---
- git-clone.sh    |    4 ++++
- git-sh-setup.sh |   17 +++++++++++++++++
- t/test-lib.sh   |   13 +++++++++++++
- 3 files changed, 34 insertions(+), 0 deletions(-)
+ pager.c |   40 ++++++++++++++++++++++++++++++++++++++--
+ 1 files changed, 38 insertions(+), 2 deletions(-)
 
-diff --git a/git-clone.sh b/git-clone.sh
-index 640e29d..1fc5c92 100755
---- a/git-clone.sh
-+++ b/git-clone.sh
-@@ -35,6 +35,10 @@ die() {
- # Fix some commands on Windows
- case $(uname -s) in
- *MINGW*)
-+	# Windows has its own (incompatible) find
-+	find () {
-+		/usr/bin/find "$@"
-+	}
- 	# pwd must return a path with a drive letter
- 	bin_pwd() {
- 		# there are no symlinks to resolve: /bin/pwd is not needed
-diff --git a/git-sh-setup.sh b/git-sh-setup.sh
-index a44b1c7..822aa6f 100755
---- a/git-sh-setup.sh
-+++ b/git-sh-setup.sh
-@@ -142,3 +142,20 @@ then
- 	}
- 	: ${GIT_OBJECT_DIRECTORY="$GIT_DIR/objects"}
- fi
+diff --git a/pager.c b/pager.c
+index ca002f9..3f7f8c1 100644
+--- a/pager.c
++++ b/pager.c
+@@ -1,12 +1,13 @@
+ #include "cache.h"
+ 
+ /*
+- * This is split up from the rest of git so that we might do
+- * something different on Windows, for example.
++ * This is split up from the rest of git so that we can do
++ * something different on Windows.
+  */
+ 
+ static int spawned_pager;
+ 
++#ifndef __MINGW32__
+ static void run_pager(const char *pager)
+ {
+ 	/*
+@@ -22,11 +23,31 @@ static void run_pager(const char *pager)
+ 	execlp(pager, pager, NULL);
+ 	execl("/bin/sh", "sh", "-c", pager, NULL);
+ }
++#else
++#include "run-command.h"
 +
-+# Fix some commands on Windows
-+case $(uname -s) in
-+*MINGW*)
-+	# Windows has its own (incompatible) sort and find
-+	sort () {
-+		/usr/bin/sort "$@"
-+	}
-+	find () {
-+		/usr/bin/find "$@"
-+	}
-+	# sync is missing
-+	sync () {
-+		:	# no implementation
-+	}
-+	;;
-+esac
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 83889c4..e2010d5 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -366,3 +366,16 @@ do
- 		test_done
- 	esac
- done
++static const char *pager_argv[] = { "sh", "-c", NULL, NULL };
++static struct child_process pager_process = {
++	.argv = pager_argv,
++	.in = -1
++};
++static void wait_for_pager(void)
++{
++	fflush(stdout);
++	fflush(stderr);
++	/* signal EOF to pager */
++	close(1);
++	close(2);
++	finish_command(&pager_process);
++}
++#endif
+ 
+ void setup_pager(void)
+ {
++#ifndef __MINGW32__
+ 	pid_t pid;
+ 	int fd[2];
++#endif
+ 	const char *pager = getenv("GIT_PAGER");
+ 
+ 	if (!isatty(1))
+@@ -45,6 +66,7 @@ void setup_pager(void)
+ 
+ 	spawned_pager = 1; /* means we are emitting to terminal */
+ 
++#ifndef __MINGW32__
+ 	if (pipe(fd) < 0)
+ 		return;
+ 	pid = fork();
+@@ -72,6 +94,20 @@ void setup_pager(void)
+ 	run_pager(pager);
+ 	die("unable to execute pager '%s'", pager);
+ 	exit(255);
++#else
++	/* spawn the pager */
++	pager_argv[2] = pager;
++	if (start_command(&pager_process))
++		return;
 +
-+# Fix some commands on Windows
-+case $(uname -s) in
-+*MINGW*)
-+	# Windows has its own (incompatible) sort and find
-+	sort () {
-+		/usr/bin/sort "$@"
-+	}
-+	find () {
-+		/usr/bin/find "$@"
-+	}
-+	;;
-+esac
++	/* original process continues, but writes to the pipe */
++	dup2(pager_process.in, 1);
++	dup2(pager_process.in, 2);
++	close(pager_process.in);
++
++	/* this makes sure that the parent terminates after the pager */
++	atexit(wait_for_pager);
++#endif
+ }
+ 
+ int pager_in_use(void)
 -- 
 1.5.4.1.126.ge5a7d
