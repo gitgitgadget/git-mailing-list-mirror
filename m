@@ -1,90 +1,59 @@
-From: Martin Koegler <mkoegler@auto.tuwien.ac.at>
-Subject: [PATCH] Document conding style
-Date: Wed, 27 Feb 2008 09:13:30 +0100
-Message-ID: <12041000101604-git-send-email-mkoegler@auto.tuwien.ac.at>
-Cc: git@vger.kernel.org, Martin Koegler <mkoegler@auto.tuwien.ac.at>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 27 09:14:27 2008
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Don't use GIT_CONFIG in t5505-remote
+Date: Wed, 27 Feb 2008 00:16:49 -0800
+Message-ID: <7vk5kqx18u.fsf@gitster.siamese.dyndns.org>
+References: <alpine.LNX.1.00.0802261713520.19665@iabervon.org>
+ <20080226221959.GB6098@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Feb 27 09:17:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JUHQk-000581-Rf
-	for gcvg-git-2@gmane.org; Wed, 27 Feb 2008 09:14:23 +0100
+	id 1JUHU4-0005xA-JO
+	for gcvg-git-2@gmane.org; Wed, 27 Feb 2008 09:17:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753801AbYB0INc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Feb 2008 03:13:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753626AbYB0INc
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Feb 2008 03:13:32 -0500
-Received: from thor.auto.tuwien.ac.at ([128.130.60.15]:35789 "EHLO
-	thor.auto.tuwien.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753090AbYB0INc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Feb 2008 03:13:32 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by thor.auto.tuwien.ac.at (Postfix) with ESMTP id 6718A680BF8C;
-	Wed, 27 Feb 2008 09:13:30 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at auto.tuwien.ac.at
-Received: from thor.auto.tuwien.ac.at ([127.0.0.1])
-	by localhost (thor.auto.tuwien.ac.at [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id aY70H7nmuwHu; Wed, 27 Feb 2008 09:13:30 +0100 (CET)
-Received: by thor.auto.tuwien.ac.at (Postfix, from userid 3001)
-	id 42DDF680B59A; Wed, 27 Feb 2008 09:13:30 +0100 (CET)
-X-Mailer: git-send-email 1.5.3.1
+	id S1754476AbYB0IRL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Feb 2008 03:17:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754532AbYB0IRK
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Feb 2008 03:17:10 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:57670 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754403AbYB0IRK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Feb 2008 03:17:10 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 479C9189A;
+	Wed, 27 Feb 2008 03:17:08 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 5CDEF1899; Wed, 27 Feb 2008 03:17:01 -0500 (EST)
+In-Reply-To: <20080226221959.GB6098@sigill.intra.peff.net> (Jeff King's
+ message of "Tue, 26 Feb 2008 17:19:59 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75210>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75211>
 
-Signed-off-by: Martin Koegler <mkoegler@auto.tuwien.ac.at>
----
-Documentation/CodingGuidelines |   27 +++++++++++++++++++++++++++
- 1 files changed, 27 insertions(+), 0 deletions(-)
+Jeff King <peff@peff.net> writes:
 
-diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
-index 3b042db..e1b5d78 100644
---- a/Documentation/CodingGuidelines
-+++ b/Documentation/CodingGuidelines
-@@ -77,6 +77,30 @@ For C programs:
-    of "else if" statements, it can make sense to add braces to
-    single line blocks.
- 
-+ - Avoid trailing whitespaces
-+
-+ - Pointer to struct foo type is (struct foo *), not (struct foo*)
-+
-+ - One space each around comparison operator "=="
-+
-+ - One space around assignment operator "="
-+
-+ - One space after "if", "while", "switch" and friends before "("
-+
-+ - No space between function name and "("
-+
-+ - A function without parameter is "static void foo(void)", not
-+   "static void foo()"
-+
-+ - Don't do any declaration after a statement.
-+
-+ - Multi-line comment is:
-+
-+        /*
-+         * This is multi line comment
-+         * and this is its second line.
-+         */
-+
-  - Try to make your code understandable.  You may put comments
-    in, but comments invariably tend to stale out when the code
-    they were describing changes.  Often splitting a function
-@@ -105,6 +129,9 @@ For C programs:
-    changed and discussed.  Many git commands started out like
-    that, and a few are still scripts.
- 
-+ - Consider checking your patches with checkpatch from the linux 
-+   kernel. It helps you to spot trivial formating errors.
-+
-  - Avoid introducing a new dependency into git. This means you
-    usually should stay away from scripting languages not already
-    used in the git core command set (unless your command is clearly
--- 
-1.5.4.3.ga3d8
+> On Tue, Feb 26, 2008 at 05:15:31PM -0500, Daniel Barkalow wrote:
+>
+>> For some reason, t5505-remote was setting GIT_CONFIG to .git/config
+>> and exporting it. The sole effect of this was to cause the tests to
+>> fail if "git clone" obeyed it (which it presumably should).
+>> 
+>> Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
+>> ---
+>> Maybe test-lib used to set GIT_CONFIG to something that would interfere? 
+>> Or the default behavior was wrong?
+>
+> test-lib used to set it to ".git/config" until recently, so this would
+> have been a no-op. As to why it was ever in here, I have no idea.
+
+Right.
