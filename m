@@ -1,194 +1,120 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: [PATCH] Set proxy override with http_init()
-Date: Wed, 27 Feb 2008 08:36:20 +0100
-Message-ID: <1204097780-29581-1-git-send-email-mh@glandium.org>
-References: <20080227072012.GA23423@glandium.org>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Feb 27 08:34:19 2008
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 05/10] builtin-fsck: move common object checking code to
+ fsck.c
+Date: Tue, 26 Feb 2008 23:48:59 -0800
+Message-ID: <7vr6eyx2j8.fsf@gitster.siamese.dyndns.org>
+References: <12039765002329-git-send-email-mkoegler@auto.tuwien.ac.at>
+ <12039765004039-git-send-email-mkoegler@auto.tuwien.ac.at>
+ <12039765003484-git-send-email-mkoegler@auto.tuwien.ac.at>
+ <12039765002219-git-send-email-mkoegler@auto.tuwien.ac.at>
+ <12039765002397-git-send-email-mkoegler@auto.tuwien.ac.at>
+ <7vskzg6pmw.fsf@gitster.siamese.dyndns.org>
+ <20080226213523.GA26618@auto.tuwien.ac.at>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: mkoegler@auto.tuwien.ac.at (Martin Koegler)
+X-From: git-owner@vger.kernel.org Wed Feb 27 08:50:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JUGny-0003XE-Eb
-	for gcvg-git-2@gmane.org; Wed, 27 Feb 2008 08:34:18 +0100
+	id 1JUH37-0007N5-I2
+	for gcvg-git-2@gmane.org; Wed, 27 Feb 2008 08:49:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751686AbYB0Hdl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Feb 2008 02:33:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751654AbYB0Hdl
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Feb 2008 02:33:41 -0500
-Received: from vuizook.err.no ([85.19.215.103]:45619 "EHLO vuizook.err.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751533AbYB0Hdl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Feb 2008 02:33:41 -0500
-Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
-	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.67)
-	(envelope-from <mh@glandium.org>)
-	id 1JUGnE-0003FM-Lu; Wed, 27 Feb 2008 08:33:39 +0100
-Received: from mh by jigen with local (Exim 4.69)
-	(envelope-from <mh@jigen>)
-	id 1JUGpw-0007iR-1y; Wed, 27 Feb 2008 08:36:20 +0100
-X-Mailer: git-send-email 1.5.4.1.48.g0d77
-In-Reply-To: <20080227072012.GA23423@glandium.org>
-X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.3
+	id S1750921AbYB0HtT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Feb 2008 02:49:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750803AbYB0HtT
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Feb 2008 02:49:19 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:49849 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750744AbYB0HtS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Feb 2008 02:49:18 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 76D5B122A;
+	Wed, 27 Feb 2008 02:49:15 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 4DEBF1228; Wed, 27 Feb 2008 02:49:10 -0500 (EST)
+In-Reply-To: <20080226213523.GA26618@auto.tuwien.ac.at> (Martin Koegler's
+ message of "Tue, 26 Feb 2008 22:35:23 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75208>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75209>
 
-In transport.c, proxy setting (the one from the remote conf) was set through
-curl_easy_setopt() call, while http.c already does the same with the
-http.proxy setting. We now just use this infrastructure instead, and make
-http_init() now take the proxy url as argument.
+mkoegler@auto.tuwien.ac.at (Martin Koegler) writes:
 
-At the same time, we make get_http_walker() take a proxy argument too, and
-pass it to http_init(), which makes remote defined proxy be used for more
-than get_refs_via_curl().
+> I have compared it to 3c5fb6a798a0b686e7818bf1da63791fb94a7b21 and
+> everything seems to look OK. I'll do better verification in the next
+> days.
 
-Signed-off-by: Mike Hommey <mh@glandium.org>
----
- > Note that remote.<name>.proxy config doesn't work as expected, you
- > should use http.proxy which just work (and the change in transport.c is
- > useless, then). I have, as part of by http-refactoring topic, a patch
- > for remote.<name>.proxy to work better, though it doesn't support
- > changing the proxy authentication method.
- 
- And here is said patch.
+Thanks.
 
- http-push.c   |    2 +-
- http-walker.c |    4 ++--
- http.c        |   10 +++++++++-
- http.h        |    2 +-
- transport.c   |    9 ++++-----
- walker.h      |    2 +-
- 6 files changed, 18 insertions(+), 11 deletions(-)
+> How should I handle changes? Send a patch ontop of 154a955 or should I
+> send a amended version of the patches?
 
-diff --git a/http-push.c b/http-push.c
-index 0beb740..04e056d 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -2240,7 +2240,7 @@ int main(int argc, char **argv)
- 
- 	memset(remote_dir_exists, -1, 256);
- 
--	http_init();
-+	http_init(NULL);
- 
- 	no_pragma_header = curl_slist_append(no_pragma_header, "Pragma:");
- 
-diff --git a/http-walker.c b/http-walker.c
-index 2c37868..02be6c8 100644
---- a/http-walker.c
-+++ b/http-walker.c
-@@ -902,13 +902,13 @@ static void cleanup(struct walker *walker)
- 	curl_slist_free_all(data->no_pragma_header);
- }
- 
--struct walker *get_http_walker(const char *url)
-+struct walker *get_http_walker(const char *url, const char *proxy)
- {
- 	char *s;
- 	struct walker_data *data = xmalloc(sizeof(struct walker_data));
- 	struct walker *walker = xmalloc(sizeof(struct walker));
- 
--	http_init();
-+	http_init(proxy);
- 
- 	data->no_pragma_header = curl_slist_append(NULL, "Pragma:");
- 
-diff --git a/http.c b/http.c
-index 519621a..89194d7 100644
---- a/http.c
-+++ b/http.c
-@@ -219,13 +219,16 @@ static CURL* get_curl_handle(void)
- 	return result;
- }
- 
--void http_init(void)
-+void http_init(const char *proxy)
- {
- 	char *low_speed_limit;
- 	char *low_speed_time;
- 
- 	curl_global_init(CURL_GLOBAL_ALL);
- 
-+	if (proxy)
-+		curl_http_proxy = xstrdup(proxy);
-+
- 	pragma_header = curl_slist_append(pragma_header, "Pragma: no-cache");
- 
- #ifdef USE_CURL_MULTI
-@@ -315,6 +318,11 @@ void http_cleanup(void)
- 
- 	curl_slist_free_all(pragma_header);
- 	pragma_header = NULL;
-+
-+	if (curl_http_proxy) {
-+		free(curl_http_proxy);
-+		curl_http_proxy = NULL;
-+	}
- }
- 
- struct active_request_slot *get_active_slot(void)
-diff --git a/http.h b/http.h
-index 9bab2c8..dcd5cea 100644
---- a/http.h
-+++ b/http.h
-@@ -83,7 +83,7 @@ extern void add_fill_function(void *data, int (*fill)(void *));
- extern void step_active_slots(void);
- #endif
- 
--extern void http_init(void);
-+extern void http_init(const char *proxy);
- extern void http_cleanup(void);
- 
- extern int data_received;
-diff --git a/transport.c b/transport.c
-index 397983d..26f0f02 100644
---- a/transport.c
-+++ b/transport.c
-@@ -442,7 +442,8 @@ static struct ref *get_refs_via_curl(struct transport *transport)
- 	struct ref *last_ref = NULL;
- 
- 	if (!transport->data)
--		transport->data = get_http_walker(transport->url);
-+		transport->data = get_http_walker(transport->url,
-+						transport->remote->http_proxy);
- 
- 	refs_url = xmalloc(strlen(transport->url) + 11);
- 	sprintf(refs_url, "%s/info/refs", transport->url);
-@@ -453,9 +454,6 @@ static struct ref *get_refs_via_curl(struct transport *transport)
- 	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite_buffer);
- 	curl_easy_setopt(slot->curl, CURLOPT_URL, refs_url);
- 	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, NULL);
--	if (transport->remote->http_proxy)
--		curl_easy_setopt(slot->curl, CURLOPT_PROXY,
--				 transport->remote->http_proxy);
- 
- 	if (start_active_slot(slot)) {
- 		run_active_slot(slot);
-@@ -509,7 +507,8 @@ static int fetch_objs_via_curl(struct transport *transport,
- 				 int nr_objs, struct ref **to_fetch)
- {
- 	if (!transport->data)
--		transport->data = get_http_walker(transport->url);
-+		transport->data = get_http_walker(transport->url,
-+						transport->remote->http_proxy);
- 	return fetch_objs_via_walker(transport, nr_objs, to_fetch);
- }
- 
-diff --git a/walker.h b/walker.h
-index ea2c363..2cc448a 100644
---- a/walker.h
-+++ b/walker.h
-@@ -32,6 +32,6 @@ int walker_fetch(struct walker *impl, int targets, char **target,
- 
- void walker_free(struct walker *walker);
- 
--struct walker *get_http_walker(const char *url);
-+struct walker *get_http_walker(const char *url, const char *proxy);
- 
- #endif /* WALKER_H */
--- 
-1.5.4.1.48.g0d77
+The rules under which I operate are (1) 'next', 'master', or
+'maint' will not rewind, hence (2) anything that is merged into
+these three branches won't be amended, either.
+
+Running "git -p show-branch next master maint 154a955" and
+scrolling to the end would show that up to "peel_onion: handle
+NULL" are in 'next' and 'master' (I wanted to make sure these
+safety-tightening commits are fine and then wanted to merge them
+eventually to 'maint', so this topic forked from 'maint' branch
+and is not meant to contain any new stuff in 'master').
+
+ ! [next] Merge branch 'db/cover-letter' into next
+  ! [master] git-apply --whitespace=fix: fix off by one thinko
+   ! [maint] Documentation/git-am.txt: Pass -r in the example invoca...
+    ! [154a955] receive-pack: use strict mode for unpacking objects
+ ----
+    ...
+    + [154a955] receive-pack: use strict mode for unpacking objects
+    + [154a955^] index-pack: introduce checking mode
+    + [154a955~2] unpack-objects: prevent writing of inconsistent objects
+    + [154a955~3] unpack-object: cache for non written objects
+    + [154a955~4] add common fsck error printing function
+    + [154a955~5] builtin-fsck: move common object checking code to fsck.c
+    + [154a955~6] builtin-fsck: reports missing parent commits
+    + [154a955~7] Remove unused object-ref code
+    + [154a955~8] builtin-fsck: move away from object-refs to fsck_walk
+    + [154a955~9] add generic, type aware object chain walker
+ ++ + [154a955~10] peel_onion: handle NULL
+ ++ + [154a955~11] check return value from parse_commit() in various functions
+ ++ + [154a955~12] parse_commit: don't fail, if object is NULL
+ ++ + [154a955~13] revision.c: handle tag->tagged == NULL
+ ++ + [154a955~14] reachable.c::process_tree/blob: check for NULL
+ ++ + [154a955~15] process_tag: handle tag->tagged == NULL
+ ++ + [154a955~16] check results of parse_commit in merge_bases
+ ++ + [154a955~17] list-objects.c::process_tree/blob: check for NULL
+ ++ + [154a955~18] reachable.c::add_one_tree: handle NULL from lookup_tree
+ ++ + [154a955~19] mark_blob/tree_uninteresting: check for NULL
+ ++ + [154a955~20] get_sha1_oneline: check return value of parse_object
+ ++ + [154a955~21] read_object_with_reference: don't read beyond the buffer
+ ++++ [maint~20] GIT 1.5.4.2
+
+So "peel_onion" fix and all commits below it are cast in stone.  But
+"add generic walker" and later ones are not, and we can do whatever we
+want to them.
+
+If you have additional checks for other commands, that are not included
+in 154a955, they naturally would make separate independent commits to be
+applied on top of 154a955.  But if you find embarrassing typo or a grave
+bug in them, you may want to send a replacement patch instead of
+incremental fix-up, because there is no point to record an earlier
+mistake in the public history only to later amend it, if mistakes are
+already known.
+
+I am tempted to merge the ones up to "peel_onion" to 'maint' soon, by
+the way.
+
+> I did not know all of these styling guidelines. SubmittingPatches only
+> talks about broken mailer. Maybe it would be a good thing to include
+> them somewhere.
+
+Yeah, some words in CodingGuidelines might be a good idea.
