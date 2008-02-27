@@ -1,63 +1,65 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: [PATCH 00/40] MinGW port
-Date: Thu, 28 Feb 2008 12:34:14 +1300
-Message-ID: <46a038f90802271534p37869c58oe79b959b4919c603@mail.gmail.com>
-References: <1204138503-6126-1-git-send-email-johannes.sixt@telecom.at>
-	 <47C5DDC0.8060004@trolltech.com>
+From: <Ken.Fuchs@bench.com>
+Subject: RE: FW: git via http protocol _and_ a proxy using NTLM authentication -- git 1.5.4.2 & curl 7.18.0
+Date: Wed, 27 Feb 2008 17:43:01 -0600
+Message-ID: <AA28F077645B324881335614E4F7C428034C0A@win-ex01.bench.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Johannes Sixt" <johannes.sixt@telecom.at>, git@vger.kernel.org
-To: "Marius Storm-Olsen" <marius@trolltech.com>
-X-From: git-owner@vger.kernel.org Thu Feb 28 00:35:02 2008
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: <git@vger.kernel.org>
+To: <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Thu Feb 28 00:44:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JUVng-000251-Es
-	for gcvg-git-2@gmane.org; Thu, 28 Feb 2008 00:35:00 +0100
+	id 1JUVwR-00057J-Fd
+	for gcvg-git-2@gmane.org; Thu, 28 Feb 2008 00:44:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932138AbYB0XeW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Feb 2008 18:34:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932135AbYB0XeW
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Feb 2008 18:34:22 -0500
-Received: from ug-out-1314.google.com ([66.249.92.173]:61262 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760989AbYB0XeV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Feb 2008 18:34:21 -0500
-Received: by ug-out-1314.google.com with SMTP id z38so19329ugc.16
-        for <git@vger.kernel.org>; Wed, 27 Feb 2008 15:34:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=Ihb8NardB2cNhEXtmd0tupL7U5v0NpqAbHioOCiFhO8=;
-        b=QpgOsUBRW+mHcKDhcOEkKINOa3VeisQYHXIf1aUyJbO2YGmq8DuRsIzMN/y+dQ+ksMwP7vDpTclczX5MKmY0asW6xoOT4rsEyvz3oihuBdJaq3VfWDb7dG7TSpp3s5EHiXLY0hUqM+uzG/8RTLsiF4tUREdgzhUqeW8DY+sEQ8k=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=HgMlHMjpturqSvbyzKcLGsZAlf5lB1Cw8LIq2twrZhy9SPeNpIxfhtGVxMvz8ZLRMcgL1SKVE0l+lV6fUJFvq8h/uTMNSzz8+nT9AT1QF2hvNBM979WH7WfWwo1pWmiBest2SZ72klDyQHP4UrHU4ljZRYMSSeyIE/JNoeW0C6s=
-Received: by 10.67.116.11 with SMTP id t11mr1891666ugm.61.1204155254470;
-        Wed, 27 Feb 2008 15:34:14 -0800 (PST)
-Received: by 10.66.252.6 with HTTP; Wed, 27 Feb 2008 15:34:14 -0800 (PST)
-In-Reply-To: <47C5DDC0.8060004@trolltech.com>
-Content-Disposition: inline
+	id S932488AbYB0XnH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Feb 2008 18:43:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932476AbYB0XnG
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Feb 2008 18:43:06 -0500
+Received: from tx-smtp01.bench.com ([12.163.172.137]:14992 "EHLO
+	tx-smtp01.bench.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761362AbYB0XnD convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Feb 2008 18:43:03 -0500
+Received: from unknown (HELO smtp.corp.bench.com) ([167.67.199.67])
+  by tx-smtp01.bench.com with ESMTP; 27 Feb 2008 17:45:21 -0600
+Received: from win-ex01.bench.com ([167.67.1.16]) by smtp.corp.bench.com with Microsoft SMTPSVC(6.0.3790.1830);
+	 Wed, 27 Feb 2008 17:43:02 -0600
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: FW: git via http protocol _and_ a proxy using NTLM authentication -- git 1.5.4.2 & curl 7.18.0
+Thread-Index: Ach5k4cIFePPj5NsQ8mFpSgI5Fi/QQAAt3Kg
+X-OriginalArrivalTime: 27 Feb 2008 23:43:02.0441 (UTC) FILETIME=[7DE91190:01C8799A]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75323>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75324>
 
-On Thu, Feb 28, 2008 at 11:01 AM, Marius Storm-Olsen
-<marius@trolltech.com> wrote:
->  I just have to say, MASSIVE work Hannes! Thank you so much for your
->  efforts in making the MinGW port the great port that it is!
->
->  You too Dscho, and the rest of the MSys Git team! ;-)
+> > $ GIT_CURL_VERBOSE=1 git clone \
+> >   http://www.kernel.org/pub/scm/git/git.git
+> > Initialized empty Git repository in /mnt/s2u1/git/test-git/git/.git/
+> > Cannot get remote repository information.
+> > Perhaps git-update-server-info needs to be run there?
+> > $
+ 
+> git-clone is not a builtin yet. When it is (and a patch has come for
+> that), it will correctly use proxys.
 
-Indeed. Amazing stuff. I do some occasional work on Windows, and it is
-a sheer pleasure to use msys git. Simple install, it just works, and
-it is fast fast FAST. Hats off!
+Is there a work-around for cloning a git repository via a proxy?
 
+Worse case, it should be possible to clone a repository on a
+machine that doesn't require a proxy.  Convert the repository
+into a tarball, copy it to the machine that requires a proxy
+and change the config to work with the proxy, right?  At this
+point, the git fetch command should work with the proxy, since
+the local repository now has the required refs, right?
 
+Thanks,
 
-m
+Ken Fuchs
