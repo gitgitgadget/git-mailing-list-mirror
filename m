@@ -1,65 +1,54 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: msgmft segfaulting on tiger
-Date: Wed, 27 Feb 2008 14:14:01 -0800
-Message-ID: <7vablmqc7q.fsf@gitster.siamese.dyndns.org>
-References: <46a038f90802211553g735215c6q260ddc49ac149bb5@mail.gmail.com>
- <46a038f90802211559w457c5460k7447ba8b38352713@mail.gmail.com>
- <20080222065836.GE8410@spearce.org>
- <46a038f90802220957y7db67d8nb6b7ad784124546a@mail.gmail.com>
- <47C5A974.7080207@gmail.com> <alpine.LSU.1.00.0802271825330.22527@racer.site>
- <47C5AEFA.5020004@gmail.com> <alpine.LSU.1.00.0802272203270.22527@racer.site>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] git-remote: do not complain on multiple URLs for a
+ remote
+Date: Wed, 27 Feb 2008 22:19:58 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0802272219120.22527@racer.site>
+References: <7v3arerrn1.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Gabriel =?utf-8?Q?Salda=C3=B1a?= <gsaldana@gmail.com>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Feb 27 23:15:17 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 27 23:21:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JUUYV-0005T1-EC
-	for gcvg-git-2@gmane.org; Wed, 27 Feb 2008 23:15:15 +0100
+	id 1JUUeE-0007s4-MP
+	for gcvg-git-2@gmane.org; Wed, 27 Feb 2008 23:21:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761962AbYB0WOX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Feb 2008 17:14:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759873AbYB0WOX
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Feb 2008 17:14:23 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:34245 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761913AbYB0WOW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Feb 2008 17:14:22 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 701C72148;
-	Wed, 27 Feb 2008 17:14:19 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 6A6D62132; Wed, 27 Feb 2008 17:14:06 -0500 (EST)
-In-Reply-To: <alpine.LSU.1.00.0802272203270.22527@racer.site> (Johannes
- Schindelin's message of "Wed, 27 Feb 2008 22:04:34 +0000 (GMT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1758358AbYB0WUd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Feb 2008 17:20:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758298AbYB0WUd
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Feb 2008 17:20:33 -0500
+Received: from mail.gmx.net ([213.165.64.20]:47272 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756693AbYB0WUc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Feb 2008 17:20:32 -0500
+Received: (qmail invoked by alias); 27 Feb 2008 22:20:30 -0000
+Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
+  by mail.gmx.net (mp030) with SMTP; 27 Feb 2008 23:20:30 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX198xPx7Zdp8KBPaqZDlhdBwzq9o2ldpgPhbFzXFf9
+	dYnWa2HQHwgk8T
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7v3arerrn1.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75309>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75310>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hi,
 
->> $ msgfmt --tcl; echo $?
->> msgfmt: unrecognized option `--tcl'
->> Try `msgfmt --help' for more information.
->> 1
->
-> Darn.  I think that's the same exit code as for any other invocation 
-> without filename.
->
-> So it seems that there is no easy way to tell a --tcl aware msgfmt from 
-> the other.
+On Wed, 27 Feb 2008, Junio C Hamano wrote:
 
-How about...
+> +		if (! exists $hash->{'URL'}) {
 
-    $ msgfmt --tcl -l C -d . /dev/null; echo $?
+Is it preferred style now to add a space after "!"?
+
+BTW I take this patch as a hint that I should resurrect builtin-remote...
+
+Thanks,
+Dscho
