@@ -1,101 +1,125 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Fix premature call to git_config() causing
- t1020-subdirectory to fail
-Date: Tue, 26 Feb 2008 17:34:12 -0800
-Message-ID: <7vy79718tn.fsf@gitster.siamese.dyndns.org>
-References: <alpine.LNX.1.00.0802251604460.19024@iabervon.org>
- <200802260321.14038.johan@herland.net> <200802261640.48770.johan@herland.net>
- <alpine.LNX.1.00.0802261709180.19665@iabervon.org>
- <alpine.LSU.1.00.0802262239200.22527@racer.site>
- <alpine.LNX.1.00.0802261742260.19665@iabervon.org>
- <7vzltn2qsd.fsf@gitster.siamese.dyndns.org>
- <alpine.LNX.1.00.0802261933551.19665@iabervon.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 1/4] Add '--fixed-strings' option to "git log --grep" and friends
+Date: Wed, 27 Feb 2008 02:37:16 +0100
+Message-ID: <200802270237.18044.jnareb@gmail.com>
+References: <1204028528-18941-1-git-send-email-jnareb@gmail.com> <1204028528-18941-2-git-send-email-jnareb@gmail.com> <7vfxvf2osk.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Johan Herland <johan@herland.net>, git@vger.kernel.org,
-	Kristian =?utf-8?Q?H=C3=B8gsb?= =?utf-8?Q?erg?= 
-	<krh@redhat.com>, Santi =?utf-8?Q?B=C3=A9jar?= <sbejar@gmail.com>
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Wed Feb 27 02:35:14 2008
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 27 02:38:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JUBCT-0000aG-8i
-	for gcvg-git-2@gmane.org; Wed, 27 Feb 2008 02:35:13 +0100
+	id 1JUBFD-0001HY-FP
+	for gcvg-git-2@gmane.org; Wed, 27 Feb 2008 02:38:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758296AbYB0Beg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Feb 2008 20:34:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758763AbYB0Beg
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Feb 2008 20:34:36 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:61601 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754266AbYB0Beg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Feb 2008 20:34:36 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id D4C9426A9;
-	Tue, 26 Feb 2008 20:34:30 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 82CE626A8; Tue, 26 Feb 2008 20:34:19 -0500 (EST)
-In-Reply-To: <alpine.LNX.1.00.0802261933551.19665@iabervon.org> (Daniel
- Barkalow's message of "Tue, 26 Feb 2008 19:53:57 -0500 (EST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1759312AbYB0Bh1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Feb 2008 20:37:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758520AbYB0Bh1
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Feb 2008 20:37:27 -0500
+Received: from nf-out-0910.google.com ([64.233.182.188]:15623 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755214AbYB0Bh0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Feb 2008 20:37:26 -0500
+Received: by nf-out-0910.google.com with SMTP id g13so1305805nfb.21
+        for <git@vger.kernel.org>; Tue, 26 Feb 2008 17:37:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        bh=D7GLubW7Ie2SMKOp6dm5UwW55PtWlG61WBz0Uy/8PaI=;
+        b=B0Ws4+kWrwXk+EuYG4ypbHBUuwAkkZGmu6EPBNtZ2KFyfpUYrvvVrvayxoEXxeQwMGPgC+RWm6z9Rcwo8lV0sllKAUulHQcEHq6djgbiDZSHWTANXpHp+3clUHCDMlIF7fxi6gbIg3+vxQ88QRw0SB/M108/pExYWRuZbMUvby8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=HUI42ytjZxjKV07yDobh7EBR5ZKFU17KgeQKOJNlELBimUECFmObQuPPFu0ekMVxiNuiPprS8Ij1a7Z76UNNy+TmJVfVjG5RmrpXDZEtp+ipXOMtwF0RoQkKj/GVbuIkn0QoktQQoyybqvvXaYPbHU6qMNkRmIlxHxDasoiwd44=
+Received: by 10.78.168.1 with SMTP id q1mr4562333hue.2.1204076244657;
+        Tue, 26 Feb 2008 17:37:24 -0800 (PST)
+Received: from ?192.168.1.11? ( [83.8.204.229])
+        by mx.google.com with ESMTPS id g17sm12550261nfd.10.2008.02.26.17.37.22
+        (version=SSLv3 cipher=OTHER);
+        Tue, 26 Feb 2008 17:37:23 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vfxvf2osk.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75198>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75199>
 
-Daniel Barkalow <barkalow@iabervon.org> writes:
+Junio C Hamano wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
+> 
+> > Add support for -F | --fixed-strings option to "git log --grep"
+> > and friends: "git log --author", "git log --committer=<pattern>".
+> > Code is based on implementation of this option in "git grep".
+> >
+> > Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+> > ---
+> > This would simplify ignore-case searching for a fixed string from
+> > within gitweb, as gitweb wouldn't then have to deal with differences
+> > in quoting and unquoting (if you quote character which doesn't need
+> > quoting, would git (grep) unquote it?) between searched phrase,
+> > basic/extended regular expression as understood by git/by grep,
+> > and regular expressions in Perl (when showing matched info).
+> >
+> > [I am not sure if the above paragraph should be added to commit
+> > message, so it is in patch comments. Feel free to add it.] 
+> 
+> I do not understand the issue from reading that paragraph, so it
+> probably means that (1) it does not help even if it is in the
+> commit log message, and/or (2) more readable explanation may
+> help in the commit log message ;-).
 
-> There's nothing in the documentation to suggest that you can use 
-> GIT_CONFIG to affect how the old repository is read, or that GIT_CONFIG 
-> doesn't affect the new repository. Actually, as far as I can tell, the 
-> configuration of a repository you're cloning (local or remote) doesn't 
-> matter at all. Note that GIT_DIR and GIT_WORK_TREE refer to the new repo, 
-> so it would be surprising for GIT_CONFIG to refer to the old one.
+What I meant here that gitweb using --fixed-strings option for
+commit message search is example usage of this new feature. 
 
-There was a bit of confusion in this discussion.
+Otherwise we would have to have in gitweb original $searchtext
+(for links, description, page title, etc.), $search_grep_regexp
+(for grep, or rather for "git log --grep" and friends, basic/extended 
+regexp meta quoted), and finally $search_regexp to be used in gitweb, 
+i.e. in Perl to show match.
 
-GIT_DIR the user may have in the environment may refer to the
-old reopsitory before "git clone" is invoked, but it should not
-matter at all, as the origin of the cloning comes from the
-command line and that is where we will read from.  The scripted
-version sets GIT_DIR for our own use to point at the new
-repository upfront and exports it, so we are safe from bogus
-GIT_DIR value the user may have in the environment.
+> The rule for grep input should be known by anybody who writes
+> scripts around grep, so I do not think this patch is absolutely
+> necessary if this is only for gitweb.
 
-GIT_WORK_TREE naming the new repository feels Ok, as you do not
-care about the work tree of the original tree when cloning, and
-you may want to have a say in where the work tree associated
-with the new repository should go.
+I have written it this way not only because it is simpler than correct 
+escaping, but also because git-grep has this option (consistency).
+Besides it was very easy to add.
 
-GIT_CONFIG the user may have will refer to the old repository
-before "git clone" is invoked, as there is no new repository
-built yet.  But clone does not read from the old config, so "you
-can use GIT_CONFIG to read from old repository" may be true, but
-it does not matter.  We won't use it (we do _not_ want to use
-it) to read from the old configuration file.
+> But for command line 
+> end-user usage, fixed string search _might be_ useful, although
+> I've personally never felt need for that.  So I am reluctant to
+> see it grab a short-and-sweet -F option letter that might have
+> better uses, but I do not have major objection against a more
+> explicit --fixed-strings.
 
-We would however want to make sure that we write to the correct
-configuration file of the new repository and not some random
-other place, and that's where the environment variable in the
-scripted version comes into the picture.
+Feel free to drop support for '-F' short option then, both in code
+and in documentation.
 
-In the scripted version, the only way to make sure which exact
-configuration file is updated is to set and export GIT_CONFIG
-when running "git config", so there are a few places that does
-exactly that (e.g. call to git-init and setting of core.bare).
-Unfortunately many codepaths in the scripted version are utterly
-careless (e.g. setting of remote."$origin".fetch); they should
-make sure that they protect themselves against GIT_CONFIG the
-user may have in the environment that point at random places.
+I have checked that git-log doesn't support '-F' short option; 
+additionally '-F' is used in git commands as '--file', i.e. "-F <file>" 
+to get contents (commit message, tag comment/message). Therefore it was 
+unlikely that "git log" and friends would acquire "-F <file>" option.
 
-> My current design is to collect some initial information, create 
-> directories, and then set the work tree and git dir. Then we run fetch, 
-> configure things, etc., in the new context.
+> By the way, do you allow the default regexp search in gitweb?
+> If so, how do you handle a malformed regexp that a user gives
+> you?  For example,
+> 
+> 	$ git log --grep="don\('t" -1
+> 
+> barfs, and I suspect that you can catch the exit status 128 from
+> die() and say something other than "nothing found" if you really
+> wanted to.
 
-That sounds like a clean design to me.
+Errr... to be sure I don't know. From what I have checked it shows
+"nothing found", but I guess it could be more explicit.
+
+-- 
+Jakub Narebski
+Poland
