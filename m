@@ -1,345 +1,111 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: [PATCH 2/2] http-push: add regression tests
-Date: Wed, 27 Feb 2008 20:28:45 +0100
-Message-ID: <20080227192845.GC1818@localhost>
-References: <alpine.LSU.1.00.0802181733400.30505@racer.site> <20080223212843.GA30054@localhost> <20080224085830.GD13416@glandium.org> <20080224180340.GA11515@localhost> <20080224184832.GA24240@glandium.org> <20080225232820.GA18254@localhost> <7vprukfttt.fsf@gitster.siamese.dyndns.org> <20080227085442.GA22501@localhost> <alpine.LSU.1.00.0802270947110.22527@racer.site> <20080227192334.GA1818@localhost>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH] Fix premature call to git_config() causing t1020-subdirectory
+ to fail
+Date: Wed, 27 Feb 2008 14:47:39 -0500 (EST)
+Message-ID: <alpine.LNX.1.00.0802271430130.19665@iabervon.org>
+References: <alpine.LNX.1.00.0802251604460.19024@iabervon.org> <200802260321.14038.johan@herland.net> <200802261640.48770.johan@herland.net> <alpine.LNX.1.00.0802261709180.19665@iabervon.org> <alpine.LSU.1.00.0802262239200.22527@racer.site>
+ <alpine.LNX.1.00.0802261742260.19665@iabervon.org> <7vzltn2qsd.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0802261933551.19665@iabervon.org> <7vy79718tn.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Mike Hommey <mh@glandium.org>, git@vger.kernel.org
+	Johan Herland <johan@herland.net>, git@vger.kernel.org,
+	=?ISO-8859-15?Q?Kristian_H=F8gsberg?= <krh@redhat.com>,
+	=?ISO-8859-15?Q?Santi_B=E9jar?= <sbejar@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 27 20:29:26 2008
+X-From: git-owner@vger.kernel.org Wed Feb 27 20:48:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JURxx-0005l9-Ce
-	for gcvg-git-2@gmane.org; Wed, 27 Feb 2008 20:29:22 +0100
+	id 1JUSGL-00051t-0f
+	for gcvg-git-2@gmane.org; Wed, 27 Feb 2008 20:48:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756737AbYB0T2k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Feb 2008 14:28:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756315AbYB0T2k
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Feb 2008 14:28:40 -0500
-Received: from ug-out-1314.google.com ([66.249.92.168]:21359 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756247AbYB0T2j (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Feb 2008 14:28:39 -0500
-Received: by ug-out-1314.google.com with SMTP id z38so493232ugc.16
-        for <git@vger.kernel.org>; Wed, 27 Feb 2008 11:28:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:sender;
-        bh=KGznq3mPqBx4pK8hHMHbqs2ElI8xCQTYY4/y4sKiFts=;
-        b=jlL6jcepk2U8SLMOHGxCkOARA8cVyhpvpiUTVUJMv0k3tmRikzmKsKr3DIaJMqwsmQBfLAuUah26h5xh8AKJbbejkLmeL2wOMEL0wkdfaXcP3Fl8II6sSVkKv5bwWHoRiP+Z8cMb1aWionLih/gY4VQoNvSZ6uNR/i8xcKx6fyQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:sender;
-        b=hhDZf4fWWJjOxcFDbcNCiWGfe2Z7KxX5SBCzBk+rlbauxoRwZPd2EzvG4yjElasAuBCkrdi9AB2qG5UWyD6F412D8vyG15XWDBSeSygUMrW2/TikUFUX7EIuhlwiNhzGsovP+8kH8WHpLoKPPP0cbxW53FCa7XHjdbVAGD8mNVQ=
-Received: by 10.67.123.19 with SMTP id a19mr1610385ugn.4.1204140516756;
-        Wed, 27 Feb 2008 11:28:36 -0800 (PST)
-Received: from darc.dyndns.org ( [84.154.73.116])
-        by mx.google.com with ESMTPS id p9sm13098968fkb.19.2008.02.27.11.28.34
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 27 Feb 2008 11:28:35 -0800 (PST)
-Received: from drizzd by darc.dyndns.org with local (Exim 4.68)
-	(envelope-from <drizzd@aon.at>)
-	id 1JURxN-0000qH-Jl; Wed, 27 Feb 2008 20:28:45 +0100
-Content-Disposition: inline
-In-Reply-To: <20080227192334.GA1818@localhost>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1750948AbYB0Trn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Feb 2008 14:47:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755206AbYB0Trn
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Feb 2008 14:47:43 -0500
+Received: from iabervon.org ([66.92.72.58]:32903 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750901AbYB0Trm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Feb 2008 14:47:42 -0500
+Received: (qmail 30403 invoked by uid 1000); 27 Feb 2008 19:47:39 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 27 Feb 2008 19:47:39 -0000
+In-Reply-To: <7vy79718tn.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75290>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75291>
 
-http-push tests require a web server with WebDAV support.
+On Tue, 26 Feb 2008, Junio C Hamano wrote:
 
-This commit introduces a HTTPD test library, which can be configured using
-the following environment variables.
+> Daniel Barkalow <barkalow@iabervon.org> writes:
+> 
+> > There's nothing in the documentation to suggest that you can use 
+> > GIT_CONFIG to affect how the old repository is read, or that GIT_CONFIG 
+> > doesn't affect the new repository. Actually, as far as I can tell, the 
+> > configuration of a repository you're cloning (local or remote) doesn't 
+> > matter at all. Note that GIT_DIR and GIT_WORK_TREE refer to the new repo, 
+> > so it would be surprising for GIT_CONFIG to refer to the old one.
+> 
+> There was a bit of confusion in this discussion.
+> 
+> GIT_DIR the user may have in the environment may refer to the
+> old reopsitory before "git clone" is invoked, but it should not
+> matter at all, as the origin of the cloning comes from the
+> command line and that is where we will read from.  The scripted
+> version sets GIT_DIR for our own use to point at the new
+> repository upfront and exports it, so we are safe from bogus
+> GIT_DIR value the user may have in the environment.
 
-GIT_TEST_HTTPD		enable HTTPD tests
-LIB_HTTPD_PATH		web server path
-LIB_HTTPD_MODULE_PATH	web server modules path
-LIB_HTTPD_PORT		listening port
-LIB_HTTPD_DAV		enable DAV
-LIB_HTTPD_SVN		enable SVN
-LIB_HTTPD_SSL		enable SSL
+Huh. I think there's a comment in some test or somewhere that made me 
+think that "GIT_DIR=dest.git git clone foo" would write to dest.git 
+instead of ./foo/.git, but your description here is accurate.
 
-Signed-off-by: Clemens Buchacher <drizzd@aon.at>
----
- t/lib-httpd.sh          |   96 +++++++++++++++++++++++++++++++++++++++++++++++
- t/lib-httpd/apache.conf |   34 ++++++++++++++++
- t/lib-httpd/ssl.cnf     |    8 ++++
- t/t5540-http-push.sh    |   73 +++++++++++++++++++++++++++++++++++
- t/test-lib.sh           |    9 +++-
- 5 files changed, 218 insertions(+), 2 deletions(-)
- create mode 100644 t/lib-httpd.sh
- create mode 100644 t/lib-httpd/apache.conf
- create mode 100644 t/lib-httpd/ssl.cnf
- create mode 100755 t/t5540-http-push.sh
+> GIT_WORK_TREE naming the new repository feels Ok, as you do not
+> care about the work tree of the original tree when cloning, and
+> you may want to have a say in where the work tree associated
+> with the new repository should go.
 
-diff --git a/t/lib-httpd.sh b/t/lib-httpd.sh
-new file mode 100644
-index 0000000..7f206c5
---- /dev/null
-+++ b/t/lib-httpd.sh
-@@ -0,0 +1,96 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2008 Clemens Buchacher <drizzd@aon.at>
-+#
-+
-+if test -z "$GIT_TEST_HTTPD"
-+then
-+	say "skipping test, network testing disabled by default"
-+	say "(define GIT_TEST_HTTPD to enable)"
-+	test_done
-+	exit
-+fi
-+
-+LIB_HTTPD_PATH=${LIB_HTTPD_PATH-'/usr/sbin/apache2'}
-+LIB_HTTPD_PORT=${LIB_HTTPD_PORT-'8111'}
-+
-+TEST_PATH="$PWD"/../lib-httpd
-+HTTPD_ROOT_PATH="$PWD"/httpd
-+HTTPD_DOCUMENT_ROOT_PATH=$HTTPD_ROOT_PATH/www
-+
-+if ! test -x "$LIB_HTTPD_PATH"
-+then
-+        say "skipping test, no web server found at '$LIB_HTTPD_PATH'"
-+        test_done
-+        exit
-+fi
-+
-+HTTPD_VERSION=`$LIB_HTTPD_PATH -v | \
-+	sed -n 's/^Server version: Apache\/\([0-9]*\)\..*$/\1/p; q'`
-+
-+if test -n "$HTTPD_VERSION"
-+then
-+	if test -z "$LIB_HTTPD_MODULE_PATH"
-+	then
-+		if ! test $HTTPD_VERSION -ge 2
-+		then
-+			say "skipping test, at least Apache version 2 is required"
-+			test_done
-+			exit
-+		fi
-+
-+		LIB_HTTPD_MODULE_PATH='/usr/lib/apache2/modules'
-+	fi
-+else
-+	error "Could not identify web server at '$LIB_HTTPD_PATH'"
-+fi
-+
-+HTTPD_PARA="-d $HTTPD_ROOT_PATH -f $TEST_PATH/apache.conf"
-+
-+prepare_httpd() {
-+	mkdir -p $HTTPD_DOCUMENT_ROOT_PATH
-+
-+	ln -s $LIB_HTTPD_MODULE_PATH $HTTPD_ROOT_PATH/modules
-+
-+	if test -n "$LIB_HTTPD_SSL"
-+	then
-+		HTTPD_URL=https://127.0.0.1:$LIB_HTTPD_PORT
-+
-+		RANDFILE_PATH="$HTTPD_ROOT_PATH"/.rnd openssl req \
-+			-config $TEST_PATH/ssl.cnf \
-+			-new -x509 -nodes \
-+			-out $HTTPD_ROOT_PATH/httpd.pem \
-+			-keyout $HTTPD_ROOT_PATH/httpd.pem
-+		export GIT_SSL_NO_VERIFY=t
-+		HTTPD_PARA="$HTTPD_PARA -DSSL"
-+	else
-+		HTTPD_URL=http://127.0.0.1:$LIB_HTTPD_PORT
-+	fi
-+
-+	if test -n "$LIB_HTTPD_DAV" -o -n "$LIB_HTTPD_SVN"
-+	then
-+		HTTPD_PARA="$HTTPD_PARA -DDAV"
-+
-+		if test -n "$LIB_HTTPD_SVN"
-+		then
-+			HTTPD_PARA="$HTTPD_PARA -DSVN"
-+			rawsvnrepo="$HTTPD_ROOT_PATH/svnrepo"
-+			svnrepo="http://127.0.0.1:$LIB_HTTPD_PORT/svn"
-+		fi
-+	fi
-+}
-+
-+start_httpd() {
-+	prepare_httpd
-+
-+	trap 'stop_httpd; die' exit
-+
-+	"$LIB_HTTPD_PATH" $HTTPD_PARA \
-+		-c "Listen 127.0.0.1:$LIB_HTTPD_PORT" -k start
-+}
-+
-+stop_httpd() {
-+	trap 'die' exit
-+
-+	"$LIB_HTTPD_PATH" $HTTPD_PARA -k stop
-+}
-diff --git a/t/lib-httpd/apache.conf b/t/lib-httpd/apache.conf
-new file mode 100644
-index 0000000..a447346
---- /dev/null
-+++ b/t/lib-httpd/apache.conf
-@@ -0,0 +1,34 @@
-+PidFile httpd.pid
-+DocumentRoot www
-+ErrorLog error.log
-+
-+<IfDefine SSL>
-+LoadModule ssl_module modules/mod_ssl.so
-+
-+SSLCertificateFile httpd.pem
-+SSLCertificateKeyFile httpd.pem
-+SSLRandomSeed startup file:/dev/urandom 512
-+SSLRandomSeed connect file:/dev/urandom 512
-+SSLSessionCache none
-+SSLMutex file:ssl_mutex
-+SSLEngine On
-+</IfDefine>
-+
-+<IfDefine DAV>
-+	LoadModule dav_module modules/mod_dav.so
-+	LoadModule dav_fs_module modules/mod_dav_fs.so
-+
-+	DAVLockDB DAVLock
-+	<Location />
-+		Dav on
-+	</Location>
-+</IfDefine>
-+
-+<IfDefine SVN>
-+	LoadModule dav_svn_module modules/mod_dav_svn.so
-+
-+	<Location /svn>
-+		DAV svn
-+		SVNPath svnrepo
-+	</Location>
-+</IfDefine>
-diff --git a/t/lib-httpd/ssl.cnf b/t/lib-httpd/ssl.cnf
-new file mode 100644
-index 0000000..6dab257
---- /dev/null
-+++ b/t/lib-httpd/ssl.cnf
-@@ -0,0 +1,8 @@
-+RANDFILE                = $ENV::RANDFILE_PATH
-+
-+[ req ]
-+default_bits            = 1024
-+distinguished_name      = req_distinguished_name
-+prompt                  = no
-+[ req_distinguished_name ]
-+commonName              = 127.0.0.1
-diff --git a/t/t5540-http-push.sh b/t/t5540-http-push.sh
-new file mode 100755
-index 0000000..7372439
---- /dev/null
-+++ b/t/t5540-http-push.sh
-@@ -0,0 +1,73 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2008 Clemens Buchacher <drizzd@aon.at>
-+#
-+
-+test_description='test http-push
-+
-+This test runs various sanity checks on http-push.'
-+
-+. ./test-lib.sh
-+
-+ROOT_PATH="$PWD"
-+LIB_HTTPD_DAV=t
-+
-+. ../lib-httpd.sh
-+
-+if ! start_httpd >&3 2>&4
-+then
-+	say "skipping test, web server setup failed"
-+	test_done
-+	exit
-+fi
-+
-+test_expect_success 'setup remote repository' '
-+	cd "$ROOT_PATH" &&
-+	mkdir test_repo &&
-+	cd test_repo &&
-+	git init &&
-+	: >path1 &&
-+	git add path1 &&
-+	test_tick &&
-+	git commit -m initial &&
-+	cd - &&
-+	git clone --bare test_repo test_repo.git &&
-+	cd test_repo.git &&
-+	git --bare update-server-info &&
-+	chmod +x hooks/post-update &&
-+	cd - &&
-+	mv test_repo.git $HTTPD_DOCUMENT_ROOT_PATH
-+'
-+	
-+test_expect_success 'clone remote repository' '
-+	cd "$ROOT_PATH" &&
-+	git clone $HTTPD_URL/test_repo.git test_repo_clone
-+'
-+
-+test_expect_success 'push to remote repository' '
-+	cd "$ROOT_PATH"/test_repo_clone &&
-+	: >path2 &&
-+	git add path2 &&
-+	test_tick &&
-+	git commit -m path2 &&
-+	git push
-+'
-+
-+test_expect_success 'create and delete remote branch' '
-+	cd "$ROOT_PATH"/test_repo_clone &&
-+	git checkout -b dev &&
-+	: >path3 &&
-+	git add path3 &&
-+	test_tick &&
-+	git commit -m dev &&
-+	git push origin dev &&
-+	git fetch &&
-+	git push origin :dev &&
-+	git branch -d -r origin/dev &&
-+	git fetch &&
-+	! git show-ref --verify refs/remotes/origin/dev
-+'
-+
-+stop_httpd
-+
-+test_done
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 83889c4..9d9cb8d 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -80,7 +80,7 @@ do
- 	-q|--q|--qu|--qui|--quie|--quiet)
- 		quiet=t; shift ;;
- 	--no-color)
--	    color=; shift ;;
-+		color=; shift ;;
- 	--no-python)
- 		# noop now...
- 		shift ;;
-@@ -142,7 +142,12 @@ test_count=0
- test_fixed=0
- test_broken=0
- 
--trap 'echo >&5 "FATAL: Unexpected exit with code $?"; exit 1' exit
-+die () {
-+	echo >&5 "FATAL: Unexpected exit with code $?"
-+	exit 1
-+}
-+
-+trap 'die' exit
- 
- test_tick () {
- 	if test -z "${test_tick+set}"
--- 
-1.5.4.2.156.ge3c5
+We currently definitely support "GIT_WORK_TREE=work git clone something", 
+pretty much explicitly on line 235 of git-clone.sh.
+
+> GIT_CONFIG the user may have will refer to the old repository
+> before "git clone" is invoked, as there is no new repository
+> built yet.  But clone does not read from the old config, so "you
+> can use GIT_CONFIG to read from old repository" may be true, but
+> it does not matter.  We won't use it (we do _not_ want to use
+> it) to read from the old configuration file.
+> 
+> We would however want to make sure that we write to the correct
+> configuration file of the new repository and not some random
+> other place, and that's where the environment variable in the
+> scripted version comes into the picture.
+> 
+> In the scripted version, the only way to make sure which exact
+> configuration file is updated is to set and export GIT_CONFIG
+> when running "git config", so there are a few places that does
+> exactly that (e.g. call to git-init and setting of core.bare).
+> Unfortunately many codepaths in the scripted version are utterly
+> careless (e.g. setting of remote."$origin".fetch); they should
+> make sure that they protect themselves against GIT_CONFIG the
+> user may have in the environment that point at random places.
+
+Since it sets GIT_DIR, it also could simply unset GIT_CONFIG, and then 
+everything would just write to the config file for the new GIT_DIR. On the 
+other hand, if you have GIT_CONFIG exported in your environment, and you 
+set up a repository with "git clone", and clone unsets or overrides 
+GIT_CONFIG, then your new repository will immediately be unusable, because 
+clone will set up the config file inside the new repository, but nothing 
+you run after that will look in the new repository, since everything else 
+obeys the GIT_CONFIG you still have set.
+
+On the other hand, I don't see why any git command other than "git config" 
+(run my the user directly) has any business looking at GIT_CONFIG, since 
+it's only mentioned in the man page for git-config, and not in general for 
+configuration, the wrapper, or other programs.
+
+	-Daniel
+*This .sig left intentionally blank*
