@@ -1,59 +1,58 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: Minor bug in 'stg edit' ?
-Date: Thu, 28 Feb 2008 10:41:07 +0100
-Message-ID: <20080228094107.GB28085@diana.vm.bytemark.co.uk>
-References: <20080227224756.GK2222@TopQuark.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] New test to check the real "subtree" case
+Date: Thu, 28 Feb 2008 09:45:03 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0802280944110.22527@racer.site>
+References: <7vprun32m2.fsf@gitster.siamese.dyndns.org> <20080228015122.GB31441@genesis.frugalware.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: catalin.marinas@gmail.com, git@vger.kernel.org
-To: Paul Donohue <stgit-bug@TopQuark.net>
-X-From: git-owner@vger.kernel.org Thu Feb 28 10:42:01 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Thu Feb 28 10:46:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JUfH6-0000N3-Sa
-	for gcvg-git-2@gmane.org; Thu, 28 Feb 2008 10:42:01 +0100
+	id 1JUfLB-0001ga-Q7
+	for gcvg-git-2@gmane.org; Thu, 28 Feb 2008 10:46:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754428AbYB1JlY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Feb 2008 04:41:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753853AbYB1JlY
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Feb 2008 04:41:24 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4292 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753781AbYB1JlX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Feb 2008 04:41:23 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1JUfGF-0007lw-00; Thu, 28 Feb 2008 09:41:07 +0000
-Content-Disposition: inline
-In-Reply-To: <20080227224756.GK2222@TopQuark.net>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1754494AbYB1Jph (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Feb 2008 04:45:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752345AbYB1Jph
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Feb 2008 04:45:37 -0500
+Received: from mail.gmx.net ([213.165.64.20]:51068 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753421AbYB1Jph (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Feb 2008 04:45:37 -0500
+Received: (qmail invoked by alias); 28 Feb 2008 09:45:34 -0000
+Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
+  by mail.gmx.net (mp013) with SMTP; 28 Feb 2008 10:45:34 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18oqfwENSAoBU4p2bsyNOsZ/OrFgzPfcpzoSdkqH8
+	5Htw5yAtbXsRLq
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20080228015122.GB31441@genesis.frugalware.org>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75373>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75374>
 
-On 2008-02-27 17:47:57 -0500, Paul Donohue wrote:
+Hi,
 
-> After running 'stg edit', the file '.stgit-edit.txt' is always left
-> behind. Is this supposed to happen? I would have assumed the file
-> would be automatically removed after the changes were committed.
+On Thu, 28 Feb 2008, Miklos Vajna wrote:
 
-Yes, I'd say that's a bug.
+> On Sat, Feb 23, 2008 at 11:16:21AM -0800, Junio C Hamano <gitster@pobox.com> wrote:
+> > A new test t6029 currently only tests the strategy is available,
+> > but it should be enhanced to check the real "subtree" case.
+> 
+> i think something like this should do it.
+> 
+>  t/t3035-merge-subtree.sh |   54 ++++++++++++++++++++++++++++++++++++++++++++++
 
-> I'm running StGIT 0.14.1.
+Why yet another file?  Why not enhance t6029, as suggested?
 
-The bug is gone in the master branch (at least as far as I can tell);
-it probably disappeared when stg edit was switched to the new
-infrastructure.
-
-> Thanks!
-
-Thanks for the bug report.
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+Ciao,
+Dscho
