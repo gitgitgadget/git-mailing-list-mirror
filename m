@@ -1,111 +1,93 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: [PATCH] Expect the exit code of builtin checkout to be in portable
-	range
-Date: Thu, 28 Feb 2008 17:49:53 +0100
-Message-ID: <20080228164953.GB4069@steel.home>
-References: <20080228163047.GA4069@steel.home>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: [PATCH] Use diff_tree() directly in making cover letter
+Date: Thu, 28 Feb 2008 12:14:13 -0500 (EST)
+Message-ID: <alpine.LNX.1.00.0802281213140.19665@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 28 17:50:51 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 28 18:14:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JUlxv-0001TM-Iv
-	for gcvg-git-2@gmane.org; Thu, 28 Feb 2008 17:50:40 +0100
+	id 1JUmLO-0003mf-Td
+	for gcvg-git-2@gmane.org; Thu, 28 Feb 2008 18:14:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758310AbYB1Qt4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Feb 2008 11:49:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758347AbYB1Qt4
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Feb 2008 11:49:56 -0500
-Received: from mo-p07-ob.rzone.de ([81.169.146.190]:17246 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757601AbYB1Qt4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Feb 2008 11:49:56 -0500
-X-RZG-CLASS-ID: mo07
-X-RZG-AUTH: z4gQVF2k5XWuW3Cculz1E3jKuj8=
-Received: from tigra.home (Faec3.f.strato-dslnet.de [195.4.174.195])
-	by post.webmailer.de (klopstock mo46) (RZmta 16.8)
-	with ESMTP id D03fc3k1SGRpdL ; Thu, 28 Feb 2008 17:49:54 +0100 (MET)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 1AAF5277BD;
-	Thu, 28 Feb 2008 17:49:54 +0100 (CET)
-Received: by steel.home (Postfix, from userid 1000)
-	id EDA7D56D24; Thu, 28 Feb 2008 17:49:53 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <20080228163047.GA4069@steel.home>
-User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
+	id S1758307AbYB1ROS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Feb 2008 12:14:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757812AbYB1ROR
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Feb 2008 12:14:17 -0500
+Received: from iabervon.org ([66.92.72.58]:43428 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753248AbYB1ROR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Feb 2008 12:14:17 -0500
+Received: (qmail 8949 invoked by uid 1000); 28 Feb 2008 17:14:13 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 28 Feb 2008 17:14:13 -0000
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75423>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75424>
 
-This allows crashes to be noticed at least in bash and dash, which put
-the signal which terminated the command in its exit status.
-
-Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
 ---
+ builtin-log.c |   25 +++++++++++--------------
+ 1 files changed, 11 insertions(+), 14 deletions(-)
 
-Alex Riesen, Thu, Feb 28, 2008 17:30:47 +0100:
-> Noticed in t2008, which actually passed, but silently removed
-> core-files (I saw segfaults in syslog) and did not properly check the
-> exit code.  The change for the t2008 comes as seperate patch, but it
-> should be noted that "! command" is *not* how you check for a command
-> to have failed. It could have crashed.
-
-So we'd better check the exit status in failure tests.
-Like this, for instance
-
- t/t2008-checkout-subdir.sh |   28 ++++++++++++++++++++--------
- 1 files changed, 20 insertions(+), 8 deletions(-)
-
-diff --git a/t/t2008-checkout-subdir.sh b/t/t2008-checkout-subdir.sh
-index 4a723dc..1295a09 100755
---- a/t/t2008-checkout-subdir.sh
-+++ b/t/t2008-checkout-subdir.sh
-@@ -67,16 +67,28 @@ test_expect_success 'checkout with simple prefix' '
+diff --git a/builtin-log.c b/builtin-log.c
+index 836b61e..bbadbc0 100644
+--- a/builtin-log.c
++++ b/builtin-log.c
+@@ -647,8 +647,7 @@ static void make_cover_letter(struct rev_info *rev, int use_stdout,
+ 			      int nr, struct commit **list, struct commit *head)
+ {
+ 	const char *committer;
+-	const char *origin_sha1, *head_sha1;
+-	const char *argv[7];
++	char *head_sha1;
+ 	const char *subject_start = NULL;
+ 	const char *body = "*** SUBJECT HERE ***\n\n*** BLURB HERE ***\n";
+ 	const char *msg;
+@@ -657,6 +656,7 @@ static void make_cover_letter(struct rev_info *rev, int use_stdout,
+ 	struct strbuf sb;
+ 	int i;
+ 	const char *encoding = "utf-8";
++	struct diff_options opts;
  
- '
+ 	if (rev->commit_format != CMIT_FMT_EMAIL)
+ 		die("Cover letter needs email format");
+@@ -694,20 +694,17 @@ static void make_cover_letter(struct rev_info *rev, int use_stdout,
+ 	if (!origin)
+ 		return;
  
--test_expect_success 'relative path outside tree should fail' \
--	'! git checkout HEAD -- ../../Makefile'
-+test_expect_success 'relative path outside tree should fail' '
-+	git checkout HEAD -- ../../Makefile
-+	test $? -gt 0 -a $? -le 128
-+'
+-	origin_sha1 = sha1_to_hex(origin->object.sha1);
++	diff_setup(&opts);
++	opts.output_format |= DIFF_FORMAT_SUMMARY | DIFF_FORMAT_DIFFSTAT;
  
--test_expect_success 'incorrect relative path to file should fail (1)' \
--	'! git checkout HEAD -- ../file0'
-+test_expect_success 'incorrect relative path to file should fail (1)' '
-+	git checkout HEAD -- ../file0
-+	test $? -gt 0 -a $? -le 128
-+'
+-	argv[0] = "diff";
+-	argv[1] = "--stat";
+-	argv[2] = "--summary";
+-	argv[3] = head_sha1;
+-	argv[4] = "--not";
+-	argv[5] = origin_sha1;
+-	argv[6] = "--";
+-	argv[7] = NULL;
+-	fflush(stdout);
+-	run_command_v_opt(argv, RUN_GIT_CMD);
++	diff_setup_done(&opts);
++
++	diff_tree_sha1(origin->tree->object.sha1,
++		       head->tree->object.sha1,
++		       "", &opts);
++	diffcore_std(&opts);
++	diff_flush(&opts);
  
--test_expect_success 'incorrect relative path should fail (2)' \
--	'( cd dir1 && ! git checkout HEAD -- ./file0 )'
-+test_expect_success 'incorrect relative path should fail (2)' '
-+	( cd dir1 && {
-+	    git checkout HEAD -- ./file0
-+	    test $? -gt 0 -a $? -le 128
-+	} )
-+'
+-	fflush(stdout);
+ 	printf("\n");
+ }
  
--test_expect_success 'incorrect relative path should fail (3)' \
--	'( cd dir1 && ! git checkout HEAD -- ../../file0 )'
-+test_expect_success 'incorrect relative path should fail (3)' '
-+	( cd dir1 && {
-+	    git checkout HEAD -- ../../file0
-+	    test $? -gt 0 -a $? -le 128
-+	} )
-+'
- 
- test_done
 -- 
-1.5.4.3.253.g9f1d5
-
+1.5.4.3.328.gcaed
