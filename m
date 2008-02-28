@@ -1,121 +1,63 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: [PATCH 3/4] fix unimplemented packed_object_info_detail() features
-Date: Thu, 28 Feb 2008 00:25:19 -0500
-Message-ID: <1204176320-31358-4-git-send-email-nico@cam.org>
-References: <1204176320-31358-1-git-send-email-nico@cam.org>
- <1204176320-31358-2-git-send-email-nico@cam.org>
- <1204176320-31358-3-git-send-email-nico@cam.org>
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 28 06:26:39 2008
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] format-patch: remove a leftover debugging message
+Date: Wed, 27 Feb 2008 22:18:47 -0800
+Message-ID: <7v8x15li2g.fsf_-_@gitster.siamese.dyndns.org>
+References: <alpine.LNX.1.00.0802251822240.19024@iabervon.org>
+ <7v1w70h96u.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Daniel Barkalow <barkalow@iabervon.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 28 07:19:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JUbHy-0004gi-3f
-	for gcvg-git-2@gmane.org; Thu, 28 Feb 2008 06:26:38 +0100
+	id 1JUc7C-0006zG-8M
+	for gcvg-git-2@gmane.org; Thu, 28 Feb 2008 07:19:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751897AbYB1FZa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Feb 2008 00:25:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751775AbYB1FZ3
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Feb 2008 00:25:29 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:61471 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751504AbYB1FZ0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Feb 2008 00:25:26 -0500
-Received: from localhost.localdomain ([66.131.194.97])
- by VL-MO-MR002.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JWX00B63OE9QT70@VL-MO-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 28 Feb 2008 00:25:22 -0500 (EST)
-X-Mailer: git-send-email 1.5.4.2.200.g99e75
-In-reply-to: <1204176320-31358-3-git-send-email-nico@cam.org>
+	id S1750910AbYB1GS5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Feb 2008 01:18:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750728AbYB1GS5
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Feb 2008 01:18:57 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:35072 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750695AbYB1GS4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Feb 2008 01:18:56 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 80DC117A0;
+	Thu, 28 Feb 2008 01:18:55 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id B5753173E; Thu, 28 Feb 2008 01:18:49 -0500 (EST)
+In-Reply-To: <7v1w70h96u.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Mon, 25 Feb 2008 16:07:21 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75357>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75358>
 
-Since commit eb32d236df0c16b936b04f0c5402addb61cdb311, there was a TODO
-comment in packed_object_info_detail() about the SHA1 of base object to
-OBJ_OFS_DELTA objects.  So here it is at last.
+Sorry, Daniel ;-)
 
-While at it, providing the actual storage size information as well is now
-trivial.
-
-Signed-off-by: Nicolas Pitre <nico@cam.org>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- pack-check.c |    3 +++
- sha1_file.c  |   10 +++++++---
- 2 files changed, 10 insertions(+), 3 deletions(-)
+ builtin-log.c |    1 -
+ 1 files changed, 0 insertions(+), 1 deletions(-)
 
-diff --git a/pack-check.c b/pack-check.c
-index d7dd62b..ae25685 100644
---- a/pack-check.c
-+++ b/pack-check.c
-@@ -1,5 +1,6 @@
- #include "cache.h"
- #include "pack.h"
-+#include "pack-revindex.h"
- 
- struct idx_entry
- {
-@@ -101,8 +102,10 @@ static int verify_packfile(struct packed_git *p,
- static void show_pack_info(struct packed_git *p)
- {
- 	uint32_t nr_objects, i, chain_histogram[MAX_CHAIN+1];
-+
- 	nr_objects = p->num_objects;
- 	memset(chain_histogram, 0, sizeof(chain_histogram));
-+	init_pack_revindex();
- 
- 	for (i = 0; i < nr_objects; i++) {
- 		const unsigned char *sha1;
-diff --git a/sha1_file.c b/sha1_file.c
-index 1ddb96b..445a871 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -14,6 +14,7 @@
- #include "tag.h"
- #include "tree.h"
- #include "refs.h"
-+#include "pack-revindex.h"
- 
- #ifndef O_NOATIME
- #if defined(__linux__) && (defined(__i386__) || defined(__PPC__))
-@@ -1367,11 +1368,15 @@ const char *packed_object_info_detail(struct packed_git *p,
- 	unsigned long dummy;
- 	unsigned char *next_sha1;
- 	enum object_type type;
-+	struct revindex_entry *revidx;
- 
- 	*delta_chain_length = 0;
- 	curpos = obj_offset;
- 	type = unpack_object_header(p, &w_curs, &curpos, size);
- 
-+	revidx = find_pack_revindex(p, obj_offset);
-+	*store_size = revidx[1].offset - obj_offset;
-+
- 	for (;;) {
- 		switch (type) {
- 		default:
-@@ -1381,14 +1386,13 @@ const char *packed_object_info_detail(struct packed_git *p,
- 		case OBJ_TREE:
- 		case OBJ_BLOB:
- 		case OBJ_TAG:
--			*store_size = 0; /* notyet */
- 			unuse_pack(&w_curs);
- 			return typename(type);
- 		case OBJ_OFS_DELTA:
- 			obj_offset = get_delta_base(p, &w_curs, &curpos, type, obj_offset);
- 			if (*delta_chain_length == 0) {
--				/* TODO: find base_sha1 as pointed by curpos */
--				hashclr(base_sha1);
-+				revidx = find_pack_revindex(p, obj_offset);
-+				hashcpy(base_sha1, nth_packed_object_sha1(p, revidx->nr));
- 			}
- 			break;
- 		case OBJ_REF_DELTA:
+diff --git a/builtin-log.c b/builtin-log.c
+index 3209ea5..836b61e 100644
+--- a/builtin-log.c
++++ b/builtin-log.c
+@@ -960,7 +960,6 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 	rev.boundary = 1;
+ 	while ((commit = get_revision(&rev)) != NULL) {
+ 		if (commit->object.flags & BOUNDARY) {
+-			fprintf(stderr, "Boundary %s\n", sha1_to_hex(commit->object.sha1));
+ 			boundary_count++;
+ 			origin = (boundary_count == 1) ? commit : NULL;
+ 			continue;
 -- 
-1.5.4.2.200.g99e75
+1.5.4.3.393.g55409
