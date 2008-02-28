@@ -1,55 +1,83 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: warning: no common commits - slow pull
-Date: Thu, 28 Feb 2008 13:36:56 -0500 (EST)
-Message-ID: <alpine.LNX.1.00.0802281331220.19665@iabervon.org>
-References: <200802102007.38838.lenb@kernel.org> <20080211035501.GB26205@mit.edu> <200802151643.30232.lenb@kernel.org> <200802261438.17014.lenb@kernel.org> <7vir0byoc2.fsf@gitster.siamese.dyndns.org> <7voda2yksf.fsf@gitster.siamese.dyndns.org>
- <alpine.LNX.1.00.0802271411280.19665@iabervon.org> <7vskzeruit.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0802271605540.19665@iabervon.org> <7voda1nbzc.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0802281026030.19665@iabervon.org>
- <7vy795j7d2.fsf@gitster.siamese.dyndns.org>
+From: =?ISO-8859-1?Q?Gabriel_Salda=F1a?= <gsaldana@gmail.com>
+Subject: Re: msgmft segfaulting on tiger
+Date: Thu, 28 Feb 2008 12:40:12 -0600
+Message-ID: <47C7000C.1000809@gmail.com>
+References: <46a038f90802211553g735215c6q260ddc49ac149bb5@mail.gmail.com> <46a038f90802211559w457c5460k7447ba8b38352713@mail.gmail.com> <20080222065836.GE8410@spearce.org> <46a038f90802220957y7db67d8nb6b7ad784124546a@mail.gmail.com> <47C5A974.7080207@gmail.com> <alpine.LSU.1.00.0802271825330.22527@racer.site> <47C5AEFA.5020004@gmail.com> <alpine.LSU.1.00.0802272203270.22527@racer.site> <7vablmqc7q.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Nicolas Pitre <nico@cam.org>, Len Brown <lenb@kernel.org>,
-	Theodore Tso <tytso@mit.edu>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Git Mailing List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 28 19:38:07 2008
+X-From: git-owner@vger.kernel.org Thu Feb 28 19:39:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JUndQ-0004gT-KS
-	for gcvg-git-2@gmane.org; Thu, 28 Feb 2008 19:37:37 +0100
+	id 1JUnej-0005Gp-Gu
+	for gcvg-git-2@gmane.org; Thu, 28 Feb 2008 19:38:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751011AbYB1ShA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Feb 2008 13:37:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751098AbYB1Sg7
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Feb 2008 13:36:59 -0500
-Received: from iabervon.org ([66.92.72.58]:46370 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750915AbYB1Sg7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Feb 2008 13:36:59 -0500
-Received: (qmail 15755 invoked by uid 1000); 28 Feb 2008 18:36:56 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 28 Feb 2008 18:36:56 -0000
-In-Reply-To: <7vy795j7d2.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1753622AbYB1Shm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Feb 2008 13:37:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753299AbYB1Shm
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Feb 2008 13:37:42 -0500
+Received: from rv-out-0910.google.com ([209.85.198.187]:44893 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751932AbYB1Shl (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Feb 2008 13:37:41 -0500
+Received: by rv-out-0910.google.com with SMTP id k20so2246289rvb.1
+        for <git@vger.kernel.org>; Thu, 28 Feb 2008 10:37:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:x-enigmail-version:content-type:content-transfer-encoding;
+        bh=8uE0v3oWjznNs+/r3iSNmwKSccFP9ofr+h+dkMI24Z8=;
+        b=UYkvjUB1bzcuhr1EPyshQ9bSVJUdYvP8laj7FcJGtVAsMSkTk1xg8bvIcBZFBrFZJ/z7scY5hh6yj5nDGzqg9LMcEy6rpp6e3MyGVK8QZTkwj1MT3faQHunp6iVFuQ2G3zG+pPIaOekpFnJ2/b6ZkamB3N5gewzt+BzCOgkyeTE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:x-enigmail-version:content-type:content-transfer-encoding;
+        b=bmQdQ9PmAGySt0Ieru/p3Rz9zVWi2wp/JohJMXYh0lHr8uzqDMqkE5/ge9Fu4AiT09ES+Px5RE3qPa3J7i7ni6NoQdMHL42PTKBwtYjRaddDqzgQpSci1gHy+bn6lmKZNd9QJtXvV1ElgfZO9qLcYx6Onsos17bPkyV4sw+ivZ8=
+Received: by 10.141.113.6 with SMTP id q6mr5781878rvm.135.1204223860486;
+        Thu, 28 Feb 2008 10:37:40 -0800 (PST)
+Received: from ?192.168.1.107? ( [200.67.17.70])
+        by mx.google.com with ESMTPS id g6sm21108032rvb.25.2008.02.28.10.37.36
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 28 Feb 2008 10:37:38 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.0 (X11/20070326)
+In-Reply-To: <7vablmqc7q.fsf@gitster.siamese.dyndns.org>
+X-Enigmail-Version: 0.95.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75432>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75433>
 
-On Thu, 28 Feb 2008, Junio C Hamano wrote:
+Here's the output, hope it helps:
 
-> Another potential problem area is if find_common() does the
-> right thing when it is called for the second time.  I did not
-> check if you clear COMMON, SEEN, COMPLETE etc. bits from the
-> object database before initiating the second round, but if you
-> didn't, I am afraid these bits left over from the primary
-> transfer might interfere the common ancestor discovery during
-> the second round.
+$ msgfmt --tcl -l C -d . /dev/null; echo $?
+msgfmt: unrecognized option `--tcl'
+Try `msgfmt --help' for more information.
+1
 
-Absolutely; that was actually my first guess at why it was failing, and I 
-think it's a necessary aspect to the failure. Let me see if I can get your 
-test case to exhibit the problem for me and look into it further.
+somehow msgfmt doesn't recognize the --tcl flag.
 
-	-Daniel
-*This .sig left intentionally blank*
+Gabriel Saldana
+
+Junio C Hamano wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+>>> $ msgfmt --tcl; echo $?
+>>> msgfmt: unrecognized option `--tcl'
+>>> Try `msgfmt --help' for more information.
+>>> 1
+>> Darn.  I think that's the same exit code as for any other invocation 
+>> without filename.
+>>
+>> So it seems that there is no easy way to tell a --tcl aware msgfmt from 
+>> the other.
+> 
+> How about...
+> 
+>     $ msgfmt --tcl -l C -d . /dev/null; echo $?
+> 
