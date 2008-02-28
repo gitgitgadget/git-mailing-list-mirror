@@ -1,82 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Write index file on any checkout of files
-Date: Thu, 28 Feb 2008 12:25:16 -0800
-Message-ID: <7vfxvcj0b7.fsf@gitster.siamese.dyndns.org>
-References: <87wsop188j.fsf@wine.dyndns.org>
- <alpine.LNX.1.00.0802281058190.19665@iabervon.org>
+From: Johannes Sixt <johannes.sixt@telecom.at>
+Subject: Re: [PATCH 02/40] Compile some programs only conditionally.
+Date: Thu, 28 Feb 2008 21:30:10 +0100
+Message-ID: <200802282130.10225.johannes.sixt@telecom.at>
+References: <1204138503-6126-1-git-send-email-johannes.sixt@telecom.at> <1204138503-6126-3-git-send-email-johannes.sixt@telecom.at> <alpine.LSU.1.00.0802281146050.22527@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Alexandre Julliard <julliard@winehq.org>
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Thu Feb 28 21:26:59 2008
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 28 21:31:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JUpL9-0001JW-2H
-	for gcvg-git-2@gmane.org; Thu, 28 Feb 2008 21:26:51 +0100
+	id 1JUpP2-0002wV-CS
+	for gcvg-git-2@gmane.org; Thu, 28 Feb 2008 21:30:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759354AbYB1UZq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Feb 2008 15:25:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757951AbYB1UZp
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Feb 2008 15:25:45 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:33900 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758930AbYB1UZo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Feb 2008 15:25:44 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id CD7DA2666;
-	Thu, 28 Feb 2008 15:25:41 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 0A8502664; Thu, 28 Feb 2008 15:25:33 -0500 (EST)
-In-Reply-To: <alpine.LNX.1.00.0802281058190.19665@iabervon.org> (Daniel
- Barkalow's message of "Thu, 28 Feb 2008 10:58:59 -0500 (EST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752195AbYB1UaP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Feb 2008 15:30:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751888AbYB1UaO
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Feb 2008 15:30:14 -0500
+Received: from smtp4.srv.eunet.at ([193.154.160.226]:58367 "EHLO
+	smtp4.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751434AbYB1UaM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Feb 2008 15:30:12 -0500
+Received: from dx.sixt.local (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
+	by smtp4.srv.eunet.at (Postfix) with ESMTP id A245F972E9;
+	Thu, 28 Feb 2008 21:30:10 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by dx.sixt.local (Postfix) with ESMTP id 6C2EB5B9E3;
+	Thu, 28 Feb 2008 21:30:10 +0100 (CET)
+User-Agent: KMail/1.9.3
+In-Reply-To: <alpine.LSU.1.00.0802281146050.22527@racer.site>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75442>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75443>
 
-Daniel Barkalow <barkalow@iabervon.org> writes:
+On Thursday 28 February 2008 12:57, Johannes Schindelin wrote:
+> Hi,
+>
+> On Wed, 27 Feb 2008, Johannes Sixt wrote:
+> > On MinGW, we won't compile some programs.
+>
+> This explanation is good (even if I recall that we compile git-daemon.exe
+> just fine now).
+>
+> > @@ -264,7 +263,7 @@ PROGRAMS = \
+> >  	git-update-server-info$X \
+> >  	git-upload-pack$X \
+> >  	git-pack-redundant$X git-var$X \
+> > -	git-merge-tree$X git-imap-send$X \
+> > +	git-merge-tree$X \
+>
+> We do not compile git-imap-send because MinGW lacks socketpair() and
+> getpass().  Why not say it explicitely, and have a NO_SOCKETPAIR variable?
+> Likewise, for git-daemon we should say NO_SYSLOG.
 
-> We need to rewrite the index file when we check out files, even if we
-> haven't modified the blob info by reading from another tree, so that
-> we get the stat cache to include the fact that we just modified the
-> file so it doesn't need to be refreshed.
+Where are NO_WNOHANG, NO_GETPASS, NO_SELECT, NO_SIGCHLD, NO_EXECVE etc in your 
+list? A condition on MINGW32 is certainly sufficient.
 
-Thanks, Alexandre, for spotting.
+> > +ifndef NO_EXTRA_PROGRAMS
+>
+> The name NO_EXTRA_PROGRAMS is definitely not illustrating the reasons why
+> we exclude those programs, so I'd rather not have this patch as-is.
 
-> -static int checkout_paths(const char **pathspec)
-> +static int checkout_paths(const char **pathspec, int newfd, struct lock_file *lock_file)
->  {
-> ...
-> @@ -554,11 +549,14 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
->  			}
->  		}
->  
-> +		int newfd;
-> +		struct lock_file *lock_file = xcalloc(1, sizeof(struct lock_file));
-> +		newfd = hold_locked_index(lock_file, 1);
-> +		read_cache();
-> +
->  		if (source_tree)
->  			read_tree_some(source_tree, pathspec);
-> -		else
-> -			read_cache();
-> -		return checkout_paths(pathspec);
-> +		return checkout_paths(pathspec, newfd, lock_file);
+I agree.
 
-Aside from decl-after-statement, I suspect that at this point
-these all should go to checkout_paths() function itself, that
-takes pathspec and source_tree (which could be NULL), but that
-is only "logical code organization" issue.  Thanks for fixing.
+> NOTE: I think that both programs are fixable, but only git-daemon is
+> important enough that I would like to see patch of the "daemon" branch in
+> 4msysgit.git cherry picked into this series (maybe we should implement a
+> compat/syslog.c using the ReportEvent() function of the win32 API?).
 
-I however would have liked if this were caught while the topic
-was still cooking in 'next'.
+openlog() etc. is only one problem in git-daemon. It also depends on SIGCHLD, 
+a non-blocking waitpid, and a lot more. The patch that is in 4msysgit.git 
+allows only a single connection, IIRC, after which it terminates. But I also 
+think that git-daemon can be made more complete on Windows, but it certainly 
+requires a major surgery.
 
-There was a process failure somewhere, which makes me worry more
-than just this single bug that escaped to 'master'.  Alex
-Riesen's segv fix in another thread makes it double X-<.
+-- Hannes
