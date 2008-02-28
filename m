@@ -1,77 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 6/9] Completely move out worktree setup from
- setup_git_directory_gently()
-Date: Wed, 27 Feb 2008 19:37:37 -0800
-Message-ID: <7vk5kplpj2.fsf@gitster.siamese.dyndns.org>
-References: <cover.1204130175.git.pclouds@gmail.com>
- <20080227163934.GA28084@laptop> <7vy795lt89.fsf@gitster.siamese.dyndns.org>
- <fcaeb9bf0802271931t559d4bd1n86bb5c644b082274@mail.gmail.com>
+From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+Subject: Re: [PATCH 00/40] MinGW port
+Date: Thu, 28 Feb 2008 10:38:50 +0700
+Message-ID: <fcaeb9bf0802271938n2eeb63f3h3787a0a20f739031@mail.gmail.com>
+References: <1204138503-6126-1-git-send-email-johannes.sixt@telecom.at>
+	 <47C5DDC0.8060004@trolltech.com>
+	 <46a038f90802271534p37869c58oe79b959b4919c603@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-To: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 28 04:38:27 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Marius Storm-Olsen" <marius@trolltech.com>,
+	"Johannes Sixt" <johannes.sixt@telecom.at>, git@vger.kernel.org
+To: "Martin Langhoff" <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 28 04:39:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JUZbH-0006vf-2h
-	for gcvg-git-2@gmane.org; Thu, 28 Feb 2008 04:38:27 +0100
+	id 1JUZcF-00077R-N6
+	for gcvg-git-2@gmane.org; Thu, 28 Feb 2008 04:39:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752906AbYB1Dhu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 Feb 2008 22:37:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752735AbYB1Dhu
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Feb 2008 22:37:50 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:49647 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752723AbYB1Dht convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Feb 2008 22:37:49 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 3974D2ED0;
-	Wed, 27 Feb 2008 22:37:48 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 676962ECE; Wed, 27 Feb 2008 22:37:42 -0500 (EST)
-In-Reply-To: <fcaeb9bf0802271931t559d4bd1n86bb5c644b082274@mail.gmail.com>
- (Nguyen Thai Ngoc Duy's message of "Thu, 28 Feb 2008 10:31:01 +0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1755480AbYB1Diw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Feb 2008 22:38:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755435AbYB1Diw
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Feb 2008 22:38:52 -0500
+Received: from fg-out-1718.google.com ([72.14.220.157]:8301 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752735AbYB1Div (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Feb 2008 22:38:51 -0500
+Received: by fg-out-1718.google.com with SMTP id e21so2522166fga.17
+        for <git@vger.kernel.org>; Wed, 27 Feb 2008 19:38:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=i+++V2ti52iO+Q4Jml3b9inm+nc2BCyAu4hO5m+/7mU=;
+        b=CtVUPCiy4g3Ed1gHkH9utiQCXIvtTE4fTT6zpfsxFHU2bBwbOMq6Fquz00OqzjKIdlyv75BOMETAHAbm8J8VuJdfJV1hrCb3GlPaMWsRV4hajpW07mqaJC5ViC8FsmsLiqXbcJ6GfZkSkApisT43D2Ivdv9jzPef0Z7/FFfZGvc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=dZSyGMZKwqK54dm0xvkNT1AoBj27tUjtjwNROjX/f6IXzmTojgONKTJix0Cqd9XvHC7dAu/HMYwJqFI5DwSO+wu53lxAhaSgn05h3y0BwKPvDHj4GLBPnGXJRcriFHnkQvVD4agAVMx7bQ3fl0xKEifbJl14n1VSCCNbGn/gvNM=
+Received: by 10.86.72.15 with SMTP id u15mr7238921fga.21.1204169930130;
+        Wed, 27 Feb 2008 19:38:50 -0800 (PST)
+Received: by 10.86.83.3 with HTTP; Wed, 27 Feb 2008 19:38:50 -0800 (PST)
+In-Reply-To: <46a038f90802271534p37869c58oe79b959b4919c603@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75346>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75347>
 
-"Nguyen Thai Ngoc Duy" <pclouds@gmail.com> writes:
-
-> On Thu, Feb 28, 2008 at 9:17 AM, Junio C Hamano <gitster@pobox.com> w=
-rote:
->> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes=
-:
->>
->>  > -     prefix =3D setup_git_directory_gently(&nongit);
->>  > -     init_revisions(&rev, prefix);
->>  > +     setup_git_directory_gently(&nongit);
->>  > +     init_revisions(&rev, NULL);
->>
->>
->>
->> > @@ -233,19 +233,20 @@ int cmd_diff(int argc, const char **argv, co=
-nst char *prefix)
->>  > ...
->>
->> > -     init_revisions(&rev, prefix);
->>  > +     init_revisions(&rev, NULL);
->>
->>  Hmm.  How is the effect of this change compensated later to give
->>  proper prefix value to rev.diffopt.prefix?
->>
+On Thu, Feb 28, 2008 at 6:34 AM, Martin Langhoff
+<martin.langhoff@gmail.com> wrote:
+> On Thu, Feb 28, 2008 at 11:01 AM, Marius Storm-Olsen
+>  <marius@trolltech.com> wrote:
+>  >  I just have to say, MASSIVE work Hannes! Thank you so much for your
+>  >  efforts in making the MinGW port the great port that it is!
+>  >
+>  >  You too Dscho, and the rest of the MSys Git team! ;-)
 >
-> I assume you meant rev.prefix? rev.prefix is set right before
-> setup_revisions(). (grr.. I think I left an redundant
-> rev.diffopt.skip_stat_unmatch assignment)
+>  Indeed. Amazing stuff. I do some occasional work on Windows, and it is
+>  a sheer pleasure to use msys git. Simple install, it just works, and
+>  it is fast fast FAST. Hats off!
 
-I did mean rev.diffopt.prefix that is initialized by the last
-four lines in init_revisions() from the value of prefix you
-pass.
+Yeah. I've been waiting this moment for too long. Thanks all.
+-- 
+Duy
