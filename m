@@ -1,65 +1,66 @@
-From: "=?ISO-8859-1?Q?Johan_S=F8rensen?=" <johan@johansorensen.com>
-Subject: git-daemon hangs in futex()
-Date: Thu, 28 Feb 2008 23:41:41 +0100
-Message-ID: <9e0f31700802281441i33120d70s43ca9f4eced6b5c3@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git diff --name-status does not always list changed files
+Date: Thu, 28 Feb 2008 14:51:08 -0800
+Message-ID: <7v63w8hezn.fsf@gitster.siamese.dyndns.org>
+References: <fq6hhi$cub$1@ger.gmane.org>
+ <7vablkkhac.fsf@gitster.siamese.dyndns.org>
+ <bdca99240802281323x1ec904ddq914ac2c484e7c468@mail.gmail.com>
+ <7vejawhi6a.fsf@gitster.siamese.dyndns.org>
+ <bdca99240802281419o3fcea2e8u277d8e5e48131b6d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 28 23:42:25 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Sebastian Schuberth" <sschuberth@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 28 23:52:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JUrSK-0004gU-Hq
-	for gcvg-git-2@gmane.org; Thu, 28 Feb 2008 23:42:24 +0100
+	id 1JUrba-000067-SV
+	for gcvg-git-2@gmane.org; Thu, 28 Feb 2008 23:51:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755519AbYB1Wlp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Feb 2008 17:41:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755472AbYB1Wlp
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Feb 2008 17:41:45 -0500
-Received: from ti-out-0910.google.com ([209.85.142.186]:16821 "EHLO
-	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754556AbYB1Wlo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Feb 2008 17:41:44 -0500
-Received: by ti-out-0910.google.com with SMTP id 28so3272869tif.23
-        for <git@vger.kernel.org>; Thu, 28 Feb 2008 14:41:43 -0800 (PST)
-Received: by 10.151.44.18 with SMTP id w18mr3045898ybj.184.1204238501682;
-        Thu, 28 Feb 2008 14:41:41 -0800 (PST)
-Received: by 10.150.97.16 with HTTP; Thu, 28 Feb 2008 14:41:41 -0800 (PST)
-Content-Disposition: inline
+	id S1757918AbYB1WvV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Feb 2008 17:51:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755014AbYB1WvV
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Feb 2008 17:51:21 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:56355 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754091AbYB1WvU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Feb 2008 17:51:20 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id AADD5131E;
+	Thu, 28 Feb 2008 17:51:18 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id EC1AC131C; Thu, 28 Feb 2008 17:51:10 -0500 (EST)
+In-Reply-To: <bdca99240802281419o3fcea2e8u277d8e5e48131b6d@mail.gmail.com>
+ (Sebastian Schuberth's message of "Thu, 28 Feb 2008 23:19:35 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75471>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75472>
 
-Hi,
+"Sebastian Schuberth" <sschuberth@gmail.com> writes:
 
-I'm having an issue with my git-daemon (1.5.4.3 on ubuntu gutsy), it
-works fine for a few minutes, then it hangs (eg, "git clone git://"
-never comes past "initialized empty git repo" adnd just sits and
-waits) and strace on the git-daemon says:
-$ strace -Ff -p 27453
-Process 27453 attached - interrupt to quit
-futex(0x2b270fb50980, FUTEX_WAIT, 2, NULL) = -1 EINTR (Interrupted system call)
+> Thanks, -FX works, though I do not understand why it did not with just
+> -F. From what I understood, -F just makes "less" quit immediately
+> (instead of waiting for the user to press "q") if the lines to display
+> fit completely on screen. In no case it should display nothing if
+> there actually is something to display.
 
-.. and nothing more. But, if I attach to the git-daemon process with
-strace before that happens, git-daemon keeps on working fine, so I can
-change the outcome by observing it which is always nice, but not too
-helpful.
-I don't think this is related to Wincents problem some time ago[1],
-because I can reproduce this when running dashed/dashless and
-with/without --detach regardless of my env. Here's my git-daemon args:
-/usr/local/bin/git --exec-path=/usr/local/bin daemon
---base-path=/home/git/repositories --verbose --export-all
---pid-file=/home/git/run/git-daemon.pid --detach
+My reading and understanding of less manual page, especially the
+part that talks about -X suggests that everything is working as
+it is meant to.
 
-I'm not even sure if this is directly related to git or if it's some
-other library causing the futex wait, any hints would be greatly
-appreciated.
+"git diff --name-status" displays something, less shows it, and
+it quits immediately (because you asked it to with -F).  As part
+of its quitting, it clears the screen because you did not ask
+less not to do that by giving it an -X.
 
-[1]: http://kerneltrap.org/mailarchive/git/2008/2/5/732214
+I am tempted to call it a bug in less, but I am a very nice
+person and I would not actually do so ;-).  But it certainly
+feels like a misfeature between less and terminfo to me.
 
-Thanks
-JS
