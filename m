@@ -1,87 +1,120 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: stgit - continue rebase after merge conflict?
-Date: Thu, 28 Feb 2008 21:50:04 +0000
-Message-ID: <b0943d9e0802281350r3945d3f0qd0dd8ee61679e82d@mail.gmail.com>
-References: <20080226145725.GA24987@ldl.fc.hp.com>
-	 <b0943d9e0802260856j6e9b0053ne4916149d8e4387c@mail.gmail.com>
-	 <20080228173830.GA16045@ldl.fc.hp.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: [PATCH v2] Write index file on any checkout of files
+Date: Thu, 28 Feb 2008 16:52:44 -0500 (EST)
+Message-ID: <alpine.LNX.1.00.0802281652160.19665@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: "Alex Chiang" <achiang@hp.com>,
-	"Catalin Marinas" <catalin.marinas@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 28 22:50:53 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 28 22:53:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JUqeM-00026W-10
-	for gcvg-git-2@gmane.org; Thu, 28 Feb 2008 22:50:46 +0100
+	id 1JUqgx-00038n-DE
+	for gcvg-git-2@gmane.org; Thu, 28 Feb 2008 22:53:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751690AbYB1VuJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Feb 2008 16:50:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751819AbYB1VuJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Feb 2008 16:50:09 -0500
-Received: from wr-out-0506.google.com ([64.233.184.224]:35822 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751690AbYB1VuH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Feb 2008 16:50:07 -0500
-Received: by wr-out-0506.google.com with SMTP id c48so5432560wra.23
-        for <git@vger.kernel.org>; Thu, 28 Feb 2008 13:50:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=Tz8K+9YCqVkuJm5JiEPLGZyjst2TAkj3Tp1LvFjORm8=;
-        b=echIC1PYBZ3lt0C3gZmK1kfg3cKEJaoLYurGqcrgKssRhygJiGvRaiVlLVCUtHM+r36Y38oyysfWDm7TMfPfoU1GFEGsMxiIztOJsOWDEu8pzUnOHNUKBLTNwRPNNvPgXW6acp8YuZhzqMaCsOQGfI8El19tMT/NT6X2gPfQpqM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=PxJNdho0dUW6Tz27R3NJLXnca2Zp+Fvbj9bgAshIQUwgngaNr8TuUaOBWVhpm1YEDNQTVOLdN5CikJtEbtRL6mxFC8uzkKz1nbi0LqloRuqkIc2WgyCKnfj+9hw+v3JKZcnpIhdZ7l2VZbXBzzCilG/X1onAw2x7E1dgG52Hfoo=
-Received: by 10.141.205.10 with SMTP id h10mr5932709rvq.138.1204235404655;
-        Thu, 28 Feb 2008 13:50:04 -0800 (PST)
-Received: by 10.141.206.19 with HTTP; Thu, 28 Feb 2008 13:50:04 -0800 (PST)
-In-Reply-To: <20080228173830.GA16045@ldl.fc.hp.com>
-Content-Disposition: inline
+	id S1755346AbYB1Vws (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Feb 2008 16:52:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755100AbYB1Vws
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Feb 2008 16:52:48 -0500
+Received: from iabervon.org ([66.92.72.58]:38921 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754372AbYB1Vwr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Feb 2008 16:52:47 -0500
+Received: (qmail 29053 invoked by uid 1000); 28 Feb 2008 21:52:44 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 28 Feb 2008 21:52:44 -0000
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75465>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75466>
 
-On 28/02/2008, Alex Chiang <achiang@hp.com> wrote:
-> * Catalin Marinas <catalin.marinas@gmail.com>:
->
-> > On 26/02/2008, Alex Chiang <achiang@hp.com> wrote:
->  > >  How does one do a stg rebase if there are merge conflicts?
->  >
->  > Basically, you solve the conflict, refresh the current patch and
->  > continue with 'stg push' or 'stg goto <top patch>'. The 'rebase'
->  > command does 'pop --all', 'git reset', 'push --all'. In your conflict,
->  > the base of the stack was already changed to the latest and hence only
->  > push/goto is needed. To fix it:
->  >
->  > $ vi files   # or simply use 'resolved -i' below
->  > $ stg resolved -a [-i]
->  > $ stg refresh
->  > $ stg goto top-patch
->
->
-> That goto command doesn't tell you about merge conflicts:
-[...]
->  achiang@blender:~/kernels/linux-2.6$ stg goto 0004-ACPI-PCI-slot-detection-driver.patch
->  Pushed 0003-Introduce-pci_slot.patch (conflict)
->  Error: Merge conflict
->  Now at patch "0003-Introduce-pci_slot.patch"
+We need to rewrite the index file when we check out files, even if we
+haven't modified the blob info by reading from another tree, so that
+we get the stat cache to include the fact that we just modified the
+file so it doesn't need to be refreshed.
 
-It says that it's a merge conflict but isn't more precise than that.
-You can run 'stg status' to check the conflicts.
+While we're at it, move everything that needs to be done to check out
+some paths from a tree (or the current index) into checkout_paths().
 
-The reason is that you are probably using the development branch of
-StGIT and we (actually Karl) are refactoring the GIT objects handling.
-The 'goto' command (but not 'push') was moved to the new
-infrastructure but missed some of the UI stuff. They'll be added back.
+Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
+---
+ builtin-checkout.c |   30 +++++++++++++++---------------
+ 1 files changed, 15 insertions(+), 15 deletions(-)
 
-I could use the stable branch until we sort out these issues.
-
+diff --git a/builtin-checkout.c b/builtin-checkout.c
+index 4a4bb8b..007572e 100644
+--- a/builtin-checkout.c
++++ b/builtin-checkout.c
+@@ -67,17 +67,8 @@ static int update_some(const unsigned char *sha1, const char *base, int baselen,
+ 
+ static int read_tree_some(struct tree *tree, const char **pathspec)
+ {
+-	int newfd;
+-	struct lock_file *lock_file = xcalloc(1, sizeof(struct lock_file));
+-	newfd = hold_locked_index(lock_file, 1);
+-	read_cache();
+-
+ 	read_tree_recursive(tree, "", 0, 0, pathspec, update_some);
+ 
+-	if (write_cache(newfd, active_cache, active_nr) ||
+-	    commit_locked_index(lock_file))
+-		die("unable to write new index file");
+-
+ 	/* update the index with the given tree's info
+ 	 * for all args, expanding wildcards, and exit
+ 	 * with any non-zero return code.
+@@ -85,7 +76,7 @@ static int read_tree_some(struct tree *tree, const char **pathspec)
+ 	return 0;
+ }
+ 
+-static int checkout_paths(const char **pathspec)
++static int checkout_paths(struct tree *source_tree, const char **pathspec)
+ {
+ 	int pos;
+ 	struct checkout state;
+@@ -94,6 +85,15 @@ static int checkout_paths(const char **pathspec)
+ 	int flag;
+ 	struct commit *head;
+ 
++	int newfd;
++	struct lock_file *lock_file = xcalloc(1, sizeof(struct lock_file));
++
++	newfd = hold_locked_index(lock_file, 1);
++	read_cache();
++
++	if (source_tree)
++		read_tree_some(source_tree, pathspec);
++
+ 	for (pos = 0; pathspec[pos]; pos++)
+ 		;
+ 	ps_matched = xcalloc(1, pos);
+@@ -116,6 +116,10 @@ static int checkout_paths(const char **pathspec)
+ 		}
+ 	}
+ 
++	if (write_cache(newfd, active_cache, active_nr) ||
++	    commit_locked_index(lock_file))
++		die("unable to write new index file");
++
+ 	resolve_ref("HEAD", rev, 0, &flag);
+ 	head = lookup_commit_reference_gently(rev, 1);
+ 
+@@ -554,11 +558,7 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
+ 			}
+ 		}
+ 
+-		if (source_tree)
+-			read_tree_some(source_tree, pathspec);
+-		else
+-			read_cache();
+-		return checkout_paths(pathspec);
++		return checkout_paths(source_tree, pathspec);
+ 	}
+ 
+ 	if (new.name && !new.commit) {
 -- 
-Catalin
+1.5.4.3.327.g614d7.dirty
