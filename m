@@ -1,75 +1,119 @@
-From: "Philippe Bruhat (BooK)" <book@cpan.org>
-Subject: [PATCH] cvsimport: document that -M can be used multiple times
-Date: Thu, 28 Feb 2008 11:18:23 +0100
-Message-ID: <1204193904-3652-4-git-send-email-book@cpan.org>
-References: <>
- <1204193904-3652-1-git-send-email-book@cpan.org>
- <1204193904-3652-2-git-send-email-book@cpan.org>
- <1204193904-3652-3-git-send-email-book@cpan.org>
-Cc: gitster@pobox.com, "Philippe Bruhat (BooK" <book@cpan.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 28 11:20:07 2008
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Google Summer of Code 2008
+Date: Thu, 28 Feb 2008 10:27:10 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0802281021070.22527@racer.site>
+References: <200802262356.28971.jnareb@gmail.com> <alpine.LSU.1.00.0802262337390.22527@racer.site> <20080228063621.GR8410@spearce.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>,
+	Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+X-From: git-owner@vger.kernel.org Thu Feb 28 11:28:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JUfrx-0005VB-CN
-	for gcvg-git-2@gmane.org; Thu, 28 Feb 2008 11:20:05 +0100
+	id 1JUfzy-0008HJ-GF
+	for gcvg-git-2@gmane.org; Thu, 28 Feb 2008 11:28:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754505AbYB1KTG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Feb 2008 05:19:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754403AbYB1KTD
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Feb 2008 05:19:03 -0500
-Received: from zlonk.bruhat.net ([91.121.102.217]:34201 "EHLO
-	ks354402.kimsufi.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754361AbYB1KS5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Feb 2008 05:18:57 -0500
-Received: from localhost ([127.0.0.1] helo=plop.home.bruhat.net)
-	by ks354402.kimsufi.com with esmtp (Exim 4.63)
-	(envelope-from <philippe.bruhat@free.fr>)
-	id 1JUfs1-0007q0-A2; Thu, 28 Feb 2008 11:20:09 +0100
-Received: from book by plop.home.bruhat.net with local (Exim 4.69)
-	(envelope-from <philippe.bruhat@free.fr>)
-	id 1JUfqe-0000aZ-HH; Thu, 28 Feb 2008 11:18:44 +0100
-X-Mailer: git-send-email 1.5.4.2.187.gfc276
-In-Reply-To: <1204193904-3652-3-git-send-email-book@cpan.org>
+	id S1757350AbYB1K1o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Feb 2008 05:27:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754466AbYB1K1o
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Feb 2008 05:27:44 -0500
+Received: from mail.gmx.net ([213.165.64.20]:53580 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1759549AbYB1K1n (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Feb 2008 05:27:43 -0500
+Received: (qmail invoked by alias); 28 Feb 2008 10:27:41 -0000
+Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
+  by mail.gmx.net (mp027) with SMTP; 28 Feb 2008 11:27:41 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19R8vhM4N5RXh5+iiGPlLaYiBHOMpIXmPbx0UCuJ4
+	dpXp92H3ksm3kp
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20080228063621.GR8410@spearce.org>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75381>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75382>
 
-From: Philippe Bruhat (BooK <book@cpan.org>
+Hi,
 
-Also document the capture behaviour (source branch name in $1)
+On Thu, 28 Feb 2008, Shawn O. Pearce wrote:
 
-Signed-off-by: Philippe Bruhat (BooK) <book@cpan.org>
----
- Documentation/git-cvsimport.txt |    6 +++++-
- 1 files changed, 5 insertions(+), 1 deletions(-)
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > On Tue, 26 Feb 2008, Jakub Narebski wrote:
+> > 
+> > > I have just read (via Linux Today news[*1*]) that GSoC 2008 
+> > > initiative starts early.  Applications for organizations open March 
+> > > 3 and close March 12.  Git development community participated in 
+> > > GSoC 2007 with two projects accepted[*2*]: builtinification and 
+> > > libification.  What do you think about their results for git? What 
+> > > do you think about participating in this year GSoC?
+> > 
+> > I think that GSoC2007 was quite nice for us.  And with what we learnt, 
+> > we would do even better in 2008.
+> 
+> I agree.  Unfortunately though it seems only 3 of us out of 855 current 
+> subscribers to the git mailing list have anything to say on the subject 
+> in the past couple of days. :-\
 
-diff --git a/Documentation/git-cvsimport.txt b/Documentation/git-cvsimport.txt
-index 6f91b9e..58eefd4 100644
---- a/Documentation/git-cvsimport.txt
-+++ b/Documentation/git-cvsimport.txt
-@@ -102,13 +102,17 @@ If you need to pass multiple options, separate them with a comma.
- 
- -m::
- 	Attempt to detect merges based on the commit message. This option
--	will enable default regexes that try to capture the name source
-+	will enable default regexes that try to capture the source
- 	branch name from the commit message.
- 
- -M <regex>::
- 	Attempt to detect merges based on the commit message with a custom
- 	regex. It can be used with '-m' to enable the default regexes
- 	as well. You must escape forward slashes.
-++
-+The regex must capture the source branch name in $1.
-++
-+This option can be used several times to provide several detection regexes.
- 
- -S <regex>::
- 	Skip paths matching the regex.
--- 
-1.5.4.2.187.gfc276
+Yes, it is sad.  Even if now 4 out of 855 current subscribers said 
+something.
+
+> > However, I simply do not have the time to serve as primary contact.  
+> > I am willing to be mentor again, though.
+> 
+> I'd be willing to do it again, as well as mentor a student.  I found it 
+> very interesting last year.
+
+Thanks!
+
+> > As for projects, I imagine that Gitorrent, further builtinification 
+> > and Windows support would be good candidates.
+> 
+> Yea, Gitorrent would be cool.  Especially since send-pack is somewhat 
+> heavy on the server's resources and there are some very popular projects 
+> offered in git format (hello Linux kernel!).
+> 
+> I'd love to see new features added to git-gui, but I'm being selfish.
+
+Why?  I see that we had many ideas, less student applications, and even 
+less accepted.
+
+So let's throw ideas out there!
+
+> Ditto with jgit and egit, though I think Robin has done a stellar job 
+> with them thus far.  I can still want them to grow.
+
+Robin, how about it?
+
+> pack v4 (or maybe v5?! a student could have better ideas then we have 
+> thus far come up with) would also be interesting.
+
+That would need a student who is already familiar with Git, though.  A Git 
+newbie has no chance to learn everything necessary (including the style of 
+the community) in 3 months _and_ finish the project.
+
+> My list could probably go on for a bit.
+
+Do go ahead!  I started the page
+
+	http://git.or.cz/gitwiki/SoC2008Ideas
+
+which is utterly incomplete.  I just took the ideas of 2007 that I am 
+still interested in, and removed other people from the Mentor list, 
+because I do not want to force them.  So please, if you are interested in 
+mentoring one of the existing projects, just add yourself.
+
+And of course add all those cool projects you have in mind.
+
+Shawn, do we have to do the same again, as on this page?
+
+	http://git.or.cz/gitwiki/Soc2007Application
+
+Ciao,
+Dscho
