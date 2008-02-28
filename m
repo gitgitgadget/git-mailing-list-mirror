@@ -1,212 +1,115 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: What's in git.git (stable)
-Date: Wed, 27 Feb 2008 16:43:21 -0800
-Message-ID: <7vablloqqe.fsf@gitster.siamese.dyndns.org>
-References: <7v8x27iui1.fsf@gitster.siamese.dyndns.org>
- <7vd4r24ox6.fsf@gitster.siamese.dyndns.org>
- <7vir0o44mt.fsf_-_@gitster.siamese.dyndns.org>
- <7vejb7ymep.fsf@gitster.siamese.dyndns.org>
- <7vfxvhjukt.fsf@gitster.siamese.dyndns.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: warning: no common commits - slow pull
+Date: Wed, 27 Feb 2008 19:43:13 -0500
+Message-ID: <20080228004313.GQ8410@spearce.org>
+References: <200802102007.38838.lenb@kernel.org> <20080211035501.GB26205@mit.edu> <200802151643.30232.lenb@kernel.org> <200802261438.17014.lenb@kernel.org> <7vir0byoc2.fsf@gitster.siamese.dyndns.org> <7voda2yksf.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0802271411280.19665@iabervon.org> <7vskzeruit.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0802271605540.19665@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 28 01:44:22 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, Nicolas Pitre <nico@cam.org>,
+	Len Brown <lenb@kernel.org>, Theodore Tso <tytso@mit.edu>,
+	git@vger.kernel.org
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Thu Feb 28 01:44:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JUWsn-00077N-Q1
-	for gcvg-git-2@gmane.org; Thu, 28 Feb 2008 01:44:22 +0100
+	id 1JUWt3-0007CV-JO
+	for gcvg-git-2@gmane.org; Thu, 28 Feb 2008 01:44:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758407AbYB1Ani (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Feb 2008 19:43:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758926AbYB1Anh
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Feb 2008 19:43:37 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:57637 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758346AbYB1Ang (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Feb 2008 19:43:36 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id A9B2725BC;
-	Wed, 27 Feb 2008 19:43:34 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 6C0E425BA; Wed, 27 Feb 2008 19:43:29 -0500 (EST)
-X-maint-at: 0f497e75f05cdf0c0c1278eaba898cda6f118d71
-X-master-at: 6d21667206c4c2b10aad99eca1530a4f17c4e61d
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1759107AbYB1Anw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Feb 2008 19:43:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758999AbYB1Anw
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Feb 2008 19:43:52 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:36237 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758926AbYB1Anv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Feb 2008 19:43:51 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1JUWrY-0006wL-RQ; Wed, 27 Feb 2008 19:43:05 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id F1FE920FBAE; Wed, 27 Feb 2008 19:43:13 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <alpine.LNX.1.00.0802271605540.19665@iabervon.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75333>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75334>
 
-For the next maintenance release v1.5.4.4, I made a few
-cherry-picks from 'master' and also a merge down of a topic
-branch that has been cooking there, to 'maint'.
+Daniel Barkalow <barkalow@iabervon.org> wrote:
+> On Wed, 27 Feb 2008, Junio C Hamano wrote:
+> > 
+> > I think we can teach the upload-pack side to be more helpful and
+> > with a protocol extension to send tag objects that are pointing
+> > at commits that will be included in the result, or something
+> > like that, though.  But that is outside the scope of 1.5.5; it
+> > would be a moderate to large protocol surgery, and I suspect it
+> > might even have to affect pack-objects.
+> 
+> Using a single connection, either by just telling the remote that you want 
+> to autofollow tags, and it should therefore include any tags that point to 
+> any objects it includes,
 
-On the 'master' front, many topics have been merged.  With a few
-more topics that are still in 'next', we are pretty much done
-feature-wise for the next feature release v1.5.5.
+I agree its outside of 1.5.5, as we'd all like to see 1.5.5 happen
+soon, but it could be 1.5.6 material, especially if someone starts
+working on it sooner rather than later.
 
-----------------------------------------------------------------
-* The 'maint' branch has these fixes since the last announcement.
+Its actually probably not that difficult to implement.  We'd just
+want to include a size threshold, to prevent the client from
+suddenly receiving a 1M tag (with say a build log embedded in it)
+on an otherwise 100K transfer.  Autofollowing by having the remote
+include the tags in the pack and send to the client would be more
+efficient for both sides then autofollowing with a second set of
+ref requests, even if we are keeping the current connection open.
 
-Brandon Casey (1):
-  builtin-reflog.c: don't install new reflog on write failure
+I'll try to work up a prototype of this soon, say in the next week.
+Obviously not for 1.5.5 but no reason to wait for the 1.5.6/1.6.0
+window to open before developing it.  I think its a better approach
+then supporting a second set of ref requests on the same connection.
 
-Bryan Donlan (1):
-  Documentation/git-am.txt: Pass -r in the example invocation of rm -f
-    .dotest
+_IF_ we are going to support a second set of ref requests on the
+same connection then we should also support being able to switch
+to another repository.  I have 40 some odd repositories at day-job
+that a shell script loops over and does fetches in, over SSH.
+Setting up and tearing down 40+ SSH connections (especially with tag
+following!) sucks[*1*].  I think the X.org folks are in a similar
+position as me[*2*].
+ 
+> If the situation is:
+> 
+>       T - tag     master
+>      /           /
+> O - A - O - O - B
+> 
+> the first fetch will see:
+> 
+> tag: T
+> tag^{}: A
+> master: B
+> 
+> The issue is that our starting set for our side of the negotiation is our 
+> current refs, which doesn't include A. I'm suggesting that, for the 
+> purposes of autofollow, A should be included.
 
-Caio Marcelo de Oliveira Filho (1):
-  filter-branch documentation: non-zero exit status in command abort the
-    filter
-
-Carl Worth (1):
-  Eliminate confusing "won't bisect on seeked tree" failure
-
-Daniel Barkalow (2):
-  Use a single implementation and API for copy_file()
-  Don't use GIT_CONFIG in t5505-remote
-
-Jay Soffian (2):
-  rev-parse: fix potential bus error with --parseopt option spec handling
-  send-email: fix In-Reply-To regression
-
-Johan Herland (2):
-  Add testcase for 'git cvsexportcommit -w $cvsdir ...' with relative
-    $GIT_DIR
-  Fix 'git cvsexportcommit -w $cvsdir ...' when used with relative $GIT_DIR
-
-Johannes Schindelin (3):
-  http-push: avoid invalid memory accesses
-  http-push: do not get confused by submodules
-  http-push: avoid a needless goto
-
-Jonathan del Strother (1):
-  Prompt to continue when editing during rebase --interactive
-
-Miklos Vajna (2):
-  Documentation/git-filter-branch: add a new msg-filter example
-  Documentation/git svn log: add a note about timezones.
-
-Steven Drake (1):
-  timezone_names[]: fixed the tz offset for New Zealand.
+I agree.  This is probably easier than coding the protocol extension above.
+:-)
 
 
-----------------------------------------------------------------
-* The 'master' branch has these since the last announcement
-  in addition to the above.
+*1* I know all about the SSH connection sharing feature, it is
+    unsupported on Cygwin.  I'm on Cygwin at day-job.  So that is
+    a no-go.
 
-Alexandre Julliard (1):
-  git.el: Do not display empty directories.
+*2* X.org users are more likely to be on a UNIX platform where the
+    OpenSSH connection share code works correctly.
 
-Andreas Ericsson (1):
-  pack-objects: Add runtime detection of online CPU's
-
-Brandon Casey (2):
-  builtin-reflog.c: don't install new reflog on write failure
-  pack-objects: Print a message describing the number of threads for packing
-
-Carl Worth (1):
-  Eliminate confusing "won't bisect on seeked tree" failure
-
-Daniel Barkalow (26):
-  Allow callers of unpack_trees() to handle failure
-  Add flag to make unpack_trees() not print errors.
-  Send unpack-trees debugging output to stderr
-  Discard "deleted" cache entries after using them to update the working tree
-  Add "skip_unmerged" option to unpack_trees.
-  Build-in merge-recursive
-  Move create_branch into a library file
-  Use diff -u instead of diff in t7201
-  Library function to check for unmerged index entries
-  Move code to clean up after a branch change to branch.c
-  Build in checkout
-  Clean up reporting differences on branch switch
-  Add more tests for format-patch
-  Improve message-id generation flow control for format-patch
-  Export some email and pretty-printing functions
-  Use ALLOC_GROW in remote.{c,h}
-  Add a --cover-letter option to format-patch
-  Add tests for extra headers in format-patch
-  Fix format.headers not ending with a newline
-  Combine To: and Cc: headers
-  Support a --cc=<email> option in format-patch
-  Resolve value supplied for no-colon push refspecs
-  builtin-checkout.c: Remove unused prefix arguments in switch_branches path
-  Add support for url aliases in config files
-  Add API access to shortlog
-  Improve collection of information for format-patch --cover-letter
-
-Gerrit Pape (1):
-  hash-object: cleanup handling of command line options
-
-Jakub Narebski (2):
-  gitweb: Better cutting matched string and its context
-  Add '--fixed-strings' option to "git log --grep" and friends
-
-Jay Soffian (3):
-  builtin-checkout.c: fix possible usage segfault
-  branch: optionally setup branch.*.merge from upstream local branches
-  doc: documentation update for the branch track changes
-
-Jeff King (3):
-  help: use parseopt
-  make alias lookup a public, procedural function
-  help: respect aliases
-
-Jim Meyering (1):
-  Avoid unnecessary "if-before-free" tests.
-
-Johannes Schindelin (2):
-  xdl_merge(): make XDL_MERGE_ZEALOUS output simpler
-  xdl_merge(): introduce XDL_MERGE_ZEALOUS_ALNUM
-
-Johannes Sixt (2):
-  start_command(), .in/.out/.err = -1: Callers must close the file descriptor
-  start_command(), if .in/.out > 0, closes file descriptors, not the callers
-
-Junio C Hamano (12):
-  diff --relative: output paths as relative to the current subdirectory
-  diff --relative: help working in a bare repository
-  checkout: notice when the switched branch is behind or forked
-  checkout: tone down the "forked status" diagnostic messages
-  checkout: work from a subdirectory
-  checkout: updates to tracking report
-  Add merge-subtree back
-  checkout: show progress when checkout takes long time while switching
-    branches
-  checkout: error out when index is unmerged even with -m
-  url rewriting: take longest and first match
-  git-apply --whitespace=fix: fix off by one thinko
-  Revert "pack-objects: Print a message describing the number of threads
-    for packing"
-
-Sebastian Noack (1):
-  git-svn: Don't prompt for client cert password everytime.
-
-Shawn O. Pearce (5):
-  Optimize peel_ref for the current ref of a for_each_ref callback
-  Teach git-describe to use peeled ref information when scanning tags
-  Avoid accessing non-tag refs in git-describe unless --all is requested
-  Teach git-describe --exact-match to avoid expensive tag searches
-  Use git-describe --exact-match in bash prompt on detached HEAD
-
-Simon Hausmann (4):
-  git-p4: Remove --log-substitutions feature.
-  git-p4: Clean up git-p4 submit's log message handling.
-  git-p4: Removed git-p4 submit --direct.
-  git-p4: git-p4 submit cleanups.
-
-Steffen Prohaska (2):
-  t4014: Replace sed's non-standard 'Q' by standard 'q'
-  Add tests for filesystem challenges (case and unicode normalization)
-
-Tommy Thorn (1):
-  git-p4: support exclude paths
-
-Tor Arvid Lund (1):
-  git-p4: Support usage of perforce client spec
+-- 
+Shawn.
