@@ -1,62 +1,68 @@
-From: Jeremy Maitin-Shepard <jbms@cmu.edu>
-Subject: Re: Google Summer of Code 2008
-Date: Thu, 28 Feb 2008 02:03:00 -0500
-Message-ID: <874pbtr2aj.fsf@jbms.ath.cx>
-References: <200802262356.28971.jnareb@gmail.com>
-	<alpine.LSU.1.00.0802262337390.22527@racer.site>
-	<20080228063621.GR8410@spearce.org>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [PATCH 1/4] git.el: Support for showing unknown/ignored directories.
+Date: Thu, 28 Feb 2008 08:06:11 +0100
+Message-ID: <20080228070611.GA28085@diana.vm.bytemark.co.uk>
+References: <87zludorqs.fsf@wine.dyndns.org> <20080222153051.GA20984@diana.vm.bytemark.co.uk> <8763whkmxf.fsf@wine.dyndns.org> <20080222171052.GA23012@diana.vm.bytemark.co.uk> <20080227112746.GA10786@diana.vm.bytemark.co.uk> <7vejaytc35.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Feb 28 08:04:12 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Alexandre Julliard <julliard@winehq.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 28 08:07:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JUcoN-00082c-4z
-	for gcvg-git-2@gmane.org; Thu, 28 Feb 2008 08:04:11 +0100
+	id 1JUcrZ-0000LI-LL
+	for gcvg-git-2@gmane.org; Thu, 28 Feb 2008 08:07:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754856AbYB1HDR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Feb 2008 02:03:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750823AbYB1HDQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Feb 2008 02:03:16 -0500
-Received: from deleuze.hcoop.net ([69.90.123.67]:34490 "EHLO deleuze.hcoop.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754845AbYB1HDI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Feb 2008 02:03:08 -0500
-Received: from c-67-165-107-197.hsd1.pa.comcast.net ([67.165.107.197] helo=localhost)
-	by deleuze.hcoop.net with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.63)
-	(envelope-from <jbms@cmu.edu>)
-	id 1JUcnG-0007Dg-1b; Thu, 28 Feb 2008 02:03:02 -0500
-X-Habeas-SWE-9: mark in spam to <http://www.habeas.com/report/>.
-X-Habeas-SWE-8: Message (HCM) and not spam. Please report use of this
-X-Habeas-SWE-7: warrant mark warrants that this is a Habeas Compliant
-X-Habeas-SWE-6: email in exchange for a license for this Habeas
-X-Habeas-SWE-5: Sender Warranted Email (SWE) (tm). The sender of this
-X-Habeas-SWE-4: Copyright 2002 Habeas (tm)
-X-Habeas-SWE-3: like Habeas SWE (tm)
-X-Habeas-SWE-2: brightly anticipated
-X-Habeas-SWE-1: winter into spring
-In-Reply-To: <20080228063621.GR8410@spearce.org> (Shawn O. Pearce's message of
-	"Thu, 28 Feb 2008 01:36:21 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.50 (gnu/linux)
+	id S1751323AbYB1HGy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Feb 2008 02:06:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751315AbYB1HGx
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Feb 2008 02:06:53 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3050 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750823AbYB1HGx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Feb 2008 02:06:53 -0500
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1JUcqJ-0007Kx-00; Thu, 28 Feb 2008 07:06:11 +0000
+Content-Disposition: inline
+In-Reply-To: <7vejaytc35.fsf@gitster.siamese.dyndns.org>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75361>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75362>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
+On 2008-02-27 11:48:30 -0800, Junio C Hamano wrote:
 
-[snip]
+> Karl Hasselstr=F6m <kha@treskal.com> writes:
+>
+> > Junio, did you see this bugfix? (I just realized you weren't
+> > cc'ed, so I guess not.)
+>
+> No, and thanks.
+>
+> So I'll take
+>
+>     From: Alexandre Julliard <julliard@winehq.org>
+>     Message-ID: <8763whkmxf.fsf@wine.dyndns.org>
+>
+> aka
+>
+>     http://article.gmane.org/gmane.comp.version-control.git/74730
+>
+> in this thread with your Tested-by: and apply to fix 3f3d564
+> (git.el: Support for showing unknown/ignored directories.)?
 
-> My list could probably go on for a bit.
+Yes, exactly. Thanks.
 
-Just as a suggested project, it seems that a continuation of the efforts
-on libgit-thin would be very useful.
+(Would you like this kind of detailed pointer in a reminder, or is the
+threading support in your mailer good enough that just replying to the
+right mail will do it?)
 
--- 
-Jeremy Maitin-Shepard
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
