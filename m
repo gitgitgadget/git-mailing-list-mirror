@@ -1,63 +1,59 @@
-From: Paolo Bonzini <bonzini@gnu.org>
-Subject: Re: [PATCH 20/40] Windows: A rudimentary poll() emulation.
-Date: Thu, 28 Feb 2008 10:36:36 +0100
-Message-ID: <47C680A4.6050309@gnu.org>
-References: <1204138503-6126-1-git-send-email-johannes.sixt@telecom.at> <1204138503-6126-21-git-send-email-johannes.sixt@telecom.at>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: Minor bug in 'stg edit' ?
+Date: Thu, 28 Feb 2008 10:41:07 +0100
+Message-ID: <20080228094107.GB28085@diana.vm.bytemark.co.uk>
+References: <20080227224756.GK2222@TopQuark.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Johannes Sixt <johannes.sixt@telecom.at>
-X-From: git-owner@vger.kernel.org Thu Feb 28 10:37:22 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: catalin.marinas@gmail.com, git@vger.kernel.org
+To: Paul Donohue <stgit-bug@TopQuark.net>
+X-From: git-owner@vger.kernel.org Thu Feb 28 10:42:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JUfCb-0007K3-Mj
-	for gcvg-git-2@gmane.org; Thu, 28 Feb 2008 10:37:22 +0100
+	id 1JUfH6-0000N3-Sa
+	for gcvg-git-2@gmane.org; Thu, 28 Feb 2008 10:42:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755119AbYB1Jgp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Feb 2008 04:36:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755176AbYB1Jgp
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Feb 2008 04:36:45 -0500
-Received: from fg-out-1718.google.com ([72.14.220.153]:18407 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755069AbYB1Jgo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Feb 2008 04:36:44 -0500
-Received: by fg-out-1718.google.com with SMTP id e21so2636317fga.17
-        for <git@vger.kernel.org>; Thu, 28 Feb 2008 01:36:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:sender;
-        bh=usLr+F5rXAkuXfC10uULalsW1wTyhO0WpJ4IB8fjOxg=;
-        b=IS+szxGucse9ZqIYScsqusNRyRFy7osRspZNVK2Np5XD4I21dtmpaB/vCQs1/v1tg6J4KeAihpj1fnpDsHv/+WQ0Ye67pho9MP58/tOZV9SIRa3aaO0gs3+mcfgIV349TSGyHABVENyaovZayO6d8m9HcFYtnrXg/2tkcd1uaDE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:sender;
-        b=Gk9CV7FMXfho8epDhGsZ8Wb91ISWWYTrwSUMk4lzU02QaXFb07shZyowBdS/p57wLfPqnQDBvN+FkYMgRnY50va2ftVZHO1ySAdSDQQajU21UZgfXl2jsvdy6DOpNpivi/yOXIybdQIuL9g2KoFMaKQsimqjUuCqjSRJ1lQMX2Y=
-Received: by 10.86.73.17 with SMTP id v17mr7807122fga.40.1204191402525;
-        Thu, 28 Feb 2008 01:36:42 -0800 (PST)
-Received: from scientist-2.local ( [195.176.178.209])
-        by mx.google.com with ESMTPS id u9sm16904512muf.4.2008.02.28.01.36.39
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 28 Feb 2008 01:36:41 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.12 (Macintosh/20080213)
-In-Reply-To: <1204138503-6126-21-git-send-email-johannes.sixt@telecom.at>
+	id S1754428AbYB1JlY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Feb 2008 04:41:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753853AbYB1JlY
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Feb 2008 04:41:24 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4292 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753781AbYB1JlX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Feb 2008 04:41:23 -0500
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1JUfGF-0007lw-00; Thu, 28 Feb 2008 09:41:07 +0000
+Content-Disposition: inline
+In-Reply-To: <20080227224756.GK2222@TopQuark.net>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75372>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75373>
 
-Johannes Sixt wrote:
-> This emulation of poll() is by far not general. It assumes that the
-> fds that are to be waited for are connected to pipes. The pipes are
-> polled in a loop until data becomes available in at least one of them.
-> If only a single fd is waited for, the implementation actually does
-> not wait at all, but assumes that a subsequent read() will block.
+On 2008-02-27 17:47:57 -0500, Paul Donohue wrote:
 
-For the future, would it be better to first use WaitForMultipleObjects, 
-and then use PeekNamedPipe to find which handles have data on it? 
-That's how the mingw port of GNU Smalltalk does it.
+> After running 'stg edit', the file '.stgit-edit.txt' is always left
+> behind. Is this supposed to happen? I would have assumed the file
+> would be automatically removed after the changes were committed.
 
-Paolo
+Yes, I'd say that's a bug.
+
+> I'm running StGIT 0.14.1.
+
+The bug is gone in the master branch (at least as far as I can tell);
+it probably disappeared when stg edit was switched to the new
+infrastructure.
+
+> Thanks!
+
+Thanks for the bug report.
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
