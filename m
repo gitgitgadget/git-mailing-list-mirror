@@ -1,69 +1,63 @@
-From: Gerrit Pape <pape@smarden.org>
-Subject: [PATCH] templates/Makefile: don't depend on local umask setting
-Date: Thu, 28 Feb 2008 18:44:42 +0000
-Message-ID: <20080228184442.13993.qmail@c0e6a439c34263.315fe32.mid.smarden.org>
+From: Kyle Rose <krose@krose.org>
+Subject: cookbook question
+Date: Thu, 28 Feb 2008 14:00:11 -0500
+Message-ID: <47C704BB.2010707@krose.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 28 19:46:09 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git mailing list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Feb 28 20:08:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JUnlP-0000BI-44
-	for gcvg-git-2@gmane.org; Thu, 28 Feb 2008 19:45:51 +0100
+	id 1JUo7G-0001Qe-Uf
+	for gcvg-git-2@gmane.org; Thu, 28 Feb 2008 20:08:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761433AbYB1SoZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Feb 2008 13:44:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761425AbYB1SoZ
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Feb 2008 13:44:25 -0500
-Received: from a.ns.smarden.org ([212.42.242.37]:41825 "HELO a.mx.smarden.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755346AbYB1SoX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Feb 2008 13:44:23 -0500
-Received: (qmail 13994 invoked by uid 1000); 28 Feb 2008 18:44:42 -0000
-Content-Disposition: inline
+	id S1752286AbYB1THu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Feb 2008 14:07:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752556AbYB1THu
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Feb 2008 14:07:50 -0500
+Received: from kai.krose.org ([140.186.190.96]:51037 "EHLO mail.krose.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752236AbYB1THt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Feb 2008 14:07:49 -0500
+X-Greylist: delayed 456 seconds by postgrey-1.27 at vger.kernel.org; Thu, 28 Feb 2008 14:07:49 EST
+Received: from [172.16.25.54] (fw01.cmbrmaks.akamai.com [80.67.64.10])
+	by mail.krose.org (Postfix) with ESMTP id 4B3332AEC084
+	for <git@vger.kernel.org>; Thu, 28 Feb 2008 14:00:12 -0500 (EST)
+User-Agent: Thunderbird 2.0.0.9 (X11/20071229)
+X-Enigmail-Version: 0.95.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75434>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75435>
 
-Don't take the local umask setting into account when installing the
-templates/* files and directories, running 'make install' with umask set
-to 077 resulted in template/* installed with permissions 700 and 600.
+In maintaining a postfix config that differs maybe 10% between two 
+different machines, I have a "common" branch that has ???? in the fields 
+that differ.  I realized after speaking with one of the git developers a 
+few weeks ago that I really should be using git-rebase to fix up the 
+machine-specific branches when I make a change to the common branch.  
+Unfortunately, the merge history was screwed up enough such that doing
 
-The problem was discovered by Florian Zumbiehl, reported through
- http://bugs.debian.org/467518
+git rebase -s ours origin/common
 
-Signed-off-by: Gerrit Pape <pape@smarden.org>
----
- templates/Makefile |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
+replaced one machine-specific config with the other, which is not what I 
+wanted.
 
-diff --git a/templates/Makefile b/templates/Makefile
-index ebd3a62..bda9d13 100644
---- a/templates/Makefile
-+++ b/templates/Makefile
-@@ -29,10 +29,10 @@ boilerplates.made : $(bpsrc)
- 		case "$$boilerplate" in *~) continue ;; esac && \
- 		dst=`echo "$$boilerplate" | sed -e 's|^this|.|;s|--|/|g'` && \
- 		dir=`expr "$$dst" : '\(.*\)/'` && \
--		mkdir -p blt/$$dir && \
-+		$(INSTALL) -d -m 755 blt/$$dir && \
- 		case "$$boilerplate" in \
- 		*--) ;; \
--		*) cp $$boilerplate blt/$$dst ;; \
-+		*) cp -p $$boilerplate blt/$$dst ;; \
- 		esac || exit; \
- 	done && \
- 	date >$@
-@@ -48,4 +48,4 @@ clean:
- install: all
- 	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(template_dir_SQ)'
- 	(cd blt && $(TAR) cf - .) | \
--	(cd '$(DESTDIR_SQ)$(template_dir_SQ)' && $(TAR) xf -)
-+	(cd '$(DESTDIR_SQ)$(template_dir_SQ)' && umask 022 && $(TAR) xf -)
--- 
-1.5.4.3
+In order to reset things to a state in which git-rebase would be useful, 
+I did the following:
+
+git diff origin/common >/tmp/diff
+git reset --hard origin/common
+patch -p1 </tmp/diff
+git commit -a -m 'reintroduce changes'
+
+which works fine, but is obviously not the right way to do this.  What 
+*is* the right way to accomplish this?  Essentially, I'm trying to reset 
+the rebase point such that git won't rewind earlier when trying to do 
+subsequent rebases.
+
+Kyle
 
