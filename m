@@ -1,67 +1,105 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/4] git.el: Support for showing unknown/ignored
- directories.
-Date: Wed, 27 Feb 2008 23:46:44 -0800
-Message-ID: <7v3ardldzv.fsf@gitster.siamese.dyndns.org>
-References: <87zludorqs.fsf@wine.dyndns.org>
- <20080222153051.GA20984@diana.vm.bytemark.co.uk>
- <8763whkmxf.fsf@wine.dyndns.org>
- <20080222171052.GA23012@diana.vm.bytemark.co.uk>
- <20080227112746.GA10786@diana.vm.bytemark.co.uk>
- <7vejaytc35.fsf@gitster.siamese.dyndns.org>
- <20080228070611.GA28085@diana.vm.bytemark.co.uk>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [PATCH 2/4] Allow builtin-fetch's find_non_local_tags to append onto a list
+Date: Thu, 28 Feb 2008 03:42:34 -0500
+Message-ID: <20080228084234.GB16870@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Alexandre Julliard <julliard@winehq.org>, git@vger.kernel.org
-To: Karl =?utf-8?Q?Hasselstr=C3=B6m?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Thu Feb 28 08:47:42 2008
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 28 09:43:18 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JUdUU-0001GL-4i
-	for gcvg-git-2@gmane.org; Thu, 28 Feb 2008 08:47:42 +0100
+	id 1JUeMG-0008Cq-RY
+	for gcvg-git-2@gmane.org; Thu, 28 Feb 2008 09:43:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752607AbYB1HrF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Feb 2008 02:47:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752188AbYB1HrE
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Feb 2008 02:47:04 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:59553 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752110AbYB1HrD convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Feb 2008 02:47:03 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 6B6BB26B3;
-	Thu, 28 Feb 2008 02:47:01 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 7F66A26B2; Thu, 28 Feb 2008 02:46:54 -0500 (EST)
-In-Reply-To: <20080228070611.GA28085@diana.vm.bytemark.co.uk> (Karl
- =?utf-8?Q?Hasselstr=C3=B6m's?= message of "Thu, 28 Feb 2008 08:06:11 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753977AbYB1Imi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Feb 2008 03:42:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752539AbYB1Imi
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Feb 2008 03:42:38 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:60832 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753134AbYB1Imh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Feb 2008 03:42:37 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1JUeLZ-0000yQ-Md; Thu, 28 Feb 2008 03:42:33 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 6C3F220FBC9; Thu, 28 Feb 2008 03:42:34 -0500 (EST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75364>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75365>
 
-Karl Hasselstr=C3=B6m <kha@treskal.com> writes:
+By allowing the function to append onto the end of an existing list
+we can do more interesting things, like join the list of tags we
+want to fetch into the first fetch, rather than the second.
 
-> (Would you like this kind of detailed pointer in a reminder, or is th=
-e
-> threading support in your mailer good enough that just replying to th=
-e
-> right mail will do it?)
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ builtin-fetch.c |   16 ++++++++--------
+ 1 files changed, 8 insertions(+), 8 deletions(-)
 
-I'd actually like a forwarded message that I can directly feed
-to "git am", with Sign-offs and Acked-bys, but being explicit
-would be good enough.
-
-I often do not have enough mental and time bandwidth to hunt for
-messages more than 2 weeks old in the list archive, so unless
-the response is direct reply to the original, I'd rather not
-rely on the threading feature. IOW, I can move to grandparent by
-typing ^ just fine, but uncles and aunts are harder to find
-without reloading my MUA full message archive for N weeks worth.
+diff --git a/builtin-fetch.c b/builtin-fetch.c
+index f8b9542..834fbc6 100644
+--- a/builtin-fetch.c
++++ b/builtin-fetch.c
+@@ -452,7 +452,9 @@ static int add_existing(const char *refname, const unsigned char *sha1,
+ 	return 0;
+ }
+ 
+-static struct ref *find_non_local_tags(struct transport *transport)
++static void find_non_local_tags(struct transport *transport,
++			struct ref **head,
++			struct ref ***tail)
+ {
+ 	static struct path_list existing_refs = { NULL, 0, 0, 0 };
+ 	struct path_list new_refs = { NULL, 0, 0, 1 };
+@@ -461,8 +463,6 @@ static struct ref *find_non_local_tags(struct transport *transport)
+ 	const unsigned char *ref_sha1;
+ 	const struct ref *tag_ref;
+ 	struct ref *rm = NULL;
+-	struct ref *ref_map = NULL;
+-	struct ref **tail = &ref_map;
+ 	const struct ref *ref;
+ 
+ 	for_each_ref(add_existing, &existing_refs);
+@@ -497,13 +497,11 @@ static struct ref *find_non_local_tags(struct transport *transport)
+ 			strcpy(rm->peer_ref->name, ref_name);
+ 			hashcpy(rm->old_sha1, ref_sha1);
+ 
+-			*tail = rm;
+-			tail = &rm->next;
++			**tail = rm;
++			*tail = &rm->next;
+ 		}
+ 		free(ref_name);
+ 	}
+-
+-	return ref_map;
+ }
+ 
+ static int do_fetch(struct transport *transport,
+@@ -546,7 +544,9 @@ static int do_fetch(struct transport *transport,
+ 	/* if neither --no-tags nor --tags was specified, do automated tag
+ 	 * following ... */
+ 	if (tags == TAGS_DEFAULT && autotags) {
+-		ref_map = find_non_local_tags(transport);
++		struct ref **tail = &ref_map;
++		ref_map = NULL;
++		find_non_local_tags(transport, &ref_map, &tail);
+ 		if (ref_map) {
+ 			transport_set_option(transport, TRANS_OPT_DEPTH, "0");
+ 			fetch_refs(transport, ref_map);
+-- 
+1.5.4.3.393.g5540
