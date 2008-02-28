@@ -1,67 +1,64 @@
-From: Sebastian Schuberth <sschuberth@gmail.com>
-Subject: git diff --name-status does not always list changed files
-Date: Thu, 28 Feb 2008 15:47:14 +0100
-Message-ID: <fq6hhi$cub$1@ger.gmane.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 03/40] Add target architecture MinGW.
+Date: Thu, 28 Feb 2008 14:56:24 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0802281455440.22527@racer.site>
+References: <1204138503-6126-1-git-send-email-johannes.sixt@telecom.at> <1204138503-6126-4-git-send-email-johannes.sixt@telecom.at> <alpine.LSU.1.00.0802281159550.22527@racer.site> <47C6AFA4.9040304@gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 28 15:48:18 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johannes Sixt <johannes.sixt@telecom.at>, git@vger.kernel.org
+To: Paolo Bonzini <bonzini@gnu.org>
+X-From: git-owner@vger.kernel.org Thu Feb 28 15:58:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JUk3O-0000OL-Iz
-	for gcvg-git-2@gmane.org; Thu, 28 Feb 2008 15:48:11 +0100
+	id 1JUkCz-0004NP-MG
+	for gcvg-git-2@gmane.org; Thu, 28 Feb 2008 15:58:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752928AbYB1Ord (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Feb 2008 09:47:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752308AbYB1Ord
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Feb 2008 09:47:33 -0500
-Received: from main.gmane.org ([80.91.229.2]:36911 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751371AbYB1Orc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Feb 2008 09:47:32 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1JUk2d-0007Ra-L9
-	for git@vger.kernel.org; Thu, 28 Feb 2008 14:47:23 +0000
-Received: from port-83-236-129-242.static.qsc.de ([83.236.129.242])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 28 Feb 2008 14:47:23 +0000
-Received: from sschuberth by port-83-236-129-242.static.qsc.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 28 Feb 2008 14:47:23 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: port-83-236-129-242.static.qsc.de
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.12) Gecko/20080213 Thunderbird/2.0.0.12 Mnenhy/0.7.5.0
+	id S1754337AbYB1O5I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Feb 2008 09:57:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759218AbYB1O5A
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Feb 2008 09:57:00 -0500
+Received: from mail.gmx.net ([213.165.64.20]:40242 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1758238AbYB1O44 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Feb 2008 09:56:56 -0500
+Received: (qmail invoked by alias); 28 Feb 2008 14:56:54 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp037) with SMTP; 28 Feb 2008 15:56:54 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18JdKBnjdcJ3KkU3PZ4o6RL5egBeF5KgX02NsoRcu
+	Kvbu8jiMzh9JDH
+X-X-Sender: gene099@racer.site
+In-Reply-To: <47C6AFA4.9040304@gnu.org>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75402>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75403>
 
 Hi,
 
-I was getting a lot of "no newline at end of file" warnings with GCC, so 
-I decided to fix these files in my clean working tree with
+On Thu, 28 Feb 2008, Paolo Bonzini wrote:
 
-for i in `find . -iname "*.c" -o -iname "*.cc" -o -iname "*.cpp" -o 
--iname "*.h" -o -iname "*.hpp"`; do
-     echo $i
-     echo wq | ed $i > /dev/null 2>&1
-done
+> Johannes Schindelin wrote:
+> 
+> > On Wed, 27 Feb 2008, Johannes Sixt wrote:
+> > 
+> > > +int gettimeofday(struct timeval *tv, void *tz)
+> > > +{
+> > > +	return 0;
+> > > +}
+> > 
+> > Should it not return -1, for failure?  (I know, I know, probably a few
+> > programs do not work, then, but it is not correct that it succeeded.)
+> 
+> FWIW, this is overwritten by later patches in the series anyway.
 
-Afterwards, I wanted so see a list of files that were actually affected, 
-but to my wonderment "git diff --name-status" did not list any files, 
-although both "git diff" and "gitk" showed the diffs correctly.
+Yes, I know that.  But the whole point of having a nice patch series is to 
+have proper revisions, and IMO returning 0 here is not correct.
 
-Is this a bug in "--name-status" that is does not detected changes if 
-only a final newline has been added, or am I missing something?
-
-Thanks.
-
--- 
-Sebastian Schuberth
-
+Ciao,
+Dscho
