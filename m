@@ -1,74 +1,174 @@
-From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-Subject: Re: [PATCH 6/9] Completely move out worktree setup from setup_git_directory_gently()
-Date: Thu, 28 Feb 2008 11:09:54 +0700
-Message-ID: <fcaeb9bf0802272009s4ea773b3i6123ac5012b471a@mail.gmail.com>
-References: <cover.1204130175.git.pclouds@gmail.com>
-	 <20080227163934.GA28084@laptop>
-	 <7vy795lt89.fsf@gitster.siamese.dyndns.org>
-	 <fcaeb9bf0802271931t559d4bd1n86bb5c644b082274@mail.gmail.com>
-	 <7vk5kplpj2.fsf@gitster.siamese.dyndns.org>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH 1/2] help: add "man.viewer" config var to use "woman" or
+ "konqueror"
+Date: Thu, 28 Feb 2008 05:19:56 +0100
+Message-ID: <20080228051956.2f36edf0.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 28 05:11:04 2008
+To: Junio Hamano <junkio@cox.net>, Pascal Obry <pascal@obry.net>,
+	Xavier Maillard <xma@gnu.org>,
+	=?UTF-8?Q?=E3=81=97=E3=82=89=E3=81=84=E3=81=97?=
+	 =?UTF-8?Q?=E3=81=AA=E3=81=AA=E3=81=93?=
+X-From: git-owner@vger.kernel.org Thu Feb 28 05:14:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JUa6p-00050n-8a
-	for gcvg-git-2@gmane.org; Thu, 28 Feb 2008 05:11:03 +0100
+	id 1JUaAT-0005ez-Mj
+	for gcvg-git-2@gmane.org; Thu, 28 Feb 2008 05:14:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755720AbYB1EJ4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Feb 2008 23:09:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755567AbYB1EJ4
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Feb 2008 23:09:56 -0500
-Received: from nf-out-0910.google.com ([64.233.182.191]:24803 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752497AbYB1EJz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Feb 2008 23:09:55 -0500
-Received: by nf-out-0910.google.com with SMTP id g13so1735879nfb.21
-        for <git@vger.kernel.org>; Wed, 27 Feb 2008 20:09:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=dwp1y4su87qKSflG2dsbMFShVbWYnT4N/ThyHe6BaPk=;
-        b=PFPdsib7kS9Mm55MD90mAQrEMChxqJX6ZN9ULsflydFCqIlppTbNfflmo1PLFvFqqSWIb2HsBxfaPfkE81V8T7MOedzUxdqssrjLMa1Mt9jt0DRn6N12BuqvkJne/Busua+SuVgv2IX9s+IBX6UB5ZlvFYznAViGbtP71gIuKmw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=ZxadUPzOuUmoSDtLSR8TgDEI44+Mrw/rpcSG+/qI1H1S2EnVDdzxREF3Nth0oFhpSBkcQqe3h77ZX0sKGwl16bdFjS3CBz8IcZ1tCjvqgRbSTKnr5j1n5b21xNs4ekHqKs4EcrXsi6fKlR81p0OyMZK0qB9OqUf3tUvBOm1c/8Q=
-Received: by 10.86.54.3 with SMTP id c3mr7297284fga.18.1204171794290;
-        Wed, 27 Feb 2008 20:09:54 -0800 (PST)
-Received: by 10.86.83.3 with HTTP; Wed, 27 Feb 2008 20:09:54 -0800 (PST)
-In-Reply-To: <7vk5kplpj2.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1756478AbYB1EOO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Feb 2008 23:14:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756436AbYB1EON
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Feb 2008 23:14:13 -0500
+Received: from smtp1-g19.free.fr ([212.27.42.27]:38753 "EHLO smtp1-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756404AbYB1EOM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Feb 2008 23:14:12 -0500
+Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id C1C551AB2B9;
+	Thu, 28 Feb 2008 05:14:11 +0100 (CET)
+Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with SMTP id 653E41AB2B8;
+	Thu, 28 Feb 2008 05:14:11 +0100 (CET)
+X-Mailer: Sylpheed 2.4.8 (GTK+ 2.12.5; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75350>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75351>
 
-T24gVGh1LCBGZWIgMjgsIDIwMDggYXQgMTA6MzcgQU0sIEp1bmlvIEMgSGFtYW5vIDxnaXRzdGVy
-QHBvYm94LmNvbT4gd3JvdGU6Cj4KPiAiTmd1eWVuIFRoYWkgTmdvYyBEdXkiIDxwY2xvdWRzQGdt
-YWlsLmNvbT4gd3JpdGVzOgo+Cj4gID4gT24gVGh1LCBGZWIgMjgsIDIwMDggYXQgOToxNyBBTSwg
-SnVuaW8gQyBIYW1hbm8gPGdpdHN0ZXJAcG9ib3guY29tPiB3cm90ZToKPiAgPj4gTmd1eeG7hW4g
-VGjDoWkgTmfhu41jIER1eSA8cGNsb3Vkc0BnbWFpbC5jb20+IHdyaXRlczoKPiAgPj4KPiAgPj4g
-ID4gLSAgICAgcHJlZml4ID0gc2V0dXBfZ2l0X2RpcmVjdG9yeV9nZW50bHkoJm5vbmdpdCk7Cj4g
-ID4+ICA+IC0gICAgIGluaXRfcmV2aXNpb25zKCZyZXYsIHByZWZpeCk7Cj4gID4+ICA+ICsgICAg
-IHNldHVwX2dpdF9kaXJlY3RvcnlfZ2VudGx5KCZub25naXQpOwo+ICA+PiAgPiArICAgICBpbml0
-X3JldmlzaW9ucygmcmV2LCBOVUxMKTsKPiAgPj4KPiAgPj4KPiAgPj4KPiAgPj4gPiBAQCAtMjMz
-LDE5ICsyMzMsMjAgQEAgaW50IGNtZF9kaWZmKGludCBhcmdjLCBjb25zdCBjaGFyICoqYXJndiwg
-Y29uc3QgY2hhciAqcHJlZml4KQo+ICA+PiAgPiAuLi4KPiAgPj4KPiAgPj4gPiAtICAgICBpbml0
-X3JldmlzaW9ucygmcmV2LCBwcmVmaXgpOwo+ICA+PiAgPiArICAgICBpbml0X3JldmlzaW9ucygm
-cmV2LCBOVUxMKTsKPiAgPj4KPiAgPj4gIEhtbS4gIEhvdyBpcyB0aGUgZWZmZWN0IG9mIHRoaXMg
-Y2hhbmdlIGNvbXBlbnNhdGVkIGxhdGVyIHRvIGdpdmUKPiAgPj4gIHByb3BlciBwcmVmaXggdmFs
-dWUgdG8gcmV2LmRpZmZvcHQucHJlZml4Pwo+ICA+Pgo+ICA+Cj4gID4gSSBhc3N1bWUgeW91IG1l
-YW50IHJldi5wcmVmaXg/IHJldi5wcmVmaXggaXMgc2V0IHJpZ2h0IGJlZm9yZQo+ICA+IHNldHVw
-X3JldmlzaW9ucygpLiAoZ3JyLi4gSSB0aGluayBJIGxlZnQgYW4gcmVkdW5kYW50Cj4gID4gcmV2
-LmRpZmZvcHQuc2tpcF9zdGF0X3VubWF0Y2ggYXNzaWdubWVudCkKPgo+ICBJIGRpZCBtZWFuIHJl
-di5kaWZmb3B0LnByZWZpeCB0aGF0IGlzIGluaXRpYWxpemVkIGJ5IHRoZSBsYXN0Cj4gIGZvdXIg
-bGluZXMgaW4gaW5pdF9yZXZpc2lvbnMoKSBmcm9tIHRoZSB2YWx1ZSBvZiBwcmVmaXggeW91Cj4g
-IHBhc3MuCgpVbS4uIEkgbWlzc2VkIGNvbW1pdCAiZGlmZiAtLXJlbGF0aXZlIi4gVGhhbmtzIGZv
-ciBub3RpY2luZy4KLS0gCkR1eQo=
+This patch makes it possible to view man pages using other tools
+than the "man" program. It also implements support for emacs'
+"woman" and konqueror with the man KIO slave to view man pages.
+
+Note that "emacsclient" is used with option "-e" to launch "woman"
+on emacs and this works only on versions >= 22.
+
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ help.c |   81 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 files changed, 80 insertions(+), 1 deletions(-)
+
+	A few minor changes since the previous version:
+	- remove an unused "size" variable,
+	- use right style for multi line comments,
+	- use (void) for function with no arguments,
+	- use [PATCH ...] in email subject.
+
+	It should apply on top of 'next'.
+
+diff --git a/help.c b/help.c
+index e57a50e..2cb152d 100644
+--- a/help.c
++++ b/help.c
+@@ -8,6 +8,9 @@
+ #include "exec_cmd.h"
+ #include "common-cmds.h"
+ #include "parse-options.h"
++#include "run-command.h"
++
++static const char *man_viewer;
+ 
+ enum help_format {
+ 	HELP_FORMAT_MAN,
+@@ -50,6 +53,8 @@ static int git_help_config(const char *var, const char *value)
+ 		help_format = parse_help_format(value);
+ 		return 0;
+ 	}
++	if (!strcmp(var, "man.viewer"))
++		return git_config_string(&man_viewer, var, value);
+ 	return git_default_config(var, value);
+ }
+ 
+@@ -345,11 +350,85 @@ static void setup_man_path(void)
+ 	strbuf_release(&new_path);
+ }
+ 
++static int check_emacsclient_version(void)
++{
++	struct strbuf buffer = STRBUF_INIT;
++	struct child_process ec_process;
++	const char *argv_ec[] = { "emacsclient", "--version", NULL };
++	int version;
++
++	/* emacsclient prints its version number on stderr */
++	memset(&ec_process, 0, sizeof(ec_process));
++	ec_process.argv = argv_ec;
++	ec_process.err = -1;
++	ec_process.stdout_to_stderr = 1;
++	if (start_command(&ec_process)) {
++		fprintf(stderr, "Failed to start emacsclient.\n");
++		return -1;
++	}
++	strbuf_read(&buffer, ec_process.err, 20);
++	close(ec_process.err);
++
++	/*
++	 * Don't bother checking return value, because "emacsclient --version"
++	 * seems to always exits with code 1.
++	 */
++	finish_command(&ec_process);
++
++	if (prefixcmp(buffer.buf, "emacsclient")) {
++		fprintf(stderr, "Failed to parse emacsclient version.\n");
++		strbuf_release(&buffer);
++		return -1;
++	}
++
++	strbuf_remove(&buffer, 0, strlen("emacsclient"));
++	version = atoi(buffer.buf);
++
++	if (version < 22) {
++		fprintf(stderr,
++			"emacsclient version '%d' too old (< 22).\n",
++			version);
++		strbuf_release(&buffer);
++		return -1;
++	}
++
++	strbuf_release(&buffer);
++	return 0;
++}
++
++static void exec_woman_emacs(const char *page)
++{
++	if (!check_emacsclient_version()) {
++		/* This works only with emacsclient version >= 22. */
++		struct strbuf man_page = STRBUF_INIT;
++		strbuf_addf(&man_page, "(woman \"%s\")", page);
++		execlp("emacsclient", "emacsclient", "-e", man_page.buf, NULL);
++	} else
++		execlp("man", "man", page, NULL);
++}
++
++static void exec_man_konqueror(const char *page)
++{
++	const char *display = getenv("DISPLAY");
++	if (display && *display) {
++		struct strbuf man_page = STRBUF_INIT;
++		strbuf_addf(&man_page, "man:%s(1)", page);
++		execlp("kfmclient", "kfmclient", "newTab", man_page.buf, NULL);
++	} else
++		execlp("man", "man", page, NULL);
++}
++
+ static void show_man_page(const char *git_cmd)
+ {
+ 	const char *page = cmd_to_page(git_cmd);
+ 	setup_man_path();
+-	execlp("man", "man", page, NULL);
++	if (!man_viewer || !strcmp(man_viewer, "man"))
++		execlp("man", "man", page, NULL);
++	if (!strcmp(man_viewer, "woman"))
++		exec_woman_emacs(page);
++	if (!strcmp(man_viewer, "konqueror"))
++		exec_man_konqueror(page);
++	die("'%s': unsupported man viewer.", man_viewer);
+ }
+ 
+ static void show_info_page(const char *git_cmd)
+-- 
+1.5.4.3.328.gcaed.dirty
