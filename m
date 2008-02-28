@@ -1,54 +1,121 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 5/9] http-push: Avoid calling setup_git_directory() twice
-Date: Wed, 27 Feb 2008 16:50:13 -0800
-Message-ID: <7vd4qhnbui.fsf@gitster.siamese.dyndns.org>
-References: <cover.1204130175.git.pclouds@gmail.com>
- <20080227163918.GA28071@laptop>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [PATCH] New test to check the real "subtree" case
+Date: Thu, 28 Feb 2008 02:51:22 +0100
+Message-ID: <20080228015122.GB31441@genesis.frugalware.org>
+References: <7vprun32m2.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 28 01:51:25 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Daniel Barkalow <barkalow@iabervon.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 28 02:52:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JUWza-0000Q9-LY
-	for gcvg-git-2@gmane.org; Thu, 28 Feb 2008 01:51:23 +0100
+	id 1JUXwJ-0007jn-GV
+	for gcvg-git-2@gmane.org; Thu, 28 Feb 2008 02:52:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751581AbYB1Aub convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 Feb 2008 19:50:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751514AbYB1Aua
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Feb 2008 19:50:30 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:60545 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751218AbYB1Au3 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Feb 2008 19:50:29 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 333BA27E1;
-	Wed, 27 Feb 2008 19:50:27 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 8F506272F; Wed, 27 Feb 2008 19:50:21 -0500 (EST)
-In-Reply-To: <20080227163918.GA28071@laptop> (=?utf-8?B?Tmd1eeG7hW4gVGg=?=
- =?utf-8?B?w6FpIE5n4buNYw==?= Duy's message of "Wed, 27 Feb 2008 23:39:18
- +0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754262AbYB1Bv0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Feb 2008 20:51:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754712AbYB1Bv0
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Feb 2008 20:51:26 -0500
+Received: from virgo.iok.hu ([193.202.89.103]:16607 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753708AbYB1BvZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Feb 2008 20:51:25 -0500
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 53FF51B255B;
+	Thu, 28 Feb 2008 02:51:23 +0100 (CET)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 3E5B044698;
+	Thu, 28 Feb 2008 02:48:50 +0100 (CET)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 47D2811904D7; Thu, 28 Feb 2008 02:51:22 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <7vprun32m2.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75338>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75339>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes:
+t6029 already checks if subtree available and works like recursive, but
+this new one actually tests the extra functionality the subtree merge
+strategy provides.
 
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
-> ---
->  http-push.c |    4 ++--
->  1 files changed, 2 insertions(+), 2 deletions(-)
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+---
 
-Calling setup more than once is now an error?  I do not mind the
-new restriction but is it documented clearly somewhere?
+On Sat, Feb 23, 2008 at 11:16:21AM -0800, Junio C Hamano <gitster@pobox.com> wrote:
+> A new test t6029 currently only tests the strategy is available,
+> but it should be enhanced to check the real "subtree" case.
+
+i think something like this should do it.
+
+ t/t3035-merge-subtree.sh |   54 ++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 54 insertions(+), 0 deletions(-)
+ create mode 100755 t/t3035-merge-subtree.sh
+
+diff --git a/t/t3035-merge-subtree.sh b/t/t3035-merge-subtree.sh
+new file mode 100755
+index 0000000..e400dce
+--- /dev/null
++++ b/t/t3035-merge-subtree.sh
+@@ -0,0 +1,54 @@
++#!/bin/sh
++
++test_description='merge-subtree backend test'
++
++. ./test-lib.sh
++
++test_expect_success 'setup' '
++	mkdir git-gui &&
++	cd git-gui &&
++	git init &&
++	echo git-gui > git-gui.sh &&
++	o1=$(git hash-object git-gui.sh) &&
++	git add git-gui.sh &&
++	git commit -m "initial git-gui" &&
++	cd .. &&
++	mkdir git &&
++	cd git &&
++	git init &&
++	echo git >git.c &&
++	o2=$(git hash-object git.c) &&
++	git add git.c &&
++	git commit -m "initial git"
++'
++
++test_expect_success 'initial merge' '
++	git remote add -f gui ../git-gui &&
++	git merge -s ours --no-commit gui/master &&
++	git read-tree --prefix=git-gui/ -u gui/master &&
++	git commit -m "Merge git-gui as our subdirectory" &&
++	git ls-files -s >actual &&
++	(
++		echo "100644 $o1 0	git-gui/git-gui.sh"
++		echo "100644 $o2 0	git.c"
++	) >expected &&
++	git diff -u expected actual
++'
++
++test_expect_success 'merge update' '
++	cd ../git-gui &&
++	echo git-gui2 > git-gui.sh &&
++	o3=$(git hash-object git-gui.sh) &&
++	git add git-gui.sh &&
++	git commit -m "update git-gui" &&
++	cd ../git &&
++	git pull -s subtree gui master &&
++	git ls-files -s >actual &&
++	(
++		echo "100644 $o3 0	git-gui/git-gui.sh"
++		echo "100644 $o2 0	git.c"
++	) >expected &&
++	git diff -u expected actual
++'
++
++test_done
+-- 
+1.5.4.3
