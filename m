@@ -1,79 +1,60 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: warning: no common commits - slow pull
-Date: Thu, 28 Feb 2008 03:50:38 -0500
-Message-ID: <20080228085038.GS8410@spearce.org>
-References: <200802102007.38838.lenb@kernel.org> <20080211035501.GB26205@mit.edu> <200802151643.30232.lenb@kernel.org> <200802261438.17014.lenb@kernel.org> <7vir0byoc2.fsf@gitster.siamese.dyndns.org> <7voda2yksf.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0802271411280.19665@iabervon.org> <7vskzeruit.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0802271605540.19665@iabervon.org> <20080228004313.GQ8410@spearce.org>
+From: Paolo Bonzini <bonzini@gnu.org>
+Subject: Re: [PATCH 04/40] Windows: Use the Windows style PATH separator ';'.
+Date: Thu, 28 Feb 2008 10:25:46 +0100
+Message-ID: <47C67E1A.5030304@gnu.org>
+References: <1204138503-6126-1-git-send-email-johannes.sixt@telecom.at> <1204138503-6126-5-git-send-email-johannes.sixt@telecom.at>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, Nicolas Pitre <nico@cam.org>,
-	Len Brown <lenb@kernel.org>, Theodore Tso <tytso@mit.edu>,
-	git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Thu Feb 28 09:51:55 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>, johannes.sixt@telecom.at
+X-From: git-owner@vger.kernel.org Thu Feb 28 10:26:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JUeUb-00024i-J2
-	for gcvg-git-2@gmane.org; Thu, 28 Feb 2008 09:51:54 +0100
+	id 1JUf28-0003u2-2l
+	for gcvg-git-2@gmane.org; Thu, 28 Feb 2008 10:26:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753336AbYB1IvP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Feb 2008 03:51:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751592AbYB1IvP
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Feb 2008 03:51:15 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:34356 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752431AbYB1IvP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Feb 2008 03:51:15 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1JUeTN-0001cO-NH; Thu, 28 Feb 2008 03:50:37 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 6707420FBAE; Thu, 28 Feb 2008 03:50:38 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <20080228004313.GQ8410@spearce.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1753320AbYB1JZx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Feb 2008 04:25:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757987AbYB1JZx
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Feb 2008 04:25:53 -0500
+Received: from nf-out-0910.google.com ([64.233.182.191]:29314 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757746AbYB1JZv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Feb 2008 04:25:51 -0500
+Received: by nf-out-0910.google.com with SMTP id g13so1806478nfb.21
+        for <git@vger.kernel.org>; Thu, 28 Feb 2008 01:25:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:subject:references:in-reply-to:content-type:content-transfer-encoding:sender;
+        bh=Bf9J2m9AJP8gLAcj4QweD2Q8Dc0qV7xfoll3IxP5jzk=;
+        b=FRAlRZFh3v5HZDDMXbl+Ku3ebCjDulBN6DlHPo20iAWDxAWK2cdcwjSlddIw+kFXLyZyNjJV87jxVBxlpCux/hItquE40poqfhVpkn/oFGXDHt2RCO73PYe12+SKCkGYeF3siIdlpvslO6F6Qs5uPulmWtIS9ugYtxFHCetM7js=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:subject:references:in-reply-to:content-type:content-transfer-encoding:sender;
+        b=JUf3UAscOVGAkzRyjTR2J7Y+CQgIhIeOG7hiK6bflOxXYeFwsNxMfpeUx0GiGXUhpcHWdJk2GlUOLWEB2e4Xh+Ffud6ourXJOH56WptLYTRXPkgsf5xRRwtNYAekG7gRZNKjTGmI8NrPnbmIlqj5yv2RS15jvJyTyYmA/vuIciU=
+Received: by 10.86.97.7 with SMTP id u7mr7795687fgb.54.1204190749521;
+        Thu, 28 Feb 2008 01:25:49 -0800 (PST)
+Received: from scientist-2.local ( [195.176.178.209])
+        by mx.google.com with ESMTPS id u26sm4247484mug.17.2008.02.28.01.25.48
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 28 Feb 2008 01:25:48 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.12 (Macintosh/20080213)
+In-Reply-To: <1204138503-6126-5-git-send-email-johannes.sixt@telecom.at>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75370>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75371>
 
-"Shawn O. Pearce" <spearce@spearce.org> wrote:
-> Daniel Barkalow <barkalow@iabervon.org> wrote:
-> > On Wed, 27 Feb 2008, Junio C Hamano wrote:
-> > > 
-> > > I think we can teach the upload-pack side to be more helpful and
-> > > with a protocol extension to send tag objects that are pointing
-> > > at commits that will be included in the result, or something
-> > > like that, though.  But that is outside the scope of 1.5.5; it
-> > > would be a moderate to large protocol surgery, and I suspect it
-> > > might even have to affect pack-objects.
-> > 
-> > Using a single connection, either by just telling the remote that you want 
-> > to autofollow tags, and it should therefore include any tags that point to 
-> > any objects it includes,
-> 
-> I agree its outside of 1.5.5, as we'd all like to see 1.5.5 happen
-> soon, but it could be 1.5.6 material, especially if someone starts
-> working on it sooner rather than later.
-> 
-> Its actually probably not that difficult to implement.
 
-OK, so I posted a fairly short series tonight (4 patches) that
-handles some of the common cases in a fairly small amount of
-code churn.  It might just be 1.5.5-ish.
+> +#ifdef __MINGW32__
+> +		strbuf_addch(out, ';');
+> +#else
+>  		strbuf_addch(out, ':');
+> +#endif
 
-Doing anything better is going to require a new protocol extension,
-which is already 1.5.6 material.  In the mean time maybe Junio's
-earlier patch to try and drop the ref_map when we do open the new
-connection is the way to deal with the round-robin DNS issues.
+Why not adding a PATH_SEPARATOR #define?
 
--- 
-Shawn.
+Paolo
