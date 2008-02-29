@@ -1,83 +1,65 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: '.git file' alternative, native (cross-platform) workdir
- support.
-Date: Fri, 29 Feb 2008 14:25:16 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802291333310.22527@racer.site>
-References: <47C7FA49.9010001@trolltech.com> <alpine.LSU.1.00.0802291248510.22527@racer.site> <47C80786.4070701@trolltech.com>
+From: "=?ISO-8859-1?Q?Johan_S=F8rensen?=" <johan@johansorensen.com>
+Subject: Re: git-daemon hangs in futex()
+Date: Fri, 29 Feb 2008 15:26:12 +0100
+Message-ID: <9e0f31700802290626o22ffea7bj6a2410a860f75b1b@mail.gmail.com>
+References: <9e0f31700802281441i33120d70s43ca9f4eced6b5c3@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>,
-	msysGit <msysgit@googlegroups.com>
-To: Marius Storm-Olsen <marius@trolltech.com>
-X-From: git-owner@vger.kernel.org Fri Feb 29 15:26:42 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 29 15:26:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JV6By-0001gf-PJ
-	for gcvg-git-2@gmane.org; Fri, 29 Feb 2008 15:26:31 +0100
+	id 1JV6CM-0001qg-HW
+	for gcvg-git-2@gmane.org; Fri, 29 Feb 2008 15:26:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758611AbYB2OZy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Feb 2008 09:25:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758287AbYB2OZx
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Feb 2008 09:25:53 -0500
-Received: from mail.gmx.net ([213.165.64.20]:58391 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1758560AbYB2OZx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Feb 2008 09:25:53 -0500
-Received: (qmail invoked by alias); 29 Feb 2008 14:25:51 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp011) with SMTP; 29 Feb 2008 15:25:51 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19KcaVL2i1KjTRnT1q8AFHIdamCn2RvgXlHNS/APf
-	waTEBKCYhs/iaw
-X-X-Sender: gene099@racer.site
-In-Reply-To: <47C80786.4070701@trolltech.com>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1758607AbYB2O0R convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 Feb 2008 09:26:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758680AbYB2O0R
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Feb 2008 09:26:17 -0500
+Received: from ag-out-0708.google.com ([72.14.246.242]:39697 "EHLO
+	ag-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758287AbYB2O0Q convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 29 Feb 2008 09:26:16 -0500
+Received: by ag-out-0708.google.com with SMTP id 33so10186454agc.1
+        for <git@vger.kernel.org>; Fri, 29 Feb 2008 06:26:13 -0800 (PST)
+Received: by 10.150.121.2 with SMTP id t2mr3273689ybc.69.1204295172000;
+        Fri, 29 Feb 2008 06:26:12 -0800 (PST)
+Received: by 10.150.97.16 with HTTP; Fri, 29 Feb 2008 06:26:12 -0800 (PST)
+In-Reply-To: <9e0f31700802281441i33120d70s43ca9f4eced6b5c3@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75538>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75539>
 
-Hi,
+On Thu, Feb 28, 2008 at 11:41 PM, Johan S=F8rensen
+<johan@johansorensen.com> wrote:
+> Hi,
+>
+>  I'm having an issue with my git-daemon (1.5.4.3 on ubuntu gutsy), it
+>  works fine for a few minutes, then it hangs (eg, "git clone git://"
+>  never comes past "initialized empty git repo" adnd just sits and
+>  waits) and strace on the git-daemon says:
+>  $ strace -Ff -p 27453
+>  Process 27453 attached - interrupt to quit
+>  futex(0x2b270fb50980, FUTEX_WAIT, 2, NULL) =3D -1 EINTR (Interrupted=
+ system call)
+>
+>  .. and nothing more. But, if I attach to the git-daemon process with
+>  strace before that happens, git-daemon keeps on working fine, so I c=
+an
+>  change the outcome by observing it which is always nice, but not too
+>  helpful.
 
-On Fri, 29 Feb 2008, Marius Storm-Olsen wrote:
+Upon further investigation, it seems that this could be related to me
+updating glibc to 2.6.1. Google suggest that it can because libc
+switched to NPTL. I'm not familiar with the internals of it, so I
+can't decide if this is a git issue (by indirect usage of glibc
+functions) or not?
 
-> Johannes Schindelin said the following on 29.02.2008 13:54:
-> > On Fri, 29 Feb 2008, Marius Storm-Olsen wrote:
-> > > However, wouldn't simply redirecting everything into a real repo 
-> > > then create problems with shared index file and more? A problem 
-> > > which could be tacled by file suffixes or other methods, I'm sure, 
-> > > but which would require even more patches to achieve the goal.
-> > 
-> > Not only would it requre these patches, but it would actually make a 
-> > _safe_ multiple-workdirs feature possible.
-> 
-> Sure, I'm aware of that. The initial goal was to make something which 
-> works as the current contrib/workdir/git-new-workdir, just 
-> cross-platform. Then we can take it from there, step by step, until we 
-> have something which works safely; instead of taking a single big leap.
-
-That's what I am saying: there is no way to make it safe.
-
-> I'm actually not sure that it's impossible to make it safe. My 
-> implementation works by redirecting files into the real repo. However, 
-> we can also detect when redirection is in effect, and do extra 
-> 'maintainance' things then, to avoid the bad effects.
-
->From the perspective of Windows, I guess it is easy to overlook the fact 
-that permissions can break your idea.
-
-Even after creating a second working tree for an existing repository, the 
-permissions of the original repository can change.
-
-The only way to be on the safe side is to use _the repository_ twice.  IOW 
-not having a second .git/ directory.
-
-Also, having a single .git is just a very simple, and thus preferable 
-concept, to having part of this, and part of that repository.
-
-Ciao,
-Dscho
+Thanks
+JS
