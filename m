@@ -1,87 +1,72 @@
-From: "Govind Salinas" <blix@sophiasuchtig.com>
-Subject: Re: [PATCH 20/40] Windows: A rudimentary poll() emulation.
-Date: Fri, 29 Feb 2008 15:47:12 -0600
-Message-ID: <5d46db230802291347u5f286dadw6b532abf82c0cff7@mail.gmail.com>
-References: <1204138503-6126-1-git-send-email-johannes.sixt@telecom.at>
-	 <200802282149.36748.johannes.sixt@telecom.at>
-	 <5d46db230802282019o21f9ed9fo75fed8744625289e@mail.gmail.com>
-	 <200802292216.25014.johannes.sixt@telecom.at>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Which freedesktop.org "design flaws" in git are still relevant?
+Date: Fri, 29 Feb 2008 13:50:46 -0800
+Message-ID: <7vmypjbfex.fsf@gitster.siamese.dyndns.org>
+References: <51419b2c0802291232w166b3100yabd30ba30df6ef1f@mail.gmail.com>
+ <m3hcfrjwnk.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Johannes Sixt" <johannes.sixt@telecom.at>
-X-From: git-owner@vger.kernel.org Fri Feb 29 22:47:56 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: "Elijah Newren" <newren@gmail.com>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 29 22:51:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JVD56-0008Qs-Gh
-	for gcvg-git-2@gmane.org; Fri, 29 Feb 2008 22:47:52 +0100
+	id 1JVD8l-0001Jd-9W
+	for gcvg-git-2@gmane.org; Fri, 29 Feb 2008 22:51:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760283AbYB2VrQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Feb 2008 16:47:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760156AbYB2VrQ
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Feb 2008 16:47:16 -0500
-Received: from ti-out-0910.google.com ([209.85.142.187]:27800 "EHLO
-	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759253AbYB2VrP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Feb 2008 16:47:15 -0500
-Received: by ti-out-0910.google.com with SMTP id 28so4044684tif.23
-        for <git@vger.kernel.org>; Fri, 29 Feb 2008 13:47:14 -0800 (PST)
-Received: by 10.151.47.7 with SMTP id z7mr962570ybj.103.1204321632073;
-        Fri, 29 Feb 2008 13:47:12 -0800 (PST)
-Received: by 10.150.199.5 with HTTP; Fri, 29 Feb 2008 13:47:12 -0800 (PST)
-In-Reply-To: <200802292216.25014.johannes.sixt@telecom.at>
-Content-Disposition: inline
-X-Google-Sender-Auth: 0442b7dc10f2141e
+	id S1761527AbYB2VvB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Feb 2008 16:51:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761503AbYB2VvA
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Feb 2008 16:51:00 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:60335 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761298AbYB2VvA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Feb 2008 16:51:00 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 57FDE1883;
+	Fri, 29 Feb 2008 16:50:57 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 8446E1882; Fri, 29 Feb 2008 16:50:51 -0500 (EST)
+In-Reply-To: <m3hcfrjwnk.fsf@localhost.localdomain> (Jakub Narebski's message
+ of "Fri, 29 Feb 2008 13:11:15 -0800 (PST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75569>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75570>
 
-On 2/29/08, Johannes Sixt <johannes.sixt@telecom.at> wrote:
-> On Friday 29 February 2008 05:19, Govind Salinas wrote:
->  > On Thu, Feb 28, 2008 at 2:49 PM, Johannes Sixt <johannes.sixt@telecom.at>
->  wrote:
->  > > On Thursday 28 February 2008 10:36, Paolo Bonzini wrote:
+Jakub Narebski <jnareb@gmail.com> writes:
+
+>> * git-fetch requires that the branch be named on both sides of
+>>   the :. It should treat 'foo' as an alias for 'foo:foo'.
 >
-> > >  > For the future, would it be better to first use
->  > >  > WaitForMultipleObjects, and then use PeekNamedPipe to find which
->  > >  > handles have data on it? That's how the mingw port of GNU Smalltalk
->  > >  > does it.
->  > >
->  > >  I tried but I failed. If you can show me code where
->      ^^^^^^^^^^^^^^^^^^^^^
->  > > WaitForMultipleObjects works on handles that MSVCRT.DLL's open() created,
->  > > I'll gladly accept it!
->  >
->  > I haven't tried it myself, but you can look at _get_osfhandle
->  >
->  > http://msdn2.microsoft.com/en-us/library/ks2530z6(VS.71).aspx
->  >
->  > of course you would need to keep a mapping from the handle to the fd.
->  > Or _open_osfhandle might work the other way, I don't know if it will
->  > necessarily return the same descriptor.
->  >
->  > http://msdn2.microsoft.com/en-us/library/bdts1c9x(VS.71).aspx
->
->
-> Fscking basics, this. How do you go from here to WaitForMultipleObjects?
->
-Well, I could have sworn that named pipe handles were in the waitable
-list, but after looking again, they are not.
+> So 'foo' is treated as 'foo:' (which means fetch, and not store), and
+> not as 'foo:foo'. It is perhaps a bit strange, but backward
+> compatibility would I think prohibit us to change it, even if it would
+> make more sense to have it be shortcut for 'foo:foo' instead.
 
-However, I did find
+It is not strange nor b/c requirement at all.  If anything, it
+could default to "foo:remotes/$remote/foo", not "foo:foo", but
+even then, it shouldn't.
 
-http://msdn2.microsoft.com/en-us/library/aa365603(VS.85).aspx
+You are missing a bigger picture.  I think the list predates the
+introduction of separate remotes, which has been the default for
+more than a year.
 
-which suggests you can pass these handles to ReadFile and if you include an
-OVERLAPPED struct in the call, it will return an event handle to wait on which
-you can then use to wait.
+You would have "fetch = refs/heads/*:refs/remotes/origin/*"
+these days in the configuration by default.  What this means is
+that you would have much less reason to run "fetch $there foo"
+to begin with.  The only time you would fetch in that way is
+when you want an unconfigured, single-shot fetch, in which case
+you do _NOT_ want tracking.  So there is no valid reason to
+default "foo" to "foo:<anything>", unless that <anything> is
+empty.  Not to foo:foo, not to foo:remotes/$remote/foo.
 
-Sorry for the false lead.
-
-HTH,
-Govind.
+Many of the remaining parts of the complaint list share the
+misunderstanding coming from the lack of understanding of
+separate remotes layout.
