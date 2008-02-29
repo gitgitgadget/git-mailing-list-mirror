@@ -1,85 +1,83 @@
-From: "Philippe Bruhat (BooK)" <book@cpan.org>
-Subject: Re: Multiple -M options for git-cvsimport
-Date: Fri, 29 Feb 2008 11:02:41 +0100
-Message-ID: <20080229100241.GA6777@plop.home.bruhat.net>
-References: <1204193904-3652-1-git-send-email-book@cpan.org> <7vzltkj14d.fsf@gitster.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 22/40] Windows: Implement asynchronous functions as
+ threads.
+Date: Fri, 29 Feb 2008 10:26:31 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0802291023060.22527@racer.site>
+References: <1204138503-6126-1-git-send-email-johannes.sixt@telecom.at> <1204138503-6126-23-git-send-email-johannes.sixt@telecom.at> <alpine.LSU.1.00.0802281525510.22527@racer.site> <47C6F40A.4010703@comcast.net> <alpine.LSU.1.00.0802290122110.22527@racer.site>
+ <47C76407.3090804@comcast.net> <alpine.LSU.1.00.0802290150440.22527@racer.site> <47C77720.2080405@comcast.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 29 11:03:44 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johannes Sixt <johannes.sixt@telecom.at>, git@vger.kernel.org
+To: Paul Franz <thefranz@comcast.net>
+X-From: git-owner@vger.kernel.org Fri Feb 29 11:27:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JV25f-0002IE-V1
-	for gcvg-git-2@gmane.org; Fri, 29 Feb 2008 11:03:44 +0100
+	id 1JV2Sv-0001HB-Or
+	for gcvg-git-2@gmane.org; Fri, 29 Feb 2008 11:27:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754241AbYB2KC7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Feb 2008 05:02:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754436AbYB2KC7
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Feb 2008 05:02:59 -0500
-Received: from zlonk.bruhat.net ([91.121.102.217]:35764 "EHLO
-	ks354402.kimsufi.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752231AbYB2KC6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Feb 2008 05:02:58 -0500
-Received: from localhost ([127.0.0.1] helo=plop.home.bruhat.net)
-	by ks354402.kimsufi.com with esmtp (Exim 4.63)
-	(envelope-from <philippe.bruhat@free.fr>)
-	id 1JV25z-0004ge-LG; Fri, 29 Feb 2008 11:04:04 +0100
-Received: from book by plop.home.bruhat.net with local (Exim 4.69)
-	(envelope-from <philippe.bruhat@free.fr>)
-	id 1JV24f-0005qc-KN; Fri, 29 Feb 2008 11:02:41 +0100
-Content-Disposition: inline
-In-Reply-To: <7vzltkj14d.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1755203AbYB2K1J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Feb 2008 05:27:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755091AbYB2K1I
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Feb 2008 05:27:08 -0500
+Received: from mail.gmx.net ([213.165.64.20]:37771 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754366AbYB2K1G (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Feb 2008 05:27:06 -0500
+Received: (qmail invoked by alias); 29 Feb 2008 10:27:04 -0000
+Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
+  by mail.gmx.net (mp005) with SMTP; 29 Feb 2008 11:27:04 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19uNL04NzhukNSLKyfiqIyfIt+pVg222vx+dyhlJc
+	JGIslxLZlcRmCg
+X-X-Sender: gene099@racer.site
+In-Reply-To: <47C77720.2080405@comcast.net>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75518>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75519>
 
-On Thu, Feb 28, 2008 at 12:07:46PM -0800, Junio C Hamano wrote:
-> "Philippe Bruhat (BooK)" <book@cpan.org> writes:
+Hi,
+
+On Thu, 28 Feb 2008, Paul Franz wrote:
+
+> Johannes Schindelin wrote:
 > 
-> > Sending again my series of patches to git-cvsimport, which allow to
-> > use several -M options for giving the regular expressions capturing the
-> > source branch name when merging.
+> > [top-posting?]
 > 
-> Could you be a bit more explicit than "Sending again", describe
-> if it is just a straight resend, or what problems were pointed
-> out in the earlier round (if any) and how they were addressed
-> (or ignored, if any)?
+> Is there something wrong with it?
 
-Sorry.
+My favourite way to describe it (a quote):
 
-In the previous round, an asciidoc formatting error was pointed in my
-doc patch, and you also noted that the t/t9600-cvsimport.sh test script
-failed after my Getopt::Std -> Getopt::Long patch.
++A: Because it messes up the order in which people normally read text.
++Q: Why is top-posting such a bad thing?
++A: Top-posting.
++Q: What is the most annoying thing on usenet and in e-mail?
 
-I corrected all those problems (checked the asciidoc HTML output, and
-made sure the test script passed again).
+> > The problems with Git and Windows are not network related.  They are 
+> > with Windows' pitiful performance when it comes to spawn processes.
+>
+> Which makes me believe that it sounds like git depends on spawning 
+> processes being cheap.
 
-> Also please Sign-off all your patches.  Cover letters do not
-> need one.
+Yes, like everything that relies on being scriptable.
 
-It noticed that I forgot to -s my commits, so I thought that signing off
-the cover letter would be equivalent. I tried to follow the guidelines
-for sending patches, using format-patch and send-email, but I'm still a
-newbie both to git and it's development model.
+> > IMO your efforts to help Git on Windows would be better spent on the 
+> > msysGit list, where you would learn about the real issues we face.
+> 
+> Excuse my ignorance, could you tell me where the mysGit list is, so that 
+> I can subscribe?
 
-> I'll take a look at them later, when I have enough time to fish
-> for messages and discussions from earlier round in the list
-> archive in order to process this.
+It is referenced right on the first page on
 
-You can ignore my previous messages, then. These four patches were
-rebased on the top of master, and correct the problems that were
-previously pointed to me.
+	http://msysgit.googlecode.com/
 
-    Thanks,
+under the keyword "Groups:".
 
--- 
- Philippe Bruhat (BooK)
+Hth,
+Dscho
 
- The shortest distance between two points is not always the safest.
-                                    (Moral from Groo The Wanderer #69 (Epic))
