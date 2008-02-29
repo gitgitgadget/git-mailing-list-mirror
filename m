@@ -1,72 +1,64 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Which freedesktop.org "design flaws" in git are still relevant?
-Date: Fri, 29 Feb 2008 13:50:46 -0800
-Message-ID: <7vmypjbfex.fsf@gitster.siamese.dyndns.org>
-References: <51419b2c0802291232w166b3100yabd30ba30df6ef1f@mail.gmail.com>
- <m3hcfrjwnk.fsf@localhost.localdomain>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] pretty format now configurable
+Date: Fri, 29 Feb 2008 21:51:12 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0802292150350.22527@racer.site>
+References: <1204314263-8072-1-git-send-email-crquan@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Elijah Newren" <newren@gmail.com>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 29 22:51:48 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Denis Cheng <crquan@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 29 22:52:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JVD8l-0001Jd-9W
-	for gcvg-git-2@gmane.org; Fri, 29 Feb 2008 22:51:39 +0100
+	id 1JVD9b-0001e6-2J
+	for gcvg-git-2@gmane.org; Fri, 29 Feb 2008 22:52:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761527AbYB2VvB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Feb 2008 16:51:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761503AbYB2VvA
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Feb 2008 16:51:00 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:60335 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761298AbYB2VvA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Feb 2008 16:51:00 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 57FDE1883;
-	Fri, 29 Feb 2008 16:50:57 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 8446E1882; Fri, 29 Feb 2008 16:50:51 -0500 (EST)
-In-Reply-To: <m3hcfrjwnk.fsf@localhost.localdomain> (Jakub Narebski's message
- of "Fri, 29 Feb 2008 13:11:15 -0800 (PST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S934081AbYB2Vvy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Feb 2008 16:51:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934088AbYB2Vvx
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Feb 2008 16:51:53 -0500
+Received: from mail.gmx.net ([213.165.64.20]:38699 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S934075AbYB2Vvw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Feb 2008 16:51:52 -0500
+Received: (qmail invoked by alias); 29 Feb 2008 21:51:50 -0000
+Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
+  by mail.gmx.net (mp014) with SMTP; 29 Feb 2008 22:51:50 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19CWJ9CTTlCZKXFOAPKrB8zcsp5KRmE6AA12F0dWM
+	cOkwmnFiY2HquD
+X-X-Sender: gene099@racer.site
+In-Reply-To: <1204314263-8072-1-git-send-email-crquan@gmail.com>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75570>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75571>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Hi,
 
->> * git-fetch requires that the branch be named on both sides of
->>   the :. It should treat 'foo' as an alias for 'foo:foo'.
->
-> So 'foo' is treated as 'foo:' (which means fetch, and not store), and
-> not as 'foo:foo'. It is perhaps a bit strange, but backward
-> compatibility would I think prohibit us to change it, even if it would
-> make more sense to have it be shortcut for 'foo:foo' instead.
+On Sat, 1 Mar 2008, Denis Cheng wrote:
 
-It is not strange nor b/c requirement at all.  If anything, it
-could default to "foo:remotes/$remote/foo", not "foo:foo", but
-even then, it shouldn't.
+> Signed-off-by: Denis Cheng <crquan@gmail.com>
+> ---
+>  builtin-log.c |   10 +++++++++-
+>  1 files changed, 9 insertions(+), 1 deletions(-)
+> 
+> diff --git a/builtin-log.c b/builtin-log.c
+> index bbadbc0..0f7ee1f 100644
+> --- a/builtin-log.c
+> +++ b/builtin-log.c
+> @@ -20,6 +20,7 @@
+>  
+>  static int default_show_root = 1;
+>  static const char *fmt_patch_subject_prefix = "PATCH";
+> +static const char *fmt_pretty;
 
-You are missing a bigger picture.  I think the list predates the
-introduction of separate remotes, which has been the default for
-more than a year.
+Don't you want to initialise this?
 
-You would have "fetch = refs/heads/*:refs/remotes/origin/*"
-these days in the configuration by default.  What this means is
-that you would have much less reason to run "fetch $there foo"
-to begin with.  The only time you would fetch in that way is
-when you want an unconfigured, single-shot fetch, in which case
-you do _NOT_ want tracking.  So there is no valid reason to
-default "foo" to "foo:<anything>", unless that <anything> is
-empty.  Not to foo:foo, not to foo:remotes/$remote/foo.
-
-Many of the remaining parts of the complaint list share the
-misunderstanding coming from the lack of understanding of
-separate remotes layout.
+Ciao,
+Dscho
