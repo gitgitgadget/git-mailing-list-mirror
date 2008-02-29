@@ -1,73 +1,85 @@
-From: Sean <seanlkml@sympatico.ca>
-Subject: Re: Will git have a baseline feature or something alike?
-Date: Fri, 29 Feb 2008 04:56:09 -0500
-Message-ID: <BAYC1-PASMTP1509BFBE329A906C583BDCAE140@CEZ.ICE>
-References: <f17812d70802290123raa099bag17a6f7b89de65dd4@mail.gmail.com>
+From: "Philippe Bruhat (BooK)" <book@cpan.org>
+Subject: Re: Multiple -M options for git-cvsimport
+Date: Fri, 29 Feb 2008 11:02:41 +0100
+Message-ID: <20080229100241.GA6777@plop.home.bruhat.net>
+References: <1204193904-3652-1-git-send-email-book@cpan.org> <7vzltkj14d.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: "eric miao" <eric.y.miao@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 29 10:57:10 2008
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 29 11:03:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JV1zB-0000A3-Bx
-	for gcvg-git-2@gmane.org; Fri, 29 Feb 2008 10:57:01 +0100
+	id 1JV25f-0002IE-V1
+	for gcvg-git-2@gmane.org; Fri, 29 Feb 2008 11:03:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754225AbYB2J4P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Feb 2008 04:56:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754219AbYB2J4P
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Feb 2008 04:56:15 -0500
-Received: from bay0-omc2-s4.bay0.hotmail.com ([65.54.246.140]:45015 "EHLO
-	bay0-omc2-s4.bay0.hotmail.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754049AbYB2J4O (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 29 Feb 2008 04:56:14 -0500
-Received: from BAYC1-PASMTP15 ([65.54.191.189]) by bay0-omc2-s4.bay0.hotmail.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 29 Feb 2008 01:56:14 -0800
-X-Originating-IP: [70.54.5.51]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([70.54.5.51]) by BAYC1-PASMTP15.CEZ.ICE over TLS secured channel with Microsoft SMTPSVC(6.0.3790.2668);
-	 Fri, 29 Feb 2008 01:56:13 -0800
-Received: from bud.attic.local ([10.10.10.20])
-	by linux1.attic.local with esmtp (Exim 4.43)
-	id 1JV2uH-0002sC-8O; Fri, 29 Feb 2008 05:56:01 -0500
-In-Reply-To: <f17812d70802290123raa099bag17a6f7b89de65dd4@mail.gmail.com>
-X-Mailer: Sylpheed 2.4.5 (GTK+ 2.12.5; x86_64-pc-linux-gnu)
-X-OriginalArrivalTime: 29 Feb 2008 09:56:13.0863 (UTC) FILETIME=[51B84B70:01C87AB9]
+	id S1754241AbYB2KC7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Feb 2008 05:02:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754436AbYB2KC7
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Feb 2008 05:02:59 -0500
+Received: from zlonk.bruhat.net ([91.121.102.217]:35764 "EHLO
+	ks354402.kimsufi.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752231AbYB2KC6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Feb 2008 05:02:58 -0500
+Received: from localhost ([127.0.0.1] helo=plop.home.bruhat.net)
+	by ks354402.kimsufi.com with esmtp (Exim 4.63)
+	(envelope-from <philippe.bruhat@free.fr>)
+	id 1JV25z-0004ge-LG; Fri, 29 Feb 2008 11:04:04 +0100
+Received: from book by plop.home.bruhat.net with local (Exim 4.69)
+	(envelope-from <philippe.bruhat@free.fr>)
+	id 1JV24f-0005qc-KN; Fri, 29 Feb 2008 11:02:41 +0100
+Content-Disposition: inline
+In-Reply-To: <7vzltkj14d.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75517>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75518>
 
-On Fri, 29 Feb 2008 17:23:37 +0800
-"eric miao" <eric.y.miao@gmail.com> wrote:
-
-
-Hi Eric,
-
-> I kept a mirror of
+On Thu, Feb 28, 2008 at 12:07:46PM -0800, Junio C Hamano wrote:
+> "Philippe Bruhat (BooK)" <book@cpan.org> writes:
 > 
-> http://www.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
+> > Sending again my series of patches to git-cvsimport, which allow to
+> > use several -M options for giving the regular expressions capturing the
+> > source branch name when merging.
 > 
-> by a crontab task fetching the updated commits at midnight everyday.
-> 
-> Yet I found the repository now grows to be 1.2G without checking out
-> anything. The checked out working tree of this is about 1.5G.
+> Could you be a bit more explicit than "Sending again", describe
+> if it is just a straight resend, or what problems were pointed
+> out in the earlier round (if any) and how they were addressed
+> (or ignored, if any)?
 
-There's something wrong in your setup, the entire kernel history should
-take less than 200M.
+Sorry.
 
-> I tried "git prune" and "git repack" but it still remains so large. The
-> trend of the kernel is still going to be enlarged. Thus I'm thinking
-> of the possibility of a baseline feature. One can totally forget about
-> the history before that baseline, and start the development there
-> after.
+In the previous round, an asciidoc formatting error was pointed in my
+doc patch, and you also noted that the t/t9600-cvsimport.sh test script
+failed after my Getopt::Std -> Getopt::Long patch.
 
-Git provides "shallow" clones which essentially give you that ability
-today via the --depth option.  While it won't automatically determine
-a baseline, it avoids the need for you to download a tarball first.
+I corrected all those problems (checked the asciidoc HTML output, and
+made sure the test script passed again).
 
-Sean
+> Also please Sign-off all your patches.  Cover letters do not
+> need one.
+
+It noticed that I forgot to -s my commits, so I thought that signing off
+the cover letter would be equivalent. I tried to follow the guidelines
+for sending patches, using format-patch and send-email, but I'm still a
+newbie both to git and it's development model.
+
+> I'll take a look at them later, when I have enough time to fish
+> for messages and discussions from earlier round in the list
+> archive in order to process this.
+
+You can ignore my previous messages, then. These four patches were
+rebased on the top of master, and correct the problems that were
+previously pointed to me.
+
+    Thanks,
+
+-- 
+ Philippe Bruhat (BooK)
+
+ The shortest distance between two points is not always the safest.
+                                    (Moral from Groo The Wanderer #69 (Epic))
