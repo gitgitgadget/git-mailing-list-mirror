@@ -1,86 +1,70 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Which freedesktop.org "design flaws" in git are still
- relevant?
-Date: Fri, 29 Feb 2008 17:58:15 -0500 (EST)
-Message-ID: <alpine.LNX.1.00.0802291743330.19665@iabervon.org>
-References: <51419b2c0802291232w166b3100yabd30ba30df6ef1f@mail.gmail.com>  <m3hcfrjwnk.fsf@localhost.localdomain>  <alpine.LNX.1.00.0802291614230.19665@iabervon.org> <76718490802291440x60896c93i26d8d0c2cf5678b2@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] t6024-recursive-merge.sh: hide spurious output when
+	not running verbosely
+Date: Fri, 29 Feb 2008 18:01:56 -0500
+Message-ID: <20080229230156.GA8742@coredump.intra.peff.net>
+References: <1204323805-23185-1-git-send-email-mh@glandium.org> <20080229225331.GA8440@coredump.intra.peff.net> <20080229225816.GA24892@glandium.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Elijah Newren <newren@gmail.com>, git@vger.kernel.org
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 29 23:58:55 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Sat Mar 01 00:02:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JVEBp-0000Ps-Hv
-	for gcvg-git-2@gmane.org; Fri, 29 Feb 2008 23:58:53 +0100
+	id 1JVEFQ-0001jt-95
+	for gcvg-git-2@gmane.org; Sat, 01 Mar 2008 00:02:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754552AbYB2W6R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Feb 2008 17:58:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752231AbYB2W6R
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Feb 2008 17:58:17 -0500
-Received: from iabervon.org ([66.92.72.58]:49550 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753853AbYB2W6R (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Feb 2008 17:58:17 -0500
-Received: (qmail 16797 invoked by uid 1000); 29 Feb 2008 22:58:15 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 29 Feb 2008 22:58:15 -0000
-In-Reply-To: <76718490802291440x60896c93i26d8d0c2cf5678b2@mail.gmail.com>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1755094AbYB2XB7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Feb 2008 18:01:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755203AbYB2XB7
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Feb 2008 18:01:59 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4518 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754994AbYB2XB7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Feb 2008 18:01:59 -0500
+Received: (qmail 9490 invoked by uid 111); 29 Feb 2008 23:01:57 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Fri, 29 Feb 2008 18:01:57 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 29 Feb 2008 18:01:56 -0500
+Content-Disposition: inline
+In-Reply-To: <20080229225816.GA24892@glandium.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75586>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75587>
 
-On Fri, 29 Feb 2008, Jay Soffian wrote:
+On Fri, Feb 29, 2008 at 11:58:16PM +0100, Mike Hommey wrote:
 
-> On Fri, Feb 29, 2008 at 4:58 PM, Daniel Barkalow <barkalow@iabervon.org> wrote:
+> > > -git reset --hard
+> > > +git reset --hard >&3 2>&4
+> > >  test_expect_success 'refuse to merge binary files' '
+> > >  	printf "\0" > binary-file &&
+> > >  	git add binary-file &&
+> > 
+> > Should this perhaps just be:
+> > 
+> >   test_expect_success 'reset state' 'git reset --hard'
 > 
-> > I wonder if it would be nice to have per-branch aliases, so that you
-> > could have "git update" do whatever is appropriate to update this
-> > particular branch, whether it be "git pull --no-commit" or "git reset
-> > --hard origin/next && git merge" or "git rebase".
-> 
-> Well, you effectively have this via
-> branch.*.{merge,mergeoptions,rebase,remote}. e.g.:
-> 
-> To effect fetch + non-committing merge:
-> 
->   branch.<name>.remote        = origin
->   branch.<name>.merge         = refs/heads/<name>
->   branch.<name>.mergeoptions  = --no-commit
-> 
-> To effect fetch + rebasing:
-> 
->   branch.<name>.remote        = origin
->   branch.<name>.merge         = refs/heads/<name>
->   branch.<name>.rebase        = true
+> Is it really about testing git reset ?
 
-Ah, good point. I'd forgotten mergeoptions.
+No, of course not. Nor is t0003 about testing 'setup'. But it is a
+convention[1] in git tests to do everything inside a test_expect_success
+wrapper, which is beneficial because:
 
-> To effect reset --hard origin/next, add another fetch line to your
-> remote. e.g.:
-> 
->   [remote "origin"]
->     url = git://git.kernel.org/pub/scm/git/git.git
->     fetch = +refs/heads/*:refs/remotes/origin/*
->     fetch = refs/heads/pu:/refs/heads/pu-readonly
+  - you get your output handled properly automagically :)
+  - if the setup step fails, we notice. Which means:
+     - it cannot silently cause a later test to succeed (e.g., setup
+       changes a file, then the real test reverts it)
+     - it is easier to debug failing tests, because you are notified
+       of the _first_ failure
 
-This case is actually tougher. I've got:
+-Peff
 
-[branch "good-stuff"]
-	remote = .
-	merge = refs/heads/<local topic I like>
-	merge = refs/heads/<another topic>
-	merge = refs/heads/<yet another>
+[1] By convention, I don't necessarily mean that there is a written
+rule, nor that we always do it that way, but only that in my experience
+we usually do. Somebody like Junio could say more definitely what is
+preferred.
 
-This branch is my local equivalent of "pu" for my own topics, which gets 
-next + each topic I have in a testable state (by way of an octopus merge). 
-So I reset to origin/next and merge a lot of local branches.
-
-	-Daniel
-*This .sig left intentionally blank*
