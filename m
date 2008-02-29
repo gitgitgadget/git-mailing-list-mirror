@@ -1,60 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/5] path-list: add functions to work with unsorted lists
-Date: Thu, 28 Feb 2008 18:04:31 -0800
-Message-ID: <7vprugfrgw.fsf@gitster.siamese.dyndns.org>
-References: <alpine.LSU.1.00.0802290144130.22527@racer.site>
- <alpine.LSU.1.00.0802290144410.22527@racer.site>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 0/5] Builtin "git remote"
+Date: Fri, 29 Feb 2008 02:13:45 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0802290211460.22527@racer.site>
+References: <alpine.LSU.1.00.0802290144130.22527@racer.site> <7vwsoofrue.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Feb 29 03:06:10 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Daniel Barkalow <barkalow@iabervon.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 29 03:15:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JUucj-0006Am-4y
-	for gcvg-git-2@gmane.org; Fri, 29 Feb 2008 03:05:51 +0100
+	id 1JUum4-0000d7-Vz
+	for gcvg-git-2@gmane.org; Fri, 29 Feb 2008 03:15:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752147AbYB2CEo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Feb 2008 21:04:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751678AbYB2CEo
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Feb 2008 21:04:44 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:60608 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751497AbYB2CEn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Feb 2008 21:04:43 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 580401F0F;
-	Thu, 28 Feb 2008 21:04:42 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id B5FFC1F01; Thu, 28 Feb 2008 21:04:38 -0500 (EST)
-In-Reply-To: <alpine.LSU.1.00.0802290144410.22527@racer.site> (Johannes
- Schindelin's message of "Fri, 29 Feb 2008 01:44:56 +0000 (GMT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753269AbYB2COV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Feb 2008 21:14:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751654AbYB2COV
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Feb 2008 21:14:21 -0500
+Received: from mail.gmx.net ([213.165.64.20]:43936 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753142AbYB2COU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Feb 2008 21:14:20 -0500
+Received: (qmail invoked by alias); 29 Feb 2008 02:14:18 -0000
+Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
+  by mail.gmx.net (mp041) with SMTP; 29 Feb 2008 03:14:18 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/Gol9rIQjG1rxiEVfn0FavGhaB/qWnqdK250bBzE
+	bLIjysbWhgQe7l
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7vwsoofrue.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75495>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75496>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hi,
 
-> 	This is probably useful to a number of existing non-users of
-> 	path_list.
+On Thu, 28 Feb 2008, Junio C Hamano wrote:
 
-I suspect most of the non-users will stay non-users, until the
-thing is renamed to something more sensible.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > It also demonstrates that format-patch --cover-letter should default 
+> > to -M for the diffstat (search for "git-remote.perl"...).
+> 
+> It probably should inherit the settings for the primary part.
+> You did generate the series with -M, especially [PATCH 4/5],
+> didn't you?
 
-The name gives a false impression that this is a special-purpose
-data structure that is meant to handle pathnames very well
-(e.g. canonicalizing "foo//../bar" to "bar" before doing
-comparsion) but in reality it does not do anything like that,
-and is a general purpose "table keyed with string" mechanism.
+Yes, I did.
 
-The wholesale renaming, if we were to do so, should happen when
-things are quiet, and this is probably not a good time for it.
+> > Johannes Schindelin (5):
+> >       path-list: add functions to work with unsorted lists
+> >       parseopt: add flag to stop on first non option
+> >       Test "git remote show" and "git remote prune"
+> >       Make git-remote a builtin
+> >       builtin-remote: prune remotes correctly that were added with --mirror
+> 
+> Also I wish the default indentation were not that deep, and also
+> line-wrapped at around 72-76 columns.
 
+Right.
+
+I still have a few patches in my personal tree to implement "git-fmt", and 
+I think that it should be easy to rework them into something usable for 
+this purpose (4-character indent for the first line, 8-character for every 
+subsequent one).
+
+Also, it might be a good idea to teach "git log" to use these wrapping 
+functions, as there are still regular contributors, even to Git itself, 
+who seem to be unwilling to use <=76 characters/line.
+
+Ciao,
+Dscho
 
