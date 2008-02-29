@@ -1,83 +1,75 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Using gpg and gitattributes together
-Date: Fri, 29 Feb 2008 14:59:43 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802291455120.22527@racer.site>
-References: <alpine.LSU.1.00.0802270008550.22527@racer.site>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: warning: no common commits - slow pull
+Date: Fri, 29 Feb 2008 12:14:54 -0500 (EST)
+Message-ID: <alpine.LNX.1.00.0802291211290.19665@iabervon.org>
+References: <200802102007.38838.lenb@kernel.org> <20080211035501.GB26205@mit.edu> <200802151643.30232.lenb@kernel.org> <200802261438.17014.lenb@kernel.org> <7vir0byoc2.fsf@gitster.siamese.dyndns.org> <7voda2yksf.fsf@gitster.siamese.dyndns.org>
+ <alpine.LNX.1.00.0802271411280.19665@iabervon.org> <7vskzeruit.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0802271605540.19665@iabervon.org> <20080228004313.GQ8410@spearce.org> <20080228085038.GS8410@spearce.org> <47C81A6B.1060905@freescale.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 29 16:01:16 2008
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Nicolas Pitre <nico@cam.org>, Len Brown <lenb@kernel.org>,
+	Theodore Tso <tytso@mit.edu>, git@vger.kernel.org
+To: Jon Loeliger <jdl@freescale.com>
+X-From: git-owner@vger.kernel.org Fri Feb 29 18:15:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JV6jJ-0006s1-QS
-	for gcvg-git-2@gmane.org; Fri, 29 Feb 2008 16:00:58 +0100
+	id 1JV8pc-0002vv-Tm
+	for gcvg-git-2@gmane.org; Fri, 29 Feb 2008 18:15:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759063AbYB2PAV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Feb 2008 10:00:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759186AbYB2PAU
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Feb 2008 10:00:20 -0500
-Received: from mail.gmx.net ([213.165.64.20]:33989 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1758952AbYB2PAT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Feb 2008 10:00:19 -0500
-Received: (qmail invoked by alias); 29 Feb 2008 15:00:18 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp003) with SMTP; 29 Feb 2008 16:00:18 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+EBFEOSdeEBKX1OaGCSmnqtrzYSmGrftMWNNqQLq
-	jRiNw7puM7kuLu
-X-X-Sender: gene099@racer.site
-In-Reply-To: <alpine.LSU.1.00.0802270008550.22527@racer.site>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1757620AbYB2RO6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Feb 2008 12:14:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751199AbYB2RO5
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Feb 2008 12:14:57 -0500
+Received: from iabervon.org ([66.92.72.58]:55651 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751635AbYB2RO4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Feb 2008 12:14:56 -0500
+Received: (qmail 24067 invoked by uid 1000); 29 Feb 2008 17:14:54 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 29 Feb 2008 17:14:54 -0000
+In-Reply-To: <47C81A6B.1060905@freescale.com>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75542>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75543>
 
-Hi,
+On Fri, 29 Feb 2008, Jon Loeliger wrote:
 
-On Wed, 27 Feb 2008, Johannes Schindelin wrote:
-
-> I just added my .netrc to a repository where I track some files that I 
-> would hate to lose.  However, since I mirror that repository to a 
-> machine where other people than me have root access, I thought that I 
-> encrypt the file with gpg.
+> Shawn O. Pearce wrote:
+> > "Shawn O. Pearce" <spearce@spearce.org> wrote:
+> > > Daniel Barkalow <barkalow@iabervon.org> wrote:
 > 
-> To make this procedure more convenient for me, I decided not to encrypt 
-> with a private key, but with a passphrase, and to use gitattributes to 
-> do the encryption for me:
+> > > I agree its outside of 1.5.5, as we'd all like to see 1.5.5 happen
+> > > soon, but it could be 1.5.6 material, especially if someone starts
+> > > working on it sooner rather than later.
+> > >
+> > > Its actually probably not that difficult to implement.
+> > 
+> > OK, so I posted a fairly short series tonight (4 patches) that
+> > handles some of the common cases in a fairly small amount of
+> > code churn.  It might just be 1.5.5-ish.
+> > 
+> > Doing anything better is going to require a new protocol extension,
+> > which is already 1.5.6 material.  In the mean time maybe Junio's
+> > earlier patch to try and drop the ref_map when we do open the new
+> > connection is the way to deal with the round-robin DNS issues.
 > 
-> $ echo 'netrc filter=gpg' > .gitattributes
-> $ git config filter.gpg.clean 'gpg --cipher-algo AES256 -c'
-> $ git config filter.gpg.smudge 'gpg --decrypt'
-> $ git add netrc
 > 
-> It asks quite a few times for the passphrase (as expected), but I had to 
-> add the file twice (not expected).  However, since it worked now, I am 
-> happy.
-> 
-> Maybe somebody else will find this information useful.
+> Hmmm... Might the any protocol extensions require a 1.6 release
+> rather than a 1.5.x release?  Or is this extension compatible
+> enough that it can be transparent?
 
-Unfortunately, this procedure has an issue I was not able to fix, and not 
-even Daniel's checkout patch could fix it.
+The client and server exchange a list of supported features at the 
+beginning, and the difference in behavior would be at the end, so it 
+should be no problem to have the client ask for the chance to make further 
+requests and the server acknowledge that (or the server offer and the 
+client accept, depending on the order they do it, which I don't remember) 
+without affecting programs that don't report the feature.
 
-When encrypting, gpg uses a random element (to make the encryption harder 
-to break, I guess).  So when I update netrc with "git add" (and nothing 
-was changed), git will have a _different_ blob.
-
-So I just tried "git checkout netrc", hoping that the index would be 
-updated to say that the netrc file is current, after writing it.
-
-But that did not work, since git checkout insisted on readding the file 
-(which again resulted in a different blob, and therefore netrc seems to be 
-out-of-date at all times).
-
-So scrap that method.
-
-Ciao,
-Dscho
-
+	-Daniel
+*This .sig left intentionally blank*
