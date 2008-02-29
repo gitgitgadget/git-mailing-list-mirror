@@ -1,63 +1,52 @@
-From: Johannes Sixt <johannes.sixt@telecom.at>
-Subject: Re: [PATCH 02/40] Compile some programs only conditionally.
-Date: Fri, 29 Feb 2008 21:58:11 +0100
-Message-ID: <200802292158.12398.johannes.sixt@telecom.at>
-References: <1204138503-6126-1-git-send-email-johannes.sixt@telecom.at> <200802282130.10225.johannes.sixt@telecom.at> <alpine.LSU.1.00.0802290046180.22527@racer.site>
+From: Mike Hommey <mh@glandium.org>
+Subject: Problem with test from aa9c83c2
+Date: Fri, 29 Feb 2008 22:04:10 +0100
+Organization: glandium.org
+Message-ID: <20080229210410.GA26683@glandium.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 29 21:58:53 2008
+X-From: git-owner@vger.kernel.org Fri Feb 29 22:02:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JVCJh-0006in-4r
-	for gcvg-git-2@gmane.org; Fri, 29 Feb 2008 21:58:53 +0100
+	id 1JVCMc-0007wU-QQ
+	for gcvg-git-2@gmane.org; Fri, 29 Feb 2008 22:01:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754181AbYB2U6Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Feb 2008 15:58:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752496AbYB2U6Q
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Feb 2008 15:58:16 -0500
-Received: from smtp1.srv.eunet.at ([193.154.160.119]:51615 "EHLO
-	smtp1.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754007AbYB2U6P (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Feb 2008 15:58:15 -0500
-Received: from dx.sixt.local (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
-	by smtp1.srv.eunet.at (Postfix) with ESMTP id B268D345DB;
-	Fri, 29 Feb 2008 21:58:13 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by dx.sixt.local (Postfix) with ESMTP id 7863156E3B;
-	Fri, 29 Feb 2008 21:58:13 +0100 (CET)
-User-Agent: KMail/1.9.3
-In-Reply-To: <alpine.LSU.1.00.0802290046180.22527@racer.site>
+	id S1759387AbYB2VAv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Feb 2008 16:00:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760149AbYB2VAv
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Feb 2008 16:00:51 -0500
+Received: from vuizook.err.no ([194.24.252.247]:36381 "EHLO vuizook.err.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759221AbYB2VAu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Feb 2008 16:00:50 -0500
+X-Greylist: delayed 1903 seconds by postgrey-1.27 at vger.kernel.org; Fri, 29 Feb 2008 16:00:50 EST
+Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
+	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.67)
+	(envelope-from <mh@glandium.org>)
+	id 1JVCLS-0003Bz-MX
+	for git@vger.kernel.org; Fri, 29 Feb 2008 22:00:48 +0100
+Received: from mh by jigen with local (Exim 4.69)
+	(envelope-from <mh@jigen>)
+	id 1JVCOo-00070E-3u
+	for git@vger.kernel.org; Fri, 29 Feb 2008 22:04:10 +0100
 Content-Disposition: inline
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75560>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75561>
 
-On Friday 29 February 2008 01:47, Johannes Schindelin wrote:
-> On Thu, 28 Feb 2008, Johannes Sixt wrote:
-> > openlog() etc. is only one problem in git-daemon. It also depends on
-> > SIGCHLD, a non-blocking waitpid, and a lot more. The patch that is in
-> > 4msysgit.git allows only a single connection, IIRC, after which it
-> > terminates. But I also think that git-daemon can be made more complete
-> > on Windows, but it certainly requires a major surgery.
->
-> Okay, I did not look closely enough.  But even a single-connection daemon
-> is better than no daemon, no?
+Hi,
 
-In principle, yes. But:
+When run as root, the test added in aa9c83c2 fails, because root is allowed
+to remove files in unreadable and unwriteable directories. Now, the
+problem is that I don't know what to do with that. Should we care ?
 
-- git-fetch needs two connections if there are new tags in the source repo.
-
-- The daemon patches in 4msysgit.git could be prettier, they certainly would 
-not pass your scrutiny.
-
-git-daemon is not my itch at this time, so I won't scratch it.
-
--- Hannes
+Mike
