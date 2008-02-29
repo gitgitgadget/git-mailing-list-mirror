@@ -1,100 +1,111 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Using gpg and gitattributes together
-Date: Fri, 29 Feb 2008 15:02:37 -0500
-Message-ID: <20080229200237.GA6892@coredump.intra.peff.net>
-References: <alpine.LSU.1.00.0802270008550.22527@racer.site> <alpine.LSU.1.00.0802291455120.22527@racer.site>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: '.git file' alternative, native (cross-platform)
+ workdir support.
+Date: Fri, 29 Feb 2008 12:02:42 -0800
+Message-ID: <7vabljcyzh.fsf@gitster.siamese.dyndns.org>
+References: <47C7FA49.9010001@trolltech.com> <alpine.LSU.1.00.0802291248510.22527@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Marius Storm-Olsen <marius@trolltech.com>,  Git Mailing List <git@vger.kernel.org>,  msysGit <msysgit@googlegroups.com>
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Feb 29 21:03:27 2008
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Fri Feb 29 21:03:34 2008
+Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from ag-out-0910.google.com ([72.14.246.186])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JVBRt-00023J-El
-	for gcvg-git-2@gmane.org; Fri, 29 Feb 2008 21:03:17 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757886AbYB2UCl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Feb 2008 15:02:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757200AbYB2UCl
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Feb 2008 15:02:41 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1204 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755255AbYB2UCk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Feb 2008 15:02:40 -0500
-Received: (qmail 30093 invoked by uid 111); 29 Feb 2008 20:02:38 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Fri, 29 Feb 2008 15:02:38 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 29 Feb 2008 15:02:37 -0500
-Content-Disposition: inline
-In-Reply-To: <alpine.LSU.1.00.0802291455120.22527@racer.site>
-Sender: git-owner@vger.kernel.org
+	id 1JVBS7-000299-Sh
+	for gcvm-msysgit@m.gmane.org; Fri, 29 Feb 2008 21:03:32 +0100
+Received: by ag-out-0910.google.com with SMTP id 32so4234186agc.3
+        for <gcvm-msysgit@m.gmane.org>; Fri, 29 Feb 2008 12:02:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:received:x-sender:x-apparently-to:received:received:received-spf:authentication-results:received:received:from:to:cc:subject:references:date:in-reply-to:message-id:user-agent:mime-version:content-type:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
+        bh=bQY9+zdHwrl8I+igetiNTYFtuNW6aaziqXiqIbDGjlc=;
+        b=Y9Icgs5sBkiXaFCvvBw2ULk8FoakB6DCD5BSNf50VSsv5Kn7FQGo7A4n2DNW36YlnhNjI/la4nbFLn25wphJY6E87iWU8lVkhfbIB0LqSrSSKl6OYhF1IJaCpl0blIw9vyYtmk8BoSA8A11I5qSyOqHEtNHZgTXDb488qA3q/ZQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlegroups.com; s=beta;
+        h=x-sender:x-apparently-to:received-spf:authentication-results:from:to:cc:subject:references:date:in-reply-to:message-id:user-agent:mime-version:content-type:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
+        b=xZER7RVHYUqwkqmxe0elsAPBWhgwfbFCRBszHBd0NGawSk+tM4Z7R8TzltvKAG6NYPZpqPGBqlcuezRLr++4MS0ICg9rhaKShQiCyhyBFu+6zToRJ9AgS/piTAmw93DWIpPrK9eVhkRYg7fotKrNExG4BZOiDyuoKyZ3PewVLZ0=
+Received: by 10.100.164.10 with SMTP id m10mr886144ane.3.1204315376023;
+        Fri, 29 Feb 2008 12:02:56 -0800 (PST)
+Received: by 10.106.177.2 with SMTP id z2gr1861pre.0;
+	Fri, 29 Feb 2008 12:02:55 -0800 (PST)
+X-Sender: gitster@pobox.com
+X-Apparently-To: msysgit@googlegroups.com
+Received: by 10.114.193.1 with SMTP id q1mr7577288waf.27.1204315375500; Fri, 29 Feb 2008 12:02:55 -0800 (PST)
+Received: from sasl.smtp.pobox.com (a-sasl-fastnet.sasl.smtp.pobox.com [207.106.133.19]) by mx.google.com with ESMTP id k36si3268006waf.0.2008.02.29.12.02.54; Fri, 29 Feb 2008 12:02:55 -0800 (PST)
+Received-SPF: pass (google.com: domain of gitster@pobox.com designates 207.106.133.19 as permitted sender) client-ip=207.106.133.19;
+Authentication-Results: mx.google.com; spf=pass (google.com: domain of gitster@pobox.com designates 207.106.133.19 as permitted sender) smtp.mail=gitster@pobox.com
+Received: from localhost.localdomain (localhost [127.0.0.1]) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 2FBBD2E4F; Fri, 29 Feb 2008 15:02:53 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77]) (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 310C02E4C; Fri, 29 Feb 2008 15:02:45 -0500 (EST)
+In-Reply-To: <alpine.LSU.1.00.0802291248510.22527@racer.site> (Johannes Schindelin's message of "Fri, 29 Feb 2008 12:54:11 +0000 (GMT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Sender: msysgit@googlegroups.com
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75555>
+X-Google-Loop: groups
+Mailing-List: list msysgit@googlegroups.com;
+	contact msysgit-owner@googlegroups.com
+List-Id: <msysgit.googlegroups.com>
+List-Post: <mailto:msysgit@googlegroups.com>
+List-Help: <mailto:msysgit-help@googlegroups.com>
+List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
+	<mailto:msysgit-unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75556>
 
-On Fri, Feb 29, 2008 at 02:59:43PM +0000, Johannes Schindelin wrote:
 
-> When encrypting, gpg uses a random element (to make the encryption harder 
-> to break, I guess).  So when I update netrc with "git add" (and nothing 
-> was changed), git will have a _different_ blob.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-This is probably due to two things:
+> On Fri, 29 Feb 2008, Marius Storm-Olsen wrote:
+>
+>> I just caught a glimpse of the '.git file' efforts, as a file for 
+>> redirection to a real repository.
+>> 
+>> As far as I can tell, the reason for adding the support is to in the end 
+>> provide a cross-platform way of supporting workdirs. (If this is not the 
+>> [main] point, please point me to the thread describing the real reason, 
+>> I couldn't find it.)
+>
+> This is the main reason, yes.
 
-  1. random salting of the passphrase when generating a key
+I do not think so.  For repository and work tree separation, we already
+have core.worktree.  Multiple work trees attached to a single repository
+is what contrib/workdir/ does, and it could probably be extended, but that
+one needs more than "redirect .git elsewhere".
 
-     To turn a passphrase into a key, you usually do something like
+The primary reason we may want to do the ".git file" thing is to sanely
+support switching between branches (or checking out a different revision,
+which amounts to the same thing) when one has a submodule and the other
+one either does not have that submodule anywhere or have it in a different
+location in its tree.
 
-       salt = some random data
-       K = hash(salt + passphrase)
+Suppose the HEAD one binds a submodule "gitk" at gitk-git.  Then suppose
+we want to switch to an old branch that did not have that submodule bound
+yet.  Or the branch we are switching to has the submodule at modules/gitk.
+What happens?
 
-     and then include the salt in your message (since the decrypter
-     needs to know it). The point is to avoid dictionary attacks against
-     common passphrases (IOW, if "foobar" always becomes 0xabcdef, then
-     I can just build a table lookup to make brute forcing faster).
+Currently, when we are on HEAD, we create a directory at gitk-git and make
+gitk-git/.git directory its controlling repository (i.e. GIT_DIR).
+Switching to a branch that did not have the submodule bound will need to
+rmdir gitk-git (this needs to happen no matter what) but as a side effect
+we will lose gitk-git/.git repository.  Switching back to where we were
+would require reloading that repository from somewhere else, but if you
+are "the upstream", that somewhere else may not even exist.
 
-     So you can turn this off at the price of lessened security against
-     dictionary attacks.
+One way to solve this would be to add .git/submodules/paulus.git
+repository inside the controlling reopsitory of the toplevel project, and
+point that with the ".git file" installed at gitk-git/.git, when we are on
+HEAD.  We can lose gitk-git directory and everything below it when
+switching away from the revision, but when we come back, we can recreate
+gitk-git directory, point gitk-git/.git back to .git/submodules/paulus.git
+kept in the toplevel repository, and check the appropriate commit out there.
 
-  2. CBC mode with a random IV
+After switching to an old revision that did not have the submodule,
+further switching to a branch that has the submodule at modules/gitk would
+be the same deal.  Instead of creating gitk-git directory and installing
+the ".git file" there (which is what we did when we came back to the
+original HEAD), create modules/gitk and install the ".git file" there, to
+point at the same .git/submodules/paulus.git/.
 
-     Most symmetric algorithms are block ciphers. There are many "modes"
-     for encrypting a stream; a common one is CBC, which works like
-     this:
-
-       C[0] = random initial vector
-       C[i] = E(K, P[i] ^ C[i-1])
-
-     so each block depends on the block before, and the first block
-     depends on some randomly selected data.
-
-     You can switch to ECB mode, where C[i] = E(P[i]), but it can reveal
-     patterns in the data (there is a nice graphical example on the
-     wikipedia page:
-
-       http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation
-
-     You can also use the same IV over and over again, but that does
-     leak some information: you can tell up to which block two messages
-     encrypted with the same key and IV are the same.
-
-     In the case of your netrc, either of these is probably OK. You are
-     only trying to keep secret one fixed string within the file.
-
-I don't think gpg's command-line interface is flexible enough to change
-any of these options, but I might be wrong. You can definitely use
-openssl like this:
-
-  openssl aes-256-ecb -nosalt
-
-If you wanted to implement higher quality encryption in git, you could
-just encrypt/decrypt objects going into the object database (like how we
-do zlib compression), but still name them by hash. The downside, though,
-is that if objects are named by their contents, there is an obvious
-"guessing" attack where I can see if your repo contains an object with
-particular content. There might be a way around that, but I'd have to
-give it some thought.
-
--Peff
+We should be able to do this today without ".git file" using symlinks.
+It's just a Porcelain hackery, so I'll leave it to interested parties as
+an exercise.
