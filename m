@@ -1,54 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Problem with test from aa9c83c2
-Date: Fri, 29 Feb 2008 13:36:40 -0800
-Message-ID: <7vtzjrbg2f.fsf@gitster.siamese.dyndns.org>
-References: <20080229210410.GA26683@glandium.org>
+From: "Govind Salinas" <blix@sophiasuchtig.com>
+Subject: Re: [PATCH 20/40] Windows: A rudimentary poll() emulation.
+Date: Fri, 29 Feb 2008 15:47:12 -0600
+Message-ID: <5d46db230802291347u5f286dadw6b532abf82c0cff7@mail.gmail.com>
+References: <1204138503-6126-1-git-send-email-johannes.sixt@telecom.at>
+	 <200802282149.36748.johannes.sixt@telecom.at>
+	 <5d46db230802282019o21f9ed9fo75fed8744625289e@mail.gmail.com>
+	 <200802292216.25014.johannes.sixt@telecom.at>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Fri Feb 29 22:37:52 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Johannes Sixt" <johannes.sixt@telecom.at>
+X-From: git-owner@vger.kernel.org Fri Feb 29 22:47:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JVCvK-0004nk-Kh
-	for gcvg-git-2@gmane.org; Fri, 29 Feb 2008 22:37:47 +0100
+	id 1JVD56-0008Qs-Gh
+	for gcvg-git-2@gmane.org; Fri, 29 Feb 2008 22:47:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760840AbYB2Vgz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Feb 2008 16:36:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759253AbYB2Vgz
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Feb 2008 16:36:55 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:56873 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756584AbYB2Vgy (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Feb 2008 16:36:54 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 9B7C02AC8;
-	Fri, 29 Feb 2008 16:36:51 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 095D82AC7; Fri, 29 Feb 2008 16:36:48 -0500 (EST)
-In-Reply-To: <20080229210410.GA26683@glandium.org> (Mike Hommey's message of
- "Fri, 29 Feb 2008 22:04:10 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1760283AbYB2VrQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Feb 2008 16:47:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760156AbYB2VrQ
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Feb 2008 16:47:16 -0500
+Received: from ti-out-0910.google.com ([209.85.142.187]:27800 "EHLO
+	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759253AbYB2VrP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Feb 2008 16:47:15 -0500
+Received: by ti-out-0910.google.com with SMTP id 28so4044684tif.23
+        for <git@vger.kernel.org>; Fri, 29 Feb 2008 13:47:14 -0800 (PST)
+Received: by 10.151.47.7 with SMTP id z7mr962570ybj.103.1204321632073;
+        Fri, 29 Feb 2008 13:47:12 -0800 (PST)
+Received: by 10.150.199.5 with HTTP; Fri, 29 Feb 2008 13:47:12 -0800 (PST)
+In-Reply-To: <200802292216.25014.johannes.sixt@telecom.at>
+Content-Disposition: inline
+X-Google-Sender-Auth: 0442b7dc10f2141e
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75568>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75569>
 
-Mike Hommey <mh@glandium.org> writes:
+On 2/29/08, Johannes Sixt <johannes.sixt@telecom.at> wrote:
+> On Friday 29 February 2008 05:19, Govind Salinas wrote:
+>  > On Thu, Feb 28, 2008 at 2:49 PM, Johannes Sixt <johannes.sixt@telecom.at>
+>  wrote:
+>  > > On Thursday 28 February 2008 10:36, Paolo Bonzini wrote:
+>
+> > >  > For the future, would it be better to first use
+>  > >  > WaitForMultipleObjects, and then use PeekNamedPipe to find which
+>  > >  > handles have data on it? That's how the mingw port of GNU Smalltalk
+>  > >  > does it.
+>  > >
+>  > >  I tried but I failed. If you can show me code where
+>      ^^^^^^^^^^^^^^^^^^^^^
+>  > > WaitForMultipleObjects works on handles that MSVCRT.DLL's open() created,
+>  > > I'll gladly accept it!
+>  >
+>  > I haven't tried it myself, but you can look at _get_osfhandle
+>  >
+>  > http://msdn2.microsoft.com/en-us/library/ks2530z6(VS.71).aspx
+>  >
+>  > of course you would need to keep a mapping from the handle to the fd.
+>  > Or _open_osfhandle might work the other way, I don't know if it will
+>  > necessarily return the same descriptor.
+>  >
+>  > http://msdn2.microsoft.com/en-us/library/bdts1c9x(VS.71).aspx
+>
+>
+> Fscking basics, this. How do you go from here to WaitForMultipleObjects?
+>
+Well, I could have sworn that named pipe handles were in the waitable
+list, but after looking again, they are not.
 
-> When run as root, the test added in aa9c83c2 fails, because root is allowed
-> to remove files in unreadable and unwriteable directories. Now, the
-> problem is that I don't know what to do with that. Should we care ?
+However, I did find
 
-Of course not.  You are nuts running tests as root.
+http://msdn2.microsoft.com/en-us/library/aa365603(VS.85).aspx
 
-If "git foo" should refuse to remove a file for revision control
-reason, and it does refuse correctly for a non-root user but it
-fails to refuse when run as root, then that is a bug and we do
-care about it.  IOW, I am not saying you are nuts running git as
-root.
+which suggests you can pass these handles to ReadFile and if you include an
+OVERLAPPED struct in the call, it will return an event handle to wait on which
+you can then use to wait.
+
+Sorry for the false lead.
+
+HTH,
+Govind.
