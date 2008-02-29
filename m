@@ -1,59 +1,55 @@
-From: "Jay Soffian" <jaysoffian@gmail.com>
-Subject: Re: Which freedesktop.org "design flaws" in git are still relevant?
-Date: Fri, 29 Feb 2008 17:52:20 -0500
-Message-ID: <76718490802291452x7b9c91adlb48c55f5737a1a33@mail.gmail.com>
-References: <51419b2c0802291232w166b3100yabd30ba30df6ef1f@mail.gmail.com>
-	 <m3hcfrjwnk.fsf@localhost.localdomain>
-	 <alpine.LNX.1.00.0802291614230.19665@iabervon.org>
-	 <76718490802291440x60896c93i26d8d0c2cf5678b2@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] t6024-recursive-merge.sh: hide spurious output when
+	not running verbosely
+Date: Fri, 29 Feb 2008 17:53:31 -0500
+Message-ID: <20080229225331.GA8440@coredump.intra.peff.net>
+References: <1204323805-23185-1-git-send-email-mh@glandium.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Jakub Narebski" <jnareb@gmail.com>,
-	"Elijah Newren" <newren@gmail.com>, git@vger.kernel.org
-To: "Daniel Barkalow" <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Fri Feb 29 23:53:20 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Fri Feb 29 23:54:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JVE6B-0006pp-Jm
-	for gcvg-git-2@gmane.org; Fri, 29 Feb 2008 23:53:04 +0100
+	id 1JVE7G-0007Fo-Pk
+	for gcvg-git-2@gmane.org; Fri, 29 Feb 2008 23:54:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760259AbYB2Ww0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Feb 2008 17:52:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754225AbYB2WwZ
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Feb 2008 17:52:25 -0500
-Received: from gv-out-0910.google.com ([216.239.58.187]:14040 "EHLO
-	gv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754061AbYB2WwZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Feb 2008 17:52:25 -0500
-Received: by gv-out-0910.google.com with SMTP id s4so1928618gve.37
-        for <git@vger.kernel.org>; Fri, 29 Feb 2008 14:52:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=5Hj5O+RyK+HGzp6JZxgOzo3e2ZMbzZrC0hLKImBub/I=;
-        b=wDXdBna7v7pxEqinHyJL4AaGGSaiQCRcGoaDMyuLdnPhOKyeFP2NQEdL5/rB45UVr6tC15CK/Y7tGXck7Ot8k1lHxCpEF/7IYDIBo080M/QfB4tMg46ZMY+GZFmm/d8fLuy9faopUb98fg9uGUHQIWQ0tegdZCCTEfqjqimeqpo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=YU/jrw3iE6JzVnDpaDYi8KdiNEpqWIvNXrI8nbrLjqTpHWRxvcN1oFo5m9wNEl5CpP2BUgS7s8TVj34OucYiw61iGNQz/jKE9CeTlJ1CBp0Zn56hl4v57pYcwwdyk+aIvE3vsV/nz0WNZiH26xHcP2X/lIuIp6/8ywSTWCmjY8Q=
-Received: by 10.115.78.1 with SMTP id f1mr6967697wal.100.1204325541485;
-        Fri, 29 Feb 2008 14:52:21 -0800 (PST)
-Received: by 10.114.13.5 with HTTP; Fri, 29 Feb 2008 14:52:20 -0800 (PST)
-In-Reply-To: <76718490802291440x60896c93i26d8d0c2cf5678b2@mail.gmail.com>
+	id S1755211AbYB2Wxe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Feb 2008 17:53:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755094AbYB2Wxe
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Feb 2008 17:53:34 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4086 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752114AbYB2Wxe (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Feb 2008 17:53:34 -0500
+Received: (qmail 8865 invoked by uid 111); 29 Feb 2008 22:53:32 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Fri, 29 Feb 2008 17:53:32 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 29 Feb 2008 17:53:31 -0500
 Content-Disposition: inline
+In-Reply-To: <1204323805-23185-1-git-send-email-mh@glandium.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75583>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75584>
 
-On Fri, Feb 29, 2008 at 5:40 PM, Jay Soffian <jaysoffian@gmail.com> wrote:
->     fetch = refs/heads/pu:/refs/heads/pu-readonly
+On Fri, Feb 29, 2008 at 11:23:25PM +0100, Mike Hommey wrote:
 
-Obviously missing a '+', though I'm not sure why anyone would do
-this anyway.
+>  test_expect_success "virtual trees were processed" "git diff expect out"
+>  
+> -git reset --hard
+> +git reset --hard >&3 2>&4
+>  test_expect_success 'refuse to merge binary files' '
+>  	printf "\0" > binary-file &&
+>  	git add binary-file &&
 
-j.
+Should this perhaps just be:
+
+  test_expect_success 'reset state' 'git reset --hard'
+
+?
+
+-Peff
