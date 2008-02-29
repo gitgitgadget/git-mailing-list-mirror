@@ -1,109 +1,113 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 5/5] builtin-remote: prune remotes correctly that were added
- with --mirror
-Date: Fri, 29 Feb 2008 01:46:07 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802290145550.22527@racer.site>
-References: <alpine.LSU.1.00.0802290144130.22527@racer.site>
+From: Paul Franz <thefranz@comcast.net>
+Subject: Re: [PATCH 22/40] Windows: Implement asynchronous functions as threads.
+Date: Thu, 28 Feb 2008 20:46:47 -0500
+Message-ID: <47C76407.3090804@comcast.net>
+References: <1204138503-6126-1-git-send-email-johannes.sixt@telecom.at> <1204138503-6126-23-git-send-email-johannes.sixt@telecom.at> <alpine.LSU.1.00.0802281525510.22527@racer.site> <47C6F40A.4010703@comcast.net> <alpine.LSU.1.00.0802290122110.22527@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Feb 29 02:47:21 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Sixt <johannes.sixt@telecom.at>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Feb 29 02:47:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JUuLI-0001NY-AC
-	for gcvg-git-2@gmane.org; Fri, 29 Feb 2008 02:47:20 +0100
+	id 1JUuLX-0001S2-2D
+	for gcvg-git-2@gmane.org; Fri, 29 Feb 2008 02:47:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751566AbYB2Bqm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Feb 2008 20:46:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751542AbYB2Bqm
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Feb 2008 20:46:42 -0500
-Received: from mail.gmx.net ([213.165.64.20]:52999 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751541AbYB2Bql (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Feb 2008 20:46:41 -0500
-Received: (qmail invoked by alias); 29 Feb 2008 01:46:39 -0000
-Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
-  by mail.gmx.net (mp020) with SMTP; 29 Feb 2008 02:46:39 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/wp3BpKh/wJ0pH6kO08Z7YuW2XKIRkv9l5pA020c
-	euNIKthFQ9Rxz4
-X-X-Sender: gene099@racer.site
-In-Reply-To: <alpine.LSU.1.00.0802290144130.22527@racer.site>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1751670AbYB2Bqu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Feb 2008 20:46:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751648AbYB2Bqu
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Feb 2008 20:46:50 -0500
+Received: from qmta02.westchester.pa.mail.comcast.net ([76.96.62.24]:40022
+	"EHLO QMTA02.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751598AbYB2Bqt (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 Feb 2008 20:46:49 -0500
+Received: from OMTA13.westchester.pa.mail.comcast.net ([76.96.62.52])
+	by QMTA02.westchester.pa.mail.comcast.net with comcast
+	id vBzp1Y00217dt5G5207P00; Fri, 29 Feb 2008 01:46:17 +0000
+Received: from paul-franz-laptop.local ([76.117.152.226])
+	by OMTA13.westchester.pa.mail.comcast.net with comcast
+	id vDmo1Y0014tLBlG3Z00000; Fri, 29 Feb 2008 01:46:48 +0000
+X-Authority-Analysis: v=1.0 c=1 a=jYeb2YJqOk4A:10 a=sDGkoYPlu-P0RWVk5loA:9
+ a=YfUFpNUf8HOGI_975qXHhVYDX-8A:4 a=8UL1S1SzPDgA:10
+User-Agent: Thunderbird 2.0.0.12 (Macintosh/20080213)
+In-Reply-To: <alpine.LSU.1.00.0802290122110.22527@racer.site>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75491>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75492>
 
+True there are the legal issues. And it is not known if it would help on 
+other platforms. My may concern is Windows because if git could be made 
+available without some of msysGit's requirements. It would definitely 
+make it more palletable (sp?) to that community which is a large chunk 
+of developers, including my own work environment. I would love to switch 
+from ClearCase to git but there are issues. One of them is integration 
+with the Windows environment.
 
-This adds special handling for mirror remotes.
+Another concern is performance penalty of using non-native calls under 
+Windows and that is one of the problems that I was hoping the using APR 
+would solve. I figure if it is good enough to support the network stuff 
+under Windows well maybe it would be good for git too.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- builtin-remote.c  |   16 +++++++++++++---
- t/t5505-remote.sh |   16 ++++++++++++++++
- 2 files changed, 29 insertions(+), 3 deletions(-)
+Paul Franz
 
-diff --git a/builtin-remote.c b/builtin-remote.c
-index d229919..3954926 100644
---- a/builtin-remote.c
-+++ b/builtin-remote.c
-@@ -396,12 +396,22 @@ static int show_or_prune(int argc, const char **argv, int prune)
- 
- 		if (prune) {
- 			struct strbuf buf;
-+			int prefix_len;
- 
- 			strbuf_init(&buf, 0);
-+			if (states.remote->fetch_refspec_nr == 1 &&
-+					states.remote->fetch->pattern &&
-+					!strcmp(states.remote->fetch->src,
-+						states.remote->fetch->dst))
-+				/* handle --mirror remote */
-+				strbuf_addstr(&buf, "refs/heads/");
-+			else
-+				strbuf_addf(&buf, "refs/remotes/%s/", *argv);
-+			prefix_len = buf.len;
-+
- 			for (i = 0; i < states.stale.nr; i++) {
--				strbuf_reset(&buf);
--				strbuf_addf(&buf, "refs/remotes/%s/%s", *argv,
--						states.stale.items[i].path);
-+				strbuf_setlen(&buf, prefix_len);
-+				strbuf_addstr(&buf, states.stale.items[i].path);
- 				result |= delete_ref(buf.buf, NULL);
- 			}
- 
-diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-index 5986982..0a25c8b 100755
---- a/t/t5505-remote.sh
-+++ b/t/t5505-remote.sh
-@@ -128,4 +128,20 @@ test_expect_success 'prune' '
- 	 ! git rev-parse refs/remotes/origin/side)
- '
- 
-+test_expect_success 'add --mirror && prune' '
-+	(mkdir mirror &&
-+	 cd mirror &&
-+	 git init &&
-+	 git remote add --mirror -f origin ../one) &&
-+	(cd one &&
-+	 git branch -m side2 side) &&
-+	(cd mirror &&
-+	 git rev-parse --verify refs/heads/side2 &&
-+	 ! git rev-parse --verify refs/heads/side &&
-+	 git fetch origin &&
-+	 git remote prune origin &&
-+	 ! git rev-parse --verify refs/heads/side2 &&
-+	 git rev-parse --verify refs/heads/side)
-+'
-+
- test_done
+Johannes Schindelin wrote:
+> Hi,
+>
+> On Thu, 28 Feb 2008, Paul Franz wrote:
+>
+>   
+>> Do you think it would be possible to change git to use Apache's apr 
+>> library?
+>>     
+>
+> Possible?  Yes.
+>
+> Sensible?  That's another issue.  For one, we already rely on a pretty 
+> good POSIX shell support.  That is not something helped by APR.
+>
+> So if we already need a POSIX shell, we might just as well rely on a 
+> (kind of) POSIX environment.
+>
+> Besides, I cannot say that I found compiling APR in msysGit _easy_.
+>
+> So if there are as many disadvantages as I suspect, and as few advantages, 
+> as I suspect, too, I think it would be a waste of time to bother to port 
+> Git to APR.
+>
+> Besides, I think there are -- again, as always when things seem to be only 
+> fun -- legal issues.  I do not know the details, but there are people who 
+> say that APL is incompatible with GPL (v2).
+>
+> Not that I care too much about those bastards who devised licenses just to 
+> make my life miserable.  But them lawyer types have ways to _make_ my 
+> life miserable.  So I avoid those kind of problems.  I guess you could 
+> call this "collateral legal damage".
+>
+> Ciao,
+> Dscho
+>
+>
+>   
+
 -- 
-1.5.4.3.431.g066fa
 
+-------------------------------------------
+
+There are seven sins in the world.
+     Wealth without work.
+     Pleasure without conscience.
+     Knowledge without character.
+     Commerce without morality.
+     Science without humanity.
+     Worship without sacrifice.
+     Politics without principle.
+
+   -- Mohandas Gandhi
+
+-------------------------------------------
 
