@@ -1,123 +1,110 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: [PATCH] Add test for git rebase --abort
-Date: Fri, 29 Feb 2008 23:08:47 +0100
-Message-ID: <1204322927-22407-1-git-send-email-mh@glandium.org>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Feb 29 23:06:50 2008
+From: Frank Lichtenheld <frank@lichtenheld.de>
+Subject: [PATCH] gc: Add --quiet option
+Date: Fri, 29 Feb 2008 22:53:39 +0100
+Message-ID: <1204322019-17788-1-git-send-email-frank@lichtenheld.de>
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Frank Lichtenheld <frank@lichtenheld.de>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Fri Feb 29 23:12:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JVDN7-00072c-Fj
-	for gcvg-git-2@gmane.org; Fri, 29 Feb 2008 23:06:29 +0100
+	id 1JVDT1-00010b-JX
+	for gcvg-git-2@gmane.org; Fri, 29 Feb 2008 23:12:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758328AbYB2WFd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Feb 2008 17:05:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758318AbYB2WFd
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Feb 2008 17:05:33 -0500
-Received: from vuizook.err.no ([194.24.252.247]:35559 "EHLO vuizook.err.no"
+	id S934185AbYB2WLy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Feb 2008 17:11:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934177AbYB2WLy
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Feb 2008 17:11:54 -0500
+Received: from aiolos.lenk.info ([85.214.124.154]:45669 "EHLO aiolos.lenk.info"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755397AbYB2WFc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Feb 2008 17:05:32 -0500
-Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
-	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.67)
-	(envelope-from <mh@glandium.org>)
-	id 1JVDLz-0005bI-8E; Fri, 29 Feb 2008 23:05:25 +0100
-Received: from mh by jigen with local (Exim 4.69)
-	(envelope-from <mh@jigen>)
-	id 1JVDPL-0005pm-Qg; Fri, 29 Feb 2008 23:08:47 +0100
+	id S934138AbYB2WLw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Feb 2008 17:11:52 -0500
+X-Greylist: delayed 1090 seconds by postgrey-1.27 at vger.kernel.org; Fri, 29 Feb 2008 17:11:52 EST
+Received: from herkules.lenk.info
+	([213.239.194.154] helo=smtp.lenk.info ident=Debian-exim)
+	by mail.lenk.info with esmtpsa 
+	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA1:32) (Exim 4.63 1)
+	id 1JVDAk-0005I8-9z; Fri, 29 Feb 2008 22:53:42 +0100
+Received: from p57b244c6.dip.t-dialin.net ([87.178.68.198] helo=dirac.djpig.de)
+	by smtp.lenk.info with esmtpsa 
+	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA1:32) (Exim 4.63 1)
+	id 1JVDAf-0002Ip-1s; Fri, 29 Feb 2008 22:53:37 +0100
+Received: from djpig by dirac.djpig.de with local (Exim 4.69)
+	(envelope-from <frank@lichtenheld.de>)
+	id 1JVDAh-0004dJ-Sk; Fri, 29 Feb 2008 22:53:40 +0100
 X-Mailer: git-send-email 1.5.4.3.340.g97b97.dirty
-X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75576>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75577>
 
-We expect git rebase --abort to come back to the original (pre-rebase)
-head, independently from when it's run during a rebase.
+Pass -q option to git-repack.
 
-Signed-off-by: Mike Hommey <mh@glandium.org>
+Signed-off-by: Frank Lichtenheld <frank@lichtenheld.de>
 ---
+ Documentation/git-gc.txt |    5 ++++-
+ builtin-gc.c             |    5 +++++
+ 2 files changed, 9 insertions(+), 1 deletions(-)
 
- I wrote this test because I spotted a problem with git rebase --abort, and
- expanded the test to other cases that work, but that it is still better to
- have a test for.
+I've decided to support -q since all other git commands that support --quiet
+seem to support it, and many only support -q, but not --quiet.
+It is currently not documented, though.
 
- The failing test is the third. I don't have enough knowledge in git-rebase
- to write an appropriate fix, but the problem seems to be in
- move_to_original_branch, where testing head_name doesn't seem appropriate.
-
- t/t3407-rebase-abort.sh |   59 +++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 59 insertions(+), 0 deletions(-)
- create mode 100755 t/t3407-rebase-abort.sh
-
-diff --git a/t/t3407-rebase-abort.sh b/t/t3407-rebase-abort.sh
-new file mode 100755
-index 0000000..abdecc9
---- /dev/null
-+++ b/t/t3407-rebase-abort.sh
-@@ -0,0 +1,59 @@
-+#!/bin/sh
+diff --git a/Documentation/git-gc.txt b/Documentation/git-gc.txt
+index 4b2dfef..310710a 100644
+--- a/Documentation/git-gc.txt
++++ b/Documentation/git-gc.txt
+@@ -8,7 +8,7 @@ git-gc - Cleanup unnecessary files and optimize the local repository
+ 
+ SYNOPSIS
+ --------
+-'git-gc' [--prune] [--aggressive] [--auto]
++'git-gc' [--prune] [--aggressive] [--auto] [--quiet]
+ 
+ DESCRIPTION
+ -----------
+@@ -49,6 +49,9 @@ OPTIONS
+ 	required; if not, it exits without performing any work.
+ 	Some git commands run `git gc --auto` after performing
+ 	operations that could create many loose objects.
 +
-+test_description='git rebase --abort tests'
-+
-+. ./test-lib.sh
-+
-+test_expect_success setup '
-+	echo a > a &&
-+	git add a &&
-+	git commit -m a &&
-+	git branch to-rebase &&
-+
-+	echo b > a &&
-+	git commit -a -m b &&
-+	echo c > a &&
-+	git commit -a -m c &&
-+
-+	git checkout to-rebase &&
-+	echo d > a &&
-+	git commit -a -m "merge should fail on this" &&
-+	echo e > a &&
-+	git commit -a -m "merge should fail on this, too" &&
-+	git branch pre-rebase
-+'
-+
-+test_expect_success 'rebase --abort' '
-+	! git rebase master &&
-+	git rebase --abort &&
-+	test $(git rev-parse to-rebase) = $(git rev-parse pre-rebase)
-+'
-+
-+# In case previous test failed
-+git reset --hard pre-rebase >&3 2>&4
-+rm -rf .dotest # Should be changed whenever rebase stop using .dotest
-+
-+test_expect_success 'rebase --abort after --skip' '
-+	! git rebase master &&
-+	! git rebase --skip &&
-+	test $(git rev-parse HEAD) = $(git rev-parse master) &&
-+	sh -x ../../git-rebase --abort &&
-+	test $(git rev-parse to-rebase) = $(git rev-parse pre-rebase)
-+'
-+
-+# In case previous test failed
-+git reset --hard pre-rebase >&3 2>&4
-+rm -rf .dotest # Should be changed whenever rebase stop using .dotest
-+
-+test_expect_success 'rebase --abort after --continue' '
-+	! git rebase master &&
-+	echo c > a &&
-+	echo d >> a &&
-+	git add a &&
-+	! git rebase --continue &&
-+	test $(git rev-parse HEAD) != $(git rev-parse master) &&
-+	git rebase --abort &&
-+	test $(git rev-parse to-rebase) = $(git rev-parse pre-rebase)
-+'
-+
-+test_done
++--quiet::
++	Suppress all progress reports.
+ +
+ Housekeeping is required if there are too many loose objects or
+ too many packs in the repository. If the number of loose objects
+diff --git a/builtin-gc.c b/builtin-gc.c
+index ad4a75e..3a42986 100644
+--- a/builtin-gc.c
++++ b/builtin-gc.c
+@@ -172,12 +172,14 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
+ 	int prune = 0;
+ 	int aggressive = 0;
+ 	int auto_gc = 0;
++	int quiet = 0;
+ 	char buf[80];
+ 
+ 	struct option builtin_gc_options[] = {
+ 		OPT_BOOLEAN(0, "prune", &prune, "prune unreferenced objects"),
+ 		OPT_BOOLEAN(0, "aggressive", &aggressive, "be more thorough (increased runtime)"),
+ 		OPT_BOOLEAN(0, "auto", &auto_gc, "enable auto-gc mode"),
++		OPT_BOOLEAN('q', "quiet", &quiet, "suppress progress reports"),
+ 		OPT_END()
+ 	};
+ 
+@@ -197,6 +199,9 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
+ 			append_option(argv_repack, buf, MAX_ADD);
+ 		}
+ 	}
++	if (quiet) {
++		append_option(argv_repack, "-q", MAX_ADD);
++	}
+ 
+ 	if (auto_gc) {
+ 		/*
 -- 
-1.5.4.3.340.g97b97.dirty
+1.5.4.3
 
