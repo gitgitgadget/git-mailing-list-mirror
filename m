@@ -1,81 +1,126 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: Google Summer of Code 2008
-Date: Sat, 01 Mar 2008 18:07:02 +1300
-Message-ID: <47C8E476.7070105@vilain.net>
-References: <200802262356.28971.jnareb@gmail.com> <20080228063621.GR8410@spearce.org> <alpine.LSU.1.00.0802281021070.22527@racer.site> <200802291304.16026.jnareb@gmail.com> <47C8A3D5.9050309@vilain.net> <alpine.LSU.1.00.0803010102000.22527@racer.site>
+From: Jeff King <peff@peff.net>
+Subject: Re: Redefine semantics of find_unique_abbrev()
+Date: Sat, 1 Mar 2008 00:06:41 -0500
+Message-ID: <20080301050641.GB8969@coredump.intra.peff.net>
+References: <7vpruf9q5a.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	git@vger.kernel.org, John Hawley <warthog9@kernel.org>,
-	Julian Phillips <julian@quantumfyre.co.uk>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Mar 01 06:06:03 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Mar 01 06:07:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JVJv1-00019k-DB
-	for gcvg-git-2@gmane.org; Sat, 01 Mar 2008 06:05:55 +0100
+	id 1JVJwO-0001RC-92
+	for gcvg-git-2@gmane.org; Sat, 01 Mar 2008 06:07:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750902AbYCAFEv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Mar 2008 00:04:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750826AbYCAFEv
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Mar 2008 00:04:51 -0500
-Received: from watts.utsl.gen.nz ([202.78.240.73]:58739 "EHLO mail.utsl.gen.nz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750702AbYCAFEu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Mar 2008 00:04:50 -0500
-Received: by mail.utsl.gen.nz (Postfix, from userid 65534)
-	id 44E3221D21E; Sat,  1 Mar 2008 18:04:44 +1300 (NZDT)
-X-Spam-Checker-Version: SpamAssassin 3.1.7-deb (2006-10-05) on 
-	mail.musashi.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.4 required=5.0 tests=ALL_TRUSTED autolearn=failed 
-	version=3.1.7-deb
-Received: from [192.168.69.233] (203-97-235-49.cable.telstraclear.net [203.97.235.49])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.utsl.gen.nz (Postfix) with ESMTP id D279E21D21A;
-	Sat,  1 Mar 2008 18:04:39 +1300 (NZDT)
-User-Agent: Thunderbird 2.0.0.6 (X11/20071022)
-In-Reply-To: <alpine.LSU.1.00.0803010102000.22527@racer.site>
-X-Enigmail-Version: 0.95.0
+	id S1750986AbYCAFGo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Mar 2008 00:06:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750965AbYCAFGo
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Mar 2008 00:06:44 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1876 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750826AbYCAFGn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Mar 2008 00:06:43 -0500
+Received: (qmail 32644 invoked by uid 111); 1 Mar 2008 05:06:42 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Sat, 01 Mar 2008 00:06:42 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 01 Mar 2008 00:06:41 -0500
+Content-Disposition: inline
+In-Reply-To: <7vpruf9q5a.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75610>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75611>
 
-Johannes Schindelin wrote:
->> Funnily enough, I'm actually a possible /student/ this year - I'm
->> studying full-time this year - not in Computer Science, but hey that's
->> not a requirement ;-), and perhaps finishing my GitTorrent
->> implementation in my breaks would be a nice way to earn US$5k.
+On Fri, Feb 29, 2008 at 05:41:53PM -0800, Junio C Hamano wrote:
+
+> The function returned NULL when no object that matches the name
+> was found, but that made the callers more complicated, as nobody
+> used that NULL return as an indication that no object with such
+> a name exists.  They (at least the careful ones) instead took
+> the full 40-hexdigit and used in such a case, and the careless
+> ones segfaulted.
 > 
-> You have my vote.  If this works out, I will be your mentor.  As you know, 
-> I will not be easy to work with, but the outcome will be pleasing to you 
-> _and_ me.
-> 
-> I think GitTorrent is a really interesting project.  And since I do not 
-> have time to do it myself, I would really appreciate this to be a GSoC 
-> project, preferably a successful one (which is the reason I am willing to 
-> mentor it).
+> With this "git rev-parse --short 5555555555555555555555555555555555555555"
+> would stop segfaulting.
 
-Excellent, well that was going to be the next question - who would be
-the mentor, and what would they do?
+I have been meaning to clean up and submit a similar patch from the
+1.5.4 freeze period. However, your patch will always print the
+40-hexdigit version, which looks quite ugly in status output. Instead,
+we can do much better by finding the longest subsequence we _do_ know
+about, and adding one digit to it.
 
-I guess I could re-work this RFP to be a proposal to complete it;
+So you get:
 
-  http://utsl.gen.nz/git/gittorrent-rfp.txt
+  # this is the current master, abbreviated
+  $ git rev-parse --short 97b97c58e609a1cd23b3c2514f41cdb0405870ee
+  97b97c5
 
-So far, the first two milestones on the plan are basically nailed, so
-that's something of a head start.  The test script fires up two nodes
-that connect to each other, sends a choke message and then shuts down.
-I'm quite happy with the stack being used (Moose - which is CLOS for
-Perl, and Coro - coroutines, similar to stackless python).  How about I
-brush that up and we can take this discussion off-list.
+  # this is an object we don't have, but similar to that
+  $ git rev-parse --short 97b97c58e609a1cd23b3c2514f41cdb0405870ff
+  97b97c58e609a1cd23b3c2514f41cdb0405870f
 
-Sam.
+  # and less similar means we can abbreviate more
+  $ git rev-parse --short 97b97c58e609a1cd23b3c2514fffffffffffffff
+  97b97c58e609a1cd23b3c2514ff
+
+Implementation is below:
+
+> --- a/sha1_name.c
+> +++ b/sha1_name.c
+> @@ -202,16 +202,14 @@ const char *find_unique_abbrev(const unsigned char *sha1, int len)
+>  	while (len < 40) {
+>  		unsigned char sha1_ret[20];
+>  		status = get_short_sha1(hex, len, sha1_ret, 1);
+> -		if (!status ||
+> -		    (is_null && status != SHORT_NAME_AMBIGUOUS)) {
+> +		if ((!is_null && !status) ||
+> +		    (is_null && status == SHORT_NAME_NOT_FOUND)) {
+>  			hex[len] = 0;
+>  			return hex;
+>  		}
+> -		if (status != SHORT_NAME_AMBIGUOUS)
+> -			return NULL;
+>  		len++;
+>  	}
+> -	return NULL;
+> +	return hex;
+>  }
+
+All we have to do is treat the "missing" case like we treat "is_null"
+(and in fact, is_null is just a specialized case of something we don't
+have). So replace this hunk with:
+
+diff --git a/sha1_name.c b/sha1_name.c
+index 05c2e7a..9c71d1b 100644
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -192,18 +192,18 @@ static int get_short_sha1(const char *name, int len, unsigned char *sha1,
+ 
+ const char *find_unique_abbrev(const unsigned char *sha1, int len)
+ {
+-	int status, is_null;
++	int status, missing;
+ 	static char hex[41];
+ 
+-	is_null = is_null_sha1(sha1);
++	missing = !has_sha1_file(sha1);
+ 	memcpy(hex, sha1_to_hex(sha1), 40);
+ 	if (len == 40 || !len)
+ 		return hex;
+ 	while (len < 40) {
+ 		unsigned char sha1_ret[20];
+ 		status = get_short_sha1(hex, len, sha1_ret, 1);
+-		if ((!is_null && !status) ||
+-		    (is_null && status == SHORT_NAME_NOT_FOUND)) {
++		if ((!missing && !status) ||
++		    (missing && status == SHORT_NAME_NOT_FOUND)) {
+ 			hex[len] = 0;
+ 			return hex;
+ 		}
+
+
+-Peff
