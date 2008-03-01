@@ -1,74 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 3/3] git-submodule: New subcommand 'summary' (3) -
- limit summary size
-Date: Sat, 01 Mar 2008 12:26:14 -0800
-Message-ID: <7vpruexkbd.fsf@gitster.siamese.dyndns.org>
-References: <1204306487-15849-1-git-send-email-pkufranky@gmail.com>
- <80aa1c46ced6f0b92ca2fca3b917d383343b3161.1204306070.git.pkufranky@gmail.com>
- <d6e82710452985611fb75c9d32a1b772bf0cb529.1204306070.git.pkufranky@gmail.com>
- <18af168b52a735c33612c9c9e4778d8b8bef1cbc.1204306070.git.pkufranky@gmail.com>
- <7v1w6u7vhf.fsf@gitster.siamese.dyndns.org>
- <46dff0320803010442y12c1326dk45f53ce17453b53c@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Ping Yin" <pkufranky@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 01 21:27:07 2008
+From: John Goerzen <jgoerzen@complete.org>
+Subject: git-rebase dirty index and email address bug?
+Date: Sat, 1 Mar 2008 14:40:24 -0600
+Message-ID: <slrnfsjfpo.3fl.jgoerzen@katherina.lan.complete.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 01 21:41:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JVYIS-0002fZ-VC
-	for gcvg-git-2@gmane.org; Sat, 01 Mar 2008 21:27:05 +0100
+	id 1JVYWa-0006oA-Cu
+	for gcvg-git-2@gmane.org; Sat, 01 Mar 2008 21:41:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758275AbYCAU00 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Mar 2008 15:26:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758246AbYCAU00
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Mar 2008 15:26:26 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:65181 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758195AbYCAU0Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Mar 2008 15:26:25 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id E7A45161F;
-	Sat,  1 Mar 2008 15:26:23 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 440F7161E; Sat,  1 Mar 2008 15:26:18 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753157AbYCAUk5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Mar 2008 15:40:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753254AbYCAUk5
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Mar 2008 15:40:57 -0500
+Received: from main.gmane.org ([80.91.229.2]:54170 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751635AbYCAUk4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Mar 2008 15:40:56 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1JVYVi-0003he-Is
+	for git@vger.kernel.org; Sat, 01 Mar 2008 20:40:46 +0000
+Received: from 63-245-179-205.kitusa.com ([63.245.179.205])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 01 Mar 2008 20:40:46 +0000
+Received: from jgoerzen by 63-245-179-205.kitusa.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 01 Mar 2008 20:40:46 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 63-245-179-205.kitusa.com
+User-Agent: slrn/0.9.8.1pl1 (Debian)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75698>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75699>
 
-"Ping Yin" <pkufranky@gmail.com> writes:
+Hi folks,
 
-> On Sat, Mar 1, 2008 at 3:29 PM, Junio C Hamano <gitster@pobox.com> wrote:
->
-> expr is portable?
+I have checked out a remote git repo.  I have hacked on my local copy
+for the last two days.  I have performed no merges or anything elese
+odd.  Today I git fetched the remote, and then I tried to git rebase
+upstream/master.  I had committed all outstanding changes first.  My
+index was clean.  It displayed:
 
-It's not just portable but is a very old fashioned and time-proven way to
-do things like this.
+First, rewinding head to replay your work on top of it...
+HEAD is now at 77f1a60... Merge branch 'trunk'
+Dirty index: cannot apply patches (dirty: public/dispatch.fcgi)
 
->>         if summary_limit=$(( $2 + 0 )) 2>/dev/null ||
->>            test "$2" != "$summary_limit"
->>         then
->>                 usage
->>         fi
->>
->
-> summary_limit=$(( $2 + 0 )) will always has return status 0
+Tthat particular file was one that I added.  It did not exist upstream
+either at my initial checkout, nor was it added upstream at any point
+since.
 
-Ah, there's a typo there.  The intention was to reject non numbers
+git status shows:
 
-	for two in 43 -32 'deadbeef' ' -27' HEAD ''
-        do
-		if sl=$(( $two + 0 )) 2>/dev/null && test "$two" == "$sl"
-                then
-                	echo Ah, "$two", that is a number.
-		else
-                	echo You gave me an un-number "'$two' (vs '$sl')".
-		fi
-	done
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#       new file:   public/dispatch.fcgi
+#
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#       .dotest/
+
+So I tried the git reset command on public/dispatch.fcgi, and also
+then deleted that file.  I then tried git-rebase --continue, which
+displayed:
+
+sed: can't read .dotest/info: No such file or directory
+sed: can't read .dotest/info: No such file or directory
+sed: can't read .dotest/info: No such file or directory
+Patch does not have a valid e-mail address.
+
+I have no idea what sed is complaining about, but that last line is
+interesting.  The upstream git repo I am monitoring was itself
+converted from an svn repo using, presumably, git-svn or
+git-svnimport.  It lies at
+git://gitorious.org/redmine-git/mainline.git
+
+Most patches have an author like this:
+
+Author: jplang <jplang@e93f8b46-1217-0410-a6f0-8f06a7374b81>
+
+Could one of the git tools be trying to parse this for some odd
+reason?
+
+Or is something else going on here?
+
+
