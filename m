@@ -1,66 +1,133 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: [PATCH] Add test for git rebase --abort
-Date: Sat, 1 Mar 2008 09:15:11 +0100
-Organization: glandium.org
-Message-ID: <20080301081511.GA30613@glandium.org>
-References: <1204322927-22407-1-git-send-email-mh@glandium.org> <7v63w7bb06.fsf@gitster.siamese.dyndns.org> <20080301073612.GA26767@glandium.org> <20080301074511.GB26767@glandium.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] allow git-am to run in a subdirectory
+Date: Sat, 1 Mar 2008 03:12:35 -0500
+Message-ID: <20080301081235.GA31855@coredump.intra.peff.net>
+References: <20080301062255.GA27538@coredump.intra.peff.net> <7vprue6ghc.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Mar 01 09:12:33 2008
+X-From: git-owner@vger.kernel.org Sat Mar 01 09:13:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JVMpZ-0002qw-BQ
-	for gcvg-git-2@gmane.org; Sat, 01 Mar 2008 09:12:29 +0100
+	id 1JVMqI-0002zy-Dl
+	for gcvg-git-2@gmane.org; Sat, 01 Mar 2008 09:13:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754507AbYCAILv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Mar 2008 03:11:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754248AbYCAILv
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Mar 2008 03:11:51 -0500
-Received: from vuizook.err.no ([194.24.252.247]:58613 "EHLO vuizook.err.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753204AbYCAILv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Mar 2008 03:11:51 -0500
-Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
-	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.67)
-	(envelope-from <mh@glandium.org>)
-	id 1JVMol-0001BT-Ta; Sat, 01 Mar 2008 09:11:46 +0100
-Received: from mh by jigen with local (Exim 4.69)
-	(envelope-from <mh@jigen>)
-	id 1JVMsB-0007yB-9R; Sat, 01 Mar 2008 09:15:11 +0100
+	id S1754599AbYCAIMi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Mar 2008 03:12:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754248AbYCAIMi
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Mar 2008 03:12:38 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1859 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754203AbYCAIMh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Mar 2008 03:12:37 -0500
+Received: (qmail 12270 invoked by uid 111); 1 Mar 2008 08:12:36 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Sat, 01 Mar 2008 03:12:36 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 01 Mar 2008 03:12:35 -0500
 Content-Disposition: inline
-In-Reply-To: <20080301074511.GB26767@glandium.org>
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.3
+In-Reply-To: <7vprue6ghc.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75638>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75639>
 
-On Sat, Mar 01, 2008 at 08:45:11AM +0100, Mike Hommey wrote:
-> On Sat, Mar 01, 2008 at 08:36:12AM +0100, Mike Hommey wrote:
-> > On Fri, Feb 29, 2008 at 03:26:01PM -0800, Junio C Hamano wrote:
-> > > Mike Hommey <mh@glandium.org> writes:
-> > > 
-> > > >  The failing test is the third. I don't have enough knowledge in git-rebase
-> > > >  to write an appropriate fix, but the problem seems to be in
-> > > >  move_to_original_branch, where testing head_name doesn't seem appropriate.
-> > > 
-> > > Please mark such an "expected to succeed but fails due to
-> > > suspected bug" with test_expect_failure.
-> > 
-> > I was kind of expecting the bug would be fixed before the test be
-> > included ;)
+On Fri, Feb 29, 2008 at 11:38:55PM -0800, Junio C Hamano wrote:
+
+> As long as you do not lose sight of the mailbox parameter by chdir'ing
+> around, I am Ok with the patch.
 > 
-> ... and the test actually passes with v1.5.0. I'll bisect.
+> ... and after I started writing that, I find...
 
-... and I'm even the one to blame
-fb6e4e1f3f048898677f3cf177bfcaf60123bd5c is first bad commit
+Ugh. Below is a patch that saves the original pwd and prefixes it for
+relative paths. However:
 
-Mike
+  - it probably doesn't correctly determine absolute versus relative
+    paths on Windows. I don't think we have a solution for fixing this
+    within shell scripts.
+
+  - it will eat newlines in parameters names (actually, turning them
+    into spaces)
+
+The problem is that I need to turn the original "$@" into a new "$@"
+that is correctly prefixed, which requires proper quoting. Please, spend
+some of your shell guru points to show me how to do this correctly and
+portably.
+
+We could wait on doing the 'cd_to_toplevel' until after the mailsplit,
+but then your .dotest will end up in a prefixed directory (and of course
+we have a similar munging problem when we point .dotest to the right
+spot).
+
+Maybe I should just wait for a git-am rewrite in C. ;)
+
+---
+diff --git a/git-am.sh b/git-am.sh
+index 2ecebc4..a5e0c43 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -2,6 +2,7 @@
+ #
+ # Copyright (c) 2005, 2006 Junio C Hamano
+ 
++SUBDIRECTORY_OK=Yes
+ OPTIONS_KEEPDASHDASH=
+ OPTIONS_SPEC="\
+ git-am [options] <mbox>|<Maildir>...
+@@ -25,6 +26,13 @@ skip            skip the current patch"
+ . git-sh-setup
+ set_reflog_action am
+ require_work_tree
++orig_pwd=$(pwd)
++cd_to_toplevel
++if test "$(pwd)" = "$orig_pwd"; then
++	orig_pwd=
++else
++	orig_pwd="$orig_pwd/"
++fi
+ 
+ git var GIT_COMMITTER_IDENT >/dev/null || exit
+ 
+@@ -121,6 +129,21 @@ reread_subject () {
+ 	git stripspace <"$1" | sed -e 1q
+ }
+ 
++shellquote() {
++	printf \'
++	printf "$1" | sed "s/'/\\'/g"
++	echo \'
++}
++
++handle_file_args() {
++	for i in "$@"; do
++		case "$i" in
++		/*) shellquote "$i";;
++		 *) shellquote "$orig_pwd$i";;
++		esac
++	done
++}
++
+ prec=4
+ dotest=.dotest sign= utf8=t keep= skip= interactive= resolved= binary=
+ resolvemsg= resume=
+@@ -148,7 +171,7 @@ do
+ 	--skip)
+ 		skip=t ;;
+ 	-d|--dotest)
+-		shift; dotest=$1;;
++		shift; eval dotest=`handle_file_args "$1"` ;;
+ 	--resolvemsg)
+ 		shift; resolvemsg=$1 ;;
+ 	--whitespace)
+@@ -163,6 +186,8 @@ do
+ 	shift
+ done
+ 
++eval set -- `handle_file_args "$@"`
++
+ # If the dotest directory exists, but we have finished applying all the
+ # patches in them, clear it out.
+ if test -d "$dotest" &&
