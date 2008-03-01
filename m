@@ -1,62 +1,91 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: [PATCH] Add test for git rebase --abort
-Date: Sat, 1 Mar 2008 08:45:11 +0100
-Organization: glandium.org
-Message-ID: <20080301074511.GB26767@glandium.org>
-References: <1204322927-22407-1-git-send-email-mh@glandium.org> <7v63w7bb06.fsf@gitster.siamese.dyndns.org> <20080301073612.GA26767@glandium.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Suggestion: make --left-right work with --merge
+Date: Fri, 29 Feb 2008 23:52:04 -0800
+Message-ID: <7vejau6fvf.fsf@gitster.siamese.dyndns.org>
+References: <18372.53155.854763.12637@cargo.ozlabs.ibm.com>
+ <7v7igqyii9.fsf@gitster.siamese.dyndns.org>
+ <18373.58839.636432.448970@cargo.ozlabs.ibm.com>
+ <7v1w6yqaim.fsf@gitster.siamese.dyndns.org>
+ <18374.39253.408961.634788@cargo.ozlabs.ibm.com>
+ <7vprugdxpj.fsf@gitster.siamese.dyndns.org>
+ <18375.58359.687664.855599@cargo.ozlabs.ibm.com>
+ <7vfxvbd0nu.fsf@gitster.siamese.dyndns.org>
+ <18377.2084.30531.202087@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Mar 01 08:42:29 2008
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Sat Mar 01 08:53:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JVMMW-0005RL-CA
-	for gcvg-git-2@gmane.org; Sat, 01 Mar 2008 08:42:28 +0100
+	id 1JVMWr-0007Is-8m
+	for gcvg-git-2@gmane.org; Sat, 01 Mar 2008 08:53:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752751AbYCAHlv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Mar 2008 02:41:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752840AbYCAHlv
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Mar 2008 02:41:51 -0500
-Received: from vuizook.err.no ([194.24.252.247]:45917 "EHLO vuizook.err.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752387AbYCAHlu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Mar 2008 02:41:50 -0500
-Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
-	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.67)
-	(envelope-from <mh@glandium.org>)
-	id 1JVMLl-00009T-1s; Sat, 01 Mar 2008 08:41:47 +0100
-Received: from mh by jigen with local (Exim 4.69)
-	(envelope-from <mh@jigen>)
-	id 1JVMP9-0007iD-UI; Sat, 01 Mar 2008 08:45:11 +0100
-Content-Disposition: inline
-In-Reply-To: <20080301073612.GA26767@glandium.org>
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.3
+	id S1751828AbYCAHwS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Mar 2008 02:52:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750842AbYCAHwR
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Mar 2008 02:52:17 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:45411 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751424AbYCAHwR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Mar 2008 02:52:17 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 883CF2A9C;
+	Sat,  1 Mar 2008 02:52:15 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id A1D2A2A9B; Sat,  1 Mar 2008 02:52:09 -0500 (EST)
+In-Reply-To: <18377.2084.30531.202087@cargo.ozlabs.ibm.com> (Paul Mackerras's
+ message of "Sat, 1 Mar 2008 18:39:16 +1100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75636>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75637>
 
-On Sat, Mar 01, 2008 at 08:36:12AM +0100, Mike Hommey wrote:
-> On Fri, Feb 29, 2008 at 03:26:01PM -0800, Junio C Hamano wrote:
-> > Mike Hommey <mh@glandium.org> writes:
-> > 
-> > >  The failing test is the third. I don't have enough knowledge in git-rebase
-> > >  to write an appropriate fix, but the problem seems to be in
-> > >  move_to_original_branch, where testing head_name doesn't seem appropriate.
-> > 
-> > Please mark such an "expected to succeed but fails due to
-> > suspected bug" with test_expect_failure.
-> 
-> I was kind of expecting the bug would be fixed before the test be
-> included ;)
+Paul Mackerras <paulus@samba.org> writes:
 
-... and the test actually passes with v1.5.0. I'll bisect.
+> Junio C Hamano writes:
+>
+>> Try it on user inputs like "master..next", "next...master".  You
+>> wanted to grab only the positive ones, no?
+>
+> No... gitk passes the IDs it gets from git rev-parse (both positive
+> and negative) to git log, rather than the original arguments.
 
-Mike
+I am not sure if I was answering the right question, then.
+
+I thought the issue you were addressing was this.
+
+ (1) the user says "gitk master...next" to start you.
+
+ (2) you run "git log master...next" (or whatever the equivalent of what
+     the user gave you) and draw.
+
+ (3) the user does things outside your control to modify refs, and says
+     "Update".
+
+ (4) you could re-run "git log master...next" again, but that would show
+     mostly what you already know.
+
+     If you saved all the positive ones you used in (2), you could instead
+     run "git log master...next --not <positives in 2>" to ask only the
+     incremental changes (as long as the branches do not rewind, but you
+     do not discard nodes from the already drawn graph anyway).
+
+     <positives in 2> in this example sequence would be the object names
+     for master and next when (2) was run.
+
+I think your "gitk passes the IDs" part is about the master...next part in
+the above example.  I do not think it really matters if they are converted
+to object names or kept symbolic when given to "git log".  I was talking
+about the part you add after --not in the second round, and that was why
+my answer was only about positive ones.
+
+Come to think of it, when you are told to "Update", you already know the
+positive tips you can use to optimize (4), don't you?  They are the
+commits you drew in (3) that do not have children.
