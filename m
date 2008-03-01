@@ -1,77 +1,101 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Multiple -M options for git-cvsimport
-Date: Fri, 29 Feb 2008 21:59:19 -0800
-Message-ID: <7vejav7zns.fsf@gitster.siamese.dyndns.org>
-References: <1204193904-3652-1-git-send-email-book@cpan.org>
- <7vzltkj14d.fsf@gitster.siamese.dyndns.org>
- <20080229100241.GA6777@plop.home.bruhat.net>
+From: "rae l" <crquan@gmail.com>
+Subject: Re: [PATCH] pretty format now configurable
+Date: Sat, 1 Mar 2008 14:07:23 +0800
+Message-ID: <91b13c310802292207j1b130077we11859bd20187226@mail.gmail.com>
+References: <1204314263-8072-1-git-send-email-crquan@gmail.com>
+	 <alpine.LFD.1.00.0802291155550.17889@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Philippe Bruhat (BooK)" <book@cpan.org>
-X-From: git-owner@vger.kernel.org Sat Mar 01 07:00:15 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+To: "Linus Torvalds" <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sat Mar 01 07:08:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JVKlY-0002MO-KL
-	for gcvg-git-2@gmane.org; Sat, 01 Mar 2008 07:00:13 +0100
+	id 1JVKt8-0003hg-Vg
+	for gcvg-git-2@gmane.org; Sat, 01 Mar 2008 07:08:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752697AbYCAF7d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Mar 2008 00:59:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752651AbYCAF7d
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Mar 2008 00:59:33 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:50884 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752545AbYCAF7d (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Mar 2008 00:59:33 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 1EB872315;
-	Sat,  1 Mar 2008 00:59:32 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 68E0F2314; Sat,  1 Mar 2008 00:59:29 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753128AbYCAGH0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Mar 2008 01:07:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754342AbYCAGH0
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Mar 2008 01:07:26 -0500
+Received: from ug-out-1314.google.com ([66.249.92.168]:47481 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752879AbYCAGHZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Mar 2008 01:07:25 -0500
+Received: by ug-out-1314.google.com with SMTP id z38so705461ugc.16
+        for <git@vger.kernel.org>; Fri, 29 Feb 2008 22:07:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=QQVLOG2DQvYbk2kIU+PKxYpiAJfNyZw5hZDwhxy5VQA=;
+        b=G6FBi3xRGzkkphA1RevEdf5SQmnEL+NEp7wklfuYw64T1mhx8pJKP4wyU5lOOu9sR/lz1YbfWvF5w1mCq4hQxHiPS23RCL70bBI4TY2t1CaMNmhBkxTUHNO41GPbx7nqiKm24AoTdSSeJJTQ/cC5ZSPJO7cQfC4BNv14ryMI184=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=YcILfjHzZIrZNyDVPdbTUIaRqSjT5jMxB9KEfmZs9Bc9RzZXqOjUwgMAbres+KZxfVDAYY2I252yTcSsXwme4rlWx5DxL5JQShQ8QWLIBLHHF7Uxl2XaGGKCIlSgYa5IGuDAgzdcBik3bwR36zEVNPWtnx0HxF7N+PScdW4qpYA=
+Received: by 10.78.133.2 with SMTP id g2mr11235292hud.33.1204351643939;
+        Fri, 29 Feb 2008 22:07:23 -0800 (PST)
+Received: by 10.78.156.14 with HTTP; Fri, 29 Feb 2008 22:07:23 -0800 (PST)
+In-Reply-To: <alpine.LFD.1.00.0802291155550.17889@woody.linux-foundation.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75622>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75623>
 
-"Philippe Bruhat (BooK)" <book@cpan.org> writes:
-
-> On Thu, Feb 28, 2008 at 12:07:46PM -0800, Junio C Hamano wrote:
+On Sat, Mar 1, 2008 at 4:00 AM, Linus Torvalds
+<torvalds@linux-foundation.org> wrote:
 >
->> I'll take a look at them later, when I have enough time to fish
->> for messages and discussions from earlier round in the list
->> archive in order to process this.
+>  On Sat, 1 Mar 2008, Denis Cheng wrote:
+>  >
+>  >       rev->abbrev = DEFAULT_ABBREV;
+>  > -     rev->commit_format = CMIT_FMT_DEFAULT;
+>  > +     if (fmt_pretty)
+>  > +             rev->commit_format = get_commit_format(fmt_pretty);
 >
-> You can ignore my previous messages, then. These four patches were
-> rebased on the top of master, and correct the problems that were
-> previously pointed to me.
+>  Umm. Now it looks like commit_format isn't initialized at all if
+>  fmt_pretty hasn't been set.
+>
+>  Now, it looks like it will have been initialized properly in
+>  "init_revisions()", but your commit log doesn't mention that, so it was
+>  harder to review this patch than necessary.
+>
+>  Also, can you describe what the background for this is? The reason I ask
+>  is that if anybody ever sets that default commit format to anythign else,
+>  it will now *seriously* confuse not just users but potentially other git
+>  tools too (at least gitk uses "--pretty=raw", but who knows what other
+>  tools/scripts are around that just expected the default format).
+yes, rev->commit_format has been initialized to CMIT_FMT_DEFAULT in
+"init_revisions()", so the code of this patch has been working well in
+my local repo,
 
-I do not work that way.  I am a trust-but-verify kind of person.
+the "format.pretty" configuration's background is that I often use
+"--pretty=fuller" on my command line, and different "format:..." on my
+different local repos, I hope there is a configuration to store this
+to gitconfig.
 
-So I dug up the old ones and the discussion.  The series looks
-fine.
+now git log/show/whathappened accept pretty format in the following sort:
+1. rev->commit_format set to CMIT_FMT_DEFAULT in init_revisions;
+2. call to gitconfig will set fmt_pretty properly;
+3. set rev->commit_format according to fmt_pretty;
+4. setup_revisions will accept "--pretty=" from the command line;
 
-cvsimport: have default merge regex allow for dashes in the branch name
+so the "--pretty=" precedence is:
+1. the command line "--pretty=";
+2. "format.pretty" from the gitconfig;
+3. default CMIT_FMT_DEFAULT;
 
-  You can extend the default with -M anyway, but I guess the
-  default pattern can be loosened like this without increasing
-  the risk of false hits, so probably it is Ok.
+and indeed I need to  generate a new patch including comments of this
+in the source and in Documentation/*.txt; I will soon send a new
+patch.
 
-cvsimport: allow for multiple -M options
+>
+>                 Linus
+>
 
-  Ok.
-
-cvsimport: document that -M can be used multiple times
-
-  Ok, except that "can be used seveval times" should probably be
-  "can be used more than once".
-
-cvsimport: configure Getopt::Long to bundle options
-
-  Ok.  Why isn't bundling the default, I have to wonder...
-
+--
+Denis Cheng
