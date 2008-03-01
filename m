@@ -1,67 +1,173 @@
-From: "Rhodes, Kate" <masukomi@gmail.com>
-Subject: ambiguous git-log date and timestamp syntax
-Date: Sat, 1 Mar 2008 11:15:56 -0500
-Message-ID: <715587AA-D485-4B31-A786-D26334506007@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v915)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
+From: Ping Yin <pkufranky@gmail.com>
+Subject: [PATCH RFC] git-submodule: multi-level module support
+Date: Sun,  2 Mar 2008 00:23:54 +0800
+Message-ID: <1204388634-757-1-git-send-email-pkufranky@gmail.com>
+Cc: gitster@pobox.com, Ping Yin <pkufranky@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 01 17:16:45 2008
+X-From: git-owner@vger.kernel.org Sat Mar 01 17:24:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JVUOB-00048w-9Q
-	for gcvg-git-2@gmane.org; Sat, 01 Mar 2008 17:16:43 +0100
+	id 1JVUVq-0006zV-LH
+	for gcvg-git-2@gmane.org; Sat, 01 Mar 2008 17:24:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756659AbYCAQQG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Mar 2008 11:16:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756644AbYCAQQF
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Mar 2008 11:16:05 -0500
-Received: from wx-out-0506.google.com ([66.249.82.236]:54681 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756619AbYCAQQD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Mar 2008 11:16:03 -0500
-Received: by wx-out-0506.google.com with SMTP id h31so5009562wxd.4
-        for <git@vger.kernel.org>; Sat, 01 Mar 2008 08:16:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:from:to:content-type:content-transfer-encoding:mime-version:subject:date:x-mailer;
-        bh=F+L2IRw7KsSrPf9OTdTLBH3jVBt04cmbbkhJx1I5xSU=;
-        b=SLFhGdUoo42iFJbYKuUSWML6AVPwM+5+tFRbWB9+j1t2ksPiTPssyPA0OKOSmoSFs5HTj3IeoWjbdXOo8sxA5TKwkt5Gy9qiMzzV/HPn9iiJiVk7neY5iV3Z/Kl0Hs2VtXUl/u5a9/8qMRRMJRcBSb/BJkRmJBCW3mHfOS7lY+Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:from:to:content-type:content-transfer-encoding:mime-version:subject:date:x-mailer;
-        b=Jn1M0SmLmbfmAdgUon7opWvipqYFYfdKg3NrE+tejsmEkhC/opfMA8KE0fCBzEGjthFrcsQp0sNYA+NDOySgtPo1VgKfq4cWxWoUVtVenooHnUQgnfS6CH2xIYgx9nniru0l2hl2BtbXabtVMOrgqwMrmaEUMNmI3KoKaDfGhFY=
-Received: by 10.70.21.10 with SMTP id 10mr9161749wxu.2.1204388160010;
-        Sat, 01 Mar 2008 08:16:00 -0800 (PST)
-Received: from ?192.168.1.103? ( [72.93.195.57])
-        by mx.google.com with ESMTPS id i13sm1847664wxd.3.2008.03.01.08.15.57
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 01 Mar 2008 08:15:57 -0800 (PST)
-X-Mailer: Apple Mail (2.915)
+	id S1763143AbYCAQYB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Mar 2008 11:24:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763119AbYCAQYA
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Mar 2008 11:24:00 -0500
+Received: from mail.qikoo.org ([60.28.205.235]:43092 "EHLO mail.qikoo.org"
+	rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1763099AbYCAQX7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Mar 2008 11:23:59 -0500
+Received: by mail.qikoo.org (Postfix, from userid 1029)
+	id 81BDA470AE; Sun,  2 Mar 2008 00:23:54 +0800 (CST)
+X-Mailer: git-send-email 1.5.4.3.347.g5314c
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75682>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75683>
 
-The docs are a little vague on exactly what your options are when  
-specifying dates. If someone can provide me some details on this i'll  
-make a patch for the docs.
+This patch allows multi-level modules in .gitmodules as linus
+and Sven Verdoolaege etc. have suggested in mails
+"Let .git/config specify the url for submodules"
+(http://article.gmane.org/gmane.comp.version-control.git/48939).
 
---since=date, --after=date
-	Show commits more recent than a specific date.
---until=date, --before=date
-	Show commits older than a specific date.
---max-age=timestamp, --min-age=timestamp
-	Limit the commits output to specified time range.
+Example multi-level .gitmodules
+-----------------------------------------------
+[submodule 'a']
+	url = aurl
+[submodule 'b']
+	url = aurl
+[submodule 'c']
+	url = aurl
+[submodule "all"]
+	submodule = all1
+	submodule = all2
+[submodule "all1"]
+	submodule = a
+	submodule = b
+[submodule "all2"]
+	submodule = c
+-----------------------------------------------
 
- From what i can tell it seems that dates can be specified relatively,  
-e.g. "2 hours ago", or with any ISO 8601 or RFC 2822 date syntax. Is  
-this correct, and are there any docs on specifying relative dates?
+An option '-m|--module-name' is introduced to designate submodule
+by logical module names instead of module paths. So follwoing
+commands pairs (1,2), (3,4) will be equivalent.
 
-I can't find any details on what the "timestamp" format should be. Can  
-someone point me in the right direction?
+--------------------------------------
+$ git submodule a b c           (1)
+$ git submodule -m all          (2)
+$ git submodule init a b        (3)
+$ git submodule -m init all1    (4)
+--------------------------------------
 
--Kate == masukomi
+Signed-off-by: Ping Yin <pkufranky@gmail.com>
+---
+ git-submodule.sh |   54 +++++++++++++++++++++++++++++++++++++++++++++++++++---
+ 1 files changed, 51 insertions(+), 3 deletions(-)
+
+diff --git a/git-submodule.sh b/git-submodule.sh
+index a6aaf40..4359e53 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -13,6 +13,7 @@ command=
+ branch=
+ quiet=
+ cached=
++use_module_name=
+ 
+ #
+ # print stuff on stdout unless -q was specified
+@@ -81,6 +82,44 @@ module_name()
+ }
+ 
+ #
++# Map submodule names to path(s)
++# $@ = module names
++#
++module_name2path() {
++	while test $# != 0
++	do
++		local name=$1
++		shift
++		local paths=$( GIT_CONFIG=.gitmodules \
++			git config --get-all submodule.$name.submodule |
++			while read name
++			do
++				module_name2path $name
++			done
++			git config --get-all submodule.$name.path
++		)
++		if test -z "$paths"
++		then
++			git config --get-all submodule.$name.url >/dev/null &&
++			echo $name
++		else
++			echo "$paths"
++		fi
++	done
++}
++
++module_path() {
++	if test -n "$use_module_name"
++	then
++		paths=$(module_name2path "$@")
++		test -z "$paths" && die "no path for modules: $@"
++	else
++		paths=$@
++	fi
++	echo $paths
++}
++
++#
+ # Clone a submodule
+ #
+ # Prior to calling, cmd_update checks that a possibly existing
+@@ -220,7 +259,9 @@ cmd_init()
+ 		shift
+ 	done
+ 
+-	git ls-files --stage -- "$@" | grep -e '^160000 ' |
++	mpaths=$(module_path "$@") || exit
++
++	git ls-files --stage -- $mpaths | grep -e '^160000 ' |
+ 	while read mode sha1 stage path
+ 	do
+ 		# Skip already registered paths
+@@ -274,7 +315,9 @@ cmd_update()
+ 		shift
+ 	done
+ 
+-	git ls-files --stage -- "$@" | grep -e '^160000 ' |
++	mpaths=$(module_path "$@") || exit
++
++	git ls-files --stage -- $mpaths | grep -e '^160000 ' |
+ 	while read mode sha1 stage path
+ 	do
+ 		name=$(module_name "$path") || exit
+@@ -357,7 +400,9 @@ cmd_status()
+ 		shift
+ 	done
+ 
+-	git ls-files --stage -- "$@" | grep -e '^160000 ' |
++	mpaths=$(module_path "$@") || exit
++
++	git ls-files --stage -- $mpaths | grep -e '^160000 ' |
+ 	while read mode sha1 stage path
+ 	do
+ 		name=$(module_name "$path") || exit
+@@ -408,6 +453,9 @@ do
+ 	--cached)
+ 		cached=1
+ 		;;
++	-m|--module-name)
++		use_module_name=1
++		;;
+ 	--)
+ 		break
+ 		;;
+-- 
+1.5.4.3.347.g5314c
+
