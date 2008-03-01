@@ -1,82 +1,53 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: Will git have a baseline feature or something alike?
-Date: Sun, 02 Mar 2008 02:20:35 +1300
-Message-ID: <47C95823.5090006@vilain.net>
-References: <f17812d70802290123raa099bag17a6f7b89de65dd4@mail.gmail.com> <m3tzjrkie4.fsf@localhost.localdomain> <47C8FFFC.3050901@vilain.net> <200803011339.50978.jnareb@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: what does RFH mean
+Date: Sat, 1 Mar 2008 13:18:01 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0803011317530.22527@racer.site>
+References: <46dff0320803010514m5132d1fcx819e06f12cb36d1f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: 7bit
-Cc: eric miao <eric.y.miao@gmail.com>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 01 14:19:00 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Ping Yin <pkufranky@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 01 14:19:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JVRc9-0007wI-6A
-	for gcvg-git-2@gmane.org; Sat, 01 Mar 2008 14:18:57 +0100
+	id 1JVRcV-00081K-Nl
+	for gcvg-git-2@gmane.org; Sat, 01 Mar 2008 14:19:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756067AbYCANSV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Mar 2008 08:18:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755991AbYCANSV
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Mar 2008 08:18:21 -0500
-Received: from watts.utsl.gen.nz ([202.78.240.73]:56625 "EHLO mail.utsl.gen.nz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756043AbYCANSU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Mar 2008 08:18:20 -0500
-Received: by mail.utsl.gen.nz (Postfix, from userid 65534)
-	id C80B321D221; Sun,  2 Mar 2008 02:18:18 +1300 (NZDT)
-X-Spam-Checker-Version: SpamAssassin 3.1.7-deb (2006-10-05) on 
-	mail.musashi.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.4 required=5.0 tests=ALL_TRUSTED autolearn=failed 
-	version=3.1.7-deb
-Received: from [192.168.69.233] (203-97-235-49.cable.telstraclear.net [203.97.235.49])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.utsl.gen.nz (Postfix) with ESMTP id BFF6621D20D;
-	Sun,  2 Mar 2008 02:18:14 +1300 (NZDT)
-User-Agent: Thunderbird 2.0.0.6 (X11/20071022)
-In-Reply-To: <200803011339.50978.jnareb@gmail.com>
-X-Enigmail-Version: 0.95.0
+	id S1756116AbYCANSn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Mar 2008 08:18:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756100AbYCANSn
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Mar 2008 08:18:43 -0500
+Received: from mail.gmx.net ([213.165.64.20]:50195 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755991AbYCANSn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Mar 2008 08:18:43 -0500
+Received: (qmail invoked by alias); 01 Mar 2008 13:18:41 -0000
+Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
+  by mail.gmx.net (mp017) with SMTP; 01 Mar 2008 14:18:41 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18yzoBVBCQyliZ1ne6OZJgq2m78+euXdB4sxzwHNq
+	e5S6uJOUcfctyt
+X-X-Sender: gene099@racer.site
+In-Reply-To: <46dff0320803010514m5132d1fcx819e06f12cb36d1f@mail.gmail.com>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75672>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75673>
 
-Jakub Narebski wrote:
-> On Sat, 1 Mar 2008, Sam Vilain wrote:
->> Jakub Narebski wrote:
->>
->>> BTW. the largest git repository is 1.6G OpenOffice.org conversion,
->>> with > 2G checkout, and some large binary files under version
->>> control. Mozilla and GCC, other large repos, got under 0.5G IIRC.
->>> So kernel should be quite smaller.
->> I have an 8GB git-svn import of the KDE repository :-)
-> 
-> First, how large full checkout is? 
+Hi,
 
-Heh, haven't tried tbh.
+On Sat, 1 Mar 2008, Ping Yin wrote:
 
-> And how large Subversion repo?
+> RFC represents Request for Comments
+> how about RFH?
 
-48GB apparently.  This repository is approx. 90% of the subversion
-repository - I didn't prepare it.
+Request for Help.
 
-> Second, is this repository tightly packed (large window, big delta
-> chain)?
+Hth,
+Dscho
 
-Yes, I don't have the details, though.
-
-> And last, KDE repos should most probably be split into submodules.
-
-Mmm.  Everyone always says that; what it really needs I think is someone
-to really take the conversion on board and come up with a workable plan
-on this front.  I think the counter-argument to this was "but you always
-want to have 70% of the repository checked out for development".
-Counter-counter argument is "yes but they don't always need to be deep
-clones".  Anyway, it's not my baby, just thought I'd let you know about
-it :-)
-
-Sam.
