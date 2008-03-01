@@ -1,186 +1,240 @@
-From: Denis Cheng <crquan@gmail.com>
-Subject: [PATCH] add pretty format configuration to git log/show/whatchanged
-Date: Sun,  2 Mar 2008 03:50:56 +0800
-Message-ID: <1204401056-8763-1-git-send-email-crquan@gmail.com>
-References: <alpine.LSU.1.00.0803011821420.22527@racer.site>
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Mar 01 20:51:50 2008
+From: Junio C Hamano <gitster@pobox.com>
+Subject: What's cooking in git.git (topics)
+Date: Sat, 01 Mar 2008 12:15:49 -0800
+Message-ID: <7vy792yzd6.fsf@gitster.siamese.dyndns.org>
+References: <7v7ihmuwzi.fsf@gitster.siamese.dyndns.org>
+ <7vodavd9qw.fsf@gitster.siamese.dyndns.org>
+ <7vbq6tset4.fsf@gitster.siamese.dyndns.org>
+ <7vmyq9gk94.fsf@gitster.siamese.dyndns.org>
+ <7vk5la4oxq.fsf@gitster.siamese.dyndns.org>
+ <7vejbc44hu.fsf@gitster.siamese.dyndns.org>
+ <7v8x1fymei.fsf@gitster.siamese.dyndns.org>
+ <7vpruljunl.fsf@gitster.siamese.dyndns.org>
+ <7v1w6xoqnm.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 01 21:16:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JVXkL-0000iH-31
-	for gcvg-git-2@gmane.org; Sat, 01 Mar 2008 20:51:49 +0100
+	id 1JVY8L-0008GQ-CQ
+	for gcvg-git-2@gmane.org; Sat, 01 Mar 2008 21:16:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756859AbYCATvK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Mar 2008 14:51:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756789AbYCATvK
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Mar 2008 14:51:10 -0500
-Received: from wa-out-1112.google.com ([209.85.146.181]:31440 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756691AbYCATvI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Mar 2008 14:51:08 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so5640194wah.23
-        for <git@vger.kernel.org>; Sat, 01 Mar 2008 11:51:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=m0kgnZ6ua9vZhi76nBdI3KYi7SJ9ETX9nN3+DxP/AdE=;
-        b=L68nRGtUkjIAZaxbtOdskikOtSqkZflkoO4UkYjQonaAeULAh43E2AJ4UpAtOmPM0YMTBEeqakkQmgOfCfPvCvTvlFlSVEuZV8LwsTVxHNj44BE74A8dY4VIPRQOhDfhS24QSYfwfWIM0em8wtYKunsWobdx9X2rpZJdRML5RQ4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=N8xpwA/b2GdejmUSDnCKudoacXaNJi5pOwT1f+NPM1SXH/De267N2o4v22VQfr835950Iyq9Px+E/snyTjpLgmb/pe2crMj40hVw9p3vW1dPTmT2qH/XxFuRD3te5aEr55oYvsWsE1JCTJuKtanx3n3KmN2CTJJg0us3W4nES7Y=
-Received: by 10.114.175.16 with SMTP id x16mr13729234wae.116.1204401067535;
-        Sat, 01 Mar 2008 11:51:07 -0800 (PST)
-Received: from tux ( [121.34.60.168])
-        by mx.google.com with ESMTPS id j6sm22037006wah.6.2008.03.01.11.51.04
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 01 Mar 2008 11:51:06 -0800 (PST)
-Received: by tux (sSMTP sendmail emulation); Sun,  2 Mar 2008 03:50:56 +0800
-X-Mailer: git-send-email 1.5.3.8
-In-Reply-To: <alpine.LSU.1.00.0803011821420.22527@racer.site>
+	id S1757109AbYCAUQA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Mar 2008 15:16:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756994AbYCAUP7
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Mar 2008 15:15:59 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:62738 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755966AbYCAUP6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Mar 2008 15:15:58 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 678552FBC;
+	Sat,  1 Mar 2008 15:15:55 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 002E92FBB; Sat,  1 Mar 2008 15:15:52 -0500 (EST)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75693>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75694>
 
- * New configuration variable "format.pretty" can be used
-    in git log/show/whatchanged.
+Here are the topics that have been cooking.  Commits prefixed
+with '-' are only in 'pu' while commits prefixed with '+' are
+in 'next'.
 
-the "format.pretty" configuration's design background is that I often use
-"--pretty=fuller" on my command line, and different "--pretty=format:..."
- on my different local repos, I hope there is a configuration to store this
-to git-config, and I think many people also need this to avoid specifying
-"--pretty=..." every time.
+The topics list the commits in reverse chronological order.
 
-with applying the patch, code in `git log/show/whatchanged` executed in
-the following order:
-1. call to gitconfig will set static fmt_pretty according to user's git-config:
-   if the user never config "format.pretty", fmt_pretty doesn't need to be
-   initialized;
-2. rev->commit_format set to CMIT_FMT_DEFAULT in init_revisions;
-3. set rev->commit_format according to fmt_pretty if the user has configured
-   "format.pretty" in git-config, else default to CMIT_FMT_DEFAULT;
-4. setup_revisions will accept "--pretty=" from the command line;
+----------------------------------------------------------------
+[New Topics]
 
-so the pretty format's setting precedence will be:
-1. the command line "--pretty=";
-2. "format.pretty" from the git-config;
-3. default CMIT_FMT_DEFAULT;
+* sp/fetch-optim (Sat Mar 1 00:25:38 2008 -0500) 7 commits
+ - Teach git-fetch to grab a tag at the same time as a commit
+ - Make git-fetch follow tags we already have objects for sooner
+ - Teach upload-pack to log the received need lines to fd 3
+ - Allow builtin-fetch's find_non_local_tags to append onto a list
+ - Ensure tail pointer gets setup correctly when we fetch HEAD only
+ - Remove unnecessary delaying of free_refs(ref_map) in builtin-fetch
+ - Remove unused variable in builtin-fetch find_non_local_tags
 
-here documentation of `git config/log/show/whatchanged` also updated.
+A few existing tests in 5515 need to be adjusted as they expect tags not
+to be fetched early, but the point of this series is to optimize to allow
+them to, under some conditions.  Otherwise slated for 1.5.5.
 
-Signed-off-by: Denis Cheng <crquan@gmail.com>
----
-to Johannes: rev->commit_format default to CMIT_FMT_DEFAULT instead of fmt_pretty
-could avoid an extra call to get_commit_format.
----
- Documentation/config.txt          |    5 +++++
- Documentation/git-whatchanged.txt |    9 ++++-----
- Documentation/pretty-options.txt  |    8 ++++++++
- builtin-log.c                     |    9 +++++++++
- 4 files changed, 26 insertions(+), 5 deletions(-)
+* pb/cvsimport (Thu Feb 28 11:18:23 2008 +0100) 3 commits
+ + cvsimport: document that -M can be used multiple times
+ + cvsimport: allow for multiple -M options
+ + cvsimport: have default merge regex allow for dashes in the branch
+   name
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 4027726..8a0dff9 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -556,6 +556,11 @@ format.suffix::
- 	`.patch`. Use this variable to change that suffix (make sure to
- 	include the dot if you want it).
- 
-+format.pretty::
-+	The default pretty format for log/show/whatchanged command,
-+	See linkgit:git-log[1], linkgit:git-show[1],
-+	linkgit:git-whatchanged[1].
-+
- gc.aggressiveWindow::
- 	The window size parameter used in the delta compression
- 	algorithm used by 'git gc --aggressive'.  This defaults
-diff --git a/Documentation/git-whatchanged.txt b/Documentation/git-whatchanged.txt
-index 54947b6..a6e7bd4 100644
---- a/Documentation/git-whatchanged.txt
-+++ b/Documentation/git-whatchanged.txt
-@@ -38,11 +38,6 @@ OPTIONS
- 	Show git internal diff output, but for the whole tree,
- 	not just the top level.
- 
----pretty=<format>::
--	Controls the output format for the commit logs.
--	<format> can be one of 'raw', 'medium', 'short', 'full',
--	and 'oneline'.
--
- -m::
- 	By default, differences for merge commits are not shown.
- 	With this flag, show differences to that commit from all
-@@ -51,6 +46,10 @@ OPTIONS
- However, it is not very useful in general, although it
- *is* useful on a file-by-file basis.
- 
-+include::pretty-options.txt[]
-+
-+include::pretty-formats.txt[]
-+
- Examples
- --------
- git-whatchanged -p v2.6.12.. include/scsi drivers/scsi::
-diff --git a/Documentation/pretty-options.txt b/Documentation/pretty-options.txt
-index 973d8dd..15e01fa 100644
---- a/Documentation/pretty-options.txt
-+++ b/Documentation/pretty-options.txt
-@@ -4,6 +4,14 @@
- 	where '<format>' can be one of 'oneline', 'short', 'medium',
- 	'full', 'fuller', 'email', 'raw' and 'format:<string>'.
- 	When omitted, the format defaults to 'medium'.
-++
-+Note: now you can specify the default pretty format in the repository
-+configuration (see linkgit:git-config[1]), like this in .git/config:
-++
-+-----------------------
-+[format]
-+	pretty = fuller
-+-----------------------
- 
- --abbrev-commit::
- 	Instead of showing the full 40-byte hexadecimal commit object
-diff --git a/builtin-log.c b/builtin-log.c
-index bbadbc0..23c05bc 100644
---- a/builtin-log.c
-+++ b/builtin-log.c
-@@ -20,6 +20,7 @@
- 
- static int default_show_root = 1;
- static const char *fmt_patch_subject_prefix = "PATCH";
-+static const char *fmt_pretty;
- 
- static void add_name_decoration(const char *prefix, const char *name, struct object *obj)
- {
-@@ -54,6 +55,8 @@ static void cmd_log_init(int argc, const char **argv, const char *prefix,
- 
- 	rev->abbrev = DEFAULT_ABBREV;
- 	rev->commit_format = CMIT_FMT_DEFAULT;
-+	if (fmt_pretty)
-+		rev->commit_format = get_commit_format(fmt_pretty);
- 	rev->verbose_header = 1;
- 	DIFF_OPT_SET(&rev->diffopt, RECURSIVE);
- 	rev->show_root_diff = default_show_root;
-@@ -221,6 +224,12 @@ static int cmd_log_walk(struct rev_info *rev)
- 
- static int git_log_config(const char *var, const char *value)
- {
-+	if (!strcmp(var, "format.pretty")) {
-+		if (!value)
-+			config_error_nonbool(var);
-+		fmt_pretty = xstrdup(value);
-+		return 0;
-+	}
- 	if (!strcmp(var, "format.subjectprefix")) {
- 		if (!value)
- 			config_error_nonbool(var);
--- 
-1.5.4.2
+Slated for 1.5.5.
 
+* nd/worktree (Wed Feb 27 23:40:45 2008 +0700) 9 commits
+ - Documentation: update api-builtin and api-setup
+ - Make setup_git_directory() auto-setup worktree if found
+ - builtin-archive: mark unused prefix "unused_prefix"
+ - Completely move out worktree setup from
+   setup_git_directory_gently()
+ - http-push: Avoid calling setup_git_directory() twice
+ - Make setup_work_tree() return new prefix
+ - Make get_git_dir() and 'git rev-parse --git-dir' absolute path
+ - Make sure setup_git_directory is called before accessing
+   repository
+ - "git read-tree -m" and the like require worktree
+
+The first one needs replacement as it breaks "read-tree -i", I think.
+
+* sp/describe-tag (Thu Feb 28 01:22:36 2008 -0500) 1 commit
+ - Teach git-describe to verify annotated tag names before output
+
+Slated for 1.5.5.
+
+* jc/maint-log-merge-left-right (Tue Feb 26 23:18:38 2008 -0800) 1 commit
+ + Fix "git log --merge --left-right"
+
+Soon to be in 'master' and then 'maint'.
+
+* np/verify-pack (Thu Feb 28 00:25:20 2008 -0500) 4 commits
+ + add storage size output to 'git verify-pack -v'
+ + fix unimplemented packed_object_info_detail() features
+ + make verify_one_pack() a bit less wrong wrt packed_git structure
+ + factorize revindex code out of builtin-pack-objects.c
+
+Slated for 1.5.5.
+
+* js/remote (Fri Feb 29 01:46:07 2008 +0000) 5 commits
+ + builtin-remote: prune remotes correctly that were added with --
+   mirror
+ + Make git-remote a builtin
+ + Test "git remote show" and "git remote prune"
+ + parseopt: add flag to stop on first non option
+ + path-list: add functions to work with unsorted lists
+
+Slated for 1.5.5.
+
+----------------------------------------------------------------
+[Merge to "master" soon, Slated for 1.5.5]
+
+* js/maint-daemon (Tue Feb 26 13:00:55 2008 +0100) 2 commits
+ + daemon: ensure that base-path is an existing directory
+ + daemon: send more error messages to the syslog
+
+* ew/maint-svn-cert-fileprovider (Mon Feb 25 15:56:28 2008 +0100) 1 commit
+ + git-svn: Don't prompt for client cert password everytime.
+
+* sb/describe-long (Mon Feb 25 10:43:33 2008 +0100) 1 commit
+ + git-describe: --long shows the object name even for a tagged
+   commit
+
+* mk/maint-parse-careful (Mon Feb 25 22:46:13 2008 +0100) 10 commits
+ + receive-pack: use strict mode for unpacking objects
+ + index-pack: introduce checking mode
+ + unpack-objects: prevent writing of inconsistent objects
+ + unpack-object: cache for non written objects
+ + add common fsck error printing function
+ + builtin-fsck: move common object checking code to fsck.c
+ + builtin-fsck: reports missing parent commits
+ + Remove unused object-ref code
+ + builtin-fsck: move away from object-refs to fsck_walk
+ + add generic, type aware object chain walker
+
+* jn/gitweb-grep (Tue Feb 26 13:22:08 2008 +0100) 3 commits
+ + gitweb: Clearly distinguish regexp / exact match searches
+ + gitweb: Simplify fixed string search
+ + gitweb: Change parse_commits signature to allow for multiple
+   options
+
+* jc/remote-multi-url (Wed Feb 27 13:50:44 2008 -0800) 1 commit
+ + git-remote: do not complain on multiple URLs for a remote
+
+* cb/http-test (Wed Feb 27 20:28:45 2008 +0100) 2 commits
+ + http-push: add regression tests
+ + http-push: push <remote> :<branch> deletes remote branch
+
+* mh/maint-http-proxy-fix (Wed Feb 27 21:35:50 2008 +0100) 1 commit
+ + Set proxy override with http_init()
+
+----------------------------------------------------------------
+[Actively Cooking]
+
+* js/reflog-delete (Fri Feb 22 16:52:50 2008 -0600) 9 commits
+ + git-stash: add new 'pop' subcommand
+ + git-stash: add new 'drop' subcommand
+ + git-reflog: add option --updateref to write the last reflog sha1
+   into the ref
+ + refs.c: make close_ref() and commit_ref() non-static
+ + git-reflog: add option --rewrite to update reflog entries while
+   expiring
+ + reflog-delete: parse standard reflog options
+ + Merge branch 'bc/reflog-fix' into js/reflog-delete
+ + builtin-reflog.c: fix typo that accesses an unset variable
+ + Teach "git reflog" a subcommand to delete single entries
+
+I think this needs tests for both high-level ("stash drop" and
+"stash pop") and low-level ("reflog delete --rewrite" and
+"reflog delete --updateref"), but otherwise the series looks in
+a very good shape.  Slated for 1.5.5 iff tests materialize.
+
+----------------------------------------------------------------
+[On Hold]
+
+* jc/test (Thu Feb 21 21:17:54 2008 -0800) 2 commits
+ - tests: convert "cmp" and "cmp -s" to test_cmp
+ - tests: test_cmp helper function
+
+* jc/rename (Tue Jan 29 20:54:56 2008 -0800) 1 commit
+ + Optimize rename detection for a huge diff
+
+* jc/dirstat (Tue Feb 12 17:06:58 2008 -0800) 1 commit
+ - diff: make --dirstat binary-file safe
+
+* lh/git-file (Wed Feb 20 23:13:16 2008 +0100) 4 commits
+ - Teach GIT-VERSION-GEN about the .git file
+ - Teach git-submodule.sh about the .git file
+ - Teach resolve_gitlink_ref() about the .git file
+ - Add platform-independent .git "symlink"
+
+The idea and the implementation seem Ok, but this leaves
+distinct feeling that it is a solution still waiting for a user
+(e.g. "git submodule" enhancements to take advantage of this
+facility to preserve the subrepository while switching between a
+revision with a submodule and another before the submodule was
+bound to the superproject).
+
+* jc/bulk-allocate (Wed Feb 13 18:37:27 2008 -0800) 2 commits
+ - Bulk allocate diff_filepair
+ - patch freeable-bulk-alloc
+
+* nd/dashless (Wed Nov 28 23:21:57 2007 +0700) 1 commit
+ - Move all dashed-form commands to libexecdir
+
+Scheduled for 1.6.0.  I am not sure if we should merge this to
+'next' before 1.5.5.  Most active people will be on 'next' and
+if we have this there, the resulting 1.5.5 release might end up
+having issues that come from differences this one introduces.
+
+* jc/dashless (Sat Dec 1 22:09:22 2007 -0800) 2 commits
+ - Prepare execv_git_cmd() for removal of builtins from the
+   filesystem
+ - git-shell: accept "git foo" form
+
+We do not plan to remove git-foo form completely from the filesystem at
+this point, but git-shell may need to be updated.
+
+* jc/sha1-lookup (Sun Dec 30 03:13:27 2007 -0800) 2 commits
+ - sha1-lookup: make selection of 'middle' less aggressive
+ - sha1-lookup: more memory efficient search in sorted list of SHA-1
+
+Micro-optimization whose real world benefit is not proven.
+
+* jc/cherry-pick (Wed Feb 20 23:17:06 2008 -0800) 5 commits
+ - WIP: rethink replay merge
+ - Start using replay-tree merge in cherry-pick
+ - revert/cherry-pick: start refactoring call to merge_recursive
+ + expose a helper function peel_to_type().
+ + merge-recursive: split low-level merge functions out.
