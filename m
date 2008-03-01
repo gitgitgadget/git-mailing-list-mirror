@@ -1,113 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 3/3] git-submodule: New subcommand 'summary' (3) -
- limit summary size
-Date: Fri, 29 Feb 2008 23:29:32 -0800
-Message-ID: <7v1w6u7vhf.fsf@gitster.siamese.dyndns.org>
-References: <1204306487-15849-1-git-send-email-pkufranky@gmail.com>
- <80aa1c46ced6f0b92ca2fca3b917d383343b3161.1204306070.git.pkufranky@gmail.com>
- <d6e82710452985611fb75c9d32a1b772bf0cb529.1204306070.git.pkufranky@gmail.com>
- <18af168b52a735c33612c9c9e4778d8b8bef1cbc.1204306070.git.pkufranky@gmail.com>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: [PATCH] Add test for git rebase --abort
+Date: Sat, 1 Mar 2008 08:36:12 +0100
+Organization: glandium.org
+Message-ID: <20080301073612.GA26767@glandium.org>
+References: <1204322927-22407-1-git-send-email-mh@glandium.org> <7v63w7bb06.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Ping Yin <pkufranky@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 01 08:30:33 2008
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Mar 01 08:33:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JVMAr-0002t7-1e
-	for gcvg-git-2@gmane.org; Sat, 01 Mar 2008 08:30:25 +0100
+	id 1JVMDp-0003dv-KB
+	for gcvg-git-2@gmane.org; Sat, 01 Mar 2008 08:33:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753276AbYCAH3t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Mar 2008 02:29:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753298AbYCAH3t
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Mar 2008 02:29:49 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:40161 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753075AbYCAH3s (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Mar 2008 02:29:48 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id AAD662259;
-	Sat,  1 Mar 2008 02:29:45 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id E555A2258; Sat,  1 Mar 2008 02:29:41 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753384AbYCAHcx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Mar 2008 02:32:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753374AbYCAHcx
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Mar 2008 02:32:53 -0500
+Received: from vuizook.err.no ([194.24.252.247]:36802 "EHLO vuizook.err.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753312AbYCAHcx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Mar 2008 02:32:53 -0500
+Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
+	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.67)
+	(envelope-from <mh@glandium.org>)
+	id 1JVMD4-0008IX-Vl; Sat, 01 Mar 2008 08:32:49 +0100
+Received: from mh by jigen with local (Exim 4.69)
+	(envelope-from <mh@jigen>)
+	id 1JVMGS-000759-S3; Sat, 01 Mar 2008 08:36:12 +0100
+Content-Disposition: inline
+In-Reply-To: <7v63w7bb06.fsf@gitster.siamese.dyndns.org>
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75629>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75630>
 
-Ping Yin <pkufranky@gmail.com> writes:
+On Fri, Feb 29, 2008 at 03:26:01PM -0800, Junio C Hamano wrote:
+> Mike Hommey <mh@glandium.org> writes:
+> 
+> >  The failing test is the third. I don't have enough knowledge in git-rebase
+> >  to write an appropriate fix, but the problem seems to be in
+> >  move_to_original_branch, where testing head_name doesn't seem appropriate.
+> 
+> Please mark such an "expected to succeed but fails due to
+> suspected bug" with test_expect_failure.
 
-> This patches teaches git-submodule an option '--summary-limit|-n <number>'
-> to limit number of commits for the summary. Number 0 will disable summary
-> and minus number will not limit the summary size.
+I was kind of expecting the bug would be fixed before the test be
+included ;)
 
-"Negative means unlimited" feels unnecessary.  Didn't you make "unlimited"
-the default anyway?
->
-> For beauty and clarification, the last commit for each section (backward
-> and forward) will always be shown disregarding the given limit. So actual
-> summary size may be greater than the given limit.
->
-> In the same super project of these patch series, 'git submodule -n 2
-> summary sm1' and 'git submodule -n 3 summary sm1' will show the same.
+> > +test_expect_success 'rebase --abort' '
+> > +	! git rebase master &&
+> 
+> When making sure "git frotz" refuses gracefully (instead of
+> segfault-and-burn), please say "test_must_fail git frotz".
 
-This description is unclear.  Does "-n 2" tell "show 2 commits from both
-side", or "show 2 in total"?
+Ooooh, I just saw 74359821.
 
-> ---------------------------------------
->  $ git submodule -n 2 summary sm1
->  # Submodules modifiled: sm1
->  #
->  # * sm1 354cd45...3f751e5:
->  #   <one line message for C
->  #   <one line message for B
->  #   >... (1 more)
->  #   >one line message for E
->  #
+> > +# In case previous test failed
+> > +git reset --hard pre-rebase >&3 2>&4
+> > +rm -rf .dotest # Should be changed whenever rebase stop using .dotest
+> 
+> Have this kind of clean-up at the very beginning of the next
+> test.  Test writers should not have to learn about file
+> descriptors 3 and 4.
+> 
+>         Side note.  As a test framework extension, we might want
+>         to add 4th parameter to test_expect_{success,failure}
+>         that specifies a clean-up to be made regardless of the
+>         outcome of the test.
+> 
+> > +test_expect_success 'rebase --abort after --skip' '
+> > +	! git rebase master &&
+> > +	! git rebase --skip &&
+> > +	test $(git rev-parse HEAD) = $(git rev-parse master) &&
+> > +	sh -x ../../git-rebase --abort &&
+> > +	test $(git rev-parse to-rebase) = $(git rev-parse pre-rebase)
+> > +'
+> 
+> I take that "sh -x ../../" is not for inclusion in the official
+> release.
 
-When you have room only for N lines, you might have to say (X more), but
-you never need to say (1 more).  You can fit that omitted one item on that
-line instead of wasting that line to say (1 more).
+D'oh, I forgot to change that back.
 
-It is unclear from the above illustration as the (1 more) is pointing at
-right without having anything newer than that, but I think you meant to do
-something like this:
-
-    <top
-    <second
-    <... (N more)
-    <bottom
-    >top
-    >second
-    >... (M more)
-    >bottom
-
-I guess fork-point may be interesting enough that showing the bottom one
-like you did might make sense.  I am not convinced but we'll see.
-
-> +		-n|--summary-limit)
-> +			if test -z "$2" || echo "$2" | grep --quiet -v '^-\?[0-9]\+$'
-
-\?\+?????
-
-	summary_limit=$(expr "$2" : '[0-9][0-9]*$')
-
-or even
-
-	if summary_limit=$(( $2 + 0 )) 2>/dev/null ||
-           test "$2" != "$summary_limit"
-	then
-		usage
-	fi
-
-perhaps.
-
-> +			if (( $summary_limit < 0 ))
-
-Don't.  The first line of this script says "#!/bin/sh", not bash.
+Mike
