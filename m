@@ -1,76 +1,72 @@
-From: Tor Arvid Lund <torarvid@gmail.com>
-Subject: Re: [GIT-P4] usage under Windows
-Date: Sat, 01 Mar 2008 12:44:39 +0100
-Message-ID: <B929D1FF-BAF7-4595-9DAF-07E62B90D767@gmail.com>
-References: <96c268400802212244g7fd2de2bj6c1b7022885c8e89@mail.gmail.com>
- <47C5E4EC.1060003@trolltech.com>
- <96c268400802291048u31a2d8b6ub1726ade941afb8c@mail.gmail.com>
+From: "Ping Yin" <pkufranky@gmail.com>
+Subject: git diff-index --raw HEAD and git diff --raw HEAD output the same thing?
+Date: Sat, 1 Mar 2008 21:10:03 +0800
+Message-ID: <46dff0320803010510q67bc4101k9f85c71e5d20b4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7BIT
-Cc: Marius Storm-Olsen <marius@trolltech.com>, git@vger.kernel.org
-To: Maxim Gordienko <mgordienko@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 01 13:46:57 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Mar 01 14:11:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JVR7A-0007Nn-Hq
-	for gcvg-git-2@gmane.org; Sat, 01 Mar 2008 13:46:56 +0100
+	id 1JVRUi-0005j8-5N
+	for gcvg-git-2@gmane.org; Sat, 01 Mar 2008 14:11:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754366AbYCAMqU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Mar 2008 07:46:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754299AbYCAMqU
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Mar 2008 07:46:20 -0500
-Received: from smtp.getmail.no ([84.208.20.33]:48622 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753784AbYCAMqT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Mar 2008 07:46:19 -0500
-X-Greylist: delayed 3600 seconds by postgrey-1.27 at vger.kernel.org; Sat, 01 Mar 2008 07:46:19 EST
-Received: from pmxchannel-daemon.no-osl-m323-srv-004-z2.isp.get.no by
- no-osl-m323-srv-004-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- id <0JX10060DVCWU000@no-osl-m323-srv-004-z2.isp.get.no> for
- git@vger.kernel.org; Sat, 01 Mar 2008 12:46:08 +0100 (CET)
-Received: from smtp.getmail.no ([10.5.16.1])
- by no-osl-m323-srv-004-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JX100JZBVAEJ550@no-osl-m323-srv-004-z2.isp.get.no> for
- git@vger.kernel.org; Sat, 01 Mar 2008 12:44:38 +0100 (CET)
-Received: from cm-84.215.103.33.getinternet.no ([84.215.103.33])
- by no-osl-m323-srv-004-z1.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JX100KZZVAE6OB0@no-osl-m323-srv-004-z1.isp.get.no> for
- git@vger.kernel.org; Sat, 01 Mar 2008 12:44:38 +0100 (CET)
-In-reply-to: <96c268400802291048u31a2d8b6ub1726ade941afb8c@mail.gmail.com>
-X-Mailer: Apple Mail (2.919.2)
+	id S1755427AbYCANKG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Mar 2008 08:10:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755136AbYCANKF
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Mar 2008 08:10:05 -0500
+Received: from an-out-0708.google.com ([209.85.132.246]:57426 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752123AbYCANKE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Mar 2008 08:10:04 -0500
+Received: by an-out-0708.google.com with SMTP id d31so1013544and.103
+        for <git@vger.kernel.org>; Sat, 01 Mar 2008 05:10:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=7L+partWKEpVlYA4QHmHb5P2WLE1HQNpaH8of1sIgZQ=;
+        b=qZue7PirZYXyW4hvQcZs+zWwhN6b2kPlCOYGM9Eghx4HXhRj83uZb7jHQ1G6f/dMJpXVMfxhr6XXskoi67bv0OG8x2f8Nm+Dlgw1ScBFn2rNhhHmv6l8NbPZTp85Te1hm6kMxJpttv+4p9VUrf5P+aSxqb8cYzEijFVREW6SuXM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=lDcBJvcTfH21/Y5Mi0YEbeU4fbLHWIrmDY1lrGe78Fmcnq4JiqJUBypdR1h+1dzU7/hcgy5J23cCK0J2c81w73goMTzngwM2OuBHdshqiIfTeisjEDqjqDxb3hmg6gJRxnklu04y5xxFK752ifPCli4Z9u8ixplj3Cx4eKSclQ4=
+Received: by 10.100.174.2 with SMTP id w2mr22647584ane.71.1204377003908;
+        Sat, 01 Mar 2008 05:10:03 -0800 (PST)
+Received: by 10.100.95.20 with HTTP; Sat, 1 Mar 2008 05:10:03 -0800 (PST)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75662>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75663>
 
-On 29. feb.. 2008, at 19.48, Maxim Gordienko wrote:
+Does these two commands output the same content except displaying format?
 
-> Thank you, Marius for detailed instructions!
-> Now everything except submitting back to perforce works like a charm.
-> Perforce complains about git-p4 checkout is not under it's root
->
-> Synchronizing p4 checkout...
-> executing p4 sync ...
-> Path 'c:/tmp/p42/main\...' is not under client's root 'c:\p4'.
+Follwoing is my test
 
-I have seen it too. I'm not sure, but it seems to me like even though  
-the git-p4 script does a chdir(<perforce_dir>) before calling "p4  
-<command> <args>" the chdir is "not seen by" p4 on windows.
+$ git diff-index --raw HEAD
+:160000 000000 ad1e416e87dc02617de68c41bb18e5abf0e24729
+0000000000000000000000000000000000000000 D      WordBreak
+:160000 160000 34f279b1662a6bef6a8fdea1827bbdbd80f12444
+0000000000000000000000000000000000000000 M      commonmake
+:160000 100644 c517f783d9efb5a8d24f80fb67f644a39afec2a6
+e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 T      util
 
-I have a patch on my machine where i simply change all the p4 calls,  
-like so:
+$ git diff --raw HEAD
+:160000 000000 ad1e416e87dc02617de68c41bb18e5abf0e24729 0000000... D
+ WordBreak
+:160000 160000 34f279b1662a6bef6a8fdea1827bbdbd80f12444
+c1f46b3f10cc041e196c388490ddb049dacc7dc0 M      commonmake
+:160000 100644 c517f783d9efb5a8d24f80fb67f644a39afec2a6 e69de29... T    util
 
-system("p4 sync ...") --> system("p4 sync %s..." % self.clientPath)
+Strange things is this line
+:160000 160000 34f279b1662a6bef6a8fdea1827bbdbd80f12444
+0000000000000000000000000000000000000000 M      commonmake
 
-This seems to work in all cases, and also in Mac OS X... I can  
-probably clean the patch up a bit, and submit it later today or  
-tomorrow if you're interested.
+why mod is 160000 while sha1 is 0000...
 
-      -- Tor Arvid
+-- 
+Ping Yin
