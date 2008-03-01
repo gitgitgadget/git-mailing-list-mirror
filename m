@@ -1,57 +1,81 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] t6024-recursive-merge.sh: hide spurious output when
-	not running verbosely
-Date: Fri, 29 Feb 2008 18:54:43 -0500
-Message-ID: <20080229235442.GA20028@sigill.intra.peff.net>
-References: <1204323805-23185-1-git-send-email-mh@glandium.org> <20080229225331.GA8440@coredump.intra.peff.net> <20080229225816.GA24892@glandium.org> <7vfxvbbbhn.fsf@gitster.siamese.dyndns.org>
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: Google Summer of Code 2008
+Date: Sat, 01 Mar 2008 13:31:17 +1300
+Message-ID: <47C8A3D5.9050309@vilain.net>
+References: <200802262356.28971.jnareb@gmail.com> <20080228063621.GR8410@spearce.org> <alpine.LSU.1.00.0802281021070.22527@racer.site> <200802291304.16026.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Mike Hommey <mh@glandium.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Mar 01 00:55:25 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
+	git@vger.kernel.org, John Hawley <warthog9@kernel.org>,
+	Julian Phillips <julian@quantumfyre.co.uk>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 01 01:29:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JVF4U-0001dO-AC
-	for gcvg-git-2@gmane.org; Sat, 01 Mar 2008 00:55:22 +0100
+	id 1JVFbj-0002WN-Mj
+	for gcvg-git-2@gmane.org; Sat, 01 Mar 2008 01:29:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932103AbYB2Xyq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Feb 2008 18:54:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758964AbYB2Xyq
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Feb 2008 18:54:46 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3832 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760658AbYB2Xyp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Feb 2008 18:54:45 -0500
-Received: (qmail 13001 invoked by uid 111); 29 Feb 2008 23:54:44 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Fri, 29 Feb 2008 18:54:44 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 29 Feb 2008 18:54:43 -0500
-Content-Disposition: inline
-In-Reply-To: <7vfxvbbbhn.fsf@gitster.siamese.dyndns.org>
+	id S1751964AbYCAA3F convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 Feb 2008 19:29:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751926AbYCAA3E
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Feb 2008 19:29:04 -0500
+Received: from watts.utsl.gen.nz ([202.78.240.73]:38571 "EHLO mail.utsl.gen.nz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751841AbYCAA3C (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Feb 2008 19:29:02 -0500
+Received: by mail.utsl.gen.nz (Postfix, from userid 65534)
+	id ED5DF21D176; Sat,  1 Mar 2008 13:28:59 +1300 (NZDT)
+X-Spam-Checker-Version: SpamAssassin 3.1.7-deb (2006-10-05) on 
+	mail.musashi.utsl.gen.nz
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.4 required=5.0 tests=ALL_TRUSTED autolearn=failed 
+	version=3.1.7-deb
+Received: from [192.168.69.233] (203-97-235-49.cable.telstraclear.net [203.97.235.49])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.utsl.gen.nz (Postfix) with ESMTP id 86EE121D146;
+	Sat,  1 Mar 2008 13:28:54 +1300 (NZDT)
+User-Agent: Thunderbird 2.0.0.6 (X11/20071022)
+In-Reply-To: <200802291304.16026.jnareb@gmail.com>
+X-Enigmail-Version: 0.95.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75594>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75595>
 
-On Fri, Feb 29, 2008 at 03:15:32PM -0800, Junio C Hamano wrote:
+Jakub Narebski wrote:
+> I have some interesting ideas for GSoC, but unfortunately none (with=20
+> perhaps single exception) that I could mentor. So I think I'd list th=
+em=20
+> here for now, and later I'd add it to SoC2008Ideas page.
+>=20
+> Here they are.
 
-> >> >  test_expect_success 'refuse to merge binary files' '
-> >> >  	printf "\0" > binary-file &&
-> >> >  	git add binary-file &&
-> >> 
-> >> Should this perhaps just be:
-> >> 
-> >>   test_expect_success 'reset state' 'git reset --hard'
-> >
-> > Is it really about testing git reset ?
-> 
-> No, it is about setting the stage to perform the test in
-> question, so it belongs inside.
+Great - I've put these all up on the wiki along with GitTorrent, and
+noted Julian Phillips as a possible mentor for the git-svnserver.  I'll
+again point out that I wrote a plan for this effort at
+http://utsl.gen.nz/git/git-svnserver.txt - though that may be becoming
+more and more irrelevant.
 
-That sounds reasonable to me.
+=46unnily enough, I'm actually a possible /student/ this year - I'm
+studying full-time this year - not in Computer Science, but hey that's
+not a requirement ;-), and perhaps finishing my GitTorrent
+implementation in my breaks would be a nice way to earn US$5k.  It woul=
+d
+be contrary to all of the "goals" of the programme=B9, bar the first.  =
+I'd
+have to get the work done on a slightly different schedule because of
+the hemispherical term difference... but possible.  Would this be an
+abuse of the programme.  I leave the moral question open to the list; I
+can easily find paid contracting work over the time anyway.  But this
+would be *fun* :-)
 
--Peff
+Sam.
+
+=B9 http://code.google.com/soc/2008/faqs.html#0.1_goals
