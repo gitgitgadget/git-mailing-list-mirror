@@ -1,69 +1,81 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC/PATCH] mergetool: clarify local/remote terminology
-Date: Fri, 29 Feb 2008 23:41:55 -0500
-Message-ID: <20080301044155.GA9010@coredump.intra.peff.net>
-References: <1203570776-62019-1-git-send-email-jaysoffian@gmail.com> <76718490802250631p262baf1bw23873e5fdbbb7180@mail.gmail.com> <20080225184648.GC15131@sigill.intra.peff.net> <20080228084328.GA18350@coredump.intra.peff.net> <7v3arcfh54.fsf@gitster.siamese.dyndns.org>
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: Google Summer of Code 2008
+Date: Sat, 01 Mar 2008 18:07:02 +1300
+Message-ID: <47C8E476.7070105@vilain.net>
+References: <200802262356.28971.jnareb@gmail.com> <20080228063621.GR8410@spearce.org> <alpine.LSU.1.00.0802281021070.22527@racer.site> <200802291304.16026.jnareb@gmail.com> <47C8A3D5.9050309@vilain.net> <alpine.LSU.1.00.0803010102000.22527@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Mar 01 05:43:02 2008
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
+	git@vger.kernel.org, John Hawley <warthog9@kernel.org>,
+	Julian Phillips <julian@quantumfyre.co.uk>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Mar 01 06:06:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JVJYr-0005ad-26
-	for gcvg-git-2@gmane.org; Sat, 01 Mar 2008 05:43:01 +0100
+	id 1JVJv1-00019k-DB
+	for gcvg-git-2@gmane.org; Sat, 01 Mar 2008 06:05:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753265AbYCAEl6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Feb 2008 23:41:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753213AbYCAEl6
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Feb 2008 23:41:58 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3054 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752909AbYCAEl5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Feb 2008 23:41:57 -0500
-Received: (qmail 31072 invoked by uid 111); 1 Mar 2008 04:41:56 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Fri, 29 Feb 2008 23:41:56 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 29 Feb 2008 23:41:55 -0500
-Content-Disposition: inline
-In-Reply-To: <7v3arcfh54.fsf@gitster.siamese.dyndns.org>
+	id S1750902AbYCAFEv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Mar 2008 00:04:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750826AbYCAFEv
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Mar 2008 00:04:51 -0500
+Received: from watts.utsl.gen.nz ([202.78.240.73]:58739 "EHLO mail.utsl.gen.nz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750702AbYCAFEu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Mar 2008 00:04:50 -0500
+Received: by mail.utsl.gen.nz (Postfix, from userid 65534)
+	id 44E3221D21E; Sat,  1 Mar 2008 18:04:44 +1300 (NZDT)
+X-Spam-Checker-Version: SpamAssassin 3.1.7-deb (2006-10-05) on 
+	mail.musashi.utsl.gen.nz
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.4 required=5.0 tests=ALL_TRUSTED autolearn=failed 
+	version=3.1.7-deb
+Received: from [192.168.69.233] (203-97-235-49.cable.telstraclear.net [203.97.235.49])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.utsl.gen.nz (Postfix) with ESMTP id D279E21D21A;
+	Sat,  1 Mar 2008 18:04:39 +1300 (NZDT)
+User-Agent: Thunderbird 2.0.0.6 (X11/20071022)
+In-Reply-To: <alpine.LSU.1.00.0803010102000.22527@racer.site>
+X-Enigmail-Version: 0.95.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75609>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75610>
 
-On Thu, Feb 28, 2008 at 09:47:35PM -0800, Junio C Hamano wrote:
-
-> While I like the fact that somebody is trying to tackle the
-> consistency issue, I do not like the approach itself.  Fudging
-> the issue at the merge-tool UI level may make things appear more
-> consistent when viewing the merge from within merge-tool, but it
-> makes the views merge-tool gives and vi/less gives inconsistent.
+Johannes Schindelin wrote:
+>> Funnily enough, I'm actually a possible /student/ this year - I'm
+>> studying full-time this year - not in Computer Science, but hey that's
+>> not a requirement ;-), and perhaps finishing my GitTorrent
+>> implementation in my breaks would be a nice way to earn US$5k.
 > 
-> It would be a lot more sensible to make sure that we always show
-> the side that the end-user modified first and then the side the
-> other party changed.
+> You have my vote.  If this works out, I will be your mentor.  As you know, 
+> I will not be easy to work with, but the outcome will be pleasing to you 
+> _and_ me.
+> 
+> I think GitTorrent is a really interesting project.  And since I do not 
+> have time to do it myself, I would really appreciate this to be a GSoC 
+> project, preferably a successful one (which is the reason I am willing to 
+> mentor it).
 
-I hadn't considered that, because I never pay attention to the order of
-changes between the conflict markers; I look at the nice "HEAD" and
-"abcdef... commit subject" messages.
+Excellent, well that was going to be the next question - who would be
+the mentor, and what would they do?
 
-But then I don't do a lot of conflict resolution. Usually I either work
-with tiny teams on a central-ish repository, or work on projects where I
-am just a contributor.
+I guess I could re-work this RFP to be a proposal to complete it;
 
-So I agree that a consistent view makes sense, and I can see that
-ordering of hunks is a sensible context clue. However, should this not
-extend further, to the index numbering? Or do we not care, because
-mortals rarely touch the index? What about "git-rebase --strategy=ours",
-which really means "theirs"?
+  http://utsl.gen.nz/git/gittorrent-rfp.txt
 
-Unfortunately just swapping the arguments to git-merge-* in
-git-rebase.sh doesn't quite work ("merge-ours" doesn't actually load the
-index and say "pick the 'ours' stage"; it just says "whatever is in the
-working tree is fine.").
+So far, the first two milestones on the plan are basically nailed, so
+that's something of a head start.  The test script fires up two nodes
+that connect to each other, sends a choke message and then shuts down.
+I'm quite happy with the stack being used (Moose - which is CLOS for
+Perl, and Coro - coroutines, similar to stackless python).  How about I
+brush that up and we can take this discussion off-list.
 
--Peff
+Sam.
