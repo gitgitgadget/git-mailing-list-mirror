@@ -1,173 +1,123 @@
-From: Ping Yin <pkufranky@gmail.com>
-Subject: [PATCH RFC] git-submodule: multi-level module support
-Date: Sun,  2 Mar 2008 00:23:54 +0800
-Message-ID: <1204388634-757-1-git-send-email-pkufranky@gmail.com>
-Cc: gitster@pobox.com, Ping Yin <pkufranky@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 01 17:24:49 2008
+From: Carlos Rica <jasampler@gmail.com>
+Subject: [PATCH] Make builtin-reset.c use parse_options.
+Date: Sat, 01 Mar 2008 17:29:38 +0100
+Message-ID: <47C98472.8000002@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Mar 01 17:31:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JVUVq-0006zV-LH
-	for gcvg-git-2@gmane.org; Sat, 01 Mar 2008 17:24:39 +0100
+	id 1JVUc4-0000ti-Hm
+	for gcvg-git-2@gmane.org; Sat, 01 Mar 2008 17:31:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763143AbYCAQYB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Mar 2008 11:24:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763119AbYCAQYA
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Mar 2008 11:24:00 -0500
-Received: from mail.qikoo.org ([60.28.205.235]:43092 "EHLO mail.qikoo.org"
-	rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1763099AbYCAQX7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Mar 2008 11:23:59 -0500
-Received: by mail.qikoo.org (Postfix, from userid 1029)
-	id 81BDA470AE; Sun,  2 Mar 2008 00:23:54 +0800 (CST)
-X-Mailer: git-send-email 1.5.4.3.347.g5314c
+	id S1763959AbYCAQ3x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Mar 2008 11:29:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763833AbYCAQ3w
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Mar 2008 11:29:52 -0500
+Received: from nf-out-0910.google.com ([64.233.182.189]:29175 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1763945AbYCAQ3v (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Mar 2008 11:29:51 -0500
+Received: by nf-out-0910.google.com with SMTP id g13so2733259nfb.21
+        for <git@vger.kernel.org>; Sat, 01 Mar 2008 08:29:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:subject:content-type:content-transfer-encoding;
+        bh=0oWS7X+AMfIaXx9EJK0KMwgU00+wZ/zxkc2Cis6fyjc=;
+        b=S7+gkx4Vdf2liM13/Ap/pphULinqfruXdhN4EyphUhyELQs5NMERybn2iZAeyoCIBuNBekfyKT659AjeFLgpDWjUfw1G4bi6JVuZiLaWW38sbOYbmp1sO6h2l3OkGSf05WR99Vk1ephuxLSZXGGQ6GVnEawR4BQDpBApw0FYoNo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:subject:content-type:content-transfer-encoding;
+        b=YcFc9ijzc0gjpweDdXcMgoHbTG0oXl96pHZ2nUd/+UZ4IaNE2S0OMrGF51PivO9a2A1fFRsuRS6Z45Hv9ZEUx4Qw2iCcd4BeHjsWVd2EVsjMukRTojGAi1Z3OvbV0UgRIQpKLkT9hSmm+HiptptgqnX6FioFFSwrNgKF9Hf3tiE=
+Received: by 10.78.182.17 with SMTP id e17mr12096417huf.26.1204388988878;
+        Sat, 01 Mar 2008 08:29:48 -0800 (PST)
+Received: from ?192.168.0.192? ( [212.145.102.186])
+        by mx.google.com with ESMTPS id f4sm468798nfh.26.2008.03.01.08.29.46
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 01 Mar 2008 08:29:47 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.4 (X11/20070604)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75683>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75684>
 
-This patch allows multi-level modules in .gitmodules as linus
-and Sven Verdoolaege etc. have suggested in mails
-"Let .git/config specify the url for submodules"
-(http://article.gmane.org/gmane.comp.version-control.git/48939).
 
-Example multi-level .gitmodules
------------------------------------------------
-[submodule 'a']
-	url = aurl
-[submodule 'b']
-	url = aurl
-[submodule 'c']
-	url = aurl
-[submodule "all"]
-	submodule = all1
-	submodule = all2
-[submodule "all1"]
-	submodule = a
-	submodule = b
-[submodule "all2"]
-	submodule = c
------------------------------------------------
-
-An option '-m|--module-name' is introduced to designate submodule
-by logical module names instead of module paths. So follwoing
-commands pairs (1,2), (3,4) will be equivalent.
-
---------------------------------------
-$ git submodule a b c           (1)
-$ git submodule -m all          (2)
-$ git submodule init a b        (3)
-$ git submodule -m init all1    (4)
---------------------------------------
-
-Signed-off-by: Ping Yin <pkufranky@gmail.com>
+Signed-off-by: Carlos Rica <jasampler@gmail.com>
 ---
- git-submodule.sh |   54 +++++++++++++++++++++++++++++++++++++++++++++++++++---
- 1 files changed, 51 insertions(+), 3 deletions(-)
+ builtin-reset.c |   47 ++++++++++++++++++++---------------------------
+ 1 files changed, 20 insertions(+), 27 deletions(-)
 
-diff --git a/git-submodule.sh b/git-submodule.sh
-index a6aaf40..4359e53 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -13,6 +13,7 @@ command=
- branch=
- quiet=
- cached=
-+use_module_name=
- 
- #
- # print stuff on stdout unless -q was specified
-@@ -81,6 +82,44 @@ module_name()
- }
- 
- #
-+# Map submodule names to path(s)
-+# $@ = module names
-+#
-+module_name2path() {
-+	while test $# != 0
-+	do
-+		local name=$1
-+		shift
-+		local paths=$( GIT_CONFIG=.gitmodules \
-+			git config --get-all submodule.$name.submodule |
-+			while read name
-+			do
-+				module_name2path $name
-+			done
-+			git config --get-all submodule.$name.path
-+		)
-+		if test -z "$paths"
-+		then
-+			git config --get-all submodule.$name.url >/dev/null &&
-+			echo $name
-+		else
-+			echo "$paths"
-+		fi
-+	done
-+}
-+
-+module_path() {
-+	if test -n "$use_module_name"
-+	then
-+		paths=$(module_name2path "$@")
-+		test -z "$paths" && die "no path for modules: $@"
-+	else
-+		paths=$@
-+	fi
-+	echo $paths
-+}
-+
-+#
- # Clone a submodule
- #
- # Prior to calling, cmd_update checks that a possibly existing
-@@ -220,7 +259,9 @@ cmd_init()
- 		shift
- 	done
- 
--	git ls-files --stage -- "$@" | grep -e '^160000 ' |
-+	mpaths=$(module_path "$@") || exit
-+
-+	git ls-files --stage -- $mpaths | grep -e '^160000 ' |
- 	while read mode sha1 stage path
- 	do
- 		# Skip already registered paths
-@@ -274,7 +315,9 @@ cmd_update()
- 		shift
- 	done
- 
--	git ls-files --stage -- "$@" | grep -e '^160000 ' |
-+	mpaths=$(module_path "$@") || exit
-+
-+	git ls-files --stage -- $mpaths | grep -e '^160000 ' |
- 	while read mode sha1 stage path
- 	do
- 		name=$(module_name "$path") || exit
-@@ -357,7 +400,9 @@ cmd_status()
- 		shift
- 	done
- 
--	git ls-files --stage -- "$@" | grep -e '^160000 ' |
-+	mpaths=$(module_path "$@") || exit
-+
-+	git ls-files --stage -- $mpaths | grep -e '^160000 ' |
- 	while read mode sha1 stage path
- 	do
- 		name=$(module_name "$path") || exit
-@@ -408,6 +453,9 @@ do
- 	--cached)
- 		cached=1
- 		;;
-+	-m|--module-name)
-+		use_module_name=1
-+		;;
- 	--)
- 		break
- 		;;
--- 
-1.5.4.3.347.g5314c
+diff --git a/builtin-reset.c b/builtin-reset.c
+index af0037e..71892d0 100644
+--- a/builtin-reset.c
++++ b/builtin-reset.c
+@@ -17,9 +17,13 @@
+ #include "diffcore.h"
+ #include "tree.h"
+ #include "branch.h"
++#include "parse-options.h"
 
+-static const char builtin_reset_usage[] =
+-"git-reset [--mixed | --soft | --hard] [-q] [<commit-ish>] [ [--] <paths>...]";
++static const char * const git_reset_usage[] = {
++	"git-reset [--mixed | --soft | --hard] [-q] [<commit>]",
++	"git-reset [--mixed] <commit> [--] <paths>...",
++	NULL
++};
+
+ static char *args_to_str(const char **argv)
+ {
+@@ -169,40 +173,31 @@ static const char *reset_type_names[] = { "mixed", "soft", "hard", NULL };
+
+ int cmd_reset(int argc, const char **argv, const char *prefix)
+ {
+-	int i = 1, reset_type = NONE, update_ref_status = 0, quiet = 0;
++	int i = 0, reset_type = NONE, update_ref_status = 0, quiet = 0;
+ 	const char *rev = "HEAD";
+ 	unsigned char sha1[20], *orig = NULL, sha1_orig[20],
+ 				*old_orig = NULL, sha1_old_orig[20];
+ 	struct commit *commit;
+ 	char *reflog_action, msg[1024];
++	struct option options[] = {
++		OPT_SET_INT(0, "mixed", &reset_type,
++						"reset HEAD and index", MIXED),
++		OPT_SET_INT(0, "soft", &reset_type, "reset only HEAD", SOFT),
++		OPT_SET_INT(0, "hard", &reset_type,
++				"reset HEAD, index and working tree", HARD),
++		OPT_BOOLEAN('q', NULL, &quiet,
++				"disable showing new HEAD in hard reset"),
++		OPT_END()
++	};
+
+ 	git_config(git_default_config);
+
++	argc = parse_options(argc, argv, options, git_reset_usage,
++						PARSE_OPT_KEEP_DASHDASH);
+ 	reflog_action = args_to_str(argv);
+ 	setenv("GIT_REFLOG_ACTION", reflog_action, 0);
+
+-	while (i < argc) {
+-		if (!strcmp(argv[i], "--mixed")) {
+-			reset_type = MIXED;
+-			i++;
+-		}
+-		else if (!strcmp(argv[i], "--soft")) {
+-			reset_type = SOFT;
+-			i++;
+-		}
+-		else if (!strcmp(argv[i], "--hard")) {
+-			reset_type = HARD;
+-			i++;
+-		}
+-		else if (!strcmp(argv[i], "-q")) {
+-			quiet = 1;
+-			i++;
+-		}
+-		else
+-			break;
+-	}
