@@ -1,70 +1,65 @@
-From: Paul Mackerras <paulus@samba.org>
-Subject: Re: Suggestion: make --left-right work with --merge
-Date: Sat, 1 Mar 2008 21:59:01 +1100
-Message-ID: <18377.14069.25974.10203@cargo.ozlabs.ibm.com>
-References: <18372.53155.854763.12637@cargo.ozlabs.ibm.com>
-	<7v7igqyii9.fsf@gitster.siamese.dyndns.org>
-	<18373.58839.636432.448970@cargo.ozlabs.ibm.com>
-	<7v1w6yqaim.fsf@gitster.siamese.dyndns.org>
-	<18374.39253.408961.634788@cargo.ozlabs.ibm.com>
-	<7vprugdxpj.fsf@gitster.siamese.dyndns.org>
-	<18375.58359.687664.855599@cargo.ozlabs.ibm.com>
-	<7vfxvbd0nu.fsf@gitster.siamese.dyndns.org>
-	<18377.2084.30531.202087@cargo.ozlabs.ibm.com>
-	<7vejau6fvf.fsf@gitster.siamese.dyndns.org>
+From: "Ping Yin" <pkufranky@gmail.com>
+Subject: Re: [PATCH v2 2/3] git-submodule: New subcommand 'summary' (2) - hard work
+Date: Sat, 1 Mar 2008 19:04:12 +0800
+Message-ID: <46dff0320803010304i7c9593f0l48620c4a3518314@mail.gmail.com>
+References: <1204306487-15849-1-git-send-email-pkufranky@gmail.com>
+	 <80aa1c46ced6f0b92ca2fca3b917d383343b3161.1204306070.git.pkufranky@gmail.com>
+	 <d6e82710452985611fb75c9d32a1b772bf0cb529.1204306070.git.pkufranky@gmail.com>
+	 <7vabli7vhr.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Mar 01 11:59:59 2008
+Cc: git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Mar 01 12:06:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JVPRe-00040y-GC
-	for gcvg-git-2@gmane.org; Sat, 01 Mar 2008 11:59:58 +0100
+	id 1JVPWk-0005DH-5C
+	for gcvg-git-2@gmane.org; Sat, 01 Mar 2008 12:05:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753968AbYCAK7L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Mar 2008 05:59:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753700AbYCAK7J
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Mar 2008 05:59:09 -0500
-Received: from ozlabs.org ([203.10.76.45]:52854 "EHLO ozlabs.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753331AbYCAK7I (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Mar 2008 05:59:08 -0500
-Received: by ozlabs.org (Postfix, from userid 1003)
-	id 35E6DDDE10; Sat,  1 Mar 2008 21:59:06 +1100 (EST)
-In-Reply-To: <7vejau6fvf.fsf@gitster.siamese.dyndns.org>
-X-Mailer: VM 7.19 under Emacs 21.4.1
+	id S1754178AbYCALEO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Mar 2008 06:04:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753811AbYCALEO
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Mar 2008 06:04:14 -0500
+Received: from hs-out-0708.google.com ([64.233.178.242]:3713 "EHLO
+	hs-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753700AbYCALEN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Mar 2008 06:04:13 -0500
+Received: by hs-out-0708.google.com with SMTP id 4so851488hsl.5
+        for <git@vger.kernel.org>; Sat, 01 Mar 2008 03:04:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=4Dn19LqLQjwRVkSTBcagOB6kOpydLwkyrouU8caeANQ=;
+        b=NLglEOMffKYJ+QFI4w70oOrz5zAHcWtf+AG6wguQ8rVwB0G8x+hu/72/DTwPy3OM+azRIXCtlOCi5FWBSBz477TxQUTbYdMHPdK19EDFsCt75QwC2yLZlXAI4W/kMC4f6nIK6ZJ0iN/uWkRK3ZU8V7hQ3cMR+5Xy9ifn7KdVzpM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=RC/iTLR+DK2N9Y8g82q+LNRk3XTtzW5z0vltaL/gMvxMDF/gmIpDo5owIEzU622I17rbO8usgko4AMk7zjlSfPkcS8ulBi8zYPcO/D48RgIJ+7ie9mpqLvBTQrLysR33NPurjD34MYgDhEarjU4t+a5R6PqSGq/oJ5KQM9Y9W1I=
+Received: by 10.100.93.19 with SMTP id q19mr22477811anb.50.1204369452488;
+        Sat, 01 Mar 2008 03:04:12 -0800 (PST)
+Received: by 10.100.95.20 with HTTP; Sat, 1 Mar 2008 03:04:12 -0800 (PST)
+In-Reply-To: <7vabli7vhr.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75653>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75654>
 
-Junio C Hamano writes:
+On Sat, Mar 1, 2008 at 3:29 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Ping Yin <pkufranky@gmail.com> writes:
+>
+>
+>  > +             check_src=$(echo $mod_src | grep 160000)
+>  > +             check_dst=$(echo $mod_dst | grep 160000)
+>
+>  Huh?  Do you mean "test $mod_src = ':160000'" and such?
+>
+Yeah. There are 2 places needing test this. I don't find a better way
 
-> I think your "gitk passes the IDs" part is about the master...next part in
-> the above example.  I do not think it really matters if they are converted
-> to object names or kept symbolic when given to "git log".
 
-The only time it would matter is if they were kept symbolic AND
-somehow the user changed them between the git rev-parse (or git
-rev-list) invocation and the git log invocation.
-
-> Come to think of it, when you are told to "Update", you already know the
-> positive tips you can use to optimize (4), don't you?  They are the
-> commits you drew in (3) that do not have children.
-
-It's possible the user could do "Update" before we had finished
-reading stuff from the first git log, so I don't necessarily know all
-the commits that have no children.  And in fact that's a reasonable
-thing to do if gitk is being used on a really really large
-repository.
-
-I'm a kernel guy - I worry about race conditions. :)
-
-Thanks for the tip about git rev-list --no-walk.
-
-Paul.
+-- 
+Ping Yin
