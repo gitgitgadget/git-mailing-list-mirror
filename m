@@ -1,45 +1,58 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] allow git-am to run in a subdirectory
-Date: Sat, 01 Mar 2008 00:15:39 -0800
-Message-ID: <7vabli6es4.fsf@gitster.siamese.dyndns.org>
-References: <20080301062255.GA27538@coredump.intra.peff.net>
- <7vprue6ghc.fsf@gitster.siamese.dyndns.org>
- <20080301081235.GA31855@coredump.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFC/PATCH] rename: warn user when we have turned off rename
+	detection
+Date: Sat, 1 Mar 2008 03:18:33 -0500
+Message-ID: <20080301081832.GB31855@coredump.intra.peff.net>
+References: <20080301061431.GA27301@coredump.intra.peff.net> <7vtzjq6gnv.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Mar 01 09:16:26 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Linus Torvalds <torvalds@linux-foundation.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Mar 01 09:19:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JVMtM-0003gW-9D
-	for gcvg-git-2@gmane.org; Sat, 01 Mar 2008 09:16:24 +0100
+	id 1JVMw3-0004OY-Ua
+	for gcvg-git-2@gmane.org; Sat, 01 Mar 2008 09:19:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754877AbYCAIPs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Mar 2008 03:15:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754823AbYCAIPs
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Mar 2008 03:15:48 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:51244 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754749AbYCAIPr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Mar 2008 03:15:47 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 3215916F9;
-	Sat,  1 Mar 2008 03:15:46 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id A318416F8; Sat,  1 Mar 2008 03:15:42 -0500 (EST)
-In-Reply-To: <20080301081235.GA31855@coredump.intra.peff.net> (Jeff King's
- message of "Sat, 1 Mar 2008 03:12:35 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754916AbYCAISf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Mar 2008 03:18:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754823AbYCAISf
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Mar 2008 03:18:35 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1348 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754840AbYCAISf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Mar 2008 03:18:35 -0500
+Received: (qmail 12703 invoked by uid 111); 1 Mar 2008 08:18:34 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Sat, 01 Mar 2008 03:18:34 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 01 Mar 2008 03:18:33 -0500
+Content-Disposition: inline
+In-Reply-To: <7vtzjq6gnv.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75640>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75641>
 
-Sorry for making you do an extra work.  I hoped ;-) was explicit enough
-but apparently it was not...
+On Fri, Feb 29, 2008 at 11:35:00PM -0800, Junio C Hamano wrote:
+
+> > +	if ((num_create > rename_limit && num_src > rename_limit) ||
+> > +	    (num_create * num_src > rename_limit * rename_limit)) {
+> > +		warning("too many files, skipping inexact rename detection");
+> >  		goto cleanup;
+> > +	}
+> > 
+> >  	mx = xmalloc(sizeof(*mx) * num_create * num_src);
+> >  	for (dst_cnt = i = 0; i < rename_dst_nr; i++) {
+> 
+> This reminds me of the 6d24ad9 (Optimize rename detection for a huge diff)
+> topic that reduces the above allocation greatly.  Some benching with the
+> patch may prove useful to establish much higher limits, I suspect.
+
+Actually, my timings are about the same. While the patch you mentioned
+is nice for reducing the memory consumption, we still have an O(n^2)
+loop.
+
+-Peff
