@@ -1,184 +1,97 @@
-From: "Ping Yin" <pkufranky@gmail.com>
-Subject: Re: [PATCH v2 1/3] git-submodule: New subcommand 'summary' (1) - code framework
-Date: Sat, 1 Mar 2008 18:28:14 +0800
-Message-ID: <46dff0320803010228g2d4672c3qd0548133d43b11a@mail.gmail.com>
-References: <1204306487-15849-1-git-send-email-pkufranky@gmail.com>
-	 <80aa1c46ced6f0b92ca2fca3b917d383343b3161.1204306070.git.pkufranky@gmail.com>
-	 <7vk5km7vir.fsf@gitster.siamese.dyndns.org>
-	 <46dff0320803010201q72a72et951e0a3f090684e4@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Mar 01 11:29:00 2008
+From: Mike Hommey <mh@glandium.org>
+Subject: [PATCH] Fix git reset --abort not restoring the right commit under some conditions
+Date: Sat,  1 Mar 2008 11:32:14 +0100
+Message-ID: <1204367534-28204-1-git-send-email-mh@glandium.org>
+References: <7vod9y4xcn.fsf@gitster.siamese.dyndns.org>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Sat Mar 01 11:29:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JVOxZ-00049c-3F
-	for gcvg-git-2@gmane.org; Sat, 01 Mar 2008 11:28:53 +0100
+	id 1JVOyA-0004PV-R1
+	for gcvg-git-2@gmane.org; Sat, 01 Mar 2008 11:29:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754658AbYCAK2Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Mar 2008 05:28:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753331AbYCAK2Q
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Mar 2008 05:28:16 -0500
-Received: from an-out-0708.google.com ([209.85.132.243]:58422 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753166AbYCAK2P (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Mar 2008 05:28:15 -0500
-Received: by an-out-0708.google.com with SMTP id d31so1001937and.103
-        for <git@vger.kernel.org>; Sat, 01 Mar 2008 02:28:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=b/SqunES9UOM0Gfcl3rCC+TsmyVSZqhlOdCY+j8MYq8=;
-        b=CmAUQv3Q1MVdJ6sx18yJzXjLtLFYv8asRSWfg9GI2n3/sCxFLkA4dNU99Cv8LDD/q/V986gX38fum/OkjkYC4eT8KkDr83Oxx5rql4Cq85xTwelHr7p3WW7aVFnzYozn7Wntm+QgYoOW4cEZIQqptNsMuwFGH1TW9NcSbuXcxRQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=X30Tg8binix+tr6QO5EJEQE9+tuEW4r1JikgtO1n+0dK/xvRicbqLHSfy4CN949GDPh6WkelPOupHIxOZwpDSxPYrdteUrRebVxCpHQADnhJ/gt4vk4hI7XlaUrLPKna7+iorkE6bIO3cP8TrkG7o79Ta6CnX+zX0mnhDybqzgc=
-Received: by 10.100.3.4 with SMTP id 4mr22316352anc.67.1204367294159;
-        Sat, 01 Mar 2008 02:28:14 -0800 (PST)
-Received: by 10.100.95.20 with HTTP; Sat, 1 Mar 2008 02:28:14 -0800 (PST)
-In-Reply-To: <46dff0320803010201q72a72et951e0a3f090684e4@mail.gmail.com>
-Content-Disposition: inline
+	id S1755737AbYCAK2y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Mar 2008 05:28:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755367AbYCAK2y
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Mar 2008 05:28:54 -0500
+Received: from vuizook.err.no ([194.24.252.247]:49954 "EHLO vuizook.err.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753383AbYCAK2x (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Mar 2008 05:28:53 -0500
+Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
+	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.67)
+	(envelope-from <mh@glandium.org>)
+	id 1JVOxM-00063I-Na; Sat, 01 Mar 2008 11:28:47 +0100
+Received: from mh by jigen with local (Exim 4.69)
+	(envelope-from <mh@jigen>)
+	id 1JVP0o-0007LV-Hg; Sat, 01 Mar 2008 11:32:14 +0100
+X-Mailer: git-send-email 1.5.4.3.343.gb141c.dirty
+In-Reply-To: <7vod9y4xcn.fsf@gitster.siamese.dyndns.org>
+X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75650>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75651>
 
-On Sat, Mar 1, 2008 at 3:28 PM, Junio C Hamano <gitster@pobox.com> wrote:
+Previously, --abort would end by git resetting to ORIG_HEAD, but some
+commands, such as git reset --hard (which happened in git rebase --skip,
+but could just as well be typed by the user), modify ORIG_HEAD.
+
+Just use the orig-head we store in $dotest instead.
+---
+
+ > > ... and I'm even the one to blame
+ > > fb6e4e1f3f048898677f3cf177bfcaf60123bd5c is first bad commit
  >
- > Ping Yin <pkufranky@gmail.com> writes:
+ > Heh, didn't you say you don't have enough knowledge in git-rebase? ;-)
 
+ I'm relieved, I'm not exactly to blame ;) I just exposed the bug that was
+ actually already here.
 
-> > .Example: a super project with modified/deleted/typechanged submodules sm1 to sm5.
- >
- > Overlong lines.  What's the dot before "Example"?
+ git-rebase.sh           |    5 ++---
+ t/t3407-rebase-abort.sh |    2 +-
+ 2 files changed, 3 insertions(+), 4 deletions(-)
 
- '.' is an asciitext syntax. Maybe i should not use it in a commit message.
+diff --git a/git-rebase.sh b/git-rebase.sh
+index bdcea0e..6b9af96 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -208,16 +208,15 @@ do
+ 		if test -d "$dotest"
+ 		then
+ 			move_to_original_branch
+-			rm -r "$dotest"
+ 		elif test -d .dotest
+ 		then
+ 			dotest=.dotest
+ 			move_to_original_branch
+-			rm -r .dotest
+ 		else
+ 			die "No rebase in progress?"
+ 		fi
+-		git reset --hard ORIG_HEAD
++		git reset --hard $(cat $dotest/orig-head)
++		rm -r "$dotest"
+ 		exit
+ 		;;
+ 	--onto)
+diff --git a/t/t3407-rebase-abort.sh b/t/t3407-rebase-abort.sh
+index 94bdd72..3417138 100755
+--- a/t/t3407-rebase-abort.sh
++++ b/t/t3407-rebase-abort.sh
+@@ -29,7 +29,7 @@ test_expect_success 'rebase --abort' '
+ 	test $(git rev-parse to-rebase) = $(git rev-parse pre-rebase)
+ '
+ 
+-test_expect_failure 'rebase --abort after --skip' '
++test_expect_success 'rebase --abort after --skip' '
+ 	# Clean up the state from the previous one
+ 	git reset --hard pre-rebase
+ 	rm -rf .dotest
+-- 
+1.5.4.3.343.gb141c.dirty
 
-
- > >
- > > sm3 and sm4 are submodules with typechanging (blob<->submodule).
- >
- > Are they?  I think you meant 4 and 5.
- >
-
- oh, it's a typo
-
-
- >
- > > This patch just gives the framework. It just finds the submodules to be
- > > shown as follows.
- > >
- > > --------------------------------------------
- > >  $ git submodule summary
- > >  # Submodules modifiled: sm1 sm2 sm3 sm4 sm5
- > >  #
- > > --------------------------------------------
- >
- > Probably it would be a better organization to show only this in the commit
- > log message for [1/3] and describe how the output is enhanced in the log
- > message of the commit as the code builds more .
- >
-
- Nice suggestion. Should i move most text into man page instead of in
- commit message?
-
-
-
- >
- > > +# @ = [head counting commits from (default 'HEAD'),] requested
-paths (default to all)
- > > +#
- >
- > What's "@ =" convention?
- typo again, should be $@
-
-
- >
- > > +cmd_summary()
- > > +{
- >
- > We seem to have '{' on the same line for shell functions in our scripts.
- >
- ok
-
- >
- > > +     # parse $args after "submodule ... summary".
-
-> > +     while test $# -ne 0
- > > +     do
- > > +             case "$1" in
- > > +             --cached)
- > > +                     cached=1
- > > +                     ;;
- >
- > If you do this "cached="$1" instead here, then you do not need to do ...
- >
- > > +     cache_option=${cached:+--cached}
- >
- > ... this.
- >
- --cached may be passed before 'summary' subcommand. So in the outer
- option parsing should i replace cached=1 to cached=$1 just in this
- patch or in another patch?
-
- >
- > > +
- > > +     if rev=$(git rev-parse --verify "$1^0" 2>/dev/null)
-
-> > +     then
- > > +             head=$rev
- > > +             shift
- > > +     else
- > > +             head=HEAD
- > > +     fi
- >
- > Hmph, is showing diff with anything other than HEAD useful?  What happens
- > if the user says "git submodules status HAED" by mistake?
- >
- s/status/summary ?
- This patch has nothing to do with git submodule status.
- 'git submodule summary' and 'git submodule summary HEAD' is equivalent
-
- Except HEAD, HEAD^ is neccessary. Since my target is to call 'git
- submodule summary' in wt-status.c and teach git-status and git-commit
- show this summary. So when 'git commit --amend', 'git submodule
- summary HEAD^' should be used.
- >
- > > +
- > > +     cwd=$(pwd)
-
-> > +     cd_to_toplevel
- > > +
- > > +     # Get modified modules cared by user
- > > +     modules=$(git diff $cache_option --raw $head -- "$@" |
- >
- > When scripting, please do not use "git diff" unless absolutely necessary.
- > Its output is not meant for script consumption and can be made more "user
- > friendly" as user request comes in.  Instead, use "git diff-index" here.
-
- ok
-
-
- >
- > > +     test -n "$modules" &&
-
-> > +     echo "# Submodules modified: "$modules &&
- > > +     echo "#"
- > > +     cd "$cwd"
- >
- > Hmph, is there any point to try coming back there?  You could have even
- > done the cd-to-toplevel inside of $( ... ) construct which is run inside a
- > subshell, so...
- >
- Hmm,  just to avoid side effect of this function.  I'll put 'cd' into
- the subshell
-
-
-
- --
- Ping Yin
