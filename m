@@ -1,75 +1,81 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Will git have a baseline feature or something alike?
-Date: Sun, 2 Mar 2008 09:04:46 -0500
-Message-ID: <20080302140446.GA8410@spearce.org>
-References: <f17812d70802290123raa099bag17a6f7b89de65dd4@mail.gmail.com> <200803011641.49874.jnareb@gmail.com> <8384AA89-4ECF-4BB8-8A3B-6A656F2D2903@orakel.ntnu.no> <200803011900.36723.jnareb@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Eyvind Bernhardsen <eyvind-git@orakel.ntnu.no>,
-	eric miao <eric.y.miao@gmail.com>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 02 15:06:12 2008
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH] Documentation: Remove --{min,max}-age option from git-log(1)
+Date: Sun,  2 Mar 2008 15:11:35 +0100
+Message-ID: <1204467095-24701-1-git-send-email-jnareb@gmail.com>
+References: <715587AA-D485-4B31-A786-D26334506007@gmail.com>
+Cc: Jakub Narebski <jnareb@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 02 15:12:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JVop5-0000hl-Cz
-	for gcvg-git-2@gmane.org; Sun, 02 Mar 2008 15:05:51 +0100
+	id 1JVovG-0002jn-B0
+	for gcvg-git-2@gmane.org; Sun, 02 Mar 2008 15:12:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752739AbYCBOEv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Mar 2008 09:04:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752503AbYCBOEv
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Mar 2008 09:04:51 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:41875 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752599AbYCBOEu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Mar 2008 09:04:50 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1JVonz-0004HH-Cd; Sun, 02 Mar 2008 09:04:43 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id BAC6D20FBAE; Sun,  2 Mar 2008 09:04:46 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <200803011900.36723.jnareb@gmail.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1753374AbYCBOLi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Mar 2008 09:11:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752943AbYCBOLi
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Mar 2008 09:11:38 -0500
+Received: from ug-out-1314.google.com ([66.249.92.174]:12431 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752744AbYCBOLh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Mar 2008 09:11:37 -0500
+Received: by ug-out-1314.google.com with SMTP id z38so1408043ugc.16
+        for <git@vger.kernel.org>; Sun, 02 Mar 2008 06:11:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=uECSkLRP2pKfVxKhEUafMW2h8C5QWL85Au2+Xv52Rvo=;
+        b=TBCWEATgtwUWZYq1JY+4ylAI7me2S7M9PNburrxoOxOzf/YUAR4KzmIYm2S3afM6mDuUB2ZsvRsaYXq47Q6LTrXfbHdlZ/VmTlo3EeZxYLnRpgqBZmgMoOpj8fBTg8LJiUOr3xVplsS0DL8Cj8/IqNyHVtRzsQ4tUmUpKruPm9A=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=xXwJlws2YbL8+JSf/wN0wXm+oRQfqVYUcpy+04Jg2WC1sGGivuDtyIr54u6JDsEj3+Xno8Q0qZabsJkm/MO+qGTXQIWqnfMsmYc8BPnjiRN4yLBUGF7XNwZ91t876Z1HK7Op+L9hfTFOw8UTEp3yKJtoAtcQ70bsaP4y+VxbfOA=
+Received: by 10.78.133.2 with SMTP id g2mr15217162hud.33.1204467095747;
+        Sun, 02 Mar 2008 06:11:35 -0800 (PST)
+Received: from localhost.localdomain ( [83.8.212.124])
+        by mx.google.com with ESMTPS id z33sm20665514ikz.0.2008.03.02.06.11.32
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 02 Mar 2008 06:11:33 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m22EBaDs024735;
+	Sun, 2 Mar 2008 15:11:36 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m22EBZM1024734;
+	Sun, 2 Mar 2008 15:11:35 +0100
+X-Mailer: git-send-email 1.5.4.2
+In-Reply-To: <715587AA-D485-4B31-A786-D26334506007@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75779>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75780>
 
-Jakub Narebski <jnareb@gmail.com> wrote:
-> Eyvind Bernhardsen wrote:
-> >
-> > Okay, as a git n00b I'm probably on completely the wrong track, but if  
-> > you made a git repository out of a kernel tarball (cd linux-2.6.24 &&  
-> > git init && git add .) and then did a shallow fetch from kernel.org  
-> > into that repository, wouldn't the blobs you added get reused  
-> > (assuming the tarball you downloaded was fairly recent), thus reducing  
-> > the amount of data fetch has to transfer?
-> 
-> I think it wouldn't. If I understand it correctly, the fetching engine
-> deals only with commits. If you have commit, it assumes that you have 
-> tree, blobs, and ancestors. If you don't have commit, it assumes that 
-> you don't have tree and blobs.
+The --max-age=<timestamp> and --min-age=<timestamp> are now shown only
+in the git-rev-list manpage (plumbing).
 
-Correct.
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+ Documentation/rev-list-options.txt |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
 
-I was thinking about this just yesterday.  I think that if we
-embedded inside of a tarball created by git-archive the raw sources
-of all files, plus the commit SHA-1 and the raw body of that commit,
-it should be possible to convert that into a shallow clone.
-
-Unfortunately I think it is possible for git-archive to edit a file
-in-place during export, e.g. to edit an RPM spec file and insert
-the revision.  That would damage the tree, as the blobs would no
-longer hash to the same value as they should be in that commit.
-
+diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+index a8138e2..c62ff49 100644
+--- a/Documentation/rev-list-options.txt
++++ b/Documentation/rev-list-options.txt
+@@ -130,9 +130,11 @@ limiting may be applied.
+ 
+ 	Show commits older than a specific date.
+ 
++ifdef::git-rev-list[]
+ --max-age='timestamp', --min-age='timestamp'::
+ 
+ 	Limit the commits output to specified time range.
++endif::git-rev-list[]
+ 
+ --author='pattern', --committer='pattern'::
+ 
 -- 
-Shawn.
+1.5.4.2
+
