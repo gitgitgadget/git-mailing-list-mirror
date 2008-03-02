@@ -1,145 +1,85 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH] revert: actually check for a dirty index
-Date: Sun, 2 Mar 2008 02:22:52 -0500
-Message-ID: <20080302072252.GA14214@coredump.intra.peff.net>
-References: <20080302064449.GA6334@coredump.intra.peff.net>
+Subject: Re: git-rebase dirty index and email address bug?
+Date: Sun, 2 Mar 2008 02:26:22 -0500
+Message-ID: <20080302072622.GB3935@coredump.intra.peff.net>
+References: <slrnfsjfpo.3fl.jgoerzen@katherina.lan.complete.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Mar 02 08:23:32 2008
+Cc: git@vger.kernel.org
+To: John Goerzen <jgoerzen@complete.org>
+X-From: git-owner@vger.kernel.org Sun Mar 02 08:27:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JViXk-0008EP-3w
-	for gcvg-git-2@gmane.org; Sun, 02 Mar 2008 08:23:32 +0100
+	id 1JVib7-0000Ir-Up
+	for gcvg-git-2@gmane.org; Sun, 02 Mar 2008 08:27:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751936AbYCBHWz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Mar 2008 02:22:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751932AbYCBHWz
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Mar 2008 02:22:55 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2421 "EHLO
+	id S1751983AbYCBH00 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Mar 2008 02:26:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751978AbYCBH0Z
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Mar 2008 02:26:25 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2856 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751886AbYCBHWy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Mar 2008 02:22:54 -0500
-Received: (qmail 3890 invoked by uid 111); 2 Mar 2008 07:22:53 -0000
+	id S1751932AbYCBH0Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Mar 2008 02:26:25 -0500
+Received: (qmail 4125 invoked by uid 111); 2 Mar 2008 07:26:24 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Sun, 02 Mar 2008 02:22:53 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 02 Mar 2008 02:22:52 -0500
+    by peff.net (qpsmtpd/0.32) with SMTP; Sun, 02 Mar 2008 02:26:24 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 02 Mar 2008 02:26:22 -0500
 Content-Disposition: inline
-In-Reply-To: <20080302064449.GA6334@coredump.intra.peff.net>
+In-Reply-To: <slrnfsjfpo.3fl.jgoerzen@katherina.lan.complete.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75736>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75737>
 
-The previous code mistakenly used wt_status_prepare to check
-whether the index had anything commitable in it; however,
-that function is just an init function, and will never
-report a dirty index.
+On Sat, Mar 01, 2008 at 02:40:24PM -0600, John Goerzen wrote:
 
-The correct way with wt_status_* would be to call
-wt_status_print with the output pointing to /dev/null or
-similar. However, that does extra work by both examining the
-working tree and spewing status information to nowhere.
+> odd.  Today I git fetched the remote, and then I tried to git rebase
+> upstream/master.  I had committed all outstanding changes first.  My
+> index was clean.  It displayed:
+> 
+> First, rewinding head to replay your work on top of it...
+> HEAD is now at 77f1a60... Merge branch 'trunk'
+> Dirty index: cannot apply patches (dirty: public/dispatch.fcgi)
 
-Instead, let's just implement the useful subset of
-wt_status_print as an "is_index_dirty" function.
+That seems quite strange, since git-rebase did a "git-reset --hard",
+which should have cleared your index anyway. And then it runs "git
+format-patch | git am", and "am" is responsible for the "Dirty index"
+message. So perhaps there is something in your commit that is triggering
+a bug when piped in this way.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-I said:
-> I think it should be fixable by something like the patch below, but it
-> feels a little hack-ish. Should there perhaps be an equivalent to
-> "wt_status_print_updated" that just finds the commitable flag?
+I tried cloning the "mainline.git" repository you mentioned and doing a
+few simple tests, but was unable to reproduce. Can you make available
+the commits that you are trying to rebase?
 
-This is much nicer, and more efficient to boot.
+> So I tried the git reset command on public/dispatch.fcgi, and also
+> then deleted that file.  I then tried git-rebase --continue, which
+> displayed:
+> 
+> sed: can't read .dotest/info: No such file or directory
+> sed: can't read .dotest/info: No such file or directory
+> sed: can't read .dotest/info: No such file or directory
+> Patch does not have a valid e-mail address.
 
- builtin-revert.c              |   34 ++++++++++++++++++++++++++++++----
- t/t3501-revert-cherry-pick.sh |    9 +++++++++
- 2 files changed, 39 insertions(+), 4 deletions(-)
+Hrm. I don't think it has anything to do with your email address being
+invalid, but rather that we somehow failed to create the 'info' file
+containing information about the commit.
 
-diff --git a/builtin-revert.c b/builtin-revert.c
-index b6dee6a..15ab969 100644
---- a/builtin-revert.c
-+++ b/builtin-revert.c
-@@ -9,6 +9,9 @@
- #include "utf8.h"
- #include "parse-options.h"
- #include "cache-tree.h"
-+#include "diff.h"
-+#include "diffcore.h"
-+#include "revision.h"
- 
- /*
-  * This implements the builtins revert and cherry-pick.
-@@ -246,6 +249,30 @@ static char *help_msg(const unsigned char *sha1)
- 	return helpbuf;
- }
- 
-+static void index_is_dirty_cb(struct diff_queue_struct *q,
-+		struct diff_options *options,
-+		void *data)
-+{
-+	int *is_dirty = data;
-+	if (q->nr > 0)
-+		*is_dirty = 1;
-+}
-+
-+static int index_is_dirty(void)
-+{
-+	struct rev_info rev;
-+	int is_dirty = 0;
-+
-+	init_revisions(&rev, NULL);
-+	setup_revisions(0, NULL, &rev, "HEAD");
-+	rev.diffopt.output_format |= DIFF_FORMAT_CALLBACK;
-+	rev.diffopt.format_callback = index_is_dirty_cb;
-+	rev.diffopt.format_callback_data = &is_dirty;
-+	run_diff_index(&rev, 1);
-+
-+	return is_dirty;
-+}
-+
- static int revert_or_cherry_pick(int argc, const char **argv)
- {
- 	unsigned char head[20];
-@@ -274,12 +301,11 @@ static int revert_or_cherry_pick(int argc, const char **argv)
- 		if (write_cache_as_tree(head, 0, NULL))
- 			die ("Your index file is unmerged.");
- 	} else {
--		struct wt_status s;
--
- 		if (get_sha1("HEAD", head))
- 			die ("You do not have a valid HEAD");
--		wt_status_prepare(&s);
--		if (s.commitable)
-+		if(read_cache() < 0)
-+			die("could not read the index");
-+		if (index_is_dirty())
- 			die ("Dirty index: cannot %s", me);
- 		discard_cache();
- 	}
-diff --git a/t/t3501-revert-cherry-pick.sh b/t/t3501-revert-cherry-pick.sh
-index 2dbe04f..6da2128 100755
---- a/t/t3501-revert-cherry-pick.sh
-+++ b/t/t3501-revert-cherry-pick.sh
-@@ -59,4 +59,13 @@ test_expect_success 'revert after renaming branch' '
- 
- '
- 
-+test_expect_success 'revert forbidden on dirty working tree' '
-+
-+	echo content >extra_file &&
-+	git add extra_file &&
-+	test_must_fail git revert HEAD 2>errors &&
-+	grep "Dirty index" errors
-+
-+'
-+
- test_done
--- 
-1.5.4.3.365.gc1491.dirty
+> converted from an svn repo using, presumably, git-svn or
+> git-svnimport.  It lies at
+> git://gitorious.org/redmine-git/mainline.git
+> 
+> Most patches have an author like this:
+> 
+> Author: jplang <jplang@e93f8b46-1217-0410-a6f0-8f06a7374b81>
+> 
+> Could one of the git tools be trying to parse this for some odd
+> reason?
+
+No, that should parse fine. I think there is something more fundamental
+going wrong.
+
+-Peff
