@@ -1,145 +1,203 @@
 From: Alex Riesen <raa.lkml@gmail.com>
-Subject: [PATCH] Make the exit code of add_file_to_index actually useful
-Date: Sun, 2 Mar 2008 16:42:38 +0100
-Message-ID: <20080302154238.GD2973@steel.home>
-References: <47C95E34.1050306@dirk.my1.cc> <20080302154154.GC2973@steel.home>
+Subject: [PATCH] Extend interface of add_files_to_cache to allow ignore
+	indexing errors
+Date: Sun, 2 Mar 2008 16:43:21 +0100
+Message-ID: <20080302154321.GE2973@steel.home>
+References: <47C95E34.1050306@dirk.my1.cc> <20080302154154.GC2973@steel.home> <20080302154238.GD2973@steel.home>
 Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Git Mailing List <git@vger.kernel.org>,
 	Junio C Hamano <junkio@cox.net>
 To: Dirk =?iso-8859-15?Q?S=FCsserott?= <newsletter@dirk.my1.cc>
-X-From: git-owner@vger.kernel.org Sun Mar 02 16:43:22 2008
+X-From: git-owner@vger.kernel.org Sun Mar 02 16:44:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JVqLQ-0002TR-9A
-	for gcvg-git-2@gmane.org; Sun, 02 Mar 2008 16:43:20 +0100
+	id 1JVqMT-0002kK-Se
+	for gcvg-git-2@gmane.org; Sun, 02 Mar 2008 16:44:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752345AbYCBPmn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Mar 2008 10:42:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752244AbYCBPmn
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Mar 2008 10:42:43 -0500
-Received: from mo-p07-ob.rzone.de ([81.169.146.188]:44594 "EHLO
+	id S1755602AbYCBPnZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Mar 2008 10:43:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755872AbYCBPnZ
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Mar 2008 10:43:25 -0500
+Received: from mo-p07-ob.rzone.de ([81.169.146.188]:44985 "EHLO
 	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752070AbYCBPmm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Mar 2008 10:42:42 -0500
+	with ESMTP id S1755828AbYCBPnX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Mar 2008 10:43:23 -0500
 X-RZG-CLASS-ID: mo07
 X-RZG-AUTH: z4gQVF2k5XWuW3CculzwpJKcp6o=
 Received: from tigra.home (Fab7c.f.strato-dslnet.de [195.4.171.124])
 	by post.webmailer.de (klopstock mo11) (RZmta 16.8)
-	with ESMTP id 003f18k22F7IVE ; Sun, 2 Mar 2008 16:42:38 +0100 (MET)
+	with ESMTP id 003f18k22F7IVg ; Sun, 2 Mar 2008 16:43:21 +0100 (MET)
 	(envelope-from: <raa.lkml@gmail.com>)
 Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id C8DE6277BD;
-	Sun,  2 Mar 2008 16:42:38 +0100 (CET)
+	by tigra.home (Postfix) with ESMTP id BA26C277BD;
+	Sun,  2 Mar 2008 16:43:21 +0100 (CET)
 Received: by steel.home (Postfix, from userid 1000)
-	id BDC2056D24; Sun,  2 Mar 2008 16:42:38 +0100 (CET)
+	id B085356D24; Sun,  2 Mar 2008 16:43:21 +0100 (CET)
 Content-Disposition: inline
-In-Reply-To: <20080302154154.GC2973@steel.home>
+In-Reply-To: <20080302154238.GD2973@steel.home>
 User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75789>
-
-Update the programs which used the function (as add_file_to_cache).
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75790>
 
 Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
 ---
- builtin-add.c    |    6 ++++--
- builtin-commit.c |    7 ++++---
- builtin-mv.c     |    3 ++-
- read-cache.c     |    8 ++++----
- 4 files changed, 14 insertions(+), 10 deletions(-)
+ builtin-add.c      |   37 ++++++++++++++++++++++++++++---------
+ builtin-checkout.c |    2 +-
+ builtin-commit.c   |    2 +-
+ cache.h            |    8 +++++++-
+ 4 files changed, 37 insertions(+), 12 deletions(-)
 
 diff --git a/builtin-add.c b/builtin-add.c
-index 820110e..abfe473 100644
+index abfe473..bc55a0e 100644
 --- a/builtin-add.c
 +++ b/builtin-add.c
-@@ -94,7 +94,8 @@ static void update_callback(struct diff_queue_struct *q,
+@@ -79,12 +79,18 @@ static void fill_directory(struct dir_struct *dir, const char **pathspec,
+ 		prune_directory(dir, pathspec, baselen);
+ }
+ 
++struct update_callback_data
++{
++	int flags;
++	int add_errors;
++};
++
+ static void update_callback(struct diff_queue_struct *q,
+ 			    struct diff_options *opt, void *cbdata)
+ {
+-	int i, verbose;
++	int i;
++	struct update_callback_data *data = cbdata;
+ 
+-	verbose = *((int *)cbdata);
+ 	for (i = 0; i < q->nr; i++) {
+ 		struct diff_filepair *p = q->queue[i];
+ 		const char *path = p->one->path;
+@@ -94,28 +100,35 @@ static void update_callback(struct diff_queue_struct *q,
  		case DIFF_STATUS_UNMERGED:
  		case DIFF_STATUS_MODIFIED:
  		case DIFF_STATUS_TYPE_CHANGED:
--			add_file_to_cache(path, verbose);
-+			if (add_file_to_cache(path, verbose))
-+				exit(1);
+-			if (add_file_to_cache(path, verbose))
+-				exit(1);
++			if (add_file_to_cache(path, data->flags & ADD_FILES_VERBOSE)) {
++				if (!(data->flags & ADD_FILES_IGNORE_ERRORS))
++					exit(1);
++				data->add_errors++;
++			}
  			break;
  		case DIFF_STATUS_DELETED:
  			remove_file_from_cache(path);
-@@ -266,7 +267,8 @@ int cmd_add(int argc, const char **argv, const char *prefix)
- 	}
- 
- 	for (i = 0; i < dir.nr; i++)
--		add_file_to_cache(dir.entries[i]->name, verbose);
-+		if (add_file_to_cache(dir.entries[i]->name, verbose))
-+			exit(1);
- 
-  finish:
- 	if (active_cache_changed) {
-diff --git a/builtin-commit.c b/builtin-commit.c
-index f49c22e..fb1e588 100644
---- a/builtin-commit.c
-+++ b/builtin-commit.c
-@@ -176,9 +176,10 @@ static void add_remove_files(struct path_list *list)
- 	int i;
- 	for (i = 0; i < list->nr; i++) {
- 		struct path_list_item *p = &(list->items[i]);
--		if (file_exists(p->path))
--			add_file_to_cache(p->path, 0);
--		else
-+		if (file_exists(p->path)) {
-+			if (add_file_to_cache(p->path, 0))
-+				exit(1);
-+		} else
- 			remove_file_from_cache(p->path);
+-			if (verbose)
++			if (data->flags & ADD_FILES_VERBOSE)
+ 				printf("remove '%s'\n", path);
+ 			break;
+ 		}
  	}
  }
-diff --git a/builtin-mv.c b/builtin-mv.c
-index 68aa2a6..ec6e09d 100644
---- a/builtin-mv.c
-+++ b/builtin-mv.c
-@@ -260,7 +260,8 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
  
- 		for (i = 0; i < added.nr; i++) {
- 			const char *path = added.items[i].path;
--			add_file_to_cache(path, verbose);
-+			if (add_file_to_cache(path, verbose))
-+				exit(1);
- 		}
+-void add_files_to_cache(int verbose, const char *prefix, const char **pathspec)
++int add_files_to_cache(const char *prefix, const char **pathspec, int flags)
+ {
++	struct update_callback_data data;
+ 	struct rev_info rev;
+ 	init_revisions(&rev, prefix);
+ 	setup_revisions(0, NULL, &rev, NULL);
+ 	rev.prune_data = pathspec;
+ 	rev.diffopt.output_format = DIFF_FORMAT_CALLBACK;
+ 	rev.diffopt.format_callback = update_callback;
+-	rev.diffopt.format_callback_data = &verbose;
++	data.flags = flags;
++	data.add_errors = 0;
++	rev.diffopt.format_callback_data = &data;
+ 	run_diff_files(&rev, DIFF_RACY_IS_MODIFIED);
++	return !!data.add_errors;
+ }
  
- 		for (i = 0; i < deleted.nr; i++)
-diff --git a/read-cache.c b/read-cache.c
-index 657f0c5..4a4f511 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -461,10 +461,10 @@ int add_file_to_index(struct index_state *istate, const char *path, int verbose)
- 	unsigned ce_option = CE_MATCH_IGNORE_VALID|CE_MATCH_RACY_IS_DIRTY;
+ static void refresh(int verbose, const char **pathspec)
+@@ -193,6 +206,7 @@ static struct option builtin_add_options[] = {
  
- 	if (lstat(path, &st))
--		die("%s: unable to stat (%s)", path, strerror(errno));
-+		return error("%s: unable to stat (%s)", path, strerror(errno));
+ int cmd_add(int argc, const char **argv, const char *prefix)
+ {
++	int exit_status = 0;
+ 	int i, newfd;
+ 	const char **pathspec;
+ 	struct dir_struct dir;
+@@ -209,11 +223,16 @@ int cmd_add(int argc, const char **argv, const char *prefix)
+ 	newfd = hold_locked_index(&lock_file, 1);
  
- 	if (!S_ISREG(st.st_mode) && !S_ISLNK(st.st_mode) && !S_ISDIR(st.st_mode))
--		die("%s: can only add regular files, symbolic links or git-directories", path);
-+		return error("%s: can only add regular files, symbolic links or git-directories", path);
- 
- 	namelen = strlen(path);
- 	if (S_ISDIR(st.st_mode)) {
-@@ -501,9 +501,9 @@ int add_file_to_index(struct index_state *istate, const char *path, int verbose)
+ 	if (take_worktree_changes) {
++		int flags = 0;
+ 		const char **pathspec;
+ 		if (read_cache() < 0)
+ 			die("index file corrupt");
+ 		pathspec = get_pathspec(prefix, argv);
+-		add_files_to_cache(verbose, prefix, pathspec);
++
++		if (verbose)
++			flags |= ADD_FILES_VERBOSE;
++
++		exit_status = add_files_to_cache(prefix, pathspec, flags);
+ 		goto finish;
  	}
  
- 	if (index_path(ce->sha1, path, &st, 1))
--		die("unable to index file %s", path);
-+		return error("unable to index file %s", path);
- 	if (add_index_entry(istate, ce, ADD_CACHE_OK_TO_ADD|ADD_CACHE_OK_TO_REPLACE))
--		die("unable to add %s to index",path);
-+		return error("unable to add %s to index",path);
- 	if (verbose)
- 		printf("add '%s'\n", path);
- 	return 0;
+@@ -277,5 +296,5 @@ int cmd_add(int argc, const char **argv, const char *prefix)
+ 			die("Unable to write new index file");
+ 	}
+ 
+-	return 0;
++	return exit_status;
+ }
+diff --git a/builtin-checkout.c b/builtin-checkout.c
+index b0cd788..2def093 100644
+--- a/builtin-checkout.c
++++ b/builtin-checkout.c
+@@ -273,7 +273,7 @@ static int merge_working_tree(struct checkout_opts *opts,
+ 			 * entries in the index.
+ 			 */
+ 
+-			add_files_to_cache(0, NULL, NULL);
++			add_files_to_cache(NULL, NULL, 0);
+ 			work = write_tree_from_memory();
+ 
+ 			ret = reset_to_new(new->commit->tree, opts->quiet);
+diff --git a/builtin-commit.c b/builtin-commit.c
+index fb1e588..d5e8c4c 100644
+--- a/builtin-commit.c
++++ b/builtin-commit.c
+@@ -242,7 +242,7 @@ static char *prepare_index(int argc, const char **argv, const char *prefix)
+ 	 */
+ 	if (all || (also && pathspec && *pathspec)) {
+ 		int fd = hold_locked_index(&index_lock, 1);
+-		add_files_to_cache(0, also ? prefix : NULL, pathspec);
++		add_files_to_cache(also ? prefix : NULL, pathspec, 0);
+ 		refresh_cache(REFRESH_QUIET);
+ 		if (write_cache(fd, active_cache, active_nr) ||
+ 		    close_lock_file(&index_lock))
+diff --git a/cache.h b/cache.h
+index f16d341..c6c1659 100644
+--- a/cache.h
++++ b/cache.h
+@@ -748,7 +748,13 @@ extern int convert_to_git(const char *path, const char *src, size_t len,
+ extern int convert_to_working_tree(const char *path, const char *src, size_t len, struct strbuf *dst);
+ 
+ /* add */
+-void add_files_to_cache(int verbose, const char *prefix, const char **pathspec);
++#define ADD_FILES_VERBOSE	01
++#define ADD_FILES_IGNORE_ERRORS	02
++/*
++ * return 0 if success, 1 - if addition of a file failed and
++ * ADD_FILES_IGNORE_ERRORS was specified in flags
++ */
++int add_files_to_cache(const char *prefix, const char **pathspec, int flags);
+ 
+ /* diff.c */
+ extern int diff_auto_refresh_index;
 -- 
 1.5.4.3.391.gf5a0c
 
