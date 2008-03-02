@@ -1,60 +1,80 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Make the exit code of add_file_to_index actually
- useful
-Date: Sun, 2 Mar 2008 15:57:02 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0803021555500.22527@racer.site>
-References: <47C95E34.1050306@dirk.my1.cc> <20080302154154.GC2973@steel.home> <20080302154238.GD2973@steel.home>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: Google Summer of Code 2008
+Date: Sun, 02 Mar 2008 17:05:57 +0100
+Message-ID: <vpqlk516rh6.fsf@bauges.imag.fr>
+References: <200802262356.28971.jnareb@gmail.com>
+	<alpine.LSU.1.00.0802281021070.22527@racer.site>
+	<200802291304.16026.jnareb@gmail.com>
+	<200803020053.09815.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: =?ISO-8859-15?Q?Dirk_S=FCsserott?= <newsletter@dirk.my1.cc>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <junkio@cox.net>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 02 16:58:26 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
+	git@vger.kernel.org, John Hawley <warthog9@kernel.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 02 17:08:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JVqZz-0006vF-7Y
-	for gcvg-git-2@gmane.org; Sun, 02 Mar 2008 16:58:23 +0100
+	id 1JVqji-00028Z-GS
+	for gcvg-git-2@gmane.org; Sun, 02 Mar 2008 17:08:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753699AbYCBP5r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Mar 2008 10:57:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753515AbYCBP5q
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Mar 2008 10:57:46 -0500
-Received: from mail.gmx.net ([213.165.64.20]:37005 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753441AbYCBP5q (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Mar 2008 10:57:46 -0500
-Received: (qmail invoked by alias); 02 Mar 2008 15:57:44 -0000
-Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
-  by mail.gmx.net (mp033) with SMTP; 02 Mar 2008 16:57:44 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+guShRt0KgKZDcXFCcWhgWE+rjwGprbd28IliYki
-	srTW24n2v3nM23
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20080302154238.GD2973@steel.home>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1753903AbYCBQHt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Mar 2008 11:07:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753795AbYCBQHt
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Mar 2008 11:07:49 -0500
+Received: from imag.imag.fr ([129.88.30.1]:44736 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752545AbYCBQHs (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Mar 2008 11:07:48 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id m22G5wpc020444
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Sun, 2 Mar 2008 17:05:58 +0100 (CET)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1JVqhJ-0007hL-Km; Sun, 02 Mar 2008 17:05:57 +0100
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1JVqhJ-0005Vq-HT; Sun, 02 Mar 2008 17:05:57 +0100
+In-Reply-To: <200803020053.09815.jnareb@gmail.com> (Jakub Narebski's message of "Sun\, 2 Mar 2008 00\:53\:08 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Sun, 02 Mar 2008 17:06:00 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75799>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75800>
 
-Hi,
+Jakub Narebski <jnareb@gmail.com> writes:
 
-On Sun, 2 Mar 2008, Alex Riesen wrote:
+> On Fri, 29 Feb 2008, Jakub Narebski wrote:
+>
+>> I'd send other ideas (including new ones, like translating
+>> svn:externals into git submodules in git-svn; or making git mode
+>> for Emacs have all features of tig, git-gui and gitk; or improving
+>> shallow clone support) in a later post.
+>
+> And here they are.
+>
+> * GNU Emacs git GUI
+>
+>   Make git mode for Emacs full featured git GUI, and not only commit
+>   tool, following ideas of PCL-CVS... and its limitation. I guess that
+>   DVC (http://download.gna.org/dvc) git mode is one thing to examine
+>   searching for features to implement, but from what I have read in
+>   documentation it is quite a but GNU Arch centric.
 
-> -			add_file_to_cache(path, verbose);
-> +			if (add_file_to_cache(path, verbose))
-> +				exit(1);
+The documentation is, but the tool isn't. Actually, DVC started as
+"Xtla", which was _only_ a GNU Arch interface. The tool evolved a lot
+since then, but the documentation is totally outdated :-(.
 
-Does it really, really _have_ to be exit(1)?  I mean, now you block even 
-the faintest chance that we can libify libgit.a by overriding die_routine.
-
-A "return -1" might make _much_ more sense, too.
-
-Ciao,
-Dscho
-
+-- 
+Matthieu
