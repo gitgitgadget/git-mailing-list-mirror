@@ -1,67 +1,76 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] remote show: Clean up connection correctly if object fetch
- wasn't done
-Date: Sun, 2 Mar 2008 05:31:59 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0803020531310.22527@racer.site>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git diff-index --raw HEAD and git diff --raw HEAD output the
+ same thing?
+Date: Sat, 01 Mar 2008 21:48:39 -0800
+Message-ID: <7vbq5xvfpk.fsf@gitster.siamese.dyndns.org>
+References: <46dff0320803010510q67bc4101k9f85c71e5d20b4@mail.gmail.com>
+ <alpine.LSU.1.00.0803011320100.22527@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sun Mar 02 06:33:46 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Ping Yin <pkufranky@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Mar 02 06:50:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JVgpV-0000IL-Jg
-	for gcvg-git-2@gmane.org; Sun, 02 Mar 2008 06:33:46 +0100
+	id 1JVh5I-0002qj-0f
+	for gcvg-git-2@gmane.org; Sun, 02 Mar 2008 06:50:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751612AbYCBFcn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Mar 2008 00:32:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751441AbYCBFcn
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Mar 2008 00:32:43 -0500
-Received: from mail.gmx.net ([213.165.64.20]:34823 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750826AbYCBFcm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Mar 2008 00:32:42 -0500
-Received: (qmail invoked by alias); 02 Mar 2008 05:32:40 -0000
-Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
-  by mail.gmx.net (mp001) with SMTP; 02 Mar 2008 06:32:40 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18iRRMTN64iNWDoawM+SGr8UcWAwD2mlCrmWlJGz/
-	KEP2OBnk2Ghqzj
-X-X-Sender: gene099@racer.site
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1750805AbYCBFtE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Mar 2008 00:49:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750774AbYCBFtD
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Mar 2008 00:49:03 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:36607 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750751AbYCBFtB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Mar 2008 00:49:01 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 122D626DA;
+	Sun,  2 Mar 2008 00:48:53 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 0D81826D8; Sun,  2 Mar 2008 00:48:46 -0500 (EST)
+In-Reply-To: <alpine.LSU.1.00.0803011320100.22527@racer.site> (Johannes
+ Schindelin's message of "Sat, 1 Mar 2008 13:21:02 +0000 (GMT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75724>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75725>
 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Like in ls-remote, we have to disconnect the transport after getting
-the remote refs.
+> On Sat, 1 Mar 2008, Ping Yin wrote:
+>
+>> Strange things is this line
+>> :160000 160000 34f279b1662a6bef6a8fdea1827bbdbd80f12444
+>> 0000000000000000000000000000000000000000 M      commonmake
+>> 
+>> why mod is 160000 while sha1 is 0000...
+>
+> This indicates that a submodule (160000) was deleted (00000).  It is 
+> easier not to handle a deletion as mode change...
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
+Read the question again.
 
-	I did not make the connection when commenting on ls-remote, that
-	builtin-remote uses the same API...
+When you compare something with a work tree state, and when the work tree
+state is dirty, we always show 0{40} to mean "it is dirty and we do not
+know what the object name of that thing is, until you actuallly run
+git-update-index (or git-add) it" (and at that point it would stop being
+dirty).  For blobs (be it a regular file or a symbolic link), this has an
+advantage of not having to run hash-object to obtain the object name of an
+object that would be created if you actually did git-add it.
 
- builtin-remote.c |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+When we check if it is dirty, we already do an lstat(2) and know the type
+of it, so we can show the mode bits.  So you will see 100644, 100755 or
+120000 for blobs.  Similarly for a submodule.
 
-diff --git a/builtin-remote.c b/builtin-remote.c
-index 2ad1a8d..2405c2c 100644
---- a/builtin-remote.c
-+++ b/builtin-remote.c
-@@ -387,6 +387,7 @@ static int show_or_prune(int argc, const char **argv, int prune)
- 		transport = transport_get(NULL, states.remote->url_nr > 0 ?
- 			states.remote->url[0] : NULL);
- 		ref = transport_get_remote_refs(transport);
-+		transport_disconnect(transport);
- 
- 		read_branches();
- 		got_states = get_ref_states(ref, &states);
--- 
-1.5.4.3.446.gbe8932
+For a submodule, we could read the value from $sub/.git/HEAD, but it is
+more consistent to show 0{40} on the work tree side (typically the right
+hand side, unless you use -R).
+
 
