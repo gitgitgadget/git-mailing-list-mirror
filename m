@@ -1,85 +1,79 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] convert shortlog to use parse_options
-Date: Sun, 2 Mar 2008 01:15:42 -0500
-Message-ID: <20080302061541.GA3935@coredump.intra.peff.net>
-References: <20080301090231.GA16937@coredump.intra.peff.net> <7v8x124wfd.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] add pretty format configuration to git
+ log/show/whatchanged
+Date: Sat, 01 Mar 2008 22:20:17 -0800
+Message-ID: <7vve45tzoe.fsf@gitster.siamese.dyndns.org>
+References: <alpine.LSU.1.00.0803011821420.22527@racer.site>
+ <1204401056-8763-1-git-send-email-crquan@gmail.com>
+ <7vr6etvlgm.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Mar 02 07:16:23 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Denis Cheng <crquan@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 02 07:22:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JVhUj-0006g2-9m
-	for gcvg-git-2@gmane.org; Sun, 02 Mar 2008 07:16:21 +0100
+	id 1JVhaL-0007Tv-KJ
+	for gcvg-git-2@gmane.org; Sun, 02 Mar 2008 07:22:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751700AbYCBGPp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Mar 2008 01:15:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751638AbYCBGPp
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Mar 2008 01:15:45 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2460 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751471AbYCBGPo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Mar 2008 01:15:44 -0500
-Received: (qmail 32010 invoked by uid 111); 2 Mar 2008 06:15:43 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Sun, 02 Mar 2008 01:15:43 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 02 Mar 2008 01:15:42 -0500
-Content-Disposition: inline
-In-Reply-To: <7v8x124wfd.fsf@gitster.siamese.dyndns.org>
+	id S1753649AbYCBGUz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Mar 2008 01:20:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752619AbYCBGUz
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Mar 2008 01:20:55 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:43887 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753447AbYCBGUc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Mar 2008 01:20:32 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id E97C92D88;
+	Sun,  2 Mar 2008 01:20:29 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 13BAB2D87; Sun,  2 Mar 2008 01:20:24 -0500 (EST)
+In-Reply-To: <7vr6etvlgm.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Sat, 01 Mar 2008 19:44:25 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75728>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75729>
 
-On Sat, Mar 01, 2008 at 01:37:26AM -0800, Junio C Hamano wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> > The behavior should be identical, except that we now support
-> > option bundling (e.g., "git shortlog -nse").
-> 
-> Sorry, but this breaks
-> 
-> 	git shortlog -n -s -e --no-merges v1.5.4..
+> In-tree, there are only two callers that do not use --pretty on the
+> command line when calling these three commands:
+>
+>  * "bisect visualize" calls "git log" when gitk is not available, with the
+>    user supplied formatting options.  This is very much Ok --- we actively
+>    want your configuration feature for this caller.
+>
+>  * "git merge --squash" calls "git log" to prepare the commit message
+>    template.  This is _not_ Ok, and will be broken if we accept your
+>    patch.
+>
+> So you will need a preliminary patch to "git-merge" _before_ submitting
+> this patch to make the latter codepath use "git log --pretty" instead.
+> Doing so would have raised _my_ confidence level of the patch that you
+> made your best effort not to introduce regression.
 
-I didn't test this very extensively (obviously!) since it was just a
-respin of an old patch. Sorry to waste your time with something that is
-so obviously broken.
+I should point out that I did not look at things outside shell scripts,
+i.e. stuff I do not consider really the core part of the system.  I did
+not look at contrib/ area either.
 
-I started to write a patch to give parse-options a "stop processing at
-the first unknown option" flag, but it was very unsatisfactory.
-Specifically:
+I suspect the following have calls to show/log/whatchanged and do expect
+to read the default format out of them, and can be broken by your patch:
 
-  - the final parser has to know that it's the last, and complain about
-    unrecognized options. In this case, setup_revisions would be the
-    second and final parser, and it of course doesn't do this (though
-    perhaps one could check the residual options from setup_revisions
-    manually and barf on that)
+ * contrib/emacs/git.el (git-setup-commit-buffer)
+ * git-cvsserver.perl (sub update)
 
-  - the fact that we have two sets of parsed options can't be
-    transparent to the user. We'd stop at "--no-merges", which means you
-    can't say "git shortlog --no-merges -e", which is silly. But we
-    can't possibly continue, since we don't know if "-e" is another
-    option or an argument there.
+There also is a call to git log, but I think it is Ok.
 
-And it doesn't work to do the setup_revisions first, since there is a
-conflict over the "-n" option (and we can't even munge the result
-afterwards, since one version takes an argument and one doesn't).
+ * contrib/hooks/post-receive (generate_general_email)
 
-So I think using parse-options here should be put on hold until we have
-the revision and diff parameters in a parseopt-understandable form. I
-would think we could do something like:
-
-#define OPT__REVISION(x) \
-        OPT_BOOLEAN(0, "no-merges", &(x)->no_merges, "don't show merges"),
-        OPT_BOOLEAN(0, "boundary", &(x)->boundary, "show boundary commits"),
-        ...
-
-and we could have unified options tables. I seem to recall some work
-being done in this area early on in the parse-options history, but I
-can't seem to find any mention of it in the list archive. Pierre, does
-this ring a bell?
-
--Peff
+You should not blindly trust nor take the above as an exhaustive list; it
+is just from my quick survey.
