@@ -1,74 +1,60 @@
-From: John Goerzen <jgoerzen@complete.org>
-Subject: Re: git-rebase dirty index and email address bug?
-Date: Sun, 2 Mar 2008 07:44:36 -0600
-Message-ID: <200803020744.36591.jgoerzen@complete.org>
-References: <slrnfsjfpo.3fl.jgoerzen@katherina.lan.complete.org> <slrnfsjim1.5e0.jgoerzen@katherina.lan.complete.org> <20080302073016.GC3935@coredump.intra.peff.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: ambiguous git-log date and timestamp syntax
+Date: Sun, 2 Mar 2008 14:40:52 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0803021438010.22527@racer.site>
+References: <715587AA-D485-4B31-A786-D26334506007@gmail.com> <200803012326.05698.jnareb@gmail.com> <alpine.LSU.1.00.0803020240390.22527@racer.site> <200803021040.55252.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Mar 02 15:14:27 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	"Rhodes, Kate" <masukomi@gmail.com>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 02 15:42:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JVoxO-0003KI-3g
-	for gcvg-git-2@gmane.org; Sun, 02 Mar 2008 15:14:26 +0100
+	id 1JVpOQ-0002QN-CO
+	for gcvg-git-2@gmane.org; Sun, 02 Mar 2008 15:42:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753709AbYCBONu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Mar 2008 09:13:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753583AbYCBONu
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Mar 2008 09:13:50 -0500
-Received: from b01s02mr.corenetworks.net ([64.85.160.192]:58793 "EHLO
-	glockenspiel.complete.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753499AbYCBONt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Mar 2008 09:13:49 -0500
-X-Greylist: delayed 1744 seconds by postgrey-1.27 at vger.kernel.org; Sun, 02 Mar 2008 09:13:49 EST
-Received: from 63-245-179-205.kitusa.com ([63.245.179.205] helo=erwin.lan.complete.org)
-	by glockenspiel.complete.org with esmtps
-	(with TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(TLS peer CN erwin.complete.org, certificate verified)
-	(Exim 4.63)
-	id 1JVoUa-0000AI-Ce; Sun, 02 Mar 2008 07:44:44 -0600
-Received: from katherina.lan.complete.org ([10.200.0.4])
-	by erwin.lan.complete.org with esmtps
-	(with TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(No TLS peer certificate)
-	(Exim 4.67)
-	id 1JVoUW-0007Qz-Sf; Sun, 02 Mar 2008 07:44:36 -0600
-Received: from jgoerzen by katherina.lan.complete.org with local (Exim 4.69)
-	(envelope-from <jgoerzen@complete.org>)
-	id 1JVoUW-0006Zx-KW; Sun, 02 Mar 2008 07:44:36 -0600
-User-Agent: KMail/1.9.7
-In-Reply-To: <20080302073016.GC3935@coredump.intra.peff.net>
-Content-Disposition: inline
-X-Spam-Status: No (score 0.0): AWL=0.000
-X-Virus-Scanned: by Exiscan on glockenspiel.complete.org at Sun, 02 Mar 2008 07:44:44 -0600
+	id S1751963AbYCBOlk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Mar 2008 09:41:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751726AbYCBOlk
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Mar 2008 09:41:40 -0500
+Received: from mail.gmx.net ([213.165.64.20]:34268 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751307AbYCBOlj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Mar 2008 09:41:39 -0500
+Received: (qmail invoked by alias); 02 Mar 2008 14:41:37 -0000
+Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
+  by mail.gmx.net (mp058) with SMTP; 02 Mar 2008 15:41:37 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19+eh1FtMF+5kjy8cRprGpXR5JrSknPF9d3IeLMLA
+	B9SH1LgZPq3fYW
+X-X-Sender: gene099@racer.site
+In-Reply-To: <200803021040.55252.jnareb@gmail.com>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75782>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75783>
 
-On Sunday 02 March 2008 1:30:16 am Jeff King wrote:
-> On Sat, Mar 01, 2008 at 03:29:37PM -0600, John Goerzen wrote:
-> > Two things to add:
-> >
-> > 1) This was a clean branch prior to rebase (git status was empty)
-> >
-> > 2) Adding -i to the rebase command, then making no changes to the
-> > list, caused the rebase to work perfectly.
->
-> Yes, "rebase -i" works somewhat differently than an ordinary rebase. It
-> uses a series of cherry-picks rather than "format-patch | am". And the
-> bug is, I think, in "git-am".
->
-> It probably would also have worked using "git rebase -m" which uses
-> merge strategies to rebase.
+Hi,
 
-I did try that.  The resulting error message was slightly different, but not 
-significantly so, if I remember correctly.
+On Sun, 2 Mar 2008, Jakub Narebski wrote:
 
--- John
+> I wonder if it would be worthwhile to extract all those useful codelets 
+> (mini libraries) like approxidate, strbuf, parseopt, ALLOC_GROW, list 
+> utils, etc. into separate micro-projects, to be able to be used by other 
+> projects, for *them* not to have to reimplement the wheel.
+
+Actually, something like this happens in git-cheetah ATM, where I would 
+like to use parts of libgit.a to call programs.
+
+But then, I see the responsibility of separating out parts of libgit.a by 
+those who want to use it, not by the git crowd.
+
+Ciao,
+Dscho
+
