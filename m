@@ -1,61 +1,138 @@
-From: "Carlos Rica" <jasampler@gmail.com>
-Subject: Re: [PATCH] Make builtin-reset.c use parse_options.
-Date: Sun, 2 Mar 2008 19:40:09 +0100
-Message-ID: <1b46aba20803021040ofec56b9q120a654a192eec09@mail.gmail.com>
-References: <47C98472.8000002@gmail.com> <20080302094031.GA2973@steel.home>
-	 <1b46aba20803020454v322f061bi4f34a737e9e2b7f3@mail.gmail.com>
-	 <20080302155541.GH2973@steel.home>
+From: Gerrit Pape <pape@smarden.org>
+Subject: git-http-fetch segfault, curl 7.18.0
+Date: Sun, 2 Mar 2008 19:08:57 +0000
+Message-ID: <20080302190857.11027.qmail@28c5bbafb32cb2.315fe32.mid.smarden.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Junio C Hamano" <gitster@pobox.com>
-To: "Alex Riesen" <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 02 19:40:56 2008
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 02 20:09:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JVt7A-0000am-Le
-	for gcvg-git-2@gmane.org; Sun, 02 Mar 2008 19:40:49 +0100
+	id 1JVtYj-0000eK-6s
+	for gcvg-git-2@gmane.org; Sun, 02 Mar 2008 20:09:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751592AbYCBSkL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Mar 2008 13:40:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751294AbYCBSkL
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Mar 2008 13:40:11 -0500
-Received: from wf-out-1314.google.com ([209.85.200.172]:39156 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751202AbYCBSkK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Mar 2008 13:40:10 -0500
-Received: by wf-out-1314.google.com with SMTP id 28so6146711wff.4
-        for <git@vger.kernel.org>; Sun, 02 Mar 2008 10:40:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=Gr2XigYooYaQNBM5+RGmixEvEVI18xTjFIi8UBDUuW8=;
-        b=cZM3hAlvTjw2Jww4z05GKKXzxca0RZ6YkwfIzEFRIJyETglxjSXVBgGACFUvgWAbLQY4WhLKHEgBtB+/0LVg8lJiCL9WF/o212gR89A24Id5nXaul7Nbad7WrBzB26cqwzj5Mq8Emf5NiNqKAqm+68VNK7pT9h9IZSd2gKtnofs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=rx19h9pGDuOXBqSJEvTQpvvVJ0RqpcAosJou9n51lGOWYM9gV802Iz0A4C2j7yAV44by94U15uQQ6lbdc3bH4/gfMw5ZdkRs8ifnrdOFVSJO1uVifghcL3QAurhXGwSyYnMxIQnkcGMNHIbqC3fItYi4L25R/7FPFgwRSMwDPfI=
-Received: by 10.142.215.5 with SMTP id n5mr8468686wfg.161.1204483209465;
-        Sun, 02 Mar 2008 10:40:09 -0800 (PST)
-Received: by 10.142.99.13 with HTTP; Sun, 2 Mar 2008 10:40:09 -0800 (PST)
-In-Reply-To: <20080302155541.GH2973@steel.home>
+	id S1755463AbYCBTIj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Mar 2008 14:08:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754912AbYCBTIj
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Mar 2008 14:08:39 -0500
+Received: from a.ns.smarden.org ([212.42.242.37]:38696 "HELO a.mx.smarden.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754563AbYCBTIi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Mar 2008 14:08:38 -0500
+Received: (qmail 11028 invoked by uid 1000); 2 Mar 2008 19:08:57 -0000
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75828>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75829>
 
-On Sun, Mar 2, 2008 at 4:55 PM, Alex Riesen <raa.lkml@gmail.com> wrote:
->
->  "static const struct option options[] = {"
+Hi, as reported through http://bugs.debian.org/468836, I can reproduce
+with current maint branch on Debian/unstable, but I don't know whether
+it's a problem in curl, or in git.  Maybe anyone with some experience
+in curl can help on this?
 
-The other files using parse_options have only "static", or nothing.
+ $ make
+ [...]
+ $ mkdir repo && cd repo && git init
+ Initialized empty Git repository in .git/
+ $ ../git-http-fetch -v -a -w remotes/origin/master ef227a3da916f53f5a9ef4266c27c283c1ab607b http://git.debian.org/git/users/eddyp-guest/test-segfault.git/
+ got ef227a3da916f53f5a9ef4266c27c283c1ab607b
+ walk ef227a3da916f53f5a9ef4266c27c283c1ab607b
+ got 12d086d13b3e69b26389282fe031b1a15153d84c
+ Getting alternates list for
+ http://git.debian.org/git/users/eddyp-guest/test-segfault.git
+ Getting pack list for
+ http://git.debian.org/git/users/eddyp-guest/test-segfault.git
+ got e25c7e03ea0c0d4d9bea5552ee629a25196ff43f
+ got a8d762c979ac21da092732eafb6ded8751c3f63d
+ Getting index for pack 06eec8e3e8f770e471d5f3f19c3b8ffa9159fd97
+ got 31cdb53945ddfa3b7bc15e12fdf900024eec1a56
+ Getting pack 06eec8e3e8f770e471d5f3f19c3b8ffa9159fd97
+  which contains 64580202061d4d8f449e09107ac6e60706142202
+ walk 64580202061d4d8f449e09107ac6e60706142202
+ error: Unable to find 30e8500073c101f656311906f5a00f0ccc0e8546 under http://git.debian.org/git/users/eddyp-guest/test-segfault.git
+ Cannot obtain needed commit 30e8500073c101f656311906f5a00f0ccc0e8546
+ while processing commit 64580202061d4d8f449e09107ac6e60706142202.
+ $ echo $?
+ 255
+ $ ../git-http-fetch -v -a -w remotes/origin/master ef227a3da916f53f5a9ef4266c27c283c1ab607b http://git.debian.org/git/users/eddyp-guest/test-segfault.git/
+ walk ef227a3da916f53f5a9ef4266c27c283c1ab607b
+ walk 64580202061d4d8f449e09107ac6e60706142202
+ Getting alternates list for
+ http://git.debian.org/git/users/eddyp-guest/test-segfault.git
+ Getting pack list for
+ http://git.debian.org/git/users/eddyp-guest/test-segfault.git
+ error: Unable to find 30e8500073c101f656311906f5a00f0ccc0e8546 under
+ http://git.debian.org/git/users/eddyp-guest/test-segfault.git
+ Cannot obtain needed commit 30e8500073c101f656311906f5a00f0ccc0e8546
+ while processing commit 64580202061d4d8f449e09107ac6e60706142202.
+ Waiting for
+ http://git.debian.org/git/users/eddyp-guest/test-segfault.git/objects/8b/d9d5f451cb08435cdcb773dc8cdddf9f61d553
+ Waiting for
+ http://git.debian.org/git/users/eddyp-guest/test-segfault.git/objects/ef/b3c1b344b887ffdb5d917eca2a28e5f176613c
+ Segmentation fault
 
-To make "options" static, then reset_type and quiet should be
-static too, otherwise it cannot compile (in my system).
+gdb gives this
 
-I don't know benefits of making all of them "static".
-Has this been discussed previously?
+ (gdb) r -v -a -w remotes/origin/master ef227a3da916f53f5a9ef4266c27c283c1ab607b http://git.debian.org/git/users/eddyp-guest/test-segfault.git/
+ Starting program: /usr/local/src/Debian/GIT/git/git-http-fetch -v -a -w
+ remotes/origin/master  ef227a3da916f53f5a9ef4266c27c283c1ab607b
+ http://git.debian.org/git/users/eddyp-guest/test-segfault.git/
+ [Thread debugging using libthread_db enabled]
+ walk ef227a3da916f53f5a9ef4266c27c283c1ab607b
+ [New Thread 0x3002c220 (LWP 19305)]
+ walk 64580202061d4d8f449e09107ac6e60706142202
+ Getting alternates list for http://git.debian.org/git/users/eddyp-guest/test-segfault.git
+ Getting pack list for http://git.debian.org/git/users/eddyp-guest/test-segfault.git
+ error: Unable to find 30e8500073c101f656311906f5a00f0ccc0e8546 under http://git.debian.org/git/users/eddyp-guest/test-segfault.git
+ Cannot obtain needed commit 30e8500073c101f656311906f5a00f0ccc0e8546
+ while processing commit 64580202061d4d8f449e09107ac6e60706142202.
+ Waiting for http://git.debian.org/git/users/eddyp-guest/test-segfault.git/objects/8b/d9d5f451cb08435cdcb773dc8cdddf9f61d553
+ Waiting for http://git.debian.org/git/users/eddyp-guest/test-segfault.git/objects/3a/36bcfe419fe97021a330516c25e8c8d6a61b23
+ Waiting for http://git.debian.org/git/users/eddyp-guest/test-segfault.git/objects/f9/1f9480407a3786f0a66855af7c64da9360c214
+
+ Program received signal SIGSEGV, Segmentation fault.
+ [Switching to Thread 0x3002c220 (LWP 19305)]
+ 0x0ffbaddc in ?? () from /usr/lib/libcurl-gnutls.so.4
+ (gdb) bt
+ #0  0x0ffbaddc in ?? () from /usr/lib/libcurl-gnutls.so.4
+ #1  0x0ffbadc4 in ?? () from /usr/lib/libcurl-gnutls.so.4
+ #2  0x0ffc3f0c in curl_easy_cleanup () from /usr/lib/libcurl-gnutls.so.4
+ #3  0x100a4e8c in fill_active_slots () at http.c:442
+ #4  0x100a5100 in step_active_slots () at http.c:459
+ #5  0x100a519c in run_active_slot (slot=0x10169f08) at http.c:479
+ #6  0x100a5478 in http_cleanup () at http.c:296
+ #7  0x100a6514 in cleanup (walker=<value optimized out>) at http-walker.c:900
+ #8  0x100a2550 in walker_free (walker=<value optimized out>) at walker.c:315
+ #9  0x1004df68 in cmd_http_fetch (argc=<value optimized out>, argv=0x7fbfe784, 
+     prefix=<value optimized out>) at builtin-http-fetch.c:81
+ #10 0x100045e8 in handle_internal_command (argc=7, argv=0x7fbfe784) at git.c:259
+ #11 0x10004f88 in main (argc=7, argv=0x7fbfe784) at git.c:420
+ (gdb) 
+
+and sometimes
+
+ (gdb) r -v -a -w remotes/origin/master ef227a3da916f53f5a9ef4266c27c283c1ab607b http://git.debian.org/git/users/eddyp-guest/test-segfault.git/
+ Starting program: /usr/local/src/Debian/GIT/git/git-http-fetch -v -a -w remotes/origin/master  ef227a3da916f53f5a9ef4266c27c283c1ab607b http://git.debian.org/git/users/eddyp-guest/test-segfault.git/
+ [Thread debugging using libthread_db enabled]
+ walk ef227a3da916f53f5a9ef4266c27c283c1ab607b
+ [New Thread 0x3002c220 (LWP 20097)]
+ walk 64580202061d4d8f449e09107ac6e60706142202
+ Getting alternates list for http://git.debian.org/git/users/eddyp-guest/test-segfault.git
+ Getting pack list for http://git.debian.org/git/users/eddyp-guest/test-segfault.git
+ error: Unable to find 30e8500073c101f656311906f5a00f0ccc0e8546 under http://git.debian.org/git/users/eddyp-guest/test-segfault.git
+ Cannot obtain needed commit 30e8500073c101f656311906f5a00f0ccc0e8546
+ while processing commit 64580202061d4d8f449e09107ac6e60706142202.
+ Waiting for http://git.debian.org/git/users/eddyp-guest/test-segfault.git/objects/61/6e4145cf75c474bafa94f1dd917ed0a6f421fc
+ Waiting for http://git.debian.org/git/users/eddyp-guest/test-segfault.git/objects/ef/b3c1b344b887ffdb5d917eca2a28e5f176613c
+
+ Program received signal SIGSEGV, Segmentation fault.
+ [Switching to Thread 0x3002c220 (LWP 20097)]
+ fill_active_slots () at http.c:441
+ 441                     if (!slot->in_use && slot->curl != NULL) {
+ (gdb) 
+
+Thanks, Gerrit.
