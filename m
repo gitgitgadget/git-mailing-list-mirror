@@ -1,64 +1,71 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Google Summer of Code 2008
-Date: Sun, 2 Mar 2008 23:35:53 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0803022335340.22527@racer.site>
-References: <200802262356.28971.jnareb@gmail.com>  <20080228063621.GR8410@spearce.org>  <alpine.LSU.1.00.0802281021070.22527@racer.site>  <200802291304.16026.jnareb@gmail.com> <46a038f90803021504j68f7d93dmfcdfb361c3ca9782@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC] git-merge.sh: better handling of combined
+ --squash,--no-ff,--no-commit options
+Date: Sun, 02 Mar 2008 15:50:46 -0800
+Message-ID: <7vir04n0rt.fsf@gitster.siamese.dyndns.org>
+References: <20080302175820.31385.qmail@9e9c5b8314ca7b.315fe32.mid.smarden.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	git@vger.kernel.org, John Hawley <warthog9@kernel.org>
-To: Martin Langhoff <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 03 00:37:25 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Gerrit Pape <pape@smarden.org>
+X-From: git-owner@vger.kernel.org Mon Mar 03 00:51:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JVxkB-0004Fa-6K
-	for gcvg-git-2@gmane.org; Mon, 03 Mar 2008 00:37:23 +0100
+	id 1JVxxy-00082N-91
+	for gcvg-git-2@gmane.org; Mon, 03 Mar 2008 00:51:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754563AbYCBXgj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Mar 2008 18:36:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754595AbYCBXgj
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Mar 2008 18:36:39 -0500
-Received: from mail.gmx.net ([213.165.64.20]:48193 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754370AbYCBXgi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Mar 2008 18:36:38 -0500
-Received: (qmail invoked by alias); 02 Mar 2008 23:36:36 -0000
-Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
-  by mail.gmx.net (mp022) with SMTP; 03 Mar 2008 00:36:36 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19DlNYEsxxD/Ar7GzX2PkeFikKtAkpUm6rEpsmLFt
-	LMOKJiVghHugrA
-X-X-Sender: gene099@racer.site
-In-Reply-To: <46a038f90803021504j68f7d93dmfcdfb361c3ca9782@mail.gmail.com>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1754021AbYCBXvA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Mar 2008 18:51:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753857AbYCBXvA
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Mar 2008 18:51:00 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:45431 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751814AbYCBXu7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Mar 2008 18:50:59 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 293772D51;
+	Sun,  2 Mar 2008 18:50:58 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 7D1322D4E; Sun,  2 Mar 2008 18:50:53 -0500 (EST)
+In-Reply-To: <20080302175820.31385.qmail@9e9c5b8314ca7b.315fe32.mid.smarden.org> (Gerrit
+ Pape's message of "Sun, 2 Mar 2008 17:58:19 +0000")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75857>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75858>
 
-Hi,
+Gerrit Pape <pape@smarden.org> writes:
 
-On Mon, 3 Mar 2008, Martin Langhoff wrote:
+> git-merge used to use either the --squash,--no-squash, --no-ff,--ff,
+> --no-commit,--commit option, whichever came last in the command line.
+> This lead to some un-intuitive behavior, having
+>
+>  git merge --no-commit --no-ff <branch>
+>
+> actually commit the merge.  Now git-merge respects --no-commit together
+> with --no-ff, as well as other combinations of the options.  However,
+> this broke a selftest in t/t7600-merge.sh which expected to have --no-ff
+> completely override the --squash option, so that
+>
+>  git merge --squash --no-ff <branch>
+>
+> fast-forwards, and makes a merge commit; now it prepares a squash ...
 
-> On Sat, Mar 1, 2008 at 1:04 AM, Jakub Narebski <jnareb@gmail.com> wrote:
-> >  A few things changes for us: we have participated in GSoC 2007; we need
-> >  to find backup organization administrator (was: Martin Langhoff for
-> >  GSoC2007), list of mentors would change most probably.
-> 
-> Unfortunately, this year I'm seriously swamped, as I'll probably be 
-> mentoring a few GSoC projects for Moodle and OLPC (due to 
-> http://lists.laptop.org/pipermail/devel/2008-February/011314.html ). 
-> Within OLPC I will be using bits and pieces of git, so I may come up 
-> woth something git related.
+Both make sense when they make sense (i.e. if you and the other side are
+not fast-forward nor up-to-date and need a real merge).
 
-Okay, if all else fails, I volunteer to be the backup admin.
+> ...  Combining --squash with --no-ff doesn't seem to make sense
 
-Ciao,
-Dscho
+Yeah, I think forbidding this combination would make much more sense.  The
+former asks there be _no_ merge (the user does not want to have a merge
+ever), while the other one asks to create a merge even when there is no
+need to (the user does want a merge).
+
+Are there other combinations that we should forbid?
 
