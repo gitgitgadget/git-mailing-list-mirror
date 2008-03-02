@@ -1,95 +1,62 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] revert: actually check for a dirty index
-Date: Sun, 2 Mar 2008 11:37:53 +0100
-Message-ID: <20080302103753.GB2973@steel.home>
-References: <20080302064449.GA6334@coredump.intra.peff.net> <20080302072252.GA14214@coredump.intra.peff.net>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: "Ping Yin" <pkufranky@gmail.com>
+Subject: Re: [PATCH 0/3] fix "diff --raw" on the work tree side
+Date: Sun, 2 Mar 2008 18:41:08 +0800
+Message-ID: <46dff0320803020241l29277bd4m1a711ff0a863e7f8@mail.gmail.com>
+References: <1204451012-17487-1-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Mar 02 11:38:34 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Mar 02 11:41:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JVlaT-0004CK-Qu
-	for gcvg-git-2@gmane.org; Sun, 02 Mar 2008 11:38:34 +0100
+	id 1JVldc-0004qj-8C
+	for gcvg-git-2@gmane.org; Sun, 02 Mar 2008 11:41:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752348AbYCBKh5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Mar 2008 05:37:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752713AbYCBKh5
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Mar 2008 05:37:57 -0500
-Received: from mo-p07-ob.rzone.de ([81.169.146.190]:62804 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752348AbYCBKh4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Mar 2008 05:37:56 -0500
-X-RZG-CLASS-ID: mo07
-X-RZG-AUTH: z4gQVF2k5XWuW3CculzwpJKcp6o=
-Received: from tigra.home (Fab7c.f.strato-dslnet.de [195.4.171.124])
-	by post.webmailer.de (mrclete mo43) (RZmta 16.8)
-	with ESMTP id Q0481dk227PoYR ; Sun, 2 Mar 2008 11:37:54 +0100 (MET)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 23359277BD;
-	Sun,  2 Mar 2008 11:37:54 +0100 (CET)
-Received: by steel.home (Postfix, from userid 1000)
-	id DF57256D24; Sun,  2 Mar 2008 11:37:53 +0100 (CET)
+	id S1753437AbYCBKlL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Mar 2008 05:41:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753372AbYCBKlK
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Mar 2008 05:41:10 -0500
+Received: from an-out-0708.google.com ([209.85.132.244]:28363 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753431AbYCBKlJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Mar 2008 05:41:09 -0500
+Received: by an-out-0708.google.com with SMTP id d31so1108399and.103
+        for <git@vger.kernel.org>; Sun, 02 Mar 2008 02:41:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=BMWT+xZ1APrQwQECllEZHP1U5FUZC/0DvNc4goene2A=;
+        b=XOjim+Bm/3KycMLXMiQCFSiliDltc1lv+h6SlJwUvZStPbh6+FQqkLZIgD9L8ujKbJzzXxaq6eWeJ2vC1ukDm4GrVrz6IMcmSxPfEVxXsImSUQgLLRkI1AH9oE9C1vXm67IJzuirjSUS4d1YLA1UXZNF2EIZMs/H4SuUzAzrt0U=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=R/A5AWZH3/8amj8y6nunmQVmYviOD344CbdLEe7PV3wJWLDR/oo/IGgdJmhl5EfkNd3bvM+4NgEnB21TMc31XPwSLxOaBNk/3ow0rjt5BNikgjNyOLbNjDIU6LgLiq+U8Ut/5EN8ItiM7W1/lDtoVgX9D/+PZ9/ECduFJhqP8E0=
+Received: by 10.100.131.3 with SMTP id e3mr25740606and.49.1204454468616;
+        Sun, 02 Mar 2008 02:41:08 -0800 (PST)
+Received: by 10.100.95.20 with HTTP; Sun, 2 Mar 2008 02:41:08 -0800 (PST)
+In-Reply-To: <1204451012-17487-1-git-send-email-gitster@pobox.com>
 Content-Disposition: inline
-In-Reply-To: <20080302072252.GA14214@coredump.intra.peff.net>
-User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75773>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75774>
 
-Jeff King, Sun, Mar 02, 2008 08:22:52 +0100:
-> +static int index_is_dirty(void)
-> +{
-> +	struct rev_info rev;
-> +	int is_dirty = 0;
-> +
-> +	init_revisions(&rev, NULL);
-> +	setup_revisions(0, NULL, &rev, "HEAD");
-> +	rev.diffopt.output_format |= DIFF_FORMAT_CALLBACK;
-> +	rev.diffopt.format_callback = index_is_dirty_cb;
-> +	rev.diffopt.format_callback_data = &is_dirty;
-> +	run_diff_index(&rev, 1);
-> +
-> +	return is_dirty;
-> +}
+On Sun, Mar 2, 2008 at 5:43 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> The second patch fixes the inconsistency between "git-diff --raw" and
+>  "git-diff-{index,files} --raw" when they are used for submodules.
+>
+>  The third one is a bit controversial and changes the semantics and
+>  existing callers and won't be considered for 1.5.5.
+>
+Unfortunately, my submodule summary patch series will depend on
+git-diff or git-diff-index. So should i resend my improved patch only
+after the thrid one is applied?
 
-Wouldn't something like what built-commit does more effective?
-It does:
 
-	struct rev_info rev;
-	unsigned char sha1[20];
-	const char *parent = "HEAD";
-
-	if (!active_nr && read_cache() < 0)
-		die("Cannot read index");
-
-	if (amend)
-		parent = "HEAD^1";
-
-	if (get_sha1(parent, sha1))
-		commitable = !!active_nr;
-	else {
-		init_revisions(&rev, "");
-		rev.abbrev = 0;
-		setup_revisions(0, NULL, &rev, parent);
-		DIFF_OPT_SET(&rev.diffopt, QUIET);
-		DIFF_OPT_SET(&rev.diffopt, EXIT_WITH_STATUS);
-		run_diff_index(&rev, 1 /* cached */);
-
-		commitable = !!DIFF_OPT_TST(&rev.diffopt, HAS_CHANGES);
-	}
-
-Diff-index in this case will stop as soon as the first difference
-found, while just using the output method will enforce finding all the
-differences, which is just a waste of time, if all you need is just to
-know if index is different to HEAD.
-
+-- 
+Ping Yin
