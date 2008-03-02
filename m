@@ -1,59 +1,66 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git-rebase dirty index and email address bug?
-Date: Sun, 2 Mar 2008 02:30:16 -0500
-Message-ID: <20080302073016.GC3935@coredump.intra.peff.net>
-References: <slrnfsjfpo.3fl.jgoerzen@katherina.lan.complete.org> <slrnfsjim1.5e0.jgoerzen@katherina.lan.complete.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Fix make_absolute_path() for parameters without a
+ slash
+Date: Sun, 2 Mar 2008 07:31:21 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0803020730170.22527@racer.site>
+References: <alpine.LSU.1.00.0803020717060.22527@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: John Goerzen <jgoerzen@complete.org>
-X-From: git-owner@vger.kernel.org Sun Mar 02 08:30:57 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Sun Mar 02 08:32:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JVieu-0000x6-7O
-	for gcvg-git-2@gmane.org; Sun, 02 Mar 2008 08:30:56 +0100
+	id 1JVigh-0001E6-HV
+	for gcvg-git-2@gmane.org; Sun, 02 Mar 2008 08:32:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752000AbYCBHaU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Mar 2008 02:30:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751993AbYCBHaU
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Mar 2008 02:30:20 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2862 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751978AbYCBHaT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Mar 2008 02:30:19 -0500
-Received: (qmail 4378 invoked by uid 111); 2 Mar 2008 07:30:17 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Sun, 02 Mar 2008 02:30:17 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 02 Mar 2008 02:30:16 -0500
-Content-Disposition: inline
-In-Reply-To: <slrnfsjim1.5e0.jgoerzen@katherina.lan.complete.org>
+	id S1752016AbYCBHcM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Mar 2008 02:32:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751993AbYCBHcL
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Mar 2008 02:32:11 -0500
+Received: from mail.gmx.net ([213.165.64.20]:53657 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751955AbYCBHcK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Mar 2008 02:32:10 -0500
+Received: (qmail invoked by alias); 02 Mar 2008 07:32:08 -0000
+Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
+  by mail.gmx.net (mp021) with SMTP; 02 Mar 2008 08:32:08 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/G1VYcN3rG9RMRtCBEJnxzfU1z2s/mXja62Vffrj
+	y2LR7dI6HeGeu4
+X-X-Sender: gene099@racer.site
+In-Reply-To: <alpine.LSU.1.00.0803020717060.22527@racer.site>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75738>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75739>
 
-On Sat, Mar 01, 2008 at 03:29:37PM -0600, John Goerzen wrote:
+Hi,
 
-> Two things to add:
-> 
-> 1) This was a clean branch prior to rebase (git status was empty)
-> 
-> 2) Adding -i to the rebase command, then making no changes to the
-> list, caused the rebase to work perfectly.
+On Sun, 2 Mar 2008, Johannes Schindelin wrote:
 
-Yes, "rebase -i" works somewhat differently than an ordinary rebase. It
-uses a series of cherry-picks rather than "format-patch | am". And the
-bug is, I think, in "git-am".
+> diff --git a/path.c b/path.c
+> index 4260952..bf3e469 100644
+> --- a/path.c
+> +++ b/path.c
+> @@ -311,8 +311,10 @@ const char *make_absolute_path(const char *path)
+>  			if (last_slash) {
+>  				*last_slash = '\0';
+>  				last_elem = xstrdup(last_slash + 1);
+> -			} else
+> +			} else {
+> +				*buf = '\0';
+>  				last_elem = xstrdup(buf);
 
-It probably would also have worked using "git rebase -m" which uses
-merge strategies to rebase.
+Oh, my.  The *buf = '\0' must come _after the assignment to last_elem, of 
+course.
 
-And yes, it is a bit crazy that there are so many ways to rebase. The
-original, "format-patch | am" is faster than the other schemes, but
-doesn't handle renames (as "rebase -m" does); nor is it flexible enough
-to do what "rebase -i" does.
+Will stop posting patches for today, and fix tomorrow.
 
--Peff
+Ciao,
+Dscho
+
