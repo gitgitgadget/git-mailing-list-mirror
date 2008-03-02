@@ -1,90 +1,66 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] Fix make_absolute_path() for parameters without a slash
-Date: Sun, 2 Mar 2008 07:40:33 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0803020739530.22527@racer.site>
-References: <alpine.LSU.1.00.0803020717060.22527@racer.site> <alpine.LSU.1.00.0803020730170.22527@racer.site>
+From: Jeff King <peff@peff.net>
+Subject: Re: Redefine semantics of find_unique_abbrev()
+Date: Sun, 2 Mar 2008 02:42:30 -0500
+Message-ID: <20080302074230.GD3935@coredump.intra.peff.net>
+References: <7vpruf9q5a.fsf@gitster.siamese.dyndns.org> <20080301050641.GB8969@coredump.intra.peff.net> <7vd4qdtw7k.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sun Mar 02 08:41:54 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Mar 02 08:43:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JVipV-0002dd-UM
-	for gcvg-git-2@gmane.org; Sun, 02 Mar 2008 08:41:54 +0100
+	id 1JViqi-0002r6-RY
+	for gcvg-git-2@gmane.org; Sun, 02 Mar 2008 08:43:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752075AbYCBHlR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Mar 2008 02:41:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752070AbYCBHlR
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Mar 2008 02:41:17 -0500
-Received: from mail.gmx.net ([213.165.64.20]:40811 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752068AbYCBHlQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Mar 2008 02:41:16 -0500
-Received: (qmail invoked by alias); 02 Mar 2008 07:41:14 -0000
-Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
-  by mail.gmx.net (mp007) with SMTP; 02 Mar 2008 08:41:14 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/yCYIrQfTyAbNa29cUWTcWVw0LOkBdNvXn3f/oq7
-	klpO+k+qTBTxtu
-X-X-Sender: gene099@racer.site
-In-Reply-To: <alpine.LSU.1.00.0803020730170.22527@racer.site>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1752114AbYCBHmd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Mar 2008 02:42:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752083AbYCBHmc
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Mar 2008 02:42:32 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1750 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752070AbYCBHmc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Mar 2008 02:42:32 -0500
+Received: (qmail 5220 invoked by uid 111); 2 Mar 2008 07:42:31 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Sun, 02 Mar 2008 02:42:31 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 02 Mar 2008 02:42:30 -0500
+Content-Disposition: inline
+In-Reply-To: <7vd4qdtw7k.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75741>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75742>
 
+On Sat, Mar 01, 2008 at 11:35:11PM -0800, Junio C Hamano wrote:
 
-When passing "xyz" to make_absolute_path(), make_absolute_path()
-erroneously tried to chdir("xyz"), and then append "/xyz".  Instead,
-skip the chdir() completely when no slash was found.
+> That is, "for objects we have, make sure it uniquely identifies,
+> otherwise, make sure the phoney name is long enough such that it would not
+> name any existing object".
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
+I think your logic is correct, and I think naming it 'exists' is more
+readable (I don't have a tendency not to double-negate).
 
-On Sun, 2 Mar 2008, Johannes Schindelin wrote:
+But...
 
-> Will stop posting patches for today, and fix tomorrow.
+> -		if (!status ||
+> -		    (is_null && status != SHORT_NAME_AMBIGUOUS)) {
+> +		if (exists
+> +		    ? !status
+> +		    : status == SHORT_NAME_NOT_FOUND) {
+>  			hex[len] = 0;
+>  			return hex;
+>  		}
 
-It was just too embarassing.
+Maybe it is just me, but I find the ternary operator here reduces
+readability. I would have liked the more verbose:
 
- path.c           |    4 +++-
- t/t0000-basic.sh |    2 ++
- 2 files changed, 5 insertions(+), 1 deletions(-)
+  if ((exists && !status) ||
+      (!exists && status == SHORT_NAME_NOT_FOUND)) {
 
-diff --git a/path.c b/path.c
-index 4260952..af27161 100644
---- a/path.c
-+++ b/path.c
-@@ -311,8 +311,10 @@ const char *make_absolute_path(const char *path)
- 			if (last_slash) {
- 				*last_slash = '\0';
- 				last_elem = xstrdup(last_slash + 1);
--			} else
-+			} else {
- 				last_elem = xstrdup(buf);
-+				*buf = '\0';
-+			}
- 		}
- 
- 		if (*buf) {
-diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
-index 92de088..27b54cb 100755
---- a/t/t0000-basic.sh
-+++ b/t/t0000-basic.sh
-@@ -304,6 +304,8 @@ test_expect_success 'absolute path works as expected' '
- 	test "$dir" = "$(test-absolute-path $dir2)" &&
- 	file="$dir"/index &&
- 	test "$file" = "$(test-absolute-path $dir2/index)" &&
-+	basename=blub &&
-+	test "$dir/$basename" = $(cd .git && test-absolute-path $basename) &&
- 	ln -s ../first/file .git/syml &&
- 	sym="$(cd first; pwd -P)"/file &&
- 	test "$sym" = "$(test-absolute-path $dir2/syml)"
--- 
-1.5.4.3.446.gbe8932
+But now I am just painting your bikeshed.
 
+-Peff
