@@ -1,111 +1,91 @@
-From: Gerrit Pape <pape@smarden.org>
-Subject: [PATCH/RFC] git-merge.sh: better handling of combined
-	--squash,--no-ff,--no-commit options
-Date: Sun, 2 Mar 2008 17:58:19 +0000
-Message-ID: <20080302175820.31385.qmail@9e9c5b8314ca7b.315fe32.mid.smarden.org>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: Google Summer of Code 2008
+Date: Sun, 02 Mar 2008 19:05:22 +0100
+Message-ID: <vpqfxv96ly5.fsf@bauges.imag.fr>
+References: <200802262356.28971.jnareb@gmail.com>
+	<200803020053.09815.jnareb@gmail.com> <vpqlk516rh6.fsf@bauges.imag.fr>
+	<200803021746.05629.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Mar 02 18:58:46 2008
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 02 19:07:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JVsSS-0004wp-Ha
-	for gcvg-git-2@gmane.org; Sun, 02 Mar 2008 18:58:44 +0100
+	id 1JVsad-0007Vm-Eq
+	for gcvg-git-2@gmane.org; Sun, 02 Mar 2008 19:07:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755446AbYCBR6F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Mar 2008 12:58:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755442AbYCBR6D
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Mar 2008 12:58:03 -0500
-Received: from a.ns.smarden.org ([212.42.242.37]:38276 "HELO a.mx.smarden.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755363AbYCBR6B (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Mar 2008 12:58:01 -0500
-Received: (qmail 31395 invoked by uid 1000); 2 Mar 2008 17:58:20 -0000
-Content-Disposition: inline
+	id S1755558AbYCBSGd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Mar 2008 13:06:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755549AbYCBSGd
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Mar 2008 13:06:33 -0500
+Received: from imag.imag.fr ([129.88.30.1]:50061 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755429AbYCBSGc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Mar 2008 13:06:32 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id m22I5MWI010532
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Sun, 2 Mar 2008 19:05:22 +0100 (CET)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1JVsYs-0001th-G5; Sun, 02 Mar 2008 19:05:22 +0100
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1JVsYs-0005pM-4W; Sun, 02 Mar 2008 19:05:22 +0100
+In-Reply-To: <200803021746.05629.jnareb@gmail.com> (Jakub Narebski's message of "Sun\, 2 Mar 2008 17\:46\:04 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Sun, 02 Mar 2008 19:05:23 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75821>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75822>
 
-git-merge used to use either the --squash,--no-squash, --no-ff,--ff,
---no-commit,--commit option, whichever came last in the command line.
-This lead to some un-intuitive behavior, having
+Jakub Narebski <jnareb@gmail.com> writes:
 
- git merge --no-commit --no-ff <branch>
+> [Cc list culled]
+>
+> On Sun, 2 Mar 2008, Matthieu Moy wrote:
+>> Jakub Narebski <jnareb@gmail.com> writes:
+>>>
+>>> * GNU Emacs git GUI
+>>>
+>>>   Make git mode for Emacs full featured git GUI, and not only commit
+>>>   tool, following ideas of PCL-CVS... and its limitation. I guess that
+>>>   DVC (http://download.gna.org/dvc) git mode is one thing to examine
+>>>   searching for features to implement, but from what I have read in
+>>>   documentation it is quite a but GNU Arch centric.
+>> 
+>> The documentation is, but the tool isn't. Actually, DVC started as
+>> "Xtla", which was _only_ a GNU Arch interface. The tool evolved a lot
+>> since then, but the documentation is totally outdated :-(.
+>
+> I wanted then tro try DVC out, but when comiling it I get the
+> following error message:
+>
+>   Cannot open load file: dvc-site
+>   make[1]: *** [clean-some] Error 255
+>   make[1]: Leaving directory `/tmp/dvc-snapshot/++build/lisp'
+>   make: *** [dvc] Error 2
+>
+> GNU Emacs 21.4.1, after running autoconf and ./configure.
+> Today's snapshot.
 
-actually commit the merge.  Now git-merge respects --no-commit together
-with --no-ff, as well as other combinations of the options.  However,
-this broke a selftest in t/t7600-merge.sh which expected to have --no-ff
-completely override the --squash option, so that
+Best is to try the DVC's mailing list. I'm CC-ing it (it's a moderated
+list for non-subscribers, your messages will take some time).
 
- git merge --squash --no-ff <branch>
+I used to be an active DVC contributor, but by lack of time, I didn't
+follow closely recent development. I'm not sure Emacs 21 is still
+supported (and at least, it's not well tested since most developers
+run Emacs 22 themselves).
 
-fast-forwards, and makes a merge commit; now it prepares a squash
-commit.  Combining --squash with --no-ff doesn't seem to make sense
-though, so the test is adapted to test --no-ff without the preceding
---squash.
-
-The unexpected behavior was reported by John Goerzen through
- http://bing.sdebian.org/468568
-
-Signed-off-by: Gerrit Pape <pape@smarden.org>
-
----
- git-merge.sh     |   13 +++++++------
- t/t7600-merge.sh |    1 +
- 2 files changed, 8 insertions(+), 6 deletions(-)
-
-diff --git a/git-merge.sh b/git-merge.sh
-index 1c123a3..2a5c456 100755
---- a/git-merge.sh
-+++ b/git-merge.sh
-@@ -37,6 +37,7 @@ use_strategies=
- 
- allow_fast_forward=t
- allow_trivial_merge=t
-+squash= no_commit=
- 
- dropsave() {
- 	rm -f -- "$GIT_DIR/MERGE_HEAD" "$GIT_DIR/MERGE_MSG" \
-@@ -152,17 +153,17 @@ parse_config () {
- 		--summary)
- 			show_diffstat=t ;;
- 		--squash)
--			allow_fast_forward=t squash=t no_commit=t ;;
-+			squash=t no_commit=t ;;
- 		--no-squash)
--			allow_fast_forward=t squash= no_commit= ;;
-+			squash= no_commit= ;;
- 		--commit)
--			allow_fast_forward=t squash= no_commit= ;;
-+			no_commit= ;;
- 		--no-commit)
--			allow_fast_forward=t squash= no_commit=t ;;
-+			no_commit=t ;;
- 		--ff)
--			allow_fast_forward=t squash= no_commit= ;;
-+			allow_fast_forward=t ;;
- 		--no-ff)
--			allow_fast_forward=false squash= no_commit= ;;
-+			allow_fast_forward=f ;;
- 		-s|--strategy)
- 			shift
- 			case " $all_strategies " in
-diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
-index 50c51c8..085f55f 100755
---- a/t/t7600-merge.sh
-+++ b/t/t7600-merge.sh
-@@ -419,6 +419,7 @@ test_debug 'gitk --all'
- 
- test_expect_success 'merge c0 with c1 (no-ff)' '
- 	git reset --hard c0 &&
-+	git config branch.master.mergeoptions "" &&
- 	test_tick &&
- 	git merge --no-ff c1 &&
- 	verify_merge file result.1 &&
 -- 
-1.5.4.3
-
+Matthieu
