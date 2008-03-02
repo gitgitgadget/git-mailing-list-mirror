@@ -1,70 +1,67 @@
-From: "Carlos Rica" <jasampler@gmail.com>
-Subject: Re: [PATCH] Make builtin-reset.c use parse_options.
-Date: Sun, 2 Mar 2008 13:54:10 +0100
-Message-ID: <1b46aba20803020454v322f061bi4f34a737e9e2b7f3@mail.gmail.com>
-References: <47C98472.8000002@gmail.com> <20080302094031.GA2973@steel.home>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: What's cooking in git.git (topics)
+Date: Sun, 2 Mar 2008 09:02:10 -0500
+Message-ID: <20080302140210.GZ8410@spearce.org>
+References: <7v7ihmuwzi.fsf@gitster.siamese.dyndns.org> <7vodavd9qw.fsf@gitster.siamese.dyndns.org> <7vbq6tset4.fsf@gitster.siamese.dyndns.org> <7vmyq9gk94.fsf@gitster.siamese.dyndns.org> <7vk5la4oxq.fsf@gitster.siamese.dyndns.org> <7vejbc44hu.fsf@gitster.siamese.dyndns.org> <7v8x1fymei.fsf@gitster.siamese.dyndns.org> <7vpruljunl.fsf@gitster.siamese.dyndns.org> <7v1w6xoqnm.fsf@gitster.siamese.dyndns.org> <7vy792yzd6.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Junio C Hamano" <gitster@pobox.com>
-To: "Alex Riesen" <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 02 13:54:49 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Mar 02 15:03:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JVniL-0006Ov-0D
-	for gcvg-git-2@gmane.org; Sun, 02 Mar 2008 13:54:49 +0100
+	id 1JVomT-0000D3-W2
+	for gcvg-git-2@gmane.org; Sun, 02 Mar 2008 15:03:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753770AbYCBMyM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Mar 2008 07:54:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752997AbYCBMyM
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Mar 2008 07:54:12 -0500
-Received: from wf-out-1314.google.com ([209.85.200.172]:57621 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751394AbYCBMyL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Mar 2008 07:54:11 -0500
-Received: by wf-out-1314.google.com with SMTP id 28so5903970wff.4
-        for <git@vger.kernel.org>; Sun, 02 Mar 2008 04:54:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=db1/Z7cqy6B1GwFNA9JBCLNeT32KRY6u/MD7SaIgG6s=;
-        b=GbNDU6Be4tzsHwHzKBmOw0Gkz3t5ko4E4gwyV1uH5SLtu7dhNHxEao/MIbojSejz6tPn5P4hUeuNAyuqD6dA/a4APfKrzFp2A9GY/h23RqY+L+LYzlDeToX33FTq9bJUjhst1AHcZFsF4PUnnY0NRMwj4mk1QFvSzLM8z8ghl3E=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=IY57HSUedYEskCFi7vcQiHIzjYVmNRvhKHmnBJ8G+OwuVLami7Ad8RdP8oeb645e2s7tXav2qTxVV/3+V3hxc4btyz+Y8AHBQAlKmXLTmJsisv5utx3dherqriV+3MAc7ckYJcr10Ee0IW+8/cYF/l3YnMiJASK+5HH3aGspV/I=
-Received: by 10.142.172.12 with SMTP id u12mr8306515wfe.16.1204462450637;
-        Sun, 02 Mar 2008 04:54:10 -0800 (PST)
-Received: by 10.142.99.13 with HTTP; Sun, 2 Mar 2008 04:54:10 -0800 (PST)
-In-Reply-To: <20080302094031.GA2973@steel.home>
+	id S1751934AbYCBOCP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Mar 2008 09:02:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751988AbYCBOCO
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Mar 2008 09:02:14 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:40930 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751634AbYCBOCO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Mar 2008 09:02:14 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1JVolT-0003yG-Ps; Sun, 02 Mar 2008 09:02:07 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id E418920FBAE; Sun,  2 Mar 2008 09:02:10 -0500 (EST)
 Content-Disposition: inline
+In-Reply-To: <7vy792yzd6.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75777>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75778>
 
-On Sun, Mar 2, 2008 at 10:40 AM, Alex Riesen <raa.lkml@gmail.com> wrote:
-> Carlos Rica, Sat, Mar 01, 2008 17:29:38 +0100:
->
-> > @@ -169,40 +173,31 @@ static const char *reset_type_names[] = { "mixed", "soft", "hard", NULL };
->  >
->  >  int cmd_reset(int argc, const char **argv, const char *prefix)
->  >  {
->  > -     int i = 1, reset_type = NONE, update_ref_status = 0, quiet = 0;
->  > +     int i = 0, reset_type = NONE, update_ref_status = 0, quiet = 0;
->  >       const char *rev = "HEAD";
->  >       unsigned char sha1[20], *orig = NULL, sha1_orig[20],
->  >                               *old_orig = NULL, sha1_old_orig[20];
->  >       struct commit *commit;
->  >       char *reflog_action, msg[1024];
->  > +     struct option options[] = {
->
->  "static const"?
->
->
+Junio C Hamano <gitster@pobox.com> wrote:
+> * sp/fetch-optim (Sat Mar 1 00:25:38 2008 -0500) 7 commits
+>  - Teach git-fetch to grab a tag at the same time as a commit
+>  - Make git-fetch follow tags we already have objects for sooner
+>  - Teach upload-pack to log the received need lines to fd 3
+>  - Allow builtin-fetch's find_non_local_tags to append onto a list
+>  - Ensure tail pointer gets setup correctly when we fetch HEAD only
+>  - Remove unnecessary delaying of free_refs(ref_map) in builtin-fetch
+>  - Remove unused variable in builtin-fetch find_non_local_tags
+> 
+> A few existing tests in 5515 need to be adjusted as they expect tags not
+> to be fetched early, but the point of this series is to optimize to allow
+> them to, under some conditions.  Otherwise slated for 1.5.5.
 
-"static const" what?
-options? cmd_reset? reset_type_names?
+Really?  I thought 5515 was passing when I sent the v2 series in.
+I'll double check it later today.  Prior to my "Teach upload-pack
+to log" change I'm not sure *how* the tests in 5515 would notice
+that tags were fetched on the first connection and not the second.
+Its still in the same git-fetch process.
+ 
+-- 
+Shawn.
