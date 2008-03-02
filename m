@@ -1,150 +1,192 @@
-From: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: [PATCH 10/10] Additional tests to capture worktree special cases
-Date: Sun, 2 Mar 2008 17:35:43 +0700
-Message-ID: <20080302103543.GA9028@laptop>
-References: <cover.1204453703.git.pclouds@gmail.com>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: [PATCH 3/3] parse-options: new option type to treat an option-like parameter as an argument.
+Date: Sun, 02 Mar 2008 11:35:56 +0100
+Message-ID: <20080302103556.GB21078@artemis.madism.org>
+References: <20080302082138.GB5407@artemis.madism.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 02 11:36:31 2008
+Content-Type: text/plain; charset=us-ascii
+To: Git ML <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Mar 02 11:36:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JVlYR-0003hH-4u
-	for gcvg-git-2@gmane.org; Sun, 02 Mar 2008 11:36:27 +0100
+	id 1JVlYd-0003kS-48
+	for gcvg-git-2@gmane.org; Sun, 02 Mar 2008 11:36:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752289AbYCBKfu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 2 Mar 2008 05:35:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752184AbYCBKfu
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Mar 2008 05:35:50 -0500
-Received: from wa-out-1112.google.com ([209.85.146.178]:48037 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752108AbYCBKft (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Mar 2008 05:35:49 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so6064633wah.23
-        for <git@vger.kernel.org>; Sun, 02 Mar 2008 02:35:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:date:from:to:subject:message-id:references:mime-version:content-type:content-disposition:content-transfer-encoding:in-reply-to:user-agent;
-        bh=vVJrcZ0x6gB5H+qHWtUn9tCRN7cm8lwesi3hanF5Ix8=;
-        b=bZsa5a/n6tsFEfBC9FYmiWZojG9ZV9Iw/3q3lCgWhk0izgTZXUdz0lga2P7QevYlxyLyp6hztImgPWth1aMWH/au8kJpuHTzD6bzTiwFUpeGJW5LHKtchFEfhUm0wD/W/ejIdWLYTIWFTdBUDtsfQ3zE5NjvOl/FGRWmkeykBK4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:subject:message-id:references:mime-version:content-type:content-disposition:content-transfer-encoding:in-reply-to:user-agent;
-        b=gp9RVTyFzvEcDznQW8FbygSD4Z3VvzyZJct+SP5bx6zT2bM00c3lqC4UktbR9/FXklB2xXP7yS5mczW4AXVWhdmyxHn9BATN/wgqi8GMF4dIHsQmWdu9Mase0o/LeZ8LQqIIhKtYn9wTHktEYJkJHlixIK74jqzkMUPCwdHDRtI=
-Received: by 10.114.37.1 with SMTP id k1mr3141585wak.6.1204454149346;
-        Sun, 02 Mar 2008 02:35:49 -0800 (PST)
-Received: from pclouds@gmail.com ( [117.5.2.84])
-        by mx.google.com with ESMTPS id k37sm18491580waf.55.2008.03.02.02.35.46
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 02 Mar 2008 02:35:48 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sun,  2 Mar 2008 17:35:43 +0700
+	id S1752563AbYCBKf6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Mar 2008 05:35:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752348AbYCBKf6
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Mar 2008 05:35:58 -0500
+Received: from pan.madism.org ([88.191.52.104]:40753 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752184AbYCBKf5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Mar 2008 05:35:57 -0500
+Received: from madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id B40E63108A;
+	Sun,  2 Mar 2008 11:35:56 +0100 (CET)
+Received: by madism.org (Postfix, from userid 1000)
+	id 602333D63F3; Sun,  2 Mar 2008 11:35:56 +0100 (CET)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Git ML <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
 Content-Disposition: inline
-In-Reply-To: <cover.1204453703.git.pclouds@gmail.com>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+In-Reply-To: <20080302082138.GB5407@artemis.madism.org>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75771>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75772>
 
-Most of them are for setup_git_directory_gently() commands
-as those are likely to break.
+This is meant to be used to keep --not and --all during revision parsing.
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
+Signed-off-by: Pierre Habouzit <madcoder@debian.org>
 ---
- t/t1501-worktree.sh |   57 +++++++++++++++++++++++++++++++++++++++++++=
-++++++-
- 1 files changed, 55 insertions(+), 2 deletions(-)
+ parse-options.c          |   26 +++++++++++++++++++-------
+ parse-options.h          |    2 ++
+ t/t0040-parse-options.sh |   16 ++++++++++++++++
+ test-parse-options.c     |    2 ++
+ 4 files changed, 39 insertions(+), 7 deletions(-)
 
-diff --git a/t/t1501-worktree.sh b/t/t1501-worktree.sh
-index 7ee3820..a53c1f5 100755
---- a/t/t1501-worktree.sh
-+++ b/t/t1501-worktree.sh
-@@ -47,7 +47,19 @@ export GIT_CONFIG=3D"$(pwd)"/$GIT_DIR/config
- test_rev_parse 'subdirectory' false false true sub/dir/
- cd ../../.. || exit 1
-=20
--say "core.worktree =3D absolute path"
-+say "core.worktree =3D absolute path with GIT_DIR unset"
-+mkdir -p $(pwd)/repo.git/work/sub/dir || exit 1
-+unset GIT_DIR
-+export GIT_CONFIG=3D$(pwd)/repo.git/config
-+git config core.worktree "$(pwd)/repo.git/work"
-+test_rev_parse 'outside'      false false false
-+cd repo.git/work || exit 1
-+test_rev_parse 'inside'       false true true ''
-+cd sub/dir || exit 1
-+test_rev_parse 'subdirectory' false true true sub/dir/
-+cd ../../../.. || exit 1
+diff --git a/parse-options.c b/parse-options.c
+index be35785..8e64316 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -6,7 +6,8 @@
+ 
+ struct optparse_t {
+ 	const char **argv;
+-	int argc;
++	const char **out;
++	int argc, cpidx;
+ 	const char *opt;
+ };
+ 
+@@ -159,6 +160,16 @@ static int parse_long_opt(struct optparse_t *p, const char *arg,
+ 			continue;
+ 
+ 		rest = skip_prefix(arg, options->long_name);
++		if (options->type == OPTION_ARGUMENT) {
++			if (!rest)
++				continue;
++			if (*rest == '=')
++				return opterror(options, "takes no value", flags);
++			if (*rest)
++				continue;
++			p->out[p->cpidx++] = arg - 2;
++			return 0;
++		}
+ 		if (!rest) {
+ 			/* abbreviated? */
+ 			if (!strncmp(options->long_name, arg, arg_end - arg)) {
+@@ -242,8 +253,7 @@ static NORETURN void usage_with_options_internal(const char * const *,
+ int parse_options(int argc, const char **argv, const struct option *options,
+                   const char * const usagestr[], int flags)
+ {
+-	struct optparse_t args = { argv + 1, argc - 1, NULL };
+-	int j = 0;
++	struct optparse_t args = { argv + 1, argv, argc - 1, 0, NULL };
+ 
+ 	for (; args.argc; args.argc--, args.argv++) {
+ 		const char *arg = args.argv[0];
+@@ -251,7 +261,7 @@ int parse_options(int argc, const char **argv, const struct option *options,
+ 		if (*arg != '-' || !arg[1]) {
+ 			if (flags & PARSE_OPT_STOP_AT_NON_OPTION)
+ 				break;
+-			argv[j++] = args.argv[0];
++			args.out[args.cpidx++] = args.argv[0];
+ 			continue;
+ 		}
+ 
+@@ -288,9 +298,9 @@ int parse_options(int argc, const char **argv, const struct option *options,
+ 			usage_with_options(usagestr, options);
+ 	}
+ 
+-	memmove(argv + j, args.argv, args.argc * sizeof(*argv));
+-	argv[j + args.argc] = NULL;
+-	return j + args.argc;
++	memmove(args.out + args.cpidx, args.argv, args.argc * sizeof(*args.out));
++	args.out[args.cpidx + args.argc] = NULL;
++	return args.cpidx + args.argc;
+ }
+ 
+ #define USAGE_OPTS_WIDTH 24
+@@ -330,6 +340,8 @@ void usage_with_options_internal(const char * const *usagestr,
+ 			pos += fprintf(stderr, "--%s", opts->long_name);
+ 
+ 		switch (opts->type) {
++		case OPTION_ARGUMENT:
++			break;
+ 		case OPTION_INTEGER:
+ 			if (opts->flags & PARSE_OPT_OPTARG)
+ 				pos += fprintf(stderr, " [<n>]");
+diff --git a/parse-options.h b/parse-options.h
+index 0d40cd2..1af62b0 100644
+--- a/parse-options.h
++++ b/parse-options.h
+@@ -4,6 +4,7 @@
+ enum parse_opt_type {
+ 	/* special types */
+ 	OPTION_END,
++	OPTION_ARGUMENT,
+ 	OPTION_GROUP,
+ 	/* options with no arguments */
+ 	OPTION_BIT,
+@@ -85,6 +86,7 @@ struct option {
+ };
+ 
+ #define OPT_END()                   { OPTION_END }
++#define OPT_ARGUMENT(l, h)          { OPTION_ARGUMENT, 0, (l), NULL, NULL, (h) }
+ #define OPT_GROUP(h)                { OPTION_GROUP, 0, NULL, NULL, NULL, (h) }
+ #define OPT_BIT(s, l, v, h, b)      { OPTION_BIT, (s), (l), (v), NULL, (h), 0, NULL, (b) }
+ #define OPT_BOOLEAN(s, l, v, h)     { OPTION_BOOLEAN, (s), (l), (v), NULL, (h) }
+diff --git a/t/t0040-parse-options.sh b/t/t0040-parse-options.sh
+index 0e2933a..c23f0ac 100755
+--- a/t/t0040-parse-options.sh
++++ b/t/t0040-parse-options.sh
+@@ -21,6 +21,9 @@ string options
+     --st <st>             get another string (pervert ordering)
+     -o <str>              get another string
+ 
++magic arguments
++    --quux                means --quux
 +
-+say "core.worktree =3D absolute path with GIT_DIR set"
- export GIT_DIR=3D$(pwd)/repo.git
- export GIT_CONFIG=3D$GIT_DIR/config
- git config core.worktree "$(pwd)/work"
-@@ -58,6 +70,47 @@ cd sub/dir || exit 1
- test_rev_parse 'subdirectory' false false true sub/dir/
- cd ../../.. || exit 1
-=20
-+test_expect_success '"git ls-files -o" gets correct prefix' '
-+	(cd work/sub && touch untracked &&
-+	test "$(git ls-files -o)" =3D untracked)'
-+
-+rm work/sub/untracked || exit 1
-+
-+cat <<EOF >expected
-+:100644 100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 00000000000000=
-00000000000000000000000000 M	sub/tracked
-+EOF
-+
-+cat <<EOF >expected2
-+:100644 100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 00000000000000=
-00000000000000000000000000 M	tracked
-+EOF
-+
-+test_expect_success '"git diff-files" gets correct prefix' '
-+	(cd work/sub  && touch tracked &&
-+	git add tracked && echo modified > tracked &&
-+	git diff-files > ../../result &&
-+	git diff-files --relative > ../../result2 &&
-+	git rm -f tracked) &&
-+	cmp result expected &&
-+	cmp result2 expected2'
-+
-+cat <<EOF >expected
-+:100644 100644 e69de29... 0000000... M	sub/tracked
-+EOF
-+
-+cat <<EOF >expected2
-+:100644 100644 e69de29... 0000000... M	tracked
-+EOF
-+
-+
-+test_expect_success '"git diff" gets correct prefix' '
-+	(cd work/sub  && touch tracked &&
-+	git add tracked && echo modified > tracked &&
-+	git diff --raw > ../../result &&
-+	git diff --raw --relative > ../../result2 &&
-+	git rm -f tracked) &&
-+	cmp result expected &&
-+	cmp result2 expected2'
-+
- say "GIT_WORK_TREE=3Drelative path (override core.worktree)"
- export GIT_DIR=3D$(pwd)/repo.git
- export GIT_CONFIG=3D$GIT_DIR/config
-@@ -103,7 +156,7 @@ test_expect_success 'repo finds its work tree from =
-work tree, too' '
- 	 test sub/dir/tracked =3D "$(git ls-files)")
+ EOF
+ 
+ test_expect_success 'test help' '
+@@ -114,4 +117,17 @@ test_expect_success 'detect possible typos' '
+ 	git diff expect.err output.err
  '
-=20
--test_expect_success '_gently() groks relative GIT_DIR & GIT_WORK_TREE'=
- '
-+test_expect_success '"git diff" setup worktree properly' '
- 	cd repo.git/work/sub/dir &&
- 	GIT_DIR=3D../../.. GIT_WORK_TREE=3D../.. GIT_PAGER=3D \
- 		git diff --exit-code tracked &&
---=20
-1.5.4.2.281.g28d0e
+ 
++cat > expect <<EOF
++boolean: 0
++integer: 0
++string: (not set)
++arg 00: --quux
++EOF
++
++test_expect_success 'keep some options as arguments' '
++	test-parse-options --quux > output 2> output.err &&
++        test ! -s output.err &&
++        git diff expect output
++'
++
+ test_done
+diff --git a/test-parse-options.c b/test-parse-options.c
+index eed8a02..73360d7 100644
+--- a/test-parse-options.c
++++ b/test-parse-options.c
+@@ -20,6 +20,8 @@ int main(int argc, const char **argv)
+ 		OPT_STRING(0, "string2", &string, "str", "get another string"),
+ 		OPT_STRING(0, "st", &string, "st", "get another string (pervert ordering)"),
+ 		OPT_STRING('o', NULL, &string, "str", "get another string"),
++		OPT_GROUP("magic arguments"),
++		OPT_ARGUMENT("quux", "means --quux"),
+ 		OPT_END(),
+ 	};
+ 	int i;
+-- 
+1.5.4.3.471.ga96e8.dirty
