@@ -1,72 +1,110 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: How to "git add ." when some files are not accessible
-	(permission denied)?
-Date: Sat, 1 Mar 2008 20:19:00 -0500
-Message-ID: <20080302011900.GC22843@coredump.intra.peff.net>
-References: <47C95E34.1050306@dirk.my1.cc>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 1/3] git-submodule: New subcommand 'summary' (1) -
+ code framework
+Date: Sat, 01 Mar 2008 18:16:02 -0800
+Message-ID: <7vskz9x44d.fsf@gitster.siamese.dyndns.org>
+References: <1204306487-15849-1-git-send-email-pkufranky@gmail.com>
+ <80aa1c46ced6f0b92ca2fca3b917d383343b3161.1204306070.git.pkufranky@gmail.com>
+ <7vk5km7vir.fsf@gitster.siamese.dyndns.org>
+ <46dff0320803010227r5024d152g259a6a07a2441351@mail.gmail.com>
+ <7vejauxj38.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Dirk =?utf-8?Q?S=C3=BCsserott?= <newsletter@dirk.my1.cc>
-X-From: git-owner@vger.kernel.org Sun Mar 02 02:19:44 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Ping Yin" <pkufranky@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 02 03:17:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JVcrf-0005Vz-KB
-	for gcvg-git-2@gmane.org; Sun, 02 Mar 2008 02:19:44 +0100
+	id 1JVdlP-0000Rv-Ix
+	for gcvg-git-2@gmane.org; Sun, 02 Mar 2008 03:17:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752431AbYCBBTG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 1 Mar 2008 20:19:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752218AbYCBBTF
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Mar 2008 20:19:05 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3461 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752027AbYCBBTE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Mar 2008 20:19:04 -0500
-Received: (qmail 13495 invoked by uid 111); 2 Mar 2008 01:19:01 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Sat, 01 Mar 2008 20:19:01 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 01 Mar 2008 20:19:00 -0500
-Content-Disposition: inline
-In-Reply-To: <47C95E34.1050306@dirk.my1.cc>
+	id S1751087AbYCBCQR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Mar 2008 21:16:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751130AbYCBCQQ
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Mar 2008 21:16:16 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:52224 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750964AbYCBCQQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Mar 2008 21:16:16 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id CF12328C3;
+	Sat,  1 Mar 2008 21:16:14 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id E958928C1; Sat,  1 Mar 2008 21:16:09 -0500 (EST)
+In-Reply-To: <7vejauxj38.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Sat, 01 Mar 2008 12:52:43 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75713>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75714>
 
-On Sat, Mar 01, 2008 at 02:46:28PM +0100, Dirk S=C3=BCsserott wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> The question is: is there a way to tell "git add ." to add all files =
-but
-> ignore those that cannot be added due to lack of authorization?
+> "Ping Yin" <pkufranky@gmail.com> writes:
+> ...
+>> man grep says
+>>  In  basic regular expressions the metacharacters ?, +, {, |, (, and )
+>> lose their special meaning; instead use the backslashed versions \?,
+>> \+, \{, \|, \(, and \).
+>>
+>> Doen't it mean that '\|' is BRE ?
+>
+> It just says unlike in ERE, these characters are not special in BRE; it
+> does not at all say using backslash like \?, \+, and \| makes them so.
+>
+> And they are not.  \(...\), \{m\}, \{m,\} and \{m,n\} are part of BRE, but
+> the two you used (\+ and \|) are not.  GNU accept these two as extensions,
+> but other POSIX implementations may have troubles with them.
+>
+>   http://www.opengroup.org/onlinepubs/000095399/basedefs/xbd_chap09.html
+>
+> Please be gentle to porters to non GNU systems.  Either stay inside BRE
+> (which I think we have managed to do with our usage of grep) or explicitly
+> ask for ERE with "grep -E".
 
-No, there isn't. Under Linux, I would come up with a list of files I wa=
-s
-interested in and then pipe it to "xargs git-add", which is probably
-unhelpful for Windows.
+I think this would help people new to our codebase.
 
-But I think more fundamentally, you probably _do_ want to come up with =
-a
-list of files that you can't access and add them to your .gitignore (or
-your .git/info/exclude file if they are purely a local matter). That is
-the official way to tell all git commands "I really don't care about
-these files".  Otherwise they will keep getting brought up when you do,
-e.g., a git-status.
+Also 
 
-> Or, more generally spoken: can I tell "git add" to add only those fil=
-es =20
-> it can handle and ignore the rest? The "-f" switch doesn't work and s=
-ome
-> exclude lists on a per file basis are not applicable for my purpose a=
-s I
-> don't know the files in advance.
+    Message-ID: <7v4pdtgjf0.fsf@gitster.siamese.dyndns.org>
+    Subject: Re: [PATCH] git-filter-branch could be confused by similar names
+    Date: Fri, 04 Jan 2008 17:17:39 -0800
 
-The only reason I can think of to not want to generate such an ignore
-list is if you are frequently and automagically doing a "git add ." to
-pick up new files. For that reason, a "try to continue even if we can't
-look at some files" option to git add might make some sense.
+aka
 
--Peff
+    http://article.gmane.org gmane.comp.version-control.git/69630
+
+---
+
+ Documentation/CodingGuidelines |   12 ++++++++++++
+ 1 files changed, 12 insertions(+), 0 deletions(-)
+
+diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
+index 3b042db..994eb91 100644
+--- a/Documentation/CodingGuidelines
++++ b/Documentation/CodingGuidelines
+@@ -53,6 +53,18 @@ For shell scripts specifically (not exhaustive):
+  - We do not write the noiseword "function" in front of shell
+    functions.
+ 
++ - As to use of grep, stick to a subset of BRE (namely, no \{m,n\},
++   [::], [==], nor [..]) for portability.
++
++   - We do not use \{m,n\};
++
++   - We do not use -E;
++
++   - We do not use ? nor + (which are \{0,1\} and \{1,\}
++     respectively in BRE) but that goes without saying as these
++     are ERE elements not BRE (note that \? and \+ are not even part
++     of BRE -- making them accessible from BRE is a GNU extension).
++
+ For C programs:
+ 
+  - We use tabs to indent, and interpret tabs as taking up to
