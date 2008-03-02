@@ -1,85 +1,67 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: The EGIT Chronicles Issue Volume 2, Issue 1
-Date: Sun, 2 Mar 2008 01:51:28 +0100
-Message-ID: <200803020151.28397.robin.rosenberg@dewire.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFC] git rebase -s ours
+Date: Sat, 1 Mar 2008 20:05:27 -0500
+Message-ID: <20080302010527.GB22843@coredump.intra.peff.net>
+References: <20080301111716.GA3263@glandium.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 02 01:51:54 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Sun Mar 02 02:06:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JVcQk-0007ky-60
-	for gcvg-git-2@gmane.org; Sun, 02 Mar 2008 01:51:54 +0100
+	id 1JVceV-0002YR-Ip
+	for gcvg-git-2@gmane.org; Sun, 02 Mar 2008 02:06:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752168AbYCBAvQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Mar 2008 19:51:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751521AbYCBAvQ
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Mar 2008 19:51:16 -0500
-Received: from [83.140.172.130] ([83.140.172.130]:6950 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1751318AbYCBAvP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Mar 2008 19:51:15 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id A21B2802673
-	for <git@vger.kernel.org>; Sun,  2 Mar 2008 01:51:13 +0100 (CET)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id sPdWDUTp7vyp for <git@vger.kernel.org>;
-	Sun,  2 Mar 2008 01:51:12 +0100 (CET)
-Received: from [10.9.0.3] (unknown [10.9.0.3])
-	by dewire.com (Postfix) with ESMTP id D0262800698
-	for <git@vger.kernel.org>; Sun,  2 Mar 2008 01:51:12 +0100 (CET)
-User-Agent: KMail/1.9.9
+	id S1751684AbYCBBFb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Mar 2008 20:05:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750940AbYCBBFb
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Mar 2008 20:05:31 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3561 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750794AbYCBBFa (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Mar 2008 20:05:30 -0500
+Received: (qmail 12640 invoked by uid 111); 2 Mar 2008 01:05:28 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Sat, 01 Mar 2008 20:05:28 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 01 Mar 2008 20:05:27 -0500
 Content-Disposition: inline
+In-Reply-To: <20080301111716.GA3263@glandium.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75710>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75711>
 
+On Sat, Mar 01, 2008 at 12:17:16PM +0100, Mike Hommey wrote:
 
-Eclipse 0.3.1 is out
+> What do you think git rebase -s ours should be considering as "ours"?
+> If I'm not mistaken, at the moment, "ours" stands for "upstream", which
+> is kind of confusing...
 
-This release contains a number of minor features and bug fixes.
+Sort of. It actually works as "what is in the working tree is fine" so
+it ends up not applying _any_ commits. In other words,
 
-Features:
-- Resources are now decorated with repository state, e.g. whether a merge or 
-rebase is in progress.
-- Better (subject to subjectivity) formatting of tooltips in the history view
-- Actions to set/reset the assume valid bit for files, including decorations
-- Improved layout of the history pane and user preferences for this
-- Simpler layout of changed files in the compare editor, i.e. we do not list 
-folders anymore, just changed files.
-- Searching in the history view
+  git rebase --strategy=ours upstream
 
-Bug fixes:
-- Bugfixes related to checkout and detection of changed files for commit. This
-is the most important part of this release.
-- The ability to perform the first commit in a repository from within Eclipse.
-- Parsing of the config file
+is equivalent to
 
-Documentation:
-- Javadoc on anything public/protected in jgit. Should make it a little easier 
-for newcomers. Also makes the project look better on Ohloh. Unit tests for 
-jgit moved into it's own project and tests that do require external 
-dependencies were separated from better defined ones that do not.
-- A number of typo's fixed.
+  git reset --hard upstream
 
-New branch:
-- Created stable branch. Currently points to v0.3.1. This branch will contain
-tagged versions.
+So I think the current behavior is nonsensical, and I assume nobody uses
+it.
 
-Special thanks to Roger C. Soares for the history and compare editor 
-improvements. Also thanks to Jing Xue, Ladislav Sladecek, Shunichi Fuji and 
-Vincent Legoll for correcting some smaller bugs and typos.
+OTOH, what exactly are you trying to accomplish? If you have "ours" mean
+"always take the rebased content", then aren't you stomping on original
+commits? You might mean something like "do a regular 3-way merge, and
+for every textual conflict, choose the rebased content". That at least
+makes some sense, but I suspect it will produce uncompilable results in
+most cases.
 
-Next edition will contain at least fetch thanks to Shawn Pearce. I still have 
-a lot of loose ends to tie up before that happens. Roger Soares contributed 
-some GUI's for this.
+What I am getting at is: what 'ours' should mean in a rebase depends on
+how it can usefully be used in a workflow. Do you have a workflow in
+mind?
 
--- robin
+-Peff
