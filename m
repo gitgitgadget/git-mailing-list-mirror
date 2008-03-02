@@ -1,81 +1,70 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Re* [PATCH] git-submodule: Don't blame when git-describe fails
-Date: Sun, 2 Mar 2008 17:41:52 -0500
-Message-ID: <20080302224152.GC8410@spearce.org>
-References: <1204469152-24227-1-git-send-email-pkufranky@gmail.com> <7vy791oyqa.fsf@gitster.siamese.dyndns.org>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: Google Summer of Code 2008
+Date: Mon, 3 Mar 2008 12:04:36 +1300
+Message-ID: <46a038f90803021504j68f7d93dmfcdfb361c3ca9782@mail.gmail.com>
+References: <200802262356.28971.jnareb@gmail.com>
+	 <20080228063621.GR8410@spearce.org>
+	 <alpine.LSU.1.00.0802281021070.22527@racer.site>
+	 <200802291304.16026.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Ping Yin <pkufranky@gmail.com>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Mar 02 23:42:44 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	"Robin Rosenberg" <robin.rosenberg.lists@dewire.com>,
+	git@vger.kernel.org, "John Hawley" <warthog9@kernel.org>
+To: "Jakub Narebski" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 03 00:05:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JVwt9-0005Rv-4w
-	for gcvg-git-2@gmane.org; Sun, 02 Mar 2008 23:42:35 +0100
+	id 1JVxFf-0003nH-0p
+	for gcvg-git-2@gmane.org; Mon, 03 Mar 2008 00:05:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755013AbYCBWl6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Mar 2008 17:41:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754173AbYCBWl6
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Mar 2008 17:41:58 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:58003 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754632AbYCBWl5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Mar 2008 17:41:57 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1JVwsK-0005X8-E5; Sun, 02 Mar 2008 17:41:44 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 753BC20FBAE; Sun,  2 Mar 2008 17:41:52 -0500 (EST)
+	id S1757592AbYCBXEj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Mar 2008 18:04:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757175AbYCBXEj
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Mar 2008 18:04:39 -0500
+Received: from ug-out-1314.google.com ([66.249.92.168]:7456 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754748AbYCBXEi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Mar 2008 18:04:38 -0500
+Received: by ug-out-1314.google.com with SMTP id z38so1642312ugc.16
+        for <git@vger.kernel.org>; Sun, 02 Mar 2008 15:04:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=SBVvo8jpXOpWGHZHQQRIXFnXZ6nHub0z4M5Kt5HSdrc=;
+        b=rT054orYRm1oJkpgNhJc4WrYG0MiLcnOgBhOCF9vHtWPzQj/GFmcVeVqnlLUZljQ47ZXPEBVpXj70QkrDwerkMKCzLWtnsCqMmRz2zQqg7MXRVsW1Fv+1ikVJx1d+NXV6XZiWO+h5YTyG3Kvg8zpiXKRovD5Yh79e7w6NKXxidI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=jzUx14/Ea1q4N6Bvb8Zv/olhEEmlfkKgID9yzKKhKh78d/8Op8aWpQgTOMoEG6XBKtZy3ZF6rNciUsrH2zz15cHNMrPscQjM3L/xurtYsNpy/Sd3NrtEY9RDj5b+hFp1LRYUCUHPyjIqsEchIwQv5/3Ll+JT1zfruGpnvI1mUzU=
+Received: by 10.67.89.15 with SMTP id r15mr4253421ugl.12.1204499076909;
+        Sun, 02 Mar 2008 15:04:36 -0800 (PST)
+Received: by 10.66.252.6 with HTTP; Sun, 2 Mar 2008 15:04:36 -0800 (PST)
+In-Reply-To: <200802291304.16026.jnareb@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <7vy791oyqa.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75852>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75853>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> -- >8 --
-> describe --always: fall back to showing an abbreviated object name
-...
-> diff --git a/builtin-describe.c b/builtin-describe.c
-> index 05e309f..c1182a3 100644
-> --- a/builtin-describe.c
-> +++ b/builtin-describe.c
-> @@ -146,6 +147,17 @@ static unsigned long finish_depth_computation(
->  	return seen_commits;
->  }
->  
-> +static void cannot_describe(const unsigned char *sha1) NORETURN;
-> +
-> +static void cannot_describe(const unsigned char *sha1)
-> +{
-> +	if (always) {
-> +		printf("%s\n", find_unique_abbrev(sha1, DEFAULT_ABBREV));
+On Sat, Mar 1, 2008 at 1:04 AM, Jakub Narebski <jnareb@gmail.com> wrote:
+>  A few things changes for us: we have participated in GSoC 2007; we need
+>  to find backup organization administrator (was: Martin Langhoff for
+>  GSoC2007), list of mentors would change most probably.
 
-This should be "abbrev" not "DEFAULT_ABBREV" as then we honor the
-command line "describe --always --abbrev=16" (for example).
+Unfortunately, this year I'm seriously swamped, as I'll probably be
+mentoring a few GSoC projects for Moodle and OLPC (due to
+http://lists.laptop.org/pipermail/devel/2008-February/011314.html ).
+Within OLPC I will be using bits and pieces of git, so I may come up
+woth something git related.
 
-> @@ -278,6 +290,8 @@ int cmd_describe(int argc, const char **argv, const char *prefix)
->  			    "consider <n> most recent tags (default: 10)"),
->  		OPT_STRING(0, "match",       &pattern, "pattern",
->  			   "only consider tags matching <pattern>"),
-> +		OPT_BOOLEAN(0, "always",     &always,
-> +			   "show abbreviated commit object as fallback"),
->  		OPT_END(),
->  	};
-  
-Sadly I cannot come up with a better name for this option.  :-(
+cheers,
 
--- 
-Shawn.
+
+
+martin
