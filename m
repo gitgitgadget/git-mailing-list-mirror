@@ -1,36 +1,37 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: What's cooking in git.git (topics)
-Date: Sun, 2 Mar 2008 09:02:10 -0500
-Message-ID: <20080302140210.GZ8410@spearce.org>
-References: <7v7ihmuwzi.fsf@gitster.siamese.dyndns.org> <7vodavd9qw.fsf@gitster.siamese.dyndns.org> <7vbq6tset4.fsf@gitster.siamese.dyndns.org> <7vmyq9gk94.fsf@gitster.siamese.dyndns.org> <7vk5la4oxq.fsf@gitster.siamese.dyndns.org> <7vejbc44hu.fsf@gitster.siamese.dyndns.org> <7v8x1fymei.fsf@gitster.siamese.dyndns.org> <7vpruljunl.fsf@gitster.siamese.dyndns.org> <7v1w6xoqnm.fsf@gitster.siamese.dyndns.org> <7vy792yzd6.fsf@gitster.siamese.dyndns.org>
+Subject: Re: Will git have a baseline feature or something alike?
+Date: Sun, 2 Mar 2008 09:04:46 -0500
+Message-ID: <20080302140446.GA8410@spearce.org>
+References: <f17812d70802290123raa099bag17a6f7b89de65dd4@mail.gmail.com> <200803011641.49874.jnareb@gmail.com> <8384AA89-4ECF-4BB8-8A3B-6A656F2D2903@orakel.ntnu.no> <200803011900.36723.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Mar 02 15:03:16 2008
+Cc: Eyvind Bernhardsen <eyvind-git@orakel.ntnu.no>,
+	eric miao <eric.y.miao@gmail.com>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 02 15:06:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JVomT-0000D3-W2
-	for gcvg-git-2@gmane.org; Sun, 02 Mar 2008 15:03:10 +0100
+	id 1JVop5-0000hl-Cz
+	for gcvg-git-2@gmane.org; Sun, 02 Mar 2008 15:05:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751934AbYCBOCP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Mar 2008 09:02:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751988AbYCBOCO
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Mar 2008 09:02:14 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:40930 "EHLO
+	id S1752739AbYCBOEv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Mar 2008 09:04:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752503AbYCBOEv
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Mar 2008 09:04:51 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:41875 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751634AbYCBOCO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Mar 2008 09:02:14 -0500
+	with ESMTP id S1752599AbYCBOEu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Mar 2008 09:04:50 -0500
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.68)
 	(envelope-from <spearce@spearce.org>)
-	id 1JVolT-0003yG-Ps; Sun, 02 Mar 2008 09:02:07 -0500
+	id 1JVonz-0004HH-Cd; Sun, 02 Mar 2008 09:04:43 -0500
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id E418920FBAE; Sun,  2 Mar 2008 09:02:10 -0500 (EST)
+	id BAC6D20FBAE; Sun,  2 Mar 2008 09:04:46 -0500 (EST)
 Content-Disposition: inline
-In-Reply-To: <7vy792yzd6.fsf@gitster.siamese.dyndns.org>
+In-Reply-To: <200803011900.36723.jnareb@gmail.com>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -41,27 +42,34 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75778>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75779>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> * sp/fetch-optim (Sat Mar 1 00:25:38 2008 -0500) 7 commits
->  - Teach git-fetch to grab a tag at the same time as a commit
->  - Make git-fetch follow tags we already have objects for sooner
->  - Teach upload-pack to log the received need lines to fd 3
->  - Allow builtin-fetch's find_non_local_tags to append onto a list
->  - Ensure tail pointer gets setup correctly when we fetch HEAD only
->  - Remove unnecessary delaying of free_refs(ref_map) in builtin-fetch
->  - Remove unused variable in builtin-fetch find_non_local_tags
+Jakub Narebski <jnareb@gmail.com> wrote:
+> Eyvind Bernhardsen wrote:
+> >
+> > Okay, as a git n00b I'm probably on completely the wrong track, but if  
+> > you made a git repository out of a kernel tarball (cd linux-2.6.24 &&  
+> > git init && git add .) and then did a shallow fetch from kernel.org  
+> > into that repository, wouldn't the blobs you added get reused  
+> > (assuming the tarball you downloaded was fairly recent), thus reducing  
+> > the amount of data fetch has to transfer?
 > 
-> A few existing tests in 5515 need to be adjusted as they expect tags not
-> to be fetched early, but the point of this series is to optimize to allow
-> them to, under some conditions.  Otherwise slated for 1.5.5.
+> I think it wouldn't. If I understand it correctly, the fetching engine
+> deals only with commits. If you have commit, it assumes that you have 
+> tree, blobs, and ancestors. If you don't have commit, it assumes that 
+> you don't have tree and blobs.
 
-Really?  I thought 5515 was passing when I sent the v2 series in.
-I'll double check it later today.  Prior to my "Teach upload-pack
-to log" change I'm not sure *how* the tests in 5515 would notice
-that tags were fetched on the first connection and not the second.
-Its still in the same git-fetch process.
- 
+Correct.
+
+I was thinking about this just yesterday.  I think that if we
+embedded inside of a tarball created by git-archive the raw sources
+of all files, plus the commit SHA-1 and the raw body of that commit,
+it should be possible to convert that into a shallow clone.
+
+Unfortunately I think it is possible for git-archive to edit a file
+in-place during export, e.g. to edit an RPM spec file and insert
+the revision.  That would damage the tree, as the blobs would no
+longer hash to the same value as they should be in that commit.
+
 -- 
 Shawn.
