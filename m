@@ -1,168 +1,159 @@
 From: Ping Yin <pkufranky@gmail.com>
-Subject: [PATCH v3 3/4] git-submodule: New subcommand 'summary' (3) - limit summary size
-Date: Mon,  3 Mar 2008 02:15:09 +0800
-Message-ID: <1204481710-29791-3-git-send-email-pkufranky@gmail.com>
-References: <1204481710-29791-1-git-send-email-pkufranky@gmail.com>
+Subject: [PATCH v3 1/4] git-submodule: New subcommand 'summary' (1) - code framework
+Date: Mon,  3 Mar 2008 02:15:07 +0800
+Message-ID: <1204481710-29791-1-git-send-email-pkufranky@gmail.com>
 Cc: git@vger.kernel.org, Ping Yin <pkufranky@gmail.com>
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sun Mar 02 19:15:53 2008
+X-From: git-owner@vger.kernel.org Sun Mar 02 19:15:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JVsj2-0001jW-SN
-	for gcvg-git-2@gmane.org; Sun, 02 Mar 2008 19:15:53 +0100
+	id 1JVsj2-0001jW-7e
+	for gcvg-git-2@gmane.org; Sun, 02 Mar 2008 19:15:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752465AbYCBSPR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Mar 2008 13:15:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754987AbYCBSPQ
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Mar 2008 13:15:16 -0500
-Received: from mail.qikoo.org ([60.28.205.235]:50500 "EHLO mail.qikoo.org"
+	id S1753845AbYCBSPP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Mar 2008 13:15:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753068AbYCBSPO
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Mar 2008 13:15:14 -0500
+Received: from mail.qikoo.org ([60.28.205.235]:50496 "EHLO mail.qikoo.org"
 	rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752409AbYCBSPN (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1751814AbYCBSPN (ORCPT <rfc822;git@vger.kernel.org>);
 	Sun, 2 Mar 2008 13:15:13 -0500
 Received: by mail.qikoo.org (Postfix, from userid 1029)
-	id 0DABD470AF; Mon,  3 Mar 2008 02:15:10 +0800 (CST)
+	id B0011470AE; Mon,  3 Mar 2008 02:15:10 +0800 (CST)
 X-Mailer: git-send-email 1.5.4.3.347.g5314c
-In-Reply-To: <1204481710-29791-1-git-send-email-pkufranky@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75823>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75824>
 
-This patch teaches git-submodule an option '--summary-limit|-n <number>'
-to limit number of commits in total for the summary. Number 0 will disable
-summary and minus number means unlimted (the default).
+Following patches will teach git-submodule a new subcommand 'summary' to
+show commit summary of user-cared (i.e. checked out) submodules between
+a given super project commit (default HEAD) and working tree
+(or index, switched by --cached).
 
-For beauty and clarification, the fork-point (i.e. the last commits for
-both backward and forward sections) will always be shown disregarding the
-given limit. So actual summary size may be greater than the given limit.
+This patch just introduces the framework and shows submodules modified
+as follows.
 
-'git submodule summary -n 2 sm1' and 'git submodule summary -n 3 sm1'
-will show the same in the super project mentioned in last patch.
-
----------------------------------------
- $ git submodule summary -n 2 sm1
- # Submodules modifiled: sm1
+--------------------------------------------
+ $ git submodule summary
+ # Submodules modifiled: sm1 sm2 sm3 sm4 sm5
  #
- # * sm1 354cd45...3f751e5:
- #   <one line message for C
- #   <one line message for B
- #   >...
- #   >one line message for E
- #
----------------------------------------
+--------------------------------------------
 
 Signed-off-by: Ping Yin <pkufranky@gmail.com>
 ---
- git-submodule.sh |   65 +++++++++++++++++++++++++++++++++++++++++++++++++++--
- 1 files changed, 62 insertions(+), 3 deletions(-)
+ git-submodule.sh |   66 +++++++++++++++++++++++++++++++++++++++++++++++++----
+ 1 files changed, 61 insertions(+), 5 deletions(-)
 
 diff --git a/git-submodule.sh b/git-submodule.sh
-index 3313d6c..dfd2952 100755
+index a6aaf40..787d083 100755
 --- a/git-submodule.sh
 +++ b/git-submodule.sh
-@@ -4,7 +4,9 @@
+@@ -4,7 +4,7 @@
  #
  # Copyright (c) 2007 Lars Hjemli
  
--USAGE='[--quiet] [--cached] [add <repo> [-b branch]|status|init|update|summary [<commit>]] [--] [<path>...]'
-+USAGE="[--quiet] [--cached] \
-+[add <repo> [-b branch]|status|init|update|summary [-n|--summary-limit <n>] [<commit>]] \
-+[--] [<path>...]"
+-USAGE='[--quiet] [--cached] [add <repo> [-b branch]|status|init|update] [--] [<path>...]'
++USAGE='[--quiet] [--cached] [add <repo> [-b branch]|status|init|update|summary [<commit>]] [--] [<path>...]'
  OPTIONS_SPEC=
  . git-sh-setup
  require_work_tree
-@@ -329,6 +331,8 @@ set_name_rev () {
- # $@ = [commit (default 'HEAD'),] requested paths (default all)
- #
- cmd_summary() {
-+	summary_limit=-1
-+
- 	# parse $args after "submodule ... summary".
- 	while test $# -ne 0
- 	do
-@@ -336,6 +340,15 @@ cmd_summary() {
- 		--cached)
- 			cached="$1"
- 			;;
-+		-n|--summary-limit)
-+			if summary_limit=$(($2 + 0)) 2>/dev/null && test "$summary_limit" = "$2"
-+			then
-+				:
-+			else
-+				usage
-+			fi
-+			shift
+@@ -320,7 +320,63 @@ set_name_rev () {
+ 	) )
+ 	test -z "$revname" || revname=" ($revname)"
+ }
++#
++# Show commit summary for submodules in index or working tree
++#
++# If '--cached' is given, show summary between index and given commit,
++# or between working tree and given commit
++#
++# $@ = [commit (default 'HEAD'),] requested paths (default all)
++#
++cmd_summary() {
++	# parse $args after "submodule ... summary".
++	while test $# -ne 0
++	do
++		case "$1" in
++		--cached)
++			cached="$1"
 +			;;
- 		--)
- 			shift
- 			break
-@@ -350,6 +363,8 @@ cmd_summary() {
- 		shift
- 	done
++		--)
++			shift
++			break
++			;;
++		-*)
++			usage
++			;;
++		*)
++			break
++			;;
++		esac
++		shift
++	done
  
-+	test $summary_limit = 0 && return
++	if rev=$(git rev-parse --verify "$1^0" 2>/dev/null)
++	then
++		head=$rev
++		shift
++	else
++		head=HEAD
++	fi
 +
- 	if rev=$(git rev-parse --verify "$1^0" 2>/dev/null)
- 	then
- 		head=$rev
-@@ -442,8 +457,52 @@ cmd_summary() {
- 			# Don't give error msg for modification whose dst is not submodule, i.e. deleted or changed to blob
- 			test $mod_dst = 160000 && echo "$errmsg"
- 		else
--			test -n "$left" && echo "$left"
--			test -n "$right" && echo "$right"
-+			lc0=0
-+			rc0=0
-+			test -n "$left" && lc0=$(echo "$left" | wc -l)
-+			test -n "$right" && rc0=$(echo "$right" | wc -l)
++	cd_to_toplevel
++	# Get modified modules cared by user
++	modules=$(git diff-index $cached --raw $head -- "$@" |
++		grep -e '^:160000' -e '^:[0-7]* 160000' |
++		while read mod_src mod_dst sha1_src sha1_dst status name
++		do
++			# Always show modules deleted or type-changed (blob<->module)
++			test $status = D -o $status = T && echo "$name" && continue
++			# Also show added or modified modules which are checked out
++			GIT_DIR="$name/.git" git-rev-parse --git-dir >/dev/null 2>&1 &&
++			echo "$name"
++		done
++	)
 +
-+			if test $summary_limit -lt 0
-+			then
-+				lc=$lc0
-+				rc=$rc0
-+			elif test $lc0 -lt $summary_limit
-+			then
-+				lc=$lc0
-+				rc=$(($summary_limit-$lc))
-+			else
-+				lc=$summary_limit
-+				rc=1
-+			fi
-+
-+			if test $rc -gt $rc0
-+			then
-+				rc=$rc0
-+			fi
-+
-+			if test -n "$left"
-+			then
-+				skip=$(($lc0-$lc))
-+				echo "$left" | head -$(($lc-1))
-+				case $skip in
-+					0) : ;;
-+					1) echo "  <..." ;;
-+					*) echo "  <... ($skip more)" ;;
-+				esac
-+				echo "$left" | tail -1
-+			fi
-+
-+			if test -n "$right"
-+			then
-+				skip=$(($rc0-$rc))
-+				echo "$right" | head -$(($rc-1))
-+				case $skip in
-+					0) : ;;
-+					1) echo "  <..." ;;
-+					*) echo "  <... ($skip more)" ;;
-+				esac
-+				echo "$right" | tail -1
-+			fi
- 		fi
- 		echo
- 	done | sed -e 's/^/# /'
++	# TODO: quote module names containing space or tab
++	test -n "$modules" &&
++	echo "# Submodules modified: "$modules &&
++	echo "#"
++}
+ #
+ # List all submodules, prefixed with:
+ #  - submodule not initialized
+@@ -391,7 +447,7 @@ cmd_status()
+ while test $# != 0 && test -z "$command"
+ do
+ 	case "$1" in
+-	add | init | update | status)
++	add | init | update | status | summary)
+ 		command=$1
+ 		;;
+ 	-q|--quiet)
+@@ -406,7 +462,7 @@ do
+ 		branch="$2"; shift
+ 		;;
+ 	--cached)
+-		cached=1
++		cached="$1"
+ 		;;
+ 	--)
+ 		break
+@@ -430,8 +486,8 @@ then
+ 	usage
+ fi
+ 
+-# "--cached" is accepted only by "status"
+-if test -n "$cached" && test "$command" != status
++# "--cached" is accepted only by "status" and "summary"
++if test -n "$cached" && test "$command" != status -a "$command" != summary
+ then
+ 	usage
+ fi
 -- 
 1.5.4.3.347.g5314c
 
