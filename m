@@ -1,71 +1,91 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/2] format-patch: wrap cover-letter's shortlog
- sensibly
-Date: Sun, 2 Mar 2008 17:38:29 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0803021736510.22527@racer.site>
-References: <alpine.LSU.1.00.0802290144130.22527@racer.site> <7vwsoofrue.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0802282104500.19665@iabervon.org> <alpine.LSU.1.00.0802291118540.22527@racer.site> <alpine.LSU.1.00.0803021511420.22527@racer.site>
- <alpine.LSU.1.00.0803021531230.22527@racer.site> <alpine.LSU.1.00.0803021552210.22527@racer.site> <alpine.LSU.1.00.0803021553090.22527@racer.site> <7vejatoy2w.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/3] fix "diff --raw" on the work tree side
+Date: Sun, 02 Mar 2008 09:48:02 -0800
+Message-ID: <7vlk51nhkd.fsf@gitster.siamese.dyndns.org>
+References: <1204451012-17487-1-git-send-email-gitster@pobox.com>
+ <46dff0320803020241l29277bd4m1a711ff0a863e7f8@mail.gmail.com>
+ <7v7igloxtu.fsf@gitster.siamese.dyndns.org>
+ <46dff0320803020915u565ce50eraa663f9e5a795b81@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Mar 02 18:39:51 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Ping Yin" <pkufranky@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 02 18:48:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JVsAA-0007X4-F1
-	for gcvg-git-2@gmane.org; Sun, 02 Mar 2008 18:39:50 +0100
+	id 1JVsIq-000281-3u
+	for gcvg-git-2@gmane.org; Sun, 02 Mar 2008 18:48:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754637AbYCBRjO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Mar 2008 12:39:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753113AbYCBRjO
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Mar 2008 12:39:14 -0500
-Received: from mail.gmx.net ([213.165.64.20]:60699 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752190AbYCBRjN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Mar 2008 12:39:13 -0500
-Received: (qmail invoked by alias); 02 Mar 2008 17:39:12 -0000
-Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
-  by mail.gmx.net (mp056) with SMTP; 02 Mar 2008 18:39:12 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/PX7QQH/PP11M09rQ/fiDqZN5USRc3vQxCYg5UlH
-	aEAT/TL0cGarKi
-X-X-Sender: gene099@racer.site
-In-Reply-To: <7vejatoy2w.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1755268AbYCBRsL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Mar 2008 12:48:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754827AbYCBRsL
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Mar 2008 12:48:11 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:47757 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754819AbYCBRsK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Mar 2008 12:48:10 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 0E1EA23F6;
+	Sun,  2 Mar 2008 12:48:07 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 3013923F3; Sun,  2 Mar 2008 12:48:04 -0500 (EST)
+In-Reply-To: <46dff0320803020915u565ce50eraa663f9e5a795b81@mail.gmail.com>
+ (Ping Yin's message of "Mon, 3 Mar 2008 01:15:55 +0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75817>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75818>
 
-Hi,
+"Ping Yin" <pkufranky@gmail.com> writes:
 
-On Sun, 2 Mar 2008, Junio C Hamano wrote:
+> On 3/3/08, Junio C Hamano <gitster@pobox.com> wrote:
+> ...
+>> I do not think re-introducing the inconsistency like the third one does is
+>> a palatable option.
+>>
+>> Wouldn't grabbing (cd $submodule && git rev-parse HEAD) yourself be more
+>> portable across git before and after the bugfix of "git diff --raw"?
+>
+> OK, i will parse it myself
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > Earlier, overly-long onelines would not be wrapped at all, and indented
-> > with 6 spaces.
-> >
-> > Instead, we now wrap around at 72 characters, with a first-line indent 
-> > of 2 spaces, and the rest with 4 spaces (like the "What's in" messages 
-> > of Junio).
-> 
-> Heh, I seem to personally use 76,2,4 but otherwise I think this makes it 
-> easier to read.  Thanks.
+Just to clarify, I am somewhat torn on [3/3].
 
-Oh?  My first patch was 76,4,8, but then I was unsure, and went to your 
-todo branch, and found this:
+We can certainly re-introduce the special casing for submodule across diff
+family consistently, but the rationale for doing that would be "The real
+object name is very cheaply available in that case so why not show it."
 
-$ git grep -e -w.*7
-Summary:git shortlog -w72,2,4 --no-merges $bottom..$top
-WI:     git shortlog -w76,2,4 --no-merges "$@"
+That line of thinking would lead to re-hashing of symbolic link blobs as I
+hinted in the message, but then it would also mean we would show
+inconsistent output between a symlink that points at foo.c and a regular
+file whose content is foo.c (without the trailing LF), the latter of which
+would still show 0{40}, and we will eventually end up saying "Let's
+re-hash small regular file blobs."
 
-Obviously, I missed the second one, and took the first one.
+That would lead to inconsistencies between smaller and larger regular file
+blobs, and the line between them is drawn at an arbitrary size limit.  The
+logical conclusion of this would be to re-hash everything when showing
+"diff --raw" (and "diff-anything --raw").
 
-Ciao,
-Dscho
+Which may turn out not to be such a bad thing after all, and we might even
+end up doing exactly that in future releases, although I highly doubt it.
+In any case, such a huge semantics change takes time to get right.
+People's scripts in the wild know 0{40} with non 0 mode in the raw format
+means it refers to an entity in the work tree (which is a correct thing to
+assume), but the convention has been used for the entire lifetime of git
+and they can (arguably incorrectly) be assuming that the inverse is also
+true (i.e. work tree entity is represented as 0{40} with non 0 mode).
+
+And the point is that "submodule summary" can be useful without waiting
+for the conclusion of the above confusion caused by the can of worms [3/3]
+opens.  If we decide to always show the real object name for work tree
+entities in the future, we might want to update the implementation of
+"submodule summary" to _take advantage of it_, but by starting the new
+feature not to depend on the current misbehaviour, we can try it out much
+earlier.
 
