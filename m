@@ -1,59 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-submodule: Fix typo 'url' which should be '$url'
-Date: Sun, 02 Mar 2008 18:19:37 -0800
-Message-ID: <7vy790k0qu.fsf@gitster.siamese.dyndns.org>
-References: <1204509798-671-1-git-send-email-pkufranky@gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [PATCH v3 0/8] Optimized tag autofollowing in git-fetch
+Date: Sun, 2 Mar 2008 21:34:20 -0500
+Message-ID: <20080303023419.GE8410@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: Ping Yin <pkufranky@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 03 03:20:32 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 03 03:35:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JW0I3-00075r-PM
-	for gcvg-git-2@gmane.org; Mon, 03 Mar 2008 03:20:32 +0100
+	id 1JW0WB-0001QR-L7
+	for gcvg-git-2@gmane.org; Mon, 03 Mar 2008 03:35:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752432AbYCCCTy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Mar 2008 21:19:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752454AbYCCCTy
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Mar 2008 21:19:54 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:53082 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752388AbYCCCTx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Mar 2008 21:19:53 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 2088C1994;
-	Sun,  2 Mar 2008 21:19:52 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 7A2081990; Sun,  2 Mar 2008 21:19:44 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753344AbYCCCe1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Mar 2008 21:34:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752894AbYCCCe1
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Mar 2008 21:34:27 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:59096 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752715AbYCCCe0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Mar 2008 21:34:26 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1JW0VJ-0002Ka-7P; Sun, 02 Mar 2008 21:34:13 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id E62C220FBAE; Sun,  2 Mar 2008 21:34:20 -0500 (EST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75868>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75869>
 
-Ping Yin <pkufranky@gmail.com> writes:
+Here's version 3 of the more aggressive tag following for git-fetch.
 
-> More thinking, why does empty url mean uninitialized? How about the
-> case that the submodule url is deleted from .git/config?
+  1)  Remove unused variable in builtin-fetch find_non_local_tags
+  2)  Remove unnecessary delaying of free_refs(ref_map) in builtin-fetch
+  3)  Ensure tail pointer gets setup correctly when we fetch HEAD only
+  4)  Allow builtin-fetch's find_non_local_tags to append onto a list
+  5)  Free the path_lists used to find non-local tags in git-fetch
+  6)  Teach upload-pack to log the received need lines to an fd
+  7)  Make git-fetch follow tags we already have objects for sooner
+  8)  Teach git-fetch to grab a tag at the same time as a commit
 
-That means the user is not interested in that subproject.
+ builtin-fetch.c      |   49 +++++++++++++------
+ t/t5503-tagfollow.sh |  124 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ upload-pack.c        |    9 ++++
+ 3 files changed, 166 insertions(+), 16 deletions(-)
 
-In-tree .gitmodules is merely a place a user who is interested in a
-partcular module described in it will pick up a _hint_ about attributes
-(currently, URL but there may be others) on the module from, when showing
-and recording his interest.
+Changes since the last (v2) round:
 
-Notice I said "hint"; .gitmodules is _not_ meant as "default" in the sense
-that "if the user does not have it in .git/config then read from it".
+  "Free the path_lists used to find non-local tags in git-fetch"
 
-"Is it checked-out", would be a good indication of user's interest when
-you talk about the current status (like "git submodule summary"), but if
-you think about the case of switching between branches that has and does
-not have a module, you would realize that "is it checked-out?" cannot be
-the authoritative and only place to record the user's interest.
+    This patch was added to the series to avoid memory corruption
+    errors that were only showing up on Linux.  My earlier testing
+    only on Mac OS X failed to show any symptoms of the corruption.
+    Junio noticed it on Linux and asked me to revisit the series.
+
+  "Teach upload-pack to log the received need lines to an fd"
+
+    At Daniel's suggestion the GIT_DEBUG_SEND_PACK environment
+    variable takes the value of the fd we log onto.  This mirrors
+    how GIT_TRACE works.
+
+-- 
+Shawn.
