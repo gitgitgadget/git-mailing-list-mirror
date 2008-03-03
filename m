@@ -1,73 +1,66 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH] Add test for cloning with "--reference" repo being a
- subset of source repo
-Date: Mon, 3 Mar 2008 11:36:50 -0500 (EST)
-Message-ID: <alpine.LNX.1.00.0803031130090.19665@iabervon.org>
-References: <alpine.LNX.1.00.0802251604460.19024@iabervon.org> <alpine.LSU.1.00.0803020743170.22527@racer.site> <alpine.LNX.1.00.0803021128510.19665@iabervon.org> <200803031004.16568.johan@herland.net>
+From: "Ping Yin" <pkufranky@gmail.com>
+Subject: Re: [RFC] git reset --recover
+Date: Tue, 4 Mar 2008 00:47:08 +0800
+Message-ID: <46dff0320803030847t42583badw1f5163d600a6fafb@mail.gmail.com>
+References: <46dff0320803030659j2fa0325lf9c88b915ddb70da@mail.gmail.com>
+	 <8aa486160803030713r7bdcf825sf994cbb20f096ccd@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	=?ISO-8859-15?Q?Kristian_H=F8gsberg?= <krh@redhat.com>,
-	=?ISO-8859-15?Q?Santi_B=E9jar?= <sbejar@gmail.com>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Mon Mar 03 17:38:04 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "=?UTF-8?Q?Santi_B=C3=A9jar?=" <sbejar@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 03 17:47:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWDfU-0005SV-Ia
-	for gcvg-git-2@gmane.org; Mon, 03 Mar 2008 17:37:36 +0100
+	id 1JWDpN-0000zD-Nh
+	for gcvg-git-2@gmane.org; Mon, 03 Mar 2008 17:47:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753621AbYCCQg6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Mar 2008 11:36:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753398AbYCCQg5
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Mar 2008 11:36:57 -0500
-Received: from iabervon.org ([66.92.72.58]:51230 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753202AbYCCQg4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Mar 2008 11:36:56 -0500
-Received: (qmail 5486 invoked by uid 1000); 3 Mar 2008 16:36:50 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 3 Mar 2008 16:36:50 -0000
-In-Reply-To: <200803031004.16568.johan@herland.net>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1753720AbYCCQrL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Mar 2008 11:47:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753629AbYCCQrK
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Mar 2008 11:47:10 -0500
+Received: from an-out-0708.google.com ([209.85.132.240]:12612 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753905AbYCCQrJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Mar 2008 11:47:09 -0500
+Received: by an-out-0708.google.com with SMTP id d31so21177and.103
+        for <git@vger.kernel.org>; Mon, 03 Mar 2008 08:47:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=HQ7PuktV2TfIWqePlX+YrLkgHR2hLxqKIVvePBenuI8=;
+        b=GNwC8Ge8EA4fh6hl8+7HAdqFxrAv5LGlFx1botFUYuEHMmO4Z0uu/oGezLmopg+T3z/8VAt8g5fN6XmIpQV7rY8PKDzOO5oz4fhfTbR/UJSwioQl9Q47mb1mfw2dr1qiW9PgJRl40UuYl6fIvVSe+EQv2UBmgwk6+rxRunZ63Ag=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=u9GQBoIjMw1BDPK313F3kBlLjyBVhXWtT1uPBtBJaW6Lhy8mEkJ7ctqX75Gbzx/PhF/1vfkLgTyxwveVmoBFEEWwL2yUWmX2fyIqOjRc/vwJByFWY0NG8HMiYh78lX5uvhYBbNP+zAlCZbkvsXGyP8S0K3KT5Cl/ss3cLE388DA=
+Received: by 10.100.95.19 with SMTP id s19mr341521anb.48.1204562828224;
+        Mon, 03 Mar 2008 08:47:08 -0800 (PST)
+Received: by 10.100.95.20 with HTTP; Mon, 3 Mar 2008 08:47:08 -0800 (PST)
+In-Reply-To: <8aa486160803030713r7bdcf825sf994cbb20f096ccd@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75941>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75942>
 
-On Mon, 3 Mar 2008, Johan Herland wrote:
-
-> However, we should also test the case where the "--reference" repo is a
-> _subset_ of the source repo (e.g. "git clone -l -s --reference A B C"),
-> i.e. some objects are not available in the "--reference" repo, and will
-> have to be found in the source repo.
-> 
-> However, this added test currently fails for me with the following output:
-> 
-> repo is /home/johan/git/git/t/trash/B/.git
-> dir is E
-> Initialize E/.git
-> Initialized empty Git repository in E/.git/
-> Okay
-> Wrote /home/johan/git/git/t/trash/A/.git/objects
->  to E/.git/objects/info/alternates
-> Wrote /home/johan/git/git/t/trash/B/.git/objects
->  to E/.git/objects/info/alternates
-> Get for /home/johan/git/git/t/trash/B/.git
-> error: Trying to write ref refs/remotes/origin/master with nonexistant object 276cf9e94287a7c4e6f79b2724460e9650fa4871
-> fatal: Cannot update the ref 'refs/remotes/origin/master'.
-> Remove junk E/.git
-> Remove junk E
-> 
-> The same test work well with git-clone.sh.
-> Not sure what's going on here, yet, but I thought I'd give you a heads up.
-
-Thanks for the report; I haven't really gone through the local clone 
-stuff, and I've altered the use of chdir at various points, so it's quite 
-possible that it's not right at all for some cases.
-
-	-Daniel
-*This .sig left intentionally blank*
+T24gTW9uLCBNYXIgMywgMjAwOCBhdCAxMToxMyBQTSwgU2FudGkgQsOpamFyIDxzYmVqYXJAZ21h
+aWwuY29tPiB3cm90ZToKPiBPbiBNb24sIE1hciAzLCAyMDA4IGF0IDM6NTkgUE0sIFBpbmcgWWlu
+IDxwa3VmcmFua3lAZ21haWwuY29tPiB3cm90ZToKPiAgPiBUb2RheSBpIHVzZSBnaXQgcmVzZXQg
+Y2FyZWxlc3NseSBhbmQgbG9zZSBhbGwgbXkgY2hhbmdlcyEKPiAgPgoKPiAgPgo+ICA+ICBidXQg
+aSBmb2dvdCB0byB0eXBlICJnaXQgaW5pdCIgd2hpY2ggcmVzdWx0cyB0aGF0IGZpbGUxIGFuZCBm
+aWxlMiBhcmUKPiAgPiAgYWRkZWQgdG8gaW5kZXggb2YgZm9vIHJlcG9zaXRvcnkuIEkgdHJpZWQg
+dG8gcmV2ZXJ0IHRoZSBvcGVyYXRpb24KPiAgPiAgdXNpbmcgImdpdCByZXNldCIuIEFuZCB0aGUg
+dHJhZ2VkeSBoYXBwZW5lZCBhdCB0aGF0IHRpbWUgYmVjYXVzZSBpCj4gID4gIG1hZGUgc28gZmF0
+YWwgIGEgbWlzdGFrZSB0aGF0IGkgdHlwZWQgImdpdCByZXNldCAtLWhhcmQiLiBBbmQgaSBsb3N0
+Cj4gID4gIGFsbCBteSBmaWxlcyBpbiBiYXIgZGlyIQo+Cj4gICJnaXQgcmVzZXQiIHdhcyBzdWZm
+aWNpZW50Lgo+Ckkga25vdyBhYm91dCB0aGlzLCBidXQgaSB3YXMganVzdCB0b28gY2FyZWxlc3Mu
+Cj4KPiAgPgo+ICA+ICBTbywgY2FuIHdlIGludHJvZHVjZSBhIC0tcmVjb3ZlciBvcHRpb24gZm9y
+ICJnaXQgcmVzZXQiIHRvIHNhdmUgdGhlCj4gID4gIGZvb2xpc2ggb3IgY2FyZWxlc3MgcGVvcGxl
+IGxpa2UgbWU/Cj4KPiAgQW5vdGhlciBwb3NzaWJpbGl0eSB3b3VsZCBiZSB0byBub3QgZGVsZXRl
+IGEgZmlsZSB0aGF0IGlzIGFic2VudCBpbgo+ICBib3RoIHRoZSBvbGQgYW5kIG5ldyBIRUFELCBl
+dmVuIGlmIGl0IHdhcyBpbiB0aGUgaW5kZXguCj4KU291bmRzIGludGVyZXN0aW5nLgo+ICBTYW50
+aQo+CgoKCi0tIApQaW5nIFlpbgo=
