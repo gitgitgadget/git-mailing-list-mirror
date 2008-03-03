@@ -1,54 +1,127 @@
-From: Gerrit Pape <pape@smarden.org>
-Subject: Re: [PATCH] Fix random crashes in http_cleanup()
-Date: Mon, 3 Mar 2008 10:01:41 +0000
-Message-ID: <20080303100141.15600.qmail@e81d07a86798f7.315fe32.mid.smarden.org>
-References: <20080302200309.GA2070@glandium.org> <1204489713-8696-1-git-send-email-mh@glandium.org>
+From: Simon Hausmann <simon@lst.de>
+Subject: [PATCH] git-p4: Fix import of changesets with file deletions
+Date: Mon, 3 Mar 2008 11:55:48 +0100
+Message-ID: <200803031155.51015.simon@lst.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, gitster@pobox.com,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Mon Mar 03 11:02:18 2008
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Tor Arvid Lund <torarvid@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 03 11:58:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JW7Uf-0006bC-7q
-	for gcvg-git-2@gmane.org; Mon, 03 Mar 2008 11:02:01 +0100
+	id 1JW8N1-0007BV-Ht
+	for gcvg-git-2@gmane.org; Mon, 03 Mar 2008 11:58:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755833AbYCCKBX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 Mar 2008 05:01:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755539AbYCCKBW
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Mar 2008 05:01:22 -0500
-Received: from a.ns.smarden.org ([212.42.242.37]:42927 "HELO a.mx.smarden.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754933AbYCCKBV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Mar 2008 05:01:21 -0500
-Received: (qmail 15601 invoked by uid 1000); 3 Mar 2008 10:01:41 -0000
+	id S1760506AbYCCK5A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Mar 2008 05:57:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753673AbYCCK47
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Mar 2008 05:56:59 -0500
+Received: from verein.lst.de ([213.95.11.210]:38920 "EHLO verein.lst.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758357AbYCCK4b (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Mar 2008 05:56:31 -0500
+Received: from rhea.troll.no (nat0.troll.no [62.70.27.100])
+	(authenticated bits=0)
+	by verein.lst.de (8.12.3/8.12.3/Debian-7.1) with ESMTP id m23AtvF3010098
+	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=NO);
+	Mon, 3 Mar 2008 11:55:57 +0100
+User-Agent: KMail/1.9.9
 Content-Disposition: inline
-In-Reply-To: <1204489713-8696-1-git-send-email-mh@glandium.org>
+X-Spam-Score: 0 () 
+X-Scanned-By: MIMEDefang 2.39
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75912>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75913>
 
-On Sun, Mar 02, 2008 at 09:28:33PM +0100, Mike Hommey wrote:
-> For some reason, http_cleanup was running all active slots, which cou=
-ld
-> lead in situations where a freed slot would be accessed in
-> fill_active_slots. OTOH, we are cleaning up, which means the caller
-> doesn't care about pending requests. Just forget about them instead
-> or running them.
+Commit 3a70cdfa42199e16d2d047c286431c4274d65b1a made readP4Files abort quickly
+when the changeset only contains files that are marked for deletion with an empty return
+value, which caused the commit to not do anything.
 
-Hi, I can confirm that this fixes the segfault we managed to reproduce,
-but didn't look deeper into the changes.
+This commit changes readP4Files to distinguish between files that need to be passed to p4
+print and files that have no content ("deleted") and merge them in the returned
+list.
 
-There's a warning when compiling http.c, trivial to fix:
+Signed-off-by: Simon Hausmann <simon@lst.de>
+---
+ contrib/fast-import/git-p4 |   45 ++++++++++++++++++++++++-------------------
+ 1 files changed, 25 insertions(+), 20 deletions(-)
 
-      CC http.o
-  http.c: In function =E2=80=98http_cleanup=E2=80=99:
-  http.c:288: warning: unused variable =E2=80=98wait_url=E2=80=99
+diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
+index be96600..650ea34 100755
+--- a/contrib/fast-import/git-p4
++++ b/contrib/fast-import/git-p4
+@@ -850,29 +850,32 @@ class P4Sync(Command):
+ 
+     ## Should move this out, doesn't use SELF.
+     def readP4Files(self, files):
++        filesForCommit = []
++        filesToRead = []
++
+         for f in files:
++            includeFile = True
+             for val in self.clientSpecDirs:
+                 if f['path'].startswith(val[0]):
+-                    if val[1] > 0:
+-                        f['include'] = True
+-                    else:
+-                        f['include'] = False
++                    if val[1] <= 0:
++                        includeFile = False
+                     break
+ 
+-        files = [f for f in files
+-                 if f['action'] != 'delete' and
+-                 (f.has_key('include') == False or f['include'] == True)]
++            if includeFile:
++                filesForCommit.append(f)
++                if f['action'] != 'delete':
++                    filesToRead.append(f)
+ 
+-        if not files:
+-            return []
++        filedata = []
++        if len(filesToRead) > 0:
++            filedata = p4CmdList('-x - print',
++                                 stdin='\n'.join(['%s#%s' % (f['path'], f['rev'])
++                                                  for f in filesToRead]),
++                                 stdin_mode='w+')
+ 
+-        filedata = p4CmdList('-x - print',
+-                             stdin='\n'.join(['%s#%s' % (f['path'], f['rev'])
+-                                              for f in files]),
+-                             stdin_mode='w+')
+-        if "p4ExitCode" in filedata[0]:
+-            die("Problems executing p4. Error: [%d]."
+-                % (filedata[0]['p4ExitCode']));
++            if "p4ExitCode" in filedata[0]:
++                die("Problems executing p4. Error: [%d]."
++                    % (filedata[0]['p4ExitCode']));
+ 
+         j = 0;
+         contents = {}
+@@ -896,10 +899,12 @@ class P4Sync(Command):
+ 
+             contents[stat['depotFile']] = text
+ 
+-        for f in files:
+-            assert not f.has_key('data')
+-            f['data'] = contents[f['path']]
+-        return files
++        for f in filesForCommit:
++            path = f['path']
++            if contents.has_key(path):
++                f['data'] = contents[path]
++
++        return filesForCommit
+ 
+     def commit(self, details, files, branch, branchPrefixes, parent = ""):
+         epoch = details["time"]
+-- 
+1.5.4.3.325.g6d216
 
-Thanks!, Gerrit.
