@@ -1,70 +1,132 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] Fix incorrect wording in git-merge.txt.
-Date: Mon, 03 Mar 2008 17:10:59 -0500 (EST)
-Message-ID: <alpine.LFD.1.00.0803031706320.2899@xanadu.home>
-References: <1204564483-5260-1-git-send-email-Matthieu.Moy@imag.fr>
- <alpine.LFD.1.00.0803031320180.2899@xanadu.home>
- <vpqlk4zoacw.fsf@bauges.imag.fr>
- <alpine.LFD.1.00.0803031519360.2899@xanadu.home>
- <vpqwsojlcu5.fsf@bauges.imag.fr>
+From: Charles Bailey <charles@hashpling.org>
+Subject: [PATCH] gitweb: add a setting to control the tabstop width
+Date: Mon, 3 Mar 2008 22:11:59 +0000
+Message-ID: <20080303221159.GA6875@hashpling.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Mon Mar 03 23:12:05 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jakub Narebski <jnareb@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 03 23:13:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWIsn-0005cB-Pe
-	for gcvg-git-2@gmane.org; Mon, 03 Mar 2008 23:11:42 +0100
+	id 1JWItt-0006Cz-Fb
+	for gcvg-git-2@gmane.org; Mon, 03 Mar 2008 23:12:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752932AbYCCWLB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Mar 2008 17:11:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753390AbYCCWLA
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Mar 2008 17:11:00 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:49366 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752337AbYCCWLA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Mar 2008 17:11:00 -0500
-Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR004.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JX600LKRDMBJW60@VL-MO-MR004.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 03 Mar 2008 17:10:59 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <vpqwsojlcu5.fsf@bauges.imag.fr>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+	id S1752326AbYCCWMM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Mar 2008 17:12:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752063AbYCCWML
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Mar 2008 17:12:11 -0500
+Received: from pih-relay05.plus.net ([212.159.14.132]:33320 "EHLO
+	pih-relay05.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751824AbYCCWMK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Mar 2008 17:12:10 -0500
+Received: from [212.159.69.125] (helo=hashpling.plus.com)
+	 by pih-relay05.plus.net with esmtp (Exim) id 1JWItB-0006y0-Uv; Mon, 03 Mar 2008 22:12:06 +0000
+Received: from fermat.hashpling.org (fermat.hashpling.org [127.0.0.1])
+	by hashpling.plus.com (8.13.8/8.13.6) with ESMTP id m23MBxfS007368;
+	Mon, 3 Mar 2008 22:11:59 GMT
+Received: (from charles@localhost)
+	by fermat.hashpling.org (8.13.8/8.13.6/Submit) id m23MBx0Y007367;
+	Mon, 3 Mar 2008 22:11:59 GMT
+Content-Disposition: inline
+User-Agent: Mutt/1.5.17 (2007-11-01)
+X-Plusnet-Relay: f1a7887bec3f23897db3d77fd66d35ca
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75986>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75987>
 
-On Mon, 3 Mar 2008, Matthieu Moy wrote:
+Not everyone uses the same tab width. gitweb learns a new setting to
+control the tabstop width. The configuration can be set globally and
+on a per project basis. The default is 8, preserving existing
+behaviour. The configuration variable name is borrowed from the vim
+setting with the same behaviour.
 
-> Nicolas Pitre <nico@cam.org> writes:
-> 
-> >> Now, I don't understand the distinction you seem to be making between
-> >> "commit" and "commit object".
-> >
-> > Objects are what the low level storage is made of.  Conceptually, The 
-> > merge operation doesn't work at the object level, but rather at the 
-> > history graph level.
-> 
-> I still don't get the distinction. What is the "graph" if not a set of
-> objects pointing to each other?
-> 
-> If you don't want to talk about commit object, then you should fix
-> also user-manual.txt (for example, it states that a merge "create a
-> commit object in the history").
-> 
-> Well, that said, the same sentence as the one I propose without
-> "object" is fine to me, but I just don't understand the difference.
+Signed-off-by: Charles Bailey <charles@hashpling.org>
+---
 
-Sorry.  I don't have enough free time to pursue this point, nor do I 
-consider it important enough.  So if no one else feels like the 
-distinction deserves to be made then I won't care anymore either.
+The untabify function seems the sensible place to make the change. As
+untabify is called once per line from various different locations it
+also makes sense to cache the result of the config lookup in a package
+variable, though this makes the change slightly less neat.
+
+This change should have a minimal impact on performance but it would
+appreciate some more eyes and ideally some performance testing on
+heavier systems than my own. 
+
+ gitweb/gitweb.perl |   29 ++++++++++++++++++++++++++++-
+ 1 files changed, 28 insertions(+), 1 deletions(-)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 922dee9..cdabe37 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -108,6 +108,12 @@ our $mimetypes_file = undef;
+ # could be even 'utf-8' for the old behavior)
+ our $fallback_encoding = 'latin1';
+ 
++# variable to keep track of the the current tabstop width
++# this is a package variable as the natural place to check the feature is in
++# the untabify function, but as the function is called once per line we don't
++# want to have to recheck the config for each line
++our $tabstop_width;
++
+ # rename detection options for git-diff and git-diff-tree
+ # - default is '-M', with the cost proportional to
+ #   (number of removed files) * (number of new files).
+@@ -275,6 +281,18 @@ our %feature = (
+ 	'forks' => {
+ 		'override' => 0,
+ 		'default' => [0]},
++
++	# Tabstop width.  Controls the number of spaces to which tabs are
++	# expanded. Default is 8.
++	# To change system wide add the following to $GITWEB_CONFIG
++	# $feature{'tabstop'}{'default'} = [8];
++	# To have project specific config enable override in $GITWEB_CONFIG
++	# $feature{'tabstop'}{'override'} = 1;
++	# and in project config gitweb.tabstop = <width>
++	'tabstop' => {
++		'sub' => \&feature_tabstop,
++		'override' => 0,
++		'default' => [8]},
+ );
+ 
+ sub gitweb_check_feature {
+@@ -340,6 +358,11 @@ sub feature_pickaxe {
+ 	return ($_[0]);
+ }
+ 
++sub feature_tabstop {
++	my ($val) = git_get_project_config('tabstop', '--int');
++	return defined($val) ? ($val) : ($_[0])
++}
++
+ # checking HEAD file with -e is fragile if the repository was
+ # initialized long time ago (i.e. symlink HEAD) and was pack-ref'ed
+ # and then pruned.
+@@ -832,8 +855,12 @@ sub unquote {
+ sub untabify {
+ 	my $line = shift;
+ 
++	if (!defined($tabstop_width)) {
++		($tabstop_width) = gitweb_check_feature('tabstop');
++	}
++
+ 	while ((my $pos = index($line, "\t")) != -1) {
+-		if (my $count = (8 - ($pos % 8))) {
++		if (my $count = ($tabstop_width - ($pos % $tabstop_width))) {
+ 			my $spaces = ' ' x $count;
+ 			$line =~ s/\t/$spaces/;
+ 		}
+-- 
+1.5.4.3.432.g5ecfc
 
 
-Nicolas
+-- 
+Charles Bailey
+http://ccgi.hashpling.plus.com/blog/
