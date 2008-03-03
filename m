@@ -1,73 +1,76 @@
-From: Johannes Sixt <johannes.sixt@telecom.at>
-Subject: Re: [PATCH 00/40] MinGW port
-Date: Mon, 3 Mar 2008 19:34:25 +0100
-Message-ID: <200803031934.25569.johannes.sixt@telecom.at>
-References: <1204138503-6126-1-git-send-email-johannes.sixt@telecom.at> <200803022220.59711.johannes.sixt@telecom.at> <alpine.LSU.1.00.0803022200070.22527@racer.site>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 03 19:35:29 2008
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH] Fix incorrect wording in git-merge.txt.
+Date: Mon,  3 Mar 2008 18:52:49 +0100
+Message-ID: <1204566769-6585-1-git-send-email-Matthieu.Moy@imag.fr>
+References: <1204564483-5260-1-git-send-email-Matthieu.Moy@imag.fr>
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Mar 03 19:36:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWFVC-00008l-80
-	for gcvg-git-2@gmane.org; Mon, 03 Mar 2008 19:35:06 +0100
+	id 1JWFWL-0000f4-CC
+	for gcvg-git-2@gmane.org; Mon, 03 Mar 2008 19:36:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754261AbYCCSe2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Mar 2008 13:34:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754203AbYCCSe2
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Mar 2008 13:34:28 -0500
-Received: from smtp1.srv.eunet.at ([193.154.160.119]:43444 "EHLO
-	smtp1.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753928AbYCCSe1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Mar 2008 13:34:27 -0500
-Received: from dx.sixt.local (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
-	by smtp1.srv.eunet.at (Postfix) with ESMTP id 032A233BB6;
-	Mon,  3 Mar 2008 19:34:26 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by dx.sixt.local (Postfix) with ESMTP id C4BB560FA1;
-	Mon,  3 Mar 2008 19:34:25 +0100 (CET)
-User-Agent: KMail/1.9.3
-In-Reply-To: <alpine.LSU.1.00.0803022200070.22527@racer.site>
-Content-Disposition: inline
+	id S1758886AbYCCSfe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Mar 2008 13:35:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754564AbYCCSfe
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Mar 2008 13:35:34 -0500
+Received: from harmonie.imag.fr ([147.171.130.40]:62137 "EHLO harmonie.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758789AbYCCSfd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Mar 2008 13:35:33 -0500
+X-Greylist: delayed 1804 seconds by postgrey-1.27 at vger.kernel.org; Mon, 03 Mar 2008 13:35:33 EST
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by harmonie.imag.fr (8.13.8/8.13.8) with ESMTP id m23HqnQT006899;
+	Mon, 3 Mar 2008 18:52:49 +0100 (CET)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1JWEqH-0002KO-CH; Mon, 03 Mar 2008 18:52:49 +0100
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1JWEqH-0001im-8T; Mon, 03 Mar 2008 18:52:49 +0100
+X-Mailer: git-send-email 1.5.4.21.g82c44
+In-Reply-To: <1204564483-5260-1-git-send-email-Matthieu.Moy@imag.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (harmonie.imag.fr [147.171.130.40]); Mon, 03 Mar 2008 18:52:49 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75965>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75966>
 
-On Sunday 02 March 2008 23:07, Johannes Schindelin wrote:
-> On Sun, 2 Mar 2008, Johannes Sixt wrote:
-> > diff --git a/Makefile b/Makefile
-> > index 53a4e2a..2ea53c0 100644
-> > --- a/Makefile
-> > +++ b/Makefile
-> > @@ -265,6 +265,7 @@ PROGRAMS = \
-> >  	git-pack-redundant$X git-var$X \
-> >  	git-merge-tree$X \
-> >  	git-merge-recursive$X \
-> > +	$(POSIX_ONLY_PROGRAMS) \
-> >  	$(EXTRA_PROGRAMS)
->
-> Clever name!  But shouldn't EXTRA_PROGRAMS go?
+A merge is not necessarily with a remote branch, it can be with any
+commit object.
 
-No. It was there before I messed around with it.
+Thanks to Paolo Ciarrocchi for pointing out the problem, and to
+Nicolas Pitre for pointing out the fact that a merge is not
+necessarily with a branch head.
 
-> > -			/* Thanks, Bill. You'll burn in hell for that. */
->
-> Boo.  My nice comment.  You just deleted it.  ;-)
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+ Documentation/git-merge.txt |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
 
-It's not my fault, I swear it. It went like this: I erased the line, but then 
-changed my mind and hit Undo. But then I thought, this is a serious project, 
-we don't need such language. And hit Redo. Which made me think again... So I 
-said to my little rascal, who was playing Lego: "Say 'stop'", and I hit Undo 
-and Redo as fast as I could. And when he said "Stop", oh well, I had just hit 
-Redo. So here we have it - no longer.
+diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
+index 0c9ad7f..193c9c0 100644
+--- a/Documentation/git-merge.txt
++++ b/Documentation/git-merge.txt
+@@ -68,7 +68,8 @@ HOW MERGE WORKS
+ ---------------
+ 
+ A merge is always between the current `HEAD` and one or more
+-remote branch heads, and the index file must exactly match the
++commit objects (usually, branch head or tag), and the index file must
++exactly match the
+ tree of `HEAD` commit (i.e. the contents of the last commit) when
+ it happens.  In other words, `git-diff --cached HEAD` must
+ report no changes.
+-- 
+1.5.4.21.g82c44
 
-;-)
-
--- Hannes
