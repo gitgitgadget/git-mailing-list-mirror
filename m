@@ -1,66 +1,76 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: [PATCH] Fix incorrect wording in git-merge.txt.
-Date: Mon, 03 Mar 2008 20:50:39 +0100
-Message-ID: <vpqlk4zoacw.fsf@bauges.imag.fr>
-References: <1204564483-5260-1-git-send-email-Matthieu.Moy@imag.fr>
-	<alpine.LFD.1.00.0803031320180.2899@xanadu.home>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH, fixed] builtin-clone: create remotes/origin/HEAD  symref,
+ if guessed
+Date: Mon, 3 Mar 2008 19:55:42 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0803031955020.22527@racer.site>
+References: <alpine.LNX.1.00.0802251604460.19024@iabervon.org> <200802260321.14038.johan@herland.net> <alpine.LNX.1.00.0802261128360.19024@iabervon.org> <alpine.LSU.1.00.0803020556380.22527@racer.site> <alpine.LSU.1.00.0803020622190.22527@racer.site>
+ <1204563913.4084.3.camel@gaara.boston.redhat.com> <20080303170942.GB23210@artemis.madism.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Mon Mar 03 20:53:17 2008
+Content-Type: MULTIPART/MIXED; BOUNDARY="-1463811741-1443587725-1204574144=:22527"
+Cc: =?ISO-8859-15?Q?Kristian_H=F8gsberg?= <krh@redhat.com>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Johan Herland <johan@herland.net>, git@vger.kernel.org,
+	=?ISO-8859-15?Q?Santi_B=E9jar?= <sbejar@gmail.com>
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Mon Mar 03 20:57:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWGil-0003VI-L2
-	for gcvg-git-2@gmane.org; Mon, 03 Mar 2008 20:53:12 +0100
+	id 1JWGmZ-0004qM-ME
+	for gcvg-git-2@gmane.org; Mon, 03 Mar 2008 20:57:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751564AbYCCTwe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Mar 2008 14:52:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751282AbYCCTwe
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Mar 2008 14:52:34 -0500
-Received: from imag.imag.fr ([129.88.30.1]:49737 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750771AbYCCTwd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Mar 2008 14:52:33 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id m23Joi3x014370
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 3 Mar 2008 20:50:44 +0100 (CET)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1JWGgJ-0006EV-4V; Mon, 03 Mar 2008 20:50:39 +0100
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1JWGgJ-00026u-2B; Mon, 03 Mar 2008 20:50:39 +0100
-In-Reply-To: <alpine.LFD.1.00.0803031320180.2899@xanadu.home> (Nicolas Pitre's message of "Mon\, 03 Mar 2008 13\:26\:42 -0500 \(EST\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 03 Mar 2008 20:50:45 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1751065AbYCCT43 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Mar 2008 14:56:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751212AbYCCT43
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Mar 2008 14:56:29 -0500
+Received: from mail.gmx.net ([213.165.64.20]:54960 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751052AbYCCT42 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Mar 2008 14:56:28 -0500
+Received: (qmail invoked by alias); 03 Mar 2008 19:56:27 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp044) with SMTP; 03 Mar 2008 20:56:27 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/NFNF4BuXN6Nx5IswrUmyoDdomnMomuC4qTy1M5Q
+	0X8xbmPksMYv9y
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20080303170942.GB23210@artemis.madism.org>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75978>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75979>
 
-Nicolas Pitre <nico@cam.org> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> You don't really merge a commit _object_.
-> You merge with one or more other commits, tipycally identified by a 
-> branch name or a tag.
+---1463811741-1443587725-1204574144=:22527
+Content-Type: TEXT/PLAIN; charset=ISO-8859-15
+Content-Transfer-Encoding: 8BIT
 
-Strictly speaking, you can merge any commit, not necessarily a branch
-or a tag. That can be "git merge 66f0a4d" or whatever. Admitedly, the
-common case is to merge a tag or a branch (which is why I keep it in
-parentheses).
+Hi,
 
-Now, I don't understand the distinction you seem to be making between
-"commit" and "commit object".
+On Mon, 3 Mar 2008, Pierre Habouzit wrote:
 
--- 
-Matthieu
+> On Mon, Mar 03, 2008 at 05:05:13PM +0000, Kristian Høgsberg wrote:
+> > Oh and I'm wondering if
+> > 
+> >   strbuf_initf(&real_ref, "%s/%s", branch_top, head);
+> > 
+> > would be a worthwhile addition to the strbuf API...
+> 
+>   I don't think so, unless there are 1289 places in git that would 
+> benefit from the shortcut it gives, but I really doubt it.
+
+I think the proper question is: how many places in Git would benefit from 
+strbuf_initf()?
+
+Well, I stated already that I like it.
+
+Ciao,
+Dscho
+
+---1463811741-1443587725-1204574144=:22527--
