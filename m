@@ -1,55 +1,62 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: How to "git add ." when some files are not accessible
- (permission denied)?
-Date: Mon, 03 Mar 2008 12:06:35 -0800
-Message-ID: <7vmypfh8s4.fsf@gitster.siamese.dyndns.org>
-References: <47C95E34.1050306@dirk.my1.cc>
- <20080302011900.GC22843@coredump.intra.peff.net>
- <47CC4EAC.1050905@dirk.my1.cc>
+From: Michele Ballabio <barra_cuda@katamail.com>
+Subject: [PATCH] gitk: mark a string for translation
+Date: Mon, 3 Mar 2008 21:12:47 +0100
+Message-ID: <200803032112.47375.barra_cuda@katamail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Dirk =?utf-8?Q?S=C3=BCsserott?= <newsletter@dirk.my1.cc>
-X-From: git-owner@vger.kernel.org Mon Mar 03 21:08:39 2008
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Mon Mar 03 21:11:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWGwn-0000ap-Ex
-	for gcvg-git-2@gmane.org; Mon, 03 Mar 2008 21:07:41 +0100
+	id 1JWH0A-0002CI-HI
+	for gcvg-git-2@gmane.org; Mon, 03 Mar 2008 21:11:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754610AbYCCUGs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 Mar 2008 15:06:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754829AbYCCUGr
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Mar 2008 15:06:47 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:60016 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754610AbYCCUGr convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 3 Mar 2008 15:06:47 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 196EF31D2;
-	Mon,  3 Mar 2008 15:06:45 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 75FC831D0; Mon,  3 Mar 2008 15:06:38 -0500 (EST)
-In-Reply-To: <47CC4EAC.1050905@dirk.my1.cc> (Dirk =?utf-8?Q?S=C3=BCsserott?=
- =?utf-8?Q?'s?= message of "Mon, 03 Mar 2008 20:17:00 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754997AbYCCUKL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Mar 2008 15:10:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754853AbYCCUKK
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Mar 2008 15:10:10 -0500
+Received: from smtp.katamail.com ([62.149.157.154]:51478 "HELO
+	smtp1.pc.aruba.it" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with SMTP id S1753819AbYCCUKI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Mar 2008 15:10:08 -0500
+Received: (qmail 21377 invoked by uid 89); 3 Mar 2008 20:09:48 -0000
+X-Spam-Checker-Version: SpamAssassin 3.2.3 (2007-08-08) on smtp2-pc
+X-Spam-Level: 
+X-Spam-Status: No, score=0.1 required=5.0 tests=RDNS_NONE autolearn=disabled
+	version=3.2.3
+Received: from unknown (HELO host122-56-static.104-80-b.business.telecomitalia.it) (barra?cuda@katamail.com@80.104.56.122)
+  by smtp2-pc with SMTP; 3 Mar 2008 20:09:47 -0000
+User-Agent: KMail/1.9.7
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75980>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75981>
 
-Dirk S=C3=BCsserott <newsletter@dirk.my1.cc> writes:
+Signed-off-by: Michele Ballabio <barra_cuda@katamail.com>
+---
+ gitk |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-> This way prepared, I used "git ls-files -o | xargs git add -v" until
-> most of my files were added.
-> ...
-> Caveat: filenames containing blanks are not handled properly as they
-> are not surrounded by quotes. "git add" thinks of them as two or more
-> files and fails.
+diff --git a/gitk b/gitk
+index f1f21e9..e82f744 100755
+--- a/gitk
++++ b/gitk
+@@ -1858,7 +1858,7 @@ proc newview {ishighlight} {
+ 	raise $top
+ 	return
+     }
+-    set newviewname($nextviewnum) "View $nextviewnum"
++    set newviewname($nextviewnum) "[mc "View"] $nextviewnum"
+     set newviewperm($nextviewnum) 0
+     set newviewargs($nextviewnum) [shellarglist $revtreeargs]
+     vieweditor $top $nextviewnum [mc "Gitk view definition"]
+-- 
+1.5.4.3
 
-Perhaps "git ls-files -z -o | git update-index --add --stdin"
