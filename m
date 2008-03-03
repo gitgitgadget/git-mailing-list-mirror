@@ -1,60 +1,59 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCH, fixed] builtin-clone: create remotes/origin/HEAD symref, if guessed
-Date: Mon, 3 Mar 2008 18:41:46 +0100
-Message-ID: <200803031841.47302.johan@herland.net>
-References: <alpine.LNX.1.00.0802251604460.19024@iabervon.org> <alpine.LSU.1.00.0803020622190.22527@racer.site> <1204563913.4084.3.camel@gaara.boston.redhat.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH] Make the exit code of add_file_to_index actually
+ useful
+Date: Mon, 3 Mar 2008 13:01:24 -0500 (EST)
+Message-ID: <alpine.LNX.1.00.0803031252410.19665@iabervon.org>
+References: <47C95E34.1050306@dirk.my1.cc> <20080302154154.GC2973@steel.home> <20080302154238.GD2973@steel.home> <alpine.LSU.1.00.0803021555500.22527@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org,
-	Santi =?utf-8?q?B=C3=A9jar?= <sbejar@gmail.com>,
-	Pierre Habouzit <madcoder@debian.org>
-To: Kristian =?utf-8?q?H=C3=B8gsberg?= <krh@redhat.com>
-X-From: git-owner@vger.kernel.org Mon Mar 03 18:44:24 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Alex Riesen <raa.lkml@gmail.com>,
+	=?ISO-8859-15?Q?Dirk_S=FCsserott?= <newsletter@dirk.my1.cc>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <junkio@cox.net>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Mar 03 19:02:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWEi7-0006LK-Fy
-	for gcvg-git-2@gmane.org; Mon, 03 Mar 2008 18:44:23 +0100
+	id 1JWEzS-0004MZ-Jj
+	for gcvg-git-2@gmane.org; Mon, 03 Mar 2008 19:02:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751462AbYCCRn0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 Mar 2008 12:43:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755656AbYCCRnW
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Mar 2008 12:43:22 -0500
-Received: from sam.opera.com ([213.236.208.81]:36514 "EHLO smtp.opera.com"
+	id S1757555AbYCCSB3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Mar 2008 13:01:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757437AbYCCSB3
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Mar 2008 13:01:29 -0500
+Received: from iabervon.org ([66.92.72.58]:56364 "EHLO iabervon.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757505AbYCCRnT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Mar 2008 12:43:19 -0500
-Received: from pc107.coreteam.oslo.opera.com (pat-tdc.opera.com [213.236.208.22])
-	by smtp.opera.com (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id m23Hfllo030357
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Mon, 3 Mar 2008 17:41:48 GMT
-User-Agent: KMail/1.9.9
-In-Reply-To: <1204563913.4084.3.camel@gaara.boston.redhat.com>
-Content-Disposition: inline
-X-Virus-Scanned: ClamAV 0.92.1/6093/Mon Mar  3 15:03:18 2008 on smtp.opera.com
-X-Virus-Status: Clean
+	id S1751695AbYCCSB1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Mar 2008 13:01:27 -0500
+Received: (qmail 11712 invoked by uid 1000); 3 Mar 2008 18:01:24 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 3 Mar 2008 18:01:24 -0000
+In-Reply-To: <alpine.LSU.1.00.0803021555500.22527@racer.site>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75956>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75957>
 
-On Monday 03 March 2008, Kristian H=C3=B8gsberg wrote:
-> Oh and I'm wondering if
->=20
->   strbuf_initf(&real_ref,=EF=BB=BF "%s/%s", branch_top, head);
->=20
-> would be a worthwhile addition to the strbuf API...
+On Sun, 2 Mar 2008, Johannes Schindelin wrote:
 
-+1. This is about the first thing I started looking for in strbuf.h whe=
-n I first looked at strbufs...
+> Hi,
+> 
+> On Sun, 2 Mar 2008, Alex Riesen wrote:
+> 
+> > -			add_file_to_cache(path, verbose);
+> > +			if (add_file_to_cache(path, verbose))
+> > +				exit(1);
+> 
+> Does it really, really _have_ to be exit(1)?  I mean, now you block even 
+> the faintest chance that we can libify libgit.a by overriding die_routine.
 
+It would be handy to have a die_no_message(), for cases like this where a 
+function wants to print an error message but it's up to the caller whether 
+to abort (in the contextually reasonable way).
 
-=2E..Johan
-
---=20
-Johan Herland, <johan@herland.net>
-www.herland.net
+	-Daniel
+*This .sig left intentionally blank*
