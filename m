@@ -1,99 +1,101 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: git fetch: where are the downloaded objects stored?
-Date: Mon, 03 Mar 2008 13:14:57 -0500 (EST)
-Message-ID: <alpine.LFD.1.00.0803031307380.2899@xanadu.home>
-References: <4d8e3fd30803030440s7239c83cj8bf69401dd76bad@mail.gmail.com>
- <vpqskz82bm3.fsf@bauges.imag.fr>
- <4d8e3fd30803030633nf6266d5qab0df4ba4c539e0b@mail.gmail.com>
- <vpq63w325px.fsf@bauges.imag.fr>
- <4d8e3fd30803030740i18ca8db1y681b4f10797f8c83@mail.gmail.com>
- <alpine.LFD.1.00.0803031057140.2899@xanadu.home>
- <4d8e3fd30803030851n498953c4u7e7a109b91b9da11@mail.gmail.com>
- <87hcfnu3nu.fsf@osv.gnss.ru>
+From: Tilman Schmidt <tilman@imap.cc>
+Subject: Re: The 8th airing of the msysGit herald
+Date: Mon, 03 Mar 2008 19:21:18 +0100
+Organization: me - organized??
+Message-ID: <47CC419E.7030704@imap.cc>
+References: <alpine.LSU.1.00.0803022329560.22527@racer.site> <m34pbok54h.fsf@localhost.localdomain> <alpine.LSU.1.00.0803030052450.22527@racer.site> <200803030210.02223.jnareb@gmail.com> <47CBE85B.6060702@imap.cc> <alpine.LSU.1.00.0803031205170.22527@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Git Mailing List <git@vger.kernel.org>
-To: Sergei Organov <osv@javad.com>
-X-From: git-owner@vger.kernel.org Mon Mar 03 19:15:39 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enigCA490BFAB94302A0679A1A42"
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Mar 03 19:22:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWFCM-0001B0-2T
-	for gcvg-git-2@gmane.org; Mon, 03 Mar 2008 19:15:38 +0100
+	id 1JWFIg-0003ew-7o
+	for gcvg-git-2@gmane.org; Mon, 03 Mar 2008 19:22:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751101AbYCCSO7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Mar 2008 13:14:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751480AbYCCSO7
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Mar 2008 13:14:59 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:44089 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751065AbYCCSO6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Mar 2008 13:14:58 -0500
-Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JX6003PF2OXQ260@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 03 Mar 2008 13:14:57 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <87hcfnu3nu.fsf@osv.gnss.ru>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+	id S1751250AbYCCSVc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Mar 2008 13:21:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750893AbYCCSVb
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Mar 2008 13:21:31 -0500
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:57291 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750826AbYCCSVb (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 3 Mar 2008 13:21:31 -0500
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by out1.messagingengine.com (Postfix) with ESMTP id 23BA2ACF0B;
+	Mon,  3 Mar 2008 13:21:30 -0500 (EST)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute2.internal (MEProxy); Mon, 03 Mar 2008 13:21:30 -0500
+X-Sasl-enc: 2IzmQkD5JvTzAtNxJ0I6tf/xvztXUmtSEjuHCbMfSizo 1204568489
+Received: from [192.168.59.127] (pD9E8743C.dip.t-dialin.net [217.232.116.60])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id EFF4025D99;
+	Mon,  3 Mar 2008 13:21:28 -0500 (EST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.0; de-AT; rv:1.8.1.12) Gecko/20080201 SeaMonkey/1.1.8 Mnenhy/0.7.5.666
+In-Reply-To: <alpine.LSU.1.00.0803031205170.22527@racer.site>
+X-Enigmail-Version: 0.95.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75959>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75960>
 
-On Mon, 3 Mar 2008, Sergei Organov wrote:
-> "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com> writes:
-> > On Mon, Mar 3, 2008 at 5:29 PM, Nicolas Pitre <nico@cam.org> wrote:
-> >> If you have reflog enabled (it should be by default) then a good thing
-> >> to remember is the @{1} notation.  For example, if the fetch updated the
-> >> origin/master branch, then origin/master@{1} is what your origin/master
-> >> was before being updated.  To see the difference between the previous
-> >> and the current state of origin/master, you can do:
-> >>
-> >>        git diff origin/master@{1}..origin/master
-> >>
-> >> Or to see the list of new commits:
-> >>
-> >>        git log origin/master@{1}..origin/master
-> >>
-> >>        git log -p origin/master@{1}..origin/master
-> >>
-> >> Etc.
-> >
-> > Very nice, I didn't find in the documentation.
-> > I'll read again the documents and if needed, I'll propose some new text.
-> >
-> >> This notation is a bit obnoxious and the re were suggestions about
-> >> addind the equivalent origin/master@{1..} but that didn't materialize
-> >> yet.
-> >
-> > Mybe it's just me but wouldn't be very nice to have a simple command
-> > to look at what data have been used for updating the currente branch?
-> > i.e.
-> > git fetch
-> > git diff -- fetch (which is an alias of git diff
-> > origin/master@{1}..origin/master)
-> >
-> > And how about a repository which have reflogs disabled?
-> 
-> I'm also a newbie, and I think you are on a wrong road. Usually it's not
-> that interesting what was downloaded. What is interesting is what is on
-> 'origin/master' that is still missing from 'master'. For this I think
-> you have:
-> 
-> $ git log master..origin
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enigCA490BFAB94302A0679A1A42
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
 
-Yes, this is indeed what most people should be doing.  But if you're 
-tracking some remote repository with no intention of merging them in 
-your master branch by default, then it is often a nice thing to be able 
-to see what has changed in those tracked branches since the last time 
-you fetched them.  This is where the reflog is really handy as it 
-records all fetch points you did.
+Am 03.03.2008 13:05 schrieb Johannes Schindelin:
+> On Mon, 3 Mar 2008, Tilman Schmidt wrote:
+>=20
+>> Jakub Narebski schrieb:
+[...]
+>>> For me the sign how incredibly fast the git development is is the fac=
+t
+>>> that git version from a year ago is considered "ancient".
+>> Yes, and that is in itself a problem for people like me who just want =
+to=20
+>> use git to get some work done. The time I spend installing new git=20
+>> versions, reading RelNotes and sorting through a rather high-volume=20
+>> mailing list goes off the time I can spare for working on the Linux=20
+>> driver I maintain. :-(
+>=20
+> Well, you do not _have_ to upgrade, if you are comfortable with what yo=
+u=20
+> have...
+
+True as far as it goes, and for appropriate values of "what I have".
+Neither do I _have_ to subscribe to the mailing list, or, for that
+matter, to read the release notes of a new version I install.
+
+But git is not particularly easy to learn on my own, so I end up
+asking for help. (Arguably this qualifies as "not comfortable with
+what I have.") And then "ancient version" translates all too easily
+into "you should upgrade to a newer one".
+
+--=20
+Tilman Schmidt                          E-Mail: tilman@imap.cc
+Bonn, Germany
+Diese Nachricht besteht zu 100% aus wiederverwerteten Bits.
+Unge=F6ffnet mindestens haltbar bis: (siehe R=FCckseite)
 
 
-Nicolas
+--------------enigCA490BFAB94302A0679A1A42
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.3rc1 (MingW32)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+
+iD8DBQFHzEGmMdB4Whm86/kRAl74AJ9N0/BhkH0SiATGIsqRpBUWfv97LACcDc7Y
++p7JXbBv3CKkhocRVjei/qg=
+=yNsO
+-----END PGP SIGNATURE-----
+
+--------------enigCA490BFAB94302A0679A1A42--
