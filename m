@@ -1,212 +1,259 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: What's in git.git (stable)
-Date: Sun, 02 Mar 2008 18:06:30 -0800
-Message-ID: <7vod9wlfx5.fsf@gitster.siamese.dyndns.org>
-References: <7v8x27iui1.fsf@gitster.siamese.dyndns.org>
- <7vd4r24ox6.fsf@gitster.siamese.dyndns.org>
- <7vir0o44mt.fsf_-_@gitster.siamese.dyndns.org>
- <7vejb7ymep.fsf@gitster.siamese.dyndns.org>
- <7vfxvhjukt.fsf@gitster.siamese.dyndns.org>
- <7vablloqqe.fsf@gitster.siamese.dyndns.org>
+Subject: What's cooking in git.git (topics)
+Date: Sun, 02 Mar 2008 18:06:49 -0800
+Message-ID: <7vmypglfwm.fsf@gitster.siamese.dyndns.org>
+References: <7v7ihmuwzi.fsf@gitster.siamese.dyndns.org>
+ <7vodavd9qw.fsf@gitster.siamese.dyndns.org>
+ <7vbq6tset4.fsf@gitster.siamese.dyndns.org>
+ <7vmyq9gk94.fsf@gitster.siamese.dyndns.org>
+ <7vk5la4oxq.fsf@gitster.siamese.dyndns.org>
+ <7vejbc44hu.fsf@gitster.siamese.dyndns.org>
+ <7v8x1fymei.fsf@gitster.siamese.dyndns.org>
+ <7vpruljunl.fsf@gitster.siamese.dyndns.org>
+ <7v1w6xoqnm.fsf@gitster.siamese.dyndns.org>
+ <7vy792yzd6.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 03 03:07:20 2008
+X-From: git-owner@vger.kernel.org Mon Mar 03 03:07:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JW05H-0004XT-Fp
-	for gcvg-git-2@gmane.org; Mon, 03 Mar 2008 03:07:20 +0100
+	id 1JW05f-0004cA-Jw
+	for gcvg-git-2@gmane.org; Mon, 03 Mar 2008 03:07:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751429AbYCCCGm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 2 Mar 2008 21:06:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751254AbYCCCGm
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Mar 2008 21:06:42 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:49324 "EHLO
+	id S1752001AbYCCCHG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Mar 2008 21:07:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751984AbYCCCHG
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Mar 2008 21:07:06 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:49608 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751227AbYCCCGl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 2 Mar 2008 21:06:41 -0500
+	with ESMTP id S1751254AbYCCCHD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Mar 2008 21:07:03 -0500
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id E37DA2860;
-	Sun,  2 Mar 2008 21:06:38 -0500 (EST)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 617142869;
+	Sun,  2 Mar 2008 21:07:01 -0500 (EST)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
  certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id D768F24DD; Sun,  2 Mar 2008 21:06:35 -0500 (EST)
-X-maint-at: 84989bd820119260c4fcd0dd5ee8a50bc8ff0d2c
-X-master-at: 34cd62eb91600109378c8121c1fecd924a9af177
-In-Reply-To: <7vablloqqe.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
- message of "Wed, 27 Feb 2008 16:43:21 -0800")
+ ESMTP id 24E622867; Sun,  2 Mar 2008 21:06:57 -0500 (EST)
+In-Reply-To: <7vy792yzd6.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Sat, 01 Mar 2008 12:15:49 -0800")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75866>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75867>
 
-The 'master' has, aside from trivial fixes and enhancements, the follow=
-ing
-topics that have been cooking:
+Here are the topics that have been cooking.  Commits prefixed
+with '-' are only in 'pu' while commits prefixed with '+' are
+in 'next'.
 
- * "verify-pack" improvements;
-
- * "describe" that warns about a tag whose name and path contradict;
-
- * "describe --long" to show an tagged commit as $tag-0-$sha1;
-
- * "cvsimport -M" can be given more than once;
-
- * "gitweb" grep-search improvements;
-
-A handful of the topics are meant also for 'maint'; after seeing no
-complaints for a while they will be merged to 'maint' as part of the ne=
-xt
-maintenance release v1.5.4.4.
+The topics list the commits in reverse chronological order.
 
 ----------------------------------------------------------------
-* The 'maint' branch has these fixes since the last announcement.
+[New Topics]
 
-Daniel Barkalow (1):
-  Correct name of diff_flush() in API documentation
+* cb/mergetool (Thu Feb 21 23:31:56 2008 +0000) 4 commits
+ - Add a very basic test script for git mergetool
+ - Teach git mergetool to use custom commands defined at config time
+ - Changed an internal variable of mergetool to support custom
+   commands
+ - Tidy up git mergetool's backup file behaviour
 
-Gerrit Pape (1):
-  templates/Makefile: don't depend on local umask setting
+* dc/format-pretty (Sun Mar 2 17:05:53 2008 +0800) 3 commits
+ - log/show/whatchanged: introduce format.pretty configuration
+ - specify explicit "--pretty=medium" with `git log/show/whatchanged`
+ - whatchanged documentation: share description of --pretty with
+   others
 
-Junio C Hamano (1):
-  Start preparing for 1.5.4.4
+* ph/parseopt (Sun Mar 2 11:35:56 2008 +0100) 2 commits
+ + parse-options: new option type to treat an option-like parameter
+   as an argument.
+ + parse-opt: bring PARSE_OPT_HIDDEN and NONEG to git-rev-parse --
+   parseopt
 
-Mike Ralphson (1):
-  Documentation cherry-pick: Fix cut-and-paste error
+* nd/worktree (Sun Mar 2 17:35:43 2008 +0700) 10 commits
+ - Additional tests to capture worktree special cases
+ - Documentation: update api-builtin and api-setup
+ - Make setup_git_directory() auto-setup worktree if found
+ - builtin-archive: mark unused prefix "unused_prefix"
+ - Completely move out worktree setup from
+   setup_git_directory_gently()
+ - http-push: Avoid calling setup_git_directory() twice
+ - Make setup_work_tree() return new prefix
+ - Make get_git_dir() and 'git rev-parse --git-dir' absolute path
+ - Make sure setup_git_directory is called before accessing
+   repository
+ - "git read-tree -m" and the like require worktree
 
-R=C3=A9mi Vanicat (1):
-  git.el: find the git-status buffer whatever its name is
-
-Shawn O. Pearce (1):
-  git-gui: Paper bag fix info dialog when no files are staged at commit
+Replaced from the early ones in 'pu'.
 
 ----------------------------------------------------------------
-* The 'master' branch has these since the last announcement
-  in addition to the above.
+[Graduated to "master"]
 
-Alex Riesen (1):
-  Fix builtin checkout crashing when given an invalid path
+* np/verify-pack (Thu Feb 28 00:25:20 2008 -0500) 4 commits
+ + add storage size output to 'git verify-pack -v'
+ + fix unimplemented packed_object_info_detail() features
+ + make verify_one_pack() a bit less wrong wrt packed_git structure
+ + factorize revindex code out of builtin-pack-objects.c
 
-Christian Stimming (2):
-  git-gui: (i18n) Add newly added translation strings to template.
-  git-gui: Update German translation.
+* sp/describe-tag (Thu Feb 28 01:22:36 2008 -0500) 1 commit
+ - Teach git-describe to verify annotated tag names before output
 
-Clemens Buchacher (2):
-  http-push: push <remote> :<branch> deletes remote branch
-  http-push: add regression tests
+* jc/maint-log-merge-left-right (Tue Feb 26 23:18:38 2008 -0800) 1 commit
+ + Fix "git log --merge --left-right"
 
-Daniel Barkalow (3):
-  Always use the current connection's remote ref list in git protocol
-  Use diff_tree() directly in making cover letter
-  Write index file on any checkout of files
+* pb/cvsimport (Thu Feb 28 11:18:23 2008 +0100) 3 commits
+ + cvsimport: document that -M can be used multiple times
+ + cvsimport: allow for multiple -M options
+ + cvsimport: have default merge regex allow for dashes in the branch
+   name
 
-Denis Cheng (1):
-  cleanup: remove unused git_checkout_config
+* js/maint-daemon (Tue Feb 26 13:00:55 2008 +0100) 2 commits
+ + daemon: ensure that base-path is an existing directory
+ + daemon: send more error messages to the syslog
 
-=46rank Lichtenheld (1):
-  gc: Add --quiet option
+* ew/maint-svn-cert-fileprovider (Mon Feb 25 15:56:28 2008 +0100) 1 commit
+ + git-svn: Don't prompt for client cert password everytime.
 
-Jakub Narebski (4):
-  gitweb: Change parse_commits signature to allow for multiple options
-  gitweb: Simplify fixed string search
-  Documentation: Remove --{min,max}-age option from git-log(1)
-  gitweb: Mark first match when searching commit messages
+* sb/describe-long (Mon Feb 25 10:43:33 2008 +0100) 1 commit
+ + git-describe: --long shows the object name even for a tagged
+   commit
 
-Jean-Luc Herren (1):
-  fast-import: exit with proper message if not a git dir
+* mk/maint-parse-careful (Mon Feb 25 22:46:13 2008 +0100) 10 commits
+ + receive-pack: use strict mode for unpacking objects
+ + index-pack: introduce checking mode
+ + unpack-objects: prevent writing of inconsistent objects
+ + unpack-object: cache for non written objects
+ + add common fsck error printing function
+ + builtin-fsck: move common object checking code to fsck.c
+ + builtin-fsck: reports missing parent commits
+ + Remove unused object-ref code
+ + builtin-fsck: move away from object-refs to fsck_walk
+ + add generic, type aware object chain walker
 
-Jeff King (3):
-  use build-time SHELL_PATH in test scripts
-  rename: warn user when we have turned off rename detection
-  allow git-am to run in a subdirectory
+* jn/gitweb-grep (Tue Feb 26 13:22:08 2008 +0100) 3 commits
+ + gitweb: Clearly distinguish regexp / exact match searches
+ + gitweb: Simplify fixed string search
+ + gitweb: Change parse_commits signature to allow for multiple
+   options
 
-Johannes Schindelin (4):
-  completion: support format-patch's --cover-letter option
-  Fix make_absolute_path() for parameters without a slash
-  format-patch: use the diff options for the cover letter, too
-  format-patch: wrap cover-letter's shortlog sensibly
+* jc/remote-multi-url (Wed Feb 27 13:50:44 2008 -0800) 1 commit
+ + git-remote: do not complain on multiple URLs for a remote
 
-Johannes Sixt (2):
-  daemon: send more error messages to the syslog
-  daemon: ensure that base-path is an existing directory
+* cb/http-test (Wed Feb 27 20:28:45 2008 +0100) 2 commits
+ + http-push: add regression tests
+ + http-push: push <remote> :<branch> deletes remote branch
 
-Junio C Hamano (11):
-  git-remote: do not complain on multiple URLs for a remote
-  Fix "git log --merge --left-right"
-  format-patch: remove a leftover debugging message
-  tests: introduce test_must_fail
-  Update draft release notes for 1.5.5
-  t6024: move "git reset" to prepare for a test inside the test itself
-  CodingGuidelines: spell out how we use grep in our scripts
-  find_unique_abbrev(): redefine semantics
-  Clean up find_unique_abbrev() callers
-  diff-lib.c: constness strengthening
-  diff: make sure work tree side is shown as 0{40} when different
+* mh/maint-http-proxy-fix (Wed Feb 27 21:35:50 2008 +0100) 1 commit
+ + Set proxy override with http_init()
 
-Martin Koegler (10):
-  add generic, type aware object chain walker
-  builtin-fsck: move away from object-refs to fsck_walk
-  Remove unused object-ref code
-  builtin-fsck: reports missing parent commits
-  builtin-fsck: move common object checking code to fsck.c
-  add common fsck error printing function
-  unpack-object: cache for non written objects
-  unpack-objects: prevent writing of inconsistent objects
-  index-pack: introduce checking mode
-  receive-pack: use strict mode for unpacking objects
+----------------------------------------------------------------
+[Actively Cooking]
 
-Michele Ballabio (1):
-  git-gui: fix typo in lib/spellcheck.tcl
+* js/remote (Sun Mar 2 05:31:59 2008 +0000) 6 commits
+ - remote show: Clean up connection correctly if object fetch wasn't
+   done
+ + builtin-remote: prune remotes correctly that were added with --
+   mirror
+ + Make git-remote a builtin
+ + Test "git remote show" and "git remote prune"
+ + parseopt: add flag to stop on first non option
+ + path-list: add functions to work with unsorted lists
 
-Mike Hommey (4):
-  Set proxy override with http_init()
-  Add test for git rebase --abort
-  Documentation/git-rebase.txt: Add --strategy to synopsys
-  git rebase --abort: always restore the right commit
+Slated for 1.5.5.
 
-Miklos Vajna (1):
-  Improve t6029 to check the real "subtree" case
+* sp/fetch-optim (Sat Mar 1 00:25:38 2008 -0500) 7 commits
+ - Teach git-fetch to grab a tag at the same time as a commit
+ - Make git-fetch follow tags we already have objects for sooner
+ - Teach upload-pack to log the received need lines to fd 3
+ - Allow builtin-fetch's find_non_local_tags to append onto a list
+ - Ensure tail pointer gets setup correctly when we fetch HEAD only
+ - Remove unnecessary delaying of free_refs(ref_map) in builtin-fetch
+ - Remove unused variable in builtin-fetch find_non_local_tags
 
-Nicolas Pitre (4):
-  factorize revindex code out of builtin-pack-objects.c
-  make verify_one_pack() a bit less wrong wrt packed_git structure
-  fix unimplemented packed_object_info_detail() features
-  add storage size output to 'git verify-pack -v'
+A few existing tests in 5515 need to be adjusted as they expect tags not
+to be fetched early, but the point of this series is to optimize to allow
+them to, under some conditions.  Otherwise slated for 1.5.5.
 
-Petr Baudis (1):
-  gitweb: Clearly distinguish regexp / exact match searches
+* js/reflog-delete (Sun Mar 2 14:58:51 2008 -0600) 13 commits
+ - t3903-stash.sh: Add tests for new stash commands drop and pop
+ - git-reflog.txt: Document new commands --updateref and --rewrite
+ - t3903-stash.sh: Add missing '&&' to body of testcase
+ - Merge commit '7435982102093179474a128648179a44042d8a1c' into
+   bc/stash
+ + git-stash: add new 'pop' subcommand
+ + git-stash: add new 'drop' subcommand
+ + git-reflog: add option --updateref to write the last reflog sha1
+   into the ref
+ + refs.c: make close_ref() and commit_ref() non-static
+ + git-reflog: add option --rewrite to update reflog entries while
+   expiring
+ + reflog-delete: parse standard reflog options
+ + Merge branch 'bc/reflog-fix' into js/reflog-delete
+ + builtin-reflog.c: fix typo that accesses an unset variable
+ + Teach "git reflog" a subcommand to delete single entries
 
-Philippe Bruhat (BooK (3):
-  cvsimport: have default merge regex allow for dashes in the branch na=
-me
-  cvsimport: allow for multiple -M options
-  cvsimport: document that -M can be used multiple times
+Slated for 1.5.5.
 
-Ralf Wildenhues (1):
-  Fix doc typos.
+----------------------------------------------------------------
+[On Hold]
 
-Santi B=C3=A9jar (2):
-  git-describe: --long shows the object name even for a tagged commit
-  clone: support cloning full bundles
+* jc/test (Thu Feb 21 21:17:54 2008 -0800) 2 commits
+ - tests: convert "cmp" and "cmp -s" to test_cmp
+ - tests: test_cmp helper function
 
-Sebastian Noack (1):
-  git-svn: Don't prompt for client cert password everytime.
+* jc/rename (Tue Jan 29 20:54:56 2008 -0800) 1 commit
+ + Optimize rename detection for a huge diff
 
-Shawn O. Pearce (7):
-  git-gui: Ensure all spellchecker 'class' variables are initialized
-  git-gui: Remove explicit references to 'aspell' in message strings
-  git-gui: Only bind the spellcheck popup suggestion hook once
-  git-gui: Catch and display aspell startup failures to the user
-  git-gui: Gracefully display non-aspell version errors to users
-  git-gui: Shorten Aspell version strings to just Aspell version number
-  Teach git-describe to verify annotated tag names before output
+* jc/dirstat (Tue Feb 12 17:06:58 2008 -0800) 1 commit
+ - diff: make --dirstat binary-file safe
 
-Uwe Kleine-K=C3=B6nig (1):
-  rev-list: add --branches, --tags and --remotes
+* lh/git-file (Wed Feb 20 23:13:16 2008 +0100) 4 commits
+ - Teach GIT-VERSION-GEN about the .git file
+ - Teach git-submodule.sh about the .git file
+ - Teach resolve_gitlink_ref() about the .git file
+ - Add platform-independent .git "symlink"
 
+The idea and the implementation seem Ok, but this leaves
+distinct feeling that it is a solution still waiting for a user
+(e.g. "git submodule" enhancements to take advantage of this
+facility to preserve the subrepository while switching between a
+revision with a submodule and another before the submodule was
+bound to the superproject).
+
+* jc/bulk-allocate (Wed Feb 13 18:37:27 2008 -0800) 2 commits
+ - Bulk allocate diff_filepair
+ - patch freeable-bulk-alloc
+
+* nd/dashless (Wed Nov 28 23:21:57 2007 +0700) 1 commit
+ - Move all dashed-form commands to libexecdir
+
+Scheduled for 1.6.0.  I am not sure if we should merge this to
+'next' before 1.5.5.  Most active people will be on 'next' and
+if we have this there, the resulting 1.5.5 release might end up
+having issues that come from differences this one introduces.
+
+* jc/dashless (Sat Dec 1 22:09:22 2007 -0800) 2 commits
+ - Prepare execv_git_cmd() for removal of builtins from the
+   filesystem
+ - git-shell: accept "git foo" form
+
+We do not plan to remove git-foo form completely from the filesystem at
+this point, but git-shell may need to be updated.
+
+* jc/sha1-lookup (Sun Dec 30 03:13:27 2007 -0800) 2 commits
+ - sha1-lookup: make selection of 'middle' less aggressive
+ - sha1-lookup: more memory efficient search in sorted list of SHA-1
+
+Micro-optimization whose real world benefit is not proven.
+
+* jc/cherry-pick (Wed Feb 20 23:17:06 2008 -0800) 5 commits
+ - WIP: rethink replay merge
+ - Start using replay-tree merge in cherry-pick
+ - revert/cherry-pick: start refactoring call to merge_recursive
+ + expose a helper function peel_to_type().
+ + merge-recursive: split low-level merge functions out.
