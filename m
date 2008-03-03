@@ -1,74 +1,65 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH AMENDED] help: add "man.viewer" config var to use "woman" or "konqueror"
-Date: Mon, 03 Mar 2008 08:42:23 +0100
-Organization: At home
-Message-ID: <fqga4j$hgt$1@ger.gmane.org>
-References: <200802290814.39366.chriscool@tuxfamily.org> <200803010100.m2110ULs008889@localhost.localdomain> <7vir079ong.fsf@gitster.siamese.dyndns.org> <200803030838.48976.chriscool@tuxfamily.org>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH] Redirect stderr to a pipe before redirecting stdout to stderr
+Date: Mon, 3 Mar 2008 08:52:42 +0100
+Message-ID: <200803030852.43254.chriscool@tuxfamily.org>
+References: <20080303082111.24d3ea73.chriscool@tuxfamily.org> <20080303073307.GG8410@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 03 08:43:28 2008
+Cc: Junio C Hamano <gitster@pobox.com>, Xavier Maillard <xma@gnu.org>,
+	git@vger.kernel.org, nanako3@bluebottle.com, pascal@obry.net
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon Mar 03 08:48:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JW5KZ-0006gM-Qt
-	for gcvg-git-2@gmane.org; Mon, 03 Mar 2008 08:43:28 +0100
+	id 1JW5Ot-0007We-Fn
+	for gcvg-git-2@gmane.org; Mon, 03 Mar 2008 08:47:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750790AbYCCHm1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 Mar 2008 02:42:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750765AbYCCHm1
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Mar 2008 02:42:27 -0500
-Received: from main.gmane.org ([80.91.229.2]:54998 "EHLO ciao.gmane.org"
+	id S1754685AbYCCHrG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 Mar 2008 02:47:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754555AbYCCHrE
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Mar 2008 02:47:04 -0500
+Received: from smtp1-g19.free.fr ([212.27.42.27]:51768 "EHLO smtp1-g19.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750751AbYCCHm0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Mar 2008 02:42:26 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1JW5JU-0006WY-8R
-	for git@vger.kernel.org; Mon, 03 Mar 2008 07:42:20 +0000
-Received: from abxb32.neoplus.adsl.tpnet.pl ([83.8.251.32])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 03 Mar 2008 07:42:20 +0000
-Received: from jnareb by abxb32.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 03 Mar 2008 07:42:20 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: abxb32.neoplus.adsl.tpnet.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S1753518AbYCCHq7 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 3 Mar 2008 02:46:59 -0500
+Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 3BCE41AB2A8;
+	Mon,  3 Mar 2008 08:46:58 +0100 (CET)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 00C7A1AB2B2;
+	Mon,  3 Mar 2008 08:46:57 +0100 (CET)
+User-Agent: KMail/1.9.7
+In-Reply-To: <20080303073307.GG8410@spearce.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75903>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75904>
 
-Christian Couder wrote:
-> Le samedi 1 mars 2008, Junio C Hamano a =E9crit :
+Le lundi 3 mars 2008, Shawn O. Pearce a =C3=A9crit :
+> Christian Couder <chriscool@tuxfamily.org> wrote:
+> > With this patch, in the 'start_command' function after forking
+> > we now take care of stderr in the child process before stdout.
+> >
+> > This way if 'start_command' is called with a 'child_process'
+> > argument like this:
+> >
+> > 	.err =3D -1;
+> > 	.stdout_to_stderr =3D 1;
+> >
+> > then stderr will be redirected to a pipe before stdout is
+> > redirected to stderr. So we can now get the process' stdout
+> > from the pipe (as well as its stderr).
+>
+> I'm in favor of this patch.  My series to add sideband support
+> to send-pack/receive-pack (aka push) needed it for the hooks.
 
->> How about allowing multi-valued man.viewer like this:
->>
->> =A0 =A0 =A0 =A0 [man]
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 viewer =3D woman
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 viewer =3D konqueror
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 viewer =3D man
->=20
-> I tried the above in my .git/config and I get:
->=20
-> $ git config man.viewer
-> woman
-> error: More than one value for the key man.viewer: konqueror
-> error: More than one value for the key man.viewer: man
->=20
-> so I guess this can work only in C.
+Now that you say it, I remember having seen your patch, so please take=20
+ownership of this patch.
 
-$ git config --get-all man.viewer=20
-
---=20
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
-
-
+Thanks,
+Christian.
