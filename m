@@ -1,34 +1,36 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH] Paper bag fix git-describe on packed tags
-Date: Mon, 3 Mar 2008 18:21:36 -0500
-Message-ID: <20080303232136.GA15312@spearce.org>
+Subject: Re: [PATCH] Paper bag fix git-describe on packed tags
+Date: Mon, 3 Mar 2008 18:26:17 -0500
+Message-ID: <20080303232617.GI8410@spearce.org>
+References: <20080303232136.GA15312@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 04 00:22:20 2008
+X-From: git-owner@vger.kernel.org Tue Mar 04 00:26:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWJz8-0006Ol-Ij
-	for gcvg-git-2@gmane.org; Tue, 04 Mar 2008 00:22:18 +0100
+	id 1JWK3e-0007lZ-PX
+	for gcvg-git-2@gmane.org; Tue, 04 Mar 2008 00:26:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754534AbYCCXVl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Mar 2008 18:21:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754319AbYCCXVl
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Mar 2008 18:21:41 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:41646 "EHLO
+	id S1755809AbYCCX0U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Mar 2008 18:26:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755823AbYCCX0U
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Mar 2008 18:26:20 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:44099 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754132AbYCCXVk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Mar 2008 18:21:40 -0500
+	with ESMTP id S1755677AbYCCX0U (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Mar 2008 18:26:20 -0500
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.68)
 	(envelope-from <spearce@spearce.org>)
-	id 1JWJyK-00061b-At; Mon, 03 Mar 2008 18:21:28 -0500
+	id 1JWK2q-0006qD-N3; Mon, 03 Mar 2008 18:26:08 -0500
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id B146520FBAE; Mon,  3 Mar 2008 18:21:36 -0500 (EST)
+	id 2A47020FBAE; Mon,  3 Mar 2008 18:26:17 -0500 (EST)
 Content-Disposition: inline
+In-Reply-To: <20080303232136.GA15312@spearce.org>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -39,33 +41,22 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75996>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75997>
 
-In 212945d ("Teach git-describe to verify annotated tag names")
-we tried to access a possibly unparsed tag structure.  We must
-make sure it was parsed before we try to read its tag name.
+"Shawn O. Pearce" <spearce@spearce.org> wrote:
+> In 212945d ("Teach git-describe to verify annotated tag names")
+> we tried to access a possibly unparsed tag structure.  We must
+> make sure it was parsed before we try to read its tag name.
+> 
+> Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+> ---
+> 
+>  As 212945d is already in master this probably should be
+>  fast-tracked there.  Whoops.  :-)
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
+Hmmph, looks like you already fixed this with
+c374b91cf295f437d438a103bfd2cf3fffcce580 ("git-describe: use tags
+found in packed-refs correctly").
 
- As 212945d is already in master this probably should be
- fast-tracked there.  Whoops.  :-)
-
- builtin-describe.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/builtin-describe.c b/builtin-describe.c
-index 2f1e7ba..d4204ee 100644
---- a/builtin-describe.c
-+++ b/builtin-describe.c
-@@ -156,7 +156,7 @@ static void display_name(struct commit_name *n)
- {
- 	if (n->prio == 2 && !n->tag) {
- 		n->tag = lookup_tag(n->sha1);
--		if (!n->tag || !n->tag->tag)
-+		if (!n->tag || parse_tag(n->tag) || !n->tag->tag)
- 			die("annotated tag %s not available", n->path);
- 		if (strcmp(n->tag->tag, n->path))
- 			warning("tag '%s' is really '%s' here", n->tag->tag, n->path);
 -- 
-1.5.4.3.509.gf785
+Shawn.
