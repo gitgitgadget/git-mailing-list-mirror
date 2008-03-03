@@ -1,85 +1,105 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: The 8th airing of the msysGit herald
-Date: Tue, 4 Mar 2008 11:58:22 +1300
-Message-ID: <46a038f90803031458t2b404212t10f6e9ae710dc408@mail.gmail.com>
-References: <alpine.LSU.1.00.0803022329560.22527@racer.site>
-	 <m34pbok54h.fsf@localhost.localdomain>
-	 <alpine.LSU.1.00.0803030052450.22527@racer.site>
-	 <200803030210.02223.jnareb@gmail.com> <47CBE85B.6060702@imap.cc>
-	 <7vablfiv42.fsf@gitster.siamese.dyndns.org> <47CC432B.8060502@imap.cc>
-	 <7v1w6rh1ru.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] gitweb: add a setting to control the tabstop width
+Date: Mon, 03 Mar 2008 15:13:39 -0800
+Message-ID: <7vhcfnfljw.fsf@gitster.siamese.dyndns.org>
+References: <20080303221159.GA6875@hashpling.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Tilman Schmidt" <tilman@imap.cc>,
-	"Jakub Narebski" <jnareb@gmail.com>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	msysgit@googlegroups.com, git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 03 23:59:14 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
+To: Charles Bailey <charles@hashpling.org>
+X-From: git-owner@vger.kernel.org Tue Mar 04 00:14:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWJcg-0006dj-Jw
-	for gcvg-git-2@gmane.org; Mon, 03 Mar 2008 23:59:07 +0100
+	id 1JWJrg-000486-6F
+	for gcvg-git-2@gmane.org; Tue, 04 Mar 2008 00:14:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752209AbYCCW60 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Mar 2008 17:58:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751908AbYCCW60
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Mar 2008 17:58:26 -0500
-Received: from ug-out-1314.google.com ([66.249.92.170]:39234 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750863AbYCCW6Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Mar 2008 17:58:25 -0500
-Received: by ug-out-1314.google.com with SMTP id z38so2310718ugc.16
-        for <git@vger.kernel.org>; Mon, 03 Mar 2008 14:58:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=fHkULCmvlP/6D3vHukS+pVwA3uHVCRIsXQG9xhjkwV8=;
-        b=A9QPVuCk5osbaYbGGiJRXB7np+vEFilugVPwdiWbSiryc2ne+egNgH1N766WDGTY6RCddQgSeRt/D9Yk9Wm14gXvFXcZFgDdsMlGxTFKxvgFCPqKD4Dw/y+thyCXsHSL8WLgps0pi0HbkVqEuL8GdMSMGQ8e7h7OHCnJzfn/Tw8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=AZhL3J+8VVZTck+hegPOwo6TG7Y7rEdGDTgfn1S9qe1Nt5bhWK7y9HY/XJnNUz/q8TPh6Hgvmi+r137bgdp/S3mCT5oLzsx2Tmcz/DXqUmU2zwuuwEbeXYXFbwD4vTtZWZnhLwma6IWK9h1diPy/m/j00+UCXKTqhSeAPWRw+fo=
-Received: by 10.67.116.9 with SMTP id t9mr4979177ugm.77.1204585102594;
-        Mon, 03 Mar 2008 14:58:22 -0800 (PST)
-Received: by 10.66.252.6 with HTTP; Mon, 3 Mar 2008 14:58:22 -0800 (PST)
-In-Reply-To: <7v1w6rh1ru.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1754163AbYCCXNy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Mar 2008 18:13:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755294AbYCCXNy
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Mar 2008 18:13:54 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:52217 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751420AbYCCXNx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Mar 2008 18:13:53 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 84F4E25E1;
+	Mon,  3 Mar 2008 18:13:52 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id A225625E0; Mon,  3 Mar 2008 18:13:47 -0500 (EST)
+In-Reply-To: <20080303221159.GA6875@hashpling.org> (Charles Bailey's message
+ of "Mon, 3 Mar 2008 22:11:59 +0000")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75994>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75995>
 
-On Tue, Mar 4, 2008 at 11:37 AM, Junio C Hamano <gitster@pobox.com> wrote:
->  But if you s/stop/slow down/ what I said, it may start to resemble a more
->  serious question.
+Charles Bailey <charles@hashpling.org> writes:
 
-Given that git dev has such a frantic pace... would it make sense to
-give way to some "version inflation"?
+> +	# Tabstop width.  Controls the number of spaces to which tabs are
+> +	# expanded. Default is 8.
+> +	# To change system wide add the following to $GITWEB_CONFIG
+> +	# $feature{'tabstop'}{'default'} = [8];
+> +	# To have project specific config enable override in $GITWEB_CONFIG
+> +	# $feature{'tabstop'}{'override'} = 1;
+> +	# and in project config gitweb.tabstop = <width>
+> +	'tabstop' => {
+> +		'sub' => \&feature_tabstop,
+> +		'override' => 0,
+> +		'default' => [8]},
 
-This would give end users a more clear sense of how much things have
-changed -- a 1.4.x to 1.5.x doesn't seem like much. But a 1.5 to 2.0
-with a "new features summary" will grab a bit of attention, get its
-slashdot article, and be a more frank communication of the work that's
-happened, and what the user can expect.
+Some people say "Tabs are 8 characters, and thus indentations are also 8
+characters.  There are heretic movements that try to make indentations 4
+(or even 2!)  characters deep, and that is akin to trying to define the
+value of PI to be 3."  Some people disagree.
 
-In other words, the 'linux versioning' scheme sucks when dealing with
-people who aren't sub'd to the mailing list. Yes, from git v0.99 to
-today we haven't broken anything too significant, but from an end user
-POV, several of the  smaller changes carry enough incompatibility that
-v1.4.x and v1.5.x are not actually compatible (all the remote heads
-handling changes, for example).
+But while viewing what is etched in the history, it does not hurt anybody
+else if the viewer uses different tab width.  Choice is good.
 
-So say rock on, but label the next feature release 2.0 or at least 1.6
-and declare it is "mostly compatible, but you'll do well in re-cloning
-your projects to keep things simple" -- in practice, I've had to do
-that anyway on the 1.3->1.4->1.5 transitions.
+However, a choice made by the hosting service that runs gitweb would not
+help individual viewers with different tab-width taste.  Neither does
+configuration that is per-repository.  Participants of the same project
+would want to view contents with different tab-width.
 
-cheers,
+Perhaps the tabstop "feature" should control _if_ the tab width of the
+material gitweb feeds can be tailored at all (i.e. boolean).  And when
+enabled, it would leave the choice of non-8 tab width to the browser (the
+way to maintain per-client choice could be cookies or extra parameters, I
+do not really care the details), and use that preferred tab-width in the
+untabify function.
+
+On the other hand, maybe the tab-width customization is not about user
+preference but what tab-width was used when the contents were created.  In
+such a case, probably the right thing to do would be to look at the
+tab-width hints embedded in the file.  In such a case, probably the tab
+width setting need to be per-path (e.g. *.c files may use standard 8,
+while *.py may use heretic 4).  Again, site-wide or repository-wide
+configuration would not help.
+
+In short, I do not like the patch, not because I do not like customizable
+tab-width, but because I think the customizability the patch offers is of
+the wrong kind and too limited to be useful.
+
+P.S.
+
+It might be interesting to come up with a heuristics to _guess_ the tab
+width used by the content creator by looking at the contents, by the way.
+There obviously are Emacs "Local Variables" and "-*-" lines and equivalent
+clues vim would leave, but you could probably also use indentation levels
+as a cue.
+
+And perhaps teach the underlying git commands a special flag to expand
+tabs on the output.
+
+	"git cat-file --expand=auto blob Makefile"
+	"git diff --expand=8 HEAD^..HEAD frotz.c"
+
+;-)
 
 
-martin
+
