@@ -1,86 +1,78 @@
-From: =?UTF-8?B?RGlyayBTw7xzc2Vyb3R0?= <newsletter@dirk.my1.cc>
-Subject: Re: How to "git add ." when some files are not accessible (permission
- denied)?
-Date: Mon, 03 Mar 2008 20:17:00 +0100
-Message-ID: <47CC4EAC.1050905@dirk.my1.cc>
-References: <47C95E34.1050306@dirk.my1.cc> <20080302011900.GC22843@coredump.intra.peff.net>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: Unknown option: no-signed-off-by-cc (git-send-email)
+Date: Mon, 03 Mar 2008 13:17:56 -0600
+Message-ID: <47CC4EE4.1050106@nrlssc.navy.mil>
+References: <47CC21F7.3020204@freescale.com> <47CC4423.8020109@freescale.com> <47CC456B.6000203@freescale.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Mar 03 20:17:52 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jon Loeliger <jdl@freescale.com>, git@vger.kernel.org
+To: Timur Tabi <timur@freescale.com>
+X-From: git-owner@vger.kernel.org Mon Mar 03 20:19:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWGAT-0007aW-ED
-	for gcvg-git-2@gmane.org; Mon, 03 Mar 2008 20:17:45 +0100
+	id 1JWGBc-00084e-6O
+	for gcvg-git-2@gmane.org; Mon, 03 Mar 2008 20:18:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755080AbYCCTRG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 Mar 2008 14:17:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751760AbYCCTRF
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Mar 2008 14:17:05 -0500
-Received: from smtprelay10.ispgateway.de ([80.67.29.24]:41831 "EHLO
-	smtprelay10.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750890AbYCCTRE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Mar 2008 14:17:04 -0500
-Received: from [84.176.72.199] (helo=[192.168.2.100])
-	by smtprelay10.ispgateway.de with esmtpa (Exim 4.68)
-	(envelope-from <newsletter@dirk.my1.cc>)
-	id 1JWG9k-0001Ky-H2
-	for git@vger.kernel.org; Mon, 03 Mar 2008 20:17:00 +0100
-User-Agent: Thunderbird 2.0.0.12 (Windows/20080213)
-In-Reply-To: <20080302011900.GC22843@coredump.intra.peff.net>
-X-Df-Sender: 757646
+	id S1755581AbYCCTSK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Mar 2008 14:18:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755099AbYCCTSK
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Mar 2008 14:18:10 -0500
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:39601 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754691AbYCCTSJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Mar 2008 14:18:09 -0500
+Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
+	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id m23JHua1011162;
+	Mon, 3 Mar 2008 13:17:56 -0600
+Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 3 Mar 2008 13:17:56 -0600
+User-Agent: Thunderbird 2.0.0.9 (X11/20071031)
+In-Reply-To: <47CC456B.6000203@freescale.com>
+X-OriginalArrivalTime: 03 Mar 2008 19:17:56.0384 (UTC) FILETIME=[493A2200:01C87D63]
+X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-5.0.0.1023-15764001
+X-TM-AS-Result: : Yes--15.307000-0-31-1
+X-TM-AS-Category-Info: : 31:0.000000
+X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNTY3LTcwMDA3NS0xMzkw?=
+	=?us-ascii?B?MTAtNzAxMjkyLTcwNzMyMS03MDQ0MjEtNzA3NDkwLTcwMzc4OC0x?=
+	=?us-ascii?B?MDY0MjAtNzAwMTA3LTE4ODE5OC03MDUzODgtNzAwNjE4LTcwNTEw?=
+	=?us-ascii?B?Mi03MDA2MjQtMTA1MDQwLTcwMjA0Mi0xNDgwMzktMTQ4MDUxLTIw?=
+	=?us-ascii?B?MDQy?=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75972>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75973>
 
-Jeff King schrieb:
-> On Sat, Mar 01, 2008 at 02:46:28PM +0100, Dirk S=C3=BCsserott wrote:
->
->  =20
->> The question is: is there a way to tell "git add ." to add all files=
- but
->> ignore those that cannot be added due to lack of authorization?
->>    =20
->
-> No, there isn't. Under Linux, I would come up with a list of files I =
-was
-> interested in and then pipe it to "xargs git-add", which is probably
-> unhelpful for Windows.
->
->  =20
-Not quite. I'm using the msysGit package from=20
-http://code.google.com/p/msysgit/downloads/list and that comes with som=
-e=20
-fundamental unix tools like a sound shell, find, xargs, and many more.=20
-Very good!
-This way prepared, I used "git ls-files -o | xargs git add -v" until=20
-most of my files were added.
-=46or the rest I did "xargs -l" (ell) so that the files got added one b=
-y one.
-The files that still refused to be added are finally ignored by "git=20
-ls-files -o >> .gitignore".
+Timur Tabi wrote:
+> Jon Loeliger wrote:
+> 
+>> Except that the "no" and "signed" are not separated by "-".
+> 
+> From the man page:
+> 
+>        --no-signed-off-by-cc
+>               Do  not add emails found in Signed-off-by: lines to the cc list.
+> 
+> However, when I removed the "-", it worked.  So thanks for that.
+> 
+> It *used* to work with the "-", so I consider it a bug.
+> 
 
-Caveat: filenames containing blanks are not handled properly as they ar=
-e=20
-not surrounded by quotes. "git add" thinks of them as two or more files=
-=20
-and fails.
-I figure xargs has some cool switches to sourround the parameters with=20
-quotes, but I didn't find them. An option was to write a script or shel=
-l=20
-function that does it and pipe the filenames through that function or -=
--=20
-as filenames with blanks aren't so numerous -- to add them manually wit=
-h=20
-"git gui".
+git-send-email.txt does still mention --no-signed-off-by-cc, and additionally
+--no-chain-reply-to, --no-suppress-from, and --no-thread.
 
-Eventually, I solved the problem. Thanks for and to your pointers. :-)
+Shouldn't either work? This is from the Getopt::Long man page:
 
-  -- Dirk
+       !   The option does not take an argument and may be negated, i.e. pre-
+           fixed by "no". E.g. "foo!" will allow "--foo" (a value of 1 will
+           be assigned) and "--nofoo" and "--no-foo" (a value of 0 will be
+           assigned). If the option has aliases, this applies to the aliases
+           as well.
+
+Looks like --no-signed-off-by-cc or --nosigned-off-by-cc should work, no?
+
+-brandon
 
