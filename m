@@ -1,151 +1,57 @@
-From: Gerrit Pape <pape@smarden.org>
-Subject: [PATCH] git-merge.sh: better handling of combined
-	--squash,--no-ff,--no-commit options
-Date: Mon, 3 Mar 2008 09:22:03 +0000
-Message-ID: <20080303092203.9752.qmail@34b3887920a333.315fe32.mid.smarden.org>
-References: <20080302175820.31385.qmail@9e9c5b8314ca7b.315fe32.mid.smarden.org> <7vir04n0rt.fsf@gitster.siamese.dyndns.org>
+From: "Mike Ralphson" <mike.ralphson@gmail.com>
+Subject: Re: How are the same file modified on different brances stored physically?
+Date: Mon, 3 Mar 2008 09:36:46 +0000
+Message-ID: <e2b179460803030136s16d9c54by7c7a4c58682e0fea@mail.gmail.com>
+References: <15799383.post@talk.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 03 10:22:44 2008
+To: amishera <amishera2007@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 03 10:37:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JW6sc-0004XL-On
-	for gcvg-git-2@gmane.org; Mon, 03 Mar 2008 10:22:43 +0100
+	id 1JW77E-0008VP-P5
+	for gcvg-git-2@gmane.org; Mon, 03 Mar 2008 10:37:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754453AbYCCJVp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Mar 2008 04:21:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754484AbYCCJVo
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Mar 2008 04:21:44 -0500
-Received: from a.ns.smarden.org ([212.42.242.37]:42586 "HELO a.mx.smarden.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1759725AbYCCJVn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Mar 2008 04:21:43 -0500
-Received: (qmail 9753 invoked by uid 1000); 3 Mar 2008 09:22:03 -0000
+	id S1754518AbYCCJgx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Mar 2008 04:36:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754126AbYCCJgx
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Mar 2008 04:36:53 -0500
+Received: from el-out-1112.google.com ([209.85.162.176]:50342 "EHLO
+	el-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754096AbYCCJgw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Mar 2008 04:36:52 -0500
+Received: by el-out-1112.google.com with SMTP id v27so1790221ele.17
+        for <git@vger.kernel.org>; Mon, 03 Mar 2008 01:36:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=kuMGEOOts/+LSDCRdTxJvKLEZcDTHMCpQdUi2450ZYo=;
+        b=VinzoPRxOLJSmGDcmQRPehEIkmutW0p4/PSuwoS0FXIXDTJselasGN+WmsW0NvCRm2ikQr2z9KUCsWavB9cSh6i9sksEelFb56Wbxzasp313qzMTHz8eMIsiEdHF02Tky+gQHsmbA0y2viclUQWWHucttHcqzuRSpFECZsyLwKE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=QhvKCDRN11ctGy7KtBMFglBnx4mEVNdJi1reGcMRTc7pRhAkeu1OaEE4k++ctJZu5ysjzoR8DBuTwAteR1lggAkmMVZrYiIThqChnKDtvCIlahX5ESxolvIL0uIta1uP9gKyCwGJBos6Dnkr5oYvSHwbBz6+DjDBhdLG9am9d1s=
+Received: by 10.140.177.15 with SMTP id z15mr7585036rve.128.1204537006312;
+        Mon, 03 Mar 2008 01:36:46 -0800 (PST)
+Received: by 10.141.19.11 with HTTP; Mon, 3 Mar 2008 01:36:46 -0800 (PST)
+In-Reply-To: <15799383.post@talk.nabble.com>
 Content-Disposition: inline
-In-Reply-To: <7vir04n0rt.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75910>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75911>
 
-git-merge used to use either the --squash,--no-squash, --no-ff,--ff,
---no-commit,--commit option, whichever came last in the command line.
-This lead to some un-intuitive behavior, having
+On 03/03/2008, amishera <amishera2007@gmail.com> wrote:
+>  I am trying to figure out how stuffs work behind the scene. We know that we
+>  can switch branches freely and then work on the switched branch. If the same
+>  file is modified on two branches then how are the two copies of the two
+>  branches saved?
 
- git merge --no-commit --no-ff <branch>
+http://eagain.net/articles/git-for-computer-scientists/
 
-actually commit the merge.  Now git-merge respects --no-commit together
-with --no-ff, as well as other combinations of the options.  However,
-this broke a selftest in t/t7600-merge.sh which expected to have --no-ff
-completely override the --squash option, so that
-
- git merge --squash --no-ff <branch>
-
-fast-forwards, and makes a merge commit; combining --squash with --no-ff
-doesn't really make sense though, and is now refused by git-merge.  The
-test is adapted to test --no-ff without the preceding --squash, and
-another test is added to make sure the --squash --no-ff combination is
-refused.
-
-The unexpected behavior was reported by John Goerzen through
- http://bing.sdebian.org/468568
-
-Signed-off-by: Gerrit Pape <pape@smarden.org>
----
-
-On Sun, Mar 02, 2008 at 03:50:46PM -0800, Junio C Hamano wrote:
-> Gerrit Pape <pape@smarden.org> writes:
-> > ...  Combining --squash with --no-ff doesn't seem to make sense
-> Yeah, I think forbidding this combination would make much more sense.  The
-> former asks there be _no_ merge (the user does not want to have a merge
-> ever), while the other one asks to create a merge even when there is no
-> need to (the user does want a merge).
-
-Okay.
-
-> Are there other combinations that we should forbid?
-
-I don't think so, it's just --squash --no-ff, and maybe --squash --ff,
-but --ff is the default anyway.
-
-The combination --squash --commit doesn't work with the current
-implementation though, but it might make sense to have the squash
-committed automatically?
-
-
- git-merge.sh     |   17 +++++++++++------
- t/t7600-merge.sh |    6 ++++++
- 2 files changed, 17 insertions(+), 6 deletions(-)
-
-diff --git a/git-merge.sh b/git-merge.sh
-index 1c123a3..03cd398 100755
---- a/git-merge.sh
-+++ b/git-merge.sh
-@@ -37,6 +37,7 @@ use_strategies=
- 
- allow_fast_forward=t
- allow_trivial_merge=t
-+squash= no_commit=
- 
- dropsave() {
- 	rm -f -- "$GIT_DIR/MERGE_HEAD" "$GIT_DIR/MERGE_MSG" \
-@@ -152,17 +153,21 @@ parse_config () {
- 		--summary)
- 			show_diffstat=t ;;
- 		--squash)
--			allow_fast_forward=t squash=t no_commit=t ;;
-+			test "$allow_fast_forward" = t ||
-+				die "You cannot combine --squash with --no-ff."
-+			squash=t no_commit=t ;;
- 		--no-squash)
--			allow_fast_forward=t squash= no_commit= ;;
-+			squash= no_commit= ;;
- 		--commit)
--			allow_fast_forward=t squash= no_commit= ;;
-+			no_commit= ;;
- 		--no-commit)
--			allow_fast_forward=t squash= no_commit=t ;;
-+			no_commit=t ;;
- 		--ff)
--			allow_fast_forward=t squash= no_commit= ;;
-+			allow_fast_forward=t ;;
- 		--no-ff)
--			allow_fast_forward=false squash= no_commit= ;;
-+			test "$squash" != t ||
-+				die "You cannot combine --squash with --no-ff."
-+			allow_fast_forward=f ;;
- 		-s|--strategy)
- 			shift
- 			case " $all_strategies " in
-diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
-index 50c51c8..5d16628 100755
---- a/t/t7600-merge.sh
-+++ b/t/t7600-merge.sh
-@@ -419,6 +419,7 @@ test_debug 'gitk --all'
- 
- test_expect_success 'merge c0 with c1 (no-ff)' '
- 	git reset --hard c0 &&
-+	git config branch.master.mergeoptions "" &&
- 	test_tick &&
- 	git merge --no-ff c1 &&
- 	verify_merge file result.1 &&
-@@ -427,6 +428,11 @@ test_expect_success 'merge c0 with c1 (no-ff)' '
- 
- test_debug 'gitk --all'
- 
-+test_expect_success 'combining --squash and --no-ff is refused' '
-+	test_must_fail git merge --squash --no-ff c1 &&
-+	test_must_fail git merge --no-ff --squash c1
-+'
-+
- test_expect_success 'merge c0 with c1 (ff overrides no-ff)' '
- 	git reset --hard c0 &&
- 	git config branch.master.mergeoptions "--no-ff" &&
--- 
-1.5.4.3
-
+May help explain the inner workings.
