@@ -1,48 +1,60 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Fix incorrect wording in git-merge.txt.
-Date: Mon, 03 Mar 2008 09:27:29 -0800
-Message-ID: <7v63w3iupq.fsf@gitster.siamese.dyndns.org>
-References: <1204564483-5260-1-git-send-email-Matthieu.Moy@imag.fr>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCH, fixed] builtin-clone: create remotes/origin/HEAD symref, if guessed
+Date: Mon, 3 Mar 2008 18:41:46 +0100
+Message-ID: <200803031841.47302.johan@herland.net>
+References: <alpine.LNX.1.00.0802251604460.19024@iabervon.org> <alpine.LSU.1.00.0803020622190.22527@racer.site> <1204563913.4084.3.camel@gaara.boston.redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Mon Mar 03 18:29:44 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org,
+	Santi =?utf-8?q?B=C3=A9jar?= <sbejar@gmail.com>,
+	Pierre Habouzit <madcoder@debian.org>
+To: Kristian =?utf-8?q?H=C3=B8gsberg?= <krh@redhat.com>
+X-From: git-owner@vger.kernel.org Mon Mar 03 18:44:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWETm-0008Ui-Ou
-	for gcvg-git-2@gmane.org; Mon, 03 Mar 2008 18:29:35 +0100
+	id 1JWEi7-0006LK-Fy
+	for gcvg-git-2@gmane.org; Mon, 03 Mar 2008 18:44:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761947AbYCCR1t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Mar 2008 12:27:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761358AbYCCR1s
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Mar 2008 12:27:48 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:41028 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757826AbYCCR1o (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Mar 2008 12:27:44 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id E93041FA1;
-	Mon,  3 Mar 2008 12:27:39 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 599041FA0; Mon,  3 Mar 2008 12:27:33 -0500 (EST)
-In-Reply-To: <1204564483-5260-1-git-send-email-Matthieu.Moy@imag.fr>
- (Matthieu Moy's message of "Mon, 3 Mar 2008 18:14:43 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751462AbYCCRn0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 Mar 2008 12:43:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755656AbYCCRnW
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Mar 2008 12:43:22 -0500
+Received: from sam.opera.com ([213.236.208.81]:36514 "EHLO smtp.opera.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757505AbYCCRnT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Mar 2008 12:43:19 -0500
+Received: from pc107.coreteam.oslo.opera.com (pat-tdc.opera.com [213.236.208.22])
+	by smtp.opera.com (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id m23Hfllo030357
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Mon, 3 Mar 2008 17:41:48 GMT
+User-Agent: KMail/1.9.9
+In-Reply-To: <1204563913.4084.3.camel@gaara.boston.redhat.com>
+Content-Disposition: inline
+X-Virus-Scanned: ClamAV 0.92.1/6093/Mon Mar  3 15:03:18 2008 on smtp.opera.com
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75955>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75956>
 
-Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+On Monday 03 March 2008, Kristian H=C3=B8gsberg wrote:
+> Oh and I'm wondering if
+>=20
+>   strbuf_initf(&real_ref,=EF=BB=BF "%s/%s", branch_top, head);
+>=20
+> would be a worthwhile addition to the strbuf API...
 
-> A merge is not necessarily with a remote branch, it can be with any
-> commit object.
++1. This is about the first thing I started looking for in strbuf.h whe=
+n I first looked at strbufs...
 
-Thanks.  Sign-off, and perhaps mention other people who helped refine the
-wording in the discussion?
+
+=2E..Johan
+
+--=20
+Johan Herland, <johan@herland.net>
+www.herland.net
