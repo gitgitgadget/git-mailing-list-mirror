@@ -1,93 +1,67 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: add a setting to control the tabstop width
-Date: Mon, 3 Mar 2008 23:33:28 +0100
-Message-ID: <200803032333.29426.jnareb@gmail.com>
-References: <20080303221159.GA6875@hashpling.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: The 8th airing of the msysGit herald
+Date: Mon, 03 Mar 2008 14:37:57 -0800
+Message-ID: <7v1w6rh1ru.fsf@gitster.siamese.dyndns.org>
+References: <alpine.LSU.1.00.0803022329560.22527@racer.site>
+ <m34pbok54h.fsf@localhost.localdomain>
+ <alpine.LSU.1.00.0803030052450.22527@racer.site>
+ <200803030210.02223.jnareb@gmail.com> <47CBE85B.6060702@imap.cc>
+ <7vablfiv42.fsf@gitster.siamese.dyndns.org> <47CC432B.8060502@imap.cc>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Charles Bailey <charles@hashpling.org>
-X-From: git-owner@vger.kernel.org Mon Mar 03 23:34:04 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	msysgit@googlegroups.com, git@vger.kernel.org
+To: Tilman Schmidt <tilman@imap.cc>
+X-From: git-owner@vger.kernel.org Mon Mar 03 23:38:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWJEN-00063B-Kb
-	for gcvg-git-2@gmane.org; Mon, 03 Mar 2008 23:34:00 +0100
+	id 1JWJJ2-0007iK-SB
+	for gcvg-git-2@gmane.org; Mon, 03 Mar 2008 23:38:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752736AbYCCWdW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Mar 2008 17:33:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752683AbYCCWdW
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Mar 2008 17:33:22 -0500
-Received: from nf-out-0910.google.com ([64.233.182.184]:25483 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752501AbYCCWdV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Mar 2008 17:33:21 -0500
-Received: by nf-out-0910.google.com with SMTP id g13so202453nfb.21
-        for <git@vger.kernel.org>; Mon, 03 Mar 2008 14:33:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=sG7JG2LFIyF6U5WfQH3pxXovw3FXhIxZ0d9UOiEICSE=;
-        b=P40sKpztJLHhuOGkkC3TYxBdSwiiNzl7j9aNoNxhGJZAJS5+P1R5/SMUM2MBjWko3m86TGeL/fMYyjdHO8H1X1VpvC4lEdIXUN4OPj5xuV1Q0hAJpRF2ssC7sp+FtHN7XGfAesSM9RIIzfxGx7+T43Sgj3uzY7d5AMx5uVg7aAg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=vUY2vVs6knVcrj7tSJ0eDJIpUtPk75LSY0VJiGkLq+YlIjffJKiNXeC5KABE9VgaJ+qDrRka/NZfnOesNGssS85fEa/UYyoJcM6F6Xe2OYW7NjRFp32uHAUSPV6NbkuLH9ydRhZ1/AZHe3kfMl5cAmf2MHDlYj62lApNobbLR5k=
-Received: by 10.82.153.5 with SMTP id a5mr514873bue.5.1204583599059;
-        Mon, 03 Mar 2008 14:33:19 -0800 (PST)
-Received: from ?192.168.1.15? ( [83.8.251.32])
-        by mx.google.com with ESMTPS id c5sm424649nfi.31.2008.03.03.14.33.15
-        (version=SSLv3 cipher=OTHER);
-        Mon, 03 Mar 2008 14:33:16 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <20080303221159.GA6875@hashpling.org>
-Content-Disposition: inline
+	id S1752155AbYCCWiL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Mar 2008 17:38:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752118AbYCCWiK
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Mar 2008 17:38:10 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:40327 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751727AbYCCWiJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Mar 2008 17:38:09 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 7AA25209B;
+	Mon,  3 Mar 2008 17:38:06 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id CAFC5209A; Mon,  3 Mar 2008 17:38:00 -0500 (EST)
+In-Reply-To: <47CC432B.8060502@imap.cc> (Tilman Schmidt's message of "Mon, 03
+ Mar 2008 19:27:55 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75989>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75990>
 
-Charles Bailey <charles@hashpling.org> writes:
+Tilman Schmidt <tilman@imap.cc> writes:
 
-> Not everyone uses the same tab width. gitweb learns a new setting to
-> control the tabstop width. The configuration can be set globally and
-> on a per project basis. The default is 8, preserving existing
-> behaviour. The configuration variable name is borrowed from the vim
-> setting with the same behaviour.
+> Am 03.03.2008 18:18 schrieb Junio C Hamano:
+>> Tilman Schmidt <tilman@imap.cc> writes:
+>> 
+>>> Yes, and that is in itself a problem for people like me who just want to
+>>> use git to get some work done. The time I spend installing new git
+>>> versions, reading RelNotes and sorting through a rather high-volume
+>>> mailing list goes off the time I can spare for working on the Linux
+>>> driver I maintain. :-(
+>> 
+>> Yeah, we can stop fixing issues and enhancing features.  Would that help?
+>
+> Oh dear, I didn't want to offend anyone. Of course fixing issues
+> and enhancing features is a Good Thing(TM).
 
-Good idea. Very nice change.
- 
-> Signed-off-by: Charles Bailey <charles@hashpling.org>
-> ---
-> 
-> The untabify function seems the sensible place to make the change. As
-> untabify is called once per line from various different locations it
-> also makes sense to cache the result of the config lookup in a package
-> variable, though this makes the change slightly less neat.
+Heh, no offence taken, and sorry I forgot the obligatory smiley ;-)
 
-Since b201927 (gitweb: Read repo config using 'git config -z -l')
-repository config is cached in %config hash (per repository), so
-I don't think global / package variable $tabstop_width is really
-needed...
- 
-> This change should have a minimal impact on performance but it would
-> appreciate some more eyes and ideally some performance testing on
-> heavier systems than my own. 
-
-...but it would be better if you have checked at least on your system
-if it does affect performance or not.
-
-[...]
-
-+our $tabstop_width;
-
-I think I would write "our $tabstop_width = 8;" here.
-
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+But if you s/stop/slow down/ what I said, it may start to resemble a more
+serious question.
