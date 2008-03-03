@@ -1,103 +1,148 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: kernel.org git tree corrupt?
-Date: Mon, 3 Mar 2008 08:21:35 -0800 (PST)
-Message-ID: <alpine.LFD.1.00.0803030800460.17889@woody.linux-foundation.org>
-References: <524f69650803020749o469f2e48l125a55267b0b5d13@mail.gmail.com>  <alpine.LFD.1.00.0803021302070.17889@woody.linux-foundation.org> <524f69650803021943i33ce6ddbo309f118cd0a77ac9@mail.gmail.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: git fetch: where are the downloaded objects stored?
+Date: Mon, 03 Mar 2008 11:29:54 -0500 (EST)
+Message-ID: <alpine.LFD.1.00.0803031057140.2899@xanadu.home>
+References: <4d8e3fd30803030440s7239c83cj8bf69401dd76bad@mail.gmail.com>
+ <vpqskz82bm3.fsf@bauges.imag.fr>
+ <4d8e3fd30803030633nf6266d5qab0df4ba4c539e0b@mail.gmail.com>
+ <vpq63w325px.fsf@bauges.imag.fr>
+ <4d8e3fd30803030740i18ca8db1y681b4f10797f8c83@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, lkml <linux-kernel@vger.kernel.org>
-To: Steve French <smfrench@gmail.com>
-X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1759552AbYCCQWX@vger.kernel.org Mon Mar 03 17:23:20 2008
-Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1759552AbYCCQWX@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@gmane.org
+Content-Transfer-Encoding: 7BIT
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Git Mailing List <git@vger.kernel.org>
+To: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 03 17:31:10 2008
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWDRW-0007fa-VG
-	for glk-linux-kernel-3@gmane.org; Mon, 03 Mar 2008 17:23:11 +0100
+	id 1JWDYq-0002au-PD
+	for gcvg-git-2@gmane.org; Mon, 03 Mar 2008 17:30:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759552AbYCCQWX (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Mon, 3 Mar 2008 11:22:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755872AbYCCQWL
-	(ORCPT <rfc822;linux-kernel-outgoing>);
-	Mon, 3 Mar 2008 11:22:11 -0500
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:34924 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755644AbYCCQWK (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Mon, 3 Mar 2008 11:22:10 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.14.2/Debian-2build1) with ESMTP id m23GLit7018847
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 3 Mar 2008 08:21:46 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m23GLZeZ026627;
-	Mon, 3 Mar 2008 08:21:36 -0800
-In-Reply-To: <524f69650803021943i33ce6ddbo309f118cd0a77ac9@mail.gmail.com>
+	id S1753960AbYCCQaG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Mar 2008 11:30:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753865AbYCCQaG
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Mar 2008 11:30:06 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:46352 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751976AbYCCQaE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Mar 2008 11:30:04 -0500
+Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR002.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0JX500JNUXTU6SF0@VL-MO-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Mon, 03 Mar 2008 11:29:54 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <4d8e3fd30803030740i18ca8db1y681b4f10797f8c83@mail.gmail.com>
 User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
-X-Spam-Status: No, hits=-2.883 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
-Sender: linux-kernel-owner@vger.kernel.org
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75939>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75940>
 
+On Mon, 3 Mar 2008, Paolo Ciarrocchi wrote:
 
-
-On Sun, 2 Mar 2008, Steve French wrote:
-> 
-> >   - look at your "origin" branch, and make sure it's a *remote* branch, not
-> >    the old-style local one. Ie it should *not* show up when you do a
-> >    plain
+> On Mon, Mar 3, 2008 at 4:21 PM, Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
+> > "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com> writes:
 > >
-> >         git branch
-> now only shows "* master"
-> 
-> >    but it *should* show up (as both "origin/HEAD" and "origin/master")
-> >    when you do
+> > > "A merge is always between the current HEAD and one or more remote
+> > > branch heads"
 > >
-> >         git branch -a
-> Now "git branch -a" shows
-> * master
->   origin/master
+> > I think this is just wrong. Would this be correct?
 > 
-> It is missing "origin/HEAD"
+> Sounds better than the original document,
+> however I'm still having some problems in visualizing what happens
+> when I type "git fetch" followed by "git merge".
+> 
+> > diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
+> > index 0c9ad7f..e46dea1 100644
+> > --- a/Documentation/git-merge.txt
+> > +++ b/Documentation/git-merge.txt
+> > @@ -68,7 +68,7 @@ HOW MERGE WORKS
+> >  ---------------
+> >
+> >  A merge is always between the current `HEAD` and one or more
+> > -remote branch heads, and the index file must exactly match the
+> > +branch heads (remote or local), and the index file must exactly match the
 
-Ahh, yeah, my bad. The origin/HEAD thing will be created if you use either 
-clone or "git remote add -m master" to create the remote. But when I asked 
-you to do it by just editing the config file, you now have to create that 
-HEAD pointer manually too.
+Yes, this is much better.  A merge may occur with any other branches, 
+local or remote, or even with a tag, or any other random commit 
+reference for that matter.
 
-You can do
+> When I run the command git fetch the objects are downloaded from the remote
+> branch and locally stored in the objects database.
+> Both the working tree and index are not touched by this operation.
+> Is this correct?
 
-	git symbolic-ref refs/remotes/origin/HEAD refs/remotes/origin/master
+Yes.  The fetch operation will figure out, with the remote machine, what 
+is the set of objects that you already have and the set that you don't 
+have so the remote machine will create and send you a pack of only the 
+objects you're missing.  And the remote machine will also reduce it to 
+deltas against objects that you already have when possible so the 
+transferred pack is even smaller.  Once that pack has successfully been 
+received, then the branch head for which this pack was requested will be 
+updated to point at the latest commit for that branch.
 
-to create the thing (it just creates a symbolic ref from the origin/HEAD 
-remote ref to the origin/master one, so now git will know that when you 
-talk about 'origin', it is supposed to just use the master branch of 
-that remote).
+> How can I look to what I just downloaded?
+> Should I simply do a git diff?
 
-> >   - now do "git log origin" an it should show something recent
-> git log origin and git log origin/master both return
-> "ambiguous argument 'origin': unknown revision"
+If you have reflog enabled (it should be by default) then a good thing 
+to remember is the @{1} notation.  For example, if the fetch updated the 
+origin/master branch, then origin/master@{1} is what your origin/master 
+was before being updated.  To see the difference between the previous 
+and the current state of origin/master, you can do:
 
-Well, origin/master should have worked, but the fact that plain "origin" 
-didn't work is due to exactly the lack of HEAD file for that remote branch 
-(for your kernel tree, there's only one remote branch, so it may be 
-"obvious" that origin must be talking about the master branch, but if 
-there are multiple branches at the origin it's not obvious *which* branch 
-should be considered the default one, which is why we use HEAD)
+	git diff origin/master@{1}..origin/master
 
-> I must be misunderstanding the syntax/manpage of git-log but "git diff
-> -m -r origin/master"
-> now works fine and displays exactly what I expect so things have improved.
+Or to see the list of new commits:
 
-Well, if "origin/master" works in that situation, then "origin/master" 
-should have worked in "git log" too, so maybe you mistyped?
+	git log origin/master@{1}..origin/master
 
-Anyway, with the HEAD link added for the remote 'origin', you should be 
-able to use plain 'origin' like you're used to.
+	git log -p origin/master@{1}..origin/master
 
-			Linus
+Etc.
+
+This notation is a bit obnoxious and the re were suggestions about 
+addind the equivalent origin/master@{1..} but that didn't materialize 
+yet.
+
+> Backing to the documentation, your proposal is:
+>  A merge is always between the current `HEAD` and one or more
+>  branch heads (remote or local), and the index file must exactly match the
+> 
+> In case of a git fetch + git merge the merge is between the current
+> `HEAD` and the
+> downloaded objects. Is correct to define it `branch heads`?
+
+A merge doesn't happen between a branch and some objects.  Please don't 
+see it that way.  Objects are at a lower level of abstraction.  What a 
+fetch does is to make sure your version of a branch (say origin/master) 
+matches the remote version of the branch "master" on server "origin".  
+If you happen to already have all the needed objects already, then no 
+objects will be transferred and only the branch reference will be 
+updated.
+
+The merge operation really works at the commit graph level in order to 
+jointwo or more branches together. Objects associated to the involved 
+branches are only checked so to make sure the merging of the specified 
+branches does not create a conflict (and to fix it otherwise).  If a 
+merge conflict is fixed (either manually or automatically) then new 
+objects corresponding to the modified files are locally created but the 
+previously existing objects remain unchanged.  But object handling 
+during a merge is really a low level thing.
+
+> Maybe (read it: for sure) I'm a bit confused by the git terminology
+> but I really feel that
+> other newbies are not easily understanding this process.
+
+I suggest you have a look at the following article:
+
+	http://eagain.net/articles/git-for-computer-scientists/ 
+
+It is really well written, with the right level of vulgarization to make 
+the Git concept really obvious very quickly.
+
+
+Nicolas
