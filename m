@@ -1,244 +1,58 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH v3 8/8] Teach git-fetch to grab a tag at the same time as a commit
-Date: Sun, 2 Mar 2008 21:35:33 -0500
-Message-ID: <20080303023533.GH9966@spearce.org>
+From: "Jay Soffian" <jaysoffian@gmail.com>
+Subject: Re: [PATCH] allow git-am to run in a subdirectory
+Date: Sun, 2 Mar 2008 22:26:51 -0500
+Message-ID: <76718490803021926w29a6a44bha9fd22c48c94250a@mail.gmail.com>
+References: <20080301062255.GA27538@coredump.intra.peff.net>
+	 <7vprue6ghc.fsf@gitster.siamese.dyndns.org>
+	 <20080301081235.GA31855@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 03 03:36:19 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+To: "Jeff King" <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Mar 03 04:27:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JW0XK-0001hX-9m
-	for gcvg-git-2@gmane.org; Mon, 03 Mar 2008 03:36:18 +0100
+	id 1JW1L2-0003D8-Uy
+	for gcvg-git-2@gmane.org; Mon, 03 Mar 2008 04:27:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755764AbYCCCfh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Mar 2008 21:35:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755752AbYCCCfh
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Mar 2008 21:35:37 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:59591 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755620AbYCCCfg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Mar 2008 21:35:36 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1JW0WR-0002Tm-5E; Sun, 02 Mar 2008 21:35:23 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 6BFC120FBAE; Sun,  2 Mar 2008 21:35:33 -0500 (EST)
+	id S1756552AbYCCD0z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Mar 2008 22:26:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756514AbYCCD0z
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Mar 2008 22:26:55 -0500
+Received: from ug-out-1314.google.com ([66.249.92.174]:44995 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756186AbYCCD0y (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Mar 2008 22:26:54 -0500
+Received: by ug-out-1314.google.com with SMTP id z38so1750818ugc.16
+        for <git@vger.kernel.org>; Sun, 02 Mar 2008 19:26:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=z6p4EDD1/guK5yosVTGcKaxl06F7DqVI21+avPlvZjw=;
+        b=CqB4BOc0Xx0byXPCScTJfWGK4ivcMRjJkSsLE3W3nhwcOfaURSZSYZ147NOvqN2tKNBQYByk7P1LMJ5ENDEivDZcSE7gLr/rG7qUwU1DpglVY+Ptf4Zp4Z0CGy1I1GIDFMVWlZzbZWOSBSKI+Rjqn1GS5RJ/JchRYb97oYphaE0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=qjcVbNdo95iYXhp5iKCa4429r31sePAs02ZCeXvW4g/YA+hT34JsFHX3Rwu/65xREquU7l7uq4ffLdrolSuL+pCt5+cxzwqI5WtG/fxxDmZsD4s5fD0O42sA8Q8rFJrTsy+h9+6TBkHLbnhqHyLsV2o1elZ3d0oFvNUywb+yi8g=
+Received: by 10.114.126.1 with SMTP id y1mr109668wac.41.1204514811372;
+        Sun, 02 Mar 2008 19:26:51 -0800 (PST)
+Received: by 10.114.13.5 with HTTP; Sun, 2 Mar 2008 19:26:51 -0800 (PST)
+In-Reply-To: <20080301081235.GA31855@coredump.intra.peff.net>
 Content-Disposition: inline
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75877>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75878>
 
-If the situation is the following on the remote and L is the common
-base between both sides:
+On Sat, Mar 1, 2008 at 3:12 AM, Jeff King <peff@peff.net> wrote:
+>  The problem is that I need to turn the original "$@" into a new "$@"
+>  that is correctly prefixed, which requires proper quoting.
 
-          T - tag1    S - tag2
-         /           /
-    L - A - O - O - B
-     \               \
-      origin/master   master
+Perhaps rev-parse could be taught to optionally convert relative
+paths to absolute?
 
-and we have decided to fetch "master" to acquire the range L..B we
-can also nab tag S at the same time during the first connection,
-as we can clearly see from the refs advertised by upload-pack that
-S^{} = B and master = B.
-
-Unfortunately we still cannot nab T at the same time as we are not
-able to see that T^{} will also be in the range implied by L..B.
-Such computations must be performed on the remote side (not yet
-supported) or on the client side as post-processing (the current
-behavior).
-
-This optimization is an extension of the previous one in that it
-helps on projects which tend to publish both a new commit and a
-new tag, then lay idle for a while before publishing anything else.
-Most followers are able to download both the new commit and the new
-tag in one connection, rather than two.  git.git tends to follow
-such patterns with its roughly once-daily updates from Junio.
-
-A protocol extension and additional server side logic would be
-necessary to also ensure T is grabbed on the first connection.
-
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- builtin-fetch.c      |   14 +++++-
- t/t5503-tagfollow.sh |  124 ++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 137 insertions(+), 1 deletions(-)
- create mode 100755 t/t5503-tagfollow.sh
-
-diff --git a/builtin-fetch.c b/builtin-fetch.c
-index a58efa6..26c3d74 100644
---- a/builtin-fetch.c
-+++ b/builtin-fetch.c
-@@ -459,6 +459,17 @@ static int add_existing(const char *refname, const unsigned char *sha1,
- 	return 0;
- }
- 
-+static int will_fetch(struct ref **head, const unsigned char *sha1)
-+{
-+	struct ref *rm = *head;
-+	while (rm) {
-+		if (!hashcmp(rm->old_sha1, sha1))
-+			return 1;
-+		rm = rm->next;
-+	}
-+	return 0;
-+}
-+
- static void find_non_local_tags(struct transport *transport,
- 			struct ref **head,
- 			struct ref ***tail)
-@@ -495,7 +506,8 @@ static void find_non_local_tags(struct transport *transport,
- 
- 		if (!path_list_has_path(&existing_refs, ref_name) &&
- 		    !path_list_has_path(&new_refs, ref_name) &&
--		    has_sha1_file(ref->old_sha1)) {
-+		    (has_sha1_file(ref->old_sha1) ||
-+		     will_fetch(head, ref->old_sha1))) {
- 			path_list_insert(ref_name, &new_refs);
- 
- 			rm = alloc_ref(strlen(ref_name) + 1);
-diff --git a/t/t5503-tagfollow.sh b/t/t5503-tagfollow.sh
-new file mode 100755
-index 0000000..45ff982
---- /dev/null
-+++ b/t/t5503-tagfollow.sh
-@@ -0,0 +1,124 @@
-+#!/bin/sh
-+
-+test_description='test automatic tag following'
-+
-+. ./test-lib.sh
-+
-+# End state of the repository:
-+#
-+#         T - tag1          S - tag2
-+#        /                 /
-+#   L - A ------ O ------ B
-+#    \   \                 \
-+#     \   C - origin/cat    \
-+#      origin/master         master
-+
-+test_expect_success setup '
-+	test_tick &&
-+	echo ichi >file &&
-+	git add file &&
-+	git commit -m L &&
-+	L=$(git rev-parse --verify HEAD) &&
-+
-+	(
-+		mkdir cloned &&
-+		cd cloned &&
-+		git init-db &&
-+		git remote add -f origin ..
-+	) &&
-+
-+	test_tick &&
-+	echo A >file &&
-+	git add file &&
-+	git commit -m A &&
-+	A=$(git rev-parse --verify HEAD)
-+'
-+
-+U=UPLOAD_LOG
-+
-+cat - <<EOF >expect
-+#S
-+want $A
-+#E
-+EOF
-+test_expect_success 'fetch A (new commit : 1 connection)' '
-+	rm -f $U
-+	(
-+		cd cloned &&
-+		GIT_DEBUG_SEND_PACK=3 git fetch 3>../$U &&
-+		test $A = $(git rev-parse --verify origin/master)
-+	) &&
-+	test -s $U &&
-+	cut -d" " -f1,2 $U >actual &&
-+	git diff expect actual
-+'
-+
-+test_expect_success "create tag T on A, create C on branch cat" '
-+	git tag -a -m tag1 tag1 $A &&
-+	T=$(git rev-parse --verify tag1) &&
-+
-+	git checkout -b cat &&
-+	echo C >file &&
-+	git add file &&
-+	git commit -m C &&
-+	C=$(git rev-parse --verify HEAD) &&
-+	git checkout master
-+'
-+
-+cat - <<EOF >expect
-+#S
-+want $C
-+want $T
-+#E
-+EOF
-+test_expect_success 'fetch C, T (new branch, tag : 1 connection)' '
-+	rm -f $U
-+	(
-+		cd cloned &&
-+		GIT_DEBUG_SEND_PACK=3 git fetch 3>../$U &&
-+		test $C = $(git rev-parse --verify origin/cat) &&
-+		test $T = $(git rev-parse --verify tag1) &&
-+		test $A = $(git rev-parse --verify tag1^0)
-+	) &&
-+	test -s $U &&
-+	cut -d" " -f1,2 $U >actual &&
-+	git diff expect actual
-+'
-+
-+test_expect_success "create commits O, B, tag S on B" '
-+	test_tick &&
-+	echo O >file &&
-+	git add file &&
-+	git commit -m O &&
-+
-+	test_tick &&
-+	echo B >file &&
-+	git add file &&
-+	git commit -m B &&
-+	B=$(git rev-parse --verify HEAD) &&
-+
-+	git tag -a -m tag2 tag2 $B &&
-+	S=$(git rev-parse --verify tag2)
-+'
-+
-+cat - <<EOF >expect
-+#S
-+want $B
-+want $S
-+#E
-+EOF
-+test_expect_success 'fetch B, S (commit and tag : 1 connection)' '
-+	rm -f $U
-+	(
-+		cd cloned &&
-+		GIT_DEBUG_SEND_PACK=3 git fetch 3>../$U &&
-+		test $B = $(git rev-parse --verify origin/master) &&
-+		test $B = $(git rev-parse --verify tag2^0) &&
-+		test $S = $(git rev-parse --verify tag2)
-+	) &&
-+	test -s $U &&
-+	cut -d" " -f1,2 $U >actual &&
-+	git diff expect actual
-+'
-+
-+test_done
--- 
-1.5.4.3.468.g36990
+j.
