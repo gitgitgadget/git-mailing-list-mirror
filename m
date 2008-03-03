@@ -1,143 +1,145 @@
-From: drafnel@gmail.com
-Subject: [PATCH] git-send-email: add option to force a From: line within the message body
-Date: Mon,  3 Mar 2008 00:00:43 -0600
-Message-ID: <8870673.1204524015315.JavaMail.teamon@b301.teamon.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] revert: actually check for a dirty index
+Date: Mon, 3 Mar 2008 01:30:56 -0500
+Message-ID: <20080303063055.GA24866@coredump.intra.peff.net>
+References: <20080302064449.GA6334@coredump.intra.peff.net> <20080302072252.GA14214@coredump.intra.peff.net> <20080302103753.GB2973@steel.home>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Brandon Casey <drafnel@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 03 07:11:15 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 03 07:31:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JW3tK-0005Pq-Nx
-	for gcvg-git-2@gmane.org; Mon, 03 Mar 2008 07:11:15 +0100
+	id 1JW4DL-0000ik-Eq
+	for gcvg-git-2@gmane.org; Mon, 03 Mar 2008 07:31:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751548AbYCCGKh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Mar 2008 01:10:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751400AbYCCGKg
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Mar 2008 01:10:36 -0500
-Received: from mailproxy01.teamon.com ([64.85.68.137]:56135 "EHLO
-	b301.teamon.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751288AbYCCGKf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Mar 2008 01:10:35 -0500
-X-Greylist: delayed 619 seconds by postgrey-1.27 at vger.kernel.org; Mon, 03 Mar 2008 01:10:35 EST
-Received: from b301.teamon.com (localhost [127.0.0.1])
-	by b301.teamon.com (8.11.7 DSN_MOD/8.11.7) with ESMTP id m2360FZ27596;
-	Mon, 3 Mar 2008 06:00:15 GMT
-X-Mailer: git-send-email 1.5.4.3.473.g74d8
+	id S1751522AbYCCGa7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Mar 2008 01:30:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751965AbYCCGa7
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Mar 2008 01:30:59 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1252 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751522AbYCCGa6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Mar 2008 01:30:58 -0500
+Received: (qmail 6377 invoked by uid 111); 3 Mar 2008 06:30:57 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Mon, 03 Mar 2008 01:30:57 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 03 Mar 2008 01:30:56 -0500
+Content-Disposition: inline
+In-Reply-To: <20080302103753.GB2973@steel.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75886>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75887>
 
-From: Brandon Casey <drafnel@gmail.com>
+On Sun, Mar 02, 2008 at 11:37:53AM +0100, Alex Riesen wrote:
 
-Add a new command line option --add-author-from and a config option
-sendemail.addauthorfrom which will ensure that a From: line is added
-to the message body regardless of whether the sender email matches the
-From: line parsed from the supplied patch (i.e. the patch author).
+> Wouldn't something like what built-commit does more effective?
 
-This provides a work-around for mail gateways which override the From:
-line of submitted messages.
+I assumed git-commit used wt_status_print, and it does, but only for
+some code paths. When possible, it uses the more efficient version you
+mentioned.
 
-Signed-off-by: Brandon Casey <drafnel@gmail.com>
+So here is my patch respun with the same method. I considered making a
+globally available "is_index_dirty" function, but I think there are a
+lot of assumptions that make such a function more trouble than the 6
+lines it saves. E.g., "dirty versus what?", "which index?", "has the
+index been loaded already?"
+
+Thanks Alex.
+
+-Peff
+
+-- >8 --
+revert: actually check for a dirty index
+
+The previous code mistakenly used wt_status_prepare to check
+whether the index had anything commitable in it; however,
+that function is just an init function, and will never
+report a dirty index.
+
+The correct way with wt_status_* would be to call
+wt_status_print with the output pointing to /dev/null or
+similar. However, that does extra work by both examining the
+working tree and spewing status information to nowhere.
+
+Instead, let's just implement the useful subset of
+wt_status_print as an "is_index_dirty" function.
 ---
+ builtin-revert.c              |   20 ++++++++++++++++----
+ t/t3501-revert-cherry-pick.sh |    9 +++++++++
+ 2 files changed, 25 insertions(+), 4 deletions(-)
 
-I don't know if anyone else has the same problem, but I sometimes use a
-mail gateway which forces a certain From: line overriding what is
-supplied in the email. So, for me, the solution this patch provides could
-be achieved by just typing in some bogus string when git-send-email prompts
-for the From address, but this patch is more convenient and more general.
-
--brandon
-
-
- Documentation/git-send-email.txt |    9 +++++++++
- git-send-email.perl              |   12 ++++++++++++
- 2 files changed, 21 insertions(+), 0 deletions(-)
-
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index 336d797..e3267de 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -157,6 +157,11 @@ user is prompted for a password while the input is masked for privacy.
- 	if that is unspecified, default to 'self' if --suppress-from is
- 	specified, as well as 'sob' if --no-signed-off-cc is specified.
+diff --git a/builtin-revert.c b/builtin-revert.c
+index b6dee6a..1989f96 100644
+--- a/builtin-revert.c
++++ b/builtin-revert.c
+@@ -9,6 +9,8 @@
+ #include "utf8.h"
+ #include "parse-options.h"
+ #include "cache-tree.h"
++#include "diff.h"
++#include "revision.h"
  
-+--add-author-from::
-+	Add a "From:" line within the message body describing the patch
-+	author even if the author is equal to the sender. Usually, a "From:"
-+	line is added only when the author differs from the sender.
+ /*
+  * This implements the builtins revert and cherry-pick.
+@@ -246,6 +248,17 @@ static char *help_msg(const unsigned char *sha1)
+ 	return helpbuf;
+ }
+ 
++static int index_is_dirty(void)
++{
++	struct rev_info rev;
++	init_revisions(&rev, NULL);
++	setup_revisions(0, NULL, &rev, "HEAD");
++	DIFF_OPT_SET(&rev.diffopt, QUIET);
++	DIFF_OPT_SET(&rev.diffopt, EXIT_WITH_STATUS);
++	run_diff_index(&rev, 1);
++	return !!DIFF_OPT_TST(&rev.diffopt, HAS_CHANGES);
++}
 +
- --thread, --no-thread::
- 	If this is set, the In-Reply-To header will be set on each email sent.
- 	If disabled with "--no-thread", no emails will have the In-Reply-To
-@@ -225,6 +230,10 @@ sendemail.smtppass::
- sendemail.smtpssl::
- 	Boolean value specifying the default to the '--smtp-ssl' parameter.
+ static int revert_or_cherry_pick(int argc, const char **argv)
+ {
+ 	unsigned char head[20];
+@@ -274,12 +287,11 @@ static int revert_or_cherry_pick(int argc, const char **argv)
+ 		if (write_cache_as_tree(head, 0, NULL))
+ 			die ("Your index file is unmerged.");
+ 	} else {
+-		struct wt_status s;
+-
+ 		if (get_sha1("HEAD", head))
+ 			die ("You do not have a valid HEAD");
+-		wt_status_prepare(&s);
+-		if (s.commitable)
++		if(read_cache() < 0)
++			die("could not read the index");
++		if (index_is_dirty())
+ 			die ("Dirty index: cannot %s", me);
+ 		discard_cache();
+ 	}
+diff --git a/t/t3501-revert-cherry-pick.sh b/t/t3501-revert-cherry-pick.sh
+index 2dbe04f..6da2128 100755
+--- a/t/t3501-revert-cherry-pick.sh
++++ b/t/t3501-revert-cherry-pick.sh
+@@ -59,4 +59,13 @@ test_expect_success 'revert after renaming branch' '
  
-+sendemail.addauthorfrom::
-+	Boolean value specifying the default to the '--add-author-from'
-+	parameter.
+ '
+ 
++test_expect_success 'revert forbidden on dirty working tree' '
 +
- Author
- ------
- Written by Ryan Anderson <ryan@michonline.com>
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 29b1105..4d0aaac 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -94,6 +94,9 @@ Options:
- 
-    --suppress-from Suppress sending emails to yourself. Defaults to off.
- 
-+   --add-author-from Add "From:" line within message body for patch author
-+                  even when author is equal to sender.
++	echo content >extra_file &&
++	git add extra_file &&
++	test_must_fail git revert HEAD 2>errors &&
++	grep "Dirty index" errors
 +
-    --thread       Specify that the "In-Reply-To:" header should be set on all
-                   emails. Defaults to on.
- 
-@@ -187,6 +190,7 @@ my ($smtp_server, $smtp_server_port, $smtp_authuser, $smtp_ssl);
- my ($identity, $aliasfiletype, @alias_files, @smtp_host_parts);
- my ($no_validate);
- my (@suppress_cc);
-+my ($force_author_from);
- 
- my %config_bool_settings = (
-     "thread" => [\$thread, 1],
-@@ -194,6 +198,7 @@ my %config_bool_settings = (
-     "suppressfrom" => [\$suppress_from, undef],
-     "signedoffcc" => [\$signed_off_cc, undef],
-     "smtpssl" => [\$smtp_ssl, 0],
-+    "addauthorfrom" => [\$force_author_from, 0],
- );
- 
- my %config_settings = (
-@@ -252,6 +257,7 @@ my $rc = GetOptions("sender|from=s" => \$sender,
- 		    "quiet" => \$quiet,
- 		    "cc-cmd=s" => \$cc_cmd,
- 		    "suppress-from!" => \$suppress_from,
-+		    "add-author-from!" => \$force_author_from,
- 		    "suppress-cc=s" => \@suppress_cc,
- 		    "signed-off-cc|signed-off-by-cc!" => \$signed_off_cc,
- 		    "dry-run" => \$dry_run,
-@@ -802,6 +808,12 @@ foreach my $t (@files) {
- 
- 				} elsif (/^(Cc|From):\s+(.*)$/) {
- 					if (unquote_rfc2047($2) eq $sender) {
-+						if ($force_author_from &&
-+						    $1 eq 'From') {
-+							($author,
-+							 $author_encoding) =
-+							unquote_rfc2047($2)
-+						}
- 						next if ($suppress_cc{'self'});
- 					}
- 					elsif ($1 eq 'From') {
++'
++
+ test_done
 -- 
-1.5.4.3.472.gdf7d.dirty
+1.5.4.3.366.gb96b1.dirty
 
