@@ -1,57 +1,54 @@
-From: "Mike Ralphson" <mike.ralphson@gmail.com>
-Subject: Re: How are the same file modified on different brances stored physically?
-Date: Mon, 3 Mar 2008 09:36:46 +0000
-Message-ID: <e2b179460803030136s16d9c54by7c7a4c58682e0fea@mail.gmail.com>
-References: <15799383.post@talk.nabble.com>
+From: Gerrit Pape <pape@smarden.org>
+Subject: Re: [PATCH] Fix random crashes in http_cleanup()
+Date: Mon, 3 Mar 2008 10:01:41 +0000
+Message-ID: <20080303100141.15600.qmail@e81d07a86798f7.315fe32.mid.smarden.org>
+References: <20080302200309.GA2070@glandium.org> <1204489713-8696-1-git-send-email-mh@glandium.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: amishera <amishera2007@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 03 10:37:49 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, gitster@pobox.com,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Mon Mar 03 11:02:18 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JW77E-0008VP-P5
-	for gcvg-git-2@gmane.org; Mon, 03 Mar 2008 10:37:49 +0100
+	id 1JW7Uf-0006bC-7q
+	for gcvg-git-2@gmane.org; Mon, 03 Mar 2008 11:02:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754518AbYCCJgx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Mar 2008 04:36:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754126AbYCCJgx
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Mar 2008 04:36:53 -0500
-Received: from el-out-1112.google.com ([209.85.162.176]:50342 "EHLO
-	el-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754096AbYCCJgw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Mar 2008 04:36:52 -0500
-Received: by el-out-1112.google.com with SMTP id v27so1790221ele.17
-        for <git@vger.kernel.org>; Mon, 03 Mar 2008 01:36:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=kuMGEOOts/+LSDCRdTxJvKLEZcDTHMCpQdUi2450ZYo=;
-        b=VinzoPRxOLJSmGDcmQRPehEIkmutW0p4/PSuwoS0FXIXDTJselasGN+WmsW0NvCRm2ikQr2z9KUCsWavB9cSh6i9sksEelFb56Wbxzasp313qzMTHz8eMIsiEdHF02Tky+gQHsmbA0y2viclUQWWHucttHcqzuRSpFECZsyLwKE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=QhvKCDRN11ctGy7KtBMFglBnx4mEVNdJi1reGcMRTc7pRhAkeu1OaEE4k++ctJZu5ysjzoR8DBuTwAteR1lggAkmMVZrYiIThqChnKDtvCIlahX5ESxolvIL0uIta1uP9gKyCwGJBos6Dnkr5oYvSHwbBz6+DjDBhdLG9am9d1s=
-Received: by 10.140.177.15 with SMTP id z15mr7585036rve.128.1204537006312;
-        Mon, 03 Mar 2008 01:36:46 -0800 (PST)
-Received: by 10.141.19.11 with HTTP; Mon, 3 Mar 2008 01:36:46 -0800 (PST)
-In-Reply-To: <15799383.post@talk.nabble.com>
+	id S1755833AbYCCKBX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 Mar 2008 05:01:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755539AbYCCKBW
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Mar 2008 05:01:22 -0500
+Received: from a.ns.smarden.org ([212.42.242.37]:42927 "HELO a.mx.smarden.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754933AbYCCKBV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Mar 2008 05:01:21 -0500
+Received: (qmail 15601 invoked by uid 1000); 3 Mar 2008 10:01:41 -0000
 Content-Disposition: inline
+In-Reply-To: <1204489713-8696-1-git-send-email-mh@glandium.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75911>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75912>
 
-On 03/03/2008, amishera <amishera2007@gmail.com> wrote:
->  I am trying to figure out how stuffs work behind the scene. We know that we
->  can switch branches freely and then work on the switched branch. If the same
->  file is modified on two branches then how are the two copies of the two
->  branches saved?
+On Sun, Mar 02, 2008 at 09:28:33PM +0100, Mike Hommey wrote:
+> For some reason, http_cleanup was running all active slots, which cou=
+ld
+> lead in situations where a freed slot would be accessed in
+> fill_active_slots. OTOH, we are cleaning up, which means the caller
+> doesn't care about pending requests. Just forget about them instead
+> or running them.
 
-http://eagain.net/articles/git-for-computer-scientists/
+Hi, I can confirm that this fixes the segfault we managed to reproduce,
+but didn't look deeper into the changes.
 
-May help explain the inner workings.
+There's a warning when compiling http.c, trivial to fix:
+
+      CC http.o
+  http.c: In function =E2=80=98http_cleanup=E2=80=99:
+  http.c:288: warning: unused variable =E2=80=98wait_url=E2=80=99
+
+Thanks!, Gerrit.
