@@ -1,63 +1,120 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH, fixed] builtin-clone: create remotes/origin/HEAD  symref, if guessed
-Date: Mon, 03 Mar 2008 18:09:43 +0100
-Message-ID: <20080303170942.GB23210@artemis.madism.org>
-References: <alpine.LNX.1.00.0802251604460.19024@iabervon.org> <200802260321.14038.johan@herland.net> <alpine.LNX.1.00.0802261128360.19024@iabervon.org> <alpine.LSU.1.00.0803020556380.22527@racer.site> <alpine.LSU.1.00.0803020622190.22527@racer.site> <1204563913.4084.3.camel@gaara.boston.redhat.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH, fixed] builtin-clone: create remotes/origin/HEAD symref,
+ if guessed
+Date: Mon, 3 Mar 2008 17:10:52 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0803031709150.22527@racer.site>
+References: <alpine.LNX.1.00.0802251604460.19024@iabervon.org>  <200802260321.14038.johan@herland.net>  <alpine.LNX.1.00.0802261128360.19024@iabervon.org>  <alpine.LSU.1.00.0803020556380.22527@racer.site>  <alpine.LSU.1.00.0803020622190.22527@racer.site>
+ <1204563913.4084.3.camel@gaara.boston.redhat.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="SkvwRMAIpAhPCcCJ";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Daniel Barkalow <barkalow@iabervon.org>,
+Content-Type: MULTIPART/MIXED; BOUNDARY="-1463811741-1636564381-1204564254=:22527"
+Cc: Daniel Barkalow <barkalow@iabervon.org>,
 	Johan Herland <johan@herland.net>, git@vger.kernel.org,
-	Santi =?utf-8?B?QsOpamFy?= <sbejar@gmail.com>
-To: Kristian =?utf-8?B?SMO4Z3NiZXJn?= <krh@redhat.com>
-X-From: git-owner@vger.kernel.org Mon Mar 03 18:10:39 2008
+	=?ISO-8859-15?Q?Santi_B=E9jar?= <sbejar@gmail.com>,
+	Pierre Habouzit <madcoder@debian.org>
+To: =?ISO-8859-15?Q?Kristian_H=F8gsberg?= <krh@redhat.com>
+X-From: git-owner@vger.kernel.org Mon Mar 03 18:13:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWEBJ-0000yC-Vf
-	for gcvg-git-2@gmane.org; Mon, 03 Mar 2008 18:10:30 +0100
+	id 1JWEDY-0001q4-16
+	for gcvg-git-2@gmane.org; Mon, 03 Mar 2008 18:12:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751694AbYCCRJq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Mar 2008 12:09:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752456AbYCCRJq
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Mar 2008 12:09:46 -0500
-Received: from pan.madism.org ([88.191.52.104]:47920 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751576AbYCCRJp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Mar 2008 12:09:45 -0500
-Received: from madism.org (def92-2-81-57-219-236.fbx.proxad.net [81.57.219.236])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 8210B308CE;
-	Mon,  3 Mar 2008 18:09:43 +0100 (CET)
-Received: by madism.org (Postfix, from userid 1000)
-	id 08128451FE8; Mon,  3 Mar 2008 18:09:43 +0100 (CET)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Kristian =?utf-8?B?SMO4Z3NiZXJn?= <krh@redhat.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Johan Herland <johan@herland.net>, git@vger.kernel.org,
-	Santi =?utf-8?B?QsOpamFy?= <sbejar@gmail.com>
-Content-Disposition: inline
+	id S1757935AbYCCRLl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Mar 2008 12:11:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757910AbYCCRLk
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Mar 2008 12:11:40 -0500
+Received: from mail.gmx.net ([213.165.64.20]:35157 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1757827AbYCCRLi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Mar 2008 12:11:38 -0500
+Received: (qmail invoked by alias); 03 Mar 2008 17:11:37 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp038) with SMTP; 03 Mar 2008 18:11:37 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18507kGfJw57yDX/YehfkWprz3kD7VJpRpG8buuiN
+	OQYOXxO8JQn5uP
+X-X-Sender: gene099@racer.site
 In-Reply-To: <1204563913.4084.3.camel@gaara.boston.redhat.com>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75949>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75950>
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
---SkvwRMAIpAhPCcCJ
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+---1463811741-1636564381-1204564254=:22527
+Content-Type: TEXT/PLAIN; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 
-On Mon, Mar 03, 2008 at 05:05:13PM +0000, Kristian H=C3=B8gsberg wrote:
+Hi,
+
+On Mon, 3 Mar 2008, Kristian Høgsberg wrote:
+
 > On Sun, 2008-03-02 at 06:25 +0000, Johannes Schindelin wrote:
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> > 
+> > 	Sorry, my previous patch was broken in so many ways.  This one
+> > 	is better, promise.
+> > 
+> > 	BTW this incidentally fixes the branch.<branch>.{remote,merge} 
+> > 	setup: it used to strip all up-to and including a slash from the 
+> > 	ref name.  This just _happened_ to work, because commonly HEAD is 
+> > 	at "refs/heads/master".  However, if it is at "refs/heads/a/b", it 
+> > 	would fail.
+> > 
+> >  builtin-clone.c |   35 ++++++++++++++++++++---------------
+> >  1 files changed, 20 insertions(+), 15 deletions(-)
+> > 
+> > diff --git a/builtin-clone.c b/builtin-clone.c
+> > index 056e8a3..f27d205 100644
+> > --- a/builtin-clone.c
+> > +++ b/builtin-clone.c
+> > @@ -523,33 +523,38 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+> >  		git_config_set_multivar(key, value, "^$", 0);
+> >  	}
+> >  
+> > +	if (head_points_at)
+> > +		/* Local default branch */
+> > +		create_symref("HEAD", head_points_at->name, NULL);
+> > +
+> >  	if (option_bare) {
+> > -		if (head_points_at) {
+> > -			/* Local default branch */
+> > -			create_symref("HEAD", head_points_at->name, NULL);
+> > -		}
+> >  		junk_work_tree = NULL;
+> >  		junk_git_dir = NULL;
+> >  		return 0;
+> >  	}
+> >  
+> >  	if (head_points_at) {
+> > -		if (strrchr(head_points_at->name, '/'))
+> > -			head = strrchr(head_points_at->name, '/') + 1;
+> > -		else
+> > -			head = head_points_at->name;
+> > +		struct strbuf head_ref, real_ref;
+> >  
+> > -		/* Local default branch */
+> > -		create_symref("HEAD", head_points_at->name, NULL);
+> > +		head = head_points_at->name;
+> > +		if (!prefixcmp(head, "refs/heads/"))
+> > +			head += 11;
+> >  
+> >  		/* Tracking branch for the primary branch at the remote. */
+> >  		update_ref(NULL, "HEAD", head_points_at->old_sha1,
+> >  			   NULL, 0, DIE_ON_ERR);
+> > -	/*
+> > -		rm -f "refs/remotes/$origin/HEAD"
+> > -		git symbolic-ref "refs/remotes/$origin/HEAD" \
+> > -			"refs/remotes/$origin/$head_points_at" &&
+> > -	*/
+> > +
 > > +		strbuf_init(&head_ref, 0);
 > > +		strbuf_addstr(&head_ref, branch_top);
 > > +		strbuf_addstr(&head_ref, "/HEAD");
@@ -66,41 +123,32 @@ On Mon, Mar 03, 2008 at 05:05:13PM +0000, Kristian H=C3=B8gsberg wrote:
 > > +		strbuf_addstr(&real_ref, branch_top);
 > > +		strbuf_addch(&real_ref, '/');
 > > +		strbuf_addstr(&real_ref, head);
->=20
+> 
 > What about just using
->=20
+> 
 >   strbuf_addf(&real_ref, "%s/%s", branch_top, head);
->=20
+> 
 > Are you worried about performance? :-p
 
-  If he was he would have used strbuf_init(&real_ref, 1024) or sth like
-that I assume :)
+You know, just after sending, I thought the same.
 
 > Oh and I'm wondering if
->=20
->   strbuf_initf(&real_ref, "%s/%s", branch_top, head);
->=20
+> 
+>   strbuf_initf(&real_ref,﻿ "%s/%s", branch_top, head);
+> 
 > would be a worthwhile addition to the strbuf API...
 
-  I don't think so, unless there are 1289 places in git that would
-benefit from the shortcut it gives, but I really doubt it.
+And exactly this was crossing my mind, too, as
 
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
+static inline int strbuf_initf(struct strbuf *buf, const char *format, ...)
+{
+	strbuf_init(buf, strlen(format));
+	return strbuf_addf(format, ...);
+}
 
---SkvwRMAIpAhPCcCJ
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+(just a sketch, but you get the idea...)
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
+Ciao,
+Dscho
 
-iD8DBQBHzDDWvGr7W6HudhwRAq8BAKCdAhbdTbh/uf9uQDIEvQqpR+JaPQCfRcIg
-683KDklJdH8ds0EZO4YT83M=
-=xAu2
------END PGP SIGNATURE-----
-
---SkvwRMAIpAhPCcCJ--
+---1463811741-1636564381-1204564254=:22527--
