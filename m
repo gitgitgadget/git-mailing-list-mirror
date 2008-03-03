@@ -1,76 +1,56 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH] Fix incorrect wording in git-merge.txt.
-Date: Mon,  3 Mar 2008 18:52:49 +0100
-Message-ID: <1204566769-6585-1-git-send-email-Matthieu.Moy@imag.fr>
-References: <1204564483-5260-1-git-send-email-Matthieu.Moy@imag.fr>
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Mar 03 19:36:22 2008
+From: Timur Tabi <timur@freescale.com>
+Subject: Re: Unknown option: no-signed-off-by-cc (git-send-email)
+Date: Mon, 03 Mar 2008 12:37:31 -0600
+Message-ID: <47CC456B.6000203@freescale.com>
+References: <47CC21F7.3020204@freescale.com> <47CC4423.8020109@freescale.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Jon Loeliger <jdl@freescale.com>
+X-From: git-owner@vger.kernel.org Mon Mar 03 19:38:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWFWL-0000f4-CC
-	for gcvg-git-2@gmane.org; Mon, 03 Mar 2008 19:36:17 +0100
+	id 1JWFYG-0001Xo-8I
+	for gcvg-git-2@gmane.org; Mon, 03 Mar 2008 19:38:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758886AbYCCSfe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Mar 2008 13:35:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754564AbYCCSfe
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Mar 2008 13:35:34 -0500
-Received: from harmonie.imag.fr ([147.171.130.40]:62137 "EHLO harmonie.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758789AbYCCSfd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Mar 2008 13:35:33 -0500
-X-Greylist: delayed 1804 seconds by postgrey-1.27 at vger.kernel.org; Mon, 03 Mar 2008 13:35:33 EST
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by harmonie.imag.fr (8.13.8/8.13.8) with ESMTP id m23HqnQT006899;
-	Mon, 3 Mar 2008 18:52:49 +0100 (CET)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1JWEqH-0002KO-CH; Mon, 03 Mar 2008 18:52:49 +0100
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1JWEqH-0001im-8T; Mon, 03 Mar 2008 18:52:49 +0100
-X-Mailer: git-send-email 1.5.4.21.g82c44
-In-Reply-To: <1204564483-5260-1-git-send-email-Matthieu.Moy@imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (harmonie.imag.fr [147.171.130.40]); Mon, 03 Mar 2008 18:52:49 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1755135AbYCCShh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Mar 2008 13:37:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755033AbYCCShh
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Mar 2008 13:37:37 -0500
+Received: from de01egw02.freescale.net ([192.88.165.103]:49882 "EHLO
+	de01egw02.freescale.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751438AbYCCShg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Mar 2008 13:37:36 -0500
+Received: from de01smr01.freescale.net (de01smr01.freescale.net [10.208.0.31])
+	by de01egw02.freescale.net (8.12.11/de01egw02) with ESMTP id m23IbX92029230
+	for <git@vger.kernel.org>; Mon, 3 Mar 2008 11:37:34 -0700 (MST)
+Received: from [10.82.19.119] (ld0169-tx32.am.freescale.net [10.82.19.119])
+	by de01smr01.freescale.net (8.13.1/8.13.0) with ESMTP id m23IbWS5009297;
+	Mon, 3 Mar 2008 12:37:32 -0600 (CST)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.8.1.11) Gecko/20071128 SeaMonkey/1.1.7
+In-Reply-To: <47CC4423.8020109@freescale.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75966>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75967>
 
-A merge is not necessarily with a remote branch, it can be with any
-commit object.
+Jon Loeliger wrote:
 
-Thanks to Paolo Ciarrocchi for pointing out the problem, and to
-Nicolas Pitre for pointing out the fact that a merge is not
-necessarily with a branch head.
+> Except that the "no" and "signed" are not separated by "-".
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
- Documentation/git-merge.txt |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
+>From the man page:
 
-diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
-index 0c9ad7f..193c9c0 100644
---- a/Documentation/git-merge.txt
-+++ b/Documentation/git-merge.txt
-@@ -68,7 +68,8 @@ HOW MERGE WORKS
- ---------------
- 
- A merge is always between the current `HEAD` and one or more
--remote branch heads, and the index file must exactly match the
-+commit objects (usually, branch head or tag), and the index file must
-+exactly match the
- tree of `HEAD` commit (i.e. the contents of the last commit) when
- it happens.  In other words, `git-diff --cached HEAD` must
- report no changes.
+       --no-signed-off-by-cc
+              Do  not add emails found in Signed-off-by: lines to the cc list.
+
+However, when I removed the "-", it worked.  So thanks for that.
+
+It *used* to work with the "-", so I consider it a bug.
+
 -- 
-1.5.4.21.g82c44
-
+Timur Tabi
+Linux kernel developer at Freescale
