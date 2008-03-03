@@ -1,58 +1,42 @@
-From: Mike Hommey <mh@glandium.org>
+From: Jeff King <peff@peff.net>
 Subject: Re: [RFC] git rebase -s ours
-Date: Mon, 3 Mar 2008 08:04:37 +0100
-Organization: glandium.org
-Message-ID: <20080303070437.GA19082@glandium.org>
+Date: Mon, 3 Mar 2008 02:03:27 -0500
+Message-ID: <20080303070327.GB22810@coredump.intra.peff.net>
 References: <20080301111716.GA3263@glandium.org> <20080302010527.GB22843@coredump.intra.peff.net> <20080302124848.GB8696@glandium.org> <20080303054126.GB24210@coredump.intra.peff.net> <20080303065521.GA18152@glandium.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Mar 03 08:01:28 2008
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Mon Mar 03 08:04:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JW4fu-00069V-V4
-	for gcvg-git-2@gmane.org; Mon, 03 Mar 2008 08:01:27 +0100
+	id 1JW4iU-0006ev-VF
+	for gcvg-git-2@gmane.org; Mon, 03 Mar 2008 08:04:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752498AbYCCHAu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Mar 2008 02:00:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752495AbYCCHAu
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Mar 2008 02:00:50 -0500
-Received: from vuizook.err.no ([194.24.252.247]:44278 "EHLO vuizook.err.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752494AbYCCHAu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Mar 2008 02:00:50 -0500
-Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
-	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.67)
-	(envelope-from <mh@glandium.org>)
-	id 1JW4fA-0007hx-BG; Mon, 03 Mar 2008 08:00:46 +0100
-Received: from mh by jigen with local (Exim 4.69)
-	(envelope-from <mh@jigen>)
-	id 1JW4iz-0004yw-N3; Mon, 03 Mar 2008 08:04:37 +0100
+	id S1752725AbYCCHDa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Mar 2008 02:03:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752720AbYCCHDa
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Mar 2008 02:03:30 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2201 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752686AbYCCHD3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Mar 2008 02:03:29 -0500
+Received: (qmail 8574 invoked by uid 111); 3 Mar 2008 07:03:28 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Mon, 03 Mar 2008 02:03:28 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 03 Mar 2008 02:03:27 -0500
 Content-Disposition: inline
 In-Reply-To: <20080303065521.GA18152@glandium.org>
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75894>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75895>
 
 On Mon, Mar 03, 2008 at 07:55:21AM +0100, Mike Hommey wrote:
-> On Mon, Mar 03, 2008 at 12:41:26AM -0500, Jeff King wrote:
-> > On Sun, Mar 02, 2008 at 01:48:48PM +0100, Mike Hommey wrote:
-> > 
-> > > I don't have a workflow in mind, but I have expectations: considering
-> > > the documentation, I would expect git rebase -s ours to do what git
-> > > filter-branch can do with grafts.
-> > 
-> > I'm not sure I follow. Can you elaborate?
-> 
+
 > Starting with a history like this:
 > 
 >                       G---H 
@@ -68,7 +52,11 @@ On Mon, Mar 03, 2008 at 07:55:21AM +0100, Mike Hommey wrote:
 > don't know if it actually works in cases where the grafted commit had a
 > parent, originally)
 
-Obviously, HEAD would be the commit with tree H before rebase, and you
-would be asking to rebase onto the commit with tree F.
+Ah, OK. That makes some sense, and I think would work if "git
+merge-ours" actually did a "git read-tree && git checkout-index" on
+the "us" parameter instead of just assuming that the working tree is
+what is desired.
 
-Mike
+I'm still not sure it is all that useful in practice.
+
+-Peff
