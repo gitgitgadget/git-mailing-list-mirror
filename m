@@ -1,58 +1,66 @@
-From: "Jay Soffian" <jaysoffian@gmail.com>
-Subject: Re: [PATCH] allow git-am to run in a subdirectory
-Date: Sun, 2 Mar 2008 22:26:51 -0500
-Message-ID: <76718490803021926w29a6a44bha9fd22c48c94250a@mail.gmail.com>
-References: <20080301062255.GA27538@coredump.intra.peff.net>
-	 <7vprue6ghc.fsf@gitster.siamese.dyndns.org>
-	 <20080301081235.GA31855@coredump.intra.peff.net>
+From: John Goerzen <jgoerzen@complete.org>
+Subject: Re: git-rebase dirty index and email address bug?
+Date: Sun, 2 Mar 2008 21:28:14 -0600
+Message-ID: <200803022128.14511.jgoerzen@complete.org>
+References: <slrnfsjfpo.3fl.jgoerzen@katherina.lan.complete.org> <20080302072622.GB3935@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain;
+  charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-To: "Jeff King" <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Mar 03 04:27:42 2008
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Mar 03 04:29:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JW1L2-0003D8-Uy
-	for gcvg-git-2@gmane.org; Mon, 03 Mar 2008 04:27:41 +0100
+	id 1JW1Mh-0003d6-53
+	for gcvg-git-2@gmane.org; Mon, 03 Mar 2008 04:29:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756552AbYCCD0z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Mar 2008 22:26:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756514AbYCCD0z
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Mar 2008 22:26:55 -0500
-Received: from ug-out-1314.google.com ([66.249.92.174]:44995 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756186AbYCCD0y (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Mar 2008 22:26:54 -0500
-Received: by ug-out-1314.google.com with SMTP id z38so1750818ugc.16
-        for <git@vger.kernel.org>; Sun, 02 Mar 2008 19:26:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=z6p4EDD1/guK5yosVTGcKaxl06F7DqVI21+avPlvZjw=;
-        b=CqB4BOc0Xx0byXPCScTJfWGK4ivcMRjJkSsLE3W3nhwcOfaURSZSYZ147NOvqN2tKNBQYByk7P1LMJ5ENDEivDZcSE7gLr/rG7qUwU1DpglVY+Ptf4Zp4Z0CGy1I1GIDFMVWlZzbZWOSBSKI+Rjqn1GS5RJ/JchRYb97oYphaE0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=qjcVbNdo95iYXhp5iKCa4429r31sePAs02ZCeXvW4g/YA+hT34JsFHX3Rwu/65xREquU7l7uq4ffLdrolSuL+pCt5+cxzwqI5WtG/fxxDmZsD4s5fD0O42sA8Q8rFJrTsy+h9+6TBkHLbnhqHyLsV2o1elZ3d0oFvNUywb+yi8g=
-Received: by 10.114.126.1 with SMTP id y1mr109668wac.41.1204514811372;
-        Sun, 02 Mar 2008 19:26:51 -0800 (PST)
-Received: by 10.114.13.5 with HTTP; Sun, 2 Mar 2008 19:26:51 -0800 (PST)
-In-Reply-To: <20080301081235.GA31855@coredump.intra.peff.net>
+	id S1756788AbYCCD2Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Mar 2008 22:28:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756714AbYCCD2Y
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Mar 2008 22:28:24 -0500
+Received: from b01s02mr.corenetworks.net ([64.85.160.192]:52818 "EHLO
+	glockenspiel.complete.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760820AbYCCD2V (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Mar 2008 22:28:21 -0500
+Received: from 63-245-179-205.kitusa.com ([63.245.179.205] helo=erwin.lan.complete.org)
+	by glockenspiel.complete.org with esmtps
+	(with TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(TLS peer CN erwin.complete.org, certificate verified)
+	(Exim 4.63)
+	id 1JW1Le-0001OM-8d; Sun, 02 Mar 2008 21:28:20 -0600
+Received: from katherina.lan.complete.org ([10.200.0.4])
+	by erwin.lan.complete.org with esmtps
+	(with TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(No TLS peer certificate)
+	(Exim 4.67)
+	id 1JW1La-0000cL-Nw; Sun, 02 Mar 2008 21:28:15 -0600
+Received: from jgoerzen by katherina.lan.complete.org with local (Exim 4.69)
+	(envelope-from <jgoerzen@complete.org>)
+	id 1JW1La-00038X-HN; Sun, 02 Mar 2008 21:28:14 -0600
+User-Agent: KMail/1.9.7
+In-Reply-To: <20080302072622.GB3935@coredump.intra.peff.net>
 Content-Disposition: inline
+X-Spam-Status: No (score 0.0): AWL=0.000
+X-Virus-Scanned: by Exiscan on glockenspiel.complete.org at Sun, 02 Mar 2008 21:28:20 -0600
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75878>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75879>
 
-On Sat, Mar 1, 2008 at 3:12 AM, Jeff King <peff@peff.net> wrote:
->  The problem is that I need to turn the original "$@" into a new "$@"
->  that is correctly prefixed, which requires proper quoting.
+On Sunday 02 March 2008 1:26:22 am Jeff King wrote:
 
-Perhaps rev-parse could be taught to optionally convert relative
-paths to absolute?
+> I tried cloning the "mainline.git" repository you mentioned and doing a
+> few simple tests, but was unable to reproduce. Can you make available
+> the commits that you are trying to rebase?
 
-j.
+That repo contains some local configuration and password information.  
+However, I would be happy to make it available to you or any other Git 
+developer privately.  Could you contact me off-list if you'd like me to send 
+it to you?  The .git directory in question is about 4.5MB, and I'd be happy 
+to email it.
+
+-- John
