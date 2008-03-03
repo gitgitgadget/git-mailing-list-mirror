@@ -1,75 +1,117 @@
-From: mkoegler@auto.tuwien.ac.at (Martin Koegler)
-Subject: Re: Header files not mentioned in the makefile
-Date: Mon, 3 Mar 2008 19:55:24 +0100
-Message-ID: <20080303185524.GA26790@auto.tuwien.ac.at>
-References: <20080303072424.GA25623@auto.tuwien.ac.at> <alpine.LSU.1.00.0803031146310.22527@racer.site>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH] run-command: Redirect stderr to a pipe before redirecting
+ stdout to stderr
+Date: Mon, 3 Mar 2008 20:06:23 +0100
+Message-ID: <20080303200623.ac862ed1.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Mar 03 19:56:20 2008
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Xavier Maillard <xma@gnu.org>, git@vger.kernel.org,
+	nanako3@bluebottle.com, pascal@obry.net
+To: Johannes Sixt <j.sixt@viscovery.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon Mar 03 20:01:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWFpg-00083g-GF
-	for gcvg-git-2@gmane.org; Mon, 03 Mar 2008 19:56:16 +0100
+	id 1JWFuc-0001KV-4m
+	for gcvg-git-2@gmane.org; Mon, 03 Mar 2008 20:01:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756122AbYCCSz2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 Mar 2008 13:55:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757141AbYCCSz1
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Mar 2008 13:55:27 -0500
-Received: from thor.auto.tuwien.ac.at ([128.130.60.15]:51255 "EHLO
-	thor.auto.tuwien.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756427AbYCCSz0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Mar 2008 13:55:26 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by thor.auto.tuwien.ac.at (Postfix) with ESMTP id 90AC9680C0C0;
-	Mon,  3 Mar 2008 19:55:24 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at auto.tuwien.ac.at
-Received: from thor.auto.tuwien.ac.at ([127.0.0.1])
-	by localhost (thor.auto.tuwien.ac.at [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 9S8t4G24xRfi; Mon,  3 Mar 2008 19:55:24 +0100 (CET)
-Received: by thor.auto.tuwien.ac.at (Postfix, from userid 3001)
-	id 7089E680BF98; Mon,  3 Mar 2008 19:55:24 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <alpine.LSU.1.00.0803031146310.22527@racer.site>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1753149AbYCCTAp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Mar 2008 14:00:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753110AbYCCTAp
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Mar 2008 14:00:45 -0500
+Received: from smtp1-g19.free.fr ([212.27.42.27]:55170 "EHLO smtp1-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751093AbYCCTAo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Mar 2008 14:00:44 -0500
+Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 62F321AB32E;
+	Mon,  3 Mar 2008 20:00:42 +0100 (CET)
+Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with SMTP id 2D0A01AB2BF;
+	Mon,  3 Mar 2008 20:00:38 +0100 (CET)
+X-Mailer: Sylpheed 2.4.8 (GTK+ 2.12.5; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75969>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75970>
 
-On Mon, Mar 03, 2008 at 11:47:01AM +0000, Johannes Schindelin wrote:
-> On Mon, 3 Mar 2008, Martin Koegler wrote:
->=20
-> > When I modified fetch-pack.h I was surprised by the fact, that it d=
-oes=20
-> > not result in rebuilding all object files. In fact, no file was reb=
-uilt.=20
-> > It turned out, that fetch-pack.h was not mentioned in the Makefile.
-> >=20
-> > A quick search (on next) showed, that other header files are also n=
-ot
-> > taking part in dependency checking:
-> >=20
-> > $for a in `ls *.h`; do grep "$a" Makefile >/dev/null || (echo "miss=
-ing: $a"; grep "$a" *.c|grep include) ; done
-> > missing: branch.h
->=20
-> Somehow I miss "wt-status.h" in your list.
+From: "Shawn O. Pearce" <spearce@spearce.org>
 
-There is a dependency for wt-status.h, so it does not show up in
-my grep:
- builtin-revert.o wt-status.o: wt-status.h
+With this patch, in the 'start_command' function after forking
+we now take care of stderr in the child process before stdout.
 
-But this is complete:
-$ grep wt-status.h *.c
-builtin-commit.c:#include "wt-status.h"
-builtin-revert.c:#include "wt-status.h"
-wt-status.c:#include "wt-status.h"
+This way if 'start_command' is called with a 'child_process'
+argument like this:
 
+	.err = -1;
+	.stdout_to_stderr = 1;
 
-mfg Martin K=F6gler
+then stderr will be redirected to a pipe before stdout is
+redirected to stderr. So we can now get the process' stdout
+from the pipe (as well as its stderr).
+
+Update documentation in 'api-run-command.txt' accordingly.
+
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ Documentation/technical/api-run-command.txt |    7 ++++---
+ run-command.c                               |   14 +++++++-------
+ 2 files changed, 11 insertions(+), 10 deletions(-)
+
+	The changes since the previous versions are:
+
+		- added documentation,
+		- added 'From: "Shawn O. Pearce" <spearce@spearce.org>',
+		- improved title.
+
+diff --git a/Documentation/technical/api-run-command.txt b/Documentation/technical/api-run-command.txt
+index dfbf9ac..c097f8b 100644
+--- a/Documentation/technical/api-run-command.txt
++++ b/Documentation/technical/api-run-command.txt
+@@ -111,9 +111,10 @@ stderr as follows:
+ 	.no_stdin, .no_stdout, .no_stderr: The respective channel is
+ 		redirected to /dev/null.
+ 
+-	.stdout_to_stderr: stdout of the child is redirected to the
+-		parent's stderr (i.e. *not* to what .err or
+-		.no_stderr specify).
++	.stdout_to_stderr: stdout of the child is redirected to its
++		stderr. This happens before stderr is itself
++		redirected. So stdout will follow stderr to wherever
++		it is redirected.
+ 
+ To modify the environment of the sub-process, specify an array of
+ string pointers (NULL terminated) in .env:
+diff --git a/run-command.c b/run-command.c
+index 743757c..44100a7 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -91,6 +91,13 @@ int start_command(struct child_process *cmd)
+ 			close(cmd->in);
+ 		}
+ 
++		if (cmd->no_stderr)
++			dup_devnull(2);
++		else if (need_err) {
++			dup2(fderr[1], 2);
++			close_pair(fderr);
++		}
++
+ 		if (cmd->no_stdout)
+ 			dup_devnull(1);
+ 		else if (cmd->stdout_to_stderr)
+@@ -103,13 +110,6 @@ int start_command(struct child_process *cmd)
+ 			close(cmd->out);
+ 		}
+ 
+-		if (cmd->no_stderr)
+-			dup_devnull(2);
+-		else if (need_err) {
+-			dup2(fderr[1], 2);
+-			close_pair(fderr);
+-		}
