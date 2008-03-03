@@ -1,90 +1,170 @@
-From: Martin Koegler <mkoegler@auto.tuwien.ac.at>
-Subject: [PATCH] fetch-pack: check parse_commit/object results
-Date: Mon,  3 Mar 2008 07:31:23 +0100
-Message-ID: <12045258831942-git-send-email-mkoegler@auto.tuwien.ac.at>
-Cc: git@vger.kernel.org, Martin Koegler <mkoegler@auto.tuwien.ac.at>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 03 07:32:12 2008
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re* [PATCH] allow git-am to run in a subdirectory
+Date: Sun, 02 Mar 2008 22:46:31 -0800
+Message-ID: <7vlk50joe0.fsf_-_@gitster.siamese.dyndns.org>
+References: <20080301062255.GA27538@coredump.intra.peff.net>
+ <7vprue6ghc.fsf@gitster.siamese.dyndns.org>
+ <20080301081235.GA31855@coredump.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Mar 03 07:47:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JW4DZ-0000jq-KH
-	for gcvg-git-2@gmane.org; Mon, 03 Mar 2008 07:32:10 +0100
+	id 1JW4SE-0003SR-P6
+	for gcvg-git-2@gmane.org; Mon, 03 Mar 2008 07:47:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752172AbYCCGb0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Mar 2008 01:31:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752101AbYCCGbZ
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Mar 2008 01:31:25 -0500
-Received: from thor.auto.tuwien.ac.at ([128.130.60.15]:56216 "EHLO
-	thor.auto.tuwien.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751965AbYCCGbZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Mar 2008 01:31:25 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by thor.auto.tuwien.ac.at (Postfix) with ESMTP id 32C836CF0079;
-	Mon,  3 Mar 2008 07:31:23 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at auto.tuwien.ac.at
-Received: from thor.auto.tuwien.ac.at ([127.0.0.1])
-	by localhost (thor.auto.tuwien.ac.at [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id frRKYyAgcqE5; Mon,  3 Mar 2008 07:31:23 +0100 (CET)
-Received: by thor.auto.tuwien.ac.at (Postfix, from userid 3001)
-	id 146F96CF0078; Mon,  3 Mar 2008 07:31:23 +0100 (CET)
-X-Mailer: git-send-email 1.5.3.1
+	id S1752130AbYCCGql (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Mar 2008 01:46:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751869AbYCCGql
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Mar 2008 01:46:41 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:58297 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750785AbYCCGqk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Mar 2008 01:46:40 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 5CF2F2B5E;
+	Mon,  3 Mar 2008 01:46:38 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 36F922B5C; Mon,  3 Mar 2008 01:46:33 -0500 (EST)
+In-Reply-To: <20080301081235.GA31855@coredump.intra.peff.net> (Jeff King's
+ message of "Sat, 1 Mar 2008 03:12:35 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75888>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/75889>
 
-Signed-off-by: Martin Koegler <mkoegler@auto.tuwien.ac.at>
+Jeff King <peff@peff.net> writes:
+
+> The problem is that I need to turn the original "$@" into a new "$@"
+> that is correctly prefixed, which requires proper quoting.
+
+Perhaps like this?
+
 ---
-Resent with other subject, as the last was rejected by the mailing list.
+ git-am.sh            |   19 +++++++++++++
+ t/t4150-am-subdir.sh |   72 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 91 insertions(+), 0 deletions(-)
 
- builtin-fetch-pack.c |   17 ++++++++++-------
- 1 files changed, 10 insertions(+), 7 deletions(-)
-
-diff --git a/builtin-fetch-pack.c b/builtin-fetch-pack.c
-index b23e886..423d637 100644
---- a/builtin-fetch-pack.c
-+++ b/builtin-fetch-pack.c
-@@ -41,7 +41,8 @@ static void rev_list_push(struct commit *commit, int mark)
- 		commit->object.flags |= mark;
+diff --git a/git-am.sh b/git-am.sh
+index a2c6fea..de34636 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -24,6 +24,7 @@ r,resolved      to be used after a patch failure
+ skip            skip the current patch"
  
- 		if (!(commit->object.parsed))
--			parse_commit(commit);
-+			if (parse_commit(commit))
-+				return;
+ . git-sh-setup
++prefix=$(git rev-parse --show-prefix)
+ set_reflog_action am
+ require_work_tree
+ cd_to_toplevel
+@@ -206,6 +207,24 @@ else
+ 	# Start afresh.
+ 	mkdir -p "$dotest" || exit
  
- 		insert_by_date(commit, &rev_list);
- 
-@@ -83,7 +84,8 @@ static void mark_common(struct commit *commit,
- 			if (!ancestors_only && !(o->flags & POPPED))
- 				non_common_revs--;
- 			if (!o->parsed && !dont_parse)
--				parse_commit(commit);
-+				if (parse_commit(commit))
-+					return;
- 
- 			for (parents = commit->parents;
- 					parents;
-@@ -103,20 +105,20 @@ static const unsigned char* get_rev(void)
- 
- 	while (commit == NULL) {
- 		unsigned int mark;
--		struct commit_list* parents;
-+		struct commit_list *parents = 0;
- 
- 		if (rev_list == NULL || non_common_revs == 0)
- 			return NULL;
- 
- 		commit = rev_list->item;
- 		if (!(commit->object.parsed))
--			parse_commit(commit);
-+			if (!parse_commit(commit))
-+				parents = commit->parents;
++	if test -n "$prefix" && test $# != 0
++	then
++		first=t
++		for arg
++		do
++			test -n "$first" && {
++				set x
++				first=
++			}
++			case "$arg" in
++			/*)
++				set "$@" "$arg" ;;
++			*)
++				set "$@" "$prefix$arg" ;;
++			esac
++		done
++		shift
++	fi
+ 	git mailsplit -d"$prec" -o"$dotest" -b -- "$@" > "$dotest/last" ||  {
+ 		rm -fr "$dotest"
+ 		exit 1
+diff --git a/t/t4150-am-subdir.sh b/t/t4150-am-subdir.sh
+new file mode 100755
+index 0000000..929d2cb
+--- /dev/null
++++ b/t/t4150-am-subdir.sh
+@@ -0,0 +1,72 @@
++#!/bin/sh
 +
- 		commit->object.flags |= POPPED;
- 		if (!(commit->object.flags & COMMON))
- 			non_common_revs--;
- 
--		parents = commit->parents;
++test_description='git am running from a subdirectory'
++
++. ./test-lib.sh
++
++test_expect_success setup '
++	echo hello >world &&
++	git add world &&
++	test_tick &&
++	git commit -m initial &&
++	git tag initial &&
++	echo goodbye >world &&
++	git add world &&
++	test_tick &&
++	git commit -m second &&
++	git format-patch --stdout HEAD^ >patchfile &&
++	: >expect
++'
++
++test_expect_success 'am regularly from stdin' '
++	git checkout initial &&
++	git am <patchfile &&
++	git diff master >actual &&
++	diff -u expect actual
++'
++
++test_expect_success 'am regularly from file' '
++	git checkout initial &&
++	git am patchfile &&
++	git diff master >actual &&
++	diff -u expect actual
++'
++
++test_expect_success 'am regularly from stdin in subdirectory' '
++	rm -fr subdir &&
++	git checkout initial &&
++	(
++		mkdir -p subdir &&
++		cd subdir &&
++		git am <../patchfile
++	) &&
++	git diff master>actual &&
++	diff -u expect actual
++'
++
++test_expect_success 'am regularly from file in subdirectory' '
++	rm -fr subdir &&
++	git checkout initial &&
++	(
++		mkdir -p subdir &&
++		cd subdir &&
++		git am ../patchfile
++	) &&
++	git diff master >actual &&
++	diff -u expect actual
++'
++
++test_expect_success 'am regularly from file in subdirectory with full path' '
++	rm -fr subdir &&
++	git checkout initial &&
++	P=$(pwd) &&
++	(
++		mkdir -p subdir &&
++		cd subdir &&
++		git am "$P/patchfile"
++	) &&
++	git diff master >actual &&
++	diff -u expect actual
++'
++
++test_done
