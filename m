@@ -1,90 +1,59 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: [PATCH] Do not use GUID on dir in git init --shared=all on FreeBSD
-	4.11p2
-Date: Tue, 4 Mar 2008 21:20:47 +0100
-Message-ID: <20080304202047.GC3295@steel.home>
-References: <20080303234406.GA28158@steel.home> <7v1w6rfhyn.fsf@gitster.siamese.dyndns.org> <20080304072519.GA3070@steel.home> <7vir02ap3b.fsf@gitster.siamese.dyndns.org>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-submodule: Make update verbose for up to date path
+Date: Tue, 04 Mar 2008 12:31:03 -0800
+Message-ID: <7v7igi5j08.fsf@gitster.siamese.dyndns.org>
+References: <1204642691-3220-1-git-send-email-pkufranky@gmail.com>
+ <alpine.LSU.1.00.0803041503360.22527@racer.site>
+ <46dff0320803040803v2f93d749t6b45fc8e47e66d21@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 04 21:21:35 2008
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: "Ping Yin" <pkufranky@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 04 21:35:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWddj-0007Ag-1S
-	for gcvg-git-2@gmane.org; Tue, 04 Mar 2008 21:21:31 +0100
+	id 1JWdoC-0003rp-Ti
+	for gcvg-git-2@gmane.org; Tue, 04 Mar 2008 21:32:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932314AbYCDUUw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Mar 2008 15:20:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932191AbYCDUUv
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Mar 2008 15:20:51 -0500
-Received: from mo-p07-ob.rzone.de ([81.169.146.188]:23311 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1765675AbYCDUUu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Mar 2008 15:20:50 -0500
-X-RZG-CLASS-ID: mo07
-X-RZG-AUTH: z4gQVF2k5XWuW3CculzxtoAegw==
-Received: from tigra.home (Faa57.f.strato-dslnet.de [195.4.170.87])
-	by post.webmailer.de (klopstock mo35) (RZmta 16.8)
-	with ESMTP id a03f88k24JxRa6 ; Tue, 4 Mar 2008 21:20:48 +0100 (MET)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id BCEEA277BD;
-	Tue,  4 Mar 2008 21:20:47 +0100 (CET)
-Received: by steel.home (Postfix, from userid 1000)
-	id 9C45D56D24; Tue,  4 Mar 2008 21:20:47 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <7vir02ap3b.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
+	id S933706AbYCDUbR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Mar 2008 15:31:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764409AbYCDUbQ
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Mar 2008 15:31:16 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:52738 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1764421AbYCDUbO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Mar 2008 15:31:14 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 838E03DEC;
+	Tue,  4 Mar 2008 15:31:12 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id BB8173DEA; Tue,  4 Mar 2008 15:31:07 -0500 (EST)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76132>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76133>
 
-It does not allow changing the bit to a non-root user.
-This fixes t1301-shared-repo.sh on the platform.
+"Ping Yin" <pkufranky@gmail.com> writes:
 
-Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
----
+> When i run 'git submodule update' in a repository whose submodules are
+> all clean, there is not any output which makes me not know whether
+> this command are successful. I think this is not friendly.
 
-Junio C Hamano, Tue, Mar 04, 2008 09:08:24 +0100:
-> Alex Riesen <raa.lkml@gmail.com> writes:
-> 
-> > It is a directory. The bit 02000 is S_ISGID on FreeBSD too. It just
-> > does not work (now I am just observing, no coding).
-> 
-> IIRC, g+s on directory to make group ownership inherited was a SysVism;
-> BSD did not need that as it did the sane thing by default without g+s.
-> 
-> Perhaps we should make it conditional.
-> 
+Not at all.  If you are unsuccessful and did not issue an error message,
+you have a bug to fix.
 
-Perhaps like this (FreeBSD 4 and older).
-
-Can someone try the change on the later versions?
-
- path.c |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
-
-diff --git a/path.c b/path.c
-index af27161..6f09ba2 100644
---- a/path.c
-+++ b/path.c
-@@ -282,8 +282,10 @@ int adjust_shared_perm(const char *path)
- 			 : (shared_repository == PERM_EVERYBODY
- 			    ? (S_IXGRP|S_IXOTH)
- 			    : 0));
-+#if !defined(__FreeBSD__) || (__FreeBSD__ > 4)
- 	if (S_ISDIR(mode))
- 		mode |= S_ISGID;
-+#endif
- 	if ((mode & st.st_mode) != mode && chmod(path, mode) < 0)
- 		return -2;
- 	return 0;
--- 
-1.5.4.3.469.gf84e2
-
+When a command finishes successfully doing what it was asked to do,
+especially when it does a lot of things and has potential to issue useful
+error messages and warnings to some but not all of them, it should stay
+quiet for successful ones unless there is a very good reason not to.  The
+reasons may include "the user told it to be chatty with --verbose", "it
+may make the user think it hang, because it takes a long time", and
+perhaps "it is a rare thing to run and the user may not be familiar with
+how it acts".
