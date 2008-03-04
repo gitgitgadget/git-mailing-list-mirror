@@ -1,34 +1,33 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH 0/3] Server side automatic tag following
-Date: Mon, 3 Mar 2008 21:35:51 -0500
-Message-ID: <20080304023550.GL8410@spearce.org>
+Subject: [PATCH 2/3] Teach fetch-pack/upload-pack about --auto-follow-tags
+Date: Mon, 3 Mar 2008 21:36:13 -0500
+Message-ID: <20080304023613.GB16152@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>,
-	Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Tue Mar 04 03:36:49 2008
+Cc: git@vger.kernel.org, Daniel Barkalow <barkalow@iabervon.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 04 03:37:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWN17-0006bF-CZ
-	for gcvg-git-2@gmane.org; Tue, 04 Mar 2008 03:36:33 +0100
+	id 1JWN1i-0006pd-F2
+	for gcvg-git-2@gmane.org; Tue, 04 Mar 2008 03:37:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751895AbYCDCf4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Mar 2008 21:35:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752107AbYCDCfz
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Mar 2008 21:35:55 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:38546 "EHLO
+	id S1757470AbYCDCgT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Mar 2008 21:36:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757341AbYCDCgT
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Mar 2008 21:36:19 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:38737 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751749AbYCDCfz (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Mar 2008 21:35:55 -0500
+	with ESMTP id S1756776AbYCDCgR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Mar 2008 21:36:17 -0500
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.68)
 	(envelope-from <spearce@spearce.org>)
-	id 1JWN0H-00069e-NO; Mon, 03 Mar 2008 21:35:41 -0500
+	id 1JWN0d-0006Ck-Mr; Mon, 03 Mar 2008 21:36:03 -0500
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 79F1D20FBAE; Mon,  3 Mar 2008 21:35:51 -0500 (EST)
+	id D5F0820FBAE; Mon,  3 Mar 2008 21:36:13 -0500 (EST)
 Content-Disposition: inline
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
@@ -40,42 +39,145 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76013>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76014>
 
-As promised earlier, this series adds automatic tag following on
-the server side, allowing git-fetch to grab tags over a single
-connection rather than opening a secondary one for the tags we
-cannot get via my 'sp/fetch-optim' branch.
+The new protocol extension "auto-follow-tags" allows the client side
+of the connection (fetch-pack) to request that the server side of the
+native git protocol (upload-pack / pack-objects) use --auto-follow-tags
+as it prepares the packfile, thus ensuring that an annotated tag object
+will be included in the resulting packfile if the object it refers to
+was also included into the packfile.
 
-  1)  git-pack-objects: Automatically pack annotated tags if object was packed
-  2)  Teach fetch-pack/upload-pack about --auto-follow-tags
-  3)  Teach git-fetch to exploit server side automatic tag following
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ Documentation/git-fetch-pack.txt |    8 +++++++-
+ builtin-fetch-pack.c             |    9 +++++++--
+ fetch-pack.h                     |    3 ++-
+ upload-pack.c                    |   10 ++++++++--
+ 4 files changed, 24 insertions(+), 6 deletions(-)
 
- Documentation/git-fetch-pack.txt   |    8 +++-
- Documentation/git-pack-objects.txt |    5 ++
- builtin-fetch-pack.c               |    9 +++-
- builtin-fetch.c                    |    3 +
- builtin-pack-objects.c             |   24 +++++++++-
- fetch-pack.h                       |    3 +-
- t/t5305-autofollow-tag.sh          |   84 ++++++++++++++++++++++++++++++++++++
- t/t5503-tagfollow.sh               |   26 +++++++++++
- transport.c                        |    5 ++
- transport.h                        |    3 +
- upload-pack.c                      |   10 +++-
- 11 files changed, 172 insertions(+), 8 deletions(-)
-
-
-We may still want to support multiple request/pack pairs on a single
-connection, but I think that's more work than this is and may not
-offer a worthwhile pay-off.  Usually the client knows what branches
-it wants when it connects, and if it wants tag data.  That's all
-we need to know on the server to generate an optimal packfile, and
-said packfile is the only thing the client needs to update itself.
-
-The multiple request/pack pairs is actually better implemented for
-users like X.org where you want to update many repositories over
-a single SSH connection.  For that we need git-fetch to multiplex
-over multiple repositories, not just git-upload-pack.
-
+diff --git a/Documentation/git-fetch-pack.txt b/Documentation/git-fetch-pack.txt
+index 2b8ffe5..f896006 100644
+--- a/Documentation/git-fetch-pack.txt
++++ b/Documentation/git-fetch-pack.txt
+@@ -8,7 +8,7 @@ git-fetch-pack - Receive missing objects from another repository
+ 
+ SYNOPSIS
+ --------
+-'git-fetch-pack' [--all] [--quiet|-q] [--keep|-k] [--thin] [--upload-pack=<git-upload-pack>] [--depth=<n>] [--no-progress] [-v] [<host>:]<directory> [<refs>...]
++'git-fetch-pack' [--all] [--quiet|-q] [--keep|-k] [--thin] [--auto-follow-tags] [--upload-pack=<git-upload-pack>] [--depth=<n>] [--no-progress] [-v] [<host>:]<directory> [<refs>...]
+ 
+ DESCRIPTION
+ -----------
+@@ -45,6 +45,12 @@ OPTIONS
+ 	Spend extra cycles to minimize the number of objects to be sent.
+ 	Use it on slower connection.
+ 
++\--auto-follow-tags::
++	If the remote side supports it, annotated tags objects will
++	be downloaded on the same connection as the other objects if
++	the object the tag references is downloaded.  The caller must
++	otherwise determine the tags this option made available.
++
+ \--upload-pack=<git-upload-pack>::
+ 	Use this to specify the path to 'git-upload-pack' on the
+ 	remote side, if is not found on your $PATH.
+diff --git a/builtin-fetch-pack.c b/builtin-fetch-pack.c
+index b23e886..5bb2c3c 100644
+--- a/builtin-fetch-pack.c
++++ b/builtin-fetch-pack.c
+@@ -18,7 +18,7 @@ static struct fetch_pack_args args = {
+ };
+ 
+ static const char fetch_pack_usage[] =
+-"git-fetch-pack [--all] [--quiet|-q] [--keep|-k] [--thin] [--upload-pack=<git-upload-pack>] [--depth=<n>] [--no-progress] [-v] [<host>:]<directory> [<refs>...]";
++"git-fetch-pack [--all] [--quiet|-q] [--keep|-k] [--thin] [--auto-follow-tags] [--upload-pack=<git-upload-pack>] [--depth=<n>] [--no-progress] [-v] [<host>:]<directory> [<refs>...]";
+ 
+ #define COMPLETE	(1U << 0)
+ #define COMMON		(1U << 1)
+@@ -174,13 +174,14 @@ static int find_common(int fd[2], unsigned char *result_sha1,
+ 		}
+ 
+ 		if (!fetching)
+-			packet_write(fd[1], "want %s%s%s%s%s%s%s\n",
++			packet_write(fd[1], "want %s%s%s%s%s%s%s%s\n",
+ 				     sha1_to_hex(remote),
+ 				     (multi_ack ? " multi_ack" : ""),
+ 				     (use_sideband == 2 ? " side-band-64k" : ""),
+ 				     (use_sideband == 1 ? " side-band" : ""),
+ 				     (args.use_thin_pack ? " thin-pack" : ""),
+ 				     (args.no_progress ? " no-progress" : ""),
++				     (args.auto_follow_tags ? " auto-follow-tags" : ""),
+ 				     " ofs-delta");
+ 		else
+ 			packet_write(fd[1], "want %s\n", sha1_to_hex(remote));
+@@ -680,6 +681,10 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
+ 				args.use_thin_pack = 1;
+ 				continue;
+ 			}
++			if (!strcmp("--auto-follow-tags", arg)) {
++				args.auto_follow_tags = 1;
++				continue;
++			}
+ 			if (!strcmp("--all", arg)) {
+ 				args.fetch_all = 1;
+ 				continue;
+diff --git a/fetch-pack.h b/fetch-pack.h
+index 8d35ef6..6cb0a3c 100644
+--- a/fetch-pack.h
++++ b/fetch-pack.h
+@@ -12,7 +12,8 @@ struct fetch_pack_args
+ 		use_thin_pack:1,
+ 		fetch_all:1,
+ 		verbose:1,
+-		no_progress:1;
++		no_progress:1,
++		auto_follow_tags:1;
+ };
+ 
+ struct ref *fetch_pack(struct fetch_pack_args *args,
+diff --git a/upload-pack.c b/upload-pack.c
+index 660134a..308bde4 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -27,7 +27,8 @@ static const char upload_pack_usage[] = "git-upload-pack [--strict] [--timeout=n
+ static unsigned long oldest_have;
+ 
+ static int multi_ack, nr_our_refs;
+-static int use_thin_pack, use_ofs_delta, no_progress;
++static int use_thin_pack, use_ofs_delta, use_auto_follow_tags;
++static int no_progress;
+ static struct object_array have_obj;
+ static struct object_array want_obj;
+ static unsigned int timeout;
+@@ -162,6 +163,8 @@ static void create_pack_file(void)
+ 		argv[arg++] = "--progress";
+ 	if (use_ofs_delta)
+ 		argv[arg++] = "--delta-base-offset";
++	if (use_auto_follow_tags)
++		argv[arg++] = "--auto-follow-tags";
+ 	argv[arg++] = NULL;
+ 
+ 	memset(&pack_objects, 0, sizeof(pack_objects));
+@@ -494,6 +497,8 @@ static void receive_needs(void)
+ 			use_sideband = DEFAULT_PACKET_MAX;
+ 		if (strstr(line+45, "no-progress"))
+ 			no_progress = 1;
++		if (strstr(line+45, "auto-follow-tags"))
++			use_auto_follow_tags = 1;
+ 
+ 		/* We have sent all our refs already, and the other end
+ 		 * should have chosen out of them; otherwise they are
+@@ -565,7 +570,8 @@ static void receive_needs(void)
+ static int send_ref(const char *refname, const unsigned char *sha1, int flag, void *cb_data)
+ {
+ 	static const char *capabilities = "multi_ack thin-pack side-band"
+-		" side-band-64k ofs-delta shallow no-progress";
++		" side-band-64k ofs-delta shallow no-progress"
++		" auto-follow-tags";
+ 	struct object *o = parse_object(sha1);
+ 
+ 	if (!o)
 -- 
-Shawn.
+1.5.4.3.529.gb25fb
+
