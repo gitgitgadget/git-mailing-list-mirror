@@ -1,60 +1,65 @@
-From: "Harvey Harrison" <harvey.harrison@gmail.com>
-Subject: Re: tracking renames
-Date: Tue, 4 Mar 2008 14:03:54 -0800
-Message-ID: <590657100803041403q2cc68e21p1c92c244939eb148@mail.gmail.com>
-References: <20080304135734.b2c2f473.akpm@linux-foundation.org>
+From: Thomas Harning <harningt@gmail.com>
+Subject: Bug-tracking tools that handle branch/merge/etc
+Date: Tue, 4 Mar 2008 17:09:03 -0500
+Message-ID: <20080304170903.7b029fc3@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Andrew Morton" <akpm@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Mar 04 23:04:48 2008
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Mar 04 23:10:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWfFc-00089d-9g
-	for gcvg-git-2@gmane.org; Tue, 04 Mar 2008 23:04:44 +0100
+	id 1JWfKv-0001rF-Gw
+	for gcvg-git-2@gmane.org; Tue, 04 Mar 2008 23:10:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933268AbYCDWEF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Mar 2008 17:04:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933149AbYCDWEE
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Mar 2008 17:04:04 -0500
-Received: from gv-out-0910.google.com ([216.239.58.186]:21843 "EHLO
-	gv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933003AbYCDWEB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Mar 2008 17:04:01 -0500
-Received: by gv-out-0910.google.com with SMTP id s4so770331gve.37
-        for <git@vger.kernel.org>; Tue, 04 Mar 2008 14:03:56 -0800 (PST)
+	id S1757126AbYCDWJg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Mar 2008 17:09:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755134AbYCDWJf
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Mar 2008 17:09:35 -0500
+Received: from wr-out-0506.google.com ([64.233.184.239]:56235 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754771AbYCDWJe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Mar 2008 17:09:34 -0500
+Received: by wr-out-0506.google.com with SMTP id 50so1591673wra.13
+        for <git@vger.kernel.org>; Tue, 04 Mar 2008 14:09:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=AGZ4WmwUsAgXYzYoQmIqfSDMhh5VNqowZe9+bQo7ltA=;
-        b=kMX48hPAB3YpFCd7Lmo+xOojsi4qm62unxxrqhyYb47dHV5LyFqXPnWFKIJTWsTnNtYtmyfoUt2fc4ye97LG2ujVHl1z2SiLjnRqogZPXZ551MY4E2OxHrA9tQOGl1KL96AskNTN86GEvGmxO3tv9FuCjoX49Oc7ryzUS2fRErg=
+        h=domainkey-signature:received:received:date:from:to:subject:message-id:x-mailer:mime-version:content-type:content-transfer-encoding;
+        bh=GRvMFCRJF/aazwmNihG3dbi7BRTX/jJSgdtMse1KyOA=;
+        b=pYSu4ARG8Gtn8223ybRc1ElFJ9loNkBtngcOtobP3UI4Ce0g6o05mP7UzcRMIMKrSKtkLkRLFOsF2/cyFUdr0H8xqMuaof+XN3W0Df/yQwQF1j+Iuv/xtI0aFLQYUH3U0+5BkRahcfQuRHp7Iy1TRld5VLozIhH00Tn64b2TSAg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=tVJmBRzVFP8w9Aujibu0K7OBzM4Chm4jbSUbnmpJ4bcFTsqwvpOTAiufnwSCDrSjmKz3DnGKVKDS0A4pjHgIA143PmDPrPUqoDmXyBO+Qt9rPIAFiNk/UQqA3UV5MdAuV00cH/n7l/p7PB4iJspopkfQlGwn8pnqSCFWcIwX4xI=
-Received: by 10.114.60.19 with SMTP id i19mr3022134waa.142.1204668234885;
-        Tue, 04 Mar 2008 14:03:54 -0800 (PST)
-Received: by 10.115.22.2 with HTTP; Tue, 4 Mar 2008 14:03:54 -0800 (PST)
-In-Reply-To: <20080304135734.b2c2f473.akpm@linux-foundation.org>
-Content-Disposition: inline
+        h=date:from:to:subject:message-id:x-mailer:mime-version:content-type:content-transfer-encoding;
+        b=OTiivJjz+twE+6h2YOWFG+qgHyKEbJPiTWD6rPWvR/ClLOLMFmKOpLo4cpGLAumrsd26sVabuoUWOS+j7m4tgbpgJD4hBLnqjfYA6Ak4hREpQo8zW7CVnpkDCXlqxQiSfwY9F4orqdvgMqstSakCHthW66u8ksFiWN3NOP0orSE=
+Received: by 10.65.110.11 with SMTP id n11mr4081380qbm.46.1204668566931;
+        Tue, 04 Mar 2008 14:09:26 -0800 (PST)
+Received: from localhost ( [149.164.193.61])
+        by mx.google.com with ESMTPS id h17sm6459739wxd.24.2008.03.04.14.09.25
+        (version=SSLv3 cipher=OTHER);
+        Tue, 04 Mar 2008 14:09:26 -0800 (PST)
+X-Mailer: Claws Mail 3.3.1 (GTK+ 2.10.11; x86_64-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76145>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76146>
 
-On Tue, Mar 4, 2008 at 1:57 PM, Andrew Morton <akpm@linux-foundation.org> wrote:
->
->  When I do
->
->         git-whatchanged drivers/watchdog/iTCO_wdt.c
->
+Partly referring back to the discussion last June
+(http://article.gmane.org/gmane.comp.version-control.git/49734)...  has
+there been any developments in the area of a BTS that can grok GIT in a
+sane way?
 
-git-whatchanged --follow drivers/watchdog/iTCO_wdt.c
+Main concept I see as important for a BTS grokking git:
+ * Capability of following branches/merges in a way that
+   you can see a list of bugs that affect a branch at any point
+   in time.
 
-Cheers,
-
-Harvey
+Niceties include:
+ * The ability to 'distribute' this so bug tracking is as disconnected
+   as coding itself (great for airplane-trip coding sessions)
+ * Ability to watch incoming commits (suppose the BTS can 'pull' from
+   various sources on occasion) for messages marking a bug as
+   in-progress/fixed/re-opened/etc.
+ * Local-application GUI integration... ex: gitk/git-gui + BT
