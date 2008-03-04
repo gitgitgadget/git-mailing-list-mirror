@@ -1,106 +1,63 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] Fix git init --shared=all on FreeBSD 4.11
-Date: Tue, 4 Mar 2008 08:25:19 +0100
-Message-ID: <20080304072519.GA3070@steel.home>
-References: <20080303234406.GA28158@steel.home> <7v1w6rfhyn.fsf@gitster.siamese.dyndns.org>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH 1/3] git-pack-objects: Automatically pack annotated tags
+ if object was packed
+Date: Tue, 04 Mar 2008 08:27:22 +0100
+Message-ID: <47CCF9DA.4050304@viscovery.net>
+References: <20080304023607.GA16152@spearce.org> <alpine.LFD.1.00.0803032144110.2947@xanadu.home> <20080304030658.GO8410@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 04 08:26:06 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Nicolas Pitre <nico@cam.org>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org, Daniel Barkalow <barkalow@iabervon.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Mar 04 08:28:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWRXE-00088s-22
-	for gcvg-git-2@gmane.org; Tue, 04 Mar 2008 08:26:00 +0100
+	id 1JWRZO-0000B1-Ex
+	for gcvg-git-2@gmane.org; Tue, 04 Mar 2008 08:28:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751706AbYCDHZX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Mar 2008 02:25:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756193AbYCDHZW
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Mar 2008 02:25:22 -0500
-Received: from mo-p07-ob.rzone.de ([81.169.146.189]:40193 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751597AbYCDHZV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Mar 2008 02:25:21 -0500
-X-RZG-CLASS-ID: mo07
-X-RZG-AUTH: z4gQVF2k5XWuW3Ccul2ggTSg3Lc=
-Received: from tigra.home (Fa8a4.f.strato-dslnet.de [195.4.168.164])
-	by post.webmailer.de (fruni mo33) (RZmta 16.8)
-	with ESMTP id c072bbk247L9Vv ; Tue, 4 Mar 2008 08:25:19 +0100 (MET)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id A6234277BD;
-	Tue,  4 Mar 2008 08:25:19 +0100 (CET)
-Received: by steel.home (Postfix, from userid 1000)
-	id 179BF56D24; Tue,  4 Mar 2008 08:25:19 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <7v1w6rfhyn.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
+	id S1757453AbYCDH1b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Mar 2008 02:27:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757403AbYCDH1b
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Mar 2008 02:27:31 -0500
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:45974 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751210AbYCDH1b (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Mar 2008 02:27:31 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1JWRXy-0000dg-Kk; Tue, 04 Mar 2008 08:26:46 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 4C52F546; Tue,  4 Mar 2008 08:27:22 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <20080304030658.GO8410@spearce.org>
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76041>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76042>
 
-Junio C Hamano, Tue, Mar 04, 2008 01:31:12 +0100:
-> Alex Riesen <raa.lkml@gmail.com> writes:
+Shawn O. Pearce schrieb:
+> Nicolas Pitre <nico@cam.org> wrote:
+>> On Mon, 3 Mar 2008, Shawn O. Pearce wrote:
+>>
+>>> The new option "--auto-follow-tags" allows the caller to request that
+>>> any annotated tag be included into the packfile if the object the tag
+>>> references was also included as part of the packfile.
+>> Wouldn't "auto-include-tag" a better name for this option?
 > 
-> > At least FreeBSD 4.11p2 does not allow changing SUID/GUID bits to
-> > a non-root user.
+> Ooooh.  Indeed it would!
 > 
-> Sorry, but I do not understand this change.
-> 
+> I shall respin this series based around this better name.
 
-Now that I look at it again, I admint I don't understand what I was
-thinking either. I see the problem in t1301-shared-repo.sh: it fails
-to chmod(042775, ".git/refs") with EPERM.
+More bikeshedding: Why are you calling it "auto-"? If I tell the program
+to "--include-tags", I expect it to happen automatically.
 
-Will re-investigate.
-
-> > diff --git a/path.c b/path.c
-> > index af27161..4865e98 100644
-> > --- a/path.c
-> > +++ b/path.c
-> > @@ -265,6 +265,7 @@ int adjust_shared_perm(const char *path)
-> >  		return 0;
-> >  	if (lstat(path, &st) < 0)
-> >  		return -1;
-> > +	st.st_mode &= 07777 & ~(S_ISUID|S_ISGID);
-> >  	mode = st.st_mode;
-> 
-> If the thing is a directory, we say later in the code that we want to see
-> S_ISGID set, like this:
-> 
-> 	...
-> 	if (S_ISDIR(mode))
-> 		mode |= S_ISGID;
-> 	if ((mode & st.st_mode) != mode && chmod(path, mode) < 0)
-> 		return -2;
-> 	return 0;
-> 
-> and then we compare with st.st_mode so that we do not chmod() what's
-> already good  Your change means we will always try to chmod all the
-> directories, and your explanation suggests that such a chmod to do g+s on
-> directories would also fail (and your patch does not fix it -- we actively
-> try to make sure directories have g+s set).
-
-The change is very bogus. Dunno how it happened...
-
-> 	Side note. the wording in your message, "does not allow changing",
-> 	is very unclear.  Do you mean "non-root cannot do u+s,g+s"?  Or do
-> 	you mean "non-root cannot do u+s,g+s, non-root cannot do u-s,g-s
-> 	either"?
-
-chmod(2), as it was, just fails. It seemed like the ordinary users
-could not do g+s (which is what the function is actually supposed to
-do).
-
-> I do not mind a change to make sure we do u-s,g-s on regular files, but I
-> do not think it is necessary, and I am curious why you had files with such
-> perm bits to begin with.
-
-It is a directory. The bit 02000 is S_ISGID on FreeBSD too. It just
-does not work (now I am just observing, no coding).
+-- Hannes
 
