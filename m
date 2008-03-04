@@ -1,75 +1,72 @@
-From: "Whit Armstrong" <armstrong.whit@gmail.com>
-Subject: Re: t3900-i18n-commit.sh problem on Solaris
-Date: Tue, 4 Mar 2008 11:14:30 -0500
-Message-ID: <8ec76080803040814l694a0a11i6aa8e2c9f608413c@mail.gmail.com>
-References: <8ec76080803040751y4bf808f9ma83a9faa4f857039@mail.gmail.com>
-	 <e2b179460803040811y38e639b6wa83857c49b55aa05@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] Add compat/vsnprintf.c for systems that returns -1 on
+ maxsize reached
+Date: Tue, 04 Mar 2008 17:19:18 +0100
+Message-ID: <47CD7686.9040501@viscovery.net>
+References: <200803041459.29000.michal.rokos@nextsoft.cz> <20080304140930.GA23335@pvv.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Mike Ralphson" <mike.ralphson@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 04 17:15:16 2008
+Cc: Michal Rokos <michal.rokos@nextsoft.cz>, GIT <git@vger.kernel.org>
+To: Finn Arne Gangstad <finnag@pvv.org>
+X-From: git-owner@vger.kernel.org Tue Mar 04 17:20:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWZnM-0000x2-KY
-	for gcvg-git-2@gmane.org; Tue, 04 Mar 2008 17:15:13 +0100
+	id 1JWZs0-0002dl-NN
+	for gcvg-git-2@gmane.org; Tue, 04 Mar 2008 17:20:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763838AbYCDQOd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Mar 2008 11:14:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763841AbYCDQOd
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Mar 2008 11:14:33 -0500
-Received: from wr-out-0506.google.com ([64.233.184.234]:3949 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1763838AbYCDQOc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Mar 2008 11:14:32 -0500
-Received: by wr-out-0506.google.com with SMTP id 50so1301557wra.13
-        for <git@vger.kernel.org>; Tue, 04 Mar 2008 08:14:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=C3KmOx5XQ6Kww930xzJmwtWQFWVAGYtE4kZpTv95oMU=;
-        b=nkHZQmcjnkEnPu1O8Mz/zESe5K1/VmGi4l+ZdKqlDNyePMvqDkJ4v1yLKSKq+XgZVPlDKjrF04v7DSrWjaj84Kx4X3NKEfa6oA1IPJ3BULF9Bw5KBQun0PkPgarxjiYWVykR2COStyqPGCmxHgrTEQ+iK46ZIvMBbPoR6Pd7B5w=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=DonRjVdi1F7VJnBLUc1SgaLPcUK9aPiudBFeqD5vP0RgKYcJ3uf2bHzi9KenOCueSerC6DztthNTb2h7ArOZMBeoKWoDEIuEe6QLdMc4Ua1e3Lsc+s9lfKXrK0mXBJ0YfxLur2/NGrpuWpKl1pFctb7ZcY5hplnC1X3Q1/fHdL0=
-Received: by 10.141.87.13 with SMTP id p13mr723971rvl.62.1204647270404;
-        Tue, 04 Mar 2008 08:14:30 -0800 (PST)
-Received: by 10.141.201.19 with HTTP; Tue, 4 Mar 2008 08:14:30 -0800 (PST)
-In-Reply-To: <e2b179460803040811y38e639b6wa83857c49b55aa05@mail.gmail.com>
-Content-Disposition: inline
+	id S1764698AbYCDQTX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Mar 2008 11:19:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764886AbYCDQTW
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Mar 2008 11:19:22 -0500
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:12121 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1764573AbYCDQTW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Mar 2008 11:19:22 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1JWZqi-0004rO-Pj; Tue, 04 Mar 2008 17:18:41 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 0DDDE546; Tue,  4 Mar 2008 17:19:19 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <20080304140930.GA23335@pvv.org>
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76115>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76116>
 
-will give that a try and come back.
+Finn Arne Gangstad schrieb:
+> On Tue, Mar 04, 2008 at 02:59:28PM +0100, Michal Rokos wrote:
+> 
+>> +	while ( ret == -1 )
+>> +	{
+>> +		maxsize = (maxsize*3)/2;
+>> +		s = realloc(s, maxsize);
+>> +		if (! s) return -1;
+>> +		ret = vsnprintf(s, maxsize, format, ap);  /* <--- UNSAFE! */
+>> +	}
+> 
+> This is not generally safe, you cannot call vsnprintf multiple times
+> with the same ap on all architectures. You need va_copy (or __va_copy,
+> or VA_COPY, differs a bit between different architectures, especially
+> one the ones with a broken vsnprintf I guess..)
 
-On Tue, Mar 4, 2008 at 11:11 AM, Mike Ralphson <mike.ralphson@gmail.com> wrote:
-> On 04/03/2008, Whit Armstrong <armstrong.whit@gmail.com> wrote:
->  > this is with git latest: c95b3ad9ea310ec89e31a21edecaaf2c374e2c46
->  >  (GIT_VERSION = 1.5.4.3.447.gc95b3)
->  >
->  >
->  >  xs5-trd-p1.grn:warmstro> sh t3900-i18n-commit.sh -i -v
->  >  ...
->  >  ...
->  >  ...
->
-> >  * FAIL 22: ISO-2022-JP should be shown in EUCJP now
->  >
->
-> >  Is this a Solaris problem?
->
->  Could be. Some builtin iconv() functions / libiconv implementations
->  don't seem to have support for all of the character encodings git
->  expects.
->
->  Are you able to link against a current GNU libiconv instead?
->
->  Mike
->
+True. But...
+
+This replacement of vsnprintf will not be needed on all architectures, but
+only on some. And on these we can test in advance whether we can get away
+without va_copy (et.al.). A note next to the configuration setting about
+this would be in order, I think.
+
+Furthermore, on systems where vsnprintf is broken in this way, va_copy is
+likely not available.
+
+-- Hannes
+
