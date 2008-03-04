@@ -1,73 +1,55 @@
-From: "Ping Yin" <pkufranky@gmail.com>
-Subject: Re: [PATCH] git-submodule: Make update verbose for up to date path
-Date: Wed, 5 Mar 2008 00:03:12 +0800
-Message-ID: <46dff0320803040803v2f93d749t6b45fc8e47e66d21@mail.gmail.com>
-References: <1204642691-3220-1-git-send-email-pkufranky@gmail.com>
-	 <alpine.LSU.1.00.0803041503360.22527@racer.site>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] git-submodule: Don't die when command fails for one
+ submodule
+Date: Tue, 4 Mar 2008 16:03:11 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0803041602150.22527@racer.site>
+References: <1204641314-2726-1-git-send-email-pkufranky@gmail.com>  <alpine.LSU.1.00.0803041500170.22527@racer.site> <46dff0320803040800o499bb77bsa033134bda43becb@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: gitster@pobox.com, git@vger.kernel.org
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Mar 04 17:04:07 2008
+To: Ping Yin <pkufranky@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 04 17:04:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWZcP-0005L9-Bv
-	for gcvg-git-2@gmane.org; Tue, 04 Mar 2008 17:03:53 +0100
+	id 1JWZdD-0005fP-Pq
+	for gcvg-git-2@gmane.org; Tue, 04 Mar 2008 17:04:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758544AbYCDQDQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Mar 2008 11:03:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757098AbYCDQDQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Mar 2008 11:03:16 -0500
-Received: from an-out-0708.google.com ([209.85.132.248]:46418 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750699AbYCDQDP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Mar 2008 11:03:15 -0500
-Received: by an-out-0708.google.com with SMTP id d31so170145and.103
-        for <git@vger.kernel.org>; Tue, 04 Mar 2008 08:03:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=bZs2WKqd5dbnEsjeZpfUT/y7TfiKej36Gzg5H08mUBo=;
-        b=mamQ7ZqofY2aO/Cc4Xf0rbCTzfNW4LV0JX93lwua3NO49RTZD5ruy9v9IWAgmK+R5pcuCZuDSlF3Rri9LyxCUbFF+ZXhVUOQpJzSfWpQm55OQzi+dszb6K5hgb+ad9xdneKhFobut4bk0G5h9SzekMqqjG7lJT9+4kzBwjnh1ls=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=BhxhJRO+57dbQvxWOAgiHg8XWXmj32JlO5ElOroEzvLEsj8cYcXg8mvdsgx1x7tJosG7LF2nGCKsaxxz8wL4TKF0QvATBwmKuugwXyY/jMEq3rQUMhUPP5kH/TX/e5WEAGYHt1mXHo17D2a0yqzQ9OOvIDnMfsNfXRUp39k4NhM=
-Received: by 10.100.93.19 with SMTP id q19mr3311227anb.13.1204646592395;
-        Tue, 04 Mar 2008 08:03:12 -0800 (PST)
-Received: by 10.100.5.18 with HTTP; Tue, 4 Mar 2008 08:03:12 -0800 (PST)
-In-Reply-To: <alpine.LSU.1.00.0803041503360.22527@racer.site>
-Content-Disposition: inline
+	id S1765038AbYCDQEA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Mar 2008 11:04:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765033AbYCDQD7
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Mar 2008 11:03:59 -0500
+Received: from mail.gmx.net ([213.165.64.20]:58045 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1765022AbYCDQD6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Mar 2008 11:03:58 -0500
+Received: (qmail invoked by alias); 04 Mar 2008 16:03:56 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp006) with SMTP; 04 Mar 2008 17:03:56 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/naG4gu7jnaBpPZgyHKveJwNfVdX8p6HmZY1RB/m
+	Krsv1nQkzt6AAC
+X-X-Sender: gene099@racer.site
+In-Reply-To: <46dff0320803040800o499bb77bsa033134bda43becb@mail.gmail.com>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76106>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76107>
 
-On Tue, Mar 4, 2008 at 11:04 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi,
->
->
->  On Tue, 4 Mar 2008, Ping Yin wrote:
->
->  > When 'git submodule update' runs for multiple modules, give 'up to date'
->  > info for up to date modules should be a good idea to show the progress.
->
->  Does this not go contrary to our efforts to make Git less chatty?  See
->  e.g. the output of push and fetch...
->
-When i run 'git submodule update' in a repository whose submodules are
-all clean, there is not any output which makes me not know whether
-this command are successful. I think this is not friendly.
->  Ciao,
->  Dscho
->
+Hi,
 
+On Wed, 5 Mar 2008, Ping Yin wrote:
 
+> The error output is not lost and is in module_name
 
--- 
-Ping Yin
+That's what I am saying: the error output is not enough.  The exit status 
+needs to indicate that there was an error, too.  Everything else is 
+unusable by scripts.
+
+Thank you very much,
+Dscho
+
