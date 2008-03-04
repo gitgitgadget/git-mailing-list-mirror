@@ -1,138 +1,150 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 3/3] am: --rebasing
-Date: Tue,  4 Mar 2008 00:25:06 -0800
-Message-ID: <1204619106-30449-3-git-send-email-gitster@pobox.com>
-References: <1204619106-30449-1-git-send-email-gitster@pobox.com>
- <1204619106-30449-2-git-send-email-gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 04 09:26:22 2008
+From: Charles Bailey <charles@hashpling.org>
+Subject: Re: [PATCH] gitweb: add a setting to control the tabstop width
+Date: Tue, 4 Mar 2008 08:36:02 +0000
+Message-ID: <20080304083602.GA13585@hashpling.org>
+References: <20080303221159.GA6875@hashpling.org> <7vhcfnfljw.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 04 09:37:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWSTV-0004l3-9r
-	for gcvg-git-2@gmane.org; Tue, 04 Mar 2008 09:26:13 +0100
+	id 1JWSe5-0007c5-96
+	for gcvg-git-2@gmane.org; Tue, 04 Mar 2008 09:37:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751460AbYCDIZf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Mar 2008 03:25:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751455AbYCDIZf
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Mar 2008 03:25:35 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:38773 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751342AbYCDIZd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Mar 2008 03:25:33 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 468DC3880
-	for <git@vger.kernel.org>; Tue,  4 Mar 2008 03:25:33 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 6D04D387F for <git@vger.kernel.org>; Tue,  4 Mar 2008 03:25:32 -0500
- (EST)
-X-Mailer: git-send-email 1.5.4.3.529.gb25fb
-In-Reply-To: <1204619106-30449-2-git-send-email-gitster@pobox.com>
+	id S1759237AbYCDIgO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Mar 2008 03:36:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761149AbYCDIgN
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Mar 2008 03:36:13 -0500
+Received: from ptb-relay03.plus.net ([212.159.14.214]:51296 "EHLO
+	ptb-relay03.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760295AbYCDIgK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Mar 2008 03:36:10 -0500
+Received: from [212.159.69.125] (helo=hashpling.plus.com)
+	 by ptb-relay03.plus.net with esmtp (Exim) id 1JWSd6-00054P-OS; Tue, 04 Mar 2008 08:36:08 +0000
+Received: from fermat.hashpling.org (fermat.hashpling.org [127.0.0.1])
+	by hashpling.plus.com (8.13.8/8.13.6) with ESMTP id m248a2RQ014269;
+	Tue, 4 Mar 2008 08:36:02 GMT
+Received: (from charles@localhost)
+	by fermat.hashpling.org (8.13.8/8.13.6/Submit) id m248a2ST014268;
+	Tue, 4 Mar 2008 08:36:02 GMT
+Content-Disposition: inline
+In-Reply-To: <7vhcfnfljw.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.17 (2007-11-01)
+X-Plusnet-Relay: 286ee74a803c04f16dde94d2b74a8098
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76050>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76051>
 
-The new option --rebasing is used internally for rebase to tell am that
-it is being used for its purpose.  This would leave .dotest/rebasing to
-help "completion" scripts tell if the ongoing operation is am or rebase.
+On Mon, Mar 03, 2008 at 03:13:39PM -0800, Junio C Hamano wrote:
+> Some people say "Tabs are 8 characters, and thus indentations are also 8
+> characters.  There are heretic movements that try to make indentations 4
+> (or even 2!)  characters deep, and that is akin to trying to define the
+> value of PI to be 3."  Some people disagree.
+> 
+> But while viewing what is etched in the history, it does not hurt anybody
+> else if the viewer uses different tab width.  Choice is good.
+> 
+> However, a choice made by the hosting service that runs gitweb would not
+> help individual viewers with different tab-width taste.  Neither does
+> configuration that is per-repository.  Participants of the same project
+> would want to view contents with different tab-width.
 
-Also the option at the same time stands for --binary, -3 and -k which
-are always given when rebase drives am as its backend.
+I don not want to, nor shall I, argue about what interpretation of
+ASCII HT is correct. I do want to argue that choice is good, and
+furthermore that choice at the project level is appropriate.
 
-Using the information "am" leaves, git-completion.bash tells ongoing
-rebase and am apart.
+Personally, I do not agree that participants of the same project would
+want to view contents with different tab-width - or if they do, that
+they shouldn't ;-) .
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- contrib/completion/git-completion.bash |   10 +++++++++-
- git-am.sh                              |   13 +++++++++++--
- git-rebase.sh                          |    2 +-
- 3 files changed, 21 insertions(+), 4 deletions(-)
+I work on, or contribute to, a number of projects. I have a preference
+for indentation level of source, but I try to match the conventions of
+the project to which I am contributing. If tabs are used, and if so
+how wide they are, are important project conventions.
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 8f70e1e..5ae8799 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -70,7 +70,15 @@ __git_ps1 ()
- 		local b
- 		if [ -d "$g/../.dotest" ]
- 		then
--			r="|AM/REBASE"
-+			if test -f "$g/../.dotest/rebasing"
-+			then
-+				r="|REBASE"
-+			elif test -f "$g/../.dotest/applying"
-+			then
-+				r="|AM"
-+			else
-+				r="|AM/REBASE"
-+			fi
- 			b="$(git symbolic-ref HEAD 2>/dev/null)"
- 		elif [ -f "$g/.dotest-merge/interactive" ]
- 		then
-diff --git a/git-am.sh b/git-am.sh
-index 25129e6..db8171c 100755
---- a/git-am.sh
-+++ b/git-am.sh
-@@ -21,7 +21,8 @@ C=              pass it through git-apply
- p=              pass it through git-apply
- resolvemsg=     override error message when patch failure occurs
- r,resolved      to be used after a patch failure
--skip            skip the current patch"
-+skip            skip the current patch
-+rebasing        (internal use for git-rebase)"
- 
- . git-sh-setup
- prefix=$(git rev-parse --show-prefix)
-@@ -122,7 +123,7 @@ reread_subject () {
- 
- prec=4
- dotest=".dotest"
--sign= utf8=t keep= skip= interactive= resolved= binary=
-+sign= utf8=t keep= skip= interactive= resolved= binary= rebasing=
- resolvemsg= resume=
- git_apply_opt=
- 
-@@ -147,6 +148,8 @@ do
- 		resolved=t ;;
- 	--skip)
- 		skip=t ;;
-+	--rebasing)
-+		rebasing=t threeway=t keep=t binary=t ;;
- 	-d|--dotest)
- 		die "-d option is not longer supported.  Do not use."
- 		;;
-@@ -237,6 +240,12 @@ else
- 	echo "$utf8" >"$dotest/utf8"
- 	echo "$keep" >"$dotest/keep"
- 	echo 1 >"$dotest/next"
-+	if test -n "$rebasing"
-+	then
-+		: >"$dotest/rebasing"
-+	else
-+		: >"$dotest/applying"
-+	fi
- fi
- 
- case "$resolved" in
-diff --git a/git-rebase.sh b/git-rebase.sh
-index 6b9af96..452c5e7 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -376,7 +376,7 @@ fi
- if test -z "$do_merge"
- then
- 	git format-patch -k --stdout --full-index --ignore-if-in-upstream "$upstream"..ORIG_HEAD |
--	git am $git_am_opt --binary -3 -k --resolvemsg="$RESOLVEMSG" &&
-+	git am $git_am_opt --rebasing --resolvemsg="$RESOLVEMSG" &&
- 	move_to_original_branch
- 	ret=$?
- 	test 0 != $ret -a -d .dotest &&
--- 
-1.5.4.3.529.gb25fb
+For some projects they are mandatory standards.
 
+For some sets of conventions the width of a tab is not important, but
+for many they are.
+
+You can have the convention that tabs shall not be used, but you
+cannot have a convention that tabs shall or can be used in conjunction
+with a convention about maximum line length without and agreement on
+tab-width.
+
+git-mergetool.sh exhibits an example. If you look at the file with
+tabs set to 4 then the gvimdiff 'case' in the merge_file shell
+function *looks* correctly indented, but in other cases, the contents
+of the if statements do not look indented when they should be.
+
+If you look at git-mergetool.sh with tabs set to 8, then the other
+cases look correctly indented, but the gvimdiff case is over-indented.
+
+Clearly, what happened is that a user edited a file that should have
+been viewed with ts=8 as ts=4 and the result is now 'wrong' in
+different ways in different places.
+
+[ Aside: this particular inconsistency is fixed in pu :-) ]
+
+> On the other hand, maybe the tab-width customization is not about user
+> preference but what tab-width was used when the contents were created.  In
+> such a case, probably the right thing to do would be to look at the
+> tab-width hints embedded in the file.  In such a case, probably the tab
+> width setting need to be per-path (e.g. *.c files may use standard 8,
+> while *.py may use heretic 4).  Again, site-wide or repository-wide
+> configuration would not help.
+
+This, I certainly agree with more. Tab width is about choice at
+content creation. My argument is that choice at content creation
+should follow project-wide conventions. I agree that my patch doesn't
+provide a totally flexible solution but I do believe that there are
+projects that either use one type of source file - or at least only one
+tab width - which would benefit from the patch.
+
+I run a gitweb.cgi which has a handful of projects, one of which uses
+a popular IDE on a popular proprietary OS and uses a ts=4 convention
+and another which uses ts=8 convention. The patch was driven by this
+requirement and a (possibly erroneous) feeling that I probably wasn't
+alone.
+
+> In short, I do not like the patch, not because I do not like customizable
+> tab-width, but because I think the customizability the patch offers is of
+> the wrong kind and too limited to be useful.
+
+Whereas I believe it provides some useful customization, the
+customization is appropriate in many situations and the costs
+(performance and code complexity) are minimal. Obviously, integration
+is your call, but the patch will certainly stay on my own http server.
+
+> P.S.
+> 
+> It might be interesting to come up with a heuristics to _guess_ the tab
+> width used by the content creator by looking at the contents, by the way.
+> There obviously are Emacs "Local Variables" and "-*-" lines and equivalent
+> clues vim would leave, but you could probably also use indentation levels
+> as a cue.
+
+Perhaps. I don't really care for -*- style fluff but that's just
+personal. The heuristics could be tricky to get right, probably
+impossible in the case of users with tab conventions mangling the same
+file :-) .
+
+> And perhaps teach the underlying git commands a special flag to expand
+> tabs on the output.
+> 
+> 	"git cat-file --expand=auto blob Makefile"
+> 	"git diff --expand=8 HEAD^..HEAD frotz.c"
+> 
+> ;-)
+> 
+
+And I'd argue that expanding tabs was the job of the terminal and not
+core git, but hey :-) !
+
+Charles.
