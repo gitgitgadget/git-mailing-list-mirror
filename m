@@ -1,61 +1,64 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git-log segfault on 00 graft
-Date: Tue, 4 Mar 2008 19:09:15 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0803041908210.22527@racer.site>
-References: <Pine.LNX.4.64.0803041954320.7660@fbirervta.pbzchgretzou.qr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: t4109-apply-multifrag.sh problem on solaris -- looks like
+ problem w/ solaris patch cmd
+Date: Tue, 04 Mar 2008 11:32:20 -0800
+Message-ID: <7v3ar670aj.fsf@gitster.siamese.dyndns.org>
+References: <8ec76080803040822n5e463b50sff6639777246de7b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Jan Engelhardt <jengelh@computergmbh.de>
-X-From: git-owner@vger.kernel.org Tue Mar 04 20:11:04 2008
+To: "Whit Armstrong" <armstrong.whit@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 04 20:33:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWcXC-0004mV-H3
-	for gcvg-git-2@gmane.org; Tue, 04 Mar 2008 20:10:42 +0100
+	id 1JWcsu-0005NX-13
+	for gcvg-git-2@gmane.org; Tue, 04 Mar 2008 20:33:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754827AbYCDTKF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Mar 2008 14:10:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756153AbYCDTKE
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Mar 2008 14:10:04 -0500
-Received: from mail.gmx.net ([213.165.64.20]:60229 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751688AbYCDTKD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Mar 2008 14:10:03 -0500
-Received: (qmail invoked by alias); 04 Mar 2008 19:10:00 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp058) with SMTP; 04 Mar 2008 20:10:00 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX185fKpgBx451MvEQ8aLGfsGslKTUrmpLB1t1JOCs9
-	MjXc36w9AkcFQm
-X-X-Sender: gene099@racer.site
-In-Reply-To: <Pine.LNX.4.64.0803041954320.7660@fbirervta.pbzchgretzou.qr>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1760874AbYCDTca (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Mar 2008 14:32:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758330AbYCDTca
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Mar 2008 14:32:30 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:33312 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760160AbYCDTc3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Mar 2008 14:32:29 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 1157E3441;
+	Tue,  4 Mar 2008 14:32:26 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 81A383440; Tue,  4 Mar 2008 14:32:23 -0500 (EST)
+In-Reply-To: <8ec76080803040822n5e463b50sff6639777246de7b@mail.gmail.com>
+ (Whit Armstrong's message of "Tue, 4 Mar 2008 11:22:58 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76129>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76130>
 
-Hi,
+"Whit Armstrong" <armstrong.whit@gmail.com> writes:
 
-On Tue, 4 Mar 2008, Jan Engelhardt wrote:
+> * expecting success: git apply patch1.patch patch2.patch patch3.patch
+> *   ok 4: S = git apply (2)
+>
+> * expecting success: cat patch1.patch patch2.patch patch3.patch | patch -p1
+> patching file main.c
+> patching file main.c
+> patching file main.c
+> *   ok 5: S = patch (2)
+> ...
+>
+> Is the answer to use GNU patch? Or is there a trick to make the
+> Solaris version of patch work?
 
-> I was playing a bit with grafts, and actually did this:
-> 
->   echo '839affa3313011da783b5b8074a5c9805ee8503a 
-> 0000000000000000000000000000000000000000' >.git/info/grafts
-> 
-> running `git log --topo-order` causes a segfault. Yes, I probably 
-> "should not be doing that", but I think it at least should not
-> segfault.
+If we are reasonably sure that we will not be needing to change these test
+vectors (and because "git apply" is now solid, I think we are), I think
+the best way to address this is to prepare a new t/t4109 directory, store
+the expected output in there, and compare output from "git apply" that is
+being tested with the precomputed test vectors.
 
-Well, I agree with the first, but not the latter.  grafts are a really 
-core and plumbing thing, and if you set it to something nonsensical, I 
-think you should expect something like a segmentation fault.
-
-Ciao,
-Dscho
 
