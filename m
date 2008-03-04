@@ -1,63 +1,66 @@
-From: "Jay Soffian" <jaysoffian@gmail.com>
-Subject: Re: [RFC] git reset --recover
-Date: Tue, 4 Mar 2008 02:42:13 -0500
-Message-ID: <76718490803032342k18f05d4dte76aacd9292a1233@mail.gmail.com>
-References: <46dff0320803030659j2fa0325lf9c88b915ddb70da@mail.gmail.com>
-	 <20080303170242.GA30361@hashpling.org>
-	 <46dff0320803032121v54612b40ke953348e86daf1f@mail.gmail.com>
+From: mkoegler@auto.tuwien.ac.at (Martin Koegler)
+Subject: [RFC] Fsck while fetching
+Date: Tue, 4 Mar 2008 08:55:45 +0100
+Message-ID: <20080304075545.GA31793@auto.tuwien.ac.at>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Charles Bailey" <charles@hashpling.org>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Ping Yin" <pkufranky@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 04 08:42:59 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 04 08:56:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWRnY-0003Rj-Nu
-	for gcvg-git-2@gmane.org; Tue, 04 Mar 2008 08:42:53 +0100
+	id 1JWS0j-0006K0-R3
+	for gcvg-git-2@gmane.org; Tue, 04 Mar 2008 08:56:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753602AbYCDHmP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Mar 2008 02:42:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753243AbYCDHmP
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Mar 2008 02:42:15 -0500
-Received: from wa-out-1112.google.com ([209.85.146.181]:20852 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753191AbYCDHmO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Mar 2008 02:42:14 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so662233wah.23
-        for <git@vger.kernel.org>; Mon, 03 Mar 2008 23:42:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=GvhOlsyk+TSQ4j08vfAfFM08LgQ0zaajy98a2etNPnw=;
-        b=RkGjH7lMJolms+hNPdgQgqewxvppH1YMvYSMoTL0+siA84GiT6cMOWnGoVT4KBuREvcmI6vqAoT7vxcV17V5AysprS9ltXNGopAeMUIdYf+XF7ssdRSJxYy28IS77Oh2mMC5KNU8ou6GXUKnP3dGb2zFK05db8oXP7dYY8Bf1N0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=iMgudY/kZRcrKOfUmjdoV0v3Z37csdtibCdkDdpAdPIpL+WO6jlFEUfM1fWMfJ5X428Asep+5Zy6Yd9XvYY5YfZh6bkPUydV0J0pMJRVBVAkmJLBo+ubMG08d1JUBX4eLUxe3eU5dfl6EFNtXFRVu6LQPxd7UwktUqjavvqw5pw=
-Received: by 10.114.195.19 with SMTP id s19mr1564126waf.58.1204616533385;
-        Mon, 03 Mar 2008 23:42:13 -0800 (PST)
-Received: by 10.114.13.5 with HTTP; Mon, 3 Mar 2008 23:42:13 -0800 (PST)
-In-Reply-To: <46dff0320803032121v54612b40ke953348e86daf1f@mail.gmail.com>
+	id S1755464AbYCDHzs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 4 Mar 2008 02:55:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754528AbYCDHzs
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Mar 2008 02:55:48 -0500
+Received: from thor.auto.tuwien.ac.at ([128.130.60.15]:60370 "EHLO
+	thor.auto.tuwien.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754881AbYCDHzr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Mar 2008 02:55:47 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by thor.auto.tuwien.ac.at (Postfix) with ESMTP id 5AC436CF0063
+	for <git@vger.kernel.org>; Tue,  4 Mar 2008 08:55:45 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at auto.tuwien.ac.at
+Received: from thor.auto.tuwien.ac.at ([127.0.0.1])
+	by localhost (thor.auto.tuwien.ac.at [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id DShdJF64UFqZ for <git@vger.kernel.org>;
+	Tue,  4 Mar 2008 08:55:45 +0100 (CET)
+Received: by thor.auto.tuwien.ac.at (Postfix, from userid 3001)
+	id 3C76D6CF0060; Tue,  4 Mar 2008 08:55:45 +0100 (CET)
 Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76044>
 
-On Tue, Mar 4, 2008 at 12:21 AM, Ping Yin <pkufranky@gmail.com> wrote:
-> On Tue, Mar 4, 2008 at 1:02 AM, Charles Bailey <charles@hashpling.org> wrote:
->  >
->  >  Does 'git fsck' report some dangling blobs?  If so (some of) them
->  >  should be the content of your missing files.
->  >
->  Good news. So can "--recover" help me find the lost blobs?
+As the infrastructure for checking the objects and their connectivity
+while pushing is in place, it is easy to do the same while fetching on
+non shallow repositories.
 
-git fsck --lost-found. Look under .git/lost-found/other for your blobs.
-Anything that's not 41 bytes is a file.
+On shallow repositories this is currently only possible, if the list
+of shallow commits does not change (eg. no depth option).
 
-j.
+The neccessary changes are:
+* Read a config option in fetch-pack to disable it (default: true)
+* Add in fetch-pack --strict to the command lines of index-pack and=20
+  unpack-objects, if the config option is true and args.depth is 0.
+
+This leads to the question:
+* How should the config option be named? fetch.fsckObjects? Should
+  receive.fsckObjects be reused? Should receive.fsckObjects be renamed
+  to a new name, which is used in both cases?
+
+On additional question:
+* fsck has a strict option, which looks for files with 0664 mode. How
+  should such files be handled with the checking while pushing/fetching=
+:
+  ignored, rejected or config option for the behaviour?
+
+mfg Martin K=F6gler
