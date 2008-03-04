@@ -1,66 +1,75 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] git-submodule: Don't die when command fails for one
- submodule
-Date: Tue, 4 Mar 2008 16:13:31 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0803041612400.22527@racer.site>
-References: <1204641314-2726-1-git-send-email-pkufranky@gmail.com>  <alpine.LSU.1.00.0803041500170.22527@racer.site>  <46dff0320803040800o499bb77bsa033134bda43becb@mail.gmail.com>  <alpine.LSU.1.00.0803041602150.22527@racer.site>
- <46dff0320803040806y5ed02b86p9216ddc752f3052@mail.gmail.com>
+From: "Whit Armstrong" <armstrong.whit@gmail.com>
+Subject: Re: t3900-i18n-commit.sh problem on Solaris
+Date: Tue, 4 Mar 2008 11:14:30 -0500
+Message-ID: <8ec76080803040814l694a0a11i6aa8e2c9f608413c@mail.gmail.com>
+References: <8ec76080803040751y4bf808f9ma83a9faa4f857039@mail.gmail.com>
+	 <e2b179460803040811y38e639b6wa83857c49b55aa05@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: Ping Yin <pkufranky@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 04 17:14:56 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Mike Ralphson" <mike.ralphson@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 04 17:15:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWZn6-0000rP-3Y
-	for gcvg-git-2@gmane.org; Tue, 04 Mar 2008 17:14:56 +0100
+	id 1JWZnM-0000x2-KY
+	for gcvg-git-2@gmane.org; Tue, 04 Mar 2008 17:15:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763774AbYCDQOT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Mar 2008 11:14:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762732AbYCDQOS
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Mar 2008 11:14:18 -0500
-Received: from mail.gmx.net ([213.165.64.20]:36746 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1760224AbYCDQOS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Mar 2008 11:14:18 -0500
-Received: (qmail invoked by alias); 04 Mar 2008 16:14:16 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp007) with SMTP; 04 Mar 2008 17:14:16 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19sobVkF79smWyHUawtxjVzbrOGD+EvgubJBQXbcI
-	r0tCyaTzEbd4dK
-X-X-Sender: gene099@racer.site
-In-Reply-To: <46dff0320803040806y5ed02b86p9216ddc752f3052@mail.gmail.com>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1763838AbYCDQOd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Mar 2008 11:14:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763841AbYCDQOd
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Mar 2008 11:14:33 -0500
+Received: from wr-out-0506.google.com ([64.233.184.234]:3949 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1763838AbYCDQOc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Mar 2008 11:14:32 -0500
+Received: by wr-out-0506.google.com with SMTP id 50so1301557wra.13
+        for <git@vger.kernel.org>; Tue, 04 Mar 2008 08:14:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=C3KmOx5XQ6Kww930xzJmwtWQFWVAGYtE4kZpTv95oMU=;
+        b=nkHZQmcjnkEnPu1O8Mz/zESe5K1/VmGi4l+ZdKqlDNyePMvqDkJ4v1yLKSKq+XgZVPlDKjrF04v7DSrWjaj84Kx4X3NKEfa6oA1IPJ3BULF9Bw5KBQun0PkPgarxjiYWVykR2COStyqPGCmxHgrTEQ+iK46ZIvMBbPoR6Pd7B5w=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=DonRjVdi1F7VJnBLUc1SgaLPcUK9aPiudBFeqD5vP0RgKYcJ3uf2bHzi9KenOCueSerC6DztthNTb2h7ArOZMBeoKWoDEIuEe6QLdMc4Ua1e3Lsc+s9lfKXrK0mXBJ0YfxLur2/NGrpuWpKl1pFctb7ZcY5hplnC1X3Q1/fHdL0=
+Received: by 10.141.87.13 with SMTP id p13mr723971rvl.62.1204647270404;
+        Tue, 04 Mar 2008 08:14:30 -0800 (PST)
+Received: by 10.141.201.19 with HTTP; Tue, 4 Mar 2008 08:14:30 -0800 (PST)
+In-Reply-To: <e2b179460803040811y38e639b6wa83857c49b55aa05@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76114>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76115>
 
-Hi,
+will give that a try and come back.
 
-On Wed, 5 Mar 2008, Ping Yin wrote:
-
-> On Wed, Mar 5, 2008 at 12:03 AM, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
+On Tue, Mar 4, 2008 at 11:11 AM, Mike Ralphson <mike.ralphson@gmail.com> wrote:
+> On 04/03/2008, Whit Armstrong <armstrong.whit@gmail.com> wrote:
+>  > this is with git latest: c95b3ad9ea310ec89e31a21edecaaf2c374e2c46
+>  >  (GIT_VERSION = 1.5.4.3.447.gc95b3)
+>  >
+>  >
+>  >  xs5-trd-p1.grn:warmstro> sh t3900-i18n-commit.sh -i -v
+>  >  ...
+>  >  ...
+>  >  ...
 >
-> >  On Wed, 5 Mar 2008, Ping Yin wrote:
-> >
-> >  > The error output is not lost and is in module_name
-> >
-> >  That's what I am saying: the error output is not enough.  The exit status
-> >  needs to indicate that there was an error, too.  Everything else is
-> >  unusable by scripts.
-> 
-> I think this can be done in a following patch which capture any error
-> and give the right exit status.
-
-That's horrible!  Are you seriously suggesting breaking a perfectly fine 
-paradigm in one patch, just to fix it in the next one?
-
-*Shudders*,
-Dscho
+> >  * FAIL 22: ISO-2022-JP should be shown in EUCJP now
+>  >
+>
+> >  Is this a Solaris problem?
+>
+>  Could be. Some builtin iconv() functions / libiconv implementations
+>  don't seem to have support for all of the character encodings git
+>  expects.
+>
+>  Are you able to link against a current GNU libiconv instead?
+>
+>  Mike
+>
