@@ -1,63 +1,65 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Commit f5bbc322 to git broke pre-commit hooks which read stdin
-Date: Tue, 4 Mar 2008 10:45:12 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0803041044120.22527@racer.site>
-References: <0tableanpe.wl%bremner@pivot.cs.unb.ca>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Configure test for FREAD_READS_DIRECTORIES
+Date: Tue, 04 Mar 2008 03:03:12 -0800
+Message-ID: <7vod9u92fj.fsf@gitster.siamese.dyndns.org>
+References: <200803041048.53399.michal.rokos@nextsoft.cz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: =?ISO-8859-15?Q?Kristian_H=F8gsberg?= <krh@redhat.com>,
-	git@vger.kernel.org, 469250@bugs.debian.org
-To: David Bremner <bremner@unb.ca>
-X-From: git-owner@vger.kernel.org Tue Mar 04 11:47:01 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: GIT <git@vger.kernel.org>
+To: Michal Rokos <michal.rokos@nextsoft.cz>
+X-From: git-owner@vger.kernel.org Tue Mar 04 12:04:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWUfP-0005BI-ML
-	for gcvg-git-2@gmane.org; Tue, 04 Mar 2008 11:46:40 +0100
+	id 1JWUwX-0001m1-Lv
+	for gcvg-git-2@gmane.org; Tue, 04 Mar 2008 12:04:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751909AbYCDKqA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Mar 2008 05:46:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751004AbYCDKqA
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Mar 2008 05:46:00 -0500
-Received: from mail.gmx.net ([213.165.64.20]:35701 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751123AbYCDKp7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Mar 2008 05:45:59 -0500
-Received: (qmail invoked by alias); 04 Mar 2008 10:45:57 -0000
-Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
-  by mail.gmx.net (mp045) with SMTP; 04 Mar 2008 11:45:57 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18M4nx8SOMMTs6vY6IgBbDJZjmXpIJqN9xWFN0pGv
-	hPdNAA+GYy1e/m
-X-X-Sender: gene099@racer.site
-In-Reply-To: <0tableanpe.wl%bremner@pivot.cs.unb.ca>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1754065AbYCDLDV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Mar 2008 06:03:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753053AbYCDLDV
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Mar 2008 06:03:21 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:46859 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752756AbYCDLDU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Mar 2008 06:03:20 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 485BE2183;
+	Tue,  4 Mar 2008 06:03:17 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 9F8C12182; Tue,  4 Mar 2008 06:03:14 -0500 (EST)
+In-Reply-To: <200803041048.53399.michal.rokos@nextsoft.cz> (Michal Rokos's
+ message of "Tue, 4 Mar 2008 10:48:53 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76061>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76062>
 
-Hi,
+Michal Rokos <michal.rokos@nextsoft.cz> writes:
 
-On Tue, 4 Mar 2008, David Bremner wrote:
+> Hello,
 
-> It looks like line 435 of builtin-commit.c disables stdin for hooks 
-> (with the disclaimer that I first looked at the git source ten minutes 
-> ago).
-> 
-> 	   hook.no_stdin = 1
-> 
-> I'm not sure if this was by design, but just so you know, this breaks 
-> people's hooks.  In particular the default metastore pre-commit hook no 
-> longer works.  I didn't find anything relevant in the docs [1].
+"Hello," not wanted in the commit log message.
 
-Pardon my ignorance, but what business has metastore reading stdin?  There 
-should be nothing coming in, so the change you mentioned should be 
-correct, and your hook relies on something it should not rely on.
+> this patch adds missing tests for FREAD_READS_DIRECTORIES.
+>
+> Signed-off-by: Michal Rokos <michal.rokos@nextsoft.cz>
 
-Ciao,
-Dscho
+> +#
+> +# Define FREAD_READS_DIRECTORIES if your are on a system which succeeds
+> +# when attempting to read from an fopen'ed directory.
+> +AC_CACHE_CHECK([whether system succeeds to read fopen'ed directory],
+> + [ac_cv_fread_reads_directories],
+> +[
+> +AC_RUN_IFELSE(
+> +	[AC_LANG_PROGRAM([AC_INCLUDES_DEFAULT],
+> +		[[char c;
+> +		FILE *f = fopen("/etc", "r");
 
+Why "/etc" and not "." I have to wonder...
+
+On how many different platforms was this configure check tested on?
