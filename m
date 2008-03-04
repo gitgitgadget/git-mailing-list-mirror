@@ -1,54 +1,53 @@
-From: Finn Arne Gangstad <finnag@pvv.org>
-Subject: Re: [PATCH] Add compat/vsnprintf.c for systems that returns -1 on maxsize reached
-Date: Tue, 4 Mar 2008 15:09:31 +0100
-Message-ID: <20080304140930.GA23335@pvv.org>
-References: <200803041459.29000.michal.rokos@nextsoft.cz>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: GIT <git@vger.kernel.org>
-To: Michal Rokos <michal.rokos@nextsoft.cz>
-X-From: git-owner@vger.kernel.org Tue Mar 04 15:48:30 2008
+From: Ping Yin <pkufranky@gmail.com>
+Subject: [PATCH] git-submodule: Make update verbose for up to date path
+Date: Tue,  4 Mar 2008 22:58:11 +0800
+Message-ID: <1204642691-3220-1-git-send-email-pkufranky@gmail.com>
+Cc: git@vger.kernel.org, Ping Yin <pkufranky@gmail.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Tue Mar 04 15:59:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWYQ1-0001LE-8Z
-	for gcvg-git-2@gmane.org; Tue, 04 Mar 2008 15:47:01 +0100
+	id 1JWYbU-0006CP-Lw
+	for gcvg-git-2@gmane.org; Tue, 04 Mar 2008 15:58:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755957AbYCDOqW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Mar 2008 09:46:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755896AbYCDOqW
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Mar 2008 09:46:22 -0500
-Received: from decibel.pvv.ntnu.no ([129.241.210.179]:38018 "EHLO
-	decibel.pvv.ntnu.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755875AbYCDOqV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Mar 2008 09:46:21 -0500
-X-Greylist: delayed 2209 seconds by postgrey-1.27 at vger.kernel.org; Tue, 04 Mar 2008 09:46:21 EST
-Received: from finnag by decibel.pvv.ntnu.no with local (Exim 4.60)
-	(envelope-from <finnag@pvv.ntnu.no>)
-	id 1JWXpj-0000GH-7q; Tue, 04 Mar 2008 15:09:31 +0100
-Content-Disposition: inline
-In-Reply-To: <200803041459.29000.michal.rokos@nextsoft.cz>
-User-Agent: Mutt/1.5.11
+	id S1756431AbYCDO6O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Mar 2008 09:58:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756418AbYCDO6O
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Mar 2008 09:58:14 -0500
+Received: from mail.qikoo.org ([60.28.205.235]:39766 "EHLO mail.qikoo.org"
+	rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1756161AbYCDO6O (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Mar 2008 09:58:14 -0500
+Received: by mail.qikoo.org (Postfix, from userid 1029)
+	id BE0D4470B0; Tue,  4 Mar 2008 22:58:11 +0800 (CST)
+X-Mailer: git-send-email 1.5.4.3.347.g5314c
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76091>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76092>
 
-On Tue, Mar 04, 2008 at 02:59:28PM +0100, Michal Rokos wrote:
+When 'git submodule update' runs for multiple modules, give 'up to date'
+info for up to date modules should be a good idea to show the progress.
+---
+ git-submodule.sh |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
 
-> +	while ( ret == -1 )
-> +	{
-> +		maxsize = (maxsize*3)/2;
-> +		s = realloc(s, maxsize);
-> +		if (! s) return -1;
-> +		ret = vsnprintf(s, maxsize, format, ap);  /* <--- UNSAFE! */
-> +	}
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 67d3224..94e3db7 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -305,6 +305,8 @@ cmd_update()
+ 			die "Unable to checkout '$sha1' in submodule path '$path'"
+ 
+ 			say "Submodule path '$path': checked out '$sha1'"
++		else
++			say "Up to date: $path"
+ 		fi
+ 	done
+ }
+-- 
+1.5.4.3.347.g5314c
 
-This is not generally safe, you cannot call vsnprintf multiple times
-with the same ap on all architectures. You need va_copy (or __va_copy,
-or VA_COPY, differs a bit between different architectures, especially
-one the ones with a broken vsnprintf I guess..)
-
-- Finn Arne
