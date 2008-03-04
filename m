@@ -1,91 +1,73 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v3] autoconf: Test FREAD_READS_DIRECTORIES
-Date: Tue, 4 Mar 2008 16:01:44 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0803041558020.22527@racer.site>
-References: <200803041514.42783.michal.rokos@nextsoft.cz> <alpine.LSU.1.00.0803041458220.22527@racer.site> <200803041630.07585.michal.rokos@nextsoft.cz>
+From: "Ping Yin" <pkufranky@gmail.com>
+Subject: Re: [PATCH] git-submodule: Make update verbose for up to date path
+Date: Wed, 5 Mar 2008 00:03:12 +0800
+Message-ID: <46dff0320803040803v2f93d749t6b45fc8e47e66d21@mail.gmail.com>
+References: <1204642691-3220-1-git-send-email-pkufranky@gmail.com>
+	 <alpine.LSU.1.00.0803041503360.22527@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: GIT <git@vger.kernel.org>
-To: Michal Rokos <michal.rokos@nextsoft.cz>
-X-From: git-owner@vger.kernel.org Tue Mar 04 17:03:31 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Mar 04 17:04:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWZbk-00054Z-37
-	for gcvg-git-2@gmane.org; Tue, 04 Mar 2008 17:03:12 +0100
+	id 1JWZcP-0005L9-Bv
+	for gcvg-git-2@gmane.org; Tue, 04 Mar 2008 17:03:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756948AbYCDQCe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Mar 2008 11:02:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754700AbYCDQCd
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Mar 2008 11:02:33 -0500
-Received: from mail.gmx.net ([213.165.64.20]:42894 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756843AbYCDQCd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Mar 2008 11:02:33 -0500
-Received: (qmail invoked by alias); 04 Mar 2008 16:02:30 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp018) with SMTP; 04 Mar 2008 17:02:30 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+q6nMW7VOqPrBfR/e+lVswl9mcYBotHWvND7pVoJ
-	A7rWYJdUIYpBo9
-X-X-Sender: gene099@racer.site
-In-Reply-To: <200803041630.07585.michal.rokos@nextsoft.cz>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1758544AbYCDQDQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Mar 2008 11:03:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757098AbYCDQDQ
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Mar 2008 11:03:16 -0500
+Received: from an-out-0708.google.com ([209.85.132.248]:46418 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750699AbYCDQDP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Mar 2008 11:03:15 -0500
+Received: by an-out-0708.google.com with SMTP id d31so170145and.103
+        for <git@vger.kernel.org>; Tue, 04 Mar 2008 08:03:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=bZs2WKqd5dbnEsjeZpfUT/y7TfiKej36Gzg5H08mUBo=;
+        b=mamQ7ZqofY2aO/Cc4Xf0rbCTzfNW4LV0JX93lwua3NO49RTZD5ruy9v9IWAgmK+R5pcuCZuDSlF3Rri9LyxCUbFF+ZXhVUOQpJzSfWpQm55OQzi+dszb6K5hgb+ad9xdneKhFobut4bk0G5h9SzekMqqjG7lJT9+4kzBwjnh1ls=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=BhxhJRO+57dbQvxWOAgiHg8XWXmj32JlO5ElOroEzvLEsj8cYcXg8mvdsgx1x7tJosG7LF2nGCKsaxxz8wL4TKF0QvATBwmKuugwXyY/jMEq3rQUMhUPP5kH/TX/e5WEAGYHt1mXHo17D2a0yqzQ9OOvIDnMfsNfXRUp39k4NhM=
+Received: by 10.100.93.19 with SMTP id q19mr3311227anb.13.1204646592395;
+        Tue, 04 Mar 2008 08:03:12 -0800 (PST)
+Received: by 10.100.5.18 with HTTP; Tue, 4 Mar 2008 08:03:12 -0800 (PST)
+In-Reply-To: <alpine.LSU.1.00.0803041503360.22527@racer.site>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76105>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76106>
 
-Hi,
+On Tue, Mar 4, 2008 at 11:04 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi,
+>
+>
+>  On Tue, 4 Mar 2008, Ping Yin wrote:
+>
+>  > When 'git submodule update' runs for multiple modules, give 'up to date'
+>  > info for up to date modules should be a good idea to show the progress.
+>
+>  Does this not go contrary to our efforts to make Git less chatty?  See
+>  e.g. the output of push and fetch...
+>
+When i run 'git submodule update' in a repository whose submodules are
+all clean, there is not any output which makes me not know whether
+this command are successful. I think this is not friendly.
+>  Ciao,
+>  Dscho
+>
 
-On Tue, 4 Mar 2008, Michal Rokos wrote:
 
-> On Tuesday 04 March 2008 15:59:02 Johannes Schindelin wrote:
-> > On Tue, 4 Mar 2008, Michal Rokos wrote:
-> > > +AC_RUN_IFELSE(
-> > > +	[AC_LANG_PROGRAM([AC_INCLUDES_DEFAULT],
-> > > +		[[char c;
-> > > +		FILE *f = fopen(".", "r");
-> > > +		if (! f) return 0;
-> > > +		if (f && fread(&c, 1, 1, f) > 0) return 1]])],
-> > > +	[ac_cv_fread_reads_directories=no],
-> > > +	[ac_cv_fread_reads_directories=yes])
-> >
-> > I do not see the issue addressed that I saw on msysGit.
-> 
-> ahh, sorry I've included some old one. Now it's
-> +AC_RUN_IFELSE(
-> +	[AC_LANG_PROGRAM([AC_INCLUDES_DEFAULT],
-> +		[[char c;
-> +		FILE *f = fopen(".", "r");
-> +		return f && fread(&c, 1, 1, f)]])],
-> +	[ac_cv_fread_reads_directories=no],
-> +	[ac_cv_fread_reads_directories=yes])
-> 
-> I've tried to reproduce, but I failed to do so. When I put "return 0;" it 
-> detect that "no"; when I return something else, "yes" is detected - as it 
-> should.
 
-I finally figured out what is going wrong.
-
-But first let me say what a PITA it is to debug configure.  It is utterly, 
-completely painful!  When you insert random "exit"s, like you usually do 
-with scripts that are too garbled and complex and ugly to understand (the 
-worst Perl code I ever saw was not as ugly), it does not exit _at all_!
-
-Turns out that the compilation fails:
-
-	...\ld.exe: cannot find -lsocket 1 exit status
-
-Nice.
-
-FWIW it tries to link with
-
-	cc -o conftest.exe -g -O2   conftest.c  -liconv -lsocket >&5
-
-Hth,
-Dscho
-
+-- 
+Ping Yin
