@@ -1,89 +1,61 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] Configure test for FREAD_READS_DIRECTORIES
-Date: Tue, 04 Mar 2008 04:17:50 -0800 (PST)
-Message-ID: <m3fxv6isxw.fsf@localhost.localdomain>
-References: <200803041048.53399.michal.rokos@nextsoft.cz>
-	<200803041217.37027.michal.rokos@nextsoft.cz>
-	<7v7igi911y.fsf@gitster.siamese.dyndns.org>
-	<200803041248.54197.michal.rokos@nextsoft.cz>
+From: "Mark Levedahl" <mlevedahl@gmail.com>
+Subject: Re: [PATCH] git-submodule - Allow adding a submodule in-place
+Date: Tue, 4 Mar 2008 07:39:44 -0500
+Message-ID: <30e4a070803040439o7b3453c9ta3f00a6d1115af86@mail.gmail.com>
+References: <1204596383-4040-1-git-send-email-mlevedahl@gmail.com>
+	 <7vod9v9d9b.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, GIT <git@vger.kernel.org>
-To: Michal Rokos <michal.rokos@nextsoft.cz>
-X-From: git-owner@vger.kernel.org Tue Mar 04 13:18:51 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, pkufranky@gmail.com,
+	"Sven Verdoolaege" <skimo@kotnet.org>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 04 13:40:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWW6T-00084b-II
-	for gcvg-git-2@gmane.org; Tue, 04 Mar 2008 13:18:41 +0100
+	id 1JWWRW-0006Jo-Bq
+	for gcvg-git-2@gmane.org; Tue, 04 Mar 2008 13:40:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753606AbYCDMR5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Mar 2008 07:17:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753543AbYCDMR4
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Mar 2008 07:17:56 -0500
-Received: from nf-out-0910.google.com ([64.233.182.188]:62173 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753493AbYCDMRx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Mar 2008 07:17:53 -0500
-Received: by nf-out-0910.google.com with SMTP id g13so436009nfb.21
-        for <git@vger.kernel.org>; Tue, 04 Mar 2008 04:17:52 -0800 (PST)
+	id S1757881AbYCDMjt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Mar 2008 07:39:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757600AbYCDMjs
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Mar 2008 07:39:48 -0500
+Received: from wf-out-1314.google.com ([209.85.200.169]:31555 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757135AbYCDMjq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Mar 2008 07:39:46 -0500
+Received: by wf-out-1314.google.com with SMTP id 28so966717wff.4
+        for <git@vger.kernel.org>; Tue, 04 Mar 2008 04:39:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
-        bh=BJQzV5ecHKRg8ks+W1HnazP6dpkuNHY73I6vvUAzGRA=;
-        b=pZfQ+nXHkU47km0n+POmBa53CuoRTCgz8FDb8EeK10TjPbOiwvtagJlzTbtw/fZKwvvJmmy+BqzSHblLblkUTJTLOOmJsYPk802i5MVj7/fpFHZtLurd5SEDTky5CopJ75IkdRPq2iudLIYbPEVMf/+AsXGTv5wSvcil+ebYseI=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=l5B0WURqWj+Pc5q3i3048IhJFX/OMpv9z4eo/Yp0BcM=;
+        b=UR8UDga0EHpPt3zNtlGoiOFHQwCwX4VK38gcVi1IjyF5YNMTSCZI/nzNrRa1xPWz0CUxtDavwWBqbXbKP0eBLe7a6IpJRPOjbPt8H6ZfXs3TDJmcowxXAyNbk+YGRvfU0Vf4po3DbRK3SDkJVEogHBJfzve5iRNErNr6VV7Opj4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
-        b=G6N3Ssv/ggwdyfqWYt49zYx4nBQLZX2QAKfoz8V8cqItUagi5saIbajRdG+gd8aovCxysK4nXX2MukU23/ExIuEobSmvc06E+wIgepPPNqKgcIpWYbjosSnJJagp/n3u5FbIuZaIn7MMX2AEsOUo89ekTU02QX3mlYBYs6aMf8A=
-Received: by 10.82.112.3 with SMTP id k3mr2849145buc.9.1204633071551;
-        Tue, 04 Mar 2008 04:17:51 -0800 (PST)
-Received: from localhost.localdomain ( [83.8.251.156])
-        by mx.google.com with ESMTPS id j8sm1863031gvb.7.2008.03.04.04.17.48
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 04 Mar 2008 04:17:50 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m24CI71V011885;
-	Tue, 4 Mar 2008 13:18:07 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m24CI3jf011882;
-	Tue, 4 Mar 2008 13:18:03 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <200803041248.54197.michal.rokos@nextsoft.cz>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=tYYt6qUJ7aqRvEOYWjf0hiIinvlNsa9MxSok1r0jtDkH8DwlFNH/iGX2pkhPwc/4OBuOdDMN7SZ/Uv6oNbJl7UI8zMzCMWvOAGzXy4VJNO7IdMDXDfGXcdBnDeQFwpj/XYKEGFdSCW7cHI2bfx90QddPz9pQkdXWdno2ME32fEI=
+Received: by 10.142.127.10 with SMTP id z10mr493316wfc.216.1204634384089;
+        Tue, 04 Mar 2008 04:39:44 -0800 (PST)
+Received: by 10.143.159.5 with HTTP; Tue, 4 Mar 2008 04:39:44 -0800 (PST)
+In-Reply-To: <7vod9v9d9b.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76080>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76081>
 
-Michal Rokos <michal.rokos@nextsoft.cz> writes:
- 
-> I don't know how many people care about configure script since
-> there are missing bits in it again and again. I believe it could
-> receive good amount of testing only when it's merged in.
+On Tue, Mar 4, 2008 at 2:09 AM, Junio C Hamano <gitster@pobox.com> wrote:
 
-Because configure script is optional, people do tend to forget to add
-test to it, when adding new compile configuration option.
-Configuration is mainly done by guessing based on uname.
+>
+>  However, this part is not mentioned in the commit log message at all.
 
-Unfortunately we don't have maintainer for configure script, who would
-catch new make configuration options, and add appropriate tests to
-./configure.
+...because the code to do the latter part is not a part of the patch,
+and I failed to edit the documentation patch to remove that other
+cruft. Will resend tonight when I have a connection that lets me send
+patches.
 
-> I'm trying to make GIT working on HPUX - next patch in my queue is
-> about broken vsnprintf() that returns -1 on maxsize overrun. Do you
-> think that it's more likely that patch will be accepted when I omit
-> "broken vsnprintf()" detection code from configure.ac?
-
-I think it would be better to split patch into two: one adding build
-option, or setting it for given operating system or operating system
-version, and one adding test to ./configure script.  It is much
-simplier to test first patch; the patch to configure needs more
-review, as it should work correctly on all operating systems.
-
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Mark
