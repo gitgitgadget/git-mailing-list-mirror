@@ -1,103 +1,90 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: FastCGI support in gitweb
-Date: Tue, 4 Mar 2008 01:19:21 +0100
-Message-ID: <200803040119.22240.jnareb@gmail.com>
-References: <1c3be50f0803011334u2629011cg85cb8728a244ea4e@mail.gmail.com> <m38x12jeqt.fsf@localhost.localdomain> <47CBEED2.30808@vilain.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Fix git init --shared=all on FreeBSD 4.11
+Date: Mon, 03 Mar 2008 16:31:12 -0800
+Message-ID: <7v1w6rfhyn.fsf@gitster.siamese.dyndns.org>
+References: <20080303234406.GA28158@steel.home>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Juan Jose Comellas <juanjo@comellas.org>, git@vger.kernel.org
-To: Sam Vilain <sam@vilain.net>
-X-From: git-owner@vger.kernel.org Tue Mar 04 01:19:58 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 04 01:32:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWKsu-0006Ya-RQ
-	for gcvg-git-2@gmane.org; Tue, 04 Mar 2008 01:19:57 +0100
+	id 1JWL5H-0001kn-GU
+	for gcvg-git-2@gmane.org; Tue, 04 Mar 2008 01:32:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753657AbYCDATP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Mar 2008 19:19:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752752AbYCDATP
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Mar 2008 19:19:15 -0500
-Received: from fk-out-0910.google.com ([209.85.128.186]:59175 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754030AbYCDATN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Mar 2008 19:19:13 -0500
-Received: by fk-out-0910.google.com with SMTP id z23so417925fkz.5
-        for <git@vger.kernel.org>; Mon, 03 Mar 2008 16:19:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=OZgLNMqydJhlmhVslAG6BLu6bw88HydgN73BCbm0uUc=;
-        b=GDRkhgV7m+z4v5syCE4jnli9sqn7i/IJWlkwo88fjbGX1gYWeF8CR/Udzq7AIST72GGndZFsqP7e1IFBGx7f2XCqGxQmBz/aAnoOJygnS+7qCy21noBFb1Y0aclb0+N/fnPFhbpwCOSmttU20dZ3FdidqpCJqgaKfSeFNI0Ryoc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=L6qftgzsH/wVG9+G0/ayacP7yjPmLHEaG94Cl+G8Yi7YQAZ5rZU7r8Ezfo+N1feUnhhxGc5O/vVvRT3MwSi94mw5ih95Q1cbBjDobGCt1JvXSt6bnm4OhC2sCdOVxQn/I6AEdKIQpr3gzFJvVLrllrE4VHYXPNKhPAtTaZAGV7s=
-Received: by 10.82.165.13 with SMTP id n13mr2087734bue.16.1204589952072;
-        Mon, 03 Mar 2008 16:19:12 -0800 (PST)
-Received: from ?192.168.1.15? ( [83.8.251.32])
-        by mx.google.com with ESMTPS id f6sm1086188nfh.21.2008.03.03.16.19.09
-        (version=SSLv3 cipher=OTHER);
-        Mon, 03 Mar 2008 16:19:09 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <47CBEED2.30808@vilain.net>
-Content-Disposition: inline
+	id S1757551AbYCDAbg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Mar 2008 19:31:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750877AbYCDAbf
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Mar 2008 19:31:35 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:42202 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759492AbYCDAbV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Mar 2008 19:31:21 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id A7B8F25F9;
+	Mon,  3 Mar 2008 19:31:18 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id C257A25F8; Mon,  3 Mar 2008 19:31:15 -0500 (EST)
+In-Reply-To: <20080303234406.GA28158@steel.home> (Alex Riesen's message of
+ "Tue, 4 Mar 2008 00:44:06 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76003>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76004>
 
-On Mon, 3 Mar 2008, Sam Vilain wrote:
-> Jakub Narebski wrote:
->> First, as far as I understand it, the patch made gitweb had to be used
->> with FastCGI server.  It has no comments in code, and if I remember
->> correctly the commit message was also fairly nonexistent.  It mixes
->> FastCGI changes with site-wide changes.  It wrapped the whole file in
->> "until last request" loop instead of wrapping dispatch only.
->> 
->> Also I am not sure if gitweb doesn't rely on variables being correctly
->> set which they are not in FastCGI mode.
->> 
->> But most important part: it was never resend (IIRC it was send when
->> gitweb development was in separate repository)
->> 
->> 
->> I have attached the FastCGI patch and CC-ed the author.
-> 
-> Thanks.  I didn't submit this because I couldn't fix the bugs in it.
-> Glad you found it.  I had to make many changes in a similar vein with a
-> current gitweb version; did it work for you in its current form?
+Alex Riesen <raa.lkml@gmail.com> writes:
 
-I couldn't test it with FastCGI server, as I use Apache2, and all
-FastCGI modules for Apache are third part modules. Besides, it doesn't
-make much sense to use generic FastCGI for Perl, when there is mod_perl
-module.
+> At least FreeBSD 4.11p2 does not allow changing SUID/GUID bits to
+> a non-root user.
 
-For me for the FastCGI change to be made into mainline it would have
-to have the following properties:
- * it should be able to run as both CGI module, and under mod_perl
-   module (in legacy mode with ModPerl::Registry) without trouble
- * is should be able to run even if CGI::Fast or FCGI Perl modules
-   are not installed in the system
- * the loop over requests should try to be minimal, and not encompass
-   whole file
-The last condition would probably require to separate option parsing
-and validation into separate subroutine.
+Sorry, but I do not understand this change.
 
-> You can get it to run externally using FCGI_SOCKET=:3000 (eg, to listen
-> on FastCGI TCP port 3000)
+> diff --git a/path.c b/path.c
+> index af27161..4865e98 100644
+> --- a/path.c
+> +++ b/path.c
+> @@ -265,6 +265,7 @@ int adjust_shared_perm(const char *path)
+>  		return 0;
+>  	if (lstat(path, &st) < 0)
+>  		return -1;
+> +	st.st_mode &= 07777 & ~(S_ISUID|S_ISGID);
+>  	mode = st.st_mode;
 
-Could you elaborate on this?
+If the thing is a directory, we say later in the code that we want to see
+S_ISGID set, like this:
 
+	...
+	if (S_ISDIR(mode))
+		mode |= S_ISGID;
+	if ((mode & st.st_mode) != mode && chmod(path, mode) < 0)
+		return -2;
+	return 0;
 
-P.S. It would be good to have examples for web servers other than
-Apache2 how to configure them to run gitweb: perhaps lighthttpd, Cheetah,
-maybe IIS...
+and then we compare with st.st_mode so that we do not chmod() what's
+already good  Your change means we will always try to chmod all the
+directories, and your explanation suggests that such a chmod to do g+s on
+directories would also fail (and your patch does not fix it -- we actively
+try to make sure directories have g+s set).
 
--- 
-Jakub Narebski
-Poland
+	Side note. the wording in your message, "does not allow changing",
+	is very unclear.  Do you mean "non-root cannot do u+s,g+s"?  Or do
+	you mean "non-root cannot do u+s,g+s, non-root cannot do u-s,g-s
+	either"?
+
+For regular files, I do not think we have any reason to set u+s or g+s
+ourselves, and we do not try to do so either.  As long as the original
+st.st_mode does not have such bits set, the mode we will pass to chmod for
+regular would not try to set them.  If you already had u+s,g+s when you
+read st.st_mode that's a different story, but then I do not know why you
+had such a file to begin with.
+
+I do not mind a change to make sure we do u-s,g-s on regular files, but I
+do not think it is necessary, and I am curious why you had files with such
+perm bits to begin with.
