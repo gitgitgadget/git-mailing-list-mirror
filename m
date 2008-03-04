@@ -1,101 +1,199 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH] Add test for cloning with "--reference" repo being a
- subset of source repo
-Date: Tue, 4 Mar 2008 18:10:25 -0500 (EST)
-Message-ID: <alpine.LNX.1.00.0803041801320.19665@iabervon.org>
-References: <alpine.LNX.1.00.0802251604460.19024@iabervon.org> <200803031004.16568.johan@herland.net> <alpine.LNX.1.00.0803031318000.19665@iabervon.org> <200803040402.57993.johan@herland.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH] gitweb: Fix and simplify pickaxe search
+Date: Wed, 05 Mar 2008 00:15:53 +0100
+Message-ID: <20080304230905.17447.32472.stgit@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	=?ISO-8859-15?Q?Kristian_H=F8gsberg?= <krh@redhat.com>,
-	=?ISO-8859-15?Q?Santi_B=E9jar?= <sbejar@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Wed Mar 05 00:11:25 2008
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 05 00:16:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWgHw-0008Fh-Lt
-	for gcvg-git-2@gmane.org; Wed, 05 Mar 2008 00:11:13 +0100
+	id 1JWgMr-0001b1-Ri
+	for gcvg-git-2@gmane.org; Wed, 05 Mar 2008 00:16:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934304AbYCDXKb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Mar 2008 18:10:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934618AbYCDXKa
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Mar 2008 18:10:30 -0500
-Received: from iabervon.org ([66.92.72.58]:60762 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934594AbYCDXK1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Mar 2008 18:10:27 -0500
-Received: (qmail 23143 invoked by uid 1000); 4 Mar 2008 23:10:25 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 4 Mar 2008 23:10:25 -0000
-In-Reply-To: <200803040402.57993.johan@herland.net>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S934868AbYCDXPl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Mar 2008 18:15:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934894AbYCDXPk
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Mar 2008 18:15:40 -0500
+Received: from fk-out-0910.google.com ([209.85.128.191]:47126 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934888AbYCDXPh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Mar 2008 18:15:37 -0500
+Received: by fk-out-0910.google.com with SMTP id z23so1149373fkz.5
+        for <git@vger.kernel.org>; Tue, 04 Mar 2008 15:15:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:from:subject:to:date:message-id:user-agent:mime-version:content-type:content-transfer-encoding;
+        bh=MWnK9g89h3XMEeyi1Rp1jkw1FwM/AIQ9ditIRpvpSaM=;
+        b=V8zBpLULBNmuLBhR5RytcVSflzLZ1wg/JWlarZ76/w6tJiypLvjqSWajvqXKKMFnGn9vLCGfU5IwKn/E4qCSmLEkj0838pNwQpouK+G3ZznjlFo9V/Wfi44w1bMVI8MK/rf/s4R5JnhbKUxF9jzWCM+PIWbNNCJr0cW0VV5rjhA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:subject:to:date:message-id:user-agent:mime-version:content-type:content-transfer-encoding;
+        b=O80+R1ubnbmvuUA+y8tyOq3SlZxI57dvqD5rw7NopgbaV41tMbVfxMIC9i1AN0ZfxzNsh+vO97Nhqn2EcB+UzdNrngUjelxFg9OMLiZJm6vaiTevnfTfWItBb3G9uh6lRPIK9n4KzXQt4N5XG+CejxJDsi1svnO5/U+NIJ8Y7eo=
+Received: by 10.82.153.5 with SMTP id a5mr5483007bue.5.1204672534839;
+        Tue, 04 Mar 2008 15:15:34 -0800 (PST)
+Received: from localhost.localdomain ( [83.8.251.156])
+        by mx.google.com with ESMTPS id c22sm351857ika.3.2008.03.04.15.15.32
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 04 Mar 2008 15:15:33 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m24NFrEt017541
+	for <git@vger.kernel.org>; Wed, 5 Mar 2008 00:15:53 +0100
+User-Agent: StGIT/0.14.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76153>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76154>
 
-On Tue, 4 Mar 2008, Johan Herland wrote:
+Instead of using "git-rev-list | git-diff-tree" pipeline for pickaxe
+search, use git-log with appropriate options.  Besides reducing number
+of forks by one, this allows to use list form of open, which in turn
+allow to not worry about quoting arguments and to avoid forking shell.
 
-> On Monday 03 March 2008, Daniel Barkalow wrote:
-> > On Mon, 3 Mar 2008, Johan Herland wrote:
-> > 
-> > > Not sure what's going on here, yet, but I thought I'd give you a heads up.
-> > 
-> > I figured it out, and pushed out a fix; it was doing everything correctly, 
-> > but it wrote to the alternates files after the library had read that file, 
-> > so it then didn't notice that it actually had the objects that are in the 
-> > second alternate repository.
-> 
-> Thanks. After looking a bit more at the original test repo where I found
-> this issue, I discovered another, similar bug. This one seems ugly; brace
-> yourself:
-> 
-> In some cases (I'm not exactly sure of all the preconditions) when
-> cloning with "--reference", it seems git tries to access a loose object
-> in the "--reference" repo instead of in the cloned repo, even if that
-> object is already present in the cloned repo and _missing_ in the
-> "--reference" repo. The symptom is this error message:
->     error: Trying to write ref $ref with nonexistant object $sha1
-> 
-> After playing around with this in gdb, it seems the problem is all the
-> way down in sha1_file_name() (sha1_file.c). This function is responsible
-> for generating the loose object filename for a given $sha1. It keeps a
-> static char *base which is initially set to the object directory name,
-> and then calls fill_sha1_path() to copy the rest of the object filename
-> into the following bytes. On subsequent calls, only the fill_sha1_path()
-> part is done, thereby reusing the base from the previous invocation.
->
-> What I observe is that this base is not reset after accessing loose
-> objects in the "--reference" repo. Thus, later when accessing objects in
-> the cloned repo, sha1_file_name() generates incorrect filenames (pointing
-> to the "--reference" repo instead of the cloned repo).
-> 
-> Of course, this often goes undetected since the "--reference" repo often
-> have the same loose objects as the clone.
-> 
-> Unfortunately (from a builtin git-clone's POV) this seems to be
-> symptomatic of a deeper problem in this part of the code: Using
-> function-static variables as caches only works as far as the cache
-> is in sync with reality. Especially when switching between multiple
-> repositories within the same process, it seems that several of these
-> variables are left with invalid data in them. This needs to be fixed,
-> if not only for now, then at least as part of the libification effort.
-> 
-> I'm not sure what is the best way of fixing this issue; my initial guess
-> is to move these function-static variables out to file-level, and make
-> sure they're properly reset whenever the appropriate context is changed
-> (typically when set_git_dir() is called, I guess).
+The options to git-log were chosen to reduce required changes in
+pickaxe git command output parsing; gitweb still parses returned
+commits one by one.
 
-I think we should be able to avoid setting git_dir to anything other than 
-the repo we're creating, which would avoid this problem for the present, 
-although, as you say, it would be good to be able to switch around as 
-instructed for libification purposes eventually.
+Parsing "pickaxe" output is simplified: git_search now reuses
+parse_difftree_raw_line and writes affected files as they arrive using
+the fact that commit name goes always before [raw] diff.
 
-	-Daniel
-*This .sig left intentionally blank*
+While at it long bug of pickaxe search was fixed, namely that the last
+commit found by pickaxe search was never shown.
+
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+On linux using 'git-log' instead of 'git-rev-list' ... 'git-diff-tree'
+pipeline improves performance only insignificantly, at least on
+Linux. But that might differ on fork-performance challenged operating
+systems.
+
+Loooong time bug: if I have checked correctly, it was there from
+introduction of pickaxe search in c994d62 (v220), when gitweb was
+developed separately, mainly by Kay Sievers.
+
+ gitweb/gitweb.perl |   85 ++++++++++++++++++++++++++--------------------------
+ 1 files changed, 43 insertions(+), 42 deletions(-)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 922dee9..0bf679e 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -5305,51 +5305,19 @@ sub git_search {
+ 		print "<table class=\"pickaxe search\">\n";
+ 		my $alternate = 1;
+ 		$/ = "\n";
+-		my $git_command = git_cmd_str();
+-		my $searchqtext = $searchtext;
+-		$searchqtext =~ s/'/'\\''/;
+-		my $pickaxe_flags = $search_use_regexp ? '--pickaxe-regex' : '';
+-		open my $fd, "-|", "$git_command rev-list $hash | " .
+-			"$git_command diff-tree -r --stdin -S\'$searchqtext\' $pickaxe_flags";
++		open my $fd, '-|', git_cmd(), '--no-pager', 'log',
++			'--pretty=format:%H', '--no-abbrev', '--raw', "-S$searchtext",
++			($search_use_regexp ? '--pickaxe-regex' : ());
+ 		undef %co;
+ 		my @files;
+ 		while (my $line = <$fd>) {
+-			if (%co && $line =~ m/^:([0-7]{6}) ([0-7]{6}) ([0-9a-fA-F]{40}) ([0-9a-fA-F]{40}) (.)\t(.*)$/) {
+-				my %set;
+-				$set{'file'} = $6;
+-				$set{'from_id'} = $3;
+-				$set{'to_id'} = $4;
+-				$set{'id'} = $set{'to_id'};
+-				if ($set{'id'} =~ m/0{40}/) {
+-					$set{'id'} = $set{'from_id'};
+-				}
+-				if ($set{'id'} =~ m/0{40}/) {
+-					next;
+-				}
+-				push @files, \%set;
+-			} elsif ($line =~ m/^([0-9a-fA-F]{40})$/){
++			chomp $line;
++			next unless $line;
++
++			my %set = parse_difftree_raw_line($line);
++			if (defined $set{'commit'}) {
++				# finish previous commit
+ 				if (%co) {
+-					if ($alternate) {
+-						print "<tr class=\"dark\">\n";
+-					} else {
+-						print "<tr class=\"light\">\n";
+-					}
+-					$alternate ^= 1;
+-					my $author = chop_and_escape_str($co{'author_name'}, 15, 5);
+-					print "<td title=\"$co{'age_string_age'}\"><i>$co{'age_string_date'}</i></td>\n" .
+-					      "<td><i>" . $author . "</i></td>\n" .
+-					      "<td>" .
+-					      $cgi->a({-href => href(action=>"commit", hash=>$co{'id'}),
+-					              -class => "list subject"},
+-					              chop_and_escape_str($co{'title'}, 50) . "<br/>");
+-					while (my $setref = shift @files) {
+-						my %set = %$setref;
+-						print $cgi->a({-href => href(action=>"blob", hash_base=>$co{'id'},
+-						                             hash=>$set{'id'}, file_name=>$set{'file'}),
+-						              -class => "list"},
+-						              "<span class=\"match\">" . esc_path($set{'file'}) . "</span>") .
+-						      "<br/>\n";
+-					}
+ 					print "</td>\n" .
+ 					      "<td class=\"link\">" .
+ 					      $cgi->a({-href => href(action=>"commit", hash=>$co{'id'})}, "commit") .
+@@ -5358,11 +5326,44 @@ sub git_search {
+ 					print "</td>\n" .
+ 					      "</tr>\n";
+ 				}
+-				%co = parse_commit($1);
++
++				if ($alternate) {
++					print "<tr class=\"dark\">\n";
++				} else {
++					print "<tr class=\"light\">\n";
++				}
++				$alternate ^= 1;
++				%co = parse_commit($set{'commit'});
++				my $author = chop_and_escape_str($co{'author_name'}, 15, 5);
++				print "<td title=\"$co{'age_string_age'}\"><i>$co{'age_string_date'}</i></td>\n" .
++				      "<td><i>$author</i></td>\n" .
++				      "<td>" .
++				      $cgi->a({-href => href(action=>"commit", hash=>$co{'id'}),
++				              -class => "list subject"},
++				              chop_and_escape_str($co{'title'}, 50) . "<br/>");
++			} elsif (defined $set{'to_id'}) {
++				next if ($set{'to_id'} =~ m/^0{40}$/);
++
++				print $cgi->a({-href => href(action=>"blob", hash_base=>$co{'id'},
++				                             hash=>$set{'to_id'}, file_name=>$set{'to_file'}),
++				              -class => "list"},
++				              "<span class=\"match\">" . esc_path($set{'file'}) . "</span>") .
++				      "<br/>\n";
+ 			}
+ 		}
+ 		close $fd;
+ 
++		# finish last commit (warning: repetition!)
++		if (%co) {
++			print "</td>\n" .
++			      "<td class=\"link\">" .
++			      $cgi->a({-href => href(action=>"commit", hash=>$co{'id'})}, "commit") .
++			      " | " .
++			      $cgi->a({-href => href(action=>"tree", hash=>$co{'tree'}, hash_base=>$co{'id'})}, "tree");
++			print "</td>\n" .
++			      "</tr>\n";
++		}
++
+ 		print "</table>\n";
+ 	}
+ 
+
+
+-- 
+Stacked GIT 0.14.1
+git version 1.5.4.2
+Python version 2.4.3 (#1, Jun 13 2006, 16:41:18) 
+[GCC 4.0.2 20051125 (Red Hat 4.0.2-8)]
