@@ -1,53 +1,70 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2] Configure test for FREAD_READS_DIRECTORIES
-Date: Tue, 4 Mar 2008 12:05:11 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0803041204490.22527@racer.site>
-References: <200803041244.11315.michal.rokos@nextsoft.cz>
+From: Jeff King <peff@peff.net>
+Subject: Re: git-rebase dirty index and email address bug?
+Date: Tue, 4 Mar 2008 07:08:04 -0500
+Message-ID: <20080304120804.GA9042@sigill.intra.peff.net>
+References: <slrnfsjfpo.3fl.jgoerzen@katherina.lan.complete.org> <20080302072622.GB3935@coredump.intra.peff.net> <200803022128.14511.jgoerzen@complete.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: GIT <git@vger.kernel.org>
-To: Michal Rokos <michal.rokos@nextsoft.cz>
-X-From: git-owner@vger.kernel.org Tue Mar 04 13:06:47 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: John Goerzen <jgoerzen@complete.org>
+X-From: git-owner@vger.kernel.org Tue Mar 04 13:08:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWVun-00048f-Gg
-	for gcvg-git-2@gmane.org; Tue, 04 Mar 2008 13:06:37 +0100
+	id 1JWVx2-0004xS-8W
+	for gcvg-git-2@gmane.org; Tue, 04 Mar 2008 13:08:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751251AbYCDMF6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Mar 2008 07:05:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751261AbYCDMF6
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Mar 2008 07:05:58 -0500
-Received: from mail.gmx.net ([213.165.64.20]:55950 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751045AbYCDMF6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Mar 2008 07:05:58 -0500
-Received: (qmail invoked by alias); 04 Mar 2008 12:05:56 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp021) with SMTP; 04 Mar 2008 13:05:56 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18hl/VDU2ghA1G6AFL15WAL0aVz41QK9GHRDdWqt3
-	Bw8wJX0LlZqvSb
-X-X-Sender: gene099@racer.site
-In-Reply-To: <200803041244.11315.michal.rokos@nextsoft.cz>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1751466AbYCDMIJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Mar 2008 07:08:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752767AbYCDMIH
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Mar 2008 07:08:07 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1835 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752768AbYCDMIG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Mar 2008 07:08:06 -0500
+Received: (qmail 5574 invoked by uid 111); 4 Mar 2008 12:08:04 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Tue, 04 Mar 2008 07:08:04 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 04 Mar 2008 07:08:04 -0500
+Content-Disposition: inline
+In-Reply-To: <200803022128.14511.jgoerzen@complete.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76076>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76077>
 
-Hi,
+On Sun, Mar 02, 2008 at 09:28:14PM -0600, John Goerzen wrote:
 
-On Tue, 4 Mar 2008, Michal Rokos wrote:
+> That repo contains some local configuration and password information.  
+> However, I would be happy to make it available to you or any other Git 
+> developer privately.  Could you contact me off-list if you'd like me to send 
+> it to you?  The .git directory in question is about 4.5MB, and I'd be happy 
+> to email it.
 
-> Hello,
+I was able to turn this into a much smaller test case.
 
-this is still wrong in the commit message.
+What is happening is that rebase works something like:
+  1. reset to "onto" commit
+  2. replay each commit between "upstream" and "branch"
+but there is a bug in step 1 that is leaving the bogus
+"public/dispatch.fcgi" file in the index and working tree. So step 2
+correctly complains that the file is already there and uncommitted.
 
-I will test on msysGit in a moment.
+The bug in step 1 seems to be very hard to trigger, and requires that
+the "branch" commit and the "onto" commit differ such that:
 
-Ciao,
-Dscho
+  - there is a file on the branch that was a directory in "onto"
+
+  - there is a file on the branch that is new since "onto", and that
+    sorts lexically after the file mentioned above
+
+So you can see that it is rare for it to come up. :)
+
+I'm not sure of the correct fix for the bug, but I have posted a request
+for help under the subject "bug in unpack_trees", so hopefully somebody
+more wise than I will have something to say.
+
+-Peff
