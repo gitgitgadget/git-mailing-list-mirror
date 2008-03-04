@@ -1,143 +1,135 @@
-From: "Mike Ralphson" <mike.ralphson@gmail.com>
-Subject: Fwd: [PATCH v3] autoconf: Test FREAD_READS_DIRECTORIES
-Date: Tue, 4 Mar 2008 16:22:35 +0000
-Message-ID: <e2b179460803040822v1161190n45c6080da36700c9@mail.gmail.com>
-References: <200803041514.42783.michal.rokos@nextsoft.cz>
-	 <e2b179460803040732k222651c2vdb04e553b8137891@mail.gmail.com>
+From: "Whit Armstrong" <armstrong.whit@gmail.com>
+Subject: t4109-apply-multifrag.sh problem on solaris -- looks like problem w/ solaris patch cmd
+Date: Tue, 4 Mar 2008 11:22:58 -0500
+Message-ID: <8ec76080803040822n5e463b50sff6639777246de7b@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>,
-	"Michal Rokos" <michal.rokos@nextsoft.cz>
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Mar 04 17:23:17 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 04 17:23:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWZvA-0003nO-FC
-	for gcvg-git-2@gmane.org; Tue, 04 Mar 2008 17:23:16 +0100
+	id 1JWZvd-0003zx-2q
+	for gcvg-git-2@gmane.org; Tue, 04 Mar 2008 17:23:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764770AbYCDQWi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Mar 2008 11:22:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764714AbYCDQWi
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Mar 2008 11:22:38 -0500
-Received: from rv-out-0910.google.com ([209.85.198.184]:59735 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1763617AbYCDQWh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Mar 2008 11:22:37 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so548811rvb.1
-        for <git@vger.kernel.org>; Tue, 04 Mar 2008 08:22:35 -0800 (PST)
+	id S1762487AbYCDQXH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Mar 2008 11:23:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764202AbYCDQXG
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Mar 2008 11:23:06 -0500
+Received: from wr-out-0506.google.com ([64.233.184.227]:14593 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762418AbYCDQXD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Mar 2008 11:23:03 -0500
+Received: by wr-out-0506.google.com with SMTP id 50so1308986wra.13
+        for <git@vger.kernel.org>; Tue, 04 Mar 2008 08:23:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=jJrpd2ofK0JFrhgGv244bJ7bkHDcA1Ak6wNGZ3R9U6k=;
-        b=k5r9S4wap1HHdP/zdrrkEPtdQxSpK123nltnyWtKN38Hvqy7YZ6sH0eSyUfcVm13b0fOeWd8Id/TM1ZqdY5y1twgr0f4H+gHAF+QO/+Ukh2OR7RQ2A8IyzAXYCAeF9mL7ixaV6fx60qymBE2hibmpIy4y7TGCvpM0Oup93Nt7Rw=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=CwjLDgiw/DBnwpIj6pu9syRnSEAo1Jcp8gbFZpn7hZM=;
+        b=bS06tMg4sMipNbc3F0eOptuSW4yV39pMYFh9JEHTXD3d0flpIWNv7r65PC/HI4ZgsCZGvdDJF3DVsuFx9zQ+fu5AqSLllu2IaHJimDY/CLPcDrTpUapMQfoOrHfoLtbEKAChiu+DfZyk+c1iZ08oafX6C/g7et1HZjJpnOmmAhU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=OMuf+xtexRJlESq7Xr4KDwB5mWKg8dKv2UZy0pgu4N69WoA27FI8+CmiNHy4Sf7DPERGv18+z00TaASQZ6gW11/kg94xlbBVsD4UdIpPGR6Nnmbw3ThUb4hEShj8MZZdOy4QdpNerCeidXlDOV0olB0UZLliGpo3hCUI2YRPpro=
-Received: by 10.141.161.6 with SMTP id n6mr704591rvo.201.1204647755357;
-        Tue, 04 Mar 2008 08:22:35 -0800 (PST)
-Received: by 10.141.19.11 with HTTP; Tue, 4 Mar 2008 08:22:35 -0800 (PST)
-In-Reply-To: <e2b179460803040732k222651c2vdb04e553b8137891@mail.gmail.com>
+        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=FpmRcnKYnljJcKNf/hmyiJcC2FHgt3rA+ibQq5fwRM/d/KJrSPjtmhOobiHvdVMSvRZ9RZc7m26abLU7/yx5jLj9EDR+VkpippuQoj26GcMZYBwLEtvkcXa7/HnmlafwZvbHoSrIIgFOk/oL4K6UFmu4UAam1aKhvp2Loj/eYEU=
+Received: by 10.141.170.10 with SMTP id x10mr718923rvo.139.1204647778832;
+        Tue, 04 Mar 2008 08:22:58 -0800 (PST)
+Received: by 10.141.201.19 with HTTP; Tue, 4 Mar 2008 08:22:58 -0800 (PST)
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76117>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76118>
 
-On 04/03/2008, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
->  On Tue, 4 Mar 2008, Michal Rokos wrote:
->
->  > On Tuesday 04 March 2008 15:59:02 Johannes Schindelin wrote:
->  > > On Tue, 4 Mar 2008, Michal Rokos wrote:
->  > > > +AC_RUN_IFELSE(
->  > > > + [AC_LANG_PROGRAM([AC_INCLUDES_DEFAULT],
->  > > > +         [[char c;
->  > > > +         FILE *f = fopen(".", "r");
->  > > > +         if (! f) return 0;
->  > > > +         if (f && fread(&c, 1, 1, f) > 0) return 1]])],
->  > > > + [ac_cv_fread_reads_directories=no],
->  > > > + [ac_cv_fread_reads_directories=yes])
->  > >
->  > > I do not see the issue addressed that I saw on msysGit.
->  >
->  > ahh, sorry I've included some old one. Now it's
->  > +AC_RUN_IFELSE(
->  > +     [AC_LANG_PROGRAM([AC_INCLUDES_DEFAULT],
->  > +             [[char c;
->  > +             FILE *f = fopen(".", "r");
->  > +             return f && fread(&c, 1, 1, f)]])],
->  > +     [ac_cv_fread_reads_directories=no],
->  > +     [ac_cv_fread_reads_directories=yes])
->  >
->  > I've tried to reproduce, but I failed to do so. When I put "return 0;" it
->  > detect that "no"; when I return something else, "yes" is detected - as it
->  > should.
->
->
-> I finally figured out what is going wrong.
->
->  But first let me say what a PITA it is to debug configure.  It is utterly,
->  completely painful!  When you insert random "exit"s, like you usually do
->  with scripts that are too garbled and complex and ugly to understand (the
->  worst Perl code I ever saw was not as ugly), it does not exit _at all_!
->
->  Turns out that the compilation fails:
->
->         ...\ld.exe: cannot find -lsocket 1 exit status
->
->  Nice.
->
->  FWIW it tries to link with
->
->         cc -o conftest.exe -g -O2   conftest.c  -liconv -lsocket >&5
->
+using git current: c95b3ad9ea310ec89e31a21edecaaf2c374e2c46
 
-Should probably have copied you on the mail below. Seems like you hit
-a similar problem.
+xs5-trd-p1.grn:warmstro> sh t4109-apply-multifrag.sh -v -i
+* expecting success: git apply patch1.patch patch2.patch
+*   ok 1: S = git apply (1)
 
-With configure you have to always go back to the initial failure
-(which may have been reported as a success!) as all subsequent test
-results could be invalid.
+* expecting success: cat patch1.patch patch2.patch | patch -p1
+  Looks like a unified context diff.
+File to patch: ^CFATAL: Unexpected exit with code 3
+xs5-trd-p1.grn:warmstro> sh t4109-apply-multifrag.sh -i -v
+* expecting success: git apply patch1.patch patch2.patch
+*   ok 1: S = git apply (1)
 
-Either the test to see whether gcc accepts -g is flawed (it doesn't
-check whether it actually works, only that the gcc wrapper accepts it;
-or -g only works if libg is available, and it fails to test for
-that...
+* expecting success: cat patch1.patch patch2.patch | patch -p1
+  Looks like a unified context diff.
+File to patch: ^CFATAL: Unexpected exit with code 3
+xs5-trd-p1.grn:warmstro>
 
----------- Forwarded message ----------
-From: Mike Ralphson <mike.ralphson@gmail.com>
-Date: 4 Mar 2008 15:32
-Subject: Re: [PATCH v3] autoconf: Test FREAD_READS_DIRECTORIES
-To: Michal Rokos <michal.rokos@nextsoft.cz>
-Cc: GIT <git@vger.kernel.org>
+the test just hangs at "File to patch:" and I have to C^ to exit.
+
+and that's exactly what I get executing the patch command myself:
+
+xs5-trd-p1.grn:warmstro> cd trash/
+xs5-trd-p1.grn:warmstro> cat patch1.patch patch4.patch | patch -p1
+  Looks like a unified context diff.
+File to patch:
+No file found -- skip this patch? [no]
+File to patch:
+No file found -- skip this patch? [no] yes
+Skipping patch...
+  The next patch looks like a unified context diff.
+File to patch: ^Cxs5-trd-p1.grn:warmstro>
+xs5-trd-p1.grn:warmstro>
 
 
-On 04/03/2008, Michal Rokos <michal.rokos@nextsoft.cz> wrote:
- > Add test for FREAD_READS_DIRECTORIES to configure script.
- >
- >  When "." could be opened and fread reads more than 0 items,
- >  FREAD_READS_DIRECTORIES will be set.
+but with GNU patch-2.5.4 the test works (not sure what the failure is
+at the end, but it looks like all the individual tests pass):
 
 
-On AIX 5.3 this appears to work correctly, i.e. it defines
- FREAD_READS_DIRECTORIES
+xs5-trd-p1.grn:warmstro> sh t4109-apply-multifrag.sh -i -v
+* expecting success: git apply patch1.patch patch2.patch
+*   ok 1: S = git apply (1)
 
- I've negatively tested it just by swapping the return values.
+* expecting success: cat patch1.patch patch2.patch | patch -p1
+patching file main.c
+patching file main.c
+*   ok 2: S = patch (1)
 
- It is susceptible to failing for other reasons than those expected
- (i.e. the configure script gets the libsocket test wrong on my
- platform if I forget to amend CFLAGS because libg is not available,
- and then various tests including this one fail because libsocket is
- erroneously linked in and the test programs fail to compile at all),
- but that is I think a wider issue with autoconf tests in general.
+* expecting success: cmp main.c.git main.c
+*   ok 3: S = cmp (1)
 
- So, with those caveats:
+* expecting success: git apply patch1.patch patch2.patch patch3.patch
+*   ok 4: S = git apply (2)
 
- Tested-by: Mike Ralphson <mike@abacus.co.uk>
+* expecting success: cat patch1.patch patch2.patch patch3.patch | patch -p1
+patching file main.c
+patching file main.c
+patching file main.c
+*   ok 5: S = patch (2)
 
- Patch to set this option by default on AIX for the non-autoconf
- Makefile to follow.
+* expecting success: cmp main.c.git main.c
+*   ok 6: S = cmp (2)
+
+* expecting success: git apply patch1.patch patch4.patch
+*   ok 7: S = git apply (3)
+
+* expecting success: cat patch1.patch patch4.patch | patch -p1
+patching file main.c
+patching file main.c
+*   ok 8: S = patch (3)
+
+* expecting success: cmp main.c.git main.c
+*   ok 9: S = cmp (3)
+
+* passed all 9 test(s)
+FATAL: Unexpected exit with code 0
+xs5-trd-p1.grn:warmstro>
+
+
+Again, this is on a Solaris 5.9 machine:
+xs5-trd-p1.grn:warmstro> uname -a
+SunOS xs5-trd-p1.grn.tudor.com 5.9 Generic_118558-38 sun4u sparc
+SUNW,Sun-Fire-V240 Solaris
+xs5-trd-p1.grn:warmstro>
+
+Is the answer to use GNU patch? Or is there a trick to make the
+Solaris version of patch work?
+
+Thanks,
+Whit
