@@ -1,62 +1,84 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: GSoC 2008 Application - Help Wanted!
-Date: Mon, 3 Mar 2008 19:00:39 -0500
-Message-ID: <20080304000039.GJ8410@spearce.org>
-References: <20080303050624.GF8410@spearce.org> <alpine.LSU.1.00.0803031130210.22527@racer.site> <88B38F4C-C95E-46AE-95F2-812BDA1CC911@wincent.com> <alpine.LSU.1.00.0803031552300.22527@racer.site>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: add a setting to control the tabstop width
+Date: Tue, 4 Mar 2008 01:08:57 +0100
+Message-ID: <200803040108.58243.jnareb@gmail.com>
+References: <20080303221159.GA6875@hashpling.org> <200803032333.29426.jnareb@gmail.com> <20080303225200.GA8145@hashpling.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Wincent Colaiuta <win@wincent.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Mar 04 01:01:43 2008
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Charles Bailey <charles@hashpling.org>
+X-From: git-owner@vger.kernel.org Tue Mar 04 01:09:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWKb5-0001L0-Ny
-	for gcvg-git-2@gmane.org; Tue, 04 Mar 2008 01:01:32 +0100
+	id 1JWKj7-0003lN-D2
+	for gcvg-git-2@gmane.org; Tue, 04 Mar 2008 01:09:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752397AbYCDAAn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 Mar 2008 19:00:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752333AbYCDAAn
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Mar 2008 19:00:43 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:35540 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752292AbYCDAAn convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 3 Mar 2008 19:00:43 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1JWKa7-0004Uo-B0; Mon, 03 Mar 2008 19:00:31 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 1094520FBAE; Mon,  3 Mar 2008 19:00:40 -0500 (EST)
+	id S1753129AbYCDAIy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Mar 2008 19:08:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756918AbYCDAIx
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Mar 2008 19:08:53 -0500
+Received: from ug-out-1314.google.com ([66.249.92.171]:8763 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1763089AbYCDAIu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Mar 2008 19:08:50 -0500
+Received: by ug-out-1314.google.com with SMTP id z38so2342831ugc.16
+        for <git@vger.kernel.org>; Mon, 03 Mar 2008 16:08:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        bh=IvDyo5nFIImxhfZmzcpUOUvXLdJTvp4rg5UAlxCJcOM=;
+        b=QbKhqDyEi9BQTWjWdg4Ee3dQNFgSzd1OGJ7q0RLPp7jbk8NP88gD2pM4lNFg+vv+4z3nvxj2UcCbD4asOU9VE+LO7GC1CMEYbyWqlJ0ii7KPRGdoYGNNK98vBGTBSbKQ5+6xUAzHfldMwMvx4zMYS7kWadEoKCKFZaGuqYAMFN8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=P94nWSRbs0xjKeFUKS5OuwnSWFMv3ZC9hUuImIni4/6Yj5Ljjewr3vMU7dNQve+PCzr6AHccVByAc1PJGjIIL8Y3CvUEv6Od1UdwA4ph7WdsLmSEDPFP4x+2iXTf50U0novWCrWgDbbZqinqJbBXW7dOz3kUVZuSXnHH3YkjoeY=
+Received: by 10.78.193.19 with SMTP id q19mr1674051huf.15.1204589326620;
+        Mon, 03 Mar 2008 16:08:46 -0800 (PST)
+Received: from ?192.168.1.15? ( [83.8.251.32])
+        by mx.google.com with ESMTPS id 35sm1016705nfu.5.2008.03.03.16.08.43
+        (version=SSLv3 cipher=OTHER);
+        Mon, 03 Mar 2008 16:08:44 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20080303225200.GA8145@hashpling.org>
 Content-Disposition: inline
-In-Reply-To: <alpine.LSU.1.00.0803031552300.22527@racer.site>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76001>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76002>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> On Mon, 3 Mar 2008, Wincent Colaiuta wrote:
->=20
-> > El 3/3/2008, a las 12:39, Johannes Schindelin escribi=C3=B3:
-> >=20
-> > > > The interaction between community members has always been very
-> > > > friendly, and new people are have always been warmly welcomed;
-> > >=20
-> > > s/have//
-> >=20
-> > If you drop the "have" you'll want to drop the "been" as well.
+Charles Bailey wrote:
+> On Mon, Mar 03, 2008 at 11:33:28PM +0100, Jakub Narebski wrote:
+>> Charles Bailey <charles@hashpling.org> writes:
+>>> 
+>>> The untabify function seems the sensible place to make the change. As
+>>> untabify is called once per line from various different locations it
+>>> also makes sense to cache the result of the config lookup in a package
+>>> variable, though this makes the change slightly less neat.
+>> 
+>> Since b201927 (gitweb: Read repo config using 'git config -z -l')
+>> repository config is cached in %config hash (per repository), so
+>> I don't think global / package variable $tabstop_width is really
+>> needed...
+> 
+> Fair point, although we still save the cost of some 'is the config
+> variable overrideable and if so is it overriden' logic.  Untabify is a
+> once per line call which is more frequesnt than most gitweb config
+> checking calls.
 
-Thanks folks.  Those changes have all been reflected on the Wiki now.
+Good enough.
 
---=20
-Shawn.
+One think I'd worry about is interaction with mod_perl (or FastCGI),
+namely if $tabstop_width wouldn't get stale information.  Perhaps
+writing
+
+  our $tabstop_width = undef;
+
+as initializer would be enough.
+-- 
+Jakub Narebski
+Poland
