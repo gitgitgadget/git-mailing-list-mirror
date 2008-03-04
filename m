@@ -1,90 +1,91 @@
-From: Michal Rokos <michal.rokos@nextsoft.cz>
-Subject: Re: [PATCH] Configure test for FREAD_READS_DIRECTORIES
-Date: Tue, 4 Mar 2008 12:17:36 +0100
-Organization: NextSoft
-Message-ID: <200803041217.37027.michal.rokos@nextsoft.cz>
-References: <200803041048.53399.michal.rokos@nextsoft.cz> <7vod9u92fj.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] fsck.c: fix bogus "empty tree" check
+Date: Tue, 04 Mar 2008 03:21:16 -0800
+Message-ID: <7vbq5u91lf.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: GIT <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 04 12:18:59 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Martin Koegler <mkoegler@auto.tuwien.ac.at>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 04 12:22:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWVA6-0006a7-43
-	for gcvg-git-2@gmane.org; Tue, 04 Mar 2008 12:18:22 +0100
+	id 1JWVDm-0008AA-N2
+	for gcvg-git-2@gmane.org; Tue, 04 Mar 2008 12:22:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756210AbYCDLRo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 4 Mar 2008 06:17:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754218AbYCDLRo
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Mar 2008 06:17:44 -0500
-Received: from holub.nextsoft.cz ([195.122.198.235]:41753 "EHLO
-	holub.nextsoft.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756145AbYCDLRn convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 4 Mar 2008 06:17:43 -0500
-Received: by holub.nextsoft.cz (Postfix, from userid 111)
-	id 7BE1B8E3; Tue,  4 Mar 2008 12:17:42 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by holub.nextsoft.cz (Postfix) with ESMTP id 8BDA48E2;
-	Tue,  4 Mar 2008 12:17:41 +0100 (CET)
-Received: from holub.nextsoft.cz ([127.0.0.1])
-	by localhost (holub.nextsoft.cz [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 07929-02; Tue, 4 Mar 2008 12:17:41 +0100 (CET)
-Received: from 89-24-113-79.i4g.tmcz.cz (89-24-113-79.i4g.tmcz.cz [89.24.113.79])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	by holub.nextsoft.cz (Postfix) with ESMTP id 4270B6A9;
-	Tue,  4 Mar 2008 12:17:41 +0100 (CET)
-User-Agent: KMail/1.9.9
-In-Reply-To: <7vod9u92fj.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
-X-Bogosity: Ham, tests=bogofilter, spamicity=0.000000, version=1.0.1
+	id S1755913AbYCDLVb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Mar 2008 06:21:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755078AbYCDLVb
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Mar 2008 06:21:31 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:51809 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754544AbYCDLVa (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Mar 2008 06:21:30 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 0E05126F0;
+	Tue,  4 Mar 2008 06:21:29 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 4ED0826E5; Tue,  4 Mar 2008 06:21:26 -0500 (EST)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76064>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76065>
 
-Hello,
+ba002f3 (builtin-fsck: move common object checking code to fsck.c) did
+more than what it claimed to.  Most notably, it wrongly made an empty tree
+object an error by pretending to only move code from fsck_tree() in
+builtin-fsck.c to fsck_tree() in fsck.c, but in fact adding a bogus check
+to barf on an empty tree.
 
-On Tuesday 04 March 2008 12:03:12 Junio C Hamano wrote:
-> > +#
-> > +# Define FREAD_READS_DIRECTORIES if your are on a system which suc=
-ceeds
-> > +# when attempting to read from an fopen'ed directory.
-> > +AC_CACHE_CHECK([whether system succeeds to read fopen'ed directory=
-],
-> > + [ac_cv_fread_reads_directories],
-> > +[
-> > +AC_RUN_IFELSE(
-> > +	[AC_LANG_PROGRAM([AC_INCLUDES_DEFAULT],
-> > +		[[char c;
-> > +		FILE *f =3D fopen("/etc", "r");
->
-> Why "/etc" and not "." I have to wonder...
+An empty tree object is _unusual_.  Recent porcelains try reasonably hard
+not to let the user create a commit that contains such a tree.  Perhaps
+warning about them in git-fsck may have some merit.
 
-I think "." is brilliant - ie no reason for "/etc" apart that I'm dumb.
+However, being unusual and being errorneous are two quite different
+things.  This is especially true now we seem to use the same
+fsck_$object() code in places other than git-fsck itself.  For example,
+receive-pack should not reject unusual objects, even if it would be a good
+idea to tighten it to reject incorrect ones.
 
-> On how many different platforms was this configure check tested on?
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-Test works on Linux (no FREAD_READS_DIRECTORIES) and HPUXes=20
-(FREAD_READS_DIRECTORIES): HP-UX B.11.23 ia64 (Itanium) and HP-UX B.11.=
-11=20
-9000/800 (PaRisc)
+ * I've wasted a few hours tonight hunting for random breakages in "git
+   push", the symptom of which is "fatal: unresolved deltas left after
+   unpacking."  I was hoping this patch would fix it, but it seems that
+   the problem is elsewhere.
 
-Do you want me to resend with "."?
+   I'll revert the following two commits for now:
 
-MR
---=20
-Michal Rokos
+   d5ef408 (unpack-objects: prevent writing of inconsistent objects)
+   28f72a0 (receive-pack: use strict mode for unpacking objects)
 
-NextSoft s.r.o.
-Vysko=C4=8Dilova 1/1410
-140 21 Praha 4
-phone:  +420 267 224 311
-fax:    +420 267 224 307
-mobile: +420 736 646 591
-e-mail: michal.rokos@nextsoft.cz
+   as I have verified that running with receive.fsckobjects set to false
+   fixes the issues for me, and the repository at the receiving end (both
+   before and after the push) pass git-fsck without problems.  Needless to
+   say, I am not a happy camper right now.
+
+ fsck.c |    2 --
+ 1 files changed, 0 insertions(+), 2 deletions(-)
+
+diff --git a/fsck.c b/fsck.c
+index 6883d1b..797e317 100644
+--- a/fsck.c
++++ b/fsck.c
+@@ -155,8 +155,6 @@ static int fsck_tree(struct tree *item, int strict, fsck_error error_func)
+ 	o_mode = 0;
+ 	o_name = NULL;
+ 	o_sha1 = NULL;
+-	if (!desc.size)
+-		return error_func(&item->object, FSCK_ERROR, "empty tree");
+ 
+ 	while (desc.size) {
+ 		unsigned mode;
+-- 
+1.5.4.3.529.gb25fb
+
