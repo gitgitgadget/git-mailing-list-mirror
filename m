@@ -1,50 +1,60 @@
-From: Andrew Morton <akpm@linux-foundation.org>
-Subject: tracking renames
-Date: Tue, 4 Mar 2008 13:57:34 -0800
-Message-ID: <20080304135734.b2c2f473.akpm@linux-foundation.org>
+From: "Harvey Harrison" <harvey.harrison@gmail.com>
+Subject: Re: tracking renames
+Date: Tue, 4 Mar 2008 14:03:54 -0800
+Message-ID: <590657100803041403q2cc68e21p1c92c244939eb148@mail.gmail.com>
+References: <20080304135734.b2c2f473.akpm@linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 04 22:58:50 2008
+Cc: git@vger.kernel.org
+To: "Andrew Morton" <akpm@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue Mar 04 23:04:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWf9q-0005qR-D7
-	for gcvg-git-2@gmane.org; Tue, 04 Mar 2008 22:58:46 +0100
+	id 1JWfFc-00089d-9g
+	for gcvg-git-2@gmane.org; Tue, 04 Mar 2008 23:04:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754800AbYCDV6J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Mar 2008 16:58:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753993AbYCDV6I
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Mar 2008 16:58:08 -0500
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:57153 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752696AbYCDV6G (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 4 Mar 2008 16:58:06 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.14.2/Debian-2build1) with ESMTP id m24LvlC3003351
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Tue, 4 Mar 2008 13:57:50 -0800
-Received: from akpm.corp.google.com (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with SMTP id m24LvYok031146
-	for <git@vger.kernel.org>; Tue, 4 Mar 2008 13:57:34 -0800
-X-Mailer: Sylpheed version 2.2.4 (GTK+ 2.8.20; i486-pc-linux-gnu)
-X-Spam-Status: No, hits=-2.75 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S933268AbYCDWEF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Mar 2008 17:04:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933149AbYCDWEE
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Mar 2008 17:04:04 -0500
+Received: from gv-out-0910.google.com ([216.239.58.186]:21843 "EHLO
+	gv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933003AbYCDWEB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Mar 2008 17:04:01 -0500
+Received: by gv-out-0910.google.com with SMTP id s4so770331gve.37
+        for <git@vger.kernel.org>; Tue, 04 Mar 2008 14:03:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=AGZ4WmwUsAgXYzYoQmIqfSDMhh5VNqowZe9+bQo7ltA=;
+        b=kMX48hPAB3YpFCd7Lmo+xOojsi4qm62unxxrqhyYb47dHV5LyFqXPnWFKIJTWsTnNtYtmyfoUt2fc4ye97LG2ujVHl1z2SiLjnRqogZPXZ551MY4E2OxHrA9tQOGl1KL96AskNTN86GEvGmxO3tv9FuCjoX49Oc7ryzUS2fRErg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=tVJmBRzVFP8w9Aujibu0K7OBzM4Chm4jbSUbnmpJ4bcFTsqwvpOTAiufnwSCDrSjmKz3DnGKVKDS0A4pjHgIA143PmDPrPUqoDmXyBO+Qt9rPIAFiNk/UQqA3UV5MdAuV00cH/n7l/p7PB4iJspopkfQlGwn8pnqSCFWcIwX4xI=
+Received: by 10.114.60.19 with SMTP id i19mr3022134waa.142.1204668234885;
+        Tue, 04 Mar 2008 14:03:54 -0800 (PST)
+Received: by 10.115.22.2 with HTTP; Tue, 4 Mar 2008 14:03:54 -0800 (PST)
+In-Reply-To: <20080304135734.b2c2f473.akpm@linux-foundation.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76144>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76145>
 
+On Tue, Mar 4, 2008 at 1:57 PM, Andrew Morton <akpm@linux-foundation.org> wrote:
+>
+>  When I do
+>
+>         git-whatchanged drivers/watchdog/iTCO_wdt.c
+>
 
-When I do
+git-whatchanged --follow drivers/watchdog/iTCO_wdt.c
 
-	git-whatchanged drivers/watchdog/iTCO_wdt.c
+Cheers,
 
-it ends at "mv watchdog tree under drivers".  I'd have expected it to
-tell me things about that file when it was in its original home at
-drivers/char/watchdog/iTCO_wdt.c
+Harvey
