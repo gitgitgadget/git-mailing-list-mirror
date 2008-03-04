@@ -1,91 +1,67 @@
-From: Jeff King <peff@peff.net>
-Subject: [RFH] bug in unpack_trees
-Date: Tue, 4 Mar 2008 06:59:41 -0500
-Message-ID: <20080304115940.GA5260@sigill.intra.peff.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Commit f5bbc322 to git broke pre-commit hooks which read stdin
+Date: Tue, 4 Mar 2008 12:03:16 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0803041202150.22527@racer.site>
+References: <0tableanpe.wl%bremner@pivot.cs.unb.ca> <alpine.LSU.1.00.0803041044120.22527@racer.site> <m3k5kiiu60.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	John Goerzen <jgoerzen@complete.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 04 13:00:46 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: David Bremner <bremner@unb.ca>,
+	=?ISO-8859-15?Q?Kristian_H=F8gsberg?= <krh@redhat.com>,
+	git@vger.kernel.org, 469250@bugs.debian.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 04 13:04:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWVp7-0002Vx-Uh
-	for gcvg-git-2@gmane.org; Tue, 04 Mar 2008 13:00:46 +0100
+	id 1JWVsw-0003hg-Fq
+	for gcvg-git-2@gmane.org; Tue, 04 Mar 2008 13:04:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754537AbYCDL7o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Mar 2008 06:59:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756000AbYCDL7o
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Mar 2008 06:59:44 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3746 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754395AbYCDL7o (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Mar 2008 06:59:44 -0500
-Received: (qmail 4953 invoked by uid 111); 4 Mar 2008 11:59:41 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Tue, 04 Mar 2008 06:59:41 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 04 Mar 2008 06:59:41 -0500
-Content-Disposition: inline
+	id S1752727AbYCDMEG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Mar 2008 07:04:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756875AbYCDMEF
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Mar 2008 07:04:05 -0500
+Received: from mail.gmx.net ([213.165.64.20]:59284 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756716AbYCDMEE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Mar 2008 07:04:04 -0500
+Received: (qmail invoked by alias); 04 Mar 2008 12:04:01 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp052) with SMTP; 04 Mar 2008 13:04:01 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+lZqkCBKOlSvO0O5xCInzjoTOh80uqPTeiyBKslw
+	icckjK0RQblr5S
+X-X-Sender: gene099@racer.site
+In-Reply-To: <m3k5kiiu60.fsf@localhost.localdomain>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76073>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76074>
 
-I am tracking down a bug in unpack_trees, but I can't seem to find the
-exact problem; I'm hoping to get help from people who have touched this
-code a bit more than I have.
+Hi,
 
-You can see the problem with this script:
+On Tue, 4 Mar 2008, Jakub Narebski wrote:
 
-  # make a repo
-  mkdir repo && cd repo && git init
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> > On Tue, 4 Mar 2008, David Bremner wrote:
+> > 
+> >> It looks like line 435 of builtin-commit.c disables stdin for hooks 
+> >> (with the disclaimer that I first looked at the git source ten minutes 
+> >> ago).
+> >> 
+> >> 	   hook.no_stdin = 1
+> 
+> Never mind pre-commit. What about pre-receive and post-receive hooks, 
+> both of which gets data on stdin?
 
-  # make a directory which will become a df conflict
-  mkdir df
-  echo content >df/file
-  git add df/file
-  git commit -m one
+He was talking about builtin-commit.c.  AFAIR there is no code to call 
+pre-receive or post-receive in that file. ;-)
 
-  # and save a copy of the index
-  git ls-files >index1
+IOW the issue does not apply to the hooks you mentioned.
 
-  # now make a new commit that has the df conflict and
-  # a newly added file
-  rm -rf df
-  echo content >df
-  git add df
-  echo content >new
-  git add new
-  git commit -m two
+Ciao,
+Dscho
 
-  # now this should put our index exactly back to 'one'
-  git reset --hard HEAD^
-
-  # but it doesn't
-  git ls-files >index2
-  diff -u index1 index2
-
-The 'new' file is still in the index, and it shouldn't be. It's actually
-not git-reset to blame, but the "git read-tree -u --reset HEAD^" that it
-calls. The problem reproduces with every version of git I tried, so I
-suspect it is as old as unpack_trees.
-
-As far as I can tell, the D/F conflict somehow gets the list merge out
-of sync. In unpack_trees_rec, every cache entry we look up gets compared
-to the first tree entry, but because we are out of sync, the tree entry
-will always become the new "first" (it looks like this test is supposed
-to be for processing foo/ before foo/bar, and shouldn't otherwise
-trigger). Because "first" and "cache_name" don't match, we don't realize
-we haven't found an entry missing from the tree, and we don't trigger
-the removal code.
-
-So where I need help is figuring out how the traversal is _supposed_ to
-work. I.e., why does it get out of sync on the D/F case? I'm sure it's
-probably a one-liner fix, but I just don't see it.
-
--Peff
