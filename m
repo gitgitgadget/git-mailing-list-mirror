@@ -1,90 +1,82 @@
-From: =?utf-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-Subject: [PATCH 2/2] bash: git-branch -d and -m lists only local branches
-Date: Tue,  4 Mar 2008 19:00:59 +0100
-Message-ID: <4fffe1c7adc092af695610a87f97c8684ae0eea6.1204652001.git.szeder@ira.uka.de>
-References: <>
- <d55a578b4b3f3b7d679b7f8b69497955c7a82a50.1204652001.git.szeder@ira.uka.de>
+From: "Mike Ralphson" <mike.ralphson@gmail.com>
+Subject: Re: t3900-i18n-commit.sh problem on Solaris
+Date: Tue, 4 Mar 2008 18:18:30 +0000
+Message-ID: <e2b179460803041018w4c5b7692u1d24c89bbc73805a@mail.gmail.com>
+References: <8ec76080803040751y4bf808f9ma83a9faa4f857039@mail.gmail.com>
+	 <e2b179460803040811y38e639b6wa83857c49b55aa05@mail.gmail.com>
+	 <8ec76080803040814l694a0a11i6aa8e2c9f608413c@mail.gmail.com>
+	 <8ec76080803040915m3ea11ae6te4379bff05df9402@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: gitster@pobox.com, spearce@spearce.org,
-	=?utf-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 04 19:18:10 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Whit Armstrong" <armstrong.whit@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 04 19:19:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWbi7-0008HT-MQ
-	for gcvg-git-2@gmane.org; Tue, 04 Mar 2008 19:17:56 +0100
+	id 1JWbjR-0000PF-2X
+	for gcvg-git-2@gmane.org; Tue, 04 Mar 2008 19:19:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757532AbYCDSRR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 4 Mar 2008 13:17:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756683AbYCDSRQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Mar 2008 13:17:16 -0500
-Received: from francis.fzi.de ([141.21.7.5]:5832 "EHLO exchange.fzi.de"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751173AbYCDSRQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Mar 2008 13:17:16 -0500
-X-Greylist: delayed 975 seconds by postgrey-1.27 at vger.kernel.org; Tue, 04 Mar 2008 13:17:15 EST
-Received: from fzi.de ([141.21.4.196]) by exchange.fzi.de with Microsoft SMTPSVC(6.0.3790.3959);
-	 Tue, 4 Mar 2008 19:00:57 +0100
-X-Mailer: git-send-email 1.5.4.3
-In-Reply-To: <d55a578b4b3f3b7d679b7f8b69497955c7a82a50.1204652001.git.szeder@ira.uka.de>
-In-Reply-To: <d55a578b4b3f3b7d679b7f8b69497955c7a82a50.1204652001.git.szeder@ira.uka.de>
-References: <d55a578b4b3f3b7d679b7f8b69497955c7a82a50.1204652001.git.szeder@ira.uka.de>
-X-OriginalArrivalTime: 04 Mar 2008 18:00:57.0332 (UTC) FILETIME=[B2787B40:01C87E21]
+	id S1757702AbYCDSSe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Mar 2008 13:18:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757988AbYCDSSe
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Mar 2008 13:18:34 -0500
+Received: from el-out-1112.google.com ([209.85.162.179]:62998 "EHLO
+	el-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756429AbYCDSSd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Mar 2008 13:18:33 -0500
+Received: by el-out-1112.google.com with SMTP id v27so1317237ele.17
+        for <git@vger.kernel.org>; Tue, 04 Mar 2008 10:18:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=YuBhoUDhRgpaLQ01TtbgNYgiYdm+4RkI9m38IxBnOtw=;
+        b=xnbGEKr/MEjVf2Zzo3jID1k8oniqPkIWvziwftsF1VJqhSpiQZQd80fuVStmr0i7Zfzw06vTmjNX5ihuUYbvy297/Uv9o82yzDF10xbBXF0vI0WDykEvSfZC7nYboRwSd0Cgun5djVvqOfwQNqEjibkB84yXaJeuOCjri6S5Fcs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=rBdnwbQYXz33wrDRm0nfCM8fA75gAnbYmb1NeD/jUamhLiNWlj+gkf5Y2nhVq9S4OcnAi07pKGn0/9ZaOJKFMA7b5Dz4NZhhxzrteTEsFL6zM2e3e1L+kifCIVfIbYHHQj3+Zt9EeGBLRhEnstKwFwlF+BuA5D6gptVaaBQ+kDg=
+Received: by 10.140.193.16 with SMTP id q16mr843578rvf.109.1204654710204;
+        Tue, 04 Mar 2008 10:18:30 -0800 (PST)
+Received: by 10.141.19.11 with HTTP; Tue, 4 Mar 2008 10:18:30 -0800 (PST)
+In-Reply-To: <8ec76080803040915m3ea11ae6te4379bff05df9402@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76124>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76125>
 
-But still all branches are listed, if -r is present
+On 04/03/2008, Whit Armstrong <armstrong.whit@gmail.com> wrote:
+> I still got the same failure after using: ./configure
+>  --with-iconv=/home/warmstro/bin
+>
+>  which is where I put GNU inconv.
+>
+>  Is it possible to make sure that configure used that version?
+>
+>  I tried ldd on the git executable, but I didn't find it.
+>
+>  xs5-trd-p1.grn:warmstro> ldd git
+>         libcurl.so.3 =>  /usr/local/misc/lib/libcurl.so.3
+>         libz.so =>       /usr/local/subversion/lib/libz.so
+>         libsocket.so.1 =>        /usr/lib/libsocket.so.1
+>         libnsl.so.1 =>   /usr/lib/libnsl.so.1
+>         libc.so.1 =>     /usr/lib/libc.so.1
+>         libdl.so.1 =>    /usr/lib/libdl.so.1
+>         libz.so.1 =>     /usr/local/subversion/lib/libz.so.1
+>         libz.so.1 (SUNW_1.1) =>  (version not found)
+>         libgcc_s.so.1 =>         /usr/local/subversion/lib/libgcc_s.so.1
+>         libmp.so.2 =>    /usr/lib/libmp.so.2
+>         /usr/platform/SUNW,Sun-Fire-V240/lib/libc_psr.so.1
 
-Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
----
- contrib/completion/git-completion.bash |   19 ++++++++++++++++++-
- 1 files changed, 18 insertions(+), 1 deletions(-)
+It looks to me like the configure script has no way to set the
+ICONVDIR variable used by the Makefile, so the --with-iconv= probably
+isn't doing anything.
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
-n/git-completion.bash
-index 8d6733a..49e6df0 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -506,6 +506,17 @@ _git_bisect ()
-=20
- _git_branch ()
- {
-+	local i c=3D1 only_local_ref=3D"n" has_r=3D"n"
-+
-+	while [ $c -lt $COMP_CWORD ]; do
-+		i=3D"${COMP_WORDS[c]}"
-+		case "$i" in
-+		-d|-m)	only_local_ref=3D"y" ;;
-+		-r)	has_r=3D"y" ;;
-+		esac
-+		c=3D$((++c))
-+	done
-+
- 	case "${COMP_WORDS[COMP_CWORD]}" in
- 	--*=3D*)	COMPREPLY=3D() ;;
- 	--*)
-@@ -514,7 +525,13 @@ _git_branch ()
- 			--track --no-track
- 			"
- 		;;
--	*)	__gitcomp "$(__git_refs)" ;;
-+	*)
-+		if [ $only_local_ref =3D "y" -a $has_r =3D "n" ]; then
-+			__gitcomp "$(__git_heads)"
-+		else
-+			__gitcomp "$(__git_refs)"
-+		fi
-+		;;
- 	esac
- }
-=20
---=20
-1.5.4.3
+For now, could you try setting that directly in your Makefile ?
+NEEDS_LIBICONV must be defined if it isn't already.
 
+Mike
