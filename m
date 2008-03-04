@@ -1,58 +1,71 @@
-From: "Carlos Rica" <jasampler@gmail.com>
-Subject: Re: GSoC 2008 - Mentors Wanted!
-Date: Tue, 4 Mar 2008 21:51:39 +0100
-Message-ID: <1b46aba20803041251x5e497dc5m5a3ce7e13f25e6ea@mail.gmail.com>
-References: <20080304051149.GS8410@spearce.org>
-	 <1b46aba20803041247h5cc64186q2abf7973372fd3ef@mail.gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [RFH] bug in unpack_trees
+Date: Tue, 4 Mar 2008 13:31:44 -0800 (PST)
+Message-ID: <alpine.LFD.1.00.0803041325370.12253@woody.linux-foundation.org>
+References: <20080304115940.GA5260@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Junio C Hamano" <gitster@pobox.com>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Mar 04 21:52:57 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	John Goerzen <jgoerzen@complete.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Mar 04 22:33:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWe7t-0004gZ-QH
-	for gcvg-git-2@gmane.org; Tue, 04 Mar 2008 21:52:42 +0100
+	id 1JWelG-0004UI-2r
+	for gcvg-git-2@gmane.org; Tue, 04 Mar 2008 22:33:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754505AbYCDUvm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Mar 2008 15:51:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754235AbYCDUvl
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Mar 2008 15:51:41 -0500
-Received: from wf-out-1314.google.com ([209.85.200.174]:29336 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754099AbYCDUvk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Mar 2008 15:51:40 -0500
-Received: by wf-out-1314.google.com with SMTP id 28so1305548wff.4
-        for <git@vger.kernel.org>; Tue, 04 Mar 2008 12:51:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=/bd3IHhma/7O2MsvjJWi6ZaQZM8oYpFliPUoivBsyyM=;
-        b=E9WYlJhUbQ6DhUwCNpAErHQ4gBSZWNR3dDvbN4PbGrm9STk5VO9gitZCSu9SjFGQd9A/vH59QQieuWZrKsvIa448VLRYmkcS/1MytmOljRveOT0+sE/ZgBNw3pTuSs1v9+lsdJThhL8NjTVFrsZAop1eqMQQNxHyNJHJMfxO8Ds=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=JYEfVM9YBSi7qSzcjQN0L9uj4tIoFxPwUbweUvIyafyzJWcUAZyP3WOef6HIsNmOHjvSzPt4AdzFtgn9Lga3J9Puzqe2wCoWXDrwo4t06SKPUv+s3rsIHaBFsYuWwOfwhb1Ng/WFe7dtdLlM1+EUPmWcW68hcpto5Vyt6FL/XUc=
-Received: by 10.142.14.20 with SMTP id 20mr630600wfn.2.1204663899836;
-        Tue, 04 Mar 2008 12:51:39 -0800 (PST)
-Received: by 10.142.99.13 with HTTP; Tue, 4 Mar 2008 12:51:39 -0800 (PST)
-In-Reply-To: <1b46aba20803041247h5cc64186q2abf7973372fd3ef@mail.gmail.com>
-Content-Disposition: inline
+	id S1756876AbYCDVcn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Mar 2008 16:32:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756581AbYCDVcm
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Mar 2008 16:32:42 -0500
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:35204 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756187AbYCDVcl (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 4 Mar 2008 16:32:41 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.14.2/Debian-2build1) with ESMTP id m24LVwZl032750
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 4 Mar 2008 13:32:00 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m24LVivn030162;
+	Tue, 4 Mar 2008 13:31:44 -0800
+In-Reply-To: <20080304115940.GA5260@sigill.intra.peff.net>
+User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+X-Spam-Status: No, hits=-4.082 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76138>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76139>
 
-On Tue, Mar 4, 2008 at 9:47 PM, Carlos Rica <jasampler@gmail.com> wrote:
->  Gitster talked today about libification as a project for the GSoC
->  (I mangled some comments, I accept complaints):
 
-I mean, I removed some comments from the start, middle and end
-of the conversation. The order and comments are left as it was.
 
---
-Carlos
+On Tue, 4 Mar 2008, Jeff King wrote:
+>
+> I am tracking down a bug in unpack_trees, but I can't seem to find the
+> exact problem; I'm hoping to get help from people who have touched this
+> code a bit more than I have.
+
+Ok, I haven't (the blame for that unpack_trees function lies mainly at 
+Dscho, I think ;), and now that I'm looking at it more closely I really 
+don't think unpack_trees() is salvageable.
+
+I tried. I can't make it work.
+
+The only really sane way to traverse trees in parallel is with the 
+walk-tree.c functionality (ie using "traverse_trees()"), which is quite 
+straightforward and rather simple, and which I can pretty much guarantee 
+works.
+
+In contrast, the things that unpack_trees() does to try to figure out how 
+to mix in the index into the pot really doesn't work.
+
+I'll take a good hard look at trying to convert users of unpack_trees() 
+into traverse_trees(), or perhaps even convert "unpack_trees()" itself.
+
+		Linus
