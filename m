@@ -1,73 +1,192 @@
-From: "Ping Yin" <pkufranky@gmail.com>
-Subject: Re: [RFC] git reset --recover
-Date: Tue, 4 Mar 2008 16:22:40 +0800
-Message-ID: <46dff0320803040022r6babc3d2n745bc8a08b8bf197@mail.gmail.com>
-References: <46dff0320803030659j2fa0325lf9c88b915ddb70da@mail.gmail.com>
-	 <20080303170242.GA30361@hashpling.org>
-	 <46dff0320803032121v54612b40ke953348e86daf1f@mail.gmail.com>
-	 <76718490803032342k18f05d4dte76aacd9292a1233@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Charles Bailey" <charles@hashpling.org>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Jay Soffian" <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 04 09:23:22 2008
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 1/3] am: read from the right mailbox when started from a
+ subdirectory
+Date: Tue,  4 Mar 2008 00:25:04 -0800
+Message-ID: <1204619106-30449-1-git-send-email-gitster@pobox.com>
+Cc: Jeff King <peff@peff.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 04 09:26:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWSQj-0003xb-E6
-	for gcvg-git-2@gmane.org; Tue, 04 Mar 2008 09:23:21 +0100
+	id 1JWSTF-0004hC-BG
+	for gcvg-git-2@gmane.org; Tue, 04 Mar 2008 09:25:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750823AbYCDIWo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Mar 2008 03:22:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750941AbYCDIWn
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Mar 2008 03:22:43 -0500
-Received: from an-out-0708.google.com ([209.85.132.242]:43540 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750823AbYCDIWn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Mar 2008 03:22:43 -0500
-Received: by an-out-0708.google.com with SMTP id d31so125126and.103
-        for <git@vger.kernel.org>; Tue, 04 Mar 2008 00:22:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=izb6HSrRrov+bhxJnsFuEnz+3r7xC1yNtct9jAJWpuo=;
-        b=O2xTB7hoyV3qWTMjcRJ6sFz+nve3+XVLqouMADdOLfAC8YgE17eCxg9T8r/QkZ+a73QKPR2nbKt8v7bxRQMI7eTri5lu3OWRBl8yZvQileZL6hFH7zhpPZ/ymlnpK/WDdNKCpaJqtorGV3GePw+ad/PCJ3aLI8184tROV/Ylwoc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=FrV7S1j9KWulAmhOcvSGeCBWcVkHkr2Hxm+xG8g/y9dfbZWfggqJ87q/jHg+UzG1klUPn4KVWMk4ZjtOYoo40yESI4jrcsurb2v70wcFlSDbJRi4JwxX6A4r6pxkqVu4WNsoBSilavLF2foFpfhG+sZGIigflfgecfa2Xf0Chx8=
-Received: by 10.100.225.19 with SMTP id x19mr1873976ang.58.1204618960929;
-        Tue, 04 Mar 2008 00:22:40 -0800 (PST)
-Received: by 10.100.5.18 with HTTP; Tue, 4 Mar 2008 00:22:40 -0800 (PST)
-In-Reply-To: <76718490803032342k18f05d4dte76aacd9292a1233@mail.gmail.com>
-Content-Disposition: inline
+	id S1751256AbYCDIZU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Mar 2008 03:25:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751296AbYCDIZU
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Mar 2008 03:25:20 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:38726 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751094AbYCDIZT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Mar 2008 03:25:19 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 0E8E73879
+	for <git@vger.kernel.org>; Tue,  4 Mar 2008 03:25:18 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 278E43878 for <git@vger.kernel.org>; Tue,  4 Mar 2008 03:25:17 -0500
+ (EST)
+X-Mailer: git-send-email 1.5.4.3.529.gb25fb
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76047>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76048>
 
-On Tue, Mar 4, 2008 at 3:42 PM, Jay Soffian <jaysoffian@gmail.com> wrote:
-> On Tue, Mar 4, 2008 at 12:21 AM, Ping Yin <pkufranky@gmail.com> wrote:
->  > On Tue, Mar 4, 2008 at 1:02 AM, Charles Bailey <charles@hashpling.org> wrote:
->  >  >
->
-> >  >  Does 'git fsck' report some dangling blobs?  If so (some of) them
->  >  >  should be the content of your missing files.
->  >  >
->  >  Good news. So can "--recover" help me find the lost blobs?
->
->  git fsck --lost-found. Look under .git/lost-found/other for your blobs.
->  Anything that's not 41 bytes is a file.
->
-Thanks for pointing me that.
->  j.
->
+An earlier commit c149184 (allow git-am to run in a subdirectory) taught
+git-am to start from a subdirectory by going up to the root of the work
+tree byitself, but it did not adjust the path to read the mbox from when
+it did so.
 
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
+ * This is a fixed-up version of an earlier patch I sent to Jeff and the
+   list, and should be considered as a bugfix.
 
+ git-am.sh            |   25 ++++++++++++++++-
+ t/t4150-am-subdir.sh |   72 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 95 insertions(+), 2 deletions(-)
+ create mode 100755 t/t4150-am-subdir.sh
+
+diff --git a/git-am.sh b/git-am.sh
+index a2c6fea..2b5bbb7 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -24,6 +24,7 @@ r,resolved      to be used after a patch failure
+ skip            skip the current patch"
+ 
+ . git-sh-setup
++prefix=$(git rev-parse --show-prefix)
+ set_reflog_action am
+ require_work_tree
+ cd_to_toplevel
+@@ -124,7 +125,8 @@ reread_subject () {
+ }
+ 
+ prec=4
+-dotest=.dotest sign= utf8=t keep= skip= interactive= resolved= binary=
++dotest="${prefix}.dotest"
++sign= utf8=t keep= skip= interactive= resolved= binary=
+ resolvemsg= resume=
+ git_apply_opt=
+ 
+@@ -150,7 +152,8 @@ do
+ 	--skip)
+ 		skip=t ;;
+ 	-d|--dotest)
+-		shift; dotest=$1;;
++		shift
++		case "$1" in /*) dotest=$1;; *) dotest="$prefix$1" ;; esac ;;
+ 	--resolvemsg)
+ 		shift; resolvemsg=$1 ;;
+ 	--whitespace)
+@@ -206,6 +209,24 @@ else
+ 	# Start afresh.
+ 	mkdir -p "$dotest" || exit
+ 
++	if test -n "$prefix" && test $# != 0
++	then
++		first=t
++		for arg
++		do
++			test -n "$first" && {
++				set x
++				first=
++			}
++			case "$arg" in
++			/*)
++				set "$@" "$arg" ;;
++			*)
++				set "$@" "$prefix$arg" ;;
++			esac
++		done
++		shift
++	fi
+ 	git mailsplit -d"$prec" -o"$dotest" -b -- "$@" > "$dotest/last" ||  {
+ 		rm -fr "$dotest"
+ 		exit 1
+diff --git a/t/t4150-am-subdir.sh b/t/t4150-am-subdir.sh
+new file mode 100755
+index 0000000..929d2cb
+--- /dev/null
++++ b/t/t4150-am-subdir.sh
+@@ -0,0 +1,72 @@
++#!/bin/sh
++
++test_description='git am running from a subdirectory'
++
++. ./test-lib.sh
++
++test_expect_success setup '
++	echo hello >world &&
++	git add world &&
++	test_tick &&
++	git commit -m initial &&
++	git tag initial &&
++	echo goodbye >world &&
++	git add world &&
++	test_tick &&
++	git commit -m second &&
++	git format-patch --stdout HEAD^ >patchfile &&
++	: >expect
++'
++
++test_expect_success 'am regularly from stdin' '
++	git checkout initial &&
++	git am <patchfile &&
++	git diff master >actual &&
++	diff -u expect actual
++'
++
++test_expect_success 'am regularly from file' '
++	git checkout initial &&
++	git am patchfile &&
++	git diff master >actual &&
++	diff -u expect actual
++'
++
++test_expect_success 'am regularly from stdin in subdirectory' '
++	rm -fr subdir &&
++	git checkout initial &&
++	(
++		mkdir -p subdir &&
++		cd subdir &&
++		git am <../patchfile
++	) &&
++	git diff master>actual &&
++	diff -u expect actual
++'
++
++test_expect_success 'am regularly from file in subdirectory' '
++	rm -fr subdir &&
++	git checkout initial &&
++	(
++		mkdir -p subdir &&
++		cd subdir &&
++		git am ../patchfile
++	) &&
++	git diff master >actual &&
++	diff -u expect actual
++'
++
++test_expect_success 'am regularly from file in subdirectory with full path' '
++	rm -fr subdir &&
++	git checkout initial &&
++	P=$(pwd) &&
++	(
++		mkdir -p subdir &&
++		cd subdir &&
++		git am "$P/patchfile"
++	) &&
++	git diff master >actual &&
++	diff -u expect actual
++'
++
++test_done
 -- 
-Ping Yin
+1.5.4.3.529.gb25fb
+
