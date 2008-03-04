@@ -1,51 +1,97 @@
-From: "Morten Welinder" <mwelinder@gmail.com>
-Subject: Re: [PATCH] Add compat/vsnprintf.c for systems that returns -1 on maxsize reached
-Date: Tue, 4 Mar 2008 09:12:18 -0500
-Message-ID: <118833cc0803040612g38dfc9f8tdb33ef866f6752e2@mail.gmail.com>
-References: <200803041459.29000.michal.rokos@nextsoft.cz>
+From: Michal Rokos <michal.rokos@nextsoft.cz>
+Subject: [PATCH v3] autoconf: Test FREAD_READS_DIRECTORIES
+Date: Tue, 4 Mar 2008 15:14:42 +0100
+Organization: NextSoft
+Message-ID: <200803041514.42783.michal.rokos@nextsoft.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Cc: GIT <git@vger.kernel.org>
-To: "Michal Rokos" <michal.rokos@nextsoft.cz>
-X-From: git-owner@vger.kernel.org Tue Mar 04 15:13:13 2008
+To: GIT <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Mar 04 15:15:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWXt3-00056J-DB
-	for gcvg-git-2@gmane.org; Tue, 04 Mar 2008 15:12:57 +0100
+	id 1JWXvS-0005uA-Nd
+	for gcvg-git-2@gmane.org; Tue, 04 Mar 2008 15:15:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751463AbYCDOMU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Mar 2008 09:12:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751210AbYCDOMU
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Mar 2008 09:12:20 -0500
-Received: from fg-out-1718.google.com ([72.14.220.153]:36683 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751123AbYCDOMU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Mar 2008 09:12:20 -0500
-Received: by fg-out-1718.google.com with SMTP id e21so923036fga.17
-        for <git@vger.kernel.org>; Tue, 04 Mar 2008 06:12:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=O97RNhAjwKCDHcNoCGE0+8bRCygnH+mqvhCjKF2pQXE=;
-        b=uwbo4kUMBYZYChE7JLTzM8N+hEC2KrjTE9OV9nOrtjmYOonf4qozxQ4MygnvI61XGpOqCo30Nw8j2DFGAyCsWlwTk2FQAOy9fkBk8PVr6rOz5LYtukokRvucArA+TwRVRflJ+P3YvbDQog1mor47svL3ixTDYt/DD36yxkKojMA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=KkoxJ3Eiltdtx6F/GRJN3dR1qQRefOMkfj9Rs9NxPAscsRKm5V8vrMEM1AG2qVw5CKFZcsZXTGnURGH5MzSikwVhU4FO1Uhw6qGbMiu6wa6+OC53Xf3iOVVptwfL2GqAPTr0e+Q1agbgjyi1Mzi9nzT2CeAaMfQHJuKxMXhx2RA=
-Received: by 10.86.50.8 with SMTP id x8mr1329954fgx.25.1204639938483;
-        Tue, 04 Mar 2008 06:12:18 -0800 (PST)
-Received: by 10.86.89.14 with HTTP; Tue, 4 Mar 2008 06:12:18 -0800 (PST)
-In-Reply-To: <200803041459.29000.michal.rokos@nextsoft.cz>
+	id S1753191AbYCDOOu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Mar 2008 09:14:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751210AbYCDOOu
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Mar 2008 09:14:50 -0500
+Received: from holub.nextsoft.cz ([195.122.198.235]:50555 "EHLO
+	holub.nextsoft.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752793AbYCDOOt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Mar 2008 09:14:49 -0500
+Received: by holub.nextsoft.cz (Postfix, from userid 111)
+	id A3BDE8E3; Tue,  4 Mar 2008 15:14:47 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by holub.nextsoft.cz (Postfix) with ESMTP id EC3848E2
+	for <git@vger.kernel.org>; Tue,  4 Mar 2008 15:14:46 +0100 (CET)
+Received: from holub.nextsoft.cz ([127.0.0.1])
+	by localhost (holub.nextsoft.cz [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 11074-09 for <git@vger.kernel.org>;
+	Tue, 4 Mar 2008 15:14:46 +0100 (CET)
+Received: from 89-24-113-79.i4g.tmcz.cz (89-24-113-79.i4g.tmcz.cz [89.24.113.79])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	by holub.nextsoft.cz (Postfix) with ESMTP id 9E8D661C
+	for <git@vger.kernel.org>; Tue,  4 Mar 2008 15:14:46 +0100 (CET)
+User-Agent: KMail/1.9.9
 Content-Disposition: inline
+X-Bogosity: Ham, tests=bogofilter, spamicity=0.000000, version=1.0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76087>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76088>
 
-That leaks in the out-of-memory case.  Not terribly important, but still.
+Add test for FREAD_READS_DIRECTORIES to configure script.
 
-Morten
+When "." could be opened and fread reads more than 0 items, 
+FREAD_READS_DIRECTORIES will be set.
+
+Signed-off-by: Michal Rokos <michal.rokos@nextsoft.cz>
+
+diff --git a/config.mak.in b/config.mak.in
+index ee6c33d..516c468 100644
+--- a/config.mak.in
++++ b/config.mak.in
+@@ -46,3 +46,4 @@ NO_MKDTEMP=@NO_MKDTEMP@
+ NO_ICONV=@NO_ICONV@
+ OLD_ICONV=@OLD_ICONV@
+ NO_DEFLATE_BOUND=@NO_DEFLATE_BOUND@
++FREAD_READS_DIRECTORIES=@FREAD_READS_DIRECTORIES@
+diff --git a/configure.ac b/configure.ac
+index 85d7ef5..8f748a9 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -326,6 +326,27 @@ else
+ 	NO_C99_FORMAT=
+ fi
+ AC_SUBST(NO_C99_FORMAT)
++#
++# Define FREAD_READS_DIRECTORIES if your are on a system which succeeds
++# when attempting to read from an fopen'ed directory.
++AC_CACHE_CHECK([whether system succeeds to read fopen'ed directory],
++ [ac_cv_fread_reads_directories],
++[
++AC_RUN_IFELSE(
++	[AC_LANG_PROGRAM([AC_INCLUDES_DEFAULT],
++		[[char c;
++		FILE *f = fopen(".", "r");
++		if (! f) return 0;
++		if (f && fread(&c, 1, 1, f) > 0) return 1]])],
++	[ac_cv_fread_reads_directories=no],
++	[ac_cv_fread_reads_directories=yes])
++])
++if test $ac_cv_fread_reads_directories = yes; then
++	FREAD_READS_DIRECTORIES=UnfortunatelyYes
++else
++	FREAD_READS_DIRECTORIES=
++fi
++AC_SUBST(FREAD_READS_DIRECTORIES)
+ 
+ 
+ ## Checks for library functions.
