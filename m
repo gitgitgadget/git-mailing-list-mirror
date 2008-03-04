@@ -1,68 +1,68 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] git-submodule: Make update verbose for up to date path
-Date: Tue, 4 Mar 2008 16:08:16 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0803041605450.22527@racer.site>
-References: <1204642691-3220-1-git-send-email-pkufranky@gmail.com>  <alpine.LSU.1.00.0803041503360.22527@racer.site> <46dff0320803040803v2f93d749t6b45fc8e47e66d21@mail.gmail.com>
+From: "Mike Ralphson" <mike.ralphson@gmail.com>
+Subject: Re: t3900-i18n-commit.sh problem on Solaris
+Date: Tue, 4 Mar 2008 16:11:51 +0000
+Message-ID: <e2b179460803040811y38e639b6wa83857c49b55aa05@mail.gmail.com>
+References: <8ec76080803040751y4bf808f9ma83a9faa4f857039@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: Ping Yin <pkufranky@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 04 17:09:43 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Whit Armstrong" <armstrong.whit@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 04 17:12:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWZi2-0007QC-MV
-	for gcvg-git-2@gmane.org; Tue, 04 Mar 2008 17:09:43 +0100
+	id 1JWZkl-0008Ss-79
+	for gcvg-git-2@gmane.org; Tue, 04 Mar 2008 17:12:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763287AbYCDQJE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Mar 2008 11:09:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759944AbYCDQJE
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Mar 2008 11:09:04 -0500
-Received: from mail.gmx.net ([213.165.64.20]:47411 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1763271AbYCDQJD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Mar 2008 11:09:03 -0500
-Received: (qmail invoked by alias); 04 Mar 2008 16:09:01 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp055) with SMTP; 04 Mar 2008 17:09:01 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+1Up10YIy1ftkof1f37xq2lPUEk96edVgrcbkSUT
-	vuVVMiUSxU0/cw
-X-X-Sender: gene099@racer.site
-In-Reply-To: <46dff0320803040803v2f93d749t6b45fc8e47e66d21@mail.gmail.com>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1763461AbYCDQLy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Mar 2008 11:11:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763401AbYCDQLy
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Mar 2008 11:11:54 -0500
+Received: from rv-out-0910.google.com ([209.85.198.189]:32583 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1763339AbYCDQLx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Mar 2008 11:11:53 -0500
+Received: by rv-out-0910.google.com with SMTP id k20so544979rvb.1
+        for <git@vger.kernel.org>; Tue, 04 Mar 2008 08:11:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=I6zmTJ7NVtKrOXninUMc3qGMQ3dja+Rz+RmDDT+4Hsw=;
+        b=YJFZ43KGQHQUVKIM8hyK6Lsodqs1fgaVIb7WLqzdMLcapsIMswp2sXhO9F0xECoFT1etKdYUbmFtEBQhreznv38PWeV+uxQpmUDmAcd+yOrAbaEncwygkDWVhXo0nisnckUVgTEE2VjAn5FENqN1W3LdrXmn3Uxcet6pW6xPN3c=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=XlLVaCnbokDY8+hcccRBqPWjqkk58MgT+oOUfhbpPXCp3RCEo+p+ikrLOfvUhUgzcS1Cr7pJr4daZV+0+CXFyKwbxJcEt7QhK9x7fhGiytdMd/p6W7rVuplP20iqvSx32K18d+noK+i7R7Svwolc9/W7ChlV9FaI+WeWlI2gAxE=
+Received: by 10.141.43.5 with SMTP id v5mr689892rvj.216.1204647111279;
+        Tue, 04 Mar 2008 08:11:51 -0800 (PST)
+Received: by 10.141.19.11 with HTTP; Tue, 4 Mar 2008 08:11:51 -0800 (PST)
+In-Reply-To: <8ec76080803040751y4bf808f9ma83a9faa4f857039@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76111>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76112>
 
-Hi,
+On 04/03/2008, Whit Armstrong <armstrong.whit@gmail.com> wrote:
+> this is with git latest: c95b3ad9ea310ec89e31a21edecaaf2c374e2c46
+>  (GIT_VERSION = 1.5.4.3.447.gc95b3)
+>
+>
+>  xs5-trd-p1.grn:warmstro> sh t3900-i18n-commit.sh -i -v
+>  ...
+>  ...
+>  ...
+>  * FAIL 22: ISO-2022-JP should be shown in EUCJP now
+>
+>  Is this a Solaris problem?
 
-On Wed, 5 Mar 2008, Ping Yin wrote:
+Could be. Some builtin iconv() functions / libiconv implementations
+don't seem to have support for all of the character encodings git
+expects.
 
-> When i run 'git submodule update' in a repository whose submodules are 
-> all clean, there is not any output which makes me not know whether this 
-> command are successful. I think this is not friendly.
+Are you able to link against a current GNU libiconv instead?
 
-The problem is: people ignore output.  Back when merge-recursive was even 
-more chatty than it is now, they happily glanced over the fact that there 
-were _conflicts_.
-
-So we reduced the output.  Drastically.
-
-For example, git reset --hard (amongst others) does not output a _thing_ 
-if it succeeds.  This is good.  No output means it succeeded.
-
-Now, some other commands take a while to complete, so we have a progress 
-which kicks in after a second or so.  Still, this is just to keep the user 
-busy when she would otherwise think that Git hangs.
-
-So no, I do not like submodule becoming chattier.  You can add --verbose 
-if you want, but the default should be _quiet_.
-
-Ciao,
-Dscho
-
+Mike
