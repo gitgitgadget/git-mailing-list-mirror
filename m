@@ -1,109 +1,90 @@
-From: "Whit Armstrong" <armstrong.whit@gmail.com>
-Subject: Re: t3900-i18n-commit.sh problem on Solaris
-Date: Tue, 4 Mar 2008 12:15:21 -0500
-Message-ID: <8ec76080803040915m3ea11ae6te4379bff05df9402@mail.gmail.com>
-References: <8ec76080803040751y4bf808f9ma83a9faa4f857039@mail.gmail.com>
-	 <e2b179460803040811y38e639b6wa83857c49b55aa05@mail.gmail.com>
-	 <8ec76080803040814l694a0a11i6aa8e2c9f608413c@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: FastCGI support in gitweb
+Date: Tue, 04 Mar 2008 09:22:45 -0800 (PST)
+Message-ID: <m37igiietq.fsf@localhost.localdomain>
+References: <1c3be50f0803011334u2629011cg85cb8728a244ea4e@mail.gmail.com>
+	<m38x12jeqt.fsf@localhost.localdomain> <47CBEED2.30808@vilain.net>
+	<200803040119.22240.jnareb@gmail.com>
+	<slrnfspi8b.83u.jgoerzen@katherina.lan.complete.org>
+	<m3od9uiyru.fsf@localhost.localdomain>
+	<slrnfsqoai.njm.jgoerzen@katherina.lan.complete.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Mike Ralphson" <mike.ralphson@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 04 18:16:20 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Sam Vilain <sam@vilain.net>,
+	Juan Jose Comellas <juanjo@comellas.org>
+To: John Goerzen <jgoerzen@complete.org>
+X-From: git-owner@vger.kernel.org Tue Mar 04 18:25:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWakF-00082S-NW
-	for gcvg-git-2@gmane.org; Tue, 04 Mar 2008 18:16:04 +0100
+	id 1JWasK-0003Ds-W6
+	for gcvg-git-2@gmane.org; Tue, 04 Mar 2008 18:24:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755320AbYCDRP0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Mar 2008 12:15:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751461AbYCDRP0
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Mar 2008 12:15:26 -0500
-Received: from wr-out-0506.google.com ([64.233.184.230]:16527 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751342AbYCDRPZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Mar 2008 12:15:25 -0500
-Received: by wr-out-0506.google.com with SMTP id 50so1354067wra.13
-        for <git@vger.kernel.org>; Tue, 04 Mar 2008 09:15:24 -0800 (PST)
+	id S1758308AbYCDRWw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Mar 2008 12:22:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757675AbYCDRWv
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Mar 2008 12:22:51 -0500
+Received: from ik-out-1112.google.com ([66.249.90.182]:7171 "EHLO
+	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1765295AbYCDRWt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Mar 2008 12:22:49 -0500
+Received: by ik-out-1112.google.com with SMTP id c28so1158133ika.5
+        for <git@vger.kernel.org>; Tue, 04 Mar 2008 09:22:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=NgdaJUj8PozNJruQ0xMJ8LlppLEVX83OB/Xnmvo7kdY=;
-        b=TYzvnY8ySkc//zuBPIO1BG7wlasjA72eoJrmyPxbLtdy6TfwFbW1L4pCNIQoF9oYy+96T2KuyJGwNXAZAv595Mc4N8YCJWCtYM2ZKDHFyvpNCFqRutS9kxz+BiwbqRnHIazx5Xr9SqCZZDvqk7wx1Q2HOHdrF12hWxeXB5cLqe8=
+        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:newsgroups:subject:references:from:message-id:lines:user-agent:in-reply-to:mime-version:content-type:posted-to:date;
+        bh=wV2bQURZbOF3v3DdeAbIfVx8I7vPDTg6Z83W6tnSvjg=;
+        b=dVDxpo7x09ubq74poz6WSSLn1dzt4Cvefqx3EzGz7rdOitoqEUglcEWBqlnKhyyuxu4zH+hbrF/VPbVvXL2/J8PutsggzaP27bXwmx4NhXKpu8/xHD75eoVVhey9/oDH66zARrYgnAEy29WbAGdHrdIGGgg1dXw2pV8iOkj7ULY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=k4MTuUaKvrvFkP1pq42LXAGP9eNJIJi2jKg88QbvBtGbGT8qTZ15WbWdzpMSsIt3Z+on2O0YBhh+IjHpZLlLKjLdXbz1UrPDOKiD7kO5GqncU99583uzSAsReE2aHozQrJi/Be8LSgePPHfboX7DzYOdH99u440ASkjSNITnVME=
-Received: by 10.141.115.6 with SMTP id s6mr786310rvm.47.1204650921310;
-        Tue, 04 Mar 2008 09:15:21 -0800 (PST)
-Received: by 10.141.201.19 with HTTP; Tue, 4 Mar 2008 09:15:21 -0800 (PST)
-In-Reply-To: <8ec76080803040814l694a0a11i6aa8e2c9f608413c@mail.gmail.com>
-Content-Disposition: inline
+        h=x-authentication-warning:to:cc:newsgroups:subject:references:from:message-id:lines:user-agent:in-reply-to:mime-version:content-type:posted-to:date;
+        b=v1zeE47GDQwHrky2fbp9X7BfKL0lBr7uQha6AFPgZEF7LMcBFCCoY0irgkIkYVFyfKTLEqv2JbmrT4EM8WAr+MpiT3snvauPY/UulXZ8Nik7ju6tmCdd+nwdbuZcqB0MWyj8Wjs8IAbmF0Q7HexP47+GsyXt91XCpMFzKjclr8A=
+Received: by 10.78.168.6 with SMTP id q6mr3637691hue.65.1204651366982;
+        Tue, 04 Mar 2008 09:22:46 -0800 (PST)
+Received: from localhost.localdomain ( [83.8.251.156])
+        by mx.google.com with ESMTPS id c25sm2257188ika.9.2008.03.04.09.22.44
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 04 Mar 2008 09:22:45 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m24HN2ZF013796;
+	Tue, 4 Mar 2008 18:23:02 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m24HMwfd013792;
+	Tue, 4 Mar 2008 18:22:58 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+Newsgroups: gmane.comp.version-control.git
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+In-Reply-To: <slrnfsqoai.njm.jgoerzen@katherina.lan.complete.org>
+Posted-To: gmane.comp.version-control.git
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76121>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76122>
 
-I still got the same failure after using: ./configure
---with-iconv=/home/warmstro/bin
+The following message is a courtesy copy of an article
+that has been posted to gmane.comp.version-control.git as well.
 
-which is where I put GNU inconv.
+[Cc: Sam Vilain, Juan Jose Comellas]
 
-Is it possible to make sure that configure used that version?
+John Goerzen <jgoerzen@complete.org> writes:
 
-I tried ldd on the git executable, but I didn't find it.
+> FastCGI is much, much lighter on resource requirements if you are
+> deploying apps written in various languages on a single server.
+> Sometimes even if you aren't.
 
-xs5-trd-p1.grn:warmstro> ldd git
-        libcurl.so.3 =>  /usr/local/misc/lib/libcurl.so.3
-        libz.so =>       /usr/local/subversion/lib/libz.so
-        libsocket.so.1 =>        /usr/lib/libsocket.so.1
-        libnsl.so.1 =>   /usr/lib/libnsl.so.1
-        libc.so.1 =>     /usr/lib/libc.so.1
-        libdl.so.1 =>    /usr/lib/libdl.so.1
-        libz.so.1 =>     /usr/local/subversion/lib/libz.so.1
-        libz.so.1 (SUNW_1.1) =>  (version not found)
-        libgcc_s.so.1 =>         /usr/local/subversion/lib/libgcc_s.so.1
-        libmp.so.2 =>    /usr/lib/libmp.so.2
-        /usr/platform/SUNW,Sun-Fire-V240/lib/libc_psr.so.1
+If you want to add FastCGI support to gitweb, besides fulfilling
+constraints I have mentioned earlier (it must run as CGI and mod_perl,
+must run without CGI::Fast / FCGI), I think it would be best to
+separate input validation and dispatch into separate subroutine.
 
+Perhaps even going as far as getting only required input in the
+"action" routines, for example
+  our ($hash, $hash_base) = gitweb_params('hash', 'hash_base');
+at the beginning of git_commit() subroutine, etc.
 
-Thanks,
-Whit
-
-
-
-On Tue, Mar 4, 2008 at 11:14 AM, Whit Armstrong
-<armstrong.whit@gmail.com> wrote:
-> will give that a try and come back.
->
->
->
->  On Tue, Mar 4, 2008 at 11:11 AM, Mike Ralphson <mike.ralphson@gmail.com> wrote:
->  > On 04/03/2008, Whit Armstrong <armstrong.whit@gmail.com> wrote:
->  >  > this is with git latest: c95b3ad9ea310ec89e31a21edecaaf2c374e2c46
->  >  >  (GIT_VERSION = 1.5.4.3.447.gc95b3)
->  >  >
->  >  >
->  >  >  xs5-trd-p1.grn:warmstro> sh t3900-i18n-commit.sh -i -v
->  >  >  ...
->  >  >  ...
->  >  >  ...
->  >
->  > >  * FAIL 22: ISO-2022-JP should be shown in EUCJP now
->  >  >
->  >
->  > >  Is this a Solaris problem?
->  >
->  >  Could be. Some builtin iconv() functions / libiconv implementations
->  >  don't seem to have support for all of the character encodings git
->  >  expects.
->  >
->  >  Are you able to link against a current GNU libiconv instead?
->  >
->  >  Mike
->  >
->
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
