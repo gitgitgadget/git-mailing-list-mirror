@@ -1,146 +1,101 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: How to make gitk not overwrite my selection?
-Date: Tue, 4 Mar 2008 18:03:07 -0500
-Message-ID: <20080304230306.GA18246@sigill.intra.peff.net>
-References: <47CD6D1C.1080202@gmx.ch>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH] Add test for cloning with "--reference" repo being a
+ subset of source repo
+Date: Tue, 4 Mar 2008 18:10:25 -0500 (EST)
+Message-ID: <alpine.LNX.1.00.0803041801320.19665@iabervon.org>
+References: <alpine.LNX.1.00.0802251604460.19024@iabervon.org> <200803031004.16568.johan@herland.net> <alpine.LNX.1.00.0803031318000.19665@iabervon.org> <200803040402.57993.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Paul Mackerras <paulus@samba.org>, git@vger.kernel.org
-To: Jean-Luc Herren <jlh@gmx.ch>
-X-From: git-owner@vger.kernel.org Wed Mar 05 00:03:56 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	=?ISO-8859-15?Q?Kristian_H=F8gsberg?= <krh@redhat.com>,
+	=?ISO-8859-15?Q?Santi_B=E9jar?= <sbejar@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Wed Mar 05 00:11:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWgAt-0005e6-Hy
-	for gcvg-git-2@gmane.org; Wed, 05 Mar 2008 00:03:55 +0100
+	id 1JWgHw-0008Fh-Lt
+	for gcvg-git-2@gmane.org; Wed, 05 Mar 2008 00:11:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934177AbYCDXDM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Mar 2008 18:03:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934094AbYCDXDL
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Mar 2008 18:03:11 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1694 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934091AbYCDXDK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Mar 2008 18:03:10 -0500
-Received: (qmail 20066 invoked by uid 111); 4 Mar 2008 23:03:07 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Tue, 04 Mar 2008 18:03:07 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 04 Mar 2008 18:03:07 -0500
-Content-Disposition: inline
-In-Reply-To: <47CD6D1C.1080202@gmx.ch>
+	id S934304AbYCDXKb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Mar 2008 18:10:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934618AbYCDXKa
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Mar 2008 18:10:30 -0500
+Received: from iabervon.org ([66.92.72.58]:60762 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S934594AbYCDXK1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Mar 2008 18:10:27 -0500
+Received: (qmail 23143 invoked by uid 1000); 4 Mar 2008 23:10:25 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 4 Mar 2008 23:10:25 -0000
+In-Reply-To: <200803040402.57993.johan@herland.net>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76152>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76153>
 
-On Tue, Mar 04, 2008 at 04:39:08PM +0100, Jean-Luc Herren wrote:
+On Tue, 4 Mar 2008, Johan Herland wrote:
 
-> In gitk, whenever I select a commit in the tree, the SHA1 field
-> gets automatically selected, putting its hash into the current
-> selection for easy pasting into other applications.  I wonder if I
-> can disable this, because I find it rather annoying; if I do
-> happen to want to paste the hash somewhere, I can easily double
-> click the SHA1 field.
+> On Monday 03 March 2008, Daniel Barkalow wrote:
+> > On Mon, 3 Mar 2008, Johan Herland wrote:
+> > 
+> > > Not sure what's going on here, yet, but I thought I'd give you a heads up.
+> > 
+> > I figured it out, and pushed out a fix; it was doing everything correctly, 
+> > but it wrote to the alternates files after the library had read that file, 
+> > so it then didn't notice that it actually had the objects that are in the 
+> > second alternate repository.
+> 
+> Thanks. After looking a bit more at the original test repo where I found
+> this issue, I discovered another, similar bug. This one seems ugly; brace
+> yourself:
+> 
+> In some cases (I'm not exactly sure of all the preconditions) when
+> cloning with "--reference", it seems git tries to access a loose object
+> in the "--reference" repo instead of in the cloned repo, even if that
+> object is already present in the cloned repo and _missing_ in the
+> "--reference" repo. The symptom is this error message:
+>     error: Trying to write ref $ref with nonexistant object $sha1
+> 
+> After playing around with this in gdb, it seems the problem is all the
+> way down in sha1_file_name() (sha1_file.c). This function is responsible
+> for generating the loose object filename for a given $sha1. It keeps a
+> static char *base which is initially set to the object directory name,
+> and then calls fill_sha1_path() to copy the rest of the object filename
+> into the following bytes. On subsequent calls, only the fill_sha1_path()
+> part is done, thereby reusing the base from the previous invocation.
 >
-> This is specially annoying when I select a hash in xterm and then
-> start gitk to paste it in the SHA1 field.  But immediately after
-> gitk opens, it preselects the current HEAD, overwriting my
-> previous selection from xterm.
->
-> Generally I think an application should not replace the selection
-> unless the user explicitely marks something.  Although I can
-> understand that it can be useful sometimes with gitk.  Therefore
-> it should maybe be optional.
+> What I observe is that this base is not reset after accessing loose
+> objects in the "--reference" repo. Thus, later when accessing objects in
+> the cloned repo, sha1_file_name() generates incorrect filenames (pointing
+> to the "--reference" repo instead of the cloned repo).
+> 
+> Of course, this often goes undetected since the "--reference" repo often
+> have the same loose objects as the clone.
+> 
+> Unfortunately (from a builtin git-clone's POV) this seems to be
+> symptomatic of a deeper problem in this part of the code: Using
+> function-static variables as caches only works as far as the cache
+> is in sync with reality. Especially when switching between multiple
+> repositories within the same process, it seems that several of these
+> variables are left with invalid data in them. This needs to be fixed,
+> if not only for now, then at least as part of the libification effort.
+> 
+> I'm not sure what is the best way of fixing this issue; my initial guess
+> is to move these function-static variables out to file-level, and make
+> sure they're properly reset whenever the appropriate context is changed
+> (typically when set_git_dir() is called, I guess).
 
-The patch below seems to work for me (see the "auto-select sha1" option
-under preferences). However, I don't actually know tcl, so I
-cargo-culted all of the option processing magic. Paul, if you want to
-take this patch, please read it carefully. ;)
+I think we should be able to avoid setting git_dir to anything other than 
+the repo we're creating, which would avoid this problem for the present, 
+although, as you say, it would be good to be able to switch around as 
+instructed for libification purposes eventually.
 
--- >8 --
-gitk: make autoselect optional
-
-Some users find it annoying to have the selection automatically changed
-without any user intervention, since it can overwrite something they
-actually wanted to keep in the selection buffer.
-
----
- gitk-git/gitk |   17 ++++++++++++++---
- 1 files changed, 14 insertions(+), 3 deletions(-)
-
-diff --git a/gitk-git/gitk b/gitk-git/gitk
-index f1f21e9..915dfb8 100644
---- a/gitk-git/gitk
-+++ b/gitk-git/gitk
-@@ -1163,6 +1163,7 @@ proc savestuff {w} {
-     global viewname viewfiles viewargs viewperm nextviewnum
-     global cmitmode wrapcomment datetimeformat limitdiffs
-     global colors bgcolor fgcolor diffcolors diffcontext selectbgcolor
-+    global autoselect
- 
-     if {$stuffsaved} return
-     if {![winfo viewable .]} return
-@@ -1177,6 +1178,7 @@ proc savestuff {w} {
- 	puts $f [list set maxwidth $maxwidth]
- 	puts $f [list set cmitmode $cmitmode]
- 	puts $f [list set wrapcomment $wrapcomment]
-+	puts $f [list set autoselect $autoselect]
- 	puts $f [list set showneartags $showneartags]
- 	puts $f [list set showlocalchanges $showlocalchanges]
- 	puts $f [list set datetimeformat $datetimeformat]
-@@ -4650,6 +4652,7 @@ proc selectline {l isnew} {
-     global commentend idtags linknum
-     global mergemax numcommits pending_select
-     global cmitmode showneartags allcommits
-+    global autoselect
- 
-     catch {unset pending_select}
-     $canv delete hover
-@@ -4705,8 +4708,10 @@ proc selectline {l isnew} {
-     set currentid $id
-     $sha1entry delete 0 end
-     $sha1entry insert 0 $id
--    $sha1entry selection from 0
--    $sha1entry selection to end
-+    if {$autoselect} {
-+	$sha1entry selection from 0
-+	$sha1entry selection to end
-+    }
-     rhighlight_sel $id
- 
-     $ctext conf -state normal
-@@ -7943,7 +7948,7 @@ proc doprefs {} {
-     global maxwidth maxgraphpct
-     global oldprefs prefstop showneartags showlocalchanges
-     global bgcolor fgcolor ctext diffcolors selectbgcolor
--    global tabstop limitdiffs
-+    global tabstop limitdiffs autoselect
- 
-     set top .gitkprefs
-     set prefstop $top
-@@ -7973,6 +7978,11 @@ proc doprefs {} {
-     checkbutton $top.showlocal.b -variable showlocalchanges
-     pack $top.showlocal.b $top.showlocal.l -side left
-     grid x $top.showlocal -sticky w
-+    frame $top.autoselect
-+    label $top.autoselect.l -text [mc "Auto-select sha1"] -font optionfont
-+    checkbutton $top.autoselect.b -variable autoselect
-+    pack $top.autoselect.b $top.autoselect.l -side left
-+    grid x $top.autoselect -sticky w
- 
-     label $top.ddisp -text [mc "Diff display options"]
-     grid $top.ddisp - -sticky w -pady 10
-@@ -8463,6 +8473,7 @@ set maxlinelen 200
- set showlocalchanges 1
- set limitdiffs 1
- set datetimeformat "%Y-%m-%d %H:%M:%S"
-+set autoselect 1
- 
- set colors {green red blue magenta darkgrey brown orange}
- set bgcolor white
--- 
-1.5.4.3.530.gbda49
-
+	-Daniel
+*This .sig left intentionally blank*
