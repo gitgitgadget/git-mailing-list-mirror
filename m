@@ -1,95 +1,109 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH] Make builtin-reset.c use parse_options.
-Date: Tue, 04 Mar 2008 10:45:28 +0100
-Message-ID: <20080304094527.GB32019@artemis.madism.org>
-References: <47C98472.8000002@gmail.com> <7vir05x2di.fsf@gitster.siamese.dyndns.org> <1b46aba20803020437p2a5128a5wfee3e98c32c1a610@mail.gmail.com> <7vbq5xqetq.fsf@gitster.siamese.dyndns.org> <1b46aba20803030607v726a6ba1y49ca8524e09c6eae@mail.gmail.com> <20080303170706.GA23210@artemis.madism.org> <7vwsojfn2v.fsf@gitster.siamese.dyndns.org>
+From: Michal Rokos <michal.rokos@nextsoft.cz>
+Subject: [PATCH] Configure test for FREAD_READS_DIRECTORIES
+Date: Tue, 4 Mar 2008 10:48:53 +0100
+Organization: NextSoft
+Message-ID: <200803041048.53399.michal.rokos@nextsoft.cz>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="p4qYPpj5QlsIQJ0K";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: Carlos Rica <jasampler@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 04 10:46:18 2008
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+To: GIT <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Mar 04 11:01:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWTis-0002Y9-DP
-	for gcvg-git-2@gmane.org; Tue, 04 Mar 2008 10:46:10 +0100
+	id 1JWTx6-0007Ac-Fd
+	for gcvg-git-2@gmane.org; Tue, 04 Mar 2008 11:00:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753748AbYCDJpc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Mar 2008 04:45:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753470AbYCDJpb
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Mar 2008 04:45:31 -0500
-Received: from pan.madism.org ([88.191.52.104]:33823 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753167AbYCDJpa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Mar 2008 04:45:30 -0500
-Received: from madism.org (def92-2-81-57-219-236.fbx.proxad.net [81.57.219.236])
+	id S1755549AbYCDKAN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Mar 2008 05:00:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755453AbYCDKAN
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Mar 2008 05:00:13 -0500
+Received: from holub.nextsoft.cz ([195.122.198.235]:45688 "EHLO
+	holub.nextsoft.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754762AbYCDKAL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Mar 2008 05:00:11 -0500
+X-Greylist: delayed 669 seconds by postgrey-1.27 at vger.kernel.org; Tue, 04 Mar 2008 05:00:10 EST
+Received: by holub.nextsoft.cz (Postfix, from userid 111)
+	id CDB9C8D8; Tue,  4 Mar 2008 10:48:58 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by holub.nextsoft.cz (Postfix) with ESMTP id C9B568E3
+	for <git@vger.kernel.org>; Tue,  4 Mar 2008 10:48:57 +0100 (CET)
+Received: from holub.nextsoft.cz ([127.0.0.1])
+	by localhost (holub.nextsoft.cz [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 05549-10 for <git@vger.kernel.org>;
+	Tue, 4 Mar 2008 10:48:57 +0100 (CET)
+Received: from 89-24-113-79.i4g.tmcz.cz (89-24-113-79.i4g.tmcz.cz [89.24.113.79])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 22D262F8C4;
-	Tue,  4 Mar 2008 10:45:29 +0100 (CET)
-Received: by madism.org (Postfix, from userid 1000)
-	id 608B02BEB49; Tue,  4 Mar 2008 10:45:28 +0100 (CET)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Carlos Rica <jasampler@gmail.com>, git@vger.kernel.org
+	(Client did not present a certificate)
+	by holub.nextsoft.cz (Postfix) with ESMTP id 54FEB872
+	for <git@vger.kernel.org>; Tue,  4 Mar 2008 10:48:57 +0100 (CET)
+User-Agent: KMail/1.9.9
 Content-Disposition: inline
-In-Reply-To: <7vwsojfn2v.fsf@gitster.siamese.dyndns.org>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+X-Bogosity: Ham, tests=bogofilter, spamicity=0.000000, version=1.0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76057>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76058>
 
+Hello,
 
---p4qYPpj5QlsIQJ0K
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+this patch adds missing tests for FREAD_READS_DIRECTORIES.
 
-On Mon, Mar 03, 2008 at 10:40:40PM +0000, Junio C Hamano wrote:
-> Pierre Habouzit <madcoder@debian.org> writes:
->=20
-> > On Mon, Mar 03, 2008 at 02:07:57PM +0000, Carlos Rica wrote:
-> >> On Sun, Mar 2, 2008 at 5:18 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> >> >  Although "--h" still favors "--hard" over "--help":
-> >> >
-> >> >         $ ./git-reset --h
-> >> >         HEAD is now at c149184...
-> >> >
-> >>=20
-> >> Pierre, is there a way to give preference to --help over --hard
-> >> when someone uses --h in command line?
-> >
-> >   The problem is that --help (and --help-all for the matter) are "magic"
-> > arguments that parse-options is not aware of when it deals with
-> > abbreviations.
->=20
-> Yeah, I do not know if this really matters in real life, though.
+Signed-off-by: Michal Rokos <michal.rokos@nextsoft.cz>
 
-  I'm not sure either, that's why I didn't really bothered to _write_
-the patch, I just mentioned how to do that if someone cares enough.
-
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---p4qYPpj5QlsIQJ0K
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBHzRo3vGr7W6HudhwRAkEiAJ91nMmtJAe4UHd+KwDx9OyzWdWeGwCdEFVS
-fu4uCbsMmWCjwXM+YI4evhE=
-=ZZQF
------END PGP SIGNATURE-----
-
---p4qYPpj5QlsIQJ0K--
+diff --git a/Makefile b/Makefile
+index ca5aad9..344ab49 100644
+--- a/Makefile
++++ b/Makefile
+@@ -526,6 +526,7 @@ ifeq ($(uname_S),HP-UX)
+ 	NO_UNSETENV = YesPlease
+ 	NO_HSTRERROR = YesPlease
+ 	NO_SYS_SELECT_H = YesPlease
++	FREAD_READS_DIRECTORIES = UnfortunatelyYes
+ endif
+ ifneq (,$(findstring arm,$(uname_M)))
+ 	ARM_SHA1 = YesPlease
+diff --git a/config.mak.in b/config.mak.in
+index ee6c33d..516c468 100644
+--- a/config.mak.in
++++ b/config.mak.in
+@@ -46,3 +46,4 @@ NO_MKDTEMP=@NO_MKDTEMP@
+ NO_ICONV=@NO_ICONV@
+ OLD_ICONV=@OLD_ICONV@
+ NO_DEFLATE_BOUND=@NO_DEFLATE_BOUND@
++FREAD_READS_DIRECTORIES=@FREAD_READS_DIRECTORIES@
+diff --git a/configure.ac b/configure.ac
+index 85d7ef5..0ac28f6 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -326,6 +326,27 @@ else
+ 	NO_C99_FORMAT=
+ fi
+ AC_SUBST(NO_C99_FORMAT)
++#
++# Define FREAD_READS_DIRECTORIES if your are on a system which succeeds
++# when attempting to read from an fopen'ed directory.
++AC_CACHE_CHECK([whether system succeeds to read fopen'ed directory],
++ [ac_cv_fread_reads_directories],
++[
++AC_RUN_IFELSE(
++	[AC_LANG_PROGRAM([AC_INCLUDES_DEFAULT],
++		[[char c;
++		FILE *f = fopen("/etc", "r");
++		if (! f) return 0;
++		if (f && fread(&c, 1, 1, f) > 0) return 1]])],
++	[ac_cv_fread_reads_directories=no],
++	[ac_cv_fread_reads_directories=yes])
++])
++if test $ac_cv_fread_reads_directories = yes; then
++	FREAD_READS_DIRECTORIES=UnfortunatelyYes
++else
++	FREAD_READS_DIRECTORIES=
++fi
++AC_SUBST(FREAD_READS_DIRECTORIES)
+ 
+ 
+ ## Checks for library functions.
