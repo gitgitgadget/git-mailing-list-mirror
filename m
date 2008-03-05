@@ -1,63 +1,59 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] user.default: New config to prevent using the default
- values for user.*
-Date: Wed, 05 Mar 2008 14:53:02 -0800
-Message-ID: <7vwsogkckx.fsf@gitster.siamese.dyndns.org>
-References: <1204744684-2043-1-git-send-email-sbejar@gmail.com>
- <7vr6eolv0r.fsf@gitster.siamese.dyndns.org>
- <8aa486160803051433h2a5f0aeenaf473784198276f6@mail.gmail.com>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: How to make gitk not overwrite my selection?
+Date: Thu, 6 Mar 2008 12:00:02 +1300
+Message-ID: <46a038f90803051500w508b3093l7061d44828600a5d@mail.gmail.com>
+References: <47CD6D1C.1080202@gmx.ch>
+	 <20080304230306.GA18246@sigill.intra.peff.net> <47CF223A.60507@gmx.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-To: =?utf-8?Q?Santi_B=C3=A9jar?= <sbejar@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 05 23:54:36 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Jeff King" <peff@peff.net>, "Paul Mackerras" <paulus@samba.org>,
+	git@vger.kernel.org
+To: "Jean-Luc Herren" <jlh@gmx.ch>
+X-From: git-owner@vger.kernel.org Thu Mar 06 00:01:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JX2VE-00075S-Rg
-	for gcvg-git-2@gmane.org; Wed, 05 Mar 2008 23:54:25 +0100
+	id 1JX2bg-0001Kc-Og
+	for gcvg-git-2@gmane.org; Thu, 06 Mar 2008 00:01:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764121AbYCEWxT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 5 Mar 2008 17:53:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764030AbYCEWxS
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 17:53:18 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:33178 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1763239AbYCEWxQ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 5 Mar 2008 17:53:16 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 405B419F0;
-	Wed,  5 Mar 2008 17:53:14 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 880B619EE; Wed,  5 Mar 2008 17:53:10 -0500 (EST)
-In-Reply-To: <8aa486160803051433h2a5f0aeenaf473784198276f6@mail.gmail.com>
- (Santi =?utf-8?Q?B=C3=A9jar's?= message of "Wed, 5 Mar 2008 23:33:41 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1765712AbYCEXAK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Mar 2008 18:00:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765730AbYCEXAI
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 18:00:08 -0500
+Received: from ug-out-1314.google.com ([66.249.92.173]:12167 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1765731AbYCEXAG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Mar 2008 18:00:06 -0500
+Received: by ug-out-1314.google.com with SMTP id z38so3520131ugc.16
+        for <git@vger.kernel.org>; Wed, 05 Mar 2008 15:00:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=PoH0z2CO/lNFwqy4WDbMlS7nufewj2xlyyHD74UYjkk=;
+        b=hMqjEoc42ITgTTa96HSp0v1l53EQ4TUuN2jUelPQ3OUdRAjY44gdCZ3sC5oNUJYEH0esmdeBZi0ZOsOfLHufoNq5P4Jr8D9yBukwda6nmhqN4l2b1JDogqUk6gJs0Dz7wg8YmUKV12ITmMaxD+rvVw+bY+v44rz/Z75SPuU74dw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=q7cgXf8L24pD/Rz0NWkbpT3iElzQGdLyji5GdsOF99tCBXxyVXg9uIGERD+UkxxKqBk11ai49sYjzaIiDmtiKH8CqKl/gJuXDx9zSAistDlpKi+upkNrHPQ7VBGXOQ6eNPw90Eghn7SqB3FGWelf3RI1iv0ULCtM3FgJ+D7jKOY=
+Received: by 10.66.220.12 with SMTP id s12mr115634ugg.15.1204758002478;
+        Wed, 05 Mar 2008 15:00:02 -0800 (PST)
+Received: by 10.66.252.6 with HTTP; Wed, 5 Mar 2008 15:00:02 -0800 (PST)
+In-Reply-To: <47CF223A.60507@gmx.ch>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76285>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76286>
 
-"Santi B=C3=A9jar" <sbejar@gmail.com> writes:
+On Thu, Mar 6, 2008 at 11:44 AM, Jean-Luc Herren <jlh@gmx.ch> wrote:
+>  Thanks, I don't know tcl either, but the patch seems to work great
+>  here.
 
-> On Wed, Mar 5, 2008 at 10:29 PM, Junio C Hamano <gitster@pobox.com> w=
-rote:
->
->>  Perhaps you can make git-init run a post-init hook script by
->>  default, and have ~/.gitconfig specify the location of it, and
->>  have it do whatever custom settings to the per-repository
->>  configuration file?
->
-> I would still need something to prevent doing a commit without a
-> locally specified name/email.
-
-Yes, but that something could simply be "echo '[user] name'
->.git/config" in that hook, for example.
+Taking it too here. Welcome option.
 
 
 
+m
