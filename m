@@ -1,71 +1,93 @@
-From: "David Symonds" <dsymonds@gmail.com>
-Subject: Re: git-svn and logging.. new to git
-Date: Wed, 5 Mar 2008 23:01:34 +1100
-Message-ID: <ee77f5c20803050401o7f33522dj6dd0f0f1c0a78f96@mail.gmail.com>
-References: <fqloop$ll$1@ger.gmane.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git-log segfault on 00 graft
+Date: Wed, 5 Mar 2008 13:43:31 +0100 (CET)
+Message-ID: <alpine.LSU.1.00.0803051335440.4448@racer.site>
+References: <Pine.LNX.4.64.0803041954320.7660@fbirervta.pbzchgretzou.qr> <alpine.LSU.1.00.0803041908210.22527@racer.site> <20080305050630.GX8410@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Kenneth P. Turvey" <kt-usenet@squeakydolphin.com>
-X-From: git-owner@vger.kernel.org Wed Mar 05 13:02:58 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jan Engelhardt <jengelh@computergmbh.de>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Mar 05 13:44:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWsKW-0001JY-5w
-	for gcvg-git-2@gmane.org; Wed, 05 Mar 2008 13:02:40 +0100
+	id 1JWsyn-0006EJ-Vd
+	for gcvg-git-2@gmane.org; Wed, 05 Mar 2008 13:44:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933995AbYCEMBj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Mar 2008 07:01:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932820AbYCEMBi
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 07:01:38 -0500
-Received: from rv-out-0910.google.com ([209.85.198.184]:5022 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933984AbYCEMBg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Mar 2008 07:01:36 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so870861rvb.1
-        for <git@vger.kernel.org>; Wed, 05 Mar 2008 04:01:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=PMrkZSb4I9UL7+KOseWkPlTTcbHnKRBq0+FcTjDRkos=;
-        b=bBWVWHW/pyNiIamM+xPxfVUdlqbkgEQu9b3jrZj/6PQ4ecrnNqRit0GczEmVeKm2Le8C/j2utW3y/eVGrAGcQw6BQ9q+lSLftPNbPyz3bRBv3n93sgYul+nuMeBBIV2ihf3A1bAIydl7DhM4OH0+42pY6vJpCrBQfxtUxSXksmo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=e0HclTuQ/3iT149vUPkFl87XusGWVFbv/jFVnpU9SeIi16jvgRW871nDzvQjjT0W2W6UfZRtIwx9kINvh+ZXpu7XHAu2ag+Qjb0f5RjnJoqjeQAGdy/6mKnr0ywSGz9fRY3h80gFlRfpODPkW4bMOVDpvKgvFesOnCweNnQxEcw=
-Received: by 10.141.114.21 with SMTP id r21mr1159507rvm.154.1204718494893;
-        Wed, 05 Mar 2008 04:01:34 -0800 (PST)
-Received: by 10.140.135.17 with HTTP; Wed, 5 Mar 2008 04:01:34 -0800 (PST)
-In-Reply-To: <fqloop$ll$1@ger.gmane.org>
-Content-Disposition: inline
+	id S1757974AbYCEMnk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Mar 2008 07:43:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757944AbYCEMnk
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 07:43:40 -0500
+Received: from mail.gmx.net ([213.165.64.20]:39403 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1757339AbYCEMni (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Mar 2008 07:43:38 -0500
+Received: (qmail invoked by alias); 05 Mar 2008 12:43:33 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp057) with SMTP; 05 Mar 2008 13:43:33 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/2J94fmL/2m8dDNnzaF8VfAkHnUAKSr9tk2D/5NX
+	J7LTwHnFYxJpMU
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20080305050630.GX8410@spearce.org>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76212>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76213>
 
-On Wed, Mar 5, 2008 at 8:22 PM, Kenneth P. Turvey
-<kt-usenet@squeakydolphin.com> wrote:
-> I'm in the process of moving to git from subversion and I've run into
->  something I just don't understand.  I've moved one project from subversion
->  using git-svnimport and that went successfully.  Unfortunately the latest
->  git doesn't include svnimport so I'm trying to do the same thing with
->  git-svn.  It seems to have worked without any problem, but when I do "git
->  log"  I don't see all the entries I see when I do "svn log" on the same
->  project in subversion.  So, now I have to ask myself, "have I lost changes
->  in the import?"
->
->  The command I used to import the source code is:
->
->   git-svn clone file:///home/kt/oldsvn/Personal/Projects/Journal \
->   --trunk=trunk --branches=branches --tags=tags
+Hi,
 
-git-svn creates a whole bunch of remote branches -- does "git branch
--a" show them up?
+On Wed, 5 Mar 2008, Shawn O. Pearce wrote:
 
-Also, you can probably leave out the --trunk, etc., and just use --stdlayout.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > On Tue, 4 Mar 2008, Jan Engelhardt wrote:
+> > 
+> > > I was playing a bit with grafts, and actually did this:
+> > > 
+> > >   echo '839affa3313011da783b5b8074a5c9805ee8503a 
+> > > 0000000000000000000000000000000000000000' >.git/info/grafts
+> > > 
+> > > running `git log --topo-order` causes a segfault. Yes, I probably 
+> > > "should not be doing that", but I think it at least should not 
+> > > segfault.
+> > 
+> > Well, I agree with the first, but not the latter.  grafts are a really 
+> > core and plumbing thing, and if you set it to something nonsensical, I 
+> > think you should expect something like a segmentation fault.
+> 
+> I'm sorry, I don't know where you learned to program Dscho, but my 
+> mentors always taught me that user input should be handled with care, 
+> and SIGSEGV / SIGBUS / SIGILL is not handling with care!
 
+I agree.
 
-Dave.
+> We tell users to popuate the .git/info/grafts file.  By hand.
+> Its user input.  We shouldn't segfault over a malformed entry.
+
+Well, I disagree about the user input.  .git/info/grafts can break tons of 
+things, just by _existing_.  So you definitely need to know what you are 
+doing.
+
+Just inserting random strings into the grafts file is not an option. It is 
+not something that we should take pains to catch... just like a Unix 
+system does not prevent "rm -rf /" as root.
+
+So again, I do think that a segmentation fault is not good.  But I 
+disagree that you have to go to great lengths to prevent a segmentation 
+fault when a user is fiddling with internals without even knowing what 
+could happen.
+
+IOW in this case, the _user input_ would have better been crafted with 
+care, and it was clearly not.
+
+But as has been pointed out, the segfault has been already fixed (most 
+likely by one of Martin's patches), so the discussion about this 
+particular problem is moot.
+
+Ciao,
+Dscho
+
