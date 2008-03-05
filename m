@@ -1,151 +1,72 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: tracking renames
-Date: Wed, 5 Mar 2008 17:15:56 +0100
-Message-ID: <200803051715.58375.jnareb@gmail.com>
-References: <20080304135734.b2c2f473.akpm@linux-foundation.org> <m3zltegmj0.fsf@localhost.localdomain> <965172C8-C7A4-4932-899B-1E1A77BD7C12@yahoo.ca>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: GSoC 2008 - Mentors Wanted!
+Date: Wed, 5 Mar 2008 17:37:20 +0100 (CET)
+Message-ID: <alpine.LSU.1.00.0803051736100.15786@racer.site>
+References: <20080304051149.GS8410@spearce.org>  <1b46aba20803041247h5cc64186q2abf7973372fd3ef@mail.gmail.com>  <20080305053612.GA8410@spearce.org>  <7bfdc29a0803042358n6126286dr7a17f3b4dadbabe5@mail.gmail.com>  <20080305081523.GK8410@spearce.org>
+ <7bfdc29a0803050025p45dfcea9q87a1107a8bed46a6@mail.gmail.com> <47CEB44F.9040404@peralex.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Andrew Morton <akpm@linux-foundation.org>,
-	"Harvey Harrison" <harvey.harrison@gmail.com>, git@vger.kernel.org
-To: =?iso-8859-1?q?Jean-Fran=E7ois_Veillette?= 
-	<jean_francois_veillette@yahoo.ca>
-X-From: git-owner@vger.kernel.org Wed Mar 05 17:16:36 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Imran M Yousuf <imyousuf@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Carlos Rica <jasampler@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Noel Grandin <noel@peralex.com>
+X-From: git-owner@vger.kernel.org Wed Mar 05 17:38:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWwI0-00087w-EX
-	for gcvg-git-2@gmane.org; Wed, 05 Mar 2008 17:16:20 +0100
+	id 1JWwcz-0000pC-R7
+	for gcvg-git-2@gmane.org; Wed, 05 Mar 2008 17:38:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755886AbYCEQPm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 5 Mar 2008 11:15:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755784AbYCEQPl
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 11:15:41 -0500
-Received: from ug-out-1314.google.com ([66.249.92.171]:17668 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753260AbYCEQPk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Mar 2008 11:15:40 -0500
-Received: by ug-out-1314.google.com with SMTP id z38so3348386ugc.16
-        for <git@vger.kernel.org>; Wed, 05 Mar 2008 08:15:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=D/mHZaQ0jl0OIEKRIiyMt4/ex8Lm2pu7XNVQ4wO//Go=;
-        b=Y1qHLbJVQfmJmjrDQIpnccwfc17FKgn8pB54TIHPyBDuf+yqKNbkNk7xxgA+yioVTi+DXIeHsRwfNq32ELLs05zGnddUvL78ufttEiB+j/Nsn6nfyRWnGWe0EbWfuN3ujVxmY5AQopz4aawX1c+rk7tUPaUvkMTZ9cBHkeg2chk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=d7fE08AnJnT4aPIL2sjuAQANPwUZpo6Oeu+4i7oSeH3HufabNg9krU2w+ZC5DeOE/vFJeXZx7Jv6YTOn3G8XatfrqOoWOy6Q8JQw1ZMwNJsSeRL05BtICbT6TFDRByr+P8AquIp03QtjH1Lnllv9HmrR/IvR5WC7dBbL6bGeQKU=
-Received: by 10.66.244.2 with SMTP id r2mr6547721ugh.64.1204733738544;
-        Wed, 05 Mar 2008 08:15:38 -0800 (PST)
-Received: from ?192.168.1.15? ( [83.8.248.32])
-        by mx.google.com with ESMTPS id y7sm13088857ugc.16.2008.03.05.08.15.34
-        (version=SSLv3 cipher=OTHER);
-        Wed, 05 Mar 2008 08:15:36 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <965172C8-C7A4-4932-899B-1E1A77BD7C12@yahoo.ca>
-Content-Disposition: inline
+	id S1753866AbYCEQhW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Mar 2008 11:37:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753609AbYCEQhW
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 11:37:22 -0500
+Received: from mail.gmx.net ([213.165.64.20]:33538 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750921AbYCEQhV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Mar 2008 11:37:21 -0500
+Received: (qmail invoked by alias); 05 Mar 2008 16:37:19 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp041) with SMTP; 05 Mar 2008 17:37:19 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/7pCFQatT7hOynHIPUfpVofR7f3NYn6XmdV9I3ej
+	gaF21pbgoSUWAi
+X-X-Sender: gene099@racer.site
+In-Reply-To: <47CEB44F.9040404@peralex.com>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76239>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76240>
 
-On Wed, 5 Mar 2008, Jean-Fran=E7ois Veillette wrote:
-> Le 08-03-04 =E0 17:19, Jakub Narebski a =E9crit :
->> Andrew Morton <akpm@linux-foundation.org> writes:
->>>
->>> On Tue, 4 Mar 2008 14:03:54 -0800
->>> "Harvey Harrison" <harvey.harrison@gmail.com> wrote:
->>>>
->>>> git-whatchanged --follow drivers/watchdog/iTCO_wdt.c
->>>>
->>>
->>> Oh.  Thanks.  It seems dumb that one needs to add an option to get
->>> it to do this.
->>
->> In "git log <paths>..." or "git whatchanged <paths>..." the <paths>
->> option is "path limiter" and can be a directory. There can be more
->> than one path. And following renames is more costly.
->=20
-> Am I the only one who think rename could be explicit?
+Hi,
 
-No, you are not the only one. Use Bazaar-NG (bzr) or Mercurial (hg)
-if you think you truly need rename _tracking_ as opposed to rename
-_detection_.
+On Wed, 5 Mar 2008, Noel Grandin wrote:
 
-> Don't take me wrong, I do appreciate the fact that git recognize =20
-> renames after-the-fact, when specifically asked for it.
-> But as a developer, at some point, a rename is no longer a point-of-=20
-> view discovery, a rename is a rename by 'design', by the nature =20
-> itself of the change, it's no longer an after-the fact realisation.
+> Imran M Yousuf wrote:
+> > To start with I was actually thinking of JNI + "exec from C". So later
+> > when libification is completed we can replace the execs with call to
+> > the libs directly instead. Is this a viable fourth option (sorry I
+> > forgot to mention it the first time around)?
+> >
+> >   
+> 
+> This is probably a good idea. JGIT is always going to be 2 steps behind
+> the native GIT code when comes to accessing on-disk structures.
 
-There is a point why git does rename detection and not (usually=20
-file-id / file-inode based) rename tracking, besides historical
-reasons. This discussion crops now and there; you can search mailing
-list archives (and perhaps look up GitFaq at GitWiki).
+Well, if you go the JNI route, you will always be platform dependent.  IMO 
+this is one of the lesser intelligent things to do when relying on Java.
 
-> It seem to me that no mather how smart we try to discover renames, =20
-> there will always be cases where algorithm won't discover due to time=
-/=20
-> space/other constraints.
+> This is also how the subversion plugin for the Eclipse IDE worked in the 
+> beginning and the performance seemed to be acceptable (to me).
 
-Then we will improve rename (and copy) detection heuristics.
+Git is much faster than subversion, so you will feel the overhead of 
+fork()ing, especially on Windows.
 
-> I would like something like 'graft' where after the fact, we can =20
-> educate git that there is a connection between 2 commits.  In a =20
-> similar way, at some point, I would like to tell git, 'ok stop trying=
- =20
-> to figure out which changes are renames, you guessed it right for the=
- =20
-> last 10 times, just freeze it ... but let me adjust it if you guessed=
- =20
-> it wrong'.
+Ciao,
+Dscho
 
-There was idea of _local_ second level of rerere (reuse resolved=20
-resolution of conficting merges), more persistant, which would remember=
-=20
-tree merge conflicts (rename detection and other such conflicts).
-But as far as I know it never got implemented.
-=20
-IMVHO it is only sensible solution, see below.
-
-> This is a comment from  a git user, I've not looked at the code at =20
-> all (and probably won't do anytime soon).
-
-=46irst, I think it could be good idea to store helper advisiory=20
-information about explicitely stated renames, or tree merge resolutions=
-=20
-as a [proposed] 'note' header in commit object, to be remembered when=20
-traversing graph of commits to find common ancestor(s) and later reuse=20
-in rename detection. But this never got past the wishful thinking...
-
-
-Explicit rename tracking has many caveats.=20
-
-If you remember it with commit info, you would loose at least somewhat=20
-nice assertion that only endpoints (which includes merge bases) matters=
-=20
-when doing merge, not the path taken.  IIRC it is what Mercurial does.
-
-If you use some kind of automatic assigned file-ids (file-inodes) you=20
-can have problems with independently added (on different branches)=20
-files.  Linus also suggests that if you have file-id conflict, you=20
-would have to resolve it again, and again, and again.  IIRC it is what=20
-Bazaar-NG (following original Arch idea) does.
-
-And of course with rename (and copy) tracking you _have_ to explicitely
-state renames, which is a bit out of question if some of your commits=20
-comes as a patches in email, or from foreign SCM. Or if you forget to=20
-explicitely state rename.
-
-
-Besides wholefile rename tracking is only small fragment of dealing wit=
-h=20
-code movement, something what "git gui blame" ("git blame -C -C") is=20
-good at...
-
---=20
-Jakub Narebski
-Poland
