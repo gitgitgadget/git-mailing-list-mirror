@@ -1,61 +1,71 @@
-From: Teemu Likonen <tlikonen@iki.fi>
-Subject: error: refs/remotes/origin/HEAD points nowhere!
-Date: Wed, 5 Mar 2008 13:38:44 +0200
-Message-ID: <200803051338.44938.tlikonen@iki.fi>
+From: "David Symonds" <dsymonds@gmail.com>
+Subject: Re: git-svn and logging.. new to git
+Date: Wed, 5 Mar 2008 23:01:34 +1100
+Message-ID: <ee77f5c20803050401o7f33522dj6dd0f0f1c0a78f96@mail.gmail.com>
+References: <fqloop$ll$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 05 12:39:26 2008
+Cc: git@vger.kernel.org
+To: "Kenneth P. Turvey" <kt-usenet@squeakydolphin.com>
+X-From: git-owner@vger.kernel.org Wed Mar 05 13:02:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWry1-00022H-LF
-	for gcvg-git-2@gmane.org; Wed, 05 Mar 2008 12:39:26 +0100
+	id 1JWsKW-0001JY-5w
+	for gcvg-git-2@gmane.org; Wed, 05 Mar 2008 13:02:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757843AbYCELir (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Mar 2008 06:38:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756799AbYCELir
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 06:38:47 -0500
-Received: from pne-smtpout4-sn1.fre.skanova.net ([81.228.11.168]:37263 "EHLO
-	pne-smtpout4-sn1.fre.skanova.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753252AbYCELir (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 5 Mar 2008 06:38:47 -0500
-Received: from [192.168.0.2] (80.220.180.181) by pne-smtpout4-sn1.fre.skanova.net (7.3.129)
-        id 47A7970A001975BC for git@vger.kernel.org; Wed, 5 Mar 2008 12:38:45 +0100
-User-Agent: KMail/1.9.5
+	id S933995AbYCEMBj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Mar 2008 07:01:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932820AbYCEMBi
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 07:01:38 -0500
+Received: from rv-out-0910.google.com ([209.85.198.184]:5022 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933984AbYCEMBg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Mar 2008 07:01:36 -0500
+Received: by rv-out-0910.google.com with SMTP id k20so870861rvb.1
+        for <git@vger.kernel.org>; Wed, 05 Mar 2008 04:01:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=PMrkZSb4I9UL7+KOseWkPlTTcbHnKRBq0+FcTjDRkos=;
+        b=bBWVWHW/pyNiIamM+xPxfVUdlqbkgEQu9b3jrZj/6PQ4ecrnNqRit0GczEmVeKm2Le8C/j2utW3y/eVGrAGcQw6BQ9q+lSLftPNbPyz3bRBv3n93sgYul+nuMeBBIV2ihf3A1bAIydl7DhM4OH0+42pY6vJpCrBQfxtUxSXksmo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=e0HclTuQ/3iT149vUPkFl87XusGWVFbv/jFVnpU9SeIi16jvgRW871nDzvQjjT0W2W6UfZRtIwx9kINvh+ZXpu7XHAu2ag+Qjb0f5RjnJoqjeQAGdy/6mKnr0ywSGz9fRY3h80gFlRfpODPkW4bMOVDpvKgvFesOnCweNnQxEcw=
+Received: by 10.141.114.21 with SMTP id r21mr1159507rvm.154.1204718494893;
+        Wed, 05 Mar 2008 04:01:34 -0800 (PST)
+Received: by 10.140.135.17 with HTTP; Wed, 5 Mar 2008 04:01:34 -0800 (PST)
+In-Reply-To: <fqloop$ll$1@ger.gmane.org>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76211>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76212>
 
-Hi,
+On Wed, Mar 5, 2008 at 8:22 PM, Kenneth P. Turvey
+<kt-usenet@squeakydolphin.com> wrote:
+> I'm in the process of moving to git from subversion and I've run into
+>  something I just don't understand.  I've moved one project from subversion
+>  using git-svnimport and that went successfully.  Unfortunately the latest
+>  git doesn't include svnimport so I'm trying to do the same thing with
+>  git-svn.  It seems to have worked without any problem, but when I do "git
+>  log"  I don't see all the entries I see when I do "svn log" on the same
+>  project in subversion.  So, now I have to ask myself, "have I lost changes
+>  in the import?"
+>
+>  The command I used to import the source code is:
+>
+>   git-svn clone file:///home/kt/oldsvn/Personal/Projects/Journal \
+>   --trunk=trunk --branches=branches --tags=tags
 
-Very annoying error "error: refs/remotes/origin/HEAD points nowhere!" 
-keeps popping up almost all the time after user has removed remote 
-repository "origin". Here's a kind of real-life example:
+git-svn creates a whole bunch of remote branches -- does "git branch
+-a" show them up?
 
-I have cloned some remote repository:
+Also, you can probably leave out the --trunk, etc., and just use --stdlayout.
 
-  git clone git://project/project.git
 
-After a while I start tracking some other remote repository. I do this:
-
-  git remote add ng git://project-ng/project.git
-
-Then I do "git fetch ng" and probably also "git checkout --track -b 
-master-ng ng/master". Then I find the old "origin" useless to me so I 
-remove it with "git remote rm origin".
-
-It seems that refs/remotes/origin/HEAD is still left in my repository 
-and hence I keep getting these annoying error messages all the time. 
-Well, I know how to delete this file, but I believe that git should 
-have deleted it when I called "git remote rm origin". Am I right? What 
-is the purpose of this refs/remotes/origin/HEAD in the first place?
-
-Anyway, thank you guys for this excellent tool and VCS/SCM system. 
-Generally git is really joy to use and very powerful. Thanks.
+Dave.
