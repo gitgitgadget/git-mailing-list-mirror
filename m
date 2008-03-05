@@ -1,66 +1,80 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: tracking renames
-Date: Wed, 5 Mar 2008 17:39:34 +0100 (CET)
-Message-ID: <alpine.LSU.1.00.0803051738370.15786@racer.site>
-References: <20080304135734.b2c2f473.akpm@linux-foundation.org> <590657100803041403q2cc68e21p1c92c244939eb148@mail.gmail.com> <20080304141029.52b12065.akpm@linux-foundation.org> <m3zltegmj0.fsf@localhost.localdomain>
- <965172C8-C7A4-4932-899B-1E1A77BD7C12@yahoo.ca>
+From: Andy Whitcroft <apw@shadowen.org>
+Subject: Re: [PATCH] shortlog: take the first populated line of the description
+Date: Wed, 5 Mar 2008 16:43:22 +0000
+Message-ID: <20080305164316.GH17931@shadowen.org>
+References: <1204727050.0@pinky> <alpine.LSU.1.00.0803051544160.15786@racer.site>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323584-87992863-1204735175=:15786"
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Harvey Harrison <harvey.harrison@gmail.com>,
-	git@vger.kernel.org
-To: =?ISO-8859-15?Q?Jean-Fran=E7ois_Veillette?= 
-	<jean_francois_veillette@yahoo.ca>
-X-From: git-owner@vger.kernel.org Wed Mar 05 17:41:43 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Mar 05 17:45:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWwf5-0001uH-Qr
-	for gcvg-git-2@gmane.org; Wed, 05 Mar 2008 17:40:12 +0100
+	id 1JWwis-0003t1-4E
+	for gcvg-git-2@gmane.org; Wed, 05 Mar 2008 17:44:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754610AbYCEQje (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Mar 2008 11:39:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754282AbYCEQje
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 11:39:34 -0500
-Received: from mail.gmx.net ([213.165.64.20]:48093 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753913AbYCEQje (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Mar 2008 11:39:34 -0500
-Received: (qmail invoked by alias); 05 Mar 2008 16:39:32 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp017) with SMTP; 05 Mar 2008 17:39:32 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19OjpsQc95ORtpsnnWjpIhR9JIsOnK1o6nC8SuIGJ
-	oi2mNzD19BiO64
-X-X-Sender: gene099@racer.site
-In-Reply-To: <965172C8-C7A4-4932-899B-1E1A77BD7C12@yahoo.ca>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1755463AbYCEQn2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Mar 2008 11:43:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753526AbYCEQn2
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 11:43:28 -0500
+Received: from hellhawk.shadowen.org ([80.68.90.175]:3235 "EHLO
+	hellhawk.shadowen.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753344AbYCEQn2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Mar 2008 11:43:28 -0500
+Received: from localhost ([127.0.0.1] helo=pinky)
+	by hellhawk.shadowen.org with esmtp (Exim 4.63)
+	(envelope-from <apw@shadowen.org>)
+	id 1JWwiF-0007oD-0H; Wed, 05 Mar 2008 16:43:27 +0000
+Content-Disposition: inline
+In-Reply-To: <alpine.LSU.1.00.0803051544160.15786@racer.site>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76241>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76242>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Wed, Mar 05, 2008 at 03:48:00PM +0100, Johannes Schindelin wrote:
+> Hi,
+> 
+> On Wed, 5 Mar 2008, Andy Whitcroft wrote:
+> 
+> > diff --git a/builtin-shortlog.c b/builtin-shortlog.c
+> > index af31aba..b22b0ed 100644
+> > --- a/builtin-shortlog.c
+> > +++ b/builtin-shortlog.c
+> > @@ -70,11 +70,12 @@ static void insert_one_record(struct shortlog *log,
+> >  	else
+> >  		free(buffer);
+> >  
+> > +	/* Skip any leading whitespace, including any blank lines. */
+> > +	while (*oneline && isspace(*oneline))
+> > +		oneline++;
+> >  	eol = strchr(oneline, '\n');
+> >  	if (!eol)
+> >  		eol = oneline + strlen(oneline);
+> > -	while (*oneline && isspace(*oneline) && *oneline != '\n')
+> > -		oneline++;
+> >  	if (!prefixcmp(oneline, "[PATCH")) {
+> >  		char *eob = strchr(oneline, ']');
+> >  		if (eob && (!eol || eob < eol))
+> 
+> Why do you move the code around?  Makes it harder to read your patch.  
+> Besides, you now strip empty lines at the beginning of the commit 
+> messages, right?  Who produces such a thing?
 
---8323584-87992863-1204735175=:15786
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: 8BIT
+I've not moved the code as such.  I added a loop to drop the leading
+whitespace.  That made the second loop redundant as its job is already
+done, so I killed it.
 
-Hi,
+The point of the patch is to strip the empty lines at the start of
+the commit.  I am ending up with them in my repo mostly due to
+imcompetant users of SVN I suspect.  The main driver is that I have
+those and the original non-C version coped and the builtin does not.
 
-On Wed, 5 Mar 2008, Jean-François Veillette wrote:
+Now if people think that its a stupid idea I might suggest it could be
+optional?
 
-> Am I the only one who think rename could be explicit ?
-
-This is one of the most FAQ.  Please see
-
-	http://git.or.cz/gitwiki/GitFaq
-
-Hth,
-Dscho
---8323584-87992863-1204735175=:15786--
+-apw
