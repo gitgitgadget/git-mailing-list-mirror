@@ -1,116 +1,92 @@
-From: Tilman Schmidt <tilman@imap.cc>
-Subject: Re: The 8th airing of the msysGit herald
-Date: Thu, 06 Mar 2008 00:40:17 +0100
-Organization: me - organized??
-Message-ID: <47CF2F61.5060208@imap.cc>
-References: <alpine.LSU.1.00.0803022329560.22527@racer.site>	 <m34pbok54h.fsf@localhost.localdomain>	 <alpine.LSU.1.00.0803030052450.22527@racer.site>	 <200803030210.02223.jnareb@gmail.com> <47CBE85B.6060702@imap.cc>	 <7vablfiv42.fsf@gitster.siamese.dyndns.org> <47CC432B.8060502@imap.cc>	 <7v1w6rh1ru.fsf@gitster.siamese.dyndns.org> <46a038f90803031458t2b404212t10f6e9ae710dc408@mail.gmail.com>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: [PATCH] git-clean: correct printing relative path
+Date: Thu, 6 Mar 2008 02:41:24 +0300
+Message-ID: <20080305234124.GD11519@dpotapov.dyndns.org>
+References: <20080305094058.GF4793@artemis.madism.org> <20080305141720.GA11542@dpotapov.dyndns.org> <20080305155359.GA15843@artemis.madism.org> <20080305155943.GB15843@artemis.madism.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enig2A5B7EE282ACBFC138CBDA46"
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	msysgit@googlegroups.com, git@vger.kernel.org
-To: Martin Langhoff <martin.langhoff@gmail.com>,
+Content-Type: text/plain; charset=us-ascii
+To: Pierre Habouzit <madcoder@debian.org>,
+	Git ML <git@vger.kernel.org>,
 	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 06 00:41:04 2008
+X-From: git-owner@vger.kernel.org Thu Mar 06 00:42:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JX3EK-0006Z9-MN
-	for gcvg-git-2@gmane.org; Thu, 06 Mar 2008 00:41:01 +0100
+	id 1JX3Fs-00077A-BX
+	for gcvg-git-2@gmane.org; Thu, 06 Mar 2008 00:42:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756791AbYCEXkW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Mar 2008 18:40:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756663AbYCEXkW
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 18:40:22 -0500
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:49321 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756636AbYCEXkV (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 5 Mar 2008 18:40:21 -0500
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id 1703BB0F83;
-	Wed,  5 Mar 2008 18:40:21 -0500 (EST)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Wed, 05 Mar 2008 18:40:21 -0500
-X-Sasl-enc: Q2XrBtdjrq4O3DJflBeG9so0Z4ch2RT2tkR4Rd4YM1a3 1204760420
-Received: from [192.168.59.127] (pD9E849B3.dip.t-dialin.net [217.232.73.179])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 908E527BC2;
-	Wed,  5 Mar 2008 18:40:19 -0500 (EST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.0; de-AT; rv:1.8.1.12) Gecko/20080201 SeaMonkey/1.1.8 Mnenhy/0.7.5.666
-In-Reply-To: <46a038f90803031458t2b404212t10f6e9ae710dc408@mail.gmail.com>
-X-Enigmail-Version: 0.95.6
+	id S1761244AbYCEXlc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Mar 2008 18:41:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756351AbYCEXlc
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 18:41:32 -0500
+Received: from fg-out-1718.google.com ([72.14.220.157]:3522 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761244AbYCEXla (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Mar 2008 18:41:30 -0500
+Received: by fg-out-1718.google.com with SMTP id e21so2001608fga.17
+        for <git@vger.kernel.org>; Wed, 05 Mar 2008 15:41:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
+        bh=0DUxM24/w8JPsl/SV7Xhy2THIROd/R06uu9cKASY75I=;
+        b=XtXtGQihd6m8wNqhDVKQNLszgQbCAqNpgYuls0Kgv88A3uMHHNUsxKrKcGKiuH4urMbtQs3NCaeT37EoEU9mOsls2UPX4VNs7S3gD7dzlapQJ6NBvDysL425gDct/6YN2Y9tijM5deBjyzKiO8h8tvHEvWZd+EHWGAuxJZlrgAM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
+        b=fV4C+xsX2mzdoQwRO9dCy2j9bwzaXGJkAecMad2gl4+w8qmA9iIDYf1eohlINtVWopWwVEInWOMeXo4kom2Aut9p15X4cybK397+fFFyG9qnjEsH8Mu/J9JyYXEaxujd02lc5Nvp8ICg/tCOD7CZQS6kksmwNDZdjzdUD6qDDXc=
+Received: by 10.86.59.2 with SMTP id h2mr3742579fga.19.1204760489283;
+        Wed, 05 Mar 2008 15:41:29 -0800 (PST)
+Received: from localhost ( [85.141.189.14])
+        by mx.google.com with ESMTPS id 31sm2740710fkt.14.2008.03.05.15.41.26
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 05 Mar 2008 15:41:27 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20080305155943.GB15843@artemis.madism.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76292>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76293>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig2A5B7EE282ACBFC138CBDA46
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
+On Wed, Mar 05, 2008 at 04:59:43PM +0100, Pierre Habouzit wrote:
+> 
+>   And as far as it goes for your patch, it misses a #include
+> "wt-status.h" 
 
-Am 03.03.2008 23:58 schrieb Martin Langhoff:
-> On Tue, Mar 4, 2008 at 11:37 AM, Junio C Hamano <gitster@pobox.com> wro=
-te:
->>  But if you s/stop/slow down/ what I said, it may start to resemble a =
-more
->>  serious question.
+My bad... I will correct and resend the patch now.
 
-Well, I seriously wouldn't want you to slow down fixing bugs. :-)
-Enhancing features is a slightly different matter, because that
-tends to impress upon insiders a feeling of "how could we ever have
-done without that?" and onwards from there to "how can anybody
-seriously without that?" which then easily creates the impression
-that the answer to every other question from simple users like me
-is "install the newest version, it has a nifty feature that solves
-your problem better than anything already present in the version
-you have!"
+> and for me it gives:
+> 
+>     git clean ..
+>     Removing ../
+>     Removing ../git-clean.patch
+>     Removing ../stFdw8KY
+> 
+> For a tree that had those unclean entries.
+>     ../git-clean.patch
+>     ../stFdw8KY
+> 
+> 
+>   Removing ../ is clearly wrong both times: it didn't really did that
+> (my current dir was the 't/' dir in the git repository for that) and I
+> didn't specified 'git clean -d'.
 
-> Given that git dev has such a frantic pace... would it make sense to
-> give way to some "version inflation"?
->=20
-> This would give end users a more clear sense of how much things have
-> changed -- a 1.4.x to 1.5.x doesn't seem like much. But a 1.5 to 2.0
-> with a "new features summary" will grab a bit of attention, get its
-> slashdot article, and be a more frank communication of the work that's
-> happened, and what the user can expect.
+Hmm... when I ran 'git clean' inside of the 't/' directory in the git
+repository, it did not print any message about removing ../. However,
+when I did the same in a clean repository where the 't/' directory
+contained only untracked files then the 't/' directory and all files
+in it were actually removed even I did not specify '-d'. This happens on
+both 1.5.4 and master versions. IMHO, removing a directory without '-d'
+is incorrect.
 
-You've got a point there.
+In addition, when I ran 'git clean -n ..' at the top a repository, the
+current master version of Git though printed the error that '..' is
+outside the repository, still exited with 0. When I test this with
+1.5.4, git clean exists with 128 after printing the error. Bisect blames
+d089ebaad5315325d67db30176df1bbd7754fda9 for changing the exit code to 0.
 
-But I'd like to suggest something else still: seeing that my git
-mailing list folder has already grown to 363 mails again, of which
-probably only a small fraction will concern me as a user - would
-it be possible to have separate mailing lists for usage topics and
-for discussions of ongoing development? I imagine that might help
-those who just want to use git (like me) to find their way around.
+I will look at git-clean more tomorrow.
 
-Just an idea ...
-
-Thanks,
-Tilman
-
---=20
-Tilman Schmidt                          E-Mail: tilman@imap.cc
-Bonn, Germany
-Diese Nachricht besteht zu 100% aus wiederverwerteten Bits.
-Unge=F6ffnet mindestens haltbar bis: (siehe R=FCckseite)
-
-
---------------enig2A5B7EE282ACBFC138CBDA46
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.3rc1 (MingW32)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
-
-iD8DBQFHzy9hMdB4Whm86/kRAg2FAJ0UYGzBRGg5AJIjJZX7nx0NAjE3ngCZAU7m
-e2bi0L7+uiMKp2mySP0NhEE=
-=flQ2
------END PGP SIGNATURE-----
-
---------------enig2A5B7EE282ACBFC138CBDA46--
+Dmitry
