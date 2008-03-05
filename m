@@ -1,92 +1,184 @@
 From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: [PATCH] git-clean: correct printing relative path
-Date: Thu, 6 Mar 2008 02:41:24 +0300
-Message-ID: <20080305234124.GD11519@dpotapov.dyndns.org>
-References: <20080305094058.GF4793@artemis.madism.org> <20080305141720.GA11542@dpotapov.dyndns.org> <20080305155359.GA15843@artemis.madism.org> <20080305155943.GB15843@artemis.madism.org>
+Subject: [PATCH v2] git-clean: correct printing relative path
+Date: Thu, 6 Mar 2008 02:51:05 +0300
+Message-ID: <20080305235105.GE11519@dpotapov.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 To: Pierre Habouzit <madcoder@debian.org>,
 	Git ML <git@vger.kernel.org>,
 	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 06 00:42:40 2008
+X-From: git-owner@vger.kernel.org Thu Mar 06 00:51:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JX3Fs-00077A-BX
-	for gcvg-git-2@gmane.org; Thu, 06 Mar 2008 00:42:36 +0100
+	id 1JX3Or-0001UW-O5
+	for gcvg-git-2@gmane.org; Thu, 06 Mar 2008 00:51:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761244AbYCEXlc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Mar 2008 18:41:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756351AbYCEXlc
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 18:41:32 -0500
-Received: from fg-out-1718.google.com ([72.14.220.157]:3522 "EHLO
+	id S1756720AbYCEXvM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Mar 2008 18:51:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756207AbYCEXvM
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 18:51:12 -0500
+Received: from fg-out-1718.google.com ([72.14.220.153]:28317 "EHLO
 	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761244AbYCEXla (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Mar 2008 18:41:30 -0500
-Received: by fg-out-1718.google.com with SMTP id e21so2001608fga.17
-        for <git@vger.kernel.org>; Wed, 05 Mar 2008 15:41:29 -0800 (PST)
+	with ESMTP id S1755453AbYCEXvK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Mar 2008 18:51:10 -0500
+Received: by fg-out-1718.google.com with SMTP id e21so2005894fga.17
+        for <git@vger.kernel.org>; Wed, 05 Mar 2008 15:51:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
-        bh=0DUxM24/w8JPsl/SV7Xhy2THIROd/R06uu9cKASY75I=;
-        b=XtXtGQihd6m8wNqhDVKQNLszgQbCAqNpgYuls0Kgv88A3uMHHNUsxKrKcGKiuH4urMbtQs3NCaeT37EoEU9mOsls2UPX4VNs7S3gD7dzlapQJ6NBvDysL425gDct/6YN2Y9tijM5deBjyzKiO8h8tvHEvWZd+EHWGAuxJZlrgAM=
+        h=domainkey-signature:received:received:date:from:to:subject:message-id:mime-version:content-type:content-disposition:user-agent;
+        bh=0n3uJ6GBcx3PPX7OgFFGcxGaXQxI1ECzU+ucJFUF2Nw=;
+        b=kG2K7gpEIQg9Fa0p3d0RaYElvY9u8qjydcp0b+g3CJ+diZLX1d9usXOlXhvTmt6l/6gqg+8gVOACIO2EuYt5KOROW8jkSdfWwVuH0hYocnzSs8Sq0hrXznCvqzrfp3v+YhkgXPErIb+/mrDNAHQ94ewlha3Njxm4dsz5zwYTEJs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
-        b=fV4C+xsX2mzdoQwRO9dCy2j9bwzaXGJkAecMad2gl4+w8qmA9iIDYf1eohlINtVWopWwVEInWOMeXo4kom2Aut9p15X4cybK397+fFFyG9qnjEsH8Mu/J9JyYXEaxujd02lc5Nvp8ICg/tCOD7CZQS6kksmwNDZdjzdUD6qDDXc=
-Received: by 10.86.59.2 with SMTP id h2mr3742579fga.19.1204760489283;
-        Wed, 05 Mar 2008 15:41:29 -0800 (PST)
+        h=date:from:to:subject:message-id:mime-version:content-type:content-disposition:user-agent;
+        b=esOI5o6EQuFxrGwhgDxlJVwcQ+bM+SZpsDPmCAMZUye63K/6RLeGLXaVByAMRwjk24KAyBzssphpKC3ruauksa3QCrqjiCI4hWlUV1YZXhr02yAgLFwBKLnetr4CiKV3rgfNbOl4P3TMIMDBTxAF08ZsXjR+Vm3n5JQNDBC7gRM=
+Received: by 10.86.72.15 with SMTP id u15mr3524734fga.11.1204761068996;
+        Wed, 05 Mar 2008 15:51:08 -0800 (PST)
 Received: from localhost ( [85.141.189.14])
-        by mx.google.com with ESMTPS id 31sm2740710fkt.14.2008.03.05.15.41.26
+        by mx.google.com with ESMTPS id f19sm2774544fka.18.2008.03.05.15.51.06
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 05 Mar 2008 15:41:27 -0800 (PST)
+        Wed, 05 Mar 2008 15:51:08 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <20080305155943.GB15843@artemis.madism.org>
 User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76293>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76294>
 
-On Wed, Mar 05, 2008 at 04:59:43PM +0100, Pierre Habouzit wrote:
-> 
->   And as far as it goes for your patch, it misses a #include
-> "wt-status.h" 
+When the given path contains '..' then git-clean incorrectly printed names
+of files. This patch changes cmd_clean to use quote_path() from wt-status.
+Also, "failed to remove ..." message used absolutely path, but not it is
+corrected to use relative path.
 
-My bad... I will correct and resend the patch now.
+Signed-off-by: Dmitry Potapov <dpotapov@gmail.com>
+---
+Add missing include "wt-status.h"
 
-> and for me it gives:
-> 
->     git clean ..
->     Removing ../
->     Removing ../git-clean.patch
->     Removing ../stFdw8KY
-> 
-> For a tree that had those unclean entries.
->     ../git-clean.patch
->     ../stFdw8KY
-> 
-> 
->   Removing ../ is clearly wrong both times: it didn't really did that
-> (my current dir was the 't/' dir in the git repository for that) and I
-> didn't specified 'git clean -d'.
+ builtin-clean.c |   32 ++++++++++++++------------------
+ wt-status.c     |    4 ++--
+ wt-status.h     |    2 ++
+ 3 files changed, 18 insertions(+), 20 deletions(-)
 
-Hmm... when I ran 'git clean' inside of the 't/' directory in the git
-repository, it did not print any message about removing ../. However,
-when I did the same in a clean repository where the 't/' directory
-contained only untracked files then the 't/' directory and all files
-in it were actually removed even I did not specify '-d'. This happens on
-both 1.5.4 and master versions. IMHO, removing a directory without '-d'
-is incorrect.
+diff --git a/builtin-clean.c b/builtin-clean.c
+index 3b220d5..c3b29b9 100644
+--- a/builtin-clean.c
++++ b/builtin-clean.c
+@@ -10,6 +10,7 @@
+ #include "cache.h"
+ #include "dir.h"
+ #include "parse-options.h"
++#include "wt-status.h"
+ 
+ static int force = -1; /* unset */
+ 
+@@ -34,7 +35,8 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
+ 	struct dir_struct dir;
+ 	const char *path, *base;
+ 	static const char **pathspec;
+-	int prefix_offset = 0;
++	struct strbuf buf;
++	const char *qname;
+ 	char *seen = NULL;
+ 	struct option options[] = {
+ 		OPT__QUIET(&quiet),
+@@ -56,6 +58,7 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
+ 
+ 	argc = parse_options(argc, argv, options, builtin_clean_usage, 0);
+ 
++	strbuf_init(&buf, 0);
+ 	memset(&dir, 0, sizeof(dir));
+ 	if (ignored_only)
+ 		dir.show_ignored = 1;
+@@ -72,8 +75,6 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
+ 	if (!ignored)
+ 		setup_standard_excludes(&dir);
+ 
+-	if (prefix)
+-		prefix_offset = strlen(prefix);
+ 	pathspec = get_pathspec(prefix, argv);
+ 	read_cache();
+ 
+@@ -133,40 +134,35 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
+ 		}
+ 
+ 		if (S_ISDIR(st.st_mode)) {
++			qname = quote_path(directory.buf, -1, &buf, prefix);
+ 			strbuf_addstr(&directory, ent->name);
+ 			if (show_only && (remove_directories || matches)) {
+-				printf("Would remove %s\n",
+-				       directory.buf + prefix_offset);
++				printf("Would remove %s\n", qname);
+ 			} else if (remove_directories || matches) {
+ 				if (!quiet)
+-					printf("Removing %s\n",
+-					       directory.buf + prefix_offset);
++					printf("Removing %s\n", qname);
+ 				if (remove_dir_recursively(&directory, 0) != 0) {
+-					warning("failed to remove '%s'",
+-						directory.buf + prefix_offset);
++					warning("failed to remove '%s'", qname);
+ 					errors++;
+ 				}
+ 			} else if (show_only) {
+-				printf("Would not remove %s\n",
+-				       directory.buf + prefix_offset);
++				printf("Would not remove %s\n", qname);
+ 			} else {
+-				printf("Not removing %s\n",
+-				       directory.buf + prefix_offset);
++				printf("Not removing %s\n", qname);
+ 			}
+ 			strbuf_reset(&directory);
+ 		} else {
+ 			if (pathspec && !matches)
+ 				continue;
++			qname = quote_path(ent->name, -1, &buf, prefix);
+ 			if (show_only) {
+-				printf("Would remove %s\n",
+-				       ent->name + prefix_offset);
++				printf("Would remove %s\n", qname);
+ 				continue;
+ 			} else if (!quiet) {
+-				printf("Removing %s\n",
+-				       ent->name + prefix_offset);
++				printf("Removing %s\n", qname);
+ 			}
+ 			if (unlink(ent->name) != 0) {
+-				warning("failed to remove '%s'", ent->name);
++				warning("failed to remove '%s'", qname);
+ 				errors++;
+ 			}
+ 		}
+diff --git a/wt-status.c b/wt-status.c
+index 32d780a..712fe91 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -82,8 +82,8 @@ static void wt_status_print_trailer(struct wt_status *s)
+ 	color_fprintf_ln(s->fp, color(WT_STATUS_HEADER), "#");
+ }
+ 
+-static char *quote_path(const char *in, int len,
+-			struct strbuf *out, const char *prefix)
++char *quote_path(const char *in, int len,
++		struct strbuf *out, const char *prefix)
+ {
+ 	if (len < 0)
+ 		len = strlen(in);
+diff --git a/wt-status.h b/wt-status.h
+index 02afaa6..4b46dda 100644
+--- a/wt-status.h
++++ b/wt-status.h
+@@ -32,5 +32,7 @@ int wt_status_use_color;
+ int wt_status_relative_paths;
+ void wt_status_prepare(struct wt_status *s);
+ void wt_status_print(struct wt_status *s);
++char *quote_path(const char *in, int len,
++		struct strbuf *out, const char *prefix);
+ 
+ #endif /* STATUS_H */
+-- 
+1.5.4.3.448.g0426d
 
-In addition, when I ran 'git clean -n ..' at the top a repository, the
-current master version of Git though printed the error that '..' is
-outside the repository, still exited with 0. When I test this with
-1.5.4, git clean exists with 128 after printing the error. Bisect blames
-d089ebaad5315325d67db30176df1bbd7754fda9 for changing the exit code to 0.
-
-I will look at git-clean more tomorrow.
-
-Dmitry
