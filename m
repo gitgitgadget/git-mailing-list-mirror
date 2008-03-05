@@ -1,52 +1,57 @@
-From: =?ISO-8859-15?Q?Dirk_S=FCsserott?= <newsletter@dirk.my1.cc>
-Subject: gitk: horizontal scroll bars in the diff pane?
-Date: Wed, 05 Mar 2008 21:12:28 +0100
-Message-ID: <47CEFEAC.7060702@dirk.my1.cc>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH] user.default: New config to prevent using the default
+ values for user.*
+Date: Wed, 5 Mar 2008 15:21:05 -0500 (EST)
+Message-ID: <alpine.LNX.1.00.0803051516300.19665@iabervon.org>
+References: <1204744684-2043-1-git-send-email-sbejar@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Mar 05 21:18:50 2008
+Content-Type: MULTIPART/MIXED; BOUNDARY="1547844168-1283575668-1204748465=:19665"
+Cc: git@vger.kernel.org
+To: =?ISO-8859-15?Q?Santi_B=E9jar?= <sbejar@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 05 21:22:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JX04J-0006uf-3f
-	for gcvg-git-2@gmane.org; Wed, 05 Mar 2008 21:18:27 +0100
+	id 1JX07X-0008H2-2r
+	for gcvg-git-2@gmane.org; Wed, 05 Mar 2008 21:21:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753168AbYCEURt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Mar 2008 15:17:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753051AbYCEURt
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 15:17:49 -0500
-Received: from smtprelay03.ispgateway.de ([80.67.18.15]:47382 "EHLO
-	smtprelay03.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752835AbYCEURt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Mar 2008 15:17:49 -0500
-X-Greylist: delayed 318 seconds by postgrey-1.27 at vger.kernel.org; Wed, 05 Mar 2008 15:17:48 EST
-Received: from [84.176.76.68] (helo=[192.168.2.100])
-	by smtprelay03.ispgateway.de with esmtpa (Exim 4.68)
-	(envelope-from <newsletter@dirk.my1.cc>)
-	id 1JWzyW-0008RQ-Lc
-	for git@vger.kernel.org; Wed, 05 Mar 2008 21:12:28 +0100
-User-Agent: Thunderbird 2.0.0.12 (Windows/20080213)
-X-Df-Sender: 757646
+	id S1753141AbYCEUVJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Mar 2008 15:21:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755332AbYCEUVH
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 15:21:07 -0500
+Received: from iabervon.org ([66.92.72.58]:38605 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754688AbYCEUVG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Mar 2008 15:21:06 -0500
+Received: (qmail 13159 invoked by uid 1000); 5 Mar 2008 20:21:05 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 5 Mar 2008 20:21:05 -0000
+In-Reply-To: <1204744684-2043-1-git-send-email-sbejar@gmail.com>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76257>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76258>
 
-Good evening,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Is there a possibility to show horizontal scroll bars within the diff 
-pane in gitk?
-I've some files with extraordinary long lines (say 150+ columns or even 
-more).
-Depending on the font in use I cannot see all diffs and would like to 
-scroll to the right easily.
-I know that I can select the text and move the mouse rightwards (with 
-MB1 being pressed) and then the text also scrolls, but that's not 
-convenient. Is there a way to tell gitk to come up with horizontal 
-scroll bars in the diff pane?
+--1547844168-1283575668-1204748465=:19665
+Content-Type: TEXT/PLAIN; charset=utf-8
+Content-Transfer-Encoding: 8BIT
 
- -- Dirk
+On Wed, 5 Mar 2008, Santi Béjar wrote:
+
+> Useful when you want a different email/name for each repository
+
+I still think it would be more intuitive if you made it so that setting 
+user.* to nothing was not an error, suppressed picking values up from the 
+system, and led (if not overridden again) to the message telling you how 
+to set them. Is there some reason you decided not to have that be how the 
+user triggers this behavior?
+
+	-Daniel
+*This .sig left intentionally blank*
+--1547844168-1283575668-1204748465=:19665--
