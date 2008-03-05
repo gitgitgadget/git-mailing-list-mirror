@@ -1,61 +1,71 @@
-From: Robert Haines <rhaines@manchester.ac.uk>
-Subject: Re: [PATCH] Add compat/vsnprintf.c for systems that returns -1 on maxsize reached
-Date: Wed, 5 Mar 2008 10:35:25 +0000
-Message-ID: <F5DC9F11-FD88-4713-AD1A-6566C345852A@manchester.ac.uk>
-References: <200803041459.29000.michal.rokos@nextsoft.cz> <47CD78C9.80003@viscovery.net> <200803050937.40345.michal.rokos@nextsoft.cz>
-Mime-Version: 1.0 (Apple Message framework v753)
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Sixt <j.sixt@viscovery.net>, GIT <git@vger.kernel.org>
-To: Michal Rokos <michal.rokos@nextsoft.cz>
-X-From: git-owner@vger.kernel.org Wed Mar 05 11:35:55 2008
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2 3/3] Teach git-fetch to exploit server side automatic
+ tag following
+Date: Wed, 5 Mar 2008 12:21:54 +0100 (CET)
+Message-ID: <alpine.LSU.1.00.0803051220360.18836@racer.site>
+References: <20080304032740.GC16462@spearce.org> <alpine.LSU.1.00.0803041512040.22527@racer.site> <20080305055659.GD8410@spearce.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Mar 05 12:22:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWqyY-0007F7-C2
-	for gcvg-git-2@gmane.org; Wed, 05 Mar 2008 11:35:54 +0100
+	id 1JWrhq-0005NY-MA
+	for gcvg-git-2@gmane.org; Wed, 05 Mar 2008 12:22:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760524AbYCEKfQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Mar 2008 05:35:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758371AbYCEKfQ
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 05:35:16 -0500
-Received: from tranquility.mcc.ac.uk ([130.88.200.145]:65295 "EHLO
-	tranquility.mcc.ac.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757411AbYCEKfO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Mar 2008 05:35:14 -0500
-Received: from gerhayn.mcc.ac.uk ([10.2.18.1])
-	by tranquility.mcc.ac.uk with esmtps (TLSv1:AES256-SHA:256)
-	(Exim 4.69 (FreeBSD))
-	(envelope-from <rhaines@manchester.ac.uk>)
-	id 1JWqxs-000E3Q-RM; Wed, 05 Mar 2008 10:35:12 +0000
-Received: from leela.rcs.manchester.ac.uk ([130.88.1.66]:55951)
-	by gerhayn.mcc.ac.uk with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.69 (FreeBSD))
-	(envelope-from <rhaines@manchester.ac.uk>)
-	id 1JWqxs-000Hmq-PD; Wed, 05 Mar 2008 10:35:12 +0000
-In-Reply-To: <200803050937.40345.michal.rokos@nextsoft.cz>
-X-Mailer: Apple Mail (2.753)
-X-Authenticated-Sender: Robert Haines from leela.rcs.manchester.ac.uk [130.88.1.66]:55951
-X-Authenticated-From: Robert.Haines@manchester.ac.uk
-X-UoM: Scanned by the University Mail System. See http://www.itservices.manchester.ac.uk/email/filtering/information/ for details.
+	id S1752094AbYCELWE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Mar 2008 06:22:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752320AbYCELWD
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 06:22:03 -0500
+Received: from mail.gmx.net ([213.165.64.20]:46763 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752355AbYCELWB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Mar 2008 06:22:01 -0500
+Received: (qmail invoked by alias); 05 Mar 2008 11:21:58 -0000
+Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
+  by mail.gmx.net (mp043) with SMTP; 05 Mar 2008 12:21:58 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+7j3EyrXa7t5J+GBhLa9K4+XjGigAedwjH/dmRcB
+	luXW/AMcg7Qf9e
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20080305055659.GD8410@spearce.org>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76209>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76210>
 
+Hi,
 
-> Could somebody else try to run testcase above on some other OSes?
+On Wed, 5 Mar 2008, Shawn O. Pearce wrote:
 
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+>  
+> > - should followtags not be the default?
+> 
+> No.  Absolutely not.
+> 
+> The client may not want tag objects from this remote.  It might not want 
+> those tags for all sorts of reasons.  Maybe they are doing a one-shot 
+> pull.  Maybe they don't trust this remote.  Maybe they trust this remote 
+> but this remote is famous for 192M tags containing PDFs of photo images 
+> of build logs printed out on paper, then photographed on a wood table 
+> and finally scanned in at 600 dpi.
 
-Mac OS X Darwin 8.11.1 i386 (Tiger)
+Sorry, I meant to say: "should the followtags feature not be on by default 
+in the circumstances where we would follow tags anyway"...
 
-case1: 5
-case2: 5
-case3: 5
-case4: 5
+Maybe you do that, but I did not see it.
 
-Cheers,
-Rob
+> So it should only be enabled *if* we were willing to open a second 
+> connection to this remote to followtags from it.  And that's not a 
+> change from prior behavior either, its just faster.
+
+Thanks,
+Dscho
 
