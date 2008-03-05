@@ -1,145 +1,81 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] Add compat/vsnprintf.c for systems that returns -1 on
- maxsize reached
-Date: Wed, 05 Mar 2008 15:28:48 +0100
-Message-ID: <47CEAE20.1030707@viscovery.net>
-References: <200803041459.29000.michal.rokos@nextsoft.cz> <200803050937.40345.michal.rokos@nextsoft.cz> <47CE6552.60308@viscovery.net> <200803051455.57148.michal.rokos@nextsoft.cz>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: How to force explicit user info
+Date: Wed, 05 Mar 2008 06:38:43 -0800 (PST)
+Message-ID: <m3r6epgrqt.fsf@localhost.localdomain>
+References: <8aa486160803050539p4c443302nc322241d59fe9374@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: GIT <git@vger.kernel.org>
-To: Michal Rokos <michal.rokos@nextsoft.cz>
-X-From: git-owner@vger.kernel.org Wed Mar 05 15:29:36 2008
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: =?iso-8859-15?q?Santi_B=E9jar?= <sbejar@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 05 15:40:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWuce-0005EX-QA
-	for gcvg-git-2@gmane.org; Wed, 05 Mar 2008 15:29:33 +0100
+	id 1JWumF-0000ax-4D
+	for gcvg-git-2@gmane.org; Wed, 05 Mar 2008 15:39:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752498AbYCEO2y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Mar 2008 09:28:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752377AbYCEO2x
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 09:28:53 -0500
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:2867 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752138AbYCEO2w (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Mar 2008 09:28:52 -0500
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1JWubK-0007FQ-4z; Wed, 05 Mar 2008 15:28:10 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 161F66EF; Wed,  5 Mar 2008 15:28:49 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <200803051455.57148.michal.rokos@nextsoft.cz>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1752001AbYCEOiu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 5 Mar 2008 09:38:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751830AbYCEOiu
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 09:38:50 -0500
+Received: from ug-out-1314.google.com ([66.249.92.168]:18996 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751353AbYCEOit convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 5 Mar 2008 09:38:49 -0500
+Received: by ug-out-1314.google.com with SMTP id z38so3303317ugc.16
+        for <git@vger.kernel.org>; Wed, 05 Mar 2008 06:38:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:content-transfer-encoding:date;
+        bh=VAm5pgzcQL4Q7mbUjitYv3cxzXLvHPgUaj5cPSNyfyg=;
+        b=G0HIbzQHII/wCZ5cQa1/VxccO9v0s6Ze6ObJ7cEI/b93/BsbCH//JRcpU4w5hxcxRpGE1y7ZLaHoS4KEHtlJ3Z9B8/xR9b2VoHgJ33dm98/gGRof3SuZFV/ali+rc2Cr4DKa3LT1QZwbzewPfIVpvsxpVfA4/od5aFEdtA+Dcn4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:content-transfer-encoding:date;
+        b=UferXGE4M6NCbR2MobLzEplYdfcqPL1sJy1g6KOqMowqpFx6a9JX+vVmMe/1Jb13FwTwbdPzjySJICbU1fx7QGazb6gA2Vb+9ledeIvFiv1+eI21VXkTRlsIXXcRPal1dP7FXAno09PATTdLE9iNC3hQOZ55asXSousMp64PySs=
+Received: by 10.66.251.3 with SMTP id y3mr6439324ugh.88.1204727925844;
+        Wed, 05 Mar 2008 06:38:45 -0800 (PST)
+Received: from localhost.localdomain ( [83.8.248.32])
+        by mx.google.com with ESMTPS id n34sm3831262ugc.64.2008.03.05.06.38.42
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 05 Mar 2008 06:38:43 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m25Ed7Zh023295;
+	Wed, 5 Mar 2008 15:39:07 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m25Ed7nK023292;
+	Wed, 5 Mar 2008 15:39:07 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <8aa486160803050539p4c443302nc322241d59fe9374@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76220>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76221>
 
-Michal Rokos schrieb:
-> On Wednesday 05 March 2008 10:18:10 Johannes Sixt wrote:
->> It's not the same on Windows, which returns:
->> case1: -1
->> case2: 5
->> case3: 5
->> case4: 5
->>
->> BTW, this is not only an issue of vsnprintf, but also of snprintf!
-> 
-> Hmm, HPUX has the same issue for snprint() as is for vsnprintf().
-> 
-> Do you think that following patch suffices your needs. Please note that it 
-> actually copies data to str.
+"Santi B=E9jar" <sbejar@gmail.com> writes:
 
-... in the case where the buffer is too small? This won't be a problem for
-our users.
+>   How can I forbid the gecos info and always force git to ask for an
+> explicit user.name and user.email?
+>=20
+>   I use a different email for personal projects and for work projects=
+,
+> using the same machine. So I set user.email locally in each
+> repository. But when I forget setting this I get
+> userid@hostname.(none) as the email. Is there a way to just die and
+> ask for this info (maybe user.AlwaysExplicit or something like that)?
 
-> +# Define SNPRINTF_RETURNS_BOGUS if your are on a system which snprintf()
-> +# returns -1 instead of number of characters which would have been written
-> +# to the final string if enough space had been available.
-> +#
-> +# Define VSNPRINTF_RETURNS_BOGUS if your are on a system which vsnprintf()
-> +# returns -1 instead of number of characters which would have been written
-> +# to the final string if enough space had been available.
+I don't think there is a way to get exactly what you want... unless
+you would "scratch that itch"... :-)
 
-We don't need two configuration variables. I think we can assume that if
-vsnprintf is broken, then snprintf will be broken, too:
+You can set default user.name and user.email in the ~/.gitconfig
+global (user) git configuration, and in /etc/gitconfig for system-wide
+git config, though. HTH.
 
-# Define SNPRINTF_RETURNS_BOGUS if your are on a system which snprintf()
-# and vsnprintf() return -1 instead of number of characters that would
-# have been written to the final string if enough space had been
-# available.
-
-> +AC_CACHE_CHECK([whether snprintf() returns bogus],
-> + [ac_cv_snprintf_returns_bogus],
-> +[
-> +AC_RUN_IFELSE(
-> +	[AC_LANG_PROGRAM([AC_INCLUDES_DEFAULT],
-> +		[[char buf[1];
-> +		  if (snprintf(bug, 1, "%s", "12345") != 5) return 1]])],
-                               ^^^
-buf?
-
-Are you trying to test for the second bogus behavior on Windows? Don't do
-it! I've thought about it for 5 minutes, but I can't come up with a simple
-test that would detect its odd behavior.
-
-> diff --git a/dev/null b/compat/snprintf.c
-> new file mode 100644
-> index 0000000..bc0d37c
-> --- /dev/null
-> +++ b/compat/snprintf.c
-> @@ -0,0 +1,37 @@
-> +#include "../git-compat-util.h"
-> +
-> +#undef vsnprintf
-> +int git_vsnprintf(char *str, size_t maxsize, const char *format, va_list ap)
-> +{
-> +   char *s;
-> +   int size;
-> +
-> +   int ret = vsnprintf(str, maxsize, format, ap);
-> +   if (ret != -1 ) return ret;
-
-'return' goes on its own line. Indentation is one tabstop, not two spaces.
-Thank you.
-
-> +
-> +   s = NULL;
-
-You could reuse str here.
-
-> +   size = maxsize;
-
-We are trying to find a suitably long buffer in a loop. We should spend as
-few cycles as possible. Therefore, my implementation used a minimum of
-250*4 for the first try just in case the caller had a long string to
-construct. (And it protects against maxsize == 0.)
-
-> +   while ( ret == -1 )
-> +   {
-> +      size *= 4;
-> +      s = realloc(s, size);
-> +      if (! s) return -1;
-
-Could you avoid the memory leak on this error path?
-
-> +      ret = vsnprintf(s, size, format, ap);
-> +   }
-> +   if (str && maxsize > 0) memcpy(str, s, maxsize);
-
-Why this?
-
-> +   free(s);
-> +   return ret;
-> +}
-
--- Hannes
-
+--=20
+Jakub Narebski
+Poland
+ShadeHawk on #git
