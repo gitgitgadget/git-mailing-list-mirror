@@ -1,54 +1,57 @@
-From: Wayne Davison <wayne@opencoder.net>
-Subject: Re: [PATCH] Add compat/vsnprintf.c for systems that returns -1 on maxsize reached
-Date: Tue, 4 Mar 2008 15:51:31 -0800
-Message-ID: <20080304235131.GA27590@herod.dreamhost.com>
-References: <200803041459.29000.michal.rokos@nextsoft.cz> <47CD78C9.80003@viscovery.net>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH] Add test for cloning with "--reference" repo being a
+ subset of source repo
+Date: Tue, 4 Mar 2008 19:24:30 -0500 (EST)
+Message-ID: <alpine.LNX.1.00.0803041922090.19665@iabervon.org>
+References: <alpine.LNX.1.00.0802251604460.19024@iabervon.org> <200803031004.16568.johan@herland.net> <alpine.LNX.1.00.0803031318000.19665@iabervon.org> <200803040402.57993.johan@herland.net> <alpine.LNX.1.00.0803041801320.19665@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michal Rokos <michal.rokos@nextsoft.cz>, GIT <git@vger.kernel.org>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed Mar 05 01:24:28 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	=?ISO-8859-15?Q?Kristian_H=F8gsberg?= <krh@redhat.com>,
+	=?ISO-8859-15?Q?Santi_B=E9jar?= <sbejar@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Wed Mar 05 01:25:27 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWhQn-00061y-TP
-	for gcvg-git-2@gmane.org; Wed, 05 Mar 2008 01:24:26 +0100
+	id 1JWhRd-0006GF-NX
+	for gcvg-git-2@gmane.org; Wed, 05 Mar 2008 01:25:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756184AbYCEAXs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Mar 2008 19:23:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755113AbYCEAXs
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Mar 2008 19:23:48 -0500
-Received: from judo.dreamhost.com ([66.33.216.100]:49716 "EHLO
-	judo.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754851AbYCEAXr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Mar 2008 19:23:47 -0500
-X-Greylist: delayed 1809 seconds by postgrey-1.27 at vger.kernel.org; Tue, 04 Mar 2008 19:23:47 EST
-Received: from smarty.dreamhost.com (smarty.dreamhost.com [208.113.175.8])
-	by judo.dreamhost.com (Postfix) with ESMTP id 16DD7176C1A
-	for <git@vger.kernel.org>; Tue,  4 Mar 2008 15:53:38 -0800 (PST)
-Received: from herod.dreamhost.com (herod.dreamhost.com [208.113.239.72])
-	by smarty.dreamhost.com (Postfix) with ESMTP id 142D5EE275;
-	Tue,  4 Mar 2008 15:51:32 -0800 (PST)
-Received: by herod.dreamhost.com (Postfix, from userid 130321)
-	id 02FF760311; Tue,  4 Mar 2008 15:51:31 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <47CD78C9.80003@viscovery.net>
-User-Agent: Mutt/1.5.9i
+	id S1758152AbYCEAYk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Mar 2008 19:24:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758100AbYCEAYk
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Mar 2008 19:24:40 -0500
+Received: from iabervon.org ([66.92.72.58]:41951 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757971AbYCEAYi (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Mar 2008 19:24:38 -0500
+Received: (qmail 25568 invoked by uid 1000); 5 Mar 2008 00:24:30 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 5 Mar 2008 00:24:30 -0000
+In-Reply-To: <alpine.LNX.1.00.0803041801320.19665@iabervon.org>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76158>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76159>
 
-On Tue, Mar 04, 2008 at 05:28:57PM +0100, Johannes Sixt wrote:
-> But there is also another complication: The size parameter of the system's
-> vsnprintf must not count the trailing NUL, i.e. the buffer must actually
-> have space for one extra byte, whereas the POSIX version must count NUL.
+On Tue, 4 Mar 2008, Daniel Barkalow wrote:
 
-FYI, rsync's configure script has a check for both those problems.  It
-sets HAVE_C99_VSNPRINTF if vsnprintf() works right.  If that fails,
-rsync uses its own lib/snprintf.c implementation (that I believe comes
-from Samba).  That file could be included in git, if desired.
+> I think we should be able to avoid setting git_dir to anything other than 
+> the repo we're creating, which would avoid this problem for the present, 
+> although, as you say, it would be good to be able to switch around as 
+> instructed for libification purposes eventually.
 
-..wayne..
+Okay, stuff pushed out to not use git_dir to access the reference repo, 
+and an additional test that requires that we actually note that we have 
+the refs in the reference repository (because otherwise we could pass all 
+the tests by just making --reference useless, but that's obviously no 
+good).
+
+	-Daniel
+*This .sig left intentionally blank*
