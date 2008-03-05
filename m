@@ -1,70 +1,106 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [RFH] bug in unpack_trees
-Date: Wed, 5 Mar 2008 07:56:11 -0800 (PST)
-Message-ID: <alpine.LFD.1.00.0803050750400.12253@woody.linux-foundation.org>
-References: <20080304115940.GA5260@sigill.intra.peff.net> <alpine.LFD.1.00.0803041325370.12253@woody.linux-foundation.org> <alpine.LNX.1.00.0803050130190.19665@iabervon.org>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [PATCH] git-clean: correct printing relative path
+Date: Wed, 05 Mar 2008 16:59:43 +0100
+Message-ID: <20080305155943.GB15843@artemis.madism.org>
+References: <20080305094058.GF4793@artemis.madism.org> <20080305141720.GA11542@dpotapov.dyndns.org> <20080305155359.GA15843@artemis.madism.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	John Goerzen <jgoerzen@complete.org>
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Wed Mar 05 16:59:11 2008
+Content-Type: multipart/signed; boundary="/NkBOFFp2J2Af1nK";
+	protocol="application/pgp-signature"; micalg=SHA1
+To: Dmitry Potapov <dpotapov@gmail.com>, Git ML <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 05 17:01:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWw0N-0000JR-K1
-	for gcvg-git-2@gmane.org; Wed, 05 Mar 2008 16:58:08 +0100
+	id 1JWw2a-0001LB-Rw
+	for gcvg-git-2@gmane.org; Wed, 05 Mar 2008 17:00:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754705AbYCEP53 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Mar 2008 10:57:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754727AbYCEP53
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 10:57:29 -0500
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:43643 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753566AbYCEP52 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 5 Mar 2008 10:57:28 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m25FuVbS021003
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 5 Mar 2008 07:56:32 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m25FuBUn007581;
-	Wed, 5 Mar 2008 07:56:13 -0800
-In-Reply-To: <alpine.LNX.1.00.0803050130190.19665@iabervon.org>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
-X-Spam-Status: No, hits=-4.032 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1755435AbYCEP7r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Mar 2008 10:59:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755413AbYCEP7q
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 10:59:46 -0500
+Received: from pan.madism.org ([88.191.52.104]:56722 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754719AbYCEP7p (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Mar 2008 10:59:45 -0500
+Received: from madism.org (def92-8-82-236-12-71.fbx.proxad.net [82.236.12.71])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id 552DC31EA1;
+	Wed,  5 Mar 2008 16:59:44 +0100 (CET)
+Received: by madism.org (Postfix, from userid 1000)
+	id B47B14DD973; Wed,  5 Mar 2008 16:59:43 +0100 (CET)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Dmitry Potapov <dpotapov@gmail.com>, Git ML <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+Content-Disposition: inline
+In-Reply-To: <20080305155359.GA15843@artemis.madism.org>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76235>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76236>
+
+
+--/NkBOFFp2J2Af1nK
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On mer, mar 05, 2008 at 03:53:59 +0000, Pierre Habouzit wrote:
+> On Wed, Mar 05, 2008 at 02:17:20PM +0000, Dmitry Potapov wrote:
+> > When the given path contains '..' then git-clean incorrectly printed na=
+mes
+> > of files. This patch changes cmd_clean to use quote_path() from wt-stat=
+us.
+> > Also, "failed to remove ..." message used absolutely path, but not it is
+> > corrected to use relative path.
+> >=20
+> > Signed-off-by: Dmitry Potapov <dpotapov@gmail.com>
+> > ---
+> > I resend this patch, because it got filtered by vger.kernel.org
+> > when I used git-send-email from 1.5.4.
+>=20
+>   It didn't FWIW.
+
+  And as far as it goes for your patch, it misses a #include
+"wt-status.h" and for me it gives:
+
+    git clean ..
+    Removing ../
+    Removing ../git-clean.patch
+    Removing ../stFdw8KY
+
+For a tree that had those unclean entries.
+    ../git-clean.patch
+    ../stFdw8KY
+
+
+  Removing ../ is clearly wrong both times: it didn't really did that
+(my current dir was the 't/' dir in the git repository for that) and I
+didn't specified 'git clean -d'.
 
 
 
-On Wed, 5 Mar 2008, Daniel Barkalow wrote:
-> 
-> The thing that's hopeless isn't including the index; it's including the 
-> index that's simultaneously being regenerated.
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
 
-Yeah. I was thinking about just putting the result in a new index. It's 
-*usually* what the user wants anyway. The whole complexity with updating 
-the old index is really nasty.
+--/NkBOFFp2J2Af1nK
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-There are other complexities there, but the index one is the worst.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
 
-When doing a stupid try at using "traverse_trees()" (which in itself was 
-not that easy - traverse_trees() is a fundamentally simpler walker and 
-_different_ enough to not match well), one of the bigger issues is that 
-traverse_trees() wants to do the directories in a separate phase from the 
-files (becasue they sort differently), and that coupled with the fact that 
-we do a kind of "read-modify-write" on the index makes it all really ugly.
+iD8DBQBHzsNvvGr7W6HudhwRAmxpAKCqHSgOq6EEQnokXxSdz/MF8uLvawCdFyLg
+PWrIDACRrBraAR2veL9DYmw=
+=7uOu
+-----END PGP SIGNATURE-----
 
-I'm still working on it, but it's nastier than I was hoping for. Maybe you 
-can come up with a better solution.
-
-		Linus
+--/NkBOFFp2J2Af1nK--
