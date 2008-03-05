@@ -1,54 +1,45 @@
 From: Dmitry Potapov <dpotapov@gmail.com>
 Subject: [PATCH] git-clean: correct printing relative path
-Date: Wed, 5 Mar 2008 17:17:20 +0300
-Message-ID: <20080305141720.GA11542@dpotapov.dyndns.org>
+Date: Wed,  5 Mar 2008 16:47:29 +0300
+Message-ID: <1204724849-11298-1-git-send-email-dpotapov@gmail.com>
 References: <20080305094058.GF4793@artemis.madism.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
 Cc: Pierre Habouzit <madcoder@debian.org>,
-	Junio C Hamano <gitster@pobox.com>
+	Junio C Hamano <gitster@pobox.com>,
+	Dmitry Potapov <dpotapov@gmail.com>
 To: Git ML <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Mar 05 15:18:12 2008
+X-From: git-owner@vger.kernel.org Wed Mar 05 15:23:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWuRa-0000oA-FR
-	for gcvg-git-2@gmane.org; Wed, 05 Mar 2008 15:18:06 +0100
+	id 1JWuWK-0002ge-5b
+	for gcvg-git-2@gmane.org; Wed, 05 Mar 2008 15:23:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751544AbYCEOR2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Mar 2008 09:17:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751548AbYCEOR2
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 09:17:28 -0500
-Received: from nf-out-0910.google.com ([64.233.182.188]:55533 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751519AbYCEOR1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Mar 2008 09:17:27 -0500
-Received: by nf-out-0910.google.com with SMTP id g13so884862nfb.21
-        for <git@vger.kernel.org>; Wed, 05 Mar 2008 06:17:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject:message-id:mime-version:content-type:content-disposition:in-reply-to:user-agent;
-        bh=ePZu/WJVnQNEAjXQj51hBdj5GG/CsRr8X8BF86Ww0bk=;
-        b=dk99kVjwmH776op9rGZInoFaDPoZs9Tgf+p0UiaJthKSr4MndN39vU1zphZgeyvuE9FjHCyc1r8bYetKtOBrVR0dXtD1UpH3h/3rjDZd36epzIKdAJPZI3QO/F0qpxkwGc9Yj9SKhgnDRjO/I+zqWfGp1Q+0AJJTzXHR/3erkWo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:mime-version:content-type:content-disposition:in-reply-to:user-agent;
-        b=lrA4TooLvHafu5khoT31JYD4u0parX07TkV1BXVbENgXC+lyus6LNMMr4tojP1ERMnhpln3aShSSV0+80Wicp+5i0Vj20yauoL6gHr4K8qxpAvHrD+ANdCew60hod5h3CU5Fe1Izdi80M86QP2PsdonT7+qaxsOEuUIj2r2lZQY=
-Received: by 10.82.184.2 with SMTP id h2mr2675977buf.1.1204726644536;
-        Wed, 05 Mar 2008 06:17:24 -0800 (PST)
-Received: from localhost ( [85.141.189.14])
-        by mx.google.com with ESMTPS id o11sm1449297fkf.9.2008.03.05.06.17.22
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 05 Mar 2008 06:17:23 -0800 (PST)
-Content-Disposition: inline
+	id S1751907AbYCEOWW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Mar 2008 09:22:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751895AbYCEOWW
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 09:22:22 -0500
+Received: from smtp03.mtu.ru ([62.5.255.50]:57137 "EHLO smtp03.mtu.ru"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751866AbYCEOWU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Mar 2008 09:22:20 -0500
+Received: from smtp03.mtu.ru (localhost.mtu.ru [127.0.0.1])
+	by smtp03.mtu.ru (Postfix) with ESMTP id AEE661870920;
+	Wed,  5 Mar 2008 17:22:18 +0300 (MSK)
+Received: from dpotapov.dyndns.org (ppp85-141-189-14.pppoe.mtu-net.ru [85.141.189.14])
+	by smtp03.mtu.ru (Postfix) with ESMTP id 76AD7187088C;
+	Wed,  5 Mar 2008 17:22:18 +0300 (MSK)
+Received: from dpotapov by dpotapov.dyndns.org with local (Exim 4.63)
+	(envelope-from <dpotapov@gmail.com>)
+	id 1JWtxx-0002wZ-G7; Wed, 05 Mar 2008 16:47:29 +0300
+X-Mailer: git-send-email 1.5.4
 In-Reply-To: <20080305094058.GF4793@artemis.madism.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+X-DCC-STREAM-Metrics: smtp03.mtu.ru 10001; Body=0 Fuz1=0 Fuz2=0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76217>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76218>
 
 When the given path contains '..' then git-clean incorrectly printed names
 of files. This patch changes cmd_clean to use quote_path() from wt-status.
@@ -57,9 +48,6 @@ corrected to use relative path.
 
 Signed-off-by: Dmitry Potapov <dpotapov@gmail.com>
 ---
-I resend this patch, because it got filtered by vger.kernel.org
-when I used git-send-email from 1.5.4.
-
  builtin-clean.c |   31 +++++++++++++------------------
  wt-status.c     |    4 ++--
  wt-status.h     |    2 ++
@@ -176,3 +164,4 @@ index 02afaa6..4b46dda 100644
  #endif /* STATUS_H */
 -- 
 1.5.4
+
