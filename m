@@ -1,34 +1,39 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH] gitk: Fallback to po2msg if msgfmt is not available
-Date: Wed, 5 Mar 2008 02:17:38 -0500
-Message-ID: <20080305071738.GA23079@spearce.org>
+Subject: Re: msgmft segfaulting on tiger
+Date: Wed, 5 Mar 2008 02:19:15 -0500
+Message-ID: <20080305071915.GI8410@spearce.org>
+References: <46a038f90802211553g735215c6q260ddc49ac149bb5@mail.gmail.com> <46a038f90802211559w457c5460k7447ba8b38352713@mail.gmail.com> <20080222065836.GE8410@spearce.org> <46a038f90802220957y7db67d8nb6b7ad784124546a@mail.gmail.com> <47C5A974.7080207@gmail.com> <alpine.LSU.1.00.0802271825330.22527@racer.site> <47C5AEFA.5020004@gmail.com> <alpine.LSU.1.00.0802272203270.22527@racer.site> <7vablmqc7q.fsf@gitster.siamese.dyndns.org> <47C7000C.1000809@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Wed Mar 05 08:18:21 2008
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Gabriel =?utf-8?Q?Salda=C3=B1a?= <gsaldana@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 05 08:20:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWntL-0005uM-VI
-	for gcvg-git-2@gmane.org; Wed, 05 Mar 2008 08:18:20 +0100
+	id 1JWnuy-0006Hq-A2
+	for gcvg-git-2@gmane.org; Wed, 05 Mar 2008 08:20:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754060AbYCEHRm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Mar 2008 02:17:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753571AbYCEHRm
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 02:17:42 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:38173 "EHLO
+	id S1752943AbYCEHTW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Mar 2008 02:19:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752394AbYCEHTW
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 02:19:22 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:38898 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752679AbYCEHRl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Mar 2008 02:17:41 -0500
+	with ESMTP id S1751362AbYCEHTV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Mar 2008 02:19:21 -0500
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.68)
 	(envelope-from <spearce@spearce.org>)
-	id 1JWnsg-0003ar-Hq; Wed, 05 Mar 2008 02:17:38 -0500
+	id 1JWnuF-0003oL-Qv; Wed, 05 Mar 2008 02:19:16 -0500
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 5B42F20FBAE; Wed,  5 Mar 2008 02:17:38 -0500 (EST)
+	id C0B5020FBAE; Wed,  5 Mar 2008 02:19:15 -0500 (EST)
 Content-Disposition: inline
+In-Reply-To: <47C7000C.1000809@gmail.com>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -39,39 +44,41 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76181>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76182>
 
-If msgfmt is not in our PATH, or it is but it does not seem to honor the
---tcl command line option then we need to fallback to po2msg.  This is
-rather common on Mac OS X systems, but also can show up on a Linux OS
-if GNU gettext is not installed on the system.
+Gabriel Saldaa <gsaldana@gmail.com> wrote:
+> Here's the output, hope it helps:
+> 
+> $ msgfmt --tcl -l C -d . /dev/null; echo $?
+> msgfmt: unrecognized option `--tcl'
+> Try `msgfmt --help' for more information.
+> 1
+> 
+> somehow msgfmt doesn't recognize the --tcl flag.
 
-This particular block of code was copied from git-gui's Makefile,
-where we have already (reasonably) vetted this fallback system.
+Just to revive a nearly dead thead...  I have a workaround now in
+git-gui maint that looks for this case and falls into our po2msg
+script when msgfmt doesn't see --tcl.
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- Makefile |    8 ++++++++
- 1 files changed, 8 insertions(+), 0 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index ae2b80b..49a9209 100644
---- a/Makefile
-+++ b/Makefile
-@@ -22,6 +22,14 @@ ifdef NO_MSGFMT
- 	MSGFMT ?= $(TCL_PATH) po/po2msg.sh
- else
- 	MSGFMT ?= msgfmt
-+	ifeq ($(shell $(MSGFMT) >/dev/null 2>&1 || echo $$?),127)
-+		MSGFMT := $(TCL_PATH) po/po2msg.sh
-+	endif
-+	ifeq (msgfmt,$(MSGFMT))
-+	ifeq ($(shell $(MSGFMT) --tcl -l C -d . /dev/null 2>/dev/null || echo $?),1)
-+		MSGFMT := $(TCL_PATH) po/po2msg.sh
-+	endif
-+	endif
- endif
+I also set Paul Mackerras a patch for gitk, so it can do the
+same thing.  Maybe Git 1.5.4.4 will include both patches.
  
- PO_TEMPLATE = po/gitk.pot
+> Junio C Hamano wrote:
+> >Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> >
+> >>>$ msgfmt --tcl; echo $?
+> >>>msgfmt: unrecognized option `--tcl'
+> >>>Try `msgfmt --help' for more information.
+> >>>1
+> >>Darn.  I think that's the same exit code as for any other invocation 
+> >>without filename.
+> >>
+> >>So it seems that there is no easy way to tell a --tcl aware msgfmt from 
+> >>the other.
+> >
+> >How about...
+> >
+> >    $ msgfmt --tcl -l C -d . /dev/null; echo $?
+
 -- 
-1.5.4.3.529.gb25fb
+Shawn.
