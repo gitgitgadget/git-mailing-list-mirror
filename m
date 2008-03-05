@@ -1,76 +1,78 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: git clone -l
-Date: Tue, 04 Mar 2008 18:53:37 -0600
-Message-ID: <47CDEF11.8000807@nrlssc.navy.mil>
-References: <alpine.LNX.1.00.0803041900080.19665@iabervon.org> <7vd4qa3t9t.fsf@gitster.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: [RFC] improve 'bad default revision' message for empty repo
+Date: Tue, 4 Mar 2008 20:07:02 -0500
+Message-ID: <20080305010701.GB20007@sigill.intra.peff.net>
+References: <3f4fd2640803011140o38ba0830l7775c8528f812779@mail.gmail.com> <20080303081021.GA6578@sigill.intra.peff.net> <3f4fd2640803041351k6debe788xbf5e818951f70146@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 05 01:54:49 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Reece Dunn <msclrhd@googlemail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 05 02:07:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWhu6-0005xD-VN
-	for gcvg-git-2@gmane.org; Wed, 05 Mar 2008 01:54:43 +0100
+	id 1JWi6j-0001Ky-Cg
+	for gcvg-git-2@gmane.org; Wed, 05 Mar 2008 02:07:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758391AbYCEAxy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Mar 2008 19:53:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758344AbYCEAxx
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Mar 2008 19:53:53 -0500
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:53084 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758391AbYCEAxw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Mar 2008 19:53:52 -0500
-Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
-	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id m250rbe7030737;
-	Tue, 4 Mar 2008 18:53:38 -0600
-Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
-	 Tue, 4 Mar 2008 18:53:37 -0600
-User-Agent: Thunderbird 2.0.0.9 (X11/20071031)
-In-Reply-To: <7vd4qa3t9t.fsf@gitster.siamese.dyndns.org>
-X-OriginalArrivalTime: 05 Mar 2008 00:53:37.0636 (UTC) FILETIME=[58C30A40:01C87E5B]
-X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-5.0.0.1023-15764001
-X-TM-AS-Result: : Yes--15.240000-0-31-1
-X-TM-AS-Category-Info: : 31:0.000000
-X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNTY3LTcwMDA3NS0xMzkw?=
-	=?us-ascii?B?MTAtNzAwMjQxLTcwMzczMS03MDcxMTktNzA4MzI4LTcwMTQzNi03?=
-	=?us-ascii?B?MDI2MDktNzAyMzU4LTcwMjkyMC03MDM3ODgtNzEwNTEyLTcwMTc5?=
-	=?us-ascii?B?NC03MDE4MjgtMTEzMjI4LTcwMzE3OS03MDA2MTctNzAxNDU1LTcw?=
-	=?us-ascii?B?NTQ1MC0xNDgwMzktMTQ4MDUxLTIwMDQy?=
+	id S1752083AbYCEBHH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Mar 2008 20:07:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751458AbYCEBHH
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Mar 2008 20:07:07 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3652 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751254AbYCEBHF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Mar 2008 20:07:05 -0500
+Received: (qmail 27974 invoked by uid 111); 5 Mar 2008 01:07:03 -0000
+Received: from lawn-128-61-17-48.lawn.gatech.edu (HELO sigill.intra.peff.net) (128.61.17.48)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Tue, 04 Mar 2008 20:07:03 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 04 Mar 2008 20:07:02 -0500
+Content-Disposition: inline
+In-Reply-To: <3f4fd2640803041351k6debe788xbf5e818951f70146@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76162>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76163>
 
-Junio C Hamano wrote:
-> Daniel Barkalow <barkalow@iabervon.org> writes:
-> 
->> What, exactly, is -l supposed to do for clone? As far as I can tell, we 
->> automatically do the local magic if we can. Would it be okay to make 
->> "local" default to "if possible", have "-l" mean error if not possible, 
->> and have "--no-local" able to avoid using local magic even if we could use 
->> it?
-> 
-> It used to be that "-l" meant "When it is local, use hardlink if possible
-> otherwise copy without complaining, as either are cheaper than the pack
-> piped to unpack."  Lack of -l meant no local magic.
-> 
-> Recently lack of -l stopped to mean "no local magic".  We still do the
-> local magic, but we do not do hardlinks and instead do copies.  An "-l"
-> that asks clone across filesystems still falls back to copying but now
-> gets a warning.  "--no-hardlinks" does not have any significance anymore,
-> as that is what you would get for a local clone without -l.
+On Tue, Mar 04, 2008 at 09:51:02PM +0000, Reece Dunn wrote:
 
-Are you sure?
-I thought this was changed by 3d5c418f so that hardlinking is done by default.
+> >  > Consider the following workflow:
+> >  >
+> >  >     $ mkdir foo
+> >  >     $ cd foo
+> >  >     $ git --bare init
+> >  >
+> >  >     $ git log
+> >  >     fatal: bad default revision 'HEAD'
+> >  >
+> >  > This message is confusing for a newbie. Displaying "no commits" would
+> >  > make more sense here.
 
-  Lack of -l means "do local magic and use hard links".
-  Using -l makes git-clone print a warning when hard linking fails.
-  --no-hardlinks disables hard linking and still does local magic.
+What do people think of this patch? It feels a little hack-ish to make
+guesses as to the reasons for a failure, but in my experience an empty
+repo is the cause of this message in 99% of cases.
 
--brandon
+We could special-case it to HEAD and make a better message, perhaps, but
+that feels even more hack-ish.
 
+---
+ revision.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/revision.c b/revision.c
+index 63bf2c5..847dbc8 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1324,7 +1324,7 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, const ch
+ 		struct object *object;
+ 		unsigned mode;
+ 		if (get_sha1_with_mode(def, sha1, &mode))
+-			die("bad default revision '%s'", def);
++			die("unable to resolve '%s'; do you have any commits on this branch?", def);
+ 		object = get_reference(revs, def, sha1, 0);
+ 		add_pending_object_with_mode(revs, object, def, mode);
+ 	}
+-- 
+1.5.4.3.531.ga940.dirty
