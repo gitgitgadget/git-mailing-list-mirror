@@ -1,84 +1,94 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [RFH] bug in unpack_trees
-Date: Wed, 5 Mar 2008 01:47:57 -0500 (EST)
-Message-ID: <alpine.LNX.1.00.0803050130190.19665@iabervon.org>
-References: <20080304115940.GA5260@sigill.intra.peff.net> <alpine.LFD.1.00.0803041325370.12253@woody.linux-foundation.org>
+From: "Ping Yin" <pkufranky@gmail.com>
+Subject: Re: [PATCH/RFC v2] git-submodule: multi-level module definition
+Date: Wed, 5 Mar 2008 15:16:23 +0800
+Message-ID: <46dff0320803042316m1921f657wacf63a63491bbda0@mail.gmail.com>
+References: <1204646661-7776-1-git-send-email-pkufranky@gmail.com>
+	 <7bfdc29a0803041917j16112e80uc0b21707bdfd3fe@mail.gmail.com>
+	 <46dff0320803042315t2d89eb6fl325b4b2ef8ddbc44@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	John Goerzen <jgoerzen@complete.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Mar 05 07:48:58 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Mar 05 08:17:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWnQt-0007bt-SA
-	for gcvg-git-2@gmane.org; Wed, 05 Mar 2008 07:48:56 +0100
+	id 1JWnsB-0005cs-MV
+	for gcvg-git-2@gmane.org; Wed, 05 Mar 2008 08:17:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757463AbYCEGsF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Mar 2008 01:48:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756088AbYCEGsE
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 01:48:04 -0500
-Received: from iabervon.org ([66.92.72.58]:37509 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757037AbYCEGsB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Mar 2008 01:48:01 -0500
-Received: (qmail 29840 invoked by uid 1000); 5 Mar 2008 06:47:57 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 5 Mar 2008 06:47:57 -0000
-In-Reply-To: <alpine.LFD.1.00.0803041325370.12253@woody.linux-foundation.org>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1752777AbYCEHQ3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Mar 2008 02:16:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753263AbYCEHQ2
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 02:16:28 -0500
+Received: from ti-out-0910.google.com ([209.85.142.184]:46880 "EHLO
+	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752659AbYCEHQ1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Mar 2008 02:16:27 -0500
+Received: by ti-out-0910.google.com with SMTP id 28so1693757tif.23
+        for <git@vger.kernel.org>; Tue, 04 Mar 2008 23:16:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=bDPy1qW26mM+VtKOiVGpYfJtTm6d8mpV7IXB272c9RE=;
+        b=db4jcqYbnIRUmAi2bPb9mlp6FlLKxgHsqPZwSMxhOAO9odRBNAItXyKOMJGv+j0rwZd74nzssVRqurUW76no57RHkhvVrh3ChieCNpJZghxaqWXJnIK6ryA3FigC3OQGxxAT6x5jMotLvXYbZxIuduBnYYD90vwiBf69Rcz25eQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=HPsBGOlmswcAqNoY7a/ggTIZYXEEUVJPqDi00Ll0bUuHujlTK9OP9HWxPt919RKZFg9BmUoE5RkpzPoZSivsGaBmKEJqLDvR05xUcescDA80cAnPofgAT+gcscWlEpSYoVoAE+a75ZfNSot3E8mTvRsXJzgzzMesPIcn8WHV51Q=
+Received: by 10.150.154.6 with SMTP id b6mr983753ybe.64.1204701383280;
+        Tue, 04 Mar 2008 23:16:23 -0800 (PST)
+Received: by 10.150.218.21 with HTTP; Tue, 4 Mar 2008 23:16:23 -0800 (PST)
+In-Reply-To: <46dff0320803042315t2d89eb6fl325b4b2ef8ddbc44@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76179>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76180>
 
-On Tue, 4 Mar 2008, Linus Torvalds wrote:
+On Wed, Mar 5, 2008 at 11:17 AM, Imran M Yousuf <imyousuf@gmail.com> wrote:
+ > On Tue, Mar 4, 2008 at 10:04 PM, Ping Yin <pkufranky@gmail.com> wrote:
 
-> On Tue, 4 Mar 2008, Jeff King wrote:
-> >
-> > I am tracking down a bug in unpack_trees, but I can't seem to find the
-> > exact problem; I'm hoping to get help from people who have touched this
-> > code a bit more than I have.
-> 
-> Ok, I haven't (the blame for that unpack_trees function lies mainly at 
-> Dscho, I think ;), and now that I'm looking at it more closely I really 
-> don't think unpack_trees() is salvageable.
+>  >  .gitmodules with with multiple level of indirection
+ >  >  ------------------------------------------------------
+ >  >  [submodule "service"]
+ >  >    submodule = crawler
+ >  >    submodule = search
+ >  >  [submodule "crawler"]
+ >  >    submodule = util
+ >  >    submodule = imcrawter
+ >  >  [submodule "search"]
+ >  >    submodule = util
+ >  >    submodule = imsearch
 
-It was mostly me, 2.5 years ago in a file with a different name.
+ >
 
-> I tried. I can't make it work.
-> 
-> The only really sane way to traverse trees in parallel is with the 
-> walk-tree.c functionality (ie using "traverse_trees()"), which is quite 
-> straightforward and rather simple, and which I can pretty much guarantee 
-> works.
-> 
-> In contrast, the things that unpack_trees() does to try to figure out how 
-> to mix in the index into the pot really doesn't work.
+>  At this point I have few questions - Will Service have its own tree
+ >  besides its submodules?
+ Now, service itself is not a submodule, and service is just a logical
+ name for a group of moduels.
 
-The thing that's hopeless isn't including the index; it's including the 
-index that's simultaneously being regenerated. In this case, the mode 0 
-entry for df is getting dropped in order to not have both a "remove df" 
-entry and a create "df/file" entry, and this means that the position in 
-the index is one entry later than it should be, skipping over "new", which 
-then doesn't get touched.
 
-Of course, regenerating the same index is not only very difficult but 
-inefficient, because it involves adding and removing elements from the 
-middle of an array. The sensible thing is just to generate a new 
-in-memory index and swap it in on success at the end. This makes the 
-position update trivial (increment the position if you use the entry) and 
-the result generation efficient. In the process, we could have a separate 
-list of things to unlink() that aren't stored as weird index entries.
+ >
+ >  For your above example of .gitmodules hierarchy if I issue "git
+ >  submodule init -m util", can you please explain what will be the
+ >  outcome, i.e. which modules will be initialized.
+ >
+ Only the util module will be initialized using the path and url in
+ submodule.util.{path,url}
 
-> I'll take a good hard look at trying to convert users of unpack_trees() 
-> into traverse_trees(), or perhaps even convert "unpack_trees()" itself.
+ >
+ >  --
 
-I'll see if I can get something sensible worked out Wednesday afternoon.
+>  Imran M Yousuf
+ >  Entrepreneur & Software Engineer
+ >  Smart IT Engineering
+ >  Dhaka, Bangladesh
+ >  Email: imran@smartitengineering.com
+ >  Mobile: +880-1711402557
+ >
 
-	-Daniel
-*This .sig left intentionally blank*
+
+-- 
+Ping Yin
