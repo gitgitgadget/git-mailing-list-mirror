@@ -1,75 +1,77 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: tracking renames
-Date: Thu, 6 Mar 2008 09:54:22 +1300
-Message-ID: <46a038f90803051254i3a722e06h397a1a2d8a6c75da@mail.gmail.com>
-References: <20080304135734.b2c2f473.akpm@linux-foundation.org>
-	 <590657100803041403q2cc68e21p1c92c244939eb148@mail.gmail.com>
-	 <20080304141029.52b12065.akpm@linux-foundation.org>
-	 <m3zltegmj0.fsf@localhost.localdomain>
-	 <965172C8-C7A4-4932-899B-1E1A77BD7C12@yahoo.ca>
-	 <alpine.LSU.1.00.0803051738370.15786@racer.site>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] user.default: New config to prevent using the default values for user.*
+Date: Wed, 05 Mar 2008 13:01:46 -0800 (PST)
+Message-ID: <m3mypchol6.fsf@localhost.localdomain>
+References: <1204744684-2043-1-git-send-email-sbejar@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "=?ISO-8859-1?Q?Jean-Fran=E7ois_Veillette?=" 
-	<jean_francois_veillette@yahoo.ca>,
-	"Jakub Narebski" <jnareb@gmail.com>,
-	"Andrew Morton" <akpm@linux-foundation.org>,
-	"Harvey Harrison" <harvey.harrison@gmail.com>, git@vger.kernel.org
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Mar 05 21:55:12 2008
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?iso-8859-15?q?Santi_B=E9jar?= <sbejar@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 05 22:02:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JX0dl-0005iN-48
-	for gcvg-git-2@gmane.org; Wed, 05 Mar 2008 21:55:05 +0100
+	id 1JX0kt-0000IW-FO
+	for gcvg-git-2@gmane.org; Wed, 05 Mar 2008 22:02:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753143AbYCEUy0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Mar 2008 15:54:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753170AbYCEUy0
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 15:54:26 -0500
-Received: from ug-out-1314.google.com ([66.249.92.169]:16953 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753026AbYCEUyZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Mar 2008 15:54:25 -0500
-Received: by ug-out-1314.google.com with SMTP id z38so3469992ugc.16
-        for <git@vger.kernel.org>; Wed, 05 Mar 2008 12:54:22 -0800 (PST)
+	id S1753683AbYCEVBt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 5 Mar 2008 16:01:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754633AbYCEVBt
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 16:01:49 -0500
+Received: from wa-out-1112.google.com ([209.85.146.183]:10403 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752919AbYCEVBt convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 5 Mar 2008 16:01:49 -0500
+Received: by wa-out-1112.google.com with SMTP id v27so1882681wah.23
+        for <git@vger.kernel.org>; Wed, 05 Mar 2008 13:01:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=1/eQ3sDJ0jwZHXApROiO6BbqX1k5EGeQSIg6NraV8FU=;
-        b=sSb55Y89KaVGbE4XisQII9NbFoSNkzZt0/BKsWytUX/bBaQmE6fvN8miRNWrFBJ7uSAAU+vXRRlyavVTtmktZBNZTsTyRTvOkNBUptutn0aaMevyl/7s0S4dLJLSsd1/o/Q1jIw0J1ejgwUjtbdXrxauJLobjCGGxC5ANddHXgg=
+        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:content-transfer-encoding:date;
+        bh=4jAiaPHWYhz476CFfRpG3JhqqhZrB7mG8RqaKdR914Y=;
+        b=xRW7b3uyWoMdcQJHmC9xlcvFBrys3PQGAh/UbFaCjIDaaxJ7CfEZTu+bAzE0gNoqS8TVf/JvAOMuDtR57eZ9vseSjyalK2wywWC+ka72mGKlicoLWkSDZPATo3tGa1TL/vtN5lUw8cbw6Hu5diy1xkz9MQ4op665kc7EIW+guSc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=AABFYVRqW1RRY4WuB79SiVtgBhoLWyTMKKgrGljfPBZaqty2cnHbtUbjy2+eeuaefQ++hRfFnPX0BlydbyozVWBrXQdNkfOJtNeh+dZp46L8zCkWCAs3LP+cWXhhwSLpj0ivMdwNQv1Uosz6RdThtWDiXpXULqcsRvKvbtXS10U=
-Received: by 10.66.233.10 with SMTP id f10mr37135ugh.25.1204750462294;
-        Wed, 05 Mar 2008 12:54:22 -0800 (PST)
-Received: by 10.66.252.6 with HTTP; Wed, 5 Mar 2008 12:54:22 -0800 (PST)
-In-Reply-To: <alpine.LSU.1.00.0803051738370.15786@racer.site>
-Content-Disposition: inline
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:content-transfer-encoding:date;
+        b=wazLxtEUH99uMJn+BbWXUxrzw5J75MLKNpvAHw4/7Trswx+nuE6/l/ve5yxkO4dqA7UXwux72/qwKvhy1d4z9OzDNfgM3pvD0sn3dL8rUxJNKbrfqLjnNW6jUpFM/l7gPQhRP4IVCjgDgTNQ6g+aKZy7zvrr9jFIB5QEuk6/i8g=
+Received: by 10.115.33.1 with SMTP id l1mr5288359waj.137.1204750907601;
+        Wed, 05 Mar 2008 13:01:47 -0800 (PST)
+Received: from localhost.localdomain ( [83.8.248.32])
+        by mx.google.com with ESMTPS id o1sm4100786uge.1.2008.03.05.13.01.42
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 05 Mar 2008 13:01:46 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m25L1wO7025831;
+	Wed, 5 Mar 2008 22:01:58 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m25L1vLX025828;
+	Wed, 5 Mar 2008 22:01:57 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <1204744684-2043-1-git-send-email-sbejar@gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76263>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76264>
 
-On Thu, Mar 6, 2008 at 5:39 AM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
->  This is one of the most FAQ.  Please see
->
->         http://git.or.cz/gitwiki/GitFaq
->
+Santi B=E9jar <sbejar@gmail.com> writes:
 
-And don't miss the entertaining and colourful email by Linus on the
-subject here http://permalink.gmane.org/gmane.comp.version-control.git/217
+> Useful when you want a different email/name for each repository
 
-... this has also been a recurring flamefest in the past. So if anyone
-is feeling argumentative, have a good read of the thousands of flaming
-posts on the matter :-)
+> +user.default::
+> +	If false the defaults values for user.email and user.name are not
+> +	used. Useful when you want a different email/name for each
+> +	repository, normally set in the global config file.
+> +
 
-cheers,
+Wouldn't it be better to use user.noDefault, or user.explicit,
+or user.dontGuess... user.default seems like place to provide
+some default value, not place to decide if there should be some
+fallback default values or not.
 
-
-m
+--=20
+Jakub Narebski
+Poland
+ShadeHawk on #git
