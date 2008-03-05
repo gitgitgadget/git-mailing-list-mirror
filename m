@@ -1,118 +1,75 @@
-From: Tilman Schmidt <tilman@imap.cc>
-Subject: Re: The 8th airing of the msysGit herald
-Date: Thu, 06 Mar 2008 00:12:26 +0100
-Organization: me - organized??
-Message-ID: <47CF28DA.9030209@imap.cc>
-References: <alpine.LSU.1.00.0803022329560.22527@racer.site> <m34pbok54h.fsf@localhost.localdomain> <alpine.LSU.1.00.0803030052450.22527@racer.site> <200803030210.02223.jnareb@gmail.com> <47CBE85B.6060702@imap.cc> <alpine.LSU.1.00.0803031205170.22527@racer.site> <47CC419E.7030704@imap.cc> <47CC47EE.9060004@nrlssc.navy.mil>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC v2] git-submodule: multi-level module definition
+Date: Wed, 05 Mar 2008 15:18:13 -0800
+Message-ID: <7vd4q8kbey.fsf@gitster.siamese.dyndns.org>
+References: <1204646661-7776-1-git-send-email-pkufranky@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enigD4D0C0343A7397AF098528EF"
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Thu Mar 06 00:13:27 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Ping Yin <pkufranky@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 06 00:19:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JX2nd-0005cb-UF
-	for gcvg-git-2@gmane.org; Thu, 06 Mar 2008 00:13:26 +0100
+	id 1JX2tC-0007o4-Rr
+	for gcvg-git-2@gmane.org; Thu, 06 Mar 2008 00:19:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933355AbYCEXMp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Mar 2008 18:12:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763397AbYCEXMn
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 18:12:43 -0500
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:51588 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S933345AbYCEXMj (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 5 Mar 2008 18:12:39 -0500
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id 4DC7FAFDEB;
-	Wed,  5 Mar 2008 18:12:38 -0500 (EST)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Wed, 05 Mar 2008 18:12:38 -0500
-X-Sasl-enc: rbXJDiQ88X9lGjJ0cu1ANwAxDES7QBftU8jlLakVfCm2 1204758757
-Received: from [192.168.59.127] (pD9E849B3.dip.t-dialin.net [217.232.73.179])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id E7E9427B79;
-	Wed,  5 Mar 2008 18:12:36 -0500 (EST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.0; de-AT; rv:1.8.1.12) Gecko/20080201 SeaMonkey/1.1.8 Mnenhy/0.7.5.666
-In-Reply-To: <47CC47EE.9060004@nrlssc.navy.mil>
-X-Enigmail-Version: 0.95.6
+	id S932862AbYCEXSc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Mar 2008 18:18:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932544AbYCEXS3
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 18:18:29 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:40979 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932991AbYCEXSY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Mar 2008 18:18:24 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 85FB3257C;
+	Wed,  5 Mar 2008 18:18:20 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id CD5C9257B; Wed,  5 Mar 2008 18:18:16 -0500 (EST)
+In-Reply-To: <1204646661-7776-1-git-send-email-pkufranky@gmail.com> (Ping
+ Yin's message of "Wed, 5 Mar 2008 00:04:21 +0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76287>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76288>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enigD4D0C0343A7397AF098528EF
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
+Ping Yin <pkufranky@gmail.com> writes:
 
-Am 03.03.2008 19:48 schrieb Brandon Casey:
-> I think the assumption made was that you were already getting some work=
+> This patch allows multi-level module definition in .gitmodules as
+> Linus and Sven Verdoolaege etc. have suggested in mails
+> "Let .git/config specify the url for submodules"
+> (http://article.gmane.org/gmane.comp.version-control.git/48939).
+> 
+> Following shows an example of such a .gitmodules.
+>
+> .gitmodules with with multiple level of indirection
+> ------------------------------------------------------
+> [submodule "service"]
+>    submodule = crawler
+>    submodule = search
+> ...
+> [submodule "util"]
+>    url = git://xyzzy/util.git
+> [submodule "imsearch"]
+>    path = search/imsearch
+>    url = git://xyzzy/imsearch.git
+> [submodule "imcrawler"]
+>    path = crawler/imcrawter
+>    url = git://xyzzy/imcrawter.git
+> ------------------------------------------------------
 
-> done with the version of git that you had.
+I would agree that allowing the user to use a short-hand to name a group
+of modules the user is interested in would be a good idea, but I think
+.gitmodules is a wrong place to do so.  The grouping is a user preference,
+isn't it?
 
-True.
-
-> If you do not yet have a comfortable grasp of git usage
-
-True, too.
-
-> I would suggest the following steps:
->=20
->     1) Grab "a" version of git (preferably latest stable version)
-> 	-If you need to compile it, read the "INSTALL" file.
->     2) Read intro/tutorials
-> 	-tutorial.txt
-> 	-everyday.txt
-> 	-user-manual.txt (more in-depth)
-> 	These three are mentioned in the git man page.
->     3) Start using it
-> 	-refer to man pages to answer questions as you
-> 	 encounter issues
-> 	-ask the mailing list when man pages or other docs
-> 	 are unable to answer your questions
-
-Got as far as that. In fact, I'm talking about one specific aspect
-of that last substep. (let's call it 3.2)
-
->     4) End of story
-
-I can't see that yet.
-
-> Upgrading, reading RelNotes, using new features, and reading the high-v=
-olume
-> mailing list are not required, so it is wrong to suggest that they are =
-barriers
-> to entry for using git.
-
-I never meant to suggest that. They only are barriers for proceeding
-to step 3.2 and onwards to step 4.
-
-Hope that clears it up a bit.
-
---=20
-Tilman Schmidt                          E-Mail: tilman@imap.cc
-Bonn, Germany
-Diese Nachricht besteht zu 100% aus wiederverwerteten Bits.
-Unge=F6ffnet mindestens haltbar bis: (siehe R=FCckseite)
-
-
---------------enigD4D0C0343A7397AF098528EF
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.3rc1 (MingW32)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
-
-iD8DBQFHzyjjMdB4Whm86/kRAo8gAJ96UaXe9Ee/6dP8SEBq8uxDB7TkawCffJY5
-xqbvNKRI9iMZ+n/gij18lJs=
-=g0jZ
------END PGP SIGNATURE-----
-
---------------enigD4D0C0343A7397AF098528EF--
+The place the owner of the repository (not the project) expresses which
+modules are of interest, what transports she wants to use to access it,
+etc. is $GIT_DIR/config, and .gitmodules is a vehicle to supply hints to
+be used when the user populates that information.
