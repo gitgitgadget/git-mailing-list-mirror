@@ -1,70 +1,75 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] user.default: New config to prevent using the default
-	values for user.*
-Date: Wed, 5 Mar 2008 21:44:14 +0100
-Message-ID: <20080305204414.GB4877@steel.home>
-References: <1204744684-2043-1-git-send-email-sbejar@gmail.com>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: tracking renames
+Date: Thu, 6 Mar 2008 09:54:22 +1300
+Message-ID: <46a038f90803051254i3a722e06h397a1a2d8a6c75da@mail.gmail.com>
+References: <20080304135734.b2c2f473.akpm@linux-foundation.org>
+	 <590657100803041403q2cc68e21p1c92c244939eb148@mail.gmail.com>
+	 <20080304141029.52b12065.akpm@linux-foundation.org>
+	 <m3zltegmj0.fsf@localhost.localdomain>
+	 <965172C8-C7A4-4932-899B-1E1A77BD7C12@yahoo.ca>
+	 <alpine.LSU.1.00.0803051738370.15786@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Santi =?iso-8859-15?Q?B=E9jar?= <sbejar@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 05 21:45:39 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "=?ISO-8859-1?Q?Jean-Fran=E7ois_Veillette?=" 
+	<jean_francois_veillette@yahoo.ca>,
+	"Jakub Narebski" <jnareb@gmail.com>,
+	"Andrew Morton" <akpm@linux-foundation.org>,
+	"Harvey Harrison" <harvey.harrison@gmail.com>, git@vger.kernel.org
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Mar 05 21:55:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JX0Tw-0001Fv-E8
-	for gcvg-git-2@gmane.org; Wed, 05 Mar 2008 21:44:56 +0100
+	id 1JX0dl-0005iN-48
+	for gcvg-git-2@gmane.org; Wed, 05 Mar 2008 21:55:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753759AbYCEUoS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 5 Mar 2008 15:44:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752853AbYCEUoS
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 15:44:18 -0500
-Received: from mo-p07-ob.rzone.de ([81.169.146.188]:61822 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751922AbYCEUoR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Mar 2008 15:44:17 -0500
-X-RZG-CLASS-ID: mo07
-X-RZG-AUTH: z4gQVF2k5XWuW3Cculz1E3jDDhk=
-Received: from tigra.home (Fae6c.f.strato-dslnet.de [195.4.174.108])
-	by post.webmailer.de (klopstock mo30) (RZmta 16.8)
-	with ESMTP id n03f7dk25HlGPd ; Wed, 5 Mar 2008 21:44:15 +0100 (MET)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id E66EE277BD;
-	Wed,  5 Mar 2008 21:44:14 +0100 (CET)
-Received: by steel.home (Postfix, from userid 1000)
-	id 7F93D56D24; Wed,  5 Mar 2008 21:44:14 +0100 (CET)
+	id S1753143AbYCEUy0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Mar 2008 15:54:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753170AbYCEUy0
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 15:54:26 -0500
+Received: from ug-out-1314.google.com ([66.249.92.169]:16953 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753026AbYCEUyZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Mar 2008 15:54:25 -0500
+Received: by ug-out-1314.google.com with SMTP id z38so3469992ugc.16
+        for <git@vger.kernel.org>; Wed, 05 Mar 2008 12:54:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=1/eQ3sDJ0jwZHXApROiO6BbqX1k5EGeQSIg6NraV8FU=;
+        b=sSb55Y89KaVGbE4XisQII9NbFoSNkzZt0/BKsWytUX/bBaQmE6fvN8miRNWrFBJ7uSAAU+vXRRlyavVTtmktZBNZTsTyRTvOkNBUptutn0aaMevyl/7s0S4dLJLSsd1/o/Q1jIw0J1ejgwUjtbdXrxauJLobjCGGxC5ANddHXgg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=AABFYVRqW1RRY4WuB79SiVtgBhoLWyTMKKgrGljfPBZaqty2cnHbtUbjy2+eeuaefQ++hRfFnPX0BlydbyozVWBrXQdNkfOJtNeh+dZp46L8zCkWCAs3LP+cWXhhwSLpj0ivMdwNQv1Uosz6RdThtWDiXpXULqcsRvKvbtXS10U=
+Received: by 10.66.233.10 with SMTP id f10mr37135ugh.25.1204750462294;
+        Wed, 05 Mar 2008 12:54:22 -0800 (PST)
+Received: by 10.66.252.6 with HTTP; Wed, 5 Mar 2008 12:54:22 -0800 (PST)
+In-Reply-To: <alpine.LSU.1.00.0803051738370.15786@racer.site>
 Content-Disposition: inline
-In-Reply-To: <1204744684-2043-1-git-send-email-sbejar@gmail.com>
-User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76262>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76263>
 
-Santi B=E9jar, Wed, Mar 05, 2008 20:18:04 +0100:
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -914,6 +914,11 @@ url.<base>.insteadOf::
->  	never-before-seen repository on the site.  When more than one
->  	insteadOf strings match a given URL, the longest match is used.
-> =20
-> +user.default::
-> +	If false the defaults values for user.email and user.name are not
+On Thu, Mar 6, 2008 at 5:39 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>  This is one of the most FAQ.  Please see
+>
+>         http://git.or.cz/gitwiki/GitFaq
+>
 
-"If false the default values"... An "s" in "default" was superflous
+And don't miss the entertaining and colourful email by Linus on the
+subject here http://permalink.gmane.org/gmane.comp.version-control.git/217
 
-> @@ -171,7 +171,7 @@ static const char au_env[] =3D "GIT_AUTHOR_NAME";
->  static const char co_env[] =3D "GIT_COMMITTER_NAME";
->  static const char *env_hint =3D
->  "\n"
-> -"*** Your name cannot be determined from your system services (gecos=
-).\n"
-> +"*** Your name cannot be determined.\n"
+... this has also been a recurring flamefest in the past. So if anyone
+is feeling argumentative, have a good read of the thousands of flaming
+posts on the matter :-)
 
-Why not?
+cheers,
 
+
+m
