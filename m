@@ -1,57 +1,88 @@
-From: Jean-Luc Herren <jlh@gmx.ch>
-Subject: Re: How to make gitk not overwrite my selection?
-Date: Wed, 05 Mar 2008 23:44:10 +0100
-Message-ID: <47CF223A.60507@gmx.ch>
-References: <47CD6D1C.1080202@gmx.ch> <20080304230306.GA18246@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 03/40] Add target architecture MinGW.
+Date: Wed, 05 Mar 2008 14:51:23 -0800
+Message-ID: <7v1w6olr84.fsf@gitster.siamese.dyndns.org>
+References: <1204138503-6126-1-git-send-email-johannes.sixt@telecom.at>
+ <1204138503-6126-4-git-send-email-johannes.sixt@telecom.at>
+ <alpine.LSU.1.00.0802281159550.22527@racer.site>
+ <200803052221.12495.johannes.sixt@telecom.at>
+ <alpine.LSU.1.00.0803052317350.15786@racer.site>
+ <7vir00lski.fsf@gitster.siamese.dyndns.org>
+ <alpine.LSU.1.00.0803052327570.15786@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Paul Mackerras <paulus@samba.org>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Mar 05 23:45:21 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Sixt <johannes.sixt@telecom.at>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Mar 05 23:52:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JX2MN-0002zn-Vb
-	for gcvg-git-2@gmane.org; Wed, 05 Mar 2008 23:45:16 +0100
+	id 1JX2T7-00067T-OX
+	for gcvg-git-2@gmane.org; Wed, 05 Mar 2008 23:52:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764728AbYCEWoQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Mar 2008 17:44:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764693AbYCEWoP
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 17:44:15 -0500
-Received: from mail.gmx.net ([213.165.64.20]:42854 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1764664AbYCEWoN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Mar 2008 17:44:13 -0500
-Received: (qmail invoked by alias); 05 Mar 2008 22:44:11 -0000
-Received: from 233-53.79-83.cust.bluewin.ch (EHLO [192.168.123.202]) [83.79.53.233]
-  by mail.gmx.net (mp007) with SMTP; 05 Mar 2008 23:44:11 +0100
-X-Authenticated: #14737133
-X-Provags-ID: V01U2FsdGVkX19p+BZElq9pwPVNf8AExGakiVWwXeYZImGOw7EnCb
-	zzPrAz54T/1fvd
-User-Agent: Thunderbird 2.0.0.12 (X11/20080229)
-In-Reply-To: <20080304230306.GA18246@sigill.intra.peff.net>
-X-Enigmail-Version: 0.95.6
-X-Y-GMX-Trusted: 0
+	id S1763633AbYCEWvc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Mar 2008 17:51:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763470AbYCEWvb
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 17:51:31 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:65177 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1763153AbYCEWva (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Mar 2008 17:51:30 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 40BA619C0;
+	Wed,  5 Mar 2008 17:51:29 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 77654193A; Wed,  5 Mar 2008 17:51:25 -0500 (EST)
+In-Reply-To: <alpine.LSU.1.00.0803052327570.15786@racer.site> (Johannes
+ Schindelin's message of "Wed, 5 Mar 2008 23:28:15 +0100 (CET)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76282>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76283>
 
-Jeff King wrote:
-> On Tue, Mar 04, 2008 at 04:39:08PM +0100, Jean-Luc Herren wrote:
->> In gitk, whenever I select a commit in the tree, the SHA1 field
->> gets automatically selected, putting its hash into the current
->> selection for easy pasting into other applications. 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> The patch below seems to work for me (see the "auto-select sha1" option
-> under preferences). However, I don't actually know tcl, so I
-> cargo-culted all of the option processing magic. Paul, if you want to
-> take this patch, please read it carefully. ;)
+>> I think Reviewed-by: would indeed be a very good addition to our
+>> patch flow convention, borrowing from the kernel folks.
+>
+> You mean you have more people to blame, then? ;-)
 
-Thanks, I don't know tcl either, but the patch seems to work great
-here.
+No.  The procedure would help me keep my impatience from making
+me merge patches that have not been adequately reviewed on the
+list.
 
-jlh
+Recently, I ended up wasting two nights because I was not
+careful enough earlier, when I was short of time and apparent
+backlog was beginning to get larger and larger.
+
+I queued some patches from the backlog to 'next' saying "ah,
+they look good enough, people will notice breakages anyway," but
+the breakage was not caught until 'master' got broken.
+
+Not good.  And the list is not to blame.
+
+By merging to 'next' I am sending a message that I think they
+have been adequately reviewed (either by me or by people whose
+judgement I trust), so I shouldn't have applied them to 'next'
+in the first place.  I instead should have ignored them, and
+waited until I had enough time and concentration to properly
+review them.  Or until somebody else did --- by that time,
+hopefully other people might have commented on them, saying
+"these look all ok to me", or "ah that's crap".
+
+These wasted two nights was all my fault, and as a result, there
+are more patches on the list archive that I have seen (notice I
+did not say "have read") that are unapplied.
+
+As to those "more patches on the list that are unapplied", I'll
+keep them unapplied for now, until there are positive feedbacks
+on them.
+
+The positive feedback may come from myself.  I am not saying I
+will stop reviewing and/or applying patches nobody else
+commented on.
