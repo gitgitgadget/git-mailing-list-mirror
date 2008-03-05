@@ -1,63 +1,63 @@
-From: "Kenneth P. Turvey" <kt-usenet@squeakydolphin.com>
-Subject: Re: git-svn and logging.. new to git
-Date: Wed, 5 Mar 2008 16:03:44 +0000 (UTC)
-Message-ID: <fqmg8v$rmm$1@ger.gmane.org>
-References: <fqloop$ll$1@ger.gmane.org>
-	<ee77f5c20803050401o7f33522dj6dd0f0f1c0a78f96@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] Add compat/vsnprintf.c for systems that returns -1 on
+ maxsize reached
+Date: Wed, 05 Mar 2008 17:04:12 +0100
+Message-ID: <47CEC47C.6060505@viscovery.net>
+References: <200803041459.29000.michal.rokos@nextsoft.cz> <200803051455.57148.michal.rokos@nextsoft.cz> <47CEAE20.1030707@viscovery.net> <200803051600.06605.michal.rokos@nextsoft.cz> <20080305155412.GA19295@herod.dreamhost.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 05 17:05:58 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Michal Rokos <michal.rokos@nextsoft.cz>, GIT <git@vger.kernel.org>
+To: Wayne Davison <wayne@opencoder.net>
+X-From: git-owner@vger.kernel.org Wed Mar 05 17:06:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWw6g-00039O-J8
-	for gcvg-git-2@gmane.org; Wed, 05 Mar 2008 17:04:39 +0100
+	id 1JWw7s-0003PM-EZ
+	for gcvg-git-2@gmane.org; Wed, 05 Mar 2008 17:05:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756127AbYCEQD6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Mar 2008 11:03:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755897AbYCEQD5
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 11:03:57 -0500
-Received: from main.gmane.org ([80.91.229.2]:51286 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755781AbYCEQD4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Mar 2008 11:03:56 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1JWw5u-0006Eh-6c
-	for git@vger.kernel.org; Wed, 05 Mar 2008 16:03:50 +0000
-Received: from pool-71-161-44-24.clppva.east.verizon.net ([71.161.44.24])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 05 Mar 2008 16:03:50 +0000
-Received: from kt-usenet by pool-71-161-44-24.clppva.east.verizon.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 05 Mar 2008 16:03:50 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: pool-71-161-44-24.clppva.east.verizon.net
-User-Agent: pan 0.120 (Plate of Shrimp)
+	id S1758862AbYCEQES (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Mar 2008 11:04:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756775AbYCEQES
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 11:04:18 -0500
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:11681 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758795AbYCEQEQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Mar 2008 11:04:16 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1JWw5d-0002oT-R2; Wed, 05 Mar 2008 17:03:35 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id C9FEC6EF; Wed,  5 Mar 2008 17:04:12 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <20080305155412.GA19295@herod.dreamhost.com>
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76237>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76238>
 
-On Wed, 05 Mar 2008 23:01:34 +1100, David Symonds wrote:
-
-
-> git-svn creates a whole bunch of remote branches -- does "git branch
-> -a" show them up?
+Wayne Davison schrieb:
+> Then, set a define that snprintf is bogus and use a version of
+> snprintf() based on this instead:
 > 
-> Also, you can probably leave out the --trunk, etc., and just use
-> --stdlayout.
+> http://rsync.samba.org/ftp/unpacked/rsync/lib/snprintf.c
+> 
+> That defines rsync_snprintf() and rsync_vsnprintf() functions (which
+> could be renamed for git). 
 
+No.
 
-Thanks.  That's good information to have.  Is there a way to just do a
-straight import like in svnimport?  Is svnimport still available
-somewhere or has it been completely superseded by git-svn? 
+If one *printf function is replaced, all of them must be replaced. The
+reason is that, eg. on Windows we don't have %llu, but we have %I64u. So
+depending on which flavor of *printf is called, we would have to supply
+the one format (rsync_printf: %llu) or the other format (fprintf et al:
+%I64u).
 
--- 
-Kenneth P. Turvey <kt-usenet@squeakydolphin.com>
-
+-- Hannes
