@@ -1,153 +1,127 @@
-From: =?utf-8?q?Santi=20B=C3=A9jar?= <sbejar@gmail.com>
-Subject: [PATCH] user.default: New config to prevent using the default values for user.*
-Date: Wed,  5 Mar 2008 20:18:04 +0100
-Message-ID: <1204744684-2043-1-git-send-email-sbejar@gmail.com>
+From: =?utf-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+Subject: [PATCH 2/2] bash: add 'git svn' options
+Date: Wed,  5 Mar 2008 20:28:06 +0100
+Message-ID: <cba299961b895ea1b20a4a3f7f4add86618891ed.1204745177.git.szeder@ira.uka.de>
+References: <>
+ <ad6d56c74f4e5ae29dc8176eba6e7381c12a3351.1204745177.git.szeder@ira.uka.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?q?Santi=20B=C3=A9jar?= <sbejar@gmail.com>
+Cc: gitster@pobox.com, spearce@spearce.org,
+	=?utf-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 05 20:19:32 2008
+X-From: git-owner@vger.kernel.org Wed Mar 05 20:28:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWz93-0007Lf-FR
-	for gcvg-git-2@gmane.org; Wed, 05 Mar 2008 20:19:17 +0100
+	id 1JWzIF-0002mG-CL
+	for gcvg-git-2@gmane.org; Wed, 05 Mar 2008 20:28:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755537AbYCETSh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 5 Mar 2008 14:18:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755201AbYCETSh
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 14:18:37 -0500
-Received: from nf-out-0910.google.com ([64.233.182.187]:14764 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755356AbYCETSf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Mar 2008 14:18:35 -0500
-Received: by nf-out-0910.google.com with SMTP id g13so987306nfb.21
-        for <git@vger.kernel.org>; Wed, 05 Mar 2008 11:18:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date:message-id:x-mailer:mime-version:content-type:content-transfer-encoding;
-        bh=QDgNZH1uLsTxj0ZBwqyBEZsmwy+sIZL8t5JaHWj20/s=;
-        b=ItElXZu0e4ubAL8wuJA8Vamb2L69RAJI4Fb6ml7B7/lyJn0uoNH9u3dHB//3ahwwNSNTsTsFlVKwxBbWY0ms2MThFI1mis8OkniwZPkT7jMtMUBm2+sXg5K1Rp+iR5FbH/2qVn2WK9YlIJGgVQadLkC7BptGhB7R5RDTA3c5N/A=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version:content-type:content-transfer-encoding;
-        b=xiV5UDA+8nhdGbKTqxK+w+GfpWRQh552JxMJMDxqxV4JazjmihfqOzrlS+i88gUCB+4TlMUf9jdFmViTQVETy7T8+ket8UDcsniV1pMBVLlUAa/P4+0lPb1pxqoEngrpaDBQZazA58H+vY+4NuNFkOW2QHhSWgu3+Udfz/7gJn8=
-Received: by 10.82.149.8 with SMTP id w8mr9310760bud.29.1204744713365;
-        Wed, 05 Mar 2008 11:18:33 -0800 (PST)
-Received: from localhost ( [91.13.114.24])
-        by mx.google.com with ESMTPS id j12sm2225260fkf.6.2008.03.05.11.18.20
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 05 Mar 2008 11:18:32 -0800 (PST)
-X-Mailer: git-send-email 1.5.4.3.447.gc95b3.dirty
+	id S1756187AbYCET2L convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 5 Mar 2008 14:28:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755088AbYCET2K
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 14:28:10 -0500
+Received: from francis.fzi.de ([141.21.7.5]:19310 "EHLO exchange.fzi.de"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1754513AbYCET2I (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Mar 2008 14:28:08 -0500
+Received: from fzi.de ([141.21.4.196]) by exchange.fzi.de with Microsoft SMTPSVC(6.0.3790.3959);
+	 Wed, 5 Mar 2008 20:28:05 +0100
+X-Mailer: git-send-email 1.5.4.3
+In-Reply-To: <ad6d56c74f4e5ae29dc8176eba6e7381c12a3351.1204745177.git.szeder@ira.uka.de>
+In-Reply-To: <ad6d56c74f4e5ae29dc8176eba6e7381c12a3351.1204745177.git.szeder@ira.uka.de>
+References: <ad6d56c74f4e5ae29dc8176eba6e7381c12a3351.1204745177.git.szeder@ira.uka.de>
+X-OriginalArrivalTime: 05 Mar 2008 19:28:05.0213 (UTC) FILETIME=[08F190D0:01C87EF7]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76252>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76253>
 
-Useful when you want a different email/name for each repository
-
-Signed-off-by: Santi B=C3=A9jar <sbejar@gmail.com>
+Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
 ---
- Documentation/config.txt |    5 +++++
- cache.h                  |    1 +
- config.c                 |    5 +++++
- environment.c            |    1 +
- ident.c                  |    6 +++---
- 5 files changed, 15 insertions(+), 3 deletions(-)
+ contrib/completion/git-completion.bash |   65 ++++++++++++++++++++++++=
+++++++++
+ 1 files changed, 65 insertions(+), 0 deletions(-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 4027726..d7e5b6d 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -914,6 +914,11 @@ url.<base>.insteadOf::
- 	never-before-seen repository on the site.  When more than one
- 	insteadOf strings match a given URL, the longest match is used.
-=20
-+user.default::
-+	If false the defaults values for user.email and user.name are not
-+	used. Useful when you want a different email/name for each
-+	repository, normally set in the global config file.
+diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
+n/git-completion.bash
+index 8f56641..797ac1b 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1186,6 +1186,71 @@ _git_svn ()
+ 			set-tree commit-diff info create-ignore propget
+ 			proplist show-ignore show-externals
+ 			"
++	else
++		local remote_opts=3D"--username=3D --config-dir=3D --no-auth-cache"
++		local fc_opts=3D"
++			--follow-parent --authors-file=3D --repack=3D
++			--no-metadata --use-svm-props --use-svnsync-props
++			--log-window-size=3D --no-checkout --quiet
++			--repack-flags --user-log-author $remote_opts
++			"
++		local init_opts=3D"
++			--template=3D --shared=3D --trunk=3D --tags=3D
++			--branches=3D --stdlayout --minimize-url
++			--no-metadata --use-svm-props --use-svnsync-props
++			--rewrite-root=3D $remote_opts
++			"
++		local cmt_opts=3D"
++			--edit --rmdir --find-copies-harder --copy-similarity=3D
++			"
 +
- user.email::
- 	Your email address to be recorded in any newly created commits.
- 	Can be overridden by the 'GIT_AUTHOR_EMAIL', 'GIT_COMMITTER_EMAIL', a=
-nd
-diff --git a/cache.h b/cache.h
-index e230302..70f08d0 100644
---- a/cache.h
-+++ b/cache.h
-@@ -703,6 +703,7 @@ extern int config_error_nonbool(const char *);
- #define MAX_GITNAME (1000)
- extern char git_default_email[MAX_GITNAME];
- extern char git_default_name[MAX_GITNAME];
-+extern int default_ident;
++		local cur=3D"${COMP_WORDS[COMP_CWORD]}"
++		case "$command,$cur" in
++		fetch,--*)
++			__gitcomp "--revision=3D --fetch-all $fc_opts"
++			;;
++		clone,--*)
++			__gitcomp "--revision=3D $fc_opts $init_opts"
++			;;
++		init,--*)
++			__gitcomp "$init_opts"
++			;;
++		dcommit,--*)
++			__gitcomp "
++				--merge --strategy=3D --verbose --dry-run
++				--fetch-all --no-rebase $cmt_opts $fc_opts
++				"
++			;;
++		set-tree,--*)
++			__gitcomp "--stdin $cmt_opts $fc_opts"
++			;;
++		create-ignore,--*|propget,--*|proplist,--*|show-ignore,--*|\
++		show-externals,--*)
++			__gitcomp "--revision=3D"
++			;;
++		log,--*)
++			__gitcomp "
++				--limit=3D --revision=3D --verbose --incremental
++				--oneline --show-commit --non-recursive
++				--authors-file=3D
++				"
++			;;
++		rebase,--*)
++			__gitcomp "
++				--merge --verbose --strategy=3D --local
++				--fetch-all $fc_opts
++				"
++			;;
++		commit-diff,--*)
++			__gitcomp "--message=3D --file=3D --revision=3D $cmt_opts"
++			;;
++		info,--*)
++			__gitcomp "--url"
++			;;
++		*)
++			COMPREPLY=3D()
++			;;
++		esac
+ 	fi
+ }
 =20
- extern const char *git_commit_encoding;
- extern const char *git_log_output_encoding;
-diff --git a/config.c b/config.c
-index 0624494..ea1fa71 100644
---- a/config.c
-+++ b/config.c
-@@ -445,6 +445,11 @@ int git_default_config(const char *var, const char=
- *value)
- 		return 0;
- 	}
-=20
-+	if (!strcmp(var, "user.default")) {
-+		default_ident =3D git_config_bool(var, value);
-+		return 0;
-+	}
-+
- 	if (!strcmp(var, "i18n.commitencoding"))
- 		return git_config_string(&git_commit_encoding, var, value);
-=20
-diff --git a/environment.c b/environment.c
-index 6739a3f..8e252e2 100644
---- a/environment.c
-+++ b/environment.c
-@@ -11,6 +11,7 @@
-=20
- char git_default_email[MAX_GITNAME];
- char git_default_name[MAX_GITNAME];
-+int default_ident =3D 1;
- int trust_executable_bit =3D 1;
- int quote_path_fully =3D 1;
- int has_symlinks =3D 1;
-diff --git a/ident.c b/ident.c
-index b839dcf..0f62a94 100644
---- a/ident.c
-+++ b/ident.c
-@@ -75,7 +75,7 @@ static void setup_ident(void)
- 	struct passwd *pw =3D NULL;
-=20
- 	/* Get the name ("gecos") */
--	if (!git_default_name[0]) {
-+	if (!git_default_name[0] && default_ident) {
- 		pw =3D getpwuid(getuid());
- 		if (!pw)
- 			die("You don't exist. Go away!");
-@@ -88,7 +88,7 @@ static void setup_ident(void)
- 		if (email && email[0])
- 			strlcpy(git_default_email, email,
- 				sizeof(git_default_email));
--		else {
-+		else if (default_ident) {
- 			if (!pw)
- 				pw =3D getpwuid(getuid());
- 			if (!pw)
-@@ -171,7 +171,7 @@ static const char au_env[] =3D "GIT_AUTHOR_NAME";
- static const char co_env[] =3D "GIT_COMMITTER_NAME";
- static const char *env_hint =3D
- "\n"
--"*** Your name cannot be determined from your system services (gecos).=
-\n"
-+"*** Your name cannot be determined.\n"
- "\n"
- "Run\n"
- "\n"
 --=20
-1.5.4.3.447.gc95b3.dirty
+1.5.4.3
 
