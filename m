@@ -1,65 +1,253 @@
-From: Noel Grandin <noel@peralex.com>
-Subject: Re: GSoC 2008 - Mentors Wanted!
-Date: Wed, 05 Mar 2008 16:55:11 +0200
-Message-ID: <47CEB44F.9040404@peralex.com>
-References: <20080304051149.GS8410@spearce.org>	 <1b46aba20803041247h5cc64186q2abf7973372fd3ef@mail.gmail.com>	 <20080305053612.GA8410@spearce.org>	 <7bfdc29a0803042358n6126286dr7a17f3b4dadbabe5@mail.gmail.com>	 <20080305081523.GK8410@spearce.org> <7bfdc29a0803050025p45dfcea9q87a1107a8bed46a6@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Carlos Rica <jasampler@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Imran M Yousuf <imyousuf@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 05 16:06:52 2008
+From: Ping Yin <pkufranky@gmail.com>
+Subject: [PATCH v2] git-submodule: Don't die when command fails for one submodule
+Date: Wed,  5 Mar 2008 23:21:18 +0800
+Message-ID: <1204730478-22027-1-git-send-email-pkufranky@gmail.com>
+Cc: gitster@pobox.com, Ping Yin <pkufranky@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 05 16:22:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWvAz-0002fX-RI
-	for gcvg-git-2@gmane.org; Wed, 05 Mar 2008 16:05:02 +0100
+	id 1JWvRU-00018C-IH
+	for gcvg-git-2@gmane.org; Wed, 05 Mar 2008 16:22:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753022AbYCEPES (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Mar 2008 10:04:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752894AbYCEPES
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 10:04:18 -0500
-Received: from [41.207.227.243] ([41.207.227.243]:54069 "EHLO mail.peralex.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1753022AbYCEPER (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Mar 2008 10:04:17 -0500
-X-Greylist: delayed 395 seconds by postgrey-1.27 at vger.kernel.org; Wed, 05 Mar 2008 10:04:15 EST
-Received: from [192.168.1.187] (noel.ct [192.168.1.187])
-	by mail.peralex.com (8.14.2/8.14.1) with ESMTP id m25ErEt2040207;
-	Wed, 5 Mar 2008 16:53:14 +0200 (SAST)
-	(envelope-from noel@peralex.com)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.0; en-US; rv:1.8) Gecko/20051201 Thunderbird/1.5 Mnenhy/0.7.3.0
-In-Reply-To: <7bfdc29a0803050025p45dfcea9q87a1107a8bed46a6@mail.gmail.com>
-X-Enigmail-Version: 0.95.3
-Content-Disposition: inline
-X-Scanned-By: MIMEDefang 2.61 on 192.168.1.7
-X-Synonym: Copied by Synonym (http://www.modulo.ro/synonym) to: mailbackup3@peralex.com, mailbackup3@peralex.com
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (mail.peralex.com [192.168.1.7]); Wed, 05 Mar 2008 16:53:27 +0200 (SAST)
+	id S1752846AbYCEPV0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Mar 2008 10:21:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752790AbYCEPV0
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 10:21:26 -0500
+Received: from mail.qikoo.org ([60.28.205.235]:46233 "EHLO mail.qikoo.org"
+	rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1752789AbYCEPVZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Mar 2008 10:21:25 -0500
+Received: by mail.qikoo.org (Postfix, from userid 1029)
+	id 45F1E470AE; Wed,  5 Mar 2008 23:21:18 +0800 (CST)
+X-Mailer: git-send-email 1.5.4.3.347.g5314c
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76227>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76228>
 
-Imran M Yousuf wrote:
-> To start with I was actually thinking of JNI + "exec from C". So later
-> when libification is completed we can replace the execs with call to
-> the libs directly instead. Is this a viable fourth option (sorry I
-> forgot to mention it the first time around)?
->
->   
+When handling multiple modules, init/update/status command will exit
+when it fails for one submodule. This patch makes the command continue
+bypassing the failure and keep right exit status.
 
-This is probably a good idea. JGIT is always going to be 2 steps behind
-the native GIT code when comes to accessing on-disk structures.
+Signed-off-by: Ping Yin <pkufranky@gmail.com>
+---
+ git-submodule.sh |  110 ++++++++++++++++++++++++++++++++++++------------------
+ 1 files changed, 74 insertions(+), 36 deletions(-)
 
-This is also how the subversion plugin for the Eclipse IDE worked in the
-beginning and the performance seemed to be acceptable (to me).
-
-Regards, Noel.
-
-Disclaimer: http://www.peralex.com/disclaimer.html
-
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 67d3224..3ad7214 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -100,15 +100,18 @@ module_clone()
+ 	# succeed but the rmdir will fail. We might want to fix this.
+ 	if test -d "$path"
+ 	then
+-		rmdir "$path" 2>/dev/null ||
+-		die "Directory '$path' exist, but is neither empty nor a git repository"
++		! rmdir "$path" 2>/dev/null &&
++		say "Directory '$path' exist, but is neither empty nor a git repository" &&
++		return 1
+ 	fi
+ 
+ 	test -e "$path" &&
+-	die "A file already exist at path '$path'"
++	say "A file already exist at path '$path'" &&
++	return 1
+ 
+-	git-clone -n "$url" "$path" ||
+-	die "Clone of '$url' into submodule path '$path' failed"
++	! git-clone -n "$url" "$path" &&
++	say "Clone of '$url' into submodule path '$path' failed" &&
++	return 1
+ }
+ 
+ #
+@@ -156,7 +159,7 @@ cmd_add()
+ 	case "$repo" in
+ 	./*|../*)
+ 		# dereference source url relative to parent's url
+-		realrepo="$(resolve_relative_url $repo)" ;;
++		realrepo="$(resolve_relative_url $repo)" || return 1 ;;
+ 	*)
+ 		# Turn the source into an absolute path if
+ 		# it is local
+@@ -175,21 +178,26 @@ cmd_add()
+ 	fi
+ 
+ 	test -e "$path" &&
+-	die "'$path' already exists"
++	say "'$path' already exists" &&
++	return 1
+ 
+ 	git ls-files --error-unmatch "$path" > /dev/null 2>&1 &&
+-	die "'$path' already exists in the index"
++	say "'$path' already exists in the index" &&
++	return 1
+ 
+-	module_clone "$path" "$realrepo" || exit
+-	(unset GIT_DIR; cd "$path" && git checkout -q ${branch:+-b "$branch" "origin/$branch"}) ||
+-	die "Unable to checkout submodule '$path'"
+-	git add "$path" ||
+-	die "Failed to add submodule '$path'"
++	module_clone "$path" "$realrepo" || return 1
++	! (unset GIT_DIR; cd "$path" && git checkout -q ${branch:+-b "$branch" "origin/$branch"}) &&
++	say "Unable to checkout submodule '$path'" &&
++	return 1
++	! git add "$path" &&
++	say "Failed to add submodule '$path'" &&
++	return 1
+ 
+ 	GIT_CONFIG=.gitmodules git config submodule."$path".path "$path" &&
+ 	GIT_CONFIG=.gitmodules git config submodule."$path".url "$repo" &&
+-	git add .gitmodules ||
+-	die "Failed to register submodule '$path'"
++	! git add .gitmodules &&
++	say "Failed to register submodule '$path'" &&
++	return 1
+ }
+ 
+ #
+@@ -221,29 +229,40 @@ cmd_init()
+ 	done
+ 
+ 	git ls-files --stage -- "$@" | grep -e '^160000 ' |
++	{
++	total=0
++	success=0
+ 	while read mode sha1 stage path
+ 	do
++		total=$(( $total + 1 ))
+ 		# Skip already registered paths
+-		name=$(module_name "$path") || exit
++		name=$(module_name "$path") || continue
+ 		url=$(git config submodule."$name".url)
+-		test -z "$url" || continue
++		test -n "$url" && success=$(( $success + 1 )) && continue
+ 
+ 		url=$(GIT_CONFIG=.gitmodules git config submodule."$name".url)
+ 		test -z "$url" &&
+-		die "No url found for submodule path '$path' in .gitmodules"
++		say "No url found for submodule path '$path' in .gitmodules" &&
++		continue
+ 
+ 		# Possibly a url relative to parent
+ 		case "$url" in
+ 		./*|../*)
+-			url="$(resolve_relative_url "$url")"
++			url="$(resolve_relative_url "$url")" || continue
+ 			;;
+ 		esac
+ 
+-		git config submodule."$name".url "$url" ||
+-		die "Failed to register url for submodule path '$path'"
+-
+-		say "Submodule '$name' ($url) registered for path '$path'"
++		if git config submodule."$name".url "$url"
++		then
++			say "Submodule '$name' ($url) registered for path '$path'"
++		else
++			say "Failed to register url for submodule path '$path'"
++			continue
++		fi
++		success=$(( $success + 1 ))
+ 	done
++	test $success = $total
++	}
+ }
+ 
+ #
+@@ -275,38 +294,53 @@ cmd_update()
+ 	done
+ 
+ 	git ls-files --stage -- "$@" | grep -e '^160000 ' |
++	{
++	total=0
++	success=0
+ 	while read mode sha1 stage path
+ 	do
+-		name=$(module_name "$path") || exit
++		total=$(( $total + 1 ))
++		name=$(module_name "$path") || continue
+ 		url=$(git config submodule."$name".url)
+ 		if test -z "$url"
+ 		then
+ 			# Only mention uninitialized submodules when its
+ 			# path have been specified
+-			test "$#" != "0" &&
+-			say "Submodule path '$path' not initialized"
++			if test "$#" != "0"
++			then
++				say "Submodule path '$path' not initialized"
++			else
++				success=$(( $success + 1 ))
++			fi
+ 			continue
+ 		fi
+ 
+ 		if ! test -d "$path"/.git
+ 		then
+-			module_clone "$path" "$url" || exit
++			module_clone "$path" "$url" || continue
+ 			subsha1=
+ 		else
+-			subsha1=$(unset GIT_DIR; cd "$path" &&
+-				git rev-parse --verify HEAD) ||
+-			die "Unable to find current revision in submodule path '$path'"
++			! subsha1=$(unset GIT_DIR; cd "$path" &&
++				git rev-parse --verify HEAD 2>/dev/null) &&
++			say "Unable to find current revision in submodule path '$path'" &&
++			continue
+ 		fi
+ 
+ 		if test "$subsha1" != "$sha1"
+ 		then
+-			(unset GIT_DIR; cd "$path" && git-fetch &&
+-				git-checkout -q "$sha1") ||
+-			die "Unable to checkout '$sha1' in submodule path '$path'"
+-
+-			say "Submodule path '$path': checked out '$sha1'"
++			if (unset GIT_DIR; cd "$path" && git-fetch &&
++				git-checkout -q "$sha1")
++			then
++				say "Submodule path '$path': checked out '$sha1'"
++			else
++				say "Unable to checkout '$sha1' in submodule path '$path'"
++				continue
++			fi
+ 		fi
++		success=$(( $success + 1 ))
+ 	done
++	test $success = $total
++	}
+ }
+ 
+ set_name_rev () {
+@@ -358,9 +392,11 @@ cmd_status()
+ 	done
+ 
+ 	git ls-files --stage -- "$@" | grep -e '^160000 ' |
++	{
++	exit_status=0
+ 	while read mode sha1 stage path
+ 	do
+-		name=$(module_name "$path") || exit
++		! name=$(module_name "$path") && exit_status=1 && continue
+ 		url=$(git config submodule."$name".url)
+ 		if test -z "$url" || ! test -d "$path"/.git
+ 		then
+@@ -380,6 +416,8 @@ cmd_status()
+ 			say "+$sha1 $path$revname"
+ 		fi
+ 	done
++	exit $exit_status
++	}
+ }
+ 
+ # This loop parses the command line arguments to find the
+-- 
+1.5.4.3.347.g5314c
 
