@@ -1,36 +1,37 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: git-log segfault on 00 graft
-Date: Wed, 5 Mar 2008 00:06:30 -0500
-Message-ID: <20080305050630.GX8410@spearce.org>
-References: <Pine.LNX.4.64.0803041954320.7660@fbirervta.pbzchgretzou.qr> <alpine.LSU.1.00.0803041908210.22527@racer.site>
+Subject: Re: GSoC 2008 Application Draft #2 - Help Wanted!
+Date: Wed, 5 Mar 2008 00:10:44 -0500
+Message-ID: <20080305051044.GY8410@spearce.org>
+References: <20080303050624.GF8410@spearce.org> <alpine.LSU.1.00.0803031130210.22527@racer.site> <88B38F4C-C95E-46AE-95F2-812BDA1CC911@wincent.com> <20080304045539.GR8410@spearce.org> <2c6b72b30803041047i34c6ad5fx6d8b30d4ce0018e5@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Jan Engelhardt <jengelh@computergmbh.de>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Mar 05 06:07:18 2008
+Cc: git@vger.kernel.org, Wincent Colaiuta <win@wincent.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Jonas Fonseca <jonas.fonseca@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 05 06:11:27 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWlqX-0004E5-EA
-	for gcvg-git-2@gmane.org; Wed, 05 Mar 2008 06:07:17 +0100
+	id 1JWluX-00054K-OS
+	for gcvg-git-2@gmane.org; Wed, 05 Mar 2008 06:11:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751134AbYCEFGj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Mar 2008 00:06:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751028AbYCEFGi
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 00:06:38 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:47260 "EHLO
+	id S1751184AbYCEFKs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Mar 2008 00:10:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751168AbYCEFKs
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 00:10:48 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:48837 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750828AbYCEFGi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Mar 2008 00:06:38 -0500
+	with ESMTP id S1751144AbYCEFKr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Mar 2008 00:10:47 -0500
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.68)
 	(envelope-from <spearce@spearce.org>)
-	id 1JWlpd-0005Yi-Rs; Wed, 05 Mar 2008 00:06:21 -0500
+	id 1JWltg-00062M-BI; Wed, 05 Mar 2008 00:10:32 -0500
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 854A720FBAE; Wed,  5 Mar 2008 00:06:30 -0500 (EST)
+	id 28B6F20FBAE; Wed,  5 Mar 2008 00:10:44 -0500 (EST)
 Content-Disposition: inline
-In-Reply-To: <alpine.LSU.1.00.0803041908210.22527@racer.site>
+In-Reply-To: <2c6b72b30803041047i34c6ad5fx6d8b30d4ce0018e5@mail.gmail.com>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -41,31 +42,21 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76168>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76169>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> On Tue, 4 Mar 2008, Jan Engelhardt wrote:
+Jonas Fonseca <jonas.fonseca@gmail.com> wrote:
+> On Tue, Mar 4, 2008 at 5:55 AM, Shawn O. Pearce <spearce@spearce.org> wrote:
+> >  ''' What criteria did you use to select these individuals as
+> >  mentors? Please be as specific as possible. '''
+> >
+> >  All mentors volunteered for the specific project(s) that they could
+> >  contribute the most to.  All mentors are active contributers within
 > 
-> > I was playing a bit with grafts, and actually did this:
-> > 
-> >   echo '839affa3313011da783b5b8074a5c9805ee8503a 
-> > 0000000000000000000000000000000000000000' >.git/info/grafts
-> > 
-> > running `git log --topo-order` causes a segfault. Yes, I probably 
-> > "should not be doing that", but I think it at least should not
-> > segfault.
-> 
-> Well, I agree with the first, but not the latter.  grafts are a really 
-> core and plumbing thing, and if you set it to something nonsensical, I 
-> think you should expect something like a segmentation fault.
+> s/contributers/contributors/
 
-I'm sorry, I don't know where you learned to program Dscho, but
-my mentors always taught me that user input should be handled
-with care, and SIGSEGV / SIGBUS / SIGILL is not handling with
-care!
+Gaaah.  Thanks Jonas.
 
-We tell users to popuate the .git/info/grafts file.  By hand.
-Its user input.  We shouldn't segfault over a malformed entry.
-
+That typo was in there last year.  :-)
+ 
 -- 
 Shawn.
