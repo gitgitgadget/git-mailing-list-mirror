@@ -1,318 +1,160 @@
-From: "Philipp A. Hartmann" <ph@sorgh.de>
-Subject: [PATCH] git-gui: if a background colour is set, set foreground colour as well
-Date: Wed,  5 Mar 2008 17:54:22 +0100
-Message-ID: <1204736062-11659-1-git-send-email-ph@sorgh.de>
-Cc: git@vger.kernel.org, "Philipp A. Hartmann" <ph@sorgh.de>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Mar 05 18:20:51 2008
+From: "Ping Yin" <pkufranky@gmail.com>
+Subject: Re: [PATCH v2] git-submodule: Don't die when command fails for one submodule
+Date: Thu, 6 Mar 2008 01:20:39 +0800
+Message-ID: <46dff0320803050920l4483d436of9b938936b47bfb4@mail.gmail.com>
+References: <1204730478-22027-1-git-send-email-pkufranky@gmail.com>
+	 <alpine.LSU.1.00.0803051742290.15786@racer.site>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Mar 05 18:22:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWxGa-0004G8-Kn
-	for gcvg-git-2@gmane.org; Wed, 05 Mar 2008 18:18:57 +0100
+	id 1JWxJL-0005j5-Nk
+	for gcvg-git-2@gmane.org; Wed, 05 Mar 2008 18:21:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756303AbYCERSS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Mar 2008 12:18:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756299AbYCERSS
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 12:18:18 -0500
-Received: from mail.sorgh.de ([88.198.99.83]:3245 "EHLO smtp.sorgh.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751681AbYCERSQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Mar 2008 12:18:16 -0500
-X-Greylist: delayed 1535 seconds by postgrey-1.27 at vger.kernel.org; Wed, 05 Mar 2008 12:18:16 EST
-Received: from localhost (unknown [77.183.56.53])
-	by smtp.sorgh.de (Postfix) with ESMTP id 45CA620053;
-	Wed,  5 Mar 2008 17:52:37 +0100 (CET)
-X-Mailer: git-send-email 1.5.4.3.447.gc95b3
+	id S1756399AbYCERUo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Mar 2008 12:20:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756548AbYCERUo
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 12:20:44 -0500
+Received: from ti-out-0910.google.com ([209.85.142.184]:49311 "EHLO
+	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755643AbYCERUn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Mar 2008 12:20:43 -0500
+Received: by ti-out-0910.google.com with SMTP id 28so2017332tif.23
+        for <git@vger.kernel.org>; Wed, 05 Mar 2008 09:20:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=ifYcaTi+qFvk4gSzHbtIdwScBU/k5DBfYqO8f+FOW04=;
+        b=uTbESJzAiwnLWghTno0a6xESVCHX2DOxqBt6flg0azxvAeo1B1Xu6RoaKPuskCeKZ3gvzq/KH4gah1tFVB5aY1Xgpiw2n7dk0cjXO8YRym/EeSlD+3HPMRNXY9jVttT9KCKeKz7KrFdDTdyS+L9gODW8NUN+lA1hEU9qBgSu16g=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=O8k/bCZfN+cuZLVdSFu9FC847JdzN3oK3/TBqPPeSRYeTwKWQBJvoq9qSRjR7mxmqTQRuIioeQCoQ0GFvqnSoZ4jo0Heix+tU+DdGR3QHSI5u6uZBdFNqds1K5HS6s3eueKrQuy9aVHybSa5rCJCL6TUbAIxSRiuO3WTWryKDEE=
+Received: by 10.150.152.17 with SMTP id z17mr1331684ybd.37.1204737639933;
+        Wed, 05 Mar 2008 09:20:39 -0800 (PST)
+Received: by 10.150.218.21 with HTTP; Wed, 5 Mar 2008 09:20:39 -0800 (PST)
+In-Reply-To: <alpine.LSU.1.00.0803051742290.15786@racer.site>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76245>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76246>
 
-In several places, only the background colour is set to an explicit
-value, sometimes even "white".  This does not work well with dark
-colour themes.
+On Thu, Mar 6, 2008 at 12:48 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi,
+>
+>
+>  On Wed, 5 Mar 2008, Ping Yin wrote:
+>
+>  > @@ -221,29 +229,40 @@ cmd_init()
+>  >       done
+>  >
+>  >       git ls-files --stage -- "$@" | grep -e '^160000 ' |
+>  > +     {
+>  > +     total=0
+>  > +     success=0
+>  >       while read mode sha1 stage path
+>  >       do
+>  > +             total=$(( $total + 1 ))
+>  >               # Skip already registered paths
+>  > -             name=$(module_name "$path") || exit
+>  > +             name=$(module_name "$path") || continue
+>
+>  What about this case?  Was the comment misleading?
+>
+>
+>  >               url=$(git config submodule."$name".url)
+>  > -             test -z "$url" || continue
+>  > +             test -n "$url" && success=$(( $success + 1 )) && continue
+>
+>  Why counting?  Why not just 'status=0 && continue'?
+>
+>
+>  >
+>  > -             git config submodule."$name".url "$url" ||
+>  > -             die "Failed to register url for submodule path '$path'"
+>  > -
+>  > -             say "Submodule '$name' ($url) registered for path '$path'"
+>  > +             if git config submodule."$name".url "$url"
+>  > +             then
+>  > +                     say "Submodule '$name' ($url) registered for path '$path'"
+>  > +             else
+>  > +                     say "Failed to register url for submodule path '$path'"
+>  > +                     continue
+>  > +             fi
+>  > +             success=$(( $success + 1 ))
+>  >       done
+>  > +     test $success = $total
+>  > +     }
+>  >  }
+>  >
+>  >  #
+>
+>  Note: I have not even begun to audit if one of your returns should not
+>  have been a "status=0 && continue" instead.
+>
+>
+>  > @@ -358,9 +392,11 @@ cmd_status()
+>  >       done
+>  >
+>  >       git ls-files --stage -- "$@" | grep -e '^160000 ' |
+>  > +     {
+>  > +     exit_status=0
+>  >       while read mode sha1 stage path
+>  >       do
+>  > -             name=$(module_name "$path") || exit
+>  > +             ! name=$(module_name "$path") && exit_status=1 && continue
+>  >               url=$(git config submodule."$name".url)
+>  >               if test -z "$url" || ! test -d "$path"/.git
+>  >               then
+>  > @@ -380,6 +416,8 @@ cmd_status()
+>  >                       say "+$sha1 $path$revname"
+>  >               fi
+>  >       done
+>  > +     exit $exit_status
+>  > +     }
+>  >  }
+>
+>  But here you use the simpler paradigm of setting exit_status?  Why that
+>  complicated and ugly "total" and "success" counting before?
+>
+>  Ciao,
+>  Dscho
+>
+>
 
-This patch tries to set the foreground colour to "black" in those
-situations, where an explicit background colour is set without defining
-any foreground colour.
+'total' and 'success' is a trick which i think is simpler than
+exit_status=1/exit_status=0 in cmd_update and cmd_init.
 
-Signed-off-by: Philipp A. Hartmann <ph@sorgh.de>
----
+In the while loop of these two functions, there are many tests which
+will continue the loop after a failure. By using exit_stauts, i have
+to replace 'cmd || continue' as '! cmd && exit_status=1 && continue".
+I don't want so many exit_status in the while loop. So i use 'total'
+and 'sucess' which count the total number of loops and the number of
+successful loops separately to simplify this. The trick is as follows:
 
-   Many GUI applications have "problems" with dark desktop themes,
-   because frequently only the background _or_ the foreground colours
-   are set to fixed values.  This results in barely readable parts of
-   the user interface when using bright-on-dark colour schemes.
+'total' will plus 1 when at the beginning of a loop and success will
+plus 1 at the end of loop. If  a loop succeeds and continues in the
+middle of a loop, success also plus 1. Failed loops never reach the
+loop end so success will not plus 1.
 
-   The effects within git-gui can be seen e.g. on the following
-   screenshots (with and without this patch):
+After leaving all loops,  $sucess=$total means all loops succeed and
+exit status should be 0, or exit status should be 1.
 
-     http://sorgh.de/tmp/git-gui/master.png
-     http://sorgh.de/tmp/git-gui/fg-colour-fix.png
+In cmd_status, the 'cmd || continue' only exists in one place, so i
+use exit_status instead of 'success' and 'total'.
 
-   This patch is against f15b75855fe15ac54adc4908f65e8a7572d47c9f
-   from git://repo.or.cz/git-gui.git - I could of course provide
-   one against git.git itself, if required.
 
-   Thanks for your time!
 
- git-gui.sh          |   19 +++++++++++++------
- lib/blame.tcl       |   25 ++++++++++++++++++++-----
- lib/browser.tcl     |    3 ++-
- lib/choose_font.tcl |    2 ++
- lib/console.tcl     |   10 +++++++---
- lib/error.tcl       |    4 +++-
- 6 files changed, 47 insertions(+), 16 deletions(-)
 
-diff --git a/git-gui.sh b/git-gui.sh
-index 238a239..8741443 100755
---- a/git-gui.sh
-+++ b/git-gui.sh
-@@ -2289,8 +2289,9 @@ pack .vpane -anchor n -side top -fill both -expand 1
- #
- frame .vpane.files.index -height 100 -width 200
- label .vpane.files.index.title -text [mc "Staged Changes (Will Commit)"] \
--	-background lightgreen
--text $ui_index -background white -borderwidth 0 \
-+	-background lightgreen -foreground black
-+text $ui_index -background white -foreground black \
-+	-borderwidth 0 \
- 	-width 20 -height 10 \
- 	-wrap none \
- 	-cursor $cursor_ptr \
-@@ -2308,8 +2309,9 @@ pack $ui_index -side left -fill both -expand 1
- #
- frame .vpane.files.workdir -height 100 -width 200
- label .vpane.files.workdir.title -text [mc "Unstaged Changes"] \
--	-background lightsalmon
--text $ui_workdir -background white -borderwidth 0 \
-+	-background lightsalmon -foreground black
-+text $ui_workdir -background white -foreground black \
-+	-borderwidth 0 \
- 	-width 20 -height 10 \
- 	-wrap none \
- 	-cursor $cursor_ptr \
-@@ -2416,7 +2418,8 @@ pack $ui_coml -side left -fill x
- pack .vpane.lower.commarea.buffer.header.amend -side right
- pack .vpane.lower.commarea.buffer.header.new -side right
- 
--text $ui_comm -background white -borderwidth 1 \
-+text $ui_comm -background white -foreground black \
-+	-borderwidth 1 \
- 	-undo true \
- 	-maxundo 20 \
- 	-autoseparators true \
-@@ -2493,15 +2496,18 @@ trace add variable current_diff_path write trace_current_diff_path
- frame .vpane.lower.diff.header -background gold
- label .vpane.lower.diff.header.status \
- 	-background gold \
-+	-foreground black \
- 	-width $max_status_desc \
- 	-anchor w \
- 	-justify left
- label .vpane.lower.diff.header.file \
- 	-background gold \
-+	-foreground black \
- 	-anchor w \
- 	-justify left
- label .vpane.lower.diff.header.path \
- 	-background gold \
-+	-foreground black \
- 	-anchor w \
- 	-justify left
- pack .vpane.lower.diff.header.status -side left
-@@ -2525,7 +2531,8 @@ bind_button3 .vpane.lower.diff.header.path "tk_popup $ctxm %X %Y"
- #
- frame .vpane.lower.diff.body
- set ui_diff .vpane.lower.diff.body.t
--text $ui_diff -background white -borderwidth 0 \
-+text $ui_diff -background white -foreground black \
-+	-borderwidth 0 \
- 	-width 80 -height 15 -wrap none \
- 	-font font_diff \
- 	-xscrollcommand {.vpane.lower.diff.body.sbx set} \
-diff --git a/lib/blame.tcl b/lib/blame.tcl
-index 00ecf21..92fac1b 100644
---- a/lib/blame.tcl
-+++ b/lib/blame.tcl
-@@ -80,6 +80,7 @@ constructor new {i_commit i_path} {
- 	label $w.header.commit_l \
- 		-text [mc "Commit:"] \
- 		-background gold \
-+		-foreground black \
- 		-anchor w \
- 		-justify left
- 	set w_back $w.header.commit_b
-@@ -89,6 +90,7 @@ constructor new {i_commit i_path} {
- 		-relief flat \
- 		-state disabled \
- 		-background gold \
-+		-foreground black \
- 		-activebackground gold
- 	bind $w_back <Button-1> "
- 		if {\[$w_back cget -state\] eq {normal}} {
-@@ -98,16 +100,19 @@ constructor new {i_commit i_path} {
- 	label $w.header.commit \
- 		-textvariable @commit \
- 		-background gold \
-+		-foreground black \
- 		-anchor w \
- 		-justify left
- 	label $w.header.path_l \
- 		-text [mc "File:"] \
- 		-background gold \
-+		-foreground black \
- 		-anchor w \
- 		-justify left
- 	set w_path $w.header.path
- 	label $w_path \
- 		-background gold \
-+		-foreground black \
- 		-anchor w \
- 		-justify left
- 	pack $w.header.commit_l -side left
-@@ -135,7 +140,9 @@ constructor new {i_commit i_path} {
- 		-takefocus 0 \
- 		-highlightthickness 0 \
- 		-padx 0 -pady 0 \
--		-background white -borderwidth 0 \
-+		-background white \
-+		-foreground black \
-+		-borderwidth 0 \
- 		-state disabled \
- 		-wrap none \
- 		-height 40 \
-@@ -148,7 +155,9 @@ constructor new {i_commit i_path} {
- 		-takefocus 0 \
- 		-highlightthickness 0 \
- 		-padx 0 -pady 0 \
--		-background white -borderwidth 0 \
-+		-background white \
-+		-foreground black \
-+		-borderwidth 0 \
- 		-state disabled \
- 		-wrap none \
- 		-height 40 \
-@@ -166,7 +175,9 @@ constructor new {i_commit i_path} {
- 		-takefocus 0 \
- 		-highlightthickness 0 \
- 		-padx 0 -pady 0 \
--		-background white -borderwidth 0 \
-+		-background white \
-+		-foreground black \
-+		-borderwidth 0 \
- 		-state disabled \
- 		-wrap none \
- 		-height 40 \
-@@ -184,7 +195,9 @@ constructor new {i_commit i_path} {
- 		-takefocus 0 \
- 		-highlightthickness 0 \
- 		-padx 0 -pady 0 \
--		-background white -borderwidth 0 \
-+		-background white \
-+		-foreground black \
-+		-borderwidth 0 \
- 		-state disabled \
- 		-wrap none \
- 		-height 40 \
-@@ -213,7 +226,9 @@ constructor new {i_commit i_path} {
- 
- 	set w_cviewer $w.file_pane.cm.t
- 	text $w_cviewer \
--		-background white -borderwidth 0 \
-+		-background white \
-+		-foreground black \
-+		-borderwidth 0 \
- 		-state disabled \
- 		-wrap none \
- 		-height 10 \
-diff --git a/lib/browser.tcl b/lib/browser.tcl
-index 53d5a62..ab470d1 100644
---- a/lib/browser.tcl
-+++ b/lib/browser.tcl
-@@ -39,7 +39,8 @@ constructor new {commit {path {}}} {
- 
- 	frame $w.list
- 	set w_list $w.list.l
--	text $w_list -background white -borderwidth 0 \
-+	text $w_list -background white -foreground black \
-+		-borderwidth 0 \
- 		-cursor $cursor_ptr \
- 		-state disabled \
- 		-wrap none \
-diff --git a/lib/choose_font.tcl b/lib/choose_font.tcl
-index 0c4051b..56443b0 100644
---- a/lib/choose_font.tcl
-+++ b/lib/choose_font.tcl
-@@ -55,6 +55,7 @@ constructor pick {path title a_family a_size} {
- 	set w_family $w.inner.family.v
- 	text $w_family \
- 		-background white \
-+		-foreground black \
- 		-borderwidth 1 \
- 		-relief sunken \
- 		-cursor $::cursor_ptr \
-@@ -92,6 +93,7 @@ constructor pick {path title a_family a_size} {
- 	set w_example $w.example.t
- 	text $w_example \
- 		-background white \
-+		-foreground black \
- 		-borderwidth 1 \
- 		-relief sunken \
- 		-height 3 \
-diff --git a/lib/console.tcl b/lib/console.tcl
-index 5597188..c112464 100644
---- a/lib/console.tcl
-+++ b/lib/console.tcl
-@@ -46,7 +46,9 @@ method _init {} {
- 		-justify left \
- 		-font font_uibold
- 	text $w_t \
--		-background white -borderwidth 1 \
-+		-background white \
-+		-foreground black \
-+		-borderwidth 1 \
- 		-relief sunken \
- 		-width 80 -height 10 \
- 		-wrap none \
-@@ -180,7 +182,8 @@ method done {ok} {
- 	if {$ok} {
- 		if {[winfo exists $w.m.s]} {
- 			bind $w.m.s <Destroy> [list delete_this $this]
--			$w.m.s conf -background green -text [mc "Success"]
-+			$w.m.s conf -background green -foreground black \
-+				-text [mc "Success"]
- 			if {$is_toplevel} {
- 				$w.ok conf -state normal
- 				focus $w.ok
-@@ -193,7 +196,8 @@ method done {ok} {
- 			_init $this
- 		}
- 		bind $w.m.s <Destroy> [list delete_this $this]
--		$w.m.s conf -background red -text [mc "Error: Command Failed"]
-+		$w.m.s conf -background red -foreground black \
-+			-text [mc "Error: Command Failed"]
- 		if {$is_toplevel} {
- 			$w.ok conf -state normal
- 			focus $w.ok
-diff --git a/lib/error.tcl b/lib/error.tcl
-index 8c27678..7565015 100644
---- a/lib/error.tcl
-+++ b/lib/error.tcl
-@@ -80,7 +80,9 @@ proc hook_failed_popup {hook msg {is_fatal 1}} {
- 		-justify left \
- 		-font font_uibold
- 	text $w.m.t \
--		-background white -borderwidth 1 \
-+		-background white \
-+		-foreground black \
-+		-borderwidth 1 \
- 		-relief sunken \
- 		-width 80 -height 10 \
- 		-font font_diff \
+
 -- 
-1.5.4.3.447.gc95b3
-
+Ping Yin
