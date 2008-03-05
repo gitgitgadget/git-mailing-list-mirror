@@ -1,78 +1,65 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: GSoC 2008 - Mentors Wanted!
-Date: Wed, 5 Mar 2008 00:36:12 -0500
-Message-ID: <20080305053612.GA8410@spearce.org>
-References: <20080304051149.GS8410@spearce.org> <1b46aba20803041247h5cc64186q2abf7973372fd3ef@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Commit f5bbc322 to git broke pre-commit hooks which read stdin
+Date: Tue, 04 Mar 2008 21:36:42 -0800
+Message-ID: <7vtzjl3f6d.fsf@gitster.siamese.dyndns.org>
+References: <0tableanpe.wl%bremner@pivot.cs.unb.ca>
+ <alpine.LSU.1.00.0803041044120.22527@racer.site>
+ <7vk5ki91zj.fsf@gitster.siamese.dyndns.org>
+ <0t4pbmaew9.wl%bremner@pivot.cs.unb.ca>
+ <alpine.LSU.1.00.0803041203320.22527@racer.site>
+ <0tr6eq87az.wl%bremner@pivot.cs.unb.ca> <20080305051212.GZ8410@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Carlos Rica <jasampler@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 05 06:36:56 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: David Bremner <bremner@unb.ca>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Kristian =?utf-8?Q?H=C3=B8gsberg?= <krh@redhat.com>,
+	git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Mar 05 06:37:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWmJC-0001ju-Ph
-	for gcvg-git-2@gmane.org; Wed, 05 Mar 2008 06:36:55 +0100
+	id 1JWmJr-0001rn-8u
+	for gcvg-git-2@gmane.org; Wed, 05 Mar 2008 06:37:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751322AbYCEFgR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Mar 2008 00:36:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751295AbYCEFgR
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 00:36:17 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:57043 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751228AbYCEFgQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Mar 2008 00:36:16 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1JWmIX-000078-FO; Wed, 05 Mar 2008 00:36:13 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 697A720FBAE; Wed,  5 Mar 2008 00:36:12 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <1b46aba20803041247h5cc64186q2abf7973372fd3ef@mail.gmail.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1752008AbYCEFg5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Mar 2008 00:36:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751919AbYCEFg5
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 00:36:57 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:47890 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751295AbYCEFg4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Mar 2008 00:36:56 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 62CD01112;
+	Wed,  5 Mar 2008 00:36:52 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 8BB6F1111; Wed,  5 Mar 2008 00:36:46 -0500 (EST)
+In-Reply-To: <20080305051212.GZ8410@spearce.org> (Shawn O. Pearce's message
+ of "Wed, 5 Mar 2008 00:12:12 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76172>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76173>
 
-Carlos Rica <jasampler@gmail.com> wrote:
-> On Tue, Mar 4, 2008 at 6:11 AM, Shawn O. Pearce <spearce@spearce.org> wrote:
-> >  OK, enough, onto the project list!
-> >
-> >   http://git.or.cz/gitwiki/SoC2008Ideas
-> 
-> Gitster talked today about libification as a project for the GSoC
-> (I mangled some comments, I accept complaints):
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-Thanks for pasting this chunk of the log Carlos.  I otherwise would
-have certainly missed it.  Much appreciated.
- 
-> gitster> For the record, i've never said I am not interested in libification.
-> 
-> gitster> However.
+> What happens to such hooks under git-gui?
+>
+> git-gui invokes the pre-commit hook with stdin coming off the stdin
+> that the wish process inherited when it was spawned.  This may not
+> be the best way to interact with the end-user of that repository.
 
-[... lots of good gitster remarks removed for space ...]
-
-After some reflection I agree with Junio.  As such I have moved the
-libification project down the page to a new category, "Projects So
-Large Your Head Will Spin".
-
-> gitster> "rewrite git-submodule, put the repository for submodules in
-> the superproject $GIT_DIR/modules, and use .git-file (currently in
-> 'pu') to point at it", would be a good sized one.
-...
-> gitster> "teach 3-way fallback logic git-am has to git-apply".
-
-These have gone onto the list as smaller, more average sized
-projects.  Both are interesting and useful.  Thanks Junio.
-
--- 
-Shawn.
+Well, if git-gui is designed to interoperate with CLI git (and I think
+that is a sensible thing to aim for), we probably should revisit the list
+of hooks in hooks.txt and make sure we define the environment these hooks
+are invoked in precisely enough (this incidentally will help C rewrite
+effort to avoid regressing).  Then, hooks that take input from and give
+output to the user could be launched with I/O redirected to talk with wish
+(which I presume has a terminal lookalike widget you can embed in your
+application).
