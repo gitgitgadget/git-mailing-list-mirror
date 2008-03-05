@@ -1,106 +1,63 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH] git-clean: correct printing relative path
-Date: Wed, 05 Mar 2008 16:59:43 +0100
-Message-ID: <20080305155943.GB15843@artemis.madism.org>
-References: <20080305094058.GF4793@artemis.madism.org> <20080305141720.GA11542@dpotapov.dyndns.org> <20080305155359.GA15843@artemis.madism.org>
+From: "Kenneth P. Turvey" <kt-usenet@squeakydolphin.com>
+Subject: Re: git-svn and logging.. new to git
+Date: Wed, 5 Mar 2008 16:03:44 +0000 (UTC)
+Message-ID: <fqmg8v$rmm$1@ger.gmane.org>
+References: <fqloop$ll$1@ger.gmane.org>
+	<ee77f5c20803050401o7f33522dj6dd0f0f1c0a78f96@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="/NkBOFFp2J2Af1nK";
-	protocol="application/pgp-signature"; micalg=SHA1
-To: Dmitry Potapov <dpotapov@gmail.com>, Git ML <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 05 17:01:29 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 05 17:05:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWw2a-0001LB-Rw
-	for gcvg-git-2@gmane.org; Wed, 05 Mar 2008 17:00:25 +0100
+	id 1JWw6g-00039O-J8
+	for gcvg-git-2@gmane.org; Wed, 05 Mar 2008 17:04:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755435AbYCEP7r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Mar 2008 10:59:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755413AbYCEP7q
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 10:59:46 -0500
-Received: from pan.madism.org ([88.191.52.104]:56722 "EHLO hermes.madism.org"
+	id S1756127AbYCEQD6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Mar 2008 11:03:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755897AbYCEQD5
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 11:03:57 -0500
+Received: from main.gmane.org ([80.91.229.2]:51286 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754719AbYCEP7p (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Mar 2008 10:59:45 -0500
-Received: from madism.org (def92-8-82-236-12-71.fbx.proxad.net [82.236.12.71])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 552DC31EA1;
-	Wed,  5 Mar 2008 16:59:44 +0100 (CET)
-Received: by madism.org (Postfix, from userid 1000)
-	id B47B14DD973; Wed,  5 Mar 2008 16:59:43 +0100 (CET)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Dmitry Potapov <dpotapov@gmail.com>, Git ML <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-Content-Disposition: inline
-In-Reply-To: <20080305155359.GA15843@artemis.madism.org>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S1755781AbYCEQD4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Mar 2008 11:03:56 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1JWw5u-0006Eh-6c
+	for git@vger.kernel.org; Wed, 05 Mar 2008 16:03:50 +0000
+Received: from pool-71-161-44-24.clppva.east.verizon.net ([71.161.44.24])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 05 Mar 2008 16:03:50 +0000
+Received: from kt-usenet by pool-71-161-44-24.clppva.east.verizon.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 05 Mar 2008 16:03:50 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: pool-71-161-44-24.clppva.east.verizon.net
+User-Agent: pan 0.120 (Plate of Shrimp)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76236>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76237>
+
+On Wed, 05 Mar 2008 23:01:34 +1100, David Symonds wrote:
 
 
---/NkBOFFp2J2Af1nK
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On mer, mar 05, 2008 at 03:53:59 +0000, Pierre Habouzit wrote:
-> On Wed, Mar 05, 2008 at 02:17:20PM +0000, Dmitry Potapov wrote:
-> > When the given path contains '..' then git-clean incorrectly printed na=
-mes
-> > of files. This patch changes cmd_clean to use quote_path() from wt-stat=
-us.
-> > Also, "failed to remove ..." message used absolutely path, but not it is
-> > corrected to use relative path.
-> >=20
-> > Signed-off-by: Dmitry Potapov <dpotapov@gmail.com>
-> > ---
-> > I resend this patch, because it got filtered by vger.kernel.org
-> > when I used git-send-email from 1.5.4.
->=20
->   It didn't FWIW.
-
-  And as far as it goes for your patch, it misses a #include
-"wt-status.h" and for me it gives:
-
-    git clean ..
-    Removing ../
-    Removing ../git-clean.patch
-    Removing ../stFdw8KY
-
-For a tree that had those unclean entries.
-    ../git-clean.patch
-    ../stFdw8KY
+> git-svn creates a whole bunch of remote branches -- does "git branch
+> -a" show them up?
+> 
+> Also, you can probably leave out the --trunk, etc., and just use
+> --stdlayout.
 
 
-  Removing ../ is clearly wrong both times: it didn't really did that
-(my current dir was the 't/' dir in the git repository for that) and I
-didn't specified 'git clean -d'.
+Thanks.  That's good information to have.  Is there a way to just do a
+straight import like in svnimport?  Is svnimport still available
+somewhere or has it been completely superseded by git-svn? 
 
+-- 
+Kenneth P. Turvey <kt-usenet@squeakydolphin.com>
 
-
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---/NkBOFFp2J2Af1nK
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBHzsNvvGr7W6HudhwRAmxpAKCqHSgOq6EEQnokXxSdz/MF8uLvawCdFyLg
-PWrIDACRrBraAR2veL9DYmw=
-=7uOu
------END PGP SIGNATURE-----
-
---/NkBOFFp2J2Af1nK--
