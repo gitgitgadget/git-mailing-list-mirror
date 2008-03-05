@@ -1,75 +1,61 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Commit f5bbc322 to git broke pre-commit hooks which read stdin
-Date: Wed, 5 Mar 2008 00:12:12 -0500
-Message-ID: <20080305051212.GZ8410@spearce.org>
-References: <0tableanpe.wl%bremner@pivot.cs.unb.ca> <alpine.LSU.1.00.0803041044120.22527@racer.site> <7vk5ki91zj.fsf@gitster.siamese.dyndns.org> <0t4pbmaew9.wl%bremner@pivot.cs.unb.ca> <alpine.LSU.1.00.0803041203320.22527@racer.site> <0tr6eq87az.wl%bremner@pivot.cs.unb.ca>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: git-log segfault on 00 graft
+Date: Wed, 5 Mar 2008 06:27:49 +0100
+Message-ID: <20080305052749.GA23511@atjola.homenet>
+References: <Pine.LNX.4.64.0803041954320.7660@fbirervta.pbzchgretzou.qr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Kristian =?utf-8?B?SMO4Z3NiZXJn?= <krh@redhat.com>,
-	git@vger.kernel.org
-To: David Bremner <bremner@unb.ca>
-X-From: git-owner@vger.kernel.org Wed Mar 05 06:13:32 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jan Engelhardt <jengelh@computergmbh.de>
+X-From: git-owner@vger.kernel.org Wed Mar 05 06:28:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWlwZ-0005TR-W8
-	for gcvg-git-2@gmane.org; Wed, 05 Mar 2008 06:13:32 +0100
+	id 1JWmB5-0008Vu-LY
+	for gcvg-git-2@gmane.org; Wed, 05 Mar 2008 06:28:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751444AbYCEFMy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Mar 2008 00:12:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750931AbYCEFMy
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 00:12:54 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:49411 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751285AbYCEFMx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Mar 2008 00:12:53 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1JWlv6-00069g-JH; Wed, 05 Mar 2008 00:12:00 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 6DE1B20FBAE; Wed,  5 Mar 2008 00:12:12 -0500 (EST)
+	id S1752098AbYCEF1x convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 5 Mar 2008 00:27:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752164AbYCEF1x
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 00:27:53 -0500
+Received: from mail.gmx.net ([213.165.64.20]:44623 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750931AbYCEF1w (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Mar 2008 00:27:52 -0500
+Received: (qmail invoked by alias); 05 Mar 2008 05:27:50 -0000
+Received: from i577B99FD.versanet.de (EHLO atjola.local) [87.123.153.253]
+  by mail.gmx.net (mp011) with SMTP; 05 Mar 2008 06:27:50 +0100
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX1+MT6F7rceM86CyiW8cJEY8V/ReoU9qWQpU5FvfWM
+	ThZ1XO+xHw3LQN
 Content-Disposition: inline
-In-Reply-To: <0tr6eq87az.wl%bremner@pivot.cs.unb.ca>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+In-Reply-To: <Pine.LNX.4.64.0803041954320.7660@fbirervta.pbzchgretzou.qr>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76170>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76171>
 
-David Bremner <bremner@unb.ca> wrote:
-> >>>>> "Johannes" == Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
->     >> Tue, 4 Mar 2008, David Bremner wrote:
->     >> 
->     >> Yeah, I should have been more explicit. The problem is a line
->     >> 
->     >> read -N1 VAR
-> 
->     Johannes> Can you be even more explicit?  IOW why does this have
->     Johannes> to be a pre-commit hook, and cannot be done before
->     Johannes> calling git-commit itself?
-> 
-> I have this feeling I don't really understand the question.  Yes, in
-> principle, whatever I am doing in a pre-commit hook could be done by
-> hand first.  I guess it is primarily a user interface issue.  The goal
-> is modify the behaviour of git-commit in a particular repository;
-> isn't this the purpose of pre-commit hooks?  
+On 2008.03.04 19:57:42 +0100, Jan Engelhardt wrote:
+> Hi,
+>=20
+>=20
+> I was playing a bit with grafts, and actually did this:
+>=20
+>   echo '839affa3313011da783b5b8074a5c9805ee8503a=20
+> 0000000000000000000000000000000000000000' >.git/info/grafts
+>=20
+> running `git log --topo-order` causes a segfault. Yes, I probably=20
+> "should not be doing that", but I think it at least should not
+> segfault.
 
-What happens to such hooks under git-gui?
+error: Could not read 0000000000000000000000000000000000000000
+fatal: revision walk setup failed
 
-git-gui invokes the pre-commit hook with stdin coming off the stdin
-that the wish process inherited when it was spawned.  This may not
-be the best way to interact with the end-user of that repository.
+That's what I get with a somewhat up-to-date version from master.
 
--- 
-Shawn.
+Bj=F6rn
