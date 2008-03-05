@@ -1,68 +1,99 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] shortlog: take the first populated line of the
- description
-Date: Wed, 05 Mar 2008 14:14:10 -0800
-Message-ID: <7vmypclsy5.fsf@gitster.siamese.dyndns.org>
-References: <1204727050.0@pinky>
- <alpine.LFD.1.00.0803051346200.2947@xanadu.home>
- <7vy78wlv46.fsf@gitster.siamese.dyndns.org>
- <alpine.LFD.1.00.0803051638150.2947@xanadu.home>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 03/40] Add target architecture MinGW.
+Date: Wed, 5 Mar 2008 23:18:53 +0100 (CET)
+Message-ID: <alpine.LSU.1.00.0803052317350.15786@racer.site>
+References: <1204138503-6126-1-git-send-email-johannes.sixt@telecom.at> <1204138503-6126-4-git-send-email-johannes.sixt@telecom.at> <alpine.LSU.1.00.0802281159550.22527@racer.site> <200803052221.12495.johannes.sixt@telecom.at>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andy Whitcroft <apw@shadowen.org>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Wed Mar 05 23:15:39 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Johannes Sixt <johannes.sixt@telecom.at>
+X-From: git-owner@vger.kernel.org Wed Mar 05 23:20:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JX1tj-0007Sy-29
-	for gcvg-git-2@gmane.org; Wed, 05 Mar 2008 23:15:39 +0100
+	id 1JX1yZ-00018G-Du
+	for gcvg-git-2@gmane.org; Wed, 05 Mar 2008 23:20:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763054AbYCEWO2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Mar 2008 17:14:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763019AbYCEWO1
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 17:14:27 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:52986 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1763201AbYCEWOZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Mar 2008 17:14:25 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id A6F902346;
-	Wed,  5 Mar 2008 17:14:23 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id E6D9C2345; Wed,  5 Mar 2008 17:14:17 -0500 (EST)
-In-Reply-To: <alpine.LFD.1.00.0803051638150.2947@xanadu.home> (Nicolas
- Pitre's message of "Wed, 05 Mar 2008 16:47:29 -0500 (EST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1763193AbYCEWS4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Mar 2008 17:18:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763188AbYCEWSy
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 17:18:54 -0500
+Received: from mail.gmx.net ([213.165.64.20]:38660 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1764735AbYCEWSx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Mar 2008 17:18:53 -0500
+Received: (qmail invoked by alias); 05 Mar 2008 22:18:51 -0000
+Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
+  by mail.gmx.net (mp028) with SMTP; 05 Mar 2008 23:18:51 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/ZJQEt5jzZ1esPH9EDoK00a6OZQx3BFZds8gdfKT
+	YCzwNKu2qHA4Re
+X-X-Sender: gene099@racer.site
+In-Reply-To: <200803052221.12495.johannes.sixt@telecom.at>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76275>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76276>
 
-Nicolas Pitre <nico@cam.org> writes:
+Hi,
 
-> On Wed, 5 Mar 2008, Junio C Hamano wrote:
->
->> I think Andy's fix to make the output side take away
->> unnecessary blank lines is unconditionally good.
->
-> It is not "bad" in itself.  However that feels like papering over 
-> another problem which IMHO has greater merits to be fixed.  We have 
-> given special semantics to the first line of a commit log in many other 
-> places now, so unless all those places are also made aware of 
-> substandard commit logs too, I think it would be more productive to make 
-> sure those logs are semi sensible upon entering Git in the first place 
-> instead.
+On Wed, 5 Mar 2008, Johannes Sixt wrote:
 
-My understanding of the current status when I wrote that message
-was that everybody at commit.c layer (that is, everybody except
-shortlog) strips such garbage.  Do you have a specific broken
-one in mind?
+> On Thursday 28 February 2008 13:05, Johannes Schindelin wrote:
+> > On Wed, 27 Feb 2008, Johannes Sixt wrote:
+> > > --- a/git-compat-util.h
+> > > +++ b/git-compat-util.h
+> > > @@ -357,6 +359,10 @@ static inline FILE *xfdopen(int fd, const char
+> > > *mode) return stream;
+> > >  }
+> > >
+> > > +#ifdef __MINGW32__
+> > > +int mkstemp(char *template);
+> > > +#endif
+> > > +
+> > >  static inline int xmkstemp(char *template)
+> > >  {
+> > >  	int fd;
+> >
+> > Could we have this...
+> >
+> > > @@ -437,4 +443,140 @@ void git_qsort(void *base, size_t nmemb, size_t
+> > > size, #define qsort git_qsort
+> > >  #endif
+> > >
+> > > +#ifdef __MINGW32__
+> > > +
+> > > +#include <winsock2.h>
+> > > +
+> > > +/*
+> > > + * things that are not available in header files
+> > > + */
+> > > +
+> > > [...]
+> >
+> > ... and this in compat/mingw.h?  And then, we'd only have
+> >
+> > #ifdef __MINGW32__
+> > #include "mingw.h"
+> > #endif
+> >
+> > in git-compat-util.h?
+> 
+> I've now created compat/mingw.h. Below is the interdiff. Of course, it 
+> mostly only moves code around. But you might want to look at at mkstemp, 
+> PATH_SEP, PRIuMAX, and has_dos_drive_prefix. Notice also that I include 
+> compat/mingw.h early in git-compat-util.h instead of late.
 
-I suspect --pretty=format:%s might be broken; I didn't check.
+Thanks!
+
+With this, I think I have nothing to add to your series (except maybe an 
+Acked-by: where it applies, or a Reviewed-by:, but I think that this 
+would only be a burden on our maintainer).
+
+Ciao,
+Dscho
 
