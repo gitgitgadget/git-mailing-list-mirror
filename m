@@ -1,70 +1,70 @@
-From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
-Subject: Re: [PATCH] user.default: New config to prevent using the default values for user.*
-Date: Wed, 5 Mar 2008 21:41:33 +0100
-Message-ID: <8aa486160803051241y33b69938p6eb68784641672a1@mail.gmail.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] user.default: New config to prevent using the default
+	values for user.*
+Date: Wed, 5 Mar 2008 21:44:14 +0100
+Message-ID: <20080305204414.GB4877@steel.home>
 References: <1204744684-2043-1-git-send-email-sbejar@gmail.com>
-	 <alpine.LNX.1.00.0803051516300.19665@iabervon.org>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=iso-8859-15
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: "Daniel Barkalow" <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Wed Mar 05 21:42:28 2008
+To: Santi =?iso-8859-15?Q?B=E9jar?= <sbejar@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 05 21:45:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JX0RM-0008SP-N1
-	for gcvg-git-2@gmane.org; Wed, 05 Mar 2008 21:42:17 +0100
+	id 1JX0Tw-0001Fv-E8
+	for gcvg-git-2@gmane.org; Wed, 05 Mar 2008 21:44:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758228AbYCEUli convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 5 Mar 2008 15:41:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757963AbYCEUlh
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 15:41:37 -0500
-Received: from ti-out-0910.google.com ([209.85.142.186]:34906 "EHLO
-	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757358AbYCEUlg convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 5 Mar 2008 15:41:36 -0500
-Received: by ti-out-0910.google.com with SMTP id 28so2143758tif.23
-        for <git@vger.kernel.org>; Wed, 05 Mar 2008 12:41:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=GKYJmaogRCmm6DwmED+Q8Fb2KM48x23aBhQSSXMl64c=;
-        b=xySG9m1t1quEt4cAev+6pHwhQy5k2maOF4rryAM4cJrEBYztX+p8zfq+je7xhOINJy79Oq4ZzilMYL7Zwkj3vGDt0bdNllqr5XNh5oHQy8bm+CAH51DXAaEV1WONYWie1LRx3sUCDYl2PvlwOEpMtvgl9/y7POpKpmCd3docgv8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Ob051dFtVoQbS9vAKxFeA2d0KgfZiQefUJx1vcno47bkgbtdEqeLE9T23ugI5MncsFs+T8GPXlAMKv+OucQYCLkiouiWrOtGvXAe1tYt7Qb4b3G4GGr1mq0QDKJbzJstfcA/RAOkbI4xKq+THhTTihQUIygrziXQM+f9vTlFuCg=
-Received: by 10.150.152.17 with SMTP id z17mr1458134ybd.37.1204749693317;
-        Wed, 05 Mar 2008 12:41:33 -0800 (PST)
-Received: by 10.150.199.9 with HTTP; Wed, 5 Mar 2008 12:41:33 -0800 (PST)
-In-Reply-To: <alpine.LNX.1.00.0803051516300.19665@iabervon.org>
+	id S1753759AbYCEUoS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 5 Mar 2008 15:44:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752853AbYCEUoS
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 15:44:18 -0500
+Received: from mo-p07-ob.rzone.de ([81.169.146.188]:61822 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751922AbYCEUoR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Mar 2008 15:44:17 -0500
+X-RZG-CLASS-ID: mo07
+X-RZG-AUTH: z4gQVF2k5XWuW3Cculz1E3jDDhk=
+Received: from tigra.home (Fae6c.f.strato-dslnet.de [195.4.174.108])
+	by post.webmailer.de (klopstock mo30) (RZmta 16.8)
+	with ESMTP id n03f7dk25HlGPd ; Wed, 5 Mar 2008 21:44:15 +0100 (MET)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id E66EE277BD;
+	Wed,  5 Mar 2008 21:44:14 +0100 (CET)
+Received: by steel.home (Postfix, from userid 1000)
+	id 7F93D56D24; Wed,  5 Mar 2008 21:44:14 +0100 (CET)
 Content-Disposition: inline
+In-Reply-To: <1204744684-2043-1-git-send-email-sbejar@gmail.com>
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76261>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76262>
 
-On Wed, Mar 5, 2008 at 9:21 PM, Daniel Barkalow <barkalow@iabervon.org>=
- wrote:
-> On Wed, 5 Mar 2008, Santi B=E9jar wrote:
->
->
-> > Useful when you want a different email/name for each repository
->
->  I still think it would be more intuitive if you made it so that sett=
-ing
->  user.* to nothing was not an error, suppressed picking values up fro=
-m the
->  system, and led (if not overridden again) to the message telling you=
- how
->  to set them. Is there some reason you decided not to have that be ho=
-w the
->  user triggers this behavior?
+Santi B=E9jar, Wed, Mar 05, 2008 20:18:04 +0100:
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -914,6 +914,11 @@ url.<base>.insteadOf::
+>  	never-before-seen repository on the site.  When more than one
+>  	insteadOf strings match a given URL, the longest match is used.
+> =20
+> +user.default::
+> +	If false the defaults values for user.email and user.name are not
 
-I first tried this way, but when I was writing the documentation I
-found it more clean and easy if it was a separate config.
+"If false the default values"... An "s" in "default" was superflous
 
-Santi
+> @@ -171,7 +171,7 @@ static const char au_env[] =3D "GIT_AUTHOR_NAME";
+>  static const char co_env[] =3D "GIT_COMMITTER_NAME";
+>  static const char *env_hint =3D
+>  "\n"
+> -"*** Your name cannot be determined from your system services (gecos=
+).\n"
+> +"*** Your name cannot be determined.\n"
+
+Why not?
+
