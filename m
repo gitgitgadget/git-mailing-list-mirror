@@ -1,84 +1,119 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: msgmft segfaulting on tiger
-Date: Wed, 5 Mar 2008 02:19:15 -0500
-Message-ID: <20080305071915.GI8410@spearce.org>
-References: <46a038f90802211553g735215c6q260ddc49ac149bb5@mail.gmail.com> <46a038f90802211559w457c5460k7447ba8b38352713@mail.gmail.com> <20080222065836.GE8410@spearce.org> <46a038f90802220957y7db67d8nb6b7ad784124546a@mail.gmail.com> <47C5A974.7080207@gmail.com> <alpine.LSU.1.00.0802271825330.22527@racer.site> <47C5AEFA.5020004@gmail.com> <alpine.LSU.1.00.0802272203270.22527@racer.site> <7vablmqc7q.fsf@gitster.siamese.dyndns.org> <47C7000C.1000809@gmail.com>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH] run-command: Redirect stderr to a pipe before redirecting
+ stdout to stderr
+Date: Wed, 5 Mar 2008 08:35:16 +0100
+Message-ID: <20080305083516.e1a2a139.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Gabriel =?utf-8?Q?Salda=C3=B1a?= <gsaldana@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 05 08:20:07 2008
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, nanako3@bluebottle.com, pascal@obry.net,
+	Xavier Maillard <xma@gnu.org>
+To: Junio C Hamano <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Wed Mar 05 08:30:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JWnuy-0006Hq-A2
-	for gcvg-git-2@gmane.org; Wed, 05 Mar 2008 08:20:00 +0100
+	id 1JWo4q-0000UT-Sj
+	for gcvg-git-2@gmane.org; Wed, 05 Mar 2008 08:30:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752943AbYCEHTW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Mar 2008 02:19:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752394AbYCEHTW
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 02:19:22 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:38898 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751362AbYCEHTV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Mar 2008 02:19:21 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1JWnuF-0003oL-Qv; Wed, 05 Mar 2008 02:19:16 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id C0B5020FBAE; Wed,  5 Mar 2008 02:19:15 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <47C7000C.1000809@gmail.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1753571AbYCEH3f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Mar 2008 02:29:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753905AbYCEH3e
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 02:29:34 -0500
+Received: from smtp1-g19.free.fr ([212.27.42.27]:38728 "EHLO smtp1-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753571AbYCEH3e (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Mar 2008 02:29:34 -0500
+Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id EC0C21AB2D6;
+	Wed,  5 Mar 2008 08:29:31 +0100 (CET)
+Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with SMTP id 15E771AB2B5;
+	Wed,  5 Mar 2008 08:29:30 +0100 (CET)
+X-Mailer: Sylpheed 2.4.8 (GTK+ 2.12.5; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76182>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76183>
 
-Gabriel Saldaa <gsaldana@gmail.com> wrote:
-> Here's the output, hope it helps:
-> 
-> $ msgfmt --tcl -l C -d . /dev/null; echo $?
-> msgfmt: unrecognized option `--tcl'
-> Try `msgfmt --help' for more information.
-> 1
-> 
-> somehow msgfmt doesn't recognize the --tcl flag.
+With this patch, in the 'start_command' function after forking
+we now take care of stderr in the child process before stdout.
 
-Just to revive a nearly dead thead...  I have a workaround now in
-git-gui maint that looks for this case and falls into our po2msg
-script when msgfmt doesn't see --tcl.
+This way if 'start_command' is called with a 'child_process'
+argument like this:
 
-I also set Paul Mackerras a patch for gitk, so it can do the
-same thing.  Maybe Git 1.5.4.4 will include both patches.
+	.err = -1;
+	.stdout_to_stderr = 1;
+
+then stderr will be redirected to a pipe before stdout is
+redirected to stderr. So we can now get the process' stdout
+from the pipe (as well as its stderr).
+
+Earlier such a call would have redirected stdout to stderr
+before stderr was itself redirected, and therefore stdout
+would not have followed stderr, which would not have been
+very useful anyway.
+
+Update documentation in 'api-run-command.txt' accordingly.
+
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ Documentation/technical/api-run-command.txt |    7 ++++---
+ run-command.c                               |   14 +++++++-------
+ 2 files changed, 11 insertions(+), 10 deletions(-)
+
+	Changes since previous version:
+
+	- improved patch justification as requested by Junio,
+	- s/before/after/ in 'api-run-command.txt' (ooops).
+
+diff --git a/Documentation/technical/api-run-command.txt b/Documentation/technical/api-run-command.txt
+index fde3b45..c364a22 100644
+--- a/Documentation/technical/api-run-command.txt
++++ b/Documentation/technical/api-run-command.txt
+@@ -111,9 +111,10 @@ stderr as follows:
+ 	.no_stdin, .no_stdout, .no_stderr: The respective channel is
+ 		redirected to /dev/null.
  
-> Junio C Hamano wrote:
-> >Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> >
-> >>>$ msgfmt --tcl; echo $?
-> >>>msgfmt: unrecognized option `--tcl'
-> >>>Try `msgfmt --help' for more information.
-> >>>1
-> >>Darn.  I think that's the same exit code as for any other invocation 
-> >>without filename.
-> >>
-> >>So it seems that there is no easy way to tell a --tcl aware msgfmt from 
-> >>the other.
-> >
-> >How about...
-> >
-> >    $ msgfmt --tcl -l C -d . /dev/null; echo $?
-
--- 
-Shawn.
+-	.stdout_to_stderr: stdout of the child is redirected to the
+-		parent's stderr (i.e. *not* to what .err or
+-		.no_stderr specify).
++	.stdout_to_stderr: stdout of the child is redirected to its
++		stderr. This happens after stderr is itself redirected.
++		So stdout will follow stderr to wherever it is
++		redirected.
+ 
+ To modify the environment of the sub-process, specify an array of
+ string pointers (NULL terminated) in .env:
+diff --git a/run-command.c b/run-command.c
+index 743757c..44100a7 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -91,6 +91,13 @@ int start_command(struct child_process *cmd)
+ 			close(cmd->in);
+ 		}
+ 
++		if (cmd->no_stderr)
++			dup_devnull(2);
++		else if (need_err) {
++			dup2(fderr[1], 2);
++			close_pair(fderr);
++		}
++
+ 		if (cmd->no_stdout)
+ 			dup_devnull(1);
+ 		else if (cmd->stdout_to_stderr)
+@@ -103,13 +110,6 @@ int start_command(struct child_process *cmd)
+ 			close(cmd->out);
+ 		}
+ 
+-		if (cmd->no_stderr)
+-			dup_devnull(2);
+-		else if (need_err) {
+-			dup2(fderr[1], 2);
+-			close_pair(fderr);
+-		}
