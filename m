@@ -1,65 +1,60 @@
-From: "=?ISO-8859-1?Q?Marc-Andr=E9_Lureau?=" <marcandre.lureau@gmail.com>
-Subject: Re: [RFC] git add -a
-Date: Thu, 6 Mar 2008 12:57:27 +0200
-Message-ID: <e29894ca0803060257u19c98074t789f87e1f8c120e7@mail.gmail.com>
-References: <e29894ca0803060223p6de78b1br1aab956c2c99fc1f@mail.gmail.com>
-	 <200803061146.00500.barra_cuda@katamail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: GSoC 2008 - Mentors Wanted!
+Date: Thu, 6 Mar 2008 12:04:08 +0100 (CET)
+Message-ID: <alpine.LSU.1.00.0803061203270.15786@racer.site>
+References: <20080304051149.GS8410@spearce.org> <20080305053612.GA8410@spearce.org> <7bfdc29a0803042358n6126286dr7a17f3b4dadbabe5@mail.gmail.com> <200803052213.20501.robin.rosenberg@dewire.com> <20080306050846.GQ8410@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "Michele Ballabio" <barra_cuda@katamail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 06 11:59:07 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Robin Rosenberg <robin.rosenberg@dewire.com>,
+	Imran M Yousuf <imyousuf@gmail.com>,
+	Carlos Rica <jasampler@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Mar 06 12:05:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JXDoF-0004Io-Kg
-	for gcvg-git-2@gmane.org; Thu, 06 Mar 2008 11:58:48 +0100
+	id 1JXDuK-0006E2-Kw
+	for gcvg-git-2@gmane.org; Thu, 06 Mar 2008 12:05:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764476AbYCFK5c convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 Mar 2008 05:57:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764454AbYCFK5b
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Mar 2008 05:57:31 -0500
-Received: from gv-out-0910.google.com ([216.239.58.185]:49529 "EHLO
-	gv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1764435AbYCFK5a convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 6 Mar 2008 05:57:30 -0500
-Received: by gv-out-0910.google.com with SMTP id s4so1445829gve.37
-        for <git@vger.kernel.org>; Thu, 06 Mar 2008 02:57:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=2nEgOyq3itrhiZOviA1gA31R9Io6HA4LgbkdBPyn28c=;
-        b=oJ7a+PSVdaZDtR9Tgs93+LlR9RCeMiX0zys245EnsPbr3p1Bkcdh/TFLSxcbcLLkwdalHk0buMB6W/RWJiKuBGDkRHMNycXD6rIYODU0yHKpP4wCCF8GuPlBX2iWRI6wBfjyjvT43IFjNIkgmmMfWiDlLSpHSlq10kVG6z5CS9k=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=HnFRJcDFhg3rhc/ZazngR9CMZkhNgfyALLil/GedcFP/quJr1869KgcL3hlcOJDmv5K3d3DK8rZtBpbnLA4cIlgmH49aXNI/wSK1dzT2xrweiSTHElWlekwsgS15Msscs9iGa8Dq2bKLFzbnYFJgkcPwoY2NFYVKNP/e72CWoks=
-Received: by 10.142.141.21 with SMTP id o21mr1130958wfd.84.1204801047191;
-        Thu, 06 Mar 2008 02:57:27 -0800 (PST)
-Received: by 10.143.8.21 with HTTP; Thu, 6 Mar 2008 02:57:27 -0800 (PST)
-In-Reply-To: <200803061146.00500.barra_cuda@katamail.com>
-Content-Disposition: inline
+	id S933157AbYCFLEO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Mar 2008 06:04:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933149AbYCFLEN
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Mar 2008 06:04:13 -0500
+Received: from mail.gmx.net ([213.165.64.20]:38429 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S933130AbYCFLEJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Mar 2008 06:04:09 -0500
+Received: (qmail invoked by alias); 06 Mar 2008 11:04:07 -0000
+Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
+  by mail.gmx.net (mp055) with SMTP; 06 Mar 2008 12:04:07 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/7waJu8pz77fbjEYEvf1XLujqc+2yfffZgnF9sfE
+	1hseXsEOF1j2vM
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20080306050846.GQ8410@spearce.org>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76371>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76372>
 
 Hi,
 
-On Thu, Mar 6, 2008 at 12:46 PM, Michele Ballabio
-<barra_cuda@katamail.com> wrote:
->
->  There's "git add -u". It should do what you want.
->
+On Thu, 6 Mar 2008, Shawn O. Pearce wrote:
 
-Thanks for this answer :) I wonder why "-u" and not "-a".. After all
-git commit "-a" could be "-s" if we follow that distinction
-(Update/Stage/All).
+> I'm determined to even get "proper" packfile generation in Java.
 
-Regards,
+That's nice!
 
---=20
-Marc-Andr=E9 Lureau
+> But it may be time consuming to build.  There may be license issues 
+> around doing a direct cribbed port of the delta generation.  :-\
+
+I am sure a little mail to Nico will give you that license.
+
+Ciao,
+Dscho
+
