@@ -1,68 +1,55 @@
-From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
-Subject: Re: [PATCH] user.default: New config to prevent using the default values for user.*
-Date: Thu, 6 Mar 2008 22:45:43 +0100
-Message-ID: <8aa486160803061345k690af0dcv14fe5d62b310ad6f@mail.gmail.com>
-References: <1204744684-2043-1-git-send-email-sbejar@gmail.com>
-	 <20080305204414.GB4877@steel.home>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] unquote_c_style: fix off-by-one.
+Date: Thu, 06 Mar 2008 14:10:41 -0800
+Message-ID: <7vbq5ra4gu.fsf@gitster.siamese.dyndns.org>
+References: <20080306212819.GA10873@artemis.madism.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "Alex Riesen" <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 06 22:46:27 2008
+Cc: Git ML <git@vger.kernel.org>
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Thu Mar 06 23:11:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JXNv1-00033i-0r
-	for gcvg-git-2@gmane.org; Thu, 06 Mar 2008 22:46:27 +0100
+	id 1JXOJE-0005Hf-SP
+	for gcvg-git-2@gmane.org; Thu, 06 Mar 2008 23:11:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764028AbYCFVpt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 Mar 2008 16:45:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755929AbYCFVpt
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Mar 2008 16:45:49 -0500
-Received: from ti-out-0910.google.com ([209.85.142.184]:11787 "EHLO
-	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1763847AbYCFVpr convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 6 Mar 2008 16:45:47 -0500
-Received: by ti-out-0910.google.com with SMTP id 28so102577tif.23
-        for <git@vger.kernel.org>; Thu, 06 Mar 2008 13:45:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=jbRg7Y+uFf1GQ2SnoDhwHjWtlEtDo5aWiRlf77DC3XY=;
-        b=SB43OyFxUAYuAsMJ29a79TSnSgSnih6FLRYLSDWsHd1cr+H/+jiviL8kBf34J/4elqxS5PmeP57J/tb51pAkGrz8z+PYBzCXXKMaieb/t4WnOPsgeF25aK30z1lLMRaGHAEvUI8RE90N9pByFm3OOP8RZzscvHe9UWSqm7z3xJg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=bYDGakp/1UcgkBjTkCZdPABdYWQP/HSytU0jcCZCWAItg1BN83aMn3LuYt11Bbo1JdjsSLHGOtMgwUQEHN9utk4Fb5Z5RBjkJBsNkY+fNEiYICxkGb6A6E0kFDnTvmAmlQpJfZzqJQ5Tb3EUVgH8hYwDdNv+kVp5chZW86jLLS8=
-Received: by 10.150.92.11 with SMTP id p11mr179497ybb.105.1204839943968;
-        Thu, 06 Mar 2008 13:45:43 -0800 (PST)
-Received: by 10.150.199.9 with HTTP; Thu, 6 Mar 2008 13:45:43 -0800 (PST)
-In-Reply-To: <20080305204414.GB4877@steel.home>
-Content-Disposition: inline
+	id S1755700AbYCFWKu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 Mar 2008 17:10:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756675AbYCFWKu
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Mar 2008 17:10:50 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:57371 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755700AbYCFWKt convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 6 Mar 2008 17:10:49 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 3FA2C13CB;
+	Thu,  6 Mar 2008 17:10:48 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id B086213CA; Thu,  6 Mar 2008 17:10:45 -0500 (EST)
+In-Reply-To: <20080306212819.GA10873@artemis.madism.org> (Pierre Habouzit's
+ message of "Thu, 06 Mar 2008 22:28:19 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76426>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76427>
 
-On Wed, Mar 5, 2008 at 9:44 PM, Alex Riesen <raa.lkml@gmail.com> wrote:
-> Santi B=E9jar, Wed, Mar 05, 2008 20:18:04 +0100:
+Pierre Habouzit <madcoder@debian.org> writes:
+
+> Thanks to Adeodato Sim=C3=B2 for having caught this.
 >
->  > @@ -171,7 +171,7 @@ static const char au_env[] =3D "GIT_AUTHOR_NAM=
-E";
->  >  static const char co_env[] =3D "GIT_COMMITTER_NAME";
->  >  static const char *env_hint =3D
->  >  "\n"
->  > -"*** Your name cannot be determined from your system services (ge=
-cos).\n"
->  > +"*** Your name cannot be determined.\n"
->
->  Why not?
+> Signed-off-by: Pierre Habouzit <madcoder@debian.org>
 
-Is this important? Or in another way, is this useful? The important
-thing is how you can fix it. But others think otherwise I'll change it
-to explain the reason.
+Thanks.  I would have appreciated a comment that said something about w=
+hat
+external breakages this one caused, so that we can have an entry in "bu=
+gs
+fixed" list.
 
-Santi
+A quick audit of the existing callers suggests that it is fast-import.
