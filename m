@@ -1,82 +1,119 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 03/40] Add target architecture MinGW.
-Date: Thu, 6 Mar 2008 01:11:16 +0100 (CET)
-Message-ID: <alpine.LSU.1.00.0803060105250.15786@racer.site>
-References: <1204138503-6126-1-git-send-email-johannes.sixt@telecom.at> <1204138503-6126-4-git-send-email-johannes.sixt@telecom.at> <alpine.LSU.1.00.0802281159550.22527@racer.site> <200803052221.12495.johannes.sixt@telecom.at> <alpine.LSU.1.00.0803052317350.15786@racer.site>
- <7vir00lski.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0803052327570.15786@racer.site> <7v1w6olr84.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 3/4] git-submodule: New subcommand 'summary' (3) -
+ limit summary size
+Date: Wed, 05 Mar 2008 16:24:18 -0800
+Message-ID: <7v7iggitsd.fsf@gitster.siamese.dyndns.org>
+References: <1204481710-29791-1-git-send-email-pkufranky@gmail.com>
+ <1204481710-29791-3-git-send-email-pkufranky@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johannes Sixt <johannes.sixt@telecom.at>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 06 01:12:07 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Ping Yin <pkufranky@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 06 01:25:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JX3iJ-0007ob-0f
-	for gcvg-git-2@gmane.org; Thu, 06 Mar 2008 01:11:59 +0100
+	id 1JX3uy-0003ZQ-AZ
+	for gcvg-git-2@gmane.org; Thu, 06 Mar 2008 01:25:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752412AbYCFALS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Mar 2008 19:11:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752327AbYCFALR
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 19:11:17 -0500
-Received: from mail.gmx.net ([213.165.64.20]:39457 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750808AbYCFALR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Mar 2008 19:11:17 -0500
-Received: (qmail invoked by alias); 06 Mar 2008 00:11:15 -0000
-Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
-  by mail.gmx.net (mp041) with SMTP; 06 Mar 2008 01:11:15 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX188di8vHn08xggqA98GM3jBeXVzqL/yWOSv5RtSk0
-	dFmv63JmetU1RI
-X-X-Sender: gene099@racer.site
-In-Reply-To: <7v1w6olr84.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1754173AbYCFAYZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Mar 2008 19:24:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754097AbYCFAYZ
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 19:24:25 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:61584 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752683AbYCFAYY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Mar 2008 19:24:24 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 64DEE31DE;
+	Wed,  5 Mar 2008 19:24:23 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 983C131DD; Wed,  5 Mar 2008 19:24:20 -0500 (EST)
+In-Reply-To: <1204481710-29791-3-git-send-email-pkufranky@gmail.com> (Ping
+ Yin's message of "Mon, 3 Mar 2008 02:15:09 +0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76297>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76298>
 
-Hi,
+Ping Yin <pkufranky@gmail.com> writes:
 
-On Wed, 5 Mar 2008, Junio C Hamano wrote:
+> This patch teaches git-submodule an option '--summary-limit|-n <number>'
+> to limit number of commits in total for the summary. Number 0 will disable
+> summary and minus number means unlimted (the default).
 
-> Recently, I ended up wasting two nights because I was not careful enough 
-> earlier, when I was short of time and apparent backlog was beginning to 
-> get larger and larger.
-> 
-> I queued some patches from the backlog to 'next' saying "ah, they look 
-> good enough, people will notice breakages anyway," but the breakage was 
-> not caught until 'master' got broken.
-> 
-> Not good.  And the list is not to blame.
+I really doubt showing the bottom one specially makes sense.
 
-Ah, but I think that you are too harsh onto yourself.  Recently, there was 
-a surge of patches, mainly because 1.5.4 was held of -- but for a good 
-reason: 1.5.4 was not ready before the point in time where you decided to 
-release it.
+Why not just read from
 
-If at all, the list is to blame, for just sending patches, but not 
-reviewing them.
+	git log '--pretty=%m %h %s' --left-right --topo-order A...B
 
-Now, personally I know that I am not half as good a reviewer as you are, 
-since you catch way more bugs than me, just by looking at the patch.
+and show N top commits from each?
 
-But still, "many eyes make bugs shallow" is a principle to be heeded 
-_everywhere_.
+I've already said that I do not think applying the same limit to
+new/deleted/modified cases makes sense, so commenting on this
+part might be a moot point, though.
 
-So I'd say: if you think that you are short of time, and patches have not 
-been reviewed properly, do not assume it _your sole_ responsibility to 
-review the patches.  Make it known that other people have to step in (even 
-if it is a mediocre reviewer like me).  Do not overload yourself.
+-- >8 --
 
-So my comment about the "blame" was really tongue-in-cheek.  Please do not 
-take it for anything but a joke.
+#!/bin/sh
 
-And when I say that I think you are a kick-ass maintainer, I _mean_ it.
+limit=10
+A=cc/run-command
+B=jc/test
 
-'nuff said,
-Dscho
+lf='
+'
+git log --pretty=format:%m\ %h\ %s --left-right $A...$B |
+(
+	left=0 right=0 l= r= llast= rlast=
+	ilimit=$(( $limit - 1 ))
+	while read leftright commit name
+	do
+		it="$leftright$commit $name"
+		case "$leftright" in
+		'<')
+			if test $left -eq $ilimit
+			then
+				llast=$it
+			elif test $left -le $ilimit
+			then
+				l="$l$it$lf"
+			fi
+			left=$(( $left + 1 ))
+			;;
+		'>')
+			if test $right -eq $ilimit
+			then
+				rlast=$it
+			elif test $right -le $ilimit
+			then
+				r="$r$it$lf"
+			fi
+			right=$(( $right + 1 ))
+			;;
+		esac
+	done
+
+	printf %s "$l"
+	if test $left -eq $limit
+	then
+		echo "$llast"
+	elif test $left -gt $limit
+	then
+		echo "< ("$(( $left - $limit ))" more...)"
+	fi
+	printf %s "$r"
+	if test $right -eq $limit
+	then
+		echo "$rlast"
+	elif test $right -gt $limit
+	then
+		echo "> ("$(( $right - $limit ))" more...)"
+	fi
+)
