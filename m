@@ -1,82 +1,98 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH] gitk: do not show local changes for bare repositories
-Date: Thu,  6 Mar 2008 04:39:24 -0800
-Message-ID: <64b42ab91804e670057c807fd8265fc07106792c.1204806475.git.davvid@gmail.com>
+From: Pekka Kaitaniemi <kaitanie@cc.helsinki.fi>
+Subject: [PATCH v2] gitk: Add horizontal scrollbar to the diff view
+Date: Thu, 6 Mar 2008 14:38:45 +0200
+Message-ID: <20080306123845.GA12115@localdomain>
+Reply-To: kaitanie@cc.helsinki.fi
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Thu Mar 06 13:30:04 2008
+To: paulus@samba.org, gitster@pobox.com, newsletter@dirk.my1.cc
+X-From: git-owner@vger.kernel.org Thu Mar 06 13:40:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JXFEa-0001eM-7v
-	for gcvg-git-2@gmane.org; Thu, 06 Mar 2008 13:30:04 +0100
+	id 1JXFNx-0005Gn-Vk
+	for gcvg-git-2@gmane.org; Thu, 06 Mar 2008 13:39:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932608AbYCFM3Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Mar 2008 07:29:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765703AbYCFM3Z
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Mar 2008 07:29:25 -0500
-Received: from rn-out-0910.google.com ([64.233.170.189]:19471 "EHLO
-	rn-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759549AbYCFM3X (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Mar 2008 07:29:23 -0500
-Received: by rn-out-0910.google.com with SMTP id v46so940074rnb.15
-        for <git@vger.kernel.org>; Thu, 06 Mar 2008 04:29:21 -0800 (PST)
+	id S1760877AbYCFMjH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Mar 2008 07:39:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755857AbYCFMjH
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Mar 2008 07:39:07 -0500
+Received: from ug-out-1314.google.com ([66.249.92.175]:53436 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753022AbYCFMjE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Mar 2008 07:39:04 -0500
+Received: by ug-out-1314.google.com with SMTP id z38so3795749ugc.16
+        for <git@vger.kernel.org>; Thu, 06 Mar 2008 04:39:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date:message-id:x-mailer;
-        bh=lrS/DUYLwMeKK/3EbJyZrhyl93eqc86VLPP08ZJ5sfM=;
-        b=kQkqPZAtaO37OTs6mlX7qMQ/BySuf68+95Sul+yVaQ8psNypE0jdIo4KhalUN+oGVvW5HIgxCGnRsF8t4aKadbhqKXhU6uYqgC8hNud71lUnBjRmK2RPcH7/y7MCxPUUlNhR11nSdL7qND7NNeHdSMy5ikioLxqq8W6S0K4lXp8=
+        h=domainkey-signature:received:received:date:from:to:cc:subject:message-id:reply-to:mime-version:content-type:content-disposition:user-agent:sender;
+        bh=cud0vX4UJlAauP3RDYGhOu0j/wcUzRprB+BBKgRVtgM=;
+        b=KZcQgQzT7DJtr94ov1mPtoQy2a15HUaJn0O3xk3cXotWFpHWWxN0OBKdQPKdvcA2500e6rMjfVhDpKVtJ3GBEsOnzjiRZgwGWj0RIkdBy+drTzPDqFqQdw9dg6Y/xIt/au5EHDwCOm9DTnkaPOFwALoepjE3efQCMDY/WQWBIHE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=a97s0njhuzbcuFmqv2sBy4Oa5cNmblYcmCl1BuYsoNlj/kIi2jTwWwwBVfv9j+EEv5wEP/sUUCyae3uQxrCuzRYOI44ZUkh3ZSjcvMT6tiNh+qvgwBajXIea5ELvQHTr+9HTYssSSm194tUSbXmZ4Mn91WYKLX7nnnymep3Tt1s=
-Received: by 10.114.89.1 with SMTP id m1mr6754753wab.77.1204806560076;
-        Thu, 06 Mar 2008 04:29:20 -0800 (PST)
-Received: from localhost ( [208.106.56.2])
-        by mx.google.com with ESMTPS id y11sm4320813pod.9.2008.03.06.04.29.18
+        h=date:from:to:cc:subject:message-id:reply-to:mime-version:content-type:content-disposition:user-agent:sender;
+        b=Y2LvJRzoSMd0MxBM/RA0+u8i0vwJQBOOp9Vyr9gVwke42S9TsiIBkADkXOR560g97kBTtJyEPe8GEAA0GcBrR/dhYX3Pbt57LhMGSK6Ikq3u1Jptad3X9UlZEtRh+nD0aTEfBy9SyIqNMVhh/MaXt8kLqGbUIW2VgaLZ5N6aHrg=
+Received: by 10.78.154.14 with SMTP id b14mr9859416hue.55.1204807142449;
+        Thu, 06 Mar 2008 04:39:02 -0800 (PST)
+Received: from shadow ( [128.214.182.195])
+        by mx.google.com with ESMTPS id j2sm8036984mue.3.2008.03.06.04.39.00
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 06 Mar 2008 04:29:18 -0800 (PST)
-X-Mailer: git-send-email 1.5.4
+        Thu, 06 Mar 2008 04:39:01 -0800 (PST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76387>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76388>
 
-Launching gitk on a bare repository would previously show the
-work tree as having removed all files.  We now test for bare
-repositories before showing local changes.
+Adding horizontal scroll bar makes the scrolling feature more
+discoverable to the users. The horizontal scrollbar is a bit narrower
+than vertical ones so we don't make too big impact on available screen
+real estate.
 
-Signed-off-by: David Aguilar <davvid@gmail.com>
+An interesting side effect of Tk scrollbars is that the "elevator"
+size changes depending on the visible content. So the horizontal
+scrollbar "elevator" changes as the user scrolls the view up and down.
+
+Signed-off-by: Pekka Kaitaniemi <kaitanie@cc.helsinki.fi>
 ---
- gitk |    5 +++--
- 1 files changed, 3 insertions(+), 2 deletions(-)
+This patch adds a relatively narrow horizontal scrollbar to the diff
+pane. It might be a bit more complicated to implement an on-demand
+one, however...
+
+The patch seems to work fine on Linux and ion3 window manager. I
+haven't had a chance to test it with other systems.
+
+ gitk |    6 +++++-
+ 1 files changed, 5 insertions(+), 1 deletions(-)
 
 diff --git a/gitk b/gitk
-index f1f21e9..cc4cde3 100755
+index f1f21e9..5340811 100755
 --- a/gitk
 +++ b/gitk
-@@ -2843,9 +2843,9 @@ proc dohidelocalchanges {} {
- 
- # spawn off a process to do git diff-index --cached HEAD
- proc dodiffindex {} {
--    global localirow localfrow lserial showlocalchanges
-+    global localirow localfrow lserial showlocalchanges isbare
- 
--    if {!$showlocalchanges} return
-+    if {!$showlocalchanges || $isbare} return
-     incr lserial
-     set localfrow -1
-     set localirow -1
-@@ -8643,6 +8643,7 @@ set patchnum 0
- set localirow -1
- set localfrow -1
- set lserial 0
-+set isbare [expr {[exec git rev-parse --is-bare-repository] == "true"}]
- setcoords
- makewindow
- # wait for the window to become visible
+@@ -857,14 +857,18 @@ proc makewindow {} {
+     set ctext .bleft.ctext
+     text $ctext -background $bgcolor -foreground $fgcolor \
+ 	-state disabled -font textfont \
+-	-yscrollcommand scrolltext -wrap none
++	-yscrollcommand scrolltext  -wrap none \
++	-xscrollcommand ".bleft.sbhorizontal set"
+     if {$have_tk85} {
+ 	$ctext conf -tabstyle wordprocessor
+     }
+     scrollbar .bleft.sb -command "$ctext yview"
++    scrollbar .bleft.sbhorizontal -command "$ctext xview" -orient h \
++	-width 10
+     pack .bleft.top -side top -fill x
+     pack .bleft.mid -side top -fill x
+     pack .bleft.sb -side right -fill y
++    pack .bleft.sbhorizontal -side bottom -fill x -in .bleft
+     pack $ctext -side left -fill both -expand 1
+     lappend bglist $ctext
+     lappend fglist $ctext
 -- 
-1.5.4.rc2.1105.gfc5f2
+1.5.4.3
 
