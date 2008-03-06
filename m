@@ -1,58 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] git-clean: correct printing relative path
-Date: Thu, 06 Mar 2008 15:08:47 -0800
-Message-ID: <7vr6en8n7k.fsf@gitster.siamese.dyndns.org>
-References: <20080306174342.GA32364@dpotapov.dyndns.org>
+From: Paul Mackerras <paulus@samba.org>
+Subject: Re: [PATCH] gitk: don't save the geometry to rc file on exit
+Date: Fri, 7 Mar 2008 10:10:08 +1100
+Message-ID: <18384.31184.663885.595827@cargo.ozlabs.ibm.com>
+References: <47AAA254.2020008@thorn.ws>
+	<20080207063020.GP24004@spearce.org>
+	<200802071056.19370.robin.rosenberg.lists@dewire.com>
+	<20080207101051.19459.qmail@fcb20609bc7c07.315fe32.mid.smarden.org>
+	<20080223113759.12854.qmail@6a8737aa4695b2.315fe32.mid.smarden.org>
+	<18368.41742.689290.877767@cargo.ozlabs.ibm.com>
+	<47C190E3.6000407@gmail.com>
+	<18383.57540.26282.526111@cargo.ozlabs.ibm.com>
+	<57518fd10803060459m6e3ffc00n388721ad2e5975ad@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Pierre Habouzit <madcoder@debian.org>, Git ML <git@vger.kernel.org>
-To: Dmitry Potapov <dpotapov@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 07 00:09:47 2008
+Content-Transfer-Encoding: 7bit
+Cc: "Mark Levedahl" <mlevedahl@gmail.com>,
+	"Gerrit Pape" <pape@smarden.org>, git@vger.kernel.org
+To: "Jonathan del Strother" <maillist@steelskies.com>
+X-From: git-owner@vger.kernel.org Fri Mar 07 00:10:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JXPDc-000381-54
-	for gcvg-git-2@gmane.org; Fri, 07 Mar 2008 00:09:44 +0100
+	id 1JXPEm-0003XM-Bt
+	for gcvg-git-2@gmane.org; Fri, 07 Mar 2008 00:10:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758345AbYCFXJF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Mar 2008 18:09:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758271AbYCFXJF
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Mar 2008 18:09:05 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:42218 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758132AbYCFXJD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Mar 2008 18:09:03 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 4221E2C64;
-	Thu,  6 Mar 2008 18:09:01 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 89D372C62; Thu,  6 Mar 2008 18:08:56 -0500 (EST)
-In-Reply-To: <20080306174342.GA32364@dpotapov.dyndns.org> (Dmitry Potapov's
- message of "Thu, 6 Mar 2008 20:43:42 +0300")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1758427AbYCFXKS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Mar 2008 18:10:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758235AbYCFXKR
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Mar 2008 18:10:17 -0500
+Received: from ozlabs.org ([203.10.76.45]:55221 "EHLO ozlabs.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752068AbYCFXKQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Mar 2008 18:10:16 -0500
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id 3E6C4DDF48; Fri,  7 Mar 2008 10:10:14 +1100 (EST)
+In-Reply-To: <57518fd10803060459m6e3ffc00n388721ad2e5975ad@mail.gmail.com>
+X-Mailer: VM 7.19 under Emacs 21.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76433>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76434>
 
-Dmitry Potapov <dpotapov@gmail.com> writes:
+Jonathan del Strother writes:
 
-> When the given path contains '..' then git-clean incorrectly printed names
-> of files. This patch changes cmd_clean to use quote_path() from wt-status.
+> This almost works on OS X.  The only problem is that it's not taking
+> into account menubars and windowbars.  eg, if I have a screen
+> resolution of 640x480, setting the window _content_ to that size will
+> make the entire window including its titlebar about 500px tall.  Not
+> only that, but the system-wide menubar at the top of the screen also
+> reduces the available space, meaning that the maximum window size
+> ought to be around 640x456.  (If you wanted to get even pickier, that
+> will changing depending on the interface resolution...)
 
-I think making quote_path() available from outside is fine, but as a
-public function, quote_path() is grossly misnamed.  It was an Ok name in
-the context of wt-status, where the sole kind of path quoting necessary
-was to show themrelative to the current working directory.  As a general
-library, it needs much better name, perhaps quote_path_relative(), and it
-should move to quote.c, not staying in wt-status.c.
+Do you know of any way for an application to determine how big it can
+be, then?
 
-The implementation of quote_path() also needs to be fixed.  For one thing,
-it does not seem to honor core.quotepath configuration, and it also passes
-"\t" unquoted.  I think rewriting the handcrafted loop to treat \n and \r
-specially should be yanked out and replaced with c_style_quote family of
-functions in quote.c
+> Presumably your patch does nothing to move gitk back on screen if the
+> monitor it was on last time has gone away?  Or are we still blaming
+> the window manager for that?
+
+With the patch it no longer specifies a position, so yes we blame the
+window manager now if it doesn't put the window somewhere visible. :)
+
+Paul.
