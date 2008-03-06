@@ -1,119 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 3/4] git-submodule: New subcommand 'summary' (3) -
- limit summary size
-Date: Wed, 05 Mar 2008 16:24:18 -0800
-Message-ID: <7v7iggitsd.fsf@gitster.siamese.dyndns.org>
-References: <1204481710-29791-1-git-send-email-pkufranky@gmail.com>
- <1204481710-29791-3-git-send-email-pkufranky@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: The 8th airing of the msysGit herald
+Date: Thu, 6 Mar 2008 01:26:58 +0100 (CET)
+Message-ID: <alpine.LSU.1.00.0803060121360.15786@racer.site>
+References: <alpine.LSU.1.00.0803022329560.22527@racer.site>  <m34pbok54h.fsf@localhost.localdomain>  <alpine.LSU.1.00.0803030052450.22527@racer.site>  <200803030210.02223.jnareb@gmail.com> <47CBE85B.6060702@imap.cc>  <7vablfiv42.fsf@gitster.siamese.dyndns.org>
+ <47CC432B.8060502@imap.cc>  <7v1w6rh1ru.fsf@gitster.siamese.dyndns.org> <46a038f90803031458t2b404212t10f6e9ae710dc408@mail.gmail.com> <47CF2F61.5060208@imap.cc>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Ping Yin <pkufranky@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 06 01:25:04 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Martin Langhoff <martin.langhoff@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jakub Narebski <jnareb@gmail.com>, msysgit@googlegroups.com,
+	git@vger.kernel.org
+To: Tilman Schmidt <tilman@imap.cc>
+X-From: git-owner@vger.kernel.org Thu Mar 06 01:27:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JX3uy-0003ZQ-AZ
-	for gcvg-git-2@gmane.org; Thu, 06 Mar 2008 01:25:04 +0100
+	id 1JX3xW-0004OL-HE
+	for gcvg-git-2@gmane.org; Thu, 06 Mar 2008 01:27:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754173AbYCFAYZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Mar 2008 19:24:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754097AbYCFAYZ
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 19:24:25 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:61584 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752683AbYCFAYY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Mar 2008 19:24:24 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 64DEE31DE;
-	Wed,  5 Mar 2008 19:24:23 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 983C131DD; Wed,  5 Mar 2008 19:24:20 -0500 (EST)
-In-Reply-To: <1204481710-29791-3-git-send-email-pkufranky@gmail.com> (Ping
- Yin's message of "Mon, 3 Mar 2008 02:15:09 +0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754893AbYCFA1E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Mar 2008 19:27:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754690AbYCFA1B
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 19:27:01 -0500
+Received: from mail.gmx.net ([213.165.64.20]:56224 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754181AbYCFA1A (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Mar 2008 19:27:00 -0500
+Received: (qmail invoked by alias); 06 Mar 2008 00:26:58 -0000
+Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
+  by mail.gmx.net (mp044) with SMTP; 06 Mar 2008 01:26:58 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19mUdNG2ZtmFZ8+uoFTGoWGmLAAvm2RG65T/cNtz3
+	GjrZOCbDw5E0iw
+X-X-Sender: gene099@racer.site
+In-Reply-To: <47CF2F61.5060208@imap.cc>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76298>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76299>
 
-Ping Yin <pkufranky@gmail.com> writes:
+Hi,
 
-> This patch teaches git-submodule an option '--summary-limit|-n <number>'
-> to limit number of commits in total for the summary. Number 0 will disable
-> summary and minus number means unlimted (the default).
+On Thu, 6 Mar 2008, Tilman Schmidt wrote:
 
-I really doubt showing the bottom one specially makes sense.
+> would it be possible to have separate mailing lists for usage topics and 
+> for discussions of ongoing development? I imagine that might help those 
+> who just want to use git (like me) to find their way around.
 
-Why not just read from
+AFAIAC you can have your "users-only" mailing list.  Personally, I will 
+never look at it, though, since all I am interested in is the development 
+of Git.  If that holds true for the majority of Git _developers_, it might 
+even be a bad idea to have a separate users' list, since then
 
-	git log '--pretty=%m %h %s' --left-right --topo-order A...B
+- no ideas from strictly-users would flow to the developers, and
 
-and show N top commits from each?
+- new developments would not reach you, and
 
-I've already said that I do not think applying the same limit to
-new/deleted/modified cases makes sense, so commenting on this
-part might be a moot point, though.
+- you would not get help by the people knowing the internals _deeply_.
 
--- >8 --
+FWIW I think what you wish for is already covered -- and in an 
+instantaneous manner at that -- by the IRC channel.
 
-#!/bin/sh
+Ciao,
+Dscho
 
-limit=10
-A=cc/run-command
-B=jc/test
-
-lf='
-'
-git log --pretty=format:%m\ %h\ %s --left-right $A...$B |
-(
-	left=0 right=0 l= r= llast= rlast=
-	ilimit=$(( $limit - 1 ))
-	while read leftright commit name
-	do
-		it="$leftright$commit $name"
-		case "$leftright" in
-		'<')
-			if test $left -eq $ilimit
-			then
-				llast=$it
-			elif test $left -le $ilimit
-			then
-				l="$l$it$lf"
-			fi
-			left=$(( $left + 1 ))
-			;;
-		'>')
-			if test $right -eq $ilimit
-			then
-				rlast=$it
-			elif test $right -le $ilimit
-			then
-				r="$r$it$lf"
-			fi
-			right=$(( $right + 1 ))
-			;;
-		esac
-	done
-
-	printf %s "$l"
-	if test $left -eq $limit
-	then
-		echo "$llast"
-	elif test $left -gt $limit
-	then
-		echo "< ("$(( $left - $limit ))" more...)"
-	fi
-	printf %s "$r"
-	if test $right -eq $limit
-	then
-		echo "$rlast"
-	elif test $right -gt $limit
-	then
-		echo "> ("$(( $right - $limit ))" more...)"
-	fi
-)
