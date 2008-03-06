@@ -1,141 +1,104 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] gitk: make autoselect optional
-Date: Thu, 6 Mar 2008 06:49:25 -0500
-Message-ID: <20080306114925.GA6942@sigill.intra.peff.net>
-References: <47CD6D1C.1080202@gmx.ch> <20080304230306.GA18246@sigill.intra.peff.net> <18383.51382.866732.308234@cargo.ozlabs.ibm.com>
+From: "Reece Dunn" <msclrhd@googlemail.com>
+Subject: Re: [PATCH 1/2] Add strbuf_initf()
+Date: Thu, 6 Mar 2008 11:53:50 +0000
+Message-ID: <3f4fd2640803060353w70651522w4b3896b8106b01c0@mail.gmail.com>
+References: <1204138503-6126-1-git-send-email-johannes.sixt@telecom.at>
+	 <alpine.LSU.1.00.0802281159550.22527@racer.site>
+	 <200803052221.12495.johannes.sixt@telecom.at>
+	 <alpine.LSU.1.00.0803052317350.15786@racer.site>
+	 <7vir00lski.fsf@gitster.siamese.dyndns.org>
+	 <alpine.LSU.1.00.0803052327570.15786@racer.site>
+	 <alpine.LSU.1.00.0803060212170.15786@racer.site>
+	 <20080306063331.GA7325@glandium.org>
+	 <3f4fd2640803060103i7fce7578ka40b5b4cc23a577f@mail.gmail.com>
+	 <alpine.LSU.1.00.0803061153400.15786@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jean-Luc Herren <jlh@gmx.ch>, git@vger.kernel.org
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Thu Mar 06 12:51:15 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Mike Hommey" <mh@glandium.org>,
+	"Junio C Hamano" <gitster@pobox.com>,
+	"Johannes Sixt" <johannes.sixt@telecom.at>, git@vger.kernel.org
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Mar 06 12:54:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JXEcL-0005Fr-U6
-	for gcvg-git-2@gmane.org; Thu, 06 Mar 2008 12:50:34 +0100
+	id 1JXEg9-0006mr-Tc
+	for gcvg-git-2@gmane.org; Thu, 06 Mar 2008 12:54:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759286AbYCFLta (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Mar 2008 06:49:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758356AbYCFLta
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Mar 2008 06:49:30 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4515 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759286AbYCFLt2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Mar 2008 06:49:28 -0500
-Received: (qmail 3106 invoked by uid 111); 6 Mar 2008 11:49:25 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Thu, 06 Mar 2008 06:49:25 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 06 Mar 2008 06:49:25 -0500
+	id S1758858AbYCFLxw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Mar 2008 06:53:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758446AbYCFLxw
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Mar 2008 06:53:52 -0500
+Received: from el-out-1112.google.com ([209.85.162.180]:28512 "EHLO
+	el-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753230AbYCFLxv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Mar 2008 06:53:51 -0500
+Received: by el-out-1112.google.com with SMTP id v27so2797757ele.17
+        for <git@vger.kernel.org>; Thu, 06 Mar 2008 03:53:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=lhzfhx35ijNyRzc5t1Vykn0j8gcmzvbXe6iApDw9Yao=;
+        b=XVOpQHMczpHqD5ie8mhTphRU35FQ+46IwCXjIghSeKnQD+FRu+p3aoy5nsT0ht86pWrU40hwewgbq6BreqZjF0IMNuQkYAuwG2qTw4RRryTatLHZWcwKFYfWHKTU1n6JLeR1N47mhAem9Sa8ZDCBBG2T+zNI4W3jNblkv4X93IE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=IHZ9UMRPm3nLJhQWux0jzua1Pou1Bs7hjp8DMSVEkHukPtl2FDMPJn7SNzdwuy++aTAVDUhzMWVSHHA3KEcvpLGRZVzqepbnbTM8NGva3+sxvw4e3sIRnHNbFJL9QNqeHJXzXHndiqFOxGPqBTfSzyDtuhrzqOM6u3XXP6AC3rs=
+Received: by 10.141.163.12 with SMTP id q12mr1883904rvo.190.1204804430080;
+        Thu, 06 Mar 2008 03:53:50 -0800 (PST)
+Received: by 10.141.23.10 with HTTP; Thu, 6 Mar 2008 03:53:50 -0800 (PST)
+In-Reply-To: <alpine.LSU.1.00.0803061153400.15786@racer.site>
 Content-Disposition: inline
-In-Reply-To: <18383.51382.866732.308234@cargo.ozlabs.ibm.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76381>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76382>
 
-Whenever a commit is selected in the graph pane, its SHA1
-is automatically put into the selection buffer for cut and
-paste. However, some users may find this behavior annoying
-since it can overwrite something they actually wanted to
-keep in the buffer.
+On 06/03/2008, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> Hi,
+>
+>  On Thu, 6 Mar 2008, Reece Dunn wrote:
+>
+>  > On 06/03/2008, Mike Hommey <mh@glandium.org> wrote:
+>  > > On Thu, Mar 06, 2008 at 02:14:43AM +0100, Johannes Schindelin wrote:
+>  > >  >
+>  > >  > The most common use of addf() was to init a strbuf and addf() right
+>  > >  > away. Since it is so common, it makes sense to have a function
+>  > >  > strbuf_initf() to wrap both calls into one.
+>  > >  >
+>  > >  > Unfortunately, C (and cpp) has no way to make this easy without
+>  > >  > code duplication, as we need to va_init() in strbuf_addf() possibly
+>  > >  > a few times.  So the code for addf() is copied.  Fortunately, the
+>  > >  > code is pretty short, so not too much had to be copied as-is.
+>  > >
+>  > >
+>  > > The problem with code duplication is not about code size, but more
+>  > > about not forgetting to fix bugs in all incarnations of the duplicated
+>  > > code.
+>  > >
+>  > > Is it so ugly to use a macro ?
+>  >
+>  > Why not have a strbuf_vaddf and strbuf_vinitf that take a va_arg as a
+>  > parameter. This would mean that you don't have code duplication, and it
+>  > is flexible enough if you want to add more customisations in the future.
+>  > No macro needed. This is what the printf/scanf family of functions do.
+>
+>
+> The problem is that we have to restart va_list() if the buffer was too
+>  small.
 
-This patch makes the behavior optional under the name
-"Auto-select SHA1", but continues to default to "on".
+Ok.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-On Thu, Mar 06, 2008 at 09:34:30PM +1100, Paul Mackerras wrote:
+>  So your suggestion is out, unless you suggest to implement the whole
+>  printf mechanism... which I hope you're not.
 
-> Looks OK to me.  Care to re-send it with a Signed-off-by?  Oh, and
-> put "sha1" in capitals, i.e. "SHA1".
+No, that was not my intention. My intention was that they were simple
+forwarding functions that handled the va_start and va_end calls.
 
-Here it is, with both requested items and a slightly more coherent
-commit message.
+Is it possible to pass a void * to a strbuf_vaddf function that you
+can pass to va_start, so you can then restart the va_list?
 
-> (Tcl is actually a very simple language, and there are man pages for
-> it; try "man Tcl" for a start. :)
-
-Heh. My biggest concern was "did I get everywhere that options must be
-mentioned" (which isn't a Tcl thing at all, of course). I tested that
-the option works, and that it correctly saves the value in the .gitk
-file and respects it on the next run.
-
- gitk-git/gitk |   17 ++++++++++++++---
- 1 files changed, 14 insertions(+), 3 deletions(-)
-
-diff --git a/gitk-git/gitk b/gitk-git/gitk
-index f1f21e9..36fdecd 100644
---- a/gitk-git/gitk
-+++ b/gitk-git/gitk
-@@ -1163,6 +1163,7 @@ proc savestuff {w} {
-     global viewname viewfiles viewargs viewperm nextviewnum
-     global cmitmode wrapcomment datetimeformat limitdiffs
-     global colors bgcolor fgcolor diffcolors diffcontext selectbgcolor
-+    global autoselect
- 
-     if {$stuffsaved} return
-     if {![winfo viewable .]} return
-@@ -1177,6 +1178,7 @@ proc savestuff {w} {
- 	puts $f [list set maxwidth $maxwidth]
- 	puts $f [list set cmitmode $cmitmode]
- 	puts $f [list set wrapcomment $wrapcomment]
-+	puts $f [list set autoselect $autoselect]
- 	puts $f [list set showneartags $showneartags]
- 	puts $f [list set showlocalchanges $showlocalchanges]
- 	puts $f [list set datetimeformat $datetimeformat]
-@@ -4650,6 +4652,7 @@ proc selectline {l isnew} {
-     global commentend idtags linknum
-     global mergemax numcommits pending_select
-     global cmitmode showneartags allcommits
-+    global autoselect
- 
-     catch {unset pending_select}
-     $canv delete hover
-@@ -4705,8 +4708,10 @@ proc selectline {l isnew} {
-     set currentid $id
-     $sha1entry delete 0 end
-     $sha1entry insert 0 $id
--    $sha1entry selection from 0
--    $sha1entry selection to end
-+    if {$autoselect} {
-+	$sha1entry selection from 0
-+	$sha1entry selection to end
-+    }
-     rhighlight_sel $id
- 
-     $ctext conf -state normal
-@@ -7943,7 +7948,7 @@ proc doprefs {} {
-     global maxwidth maxgraphpct
-     global oldprefs prefstop showneartags showlocalchanges
-     global bgcolor fgcolor ctext diffcolors selectbgcolor
--    global tabstop limitdiffs
-+    global tabstop limitdiffs autoselect
- 
-     set top .gitkprefs
-     set prefstop $top
-@@ -7973,6 +7978,11 @@ proc doprefs {} {
-     checkbutton $top.showlocal.b -variable showlocalchanges
-     pack $top.showlocal.b $top.showlocal.l -side left
-     grid x $top.showlocal -sticky w
-+    frame $top.autoselect
-+    label $top.autoselect.l -text [mc "Auto-select SHA1"] -font optionfont
-+    checkbutton $top.autoselect.b -variable autoselect
-+    pack $top.autoselect.b $top.autoselect.l -side left
-+    grid x $top.autoselect -sticky w
- 
-     label $top.ddisp -text [mc "Diff display options"]
-     grid $top.ddisp - -sticky w -pady 10
-@@ -8463,6 +8473,7 @@ set maxlinelen 200
- set showlocalchanges 1
- set limitdiffs 1
- set datetimeformat "%Y-%m-%d %H:%M:%S"
-+set autoselect 1
- 
- set colors {green red blue magenta darkgrey brown orange}
- set bgcolor white
--- 
-1.5.4.3.532.gf15a6
-
+- Reece
