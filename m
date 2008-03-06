@@ -1,97 +1,143 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH/RFC v2] git-submodule: multi-level module definition
-Date: Thu, 6 Mar 2008 03:32:34 +0100 (CET)
-Message-ID: <alpine.LSU.1.00.0803060330210.15786@racer.site>
-References: <1204646661-7776-1-git-send-email-pkufranky@gmail.com>  <7vd4q8kbey.fsf@gitster.siamese.dyndns.org> <46dff0320803051754o4b45222es524a62a7cac50b94@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] format-patch: add --reviewed-by=<ident>
+Date: Wed, 05 Mar 2008 18:40:20 -0800
+Message-ID: <7v8x0wh8x7.fsf@gitster.siamese.dyndns.org>
+References: <1204138503-6126-1-git-send-email-johannes.sixt@telecom.at>
+ <1204138503-6126-4-git-send-email-johannes.sixt@telecom.at>
+ <alpine.LSU.1.00.0802281159550.22527@racer.site>
+ <200803052221.12495.johannes.sixt@telecom.at>
+ <alpine.LSU.1.00.0803052317350.15786@racer.site>
+ <7vir00lski.fsf@gitster.siamese.dyndns.org>
+ <alpine.LSU.1.00.0803052327570.15786@racer.site>
+ <alpine.LSU.1.00.0803060214520.15786@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Ping Yin <pkufranky@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 06 03:33:23 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Sixt <johannes.sixt@telecom.at>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Mar 06 03:41:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JX5v8-0002lT-1e
-	for gcvg-git-2@gmane.org; Thu, 06 Mar 2008 03:33:22 +0100
+	id 1JX62f-0004W3-8Y
+	for gcvg-git-2@gmane.org; Thu, 06 Mar 2008 03:41:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934846AbYCFCcf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Mar 2008 21:32:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934840AbYCFCce
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 21:32:34 -0500
-Received: from mail.gmx.net ([213.165.64.20]:33237 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S934825AbYCFCcd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Mar 2008 21:32:33 -0500
-Received: (qmail invoked by alias); 06 Mar 2008 02:32:31 -0000
-Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
-  by mail.gmx.net (mp035) with SMTP; 06 Mar 2008 03:32:31 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19QNe5L6nVQCQDSw3VMpoTdsAPW4xarorec8MyBW2
-	EHOlReOVEUS0Mn
-X-X-Sender: gene099@racer.site
-In-Reply-To: <46dff0320803051754o4b45222es524a62a7cac50b94@mail.gmail.com>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1761308AbYCFCkb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Mar 2008 21:40:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759545AbYCFCka
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 21:40:30 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:39212 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756132AbYCFCk3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Mar 2008 21:40:29 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 52B8A24A7;
+	Wed,  5 Mar 2008 21:40:27 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 19D9F24A6; Wed,  5 Mar 2008 21:40:22 -0500 (EST)
+In-Reply-To: <alpine.LSU.1.00.0803060214520.15786@racer.site> (Johannes
+ Schindelin's message of "Thu, 6 Mar 2008 02:15:24 +0100 (CET)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76312>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76313>
 
-Hi,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On Thu, 6 Mar 2008, Ping Yin wrote:
+>  'git-format-patch' [-k] [-o <dir> | --stdout] [--thread]
+>  		   [--attach[=<boundary>] | --inline[=<boundary>]]
+> +		   [--reviewed-by=<ident>]
+>  		   [-s | --signoff] [<common diff options>]
+>  		   [-n | --numbered | -N | --no-numbered]
+>  		   [--start-number <n>] [--numbered-files]
 
-> On Thu, Mar 6, 2008 at 7:18 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> > Ping Yin <pkufranky@gmail.com> writes:
-> >
-> >  > This patch allows multi-level module definition in .gitmodules as
-> >  > Linus and Sven Verdoolaege etc. have suggested in mails
-> >  > "Let .git/config specify the url for submodules"
-> >  > (http://article.gmane.org/gmane.comp.version-control.git/48939).
-> >  >
-> >  > Following shows an example of such a .gitmodules.
-> >  >
-> >  > .gitmodules with with multiple level of indirection
-> >  > ------------------------------------------------------
-> >  > [submodule "service"]
-> >  >    submodule = crawler
-> >  >    submodule = search
-> >  > ...
-> >
-> > > [submodule "util"]
-> >  >    url = git://xyzzy/util.git
-> >  > [submodule "imsearch"]
-> >  >    path = search/imsearch
-> >  >    url = git://xyzzy/imsearch.git
-> >  > [submodule "imcrawler"]
-> >  >    path = crawler/imcrawter
-> >  >    url = git://xyzzy/imcrawter.git
-> >  > ------------------------------------------------------
-> >
-> >  I would agree that allowing the user to use a short-hand to name a group
-> >  of modules the user is interested in would be a good idea, but I think
-> >  .gitmodules is a wrong place to do so.  The grouping is a user preference,
-> >  isn't it?
-> >
-> >  The place the owner of the repository (not the project) expresses which
-> >  modules are of interest, what transports she wants to use to access it,
-> >  etc. is $GIT_DIR/config, and .gitmodules is a vehicle to supply hints to
-> >  be used when the user populates that information.
-> >
-> Not always the case.
+What's the expected workflow this patch intends to help?
 
-If it is _not_ always the case, .gitmodules is definitely the wrong place, 
-and $GIT_DIR/config is.
+ - You see a patch by somebody, you look at it deeply, you apply to your
+   tree (presumably with your own Signed-off-by).
 
-Just like we need "init && update", and not have "init" update implicitly, 
-like some people wish (who forget that other people might have other 
-wishes), we need to allow for different options here.
+ - You inspect the result further, and decide it is good.
 
-And as .gitmodules is _meant_ to be tracked, it is not the place to 
-express individual wishes differing from the colleagues' wishes.
+ - You format-patch with the option, which would now have a Reviewed-by:
+   too.
 
-Ciao,
-Dscho
+ - You send it out.
+
+If so, it might make sense to simply always use the committer ident.
+
+If the person who adds the reviewed-by is trusted so much that her
+reviewed-by counts, the commits might even be transfered with "Please
+pull".  In such a case, the workflow might become:
+
+ - You see a patch by somebody, you look at it deeply, you apply to your
+   tree (presumably with your own Signed-off-by).
+
+ - You inspect the result further, and decide it is good.
+
+ - You run "rebase --add-reviewed-by" to prepare a series on a branch to
+   be pulled from.
+
+ - You send a request-pull.
+
+In that workflow, it would also make sense to use the committer ident.
+
+I am trying to come up with a plausible workflow that wants to add
+somebody else's reviewed-by.
+
+ - You send out your patch to the list.  People give comments, you reroll,
+   you get more comments, eventually people say "Ah, that's good, Ack."
+   and/or "I am not the primary person who knows this area, but I reviewed
+   it and I know my reviewed-by would count, so here is my Ok".
+
+ - You format-patch the final version, with Acked-by and Reviewed-by
+   adding other people's names.
+
+Then I think it makes sense to take names of other people if that is the
+case.
+
+You probably meant that that is the expected workflow, as you can give
+more than one of these options.
+
+But people who read the documentation should not have to guess.
+
+> diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+> index b2b7a8d..e2ff94f 100755
+> --- a/t/t4014-format-patch.sh
+> +++ b/t/t4014-format-patch.sh
+> @@ -230,4 +230,30 @@ test_expect_success 'shortlog of cover-letter wraps overly-long onelines' '
+>  
+>  '
+>  
+> +cat > expect << EOF
+> +
+> +Reviewed-by: Ken Robinson
+> +
+> +Reviewed-by: Sergey Rachmaninov
+> +
+> +Reviewed-by: Ronny O Sullivan
+> +Reviewed-by: Mickey Mouse
+> +Reviewed-by: Mahatma Gandhi
+> +EOF
+> +
+> +test_expect_success '--reviewed-by' '
+> +
+> +	echo reviewed > foo &&
+> +	test_tick &&
+> +	git commit -m "Reviewed" -m "Reviewed-by: Ken Robinson" \
+> +		-m "Reviewed-by: Sergey Rachmaninov" \
+> +		-m "Reviewed-by: Ronny O Sullivan" foo &&
+> +	git format-patch --reviewed-by="Mickey Mouse" \
+> +		--reviewed-by="Sergey Rachmaninov" \
+> +		--reviewed-by="Mahatma Gandhi" -1 HEAD &&
+> +	sed -e "1,/^Cc: /d" -e "/^---/,\$d" < 0001-Reviewed.patch > output &&
+> +	git diff expect output
+> +
+> +'
+
+Why not use a single -m for the first three reviewed-bys, instead of
+making them into separate paragraphs using multiple -m?
 
