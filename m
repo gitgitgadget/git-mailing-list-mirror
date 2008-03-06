@@ -1,144 +1,141 @@
 From: imyousuf@gmail.com
 Subject: [PATCH] - Added pre command and custom argument support to git submodule recurse command
-Date: Thu,  6 Mar 2008 13:33:35 +0600
-Message-ID: <1204788817-22720-3-git-send-email-imyousuf@gmail.com>
+Date: Thu,  6 Mar 2008 13:33:36 +0600
+Message-ID: <1204788817-22720-4-git-send-email-imyousuf@gmail.com>
 References: <1204788817-22720-1-git-send-email-imyousuf@gmail.com>
  <1204788817-22720-2-git-send-email-imyousuf@gmail.com>
-Cc: gitster@pobox.com, Imran M Yousuf <imyousuf@smartitengineering.com>
+ <1204788817-22720-3-git-send-email-imyousuf@gmail.com>
+Cc: gitster@pobox.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 06 08:35:03 2008
+X-From: git-owner@vger.kernel.org Thu Mar 06 08:35:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JXAd4-00083r-UU
-	for gcvg-git-2@gmane.org; Thu, 06 Mar 2008 08:35:03 +0100
+	id 1JXAd5-00083r-Kl
+	for gcvg-git-2@gmane.org; Thu, 06 Mar 2008 08:35:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755046AbYCFHeQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Mar 2008 02:34:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758167AbYCFHeQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Mar 2008 02:34:16 -0500
+	id S1758774AbYCFHeZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Mar 2008 02:34:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758752AbYCFHeY
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Mar 2008 02:34:24 -0500
 Received: from hu-out-0506.google.com ([72.14.214.236]:41464 "EHLO
 	hu-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755015AbYCFHeP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Mar 2008 02:34:15 -0500
+	with ESMTP id S1758712AbYCFHeX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Mar 2008 02:34:23 -0500
 Received: by hu-out-0506.google.com with SMTP id 19so1229660hue.21
-        for <git@vger.kernel.org>; Wed, 05 Mar 2008 23:34:14 -0800 (PST)
+        for <git@vger.kernel.org>; Wed, 05 Mar 2008 23:34:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=5E8Q96Yltp0odHjgtm56Sjl0UNtiQwfZLq5G9lMZbSk=;
-        b=ghGTooEHjSpF1pGlJaRPPku5FJ9vgAa9Axdk1hfg/x8YPRG3jBTsie77zoYCC9kkl2MiSvsPxUt4zolgHlV6BIqrXA34b3Pji7LcDJKQ3Y0FDZT4nfIrtzzArfDc1/pQWubvaQDGTAaLeIPc7p1ihMIWmeHeRugGpz9MdLpRK7g=
+        bh=RZ7GBtkJRtHm4LenbhGbmdiaHlUF+cOnwyTQdFg+C6A=;
+        b=C0zi7k9W+5D/7pS+zgXGxQZk02WU+wp5zvE8vlO1vOiejXzsigbxK2HP2Uj26y5SFMAQY7ssuRrlenc9GcM7JKtk8AjtJNoBmOxofPfP98DOla5LDBpygBKRH2ArWVEx9bQKCgoCZW2733tuEdh+FgtZYfEhdfZ/uEH7vTUL4mM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=H7rt86w376DodXUzdKXMTIGfOGW5gFTYdEHGDh5flwK0ETrG2/JBBillsOCKlXPq0yedqjuLVmznOU+wOqevT6xI6Uub4GnJXPz8hzOWQ0zkw2FsHE/wzTW+tJJNTUNCPmlrz+3sd2thPVqNhstvMUXPogYtyIH3kIMn+pYBHUI=
-Received: by 10.86.89.4 with SMTP id m4mr4295124fgb.14.1204788854702;
-        Wed, 05 Mar 2008 23:34:14 -0800 (PST)
+        b=GCPPUoyICpb6JacyDQa45+J5beCBWt6sa7IntoHth9aqliT+4mrMSdJTQQ1Skgt8PkOq3zqfJbPg/hX/kiIfm2Q/TOLNPv6ufYlEhvLX0wZcpvySkaTqdWiNEugseP4Kdt+V/7jXV+U4kqf0+crHb1diF5ueRU1hH9ey/bKGHGk=
+Received: by 10.86.9.8 with SMTP id 8mr4260751fgi.70.1204788863078;
+        Wed, 05 Mar 2008 23:34:23 -0800 (PST)
 Received: from localhost ( [62.101.198.35])
-        by mx.google.com with ESMTPS id t12sm3138995gvd.2.2008.03.05.23.34.09
+        by mx.google.com with ESMTPS id q9sm3091343gve.10.2008.03.05.23.34.19
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 05 Mar 2008 23:34:13 -0800 (PST)
+        Wed, 05 Mar 2008 23:34:22 -0800 (PST)
 X-Mailer: git-send-email 1.5.4.2
-In-Reply-To: <1204788817-22720-2-git-send-email-imyousuf@gmail.com>
+In-Reply-To: <1204788817-22720-3-git-send-email-imyousuf@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76349>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76350>
 
-From: Imran M Yousuf <imyousuf@smartitengineering.com>
+A noteworthy change is that modules_list() is now known as
+cmd_status().  There is no "submodule list" command.
 
-There is one scenario that has been put forward several times in
-discussion over the recurse command - it is that commands can have
-different arguments for different modules. For example for the same example
-mentioned above, one wants to check a_1 for submdoule a, while it wants to
-checkout d_2 for d. It can be achieved by using [-ca|--customized-argument].
-This results the script to prompt for user input, which will be passed as
-argument to the command for that module.
-	git submodule recurse -ca checkout
-	Working in mod a .......
-	Please provide arguments for this module: a_1
-	Working in mod d .......
-	Please provide arguments for this module: a_1
-
-It is usually helpful that when typing a command, being able to see some options
-come in handy. For example if I can see the available branches before checking
-out a branch that would be useful, IOW, if one could git branch before git
-checkout; it is now possible using the [-p|--pre-command] option. Using this
-command you can actually execute other git commands before specifying the
-arguments to the original command. E.g. if the above command is changed to,
-	git submodule recurse -ca -p checkout
-it will prompt the user for the pre command until one is satisfied and later
-the user can actually use them in the argument.
-
-As these two options get along well together it made sense to me
-to group them together.
-
-Signed-off-by: Imran M Yousuf <imyousuf@smartitengineering.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- git-submodule.sh |   33 +++++++++++++++++++++++++++++----
- 1 files changed, 29 insertions(+), 4 deletions(-)
+
+ * We could probably do something like this.  This first part is
+   about making the command dispatcher maintainable.
+
+   Note that I haven't seriously tested this series.  This and
+   the next one are primarily to illustrate what I think the fix
+   you are trying should look like.
+
+ git-submodule.sh |   20 ++++++++++----------
+ 1 files changed, 10 insertions(+), 10 deletions(-)
 
 diff --git a/git-submodule.sh b/git-submodule.sh
-index ee3c928..05fd1d2 100755
+index ad9fe62..3c104e3 100755
 --- a/git-submodule.sh
 +++ b/git-submodule.sh
-@@ -8,8 +8,8 @@
- # git-submodule [-q|--quiet] add [-b|--branch branch] <repository> [<path>]
- # git-submodule [-q|--quiet] [status] [-c|--cached] [--] [<path>...]
- # git-submodule [-q|--quiet] init|update [--] [<path>...]
--# git-submodule [-q|--quiet] recurse [-i|--initialize] [-e|--exit-after-error] [-d|--depth <recursion depth>] [-df|--depth-first] <command> [<arguments> ...]
--USAGE='[-q|--quiet] [[[add [-b|--branch branch] <repo>]|[[[status [-c|--cached]]|init|update] [--]]]  [<path>...]]|[recurse [-i|--initialize] [-e|--exit-after-error] [-d|--depth <recursion depth>] [-df|--depth-first] <command> [<arguments> ...]]'
-+# git-submodule [-q|--quiet] recurse [-i|--initialize] [-e|--exit-after-error] [-d|--depth <recursion depth>] [-df|--depth-first] [-ca|--customized-argument] [-p|--pre-command] <command> [<arguments> ...]
-+USAGE='[-q|--quiet] [[[add [-b|--branch branch] <repo>]|[[[status [-c|--cached]]|init|update] [--]]]  [<path>...]]|[recurse [-i|--initialize] [-e|--exit-after-error] [-d|--depth <recursion depth>] [-df|--depth-first] [-ca|--customized-argument] [-p|--pre-command] <command> [<arguments> ...]]'
- OPTIONS_SPEC=
- . git-sh-setup
- require_work_tree
-@@ -392,6 +392,30 @@ cmd_status()
- 	done
- }
- 
-+do_pre_command()
-+{
-+	say "Starting pre-comamnd execution!"
-+	while :
-+	do
-+		(
-+			read -p "Please provide a git command: " pre_command
-+			test -z "$pre_command" || git "$pre_command"
-+		)
-+		read -p "Press y to continue with another git command... " keypress
-+		if test "$keypress" != "y" &&
-+			test "$keypress" != "Y"
-+		then
-+			break
-+		fi
-+	done
-+}
-+
-+# Take arguments from user to pass as custom arguments
-+get_custom_args()
-+{
-+	read -p "Please provide arguments for this module: " custom_args
-+}
-+
- # Initializes the submodule if already not initialized
- # and auto initialize is enabled
- initialize_sub_module()
-@@ -460,8 +484,10 @@ traverse_module()
- 		# pwd is mentioned in order to enable the ser to distinguish
- 		# between same name modules, e.g. a/lib and b/lib.
- 		say "Working in mod $submod_path" @ `pwd` "with $@ ($#)"
-+		test -n "$pre_cmd" && do_pre_command
-+		test -n "$use_custom_args" && get_custom_args
- 		cmd_status=
--		git "$@" || cmd_status=1
-+		git "$@" "$custom_args" || cmd_status=1
- 		# if exit on error is specifed than script will exit if any
- 		# command fails. As there is no transaction there will be
- 		# no rollback either
-@@ -598,4 +624,3 @@ then
- fi
- 
- "cmd_$command" "$@"
+@@ -86,9 +86,9 @@ module_name()
+ #
+ # Clone a submodule
+ #
+-# Prior to calling, modules_update checks that a possibly existing
++# Prior to calling, cmd_update checks that a possibly existing
+ # path is not a git repository.
+-# Likewise, module_add checks that path does not exist at all,
++# Likewise, cmd_add checks that path does not exist at all,
+ # since it is the location of a new submodule.
+ #
+ module_clone()
+@@ -121,7 +121,7 @@ module_clone()
+ #
+ # optional branch is stored in global branch variable
+ #
+-module_add()
++cmd_add()
+ {
+        repo=$1
+        path=$2
+@@ -174,7 +174,7 @@ module_add()
+ #
+ # $@ = requested paths (default to all)
+ #
+-modules_init()
++cmd_init()
+ {
+        git ls-files --stage -- "$@" | grep -e '^160000 ' |
+        while read mode sha1 stage path
+@@ -207,7 +207,7 @@ modules_init()
+ #
+ # $@ = requested paths (default to all)
+ #
+-modules_update()
++cmd_update()
+ {
+        git ls-files --stage -- "$@" | grep -e '^160000 ' |
+        while read mode sha1 stage path
+@@ -266,7 +266,7 @@ set_name_rev () {
+ #
+ # $@ = requested paths (default to all)
+ #
+-modules_list()
++cmd_status()
+ {
+        git ls-files --stage -- "$@" | grep -e '^160000 ' |
+        while read mode sha1 stage path
+@@ -347,16 +347,16 @@ esac
+
+ case "$add,$init,$update,$status,$cached" in
+ 1,,,,)
+-       module_add "$@"
++       cmd_add "$@"
+        ;;
+ ,1,,,)
+-       modules_init "$@"
++       cmd_init "$@"
+        ;;
+ ,,1,,)
+-       modules_update "$@"
++       cmd_update "$@"
+        ;;
+ ,,,*,*)
+-       modules_list "$@"
++       cmd_status "$@"
+        ;;
+ *)
+        usage
+--
+1.5.3.7
