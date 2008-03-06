@@ -1,62 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 2/4] git-submodule: New subcommand 'summary' (2) -
- show commit summary
-Date: Wed, 05 Mar 2008 20:10:24 -0800
-Message-ID: <7v3ar4lcgf.fsf@gitster.siamese.dyndns.org>
-References: <1204481710-29791-1-git-send-email-pkufranky@gmail.com>
- <1204481710-29791-2-git-send-email-pkufranky@gmail.com>
- <7vk5kgiv0v.fsf@gitster.siamese.dyndns.org>
- <46dff0320803051816x5b957da0m6396d31cad8b4116@mail.gmail.com>
+From: "Jay Soffian" <jaysoffian@gmail.com>
+Subject: Re: The 8th airing of the msysGit herald
+Date: Wed, 5 Mar 2008 23:29:09 -0500
+Message-ID: <76718490803052029n52e739bby6009eea14c063891@mail.gmail.com>
+References: <alpine.LSU.1.00.0803022329560.22527@racer.site> <m34pbok54h.fsf@localhost.localdomain> <alpine.LSU.1.00.0803030052450.22527@racer.site> <200803030210.02223.jnareb@gmail.com> <47CBE85B.6060702@imap.cc> <7vablfiv42.fsf@gitster.siamese.dyndns.org> <47CC432B.8060502@imap.cc> <7v1w6rh1ru.fsf@gitster.siamese.dyndns.org> <46a038f90803031458t2b404212t10f6e9ae710dc408@mail.gmail.com> <47CF2F61.5060208@imap.cc>
+Reply-To: jaysoffian@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Ping Yin" <pkufranky@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 06 05:11:27 2008
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Martin Langhoff" <martin.langhoff@gmail.com>,  "Junio C Hamano" <gitster@pobox.com>,  "Jakub Narebski" <jnareb@gmail.com>,  "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,  msysgit@googlegroups.com, git@vger.kernel.org
+To: "Tilman Schmidt" <tilman@imap.cc>
+X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Thu Mar 06 05:29:53 2008
+Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from ug-out-1516.google.com ([66.249.92.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JX7S2-0006u6-Nl
-	for gcvg-git-2@gmane.org; Thu, 06 Mar 2008 05:11:27 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753401AbYCFEKn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Mar 2008 23:10:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753166AbYCFEKn
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 23:10:43 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:33549 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752188AbYCFEKm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Mar 2008 23:10:42 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id CF0BD1C82;
-	Wed,  5 Mar 2008 23:10:37 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 35AC11C81; Wed,  5 Mar 2008 23:10:34 -0500 (EST)
-In-Reply-To: <46dff0320803051816x5b957da0m6396d31cad8b4116@mail.gmail.com>
- (Ping Yin's message of "Thu, 6 Mar 2008 10:16:23 +0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-Sender: git-owner@vger.kernel.org
+	id 1JX7jq-0002Hs-3g
+	for gcvm-msysgit@m.gmane.org; Thu, 06 Mar 2008 05:29:50 +0100
+Received: by ug-out-1516.google.com with SMTP id 1so3227704uga.9
+        for <gcvm-msysgit@m.gmane.org>; Wed, 05 Mar 2008 20:29:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:received:x-sender:x-apparently-to:received:received:received-spf:authentication-results:received:dkim-signature:domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
+        bh=nFSc0PODlpQp9x4ln/eE86U6+jLxQRdxbdJTfqT6wj8=;
+        b=Yi/W2sdf/iB8wz85G4PN3+4T4AItIoqX2GoGibh9+ncLwNU15Uvh/1h25FwgRGVrpcJ5JI9BKCmSirvnREup3cT4BOXBKyCLGNBT6A4njrodXQrUAM2b9WALL5Kitm+cwjuzR+HZ4wTV8Xy4Vp607YCQvzr8ojyQ7/as0He5niU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlegroups.com; s=beta;
+        h=x-sender:x-apparently-to:received-spf:authentication-results:dkim-signature:domainkey-signature:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
+        b=FWDqkI3fQCIMARYlCfYL33/Sh8DaJVC1jgBt0OZytSX+ZKz9vB3cRQ2VLWGOeAfdcqvStCobYHA6uDREZkNfMhmv5enKNCnbzvLkcgY8+7PrcubGAFumNAWgdWaUDY2YoEhRwISwIqwg2Ok78/i+4bUCAOQUCAQ7Cw/evmHR21Y=
+Received: by 10.115.48.12 with SMTP id a12mr170118wak.10.1204777752452;
+        Wed, 05 Mar 2008 20:29:12 -0800 (PST)
+Received: by 10.106.177.2 with SMTP id z2gr1922pre.0;
+	Wed, 05 Mar 2008 20:29:12 -0800 (PST)
+X-Sender: jaysoffian@gmail.com
+X-Apparently-To: msysgit@googlegroups.com
+Received: by 10.114.75.1 with SMTP id x1mr1712162waa.6.1204777751884; Wed, 05 Mar 2008 20:29:11 -0800 (PST)
+Received: from rn-out-0910.google.com (rn-out-0910.google.com [64.233.170.190]) by mx.google.com with ESMTP id k36si5317655waf.1.2008.03.05.20.29.10; Wed, 05 Mar 2008 20:29:11 -0800 (PST)
+Received-SPF: pass (google.com: domain of jaysoffian@gmail.com designates 64.233.170.190 as permitted sender) client-ip=64.233.170.190;
+Authentication-Results: mx.google.com; spf=pass (google.com: domain of jaysoffian@gmail.com designates 64.233.170.190 as permitted sender) smtp.mail=jaysoffian@gmail.com; dkim=pass (test mode) header.i=@gmail.com
+Received: by rn-out-0910.google.com with SMTP id s28so817998rnb.20 for <msysgit@googlegroups.com>; Wed, 05 Mar 2008 20:29:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=gamma; h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references; bh=1tJ17Yb4Mm3mdDzIV+O/VbUlpbdXWHwW/UA2xwyy2ls=; b=wZO/X6ZHX+yOFgmGzCRsL7G+K+yc6biSF7mv71bGPmn/xIRMgC1nG2SxFxCsOjdVAtMAXtCfHX7Z1MuebTZnH9422bVF1w6QyeAcAlnxz1z9DT3KiWOju+8VKvEUFbytrKpiZZrOwLLPqbG0ZXlvUUoFUJO89DdfSjzrqgbvBfQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=gmail.com; s=gamma; h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references; b=dCP1H82v3kUiPHGb4l0Zoiq31Gb68pD/Iw7yd8e8F9GtgxA+xEwT+DGS7ESx5uVLrEsiAnqPyT1NKysFxP8cqXwLe4v6syecYhSaQ9SAySGh5HZ1f42Eg8ItVzpZSK1H9PBfNvE3xK9nuwH2qN9HAeC9UzrVvOeA9qfBF9tHZdk=
+Received: by 10.114.195.19 with SMTP id s19mr2159077waf.57.1204777749318; Wed, 05 Mar 2008 20:29:09 -0800 (PST)
+Received: by 10.114.13.5 with HTTP; Wed, 5 Mar 2008 20:29:09 -0800 (PST)
+In-Reply-To: <47CF2F61.5060208@imap.cc>
+Content-Disposition: inline
+Sender: msysgit@googlegroups.com
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76316>
-
-"Ping Yin" <pkufranky@gmail.com> writes:
-
-> ... I think showing 2 (the head and tail one) should make more sense
-> since the head one would be "Initial add ..." in many cases which
-> doesn't make much sense for the user.
-
-Why would you want to see the bottom one?  I still don't understand.
-
-And I do not mean this as a rhetorical question.  I am here to learn and
-I would like to make sure that I do not make a suggestion based on wrong
-understanding of what the user wants to see.
-
-I probably am lacking imagination to think of a good use scenario that
-showing the bottom one would be useful to the user, and you as the author
-of this patch must thought about what the user want much more than me.
+X-Google-Loop: groups
+Mailing-List: list msysgit@googlegroups.com;
+	contact msysgit-owner@googlegroups.com
+List-Id: <msysgit.googlegroups.com>
+List-Post: <mailto:msysgit@googlegroups.com>
+List-Help: <mailto:msysgit-help@googlegroups.com>
+List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
+	<mailto:msysgit-unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76317>
 
 
+On Wed, Mar 5, 2008 at 6:40 PM, Tilman Schmidt <tilman@imap.cc> wrote:
+>
+>  But I'd like to suggest something else still: seeing that my git
+>  mailing list folder has already grown to 363 mails again, of which
+>  probably only a small fraction will concern me as a user - would
+>  it be possible to have separate mailing lists for usage topics and
+>  for discussions of ongoing development? I imagine that might help
+>  those who just want to use git (like me) to find their way around.
+
+The mercurial lists are split-up this way. I hate it.
+
+As for wanting a git-users list, just try filtering out everything from this
+list with PATCH in the subject and you'll have a close-enough proxy, IMO.
+
+j.
