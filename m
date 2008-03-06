@@ -1,56 +1,55 @@
-From: "=?ISO-8859-1?Q?Marc-Andr=E9_Lureau?=" <marcandre.lureau@gmail.com>
-Subject: [RFC] git add -a
-Date: Thu, 6 Mar 2008 12:23:04 +0200
-Message-ID: <e29894ca0803060223p6de78b1br1aab956c2c99fc1f@mail.gmail.com>
+From: Paul Mackerras <paulus@samba.org>
+Subject: Re: [PATCH] gitk: Add horizontal scrollbar to the diff view
+Date: Thu, 6 Mar 2008 21:30:42 +1100
+Message-ID: <18383.51154.695501.543720@cargo.ozlabs.ibm.com>
+References: <20080305225123.GA8485@localdomain>
+	<7vy78wgyu1.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 06 11:23:50 2008
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: kaitanie@cc.helsinki.fi, newsletter@dirk.my1.cc,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 06 11:32:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JXDGL-0001I3-Lt
-	for gcvg-git-2@gmane.org; Thu, 06 Mar 2008 11:23:46 +0100
+	id 1JXDOA-0003j2-Lf
+	for gcvg-git-2@gmane.org; Thu, 06 Mar 2008 11:31:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755472AbYCFKXH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 Mar 2008 05:23:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755461AbYCFKXG
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Mar 2008 05:23:06 -0500
-Received: from wf-out-1314.google.com ([209.85.200.175]:32781 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750815AbYCFKXE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 6 Mar 2008 05:23:04 -0500
-Received: by wf-out-1314.google.com with SMTP id 28so2454229wff.4
-        for <git@vger.kernel.org>; Thu, 06 Mar 2008 02:23:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=90EJnUzVYSTJ3cohcK74BgQIHkgO6Tr88BlQCxmMqMg=;
-        b=xehbo2FZSBKxo8XCDvBl9qH8cT4Ww0uPeY1R5gK0sM/+axy5s4OM7UJKC1AEK3cOGBYdJ31V9IoMlvXIdKvfgNDR6EijJSt+OkEvHuzKjhpScPE1+AqUtWdZP+G2XobajDDLu9loLtpiwhjkbekJUhK6ca9Z3th4EsF8fiyWL8o=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=wSxehAFbAgkEv5CM0oJwSv1NHzUUtmDzKTVYYZZ78Zo/7ZB3z9HrAxXiHT14zU5Zy77U8faGCyhWZT/hiyCdK6r7b6zfiEi1Ava7S1zg0S9qaIddVj/DHuRdAmbFMrcs7uLXWRy52REXeoqFx5YiQwL0m+X0c+Zwm3Y6T6PaYAQ=
-Received: by 10.142.216.9 with SMTP id o9mr662602wfg.58.1204798984081;
-        Thu, 06 Mar 2008 02:23:04 -0800 (PST)
-Received: by 10.143.8.21 with HTTP; Thu, 6 Mar 2008 02:23:04 -0800 (PST)
-Content-Disposition: inline
+	id S1751668AbYCFKbM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Mar 2008 05:31:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751772AbYCFKbM
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Mar 2008 05:31:12 -0500
+Received: from ozlabs.org ([203.10.76.45]:35812 "EHLO ozlabs.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751034AbYCFKbL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Mar 2008 05:31:11 -0500
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id 3D324DDEFA; Thu,  6 Mar 2008 21:30:59 +1100 (EST)
+In-Reply-To: <7vy78wgyu1.fsf@gitster.siamese.dyndns.org>
+X-Mailer: VM 7.19 under Emacs 21.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76360>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76361>
 
-Hello,
+Junio C Hamano writes:
 
-What about "git add -a" ? I am in a situation where I'd like it :)
+> An obvious solution is to show the scrollbar on-demand (i.e. when the
+> lines are overlong), but I do not talk Tcl/Tk and do not know if you can
+> do that easily.
 
-Of course, I could do a commit -a and amend later, but that does not
-have the same meaning for me. Tell me what you think.
+I don't know of any extremely easy way to do it; it's certainly
+possible, but I think I would have to calculate the length of each
+line as it is put in, so as to get the maximum, and then have a
+handler for when the pane is resized, and pack and unpack the
+scrollbar as necessary.
 
-Thanks
+I think it's reasonable to have the scroll bar there always.  I think
+that pane could look better using the grid geometry manager (instead
+of pack), but that can be a separate patch.
 
---=20
-Marc-Andr=E9 Lureau
+Paul.
