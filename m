@@ -1,95 +1,185 @@
-From: Oliver Kullmann <O.Kullmann@swansea.ac.uk>
-Subject: Re: "bash: git-upload-pack: command not found" ??
-Date: Thu, 6 Mar 2008 13:54:56 +0000
-Message-ID: <20080306135456.GG925@cs-wsok.swansea.ac.uk>
-References: <20080306110600.GA925@cs-wsok.swansea.ac.uk> <20080306124710.GA10266@informatik.uni-freiburg.de>
+From: =?utf-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+Subject: [PATCH] bash: __git_find_subcommand function
+Date: Thu,  6 Mar 2008 15:58:32 +0100
+Message-ID: <1204815512-18128-1-git-send-email-szeder@ira.uka.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<ukleinek@informatik.uni-freiburg.de>
-X-From: git-owner@vger.kernel.org Thu Mar 06 14:55:55 2008
+Cc: spearce@spearce.org,
+	=?utf-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 06 15:59:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JXGZL-00083L-R7
-	for gcvg-git-2@gmane.org; Thu, 06 Mar 2008 14:55:36 +0100
+	id 1JXHYw-0007fK-5t
+	for gcvg-git-2@gmane.org; Thu, 06 Mar 2008 15:59:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759228AbYCFNzA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 Mar 2008 08:55:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758818AbYCFNzA
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Mar 2008 08:55:00 -0500
-Received: from mhs.swan.ac.uk ([137.44.1.33]:44567 "EHLO mhs.swan.ac.uk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758936AbYCFNy6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Mar 2008 08:54:58 -0500
-Received: from [137.44.2.59] (helo=cs-svr1.swan.ac.uk)
-	by mhs.swan.ac.uk with esmtp (Exim 4.69)
-	(envelope-from <O.Kullmann@swansea.ac.uk>)
-	id 1JXGYi-0000FK-H5; Thu, 06 Mar 2008 13:54:56 +0000
-Received: from cs-wsok.swansea.ac.uk (cs-wsok [137.44.2.227])
-	by cs-svr1.swan.ac.uk (Postfix) with ESMTP id 5D12ADAF2B;
-	Thu,  6 Mar 2008 13:54:56 +0000 (GMT)
-Received: by cs-wsok.swansea.ac.uk (Postfix, from userid 3579)
-	id 4A834741BA; Thu,  6 Mar 2008 13:54:56 +0000 (GMT)
-Content-Disposition: inline
-In-Reply-To: <20080306124710.GA10266@informatik.uni-freiburg.de>
-User-Agent: Mutt/1.5.9i
+	id S1758709AbYCFO6f convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 Mar 2008 09:58:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758676AbYCFO6f
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Mar 2008 09:58:35 -0500
+Received: from francis.fzi.de ([141.21.7.5]:58743 "EHLO exchange.fzi.de"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1757927AbYCFO6e (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Mar 2008 09:58:34 -0500
+Received: from fzi.de ([141.21.4.196]) by exchange.fzi.de with Microsoft SMTPSVC(6.0.3790.3959);
+	 Thu, 6 Mar 2008 15:58:32 +0100
+X-Mailer: git-send-email 1.5.4.3
+In-Reply-To: <>
+References: <>
+X-OriginalArrivalTime: 06 Mar 2008 14:58:32.0138 (UTC) FILETIME=[8B73EAA0:01C87F9A]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76392>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76393>
 
-On Thu, Mar 06, 2008 at 01:47:10PM +0100, Uwe Kleine-K=F6nig wrote:
-> Hello,
->=20
-> Oliver Kullmann wrote:
-> > Hello,
-> >=20
-> > when using
-> >=20
-> > Transitional> git pull ssh://user@host.xz/~/path/to/Transitional ma=
-ster
-> >=20
-> > on a remote machine I get
-> >=20
-> > Password:
-> > bash: git-upload-pack: command not found
-> > fatal: The remote end hung up unexpectedly
-> Where is git-upload-pack on the server machine?
+This function takes one argument: a string containing all subcommands
+separated by spaces.  The function searches through the command line
+whether a subcommand is already present.  If a subcommand is found, it
+will be printed to standard output.
 
-In the same directory as git, in /usr/local/bin/
+This enables us to remove code duplications from completion
+functions for commands having subcommands.
 
->  Where do you set your
-> PATH to include $(basedir git-upload-pack).
+Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
+---
+This function does not return the index of the subcommand found on the
+command line, which was in the $c variable previously.  However, $c was
+only used in if statements, like:
+	if [ $c -eq $COMP_CWORD -a -z "$command" ]; then
+		__gitcomp "cmd1 cmd2 cmd3"
+	fi
+To my understanding the only(?) purpose of those if statements was to
+prevent subcommands appearing again on the list of possible completions=
+,
+when there was one already on the command line.  But [ -z $command ] is
+sufficient to detect those cases, so we can actually omit
+[ $c -eq $COMP_CWORD ].  Is it right, or am I missing something?
 
-Hm, it's set "nowhere". Likely that's the problem: For a=20
-standard-user the path includes the git-directory, but not
-for the git-user.
+Note, that some of the patches I sent out yesterday are in conflict wit=
+h
+these changes, namely:
+* [PATCH 1/2] bash: add missing 'git stash save' subcommand
+  is in conflict,
+* [PATCH 2/2] bash: complete 'git stash' subcommands only once
+  should be dropped,
+* [PATCH 1/2] bash: add 'git svn' subcommands
+  should be updated, and
+* [PATCH 2/2] bash: add 'git svn' options
+  should be updated (depends on the previous one).
+I think that if this patch will get merged, then it should be merged
+before those mentioned above.  It just doesn't make much sense e.g. to
+merge 'complete 'git stash' subcommands only once' and then basically
+revert it.  In this case, of course, I will send the updated patches.
 
->  Does=20
->=20
-> 	git pull --upload-pack /path/to/git-upload-pack ...
->=20
-> help?
->
+ contrib/completion/git-completion.bash |   70 ++++++++++++++----------=
+--------
+ 1 files changed, 31 insertions(+), 39 deletions(-)
 
-Yes! That solves it (I won't fiddle around with the path settings,
-since I have also local installs etc., and that additional specificatio=
-n
-does the job).
-
-Thanks!
-
-Oliver
+diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
+n/git-completion.bash
+index 49e6df0..f9e29be 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -420,6 +420,22 @@ __git_aliased_command ()
+ 	done
+ }
 =20
---=20
-Dr. Oliver Kullmann
-Computer Science Department
-Swansea University
-=46araday Building, Singleton Park
-Swansea SA2 8PP, UK
-http://cs.swan.ac.uk/~csoliver/
++__git_find_subcommand ()
++{
++	local word subcommand c=3D1
++
++	while [ $c -lt $COMP_CWORD ]; do
++		word=3D"${COMP_WORDS[c]}"
++		for subcommand in $1; do
++			if [ "$subcommand" =3D "$word" ]; then
++				echo "$subcommand"
++				return
++			fi
++		done
++		c=3D$((++c))
++	done
++}
++
+ __git_whitespacelist=3D"nowarn warn error error-all strip"
+=20
+ _git_am ()
+@@ -477,24 +493,13 @@ _git_add ()
+=20
+ _git_bisect ()
+ {
+-	local i c=3D1 command
+-	while [ $c -lt $COMP_CWORD ]; do
+-		i=3D"${COMP_WORDS[c]}"
+-		case "$i" in
+-		start|bad|good|reset|visualize|replay|log)
+-			command=3D"$i"
+-			break
+-			;;
+-		esac
+-		c=3D$((++c))
+-	done
+-
+-	if [ $c -eq $COMP_CWORD -a -z "$command" ]; then
+-		__gitcomp "start bad good reset visualize replay log"
++	local subcommands=3D"start bad good reset visualize replay log"
++	local subcommand=3D"$(__git_find_subcommand "$subcommands")"
++	if [ -z "$subcommand" ]; then
+ 		return
+ 	fi
+=20
+-	case "$command" in
++	case "$subcommand" in
+ 	bad|good|reset)
+ 		__gitcomp "$(__git_refs)"
+ 		;;
+@@ -1025,21 +1030,13 @@ _git_config ()
+=20
+ _git_remote ()
+ {
+-	local i c=3D1 command
+-	while [ $c -lt $COMP_CWORD ]; do
+-		i=3D"${COMP_WORDS[c]}"
+-		case "$i" in
+-		add|rm|show|prune|update) command=3D"$i"; break ;;
+-		esac
+-		c=3D$((++c))
+-	done
+-
+-	if [ $c -eq $COMP_CWORD -a -z "$command" ]; then
+-		__gitcomp "add rm show prune update"
++	local subcommands=3D"add rm show prune update"
++	local subcommand=3D"$(__git_find_subcommand "$subcommands")"
++	if [ -z "$subcommand" ]; then
+ 		return
+ 	fi
+=20
+-	case "$command" in
++	case "$subcommand" in
+ 	rm|show|prune)
+ 		__gitcomp "$(__git_remotes)"
+ 		;;
+@@ -1113,28 +1110,23 @@ _git_show ()
+=20
+ _git_stash ()
+ {
+-	__gitcomp 'list show apply clear'
++	local subcommands=3D'list show apply clear'
++	if [ -z "$(__git_find_subcommand "$subcommands")" ]; then
++		__gitcomp "$subcommands"
++	fi
+ }
+=20
+ _git_submodule ()
+ {
+-	local i c=3D1 command
+-	while [ $c -lt $COMP_CWORD ]; do
+-		i=3D"${COMP_WORDS[c]}"
+-		case "$i" in
+-		add|status|init|update) command=3D"$i"; break ;;
+-		esac
+-		c=3D$((++c))
+-	done
