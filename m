@@ -1,93 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-clean: correct printing relative path
-Date: Thu, 06 Mar 2008 14:54:37 -0800
-Message-ID: <7vwsof8nv6.fsf@gitster.siamese.dyndns.org>
-References: <20080305094058.GF4793@artemis.madism.org>
- <20080305141720.GA11542@dpotapov.dyndns.org>
- <20080305155359.GA15843@artemis.madism.org>
- <20080305155943.GB15843@artemis.madism.org>
- <20080305234124.GD11519@dpotapov.dyndns.org>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [PATCH 1/5] Add 'df_name_compare()' helper function
+Date: Thu, 06 Mar 2008 22:50:22 +0100
+Message-ID: <85bq5r34kh.fsf@lola.goethe.zz>
+References: <cover.1204777699.git.torvalds@linux-foundation.org>
+	<b1cd18fa986c63bea6d0a20ac580b993e5fffaa2.1204777699.git.torvalds@linux-foundation.org>
+	<8563w03sxv.fsf@lola.goethe.zz>
+	<alpine.LFD.1.00.0803060743180.12253@woody.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Pierre Habouzit <madcoder@debian.org>, Git ML <git@vger.kernel.org>
-To: Dmitry Potapov <dpotapov@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 06 23:55:32 2008
+Cc: git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri Mar 07 00:06:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JXOzs-0006VZ-80
-	for gcvg-git-2@gmane.org; Thu, 06 Mar 2008 23:55:32 +0100
+	id 1JXPA8-0001cl-6Z
+	for gcvg-git-2@gmane.org; Fri, 07 Mar 2008 00:06:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753025AbYCFWyy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Mar 2008 17:54:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752048AbYCFWyy
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Mar 2008 17:54:54 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:37765 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752022AbYCFWyx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Mar 2008 17:54:53 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id C30D92591;
-	Thu,  6 Mar 2008 17:54:51 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id E77E8258F; Thu,  6 Mar 2008 17:54:45 -0500 (EST)
-In-Reply-To: <20080305234124.GD11519@dpotapov.dyndns.org> (Dmitry Potapov's
- message of "Thu, 6 Mar 2008 02:41:24 +0300")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1756954AbYCFXFa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Mar 2008 18:05:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756285AbYCFXF3
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Mar 2008 18:05:29 -0500
+Received: from fencepost.gnu.org ([140.186.70.10]:36452 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756219AbYCFXF3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Mar 2008 18:05:29 -0500
+Received: from localhost ([127.0.0.1] helo=lola.goethe.zz)
+	by fencepost.gnu.org with esmtp (Exim 4.67)
+	(envelope-from <dak@gnu.org>)
+	id 1JXP9R-0007MC-1U; Thu, 06 Mar 2008 18:05:25 -0500
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id 58CF71C40B5F; Thu,  6 Mar 2008 22:50:21 +0100 (CET)
+In-Reply-To: <alpine.LFD.1.00.0803060743180.12253@woody.linux-foundation.org>
+	(Linus Torvalds's message of "Thu, 6 Mar 2008 07:58:48 -0800 (PST)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.60 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76429>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76430>
 
-Dmitry Potapov <dpotapov@gmail.com> writes:
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> In addition, when I ran 'git clean -n ..' at the top a repository, the
-> current master version of Git though printed the error that '..' is
-> outside the repository, still exited with 0. When I test this with
-> 1.5.4, git clean exists with 128 after printing the error. Bisect blames
-> d089ebaad5315325d67db30176df1bbd7754fda9 for changing the exit code to 0.
+> On Thu, 6 Mar 2008, David Kastrup wrote:
+>
+>> Consider the case of a merge of
+>> 
+>> A:
+>> blubb
+>> blubb.hi
+>> 
+>> B:
+>> blubb.hi
+>> blubb/
+>> 
+>> Any traversal that is done reasonably efficiently will never compare
+>> blubb to blubb/ and I don't see how to get around this.
+>
+> Correct. There _is_ no sort order that will find the conflict in a
+> single pass,
 
-You need a change similar to the one that updates builtin-ls-files.c in
-d089eba (setup: sanitize absolute and funny paths in get_pathspec()).  The
-commit should have adjusted builtin-clean.c but was overlooked.
+[...]
 
-When you give a set of paths that includes bogus ones, get_pathspec()
-issues an error message and gives back a pathspec that does not contain
-the entries corresponding to the bogus ones, and that is an indication for
-a caller that wants to refuse to operate upon bogus input.  Other callers
-that want to issue an error diagnosis and handle the remaining valid input
-do not have to die, but "git-clean" is destructive so it would be sensible
-to error out the whole operation if you see the user input was bogus.
+>> Basically, I think you need a special traversal routine.
+>
+> Yes, we need to handle it in two passes. Which is actually hopefully
+> not all that hard, but it is totally impossible (at least for me) with
+> the old code that was so hard to follow.
 
-commit d089ebaad5315325d67db30176df1bbd7754fda9
-Author: Junio C Hamano <gitster@pobox.com>
+Well, as I said: a single pass is ok when additionally supported by a
+FIFO keeping x around until x/ (or its place in the order of things)
+passes by.  This will be O(1) with regards to comparisons, and typically
+cheap with regard to memory requirements (things get unfriendly if there
+are billions of files or even directories obeying the pattern x.*, but
+only with regard to memory, not speed).
 
-    setup: sanitize absolute and funny paths in get_pathspec()
-
-diff --git a/builtin-ls-files.c b/builtin-ls-files.c
-index 0f0ab2d..3801cf4 100644
---- a/builtin-ls-files.c
-+++ b/builtin-ls-files.c
-@@ -572,8 +572,17 @@ int cmd_ls_files(int argc, const char **argv, const char *prefix)
- 	pathspec = get_pathspec(prefix, argv + i);
- 
- 	/* Verify that the pathspec matches the prefix */
--	if (pathspec)
-+	if (pathspec) {
-+		if (argc != i) {
-+			int cnt;
-+			for (cnt = 0; pathspec[cnt]; cnt++)
-+				;
-+			if (cnt != (argc - i))
-+				exit(1); /* error message already given */
-+		}
- 		prefix = verify_pathspec(prefix);
-+	} else if (argc != i)
-+		exit(1); /* error message already given */
- 
- 	/* Treat unmatching pathspec elements as errors */
- 	if (pathspec && error_unmatch) {
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
