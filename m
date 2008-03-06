@@ -1,71 +1,65 @@
-From: Teemu Likonen <tlikonen@iki.fi>
-Subject: [PATCH] bash: Add more long options to be completed with "git --<TAB>"
-Date: Thu,  6 Mar 2008 18:52:37 +0200
-Message-ID: <1204822357-10210-1-git-send-email-tlikonen@iki.fi>
-Cc: Teemu Likonen <tlikonen@iki.fi>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] t9001: set TERM=dumb to prevent ANSI output
+Date: Thu, 6 Mar 2008 17:53:28 +0100 (CET)
+Message-ID: <alpine.LSU.1.00.0803061752340.3941@racer.site>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Mar 06 17:53:24 2008
+X-From: git-owner@vger.kernel.org Thu Mar 06 17:54:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JXJLJ-0004QW-U6
-	for gcvg-git-2@gmane.org; Thu, 06 Mar 2008 17:53:18 +0100
+	id 1JXJM7-0004mn-87
+	for gcvg-git-2@gmane.org; Thu, 06 Mar 2008 17:54:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763223AbYCFQwk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Mar 2008 11:52:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764238AbYCFQwk
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Mar 2008 11:52:40 -0500
-Received: from pne-smtpout3-sn2.hy.skanova.net ([81.228.8.111]:51484 "EHLO
-	pne-smtpout3-sn2.hy.skanova.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1763098AbYCFQwj (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 6 Mar 2008 11:52:39 -0500
-Received: from mithlond.arda.local (80.220.180.181) by pne-smtpout3-sn2.hy.skanova.net (7.3.129)
-        id 478BDB96002C8C35; Thu, 6 Mar 2008 17:52:38 +0100
-Received: from dtw by mithlond.arda.local with local (Exim 4.63)
-	(envelope-from <tlikonen@iki.fi>)
-	id 1JXJKf-0002f0-1W; Thu, 06 Mar 2008 18:52:37 +0200
-X-Mailer: git-send-email 1.5.4.3.451.g43956
+	id S1761803AbYCFQx3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Mar 2008 11:53:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751722AbYCFQx3
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Mar 2008 11:53:29 -0500
+Received: from mail.gmx.net ([213.165.64.20]:38470 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751986AbYCFQx2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Mar 2008 11:53:28 -0500
+Received: (qmail invoked by alias); 06 Mar 2008 16:53:26 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp030) with SMTP; 06 Mar 2008 17:53:26 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX184wJwXnUM4pKarrAfukLx7avVIVXSNpAsylnuYsp
+	33m3GzLO5HCDfK
+X-X-Sender: gene099@racer.site
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76399>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76400>
 
-Add the following long options to be completed with command "git":
 
-	--paginate
-	--work-tree=
-	--help
+At least on one of my machines, Term::ReadLine tries to be clever and
+sends \x1b\x5b1034h at the end of the script when TERM is set to 'xterm'.
 
-Signed-off-by: Teemu Likonen <tlikonen@iki.fi>
+To prevent that, force TERM=dumb just for the test.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
+ t/t9001-send-email.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-I'm not at all expert in bash completion code but this seems to work and can be
-useful.
-
- contrib/completion/git-completion.bash |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
-
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 49e6df0..1198547 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1194,11 +1194,14 @@ _git ()
- 		case "${COMP_WORDS[COMP_CWORD]}" in
- 		--*=*) COMPREPLY=() ;;
- 		--*)   __gitcomp "
-+			--paginate
- 			--no-pager
- 			--git-dir=
- 			--bare
- 			--version
- 			--exec-path
-+			--work-tree=
-+			--help
- 			"
- 			;;
- 		*)     __gitcomp "$(__git_commands) $(__git_aliases)" ;;
+diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+index cbbfa9c..d6fcac3 100755
+--- a/t/t9001-send-email.sh
++++ b/t/t9001-send-email.sh
+@@ -68,7 +68,7 @@ Result: OK
+ EOF
+ 
+ test_expect_success 'Show all headers' '
+-	git send-email \
++	TERM=dumb git send-email \
+ 		--dry-run \
+ 		--from="Example <from@example.com>" \
+ 		--to=to@example.com \
 -- 
-1.5.4.3.451.g43956
+1.5.4.3.571.g9aec3.dirty
 
