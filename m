@@ -1,94 +1,111 @@
-From: Thomas Harning <harningt@gmail.com>
-Subject: [RFC] Idea for Git Bugtracking Tool
-Date: Thu, 6 Mar 2008 14:22:46 -0500
-Message-ID: <20080306142246.5d9460b7@gmail.com>
+From: =?utf-8?q?Adam=20Pi=C4=85tyszek?= <ediap@users.sourceforge.net>
+Subject: [PATCH] git-gui: Add option for changing the width of the commit message text box
+Date: Thu,  6 Mar 2008 20:38:40 +0100
+Message-ID: <1204832320-22800-1-git-send-email-ediap@users.sourceforge.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Mar 06 20:23:55 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	=?utf-8?q?Adam=20Pi=C4=85tyszek?= <ediap@users.sourceforge.net>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Mar 06 20:46:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JXLh0-0001au-HQ
-	for gcvg-git-2@gmane.org; Thu, 06 Mar 2008 20:23:50 +0100
+	id 1JXM2e-0002kn-9u
+	for gcvg-git-2@gmane.org; Thu, 06 Mar 2008 20:46:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755559AbYCFTXL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Mar 2008 14:23:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755873AbYCFTXL
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Mar 2008 14:23:11 -0500
-Received: from py-out-1112.google.com ([64.233.166.181]:16997 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754903AbYCFTXJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Mar 2008 14:23:09 -0500
-Received: by py-out-1112.google.com with SMTP id u52so24973pyb.10
-        for <git@vger.kernel.org>; Thu, 06 Mar 2008 11:23:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:subject:message-id:x-mailer:mime-version:content-type:content-transfer-encoding;
-        bh=LZAA4D1MaCPP3ozha8umKTTRZGqXHI1HmUoSOQvYVsM=;
-        b=XdPJ6QUXEaRXPHse03i5fmUS85zzqHSVG+5dZtMp8dipPA19tMuQ10tCOs83lUA4zyH1paruJ2dMk1mskkGWbcUVA/D6K8ohysGu7+cPBodF4vmGEfom1o1iNvcif2AxX9NGtE2Yo3IfhAtzhQqhLCVF8ox5US6ai79rgZAu+ME=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:subject:message-id:x-mailer:mime-version:content-type:content-transfer-encoding;
-        b=wsm1289Z7/ayCdSgdA29/SgulgmKM+EIqGiTAS9ruAq4RpbQRs2jbhiiRmSzTo1T6eveXJaNvHfgfocyD/+6xl5HJhA7IlnBlpuw/rhEcNkOE2nzWC1a6uqTREyODbw6EInxBGjjVRuvETp7R3aTQigtKaZWNHZDgsYJp3512VM=
-Received: by 10.65.20.18 with SMTP id x18mr224621qbi.48.1204831387848;
-        Thu, 06 Mar 2008 11:23:07 -0800 (PST)
-Received: from localhost ( [149.164.193.61])
-        by mx.google.com with ESMTPS id z21sm2760482qbc.21.2008.03.06.11.23.06
-        (version=SSLv3 cipher=OTHER);
-        Thu, 06 Mar 2008 11:23:07 -0800 (PST)
-X-Mailer: Claws Mail 3.3.1 (GTK+ 2.10.11; x86_64-pc-linux-gnu)
+	id S1762328AbYCFTpb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 Mar 2008 14:45:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762069AbYCFTpb
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Mar 2008 14:45:31 -0500
+Received: from pictor.et.put.poznan.pl ([150.254.29.68]:53058 "EHLO
+	pictor.et.put.poznan.pl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761511AbYCFTp1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Mar 2008 14:45:27 -0500
+Received: from cygnus.et.put.poznan.pl (cygnus.et.put.poznan.pl [150.254.29.66])
+	by pictor.et.put.poznan.pl (8.13.8/8.13.8) with ESMTP id m26Jfihu022908;
+	Thu, 6 Mar 2008 20:41:44 +0100 (CET)
+	(envelope-from ediap@users.sourceforge.net)
+Received: from lespaul (addr34.neoplus.adsl.tpnet.pl [79.184.69.34])
+	by cygnus.et.put.poznan.pl (8.11.7p1+Sun/8.11.6) with SMTP id m26JcfK01533;
+	Thu, 6 Mar 2008 20:38:41 +0100 (MET)
+Received: by lespaul (sSMTP sendmail emulation); Thu,  6 Mar 2008 20:38:40 +0100
+X-Mailer: git-send-email 1.5.4.3.450.gb92176.dirty
+X-PMX-Version: 5.4.1.325704, Antispam-Engine: 2.6.0.325393, Antispam-Data: 2008.3.1.94157
+X-PMX-Spam: Gauge=IIIIIII, Probability=7%, Report='__CT 0, __CTE 0, __CT_TEXT_PLAIN 0, __HAS_MSGID 0, __HAS_X_MAILER 0, __MIME_TEXT_ONLY 0, __MIME_VERSION 0, __SANE_MSGID 0'
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76411>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76412>
 
-Here's a 'basic' concept on how bugtracking could work w/ GIT
+The width of the commit message text area is currently hard-coded
+to 75 characters. This value might be not optimal for some projects.
+=46or instance users who would like to generate GNU-style ChangeLog
+file from git commit message might prefer commit messages of width
+no longer than 70 characters.
 
-Entities:
-  * BUG: Bug Repository
-  * GIT: GIT Repository
----- May be co-located...
+This patch adds a global and per repository option "Commit Message
+Text Width", which could be used to change the width of the commit
+message text area.
 
-Idea:
-  * BUG
-    Receives bug reports referencing GIT revision ID(s) to which it affects
-    Generates unique IDs for bugs (non-incremental,
-      although a scheme could be setup ex: <UNIQUE-USER>-<INC ID>
-    Contains a 'cached' calculated BUG-status from GIT log messages
-      + permanent BUG-status changes
-    Older status change takes precedence (need to make sure times are
-      in sync, for sure!)
-  * GIT
-    Commit messages/annotated-tags may contain text denoting
-      a bug's "new" status (FIXED/REOPEN/TO-BE-TESTED/...)
-    On 'push' to a repository w/ BUG-hooks, trigger 'BUG's
-      cache updates
-    For 'merge' events, BUG-status changes may get a little more
-      ugly and complicated...If a BUG-status change occurs in more
-      than 1 branch, the user may need to be alerted that some
-      manual checking may be necessary.
-    BUG-status changes should probably have the name of the
-      branch to which the change occurred, so that when a merge
-      occurs, its a little easier to visualize from that, what was
-      going on
+Signed-off-by: Adam Pi=C4=85tyszek <ediap@users.sourceforge.net>
+---
+Ideally, I would like to have an automated line wrapping in the commit
+message text area. Unfortunately the "-wrap words" switch only wraps th=
+e
+lines for displaying purposes and this has no effect on the committed m=
+essage
+itself.
 
-You may query BUG for the list of bugs at any point in history and
-it will be able to walk up the list of parents and know what bugs
-existed where and what changes occurred.
+Anyway, the patch I prepared allows at least for configuring the width =
+of
+the commit message text box, so it is easier to manually wrap lines to
+expected width.
 
-Workflow enhancement:
-  Specific comitters may only be allowed to change the status of
-    a bug from OPEN->FIXED, wheras others who state 'FIXED' may
-    get the status changed to VERIFY-FIXED or some sort of state
-    based on a mapping/workflow tree
+This patch is against git.git's master branch. I hope this is fine.
 
-Ideally the 'BUG' database can be distributed (potentially within
-  a GIT repository...) due to the use of unique IDs.  An issue
-  here would be dealing w/ the order/time-sensitive bug status changes...
+/Adam
 
-Any ideas/flaws with this concept?  Anybody up for taking on this project
-... or for taking this up as a GSOC project mentor?
+ git-gui/git-gui.sh     |    3 ++-
+ git-gui/lib/option.tcl |    1 +
+ 2 files changed, 3 insertions(+), 1 deletions(-)
+
+diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
+index 238a239..f617a4a 100755
+--- a/git-gui/git-gui.sh
++++ b/git-gui/git-gui.sh
+@@ -611,6 +611,7 @@ set default_config(gui.matchtrackingbranch) false
+ set default_config(gui.pruneduringfetch) false
+ set default_config(gui.trustmtime) false
+ set default_config(gui.diffcontext) 5
++set default_config(gui.commitmsgwidth) 75
+ set default_config(gui.newbranchtemplate) {}
+ set default_config(gui.spellingdictionary) {}
+ set default_config(gui.fontui) [font configure font_ui]
+@@ -2421,7 +2422,7 @@ text $ui_comm -background white -borderwidth 1 \
+ 	-maxundo 20 \
+ 	-autoseparators true \
+ 	-relief sunken \
+-	-width 75 -height 9 -wrap none \
++	-width $repo_config(gui.commitmsgwidth) -height 9 -wrap none \
+ 	-font font_diff \
+ 	-yscrollcommand {.vpane.lower.commarea.buffer.sby set}
+ scrollbar .vpane.lower.commarea.buffer.sby \
+diff --git a/git-gui/lib/option.tcl b/git-gui/lib/option.tcl
+index ea80df0..9270512 100644
+--- a/git-gui/lib/option.tcl
++++ b/git-gui/lib/option.tcl
+@@ -124,6 +124,7 @@ proc do_options {} {
+ 		{b gui.pruneduringfetch {mc "Prune Tracking Branches During Fetch"}}
+ 		{b gui.matchtrackingbranch {mc "Match Tracking Branches"}}
+ 		{i-0..99 gui.diffcontext {mc "Number of Diff Context Lines"}}
++		{i-0..99 gui.commitmsgwidth {mc "Commit Message Text Width"}}
+ 		{t gui.newbranchtemplate {mc "New Branch Name Template"}}
+ 		} {
+ 		set type [lindex $option 0]
+--=20
+1.5.4.3.450.gb92176.dirty
+
