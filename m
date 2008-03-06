@@ -1,88 +1,131 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: The 8th airing of the msysGit herald
-Date: Wed, 05 Mar 2008 16:41:59 -0800
-Message-ID: <7vskz4heeg.fsf@gitster.siamese.dyndns.org>
-References: <alpine.LSU.1.00.0803022329560.22527@racer.site> <m34pbok54h.fsf@localhost.localdomain> <alpine.LSU.1.00.0803030052450.22527@racer.site> <200803030210.02223.jnareb@gmail.com> <47CBE85B.6060702@imap.cc> <7vablfiv42.fsf@gitster.siamese.dyndns.org> <47CC432B.8060502@imap.cc> <7v1w6rh1ru.fsf@gitster.siamese.dyndns.org> <46a038f90803031458t2b404212t10f6e9ae710dc408@mail.gmail.com> <47CF2F61.5060208@imap.cc> <alpine.LSU.1.00.0803060121360.15786@racer.site>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH 1/2] Add strbuf_initf()
+Date: Thu, 6 Mar 2008 02:14:43 +0100 (CET)
+Message-ID: <alpine.LSU.1.00.0803060212170.15786@racer.site>
+References: <1204138503-6126-1-git-send-email-johannes.sixt@telecom.at> <1204138503-6126-4-git-send-email-johannes.sixt@telecom.at> <alpine.LSU.1.00.0802281159550.22527@racer.site> <200803052221.12495.johannes.sixt@telecom.at> <alpine.LSU.1.00.0803052317350.15786@racer.site>
+ <7vir00lski.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0803052327570.15786@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Tilman Schmidt <tilman@imap.cc>,  Martin Langhoff <martin.langhoff@gmail.com>,  Jakub Narebski <jnareb@gmail.com>,  msysgit@googlegroups.com,  git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Thu Mar 06 01:42:59 2008
-Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from ug-out-1516.google.com ([66.249.92.163])
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johannes Sixt <johannes.sixt@telecom.at>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 06 02:15:24 2008
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JX4CI-0000b0-Ry
-	for gcvm-msysgit@m.gmane.org; Thu, 06 Mar 2008 01:42:58 +0100
-Received: by ug-out-1516.google.com with SMTP id 1so3101067uga.9
-        for <gcvm-msysgit@m.gmane.org>; Wed, 05 Mar 2008 16:42:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:received:x-sender:x-apparently-to:received:received:received-spf:authentication-results:received:received:from:to:cc:subject:references:date:in-reply-to:message-id:user-agent:mime-version:content-type:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
-        bh=nQCeOPNTTu0jo1ZOUdRThR3V9e/R4rJXwbXhaR9i/6w=;
-        b=LysTVKP1+T5YZP6i3kp0uXd6cKHQaQPrhFLGKl9CCAzwYD9Vhc9ev16QNMNITzkuvohUHJMkjZk7JxICBuFUsPCPPBg/zFXZ2zXST4DgODhXNOKaClDcQBPkDcUu0eehrVtuehfVouRu1NJVoFRxA4nbmfe+OEp47YpDJgfXDaY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-sender:x-apparently-to:received-spf:authentication-results:from:to:cc:subject:references:date:in-reply-to:message-id:user-agent:mime-version:content-type:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
-        b=hEu01o47aEC4QsmcijdTyMkd1y5x9to0zYJIOjTtf3jvEpawpgvqK4buvo+tPUrOkrB40Bz5tXULBxjMq8GY8+C/lZrwfu6v8nQmqehGLMfuNXvpj5MuGgzQc8ReG+tG2SAygYGhUW0mAMLtgMQQfibCzRprxbjM/y0E5NQc/wE=
-Received: by 10.141.98.13 with SMTP id a13mr125143rvm.22.1204764141325;
-        Wed, 05 Mar 2008 16:42:21 -0800 (PST)
-Received: by 10.107.119.35 with SMTP id w35gr1918prm.0;
-	Wed, 05 Mar 2008 16:42:21 -0800 (PST)
-X-Sender: gitster@pobox.com
-X-Apparently-To: msysgit@googlegroups.com
-Received: by 10.114.179.1 with SMTP id b1mr1631272waf.4.1204764139924; Wed, 05 Mar 2008 16:42:19 -0800 (PST)
-Received: from sasl.smtp.pobox.com (a-sasl-fastnet.sasl.smtp.pobox.com [207.106.133.19]) by mx.google.com with ESMTP id v36si4944321wah.3.2008.03.05.16.42.18; Wed, 05 Mar 2008 16:42:19 -0800 (PST)
-Received-SPF: pass (google.com: domain of gitster@pobox.com designates 207.106.133.19 as permitted sender) client-ip=207.106.133.19;
-Authentication-Results: mx.google.com; spf=pass (google.com: domain of gitster@pobox.com designates 207.106.133.19 as permitted sender) smtp.mail=gitster@pobox.com
-Received: from localhost.localdomain (localhost [127.0.0.1]) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 62D6133E0; Wed,  5 Mar 2008 19:42:16 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77]) (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 6CBEA33D9; Wed,  5 Mar 2008 19:42:07 -0500 (EST)
-In-Reply-To: <alpine.LSU.1.00.0803060121360.15786@racer.site> (Johannes Schindelin's message of "Thu, 6 Mar 2008 01:26:58 +0100 (CET)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-Sender: msysgit@googlegroups.com
+	id 1JX4he-0001EN-Gh
+	for gcvg-git-2@gmane.org; Thu, 06 Mar 2008 02:15:22 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1754737AbYCFBOo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Mar 2008 20:14:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751779AbYCFBOo
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Mar 2008 20:14:44 -0500
+Received: from mail.gmx.net ([213.165.64.20]:49858 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751214AbYCFBOn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Mar 2008 20:14:43 -0500
+Received: (qmail invoked by alias); 06 Mar 2008 01:14:41 -0000
+Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
+  by mail.gmx.net (mp026) with SMTP; 06 Mar 2008 02:14:41 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+YR0VTFAiYE4C8c7JEBR6vt3J5w3ZjBhSH5Mxrw8
+	mDsFxX/FCMsKA2
+X-X-Sender: gene099@racer.site
+In-Reply-To: <alpine.LSU.1.00.0803052327570.15786@racer.site>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Google-Loop: groups
-Mailing-List: list msysgit@googlegroups.com;
-	contact msysgit-owner@googlegroups.com
-List-Id: <msysgit.googlegroups.com>
-List-Post: <mailto:msysgit@googlegroups.com>
-List-Help: <mailto:msysgit-help@googlegroups.com>
-List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
-	<mailto:msysgit-unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76302>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76303>
 
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+The most common use of addf() was to init a strbuf and addf() right away.
+Since it is so common, it makes sense to have a function strbuf_initf()
+to wrap both calls into one.
 
-> On Thu, 6 Mar 2008, Tilman Schmidt wrote:
->
->> would it be possible to have separate mailing lists for usage topics and 
->> for discussions of ongoing development? I imagine that might help those 
->> who just want to use git (like me) to find their way around.
->
-> AFAIAC you can have your "users-only" mailing list.  Personally, I will 
-> never look at it, though, since all I am interested in is the development 
-> of Git.  If that holds true for the majority of Git _developers_, it might 
-> even be a bad idea to have a separate users' list, since then
->
-> - no ideas from strictly-users would flow to the developers, and
->
-> - new developments would not reach you, and
->
-> - you would not get help by the people knowing the internals _deeply_.
+Unfortunately, C (and cpp) has no way to make this easy without code
+duplication, as we need to va_init() in strbuf_addf() possibly a few
+times.  So the code for addf() is copied.  Fortunately, the code is
+pretty short, so not too much had to be copied as-is.
 
-Personally, I suspect I would end up subscribing to both, but
-two mailing lists would make it much more cumbersome than
-necessary to correlate the original user "itch" request that
-triggered an enhancement, the discussion that clarified the
-design constraints and requirements, and the patch and the
-review comments that lead to the final implementation,
-especially if you do not encourage cross posting to both lists.
-And of course cross posting will make user-only list more
-technical which would defeat the original point of having two
-lists.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
 
-"users-only" list could probably created by readers' MUA, by
-picking emails that do not have "diff --git" in its body; that
-would probably be a good enough approximation for people who are
-not interested in the technical discussions.
+	On Wed, 5 Mar 2008, Johannes Schindelin wrote:
+
+	> On Wed, 5 Mar 2008, Junio C Hamano wrote:
+	> 
+	> > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+	> > 
+	> > > [... I'd submit my ] a Reviewed-by:, but I think that this 
+	> > > would only be a burden on our maintainer.
+	> > 
+	> > I think Reviewed-by: would indeed be a very good addition to 
+	> > our patch flow convention, borrowing from the kernel folks.
+	> 
+	> You mean you have more people to blame, then? ;-)
+
+	Well, it was meant as a joke...
+
+	Anyway, here is a start of a patch series that should help the 
+	King Penguin...
+
+	strbuf_initf() is something I long planned to do; Kristian just 
+	pushed me over the edge.
+
+ strbuf.c |   23 +++++++++++++++++++++++
+ strbuf.h |    2 ++
+ 2 files changed, 25 insertions(+), 0 deletions(-)
+
+diff --git a/strbuf.c b/strbuf.c
+index 5afa8f3..067d55a 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -147,6 +147,29 @@ void strbuf_addf(struct strbuf *sb, const char *fmt, ...)
+ 	strbuf_setlen(sb, sb->len + len);
+ }
+ 
++void strbuf_initf(struct strbuf *sb, const char *fmt, ...)
++{
++	int len;
++	va_list ap;
++
++	strbuf_init(sb, strlen(fmt) + 64);
++	va_start(ap, fmt);
++	len = vsnprintf(sb->buf + sb->len, sb->alloc - sb->len, fmt, ap);
++	va_end(ap);
++	if (len < 0)
++		die("your vsnprintf is broken");
++	if (len > strbuf_avail(sb)) {
++		strbuf_grow(sb, len);
++		va_start(ap, fmt);
++		len = vsnprintf(sb->buf + sb->len, sb->alloc - sb->len, fmt, ap);
++		va_end(ap);
++		if (len > strbuf_avail(sb)) {
++			die("this should not happen, your snprintf is broken");
++		}
++	}
++	strbuf_setlen(sb, sb->len + len);
++}
++
+ void strbuf_expand(struct strbuf *sb, const char *format, expand_fn_t fn,
+ 		   void *context)
+ {
+diff --git a/strbuf.h b/strbuf.h
+index faec229..eaf2409 100644
+--- a/strbuf.h
++++ b/strbuf.h
+@@ -108,6 +108,8 @@ extern void strbuf_expand(struct strbuf *sb, const char *format, expand_fn_t fn,
+ 
+ __attribute__((format(printf,2,3)))
+ extern void strbuf_addf(struct strbuf *sb, const char *fmt, ...);
++__attribute__((format(printf,2,3)))
++extern void strbuf_initf(struct strbuf *sb, const char *fmt, ...);
+ 
+ extern size_t strbuf_fread(struct strbuf *, size_t, FILE *);
+ /* XXX: if read fails, any partial read is undone */
+-- 
+1.5.4.3.571.g9aec3
+
