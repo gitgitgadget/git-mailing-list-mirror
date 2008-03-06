@@ -1,82 +1,127 @@
-From: "Ping Yin" <pkufranky@gmail.com>
-Subject: Re: [PATCH v3 2/4] git-submodule: New subcommand 'summary' (2) - show commit summary
-Date: Thu, 6 Mar 2008 13:56:21 +0800
-Message-ID: <46dff0320803052156u374d70c1i45f7789233beb32c@mail.gmail.com>
-References: <1204481710-29791-1-git-send-email-pkufranky@gmail.com>
-	 <1204481710-29791-2-git-send-email-pkufranky@gmail.com>
-	 <7vk5kgiv0v.fsf@gitster.siamese.dyndns.org>
-	 <46dff0320803051816x5b957da0m6396d31cad8b4116@mail.gmail.com>
-	 <7v3ar4lcgf.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: What's in git.git (stable)
+Date: Wed, 05 Mar 2008 22:02:13 -0800
+Message-ID: <7v8x0wie56.fsf@gitster.siamese.dyndns.org>
+References: <7v8x27iui1.fsf@gitster.siamese.dyndns.org>
+ <7vd4r24ox6.fsf@gitster.siamese.dyndns.org>
+ <7vir0o44mt.fsf_-_@gitster.siamese.dyndns.org>
+ <7vejb7ymep.fsf@gitster.siamese.dyndns.org>
+ <7vfxvhjukt.fsf@gitster.siamese.dyndns.org>
+ <7vablloqqe.fsf@gitster.siamese.dyndns.org>
+ <7vod9wlfx5.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 06 06:57:01 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 06 07:03:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JX96C-000410-V7
-	for gcvg-git-2@gmane.org; Thu, 06 Mar 2008 06:57:01 +0100
+	id 1JX9CE-0005E7-OA
+	for gcvg-git-2@gmane.org; Thu, 06 Mar 2008 07:03:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751679AbYCFF4X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Mar 2008 00:56:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753152AbYCFF4X
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Mar 2008 00:56:23 -0500
-Received: from an-out-0708.google.com ([209.85.132.246]:2063 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751619AbYCFF4W (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Mar 2008 00:56:22 -0500
-Received: by an-out-0708.google.com with SMTP id d31so375333and.103
-        for <git@vger.kernel.org>; Wed, 05 Mar 2008 21:56:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=3H1R/Hj8zJ0E+m/LkA1Wv67yt87N0eWpWxicH8WBYcM=;
-        b=aldrc9HrrIS4oQjyQrHKkCAr3OFoHVg0Ef2w+Mh07/nsw7uLRSTjfvuBwCXalGBah74qNho1TJF1ohsAkq4JmD0Web/hOAqkb/+jRABDq2aiXM9wzMf2Y1QeAhAZPtITe2StKeawQgyb7UbItxR5ht9zj39KzDc8ZxSqmM0xCP8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=dEyoM6rlRC/89ILbZPUqabAL+TebXMuUgrbPJvWtQjYDux3UCxyf0dogOvKKSBdtCCsnvumu+jLjsygdxa9J/r2naCmh0+08c8z9B1NunzowlJLDBls2nxj7p6TW7L+YxOl+30ajypAicChF1BYJfxkykEshQU69iWlIBIgXOGA=
-Received: by 10.100.229.13 with SMTP id b13mr9168067anh.7.1204782981864;
-        Wed, 05 Mar 2008 21:56:21 -0800 (PST)
-Received: by 10.100.5.18 with HTTP; Wed, 5 Mar 2008 21:56:21 -0800 (PST)
-In-Reply-To: <7v3ar4lcgf.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1757279AbYCFGCV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 Mar 2008 01:02:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752536AbYCFGCV
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Mar 2008 01:02:21 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:65085 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751908AbYCFGCT convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 6 Mar 2008 01:02:19 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id ECE713361;
+	Thu,  6 Mar 2008 01:02:17 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 00D973360; Thu,  6 Mar 2008 01:02:15 -0500 (EST)
+X-maint-at: 52dce39762fbec75b2d561e5dedb25b8e51f83eb
+X-master-at: b9217642ef2db34e2cbeaef8d4439b07a03027cd
+In-Reply-To: <7vod9wlfx5.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Sun, 02 Mar 2008 18:06:30 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76340>
 
-On Thu, Mar 6, 2008 at 12:10 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> "Ping Yin" <pkufranky@gmail.com> writes:
->
->  > ... I think showing 2 (the head and tail one) should make more sense
->
-> > since the head one would be "Initial add ..." in many cases which
->  > doesn't make much sense for the user.
->
->  Why would you want to see the bottom one?  I still don't understand.
->
->  And I do not mean this as a rhetorical question.  I am here to learn and
->  I would like to make sure that I do not make a suggestion based on wrong
->  understanding of what the user wants to see.
->
->  I probably am lacking imagination to think of a good use scenario that
->  showing the bottom one would be useful to the user, and you as the author
->  of this patch must thought about what the user want much more than me.
->
-Showing the bottom one can give the user an impression where
-the submodules goes at first glance if the user is familiar with the
-developing progress of the submodule.
+I should probably do a 1.5.4.4 shortly from 'maint' to flush accumulate=
+d
+fixes.  There is nothing major, but send-email regression fix deserves =
+to
+be delibered sooner to the end users.
 
-However, i don't have very strong point on this and just think it
-seems good when
-i type 'git log'  (i have make the summary go into the commit message)
+On the 'master', we briefly had a faulty receive-pack to cause a small
+pushes to fail, but that glitch has been reverted.  Also fixed was a
+git-describe not quite working when your tags are packed (e.g. after
+git-gc).
 
+----------------------------------------------------------------
+* The 'maint' branch has these fixes since the last announcement.
 
+Bj=C3=B6rn Steinbrink (1):
+  receive-pack: Initialize PATH to include exec-dir.
 
--- 
-Ping Yin
+Gerrit Pape (1):
+  git-merge.sh: better handling of combined --squash,--no-ff,--no-commi=
+t
+    options
+
+Jeff King (1):
+  revert: actually check for a dirty index
+
+Junio C Hamano (2):
+  tests: introduce test_must_fail
+  Update draft release notes for 1.5.4.4
+
+Matthieu Moy (1):
+  Fix incorrect wording in git-merge.txt.
+
+Mike Hommey (1):
+  Fix random crashes in http_cleanup()
+
+Ping Yin (1):
+  git-submodule: Fix typo 'url' which should be '$url'
+
+Shawn O. Pearce (1):
+  Fix 'git remote show' regression on empty repository in 1.5.4
+
+----------------------------------------------------------------
+* The 'master' branch has these since the last announcement
+  in addition to the above.
+
+Alex Riesen (1):
+  Fix test for cleanup failure in t7300 on Windows
+
+Junio C Hamano (8):
+  Update draft release notes for 1.5.5
+  git-describe: use tags found in packed-refs correctly
+  describe: fix --long output
+  describe: re-fix display_name()
+  t6120 (describe): check --long properly
+  Revert "receive-pack: use strict mode for unpacking objects"
+  Revert "unpack-objects: prevent writing of inconsistent objects"
+  fsck.c: fix bogus "empty tree" check
+
+Martin Koegler (1):
+  fetch-pack: check parse_commit/object results
+
+Mike Hommey (1):
+  t3407-rebase-abort.sh: Enhance existing tests, and add test for rebas=
+e
+    --merge
+
+SZEDER G=C3=A1bor (2):
+  bash: add git-branch options
+  bash: git-branch -d and -m lists only local branches
+
+Shawn O. Pearce (3):
+  Don't allow git-describe failures to go unnoticed in t6120
+  Test for packed tags in git-describe output
+  Add git-describe test for "verify annotated tag names on output"
+
+Simon Hausmann (1):
+  git-p4: Fix import of changesets with file deletions
+
