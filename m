@@ -1,100 +1,78 @@
-From: Ian Hinder <hinder@Gravity.PSU.Edu>
-Subject: Problems building git with custom curl installation
-Date: Thu, 06 Mar 2008 19:39:03 -0500
-Message-ID: <47D08EA7.8000607@gravity.psu.edu>
+From: David Brownell <david-b@pacbell.net>
+Subject: Re: warning: no common commits - slow pull
+Date: Thu, 6 Mar 2008 17:35:46 -0800
+Message-ID: <200803061735.47674.david-b@pacbell.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 07 02:25:41 2008
+X-From: git-owner@vger.kernel.org Fri Mar 07 02:36:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JXRL7-00031q-Fp
-	for gcvg-git-2@gmane.org; Fri, 07 Mar 2008 02:25:37 +0100
+	id 1JXRVe-0005bn-CV
+	for gcvg-git-2@gmane.org; Fri, 07 Mar 2008 02:36:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756398AbYCGBYu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Mar 2008 20:24:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756292AbYCGBYu
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Mar 2008 20:24:50 -0500
-Received: from f05s05.cac.psu.edu ([128.118.141.48]:37821 "EHLO
-	f05n05.cac.psu.edu" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754665AbYCGBYt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Mar 2008 20:24:49 -0500
-X-Greylist: delayed 2743 seconds by postgrey-1.27 at vger.kernel.org; Thu, 06 Mar 2008 20:24:49 EST
-Received: from [146.186.121.44] (grav10.gravity.psu.edu [146.186.121.44])
-	(authenticated bits=0)
-	by f05n05.cac.psu.edu (8.13.2/8.13.2) with ESMTP id m270d3cv065230
-	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NOT)
-	for <git@vger.kernel.org>; Thu, 6 Mar 2008 19:39:03 -0500
-User-Agent: Thunderbird 2.0.0.12 (X11/20080227)
-X-Enigmail-Version: 0.95.0
+	id S1757936AbYCGBfv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Mar 2008 20:35:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757288AbYCGBfv
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Mar 2008 20:35:51 -0500
+Received: from smtp120.sbc.mail.sp1.yahoo.com ([69.147.64.93]:40358 "HELO
+	smtp120.sbc.mail.sp1.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1757271AbYCGBfu (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 6 Mar 2008 20:35:50 -0500
+Received: (qmail 9824 invoked from network); 7 Mar 2008 01:35:49 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=pacbell.net;
+  h=Received:X-YMail-OSG:X-Yahoo-Newman-Property:From:To:Subject:Date:User-Agent:MIME-Version:Content-Type:Content-Transfer-Encoding:Content-Disposition:Message-Id;
+  b=kWkwVvzOY2DF/PPSOaW4pRuokGh6VFVY6Jji8BnTbA9/jN/nsWJ9bKKPyDjjoAFy86HhaL+b/tzbNazU/E0PkRjFvV11LNdOZhlu55uYPLVu49xjNXx5kNsIWfC4gVZs7LP4AmTeEYb/erAzDcVwSVXt1JWabtofIkY5PZP78o4=  ;
+Received: from unknown (HELO ascent) (david-b@pacbell.net@69.226.243.232 with plain)
+  by smtp120.sbc.mail.sp1.yahoo.com with SMTP; 7 Mar 2008 01:35:49 -0000
+X-YMail-OSG: 2MVkgVcVM1lhn926KyOX8YS3q1aVywW7PBJRufRjyZmO2mecAShv4gnQN7YE3Iv9dqNsoyMXRw--
+X-Yahoo-Newman-Property: ymail-3
+User-Agent: KMail/1.9.6
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76443>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76444>
 
-Hi,
+Any progress on fixing this?
 
-I have had some problems building git on a machine which does not have
-the distro development packages for Curl installed.  I have installed it
-from source, but there are some issues.
+I'll report that with git version 1.5.4.3.447.gc95b3.dirty
+(just a couple days old) I've observed this when updating
+a clone by pulling from
 
->From a clean download of git-1.5.4, I do:
+ (a) a parent on the same disk partition
+ (b) a parent on a non-mirrored network server
 
-./configure --prefix=/home/ian/software/git-1.5.4
---with-curl=/home/ian/software/curl-7.18.0
+So that would seem to trash the assumptions that this is
+related to version mismatch between mirrors, and that the
+fix can (or should!) wait till 1.6.0 ...
 
-I get
 
-  checking for curl_global_init in -lcurl... no
+I was glad to see the "^C" workaround, that seems to work.
 
-even though curl has been installed in /home/ian/software/curl-7.18.0
+When I "git pull" it first fetches a bunch of files, then
+concludes (wrongly) "no common commits", then starts a
+second fetch of a *HUGE* number of files ... 400 MB is too
+much to pay when updating from rc3-last-week to rc4.  But
+if I interrupt that second one with ^C, it seems that the
+first one fetched enough to make the next "git pull" go
+pretty quickly.
 
-I do "make", and get
 
-  /bin/sh: curl-config: command not found
+This does seem appear to show up more often lately because
+of RC4 having been tagged ... but I don't know for sure.
 
-but the make proceeds anyway. When linking, I get warnings
+I've got a couple kernel workspaces still on last Friday's
+version, which -- if this holds true to form! -- will show
+this bug when I "git pull".  So if there are experiments
+that would help nail down what's going on here, please
+spell them out to me ("this command, then this ... send
+this output...").
 
-  cc: unrecognized option
-'-R/usr/center/atlas1/numrel/software/curl-7.18.0/lib'
-and "ldd git" gives
-
-        libcurl.so.4 => not found
-
-If I do
-
-  NO_R_TO_GCC_LINKER=yes make
-
-then things seem to work perfectly, and the rpath to curl is set in
-the git executable.  In the course of debugging this problem, I also
-found that LDFLAGS were not being passed from the configure command
-line to the makefile.
-
-I suggest that the following are bugs:
-
-1. Configure: Specifying the curl location leads to output that
-indicates that curl was not correctly located, even though a
-subsequent make finds it successfully and includes it in the build.
-
-2. Make: an error appears indicating that curl-config is not found,
-which suggests that curl will not be used successfully, even though it
-works fine.  It must not be looking for curl-config in the right
-place, and it doesn't even seem to be necessary.
-
-3. The use of the makefile option NO_R_TO_GCC_LINKER is not
-automatically determined - perhaps an autoconf test could be written
-for it?  All the machines I have tried give an error if you try to
-give gcc a -R option, and gcc is being used as the linker.
-
-4. LDFLAGS is not passed from the configure command line to the
-makefile.  Modifying config.mak.in to contain the line LDFLAGS =
-@LDFLAGS@ might be the appropriate fix.
-
--- 
-Ian Hinder
-hinder@gravity.psu.edu
-http://www.gravity.psu.edu/~hinder
+- Dave
