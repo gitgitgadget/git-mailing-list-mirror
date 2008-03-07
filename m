@@ -1,98 +1,55 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: Re: [PATCH] More test cases for sanitized path names
-Date: Fri, 7 Mar 2008 16:24:34 +0100
-Message-ID: <200803071624.35369.robin.rosenberg@dewire.com>
-References: <47975FE6.4050709@viscovery.net> <200802010534.55925.robin.rosenberg.lists@dewire.com> <7vwsof2b8l.fsf@gitster.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [RFH] What do you think about adding graphical merge to
+ git-gui?
+Date: Fri, 7 Mar 2008 16:27:21 +0100 (CET)
+Message-ID: <alpine.LSU.1.00.0803071626280.19395@racer.site>
+References: <200803071240.09999.jnareb@gmail.com> <200803071446.39468.jnareb@gmail.com> <alpine.LSU.1.00.0803071453160.19395@racer.site> <200803071621.37376.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Shawn Bohrer <shawn.bohrer@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 07 16:25:20 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
+	Paul Mackerras <paulus@samba.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 07 16:28:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JXeRj-0002BW-NA
-	for gcvg-git-2@gmane.org; Fri, 07 Mar 2008 16:25:20 +0100
+	id 1JXeUH-0003NB-9t
+	for gcvg-git-2@gmane.org; Fri, 07 Mar 2008 16:27:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755667AbYCGPYk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Mar 2008 10:24:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755930AbYCGPYj
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Mar 2008 10:24:39 -0500
-Received: from [83.140.172.130] ([83.140.172.130]:17971 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1754393AbYCGPYj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Mar 2008 10:24:39 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 890608026D6;
-	Fri,  7 Mar 2008 16:24:36 +0100 (CET)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id SDEyo3g49sdi; Fri,  7 Mar 2008 16:24:36 +0100 (CET)
-Received: from [10.9.0.7] (unknown [10.9.0.7])
-	by dewire.com (Postfix) with ESMTP id E9BC88026D5;
-	Fri,  7 Mar 2008 16:24:35 +0100 (CET)
-User-Agent: KMail/1.9.9
-In-Reply-To: <7vwsof2b8l.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1751924AbYCGP1T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Mar 2008 10:27:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751670AbYCGP1T
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Mar 2008 10:27:19 -0500
+Received: from mail.gmx.net ([213.165.64.20]:38989 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751660AbYCGP1T (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Mar 2008 10:27:19 -0500
+Received: (qmail invoked by alias); 07 Mar 2008 15:27:17 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp048) with SMTP; 07 Mar 2008 16:27:17 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+xSYJMeKCx/brnz+xdGMPdMjsZs/P0Xsa8lQQ+xr
+	dmMNILOWOS2OQV
+X-X-Sender: gene099@racer.site
+In-Reply-To: <200803071621.37376.jnareb@gmail.com>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76496>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76497>
 
-Den Friday 07 March 2008 09.23.54 skrev Junio C Hamano:
-> Robin Rosenberg <robin.rosenberg.lists@dewire.com> writes:
-> > Verify a few more commands and pathname variants.
-> >
-> > Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
-> > ---
-> >  t/t7010-setup.sh |   39 +++++++++++++++++++++++++++++++++++++++
-> >  1 files changed, 39 insertions(+), 0 deletions(-)
-> >
-> > These are a few testcases from my earlier attempt at this. The
-> > log and commit cases succeeded with Junios version, but not
-> > blame and some of the nastier versions for git add (same
-> > principle for all commands, just that I use add as an example)
->
-> I am very sorry about replying to an ancient topic, but I think I misread
-> your patch.
->
-> > +test_expect_failure 'add a directory outside the work tree' '
-> > +	d1="$(cd .. ; pwd)" &&
-> > +	git add "$d1"
-> > +	echo $?
-> > +'
->
-> What I think I misunderstood was that you _wanted_ this (after removing
-> the "echo", which was a mistake, which we already talked about) to fail.
-> Somehow I ended up committing test_expect_success, which I think was a
-> mistake, and I am asking for a sanity-check.
-Yes, it should fail, so according to your filosophy, the test should be 
-reverted, i.e. ! git add "$d1 and that negated test should pass.
+Hi,
 
-> Likewise for the other two tests.  These "add outside" should fail, right?
->
-> > +test_expect_failure 'add a file outside the work tree, nasty case 1' '(
-> > +	f="$(pwd)x" &&
-> > +	touch "$f" &&
-> > +	git add "$f"
-> > +)'
-> > +
-> > +test_expect_failure 'add a file outside the work tree, nasty case 2' '(
-> > +	f="$(pwd|sed "s/.$//")x" &&
-> > +	touch "$f" &&
-> > +	git add "$f"
-> > +)'
-> > +
-> >  test_done
+On Fri, 7 Mar 2008, Jakub Narebski wrote:
 
-Yes.
+> Could you recommend some good (best if also free) documentation of 
+> Tcl/Tk, so I won't be doing "cargo cult" (copy'n'paste) programming?
 
--- robin
+AFAIR http://www.tcl.tk/ has some good links to tutorials.
+
+Ciao,
+Dscho
+
