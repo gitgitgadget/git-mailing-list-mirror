@@ -1,124 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 1/4] get_pathspec(): die when an out-of-tree path is given
-Date: Fri,  7 Mar 2008 00:38:36 -0800
-Message-ID: <1204879119-7528-2-git-send-email-gitster@pobox.com>
-References: <1204879119-7528-1-git-send-email-gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 07 09:46:21 2008
+From: David Aguilar <davvid@gmail.com>
+Subject: [PATCH] gitk: do not show local changes for bare repositories
+Date: Fri,  7 Mar 2008 01:04:42 -0800
+Message-ID: <8875845cb2c0c3a1ac515b8f71e6be77f3266479.1204879048.git.davvid@gmail.com>
+References: <64b42ab91804e670057c807fd8265fc07106792c.1204806475.git.davvid@gmail.com>
+Cc: git@vger.kernel.org
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Fri Mar 07 09:55:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JXYDV-0003XZ-52
-	for gcvg-git-2@gmane.org; Fri, 07 Mar 2008 09:46:13 +0100
+	id 1JXYMF-0006CQ-NC
+	for gcvg-git-2@gmane.org; Fri, 07 Mar 2008 09:55:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751913AbYCGIpf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Mar 2008 03:45:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751756AbYCGIpe
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Mar 2008 03:45:34 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:64838 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751445AbYCGIpe (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Mar 2008 03:45:34 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 2781B2ACE
-	for <git@vger.kernel.org>; Fri,  7 Mar 2008 03:45:32 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 1FBC02ACD for <git@vger.kernel.org>; Fri,  7 Mar 2008 03:45:30 -0500
- (EST)
-X-Mailer: git-send-email 1.5.4.3.587.g0bdd73
-In-Reply-To: <1204879119-7528-1-git-send-email-gitster@pobox.com>
+	id S1755971AbYCGIyh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Mar 2008 03:54:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754344AbYCGIyh
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Mar 2008 03:54:37 -0500
+Received: from wa-out-1112.google.com ([209.85.146.182]:51899 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759835AbYCGIyf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Mar 2008 03:54:35 -0500
+Received: by wa-out-1112.google.com with SMTP id v27so425823wah.23
+        for <git@vger.kernel.org>; Fri, 07 Mar 2008 00:54:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=WMH2XlO+L+YcJrHySUYTVHvwhx1p+McsxThIaKrgK5w=;
+        b=rspX/lwhGH8556TVQp2Xb73ETBzU/im1mQAUoWQd4LCyczRqbANtrp2btGXN5sfunK+jgBvsXURr9hQeqJCMFh7GcV+/OIJqDuKGieWT9C2BPpFcoT/ObrbTmYU07lRZ/lC1iXRIltqQPGuj/anGirz/6cn7U952iYZ2SLF9iqE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=ofkBwbZy9XtnivcKctkyCUWhHauhGHuzwcST84vRWr5NJt7bTdwA5KT5e8jUArs5UHKqhRPcQHW3r/jj83pwr0HT8rd5hiuu9bRExzTECbOB5Uo2F/f3ks96NapaOY9biir/OCjjzGea1l6c+lM082JZwcivQmJDwtsJ+10RIdM=
+Received: by 10.114.14.1 with SMTP id 1mr1861029wan.9.1204880074788;
+        Fri, 07 Mar 2008 00:54:34 -0800 (PST)
+Received: from localhost ( [208.106.56.2])
+        by mx.google.com with ESMTPS id n22sm7763326pof.1.2008.03.07.00.54.32
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 07 Mar 2008 00:54:33 -0800 (PST)
+X-Mailer: git-send-email 1.5.4
+In-Reply-To: <64b42ab91804e670057c807fd8265fc07106792c.1204806475.git.davvid@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76470>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76471>
 
-An earlier commit d089ebaa (setup: sanitize absolute and funny paths) made
-get_pathspec() aware of absolute paths, but with a botched interface that
-forced the callers to count the resulting pathspecs in order to detect
-an error of giving a path that is outside the work tree.
+Launching gitk on a bare repository would previously show the
+work tree as having removed all files.  We now query for
+bare repositories in updatecommits and test the value in
+dodiffindex before showing local changes.
 
-This fixes it, by dying inside the function.
-
-We had ls-tree test that relied on a misfeature in the original
-implementation of its pathspec handling.  Leading slashes were silently
-removed from them.  However we allow giving absolute pathnames (people
-want to cut and paste from elsewhere) that are inside work tree these
-days, so a pathspec that begin with slash _should_ be treated as a full
-path.  The test is adjusted to match the updated rule for get_pathspec().
-
-Earlier I mistook three tests given by Robin that they should succeed, but
-these are attempts to add path outside work tree, which should fail
-loudly.  These tests also have been fixed.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: David Aguilar <davvid@gmail.com>
 ---
- setup.c                    |    2 ++
- t/t3101-ls-tree-dirname.sh |    2 +-
- t/t7010-setup.sh           |    7 ++++---
- 3 files changed, 7 insertions(+), 4 deletions(-)
+ gitk |    6 ++++--
+ 1 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/setup.c b/setup.c
-index 89c81e5..c7b1080 100644
---- a/setup.c
-+++ b/setup.c
-@@ -202,6 +202,8 @@ const char **get_pathspec(const char *prefix, const char **pathspec)
- 		const char *p = prefix_path(prefix, prefixlen, *src);
- 		if (p)
- 			*(dst++) = p;
-+		else
-+			exit(128); /* error message already given */
- 		src++;
- 	}
- 	*dst = NULL;
-diff --git a/t/t3101-ls-tree-dirname.sh b/t/t3101-ls-tree-dirname.sh
-index 39fe267..70f9ce9 100755
---- a/t/t3101-ls-tree-dirname.sh
-+++ b/t/t3101-ls-tree-dirname.sh
-@@ -120,7 +120,7 @@ EOF
- # having 1.txt and path3
- test_expect_success \
-     'ls-tree filter odd names' \
--    'git ls-tree $tree 1.txt /1.txt //1.txt path3/1.txt /path3/1.txt //path3//1.txt path3 /path3/ path3// >current &&
-+    'git ls-tree $tree 1.txt ./1.txt .//1.txt path3/1.txt path3/./1.txt path3 path3// >current &&
-      cat >expected <<\EOF &&
- 100644 blob X	1.txt
- 100644 blob X	path3/1.txt
-diff --git a/t/t7010-setup.sh b/t/t7010-setup.sh
-index e809e0e..bc8ab6a 100755
---- a/t/t7010-setup.sh
-+++ b/t/t7010-setup.sh
-@@ -142,15 +142,16 @@ test_expect_success 'setup deeper work tree' '
- test_expect_success 'add a directory outside the work tree' '(
- 	cd tester &&
- 	d1="$(cd .. ; pwd)" &&
--	git add "$d1"
-+	test_must_fail git add "$d1"
- )'
+diff --git a/gitk b/gitk
+index f1f21e9..080459d 100755
+--- a/gitk
++++ b/gitk
+@@ -393,6 +393,7 @@ proc readcommit {id} {
+ proc updatecommits {} {
+     global viewdata curview phase displayorder ordertok idpending
+     global children commitrow selectedline thickerline showneartags
++    global isbare
  
-+
- test_expect_success 'add a file outside the work tree, nasty case 1' '(
- 	cd tester &&
- 	f="$(pwd)x" &&
- 	echo "$f" &&
- 	touch "$f" &&
--	git add "$f"
-+	test_must_fail git add "$f"
- )'
+     if {$phase ne {}} {
+ 	stop_rev_list
+@@ -407,6 +408,7 @@ proc updatecommits {} {
+     foreach vid [array names idpending "$n,*"] {
+ 	unset idpending($vid)
+     }
++    set isbare [expr {[exec git rev-parse --is-bare-repository] == "true"}]
+     set curview -1
+     catch {unset selectedline}
+     catch {unset thickerline}
+@@ -2843,9 +2845,9 @@ proc dohidelocalchanges {} {
  
- test_expect_success 'add a file outside the work tree, nasty case 2' '(
-@@ -158,7 +159,7 @@ test_expect_success 'add a file outside the work tree, nasty case 2' '(
- 	f="$(pwd | sed "s/.$//")x" &&
- 	echo "$f" &&
- 	touch "$f" &&
--	git add "$f"
-+	test_must_fail git add "$f"
- )'
+ # spawn off a process to do git diff-index --cached HEAD
+ proc dodiffindex {} {
+-    global localirow localfrow lserial showlocalchanges
++    global localirow localfrow lserial showlocalchanges isbare
  
- test_done
+-    if {!$showlocalchanges} return
++    if {!$showlocalchanges || $isbare} return
+     incr lserial
+     set localfrow -1
+     set localirow -1
 -- 
-1.5.4.3.587.g0bdd73
+1.5.4.1
 
