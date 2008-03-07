@@ -1,62 +1,103 @@
-From: Vineet Kumar <vineet@doorstop.net>
-Subject: [PATCH] Minor wording changes in the keyboard descriptions in git-add --interactive.
-Date: Fri,  7 Mar 2008 14:16:51 -0800
-Message-ID: <1204928211-7168-1-git-send-email-vineet@doorstop.net>
-Cc: Vineet Kumar <vineet@doorstop.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 07 23:48:50 2008
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC] Idea for Git Bugtracking Tool
+Date: Fri, 07 Mar 2008 15:10:18 -0800 (PST)
+Message-ID: <m3zltaf7vs.fsf@localhost.localdomain>
+References: <20080306142246.5d9460b7@gmail.com>
+	<vpqskz3pqdo.fsf@bauges.imag.fr>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Thomas Harning <harningt@gmail.com>,
+	Pierre Habouzit <madcoder@debian.org>, <git@vger.kernel.org>
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Sat Mar 08 00:11:18 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JXlMk-0003iM-Fm
-	for gcvg-git-2@gmane.org; Fri, 07 Mar 2008 23:48:38 +0100
+	id 1JXlif-0002d4-8J
+	for gcvg-git-2@gmane.org; Sat, 08 Mar 2008 00:11:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753715AbYCGWru (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Mar 2008 17:47:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754959AbYCGWrt
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Mar 2008 17:47:49 -0500
-Received: from doorstop.net ([69.55.226.61]:55724 "EHLO philo.doorstop.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753701AbYCGWrt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Mar 2008 17:47:49 -0500
-X-Greylist: delayed 1856 seconds by postgrey-1.27 at vger.kernel.org; Fri, 07 Mar 2008 17:47:49 EST
-Received: from vineet by philo.doorstop.net with local (Exim 4.63)
-	(envelope-from <vineet@doorstop.net>)
-	id 1JXkrz-000231-F3; Fri, 07 Mar 2008 14:16:51 -0800
-X-Mailer: git-send-email 1.5.3.7
+	id S1750932AbYCGXKW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Mar 2008 18:10:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750714AbYCGXKW
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Mar 2008 18:10:22 -0500
+Received: from fg-out-1718.google.com ([72.14.220.157]:51932 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750703AbYCGXKV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Mar 2008 18:10:21 -0500
+Received: by fg-out-1718.google.com with SMTP id e21so750180fga.17
+        for <git@vger.kernel.org>; Fri, 07 Mar 2008 15:10:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
+        bh=xeB82IbWm2EyW7fONj/Ksc2sT0/JBJnL2IxWbJD7d9k=;
+        b=DKtgex7rID+U+ACC/+RDp+g2ddVjbcLon8wSPYmottakhrhrRWBfIe5fk89vgUJpCpZe6VNLGrsLHX72cLmXGmjVaZMlp5sIQvMXC3Hz7sSj7EkMO4DzEYrZCTMF4QZC3jotSU0khwqgi7ycw9jexf8xKcqpb4DrLoexnM2B5Sw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
+        b=S4JH/n4AWPGVsv8gUlmVckqT/oaOpcFTqnFY+StHZlS7nCy4JTJI2k/8Blo9f+Oi9HlyAr5lIXje2EwVrT8T0zUBQzZaw7IARuoV0oOxGNAFkJBqvld9vngVtop/H6Fqc8O/DNGh+brAw0tHIoXYOQUbKAeOEfntZpK3IhbNyms=
+Received: by 10.86.84.5 with SMTP id h5mr2166103fgb.27.1204931419640;
+        Fri, 07 Mar 2008 15:10:19 -0800 (PST)
+Received: from localhost.localdomain ( [83.8.243.158])
+        by mx.google.com with ESMTPS id l12sm4650313fgb.8.2008.03.07.15.10.17
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 07 Mar 2008 15:10:18 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m27NAIcq006855;
+	Sat, 8 Mar 2008 00:10:18 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m27NAGxp006852;
+	Sat, 8 Mar 2008 00:10:16 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <vpqskz3pqdo.fsf@bauges.imag.fr>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76530>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76531>
 
-There were some inconsistent mixing of "this hunk" and "that hunk" referring
-to the same hunk; I switched them all to "this".  There was also a missing
-"the".
----
- Documentation/git-add.txt |    8 ++++----
- 1 files changed, 4 insertions(+), 4 deletions(-)
+Matthieu Moy <Matthieu.Moy@imag.fr> writes:
 
-diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
-index 4779909..bc74fc0 100644
---- a/Documentation/git-add.txt
-+++ b/Documentation/git-add.txt
-@@ -207,10 +207,10 @@ patch::
-   and the working tree file and asks you if you want to stage
-   the change of each hunk.  You can say:
- 
--       y - add the change from that hunk to index
--       n - do not add the change from that hunk to index
--       a - add the change from that hunk and all the rest to index
--       d - do not the change from that hunk nor any of the rest to index
-+       y - add the change from this hunk to index
-+       n - do not add the change from this hunk to index
-+       a - add the change from this hunk and all the rest to index
-+       d - do not add the change from this hunk nor any of the rest to index
-        j - do not decide on this hunk now, and view the next
-            undecided hunk
-        J - do not decide on this hunk now, and view the next hunk
+> Thomas Harning <harningt@gmail.com> writes:
+> 
+>> Any ideas/flaws with this concept?  Anybody up for taking on this
+>> project... or for taking this up as a GSOC project mentor?
+> 
+> Already discussed here:
+> 
+> http://thread.gmane.org/gmane.comp.version-control.git/48981/
+> 
+> Pierre Habouzit started working on something called grit, which
+> seems to be dead.
+
+Pierre, what happened to git://git.madism.org/grit.git ?
+
+
+There exists few implementations of distributed bug tracker idea. They
+include:
+
+ * Bugs Everywhere (http://bugseverywhere.org), written in Python,
+   developed in Bazaar, has Git backend support. Formerly written by
+   Panoramic Feedback (note that there is stale version of this tool),
+   picked up by one of developers
+
+ * DisTract (http://www.distract.wellquite.org), written in Haskell,
+   uses Monotone as backend. Has good reviews on blogs, e.g. by
+   Masukomi.
+
+ * DITrack (http://www.ditrack.org), written in Python, currently
+   uses Subversion as backend, has plans to be backend-agnostic.
+   Inspired by Subissue.
+
+Other links (mainly blogs):
+ http://erlangish.blogspot.com/2007/05/distributed-bug-tracking.html
+ http://erlangish.blogspot.com/2007/06/distributed-bug-tracking-again.html
+ http://weblog.masukomi.org/2008/1/3/distributed-bug-tracking
+ http://weblog.masukomi.org/2008/1/20/more-thoughts-on-the-future-of-distributed-bug-tracking
+ http://www.geekfire.com/~alex/blog/entries/Ideas-for-a-distributed-bug-tracking-system/Ideas-for-a-distributed-bug-tracking-system.html
+
 -- 
-1.5.3.7
-
+Jakub Narebski
+ShadeHawk on #git
+Poland
