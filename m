@@ -1,129 +1,188 @@
-From: QbProg <tholag@gmail.com>
-Subject: Re: [ANN] bzr-fast-export
-Date: Fri, 7 Mar 2008 13:26:53 +0100
-Message-ID: <d13720680803070426q3bbf9005w4cdaf193859cba47@mail.gmail.com>
-References: <20080307120347.GA27001@chistera.yi.org>
+From: avar@cpan.org (=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason)
+Subject: Re: Switching to Git
+Date: Fri, 07 Mar 2008 12:39:24 +0000
+Message-ID: <86mypaso77.fsf@cpan.org>
+References: <b77c1dce0803060447m12cf2ed9v2dbe17ed59e6073@mail.gmail.com>
+	<47D01A57.60701@havurah-software.org>
+	<51dd1af80803060858t5cb3d54ek3ee420ea313625ec@mail.gmail.com>
+	<47D05229.2070900@vilain.net>
+	<51dd1af80803061300y1a2abcf2n9b9d3184e4ed42b2@mail.gmail.com>
+	<47D06B57.4090607@vilain.net>
 Mime-Version: 1.0
-Content-Type: multipart/alternative; 
-	boundary="----=_Part_27417_23716477.1204892813815"
-To: bazaar@lists.canonical.com, git@vger.kernel.org, 
-	"Ian Clatworthy" <ian.clatworthy@internode.on.net>
-X-From: bazaar-bounces@lists.canonical.com Fri Mar 07 13:27:42 2008
-Return-path: <bazaar-bounces@lists.canonical.com>
-Envelope-to: gcvbg-bazaar-ng@m.gmane.org
-Received: from chlorine.canonical.com ([91.189.94.204])
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	John Peacock <john.peacock@havurah-software.org>,
+	Rafael Garcia-Suarez <rgarciasuarez@gmail.com>,
+	Perl 5 Porters <perl5-porters@perl.org>,
+	Martin.Langhoff@gmail.com, Junio C Hamano <junkio@cox.net>,
+	git@vger.kernel.org
+To: Sam Vilain <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Fri Mar 07 13:40:13 2008
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JXbfk-0000sG-Pg
-	for gcvbg-bazaar-ng@m.gmane.org; Fri, 07 Mar 2008 13:27:36 +0100
-Received: from localhost ([127.0.0.1] helo=chlorine.canonical.com)
-	by chlorine.canonical.com with esmtp (Exim 4.60)
-	(envelope-from <bazaar-bounces@lists.canonical.com>)
-	id 1JXbfA-0005bN-Kh; Fri, 07 Mar 2008 12:27:00 +0000
-Received: from el-out-1112.google.com ([209.85.162.179])
-	by chlorine.canonical.com with esmtp (Exim 4.60)
-	(envelope-from <tholag@gmail.com>) id 1JXbf5-0005bA-Fc
-	for bazaar@lists.canonical.com; Fri, 07 Mar 2008 12:26:55 +0000
-Received: by el-out-1112.google.com with SMTP id s27so528576ele.18
-	for <bazaar@lists.canonical.com>; Fri, 07 Mar 2008 04:26:54 -0800 (PST)
-Received: by 10.140.163.3 with SMTP id l3mr346187rve.253.1204892813829;
-	Fri, 07 Mar 2008 04:26:53 -0800 (PST)
-Received: by 10.140.191.1 with HTTP; Fri, 7 Mar 2008 04:26:53 -0800 (PST)
-In-Reply-To: <20080307120347.GA27001@chistera.yi.org>
-X-BeenThere: bazaar@lists.canonical.com
-X-Mailman-Version: 2.1.8
-Precedence: list
-List-Id: bazaar discussion <bazaar.lists.canonical.com>
-List-Unsubscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar>,
-	<mailto:bazaar-request@lists.canonical.com?subject=unsubscribe>
-List-Archive: <https://lists.ubuntu.com/archives/bazaar>
-List-Post: <mailto:bazaar@lists.canonical.com>
-List-Help: <mailto:bazaar-request@lists.canonical.com?subject=help>
-List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar>,
-	<mailto:bazaar-request@lists.canonical.com?subject=subscribe>
-Sender: bazaar-bounces@lists.canonical.com
-Errors-To: bazaar-bounces@lists.canonical.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76486>
+	id 1JXbrs-0005RN-12
+	for gcvg-git-2@gmane.org; Fri, 07 Mar 2008 13:40:08 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1757181AbYCGMja convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 7 Mar 2008 07:39:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754183AbYCGMja
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Mar 2008 07:39:30 -0500
+Received: from u.nix.is ([208.78.101.240]:42205 "EHLO t"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1756616AbYCGMj3 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 7 Mar 2008 07:39:29 -0500
+Received: from localhost
+	([127.0.0.1] helo=t.cpan.org ident=avar)
+	by t with esmtp (Exim 4.63)
+	(envelope-from <avar@cpan.org>)
+	id 1JXbrB-0004GL-Go; Fri, 07 Mar 2008 12:39:25 +0000
+In-Reply-To: <47D06B57.4090607@vilain.net> (Sam Vilain's message of "Fri, 07
+	Mar 2008 11:08:23 +1300")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.50 (gnu/linux)
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76487>
 
-------=_Part_27417_23716477.1204892813815
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Sam Vilain <sam@vilain.net> writes:
 
-I've recently filed a bug about export performance and status info.
-Maybe this could be related?
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>> Yes see [1] it works but the list members wanted some tool to manage
+>> passwords too which I didn't pursue since it worked for me in its
+>> present form.
+>>=20
+>> 1. http://lists-archives.org/git/640574-authentication-support-for-p=
+server.html
+>
+> Cool, well done.  Having re-read that thread, I think Martin Langhoff=
+'s
+> response
+> http://lists-archives.org/git/641074-authentication-support-for-pserv=
+er.html
+> is the most pertinent.  I didn't see any requests for an actual tool =
+to
+> be written, just that the password file be separate to the git config
+> file, and/or use crypt() to store its contents.  Perhaps point them a=
+t
+> "htpasswd" if they want a tool :)
+>
+> This patch is untested and sits on top of the previous patch by =C3=86=
+var.
+> Pullable from git://git.catalyst.net.nz/git.git#cvsserver-auth
+>
+> Subject: [PATCH] git-cvsserver: use a password file cvsserver pserver
+>
+> If a git repository is shared via HTTP, the config file is typically
+> visible.  Use an external file instead.
+> ---
+>  Documentation/git-cvsserver.txt |   21 ++++++++++++++++-----
+>  git-cvsserver.perl              |   27 ++++++++++++++-------------
+>  2 files changed, 30 insertions(+), 18 deletions(-)
+>
+> diff --git a/Documentation/git-cvsserver.txt b/Documentation/git-cvss=
+erver.txt
+> index 98183d4..c642f12 100644
+> --- a/Documentation/git-cvsserver.txt
+> +++ b/Documentation/git-cvsserver.txt
+> @@ -97,16 +97,27 @@ looks like
+>  ------
+> =20
+>  Only anonymous access is provided by pserve by default. To commit yo=
+u
+> -will have to create pserver accounts, simply add a [gitcvs.users]
+> -section to the repositories you want to access, for example:
+> +will have to create pserver accounts, simply add a gitcvs.authdb
+> +setting in the config file of the repositories you want the cvsserve=
+r
+> +to allow writes to, for example:
+> =20
+>  ------
+>    =20
+> -   [gitcvs.users]
+> -        someuser =3D somepassword
+> -        otheruser =3D otherpassword
+> +   [gitcvs]
+> +        authdb =3D /etc/cvsserver/passwd
+>    =20
+>  ------
+> +The format of these files is username followed by the crypted passwo=
+rd,
+> +for example:
+> +
+> +------
+> +   myuser:$1Oyx5r9mdGZ2
+> +   myuser:$1$BA)@$vbnMJMDym7tA32AamXrm./
+> +------
+> +You can use the 'htpasswd' facility that comes with Apache to make t=
+hese
+> +files, but Apache's MD5 crypt method differs from the one used by mo=
+st C
+> +library's crypt() function, so don't use the -m option.
+> +
+>  Then provide your password via the pserver method, for example:
+>  ------
+>     cvs -d:pserver:someuser:somepassword <at> server/path/repo.git co=
+ <HEAD_name>
+> diff --git a/git-cvsserver.perl b/git-cvsserver.perl
+> index 9bc2ff5..e54cbcd 100755
+> --- a/git-cvsserver.perl
+> +++ b/git-cvsserver.perl
+> @@ -156,24 +156,25 @@ if ($state->{method} eq 'pserver') {
+> =20
+>      unless ($user eq 'anonymous') {
+>          # Trying to authenticate a user
+> -        if (not exists $cfg->{gitcvs}->{users}) {
+> -            print "E the repo config file needs a [gitcvs.users] sec=
+tion with user/password key-value pairs\n";
+> +        if (not exists $cfg->{gitcvs}->{authdb}) {
+> +            print "E the repo config file needs a [gitcvs.authdb] se=
+ction with a filename\n";
+>              print "I HATE YOU\n";
+>              exit 1;
+> -        } elsif (exists $cfg->{gitcvs}->{users} and not exists $cfg-=
+>{gitcvs}->{users}->{$user}) {
+> -            #print "E the repo config file has a [gitcvs.users] sect=
+ion but the user $user is not defined in it\n";
+> +        }
+> +	my $auth_ok;
+> +	open PASSWD, "<$cfg->{gitcvs}->{authdb}" or die $!;
+> +	while(<PASSWD>) {
+> +	    if (m{^\Q$user\E:(.*)}) {
+> +		if (crypt($user, $1) eq $1) {
+> +		    $auth_ok =3D 1;
+> +		}
+> +	    };
+> +	}
+> +	unless ($auth_ok) {
+>              print "I HATE YOU\n";
+>              exit 1;
+> -        } else {
+> -            my $descrambled_password =3D descramble($password);
+> -            my $cleartext_password =3D $cfg->{gitcvs}->{users}->{$us=
+er};
+> -            if ($descrambled_password ne $cleartext_password) {
+> -                #print "E The password supplied for user $user was i=
+ncorrect\n";
+> -                print "I HATE YOU\n";
+> -                exit 1;
+> -            }
+> -            # else fall through to LOVE
+>          }
+> +        # else fall through to LOVE
+>      }
+> =20
+>      # For checking whether the user is anonymous on commit
+> --=20
+> 1.5.3.5
 
-https://bugs.launchpad.net/bzr/+bug/196607
+Ah, I didn't notice that this got crossposted, here, anyway I've cleane=
+d
+up this patch a bit and submitted it in reply to the original thread
+[1].
 
-Good Bye
-QbProg
-
-2008/3/7, Adeodato Sim=F3 <dato@net.com.org.es>:
->
-> I was needing a bzr frontend for git-fast-import, and as there wasn't
-> one, I wrote it.
->
-> It does all what I need, so I'm not atm much interested in spending more
-> time on it, but as noted in the README, Ian Clatworthy (the author of
-> bzr-fastimport) is willing to take ownership of it under the
-> bzr-fastimport
-> umbrella.
->
-> The current (fast food) code lives at:
->
->   http://chistera.yi.org/~adeodato/tmp/other/bzr-fast-export.git
->
-> I'll update the README file in that repository once it gets integrated
-> into bzr-fastimport.
->
-> Cheers,
->
->
-> --
-> Adeodato Sim=F3                                     dato at net.com.org.e=
-s
-> Debian Developer                                  adeodato at debian.org
->
-> Excuse me for thinking a banana-eating contest was about eating a banana!
->                 -- Paris Geller
->
->
->
-
-------=_Part_27417_23716477.1204892813815
-Content-Type: text/html; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
-
-I&#39;ve recently filed a bug about export performance and status info.<br>=
-Maybe this could be related?<br><br><a href=3D"https://bugs.launchpad.net/b=
-zr/+bug/196607">https://bugs.launchpad.net/bzr/+bug/196607</a><br><br>Good =
-Bye<br>
-QbProg<br><br><div><span class=3D"gmail_quote">2008/3/7, Adeodato Sim=F3 &l=
-t;<a href=3D"mailto:dato@net.com.org.es">dato@net.com.org.es</a>&gt;:</span=
-><blockquote class=3D"gmail_quote" style=3D"border-left: 1px solid rgb(204,=
- 204, 204); margin: 0pt 0pt 0pt 0.8ex; padding-left: 1ex;">
-I was needing a bzr frontend for git-fast-import, and as there wasn&#39;t<b=
-r> one, I wrote it.<br> <br> It does all what I need, so I&#39;m not atm mu=
-ch interested in spending more<br> time on it, but as noted in the README, =
-Ian Clatworthy (the author of<br>
- bzr-fastimport) is willing to take ownership of it under the bzr-fastimpor=
-t<br> umbrella.<br> <br> The current (fast food) code lives at:<br> <br>&nb=
-sp;&nbsp;<a href=3D"http://chistera.yi.org/~adeodato/tmp/other/bzr-fast-exp=
-ort.git">http://chistera.yi.org/~adeodato/tmp/other/bzr-fast-export.git</a>=
-<br>
- <br> I&#39;ll update the README file in that repository once it gets integ=
-rated<br> into bzr-fastimport.<br> <br> Cheers,<br> <br><br> --<br> Adeodat=
-o Sim=F3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =
-dato at <a href=3D"http://net.com.org.es">net.com.org.es</a><br>
- Debian Developer&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;adeo=
-dato at <a href=3D"http://debian.org">debian.org</a><br> <br> Excuse me for=
- thinking a banana-eating contest was about eating a banana!<br>&nbsp;&nbsp=
-;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
-bsp;&nbsp;-- Paris Geller<br>
- <br> <br> </blockquote></div><br>
-
-------=_Part_27417_23716477.1204892813815--
+1. http://article.gmane.org/gmane.comp.version-control.git/76446/match=3D=
+bjarmason
