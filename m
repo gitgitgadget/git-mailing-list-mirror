@@ -1,78 +1,61 @@
-From: David Brownell <david-b@pacbell.net>
-Subject: Re: warning: no common commits - slow pull
-Date: Thu, 6 Mar 2008 17:35:46 -0800
-Message-ID: <200803061735.47674.david-b@pacbell.net>
+From: "Stephen Sinclair" <radarsat1@gmail.com>
+Subject: Re: Problems building git with custom curl installation
+Date: Thu, 6 Mar 2008 20:37:15 -0500
+Message-ID: <9b3e2dc20803061737l1832fb82g6532808b58a12ab5@mail.gmail.com>
+References: <47D08EA7.8000607@gravity.psu.edu>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 07 02:36:38 2008
+Cc: git@vger.kernel.org
+To: "Ian Hinder" <hinder@gravity.psu.edu>
+X-From: git-owner@vger.kernel.org Fri Mar 07 02:38:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JXRVe-0005bn-CV
-	for gcvg-git-2@gmane.org; Fri, 07 Mar 2008 02:36:30 +0100
+	id 1JXRX3-0005yi-95
+	for gcvg-git-2@gmane.org; Fri, 07 Mar 2008 02:37:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757936AbYCGBfv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Mar 2008 20:35:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757288AbYCGBfv
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Mar 2008 20:35:51 -0500
-Received: from smtp120.sbc.mail.sp1.yahoo.com ([69.147.64.93]:40358 "HELO
-	smtp120.sbc.mail.sp1.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1757271AbYCGBfu (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 6 Mar 2008 20:35:50 -0500
-Received: (qmail 9824 invoked from network); 7 Mar 2008 01:35:49 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=pacbell.net;
-  h=Received:X-YMail-OSG:X-Yahoo-Newman-Property:From:To:Subject:Date:User-Agent:MIME-Version:Content-Type:Content-Transfer-Encoding:Content-Disposition:Message-Id;
-  b=kWkwVvzOY2DF/PPSOaW4pRuokGh6VFVY6Jji8BnTbA9/jN/nsWJ9bKKPyDjjoAFy86HhaL+b/tzbNazU/E0PkRjFvV11LNdOZhlu55uYPLVu49xjNXx5kNsIWfC4gVZs7LP4AmTeEYb/erAzDcVwSVXt1JWabtofIkY5PZP78o4=  ;
-Received: from unknown (HELO ascent) (david-b@pacbell.net@69.226.243.232 with plain)
-  by smtp120.sbc.mail.sp1.yahoo.com with SMTP; 7 Mar 2008 01:35:49 -0000
-X-YMail-OSG: 2MVkgVcVM1lhn926KyOX8YS3q1aVywW7PBJRufRjyZmO2mecAShv4gnQN7YE3Iv9dqNsoyMXRw--
-X-Yahoo-Newman-Property: ymail-3
-User-Agent: KMail/1.9.6
+	id S1760474AbYCGBhS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Mar 2008 20:37:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761131AbYCGBhS
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Mar 2008 20:37:18 -0500
+Received: from rv-out-0910.google.com ([209.85.198.187]:4140 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1764293AbYCGBhQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Mar 2008 20:37:16 -0500
+Received: by rv-out-0910.google.com with SMTP id k20so92292rvb.1
+        for <git@vger.kernel.org>; Thu, 06 Mar 2008 17:37:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=O7cDvJV0X02mzBYP6kkVmDROxn9HFl81JFMFsME0VQU=;
+        b=A3IdB8t6ElRVgDS0U/VwLjLeXCGShWnuijx2EN7GBTKFouxX2Otc5RJpvXEX2CVeNivAYcTnStPJKg+JnbZ+CsaShKh/2stlWHW/WdsuwBK46OEMlUlGTRZ2oTuK3oDs6o524qvJQthQKLpHiJBTJ3BR1bPSiw9tOXr1cby2o94=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=TQwoFRrInBhFt3prIVAfI2kR/YggWmNsJJ6S97OptBHfXqivYjrZCLYeiIM6yzLDmqOR/n4zpiey6bCJ6gpnNiUKky2Sz2SmqtyA2q40z9HZlWeuyW/SCruXl3tlvlb8z6Q/vt8C1QMX030o1sGGHSCme7iDdHyx+IvhkuFbW3I=
+Received: by 10.140.148.3 with SMTP id v3mr284045rvd.64.1204853835690;
+        Thu, 06 Mar 2008 17:37:15 -0800 (PST)
+Received: by 10.140.188.1 with HTTP; Thu, 6 Mar 2008 17:37:15 -0800 (PST)
+In-Reply-To: <47D08EA7.8000607@gravity.psu.edu>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76444>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76445>
 
-Any progress on fixing this?
+On Thu, Mar 6, 2008 at 7:39 PM, Ian Hinder <hinder@gravity.psu.edu> wrote:
+[snip]
+>  1. Configure: Specifying the curl location leads to output that
+>  indicates that curl was not correctly located, even though a
+>  subsequent make finds it successfully and includes it in the build.
 
-I'll report that with git version 1.5.4.3.447.gc95b3.dirty
-(just a couple days old) I've observed this when updating
-a clone by pulling from
-
- (a) a parent on the same disk partition
- (b) a parent on a non-mirrored network server
-
-So that would seem to trash the assumptions that this is
-related to version mismatch between mirrors, and that the
-fix can (or should!) wait till 1.6.0 ...
+I'd just like to add that configure also doesn't detect and warn about
+a missing gettext package, which became evident to me today when I
+tried compiling it on a newly installed machine.  The configure is
+successful, but the build fails.
 
 
-I was glad to see the "^C" workaround, that seems to work.
-
-When I "git pull" it first fetches a bunch of files, then
-concludes (wrongly) "no common commits", then starts a
-second fetch of a *HUGE* number of files ... 400 MB is too
-much to pay when updating from rc3-last-week to rc4.  But
-if I interrupt that second one with ^C, it seems that the
-first one fetched enough to make the next "git pull" go
-pretty quickly.
-
-
-This does seem appear to show up more often lately because
-of RC4 having been tagged ... but I don't know for sure.
-
-I've got a couple kernel workspaces still on last Friday's
-version, which -- if this holds true to form! -- will show
-this bug when I "git pull".  So if there are experiments
-that would help nail down what's going on here, please
-spell them out to me ("this command, then this ... send
-this output...").
-
-- Dave
+Steve
