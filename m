@@ -1,67 +1,174 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: [announce] text-based tree visualizer
-Date: Fri, 7 Mar 2008 01:46:54 +0100
-Message-ID: <20080307004654.GK27511@genesis.frugalware.org>
-References: <Pine.LNX.4.64.0803061557320.7660@fbirervta.pbzchgretzou.qr> <20080306201429.GA24528@old.davidb.org> <Pine.LNX.4.64.0803062137020.7660@fbirervta.pbzchgretzou.qr>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="ZOudaV4lSIjFTlHv"
-Cc: David Brown <git@davidb.org>, git@vger.kernel.org
-To: Jan Engelhardt <jengelh@computergmbh.de>
-X-From: git-owner@vger.kernel.org Fri Mar 07 01:47:38 2008
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: [PATCH 1/2] renaming quote_path() as quote_path_relative()
+Date: Fri,  7 Mar 2008 04:13:16 +0300
+Message-ID: <1204852397-20939-1-git-send-email-dpotapov@gmail.com>
+References: <7vr6en8n7k.fsf@gitster.siamese.dyndns.org>
+Cc: Pierre Habouzit <madcoder@debian.org>,
+	Git ML <git@vger.kernel.org>,
+	Dmitry Potapov <dpotapov@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Mar 07 02:14:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JXQkJ-0000fi-Bq
-	for gcvg-git-2@gmane.org; Fri, 07 Mar 2008 01:47:35 +0100
+	id 1JXR9t-0008S0-Jv
+	for gcvg-git-2@gmane.org; Fri, 07 Mar 2008 02:14:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757274AbYCGAq6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Mar 2008 19:46:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754258AbYCGAq5
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Mar 2008 19:46:57 -0500
-Received: from virgo.iok.hu ([193.202.89.103]:35203 "EHLO virgo.iok.hu"
+	id S1752460AbYCGBNV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Mar 2008 20:13:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752768AbYCGBNV
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Mar 2008 20:13:21 -0500
+Received: from smtp05.mtu.ru ([62.5.255.52]:63160 "EHLO smtp05.mtu.ru"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752351AbYCGAq5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Mar 2008 19:46:57 -0500
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 126BF1B2537;
-	Fri,  7 Mar 2008 01:46:55 +0100 (CET)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 158214469E;
-	Fri,  7 Mar 2008 01:44:12 +0100 (CET)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 5DB0C1190A17; Fri,  7 Mar 2008 01:46:54 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0803062137020.7660@fbirervta.pbzchgretzou.qr>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1752402AbYCGBNU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Mar 2008 20:13:20 -0500
+Received: from smtp05.mtu.ru (localhost [127.0.0.1])
+	by smtp05.mtu.ru (Postfix) with ESMTP id CE675A2D12D;
+	Fri,  7 Mar 2008 04:13:18 +0300 (MSK)
+Received: from dpotapov.dyndns.org (ppp85-140-168-16.pppoe.mtu-net.ru [85.140.168.16])
+	by smtp05.mtu.ru (Postfix) with ESMTP id 51763A2C3FC;
+	Fri,  7 Mar 2008 04:13:18 +0300 (MSK)
+Received: from dpotapov by dpotapov.dyndns.org with local (Exim 4.63)
+	(envelope-from <dpotapov@gmail.com>)
+	id 1JXR9B-0005S4-OY; Fri, 07 Mar 2008 04:13:17 +0300
+X-Mailer: git-send-email 1.5.4.3.452.g9b9f
+In-Reply-To: <7vr6en8n7k.fsf@gitster.siamese.dyndns.org>
+X-DCC-STREAM-Metrics: smtp05.mtu.ru 10001; Body=0 Fuz1=0 Fuz2=0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76440>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76441>
 
+Based on Junio's suggestion, this patch moves quote_path() from
+wt-status.c to quote.c and renames it as quote_path_relative(),
+because it is a better name for a public function.
 
---ZOudaV4lSIjFTlHv
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Also, instead of handcrafted quoting, quote_c_style_counted() is now
+used, so it will honor core.quotepath specified in configuration.
 
-On Thu, Mar 06, 2008 at 09:38:11PM +0100, Jan Engelhardt <jengelh@computergmbh.de> wrote:
-> Any idea how I can make gitweb display an URL text like it does on
-> http://git.kernel.org/?p=git/git.git;a=summary ?
+Signed-off-by: Dmitry Potapov <dpotapov@gmail.com>
+---
+ quote.c     |   33 +++++++++++++++++++++++++++++++++
+ quote.h     |    4 ++++
+ wt-status.c |   47 ++---------------------------------------------
+ 3 files changed, 39 insertions(+), 45 deletions(-)
 
-use the cloneurl file (just like description) for example.
-
---ZOudaV4lSIjFTlHv
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (GNU/Linux)
-
-iD8DBQFH0JB+e81tAgORUJYRAi7hAJ0WHY5z48HDB6Z/+z34yePl59Uh7wCeKB7s
-4OjWaxQc5T5TNKjNuTLVhYI=
-=Z+QL
------END PGP SIGNATURE-----
-
---ZOudaV4lSIjFTlHv--
+diff --git a/quote.c b/quote.c
+index d061626..84c6f8a 100644
+--- a/quote.c
++++ b/quote.c
+@@ -260,6 +260,39 @@ extern void write_name_quotedpfx(const char *pfx, size_t pfxlen,
+ 	fputc(terminator, fp);
+ }
+ 
++/* quote path as relative to the given prefix */
++char *quote_path_relative(const char *in, int len,
++                          struct strbuf *out, const char *prefix)
++{
++	if (len < 0)
++		len = strlen(in);
++
++	strbuf_grow(out, len);
++	strbuf_setlen(out, 0);
++	if (prefix) {
++		int off = 0;
++		while (prefix[off] && off < len && prefix[off] == in[off])
++			if (prefix[off] == '/') {
++				prefix += off + 1;
++				in += off + 1;
++				len -= off + 1;
++				off = 0;
++			} else
++				off++;
++
++		for (; *prefix; prefix++)
++			if (*prefix == '/')
++				strbuf_addstr(out, "../");
++	}
++
++	quote_c_style_counted (in, len, out, NULL, 1);
++
++	if (!out->len)
++		strbuf_addstr(out, "./");
++
++	return out->buf;
++}
++
+ /*
+  * C-style name unquoting.
+  *
+diff --git a/quote.h b/quote.h
+index 4da110e..527c152 100644
+--- a/quote.h
++++ b/quote.h
+@@ -47,6 +47,10 @@ extern void write_name_quoted(const char *name, FILE *, int terminator);
+ extern void write_name_quotedpfx(const char *pfx, size_t pfxlen,
+                                  const char *name, FILE *, int terminator);
+ 
++/* quote path as relative to the given prefix */
++char *quote_path_relative(const char *in, int len,
++                          struct strbuf *out, const char *prefix);
++
+ /* quoting as a string literal for other languages */
+ extern void perl_quote_print(FILE *stream, const char *src);
+ extern void python_quote_print(FILE *stream, const char *src);
+diff --git a/wt-status.c b/wt-status.c
+index 32d780a..701d13d 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -7,6 +7,7 @@
+ #include "diff.h"
+ #include "revision.h"
+ #include "diffcore.h"
++#include "quote.h"
+ 
+ int wt_status_relative_paths = 1;
+ int wt_status_use_color = -1;
+@@ -82,51 +83,7 @@ static void wt_status_print_trailer(struct wt_status *s)
+ 	color_fprintf_ln(s->fp, color(WT_STATUS_HEADER), "#");
+ }
+ 
+-static char *quote_path(const char *in, int len,
+-			struct strbuf *out, const char *prefix)
+-{
+-	if (len < 0)
+-		len = strlen(in);
+-
+-	strbuf_grow(out, len);
+-	strbuf_setlen(out, 0);
+-	if (prefix) {
+-		int off = 0;
+-		while (prefix[off] && off < len && prefix[off] == in[off])
+-			if (prefix[off] == '/') {
+-				prefix += off + 1;
+-				in += off + 1;
+-				len -= off + 1;
+-				off = 0;
+-			} else
+-				off++;
+-
+-		for (; *prefix; prefix++)
+-			if (*prefix == '/')
+-				strbuf_addstr(out, "../");
+-	}
+-
+-	for ( ; len > 0; in++, len--) {
+-		int ch = *in;
+-
+-		switch (ch) {
+-		case '\n':
+-			strbuf_addstr(out, "\\n");
+-			break;
+-		case '\r':
+-			strbuf_addstr(out, "\\r");
+-			break;
+-		default:
+-			strbuf_addch(out, ch);
+-			continue;
+-		}
+-	}
+-
+-	if (!out->len)
+-		strbuf_addstr(out, "./");
