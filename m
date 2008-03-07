@@ -1,85 +1,76 @@
-From: =?utf-8?q?Adeodato=20Sim=C3=B3?= <dato@net.com.org.es>
-Subject: [PATCH] Really make the LF after reset in fast-import optional
-Date: Fri,  7 Mar 2008 21:22:17 +0100
-Message-ID: <1204921337-5204-1-git-send-email-dato@net.com.org.es>
-References: <20080305210715.GA10686@chistera.yi.org>
+From: Tommi Komulainen <tommi.komulainen@iki.fi>
+Subject: Re: git-svn breaks on gtk+ import
+Date: Fri, 07 Mar 2008 22:19:42 +0200
+Message-ID: <fqs80v$98n$1@ger.gmane.org>
+References: <alpine.DEB.1.00.0803071844510.27175@master.birnet.private>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Mar 07 21:23:55 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 07 21:27:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JXj5y-0007gv-S6
-	for gcvg-git-2@gmane.org; Fri, 07 Mar 2008 21:23:11 +0100
+	id 1JXj8Z-00010G-5d
+	for gcvg-git-2@gmane.org; Fri, 07 Mar 2008 21:25:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757833AbYCGUWc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 7 Mar 2008 15:22:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757436AbYCGUWc
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Mar 2008 15:22:32 -0500
-Received: from gluck.debian.org ([192.25.206.10]:39347 "EHLO gluck.debian.org"
+	id S1761258AbYCGUZM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Mar 2008 15:25:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761162AbYCGUZM
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Mar 2008 15:25:12 -0500
+Received: from main.gmane.org ([80.91.229.2]:56149 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756750AbYCGUWc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Mar 2008 15:22:32 -0500
-Received: from localhost ([127.0.0.1] helo=chistera.yi.org)
-	by gluck.debian.org with esmtp (Exim 4.50)
-	id 1JXj5I-0007A9-Bl; Fri, 07 Mar 2008 13:22:29 -0700
-Received: from userid 1000 by plumber with local (Exim 4.69) 
-	  id 1JXj57-0001MH-NY; Fri, 07 Mar 2008 21:22:17 +0100
-X-Mailer: git-send-email 1.5.4.3
-In-Reply-To: <20080305210715.GA10686@chistera.yi.org>
+	id S1760508AbYCGUZK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Mar 2008 15:25:10 -0500
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1JXj7m-0008Sc-Dy
+	for git@vger.kernel.org; Fri, 07 Mar 2008 20:25:02 +0000
+Received: from jumbo180.adsl.netsonic.fi ([81.17.197.180])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 07 Mar 2008 20:25:02 +0000
+Received: from tommi.komulainen by jumbo180.adsl.netsonic.fi with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 07 Mar 2008 20:25:02 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: jumbo180.adsl.netsonic.fi
+User-Agent: Thunderbird 2.0.0.12 (Macintosh/20080213)
+In-Reply-To: <alpine.DEB.1.00.0803071844510.27175@master.birnet.private>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76519>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76520>
 
-cmd_from() ends with a call to read_next_command(), which is needed
-when using cmd_from() from commands where from is not the last element.
+Tim Janik wrote:
+> hi Eric.
+> 
+> with git-svn from git 1.5.4.3, imports of the Gtk+ repository fail:
+> 
+>   git-svn clone -T trunk -b branches -t tags -r 19001 
+> http://svn.gnome.org/svn/gtk+
+>   Using existing [svn-remote "svn"]
+>   Using higher level of URL: http://svn.gnome.org/svn/gtk+ => 
+> http://svn.gnome.org/svn/gtk%2B/http:
+>   No such file or directory: PROPFIND request failed on 
+> '/svn/gtk%252B/http%3A': Could not open the requested SVN filesystem at 
+> /usr/bin/git-svn line 1352
 
-With reset, however, "from" is the last command, after which the flow
-returns to the main loop, which calls read_next_command() again.
+> looks like the '+' in the the http://svn.gnome.org/svn/gtk+ repository
+> name isn't handled correctly.
 
-Because of this, always set unread_command_buf in cmd_reset_branch(),
-even if cmd_from() was successful.
+I had somewhat similar problem with git-svn fetch to a repository 
+created with 1.5.3.something failing issuing REPORT. I've tracked down 
+the problem to commit f5530b8833bcaa423cd53d133d3de3fa0173fbf3 to git, 
+reverting it seems to fix git-svn fetch for me. YMMV.
 
-Add a test case for this in t9300-fast-import.sh.
+I tried to follow where/how URL escaping happens / isn't happening 
+(there are issues like 'if (<unescaped url> eq <escaped url>)' around - 
+mostly because repos_root is escaped) but couldn't get things working. :-/
 
-Signed-off-by: Adeodato Sim=C3=B3 <dato@net.com.org.es>
----
- fast-import.c          |    3 ++-
- t/t9300-fast-import.sh |    2 ++
- 2 files changed, 4 insertions(+), 1 deletions(-)
 
-diff --git a/fast-import.c b/fast-import.c
-index 7f197d5..655913d 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -2291,7 +2291,8 @@ static void cmd_reset_branch(void)
- 	else
- 		b =3D new_branch(sp);
- 	read_next_command();
--	if (!cmd_from(b) && command_buf.len > 0)
-+	cmd_from(b);
-+	if (command_buf.len > 0)
- 		unread_command_buf =3D 1;
- }
-=20
-diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
-index cceedbb..c4f4465 100755
---- a/t/t9300-fast-import.sh
-+++ b/t/t9300-fast-import.sh
-@@ -869,6 +869,8 @@ zcommits
- COMMIT
- reset refs/tags/O3-2nd
- from :5
-+reset refs/tags/O3-3rd
-+from :5
- INPUT_END
-=20
- cat >expect <<INPUT_END
---=20
-1.5.4.3
+-- 
+Tommi Komulainen                                 tommi.komulainen@iki.fi
 
