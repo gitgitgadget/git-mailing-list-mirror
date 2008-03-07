@@ -1,146 +1,100 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: [PATCH 2/2] git-clean: correct printing relative path
-Date: Fri,  7 Mar 2008 04:13:17 +0300
-Message-ID: <1204852397-20939-2-git-send-email-dpotapov@gmail.com>
-References: <7vr6en8n7k.fsf@gitster.siamese.dyndns.org>
- <1204852397-20939-1-git-send-email-dpotapov@gmail.com>
-Cc: Pierre Habouzit <madcoder@debian.org>,
-	Git ML <git@vger.kernel.org>,
-	Dmitry Potapov <dpotapov@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 07 02:14:14 2008
+From: Ian Hinder <hinder@Gravity.PSU.Edu>
+Subject: Problems building git with custom curl installation
+Date: Thu, 06 Mar 2008 19:39:03 -0500
+Message-ID: <47D08EA7.8000607@gravity.psu.edu>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 07 02:25:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JXR9u-0008S0-8N
-	for gcvg-git-2@gmane.org; Fri, 07 Mar 2008 02:14:02 +0100
+	id 1JXRL7-00031q-Fp
+	for gcvg-git-2@gmane.org; Fri, 07 Mar 2008 02:25:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753722AbYCGBN0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Mar 2008 20:13:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753107AbYCGBN0
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Mar 2008 20:13:26 -0500
-Received: from smtp05.mtu.ru ([62.5.255.52]:49925 "EHLO smtp05.mtu.ru"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752586AbYCGBNV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Mar 2008 20:13:21 -0500
-Received: from smtp05.mtu.ru (localhost [127.0.0.1])
-	by smtp05.mtu.ru (Postfix) with ESMTP id 7FBB1A2F306;
-	Fri,  7 Mar 2008 04:13:20 +0300 (MSK)
-Received: from dpotapov.dyndns.org (ppp85-140-168-16.pppoe.mtu-net.ru [85.140.168.16])
-	by smtp05.mtu.ru (Postfix) with ESMTP id 52BBCA2C534;
-	Fri,  7 Mar 2008 04:13:18 +0300 (MSK)
-Received: from dpotapov by dpotapov.dyndns.org with local (Exim 4.63)
-	(envelope-from <dpotapov@gmail.com>)
-	id 1JXR9B-0005S6-Q3; Fri, 07 Mar 2008 04:13:17 +0300
-X-Mailer: git-send-email 1.5.4.3.452.g9b9f
-In-Reply-To: <1204852397-20939-1-git-send-email-dpotapov@gmail.com>
-X-DCC-STREAM-Metrics: smtp05.mtu.ru 10001; Body=0 Fuz1=0 Fuz2=0
+	id S1756398AbYCGBYu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Mar 2008 20:24:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756292AbYCGBYu
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Mar 2008 20:24:50 -0500
+Received: from f05s05.cac.psu.edu ([128.118.141.48]:37821 "EHLO
+	f05n05.cac.psu.edu" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754665AbYCGBYt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Mar 2008 20:24:49 -0500
+X-Greylist: delayed 2743 seconds by postgrey-1.27 at vger.kernel.org; Thu, 06 Mar 2008 20:24:49 EST
+Received: from [146.186.121.44] (grav10.gravity.psu.edu [146.186.121.44])
+	(authenticated bits=0)
+	by f05n05.cac.psu.edu (8.13.2/8.13.2) with ESMTP id m270d3cv065230
+	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NOT)
+	for <git@vger.kernel.org>; Thu, 6 Mar 2008 19:39:03 -0500
+User-Agent: Thunderbird 2.0.0.12 (X11/20080227)
+X-Enigmail-Version: 0.95.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76442>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76443>
 
-When the given path contains '..' then git-clean incorrectly printed names
-of files. This patch changes cmd_clean to use quote_path_relative().
-Also, "failed to remove ..." message used absolutely path, but not it is
-corrected to use relative path.
+Hi,
 
-Signed-off-by: Dmitry Potapov <dpotapov@gmail.com>
----
- builtin-clean.c |   32 ++++++++++++++------------------
- 1 files changed, 14 insertions(+), 18 deletions(-)
+I have had some problems building git on a machine which does not have
+the distro development packages for Curl installed.  I have installed it
+from source, but there are some issues.
 
-diff --git a/builtin-clean.c b/builtin-clean.c
-index 3b220d5..fefec30 100644
---- a/builtin-clean.c
-+++ b/builtin-clean.c
-@@ -10,6 +10,7 @@
- #include "cache.h"
- #include "dir.h"
- #include "parse-options.h"
-+#include "quote.h"
- 
- static int force = -1; /* unset */
- 
-@@ -34,7 +35,8 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
- 	struct dir_struct dir;
- 	const char *path, *base;
- 	static const char **pathspec;
--	int prefix_offset = 0;
-+	struct strbuf buf;
-+	const char *qname;
- 	char *seen = NULL;
- 	struct option options[] = {
- 		OPT__QUIET(&quiet),
-@@ -56,6 +58,7 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
- 
- 	argc = parse_options(argc, argv, options, builtin_clean_usage, 0);
- 
-+	strbuf_init(&buf, 0);
- 	memset(&dir, 0, sizeof(dir));
- 	if (ignored_only)
- 		dir.show_ignored = 1;
-@@ -72,8 +75,6 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
- 	if (!ignored)
- 		setup_standard_excludes(&dir);
- 
--	if (prefix)
--		prefix_offset = strlen(prefix);
- 	pathspec = get_pathspec(prefix, argv);
- 	read_cache();
- 
-@@ -134,39 +135,34 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
- 
- 		if (S_ISDIR(st.st_mode)) {
- 			strbuf_addstr(&directory, ent->name);
-+			qname = quote_path_relative(directory.buf, directory.len, &buf, prefix);
- 			if (show_only && (remove_directories || matches)) {
--				printf("Would remove %s\n",
--				       directory.buf + prefix_offset);
-+				printf("Would remove %s\n", qname);
- 			} else if (remove_directories || matches) {
- 				if (!quiet)
--					printf("Removing %s\n",
--					       directory.buf + prefix_offset);
-+					printf("Removing %s\n", qname);
- 				if (remove_dir_recursively(&directory, 0) != 0) {
--					warning("failed to remove '%s'",
--						directory.buf + prefix_offset);
-+					warning("failed to remove '%s'", qname);
- 					errors++;
- 				}
- 			} else if (show_only) {
--				printf("Would not remove %s\n",
--				       directory.buf + prefix_offset);
-+				printf("Would not remove %s\n", qname);
- 			} else {
--				printf("Not removing %s\n",
--				       directory.buf + prefix_offset);
-+				printf("Not removing %s\n", qname);
- 			}
- 			strbuf_reset(&directory);
- 		} else {
- 			if (pathspec && !matches)
- 				continue;
-+			qname = quote_path_relative(ent->name, -1, &buf, prefix);
- 			if (show_only) {
--				printf("Would remove %s\n",
--				       ent->name + prefix_offset);
-+				printf("Would remove %s\n", qname);
- 				continue;
- 			} else if (!quiet) {
--				printf("Removing %s\n",
--				       ent->name + prefix_offset);
-+				printf("Removing %s\n", qname);
- 			}
- 			if (unlink(ent->name) != 0) {
--				warning("failed to remove '%s'", ent->name);
-+				warning("failed to remove '%s'", qname);
- 				errors++;
- 			}
- 		}
+>From a clean download of git-1.5.4, I do:
+
+./configure --prefix=/home/ian/software/git-1.5.4
+--with-curl=/home/ian/software/curl-7.18.0
+
+I get
+
+  checking for curl_global_init in -lcurl... no
+
+even though curl has been installed in /home/ian/software/curl-7.18.0
+
+I do "make", and get
+
+  /bin/sh: curl-config: command not found
+
+but the make proceeds anyway. When linking, I get warnings
+
+  cc: unrecognized option
+'-R/usr/center/atlas1/numrel/software/curl-7.18.0/lib'
+and "ldd git" gives
+
+        libcurl.so.4 => not found
+
+If I do
+
+  NO_R_TO_GCC_LINKER=yes make
+
+then things seem to work perfectly, and the rpath to curl is set in
+the git executable.  In the course of debugging this problem, I also
+found that LDFLAGS were not being passed from the configure command
+line to the makefile.
+
+I suggest that the following are bugs:
+
+1. Configure: Specifying the curl location leads to output that
+indicates that curl was not correctly located, even though a
+subsequent make finds it successfully and includes it in the build.
+
+2. Make: an error appears indicating that curl-config is not found,
+which suggests that curl will not be used successfully, even though it
+works fine.  It must not be looking for curl-config in the right
+place, and it doesn't even seem to be necessary.
+
+3. The use of the makefile option NO_R_TO_GCC_LINKER is not
+automatically determined - perhaps an autoconf test could be written
+for it?  All the machines I have tried give an error if you try to
+give gcc a -R option, and gcc is being used as the linker.
+
+4. LDFLAGS is not passed from the configure command line to the
+makefile.  Modifying config.mak.in to contain the line LDFLAGS =
+@LDFLAGS@ might be the appropriate fix.
+
 -- 
-1.5.4.3.452.g9b9f
-
+Ian Hinder
+hinder@gravity.psu.edu
+http://www.gravity.psu.edu/~hinder
