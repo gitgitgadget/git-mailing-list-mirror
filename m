@@ -1,114 +1,83 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 4/4] Make 'unpack_trees()' have a separate source and
- destination index
-Date: Fri, 7 Mar 2008 15:13:17 +0100 (CET)
-Message-ID: <alpine.LSU.1.00.0803071507510.19395@racer.site>
-References: <cover.1204856187.git.torvalds@linux-foundation.org> <8676ea8b0313abfc2e0946f45f636643e28aade8.1204856187.git.torvalds@linux-foundation.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFH] What do you think about adding graphical merge to git-gui?
+Date: Fri, 7 Mar 2008 16:21:35 +0100
+Message-ID: <200803071621.37376.jnareb@gmail.com>
+References: <200803071240.09999.jnareb@gmail.com> <200803071446.39468.jnareb@gmail.com> <alpine.LSU.1.00.0803071453160.19395@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri Mar 07 15:13:57 2008
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
+	Paul Mackerras <paulus@samba.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Mar 07 16:23:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JXdKe-0006vB-0J
-	for gcvg-git-2@gmane.org; Fri, 07 Mar 2008 15:13:56 +0100
+	id 1JXePK-0001D3-99
+	for gcvg-git-2@gmane.org; Fri, 07 Mar 2008 16:22:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750967AbYCGONR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Mar 2008 09:13:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751065AbYCGONR
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Mar 2008 09:13:17 -0500
-Received: from mail.gmx.net ([213.165.64.20]:38967 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750960AbYCGONQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Mar 2008 09:13:16 -0500
-Received: (qmail invoked by alias); 07 Mar 2008 14:13:15 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp039) with SMTP; 07 Mar 2008 15:13:15 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/1m7wd1kP1d/Idk33QY6Lu+IuDwAeVNMfeK/+MGb
-	5QYOtRYGL7wqaj
-X-X-Sender: gene099@racer.site
-In-Reply-To: <8676ea8b0313abfc2e0946f45f636643e28aade8.1204856187.git.torvalds@linux-foundation.org>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1761449AbYCGPVx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 7 Mar 2008 10:21:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762300AbYCGPVw
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Mar 2008 10:21:52 -0500
+Received: from ug-out-1314.google.com ([66.249.92.172]:34815 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754900AbYCGPVv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Mar 2008 10:21:51 -0500
+Received: by ug-out-1314.google.com with SMTP id z38so4369095ugc.16
+        for <git@vger.kernel.org>; Fri, 07 Mar 2008 07:21:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        bh=TWKqhWejjmcq0Yum1wt8g7yrMxDc68FHq2yaP/KvTGo=;
+        b=sSdiclzMrhnB5LckoUS3FpDbGnx/IIDuhyLjFX4jqf+ymBgYhbguycBTNkRrwhO5EzfILO2pKkjzxajEFdITowMGEEmCCh5bn9uB0dWYdG8rAzFkBt1iIyAZsbYp/OoyMiSJdQdVHiK+qFVu5HO/q+BhmnXBLoqNAdfFv9dYEgo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=YGHPUgRgWObzELPAM1BMoLRC8NsaAdGBz2eQi3ARZpNJw8/e8JKoHscfEG77QBGNmzDrzPoNsLgcOy6NYS4/p+ugSK1h95BahtvX9z34whmXyePiuyoRPcP5NYXJhqpnbiANAwK0Np6BEm5z7LQPk5pnx0U945oPPL+zxBOe0U4=
+Received: by 10.78.97.7 with SMTP id u7mr4095319hub.53.1204903308681;
+        Fri, 07 Mar 2008 07:21:48 -0800 (PST)
+Received: from ?192.168.1.15? ( [83.8.252.126])
+        by mx.google.com with ESMTPS id 31sm5124772hub.10.2008.03.07.07.21.41
+        (version=SSLv3 cipher=OTHER);
+        Fri, 07 Mar 2008 07:21:45 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <alpine.LSU.1.00.0803071453160.19395@racer.site>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76494>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76495>
 
-Hi,
+Johannes Schindelin wrote:
+> On Fri, 7 Mar 2008, Jakub Narebski wrote:
+>> Dnia pi=B1tek 7. marca 2008 12:54, Johannes Schindelin napisa=B3:
+>>> On Fri, 7 Mar 2008, Jakub Narebski wrote:
+>>>=20
+>>>> What do you think about adding "merge" subcommand to git-gui,
+>>>> or to be more exact adding tree-level merge and/or file-level
+>>>> merge tool to git-gui? I think we could "borrow" some code from
+>>>> TkDiff: http://tkdiff.sourceforge.net/ (which is also GPL)
+>>>=20
+>>> Is there any reason not to use mergetool?
+[...]
 
-On Thu, 6 Mar 2008, Linus Torvalds wrote:
+>> Besides "git gui merge" can be more Git-aware than for example TkDif=
+f=20
+>> invoked from git-mergetool. It can offer also resolution also to tre=
+e=20
+>> level conflicts, such as rename/rename, rename/delete and rename/add=
+,=20
+>> delete/modify or for example the case when one side has file in=20
+>> subdirectory, and other has file in submodule.
+>=20
+> Sure, go ahead.
 
-> We will always unpack into our own internal index, but we will take the
-> source from wherever specified, and we will optionally write the result
-> to a specified index (optionally, because not everybody even _wants_ any
-> result: the index diffing really wants to just walk the tree and index
-> in parallel).
-> 
-> This ends up removing a fair number more lines than it adds, for the 
-> simple reason that we can now skip all the crud that tried to be 
-> oh-so-careful about maintaining our position in the index as we were 
-> traversing and modifying it.  Since we don't actually modify the source 
-> index any more, we can just update the 'o->pos' pointer without worrying 
-> about whether an index entry got removed or replaced or added to.
+Could you recommend some good (best if also free) documentation of=20
+Tcl/Tk, so I won't be doing "cargo cult" (copy'n'paste) programming?
 
-Nice.  Although you could have done better on the account of remove/add 
-ratio if you did not add empty lines ;-)  But then, you removed a few 
-curly brackets around single lines, too ;-)
-
-> @@ -221,27 +222,6 @@ int cmd_read_tree(int argc, const char **argv, const char *unused_prefix)
->  	if ((opts.dir && !opts.update))
->  		die("--exclude-per-directory is meaningless unless -u");
->  
-> -	if (opts.prefix) {
-> -		int pfxlen = strlen(opts.prefix);
-> -		int pos;
-> -		if (opts.prefix[pfxlen-1] != '/')
-> -			die("prefix must end with /");
-> -		if (stage != 2)
-> -			die("binding merge takes only one tree");
-> -		pos = cache_name_pos(opts.prefix, pfxlen);
-> -		if (0 <= pos)
-> -			die("corrupt index file");
-> -		pos = -pos-1;
-> -		if (pos < active_nr &&
-> -		    !strncmp(active_cache[pos]->name, opts.prefix, pfxlen))
-> -			die("subdirectory '%s' already exists.", opts.prefix);
-> -		pos = cache_name_pos(opts.prefix, pfxlen-1);
-> -		if (0 <= pos)
-> -			die("file '%.*s' already exists.",
-> -					pfxlen-1, opts.prefix);
-> -		opts.pos = -1 - pos;
-> -	}
-> -
-
-Was the wholesale removal intentional?  I think there are a few sanity 
-checks, and I did not see the checks moved to somewhere else.  But then, 
-there could be redundant checks somewhere else that I missed.
-
-> @@ -360,7 +366,10 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
->  	if (o->trivial_merges_only && o->nontrivial_merge)
->  		return unpack_failed(o, "Merge requires file-level merging");
->  
-> +	o->src_index = NULL;
->  	check_updates(o);
-> +	if (o->dst_index)
-> +		*o->dst_index = o->result;
->  	return 0;
->  }
->  
-
-I wonder if you should discard_index(o->dst_index) if o->src_index == 
-o->dst_index (before you set it to NULL, of course).
-
-I cannot really comment on the rest, since the whole unpack_trees() logic 
-was too complicated for me.  Maybe I have a chance after this patch.
-
-Ciao,
-Dscho
-
+--=20
+Jakub Narebski
+Poland
