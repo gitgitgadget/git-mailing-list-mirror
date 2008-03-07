@@ -1,87 +1,185 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH v2 2/3] git-submodule: New subcommand 'summary' (2) - hard work
-Date: Fri, 07 Mar 2008 08:59:30 -0800 (PST)
-Message-ID: <m34pbih3m9.fsf@localhost.localdomain>
-References: <1204306487-15849-1-git-send-email-pkufranky@gmail.com>
-	<80aa1c46ced6f0b92ca2fca3b917d383343b3161.1204306070.git.pkufranky@gmail.com>
-	<d6e82710452985611fb75c9d32a1b772bf0cb529.1204306070.git.pkufranky@gmail.com>
-	<7vabli7vhr.fsf@gitster.siamese.dyndns.org>
-	<46dff0320803070850w290bfbe6hcdf74b20fcd7d8a4@mail.gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH 4/4] Make 'unpack_trees()' have a separate source and
+ destination index
+Date: Fri, 7 Mar 2008 09:32:07 -0800 (PST)
+Message-ID: <alpine.LFD.1.00.0803070903080.12253@woody.linux-foundation.org>
+References: <cover.1204856187.git.torvalds@linux-foundation.org> <8676ea8b0313abfc2e0946f45f636643e28aade8.1204856187.git.torvalds@linux-foundation.org> <alpine.LSU.1.00.0803071507510.19395@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-To: "Ping Yin" <pkufranky@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 07 18:00:22 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Mar 07 18:33:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JXfva-0000hL-02
-	for gcvg-git-2@gmane.org; Fri, 07 Mar 2008 18:00:14 +0100
+	id 1JXgRi-0006ge-NX
+	for gcvg-git-2@gmane.org; Fri, 07 Mar 2008 18:33:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755855AbYCGQ7f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Mar 2008 11:59:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756237AbYCGQ7f
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Mar 2008 11:59:35 -0500
-Received: from ug-out-1314.google.com ([66.249.92.168]:26393 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755531AbYCGQ7e (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Mar 2008 11:59:34 -0500
-Received: by ug-out-1314.google.com with SMTP id z38so4400668ugc.16
-        for <git@vger.kernel.org>; Fri, 07 Mar 2008 08:59:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
-        bh=TJjd78tapPNjLQvk9+fNKJJgt/oh0TUooLyPOOevozQ=;
-        b=O/gsiAo2Gw1oS6IVjNRGdbI7Ch2+Q8984g4EHey4pJjtHkO4jf8AuYl+FRM0SwTHrZCh/Z774Kc6Cehx8h06lFsyYqWSp86OiJRXL3RZBsI+uN/4IWP9cZFKLqiVtFNVRicUgNtViNrb+pMPKgtEMjC8TXoY3vtckxy5BpCaHaU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
-        b=AnihiIY636drR49JZWqvSw8guo0ddC17WZAGAGlwSx6oLVcoXM0RtggOJLGt/3yEDueO1ecWLBtXi3Va+bmiwNM4PvRzLEalIvFkAM0LkU2TNfoGGe5BNOkUNgYZF4BvmxRkGNCM86vWUcyvRxMI59iUvHHnaxIwODX6h2Mq49o=
-Received: by 10.78.130.6 with SMTP id c6mr4552266hud.7.1204909172477;
-        Fri, 07 Mar 2008 08:59:32 -0800 (PST)
-Received: from localhost.localdomain ( [83.8.252.126])
-        by mx.google.com with ESMTPS id 4sm2371325hue.17.2008.03.07.08.59.29
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 07 Mar 2008 08:59:30 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m27GxRf9003984;
-	Fri, 7 Mar 2008 17:59:27 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m27GxQKG003981;
-	Fri, 7 Mar 2008 17:59:26 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <46dff0320803070850w290bfbe6hcdf74b20fcd7d8a4@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1754194AbYCGRcr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Mar 2008 12:32:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754633AbYCGRcr
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Mar 2008 12:32:47 -0500
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:57149 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753769AbYCGRcq (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 7 Mar 2008 12:32:46 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m27HWY4G023664
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 7 Mar 2008 09:32:35 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m27HW7mJ008805;
+	Fri, 7 Mar 2008 09:32:07 -0800
+In-Reply-To: <alpine.LSU.1.00.0803071507510.19395@racer.site>
+User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+X-Spam-Status: No, hits=-3.969 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76502>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76503>
 
-"Ping Yin" <pkufranky@gmail.com> writes:
 
-> On Sat, Mar 1, 2008 at 3:29 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Ping Yin <pkufranky@gmail.com> writes:
->>
->>> +             test -z "$check_src" ||
->>> +             GIT_DIR="$name/.git" git-rev-parse --verify $sha1_src^0 >/dev/null 2>&1 ||
->>> +             unfound_src=t
->>
->>  You do not want to do ^0; you will not be bind a non-commit in gitlink
->>  entry anyway.
->>
-> Actually, I need ^0. "git-rev-parse --verify sha1" will always
-> succeed if sha1 is an valid name with lenght 40 even if the sha1
-> doesn't belong to the repository.
->
-> But what I want to verify is that the sha1 is not just valid/unique
-> but also belongs to the submodule repository.
 
-Don't you want "git cat-file -e <sha1>" then, unless you are checking
-more than one sha1?
+On Fri, 7 Mar 2008, Johannes Schindelin wrote:
+> 
+> > @@ -221,27 +222,6 @@ int cmd_read_tree(int argc, const char **argv, const char *unused_prefix)
+> >  	if ((opts.dir && !opts.update))
+> >  		die("--exclude-per-directory is meaningless unless -u");
+> >  
+> > -	if (opts.prefix) {
+> > -		int pfxlen = strlen(opts.prefix);
+> > -		int pos;
+> > -		if (opts.prefix[pfxlen-1] != '/')
+> > -			die("prefix must end with /");
+> > -		if (stage != 2)
+> > -			die("binding merge takes only one tree");
+> > -		pos = cache_name_pos(opts.prefix, pfxlen);
+> > -		if (0 <= pos)
+> > -			die("corrupt index file");
+> > -		pos = -pos-1;
+> > -		if (pos < active_nr &&
+> > -		    !strncmp(active_cache[pos]->name, opts.prefix, pfxlen))
+> > -			die("subdirectory '%s' already exists.", opts.prefix);
+> > -		pos = cache_name_pos(opts.prefix, pfxlen-1);
+> > -		if (0 <= pos)
+> > -			die("file '%.*s' already exists.",
+> > -					pfxlen-1, opts.prefix);
+> > -		opts.pos = -1 - pos;
+> > -	}
+> > -
+> 
+> Was the wholesale removal intentional?  I think there are a few sanity 
+> checks, and I did not see the checks moved to somewhere else.  But then, 
+> there could be redundant checks somewhere else that I missed.
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+It was intentional. The "bind_merge()" function already checks for overlap 
+in the individual entries, so those sanity checks don't actually buy you 
+anything. And those games with "opt.pos" actualyl made the new model not 
+work, because it would mean that we'd skip the old entries before that 
+"pos" entirely (instead of moving them over to the new index).
+
+However, you're right to point it out. The old checks are somewhat 
+different from the new ones - "bind_merge()" will check for overlap in 
+individual entries, but it doesn't disallow merging non-overlapping 
+subdirectories. I thought that extending the functionality would be a 
+feature, but maybe somebody really wants those checks to be there on 
+purpose.
+
+So maybe we could have left a few of those checks. I just thought it was 
+pretty interesting how we disallowed doing
+
+	- index:
+		subdirectory/Makefile
+
+	- tree:
+		.. anything *but* a 'Makefile' entry ..
+
+	- git-read-tree --prefix subdirectory/ <tree>
+
+and without the checks it actually works fine (it creates a "union" of the 
+index and the incoming tree).
+
+If somebody doesn't want that, I think they should check up-front (easy 
+enough: just test if "git ls-files subdirectory/" returns anything), so I 
+actually think the sanity checks just remove capabilities rather than add 
+anything.
+
+> > @@ -360,7 +366,10 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
+> >  	if (o->trivial_merges_only && o->nontrivial_merge)
+> >  		return unpack_failed(o, "Merge requires file-level merging");
+> >  
+> > +	o->src_index = NULL;
+> >  	check_updates(o);
+> > +	if (o->dst_index)
+> > +		*o->dst_index = o->result;
+> >  	return 0;
+> >  }
+> >  
+> 
+> I wonder if you should discard_index(o->dst_index) if o->src_index == 
+> o->dst_index (before you set it to NULL, of course).
+
+Not quite yet. I _really_ wanted to, but we can't do it - there's a few 
+users that want to use "the_index" that I was not ready to work out what 
+the right thing to do was.
+
+In particular, when we do write_entry() of the finished index, that one 
+does:
+
+    check_updates
+      checkout_entry()
+        write_entry
+          convert_to_working_tree
+            git_checkattr
+              bootstrap_attr_stack
+                read_attr
+                  read_index_data
+                    index_name_pos(&the_index)
+
+and the thing is, if we discard the old "the_index()" early (like we 
+*should* do), that callchain breaks because the attribute code will use 
+"the_index" rather than the index we are actually using!
+
+Now, the fact is, I think that's a bug in the attribute code (well, 
+"historical artifact" from the fact that we always used to use just 
+"the_index" for everything). It should no longer (in my opinion) just 
+blindly use "the_index" when we are writing out something else than 
+"the_index", but hey, that's what it does.
+
+If you want to play with it, here's a patch that I did *not* post on top 
+of the whole series that makes the issue more obvious. That "memset()" is 
+just to poison any users of the index that isn't finalized yet, to make 
+you get a nice SIGSEGV rather than just inexplicable failures.
+
+Anyway, to fix that thing, we'd have to pass the correct index around all 
+the way, which is definitely worth doing regardless, but it was kind of 
+beyond the aim of _this_ particular patch series.
+
+Here's the patch to get you started :)
+
+		Linus
+
+---
+ unpack-trees.c |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
+
+diff --git a/unpack-trees.c b/unpack-trees.c
+index 0cdf198..afa9c9d 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -366,6 +366,10 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
+ 	if (o->trivial_merges_only && o->nontrivial_merge)
+ 		return unpack_failed(o, "Merge requires file-level merging");
+ 
++	if (o->dst_index) {
++		discard_index(o->dst_index);
++		memset(o->dst_index, 0x55, sizeof(*o->dst_index));
++	}
+ 	o->src_index = NULL;
+ 	check_updates(o);
+ 	if (o->dst_index)
