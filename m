@@ -1,77 +1,101 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 4/4] Revert part of d089eba (setup: sanitize absolute and
- funny paths in get_pathspec())
-Date: Fri,  7 Mar 2008 02:54:46 -0800
-Message-ID: <1204887286-32574-3-git-send-email-gitster@pobox.com>
-References: <1204887286-32574-1-git-send-email-gitster@pobox.com>
- <1204887286-32574-2-git-send-email-gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 07 11:55:58 2008
+From: martin f krafft <madduck@madduck.net>
+Subject: Re: [PATCH] gitk: don't save the geometry to rc file on exit
+Date: Fri, 7 Mar 2008 12:11:44 +0100
+Message-ID: <20080307111144.GA18108@piper.oerlikon.madduck.net>
+References: <47AAA254.2020008@thorn.ws> <20080207063020.GP24004@spearce.org> <200802071056.19370.robin.rosenberg.lists@dewire.com> <20080207101051.19459.qmail@fcb20609bc7c07.315fe32.mid.smarden.org> <20080223113759.12854.qmail@6a8737aa4695b2.315fe32.mid.smarden.org> <18368.41742.689290.877767@cargo.ozlabs.ibm.com> <47C190E3.6000407@gmail.com> <18383.57540.26282.526111@cargo.ozlabs.ibm.com>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="opJtzjQTFsWo+cga"
+Cc: Mark Levedahl <mlevedahl@gmail.com>,
+	Gerrit Pape <pape@smarden.org>, git@vger.kernel.org,
+	442253-quiet@bugs.debian.org
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Fri Mar 07 12:13:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JXaF3-0004M2-Fd
-	for gcvg-git-2@gmane.org; Fri, 07 Mar 2008 11:55:57 +0100
+	id 1JXaVm-0001JL-B3
+	for gcvg-git-2@gmane.org; Fri, 07 Mar 2008 12:13:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760283AbYCGKzR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Mar 2008 05:55:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759293AbYCGKzQ
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Mar 2008 05:55:16 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:44609 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760119AbYCGKzP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Mar 2008 05:55:15 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 88B132274
-	for <git@vger.kernel.org>; Fri,  7 Mar 2008 05:55:14 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id EF53A2273 for <git@vger.kernel.org>; Fri,  7 Mar 2008 05:55:11 -0500
- (EST)
-X-Mailer: git-send-email 1.5.4.3.587.g0bdd73
-In-Reply-To: <1204887286-32574-2-git-send-email-gitster@pobox.com>
+	id S1757352AbYCGLMg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Mar 2008 06:12:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757148AbYCGLMg
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Mar 2008 06:12:36 -0500
+Received: from seamus.madduck.net ([213.203.238.82]:57741 "EHLO
+	seamus.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757104AbYCGLMf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Mar 2008 06:12:35 -0500
+Received: from wall.oerlikon.madduck.net (84-75-158-163.dclient.hispeed.ch [84.75.158.163])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "wall.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
+	by seamus.madduck.net (postfix) with ESMTP id 60174406147;
+	Fri,  7 Mar 2008 12:12:39 +0100 (CET)
+Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [192.168.14.3])
+	by wall.oerlikon.madduck.net (Postfix) with ESMTP id A1A1D9F18E;
+	Fri,  7 Mar 2008 12:11:44 +0100 (CET)
+Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
+	id 668944424; Fri,  7 Mar 2008 12:11:44 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <18383.57540.26282.526111@cargo.ozlabs.ibm.com>
+X-Motto: Keep the good times rollin'
+X-OS: Debian GNU/Linux lenny/sid kernel 2.6.24-1-amd64 x86_64
+X-Spamtrap: madduck.bogus@madduck.net
+X-Subliminal-Message: debian/rules!
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+X-Virus-Scanned: ClamAV 0.92.1/6158/Fri Mar  7 07:54:13 2008 on seamus.madduck.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76474>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76475>
 
-When get_pathspec() was originally made absolute-path capable,
-we botched the interface to it, without dying inside the function
-when given a path that is outside the work tree, and made it the
-responsibility of callers to check the condition in a roundabout
-way.  This is made unnecessary with the previous patch.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin-ls-files.c |   11 +----------
- 1 files changed, 1 insertions(+), 10 deletions(-)
+--opJtzjQTFsWo+cga
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/builtin-ls-files.c b/builtin-ls-files.c
-index 25dbfb4..dc7eab8 100644
---- a/builtin-ls-files.c
-+++ b/builtin-ls-files.c
-@@ -574,17 +574,8 @@ int cmd_ls_files(int argc, const char **argv, const char *prefix)
- 	pathspec = get_pathspec(prefix, argv + i);
- 
- 	/* Verify that the pathspec matches the prefix */
--	if (pathspec) {
--		if (argc != i) {
--			int cnt;
--			for (cnt = 0; pathspec[cnt]; cnt++)
--				;
--			if (cnt != (argc - i))
--				exit(1); /* error message already given */
--		}
-+	if (pathspec)
- 		prefix = verify_pathspec(prefix);
--	} else if (argc != i)
--		exit(1); /* error message already given */
- 
- 	/* Treat unmatching pathspec elements as errors */
- 	if (pathspec && error_unmatch) {
--- 
-1.5.4.3.587.g0bdd73
+also sprach Paul Mackerras <paulus@samba.org> [2008.03.06.1317 +0100]:
+> Here's a patch for people to test.  It only restores the width and
+> height, and limits the width and height to be at most the width and
+> height of the screen.  It seems to work fine under X; I would be
+> interested to know what happens under macos and windows.
 
+I can confirm that the behaviour is much better: the window size is
+restored, as is the position, but it gives preference to the
+Xinerama head. You'd think it restores at the same *relative*
+position on the current head, but it actually just restores
+somewhere =E2=80=94 I cannot figure out the behaviour.
+
+However, I still wonder why we have to do this at all. I understand
+that Cygwin has issues and needs this code, but couldn't it then be
+made to run only on Cygwin, such that on "proper" Unix systems, the
+config file is *not* updated every time I move the window before
+closing the application? As I said earlier, this is really the job
+of a window manager, *not* a configuration option. If your window
+manager cannot restore the window to a size you control, then it's
+broken. Let's not hack applications to work around that, please.
+
+--=20
+martin | http://madduck.net/ | http://two.sentenc.es/
+=20
+$complex->{'data'}[$structures][$in_perl] =3D @{$can{'be'}->[$painful]};
+=20
+spamtraps: madduck.bogus@madduck.net
+
+--opJtzjQTFsWo+cga
+Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
+Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFH0SLwIgvIgzMMSnURAp6fAKCbbXxuNuzJIj1ieJpi0HTcRCrxzgCgntOv
+wUBPkeLCHbgYbRW1O50c7SU=
+=XHRA
+-----END PGP SIGNATURE-----
+
+--opJtzjQTFsWo+cga--
