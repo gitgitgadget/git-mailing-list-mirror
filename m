@@ -1,101 +1,93 @@
-From: martin f krafft <madduck@madduck.net>
-Subject: Re: [PATCH] gitk: don't save the geometry to rc file on exit
-Date: Fri, 7 Mar 2008 12:11:44 +0100
-Message-ID: <20080307111144.GA18108@piper.oerlikon.madduck.net>
-References: <47AAA254.2020008@thorn.ws> <20080207063020.GP24004@spearce.org> <200802071056.19370.robin.rosenberg.lists@dewire.com> <20080207101051.19459.qmail@fcb20609bc7c07.315fe32.mid.smarden.org> <20080223113759.12854.qmail@6a8737aa4695b2.315fe32.mid.smarden.org> <18368.41742.689290.877767@cargo.ozlabs.ibm.com> <47C190E3.6000407@gmail.com> <18383.57540.26282.526111@cargo.ozlabs.ibm.com>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Something wrong with next in main git repository?
+Date: Fri, 7 Mar 2008 11:29:21 +0000
+Message-ID: <200803071129.21551.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="opJtzjQTFsWo+cga"
-Cc: Mark Levedahl <mlevedahl@gmail.com>,
-	Gerrit Pape <pape@smarden.org>, git@vger.kernel.org,
-	442253-quiet@bugs.debian.org
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Fri Mar 07 12:13:15 2008
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Mar 07 12:30:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JXaVm-0001JL-B3
-	for gcvg-git-2@gmane.org; Fri, 07 Mar 2008 12:13:14 +0100
+	id 1JXamC-0006jC-8O
+	for gcvg-git-2@gmane.org; Fri, 07 Mar 2008 12:30:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757352AbYCGLMg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Mar 2008 06:12:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757148AbYCGLMg
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Mar 2008 06:12:36 -0500
-Received: from seamus.madduck.net ([213.203.238.82]:57741 "EHLO
-	seamus.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757104AbYCGLMf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Mar 2008 06:12:35 -0500
-Received: from wall.oerlikon.madduck.net (84-75-158-163.dclient.hispeed.ch [84.75.158.163])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "wall.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by seamus.madduck.net (postfix) with ESMTP id 60174406147;
-	Fri,  7 Mar 2008 12:12:39 +0100 (CET)
-Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [192.168.14.3])
-	by wall.oerlikon.madduck.net (Postfix) with ESMTP id A1A1D9F18E;
-	Fri,  7 Mar 2008 12:11:44 +0100 (CET)
-Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
-	id 668944424; Fri,  7 Mar 2008 12:11:44 +0100 (CET)
+	id S1758161AbYCGL32 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Mar 2008 06:29:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758035AbYCGL32
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Mar 2008 06:29:28 -0500
+Received: from ug-out-1314.google.com ([66.249.92.172]:40406 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757856AbYCGL31 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Mar 2008 06:29:27 -0500
+Received: by ug-out-1314.google.com with SMTP id z38so4299239ugc.16
+        for <git@vger.kernel.org>; Fri, 07 Mar 2008 03:29:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:mime-version:content-disposition:content-type:content-transfer-encoding:message-id;
+        bh=1+E2RbshXdW4C0fnTid9HejjX39Pk3MGu6MMepvKKDo=;
+        b=DxwGHlCZqcs3JNRTgtSbD6pkFfPbDxjuKSeVmIDlj14X6XQZOn//7cvhrDIjV3px84LU6oxFQRSwLcyzDbtaembdZ32g697wwT25eTUeXxivGo7goPuxuM4ZbRNB14xv4640/IkXybGBk9AFW6MGhzzeiBOAS1XCX0FKf4Wlf34=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:mime-version:content-disposition:content-type:content-transfer-encoding:message-id;
+        b=HYyqbJMK5kUoHMpl58apN4B5u9Bm0uUPhclgfkZd4mxxXWG7ojbdaD15eL/FFzadXMAd/04jX0XQczn8R2kufyObWJ4NT6Hznc8pcRuiLBNismmuqfUwMmA2m1IMyzHJivC4UbUPuqcYvwqeMg6ZE97ZC9b3J8EVVu1vUzGcB4g=
+Received: by 10.78.137.7 with SMTP id k7mr3212588hud.68.1204889365724;
+        Fri, 07 Mar 2008 03:29:25 -0800 (PST)
+Received: from dvr.360vision.com ( [194.70.53.227])
+        by mx.google.com with ESMTPS id z40sm1935365ikz.4.2008.03.07.03.29.23
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 07 Mar 2008 03:29:24 -0800 (PST)
+User-Agent: KMail/1.9.7
 Content-Disposition: inline
-In-Reply-To: <18383.57540.26282.526111@cargo.ozlabs.ibm.com>
-X-Motto: Keep the good times rollin'
-X-OS: Debian GNU/Linux lenny/sid kernel 2.6.24-1-amd64 x86_64
-X-Spamtrap: madduck.bogus@madduck.net
-X-Subliminal-Message: debian/rules!
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-X-Virus-Scanned: ClamAV 0.92.1/6158/Fri Mar  7 07:54:13 2008 on seamus.madduck.net
-X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76475>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76476>
+
+Hello,
+
+I've been keeping up with development only intermittently lately, and just got 
+a warning from git fetch (in my git directory) that the update to my 'next' 
+tracking branch was rejected as not being a fast forward.
+
+I renamed my current up/next to up/oldnext and fetched the latest next, so I 
+had up/oldnext and up/next to compare.  I'm probably concerned over nothing, 
+but I can't find any mention of a rewind of next in the mailing list.
+
+As far as I can tell a whole series of merges has just vanished.  For 
+information:
+
+ $ git rev-parse up/next up/oldnext
+ 0bdd7328c801101d752d0dfc9976a50651738897
+ 38fd5a1b23780381c3b6987c730f5ea3d8e1fc7f
+
+ $ git merge-base up/next up/oldnext
+ ef5b9d6e2286630bf8afb5bdf1c6e3356f3d50c7
+
+Apart from all the merges that have vanished, some revisions have vanished too 
+(vanished in the sense, they aren't on the branch any more).  i.e.
+
+ $ git log --no-merges --pretty=oneline up/next..up/oldnext
+ 33369889 Revert "Support builtin aliases"
+ 3a569a00 Revert "parse_commit_buffer: don't parse invalid commits"
+ 1b1b2346 parse_commit_buffer: don't parse invalid commits
+ f0a31f58 Avoid redundant declaration of missing_target()
+  ... etc ...
+ 0edad442 adjust_shared_perm: chmod() only when needed.
+ 69a47520 Revert "pack-objects: use of version 3 delta is now optional."
+ 394737eb pack-objects: use of version 3 delta is now optional.
+
+Have all these commits gone missing?  I'm certain that someone other than me 
+would have noticed this sort of loss, so is it something I've done wrong or 
+misunderstood?
 
 
---opJtzjQTFsWo+cga
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-also sprach Paul Mackerras <paulus@samba.org> [2008.03.06.1317 +0100]:
-> Here's a patch for people to test.  It only restores the width and
-> height, and limits the width and height to be at most the width and
-> height of the screen.  It seems to work fine under X; I would be
-> interested to know what happens under macos and windows.
-
-I can confirm that the behaviour is much better: the window size is
-restored, as is the position, but it gives preference to the
-Xinerama head. You'd think it restores at the same *relative*
-position on the current head, but it actually just restores
-somewhere =E2=80=94 I cannot figure out the behaviour.
-
-However, I still wonder why we have to do this at all. I understand
-that Cygwin has issues and needs this code, but couldn't it then be
-made to run only on Cygwin, such that on "proper" Unix systems, the
-config file is *not* updated every time I move the window before
-closing the application? As I said earlier, this is really the job
-of a window manager, *not* a configuration option. If your window
-manager cannot restore the window to a size you control, then it's
-broken. Let's not hack applications to work around that, please.
-
---=20
-martin | http://madduck.net/ | http://two.sentenc.es/
-=20
-$complex->{'data'}[$structures][$in_perl] =3D @{$can{'be'}->[$painful]};
-=20
-spamtraps: madduck.bogus@madduck.net
-
---opJtzjQTFsWo+cga
-Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
-Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFH0SLwIgvIgzMMSnURAp6fAKCbbXxuNuzJIj1ieJpi0HTcRCrxzgCgntOv
-wUBPkeLCHbgYbRW1O50c7SU=
-=XHRA
------END PGP SIGNATURE-----
-
---opJtzjQTFsWo+cga--
+Andy
+-- 
+Dr Andy Parkins, M Eng (hons), MIET
+andyparkins@gmail.com
