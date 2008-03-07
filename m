@@ -1,55 +1,58 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFH] What do you think about adding graphical merge to
- git-gui?
-Date: Fri, 7 Mar 2008 16:27:21 +0100 (CET)
-Message-ID: <alpine.LSU.1.00.0803071626280.19395@racer.site>
-References: <200803071240.09999.jnareb@gmail.com> <200803071446.39468.jnareb@gmail.com> <alpine.LSU.1.00.0803071453160.19395@racer.site> <200803071621.37376.jnareb@gmail.com>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: Something wrong with next in main git repository?
+Date: Fri, 07 Mar 2008 15:27:31 +0000
+Message-ID: <fqrmt3$suk$1@ger.gmane.org>
+References: <200803071129.21551.andyparkins@gmail.com> <alpine.LSU.1.00.0803071249400.19395@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
-	Paul Mackerras <paulus@samba.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 07 16:28:06 2008
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 07 16:28:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JXeUH-0003NB-9t
-	for gcvg-git-2@gmane.org; Fri, 07 Mar 2008 16:27:57 +0100
+	id 1JXeUm-0003Z5-7s
+	for gcvg-git-2@gmane.org; Fri, 07 Mar 2008 16:28:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751924AbYCGP1T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Mar 2008 10:27:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751670AbYCGP1T
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Mar 2008 10:27:19 -0500
-Received: from mail.gmx.net ([213.165.64.20]:38989 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751660AbYCGP1T (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Mar 2008 10:27:19 -0500
-Received: (qmail invoked by alias); 07 Mar 2008 15:27:17 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp048) with SMTP; 07 Mar 2008 16:27:17 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+xSYJMeKCx/brnz+xdGMPdMjsZs/P0Xsa8lQQ+xr
-	dmMNILOWOS2OQV
-X-X-Sender: gene099@racer.site
-In-Reply-To: <200803071621.37376.jnareb@gmail.com>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1751979AbYCGP1t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Mar 2008 10:27:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752960AbYCGP1t
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Mar 2008 10:27:49 -0500
+Received: from main.gmane.org ([80.91.229.2]:55655 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751670AbYCGP1s (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Mar 2008 10:27:48 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1JXeU1-0000Oz-NT
+	for git@vger.kernel.org; Fri, 07 Mar 2008 15:27:41 +0000
+Received: from 194.70.53.227 ([194.70.53.227])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 07 Mar 2008 15:27:41 +0000
+Received: from andyparkins by 194.70.53.227 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 07 Mar 2008 15:27:41 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 194.70.53.227
+User-Agent: KNode/0.10.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76497>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76498>
 
-Hi,
+Johannes Schindelin wrote:
 
-On Fri, 7 Mar 2008, Jakub Narebski wrote:
+>> After a feature release is made from "master", however, "next" will be
+>> rebuilt from the tip of "master" using the surviving topics. The commit
 
-> Could you recommend some good (best if also free) documentation of 
-> Tcl/Tk, so I won't be doing "cargo cult" (copy'n'paste) programming?
+Apologies for the noise; and lack of reading ability ;-)
 
-AFAIR http://www.tcl.tk/ has some good links to tutorials.
 
-Ciao,
-Dscho
+Andy
+-- 
+Dr Andy Parkins, M Eng (hons), MIET
+andyparkins@gmail.com
 
