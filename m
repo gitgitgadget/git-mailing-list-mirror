@@ -1,57 +1,64 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFH] What do you think about adding graphical merge to
- git-gui?
-Date: Fri, 7 Mar 2008 12:54:52 +0100 (CET)
-Message-ID: <alpine.LSU.1.00.0803071254310.19395@racer.site>
-References: <200803071240.09999.jnareb@gmail.com>
+From: Adeodato =?utf-8?B?U2ltw7M=?= <dato@net.com.org.es>
+Subject: [ANN] bzr-fast-export
+Date: Fri, 7 Mar 2008 13:03:47 +0100
+Message-ID: <20080307120347.GA27001@chistera.yi.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
-	Paul Mackerras <paulus@samba.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 07 12:55:57 2008
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+To: bazaar@lists.canonical.com, git@vger.kernel.org
+X-From: bazaar-bounces@lists.canonical.com Fri Mar 07 13:11:59 2008
+Return-path: <bazaar-bounces@lists.canonical.com>
+Envelope-to: gcvbg-bazaar-ng@m.gmane.org
+Received: from chlorine.canonical.com ([91.189.94.204])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JXbB1-00079o-1B
-	for gcvg-git-2@gmane.org; Fri, 07 Mar 2008 12:55:51 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758922AbYCGLyw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Mar 2008 06:54:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758797AbYCGLyw
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Mar 2008 06:54:52 -0500
-Received: from mail.gmx.net ([213.165.64.20]:42908 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1759449AbYCGLyv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Mar 2008 06:54:51 -0500
-Received: (qmail invoked by alias); 07 Mar 2008 11:54:49 -0000
-Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
-  by mail.gmx.net (mp014) with SMTP; 07 Mar 2008 12:54:49 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19gwP1bPJtgiPPSuVadvnFESu5fGDkuZvblo02gtG
-	UfS3TJqHrz+atW
-X-X-Sender: gene099@racer.site
-In-Reply-To: <200803071240.09999.jnareb@gmail.com>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76481>
+	id 1JXbQc-00043O-U8
+	for gcvbg-bazaar-ng@m.gmane.org; Fri, 07 Mar 2008 13:11:59 +0100
+Received: from localhost ([127.0.0.1] helo=chlorine.canonical.com)
+	by chlorine.canonical.com with esmtp (Exim 4.60)
+	(envelope-from <bazaar-bounces@lists.canonical.com>)
+	id 1JXbQ3-00010X-A7; Fri, 07 Mar 2008 12:11:23 +0000
+Received: from gluck.debian.org ([192.25.206.10])
+	by chlorine.canonical.com with esmtp (Exim 4.60)
+	(envelope-from <dato@net.com.org.es>) id 1JXbPb-0000xV-VM
+	for bazaar@lists.canonical.com; Fri, 07 Mar 2008 12:10:56 +0000
+Received: from localhost ([127.0.0.1] helo=chistera.yi.org)
+	by gluck.debian.org with esmtp (Exim 4.50)
+	id 1JXbPT-0005c2-QM; Fri, 07 Mar 2008 05:10:48 -0700
+Received: from userid 1000 by plumber with local (Exim 4.69) 
+	id 1JXbIh-0007fn-Cz; Fri, 07 Mar 2008 13:03:47 +0100
+Mail-Followup-To: bazaar@lists.canonical.com, git@vger.kernel.org,
+	Ian Clatworthy <ian.clatworthy@internode.on.net>
+Content-Disposition: inline
+X-No-CC: Please respect my Mail-Followup-To header
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+X-BeenThere: bazaar@lists.canonical.com
+X-Mailman-Version: 2.1.8
+Precedence: list
+List-Id: bazaar discussion <bazaar.lists.canonical.com>
+List-Unsubscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar>,
+	<mailto:bazaar-request@lists.canonical.com?subject=unsubscribe>
+List-Archive: <https://lists.ubuntu.com/archives/bazaar>
+List-Post: <mailto:bazaar@lists.canonical.com>
+List-Help: <mailto:bazaar-request@lists.canonical.com?subject=help>
+List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar>,
+	<mailto:bazaar-request@lists.canonical.com?subject=subscribe>
+Sender: bazaar-bounces@lists.canonical.com
+Errors-To: bazaar-bounces@lists.canonical.com
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76482>
 
-Hi,
+I was needing a bzr frontend for git-fast-import, and as there wasn't
+one, I wrote it.
 
-On Fri, 7 Mar 2008, Jakub Narebski wrote:
+It does all what I need, so I'm not atm much interested in spending more
+time on it, but as noted in the README, Ian Clatworthy (the author of
+bzr-fastimport) is willing to take ownership of it under the bzr-fastimport
+umbrella.
 
-> What do you think about adding "merge" subcommand to git-gui,
-> or to be more exact adding tree-level merge and/or file-level
-> merge tool to git-gui? I think we could "borrow" some code from
-> TkDiff: http://tkdiff.sourceforge.net/ (which is also GPL)
+The current (fast food) code lives at:
 
-Is there any reason not to use mergetool?
+  http://chistera.yi.org/~adeodato/tmp/other/bzr-fast-export.git
 
-Ciao,
-Dscho
+I'll update the README file in that repository once it gets integrated
+into bzr-fastimport.
 
+Cheers,
