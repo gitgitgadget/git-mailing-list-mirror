@@ -1,114 +1,85 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [RFH] bug in unpack_trees
-Date: Sat, 8 Mar 2008 17:36:25 -0500 (EST)
-Message-ID: <alpine.LNX.1.00.0803081726450.19665@iabervon.org>
-References: <20080304115940.GA5260@sigill.intra.peff.net> <alpine.LFD.1.00.0803081417040.5896@woody.linux-foundation.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] builtin remote rm: remove symbolic refs, too
+Date: Sat, 8 Mar 2008 23:40:42 +0100 (CET)
+Message-ID: <alpine.LSU.1.00.0803082339060.3975@racer.site>
+References: <200803051338.44938.tlikonen@iki.fi> <7v7iggn9ts.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	John Goerzen <jgoerzen@complete.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sat Mar 08 23:37:08 2008
+Cc: Teemu Likonen <tlikonen@iki.fi>, git@vger.kernel.org,
+	James Bowes <jbowes@dangerouslyinc.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Mar 08 23:41:27 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JY7f9-0008Gc-8a
-	for gcvg-git-2@gmane.org; Sat, 08 Mar 2008 23:37:07 +0100
+	id 1JY7jB-00010m-Mt
+	for gcvg-git-2@gmane.org; Sat, 08 Mar 2008 23:41:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751032AbYCHWg1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Mar 2008 17:36:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751143AbYCHWg1
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Mar 2008 17:36:27 -0500
-Received: from iabervon.org ([66.92.72.58]:37454 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750932AbYCHWg0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Mar 2008 17:36:26 -0500
-Received: (qmail 16913 invoked by uid 1000); 8 Mar 2008 22:36:25 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 8 Mar 2008 22:36:25 -0000
-In-Reply-To: <alpine.LFD.1.00.0803081417040.5896@woody.linux-foundation.org>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1751373AbYCHWkk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Mar 2008 17:40:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751218AbYCHWkk
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Mar 2008 17:40:40 -0500
+Received: from mail.gmx.net ([213.165.64.20]:48936 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750740AbYCHWkj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Mar 2008 17:40:39 -0500
+Received: (qmail invoked by alias); 08 Mar 2008 22:40:37 -0000
+Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
+  by mail.gmx.net (mp052) with SMTP; 08 Mar 2008 23:40:37 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18nFKYayM4npPmekV655TDOp8rK1HIWIaQHW/T+Dl
+	wb0GCUn8G5O3xC
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7v7iggn9ts.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76597>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76598>
 
-On Sat, 8 Mar 2008, Linus Torvalds wrote:
 
-> On Tue, 4 Mar 2008, Jeff King wrote:
-> >
-> > I am tracking down a bug in unpack_trees, but I can't seem to find the
-> > exact problem; I'm hoping to get help from people who have touched this
-> > code a bit more than I have.
-> 
-> Ok, so I decided that I should now finally go back and look at the 
-> original bug-report that triggered my unpack-trees rewrite, now that it's 
-> in a form where I feel like I can actually look at the code and fix the 
-> problem..
-> 
-> I'd love to say that I know what the original bug was, but since I 
-> couldn't fix it in the first place because I couldn't read the original 
-> code, I can't really say what fixed it.
+"git remote add" can add a symbolic ref "HEAD", and "rm" should delete
+it, too.
 
-The original bug was that the position in the index being modified in 
-place got messed up by core code that discarded unnecessary REMOVE entries 
-for files in a d/f conflicting directory without reporting how many were 
-removed so that the iteration could compensate. Cleaning up the code may 
-or may not have fixed it, but using separate indices would make it really 
-hard to retain the bug.
+Noticed by Teemu Likonen.
 
-> Jeff's test-script appended just for people who can't find the original 
-> message that started this all.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ builtin-remote.c  |    5 +++++
+ t/t5505-remote.sh |    1 +
+ 2 files changed, 6 insertions(+), 0 deletions(-)
 
-Here it is as an actual test case:
-
-----------
-commit f9eef3140fedaa10842d433e6fbf67f6b914712c
-Author: Daniel Barkalow <barkalow@iabervon.org>
-Date:   Wed Mar 5 15:50:36 2008 -0500
-
-    Add a test for read-tree -u --reset working despite df conflicts
-    
-    From an email by Jeff King <peff@peff.net>
-    
-    Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
-
-diff --git a/t/t1005-read-tree-reset.sh b/t/t1005-read-tree-reset.sh
-new file mode 100755
-index 0000000..f1b1216
---- /dev/null
-+++ b/t/t1005-read-tree-reset.sh
-@@ -0,0 +1,30 @@
-+#!/bin/sh
+diff --git a/builtin-remote.c b/builtin-remote.c
+index aa90cc9..f7653b6 100644
+--- a/builtin-remote.c
++++ b/builtin-remote.c
+@@ -267,6 +267,11 @@ static int add_branch_for_removal(const char *refname,
+ 
+ 	if (!prefixcmp(refname, branches->prefix)) {
+ 		struct path_list_item *item;
 +
-+test_description='read-tree -u --reset'
++		/* make sure that symrefs are deleted */
++		if (flags & REF_ISSYMREF)
++			return unlink(git_path(refname));
 +
-+. ./test-lib.sh
-+
-+# two-tree test
-+
-+test_expect_success 'setup' '
-+  git init &&
-+  mkdir df &&
-+  echo content >df/file &&
-+  git add df/file &&
-+  git commit -m one &&
-+  git ls-files >expect &&
-+  rm -rf df &&
-+  echo content >df &&
-+  git add df &&
-+  echo content >new &&
-+  git add new &&
-+  git commit -m two
-+'
-+
-+test_expect_failure 'reset should work' '
-+  git read-tree -u --reset HEAD^ &&
-+  git ls-files >actual &&
-+  diff -u expect actual
-+'
-+
-+test_done
+ 		item = path_list_append(refname, branches->branches);
+ 		item->util = xmalloc(20);
+ 		hashcpy(item->util, sha1);
+diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+index f45ea68..2822a65 100755
+--- a/t/t5505-remote.sh
++++ b/t/t5505-remote.sh
+@@ -80,6 +80,7 @@ test_expect_success 'add another remote' '
+ test_expect_success 'remove remote' '
+ (
+ 	cd test &&
++	git symbolic-ref refs/remotes/second/HEAD refs/remotes/second/master &&
+ 	git remote rm second
+ )
+ '
+-- 
+1.5.4.3.653.gbc310
+
