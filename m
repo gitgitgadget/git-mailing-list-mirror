@@ -1,118 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: What's in git.git (stable)
-Date: Sat, 08 Mar 2008 02:08:49 -0800
-Message-ID: <7v4pbhv87i.fsf@gitster.siamese.dyndns.org>
-References: <7v8x27iui1.fsf@gitster.siamese.dyndns.org>
- <7vd4r24ox6.fsf@gitster.siamese.dyndns.org>
- <7vir0o44mt.fsf_-_@gitster.siamese.dyndns.org>
- <7vejb7ymep.fsf@gitster.siamese.dyndns.org>
- <7vfxvhjukt.fsf@gitster.siamese.dyndns.org>
- <7vablloqqe.fsf@gitster.siamese.dyndns.org>
- <7vod9wlfx5.fsf@gitster.siamese.dyndns.org>
- <7v8x0wie56.fsf@gitster.siamese.dyndns.org>
+From: =?utf-8?q?Santi=20B=C3=A9jar?= <sbejar@gmail.com>
+Subject: [PATCH] ident.c: Removes geekspeak comment when the user name cannot be determined
+Date: Sat,  8 Mar 2008 12:30:04 +0100
+Message-ID: <1204975804-8511-1-git-send-email-sbejar@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?utf-8?q?Santi=20B=C3=A9jar?= <sbejar@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 08 11:09:59 2008
+X-From: git-owner@vger.kernel.org Sat Mar 08 12:31:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JXw06-0000Fo-Vb
-	for gcvg-git-2@gmane.org; Sat, 08 Mar 2008 11:09:59 +0100
+	id 1JXxHC-0004M0-Q4
+	for gcvg-git-2@gmane.org; Sat, 08 Mar 2008 12:31:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751623AbYCHKI5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 8 Mar 2008 05:08:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751595AbYCHKI5
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Mar 2008 05:08:57 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:40921 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751605AbYCHKI4 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 8 Mar 2008 05:08:56 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 7501A294A;
-	Sat,  8 Mar 2008 05:08:54 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 83AD72947; Sat,  8 Mar 2008 05:08:52 -0500 (EST)
-X-maint-at: c8744d6a8b27115503565041566d97c21e722584
-X-master-at: 60e3cad92ed93120b9e77116163b267fdda44f91
-In-Reply-To: <7v8x0wie56.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
- message of "Wed, 05 Mar 2008 22:02:13 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752279AbYCHLaj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 8 Mar 2008 06:30:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752511AbYCHLaj
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Mar 2008 06:30:39 -0500
+Received: from fk-out-0910.google.com ([209.85.128.186]:46727 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752279AbYCHLai (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Mar 2008 06:30:38 -0500
+Received: by fk-out-0910.google.com with SMTP id z23so736603fkz.5
+        for <git@vger.kernel.org>; Sat, 08 Mar 2008 03:30:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date:message-id:x-mailer:mime-version:content-type:content-transfer-encoding;
+        bh=ybChG7vE5AqFzCgGBTK8ZkeWNFkARAmWzGr5mehuUSQ=;
+        b=Np6cr74HLatsD4TnHz0cx6NAhZ55HgjOCpYfXUUY143vdUiO8sKXZJ8YzJMhh/bmAQrjX38f3V4teoAaEVb8A+uC5g+LiXKjZdzNQkF46sXA6DaGTz+SPWfDYacC/C3rH88OocevVUgNAFb/HbDTnLbPMRXh1aM7p504C7UM4tQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version:content-type:content-transfer-encoding;
+        b=FRpyFSgfJkYtp/AaOYbj2Lfdyn/3N9XZRKFz36sxLjejLs+ghpif/sP4BpH67lCd0vkgt1o+HnzmoHLkPBV5C3fx4R3ddES/uZhLGlOsBXfBBX8nJ7MR9VY2Z4ZDMxeC1gztrKgbNgiOyl0/hPSTztyxjanDlC+N6OBBV/jRy0A=
+Received: by 10.78.179.12 with SMTP id b12mr6738600huf.61.1204975832340;
+        Sat, 08 Mar 2008 03:30:32 -0800 (PST)
+Received: from localhost ( [91.13.83.130])
+        by mx.google.com with ESMTPS id j10sm7061714muh.16.2008.03.08.03.30.25
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 08 Mar 2008 03:30:31 -0800 (PST)
+X-Mailer: git-send-email 1.5.4.3.589.g6816
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76556>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76557>
 
-There are about half a dozen topics that need to be merged to 'maint'
-before 1.5.4.4 can happen, which hopefully will be mid next week.  They
-are already in 'master' and we haven't heard about breakages with them.
+The "config --global" suggested in the message is a valid one-shot fix,
+and hopefully one-shot across machines that NFS mounts the home directo=
+ries.
 
-It would be really nice to also have msgfmt issue on OSX resolved (e.g.
-http://article.gmane.org/gmane.comp.version-control.git/76355) before
-that.
+This knowledge can hopefully be reused when you are forced to use git o=
+n
+Windows, but the fix based on GECOS would probably not.
 
-----------------------------------------------------------------
+[sb: commit message taken from a Junio's comment]
 
-* The 'maint' branch has these fixes since the last announcement.
+Signed-off-by: Santi B=C3=A9jar <sbejar@gmail.com>
+---
+ ident.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-Junio C Hamano (1):
-  test-lib: fix TERM to dumb for test repeatability
-
-Pierre Habouzit (1):
-  unquote_c_style: fix off-by-one.
-
-Shawn O. Pearce (1):
-  git-gui: Gracefully fall back to po2msg.sh if msgfmt --tcl fails
-
-Uwe Kleine-K=C3=B6nig (1):
-  config.txt: refer to --upload-pack and --receive-pack instead of --ex=
-ec
-
-
-* The 'master' branch has these since the last announcement
-  in addition to the above.
-
-Alex Riesen (1):
-  Do not use GUID on dir in git init --shared=3Dall on FreeBSD
-
-Brandon Casey (10):
-  builtin-reflog.c: fix typo that accesses an unset variable
-  reflog-delete: parse standard reflog options
-  git-reflog: add option --rewrite to update reflog entries while expir=
-ing
-  refs.c: make close_ref() and commit_ref() non-static
-  git-reflog: add option --updateref to write the last reflog sha1 into=
- the
-    ref
-  git-stash: add new 'drop' subcommand
-  git-stash: add new 'pop' subcommand
-  t3903-stash.sh: Add missing '&&' to body of testcase
-  git-reflog.txt: Document new commands --updateref and --rewrite
-  t3903-stash.sh: Add tests for new stash commands drop and pop
-
-Charles Bailey (4):
-  Tidy up git mergetool's backup file behaviour
-  Changed an internal variable of mergetool to support custom commands
-  Teach git mergetool to use custom commands defined at config time
-  Add a very basic test script for git mergetool
-
-Christian Couder (1):
-  run-command: Redirect stderr to a pipe before redirecting stdout to
-    stderr
-
-Denis Cheng (3):
-  whatchanged documentation: share description of --pretty with others
-  specify explicit "--pretty=3Dmedium" with `git log/show/whatchanged`
-  log/show/whatchanged: introduce format.pretty configuration
-
-Johannes Schindelin (1):
-  Teach "git reflog" a subcommand to delete single entries
-
-Junio C Hamano (1):
-  send-email: --no-signed-off-cc should suppress 'sob' cc
+diff --git a/ident.c b/ident.c
+index b839dcf..4007c5a 100644
+--- a/ident.c
++++ b/ident.c
+@@ -171,7 +171,7 @@ static const char au_env[] =3D "GIT_AUTHOR_NAME";
+ static const char co_env[] =3D "GIT_COMMITTER_NAME";
+ static const char *env_hint =3D
+ "\n"
+-"*** Your name cannot be determined from your system services (gecos).=
+\n"
++"*** Your name cannot be determined.\n"
+ "\n"
+ "Run\n"
+ "\n"
+--=20
+1.5.4.3.589.g6816
 
