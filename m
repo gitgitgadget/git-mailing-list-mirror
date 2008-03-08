@@ -1,97 +1,61 @@
-From: Kevin Ballard <kevin@sb.org>
-Subject: [PATCH] Don't try and percent-escape existing percent escapes in git-svn URIs
-Date: Sat,  8 Mar 2008 18:20:47 -0500
-Message-ID: <1205018447-18344-1-git-send-email-kevin@sb.org>
-Cc: Kevin Ballard <kevin@sb.org>, git@vger.kernel.org
-To: normalperson@yhbt.net
-X-From: git-owner@vger.kernel.org Sun Mar 09 00:21:30 2008
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 08/11] Allow for having for_each_ref() list some refs
+ that aren't local
+Date: Sun, 9 Mar 2008 00:22:41 +0100 (CET)
+Message-ID: <alpine.LSU.1.00.0803090020430.3975@racer.site>
+References: <alpine.LNX.1.00.0803081804170.19665@iabervon.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Sun Mar 09 00:23:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JY8M5-0004VX-1Z
-	for gcvg-git-2@gmane.org; Sun, 09 Mar 2008 00:21:29 +0100
+	id 1JY8Nn-0004x8-6q
+	for gcvg-git-2@gmane.org; Sun, 09 Mar 2008 00:23:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751579AbYCHXUu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Mar 2008 18:20:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750932AbYCHXUu
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Mar 2008 18:20:50 -0500
-Received: from sd-green-bigip-145.dreamhost.com ([208.97.132.145]:34748 "EHLO
-	randymail-a9.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1751314AbYCHXUt (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 8 Mar 2008 18:20:49 -0500
-Received: from localhost.localdomain (KBALLARD.RES.WPI.NET [130.215.239.91])
-	by randymail-a9.g.dreamhost.com (Postfix) with ESMTP id B58B4EF344;
-	Sat,  8 Mar 2008 15:20:48 -0800 (PST)
-X-Mailer: git-send-email 1.5.4.3.487.g1eab2.dirty
+	id S1751678AbYCHXWh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Mar 2008 18:22:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751642AbYCHXWh
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Mar 2008 18:22:37 -0500
+Received: from mail.gmx.net ([213.165.64.20]:48930 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751314AbYCHXWh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Mar 2008 18:22:37 -0500
+Received: (qmail invoked by alias); 08 Mar 2008 23:22:35 -0000
+Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
+  by mail.gmx.net (mp008) with SMTP; 09 Mar 2008 00:22:35 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/lgBNjFuvleLYGc7y5G0SWZTgjBK+wzjPEqQTEYN
+	t7gnmKQLQNdwIj
+X-X-Sender: gene099@racer.site
+In-Reply-To: <alpine.LNX.1.00.0803081804170.19665@iabervon.org>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76616>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76617>
 
-git-svn: project names are percent-escaped ever since f5530b.
-Unfortunately this breaks the scenario where the user hands git-svn
-an already-escaped URI. Fix the regexp to skip over what looks like
-existing percent escapes, and test this scenario.
+Hi,
 
-Signed-off-by: Kevin Ballard <kevin@sb.org>
----
- git-svn.perl                                  |    2 +-
- t/t9120-git-svn-clone-with-percent-escapes.sh |   31 +++++++++++++++++++++++++
- 2 files changed, 32 insertions(+), 1 deletions(-)
- create mode 100755 t/t9120-git-svn-clone-with-percent-escapes.sh
+On Sat, 8 Mar 2008, Daniel Barkalow wrote:
 
-diff --git a/git-svn.perl b/git-svn.perl
-index 9e2faf9..cec664f 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -3658,7 +3658,7 @@ sub escape_uri_only {
- 	my ($uri) = @_;
- 	my @tmp;
- 	foreach (split m{/}, $uri) {
--		s/([^\w.-])/sprintf("%%%02X",ord($1))/eg;
-+		s/([^\w.%-]|%(?![a-fA-F0-9]{2}))/sprintf("%%%02X",ord($1))/eg;
- 		push @tmp, $_;
- 	}
- 	join('/', @tmp);
-diff --git a/t/t9120-git-svn-clone-with-percent-escapes.sh b/t/t9120-git-svn-clone-with-percent-escapes.sh
-new file mode 100755
-index 0000000..9a4eabe
---- /dev/null
-+++ b/t/t9120-git-svn-clone-with-percent-escapes.sh
-@@ -0,0 +1,31 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2008 Kevin Ballard
-+#
-+
-+test_description='git-svn clone with percent escapes'
-+. ./lib-git-svn.sh
-+
-+test_expect_success 'setup svnrepo' "
-+	mkdir project project/trunk project/branches project/tags &&
-+	echo foo > project/trunk/foo &&
-+	svn import -m '$test_description' project '$svnrepo/pr ject' &&
-+	rm -rf project &&
-+	start_httpd
-+"
-+
-+if test "$SVN_HTTPD_PORT" = ""
-+then
-+	test_expect_failure 'test clone with percent escapes - needs SVN_HTTPD_PORT set' 'false'
-+else
-+	test_expect_success 'test clone with percent escapes' '
-+		git svn clone "$svnrepo/pr%20ject" clone &&
-+		cd clone &&
-+			git rev-parse refs/remotes/git-svn &&
-+		cd ..
-+	'
-+fi
-+
-+stop_httpd
-+
-+test_done
--- 
-1.5.4.3.487.g1eab2.dirty
+> This is useful, for example, for listing the refs in a reference 
+> repository during clone, when you don't have your own refs that cover 
+> the objects that are in your alternate repository.
 
+How about this commit oneline instead:
+
+	for_each_ref(): Allow adding extra refs to be traversed
+
+Hmm?
+
+You can explain in the body that the SHA-1s are not verified locally, so 
+that you can add extra refs that do not reference local objects.
+
+Ciao,
+Dscho
