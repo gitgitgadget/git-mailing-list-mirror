@@ -1,81 +1,91 @@
-From: =?utf-8?q?Santi=20B=C3=A9jar?= <sbejar@gmail.com>
-Subject: [PATCH] ident.c: Removes geekspeak comment when the user name cannot be determined
-Date: Sat,  8 Mar 2008 12:30:04 +0100
-Message-ID: <1204975804-8511-1-git-send-email-sbejar@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?q?Santi=20B=C3=A9jar?= <sbejar@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 08 12:31:46 2008
+From: Kevin Ballard <kevin@sb.org>
+Subject: Re: [PATCH] Add test for filter-branch on a subdirectory that's been added and deleted and re-added
+Date: Sat, 8 Mar 2008 06:52:05 -0500
+Message-ID: <A766C00E-2A8B-4DAF-A8F4-9B99D6D18F3A@sb.org>
+References: <1204977007-7267-3-git-send-email-kevin@sb.org>
+Mime-Version: 1.0 (Apple Message framework v919.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Mar 08 12:52:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JXxHC-0004M0-Q4
-	for gcvg-git-2@gmane.org; Sat, 08 Mar 2008 12:31:43 +0100
+	id 1JXxba-0002rK-Pn
+	for gcvg-git-2@gmane.org; Sat, 08 Mar 2008 12:52:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752279AbYCHLaj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 8 Mar 2008 06:30:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752511AbYCHLaj
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Mar 2008 06:30:39 -0500
-Received: from fk-out-0910.google.com ([209.85.128.186]:46727 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752279AbYCHLai (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Mar 2008 06:30:38 -0500
-Received: by fk-out-0910.google.com with SMTP id z23so736603fkz.5
-        for <git@vger.kernel.org>; Sat, 08 Mar 2008 03:30:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date:message-id:x-mailer:mime-version:content-type:content-transfer-encoding;
-        bh=ybChG7vE5AqFzCgGBTK8ZkeWNFkARAmWzGr5mehuUSQ=;
-        b=Np6cr74HLatsD4TnHz0cx6NAhZ55HgjOCpYfXUUY143vdUiO8sKXZJ8YzJMhh/bmAQrjX38f3V4teoAaEVb8A+uC5g+LiXKjZdzNQkF46sXA6DaGTz+SPWfDYacC/C3rH88OocevVUgNAFb/HbDTnLbPMRXh1aM7p504C7UM4tQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version:content-type:content-transfer-encoding;
-        b=FRpyFSgfJkYtp/AaOYbj2Lfdyn/3N9XZRKFz36sxLjejLs+ghpif/sP4BpH67lCd0vkgt1o+HnzmoHLkPBV5C3fx4R3ddES/uZhLGlOsBXfBBX8nJ7MR9VY2Z4ZDMxeC1gztrKgbNgiOyl0/hPSTztyxjanDlC+N6OBBV/jRy0A=
-Received: by 10.78.179.12 with SMTP id b12mr6738600huf.61.1204975832340;
-        Sat, 08 Mar 2008 03:30:32 -0800 (PST)
-Received: from localhost ( [91.13.83.130])
-        by mx.google.com with ESMTPS id j10sm7061714muh.16.2008.03.08.03.30.25
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 08 Mar 2008 03:30:31 -0800 (PST)
-X-Mailer: git-send-email 1.5.4.3.589.g6816
+	id S1752804AbYCHLwJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Mar 2008 06:52:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752733AbYCHLwI
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Mar 2008 06:52:08 -0500
+Received: from sd-green-bigip-81.dreamhost.com ([208.97.132.81]:45754 "EHLO
+	randymail-a11.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1752712AbYCHLwI (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 8 Mar 2008 06:52:08 -0500
+Received: from KBALLARD.RES.WPI.NET (KBALLARD.RES.WPI.NET [130.215.239.91])
+	by randymail-a11.g.dreamhost.com (Postfix) with ESMTP id E8E7D109EB5;
+	Sat,  8 Mar 2008 03:52:06 -0800 (PST)
+In-Reply-To: <1204977007-7267-3-git-send-email-kevin@sb.org>
+X-Mailer: Apple Mail (2.919.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76557>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76558>
 
-The "config --global" suggested in the message is a valid one-shot fix,
-and hopefully one-shot across machines that NFS mounts the home directo=
-ries.
+Damnit, I just send those patches without the Signed-Off line. Should  
+I re-send, or is it acceptable to just say I'm signing off on these  
+and anyone is free to add my Signed-Off line when committing?
 
-This knowledge can hopefully be reused when you are forced to use git o=
-n
-Windows, but the fix based on GECOS would probably not.
+-Kevin Ballard
 
-[sb: commit message taken from a Junio's comment]
+On Mar 8, 2008, at 6:50 AM, Kevin Ballard wrote:
 
-Signed-off-by: Santi B=C3=A9jar <sbejar@gmail.com>
----
- ident.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+> Add a currently-failing test for the case when git-filter-branch
+> is run with the --subdirectory-filter referencing a folder that
+> has been added, deleted, and re-added. Such an action should work,
+> but as this test shows it ends up blowing up.
+> ---
+> t/t7003-filter-branch.sh |   13 +++++++++++++
+> 1 files changed, 13 insertions(+), 0 deletions(-)
+>
+> diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
+> index 868babc..933157b 100755
+> --- a/t/t7003-filter-branch.sh
+> +++ b/t/t7003-filter-branch.sh
+> @@ -179,4 +179,17 @@ test_expect_success 'Name needing quotes' '
+>
+> '
+>
+> +test_expect_success 'Subdirectory filter on folder with non- 
+> contiguous history' '
+> +	mkdir foo &&
+> +	touch foo/bar &&
+> +	git add foo &&
+> +	git commit -m "Adding foo" &&
+> +	git rm -r foo &&
+> +	git commit -m "Removing foo" &&
+> +	mkdir foo &&
+> +	touch foo/bar &&
+> +	git commit -m "Re-adding foo" &&
+> +	git filter-branch --subdirectory-filter foo
+> +'
+> +
+> test_done
+> -- 
+> 1.5.4.3.487.g5a92
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
 
-diff --git a/ident.c b/ident.c
-index b839dcf..4007c5a 100644
---- a/ident.c
-+++ b/ident.c
-@@ -171,7 +171,7 @@ static const char au_env[] =3D "GIT_AUTHOR_NAME";
- static const char co_env[] =3D "GIT_COMMITTER_NAME";
- static const char *env_hint =3D
- "\n"
--"*** Your name cannot be determined from your system services (gecos).=
-\n"
-+"*** Your name cannot be determined.\n"
- "\n"
- "Run\n"
- "\n"
---=20
-1.5.4.3.589.g6816
+-- 
+Kevin Ballard
+http://kevin.sb.org
+kevin@sb.org
+http://www.tildesoft.com
+
 
