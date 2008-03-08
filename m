@@ -1,63 +1,57 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH 08/11] Allow for having for_each_ref() list some refs
- that aren't local
-Date: Sat, 8 Mar 2008 18:25:23 -0500 (EST)
-Message-ID: <alpine.LNX.1.00.0803081823230.19665@iabervon.org>
-References: <alpine.LNX.1.00.0803081804170.19665@iabervon.org> <alpine.LSU.1.00.0803090020430.3975@racer.site>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 09/11] Provide API access to init_db()
+Date: Sun, 9 Mar 2008 00:27:31 +0100 (CET)
+Message-ID: <alpine.LSU.1.00.0803090026170.3975@racer.site>
+References: <alpine.LNX.1.00.0803081804200.19665@iabervon.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Mar 09 00:26:26 2008
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Sun Mar 09 00:28:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JY8QX-0005yz-24
-	for gcvg-git-2@gmane.org; Sun, 09 Mar 2008 00:26:05 +0100
+	id 1JY8ST-0006bt-4S
+	for gcvg-git-2@gmane.org; Sun, 09 Mar 2008 00:28:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752016AbYCHXZZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Mar 2008 18:25:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751952AbYCHXZZ
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Mar 2008 18:25:25 -0500
-Received: from iabervon.org ([66.92.72.58]:34167 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751812AbYCHXZY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Mar 2008 18:25:24 -0500
-Received: (qmail 19749 invoked by uid 1000); 8 Mar 2008 23:25:23 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 8 Mar 2008 23:25:23 -0000
-In-Reply-To: <alpine.LSU.1.00.0803090020430.3975@racer.site>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1752101AbYCHX11 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Mar 2008 18:27:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752158AbYCHX11
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Mar 2008 18:27:27 -0500
+Received: from mail.gmx.net ([213.165.64.20]:44543 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751952AbYCHX10 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Mar 2008 18:27:26 -0500
+Received: (qmail invoked by alias); 08 Mar 2008 23:27:25 -0000
+Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
+  by mail.gmx.net (mp007) with SMTP; 09 Mar 2008 00:27:25 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19VT2QNILBVByLXkhSLrN0FuUJ0ZNjPraSXlCTosn
+	EDGtxFHmXdvi9Z
+X-X-Sender: gene099@racer.site
+In-Reply-To: <alpine.LNX.1.00.0803081804200.19665@iabervon.org>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76620>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76621>
 
-On Sun, 9 Mar 2008, Johannes Schindelin wrote:
+Hi,
 
-> Hi,
-> 
-> On Sat, 8 Mar 2008, Daniel Barkalow wrote:
-> 
-> > This is useful, for example, for listing the refs in a reference 
-> > repository during clone, when you don't have your own refs that cover 
-> > the objects that are in your alternate repository.
-> 
-> How about this commit oneline instead:
-> 
-> 	for_each_ref(): Allow adding extra refs to be traversed
-> 
-> Hmm?
-> 
-> You can explain in the body that the SHA-1s are not verified locally, so 
-> that you can add extra refs that do not reference local objects.
+On Sat, 8 Mar 2008, Daniel Barkalow wrote:
 
-The non-local aspect is actually that the repository's refs doesn't 
-actually include them. We actually do have these objects, in an alternate 
-repo. Clearly I need a better commit message, with this info not trying to 
-fit in the first line.
+> The caller first calls set_git_dir() to specify the GIT_DIR, and then 
+> calls init_db() to initialize it. This also cleans up various parts of 
+> the code to account for the fact that everything is done with GIT_DIR 
+> set, so it's unnecessary to pass the specified directory around.
 
-	-Daniel
-*This .sig left intentionally blank*
+I think the most controversial part is that you change the way it is 
+determined if the repository is a bare one.  It might have the same 
+result (I do not have time to check it...), but the computation is 
+performed differently.
+
+Ciao,
+Dscho
