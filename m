@@ -1,75 +1,55 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] gitk: Add horizontal scrollbar to the diff view
-Date: Sat, 8 Mar 2008 00:51:57 -0500
-Message-ID: <20080308055157.GA8410@spearce.org>
-References: <20080305225123.GA8485@localdomain> <7vy78wgyu1.fsf@gitster.siamese.dyndns.org> <18383.51154.695501.543720@cargo.ozlabs.ibm.com> <20080308015357.GU8410@spearce.org> <18386.9974.50409.525039@cargo.ozlabs.ibm.com>
+From: Teemu Likonen <tlikonen@iki.fi>
+Subject: Re: [PATCH/RFC] Make "git remote rm <remote>" remove file refs/remotes/<remote>/HEAD
+Date: Sat, 8 Mar 2008 08:16:10 +0200
+Message-ID: <200803080816.10811.tlikonen@iki.fi>
+References: <200803051338.44938.tlikonen@iki.fi> <1204923732-29141-1-git-send-email-tlikonen@iki.fi> <7vlk4uyoln.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, kaitanie@cc.helsinki.fi,
-	newsletter@dirk.my1.cc, git@vger.kernel.org
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Sat Mar 08 06:53:08 2008
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junio@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 08 07:16:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JXrzX-00071w-Ev
-	for gcvg-git-2@gmane.org; Sat, 08 Mar 2008 06:53:07 +0100
+	id 1JXsMa-00027T-Kn
+	for gcvg-git-2@gmane.org; Sat, 08 Mar 2008 07:16:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751260AbYCHFwG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Mar 2008 00:52:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751430AbYCHFwF
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Mar 2008 00:52:05 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:33909 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750997AbYCHFwE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Mar 2008 00:52:04 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1JXryQ-0005VM-QN; Sat, 08 Mar 2008 00:51:58 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 51DC820FBAE; Sat,  8 Mar 2008 00:51:57 -0500 (EST)
+	id S1752417AbYCHGQS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Mar 2008 01:16:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752401AbYCHGQS
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Mar 2008 01:16:18 -0500
+Received: from pne-smtpout3-sn2.hy.skanova.net ([81.228.8.111]:51722 "EHLO
+	pne-smtpout3-sn2.hy.skanova.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752180AbYCHGQR (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 8 Mar 2008 01:16:17 -0500
+Received: from [192.168.0.2] (80.220.180.181) by pne-smtpout3-sn2.hy.skanova.net (7.3.129)
+        id 478BDB96002DB039; Sat, 8 Mar 2008 07:16:16 +0100
+User-Agent: KMail/1.9.5
+In-Reply-To: <7vlk4uyoln.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
-In-Reply-To: <18386.9974.50409.525039@cargo.ozlabs.ibm.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76549>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76550>
 
-Paul Mackerras <paulus@samba.org> wrote:
-> Shawn O. Pearce writes:
-> 
-> > git-gui does this scrollbar on-demand thing in its revision list meta-widget,
-> > which is lib/choose_rev.tcl.  The procedure in question is this, and it gets
-> > installed as:
-> 
-> That's a nice idea, doing it in _sb_set.  However, since the text
-> widget adjusts the horizontal scroll bar depending on what's visible,
-> that would mean the scroll bar would appear and disappear as you
-> scrolled vertically through the text, which would be disconcerting.
-> So for a text I think it's better to have the scrollbar there
-> permanently.
+Junio C Hamano kirjoitti:
 
-Yea.  For a list it looks a little funny too, but its better than
-not having the scrollbar there at all and looking at a chopped name
-that you can't tell apart from another chopped name.  Which was a
-bug I suffered from in the early dark ages of git-gui at my day
-job.  Imagine Aunt Tillies blindly merging branches because they
-cannot see the full branch names.  :-)
- 
-> Also, I wonder if you could use pack forget instead of destroying the
-> scrollbar?
+> Junio C Hamano <gitster@pobox.com> writes:
+> > I think "update-ref -d" should remove the ref without dereferencing
+> > anyway.  How about not doing your patch at all (you would need to
+> > manually remove the symref in "prune" codepath as well), and
+> > instead doing this?
+> >
+> > I do not know how this reacts when the tracked HEAD points at a ref
+> > that lexicographically sorts earlier, say branch "A".
+>
+> And it turns out it does not react very well.  You would want to do
+> something like this on top of that one.
 
-Because I didn't even know about that option to pack.  I'll have to
-look into switching the code to do that.  Thanks for the suggestion.
-
--- 
-Shawn.
+This turned out to be much more complicated than just deleting a file. 
+Thank you, these patches seem to work (at least from user's point of 
+view).
