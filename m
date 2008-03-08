@@ -1,97 +1,82 @@
-From: Charles Bailey <charles@hashpling.org>
-Subject: [PATCH 2/2] Added documentation for custom merge tool functionality
-Date: Sat, 8 Mar 2008 20:47:06 +0000
-Message-ID: <c869f1c4783c79dabb1fc3a9d19df64e08acbf8c.1205008859.git.charles@hashpling.org>
-References: <b4c3c2a6ee8fbc73d9c4f4582cc9c4ae6e58b15e.1205008859.git.charles@hashpling.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Can git be stopped from inserting conflict markers during a
+ merge?
+Date: Sat, 8 Mar 2008 12:51:40 -0800 (PST)
+Message-ID: <alpine.LFD.1.00.0803081242040.5896@woody.linux-foundation.org>
+References: <loom.20080308T174918-559@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 08 21:48:12 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: William Tanksley <wtanksleyjr+git@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 08 21:52:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JY5xa-0008Tz-GD
-	for gcvg-git-2@gmane.org; Sat, 08 Mar 2008 21:48:02 +0100
+	id 1JY61m-0001lD-7K
+	for gcvg-git-2@gmane.org; Sat, 08 Mar 2008 21:52:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751167AbYCHUrS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Mar 2008 15:47:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751057AbYCHUrR
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Mar 2008 15:47:17 -0500
-Received: from pih-relay05.plus.net ([212.159.14.132]:38965 "EHLO
-	pih-relay05.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750800AbYCHUrQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Mar 2008 15:47:16 -0500
-Received: from [212.159.69.125] (helo=hashpling.plus.com)
-	 by pih-relay05.plus.net with esmtp (Exim) id 1JY5wo-0002Sn-2X; Sat, 08 Mar 2008 20:47:14 +0000
-Received: from fermat.hashpling.org (fermat.hashpling.org [127.0.0.1])
-	by hashpling.plus.com (8.13.8/8.13.6) with ESMTP id m28Kl7vA020074;
-	Sat, 8 Mar 2008 20:47:07 GMT
-Received: (from charles@localhost)
-	by fermat.hashpling.org (8.13.8/8.13.6/Submit) id m28Kl7UG020073;
-	Sat, 8 Mar 2008 20:47:07 GMT
-Content-Disposition: inline
-In-Reply-To: <b4c3c2a6ee8fbc73d9c4f4582cc9c4ae6e58b15e.1205008859.git.charles@hashpling.org>
-User-Agent: Mutt/1.5.17 (2007-11-01)
-X-Plusnet-Relay: 66e94c042ccae53324aae1a4d0899a1c
+	id S1751206AbYCHUvo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Mar 2008 15:51:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751208AbYCHUvo
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Mar 2008 15:51:44 -0500
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:51924 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751057AbYCHUvn (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 8 Mar 2008 15:51:43 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m28KqBWU015558
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 8 Mar 2008 12:52:12 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m28Kpef6001076;
+	Sat, 8 Mar 2008 12:51:40 -0800
+In-Reply-To: <loom.20080308T174918-559@post.gmane.org>
+User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+X-Spam-Status: No, hits=-3.437 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76583>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76584>
 
-Up until now, the configuration variables for custom merge tools were
-documented in config.txt but there was no reference to the functionality
-in git-mergetool.txt.
 
-Signed-off-by: Charles Bailey <charles@hashpling.org>
----
- Documentation/git-mergetool.txt |   24 +++++++++++++++++++++++-
- 1 files changed, 23 insertions(+), 1 deletions(-)
 
-diff --git a/Documentation/git-mergetool.txt b/Documentation/git-mergetool.txt
-index ac8969c..1af401c 100644
---- a/Documentation/git-mergetool.txt
-+++ b/Documentation/git-mergetool.txt
-@@ -24,7 +24,7 @@ OPTIONS
- -------
- -t or --tool=<tool>::
- 	Use the merge resolution program specified by <tool>.
--	Valid merge tools are:
-+	Valid built-in merge tools are:
- 	kdiff3, tkdiff, meld, xxdiff, emerge, vimdiff, gvimdiff, ecmerge, and opendiff
- +
- If a merge resolution program is not specified, `git mergetool`
-@@ -37,6 +37,28 @@ configuration variable `mergetool.<tool>.path`. For example, you
- can configure the absolute path to kdiff3 by setting
- `mergetool.kdiff3.path`. Otherwise, `git mergetool` assumes the
- tool is available in PATH.
-++
-+As an alternative to running one of the known merge tool programs
-+`git mergetool` can be customized to run an alternative program
-+by specifying the command line to invoke in a configration
-+variable `mergetool.<tool>.cmd`.
-++
-+When `git mergetool` is invoked with this tool (either through the
-+`-t` or `--tool` option or the `merge.tool` configuration
-+variable) the configured command line will be invoked with `$BASE`
-+set to the name of a temporary file containing the common base for
-+the merge, if available; `$LOCAL` set to the name of a temporary
-+file containing the contents of the file on the current branch;
-+`$REMOTE` set to the name of a temporary file containing the
-+contents of the file to be merged, and `$MERGED` set to the name
-+of the file to which the merge tool should write the result of the
-+merge resolution.
-++
-+If the custom merge tool correctly indicates the success of a
-+merge resolution with its exit code then the configuration
-+variable `mergetool.<tool>.trustExitCode` can be set to `true`.
-+Otherwise, `git mergetool` will prompt the user to indicate the
-+success of the resolution after the custom tool has exited.
- 
- Author
- ------
--- 
-1.5.4.3.432.g5ecfc
+On Sat, 8 Mar 2008, William Tanksley wrote:
+>
+> I started using Mercurial a while ago, and I'd like to move up to git (for a
+> number of reasons). The one thing that's stopping me is that (having recently
+> escaped subversion and cvs) I'm now used to NOT having to worry about conflict
+> markers being shoved into files. To put it simply, I really like how Mercurial
+> does that one thing.
 
+Can you describe what "that one thing" is?
+
+> So, given the git is probably the ultimate in configurability, what do I need to
+> do to make it not insert merge markers?
+
+Do you want to just have both (with the base version, all three?) versions 
+of the file in your directory?
+
+That's actually conceptually what you have with git, even though what git 
+does is to keep the different untouched versions in the index. So with 
+git, you actually have *four* different versions of a file when you have a 
+conflict:
+
+ - the working tree one (which has the conflict markers, because that's 
+   traditional)
+ - and index stages 1 (base) 2 (ours) and 3 (theirs)
+
+which is why when you do
+
+	git diff
+
+on an unmerged file, you actually get something much more powerful than 
+just the conflict entries - you get a git multi-version diff. It's 
+*really* convenient when you get used to it, but I you actually seem to be 
+wanting something much simpler.
+
+			Linus
