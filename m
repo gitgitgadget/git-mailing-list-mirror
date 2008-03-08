@@ -1,73 +1,128 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: AssertionError in "stg uncommit" when going too far back
-Date: Sat, 8 Mar 2008 12:19:58 +0000
-Message-ID: <b0943d9e0803080419y6373ce62xfb108a15203858c7@mail.gmail.com>
-References: <1204753622.17845.16.camel@dv>
+From: Pekka Kaitaniemi <kaitanie@cc.helsinki.fi>
+Subject: [PATCH] gitk: Add horizontal scrollbar to the diff view
+Date: Sat, 8 Mar 2008 14:27:23 +0200
+Message-ID: <20080308122723.GA11867@localdomain>
+Reply-To: kaitanie@cc.helsinki.fi
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Pavel Roskin" <proski@gnu.org>
-X-From: git-owner@vger.kernel.org Sat Mar 08 13:20:39 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: paulus@samba.org, newsletter@dirk.my1.cc
+X-From: git-owner@vger.kernel.org Sat Mar 08 13:28:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JXy2Y-0001oO-Sg
-	for gcvg-git-2@gmane.org; Sat, 08 Mar 2008 13:20:39 +0100
+	id 1JXyAO-0003rx-L4
+	for gcvg-git-2@gmane.org; Sat, 08 Mar 2008 13:28:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751369AbYCHMT7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Mar 2008 07:19:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751659AbYCHMT7
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Mar 2008 07:19:59 -0500
-Received: from rv-out-0910.google.com ([209.85.198.190]:12281 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751367AbYCHMT6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Mar 2008 07:19:58 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so522602rvb.1
-        for <git@vger.kernel.org>; Sat, 08 Mar 2008 04:19:58 -0800 (PST)
+	id S1751346AbYCHM2G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Mar 2008 07:28:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751702AbYCHM2F
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Mar 2008 07:28:05 -0500
+Received: from fg-out-1718.google.com ([72.14.220.159]:13647 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750982AbYCHM2D (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Mar 2008 07:28:03 -0500
+Received: by fg-out-1718.google.com with SMTP id e21so1027366fga.17
+        for <git@vger.kernel.org>; Sat, 08 Mar 2008 04:28:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=5bg1BosnVsPDW9I0AItlEjh3p09AVB9oGL7XvtLJndM=;
-        b=TH4smhz4pbjQWfPC3Ol02B3Bq1doFoummvmplEa3jl/TFg+EusyGFEAaX7LGJM9tVK0ze7PlykPBPUJVxHstzxQRnIP+SA7CJmkyf/Q840O6vWdOc8/a6LSsTvUbKnwYO1x5df6gzXu4s1obhtVZE4KHdSaFAi6+nSyJgjLzeog=
+        h=domainkey-signature:received:received:date:from:to:cc:subject:message-id:reply-to:mime-version:content-type:content-disposition:user-agent:sender;
+        bh=xwOUkKQzA2h/gaVk0Hkv9yXmJyLeAV0nRjM0EAzZ5q4=;
+        b=WXF3xJ7k2/nEVx3O6vNpuhQmE9OU/bltL6gDO0xOQuvskPO7ikQCxZc0u6g4WqzgCy1XAFYnDx24umJwuY5rZqfz/9ZlTy1zO+rSje1hJ7k0hf5UP0lmR3U88O7Pcmzn5T6gMu24NB6d8aZDx+WgeJe/Tnif1HeL2Fsm7dONhBc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=w/ssKIDljG2PCQsyQ6YCEoSup+vuRiQ0BRdiH3lI6hNgJnNNvOl+0dv6bqYqzVWvRkR/yPS03SQWZKSuqOET70IegaUwnMn5fn97gKWrGkWLOVHq7QRjC10LddCdzUmwvk3Qo0cqrVONt4lGKcBhfhRPJsaNg73wcWncyXFnXZo=
-Received: by 10.141.23.7 with SMTP id a7mr1729356rvj.58.1204978798507;
-        Sat, 08 Mar 2008 04:19:58 -0800 (PST)
-Received: by 10.141.206.19 with HTTP; Sat, 8 Mar 2008 04:19:58 -0800 (PST)
-In-Reply-To: <1204753622.17845.16.camel@dv>
+        h=date:from:to:cc:subject:message-id:reply-to:mime-version:content-type:content-disposition:user-agent:sender;
+        b=bECK5Aje0OYq9WH13mHrJGOgptIZtaOxBeq/fdkOChWla7E0z5pWrNSp48k8I8s4DpgVPk7Bj6KeOqvMw9v70gdI5Rd4+nelcwdCYP/5/xjx40xf3I/EyrV9S1TzLxDhYY+gT5ALdOFSBycVJBg5L0G1dpQORtDUxYKT6hHlNwE=
+Received: by 10.82.171.16 with SMTP id t16mr6296344bue.25.1204979282001;
+        Sat, 08 Mar 2008 04:28:02 -0800 (PST)
+Received: from shadow ( [85.157.38.155])
+        by mx.google.com with ESMTPS id c25sm10133651ika.9.2008.03.08.04.27.47
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 08 Mar 2008 04:27:57 -0800 (PST)
 Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76559>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76560>
 
-On 05/03/2008, Pavel Roskin <proski@gnu.org> wrote:
-> "stg uncommit" causes AssertionError if the number commits to uncommit it too large:
->
-> $ stg uncommit -n 10000
-> Uncommitting 10000 patches ... Traceback (most recent call last):
->  File "/home/proski/bin/stg", line 43, in <module>
->    main()
->  File "home/proski/lib/python2.5/site-packages/stgit/main.py", line 278, in main
->  File "home/proski/lib/python2.5/site-packages/stgit/commands/uncommit.py", line 94, in func
->  File "home/proski/lib/python2.5/site-packages/stgit/lib/git.py", line 171, in parent
-> AssertionError
+Adding horizontal scroll bar makes the scrolling feature more
+discoverable to the users. The horizontal scrollbar is a bit narrower
+than vertical ones so we don't make too big impact on available screen
+real estate. The text and scrollbar widget layout is done using grid
+geometry manager.
 
-That's on the master branch. I think on the stable one, it used to
-report a message like "Commit doesn't have exactly one parent".
+An interesting side effect of Tk scrollbars is that the "elevator"
+size changes depending on the visible content. So the horizontal
+scrollbar "elevator" changes as the user scrolls the view up and down.
 
-In the latest version, we should indeed raise an exception rather than
-just assert. I wouldn't declare a new exception class but rather use
-an existing one with a meaningful error message. We can't recover from
-this anyway and we would simply cancel the operation. I'll let Karl
-comment on this as well.
+Signed-off-by: Pekka Kaitaniemi <kaitanie@cc.helsinki.fi>
+---
+A modified version of the earlier patch that adds horizontal
+scrollbar. This version uses grid layout for text and scrollbar
+widgets. I have tested this patch with Tk 8.4 and 8.5 on Linux.
 
-Thanks for reporting it.
+The width of the horizontal scrollbar (-width 10) seems to be OK with
+Tk 8.5 on Linux (the default seems to be about 10 as well). I don't
+know what it looks like on Windows and Mac, however.
 
+ gitk |   20 ++++++++++++++------
+ 1 files changed, 14 insertions(+), 6 deletions(-)
+
+diff --git a/gitk b/gitk
+index f1f21e9..429b091 100755
+--- a/gitk
++++ b/gitk
+@@ -827,6 +827,7 @@ proc makewindow {} {
+     }
+     frame .bleft.top
+     frame .bleft.mid
++    frame .bleft.bottom
+ 
+     button .bleft.top.search -text [mc "Search"] -command dosearch
+     pack .bleft.top.search -side left -padx 5
+@@ -854,18 +855,25 @@ proc makewindow {} {
+     checkbutton .bleft.mid.ignspace -text [mc "Ignore space change"] \
+ 	-command changeignorespace -variable ignorespace
+     pack .bleft.mid.ignspace -side left -padx 5
+-    set ctext .bleft.ctext
++    set ctext .bleft.bottom.ctext
+     text $ctext -background $bgcolor -foreground $fgcolor \
+ 	-state disabled -font textfont \
+-	-yscrollcommand scrolltext -wrap none
++	-yscrollcommand scrolltext -wrap none \
++	-xscrollcommand ".bleft.bottom.sbhorizontal set"
+     if {$have_tk85} {
+ 	$ctext conf -tabstyle wordprocessor
+     }
+-    scrollbar .bleft.sb -command "$ctext yview"
++    scrollbar .bleft.bottom.sb -command "$ctext yview"
++    scrollbar .bleft.bottom.sbhorizontal -command "$ctext xview" -orient h \
++	-width 10
+     pack .bleft.top -side top -fill x
+     pack .bleft.mid -side top -fill x
+-    pack .bleft.sb -side right -fill y
+-    pack $ctext -side left -fill both -expand 1
++    grid $ctext .bleft.bottom.sb -sticky nsew
++    grid .bleft.bottom.sbhorizontal -sticky ew
++    grid columnconfigure .bleft.bottom 0 -weight 1
++    grid rowconfigure .bleft.bottom 0 -weight 1
++    grid rowconfigure .bleft.bottom 1 -weight 0
++    pack .bleft.bottom -side top -fill both -expand 1
+     lappend bglist $ctext
+     lappend fglist $ctext
+ 
+@@ -5604,7 +5612,7 @@ proc searchmarkvisible {doall} {
+ proc scrolltext {f0 f1} {
+     global searchstring
+ 
+-    .bleft.sb set $f0 $f1
++    .bleft.bottom.sb set $f0 $f1
+     if {$searchstring ne {}} {
+ 	searchmarkvisible 0
+     }
 -- 
-Catalin
+1.5.4.3
+
