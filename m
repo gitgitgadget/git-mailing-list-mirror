@@ -1,58 +1,97 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH 00/11] Build in clone
-Date: Sat, 8 Mar 2008 18:20:10 -0500 (EST)
-Message-ID: <alpine.LNX.1.00.0803081817500.19665@iabervon.org>
-References: <alpine.LNX.1.00.0803081803250.19665@iabervon.org> <alpine.LSU.1.00.0803090014310.3975@racer.site>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Mar 09 00:21:00 2008
+From: Kevin Ballard <kevin@sb.org>
+Subject: [PATCH] Don't try and percent-escape existing percent escapes in git-svn URIs
+Date: Sat,  8 Mar 2008 18:20:47 -0500
+Message-ID: <1205018447-18344-1-git-send-email-kevin@sb.org>
+Cc: Kevin Ballard <kevin@sb.org>, git@vger.kernel.org
+To: normalperson@yhbt.net
+X-From: git-owner@vger.kernel.org Sun Mar 09 00:21:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JY8LV-0004LF-1v
-	for gcvg-git-2@gmane.org; Sun, 09 Mar 2008 00:20:53 +0100
+	id 1JY8M5-0004VX-1Z
+	for gcvg-git-2@gmane.org; Sun, 09 Mar 2008 00:21:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751435AbYCHXUN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Mar 2008 18:20:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750932AbYCHXUN
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Mar 2008 18:20:13 -0500
-Received: from iabervon.org ([66.92.72.58]:45719 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750740AbYCHXUM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Mar 2008 18:20:12 -0500
-Received: (qmail 19396 invoked by uid 1000); 8 Mar 2008 23:20:10 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 8 Mar 2008 23:20:10 -0000
-In-Reply-To: <alpine.LSU.1.00.0803090014310.3975@racer.site>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1751579AbYCHXUu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Mar 2008 18:20:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750932AbYCHXUu
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Mar 2008 18:20:50 -0500
+Received: from sd-green-bigip-145.dreamhost.com ([208.97.132.145]:34748 "EHLO
+	randymail-a9.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751314AbYCHXUt (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 8 Mar 2008 18:20:49 -0500
+Received: from localhost.localdomain (KBALLARD.RES.WPI.NET [130.215.239.91])
+	by randymail-a9.g.dreamhost.com (Postfix) with ESMTP id B58B4EF344;
+	Sat,  8 Mar 2008 15:20:48 -0800 (PST)
+X-Mailer: git-send-email 1.5.4.3.487.g1eab2.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76615>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76616>
 
-On Sun, 9 Mar 2008, Johannes Schindelin wrote:
+git-svn: project names are percent-escaped ever since f5530b.
+Unfortunately this breaks the scenario where the user hands git-svn
+an already-escaped URI. Fix the regexp to skip over what looks like
+existing percent escapes, and test this scenario.
 
-> Hi,
-> 
-> On Sat, 8 Mar 2008, Daniel Barkalow wrote:
-> 
-> > and 11 adds support for figuring out what the user means with a bundle 
-> > and should probably get squashed into 10.
-> 
-> Yes, it should be squashed into 10, methinks.
-> 
-> 
-> >  contrib/examples/git-clone.sh |  518 ++++++++++++++++++++++++++++++++++++++
-> >  git-clone.sh                  |  518 --------------------------------------
-> 
-> I thought I squashed that bug?
+Signed-off-by: Kevin Ballard <kevin@sb.org>
+---
+ git-svn.perl                                  |    2 +-
+ t/t9120-git-svn-clone-with-percent-escapes.sh |   31 +++++++++++++++++++++++++
+ 2 files changed, 32 insertions(+), 1 deletions(-)
+ create mode 100755 t/t9120-git-svn-clone-with-percent-escapes.sh
 
-I haven't updated my installed version, and didn't notice until I'd 
-written the blurb.
+diff --git a/git-svn.perl b/git-svn.perl
+index 9e2faf9..cec664f 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -3658,7 +3658,7 @@ sub escape_uri_only {
+ 	my ($uri) = @_;
+ 	my @tmp;
+ 	foreach (split m{/}, $uri) {
+-		s/([^\w.-])/sprintf("%%%02X",ord($1))/eg;
++		s/([^\w.%-]|%(?![a-fA-F0-9]{2}))/sprintf("%%%02X",ord($1))/eg;
+ 		push @tmp, $_;
+ 	}
+ 	join('/', @tmp);
+diff --git a/t/t9120-git-svn-clone-with-percent-escapes.sh b/t/t9120-git-svn-clone-with-percent-escapes.sh
+new file mode 100755
+index 0000000..9a4eabe
+--- /dev/null
++++ b/t/t9120-git-svn-clone-with-percent-escapes.sh
+@@ -0,0 +1,31 @@
++#!/bin/sh
++#
++# Copyright (c) 2008 Kevin Ballard
++#
++
++test_description='git-svn clone with percent escapes'
++. ./lib-git-svn.sh
++
++test_expect_success 'setup svnrepo' "
++	mkdir project project/trunk project/branches project/tags &&
++	echo foo > project/trunk/foo &&
++	svn import -m '$test_description' project '$svnrepo/pr ject' &&
++	rm -rf project &&
++	start_httpd
++"
++
++if test "$SVN_HTTPD_PORT" = ""
++then
++	test_expect_failure 'test clone with percent escapes - needs SVN_HTTPD_PORT set' 'false'
++else
++	test_expect_success 'test clone with percent escapes' '
++		git svn clone "$svnrepo/pr%20ject" clone &&
++		cd clone &&
++			git rev-parse refs/remotes/git-svn &&
++		cd ..
++	'
++fi
++
++stop_httpd
++
++test_done
+-- 
+1.5.4.3.487.g1eab2.dirty
 
-	-Daniel
-*This .sig left intentionally blank*
