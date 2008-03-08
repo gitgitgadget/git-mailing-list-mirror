@@ -1,87 +1,94 @@
-From: "=?ISO-8859-1?Q?Marc-Andr=E9_Lureau?=" <marcandre.lureau@gmail.com>
-Subject: [bug] 01bdab8 breaks git-svn show-ignore?
-Date: Sun, 9 Mar 2008 00:06:02 +0200
-Message-ID: <e29894ca0803081406r129deb68q38c9146d7fd419ae@mail.gmail.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] Fix dcommit, rebase when rewriteRoot is in use
+Date: Sat, 8 Mar 2008 14:22:23 -0800
+Message-ID: <20080308222223.GA1950@hand.yhbt.net>
+References: <1205013845-22286-1-git-send-email-jgoerzen@complete.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Benoit Sigoure" <tsuna@lrde.epita.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 08 23:06:52 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: John Goerzen <jgoerzen@complete.org>
+X-From: git-owner@vger.kernel.org Sat Mar 08 23:23:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JY7Bi-0008GM-UH
-	for gcvg-git-2@gmane.org; Sat, 08 Mar 2008 23:06:43 +0100
+	id 1JY7RY-0004LL-On
+	for gcvg-git-2@gmane.org; Sat, 08 Mar 2008 23:23:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751936AbYCHWGF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 8 Mar 2008 17:06:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752309AbYCHWGF
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Mar 2008 17:06:05 -0500
-Received: from wa-out-1112.google.com ([209.85.146.183]:31032 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751704AbYCHWGC convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 8 Mar 2008 17:06:02 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so1390621wah.23
-        for <git@vger.kernel.org>; Sat, 08 Mar 2008 14:06:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=InwaKaVwE5OqhrP+/lj+4UT95jRdJ074EbudEyU8/O0=;
-        b=HYxov1fzGAr4K0yG1K9C8jP4wk4nPW24DcDeoey5Qk3eT9tqWrrCV5Xqq67A1xlEjbJE12WfSpb5hUD/oOMsDpTDfsflzs3VJs6laIYHtGKzKl9CTlvCEAKwfA7BaFlDcN3il/9S+yEtkFlAfcJlaqnWsanhJvoe1TqZLsuNEzw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=OcYDQ+GdsYvVilK6Ui1fPqzPHOkaVnLfwvX/iuFAfTZo3/WhwCHlabPsJFTfYsaJLjBLVnHU98Do5mk4TCyYG+MCS57VOJn256PmNrnb6JGfpI0oM48qNfPSTvXIFkfuTIluRAFxPtMvMIn5+TdzdoZ0jCL/1FQpu9DPKdnA6iQ=
-Received: by 10.114.152.17 with SMTP id z17mr1031848wad.128.1205013962280;
-        Sat, 08 Mar 2008 14:06:02 -0800 (PST)
-Received: by 10.114.60.4 with HTTP; Sat, 8 Mar 2008 14:06:02 -0800 (PST)
+	id S1751474AbYCHWW0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Mar 2008 17:22:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751435AbYCHWW0
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Mar 2008 17:22:26 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:58822 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751192AbYCHWWZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Mar 2008 17:22:25 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with ESMTP id 689257F4153;
+	Sat,  8 Mar 2008 14:22:24 -0800 (PST)
 Content-Disposition: inline
+In-Reply-To: <1205013845-22286-1-git-send-email-jgoerzen@complete.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76593>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76594>
 
-Hi,
+John Goerzen <jgoerzen@complete.org> wrote:
+> When the rewriteRoot setting is used with git-svn, it causes the svn
+> IDs added to commit messages to bear a different URL than is actually
+> used to retrieve Subversion data.
+> 
+> It is common for Subversion repositories to be available multiple
+> ways: for instance, HTTP to the public, and svn+ssh to people with
+> commit access.  The need to switch URLs for access is fairly common as
+> well -- perhaps someone was just given commit access.  To switch URLs
+> without having to rewrite history, one can use the old url as a
+> rewriteRoot, and use the new one in the svn-remote url setting.
+> 
+> This works well for svn fetching and general git commands.
+> 
+> However, git-svn dcommit, rebase, and perhaps other commands do not
+> work in this scenario.  They scan the svn ID lines in commit messages
+> and attempt to match them up with url lines in [svn-remote] sections
+> in the git config.
+> 
+> This patch allows them to match rewriteRoot options, if such options
+> are present.
+> 
+> Signed-off-by: John Goerzen <jgoerzen@complete.org>
 
-Benoit, your 01bdab8 patch seems to break git-svn show-ignore in
-subdirectories. Example:
+Thanks again, patch + commit message
+Acked-by: Eric Wong <normalperson@yhbt.net>
 
-git-svn init svn://svn.gnome.org/svn/gobject-introspection/trunk
-git-svn fetch -r 122
-git-svn show-ignore
+> ---
+>  git-svn.perl |    7 ++++++-
+>  1 files changed, 6 insertions(+), 1 deletions(-)
+> 
+> diff --git a/git-svn.perl b/git-svn.perl
+> index 9e2faf9..1195569 100755
+> --- a/git-svn.perl
+> +++ b/git-svn.perl
+> @@ -1540,9 +1540,14 @@ sub find_by_url { # repos_root and, path are optional
+>  			                    $remotes->{$repo_id}->{$_});
+>  		}
+>  		my $p = $path;
+> +		my $rwr = rewrite_root({repo_id => $repo_id});
+>  		unless (defined $p) {
+>  			$p = $full_url;
+> -			$p =~ s#^\Q$u\E(?:/|$)## or next;
+> +			my $z = $u;
+> +			if ($rwr) {
+> +				$z = $rwr;
+> +			}
+> +			$p =~ s#^\Q$z\E(?:/|$)## or next;
+>  		}
+>  		foreach my $f (keys %$fetch) {
+>  			next if $f ne $p;
+> -- 
+> 1.5.4.2
+> 
 
-# /
-/aclocal.m4
-/autom4te.cache
-/compile
-/config.guess
-/config.h
-/config.h.in
-/config.log
-/config.status
-/config.sub
-/configure
-/COPYING
-/depcomp
-/gobject-introspection.pc
-/INSTALL
-/install-sh
-/libtool
-/ltmain.sh
-/Makefile
-/Makefile.in
-/missing
-/stamp-h1
-=46ilesystem has no item: File not found: revision 122, path '/examples=
-'
-at /opt/git/bin/git-svn line 1505
-
-(it exits 1)
-
-Regards,
-
---=20
-Marc-Andr=E9 Lureau (ex epita student - cheers :)
+-- 
+Eric Wong
