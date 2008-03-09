@@ -1,64 +1,60 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [jgit] index v2 pull request
-Date: Sat, 8 Mar 2008 19:51:53 -0500
-Message-ID: <20080309005153.GB8410@spearce.org>
-References: <20080308025027.GZ8410@spearce.org> <fqtl2e$rvc$1@ger.gmane.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 09 01:53:02 2008
+From: Simon Fraser <smfr@mac.com>
+Subject: Parsing diff --git lines
+Date: Sat, 8 Mar 2008 17:48:30 -0800
+Message-ID: <F4D3B820-CCF4-4212-BF32-700EFD448143@mac.com>
+Mime-Version: 1.0 (Apple Message framework v919.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 09 02:57:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JY9mg-0003Rn-5G
-	for gcvg-git-2@gmane.org; Sun, 09 Mar 2008 01:53:02 +0100
+	id 1JYAmc-0000Rv-KT
+	for gcvg-git-2@gmane.org; Sun, 09 Mar 2008 02:57:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752017AbYCIAv5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Mar 2008 19:51:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752014AbYCIAv5
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Mar 2008 19:51:57 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:58230 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751991AbYCIAv4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Mar 2008 19:51:56 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1JY9lQ-0002Il-Nh; Sat, 08 Mar 2008 19:51:44 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 89ED120FBAE; Sat,  8 Mar 2008 19:51:53 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <fqtl2e$rvc$1@ger.gmane.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1752559AbYCIB4E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Mar 2008 20:56:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752555AbYCIB4D
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Mar 2008 20:56:03 -0500
+Received: from smtpoutm.mac.com ([17.148.16.80]:62691 "EHLO smtpoutm.mac.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752528AbYCIB4C (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Mar 2008 20:56:02 -0500
+X-Greylist: delayed 448 seconds by postgrey-1.27 at vger.kernel.org; Sat, 08 Mar 2008 20:56:02 EST
+Received: from mac.com (asmtp009-s [10.150.69.72])
+	by smtpoutm.mac.com (Xserve/smtpout017/MantshX 4.0) with ESMTP id m291mWqa023061
+	for <git@vger.kernel.org>; Sat, 8 Mar 2008 17:48:32 -0800 (PST)
+Received: from [192.168.1.205] (netblock-68-183-25-67.dslextreme.com [68.183.25.67])
+	(authenticated bits=0)
+	by mac.com (Xserve/asmtp009/MantshX 4.0) with ESMTP id m291mUK9028184
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO)
+	for <git@vger.kernel.org>; Sat, 8 Mar 2008 17:48:31 -0800 (PST)
+X-Mailer: Apple Mail (2.919.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76628>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76629>
 
-Jakub Narebski <jnareb@gmail.com> wrote:
-> Shawn O. Pearce wrote:
-> 
-> > Unfortunately the overall series diffstat doesn't show it
-> > that way, but I think its now easier to follow how the control flows.
-> 
-> Isn't it the place then to put --dirstat instead of --diffstat?
+I'm working on a GUI for git, and I'd like to be able to provide
+some diff navigation tools. That requires that I can find the
+file chunks in a diff, and parse out the file names.
 
-Hmm.  Well, jgit is basically all in one directory right now,
-so --dirstat wouldn't have shown a nice neat organization the
-way you think it would.
+However, I don't see a reliable way to identify the two files
+from a "diff --git" line. Here's a (deliberately pathological)
+example:
 
-I've started to create a new directory in jgit that contains
-revision walking machinary.  So once that is complete then
-yea, --dirstat may show the two different parts nicely, but
-even then it still isn't very useful on this project.
+diff --git a/a / b/file with spaces.txt b/a / b/file with spaces.txt
 
--- 
-Shawn.
+In this case, the repository contains directories called "a " and
+" b" and the file names have spaces in.
+
+What would make this possible would be either to always quote
+file paths containing spaces, or use a character other than
+a space (e.g. a \t) between the two file names.
+
+Thanks
+Simon
+
