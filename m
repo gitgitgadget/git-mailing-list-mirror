@@ -1,74 +1,56 @@
-From: Iustin Pop <iusty@k1024.org>
-Subject: Re: [PATCH 2/2] Fix git pull handling of the quiet option
-Date: Sun, 9 Mar 2008 11:31:35 +0100
-Message-ID: <20080309103135.GF32019@teal.hq.k1024.org>
-References: <1205020356-6682-1-git-send-email-iusty@k1024.org> <1205020356-6682-3-git-send-email-iusty@k1024.org> <7v8x0ssfud.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Remotes order in "git remote update"
+Date: Sun, 09 Mar 2008 03:38:26 -0700
+Message-ID: <7vbq5op4gt.fsf@gitster.siamese.dyndns.org>
+References: <2008-03-09-11-22-34+trackit+sam@rfc1149.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Mar 09 11:32:26 2008
+To: Samuel Tardieu <sam@rfc1149.net>
+X-From: git-owner@vger.kernel.org Sun Mar 09 11:39:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JYIpJ-0000jr-1f
-	for gcvg-git-2@gmane.org; Sun, 09 Mar 2008 11:32:21 +0100
+	id 1JYIwP-0002I1-1i
+	for gcvg-git-2@gmane.org; Sun, 09 Mar 2008 11:39:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752249AbYCIKbl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Mar 2008 06:31:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751593AbYCIKbl
-	(ORCPT <rfc822;git-outgoing>); Sun, 9 Mar 2008 06:31:41 -0400
-Received: from fg-out-1718.google.com ([72.14.220.154]:54063 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751464AbYCIKbk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Mar 2008 06:31:40 -0400
-Received: by fg-out-1718.google.com with SMTP id e21so1467843fga.17
-        for <git@vger.kernel.org>; Sun, 09 Mar 2008 03:31:39 -0700 (PDT)
-Received: by 10.82.174.20 with SMTP id w20mr9318404bue.14.1205058698635;
-        Sun, 09 Mar 2008 03:31:38 -0700 (PDT)
-Received: from teal.hq.k1024.org ( [84.75.117.152])
-        by mx.google.com with ESMTPS id s10sm8788386muh.11.2008.03.09.03.31.36
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 09 Mar 2008 03:31:37 -0700 (PDT)
-Received: by teal.hq.k1024.org (Postfix, from userid 4004)
-	id 267F840A040; Sun,  9 Mar 2008 11:31:35 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <7v8x0ssfud.fsf@gitster.siamese.dyndns.org>
-X-Linux: This message was written on Linux
-X-Header: /usr/include gives great headers
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1752268AbYCIKii (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Mar 2008 06:38:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752221AbYCIKii
+	(ORCPT <rfc822;git-outgoing>); Sun, 9 Mar 2008 06:38:38 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:42732 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751888AbYCIKii (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Mar 2008 06:38:38 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 6035C2263;
+	Sun,  9 Mar 2008 06:38:36 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id DBF862262; Sun,  9 Mar 2008 06:38:33 -0400 (EDT)
+In-Reply-To: <2008-03-09-11-22-34+trackit+sam@rfc1149.net> (Samuel Tardieu's
+ message of "Sun, 09 Mar 2008 11:22:33 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76647>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76648>
 
-On Sat, Mar 08, 2008 at 08:04:26PM -0800, Junio C Hamano wrote:
-> Iustin Pop <iusty@k1024.org> writes:
-> 
-> > Although git pull has a documented quiet option,...
-> 
-> I think that is a documentation bug.  pull accepts all options for fetch
-> for the sole purpose of passing them intact to underlying fetch, and some
-> options to fetch does not even make much sense in the context of pull.
-> 
-> Also options to pull needs to come first; the options pull does not know
-> about is a signal for pull that the rest is for consumption of underlying
-> fetch.
-Ah, I see. This is indeed not clear from the documentation.
+Samuel Tardieu <sam@rfc1149.net> writes:
 
-> If you want to teach --quiet to pull, however, your patch is the right
-> approach.  pull would eat --quiet and make a note for itself, and passes
-> that to underlying fetch (and perhaps merge).
-> 
-> You also need to sign-off your patch and add tests to make sure that other
-> people will not break your enhancement in the future.
-Thanks, so the approach would be:
-  - resend git merge patch including tests
-  - and then resend git pull patch, again including tests.
+> It looks like remote repositories are ordered alphabetically by their
+> local names when doing a "git remote update".
 
-Thanks for the feedback, I will try to see how the unittests are written
-and hopefully come back with some more patches.
+Yeah, it is an unfortunate consequence of the Perl implementation that
+uses a hash to record remote and then try to give a stable ordering by
+sorting keys.  The command originally was never intended for working on
+more than one remote, but addition of "remote update" could have been done
+to follow the order in the configuration.
 
-iustin
+I think the reimplementaiton in 'next' that will hopefully be in 1.5.5
+will keep the list of remotes in the order read from the config.
+
+
