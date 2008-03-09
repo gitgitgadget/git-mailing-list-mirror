@@ -1,285 +1,100 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: A note from the maintainer
-Date: Sun, 09 Mar 2008 03:57:09 -0700
-Message-ID: <7v8x0snp16.fsf@gitster.siamese.dyndns.org>
-References: <7vbq6g2b9z.fsf@gitster.siamese.dyndns.org>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [PATCH] git-quiltimport: better parser to  grok "enhanced"   series files.
+Date: Sun, 09 Mar 2008 12:27:00 +0100
+Message-ID: <20080309112700.GB23924@artemis.madism.org>
+References: <20080308182709.GA3109@artemis.madism.org> <7vk5kcsh06.fsf@gitster.siamese.dyndns.org> <20080309095918.GA23924@artemis.madism.org> <7vpru4p5g1.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 09 11:58:23 2008
+Content-Type: multipart/signed; boundary="IiVenqGWf+H9Y6IX";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: Git ML <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Mar 09 12:27:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JYJEU-0006JS-B8
-	for gcvg-git-2@gmane.org; Sun, 09 Mar 2008 11:58:23 +0100
+	id 1JYJgt-0005nI-69
+	for gcvg-git-2@gmane.org; Sun, 09 Mar 2008 12:27:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752420AbYCIK5V convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 9 Mar 2008 06:57:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752304AbYCIK5V
-	(ORCPT <rfc822;git-outgoing>); Sun, 9 Mar 2008 06:57:21 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:47613 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751153AbYCIK5T convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 9 Mar 2008 06:57:19 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id BAD9A2AC5;
-	Sun,  9 Mar 2008 06:57:14 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 865192AC3; Sun,  9 Mar 2008 06:57:11 -0400 (EDT)
-In-Reply-To: <7vbq6g2b9z.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
- message of "Sun, 17 Feb 2008 01:16:24 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752772AbYCIL1E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Mar 2008 07:27:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752765AbYCIL1E
+	(ORCPT <rfc822;git-outgoing>); Sun, 9 Mar 2008 07:27:04 -0400
+Received: from pan.madism.org ([88.191.52.104]:39125 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752665AbYCIL1C (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Mar 2008 07:27:02 -0400
+Received: from madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id 2367E329D8;
+	Sun,  9 Mar 2008 12:27:00 +0100 (CET)
+Received: by madism.org (Postfix, from userid 1000)
+	id 3332F2FD91B; Sun,  9 Mar 2008 12:27:00 +0100 (CET)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Junio C Hamano <gitster@pobox.com>, Git ML <git@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <7vpru4p5g1.fsf@gitster.siamese.dyndns.org>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76652>
-
-Welcome to git community.
-
-This message talks about how git.git is managed, and how you can work
-with it.
-
-* IRC and Mailing list
-
-Many active members of development community hang around on #git
-IRC channel on Freenode.  Its log is available at:
-
-        http://colabti.de/irclogger/irclogger_log/git
-
-The development however is primarily done on the git mailing list
-(git@vger.kernel.org).  If you have patches, please send them to the
-list, following Documentation/SubmittingPatches.
-
-I usually try to read all patches posted to the list, and follow
-almost all the discussions on the list, unless the topic is about an
-obscure corner that I do not personally use.  But I am obviously not
-perfect.  If you sent a patch that you did not hear from anybody for
-three days, that is a very good indication that it was dropped on the
-floor --- please do not hesitate to remind me.
-
-The list archive is available at a few public sites as well:
-
-        http://news.gmane.org/gmane.comp.version-control.git/
-        http://marc.theaimsgroup.com/?l=3Dgit
-        http://www.spinics.net/lists/git/
-
-and some people seem to prefer to read it over NNTP:
-
-        nntp://news.gmane.org/gmane.comp.version-control.git
-
-When you point at a message in a mailing list archive, using
-gmane is often the easiest to follow by readers, like this:
-
-        http://thread.gmane.org/gmane.comp.version-control.git/27/focus=
-=3D217
-
-as it also allows people who subscribe to the mailing list as
-gmane newsgroup to "jump to" the article.
-
-* Repositories, branches and documentation.
-
-My public git.git repository is at:
-
-        git://git.kernel.org/pub/scm/git/git.git/
-
-Immediately after I publish to the primary repository at kernel.org, I
-also push into an alternate here:
-
-        git://repo.or.cz/alt-git.git/
-
-Impatient people might have better luck with the latter one.
-
-Their gitweb interfaces are found at:
-
-        http://git.kernel.org/?p=3Dgit/git.git
-        http://repo.or.cz/w/alt-git.git
-
-There are three branches in git.git repository that are not
-about the source tree of git: "todo", "html" and "man".  The
-first one was meant to contain TODO list for me, but I am not
-good at maintaining such a list and it is not as often updated as
-it could/should be.  It also contains some helper scripts I use
-to maintain git.
-
-The "html" and "man" are autogenerated documentation from the
-tip of the "master" branch; the tip of "html" is extracted to be
-visible at kernel.org at:
-
-        http://www.kernel.org/pub/software/scm/git/docs/
-
-The above URL is the top-level documentation page, and it has
-links to documentation of older releases.
-
-The script to maintain these two documentation branches are
-found in "todo" branch as dodoc.sh, if you are interested.  It
-is a good demonstration of how to use an update hook to automate
-a task.
-
-There are four branches in git.git repository that track the
-source tree of git: "master", "maint", "next", and "pu".  I may
-add more maintenance branches (e.g. "maint-1.5.3") if we have
-hugely backward incompatible feature updates in the future to keep
-an older release alive; I may not, but the distributed nature of
-git means any volunteer can run a stable-tree like that herself.
-
-The "master" branch is meant to contain what are very well
-tested and ready to be used in a production setting.  There
-could occasionally be minor breakages or brown paper bag bugs
-but they are not expected to be anything major, and more
-importantly quickly and trivially fixable.  Every now and
-then, a "feature release" is cut from the tip of this branch and
-they typically are named with three dotted decimal digits.  The
-last such release was 1.5.4 done on Feb 2nd this year.  You
-can expect that the tip of the "master" branch is always more
-stable than any of the released versions.
-
-Whenever a feature release is made, "maint" branch is forked off
-from "master" at that point.  Obvious, safe and urgent fixes
-after a feature release are applied to this branch and
-maintenance releases are cut from it.  The maintenance releases
-are named with four dotted decimal, named after the feature
-release they are updates to; the last such release was 1.5.4.4.
-New features never go to this branch.  This branch is also
-merged into "master" to propagate the fixes forward.
-
-A trivial and safe enhancement goes directly on top of "master".
-A new development, either initiated by myself or more often by
-somebody who found his or her own itch to scratch, does not
-usually happen on "master", however.  Instead, a separate topic
-branch is forked from the tip of "master", and it first is
-tested in isolation; I may make minimum fixups at this point.
-Usually there are a handful such topic branches that are running
-ahead of "master" in git.git repository.  I do not publish the
-tip of these branches in my public repository, however, partly
-to keep the number of branches that downstream developers need
-to worry about low, and primarily because I am lazy.
-
-The quality of topic branches are judged primarily by the mailing list
-discussions.  Some of them start out as "good idea but obviously is
-broken in some areas (e.g. breaks the existing testsuite)" and then
-with some more work (either by the original contributor's effort or
-help from other people on the list) becomes "more or less done and can
-now be tested by wider audience".  Luckily, most of them start out in
-the latter, better shape.
-
-The "next" branch is to merge and test topic branches in the
-latter category.  In general, the branch always contains the tip
-of "master".  It might not be quite rock-solid production ready,
-but is expected to work more or less without major breakage.  I
-usually use "next" version of git for my own work, so it cannot
-be _that_ broken to prevent me from pushing the changes out.
-The "next" branch is where new and exciting things take place.
-
-The two branches "master" and "maint" are never rewound, and
-"next" usually will not be either (this automatically means the
-topics that have been merged into "next" are usually not
-rebased, and you can find the tip of topic branches you are
-interested in from the output of "git log next"). You should be
-able to safely track them.
-
-After a feature release is made from "master", however, "next"
-will be rebuilt from the tip of "master" using the surviving
-topics.  The commit that replaces the tip of the "next" will
-have the identical tree, but it will have different ancestry
-from the tip of "master".  An announcement will be made to warn
-people about such a rebasing.
-
-The "pu" (proposed updates) branch bundles all the remainder of
-topic branches.  The "pu" branch, and topic branches that are
-only in "pu", are subject to rebasing in general.  By the above
-definition of how "next" works, you can tell that this branch
-will contain quite experimental and obviously broken stuff.
-
-When a topic that was in "pu" proves to be in testable shape, it
-graduates to "next".  I do this with:
-
-        git checkout next
-        git merge that-topic-branch
-
-Sometimes, an idea that looked promising turns out to be not so
-good and the topic can be dropped from "pu" in such a case.
-
-A topic that is in "next" is expected to be tweaked and fixed to
-perfection before it is merged to "master" (that's why "master"
-can be expected to stay very stable).  Similarly to the above, I
-do it with this:
-
-        git checkout master
-        git merge that-topic-branch
-        git branch -d that-topic-branch
-
-Note that being in "next" is not a guarantee to appear in the
-next release (being in "master" is such a guarantee, unless it
-is later found seriously broken and reverted), or even in any
-future release.  There even were cases that topics needed
-reverting a few commits in them before graduating to "master",
-or a topic that already was in "next" were entirely reverted
-from "next" because fatal flaws were found in them later.
-
-Starting from v1.5.0, "master" and "maint" have release notes
-for the next release in Documentation/RelNotes-* files, so that
-I do not have to run around summarizing what happened just
-before the release.
-
-
-* Other people's trees, trusted lieutenants and credits.
-
-Documentation/SubmittingPatches outlines who your changes should
-be sent to.  As described in contrib/README, I would delegate
-fixes and enhancements in contrib/ area to primary contributors
-of them.
-
-Although the following are included in git.git repository, they
-have their own authoritative repository and maintainers:
-
- - git-gui/ comes from Shawn Pearce's git-gui project:
-
-        git://repo.or.cz/git-gui.git
-
- - gitk-git/ comes from Paul Mackerras's gitk project:
-
-        git://git.kernel.org/pub/scm/gitk/gitk.git
-
-I would like to thank everybody who helped to raise git into the
-current shape.  Especially I would like to thank the git list
-regulars whose help I have relied on and expect to continue
-relying on heavily:
-
- - Linus on general design issues.
-
- - Linus, Shawn Pearce, Johannes Schindelin, Nicolas Pitre,
-   Ren=C3=A9 Scharfe and Jeff King on general implementation issues.
-
- - Shawn and Nicolas Pitre on pack issues.
-
- - Martin Langhoff and Frank Lichtenheld on cvsserver and cvsimport.
-
- - Paul Mackerras on gitk.
-
- - Eric Wong on git-svn.
-
- - Simon Hausmann on git-p4.
-
- - Jakub Narebski, Petr Baudis, and Luben Tuikov on gitweb.
-
- - J. Bruce Fields on documentaton issues.
-
- - Johannes Schindelin, Johannes Sixt and others for their effort
-   to move things forward on the Windows front.  Although my
-   repository does not have much from the effort of MinGW team,
-   I expect a merge into mainline will happen so that everybody
-   can work from the same codebase.
-
- - People on non-Linux platforms for keeping their eyes on
-   portability; especially, Randal Schwartz, Theodore Ts'o,
-   Jason Riedy, Thomas Glanzmann, but countless others as well.
-
-* This document
-
-The latest copy of this document is found in git.git repository,
-on 'todo' branch, as MaintNotes.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76653>
+
+
+--IiVenqGWf+H9Y6IX
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Sun, Mar 09, 2008 at 10:17:18AM +0000, Junio C Hamano wrote:
+> Pierre Habouzit <madcoder@debian.org> writes:
+>=20
+> >> You made the loop a subshell but I think you can redirect into the whi=
+le
+> >> loop without an extra "cat" process.
+> >
+> > Well probably yeah, I could use an exec -- < series or an alike trick
+> > for sure.
+>=20
+> It seems many people forget that it is perfectly fine to redirect into
+> while loop itself, like
+>=20
+> 	while read foo bar
+>         do
+>         	do a lot of stuff
+> 	done <input-file
+
+Oh right, well, I assume you already squashed that on top of my patch :)
+
+> Ok, somehow in an earlier patch to quiltimport I picked up an incorrect
+> notion that they could contain a blank, but then that's fine.
+
+  Well, maybe they could, but quilt doesn't get it right.
+
+> Will queue, but I am very well into my merge binge for tonight (and it
+> hasn't finished even though it is past 3 AM, sheesh), so it will be in the
+> next round.
+
+  That's obviously fine by me, thanks :)
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+
+--IiVenqGWf+H9Y6IX
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBH08mEvGr7W6HudhwRAtfVAJwM0x4/Q+SQUtm2madfl6Svk3CuWwCePaSG
+CUNPsasHT+arFlJVnyXAWNE=
+=2/LU
+-----END PGP SIGNATURE-----
+
+--IiVenqGWf+H9Y6IX--
