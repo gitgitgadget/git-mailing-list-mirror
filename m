@@ -1,60 +1,74 @@
-From: Simon Fraser <smfr@mac.com>
-Subject: Parsing diff --git lines
-Date: Sat, 8 Mar 2008 17:48:30 -0800
-Message-ID: <F4D3B820-CCF4-4212-BF32-700EFD448143@mac.com>
-Mime-Version: 1.0 (Apple Message framework v919.2)
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 09 02:57:15 2008
+From: Kevin Ballard <kevin@sb.org>
+Subject: [PATCH] bash: Properly quote the GIT_DIR at all times to fix subdirectory paths with spaces
+Date: Sat,  8 Mar 2008 22:10:48 -0500
+Message-ID: <1205032248-29246-1-git-send-email-kevin@sb.org>
+Cc: Kevin Ballard <kevin@sb.org>, git@vger.kernel.org
+To: szeder@ira.uka.de
+X-From: git-owner@vger.kernel.org Sun Mar 09 04:11:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JYAmc-0000Rv-KT
-	for gcvg-git-2@gmane.org; Sun, 09 Mar 2008 02:57:03 +0100
+	id 1JYBx7-0007bf-KS
+	for gcvg-git-2@gmane.org; Sun, 09 Mar 2008 04:11:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752559AbYCIB4E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Mar 2008 20:56:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752555AbYCIB4D
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Mar 2008 20:56:03 -0500
-Received: from smtpoutm.mac.com ([17.148.16.80]:62691 "EHLO smtpoutm.mac.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752528AbYCIB4C (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Mar 2008 20:56:02 -0500
-X-Greylist: delayed 448 seconds by postgrey-1.27 at vger.kernel.org; Sat, 08 Mar 2008 20:56:02 EST
-Received: from mac.com (asmtp009-s [10.150.69.72])
-	by smtpoutm.mac.com (Xserve/smtpout017/MantshX 4.0) with ESMTP id m291mWqa023061
-	for <git@vger.kernel.org>; Sat, 8 Mar 2008 17:48:32 -0800 (PST)
-Received: from [192.168.1.205] (netblock-68-183-25-67.dslextreme.com [68.183.25.67])
-	(authenticated bits=0)
-	by mac.com (Xserve/asmtp009/MantshX 4.0) with ESMTP id m291mUK9028184
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO)
-	for <git@vger.kernel.org>; Sat, 8 Mar 2008 17:48:31 -0800 (PST)
-X-Mailer: Apple Mail (2.919.2)
+	id S1751034AbYCIDK5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Mar 2008 22:10:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751012AbYCIDK5
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Mar 2008 22:10:57 -0500
+Received: from sd-green-bigip-66.dreamhost.com ([208.97.132.66]:60633 "EHLO
+	randymail-a11.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1750755AbYCIDK4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 8 Mar 2008 22:10:56 -0500
+Received: from localhost.localdomain (KBALLARD.RES.WPI.NET [130.215.239.91])
+	by randymail-a11.g.dreamhost.com (Postfix) with ESMTP id 0D195109EAF;
+	Sat,  8 Mar 2008 19:10:49 -0800 (PST)
+X-Mailer: git-send-email 1.5.4.3.487.g1eab2.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76629>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76630>
 
-I'm working on a GUI for git, and I'd like to be able to provide
-some diff navigation tools. That requires that I can find the
-file chunks in a diff, and parse out the file names.
+Signed-off-by: Kevin Ballard <kevin@sb.org>
+---
+ contrib/completion/git-completion.bash |    8 ++++----
+ 1 files changed, 4 insertions(+), 4 deletions(-)
 
-However, I don't see a reliable way to identify the two files
-from a "diff --git" line. Here's a (deliberately pathological)
-example:
-
-diff --git a/a / b/file with spaces.txt b/a / b/file with spaces.txt
-
-In this case, the repository contains directories called "a " and
-" b" and the file names have spaces in.
-
-What would make this possible would be either to always quote
-file paths containing spaces, or use a character other than
-a space (e.g. a \t) between the two file names.
-
-Thanks
-Simon
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 49e6df0..81e40e4 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -75,17 +75,17 @@ __git_ps1 ()
+ 		elif [ -f "$g/.dotest-merge/interactive" ]
+ 		then
+ 			r="|REBASE-i"
+-			b="$(cat $g/.dotest-merge/head-name)"
++			b="$(cat "$g/.dotest-merge/head-name")"
+ 		elif [ -d "$g/.dotest-merge" ]
+ 		then
+ 			r="|REBASE-m"
+-			b="$(cat $g/.dotest-merge/head-name)"
++			b="$(cat "$g/.dotest-merge/head-name")"
+ 		elif [ -f "$g/MERGE_HEAD" ]
+ 		then
+ 			r="|MERGING"
+ 			b="$(git symbolic-ref HEAD 2>/dev/null)"
+ 		else
+-			if [ -f $g/BISECT_LOG ]
++			if [ -f "$g/BISECT_LOG" ]
+ 			then
+ 				r="|BISECTING"
+ 			fi
+@@ -93,7 +93,7 @@ __git_ps1 ()
+ 			then
+ 				if ! b="$(git describe --exact-match HEAD 2>/dev/null)"
+ 				then
+-					b="$(cut -c1-7 $g/HEAD)..."
++					b="$(cut -c1-7 "$g/HEAD")..."
+ 				fi
+ 			fi
+ 		fi
+-- 
+1.5.4.3.487.g1eab2.dirty
 
