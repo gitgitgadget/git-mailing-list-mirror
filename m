@@ -1,70 +1,70 @@
-From: Junio C Hamano <junio@pobox.com>
-Subject: Re: [ANNOUNCE] GIT 1.5.4.4
-Date: Sun, 09 Mar 2008 13:28:39 -0700
-Message-ID: <7v1w6jod54.fsf@gitster.siamese.dyndns.org>
-References: <7vr6f31iwj.fsf@gitster.siamese.dyndns.org>
- <7vr6eknpjf.fsf@gitster.siamese.dyndns.org> <47D416C8.1020903@garzik.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 09/11] Provide API access to init_db()
+Date: Sun, 9 Mar 2008 21:43:46 +0100 (CET)
+Message-ID: <alpine.LSU.1.00.0803092143370.3975@racer.site>
+References: <alpine.LNX.1.00.0803081804200.19665@iabervon.org> <alpine.LSU.1.00.0803090026170.3975@racer.site> <alpine.LNX.1.00.0803081840070.19665@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, linux-kernel@vger.kernel.org
-To: Jeff Garzik <jeff@garzik.org>
-X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1755216AbYCIU3M@vger.kernel.org Sun Mar 09 21:30:17 2008
-Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1755216AbYCIU3M@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@gmane.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Sun Mar 09 21:44:26 2008
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JYS9s-0003If-GO
-	for glk-linux-kernel-3@gmane.org; Sun, 09 Mar 2008 21:30:12 +0100
+	id 1JYSNd-0001K1-JC
+	for gcvg-git-2@gmane.org; Sun, 09 Mar 2008 21:44:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755216AbYCIU3M (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Sun, 9 Mar 2008 16:29:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752917AbYCIU2v
-	(ORCPT <rfc822;linux-kernel-outgoing>);
-	Sun, 9 Mar 2008 16:28:51 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:39922 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752478AbYCIU2u (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Sun, 9 Mar 2008 16:28:50 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id A822E24EF;
-	Sun,  9 Mar 2008 16:28:47 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id F263524EE; Sun,  9 Mar 2008 16:28:41 -0400 (EDT)
-In-Reply-To: <47D416C8.1020903@garzik.org> (Jeff Garzik's message of "Sun, 09
- Mar 2008 12:56:40 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1753251AbYCIUnq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Mar 2008 16:43:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752878AbYCIUnp
+	(ORCPT <rfc822;git-outgoing>); Sun, 9 Mar 2008 16:43:45 -0400
+Received: from mail.gmx.net ([213.165.64.20]:56959 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751313AbYCIUnp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Mar 2008 16:43:45 -0400
+Received: (qmail invoked by alias); 09 Mar 2008 20:43:42 -0000
+Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
+  by mail.gmx.net (mp012) with SMTP; 09 Mar 2008 21:43:42 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/yivkPdWrycr1VV70IDvPrP/udF6cjhrG6PbO5FE
+	ehdTVGd4LcvrT9
+X-X-Sender: gene099@racer.site
+In-Reply-To: <alpine.LNX.1.00.0803081840070.19665@iabervon.org>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76665>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76666>
 
-Jeff Garzik <jeff@garzik.org> writes:
+Hi,
 
-> Junio C Hamano wrote:
->> The latest maintenance release GIT 1.5.4.4 is available at the
->> usual places:
->>
->>   http://www.kernel.org/pub/software/scm/git/
->>
->>   git-1.5.4.4.tar.{gz,bz2}			(tarball)
->>   git-htmldocs-1.5.4.4.tar.{gz,bz2}		(preformatted docs)
->>   git-manpages-1.5.4.4.tar.{gz,bz2}		(preformatted docs)
->>   RPMS/$arch/git-*-1.5.4.4-1.$arch.rpm	(RPM)
->
-> Does it address the following issue, present in git-core-1.5.4.1-1.fc8?
->
-> http://marc.info/?l=git&m=120423022832530&w=2
+On Sat, 8 Mar 2008, Daniel Barkalow wrote:
 
-I do not think so.
+> On Sun, 9 Mar 2008, Johannes Schindelin wrote:
+> 
+> > On Sat, 8 Mar 2008, Daniel Barkalow wrote:
+> > 
+> > > The caller first calls set_git_dir() to specify the GIT_DIR, and then 
+> > > calls init_db() to initialize it. This also cleans up various parts of 
+> > > the code to account for the fact that everything is done with GIT_DIR 
+> > > set, so it's unnecessary to pass the specified directory around.
+> > 
+> > I think the most controversial part is that you change the way it is 
+> > determined if the repository is a bare one.  It might have the same 
+> > result (I do not have time to check it...), but the computation is 
+> > performed differently.
+> 
+> It's actually doing the same computation; the difference is how the result 
+> is reported. Mine commits to the repo being non-bare if it doesn't think 
+> it's bare, which the current code leaves as "we don't know, assume 
+> non-bare". But since we actually create a work tree if we guess it's 
+> non-bare, it really is non-bare. So then the later code can assume it's 
+> either 0 or 1, and not worry about -1 being equivalent to 0.
 
-Is it really an issue, or is it just a warning message unread/unfollowed?
+Okay.
 
-I am comparing the last line you quoted from the command output in that
-message, which suggests the user to run 'git prune', and your comment on
-the next line in that message that says "I regularly run 'git gc'", and
-scratching my head.  I cannot tell if you regularly run 'git prune' or not
-from it...
+Thanks,
+Dscho
