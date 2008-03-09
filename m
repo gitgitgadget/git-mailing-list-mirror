@@ -1,79 +1,88 @@
-From: Jan Hudec <bulb@ucw.cz>
-Subject: Re: [RFC] Idea for Git Bugtracking Tool
-Date: Sun, 9 Mar 2008 09:26:40 +0100
-Message-ID: <20080309082640.GA22732@efreet.light.src>
-References: <20080306142246.5d9460b7@gmail.com> <vpqskz3pqdo.fsf@bauges.imag.fr> <m3zltaf7vs.fsf@localhost.localdomain>
+From: Jari Aalto <jari.aalto@cante.net>
+Subject: [PATCH] git-filter-branch.txt: Add picture to explain the graft-id
+Date: Sun, 09 Mar 2008 11:01:14 +0200
+Organization: Private
+Message-ID: <7igcz2xx.fsf@blue.sea.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Thomas Harning <harningt@gmail.com>,
-	Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 09 09:27:28 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 09 10:03:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JYGsQ-0000GK-Ka
-	for gcvg-git-2@gmane.org; Sun, 09 Mar 2008 09:27:27 +0100
+	id 1JYHQt-0006Y9-7y
+	for gcvg-git-2@gmane.org; Sun, 09 Mar 2008 10:03:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751927AbYCII0t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Mar 2008 04:26:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751924AbYCII0t
-	(ORCPT <rfc822;git-outgoing>); Sun, 9 Mar 2008 04:26:49 -0400
-Received: from ns1.bluetone.cz ([212.158.128.13]:58868 "EHLO ns1.bluetone.cz"
+	id S1750974AbYCIJB6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Mar 2008 05:01:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751174AbYCIJB5
+	(ORCPT <rfc822;git-outgoing>); Sun, 9 Mar 2008 05:01:57 -0400
+Received: from main.gmane.org ([80.91.229.2]:50797 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751907AbYCII0s (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Mar 2008 04:26:48 -0400
-Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
-	by ns1.bluetone.cz (Postfix) with ESMTP id 7C32F5724A;
-	Sun,  9 Mar 2008 09:26:46 +0100 (CET)
-Received: from ns1.bluetone.cz ([192.168.13.1])
-	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
-	with ESMTP id xA81MXZUOkgK; Sun,  9 Mar 2008 09:26:43 +0100 (CET)
-Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
-	by ns1.bluetone.cz (Postfix) with ESMTP id 174A5576A1;
-	Sun,  9 Mar 2008 09:26:43 +0100 (CET)
-Received: from bulb by efreet.light.src with local (Exim 4.69)
-	(envelope-from <bulb@ucw.cz>)
-	id 1JYGrg-0000kK-56; Sun, 09 Mar 2008 09:26:40 +0100
-Content-Disposition: inline
-In-Reply-To: <m3zltaf7vs.fsf@localhost.localdomain>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1750869AbYCIJB4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Mar 2008 05:01:56 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1JYHPl-0001Yz-NX
+	for git@vger.kernel.org; Sun, 09 Mar 2008 09:01:53 +0000
+Received: from a91-155-187-119.elisa-laajakaista.fi ([91.155.187.119])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 09 Mar 2008 09:01:53 +0000
+Received: from jari.aalto by a91-155-187-119.elisa-laajakaista.fi with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 09 Mar 2008 09:01:53 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: a91-155-187-119.elisa-laajakaista.fi
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (windows-nt)
+Cancel-Lock: sha1:tzW33RKAM/osUqItBP3X6mNuoGc=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76638>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76639>
 
-On Fri, Mar 07, 2008 at 15:10:18 -0800, Jakub Narebski wrote:
-> [...]
-> There exists few implementations of distributed bug tracker idea. They
-> include:
-> 
->  * Bugs Everywhere (http://bugseverywhere.org), written in Python,
->    developed in Bazaar, has Git backend support. Formerly written by
->    Panoramic Feedback (note that there is stale version of this tool),
->    picked up by one of developers
+Present a picture to demonstrate the positions of graft-id and
+commit-id in case of merging A with B.
 
-I recall Pierre mentioning that he didn't like some things on this back then
-when he talked about Grit. Particularly, I believe, the way it suggested to
-have the bugs in the same branch as source to keep them in sync. It might be
-possible to use it in different way though.
+Signed-off-by: Jari Aalto <jari.aalto@cante.net>
+---
+ Documentation/git-filter-branch.txt |    8 +++++++-
+ 1 files changed, 7 insertions(+), 1 deletions(-)
 
->  * DisTract (http://www.distract.wellquite.org), written in Haskell,
->    uses Monotone as backend. Has good reviews on blogs, e.g. by
->    Masukomi.
+ I'd like to thank Mikael Magnusson explaining this.
 
-Sounds a little overcomplicated with the monotone storage and firefox UI.
+diff --git a/Documentation/git-filter-branch.txt b/Documentation/git-filter-branch.txt
+index 543a1cf..73939e2 100644
+--- a/Documentation/git-filter-branch.txt
++++ b/Documentation/git-filter-branch.txt
+@@ -186,7 +186,7 @@ Now, you will get the rewritten history saved in HEAD.
+ 
+ To set a commit (which typically is at the tip of another
+ history) to be the parent of the current initial commit, in
+-order to paste the other history behind the current history:
++order to paste the other history behind the current history.
+ 
+ -------------------------------------------------------------------
+ git filter-branch --parent-filter 'sed "s/^\$/-p <graft-id>/"' HEAD
+@@ -198,6 +198,12 @@ history with a single root (that is, no merge without common ancestors
+ happened).  If this is not the case, use:
+ 
+ --------------------------------------------------------------------------
++
++    The plan: supposing we're merging A with B
++    commit sequence A: a-b-c			graft-id  = b
++    commit sequence B: c'-d'-e'			commit-id = c'
++    Result	     : a-b-c'-d'-e'
++
+ git filter-branch --parent-filter \
+ 	'test $GIT_COMMIT = <commit-id> && echo "-p <graft-id>" || cat' HEAD
+ --------------------------------------------------------------------------
+-- 
+1.5.3.8
 
->  * DITrack (http://www.ditrack.org), written in Python, currently
->    uses Subversion as backend, has plans to be backend-agnostic.
->    Inspired by Subissue.
-
-I wish them good luck. The problem is, that this is /not/ distributed,
-because they use sequential bug numbers, which they'd have to change if they
-wanted to use Git.
 
 -- 
-						 Jan 'Bulb' Hudec <bulb@ucw.cz>
+Welcome to FOSS revolution: we fix and modify until it shines
+
