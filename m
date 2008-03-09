@@ -1,70 +1,95 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 09/11] Provide API access to init_db()
-Date: Sun, 9 Mar 2008 21:43:46 +0100 (CET)
-Message-ID: <alpine.LSU.1.00.0803092143370.3975@racer.site>
-References: <alpine.LNX.1.00.0803081804200.19665@iabervon.org> <alpine.LSU.1.00.0803090026170.3975@racer.site> <alpine.LNX.1.00.0803081840070.19665@iabervon.org>
+From: Michal Rokos <michal.rokos@nextsoft.cz>
+Subject: [PATCH v6] autoconf: Test FREAD_READS_DIRECTORIES
+Date: Sun, 9 Mar 2008 21:44:04 +0100
+Organization: NextSoft
+Message-ID: <200803092144.04440.michal.rokos@nextsoft.cz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Sun Mar 09 21:44:26 2008
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+To: GIT <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Mar 09 21:45:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JYSNd-0001K1-JC
-	for gcvg-git-2@gmane.org; Sun, 09 Mar 2008 21:44:26 +0100
+	id 1JYSO8-0001bC-5j
+	for gcvg-git-2@gmane.org; Sun, 09 Mar 2008 21:44:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753251AbYCIUnq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Mar 2008 16:43:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752878AbYCIUnp
-	(ORCPT <rfc822;git-outgoing>); Sun, 9 Mar 2008 16:43:45 -0400
-Received: from mail.gmx.net ([213.165.64.20]:56959 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751313AbYCIUnp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Mar 2008 16:43:45 -0400
-Received: (qmail invoked by alias); 09 Mar 2008 20:43:42 -0000
-Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
-  by mail.gmx.net (mp012) with SMTP; 09 Mar 2008 21:43:42 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/yivkPdWrycr1VV70IDvPrP/udF6cjhrG6PbO5FE
-	ehdTVGd4LcvrT9
-X-X-Sender: gene099@racer.site
-In-Reply-To: <alpine.LNX.1.00.0803081840070.19665@iabervon.org>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1753260AbYCIUoR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Mar 2008 16:44:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752878AbYCIUoR
+	(ORCPT <rfc822;git-outgoing>); Sun, 9 Mar 2008 16:44:17 -0400
+Received: from holub.nextsoft.cz ([195.122.198.235]:57814 "EHLO
+	holub.nextsoft.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751313AbYCIUoP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Mar 2008 16:44:15 -0400
+Received: by holub.nextsoft.cz (Postfix, from userid 111)
+	id 42A8287C; Sun,  9 Mar 2008 21:44:11 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by holub.nextsoft.cz (Postfix) with ESMTP id 557A787B
+	for <git@vger.kernel.org>; Sun,  9 Mar 2008 21:44:10 +0100 (CET)
+Received: from holub.nextsoft.cz ([127.0.0.1])
+	by localhost (holub.nextsoft.cz [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 00709-03 for <git@vger.kernel.org>;
+	Sun, 9 Mar 2008 21:44:10 +0100 (CET)
+Received: from b.rokos.cz (b.rokos.cz [88.83.237.35])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	by holub.nextsoft.cz (Postfix) with ESMTP id 2ABBB4E0
+	for <git@vger.kernel.org>; Sun,  9 Mar 2008 21:44:10 +0100 (CET)
+Content-Disposition: inline
+X-Bogosity: Ham, tests=bogofilter, spamicity=0.000000, version=1.0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76666>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76667>
 
-Hi,
+Add test for FREAD_READS_DIRECTORIES to detect when fread() reads fopen'ed 
+directory.
 
-On Sat, 8 Mar 2008, Daniel Barkalow wrote:
+Signed-off-by: Michal Rokos <michal.rokos@nextsoft.cz>
+Tested-by: Mike Ralphson <mike@abacus.co.uk>
 
-> On Sun, 9 Mar 2008, Johannes Schindelin wrote:
-> 
-> > On Sat, 8 Mar 2008, Daniel Barkalow wrote:
-> > 
-> > > The caller first calls set_git_dir() to specify the GIT_DIR, and then 
-> > > calls init_db() to initialize it. This also cleans up various parts of 
-> > > the code to account for the fact that everything is done with GIT_DIR 
-> > > set, so it's unnecessary to pass the specified directory around.
-> > 
-> > I think the most controversial part is that you change the way it is 
-> > determined if the repository is a bare one.  It might have the same 
-> > result (I do not have time to check it...), but the computation is 
-> > performed differently.
-> 
-> It's actually doing the same computation; the difference is how the result 
-> is reported. Mine commits to the repo being non-bare if it doesn't think 
-> it's bare, which the current code leaves as "we don't know, assume 
-> non-bare". But since we actually create a work tree if we guess it's 
-> non-bare, it really is non-bare. So then the later code can assume it's 
-> either 0 or 1, and not worry about -1 being equivalent to 0.
-
-Okay.
-
-Thanks,
-Dscho
+diff --git a/config.mak.in b/config.mak.in
+index 8e1cd5f..7868dfd 100644
+--- a/config.mak.in
++++ b/config.mak.in
+@@ -46,4 +46,5 @@ NO_MKDTEMP=@NO_MKDTEMP@
+ NO_ICONV=@NO_ICONV@
+ OLD_ICONV=@OLD_ICONV@
+ NO_DEFLATE_BOUND=@NO_DEFLATE_BOUND@
++FREAD_READS_DIRECTORIES=@FREAD_READS_DIRECTORIES@
+ SNPRINTF_RETURNS_BOGUS=@SNPRINTF_RETURNS_BOGUS@
+diff --git a/configure.ac b/configure.ac
+index 287149d..82584e9 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -327,6 +327,26 @@ else
+ fi
+ AC_SUBST(NO_C99_FORMAT)
+ #
++# Define FREAD_READS_DIRECTORIES if your are on a system which succeeds
++# when attempting to read from an fopen'ed directory.
++AC_CACHE_CHECK([whether system succeeds to read fopen'ed directory],
++ [ac_cv_fread_reads_directories],
++[
++AC_RUN_IFELSE(
++	[AC_LANG_PROGRAM([AC_INCLUDES_DEFAULT],
++		[[char c;
++		FILE *f = fopen(".", "r");
++		return f && fread(&c, 1, 1, f)]])],
++	[ac_cv_fread_reads_directories=no],
++	[ac_cv_fread_reads_directories=yes])
++])
++if test $ac_cv_fread_reads_directories = yes; then
++	FREAD_READS_DIRECTORIES=UnfortunatelyYes
++else
++	FREAD_READS_DIRECTORIES=
++fi
++AC_SUBST(FREAD_READS_DIRECTORIES)
++#
+ # Define SNPRINTF_RETURNS_BOGUS if your are on a system which snprintf()
+ # or vsnprintf() return -1 instead of number of characters which would
+ # have been written to the final string if enough space had been available.
