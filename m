@@ -1,110 +1,53 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] Don't try and percent-escape existing percent escapes in git-svn URIs
-Date: Sun, 9 Mar 2008 01:12:40 -0800
-Message-ID: <20080309091240.GA17484@mayonaise>
-References: <1205018447-18344-1-git-send-email-kevin@sb.org>
+From: Florian Weimer <fw@deneb.enyo.de>
+Subject: Editing patch sequences
+Date: Sun, 09 Mar 2008 10:30:16 +0100
+Message-ID: <877igcw8gn.fsf@mid.deneb.enyo.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Kevin Ballard <kevin@sb.org>
-X-From: git-owner@vger.kernel.org Sun Mar 09 10:13:49 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 09 10:31:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JYHbH-0000lq-Pg
-	for gcvg-git-2@gmane.org; Sun, 09 Mar 2008 10:13:48 +0100
+	id 1JYHsC-000462-Ii
+	for gcvg-git-2@gmane.org; Sun, 09 Mar 2008 10:31:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751370AbYCIJMo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Mar 2008 05:12:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751979AbYCIJMo
-	(ORCPT <rfc822;git-outgoing>); Sun, 9 Mar 2008 05:12:44 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:59022 "EHLO hand.yhbt.net"
+	id S1752118AbYCIJaU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Mar 2008 05:30:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752106AbYCIJaU
+	(ORCPT <rfc822;git-outgoing>); Sun, 9 Mar 2008 05:30:20 -0400
+Received: from mail.enyo.de ([212.9.189.167]:58646 "EHLO mail.enyo.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750869AbYCIJMn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Mar 2008 05:12:43 -0400
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id 8E8C47F4153;
-	Sun,  9 Mar 2008 01:12:41 -0800 (PST)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Sun, 09 Mar 2008 01:12:40 -0800
-Content-Disposition: inline
-In-Reply-To: <1205018447-18344-1-git-send-email-kevin@sb.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1752088AbYCIJaT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Mar 2008 05:30:19 -0400
+Received: from deneb.vpn.enyo.de ([212.9.189.177] helo=deneb.enyo.de)
+	by mail.enyo.de with esmtp id 1JYHrF-0002Qe-97
+	for git@vger.kernel.org; Sun, 09 Mar 2008 10:30:17 +0100
+Received: from fw by deneb.enyo.de with local (Exim 4.69)
+	(envelope-from <fw@deneb.enyo.de>)
+	id 1JYHrE-0006Mb-SF
+	for git@vger.kernel.org; Sun, 09 Mar 2008 10:30:16 +0100
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76640>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76641>
 
-Kevin Ballard <kevin@sb.org> wrote:
-> git-svn: project names are percent-escaped ever since f5530b.
-> Unfortunately this breaks the scenario where the user hands git-svn
-> an already-escaped URI. Fix the regexp to skip over what looks like
-> existing percent escapes, and test this scenario.
+I've got a patch sequence (a list of file names of patches to apply to
+some directory tree, not necessarily in quilt format), and I need to
+reorder those patches (for instance, I've got a different version of the
+directory tree, but don't want the patch at the beginning of the patch
+sequence, but add the end).  If automatic reordering fails, I'd really
+like to get some sort of three-way conflict.  After the editing process,
+I want to get back another patch sequence, with as few as possible
+differences to the original sequence (e.g., embedded file time stamps
+should be kept the same, file headers should be preserved, and the order
+of files in the patch should remain unchanged).
 
-What happens when something that _looks_ like a percent escape is
-actually a part of the URL and not really an escape?
+Has this already been implemented? "git rebase --interactive" comes
+close, I think.  But minimizing the changes to individual patches seems
+a bit of work.
 
-> Signed-off-by: Kevin Ballard <kevin@sb.org>
-> ---
->  git-svn.perl                                  |    2 +-
->  t/t9120-git-svn-clone-with-percent-escapes.sh |   31 +++++++++++++++++++++++++
->  2 files changed, 32 insertions(+), 1 deletions(-)
->  create mode 100755 t/t9120-git-svn-clone-with-percent-escapes.sh
-> 
-> diff --git a/git-svn.perl b/git-svn.perl
-> index 9e2faf9..cec664f 100755
-> --- a/git-svn.perl
-> +++ b/git-svn.perl
-> @@ -3658,7 +3658,7 @@ sub escape_uri_only {
->  	my ($uri) = @_;
->  	my @tmp;
->  	foreach (split m{/}, $uri) {
-> -		s/([^\w.-])/sprintf("%%%02X",ord($1))/eg;
-> +		s/([^\w.%-]|%(?![a-fA-F0-9]{2}))/sprintf("%%%02X",ord($1))/eg;
->  		push @tmp, $_;
->  	}
->  	join('/', @tmp);
-> diff --git a/t/t9120-git-svn-clone-with-percent-escapes.sh b/t/t9120-git-svn-clone-with-percent-escapes.sh
-> new file mode 100755
-> index 0000000..9a4eabe
-> --- /dev/null
-> +++ b/t/t9120-git-svn-clone-with-percent-escapes.sh
-> @@ -0,0 +1,31 @@
-> +#!/bin/sh
-> +#
-> +# Copyright (c) 2008 Kevin Ballard
-> +#
-> +
-> +test_description='git-svn clone with percent escapes'
-> +. ./lib-git-svn.sh
-> +
-> +test_expect_success 'setup svnrepo' "
-> +	mkdir project project/trunk project/branches project/tags &&
-> +	echo foo > project/trunk/foo &&
-> +	svn import -m '$test_description' project '$svnrepo/pr ject' &&
-> +	rm -rf project &&
-> +	start_httpd
-> +"
-> +
-> +if test "$SVN_HTTPD_PORT" = ""
-> +then
-> +	test_expect_failure 'test clone with percent escapes - needs SVN_HTTPD_PORT set' 'false'
-> +else
-> +	test_expect_success 'test clone with percent escapes' '
-> +		git svn clone "$svnrepo/pr%20ject" clone &&
-> +		cd clone &&
-> +			git rev-parse refs/remotes/git-svn &&
-> +		cd ..
-> +	'
-> +fi
-> +
-> +stop_httpd
-> +
-> +test_done
-> -- 
-> 1.5.4.3.487.g1eab2.dirty
-> 
-
--- 
-Eric Wong
+It's not necessary that this integrates well with other GIT operations,
+all this can happen on some throw-away branch or set of branches.
