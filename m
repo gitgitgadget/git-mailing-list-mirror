@@ -1,95 +1,51 @@
-From: Michal Rokos <michal.rokos@nextsoft.cz>
-Subject: [PATCH v6] autoconf: Test FREAD_READS_DIRECTORIES
-Date: Sun, 9 Mar 2008 21:44:04 +0100
-Organization: NextSoft
-Message-ID: <200803092144.04440.michal.rokos@nextsoft.cz>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Parsing diff --git lines
+Date: Sun, 9 Mar 2008 21:45:15 +0100 (CET)
+Message-ID: <alpine.LSU.1.00.0803092144150.3975@racer.site>
+References: <F4D3B820-CCF4-4212-BF32-700EFD448143@mac.com> <alpine.LFD.1.00.0803081955110.5896@woody.linux-foundation.org> <m3r6ekfgnw.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-To: GIT <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Mar 09 21:45:08 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 09 21:45:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JYSO8-0001bC-5j
-	for gcvg-git-2@gmane.org; Sun, 09 Mar 2008 21:44:56 +0100
+	id 1JYSP2-000279-5R
+	for gcvg-git-2@gmane.org; Sun, 09 Mar 2008 21:45:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753260AbYCIUoR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Mar 2008 16:44:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752878AbYCIUoR
-	(ORCPT <rfc822;git-outgoing>); Sun, 9 Mar 2008 16:44:17 -0400
-Received: from holub.nextsoft.cz ([195.122.198.235]:57814 "EHLO
-	holub.nextsoft.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751313AbYCIUoP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Mar 2008 16:44:15 -0400
-Received: by holub.nextsoft.cz (Postfix, from userid 111)
-	id 42A8287C; Sun,  9 Mar 2008 21:44:11 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by holub.nextsoft.cz (Postfix) with ESMTP id 557A787B
-	for <git@vger.kernel.org>; Sun,  9 Mar 2008 21:44:10 +0100 (CET)
-Received: from holub.nextsoft.cz ([127.0.0.1])
-	by localhost (holub.nextsoft.cz [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 00709-03 for <git@vger.kernel.org>;
-	Sun, 9 Mar 2008 21:44:10 +0100 (CET)
-Received: from b.rokos.cz (b.rokos.cz [88.83.237.35])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	by holub.nextsoft.cz (Postfix) with ESMTP id 2ABBB4E0
-	for <git@vger.kernel.org>; Sun,  9 Mar 2008 21:44:10 +0100 (CET)
-Content-Disposition: inline
-X-Bogosity: Ham, tests=bogofilter, spamicity=0.000000, version=1.0.1
+	id S1752878AbYCIUpO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Mar 2008 16:45:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752968AbYCIUpN
+	(ORCPT <rfc822;git-outgoing>); Sun, 9 Mar 2008 16:45:13 -0400
+Received: from mail.gmx.net ([213.165.64.20]:38764 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751071AbYCIUpM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Mar 2008 16:45:12 -0400
+Received: (qmail invoked by alias); 09 Mar 2008 20:45:10 -0000
+Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
+  by mail.gmx.net (mp015) with SMTP; 09 Mar 2008 21:45:10 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18rHqlSrUgrnhGCz/W6diQczB5DlrbHthT3v443pf
+	E0eevBheVqTzMP
+X-X-Sender: gene099@racer.site
+In-Reply-To: <m3r6ekfgnw.fsf@localhost.localdomain>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76667>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76668>
 
-Add test for FREAD_READS_DIRECTORIES to detect when fread() reads fopen'ed 
-directory.
+Hi,
 
-Signed-off-by: Michal Rokos <michal.rokos@nextsoft.cz>
-Tested-by: Mike Ralphson <mike@abacus.co.uk>
+On Sun, 9 Mar 2008, Jakub Narebski wrote:
 
-diff --git a/config.mak.in b/config.mak.in
-index 8e1cd5f..7868dfd 100644
---- a/config.mak.in
-+++ b/config.mak.in
-@@ -46,4 +46,5 @@ NO_MKDTEMP=@NO_MKDTEMP@
- NO_ICONV=@NO_ICONV@
- OLD_ICONV=@OLD_ICONV@
- NO_DEFLATE_BOUND=@NO_DEFLATE_BOUND@
-+FREAD_READS_DIRECTORIES=@FREAD_READS_DIRECTORIES@
- SNPRINTF_RETURNS_BOGUS=@SNPRINTF_RETURNS_BOGUS@
-diff --git a/configure.ac b/configure.ac
-index 287149d..82584e9 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -327,6 +327,26 @@ else
- fi
- AC_SUBST(NO_C99_FORMAT)
- #
-+# Define FREAD_READS_DIRECTORIES if your are on a system which succeeds
-+# when attempting to read from an fopen'ed directory.
-+AC_CACHE_CHECK([whether system succeeds to read fopen'ed directory],
-+ [ac_cv_fread_reads_directories],
-+[
-+AC_RUN_IFELSE(
-+	[AC_LANG_PROGRAM([AC_INCLUDES_DEFAULT],
-+		[[char c;
-+		FILE *f = fopen(".", "r");
-+		return f && fread(&c, 1, 1, f)]])],
-+	[ac_cv_fread_reads_directories=no],
-+	[ac_cv_fread_reads_directories=yes])
-+])
-+if test $ac_cv_fread_reads_directories = yes; then
-+	FREAD_READS_DIRECTORIES=UnfortunatelyYes
-+else
-+	FREAD_READS_DIRECTORIES=
-+fi
-+AC_SUBST(FREAD_READS_DIRECTORIES)
-+#
- # Define SNPRINTF_RETURNS_BOGUS if your are on a system which snprintf()
- # or vsnprintf() return -1 instead of number of characters which would
- # have been written to the final string if enough space had been available.
+> Foootnote:
+
+Alternatively, you can write "Bigfootnote" or "Sasquatchnote".
+
+Ciao,
+Dscho
