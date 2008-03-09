@@ -1,64 +1,160 @@
-From: Samuel Tardieu <sam@rfc1149.net>
-Subject: Re: Remotes order in "git remote update"
-Date: Sun, 9 Mar 2008 12:21:35 +0100
-Organization: RFC 1149 (see http://www.rfc1149.net/)
-Message-ID: <2008-03-09-12-21-35+trackit+sam@rfc1149.net>
-References: <2008-03-09-11-22-34+trackit+sam@rfc1149.net> <7vbq5op4gt.fsf@gitster.siamese.dyndns.org>
+From: Iustin Pop <iusty@k1024.org>
+Subject: [PATCH] Add a quiet option to git merge
+Date: Sun, 9 Mar 2008 13:18:22 +0100
+Message-ID: <20080309121822.GA25890@teal.hq.k1024.org>
+References: <1205020356-6682-2-git-send-email-iusty@k1024.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Mar 09 12:31:42 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 09 13:19:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JYJkk-0006j1-6V
-	for gcvg-git-2@gmane.org; Sun, 09 Mar 2008 12:31:42 +0100
+	id 1JYKUm-0001wo-9R
+	for gcvg-git-2@gmane.org; Sun, 09 Mar 2008 13:19:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750911AbYCILbE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Mar 2008 07:31:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750871AbYCILbD
-	(ORCPT <rfc822;git-outgoing>); Sun, 9 Mar 2008 07:31:03 -0400
-Received: from zaphod.rfc1149.net ([88.191.14.223]:60271 "EHLO
-	mail.rfc1149.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750834AbYCILbB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Mar 2008 07:31:01 -0400
-X-Greylist: delayed 559 seconds by postgrey-1.27 at vger.kernel.org; Sun, 09 Mar 2008 07:31:01 EDT
-Received: from localhost (localhost [127.0.0.1])
-	by mail.rfc1149.net (Postfix) with ESMTP id 6D2FFE0645;
-	Sun,  9 Mar 2008 12:21:40 +0100 (CET)
-X-Virus-Scanned: amavisd-new at rfc1149.net
-Received: from mail.rfc1149.net ([127.0.0.1])
-	by localhost (zaphod.rfc1149.net [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Sfr10WWw03cw; Sun,  9 Mar 2008 12:21:35 +0100 (CET)
-Received: from dawn.rfc1149.net (unknown [192.168.9.2])
-	by mail.rfc1149.net (Postfix) with ESMTP id B2372E04BF;
-	Sun,  9 Mar 2008 12:21:35 +0100 (CET)
-Received: by dawn.rfc1149.net (Postfix, from userid 1000)
-	id 6F40E80AF; Sun,  9 Mar 2008 12:21:35 +0100 (CET)
+	id S1751151AbYCIMS3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Mar 2008 08:18:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750846AbYCIMS3
+	(ORCPT <rfc822;git-outgoing>); Sun, 9 Mar 2008 08:18:29 -0400
+Received: from fg-out-1718.google.com ([72.14.220.155]:58911 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750799AbYCIMS2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Mar 2008 08:18:28 -0400
+Received: by fg-out-1718.google.com with SMTP id e21so1500769fga.17
+        for <git@vger.kernel.org>; Sun, 09 Mar 2008 05:18:26 -0700 (PDT)
+Received: by 10.82.115.8 with SMTP id n8mr9553353buc.28.1205065106197;
+        Sun, 09 Mar 2008 05:18:26 -0700 (PDT)
+Received: from teal.hq.k1024.org ( [84.75.117.152])
+        by mx.google.com with ESMTPS id w5sm23536905mue.2.2008.03.09.05.18.23
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 09 Mar 2008 05:18:24 -0700 (PDT)
+Received: by teal.hq.k1024.org (Postfix, from userid 4004)
+	id 1AD5140A051; Sun,  9 Mar 2008 13:18:22 +0100 (CET)
 Content-Disposition: inline
-In-Reply-To: <7vbq5op4gt.fsf@gitster.siamese.dyndns.org>
+In-Reply-To: <1205020356-6682-2-git-send-email-iusty@k1024.org>
+X-Linux: This message was written on Linux
+X-Header: /usr/include gives great headers
 User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-X-WWW: http://www.rfc1149.net/sam
-X-Jabber: <sam@rfc1149.net> (see http://www.jabber.org/)
-X-OpenPGP-Fingerprint: 79C0 AE3C CEA8 F17B 0EF1  45A5 F133 2241 1B80 ADE6 (see http://www.gnupg.org/)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76654>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76655>
 
-On  9/03, Junio C Hamano wrote:
+Currently it's not possible to do quiet merges in case of no changes
+because git merge always outputs the 'Already up to date' message.
 
-| Samuel Tardieu <sam@rfc1149.net> writes:
-| 
-| > It looks like remote repositories are ordered alphabetically by their
-| > local names when doing a "git remote update".
-|
-| I think the reimplementaiton in 'next' that will hopefully be in 1.5.5
-| will keep the list of remotes in the order read from the config.
+This small patch adds a quiet option to git merge that in this case will
+skip the output of this message. It also adds a test for this new
+option.
 
-Indeed it does, thanks.
+Signed-off-by: Iustin Pop <iusty@k1024.org>
+---
+ This new version has a test too for this option but I'm not sure if
+ it's the right place to add it.
 
+ Documentation/git-merge.txt     |    2 +-
+ Documentation/merge-options.txt |    4 ++++
+ git-merge.sh                    |   19 +++++++++++++------
+ t/t7600-merge.sh                |    5 +++++
+ 4 files changed, 23 insertions(+), 7 deletions(-)
+
+diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
+index c136b10..0c4cd19 100644
+--- a/Documentation/git-merge.txt
++++ b/Documentation/git-merge.txt
+@@ -9,7 +9,7 @@ git-merge - Join two or more development histories together
+ SYNOPSIS
+ --------
+ [verse]
+-'git-merge' [-n] [--summary] [--no-commit] [--squash] [-s <strategy>]...
++'git-merge' [-n] [-q] [--summary] [--no-commit] [--squash] [-s <strategy>]...
+ 	[-m <msg>] <remote> <remote>...
+ 'git-merge' <msg> HEAD <remote>...
+ 
+diff --git a/Documentation/merge-options.txt b/Documentation/merge-options.txt
+index 9f1fc82..dbedf40 100644
+--- a/Documentation/merge-options.txt
++++ b/Documentation/merge-options.txt
+@@ -5,6 +5,10 @@
+ -n, \--no-summary::
+ 	Do not show diffstat at the end of the merge.
+ 
++-q, \--quiet::
++	Supress the 'Already up to date' message if no merge is
++	needed.
++
+ --no-commit::
+ 	Perform the merge but pretend the merge failed and do
+ 	not autocommit, to give the user a chance to inspect and
+diff --git a/git-merge.sh b/git-merge.sh
+index 7dbbb1d..625457e 100755
+--- a/git-merge.sh
++++ b/git-merge.sh
+@@ -15,6 +15,7 @@ commit               perform a commit if the merge sucesses (default)
+ ff                   allow fast forward (default)
+ s,strategy=          merge strategy to use
+ m,message=           message to be used for the merge commit (if any)
++q,quiet              suppress some default messages
+ "
+ 
+ SUBDIRECTORY_OK=Yes
+@@ -38,6 +39,7 @@ use_strategies=
+ allow_fast_forward=t
+ allow_trivial_merge=t
+ squash= no_commit=
++quiet=
+ 
+ dropsave() {
+ 	rm -f -- "$GIT_DIR/MERGE_HEAD" "$GIT_DIR/MERGE_MSG" \
+@@ -59,12 +61,15 @@ restorestate() {
+ }
+ 
+ finish_up_to_date () {
+-	case "$squash" in
+-	t)
+-		echo "$1 (nothing to squash)" ;;
+-	'')
+-		echo "$1" ;;
+-	esac
++	if test -z "$quiet"
++	then
++		case "$squash" in
++		t)
++			echo "$1 (nothing to squash)" ;;
++		'')
++			echo "$1" ;;
++		esac
++	fi
+ 	dropsave
+ }
+ 
+@@ -182,6 +187,8 @@ parse_config () {
+ 			merge_msg="$1"
+ 			have_message=t
+ 			;;
++		-q|--quiet)
++			quiet=t ;;
+ 		--)
+ 			shift
+ 			break ;;
+diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
+index 5d16628..cb7e2e4 100755
+--- a/t/t7600-merge.sh
++++ b/t/t7600-merge.sh
+@@ -247,6 +247,11 @@ test_expect_success 'test option parsing' '
+ 	then
+ 		echo "[OOPS] missing commit references accepted"
+ 		false
++	fi &&
++	if ! git merge --quiet c1
++	then
++		echo "[OOPS] quiet not accepted"
++		false
+ 	fi
+ '
+ 
+-- 
+1.5.4.3
