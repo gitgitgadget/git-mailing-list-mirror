@@ -1,96 +1,83 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [QUESTION] Selective fetch possible?
-Date: Mon, 10 Mar 2008 16:34:59 -0700 (PDT)
-Message-ID: <m3d4q2ywyx.fsf@localhost.localdomain>
-References: <47D5AFF3.90000@yahoo.it> <20080310225302.GE8410@spearce.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [EGIT PATCH] Circument situations where Eclipse tries to decorate resources that do not exist
+Date: Mon, 10 Mar 2008 19:40:28 -0400
+Message-ID: <20080310234028.GI8410@spearce.org>
+References: <200803100033.53905.robin.rosenberg@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Filippo Zangheri <filippo.zangheri@yahoo.it>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Mar 11 00:36:28 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Tue Mar 11 00:41:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JYrXa-0008T2-0b
-	for gcvg-git-2@gmane.org; Tue, 11 Mar 2008 00:36:22 +0100
+	id 1JYrcF-0001WC-Ce
+	for gcvg-git-2@gmane.org; Tue, 11 Mar 2008 00:41:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756470AbYCJXfG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Mar 2008 19:35:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756441AbYCJXfG
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Mar 2008 19:35:06 -0400
-Received: from ug-out-1314.google.com ([66.249.92.170]:14687 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756219AbYCJXfC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Mar 2008 19:35:02 -0400
-Received: by ug-out-1314.google.com with SMTP id z38so5009594ugc.16
-        for <git@vger.kernel.org>; Mon, 10 Mar 2008 16:35:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
-        bh=bMNuQB2lzSR+mYAQLl+idvU16yrnE+cTY/qp8FWHz0U=;
-        b=awo23lBB8ts5olB4RNF35Kj1eq56cvONUoudfCAAsCyGyJH8I7IAEBlDVCMgiiwU1pDNO0OQGg7gm0qjYNREsDD6sRHkNDnO4/pIqXL5/vKYY7sIcV1qVAAah0JhHFGPPPmvKFGV3z2+y5vbcueT0w06anX1oBIwaCqAkyr8BaQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
-        b=RyK+n0r5uZW0rBspjtoZvriQVLk95Iaxd4CvGYjCj+caabVeOeSOLWZ0KkYtn8OvzE8khHyza6/6sJqt1QGaNCPKMkWDsFSPvaWsAFaXTQt21Bxx4SBw265b7fJRoznymoQyDimYnv00AhNyoNS/gLnVKY+cE4QxDigVUNz7AK0=
-Received: by 10.67.23.5 with SMTP id a5mr4263009ugj.8.1205192101258;
-        Mon, 10 Mar 2008 16:35:01 -0700 (PDT)
-Received: from localhost.localdomain ( [83.8.230.40])
-        by mx.google.com with ESMTPS id w40sm9562875ugc.45.2008.03.10.16.34.58
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 10 Mar 2008 16:34:59 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m2ANYoQZ032120;
-	Tue, 11 Mar 2008 00:34:52 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m2ANYlFr032117;
-	Tue, 11 Mar 2008 00:34:47 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <20080310225302.GE8410@spearce.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1753051AbYCJXkc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Mar 2008 19:40:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753488AbYCJXkc
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Mar 2008 19:40:32 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:55966 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752849AbYCJXkb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Mar 2008 19:40:31 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1JYrbP-0004TG-Jg; Mon, 10 Mar 2008 19:40:19 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id F073C20FBAE; Mon, 10 Mar 2008 19:40:28 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <200803100033.53905.robin.rosenberg@dewire.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76770>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76771>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
-
-> Filippo Zangheri <filippo.zangheri@yahoo.it> wrote:
-> >
-> > Is it possible to git-fetch only a portion of the tree
-> > of the specified repository, say, fetch only one directory or a
-> > subset of files matching some regular expression? This is currently
-> > - to my knowledge - only possible via wget iff the GIT repository
-> > has gitweb enabled. But that's just a workaround.
+Robin Rosenberg <robin.rosenberg@dewire.com> wrote:
+> This happens when the workspace has not been refreshed properly, e.g.
+> when switching branches behind Eclipse's back.
 > 
-> No.
+> Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
+> ---
+>  .../internal/decorators/GitResourceDecorator.java  |    7 +++++++
+>  1 files changed, 7 insertions(+), 0 deletions(-)
 > 
-> You can use a shallow clone to fetch only X commits back into
-> history on any branch, and you can also manually configure the
-> fetch specification in .git/config to only fetch specific branches,
-> but you must fetch the entire tree to get any of the files in it.
-> 
-> If the repository is available by git:// protocol you may be able
-> to use git-archive to obtain a tarfile for just the directory you
-> want (service has to be enabled on the remote side) but that is
-> just a raw UNIX tar; there is no Git repository and no ability to
-> commit/fetch/push/diff/apply/log/etc.
+> This one seems hard to replicate though I think it shouldn't. Maybe Eclipse refereshes on demand
+> sometime and sometimes not.
 
-Note that what you wanted is, I guess, something called partial
-checkout or subtree checkout.  This feature appears now and then in
-feature requests; lately Nguyen Thai Ngoc Duy (pclouds) offered to do
-this in "on subtree checkout" thread:
-  http://thread.gmane.org/gmane.comp.version-control.git/74915
+Yup.  Earlier versions used to do a periodic refresh more often,
+which really screwed up my Ant based build when Eclipse started
+to _also_ build the same project to the same class folder at the
+same time.
 
-The problem is twofold, as far as I understand it.  First, what to do
-if there is merge conflicts outside checked out (selected) directory?
-Second, how to make repository contain only relevant objects: git in
-many places assumes full connectivity, and that if it has an object it
-hass all objects depending on it.
+3.3.1.1 seems to not do this as often to me, and tends to wait for
+a user-demanded refresh.  But then every once in a while it just
+starts building all of a sudden, which makes me think they still
+are doing a periodic refresh.  I don't know what is up with Eclipse.
 
+And SWT is all about "we need access to the host native drawing APIs
+to get good performance" but then Eclipse's resource system does
+not appear to have filesystem monitors like inotify implemented for
+the major OSes that Eclipse runs on.  Yet another aspect I don't get.
+
+Yea, yea, if it bothers me, write the patch and submit it to Eclipse.
+I'm too busy working on Git support.  I'll wait for someone else
+to write it and submit it for me.  They may be waiting for me to
+finish Git support first.  ;-)
+
+> This stacktrace suggests this is the right thing to do.
+
+Yea, I think so too.  Sucks.
+ 
 -- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Shawn.
