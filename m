@@ -1,79 +1,63 @@
-From: =?utf-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-Subject: [PATCH] update 'git rebase' documentation
-Date: Mon, 10 Mar 2008 15:38:33 +0100
-Message-ID: <1205159913-19925-1-git-send-email-szeder@ira.uka.de>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: "git checkout" branch switching safety broken in 'next'
+Date: Mon, 10 Mar 2008 07:38:25 -0700 (PDT)
+Message-ID: <alpine.LFD.1.00.0803100735530.5896@woody.linux-foundation.org>
+References: <7vmyp7j8ui.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?utf-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 10 15:39:46 2008
+X-From: git-owner@vger.kernel.org Mon Mar 10 15:39:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JYjAI-0003DD-4e
-	for gcvg-git-2@gmane.org; Mon, 10 Mar 2008 15:39:46 +0100
+	id 1JYjAI-0003DD-PH
+	for gcvg-git-2@gmane.org; Mon, 10 Mar 2008 15:39:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750929AbYCJOig convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 10 Mar 2008 10:38:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751111AbYCJOig
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Mar 2008 10:38:36 -0400
-Received: from francis.fzi.de ([141.21.7.5]:39090 "EHLO exchange.fzi.de"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1750885AbYCJOif (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Mar 2008 10:38:35 -0400
-Received: from fzi.de ([141.21.4.196]) by exchange.fzi.de with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 10 Mar 2008 15:38:32 +0100
-X-Mailer: git-send-email 1.5.4.4.481.g5075
-X-OriginalArrivalTime: 10 Mar 2008 14:38:32.0832 (UTC) FILETIME=[6A435800:01C882BC]
+	id S1751349AbYCJOio (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Mar 2008 10:38:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751269AbYCJOin
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Mar 2008 10:38:43 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:38087 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751256AbYCJOin (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 10 Mar 2008 10:38:43 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m2AEd4sj032743
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 10 Mar 2008 07:39:05 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m2AEcPrO021344;
+	Mon, 10 Mar 2008 07:38:26 -0700
+In-Reply-To: <7vmyp7j8ui.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+X-Spam-Status: No, hits=-3.378 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76730>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76731>
 
-Being in the project's top directory when starting or continuing a
-rebase is not necessary since 533b70390e540de4e0faed4823ee561c8368e5ec
 
-Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
----
- Documentation/git-rebase.txt |    3 +--
- git-rebase.sh                |    3 +--
- 2 files changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.tx=
-t
-index 4b10304..e0412e0 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -262,8 +262,7 @@ hook if one exists.  You can use this hook to do sa=
-nity checks and
- reject the rebase if it isn't appropriate.  Please see the template
- pre-rebase hook script for an example.
-=20
--You must be in the top directory of your project to start (or continue=
-)
--a rebase.  Upon completion, <branch> will be the current branch.
-+Upon completion, <branch> will be the current branch.
-=20
- INTERACTIVE MODE
- ----------------
-diff --git a/git-rebase.sh b/git-rebase.sh
-index 452c5e7..ff66af3 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -18,8 +18,7 @@ original <branch> and remove the .dotest working file=
-s, use the command
- git rebase --abort instead.
-=20
- Note that if <branch> is not specified on the command line, the
--currently checked out branch is used.  You must be in the top
--directory of your project to start (or continue) a rebase.
-+currently checked out branch is used.
-=20
- Example:       git-rebase master~1 topic
-=20
---=20
-1.5.4.4.481.g5075
+On Mon, 10 Mar 2008, Junio C Hamano wrote:
+>
+> Linus, please be careful when switching branches if you are using your
+> unpack_trees() patch (in 'next') for production.  There is a breakage that
+> makes switching branches with "git checkout" lose your work-in-progress.
+
+Ouch. I've been using those patches "in production" since posting them, 
+but since I don't generally use branches on the kernel (it happens, but 
+it's rare), I wouldn't have noticed.
+
+And in git, it probably wouldn't have triggered for me, since it looks 
+like it would only trigger for changes in subdirectories, not in the top 
+level (which is probably also why it passed all the tests!).
+
+My bad. Your patch looks obviously correct.
+
+			Linus
