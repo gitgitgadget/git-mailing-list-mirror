@@ -1,63 +1,48 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: "git checkout" branch switching safety broken in 'next'
-Date: Mon, 10 Mar 2008 07:38:25 -0700 (PDT)
-Message-ID: <alpine.LFD.1.00.0803100735530.5896@woody.linux-foundation.org>
-References: <7vmyp7j8ui.fsf@gitster.siamese.dyndns.org>
+From: Mike Miller <mike.miller@hp.com>
+Subject: git message
+Date: Mon, 10 Mar 2008 09:46:00 -0500
+Message-ID: <20080310144600.GA15556@roadking.ldev.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 10 15:39:48 2008
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 10 15:47:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JYjAI-0003DD-PH
-	for gcvg-git-2@gmane.org; Mon, 10 Mar 2008 15:39:47 +0100
+	id 1JYjHJ-0005pn-Fd
+	for gcvg-git-2@gmane.org; Mon, 10 Mar 2008 15:47:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751349AbYCJOio (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Mar 2008 10:38:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751269AbYCJOin
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Mar 2008 10:38:43 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:38087 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751256AbYCJOin (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 10 Mar 2008 10:38:43 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m2AEd4sj032743
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 10 Mar 2008 07:39:05 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m2AEcPrO021344;
-	Mon, 10 Mar 2008 07:38:26 -0700
-In-Reply-To: <7vmyp7j8ui.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
-X-Spam-Status: No, hits=-3.378 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1751285AbYCJOqF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Mar 2008 10:46:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751196AbYCJOqE
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Mar 2008 10:46:04 -0400
+Received: from g5t0007.atlanta.hp.com ([15.192.0.44]:26884 "EHLO
+	g5t0007.atlanta.hp.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751285AbYCJOqB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Mar 2008 10:46:01 -0400
+Received: from g5t0007.atlanta.hp.com (localhost.localdomain [127.0.0.1])
+	by receive-from-antispam-filter (Postfix) with SMTP id AB1C6145FF
+	for <git@vger.kernel.org>; Mon, 10 Mar 2008 14:46:00 +0000 (UTC)
+Received: from roadking.cca.cpqcorp.net (roadking.cca.cpqcorp.net [16.101.176.141])
+	by g5t0007.atlanta.hp.com (Postfix) with ESMTP id A22C214305
+	for <git@vger.kernel.org>; Mon, 10 Mar 2008 14:46:00 +0000 (UTC)
+Received: by roadking.cca.cpqcorp.net (Postfix, from userid 1000)
+	id 407C21FAC2; Mon, 10 Mar 2008 09:46:00 -0500 (CDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76731>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76732>
 
+I see some patches referring to this message but I don't understand what it
+means:
 
+Warning: Remote HEAD refers to nonexistent ref, unable to checkout.
 
-On Mon, 10 Mar 2008, Junio C Hamano wrote:
->
-> Linus, please be careful when switching branches if you are using your
-> unpack_trees() patch (in 'next') for production.  There is a breakage that
-> makes switching branches with "git checkout" lose your work-in-progress.
+Would someone please explain the message? Is my repository complete?
 
-Ouch. I've been using those patches "in production" since posting them, 
-but since I don't generally use branches on the kernel (it happens, but 
-it's rare), I wouldn't have noticed.
-
-And in git, it probably wouldn't have triggered for me, since it looks 
-like it would only trigger for changes in subdirectories, not in the top 
-level (which is probably also why it passed all the tests!).
-
-My bad. Your patch looks obviously correct.
-
-			Linus
+Thanks,
+mikem
