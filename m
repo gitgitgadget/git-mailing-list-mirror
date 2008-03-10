@@ -1,48 +1,48 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Write diff output to a file in struct diff_options
-Date: Mon, 10 Mar 2008 13:29:39 +0100 (CET)
-Message-ID: <alpine.LSU.1.00.0803101329200.3975@racer.site>
-References: <alpine.LNX.1.00.0803092235150.19665@iabervon.org> <fr37ec$9k4$1@ger.gmane.org>
+Subject: Re: [RFE] git rebase doesn't say it failed
+Date: Mon, 10 Mar 2008 13:29:55 +0100 (CET)
+Message-ID: <alpine.LSU.1.00.0803101329430.3975@racer.site>
+References: <429AC7A2-511E-496F-9C1C-4627604EBBFB@gmail.com> <alpine.LSU.1.00.0803101207120.3975@racer.site> <fr37gm$9k4$2@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323584-265362176-1205152180=:3975"
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323584-2089080222-1205152195=:3975"
 Cc: git@vger.kernel.org
 To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 10 13:30:27 2008
+X-From: git-owner@vger.kernel.org Mon Mar 10 13:30:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JYh8x-0002ev-FA
-	for gcvg-git-2@gmane.org; Mon, 10 Mar 2008 13:30:15 +0100
+	id 1JYh9G-0002mz-Np
+	for gcvg-git-2@gmane.org; Mon, 10 Mar 2008 13:30:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750900AbYCJM3g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Mar 2008 08:29:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750931AbYCJM3g
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Mar 2008 08:29:36 -0400
-Received: from mail.gmx.net ([213.165.64.20]:51089 "HELO mail.gmx.net"
+	id S1751059AbYCJM3x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Mar 2008 08:29:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751061AbYCJM3w
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Mar 2008 08:29:52 -0400
+Received: from mail.gmx.net ([213.165.64.20]:57401 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750850AbYCJM3g (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Mar 2008 08:29:36 -0400
-Received: (qmail invoked by alias); 10 Mar 2008 12:29:33 -0000
+	id S1751059AbYCJM3v (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Mar 2008 08:29:51 -0400
+Received: (qmail invoked by alias); 10 Mar 2008 12:29:49 -0000
 Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp055) with SMTP; 10 Mar 2008 13:29:33 +0100
+  by mail.gmx.net (mp006) with SMTP; 10 Mar 2008 13:29:49 +0100
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/OWDsUMKvO1Bt4yEt1QB/Lx432hiXoDIERXI1GTX
-	f1T2rvEZb6J7Gm
+X-Provags-ID: V01U2FsdGVkX1+q/INagHaq3Ek6ZCOpqlj7YdScBfpt/ULi+a2cWw
+	RncL/PzznyRkmT
 X-X-Sender: gene099@racer.site
-In-Reply-To: <fr37ec$9k4$1@ger.gmane.org>
+In-Reply-To: <fr37gm$9k4$2@ger.gmane.org>
 User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76723>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76724>
 
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323584-265362176-1205152180=:3975
+--8323584-2089080222-1205152195=:3975
 Content-Type: TEXT/PLAIN; charset=iso-8859-2
 Content-Transfer-Encoding: 8BIT
 
@@ -50,24 +50,19 @@ Hi,
 
 On Mon, 10 Mar 2008, Jakub Narebski wrote:
 
-> Daniel Barkalow wrote:
+> Johannes Schindelin wrote:
 > 
-> > I remember there being some expectation that this would be difficult, but 
-> > it was a pretty straightforward conversion, so I'm wondering if I've 
-> > missed something. In any case, this is missing tests and documentation for 
-> > --output=, but I really want it to use directly for rebase-interactive, 
-> > and I only did the command line option so I could do informal testing.
+> >> Git was unable to rebase due to the files above.  Please commit them or move
+> >> them out of the way.
+> >> Hint: See "git reset --help" for a suggestion about saving work in progress.
 > > 
-> >  diff.c |  306 +++++++++++++++++++++++++++++++++++-----------------------------
-> >  diff.h |    3 +
-> >  2 files changed, 169 insertions(+), 140 deletions(-)
+> > The same comment I gave last week applies here: people complained that Git 
+> > was too chatty.  I tend to agree, since the important information was lost 
+> > in the huge amount of text.  Now you say we should make it chatty again?
 > 
-> Errr... where is the documentation?
+> --verbose option, anyone?
 
-There is no user for that feature yet, so where exactly should it be 
-documented?
-
-Ciao,
+Patches welcome,
 Dscho
 
---8323584-265362176-1205152180=:3975--
+--8323584-2089080222-1205152195=:3975--
