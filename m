@@ -1,78 +1,196 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: warning: no common commits - slow pull
-Date: Mon, 10 Mar 2008 13:40:53 -0400 (EDT)
-Message-ID: <alpine.LNX.1.00.0803101327050.19665@iabervon.org>
-References: <200803061735.47674.david-b@pacbell.net> <alpine.LNX.1.00.0803081826080.19665@iabervon.org> <alpine.LNX.1.00.0803091443440.19665@iabervon.org> <200803101018.09282.david-b@pacbell.net>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: David Brownell <david-b@pacbell.net>
-X-From: git-owner@vger.kernel.org Mon Mar 10 18:42:14 2008
+From: Ping Yin <pkufranky@gmail.com>
+Subject: [PATCH v4 2/5] git-submodule summary: show commit summary
+Date: Tue, 11 Mar 2008 01:54:14 +0800
+Message-ID: <1205171657-16216-2-git-send-email-pkufranky@gmail.com>
+References: <1205171657-16216-1-git-send-email-pkufranky@gmail.com>
+Cc: git@vger.kernel.org, Ping Yin <pkufranky@gmail.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Mar 10 18:55:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JYm0F-0004mD-QJ
-	for gcvg-git-2@gmane.org; Mon, 10 Mar 2008 18:41:36 +0100
+	id 1JYmDJ-0001Ri-CS
+	for gcvg-git-2@gmane.org; Mon, 10 Mar 2008 18:55:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751244AbYCJRkz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Mar 2008 13:40:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751040AbYCJRkz
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Mar 2008 13:40:55 -0400
-Received: from iabervon.org ([66.92.72.58]:49748 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750750AbYCJRkz (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Mar 2008 13:40:55 -0400
-Received: (qmail 14514 invoked by uid 1000); 10 Mar 2008 17:40:53 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 10 Mar 2008 17:40:53 -0000
-In-Reply-To: <200803101018.09282.david-b@pacbell.net>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1751475AbYCJRyZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Mar 2008 13:54:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751353AbYCJRyX
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Mar 2008 13:54:23 -0400
+Received: from mail.qikoo.org ([60.28.205.235]:42286 "EHLO mail.qikoo.org"
+	rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751250AbYCJRyV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Mar 2008 13:54:21 -0400
+Received: by mail.qikoo.org (Postfix, from userid 1029)
+	id 7FCD7470AB; Tue, 11 Mar 2008 01:54:17 +0800 (CST)
+X-Mailer: git-send-email 1.5.4.3.347.g5314c
+In-Reply-To: <1205171657-16216-1-git-send-email-pkufranky@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76741>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76742>
 
-On Mon, 10 Mar 2008, David Brownell wrote:
+This patch does the hard work to show submodule commit summary.
 
-> On Sunday 09 March 2008, Daniel Barkalow wrote:
-> > Try this. I'm not at all sure that it's doing what I want, but it passes 
-> > all the current tests, and it should only affect your test case if it's 
-> > actually right.
-> 
-> Seems to resolve that problem for me ... well timed, in terms of RC5!
-> 
-> But some stuff still looks a bit fishy.  See this RC4 --> RC5 pull:
-> 
->   remote: Counting objects: 1329, done.
->   remote: Compressing objects: 100% (276/276), done.
->   remote: Total 908 (delta 749), reused 760 (delta 631)
->   Receiving objects: 100% (908/908), 146.35 KiB | 40 KiB/s, done.
->   Resolving deltas: 100% (749/749), completed with 287 local objects.
->   remote: Counting objects: 1330, done.
->   remote: Compressing objects: 100% (277/277), done.
->   remote: Total 909 (delta 749), reused 760 (delta 631)
->   Receiving objects: 100% (909/909), 146.63 KiB | 38 KiB/s, done.
->   Resolving deltas: 100% (749/749), completed with 287 local objects.
->   From git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6
->    * [new tag]         v2.6.25-rc5 -> v2.6.25-rc5
->   Updating 29e8c3c..cdeeeae
->   Fast forward
->   Auto packing your repository for optimum performance. You may also
->   run "git gc" manually. See "git help gc" for more information.
->   ...
-> 
-> That's pretty typical:  two count/compress/receive/resolve passes,
-> with almost an identical shape and size.  Every time I see that, I
-> suspect that most of the second one should not be needed...
+For a modified submodule, a series of commits will be shown with
+the following command
 
-Ah, I bet it's not rereading the list of current refs when it updates 
-them, and therefore only says it has the stuff that it had before. That 
-would actually explain somewhat why the other bug was actually mattering.
+	git log --pretty='format:%m %s' --left-right \
+	--first-parent sha1_src...sha1_dst
 
-Should be easy to fix, but I'm not sure when I'll get a chance to work on 
-it.
+where the src sha1 is from the given super project commit and the
+dst sha1 is from the index or working tree (switched by --cached).
 
-	-Daniel
-*This .sig left intentionally blank*
+For a deleted, added, or typechanged (blob<->submodule) submodule,
+only one single newest commit from the existing end (for example,
+src end for submodule deleted or type changed from submodule to blob)
+will be shown.
+
+If the src/dst sha1 for a submodule is missing in the submodule
+directory, a warning will be issued except in two cases where the
+submodule directory is deleted (type 'D') or typechanged to blob
+(one case of type 'T').
+
+In the title line for a submodule, the src/dst sha1 and the number
+of commits (--first-parent) between the two sha1s will be shown.
+
+The following example demonstrates most cases.
+
+Example: commit summary for modified submodules sm1-sm5.
+--------------------------------------------
+$ git submodule summary
+* sm1 354cd45...3f751e5 (4):
+  < one line message for C
+  < one line message for B
+  > one line message for D
+  > one line message for E
+
+* sm2 5c8bfb5...000000 (3):
+  < one line message for F
+
+* sm3 354cd45...3f751e5:
+  Warn: sm3 doesn't contain commit 354cd45
+
+* sm4 354cd34(submodule)-> 235efa(blob) (1):
+  < one line message for G
+
+* sm5 354cd34(blob)-> 235efa(submodule) (5):
+  > one line message for H
+
+--------------------------------------------
+
+Signed-off-by: Ping Yin <pkufranky@gmail.com>
+---
+ git-submodule.sh |   96 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 96 insertions(+), 0 deletions(-)
+
+diff --git a/git-submodule.sh b/git-submodule.sh
+index b70ae40..c9afa06 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -381,6 +381,102 @@ cmd_summary() {
+ 			echo "$name"
+ 		done
+ 	)
++
++	test -n "$modules" &&
++	git diff-index $cached --raw $head -- $modules |
++	grep -e '^:160000' -e '^:[0-7]* 160000' |
++	cut -c2- |
++	while read mod_src mod_dst sha1_src sha1_dst status name
++	do
++		if test -z "$cached" &&
++			test $sha1_dst = 0000000000000000000000000000000000000000
++		then
++			case "$mod_dst" in
++				160000)
++				sha1_dst=$(GIT_DIR="$name/.git" git rev-parse HEAD)
++				;;
++				100644)
++				sha1_dst=$(git hash-object $name)
++				;;
++			esac
++		fi
++		missing_src=
++		missing_dst=
++
++		test $mod_src = 160000 &&
++		! GIT_DIR="$name/.git" git-rev-parse --verify $sha1_src^0 >/dev/null 2>&1 &&
++		missing_src=t
++
++		test $mod_dst = 160000 &&
++		! GIT_DIR="$name/.git" git-rev-parse --verify $sha1_dst^0 >/dev/null 2>&1 &&
++		missing_dst=t
++
++		total_commits=
++		case "$missing_src,$missing_dst" in
++		t,)
++			errmsg="  Warn: $name doesn't contain commit $sha1_src"
++			;;
++		,t)
++			errmsg="  Warn: $name doesn't contain commit $sha1_dst"
++			;;
++		t,t)
++			errmsg="  Warn: $name doesn't contain commits $sha1_src and $sha1_dst"
++			;;
++		*)
++			errmsg=
++			total_commits=$(
++			if test $mod_src = 160000 -a $mod_dst = 160000
++			then
++				range="$sha1_src...$sha1_dst"
++			elif test $mod_src = 160000
++			then
++				range=$sha1_src
++			else
++				range=$sha1_dst
++			fi
++			GIT_DIR="$name/.git" \
++			git log --pretty=oneline --first-parent $range | wc -l
++			)
++			total_commits=" ($total_commits)"
++			;;
++		esac
++
++		sha1_abbr_src=$(echo $sha1_src | cut -c1-7)
++		sha1_abbr_dst=$(echo $sha1_dst | cut -c1-7)
++		if test $status = T
++		then
++			if test $mod_dst = 160000
++			then
++				echo "* $name $sha1_abbr_src(blob)->$sha1_abbr_dst(submodule)$total_commits:"
++			else
++				echo "* $name $sha1_abbr_src(submodule)->$sha1_abbr_dst(blob)$total_commits:"
++			fi
++		else
++			echo "* $name $sha1_abbr_src...$sha1_abbr_dst$total_commits:"
++		fi
++		if test -n "$errmsg"
++		then
++			# Don't give error msg for modification whose dst is not submodule
++			# i.e. deleted or changed to blob
++			test $mod_dst = 160000 && echo "$errmsg"
++		else
++			if test $mod_src = 160000 -a $mod_dst = 160000
++			then
++				GIT_DIR="$name/.git" \
++				git log --pretty='format:  %m %s' \
++				--left-right --first-parent $sha1_src...$sha1_dst
++			elif test $mod_dst = 160000
++			then
++				GIT_DIR="$name/.git" \
++				git log --pretty='format:  > %s' -1 $sha1_dst
++			else
++				GIT_DIR="$name/.git" \
++				git log --pretty='format:  < %s' -1 $sha1_src
++			fi
++			echo
++		fi
++		echo
++	done
+ }
+ #
+ # List all submodules, prefixed with:
+-- 
+1.5.4.3.347.g5314c
