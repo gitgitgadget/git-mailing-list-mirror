@@ -1,196 +1,244 @@
 From: Ping Yin <pkufranky@gmail.com>
-Subject: [PATCH v4 2/5] git-submodule summary: show commit summary
-Date: Tue, 11 Mar 2008 01:54:14 +0800
-Message-ID: <1205171657-16216-2-git-send-email-pkufranky@gmail.com>
+Subject: [PATCH v4 5/5] git-submodule summary: test
+Date: Tue, 11 Mar 2008 01:54:17 +0800
+Message-ID: <1205171657-16216-5-git-send-email-pkufranky@gmail.com>
 References: <1205171657-16216-1-git-send-email-pkufranky@gmail.com>
+ <1205171657-16216-2-git-send-email-pkufranky@gmail.com>
+ <1205171657-16216-3-git-send-email-pkufranky@gmail.com>
+ <1205171657-16216-4-git-send-email-pkufranky@gmail.com>
 Cc: git@vger.kernel.org, Ping Yin <pkufranky@gmail.com>
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Mar 10 18:55:10 2008
+X-From: git-owner@vger.kernel.org Mon Mar 10 18:55:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JYmDJ-0001Ri-CS
-	for gcvg-git-2@gmane.org; Mon, 10 Mar 2008 18:55:05 +0100
+	id 1JYmDK-0001Ri-LE
+	for gcvg-git-2@gmane.org; Mon, 10 Mar 2008 18:55:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751475AbYCJRyZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Mar 2008 13:54:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751353AbYCJRyX
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Mar 2008 13:54:23 -0400
-Received: from mail.qikoo.org ([60.28.205.235]:42286 "EHLO mail.qikoo.org"
+	id S1751421AbYCJRy3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Mar 2008 13:54:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751274AbYCJRy2
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Mar 2008 13:54:28 -0400
+Received: from mail.qikoo.org ([60.28.205.235]:42291 "EHLO mail.qikoo.org"
 	rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751250AbYCJRyV (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1751421AbYCJRyV (ORCPT <rfc822;git@vger.kernel.org>);
 	Mon, 10 Mar 2008 13:54:21 -0400
 Received: by mail.qikoo.org (Postfix, from userid 1029)
-	id 7FCD7470AB; Tue, 11 Mar 2008 01:54:17 +0800 (CST)
+	id EB2C5470B1; Tue, 11 Mar 2008 01:54:17 +0800 (CST)
 X-Mailer: git-send-email 1.5.4.3.347.g5314c
-In-Reply-To: <1205171657-16216-1-git-send-email-pkufranky@gmail.com>
+In-Reply-To: <1205171657-16216-4-git-send-email-pkufranky@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76742>
-
-This patch does the hard work to show submodule commit summary.
-
-For a modified submodule, a series of commits will be shown with
-the following command
-
-	git log --pretty='format:%m %s' --left-right \
-	--first-parent sha1_src...sha1_dst
-
-where the src sha1 is from the given super project commit and the
-dst sha1 is from the index or working tree (switched by --cached).
-
-For a deleted, added, or typechanged (blob<->submodule) submodule,
-only one single newest commit from the existing end (for example,
-src end for submodule deleted or type changed from submodule to blob)
-will be shown.
-
-If the src/dst sha1 for a submodule is missing in the submodule
-directory, a warning will be issued except in two cases where the
-submodule directory is deleted (type 'D') or typechanged to blob
-(one case of type 'T').
-
-In the title line for a submodule, the src/dst sha1 and the number
-of commits (--first-parent) between the two sha1s will be shown.
-
-The following example demonstrates most cases.
-
-Example: commit summary for modified submodules sm1-sm5.
---------------------------------------------
-$ git submodule summary
-* sm1 354cd45...3f751e5 (4):
-  < one line message for C
-  < one line message for B
-  > one line message for D
-  > one line message for E
-
-* sm2 5c8bfb5...000000 (3):
-  < one line message for F
-
-* sm3 354cd45...3f751e5:
-  Warn: sm3 doesn't contain commit 354cd45
-
-* sm4 354cd34(submodule)-> 235efa(blob) (1):
-  < one line message for G
-
-* sm5 354cd34(blob)-> 235efa(submodule) (5):
-  > one line message for H
-
---------------------------------------------
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76743>
 
 Signed-off-by: Ping Yin <pkufranky@gmail.com>
 ---
- git-submodule.sh |   96 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 96 insertions(+), 0 deletions(-)
+ t/t7401-submodule-summary.sh |  194 ++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 194 insertions(+), 0 deletions(-)
+ create mode 100755 t/t7401-submodule-summary.sh
 
-diff --git a/git-submodule.sh b/git-submodule.sh
-index b70ae40..c9afa06 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -381,6 +381,102 @@ cmd_summary() {
- 			echo "$name"
- 		done
- 	)
+diff --git a/t/t7401-submodule-summary.sh b/t/t7401-submodule-summary.sh
+new file mode 100755
+index 0000000..30d129c
+--- /dev/null
++++ b/t/t7401-submodule-summary.sh
+@@ -0,0 +1,194 @@
++#!/bin/sh
++#
++# Copyright (c) 2008 Ping Yin
++#
 +
-+	test -n "$modules" &&
-+	git diff-index $cached --raw $head -- $modules |
-+	grep -e '^:160000' -e '^:[0-7]* 160000' |
-+	cut -c2- |
-+	while read mod_src mod_dst sha1_src sha1_dst status name
-+	do
-+		if test -z "$cached" &&
-+			test $sha1_dst = 0000000000000000000000000000000000000000
-+		then
-+			case "$mod_dst" in
-+				160000)
-+				sha1_dst=$(GIT_DIR="$name/.git" git rev-parse HEAD)
-+				;;
-+				100644)
-+				sha1_dst=$(git hash-object $name)
-+				;;
-+			esac
-+		fi
-+		missing_src=
-+		missing_dst=
++test_description='Summary support for submodules
 +
-+		test $mod_src = 160000 &&
-+		! GIT_DIR="$name/.git" git-rev-parse --verify $sha1_src^0 >/dev/null 2>&1 &&
-+		missing_src=t
++This test tries to verify the sanity of summary subcommand of git-submodule.
++'
 +
-+		test $mod_dst = 160000 &&
-+		! GIT_DIR="$name/.git" git-rev-parse --verify $sha1_dst^0 >/dev/null 2>&1 &&
-+		missing_dst=t
++. ./test-lib.sh
 +
-+		total_commits=
-+		case "$missing_src,$missing_dst" in
-+		t,)
-+			errmsg="  Warn: $name doesn't contain commit $sha1_src"
-+			;;
-+		,t)
-+			errmsg="  Warn: $name doesn't contain commit $sha1_dst"
-+			;;
-+		t,t)
-+			errmsg="  Warn: $name doesn't contain commits $sha1_src and $sha1_dst"
-+			;;
-+		*)
-+			errmsg=
-+			total_commits=$(
-+			if test $mod_src = 160000 -a $mod_dst = 160000
-+			then
-+				range="$sha1_src...$sha1_dst"
-+			elif test $mod_src = 160000
-+			then
-+				range=$sha1_src
-+			else
-+				range=$sha1_dst
-+			fi
-+			GIT_DIR="$name/.git" \
-+			git log --pretty=oneline --first-parent $range | wc -l
-+			)
-+			total_commits=" ($total_commits)"
-+			;;
-+		esac
++add_file () {
++	sm=$1
++	shift
++	owd=$(pwd)
++	cd "$sm"
++	for name; do
++		echo "$name" > "$name" &&
++		git add "$name" &&
++		git commit -m "Add $name"
++	done >/dev/null
++	git rev-parse --verify HEAD | cut -c1-7
++	cd "$owd"
++}
++commit_file () {
++	git commit "$@" -m "Commit $*" >/dev/null
++}
 +
-+		sha1_abbr_src=$(echo $sha1_src | cut -c1-7)
-+		sha1_abbr_dst=$(echo $sha1_dst | cut -c1-7)
-+		if test $status = T
-+		then
-+			if test $mod_dst = 160000
-+			then
-+				echo "* $name $sha1_abbr_src(blob)->$sha1_abbr_dst(submodule)$total_commits:"
-+			else
-+				echo "* $name $sha1_abbr_src(submodule)->$sha1_abbr_dst(blob)$total_commits:"
-+			fi
-+		else
-+			echo "* $name $sha1_abbr_src...$sha1_abbr_dst$total_commits:"
-+		fi
-+		if test -n "$errmsg"
-+		then
-+			# Don't give error msg for modification whose dst is not submodule
-+			# i.e. deleted or changed to blob
-+			test $mod_dst = 160000 && echo "$errmsg"
-+		else
-+			if test $mod_src = 160000 -a $mod_dst = 160000
-+			then
-+				GIT_DIR="$name/.git" \
-+				git log --pretty='format:  %m %s' \
-+				--left-right --first-parent $sha1_src...$sha1_dst
-+			elif test $mod_dst = 160000
-+			then
-+				GIT_DIR="$name/.git" \
-+				git log --pretty='format:  > %s' -1 $sha1_dst
-+			else
-+				GIT_DIR="$name/.git" \
-+				git log --pretty='format:  < %s' -1 $sha1_src
-+			fi
-+			echo
-+		fi
-+		echo
-+	done
- }
- #
- # List all submodules, prefixed with:
++test_create_repo sm1 &&
++add_file . foo
++
++head1=$(add_file sm1 foo1 foo2)
++
++test_expect_success 'added submodule' "
++	git add sm1 &&
++	git submodule summary >actual &&
++	diff actual - <<-EOF
++* sm1 0000000...$head1 (2):
++  > Add foo2
++
++EOF
++"
++
++commit_file sm1 &&
++head2=$(add_file sm1 foo3)
++
++test_expect_success 'modified submodule(forward)' "
++	git submodule summary >actual &&
++	diff actual - <<-EOF
++* sm1 $head1...$head2 (1):
++  > Add foo3
++
++EOF
++"
++
++commit_file sm1 &&
++cd sm1 &&
++git reset --hard HEAD~2 >/dev/null &&
++head3=$(git rev-parse --verify HEAD | cut -c1-7) &&
++cd ..
++
++test_expect_success 'modified submodule(backward)' "
++    git submodule summary >actual &&
++    diff actual - <<-EOF
++* sm1 $head2...$head3 (2):
++  < Add foo3
++  < Add foo2
++
++EOF
++"
++
++sleep 1s
++head4=$(add_file sm1 foo4 foo5) &&
++head4_full=$(GIT_DIR=sm1/.git git rev-parse --verify HEAD)
++test_expect_success 'modified submodule(backward and forward)' "
++    git submodule summary >actual &&
++    diff actual - <<-EOF
++* sm1 $head2...$head4 (4):
++  > Add foo5
++  > Add foo4
++  < Add foo3
++  < Add foo2
++
++EOF
++"
++
++test_expect_success '--summary-limit' "
++    git submodule summary -n 3 >actual &&
++    diff actual - <<-EOF
++* sm1 $head2...$head4 (4):
++  > Add foo5
++  > Add foo4
++  < Add foo3
++
++EOF
++"
++
++commit_file sm1 &&
++mv sm1 sm1-bak &&
++echo sm1 >sm1 &&
++head5=$(git hash-object sm1 | cut -c1-7) &&
++git add sm1 &&
++rm -f sm1 &&
++mv sm1-bak sm1
++
++test_expect_success 'typechanged submodule(submodule->blob), --cached' "
++    git submodule summary --cached >actual &&
++    diff actual - <<-EOF
++* sm1 $head4(submodule)->$head5(blob) (3):
++  < Add foo5
++
++EOF
++"
++
++rm -rf sm1 &&
++git checkout-index sm1
++test_expect_success 'typechanged submodule(submodule->blob)' "
++    git submodule summary >actual &&
++    diff actual - <<-EOF
++* sm1 $head4(submodule)->$head5(blob):
++
++EOF
++"
++
++rm -f sm1 &&
++test_create_repo sm1 &&
++head6=$(add_file sm1 foo6 foo7)
++test_expect_success 'nonexistent commit' "
++    git submodule summary >actual &&
++    diff actual - <<-EOF
++* sm1 $head4...$head6:
++  Warn: sm1 doesn't contain commit $head4_full
++
++EOF
++"
++
++git commit -m "commit sm1" >/dev/null
++test_expect_success 'typechanged submodule(blob->submodule)' "
++    git submodule summary >actual &&
++    diff actual - <<-EOF
++* sm1 $head5(blob)->$head6(submodule) (2):
++  > Add foo7
++
++EOF
++"
++
++commit_file sm1 &&
++rm -rf sm1
++test_expect_success 'deleted submodule' "
++    git submodule summary >actual &&
++    diff actual - <<-EOF
++* sm1 $head6...0000000:
++
++EOF
++"
++
++test_create_repo sm2 &&
++head7=$(add_file sm2 foo8 foo9) &&
++git add sm2
++
++test_expect_success 'multiple submodules' "
++    git submodule summary >actual &&
++    diff actual - <<-EOF
++* sm1 $head6...0000000:
++
++* sm2 0000000...$head7 (2):
++  > Add foo9
++
++EOF
++"
++
++test_expect_success 'path filter' "
++    git submodule summary sm2 >actual &&
++    diff actual - <<-EOF
++* sm2 0000000...$head7 (2):
++  > Add foo9
++
++EOF
++"
++
++commit_file sm2
++test_expect_success 'given commit' "
++    git submodule summary HEAD^ >actual &&
++    diff actual - <<-EOF
++* sm1 $head6...0000000:
++
++* sm2 0000000...$head7 (2):
++  > Add foo9
++
++EOF
++"
++
++test_done
 -- 
 1.5.4.3.347.g5314c
