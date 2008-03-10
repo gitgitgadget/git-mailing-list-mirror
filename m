@@ -1,86 +1,68 @@
-From: Ping Yin <pkufranky@gmail.com>
-Subject: [PATCH v4 4/5] git-submodule summary: documentation
-Date: Tue, 11 Mar 2008 01:54:16 +0800
-Message-ID: <1205171657-16216-4-git-send-email-pkufranky@gmail.com>
+From: "Ping Yin" <pkufranky@gmail.com>
+Subject: Re: [PATCH v4 2/5] git-submodule summary: show commit summary
+Date: Tue, 11 Mar 2008 01:58:04 +0800
+Message-ID: <46dff0320803101058k451d589dl1b3f764e273630f7@mail.gmail.com>
 References: <1205171657-16216-1-git-send-email-pkufranky@gmail.com>
- <1205171657-16216-2-git-send-email-pkufranky@gmail.com>
- <1205171657-16216-3-git-send-email-pkufranky@gmail.com>
-Cc: git@vger.kernel.org, Ping Yin <pkufranky@gmail.com>
+	 <1205171657-16216-2-git-send-email-pkufranky@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Ping Yin" <pkufranky@gmail.com>
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Mar 10 18:55:33 2008
+X-From: git-owner@vger.kernel.org Mon Mar 10 19:01:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JYmDI-0001Ri-OB
-	for gcvg-git-2@gmane.org; Mon, 10 Mar 2008 18:55:05 +0100
+	id 1JYmHv-0003Vo-FA
+	for gcvg-git-2@gmane.org; Mon, 10 Mar 2008 18:59:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751471AbYCJRyX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Mar 2008 13:54:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751450AbYCJRyW
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Mar 2008 13:54:22 -0400
-Received: from mail.qikoo.org ([60.28.205.235]:42287 "EHLO mail.qikoo.org"
-	rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751252AbYCJRyU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Mar 2008 13:54:20 -0400
-Received: by mail.qikoo.org (Postfix, from userid 1029)
-	id C5116470B0; Tue, 11 Mar 2008 01:54:17 +0800 (CST)
-X-Mailer: git-send-email 1.5.4.3.347.g5314c
-In-Reply-To: <1205171657-16216-3-git-send-email-pkufranky@gmail.com>
+	id S1754602AbYCJR6H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Mar 2008 13:58:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754411AbYCJR6H
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Mar 2008 13:58:07 -0400
+Received: from hs-out-0708.google.com ([64.233.178.251]:35263 "EHLO
+	hs-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754344AbYCJR6F (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Mar 2008 13:58:05 -0400
+Received: by hs-out-0708.google.com with SMTP id 4so1515003hsl.5
+        for <git@vger.kernel.org>; Mon, 10 Mar 2008 10:58:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=rVXcn6ROWUL/CGJjn9zRXJyPH0nODaGmRWHZYRai4zY=;
+        b=tMSahA7hg+tm3XNPPZs5oYLoeXdmasK2gpmMQNQyL+4xLeFEUowwm+bog/296EcPS4Ibgh2ZyeGs9UmXm43NJakWU2TWM2GzPDKC+a2ui3EyMFu3vtFTEaEkeCoOZNL4jMB9PTM6fJ7deKXfEa3ulL1WrpCAUSbqch/9N8zvhW4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=br8sxjPQGoJs+t/vs2RP4e4b2nOzDD4pPOLvJoWwsQxfJdCzpZoyDA6BdEZQGdhW/XiUIYU5vyQBz9CktTYpLt+N4sLZE088oDYwi8rvYDPxBoQ0mAAqxIRYRQSMCd3/jNsPv1Uae4ynD/x9CHZ8I+SbSq82LDntUwQAz2PIsQs=
+Received: by 10.100.119.17 with SMTP id r17mr11495496anc.42.1205171884562;
+        Mon, 10 Mar 2008 10:58:04 -0700 (PDT)
+Received: by 10.100.5.18 with HTTP; Mon, 10 Mar 2008 10:58:04 -0700 (PDT)
+In-Reply-To: <1205171657-16216-2-git-send-email-pkufranky@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76746>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76747>
 
-Signed-off-by: Ping Yin <pkufranky@gmail.com>
----
- Documentation/git-submodule.txt |   19 ++++++++++++++++---
- 1 files changed, 16 insertions(+), 3 deletions(-)
+On Tue, Mar 11, 2008 at 1:54 AM, Ping Yin <pkufranky@gmail.com> wrote:
+> This patch does the hard work to show submodule commit summary.
+>
+>  For a modified submodule, a series of commits will be shown with
+>  the following command
+>
+>         git log --pretty='format:%m %s' --left-right \
+>         --first-parent sha1_src...sha1_dst
+>
 
-diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
-index b4d0160..41f9f63 100644
---- a/Documentation/git-submodule.txt
-+++ b/Documentation/git-submodule.txt
-@@ -12,6 +12,7 @@ SYNOPSIS
- 'git-submodule' [--quiet] add [-b branch] [--] <repository> [<path>]
- 'git-submodule' [--quiet] status [--cached] [--] [<path>...]
- 'git-submodule' [--quiet] [init|update] [--] [<path>...]
-+'git-submodule' [--quiet] summary [--summary-limit <n>] [commit] [--] [<path>...]
- 
- 
- COMMANDS
-@@ -47,6 +48,11 @@ update::
- 	checkout the commit specified in the index of the containing repository.
- 	This will make the submodules HEAD be detached.
- 
-+summary::
-+	Show commit summary between the given commit (defaults to HEAD) and
-+	working tree/index. For a submodule in question, a series of commits
-+	in the submodule between the given super project commit and the
-+	index or working tree (switched by --cached) are shown.
- 
- OPTIONS
- -------
-@@ -57,9 +63,16 @@ OPTIONS
- 	Branch of repository to add as submodule.
- 
- --cached::
--	Display the SHA-1 stored in the index, not the SHA-1 of the currently
--	checked out submodule commit. This option is only valid for the
--	status command.
-+	This option is only valid for status and summary commands.  These
-+	commands typically use the commit found in the submodule HEAD, but
-+	with this option, the commit stored in the index is used instead.
-+
-+-n, --summary-limit::
-+	This option is only valid for the summary command.
-+	Limit the summary size (number of commits shown in total).
-+	Giving 0 will disable the summary; a negative number means unlimted
-+	(the default). This limit only applies to modified submodules. The
-+	size is always limited to 1 for added/deleted/typechanged submodules.
- 
- <path>::
- 	Path to submodule(s). When specified this will restrict the command
+Relative to v3 patch series, there are only two changes in v4:
+
+  1. this patch has minor bug fix
+  2. add summary test
+
+
+
 -- 
-1.5.4.3.347.g5314c
+Ping Yin
