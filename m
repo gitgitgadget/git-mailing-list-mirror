@@ -1,90 +1,69 @@
-From: "David Tweed" <david.tweed@gmail.com>
-Subject: Re: [PATCH] gitk: don't save the geometry to rc file on exit
-Date: Mon, 10 Mar 2008 13:17:55 +0000
-Message-ID: <e1dab3980803100617n61429036w7dbbeab1f535dd39@mail.gmail.com>
-References: <47AAA254.2020008@thorn.ws> <20080207063020.GP24004@spearce.org>
-	 <200802071056.19370.robin.rosenberg.lists@dewire.com>
-	 <20080207101051.19459.qmail@fcb20609bc7c07.315fe32.mid.smarden.org>
-	 <20080223113759.12854.qmail@6a8737aa4695b2.315fe32.mid.smarden.org>
-	 <18368.41742.689290.877767@cargo.ozlabs.ibm.com>
-	 <47C190E3.6000407@gmail.com>
-	 <18383.57540.26282.526111@cargo.ozlabs.ibm.com>
-	 <20080307111144.GA18108@piper.oerlikon.madduck.net>
-	 <18386.29775.512557.202621@cargo.ozlabs.ibm.com>
+From: "Jay Soffian" <jaysoffian@gmail.com>
+Subject: Re: "git checkout" branch switching safety broken in 'next'
+Date: Mon, 10 Mar 2008 09:56:40 -0400
+Message-ID: <76718490803100656k6607e00ar1cce14aedffb3b27@mail.gmail.com>
+References: <7vmyp7j8ui.fsf@gitster.siamese.dyndns.org>
+	 <fr2v0s$cdb$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: "martin f krafft" <madduck@madduck.net>,
-	"Mark Levedahl" <mlevedahl@gmail.com>,
-	"Gerrit Pape" <pape@smarden.org>, git@vger.kernel.org,
-	442253-quiet@bugs.debian.org
-To: "Paul Mackerras" <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Mon Mar 10 14:19:16 2008
+Cc: git@vger.kernel.org
+To: "Jakub Narebski" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 10 14:57:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JYhuG-0000kf-JA
-	for gcvg-git-2@gmane.org; Mon, 10 Mar 2008 14:19:09 +0100
+	id 1JYiVE-0004O0-Ne
+	for gcvg-git-2@gmane.org; Mon, 10 Mar 2008 14:57:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753006AbYCJNR7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Mar 2008 09:17:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753217AbYCJNR7
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Mar 2008 09:17:59 -0400
-Received: from ug-out-1314.google.com ([66.249.92.170]:25995 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750982AbYCJNR6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Mar 2008 09:17:58 -0400
-Received: by ug-out-1314.google.com with SMTP id z38so4857287ugc.16
-        for <git@vger.kernel.org>; Mon, 10 Mar 2008 06:17:56 -0700 (PDT)
+	id S1751012AbYCJN4m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Mar 2008 09:56:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750868AbYCJN4l
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Mar 2008 09:56:41 -0400
+Received: from wa-out-1112.google.com ([209.85.146.177]:3987 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750696AbYCJN4l (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Mar 2008 09:56:41 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so2286428wah.23
+        for <git@vger.kernel.org>; Mon, 10 Mar 2008 06:56:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=2EJfJGlePf/qMG3wUNAif0+A7Vyay6/dIRrr8ygUYZc=;
-        b=uxnMbBqJXUU4sW5ECvX6dhqT0wvSs0HHcCvPw+dUFItRYGV581TKrB+ib6A233up1AZpo1+Sn/+/JwwMlgJuQqKKtGq2ieWC98ArbpvirGJzDZtr+V8go16NohqaSbOeh4FJdnz/tZo4sMETGobXp7isCc3YiIcYwQpCGFJ+XOA=
+        bh=kd7ilZOVoCZDPLO1ps6WDu4b12Z3vj1iorD/F4Pn/uk=;
+        b=Fg3T1vnTJ10qoMopIaKSAC8qD91NuF1d8EXmp4GK88IUPDjjLjXOt6xtxE0flnfBQ4Mdu8/UjHE7ghP0wHw3+2y9dKvNiADeNlyTAw02530IV6gpBlMRkxxe571ZWlSvgKEn/MBxPaXDcRIuL3LBq7sAI+mcuDhOKrC+4S1bBNw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=i/1EbR4SKC6nv4XFLLwsc7/bXvuuIuV/AsJzqZmeKG6X6uFFpcg8E3nz2jmq0m+21Wh2OUbdwcxsjMCQY5jEqqN+ezr5tGSlIVmUH06FF2WdcC78NroyJoDuIBAhTMHI80so6drISKGOCwegK6KD0cxUaGjIOhkoBoW0AS3cg3M=
-Received: by 10.150.58.5 with SMTP id g5mr2779239yba.20.1205155075598;
-        Mon, 10 Mar 2008 06:17:55 -0700 (PDT)
-Received: by 10.150.149.2 with HTTP; Mon, 10 Mar 2008 06:17:55 -0700 (PDT)
-In-Reply-To: <18386.29775.512557.202621@cargo.ozlabs.ibm.com>
+        b=XJcSJzx6FDN9XGsnkdSD2j3SssIDO+4ZjHrJbuOqmBRbQOb+zSIIkELwD/kRMr4EsE2udbJnrgSLd6sCytTDAy544YkdUf449w/gy6Dxl5y4zfJZlbIYugongKAKzHhkJEg1EJgvhqEPGgMb1hMEawDn3Ph0uKnPa3FsEjkPDdM=
+Received: by 10.114.150.1 with SMTP id x1mr3365383wad.109.1205157400371;
+        Mon, 10 Mar 2008 06:56:40 -0700 (PDT)
+Received: by 10.114.13.5 with HTTP; Mon, 10 Mar 2008 06:56:40 -0700 (PDT)
+In-Reply-To: <fr2v0s$cdb$1@ger.gmane.org>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76726>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76727>
 
-2008/3/8 Paul Mackerras <paulus@samba.org>:
->  > As I said earlier, this is really the job
->  > of a window manager, *not* a configuration option. If your window
->  > manager cannot restore the window to a size you control, then it's
->  > broken. Let's not hack applications to work around that, please.
+2008/3/10 Jakub Narebski <jnareb@gmail.com>:
+> Junio C Hamano wrote:
+> >     error: Entry 'foo' not uptodate. Cannot merge.
 >
->  I disagree.  It's not a window manager's job to tell an application
->  how big its window should be.
+>  By the way, could this error message be made less cryptic? It is there
+>  since the very beginning, and was not changed during making error
+>  messages more user friendly...
 
-There are some modestly popular tiling window managers that attempt to
-remove the bother of having to manually move windows around which take
-the view that the window manager's decisions should only be overruled
-in the very rare cases where it's absolutely necessary, eg,
++1. Most concise is probably:
 
-Ion http://modeemi.fi/~tuomov/ion/
-dwm http://www.suckless.org/wiki/dwm
+ * "error: 'foo' has uncommitted changes."
 
-(The major windows that don't resize well are from image based
-programs where you want exactly the underlying image on your display.
-Text based programs like gitk work great under autoresizing.) However,
-the current gitk appears to work fine on those window managers because
-the internal dividers get automtatically resized whenever the global
-window resizes, and the wm resizes the window so quickly after
-creation I don't have time to notice it.
+More helpful messages that I can think of are probably too verbose. e.g.:
 
--- 
-cheers, dave tweed__________________________
-david.tweed@gmail.com
-Rm 124, School of Systems Engineering, University of Reading.
-"while having code so boring anyone can maintain it, use Python." --
-attempted insult seen on slashdot
+ * "error: 'foo' differs in target branch but has uncommitted changes."
+
+ * "error: 'foo' has uncommitted changes. Commit, use -f to lose
+    changes, or -m to merge changes in target branch."
+
+j.
