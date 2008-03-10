@@ -1,78 +1,90 @@
-From: "Elijah Newren" <newren@gmail.com>
-Subject: Easy Git (eg) -- brainstorming about git UI
-Date: Mon, 10 Mar 2008 06:57:57 -0600
-Message-ID: <51419b2c0803100557v6b36120bt17b38d325712f8c0@mail.gmail.com>
+From: "David Tweed" <david.tweed@gmail.com>
+Subject: Re: [PATCH] gitk: don't save the geometry to rc file on exit
+Date: Mon, 10 Mar 2008 13:17:55 +0000
+Message-ID: <e1dab3980803100617n61429036w7dbbeab1f535dd39@mail.gmail.com>
+References: <47AAA254.2020008@thorn.ws> <20080207063020.GP24004@spearce.org>
+	 <200802071056.19370.robin.rosenberg.lists@dewire.com>
+	 <20080207101051.19459.qmail@fcb20609bc7c07.315fe32.mid.smarden.org>
+	 <20080223113759.12854.qmail@6a8737aa4695b2.315fe32.mid.smarden.org>
+	 <18368.41742.689290.877767@cargo.ozlabs.ibm.com>
+	 <47C190E3.6000407@gmail.com>
+	 <18383.57540.26282.526111@cargo.ozlabs.ibm.com>
+	 <20080307111144.GA18108@piper.oerlikon.madduck.net>
+	 <18386.29775.512557.202621@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "Carl Worth" <cworth@cworth.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 10 13:58:38 2008
+Cc: "martin f krafft" <madduck@madduck.net>,
+	"Mark Levedahl" <mlevedahl@gmail.com>,
+	"Gerrit Pape" <pape@smarden.org>, git@vger.kernel.org,
+	442253-quiet@bugs.debian.org
+To: "Paul Mackerras" <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Mon Mar 10 14:19:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JYhaQ-000398-1k
-	for gcvg-git-2@gmane.org; Mon, 10 Mar 2008 13:58:38 +0100
+	id 1JYhuG-0000kf-JA
+	for gcvg-git-2@gmane.org; Mon, 10 Mar 2008 14:19:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751101AbYCJM56 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Mar 2008 08:57:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751437AbYCJM56
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Mar 2008 08:57:58 -0400
-Received: from wa-out-1112.google.com ([209.85.146.182]:48391 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751034AbYCJM56 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Mar 2008 08:57:58 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so2263459wah.23
-        for <git@vger.kernel.org>; Mon, 10 Mar 2008 05:57:57 -0700 (PDT)
+	id S1753006AbYCJNR7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Mar 2008 09:17:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753217AbYCJNR7
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Mar 2008 09:17:59 -0400
+Received: from ug-out-1314.google.com ([66.249.92.170]:25995 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750982AbYCJNR6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Mar 2008 09:17:58 -0400
+Received: by ug-out-1314.google.com with SMTP id z38so4857287ugc.16
+        for <git@vger.kernel.org>; Mon, 10 Mar 2008 06:17:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=Pp2l5uq+dxQUFgPhNPfd88CyIr3MdDkLWpeylocqH7w=;
-        b=Wp3hRqKh5PXzFRSXGtKQQqoT7z5rzELuA00Pe6vfnp+3Ql1c6edWZlbLjsZzBakwDbtDZ7uuUVjyOjZD3jSTjg69pBkwxrFfHs+/MIhec/bBBDKn324Z5htH3iKpTucVuO3wNPWFAvuhMNY83oFvq0tQInMm2YVT8dPMImYaB70=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=2EJfJGlePf/qMG3wUNAif0+A7Vyay6/dIRrr8ygUYZc=;
+        b=uxnMbBqJXUU4sW5ECvX6dhqT0wvSs0HHcCvPw+dUFItRYGV581TKrB+ib6A233up1AZpo1+Sn/+/JwwMlgJuQqKKtGq2ieWC98ArbpvirGJzDZtr+V8go16NohqaSbOeh4FJdnz/tZo4sMETGobXp7isCc3YiIcYwQpCGFJ+XOA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=shahiMNWR6Ah4WCi/RI6OhTqX0wOxM0Ubzyyv8AJ2zN+ZnJupqB2p6jzNlRUdRxMzQPIvP0ZtFfE05HHf6ULKWvpUVoL1uNhWngMOqFb02175Uhl1TrXAe1gr2G+rDHEo2PAuNibiVFlH6M2cmk4So71RWsO9yHdEKo9pB2mAdo=
-Received: by 10.114.191.1 with SMTP id o1mr3322999waf.66.1205153877243;
-        Mon, 10 Mar 2008 05:57:57 -0700 (PDT)
-Received: by 10.114.205.19 with HTTP; Mon, 10 Mar 2008 05:57:57 -0700 (PDT)
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=i/1EbR4SKC6nv4XFLLwsc7/bXvuuIuV/AsJzqZmeKG6X6uFFpcg8E3nz2jmq0m+21Wh2OUbdwcxsjMCQY5jEqqN+ezr5tGSlIVmUH06FF2WdcC78NroyJoDuIBAhTMHI80so6drISKGOCwegK6KD0cxUaGjIOhkoBoW0AS3cg3M=
+Received: by 10.150.58.5 with SMTP id g5mr2779239yba.20.1205155075598;
+        Mon, 10 Mar 2008 06:17:55 -0700 (PDT)
+Received: by 10.150.149.2 with HTTP; Mon, 10 Mar 2008 06:17:55 -0700 (PDT)
+In-Reply-To: <18386.29775.512557.202621@cargo.ozlabs.ibm.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76725>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76726>
 
-Hi,
+2008/3/8 Paul Mackerras <paulus@samba.org>:
+>  > As I said earlier, this is really the job
+>  > of a window manager, *not* a configuration option. If your window
+>  > manager cannot restore the window to a size you control, then it's
+>  > broken. Let's not hack applications to work around that, please.
+>
+>  I disagree.  It's not a window manager's job to tell an application
+>  how big its window should be.
 
-I thought I'd send a heads up to the list that I'm working on a
-porcelain called eg (see http://www.gnome.org/~newren/eg/).  It's more
-of a brainstorming session and demonstration than anything else.  I'm
-not sure if anyone else will actually be interested, but it at least
-has been serving to teach me more about git.  Here's a small blurb
-about eg that I wrote last week:
+There are some modestly popular tiling window managers that attempt to
+remove the bother of having to manually move windows around which take
+the view that the window manager's decisions should only be overruled
+in the very rare cases where it's absolutely necessary, eg,
 
-    * eg is a brainstorming session about simplifying the user
-interface of git, in the form of a usable demonstration
-    * eg is predominantly an exercise in writing documentation; I'd
-guess that 95% of the lines of the program are inline text for its
-replacement help system.
-    * eg is nearly command-line backwards compatible to git; those
-familiar with git can start using eg by simply replacing "git" with
-"eg" in their commands.
-    * eg is example driven; the documentation focuses heavily on examples
-    * eg is incomplete and probably buggy. Sorry, I'm working on it.
+Ion http://modeemi.fi/~tuomov/ion/
+dwm http://www.suckless.org/wiki/dwm
 
-The first and last bullet points were too optimistic (or I caved in
-and published this too early, take your pick).  There are *definitely*
-bugs[1], and there's lots of things I haven't gotten around to doing
-yet.
+(The major windows that don't resize well are from image based
+programs where you want exactly the underlying image on your display.
+Text based programs like gitk work great under autoresizing.) However,
+the current gitk appears to work fine on those window managers because
+the internal dividers get automtatically resized whenever the global
+window resizes, and the wm resizes the window so quickly after
+creation I don't have time to notice it.
 
-Elijah
-
-
-[1] In addition to the bugs I have run across and not yet fixed, I
-also made a bunch of changes recently without testing them.  So much
-for getting everything done I wanted this weekend....and now it's time
-to go to work.
+-- 
+cheers, dave tweed__________________________
+david.tweed@gmail.com
+Rm 124, School of Systems Engineering, University of Reading.
+"while having code so boring anyone can maintain it, use Python." --
+attempted insult seen on slashdot
