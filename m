@@ -1,58 +1,93 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] Add compat/vsnprintf.c for systems that returns -1 on
- maxsize reached
-Date: Mon, 10 Mar 2008 11:05:14 +0100
-Message-ID: <47D507DA.1010802@viscovery.net>
-References: <200803041459.29000.michal.rokos@nextsoft.cz> <200803100959.43611.michal.rokos@nextsoft.cz> <47D4FF55.8020909@viscovery.net> <200803101047.47044.michal.rokos@nextsoft.cz>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: GIT <git@vger.kernel.org>
-To: Michal Rokos <michal.rokos@nextsoft.cz>
-X-From: git-owner@vger.kernel.org Mon Mar 10 11:05:56 2008
+From: David Aguilar <davvid@gmail.com>
+Subject: [PATCH] gitk: do not show local changes when we there is no work tree
+Date: Mon, 10 Mar 2008 03:54:56 -0700
+Message-ID: <309f000ad75b1842c11a04b16940dda8f1cd84af.1205145018.git.davvid@gmail.com>
+References: <18386.29988.380116.517508@cargo.ozlabs.ibm.com>
+Cc: git@vger.kernel.org
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Mon Mar 10 11:45:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JYetH-0001La-06
-	for gcvg-git-2@gmane.org; Mon, 10 Mar 2008 11:05:56 +0100
+	id 1JYfVq-0004wE-4W
+	for gcvg-git-2@gmane.org; Mon, 10 Mar 2008 11:45:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751061AbYCJKFT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Mar 2008 06:05:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750987AbYCJKFS
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Mar 2008 06:05:18 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:36698 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750992AbYCJKFR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Mar 2008 06:05:17 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1JYerw-00084J-6O; Mon, 10 Mar 2008 11:04:32 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 88986546; Mon, 10 Mar 2008 11:05:14 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <200803101047.47044.michal.rokos@nextsoft.cz>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1751227AbYCJKok (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Mar 2008 06:44:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751141AbYCJKok
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Mar 2008 06:44:40 -0400
+Received: from wx-out-0506.google.com ([66.249.82.227]:5857 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750940AbYCJKoj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Mar 2008 06:44:39 -0400
+Received: by wx-out-0506.google.com with SMTP id h31so1841312wxd.4
+        for <git@vger.kernel.org>; Mon, 10 Mar 2008 03:44:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=GDGcPo56C+jRgOmfw68waw+Sj+kdz6WT6UrrJeSknBA=;
+        b=dQQuaGUUqjgNxfXLr3ewjvxbCKoEhJo6BKTI3woRUUCyF8BADvWCetN2PhxYs1/Kpj9TxCKlqL3Jts0bd0HjiT4C+NWB4o7bm0loa+m1suuDrIVP0boaszzpChvWHl3JGiRlByi7E/mwQKc/QIxZdhl0802X4EYEtXHvlEtWfL4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=aOxtScM4RQT8NtND8HPu1IUX5WzOK9KNRlk3uz9u2J4mP/aWLgsu7uY2YI2IAUix2Ku87bSXn0g+7bZy3WI13uyNyEyN/K+WN3n0hSI8ssYycPqPBJRufbizOSqySyXDPQT6E5oCIx4aQEgznjl7EzPohCCeEz3anck6top5fKE=
+Received: by 10.114.57.1 with SMTP id f1mr3196486waa.78.1205145876801;
+        Mon, 10 Mar 2008 03:44:36 -0700 (PDT)
+Received: from localhost ( [208.106.56.2])
+        by mx.google.com with ESMTPS id v39sm17604680wah.44.2008.03.10.03.44.34
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 10 Mar 2008 03:44:35 -0700 (PDT)
+X-Mailer: git-send-email 1.5.4
+In-Reply-To: <18386.29988.380116.517508@cargo.ozlabs.ibm.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76712>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76713>
 
-Michal Rokos schrieb:
-> But - do we want to fix it now, when we don't even know that else would be 
-> needed for Tru64 port? There's even no Tru64 paragraph in Makefile yet.
-> 
-> Michal
-> 
-> PS: I have no ambition to port git to Tru64 since that test machine is 
-> accessible via friend of my friend - so I have to IM him the code and he 
-> returns value :)
+Launching gitk on a bare repository or a .git directory
+would previously show the work tree as having removed all
+files.  We now inhibit showing local changes when gitk
+is not launched from within a work tree.
 
-It's not your itch nor is it not mine. Someone else has to come along...
+Signed-off-by: David Aguilar <davvid@gmail.com>
+---
+ gitk |    7 ++++++-
+ 1 files changed, 6 insertions(+), 1 deletions(-)
 
--- Hannes
+diff --git a/gitk b/gitk
+index f1f21e9..ef12845 100755
+--- a/gitk
++++ b/gitk
+@@ -393,6 +393,9 @@ proc readcommit {id} {
+ proc updatecommits {} {
+     global viewdata curview phase displayorder ordertok idpending
+     global children commitrow selectedline thickerline showneartags
++    global isworktree
++
++    set isworktree [expr {[exec git rev-parse --is-inside-work-tree] == "true"}]
+ 
+     if {$phase ne {}} {
+ 	stop_rev_list
+@@ -2844,8 +2847,9 @@ proc dohidelocalchanges {} {
+ # spawn off a process to do git diff-index --cached HEAD
+ proc dodiffindex {} {
+     global localirow localfrow lserial showlocalchanges
++    global isworktree
+ 
+-    if {!$showlocalchanges} return
++    if {!$showlocalchanges || !$isworktree} return
+     incr lserial
+     set localfrow -1
+     set localirow -1
+@@ -8643,6 +8647,7 @@ set patchnum 0
+ set localirow -1
+ set localfrow -1
+ set lserial 0
++set isworktree [expr {[exec git rev-parse --is-inside-work-tree] == "true"}]
+ setcoords
+ makewindow
+ # wait for the window to become visible
+-- 
+1.5.4.3
