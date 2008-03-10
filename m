@@ -1,78 +1,73 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Mercurial's only true "plugin" extension: inotify... and can it be done in Git?
-Date: Mon, 10 Mar 2008 18:43:18 -0400
-Message-ID: <20080310224318.GC8410@spearce.org>
-References: <200803091459.21354.jnareb@gmail.com> <3838F28A-DB0C-4678-BA57-3344E2225889@adacore.com>
+From: Filippo Zangheri <filippo.zangheri@yahoo.it>
+Subject: [QUESTION] Selective fetch possible?
+Date: Mon, 10 Mar 2008 23:02:27 +0100
+Message-ID: <47D5AFF3.90000@yahoo.it>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Geert Bosch <bosch@adacore.com>
-X-From: git-owner@vger.kernel.org Mon Mar 10 23:44:35 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 10 23:46:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JYqjS-0004RU-4A
-	for gcvg-git-2@gmane.org; Mon, 10 Mar 2008 23:44:34 +0100
+	id 1JYqle-0005U7-PD
+	for gcvg-git-2@gmane.org; Mon, 10 Mar 2008 23:46:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751269AbYCJWnY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Mar 2008 18:43:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751252AbYCJWnY
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Mar 2008 18:43:24 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:36056 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751167AbYCJWnX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Mar 2008 18:43:23 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1JYqi5-00075F-Sl; Mon, 10 Mar 2008 18:43:09 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 7A12E20FBAE; Mon, 10 Mar 2008 18:43:18 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <3838F28A-DB0C-4678-BA57-3344E2225889@adacore.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1752803AbYCJWqM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Mar 2008 18:46:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752348AbYCJWqM
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Mar 2008 18:46:12 -0400
+Received: from n10.bullet.mail.mud.yahoo.com ([209.191.125.208]:26868 "HELO
+	n10.bullet.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1751252AbYCJWqL (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 10 Mar 2008 18:46:11 -0400
+Received: from [68.142.194.243] by n10.bullet.mail.mud.yahoo.com with NNFMP; 10 Mar 2008 15:41:37 -0000
+Received: from [68.142.201.252] by t1.bullet.mud.yahoo.com with NNFMP; 10 Mar 2008 22:46:10 -0000
+Received: from [127.0.0.1] by omp413.mail.mud.yahoo.com with NNFMP; 10 Mar 2008 22:46:10 -0000
+X-Yahoo-Newman-Id: 630218.85964.bm@omp413.mail.mud.yahoo.com
+Received: (qmail 42466 invoked from network); 10 Mar 2008 22:02:32 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.it;
+  h=Received:X-YMail-OSG:X-Yahoo-Newman-Property:Message-ID:Date:From:User-Agent:MIME-Version:To:Subject:X-Enigmail-Version:OpenPGP:Content-Type:Content-Transfer-Encoding;
+  b=gq1yF4AJ+XcK/U1eP/IrYm7TevFalXjSWm6xulU94d+BEpwDEa8wB+irKZLejTKJoZRFodv3fHNKYQ6BNfsus5NaUKz2I1AEV4/jvVPhUc+NoNyA0LGG66BMW0Mh0t+TrfkH3nsWizTWA2HGlDyCfm0MjBpUXZP57LyWCBnUMjE=  ;
+Received: from unknown (HELO ?82.50.29.33?) (filippo.zangheri@82.50.29.33 with plain)
+  by smtp113.plus.mail.mud.yahoo.com with SMTP; 10 Mar 2008 22:02:31 -0000
+X-YMail-OSG: UxnEBbMVM1noHlmzls.7LwWpRqyHX4S7UgC8PiRoLOSzvayuGvhGOg49wRcChB6U7.0YJgfedNJO1G2kDrNDBlgFBLxfpARE9b18EjMtBHAQpQMC8xrTOyg5G8x5nnV1ce1HPEIBrfPliU2U
+X-Yahoo-Newman-Property: ymail-3
+User-Agent: Thunderbird 2.0.0.12 (X11/20080213)
+X-Enigmail-Version: 0.95.6
+OpenPGP: id=E1D879FA;
+	url=http://pgp.mit.edu:11371/pks/lookup?op=get&search=0xE1D879FA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76764>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76765>
 
-Geert Bosch <bosch@adacore.com> wrote:
-> On Mar 9, 2008, at 09:59, Jakub Narebski wrote:
-> 
-> >This extension[3][4] optimises "hg status" command by asking file
-> >notification daemon about changed files instead of doing stat. I'm not
-> >sure how useful this extension is: inotify is Linux specific, and  
-> >Linux
-> >has fast stat... nevertheless this is one example where extension
-> >(plug-in) framework shows that it can do more than good scriptability.
-> 
-> FWIW, OS X 10.5 has a similar functionality, called "fsevents",
-> as well as a much slower stat.
+Hi everybody,
 
-Windows NT on NTFS has a file monitor system that works somewhat
-like an inotify, but different enough that you gotta write totally
-different code for it.  It also has a much slower stat.
+Is it possible to git-fetch only a portion of the tree
+of the specified repository, say, fetch only one directory or a
+subset of files matching some regular expression? This is currently
+- to my knowledge - only possible via wget iff the GIT repository
+has gitweb enabled. But that's just a workaround.
 
-I have wanted to put something like this into git-gui, so that a
-running git-gui session can see changes made to your working dir
-"live".  But I haven't gotten around to writing it.  I did do some
-early experiments on Windows NT + NTFS with a small C daemon that
-watches the working directory, but it ran into issues about also
-need to know what is inside .gitignore to properly avoid sending
-events that git-gui doesn't want to know about.  Like say build
-object files.  :-)
+Thanks for the great instrument that GIT is.
+Best regards.
 
-I think the reason Git has never had such an "extension" is we are
-just that freaking fast when it comes to comparing the working tree
-to the index.  hg wasn't in the early days and that may have been
-what gave rise to the plugin.
+PS: please CC me in replies, because I'm not subscribed to git ML.
 
 -- 
-Shawn.
+Filippo Zangheri
+
+GPG key ID: 0xE1D879FA
+Key fingerprint: 816B CE57 D43C 0A47 EF35 3378 EA5F A72A E1D8 79FA
+Key server: pgp.mit.edu
+
+-----BEGIN GEEK CODE BLOCK-----
+Version: 3.12
+GE d- s+:- a-- C++ UL+++ P+ L+++ E-- W+ N* o-- K- w--- O-- M--
+V- PS++ PE+ Y+ PGP++ t 5-- X++ R* tv b+ DI-- D---- G-- e++ h--
+r++ z*
+------END GEEK CODE BLOCK------
