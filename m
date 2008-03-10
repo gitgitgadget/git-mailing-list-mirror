@@ -1,47 +1,47 @@
-From: Johannes Sixt <johannes.sixt@telecom.at>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] launch_editor(): allow spaces in the filename
-Date: Mon, 10 Mar 2008 22:32:13 +0100
-Message-ID: <200803102232.13727.johannes.sixt@telecom.at>
+Date: Mon, 10 Mar 2008 14:33:04 -0700
+Message-ID: <7vod9mi7sf.fsf@gitster.siamese.dyndns.org>
 References: <alpine.LSU.1.00.0803102140280.3975@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: Zeng.Shixin@gmail.com, theevancarroll@gmail.com,
-	git@vger.kernel.org, gitster@poxbox.com
+	git@vger.kernel.org
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Mar 10 22:33:10 2008
+X-From: git-owner@vger.kernel.org Mon Mar 10 22:34:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JYpcB-0008Bs-14
-	for gcvg-git-2@gmane.org; Mon, 10 Mar 2008 22:32:59 +0100
+	id 1JYpdA-00009M-Ou
+	for gcvg-git-2@gmane.org; Mon, 10 Mar 2008 22:34:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751598AbYCJVcS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Mar 2008 17:32:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755185AbYCJVcR
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Mar 2008 17:32:17 -0400
-Received: from smtp2.srv.eunet.at ([193.154.160.116]:44385 "EHLO
-	smtp2.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751598AbYCJVcR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Mar 2008 17:32:17 -0400
-Received: from dx.sixt.local (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
-	by smtp2.srv.eunet.at (Postfix) with ESMTP id C2139BEECB;
-	Mon, 10 Mar 2008 22:32:14 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by dx.sixt.local (Postfix) with ESMTP id 8846860998;
-	Mon, 10 Mar 2008 22:32:14 +0100 (CET)
-User-Agent: KMail/1.9.3
-In-Reply-To: <alpine.LSU.1.00.0803102140280.3975@racer.site>
-Content-Disposition: inline
+	id S1752304AbYCJVdQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Mar 2008 17:33:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752228AbYCJVdQ
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Mar 2008 17:33:16 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:46196 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752206AbYCJVdQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Mar 2008 17:33:16 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id A1FB71965;
+	Mon, 10 Mar 2008 17:33:12 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 1258E1960; Mon, 10 Mar 2008 17:33:07 -0400 (EDT)
+In-Reply-To: <alpine.LSU.1.00.0803102140280.3975@racer.site> (Johannes
+ Schindelin's message of "Mon, 10 Mar 2008 21:42:47 +0100 (CET)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76756>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76757>
 
-On Monday 10 March 2008 21:42, Johannes Schindelin wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+
 > For some reason, the construct
 >
 > 	sh -c "$0 \"$@\"" <editor> <file>
@@ -49,19 +49,8 @@ On Monday 10 March 2008 21:42, Johannes Schindelin wrote:
 > does not pick up quotes in <editor> as expected.  So replace $0 with
 > <editor>.
 
-No surprise. It must be
+That's not "for some reason" but "I am asking shell to split", and
 
-	sh -c '"$0" "$@"' <editor> <file>
+	sh -c '"$@"' ignoreme <editor> <files>...
 
-Note the extra quotes around $0.
-
->  			args[i++] = "sh";
->  			args[i++] = "-c";
-> -			args[i++] = "$0 \"$@\"";
-> +			args[i++] = arg0.buf;
-
-IOW:
-
-+			args[i++] = "\"$0\" \"$@\"";
-
--- Hannes
+would work better ;-).
