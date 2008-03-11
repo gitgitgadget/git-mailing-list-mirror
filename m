@@ -1,78 +1,70 @@
-From: Luciano Rocha <luciano@eurotux.com>
-Subject: commit 0? (or: create new empty branch)
-Date: Tue, 11 Mar 2008 12:30:04 +0000
-Message-ID: <20080311123004.GA27577@bit.office.eurotux.com>
+From: Bruce Stephens <bruce.stephens@isode.com>
+Subject: Re: [RFC/PATCH] Fast forward strategies allow, never, and only
+Date: Tue, 11 Mar 2008 12:24:35 +0000
+Message-ID: <80r6eho3cs.fsf@tiny.isode.net>
+References: <20080311093553.23191.qmail@science.horizon.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="Q68bSM7Ycu6FN28Q"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 11 13:31:08 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: hvammen@gmail.com, git@vger.kernel.org
+To: colin@horizon.com
+X-From: git-owner@vger.kernel.org Tue Mar 11 13:31:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JZ3dG-00051Z-6M
-	for gcvg-git-2@gmane.org; Tue, 11 Mar 2008 13:31:02 +0100
+	id 1JZ3de-0005AE-Iw
+	for gcvg-git-2@gmane.org; Tue, 11 Mar 2008 13:31:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753673AbYCKMaL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Mar 2008 08:30:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753478AbYCKMaL
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Mar 2008 08:30:11 -0400
-Received: from os.eurotux.com ([216.75.63.6]:58173 "EHLO os.eurotux.com"
+	id S1753524AbYCKMaj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Mar 2008 08:30:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753413AbYCKMaj
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Mar 2008 08:30:39 -0400
+Received: from rufus.isode.com ([62.3.217.251]:60266 "EHLO rufus.isode.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753442AbYCKMaK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Mar 2008 08:30:10 -0400
-Received: (qmail 22306 invoked from network); 11 Mar 2008 12:30:08 -0000
-Received: from nc.eurotux.com (HELO bit.office.eurotux.com) (luciano@81.84.255.161)
-  by os.eurotux.com with AES256-SHA encrypted SMTP; 11 Mar 2008 12:30:08 -0000
-Content-Disposition: inline
-User-Agent: Mutt/1.5.14 (2007-03-31)
+	id S1752177AbYCKMaj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Mar 2008 08:30:39 -0400
+X-Greylist: delayed 361 seconds by postgrey-1.27 at vger.kernel.org; Tue, 11 Mar 2008 08:30:39 EDT
+Received: from tiny.isode.net (shiny.isode.com [62.3.217.250]) 
+          by rufus.isode.com (smtp internal) via TCP with SMTP 
+          id <R9Z6AwBKvSEn@rufus.isode.com>; Tue, 11 Mar 2008 12:24:35 +0000
+Received: by tiny.isode.net (sSMTP sendmail emulation);
+          Tue, 11 Mar 2008 12:24:35 +0000
+X-Hashcash: 1:20:080311:colin@horizon.com::itxlo/UH0afTD+h2:000000000000000000000000000000000000000000002BH6
+X-Hashcash: 1:20:080311:hvammen@gmail.com::1s9DNu3lXXA6YqgT:000000000000000000000000000000000000000000001LUC
+X-Hashcash: 1:20:080311:git@vger.kernel.org::YhQ8NWrPMQBrDbC+:000000000000000000000000000000000000000000ECTW
+In-Reply-To: <20080311093553.23191.qmail@science.horizon.com> (colin@horizon.com's message of "Tue\, 11 Mar 2008 05\:35\:53 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76832>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76833>
 
+colin@horizon.com writes:
 
---Q68bSM7Ycu6FN28Q
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+>> What's lacking is "why this is a good idea".
 
+[...]
 
-Hello,
+> .. and it never ends.  All of the merged commits are identical trees, but
+> if you insist on creating a new commit object each time, you can generate
+> an infinite number of bogus commits, and more to the point, A and B will
+> never actually agree on the current HEAD commit.
+>
+> With more developers, you can make even more of a mess.
+>
+> What use does the "--ff=never" option have except to generate this cruft?
+> Flexibility is useful only as long as it provides the ability to do
+> something desirable.  There's no point to having a button that should
+> never be pushed.
 
-I'd like to create a new branch, without any pre-existing data, for
-purposes similar to git's html/man/.....
+IIUC what the new option is about is (optionally) forbidding merges.
+So it's orthogonal to the existing --no-ff and --ff merge options.
 
-However, I've been unable to do that using the higher level tools.
+So you *don't* get that kind of criss-crossing: if you've got a local
+commit, the merge fails.  So you have to use rebase.  So it's not
+making the history more complex, it's linearizing it.
 
-Even starting from an empty git rep, I can't create a branch:
-
-$ git init
-Initialized empty Git repository in .git/
-$ git branch empty
-fatal: Not a valid object name: 'master'.
-
-How were the different git.git branches created?
-
-Regards,
-Luciano Rocha
-
---=20
-Luciano Rocha <luciano@eurotux.com>
-Eurotux Inform=E1tica, S.A. <http://www.eurotux.com/>
-
---Q68bSM7Ycu6FN28Q
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (GNU/Linux)
-
-iD8DBQFH1ntMinSul6a7oB8RAk3nAJ9hLuPB2rQPeJmg6rmSybbVH1aCmQCfZqzE
-3Tuy2fdT7HfnqyG9icJ9bUU=
-=/3PC
------END PGP SIGNATURE-----
-
---Q68bSM7Ycu6FN28Q--
+Now surely you don't always want to do that, but it seems like a very
+convenient option that you can generally have on, and switch off when
+you intend to do a merge.
