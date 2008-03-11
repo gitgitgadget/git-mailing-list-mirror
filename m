@@ -1,86 +1,109 @@
-From: "Rhodes, Kate" <masukomi@gmail.com>
-Subject: [PATCH] Specified the expected formats of dates and timestamps in rev-list-options.
-Date: Mon, 10 Mar 2008 23:41:48 -0400
-Message-ID: <FC7C7E68-1D91-4719-9D11-8F65DEA43AFB@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v915)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 11 04:42:43 2008
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Git workflow
+Date: Mon, 10 Mar 2008 22:15:20 -0700
+Message-ID: <7vr6ehg7tj.fsf@gitster.siamese.dyndns.org>
+References: <1205152663.3470.12.camel@tigger>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Peter Gordon <peter@pg-consultants.com>
+X-From: git-owner@vger.kernel.org Tue Mar 11 06:16:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JYvNy-0006SC-OW
-	for gcvg-git-2@gmane.org; Tue, 11 Mar 2008 04:42:43 +0100
+	id 1JYwqf-0001Kp-Ja
+	for gcvg-git-2@gmane.org; Tue, 11 Mar 2008 06:16:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754469AbYCKDlz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Mar 2008 23:41:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754399AbYCKDlz
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Mar 2008 23:41:55 -0400
-Received: from py-out-1112.google.com ([64.233.166.178]:52448 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754033AbYCKDly (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Mar 2008 23:41:54 -0400
-Received: by py-out-1112.google.com with SMTP id u52so3268913pyb.10
-        for <git@vger.kernel.org>; Mon, 10 Mar 2008 20:41:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:from:to:content-type:content-transfer-encoding:mime-version:subject:date:x-mailer;
-        bh=UVicGPni6ckoivrnIVReFAjvjsmR/7S+Nv98Z9BymSM=;
-        b=mHOZhQP2S3AU2mHhtA21mUHj/K96BtvJPooUIcmP7NEolYnty2T4Agc5VKbUoucoigPlf+Vx2MMeKElw5sQN0AwKn8dB8Bsi+M1hgwSXHEX7fjhU2ubDRkjJD/JKewg8I9Ca007Z8gInV042QDgc+wF4K/MyA7/JP0+oqAl2LPA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:from:to:content-type:content-transfer-encoding:mime-version:subject:date:x-mailer;
-        b=CgZMksIDT10s4aijpXIGe16lO30Ep52OyWA4LqBJ7KsjCjE6TsZcLlmoCFXS8tGKsKVIA/krk1vxt7W1KBulMGdxCdr9AKcTW513IQPfR0uwqScFyoBliFooRH3lCvVJOmguJ6mK0v00+5odR8sSnIJVs/Wc3tloqMrwkJznptk=
-Received: by 10.35.102.1 with SMTP id e1mr9076551pym.57.1205206911578;
-        Mon, 10 Mar 2008 20:41:51 -0700 (PDT)
-Received: from ?192.168.1.103? ( [71.126.228.202])
-        by mx.google.com with ESMTPS id 3sm12388303wrh.6.2008.03.10.20.41.49
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 10 Mar 2008 20:41:50 -0700 (PDT)
-X-Mailer: Apple Mail (2.915)
+	id S1751118AbYCKFPf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Mar 2008 01:15:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751309AbYCKFPf
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Mar 2008 01:15:35 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:55663 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750923AbYCKFPf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Mar 2008 01:15:35 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id CA0E518E0;
+	Tue, 11 Mar 2008 01:15:33 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id CF56818BF; Tue, 11 Mar 2008 01:15:27 -0400 (EDT)
+In-Reply-To: <1205152663.3470.12.camel@tigger> (Peter Gordon's message of
+ "Mon, 10 Mar 2008 14:37:43 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76793>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76794>
 
-The docs didn't give users any indication of the expected format of  
-dates or timestamps. Now they do.
+Peter Gordon <peter@pg-consultants.com> writes:
 
----
+> ... When we have finished
+> working on the branch, we move back to the HEAD, with 
+> git-checkout master, do a 
+> git-pull
+> and then git-cherry-pick sha1.....
+> ...
+> 1) Is this the normal way to work with git.
 
-Documentation/rev-list-options.txt |    9 +++++++--
-1 files changed, 7 insertions(+), 2 deletions(-)
+It does not look "normal" in that I do not see anything that pushes
+your change back so others can build on top of it.  Also cherry-pick is
+valid but it probably is easier to use "git rebase" frontend.
 
-diff --git a/Documentation/rev-list-options.txt b/Documentation/rev- 
-list-options.txt
-index a8138e2..bf0b881 100644
---- a/Documentation/rev-list-options.txt
-+++ b/Documentation/rev-list-options.txt
-@@ -124,15 +124,20 @@ limiting may be applied.
+You need to answer one policy question at the project level.  Do you want
+the shared central repository to be a place for your developers to also
+share their not-quite-ready-for-master-work-in-progress? 
 
---since='date', --after='date'::
+Assuming you don't, for the sake of simplicity for now, you can simplify
+the workflow by dividing it conceptually into two levels:
 
--	Show commits more recent than a specific date.
-+	Show commits more recent than a date specified relatively
-+	(e.g. "2 hours ago") or with any ISO 8601 or RFC 2822
-+	date syntax.
-+
+ * shared repository 'master' branch is where everybody meets.  Birds-eye
+   view of what you do is:
 
---until='date', --before='date'::
+   (0) git clone;
 
--	Show commits older than a specific date.
-+	Show commits older than a date specified relatively (e.g.
-+	"2 hours ago") or with any ISO 8601 or RFC 2822 date syntax.
+   (1) work locally to advance your 'master';
 
---max-age='timestamp', --min-age='timestamp'::
+   (2) "git fetch origin", followed by "git rebase remotes/origin" to make
+       sure your changes come on top of whatever others have done while
+       you were working in step (1);
 
-	Limit the commits output to specified time range.
-+	The 'timestamp' should be the interger seconds since the epoch.
+   (3) "git push origin master", which pushes back your 'master', so that
+       others can build on what you did in step (1);
 
---author='pattern', --committer='pattern'::
+   (4) go back to (1) to work further.
 
--- 
-1.5.4.1.1278.gc75be
+ * because you always push your 'master' in step (3) above, as long as you
+   have what you want in your 'master' at that point, it does not matter
+   _how_ you work towards that state in step (1) above.
+
+   You can employ local topic branches (or you can use guilt patch stack),
+   and nobody else needs to know about it.  If you have a long-running
+   work that won't be ready for the shared 'master', you may locally:
+
+   (a) "git checkout -b my-topic master";
+
+   (b) work locally whenever you find time;
+
+   (c) "git checkout master" if you get interrupted and have more urgent
+       things to do;
+
+   (d) "git checkout my-topic" to continue, but from time to time, it
+       would be a good idea to "git rebase remotes/origin" while on that
+       branch, and when you are finally done with my-topic, then
+
+   (e) after making sure with (2) above that your 'master' is up-to-date,
+      "git checkout master", "git merge my-topic".
+
+   (f) then finally "git push origin master".
+
+   But you can consider these steps (a)-(e) merely "implementation
+   details" of how you would perform (1) above.
+
+Once you got comfortable with the workflow without topics, more advanced
+developers among you would find local topic branches handy way to organize
+their work.  But you do not have to.  And if you do not use local topics,
+there is no reason to avoid working directly on 'master'.
