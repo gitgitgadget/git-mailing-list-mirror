@@ -1,70 +1,72 @@
-From: "David Tweed" <david.tweed@gmail.com>
-Subject: Re: How to ignore deleted files
-Date: Tue, 11 Mar 2008 15:43:47 +0000
-Message-ID: <e1dab3980803110843u3fdf2189xf5931f1cb5526ff9@mail.gmail.com>
-References: <47D68203.10905@bioinf.uni-sb.de>
-	 <m3y78pxsf5.fsf@localhost.localdomain>
-	 <47D69CE0.3030505@bioinf.uni-sb.de>
+From: Andreas Fuchs <asf@boinkor.net>
+Subject: git-cvsimport: creating bogus branches (was: really convert underscores in branch names to dots with -u)
+Date: Tue, 11 Mar 2008 15:56:31 +0000 (UTC)
+Message-ID: <loom.20080311T153924-977@post.gmane.org>
+References: <20071103115502.14532.qmail@d121e5a37ec172.315fe32.mid.smarden.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: "Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org
-To: "Andreas Hildebrandt" <anhi@bioinf.uni-sb.de>
-X-From: git-owner@vger.kernel.org Tue Mar 11 16:44:59 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 11 16:58:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JZ6ec-0007uG-D0
-	for gcvg-git-2@gmane.org; Tue, 11 Mar 2008 16:44:38 +0100
+	id 1JZ6r2-0004KY-HR
+	for gcvg-git-2@gmane.org; Tue, 11 Mar 2008 16:57:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752716AbYCKPoA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Mar 2008 11:44:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751998AbYCKPn7
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Mar 2008 11:43:59 -0400
-Received: from ti-out-0910.google.com ([209.85.142.191]:50091 "EHLO
-	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751028AbYCKPn7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Mar 2008 11:43:59 -0400
-Received: by ti-out-0910.google.com with SMTP id 28so986318tif.23
-        for <git@vger.kernel.org>; Tue, 11 Mar 2008 08:43:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=oQGp1lulq5mkWXTBC/kpu3KDBPMU/67au54aORXN0yI=;
-        b=lXBoxzkVnh5SeNlZSGFHby6urGIrZwJn5WdywMK28jsag5K+7yWOf+A1peaguJ9Vm+nFXwSwVgrCzgSIpe/nMncdLVUV+JjYICRKDJpmuoLqbLDh0qyw0BUZpR63jCKoQ/OCh0+25FRinS7ZRhTyNpQ1kx5hlJN/qaOIGZ4EC74=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=PmDo8aLj8WbKXgf/0vzpMS+Dsk/AqyuGoTsJU5iAJofDKLOpSN11f55iVEY0RI7kWhRLcEXFSS7ONapBFDlPlS0fbgvZrEVBc4t+2DBfECiK1qp+yi+K0X3lzjFa5OO9Wh3YIM4FPs4sr//9X45u4fIPP4B9e+bYcjaSr2acI9Q=
-Received: by 10.151.144.4 with SMTP id w4mr3722442ybn.199.1205250228510;
-        Tue, 11 Mar 2008 08:43:48 -0700 (PDT)
-Received: by 10.150.149.2 with HTTP; Tue, 11 Mar 2008 08:43:47 -0700 (PDT)
-In-Reply-To: <47D69CE0.3030505@bioinf.uni-sb.de>
-Content-Disposition: inline
+	id S1753813AbYCKP4r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Mar 2008 11:56:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754004AbYCKP4r
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Mar 2008 11:56:47 -0400
+Received: from main.gmane.org ([80.91.229.2]:46336 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753671AbYCKP4q (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Mar 2008 11:56:46 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1JZ6qG-0006iS-1y
+	for git@vger.kernel.org; Tue, 11 Mar 2008 15:56:40 +0000
+Received: from snark.boinkor.net ([213.235.219.107])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 11 Mar 2008 15:56:40 +0000
+Received: from asf by snark.boinkor.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 11 Mar 2008 15:56:40 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 213.235.219.107 (Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.5; en-US; rv:1.9b4) Gecko/2008030317 Firefox/3.0b4)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76871>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76872>
 
-On Tue, Mar 11, 2008 at 2:53 PM, Andreas Hildebrandt
-<anhi@bioinf.uni-sb.de> wrote:
->  I absolutetly agree that it's strange. The main reason for this is that
->  we have some collections of data files (some of them pretty large) that
->  can be compressed pretty effectively. At compilation time, it is decided
->  if the files are needed or not. If so, they are extracted. In the end,
->  the .tar.gz files are deleted since they are no longer needed. In
+Gerrit Pape <pape <at> smarden.org> writes:
+> The documentation states for the -u option that underscores in tag and
+> branch names are converted to dots, but this was actually implemented
+> for the tag names only.
 
-This is probably a silly questions: why are you actually deleting the
-tar.gz files? If they compress the data files well, then any storage
-requirement for keeping them is dwarfed by the size of the unpacked
-data files (presumably). If a minor tweak to your build process avoids
-more complicated git scripting, that sounds a reasonable trade-off.
+This causes a lot of problems for me with a tree that was using -u before this
+change: Now there are two git branches for each CVS branch: one with and one 
+without underscores. 
 
--- 
-cheers, dave tweed__________________________
-david.tweed@gmail.com
-Rm 124, School of Systems Engineering, University of Reading.
-"while having code so boring anyone can maintain it, use Python." --
-attempted insult seen on slashdot
+That's not so bad, but git-cvsimport seems to mess up the ancestry graph
+by using the current master's HEAD revision as the parent of each of these new
+branches. (I haven't debugged this completely, but what I see strongly 
+suggests that this is what's happening.)
+
+If you want to take a look at the mangled branches, its gitweb is at 
+<http://git.boinkor.net/gitweb/sbcl-beta.git>. See for an example:
+<http://git.boinkor.net/gitweb/sbcl-beta.git?a=shortlog;h=refs/heads/alpha64.2.branch>.
+That's commit from 2003 having a parent commit from 2008. Right after that 
+parent commit in 2008 was when I started using the new git-cvsimport.
+
+Note that I'm not strongly to rewriting underscores in branch names as 
+documented, but the way things are now, I'd have preferred the transition 
+happening in a backwards-compatible way (-:
+
+Cheers,
+Andreas.
