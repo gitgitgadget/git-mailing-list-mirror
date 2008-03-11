@@ -1,62 +1,83 @@
-From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
-Subject: Re: [PATCH 1/6] Rename path_list to string_list
-Date: Tue, 11 Mar 2008 17:20:30 +0100
-Message-ID: <87iqztz0z5.fsf@lysator.liu.se>
-References: <alpine.LSU.1.00.0802290144130.22527@racer.site> <alpine.LSU.1.00.0802290144410.22527@racer.site> <7vprugfrgw.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0802290214150.22527@racer.site> <alpine.LSU.1.00.0803011313020.22527@racer.site> <alpine.LSU.1.00.0803011315180.22527@racer.site>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 03/10] Make get_git_dir() and 'git rev-parse --git-dir'
+ absolute path
+Date: Tue, 11 Mar 2008 17:20:07 +0100 (CET)
+Message-ID: <alpine.LSU.1.00.0803111716500.3873@racer.site>
+References: <cover.1204453703.git.pclouds@gmail.com>  <20080302103348.GA8929@laptop>  <alpine.LSU.1.00.0803111420080.3873@racer.site>  <fcaeb9bf0803110806u43fbd8b8v3ec2adf84fa1cd5e@mail.gmail.com>  <alpine.LSU.1.00.0803111616050.3873@racer.site>
+ <fcaeb9bf0803110839m582bed5cr5b3e198712e0fe8e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 11 17:22:02 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 11 17:22:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JZ7E7-0005CX-IM
+	id 1JZ7E6-0005CX-SX
 	for gcvg-git-2@gmane.org; Tue, 11 Mar 2008 17:21:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751480AbYCKQUV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Mar 2008 12:20:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751545AbYCKQUV
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Mar 2008 12:20:21 -0400
-Received: from main.gmane.org ([80.91.229.2]:46563 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751480AbYCKQUT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Mar 2008 12:20:19 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1JZ7D5-0007wS-4x
-	for git@vger.kernel.org; Tue, 11 Mar 2008 16:20:15 +0000
-Received: from 79.138.179.234.bredband.tre.se ([79.138.179.234])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 11 Mar 2008 16:20:15 +0000
-Received: from davidk by 79.138.179.234.bredband.tre.se with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 11 Mar 2008 16:20:15 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 79.138.179.234.bredband.tre.se
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-Cancel-Lock: sha1:O8JMbA8BlJuVBIE7GBb+/skbZa4=
+	id S1751600AbYCKQUG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Mar 2008 12:20:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751673AbYCKQUF
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Mar 2008 12:20:05 -0400
+Received: from mail.gmx.net ([213.165.64.20]:53454 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751351AbYCKQUD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Mar 2008 12:20:03 -0400
+Received: (qmail invoked by alias); 11 Mar 2008 16:20:00 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp024) with SMTP; 11 Mar 2008 17:20:00 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19ehGc4z65eoKTCj1r4hHzYYwBoTOQ71ycf+YbTo8
+	kiMXyRQ1vanriw
+X-X-Sender: gene099@racer.site
+In-Reply-To: <fcaeb9bf0803110839m582bed5cr5b3e198712e0fe8e@mail.gmail.com>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76874>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76875>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hi,
 
-> diff --git a/Documentation/technical/api-path-list.txt b/Documentatio=
-n/technical/api-path-list.txt
-> index d077683..8892cf0 100644
-> --- a/Documentation/technical/api-path-list.txt
-> +++ b/Documentation/technical/api-path-list.txt
-> @@ -1,7 +1,7 @@
-> -path-list API
-> +string-list API
->  =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+On Tue, 11 Mar 2008, Nguyen Thai Ngoc Duy wrote:
 
-Looks like you'll want to add two =3D here.
+> On Tue, Mar 11, 2008 at 10:18 PM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> >  Besides, I remember that Junio specifically requested that I would 
+> >  _not_ do something like that (this was for --show-cdup, but I think 
+> >  it really applies here, too).
+> 
+> I might have lost track. Could you provide me the link for reference? 
+> Thanks.
 
---=20
-David K=C3=A5gedal
+http://article.gmane.org/gmane.comp.version-control.git/53993/match=show+cdup
+
+This is how you can find it yourself next time (and how I found it):
+
+Go to gmane, search for "show-cdup", then select Junio as writer.  It is 
+already the second hit, which was obvious by the email's title.
+
+> >  I do not see the problem.  And therefore I do not see that this patch 
+> >  solves anything.
+> 
+> It can simplify things (in other patches, such as builtin-config.c 
+> changes). Though without it things just run fine (with a little more 
+> complication in prefix handling). Recent mails about git-am running in 
+> subdirectory (Message-ID: 
+> 20080301062255.GA27538@coredump.intra.peff.net) made me think there was 
+> room for this.
+
+Okay, I see that you want to simplify things.  However, I am not at all 
+convinced that your patch series does that.
+
+However, instead of continuing this thread, I will try to find some time 
+later this week to look into simplifying the work-tree logic again.
+
+If I find things, I will discuss them on the list.
+
+Ciao,
+Dscho
