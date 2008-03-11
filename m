@@ -1,112 +1,58 @@
-From: "Imran M Yousuf" <imyousuf@gmail.com>
-Subject: Re: [jgit] index v2 pull request
-Date: Tue, 11 Mar 2008 08:24:24 +0600
-Message-ID: <7bfdc29a0803101924r41a6e221w3d560114fd61a90a@mail.gmail.com>
-References: <20080308025027.GZ8410@spearce.org>
-	 <200803100051.55367.robin.rosenberg@dewire.com>
-	 <7bfdc29a0803100032q6b30f16el97c021f3b051b944@mail.gmail.com>
-	 <20080311003526.GM8410@spearce.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: "git diff-index" broken in 'next'
+Date: Mon, 10 Mar 2008 19:41:33 -0700
+Message-ID: <7vk5kagexu.fsf_-_@gitster.siamese.dyndns.org>
+References: <7vmyp7j8ui.fsf@gitster.siamese.dyndns.org>
+ <alpine.LFD.1.00.0803100735530.5896@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Robin Rosenberg" <robin.rosenberg@dewire.com>,
-	git@vger.kernel.org, "Dave Watson" <dwatson@mimvista.com>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Mar 11 03:25:07 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue Mar 11 03:42:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JYuAs-0005Lx-BU
-	for gcvg-git-2@gmane.org; Tue, 11 Mar 2008 03:25:06 +0100
+	id 1JYuRY-00011M-8C
+	for gcvg-git-2@gmane.org; Tue, 11 Mar 2008 03:42:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754781AbYCKCY1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Mar 2008 22:24:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754222AbYCKCY1
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Mar 2008 22:24:27 -0400
-Received: from mu-out-0910.google.com ([209.85.134.191]:18861 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751373AbYCKCY0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Mar 2008 22:24:26 -0400
-Received: by mu-out-0910.google.com with SMTP id i10so7499981mue.5
-        for <git@vger.kernel.org>; Mon, 10 Mar 2008 19:24:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=PIoGt6agd85avXlvOyG9Vf13/nuo1Etz5SiXyV8y/Fo=;
-        b=Obnc3vV0xYCrQ1gbTnDGrSejrqhFhRLzwwIUFJpqKjmPG4Xq7TPWSjjoxKihxAWxpERuk0nDwKddU9jBxQJvVRG+XEPmowru7iwIIyZWx7yWECsf4wGNCIJPz+6gQnzRbXjIEbyV6AeTVFlOe3sVhPS4gGF3PUxLf80YkQnCfxM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=egrHP/FzsChijO1Gf8VENGmDVoOdVRf6RZLyVhxbxAus6fsaYRNwCp2Mat+dvvHGVqa4UKt1RvJtmvVkkzMr+5PjK8JUjuzPAXbU/k1ERbDUHfy+kp5Nj3OrKWCoWE0RGS287nFVcFws62nr5g71bCVvBlgForhFh6C2D8eWEqs=
-Received: by 10.78.186.9 with SMTP id j9mr16275272huf.14.1205202264681;
-        Mon, 10 Mar 2008 19:24:24 -0700 (PDT)
-Received: by 10.78.75.8 with HTTP; Mon, 10 Mar 2008 19:24:24 -0700 (PDT)
-In-Reply-To: <20080311003526.GM8410@spearce.org>
-Content-Disposition: inline
+	id S1754702AbYCKCll (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Mar 2008 22:41:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754222AbYCKCll
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Mar 2008 22:41:41 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:42002 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752661AbYCKClk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Mar 2008 22:41:40 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id CE94522F2;
+	Mon, 10 Mar 2008 22:41:38 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 334DF22F1; Mon, 10 Mar 2008 22:41:36 -0400 (EDT)
+In-Reply-To: <alpine.LFD.1.00.0803100735530.5896@woody.linux-foundation.org>
+ (Linus Torvalds's message of "Mon, 10 Mar 2008 07:38:25 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76785>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76786>
 
-On Tue, Mar 11, 2008 at 6:35 AM, Shawn O. Pearce <spearce@spearce.org> wrote:
-> Imran M Yousuf <imyousuf@gmail.com> wrote:
->  > I would like to volunteer to work in JGit;
->  > can someone let me know where I can pick some tasks to implement?
->
->  One of the areas that I think is really weak in JGit and that we
->  need to do a _good_ fetch/push implementation is the branch model.
->
->  For example, if you look at Repository.getBranches() it returns
->  to the caller a Collection<String>.
->
->  But in Git a branch is a heck of a lot more data, and that data is
->  relevant to the end user when we are talking about fetch and merge.
->  There are many configuration options stored in .git/config for a
->  branch, and these are (today) created by git-branch and git-checkout
->  automatically as the user creates and deletes branches.
->
->  JGit has none of this model.  It thinks all that a branch is is a
->  String.  Sad.
->
->  Another thing that bothers me is the packed refs cache.  We toss
->  away the peeled information (the "^" lines), but that data is very
->  useful when you are talking about fetch as well as a few other
->  types of operations, like plotting tag labels onto a history graph
->  (such as how gitk does it).
->
->  The Ref class was started as a means of wrapping up the various
->  important bits of data about a ref (of which branches are a subclass
->  and annotated tags with peeled data is another) but I suspect it
->  didn't quite do everything so these string APIs got created.
->
->  The above is a farily small task, one that any good OO programmer
->  should be able to tackle, but it can be challenging if you are
->  new to Git plumbing as you'll have to learn what are the important
->  parts of a branch/ref/annotated tag.
->
->  As a starting point look at the config file format in C Git and
->  see what is possible in a "branch" and "remote" section; that
->  data needs to be pretty readily available for any Ref, if such
->  data exists.  The backward mapping of Ref->Remote (which does
->  not exist yet, unless Robin created it) is quite relevant for
->  tracking branches.
+When you are in the middle of conflicted merge, it is useful to view "git
+diff" that compares the stage #2 and your work tree (which has conflict
+markers and both sides of the changes).  This still works.
 
-I will have a look at them and will give you and update; if I have any
-questions, I hope you and team wont mind :).
+However, with the unpack_trees() update, another form of useful sanity
+check seems to be totally broken:
 
->
->  --
->  Shawn.
->
+      $ git diff HEAD -- $conflicted_file
 
+This used to show the diff between the HEAD and the work tree, but not
+anymore.  It shows a diff as if the whole file is gone, and that is
+because diff-lib.c::oneway_diff() gets idx==NULL from the caller for
+unmerged entries. It never reaches show_modified() codepath.
 
-
--- 
-Imran M Yousuf
-Entrepreneur & Software Engineer
-Smart IT Engineering
-Dhaka, Bangladesh
-Email: imran@smartitengineering.com
-Mobile: +880-1711402557
+I think it is somewhere around ll. 280 in unpack_callback() that causes
+this, but I don't have time to dig this further for now.
