@@ -1,228 +1,269 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] gc: call "prune --expire 2.weeks.ago"
-Date: Tue, 11 Mar 2008 21:58:20 +0100 (CET)
-Message-ID: <alpine.LSU.1.00.0803112157560.3873@racer.site>
+From: Johannes Sixt <johannes.sixt@telecom.at>
+Subject: Re: [PATCH 03/40] Add target architecture MinGW.
+Date: Tue, 11 Mar 2008 22:30:56 +0100
+Message-ID: <200803112230.57004.johannes.sixt@telecom.at>
+References: <1204138503-6126-1-git-send-email-johannes.sixt@telecom.at> <alpine.LSU.1.00.0802281159550.22527@racer.site> <200803052221.12495.johannes.sixt@telecom.at>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Mar 11 22:00:34 2008
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Mar 11 22:31:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JZBYp-00039W-Dw
-	for gcvg-git-2@gmane.org; Tue, 11 Mar 2008 21:59:00 +0100
+	id 1JZC4W-0008Ke-DP
+	for gcvg-git-2@gmane.org; Tue, 11 Mar 2008 22:31:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751008AbYCKU6S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Mar 2008 16:58:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751104AbYCKU6S
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Mar 2008 16:58:18 -0400
-Received: from mail.gmx.net ([213.165.64.20]:51043 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750992AbYCKU6R (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Mar 2008 16:58:17 -0400
-Received: (qmail invoked by alias); 11 Mar 2008 20:58:15 -0000
-Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
-  by mail.gmx.net (mp037) with SMTP; 11 Mar 2008 21:58:15 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19MFKBwsi5MKImqLBiSrP53NvjQXD09YWu8TsIU25
-	hd0iE36us2SNf1
-X-X-Sender: gene099@racer.site
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1752101AbYCKVbE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Mar 2008 17:31:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751528AbYCKVbD
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Mar 2008 17:31:03 -0400
+Received: from smtp4.srv.eunet.at ([193.154.160.226]:44780 "EHLO
+	smtp4.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751337AbYCKVbB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Mar 2008 17:31:01 -0400
+Received: from dx.sixt.local (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
+	by smtp4.srv.eunet.at (Postfix) with ESMTP id B723397A0D;
+	Tue, 11 Mar 2008 22:30:58 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by dx.sixt.local (Postfix) with ESMTP id E9D28609C6;
+	Tue, 11 Mar 2008 22:30:57 +0100 (CET)
+User-Agent: KMail/1.9.3
+In-Reply-To: <200803052221.12495.johannes.sixt@telecom.at>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76899>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76900>
 
+On Wednesday 05 March 2008 22:21, Johannes Sixt wrote:
+> I've now created compat/mingw.h. Below is the interdiff. Of course, it
+> mostly only moves code around. But you might want to look at at mkstemp,
+> PATH_SEP, PRIuMAX, and has_dos_drive_prefix. Notice also that I include
+> compat/mingw.h early in git-compat-util.h instead of late.
 
-If "--prune" is passed to gc, it still just calls "git prune".
-Otherwise, "prune --expire 2.weeks.ago" is called, where the grace
-period is overrideable by the config variable gc.pruneExpire.
+I must admit I was very sloppy with the previous round. I had to make 
+has_dos_drive_prefix a macro; otherwise we would get numerous warnings 
+about "undeclared function isalpha", because the declaration appears later in 
+git-compat-util.h.
 
-While adding a test to t5304-prune.sh (since it really tests the
-implicit call to "prune"), the original test for "prune --expire"
-is moved there from t1410-reflog.sh, where it did not belong.
+On the positive side, we can now reuse Michal's vsnprintf wrapper, which fixes 
+snprintf, too, (which was not the case previously). Note that on Windows we 
+have to adjust the size parameter.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
+There's also a change in the setup of stderr in start_command() that 
+corresponds to ce2cf27adc. And I made is_dir_sep into a conditional macro 
+similar to has_dos_drive_prefix to get rid of another #ifdef/#endif.
 
-	I am really tempted to reduce the grace period further, but
-	I'd like to hear opinions first.  Is 3.days.ago too short?
+-- Hannes
 
- Documentation/config.txt |    5 +++++
- Documentation/git-gc.txt |   16 +++++++++++-----
- builtin-gc.c             |   19 +++++++++++++++++--
- t/t1410-reflog.sh        |   18 ------------------
- t/t5304-prune.sh         |   36 ++++++++++++++++++++++++++++++++++++
- 5 files changed, 69 insertions(+), 25 deletions(-)
+Here's the interdiff:
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 14df635..adde89a 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -590,6 +590,11 @@ gc.packrefs::
- 	at some stage, and setting this to `false` will continue to
- 	prevent `git pack-refs` from being run from `git gc`.
+diff --git a/Makefile b/Makefile
+index 68d60e7..6619523 100644
+--- a/Makefile
++++ b/Makefile
+@@ -309,7 +309,7 @@ LIB_H = \
+ 	tree-walk.h log-tree.h dir.h path-list.h unpack-trees.h builtin.h \
+ 	utf8.h reflog-walk.h patch-ids.h attr.h decorate.h progress.h \
+ 	mailmap.h remote.h parse-options.h transport.h diffcore.h hash.h fsck.h \
+-	pack-revindex.h
++	pack-revindex.h compat/mingw.h
  
-+gc.pruneexpire::
-+	When `git gc` is run without `--prune`, it will still call
-+	`prune`, but with `--expire 2.weeks.ago`.  Override the value
-+	with this config variable.
-+
- gc.reflogexpire::
- 	`git reflog expire` removes reflog entries older than
- 	this time; defaults to 90 days.
-diff --git a/Documentation/git-gc.txt b/Documentation/git-gc.txt
-index 2e7be91..2042d9f 100644
---- a/Documentation/git-gc.txt
-+++ b/Documentation/git-gc.txt
-@@ -28,13 +28,19 @@ OPTIONS
- --prune::
- 	Usually `git-gc` packs refs, expires old reflog entries,
- 	packs loose objects,
--	and removes old 'rerere' records.  Removal
-+	and removes old 'rerere' records.  Unilateral removal
- 	of unreferenced loose objects is an unsafe operation
- 	while other git operations are in progress, so it is not
--	done by default.  Pass this option if you want it, and only
--	when you know nobody else is creating new objects in the
--	repository at the same time (e.g. never use this option
--	in a cron script).
-+	done by default.
-++
-+Instead, `git-prune` is called with an option telling it to expire
-+only unreferenced loose objects that are at least 2 weeks old.  Set
-+the config variable `gc.pruneexpire` to override this grace period.
-++
-+Pass `--prune` to expire all unreferenced loose objects, but only
-+when you know nobody else is creating new objects in the
-+repository at the same time (e.g. never use this option
-+in a cron script).
- 
- --aggressive::
- 	Usually 'git-gc' runs very quickly while providing good disk
-diff --git a/builtin-gc.c b/builtin-gc.c
-index 7cad366..8d07350 100644
---- a/builtin-gc.c
-+++ b/builtin-gc.c
-@@ -26,12 +26,13 @@ static int pack_refs = 1;
- static int aggressive_window = 250;
- static int gc_auto_threshold = 6700;
- static int gc_auto_pack_limit = 20;
-+static char *prune_expire = "2.weeks.ago";
- 
- #define MAX_ADD 10
- static const char *argv_pack_refs[] = {"pack-refs", "--all", "--prune", NULL};
- static const char *argv_reflog[] = {"reflog", "expire", "--all", NULL};
- static const char *argv_repack[MAX_ADD] = {"repack", "-d", "-l", NULL};
--static const char *argv_prune[] = {"prune", NULL};
-+static const char *argv_prune[] = {"prune", NULL, NULL, NULL};
- static const char *argv_rerere[] = {"rerere", "gc", NULL};
- 
- static int gc_config(const char *var, const char *value)
-@@ -55,6 +56,14 @@ static int gc_config(const char *var, const char *value)
- 		gc_auto_pack_limit = git_config_int(var, value);
- 		return 0;
- 	}
-+	if (!strcmp(var, "gc.pruneexpire")) {
-+		if (!value)
-+			return config_error_nonbool(var);
-+		if (!approxidate(value))
-+			return error("Invalid gc.pruneExpire: '%s'", value);
-+		prune_expire = xstrdup(value);
-+		return 0;
-+	}
- 	return git_default_config(var, value);
+ DIFF_OBJS = \
+ 	diff.o diff-lib.o diffcore-break.o diffcore-order.o \
+@@ -549,10 +549,12 @@ ifneq (,$(findstring MINGW,$(uname_S)))
+ 	NO_C99_FORMAT = YesPlease
+ 	NO_STRTOUMAX = YesPlease
+ 	NO_MKDTEMP = YesPlease
++	SNPRINTF_RETURNS_BOGUS = YesPlease
+ 	NO_SVN_TESTS = YesPlease
+ 	NO_PERL_MAKEMAKER = YesPlease
+ 	NO_POSIX_ONLY_PROGRAMS = YesPlease
+ 	COMPAT_CFLAGS += -D__USE_MINGW_ACCESS -DNOGDI -Icompat
++	COMPAT_CFLAGS += -DSNPRINTF_SIZE_CORR=1
+ 	COMPAT_CFLAGS += -DSTRIP_EXTENSION=\".exe\"
+ 	COMPAT_OBJS += compat/mingw.o compat/fnmatch.o compat/regex.o
+ 	EXTLIBS += -lws2_32
+diff --git a/compat/mingw.c b/compat/mingw.c
+index 6733727..7c8fd0e 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -847,40 +847,6 @@ int mingw_rename(const char *pold, const char *pnew)
+ 	return -1;
  }
  
-@@ -235,7 +244,13 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
- 	if (run_command_v_opt(argv_repack, RUN_GIT_CMD))
- 		return error(FAILED_RUN, argv_repack[0]);
+-#undef vsnprintf
+-/* Note that the size parameter specifies the available space, i.e.
+- * includes the trailing NUL byte; but Windows's vsnprintf expects the
+- * number of characters to write without the trailing NUL.
+- */
+-
+-/* This is out of line because it uses alloca() behind the scenes,
+- * which must not be called in a loop (alloca() reclaims the allocations
+- * only at function exit).
+- */
+-static int try_vsnprintf(size_t size, const char *fmt, va_list args)
+-{
+-	char buf[size];	/* gcc-ism */
+-	return vsnprintf(buf, size-1, fmt, args);
+-}
+-
+-int mingw_vsnprintf(char *buf, size_t size, const char *fmt, va_list args)
+-{
+-	int len;
+-	if (size > 0) {
+-		len = vsnprintf(buf, size-1, fmt, args);
+-		if (len >= 0)
+-			return len;
+-	}
+-	/* ouch, buffer too small; need to compute the size */
+-	if (size < 250)
+-		size = 250;
+-	do {
+-		size *= 4;
+-		len = try_vsnprintf(size, fmt, args);
+-	} while (len < 0);
+-	return len;
+-}
+-
+ struct passwd *getpwuid(int uid)
+ {
+ 	static char user_name[100];
+diff --git a/compat/mingw.h b/compat/mingw.h
+index d92c631..c7db345 100644
+--- a/compat/mingw.h
++++ b/compat/mingw.h
+@@ -174,9 +174,6 @@ int mingw_fstat(int fd, struct mingw_stat *buf);
+ static inline int mingw_stat(const char *file_name, struct mingw_stat *buf)
+ { return mingw_lstat(file_name, buf); }
  
--	if (prune && run_command_v_opt(argv_prune, RUN_GIT_CMD))
-+	if (!prune) {
-+		argv_prune[1] = "--expire";
-+		argv_prune[2] = prune_expire;
-+		argv_prune[3] = NULL;
+-int mingw_vsnprintf(char *buf, size_t size, const char *fmt, va_list args);
+-#define vsnprintf mingw_vsnprintf
+-
+ pid_t mingw_spawnvpe(const char *cmd, const char **argv, char **env);
+ void mingw_execvp(const char *cmd, char *const *argv);
+ #define execvp mingw_execvp
+@@ -192,12 +189,8 @@ sig_handler_t mingw_signal(int sig, sig_handler_t 
+handler);
+  * git specific compatibility
+  */
+ 
+-static inline int has_dos_drive_prefix(const char *path)
+-{
+-	return isalpha(*path) && path[1] == ':';
+-}
+-#define has_dos_drive_prefix has_dos_drive_prefix
+-
++#define has_dos_drive_prefix(path) (isalpha(*(path)) && (path)[1] == ':')
++#define is_dir_sep(c) ((c) == '/' || (c) == '\\')
+ #define PATH_SEP ';'
+ #define PRIuMAX "I64u"
+ 
+diff --git a/compat/snprintf.c b/compat/snprintf.c
+index dbfc2d6..480b66f 100644
+--- a/compat/snprintf.c
++++ b/compat/snprintf.c
+@@ -1,12 +1,21 @@
+ #include "../git-compat-util.h"
+ 
++/*
++ * The size parameter specifies the available space, i.e. includes
++ * the trailing NUL byte; but Windows's vsnprintf expects the
++ * number of characters to write without the trailing NUL.
++ */
++#ifndef SNPRINTF_SIZE_CORR
++#define SNPRINTF_SIZE_CORR 0
++#endif
++
+ #undef vsnprintf
+ int git_vsnprintf(char *str, size_t maxsize, const char *format, va_list ap)
+ {
+ 	char *s;
+ 	int ret;
+ 
+-	ret = vsnprintf(str, maxsize, format, ap);
++	ret = vsnprintf(str, maxsize-SNPRINTF_SIZE_CORR, format, ap);
+ 	if (ret != -1)
+ 		return ret;
+ 
+@@ -20,7 +29,7 @@ int git_vsnprintf(char *str, size_t maxsize, const char 
+*format, va_list ap)
+ 		if (! str)
+ 			break;
+ 		s = str;
+-		ret = vsnprintf(str, maxsize, format, ap);
++		ret = vsnprintf(str, maxsize-SNPRINTF_SIZE_CORR, format, ap);
+ 	}
+ 	free(s);
+ 	return ret;
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 08f764e..2889146 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -117,6 +117,10 @@
+ #define has_dos_drive_prefix(path) 0
+ #endif
+ 
++#ifndef is_dir_sep
++#define is_dir_sep(c) ((c) == '/')
++#endif
++
+ #ifdef __GNUC__
+ #define NORETURN __attribute__((__noreturn__))
+ #else
+diff --git a/run-command.c b/run-command.c
+index aba2bf2..2ce8c2b 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -132,6 +132,14 @@ int start_command(struct child_process *cmd)
+ 		dup2(cmd->in, 0);
+ 	}
+ 
++	if (cmd->no_stderr) {
++		s2 = dup(2);
++		dup_devnull(2);
++	} else if (need_err) {
++		s2 = dup(2);
++		dup2(fderr[1], 2);
 +	}
 +
-+	if (run_command_v_opt(argv_prune, RUN_GIT_CMD))
- 		return error(FAILED_RUN, argv_prune[0]);
+ 	if (cmd->no_stdout) {
+ 		s1 = dup(1);
+ 		dup_devnull(1);
+@@ -146,14 +154,6 @@ int start_command(struct child_process *cmd)
+ 		dup2(cmd->out, 1);
+ 	}
  
- 	if (run_command_v_opt(argv_rerere, RUN_GIT_CMD))
-diff --git a/t/t1410-reflog.sh b/t/t1410-reflog.sh
-index 24476be..73f830d 100755
---- a/t/t1410-reflog.sh
-+++ b/t/t1410-reflog.sh
-@@ -202,22 +202,4 @@ test_expect_success 'delete' '
- 
- '
- 
--test_expect_success 'prune --expire' '
+-	if (cmd->no_stderr) {
+-		s2 = dup(2);
+-		dup_devnull(2);
+-	} else if (need_err) {
+-		s2 = dup(2);
+-		dup2(fderr[1], 2);
+-	}
 -
--	before=$(git count-objects | sed "s/ .*//") &&
--	BLOB=$(echo aleph | git hash-object -w --stdin) &&
--	BLOB_FILE=.git/objects/$(echo $BLOB | sed "s/^../&\//") &&
--	test $((1 + $before)) = $(git count-objects | sed "s/ .*//") &&
--	test -f $BLOB_FILE &&
--	git reset --hard &&
--	git prune --expire=1.hour.ago &&
--	test $((1 + $before)) = $(git count-objects | sed "s/ .*//") &&
--	test -f $BLOB_FILE &&
--	test-chmtime -86500 $BLOB_FILE &&
--	git prune --expire 1.day &&
--	test $before = $(git count-objects | sed "s/ .*//") &&
--	! test -f $BLOB_FILE
--
--'
--
- test_done
-diff --git a/t/t5304-prune.sh b/t/t5304-prune.sh
-index 6560af7..2a88b3f 100644
---- a/t/t5304-prune.sh
-+++ b/t/t5304-prune.sh
-@@ -29,4 +29,40 @@ test_expect_success 'prune stale packs' '
+ 	if (cmd->dir)
+ 		die("chdir in start_command() not implemented");
+ 	if (cmd->env) {
+diff --git a/setup.c b/setup.c
+index d1a862e..eea1038 100644
+--- a/setup.c
++++ b/setup.c
+@@ -4,12 +4,6 @@
+ static int inside_git_dir = -1;
+ static int inside_work_tree = -1;
  
- '
- 
-+test_expect_success 'prune --expire' '
-+
-+	before=$(git count-objects | sed "s/ .*//") &&
-+	BLOB=$(echo aleph | git hash-object -w --stdin) &&
-+	BLOB_FILE=.git/objects/$(echo $BLOB | sed "s/^../&\//") &&
-+	test $((1 + $before)) = $(git count-objects | sed "s/ .*//") &&
-+	test -f $BLOB_FILE &&
-+	git prune --expire=1.hour.ago &&
-+	test $((1 + $before)) = $(git count-objects | sed "s/ .*//") &&
-+	test -f $BLOB_FILE &&
-+	test-chmtime -86500 $BLOB_FILE &&
-+	git prune --expire 1.day &&
-+	test $before = $(git count-objects | sed "s/ .*//") &&
-+	! test -f $BLOB_FILE
-+
-+'
-+
-+test_expect_success 'gc: implicit prune --expire' '
-+
-+	before=$(git count-objects | sed "s/ .*//") &&
-+	BLOB=$(echo aleph_0 | git hash-object -w --stdin) &&
-+echo blob: $BLOB &&
-+	BLOB_FILE=.git/objects/$(echo $BLOB | sed "s/^../&\//") &&
-+	test $((1 + $before)) = $(git count-objects | sed "s/ .*//") &&
-+	test -f $BLOB_FILE &&
-+	test-chmtime -$((86400*14-30)) $BLOB_FILE &&
-+	git gc &&
-+	test $((1 + $before)) = $(git count-objects | sed "s/ .*//") &&
-+	test -f $BLOB_FILE &&
-+	test-chmtime -$((86400*14+1)) $BLOB_FILE &&
-+	git gc &&
-+	test $before = $(git count-objects | sed "s/ .*//") &&
-+	! test -f $BLOB_FILE
-+
-+'
-+
- test_done
--- 
-1.5.4.4.646.ge37ad
+-#ifdef __MINGW32__
+-static inline int is_dir_sep(char c) { return c == '/' || c == '\\'; }
+-#else
+-static inline int is_dir_sep(char c) { return c == '/'; }
+-#endif
+-
+ static int sanitary_path_copy(char *dst, const char *src)
+ {
+ 	char *dst0;
