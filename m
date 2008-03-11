@@ -1,64 +1,63 @@
-From: Michele Ballabio <barra_cuda@katamail.com>
-Subject: Re: git message
-Date: Tue, 11 Mar 2008 14:30:49 +0100
-Message-ID: <200803111430.49927.barra_cuda@katamail.com>
-References: <20080310144600.GA15556@roadking.ldev.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 04/10] Make setup_work_tree() return new prefix
+Date: Tue, 11 Mar 2008 14:27:21 +0100 (CET)
+Message-ID: <alpine.LSU.1.00.0803111426521.3873@racer.site>
+References: <cover.1204453703.git.pclouds@gmail.com> <20080302103405.GA8942@laptop>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Mike Miller <mike.miller@hp.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 11 14:21:53 2008
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323584-797168556-1205242043=:3873"
+Cc: git@vger.kernel.org
+To: =?VISCII?Q?Nguy=ADn_Th=E1i_Ng=F7c_Duy?= <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 11 14:28:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JZ4QN-0004MD-B2
-	for gcvg-git-2@gmane.org; Tue, 11 Mar 2008 14:21:47 +0100
+	id 1JZ4WP-0006R7-5B
+	for gcvg-git-2@gmane.org; Tue, 11 Mar 2008 14:28:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753398AbYCKNUy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Mar 2008 09:20:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751706AbYCKNUy
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Mar 2008 09:20:54 -0400
-Received: from smtp.katamail.com ([62.149.157.154]:49616 "HELO
-	smtp1.pc.aruba.it" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with SMTP id S1751282AbYCKNUx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Mar 2008 09:20:53 -0400
-Received: (qmail 9558 invoked by uid 89); 11 Mar 2008 13:19:59 -0000
-X-Spam-Checker-Version: SpamAssassin 3.2.3 (2007-08-08) on smtp2-pc
-X-Spam-Level: 
-X-Spam-Status: No, score=0.1 required=5.0 tests=RDNS_NONE autolearn=disabled
-	version=3.2.3
-Received: from unknown (HELO host41-56-static.104-80-b.business.telecomitalia.it) (barra?cuda@katamail.com@80.104.56.41)
-  by smtp2-pc with SMTP; 11 Mar 2008 13:19:58 -0000
-User-Agent: KMail/1.9.7
-In-Reply-To: <20080310144600.GA15556@roadking.ldev.net>
-Content-Disposition: inline
+	id S1752738AbYCKN1V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Mar 2008 09:27:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752276AbYCKN1V
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Mar 2008 09:27:21 -0400
+Received: from mail.gmx.net ([213.165.64.20]:41817 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751059AbYCKN1U (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Mar 2008 09:27:20 -0400
+Received: (qmail invoked by alias); 11 Mar 2008 13:27:17 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp035) with SMTP; 11 Mar 2008 14:27:17 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX194htZP2Lt4PrxSGjvg42Em1M1q4N0t9ae2wimYOT
+	tYGzRSgQ6+IOEl
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20080302103405.GA8942@laptop>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76841>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76842>
 
-On Monday 10 March 2008, Mike Miller wrote:
-> I see some patches referring to this message but I don't understand what it
-> means:
-> 
-> Warning: Remote HEAD refers to nonexistent ref, unable to checkout.
-> 
-> Would someone please explain the message? Is my repository complete?
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-When you clone from a repository, git clone does a default checkout using
-the branch referred to by HEAD. If HEAD does not exist on the remote repo,
-git clone simply does not checkout any branch (but your local repo is ok).
+--8323584-797168556-1205242043=:3873
+Content-Type: TEXT/PLAIN; charset=utf-8
+Content-Transfer-Encoding: 8BIT
 
-At least that's what I understood from reading git-clone.sh.
+Hi,
 
-You can see all the remote branches with
+On Sun, 2 Mar 2008, Nguyễn Thái Ngọc Duy wrote:
 
-	git branch -a
+> worktree setup inside setup_git_directory*() is not perfect. It does not 
+> take core.worktree into account. So when you do setup_work_tree(), the 
+> real work tree may be not the one setup_git_directory*() gives you. You 
+> need a new prefix in that case.
 
-and checkout a new local branch on top of them with
+Probably the real fix would be to setup_git_directory(), no?
 
-	git checkout -b local_branch remote_branch
+Ciao,
+Dscho
+
+--8323584-797168556-1205242043=:3873--
