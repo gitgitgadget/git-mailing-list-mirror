@@ -1,71 +1,83 @@
-From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-Subject: Re: How to archive repo from sub-directory
-Date: Tue, 11 Mar 2008 10:22:54 +0700
-Message-ID: <fcaeb9bf0803102022s3cefd1d0jcea74fcf5ac69f6c@mail.gmail.com>
-References: <18389.54080.211086.922039@lisa.zopyra.com>
+From: Thomas Harning <harningt@gmail.com>
+Subject: Re: [RFC] Idea for Git Bugtracking Tool
+Date: Mon, 10 Mar 2008 23:29:17 -0400
+Message-ID: <20080310232917.7c71ccbe@shiva>
+References: <20080306142246.5d9460b7@gmail.com>
+	<vpqskz3pqdo.fsf@bauges.imag.fr>
+	<m3zltaf7vs.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Bill Lear" <rael@zopyra.com>
-X-From: git-owner@vger.kernel.org Tue Mar 11 04:23:44 2008
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Pierre Habouzit <madcoder@debian.org>, <git@vger.kernel.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 11 04:32:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JYv5W-0002Rw-J6
-	for gcvg-git-2@gmane.org; Tue, 11 Mar 2008 04:23:39 +0100
+	id 1JYvEB-0004Mb-BT
+	for gcvg-git-2@gmane.org; Tue, 11 Mar 2008 04:32:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753309AbYCKDXA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Mar 2008 23:23:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752702AbYCKDXA
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Mar 2008 23:23:00 -0400
-Received: from fg-out-1718.google.com ([72.14.220.154]:27474 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753302AbYCKDW6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Mar 2008 23:22:58 -0400
-Received: by fg-out-1718.google.com with SMTP id e21so2216837fga.17
-        for <git@vger.kernel.org>; Mon, 10 Mar 2008 20:22:54 -0700 (PDT)
+	id S1753757AbYCKDb4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Mar 2008 23:31:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753948AbYCKDb4
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Mar 2008 23:31:56 -0400
+Received: from py-out-1112.google.com ([64.233.166.183]:34185 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753718AbYCKDbz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Mar 2008 23:31:55 -0400
+Received: by py-out-1112.google.com with SMTP id u52so3264956pyb.10
+        for <git@vger.kernel.org>; Mon, 10 Mar 2008 20:31:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=e+y5RufuBTg1nqQ4br7zTqDRf1G34xr4/xZEp3OHLyc=;
-        b=k13dRYQTbdGXe+MQ99nzY0OOQ1ITx0I2h9WWew2NNfOdwi73VxKqLsyzaZP6elyhyozE6PL689R993V3XzhDOWG8f1VUqVfTnXK+dUgg7Hcwm1+2i3O9pSPe+mYqwCMhdT8J8mV8pyfnFBmwZTjp28LuvnbXEZDlFhvHR6/VrI0=
+        h=domainkey-signature:received:received:date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer:mime-version:content-type:content-transfer-encoding;
+        bh=gCgVuKIvgI7xmO/X3Ly9elB6iBUSKBIQH7T6zLcfhAU=;
+        b=pOxB3t0YkBk62RCjcoKJDbI7tThsJYwEyacRmxiibVJFAT101s2Eeeck13mdWXesR5gA+o3ba0QexgYY+ss2bbDF7vTxBoVWMOXRXwg7fd5RYDPEuyA20PODO5p9fkNhO6LS8b68Lgaab8VW0mFhE6DAiFt9NBlPAVkgkCf/n54=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=uDlQVknqHwNsjqKfVk+a4GRFBUe/vpSXM9/IfEWqCEF7jTCBYTChPQmJXGqXYwSiraO/Oa8rNCNVFbywhJKYy+3Mrv/Het2jswnJ/NyK1IkcUIPgbfMW9ULgyKXLZDXItgRyhx6qRT/34tkXJDGvQXO5QBnLVgvSmKvrxdk+YzE=
-Received: by 10.86.66.19 with SMTP id o19mr7511040fga.10.1205205774334;
-        Mon, 10 Mar 2008 20:22:54 -0700 (PDT)
-Received: by 10.86.81.4 with HTTP; Mon, 10 Mar 2008 20:22:54 -0700 (PDT)
-In-Reply-To: <18389.54080.211086.922039@lisa.zopyra.com>
-Content-Disposition: inline
+        h=date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer:mime-version:content-type:content-transfer-encoding;
+        b=nxfkCHsv4/fcstL4L/NQ0pY+IrpAK3p1HbTxUVCz/+As5XOiGe+l+mKblp307wUDADCZFFz4BlbCojGZNZ6/kJCjRxybu1J3GKELHKTpzNHY5gGuS/0ZSglsK+Vxoi8pCo6MZ1q+TTYqGhAaeUQVKx274rzWxJ2+FE/gaHsKymM=
+Received: by 10.35.28.12 with SMTP id f12mr9060187pyj.9.1205206310377;
+        Mon, 10 Mar 2008 20:31:50 -0700 (PDT)
+Received: from shiva ( [69.245.236.18])
+        by mx.google.com with ESMTPS id i6sm893709wxd.21.2008.03.10.20.31.49
+        (version=SSLv3 cipher=OTHER);
+        Mon, 10 Mar 2008 20:31:49 -0700 (PDT)
+In-Reply-To: <m3zltaf7vs.fsf@localhost.localdomain>
+X-Mailer: Claws Mail 3.3.0 (GTK+ 2.12.5; x86_64-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76791>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76792>
 
-On Tue, Mar 11, 2008 at 7:33 AM, Bill Lear <rael@zopyra.com> wrote:
-> If I have a git repo with several levels of sub-directories, how
->  do I get git-archive to archive the entire tree, and not just
->  the tree from where I am?  Example:
->
->  % cd foo
->  % cat .git/description
->  foo project
->  % cd bar/baz
->  % git archive --format=tar --prefix=foo/ HEAD | bzip2 > foo.tar.bz2
->
->  produces a tar file starting only at baz.
->
->  If I can't conjur this on the command line with a clever argument to
->  git archive (I've tried several), then how would I ask git "What is
->  your top-level directory" so at least I could write a script to
->  do this?
+On Fri, 07 Mar 2008 15:10:18 -0800 (PST)
+Jakub Narebski <jnareb@gmail.com> wrote:
 
-You can move back to top-level dir with "cd $(git rev-parse
---show-cdup)". Another way is take "git rev-parse --show-prefix"
-result (which would be "bar/baz/") and process it yourself.
--- 
-Duy
+>  * Bugs Everywhere (http://bugseverywhere.org), written in Python,
+>    developed in Bazaar, has Git backend support. Formerly written by
+>    Panoramic Feedback (note that there is stale version of this tool),
+>    picked up by one of developers
+This doesn't appear to let you mark bugs as existing at previous points
+in history... which partly removes the usefulness of branch tracking....
+
+Grit has the same problems it seems... (at least at the state it was
+the last time I saw it).. besides the problem of being gone.
+>  * DisTract (http://www.distract.wellquite.org), written in Haskell,
+>    uses Monotone as backend. Has good reviews on blogs, e.g. by
+>    Masukomi.
+Monotone+Haskell+Local Firefox...  doesn't look like this will go far
+in the real world where people w/o the entire actual would like to post
+bugs...
+> 
+>  * DITrack (http://www.ditrack.org), written in Python, currently
+>    uses Subversion as backend, has plans to be backend-agnostic.
+>    Inspired by Subissue.
+Doesn't seem to be able to deal w/ branches particularly... looks more
+like a way to work as an offline-capable bug tracking system...
+
+I've posted up a wiki @ http://www.eharning.us/wiki/stick/ for a
+working concept for how a branch-tracking w/ possibility for
+distribution...  Feel free to comment on the page or (preferable) use
+the Discussion page...
