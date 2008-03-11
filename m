@@ -1,131 +1,109 @@
-From: Jeff Garzik <jeff@garzik.org>
-Subject: Re: [ANNOUNCE] GIT 1.5.4.4
-Date: Tue, 11 Mar 2008 15:11:41 -0400
-Message-ID: <47D6D96D.2000302@garzik.org>
-References: <7vr6f31iwj.fsf@gitster.siamese.dyndns.org> <7vr6eknpjf.fsf@gitster.siamese.dyndns.org> <47D416C8.1020903@garzik.org> <7v1w6jod54.fsf@gitster.siamese.dyndns.org> <47D459D5.2020101@garzik.org> <7vmyp7kryp.fsf@gitster.siamese.dyndns.org>
+From: Jan Hudec <bulb@ucw.cz>
+Subject: Re: [FEATURE REQUEST] git-svn format-patch
+Date: Tue, 11 Mar 2008 20:22:18 +0100
+Message-ID: <20080311192218.GA7040@efreet.light.src>
+References: <c0f2d4110801150559x155ffabaj6bea52715522a070@mail.gmail.com> <478D1442.2090301@gmx.ch> <c0f2d4110801151230g5843df66t62fb659375a1680e@mail.gmail.com> <alpine.LNX.1.00.0801152109580.13593@iabervon.org> <320075ff0803111038x36bc40bbkf4b9eec6dd9284fd@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, linux-kernel@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 11 20:13:39 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Nigel Magnay <nigel.magnay@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 11 20:23:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JZ9tk-0002Sl-OX
-	for gcvg-git-2@gmane.org; Tue, 11 Mar 2008 20:12:29 +0100
+	id 1JZA4Y-0006fI-TR
+	for gcvg-git-2@gmane.org; Tue, 11 Mar 2008 20:23:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754989AbYCKTLt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Mar 2008 15:11:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754935AbYCKTLs
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Mar 2008 15:11:48 -0400
-Received: from srv5.dvmed.net ([207.36.208.214]:52871 "EHLO mail.dvmed.net"
+	id S1754010AbYCKTWm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Mar 2008 15:22:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752364AbYCKTWl
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Mar 2008 15:22:41 -0400
+Received: from ns1.bluetone.cz ([212.158.128.13]:57215 "EHLO ns1.bluetone.cz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754545AbYCKTLr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Mar 2008 15:11:47 -0400
-Received: from cpe-069-134-071-233.nc.res.rr.com ([69.134.71.233] helo=core.yyz.us)
-	by mail.dvmed.net with esmtpsa (Exim 4.68 #1 (Red Hat Linux))
-	id 1JZ9sz-0000iP-V9; Tue, 11 Mar 2008 19:11:45 +0000
-User-Agent: Thunderbird 2.0.0.12 (X11/20080226)
-In-Reply-To: <7vmyp7kryp.fsf@gitster.siamese.dyndns.org>
-X-Spam-Score: -4.4 (----)
-X-Spam-Report: SpamAssassin version 3.2.4 on srv5.dvmed.net summary:
-	Content analysis details:   (-4.4 points, 5.0 required)
+	id S1752584AbYCKTWk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Mar 2008 15:22:40 -0400
+Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
+	by ns1.bluetone.cz (Postfix) with ESMTP id A6AAA57542;
+	Tue, 11 Mar 2008 20:22:38 +0100 (CET)
+Received: from ns1.bluetone.cz ([192.168.13.1])
+	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
+	with ESMTP id EWUv2OO5YSoQ; Tue, 11 Mar 2008 20:22:29 +0100 (CET)
+Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
+	by ns1.bluetone.cz (Postfix) with ESMTP id 155A257444;
+	Tue, 11 Mar 2008 20:22:27 +0100 (CET)
+Received: from bulb by efreet.light.src with local (Exim 4.69)
+	(envelope-from <bulb@ucw.cz>)
+	id 1JZA3H-0001u7-6X; Tue, 11 Mar 2008 20:22:19 +0100
+Content-Disposition: inline
+In-Reply-To: <320075ff0803111038x36bc40bbkf4b9eec6dd9284fd@mail.gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76894>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76895>
 
-Junio C Hamano wrote:
-> Jeff Garzik <jeff@garzik.org> writes:
-> 
->> Yes, I regularly run both 'git gc' and 'git prune'.
->>
->> But since (ref original email) I was doing some rebasing, there are
->> inevitably changesets left dangling after such an operation.
-> 
-> Yeah, I'd say it is stupid if "am" ran "gc --auto" for every patch.  I
-> recall that we had the same issue with git-svn and we made it run once
-> every 1k round, and we probably should do the same for "am" and "rebase",
-> running once at the very end.
+On Tue, Mar 11, 2008 at 17:38:22 +0000, Nigel Magnay wrote:
+> Did there ever become a way of generating svn format diffs from git?
 
-> Perhaps we would want to raise the default "gc --auto" limit?  Currently
+There was a talk about it, but I am not sure anything was actually written.
+Would be quite easy to add the Index: and equals line with a few lines of
+perl.
 
+> A project is having a hard time applying my format-patch --no-prefix
+> diffs, but I don't have a tortoiseSVN machine to figure out why..
 
-That seems quite reasonable.  This "feels" like a threshold-too-low problem.
+You quoted quite precise explanation below.
 
-
-
-> when it estimates that you have roughly 6700 objects unpacked it runs
-> "repack --prune-packed", and if there still are that many unpacked objects
-> after that, it suggests you to run "git prune" to remove them.  If you are
-> rebasing, the commits in the old history that are rewritten will _not_
-> immediately become dangling because they will still be reachable from your
-> reflog.  If you are getting the message, these objects were already
-> dangling (ancient commits that are not even reachable from your reflog
-> entries that are by default kept for 90 days) even before you started your
-> rebase or am run.
-
-My workflow generally looks like this:
-
-	# repo was created in this manner....  this was done ONCE,
-	# not every time I apply patches
-
-	git clone --reference ../linux-2.6 ../linux-2.6 libata-dev
-
-
-	# a patch-applying session
-
-	git checkout master
-	git pull ../linux-2.6
-	git fetch --tags ../linux-2.6	# yes, still necessary...
-
-	git branch -D ALL NEXT
-	git branch -D upstream-fixes upstream-linus
-
-	git checkout -b upstream-fixes master
-	git-am --utf8 --signoff -i /g/tmp/mbox	# repeat many times...
-	git branch upstream-linus upstream-fixes
-
-	git-checkout sii-lbt && git-rebase master
-	git-checkout mv-ahci-pata && git-rebase master
-	git-checkout new-eh && git-rebase master
-	git branch NEXT master
-	git branch ALL new-eh
-
-	git checkout master
-	git prune
-	git push --force --all $URL
-
-Thus, 'git prune' is run on a very regular basis, but 'git gc' is not.
-
-However, I presume the lack of 'git gc' regularity on libata-dev.git is 
-mitigated by the fact that I _do_ run 'git gc' regularly on 
-linux-2.6.git (listed in libata-dev's alternatives, as noted by 
-git-clone statement above)
-
-
-> After you finished your day's work on a typical day, what does the output
-> from "git count-objects -v" and "git fsck-objects" look like, I wonder?
-
-[jgarzik@pretzel libata-dev]$ git count-objects -v
-count: 51
-size: 244
-in-pack: 475
-packs: 4
-prune-packable: 0
-garbage: 0
-[jgarzik@pretzel libata-dev]$ git fsck-objects
-[jgarzik@pretzel libata-dev]$
-
-
-
-
-As an aside...  a git-debug-info might be a useful command, wrapping up 
-everything you (a git developer) would find interesting from me (a 
-humble and appreciative git user).  Users could attach the output from 
-git-debug-info to emails, when discussing problems in their repositories.
-
-	Jeff
+> On Wed, Jan 16, 2008 at 2:20 AM, Daniel Barkalow <barkalow@iabervon.org> wrote:
+> > On Tue, 15 Jan 2008, Chris Ortman wrote:
+> >
+> >
+> > > You are correct about Tortoise in that it is too strict.
+> >  > I looked through their code and they have written their own patch
+> >  > program which keys off these Index: lines
+> >  > http://tortoisesvn.tigris.org/svn/tortoisesvn/trunk/src/TortoiseMerge/Patch.cpp
+> >  >
+> >  > I think it could go either way as to if git-svn creates a different
+> >  > format patch or tsvn accepts multiple formats, but I anticipated
+> >  > git-svn would be easier to extend so I started here.
+> >
+> >  I think it would be worthwhile for tsvn to be less picky in some ways. It
+> >  should at least be able to accept GNU diff, since sometimes people send
+> >  maintainers patches prepared by hand (diff -u file.c.orig file.c), and
+> >  there are comments in there that suggest that they're trying to support
+> >  non-svn-generated diffs, although they seem to think that such diffs look
+> >  like:
+> >
+> >  Index: filename
+> >  ============
+> >  @@ -xxx,xxx +xxx,xxx @@
+> >  ...
+> >
+> >  which isn't anything I've ever seen. You're much more likely to get:
+> >
+> >  ...junk...
+> >  --- junk
+> >  +++ filename    junk
+> >  @@ -xxx,xxx +xxx,xxx @@
+> >
+> >  And that should be easy enough to parse as an alternative format in tsvn.
+> >  (I'd send them a patch to do it, but they wouldn't be able to apply it...)
+> >
+> >
+> >         -Daniel
+> >  *This .sig left intentionally blank*
+> >  -
+> >
+> >
+> > To unsubscribe from this list: send the line "unsubscribe git" in
+> >  the body of a message to majordomo@vger.kernel.org
+> >  More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> >
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+-- 
+						 Jan 'Bulb' Hudec <bulb@ucw.cz>
