@@ -1,198 +1,164 @@
 From: Ping Yin <pkufranky@gmail.com>
-Subject: [PATCH v5 2/5] git-submodule summary: show commit summary
-Date: Tue, 11 Mar 2008 21:52:16 +0800
-Message-ID: <1205243539-797-3-git-send-email-pkufranky@gmail.com>
+Subject: [PATCH v5 1/5] git-submodule summary: code framework
+Date: Tue, 11 Mar 2008 21:52:15 +0800
+Message-ID: <1205243539-797-2-git-send-email-pkufranky@gmail.com>
 References: <1205243539-797-1-git-send-email-pkufranky@gmail.com>
- <1205243539-797-2-git-send-email-pkufranky@gmail.com>
 Cc: git@vger.kernel.org, Ping Yin <pkufranky@gmail.com>
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Mar 11 14:54:05 2008
+X-From: git-owner@vger.kernel.org Tue Mar 11 14:54:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JZ4um-0006eX-Hf
-	for gcvg-git-2@gmane.org; Tue, 11 Mar 2008 14:53:12 +0100
+	id 1JZ4uk-0006eX-IZ
+	for gcvg-git-2@gmane.org; Tue, 11 Mar 2008 14:53:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752640AbYCKNwa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Mar 2008 09:52:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752335AbYCKNw3
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Mar 2008 09:52:29 -0400
-Received: from mail.qikoo.org ([60.28.205.235]:57651 "EHLO mail.qikoo.org"
+	id S1752444AbYCKNwZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Mar 2008 09:52:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752220AbYCKNwY
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Mar 2008 09:52:24 -0400
+Received: from mail.qikoo.org ([60.28.205.235]:57647 "EHLO mail.qikoo.org"
 	rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752087AbYCKNwY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Mar 2008 09:52:24 -0400
+	id S1751637AbYCKNwW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Mar 2008 09:52:22 -0400
 Received: by mail.qikoo.org (Postfix, from userid 1029)
-	id F07B6470AF; Tue, 11 Mar 2008 21:52:19 +0800 (CST)
+	id C699F470AB; Tue, 11 Mar 2008 21:52:19 +0800 (CST)
 X-Mailer: git-send-email 1.5.4.3.347.g5314c
-In-Reply-To: <1205243539-797-2-git-send-email-pkufranky@gmail.com>
+In-Reply-To: <1205243539-797-1-git-send-email-pkufranky@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76850>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76851>
 
-This patch does the hard work to show submodule commit summary.
+These patches teach git-submodule a new subcommand 'summary' to show
+commit summary of checked out submodules between a given super project
+commit (defaults to HEAD) and working tree (or index, when --cached is
+given).
 
-For a modified submodule, a series of commits will be shown with
-the following command:
+This patch just introduces the framework to find submodules which have
+summary to show. A submodule will have summary if it falls into these
+cases:
 
-    git log --pretty='format:%m %s' \
-        --first-parent sha1_src...sha1_dst
+  - type 'M': modified and checked out    (1)
+  - type 'A': added and checked out       (2)
+  - type 'D': deleted
+  - type 'T': typechanged (blob <-> submodule)
 
-where the sha1_src is from the given super project commit and the
-sha1_dst is from the index or working tree (switched by --cached).
+Notes:
 
-For a deleted, added, or typechanged (blob<->submodule) submodule,
-only one single newest commit from the existing end (for example,
-src end for submodule deleted or type changed from submodule to blob)
-will be shown.
-
-If the src/dst sha1 for a submodule is missing in the submodule
-directory, a warning will be issued except in two cases where the
-submodule directory is deleted (type 'D') or typechanged to blob
-(one case of type 'T').
-
-In the title line for a submodule, the src/dst sha1 and the number
-of commits (--first-parent) between the two commits will be shown.
-
-The following example demonstrates most cases.
-
-    Example: commit summary for modified submodules sm1-sm5.
-    --------------------------------------------
-    $ git submodule summary
-    * sm1 354cd45...3f751e5 (4):
-      < one line message for C
-      < one line message for B
-      > one line message for D
-      > one line message for E
-
-    * sm2 5c8bfb5...000000 (3):
-      < one line message for F
-
-    * sm3 354cd45...3f751e5:
-      Warn: sm3 doesn't contain commit 354cd45
-
-    * sm4 354cd34(submodule)-> 235efa(blob) (1):
-      < one line message for G
-
-    * sm5 354cd34(blob)-> 235efa(submodule) (5):
-      > one line message for H
-
-    --------------------------------------------
+  1. There may be modified but not checked out cases. In the case of a
+     merge conflict, even if the submodule is not checked out, there may
+	 be still a diff between index and HEAD on the submodule entry
+	 (i.e. modified). The summary will not be show for such a submodule.
+  2. A similar explanation applies to the added but not checked out case.
 
 Signed-off-by: Ping Yin <pkufranky@gmail.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- git-submodule.sh |   96 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 96 insertions(+), 0 deletions(-)
+ git-submodule.sh |   61 +++++++++++++++++++++++++++++++++++++++++++++++++----
+ 1 files changed, 56 insertions(+), 5 deletions(-)
 
 diff --git a/git-submodule.sh b/git-submodule.sh
-index b70ae40..b90e132 100755
+index 7171cb6..b70ae40 100755
 --- a/git-submodule.sh
 +++ b/git-submodule.sh
-@@ -381,6 +381,102 @@ cmd_summary() {
- 			echo "$name"
- 		done
- 	)
-+
-+	test -n "$modules" &&
-+	git diff-index $cached --raw $head -- $modules |
-+	grep -e '^:160000' -e '^:[0-7]* 160000' |
-+	cut -c2- |
-+	while read mod_src mod_dst sha1_src sha1_dst status name
+@@ -4,7 +4,7 @@
+ #
+ # Copyright (c) 2007 Lars Hjemli
+ 
+-USAGE='[--quiet] [--cached] [add <repo> [-b branch]|status|init|update] [--] [<path>...]'
++USAGE='[--quiet] [--cached] [add <repo> [-b branch]|status|init|update|summary [<commit>]] [--] [<path>...]'
+ OPTIONS_SPEC=
+ . git-sh-setup
+ require_work_tree
+@@ -330,7 +330,58 @@ set_name_rev () {
+ 	) )
+ 	test -z "$revname" || revname=" ($revname)"
+ }
++#
++# Show commit summary for submodules in index or working tree
++#
++# If '--cached' is given, show summary between index and given commit,
++# or between working tree and given commit
++#
++# $@ = [commit (default 'HEAD'),] requested paths (default all)
++#
++cmd_summary() {
++	# parse $args after "submodule ... summary".
++	while test $# -ne 0
 +	do
-+		if test -z "$cached" &&
-+			test $sha1_dst = 0000000000000000000000000000000000000000
-+		then
-+			case "$mod_dst" in
-+				160000)
-+				sha1_dst=$(GIT_DIR="$name/.git" git rev-parse HEAD)
-+				;;
-+				100644)
-+				sha1_dst=$(git hash-object $name)
-+				;;
-+			esac
-+		fi
-+		missing_src=
-+		missing_dst=
-+
-+		test $mod_src = 160000 &&
-+		! GIT_DIR="$name/.git" git-rev-parse --verify $sha1_src^0 >/dev/null 2>&1 &&
-+		missing_src=t
-+
-+		test $mod_dst = 160000 &&
-+		! GIT_DIR="$name/.git" git-rev-parse --verify $sha1_dst^0 >/dev/null 2>&1 &&
-+		missing_dst=t
-+
-+		total_commits=
-+		case "$missing_src,$missing_dst" in
-+		t,)
-+			errmsg="  Warn: $name doesn't contain commit $sha1_src"
++		case "$1" in
++		--cached)
++			cached="$1"
 +			;;
-+		,t)
-+			errmsg="  Warn: $name doesn't contain commit $sha1_dst"
++		--)
++			shift
++			break
 +			;;
-+		t,t)
-+			errmsg="  Warn: $name doesn't contain commits $sha1_src and $sha1_dst"
++		-*)
++			usage
 +			;;
 +		*)
-+			errmsg=
-+			total_commits=$(
-+			if test $mod_src = 160000 -a $mod_dst = 160000
-+			then
-+				range="$sha1_src...$sha1_dst"
-+			elif test $mod_src = 160000
-+			then
-+				range=$sha1_src
-+			else
-+				range=$sha1_dst
-+			fi
-+			GIT_DIR="$name/.git" \
-+			git log --pretty=oneline --first-parent $range | wc -l
-+			)
-+			total_commits=" ($total_commits)"
++			break
 +			;;
 +		esac
-+
-+		sha1_abbr_src=$(echo $sha1_src | cut -c1-7)
-+		sha1_abbr_dst=$(echo $sha1_dst | cut -c1-7)
-+		if test $status = T
-+		then
-+			if test $mod_dst = 160000
-+			then
-+				echo "* $name $sha1_abbr_src(blob)->$sha1_abbr_dst(submodule)$total_commits:"
-+			else
-+				echo "* $name $sha1_abbr_src(submodule)->$sha1_abbr_dst(blob)$total_commits:"
-+			fi
-+		else
-+			echo "* $name $sha1_abbr_src...$sha1_abbr_dst$total_commits:"
-+		fi
-+		if test -n "$errmsg"
-+		then
-+			# Don't give error msg for modification whose dst is not submodule
-+			# i.e. deleted or changed to blob
-+			test $mod_dst = 160000 && echo "$errmsg"
-+		else
-+			if test $mod_src = 160000 -a $mod_dst = 160000
-+			then
-+				GIT_DIR="$name/.git" \
-+				git log --pretty='format:  %m %s' \
-+				--first-parent $sha1_src...$sha1_dst
-+			elif test $mod_dst = 160000
-+			then
-+				GIT_DIR="$name/.git" \
-+				git log --pretty='format:  > %s' -1 $sha1_dst
-+			else
-+				GIT_DIR="$name/.git" \
-+				git log --pretty='format:  < %s' -1 $sha1_src
-+			fi
-+			echo
-+		fi
-+		echo
++		shift
 +	done
- }
+ 
++	if rev=$(git rev-parse --verify "$1^0" 2>/dev/null)
++	then
++		head=$rev
++		shift
++	else
++		head=HEAD
++	fi
++
++	cd_to_toplevel
++	# Get modified modules cared by user
++	modules=$(git diff-index $cached --raw $head -- "$@" |
++		grep -e '^:160000' -e '^:[0-7]* 160000' |
++		while read mod_src mod_dst sha1_src sha1_dst status name
++		do
++			# Always show modules deleted or type-changed (blob<->module)
++			test $status = D -o $status = T && echo "$name" && continue
++			# Also show added or modified modules which are checked out
++			GIT_DIR="$name/.git" git-rev-parse --git-dir >/dev/null 2>&1 &&
++			echo "$name"
++		done
++	)
++}
  #
  # List all submodules, prefixed with:
+ #  - submodule not initialized
+@@ -401,7 +452,7 @@ cmd_status()
+ while test $# != 0 && test -z "$command"
+ do
+ 	case "$1" in
+-	add | init | update | status)
++	add | init | update | status | summary)
+ 		command=$1
+ 		;;
+ 	-q|--quiet)
+@@ -416,7 +467,7 @@ do
+ 		branch="$2"; shift
+ 		;;
+ 	--cached)
+-		cached=1
++		cached="$1"
+ 		;;
+ 	--)
+ 		break
+@@ -440,8 +491,8 @@ then
+ 	usage
+ fi
+ 
+-# "--cached" is accepted only by "status"
+-if test -n "$cached" && test "$command" != status
++# "--cached" is accepted only by "status" and "summary"
++if test -n "$cached" && test "$command" != status -a "$command" != summary
+ then
+ 	usage
+ fi
 -- 
 1.5.4.3.347.g5314c
