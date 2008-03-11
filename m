@@ -1,64 +1,76 @@
-From: Christoph Duelli <duelli@melosgmbh.de>
-Subject: Is a given file known to git?
-Date: Tue, 11 Mar 2008 08:15:09 +0100
-Message-ID: <47D6317D.7030700@melosgmbh.de>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: Is a given file known to git?
+Date: Tue, 11 Mar 2008 03:24:12 -0400
+Message-ID: <20080311072412.GP8410@spearce.org>
+References: <47D6317D.7030700@melosgmbh.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
-	format=flowed
-Content-Transfer-Encoding: 7BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 11 08:18:48 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Christoph Duelli <duelli@melosgmbh.de>
+X-From: git-owner@vger.kernel.org Tue Mar 11 08:25:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JYyl5-00027n-EJ
-	for gcvg-git-2@gmane.org; Tue, 11 Mar 2008 08:18:47 +0100
+	id 1JYyrJ-0003TX-2k
+	for gcvg-git-2@gmane.org; Tue, 11 Mar 2008 08:25:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751278AbYCKHSH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Mar 2008 03:18:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751143AbYCKHSG
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Mar 2008 03:18:06 -0400
-Received: from mo-p07-fb.rzone.de ([81.169.146.191]:59483 "EHLO
-	mo-p07-fb.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750874AbYCKHSF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Mar 2008 03:18:05 -0400
-Received: from mo-p07-ob.rzone.de (mrclete-mo-p07-ob.mail [192.168.63.176])
-	by gibbsson-fb-04.store (RZmta 16.9) with ESMTP id R066e9k2ALj31i
-	for <git@vger.kernel.org>; Tue, 11 Mar 2008 08:18:03 +0100 (MET)
-	(envelope-from: <duelli@melosgmbh.de>)
-X-RZG-CLASS-ID: mo07
-X-RZG-AUTH: hvKqOO6Ph79JHUJJIwMxXgzUdNi97hMDGc5n+ojdbo9B56/YXBytmKws+HDNQA471tmH
-Received: from mail.melosgmbh.de
-	(p5B07A7E6.dip0.t-ipconnect.de [91.7.167.230])
-	by post.webmailer.de (mrclete mo29) (RZmta 16.8)
-	with ESMTP id u047d9k2B6MQGq for <git@vger.kernel.org>;
-	Tue, 11 Mar 2008 08:16:46 +0100 (MET)
-	(envelope-from: <duelli@melosgmbh.de>)
-X-Spam-Status: No, hits=0.0 required=4.0
-	tests=AWL: 0.035,BAYES_00: -1.665,TOTAL_SCORE: -1.630
-X-Spam-Level: 
-Received: from [172.27.1.229] ([172.27.1.229])
-	(authenticated user duelli@melosgmbh.de)
-	by mail.melosgmbh.de (Kerio MailServer 6.4.1 patch 1)
-	for git@vger.kernel.org;
-	Tue, 11 Mar 2008 08:16:45 +0100
-User-Agent: Thunderbird 2.0.0.0 (X11/20070326)
+	id S1751379AbYCKHYR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Mar 2008 03:24:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751373AbYCKHYR
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Mar 2008 03:24:17 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:39833 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751275AbYCKHYQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Mar 2008 03:24:16 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1JYyqK-0003NV-Vu; Tue, 11 Mar 2008 03:24:13 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 2EE8920FBAE; Tue, 11 Mar 2008 03:24:13 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <47D6317D.7030700@melosgmbh.de>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76803>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76804>
 
-Given a repository and a path p to a file in it:
-Is it possible (how?) to detect (in a bash script) if the file pointed 
-to by p is "known" to git?
-Something along the line:
-if `git knows p?
-then
-...
-fi
+Christoph Duelli <duelli@melosgmbh.de> wrote:
+> Given a repository and a path p to a file in it:
+> Is it possible (how?) to detect (in a bash script) if the file pointed 
+> to by p is "known" to git?
+> Something along the line:
+> if `git knows p?
+> then
+> ...
+> fi
 
-Thanks and keep up the good work!
+Depends on your definition of "known to git".  You can look at
+the current index, which may have files newly added but not yet
+committed:
+
+	if test $(git ls-files "$p" | wc -l) -gt 0
+	then
+	...
+	fi
+
+you can look at a specific committed state too:
+
+	if git cat-file -e "$commit:$p" 2>/dev/null
+	then
+	...
+	fi
+
+where $commit can be any tree-ish, so a tag, a branch, a commit,
+the symbolic-ref HEAD... etc.
+
 -- 
-Christoph Duelli
+Shawn.
