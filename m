@@ -1,57 +1,104 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: Is a given file known to git?
-Date: Tue, 11 Mar 2008 10:36:41 +0100
-Message-ID: <47D652A9.4090304@viscovery.net>
-References: <47D6317D.7030700@melosgmbh.de> <47D636FC.2060203@viscovery.net> <47D65074.4000505@melosgmbh.de>
+From: "Ping Yin" <pkufranky@gmail.com>
+Subject: Re: [PATCH v4 2/5] git-submodule summary: show commit summary
+Date: Tue, 11 Mar 2008 17:37:40 +0800
+Message-ID: <46dff0320803110237t6fcd6675t48949423e14f64a5@mail.gmail.com>
+References: <1205171657-16216-1-git-send-email-pkufranky@gmail.com>
+	 <1205171657-16216-2-git-send-email-pkufranky@gmail.com>
+	 <7vod9ld8iu.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: spearce@spearce.org, git@vger.kernel.org
-To: Christoph Duelli <duelli@melosgmbh.de>
-X-From: git-owner@vger.kernel.org Tue Mar 11 10:37:24 2008
+Cc: git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 11 10:38:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JZ0vD-0006mb-Lm
-	for gcvg-git-2@gmane.org; Tue, 11 Mar 2008 10:37:24 +0100
+	id 1JZ0w9-00077a-M8
+	for gcvg-git-2@gmane.org; Tue, 11 Mar 2008 10:38:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751382AbYCKJgp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Mar 2008 05:36:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751274AbYCKJgp
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Mar 2008 05:36:45 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:47757 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751213AbYCKJgo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Mar 2008 05:36:44 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1JZ0tr-0003V6-0r; Tue, 11 Mar 2008 10:35:59 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 15FA26EF; Tue, 11 Mar 2008 10:36:42 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <47D65074.4000505@melosgmbh.de>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1751274AbYCKJhn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Mar 2008 05:37:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751690AbYCKJhn
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Mar 2008 05:37:43 -0400
+Received: from an-out-0708.google.com ([209.85.132.245]:48076 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750997AbYCKJhl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Mar 2008 05:37:41 -0400
+Received: by an-out-0708.google.com with SMTP id d31so563473and.103
+        for <git@vger.kernel.org>; Tue, 11 Mar 2008 02:37:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=W7aQYMl5VIrlQ4cbrnsQMbzqhTjlIh8yZ6nO7+A18vQ=;
+        b=pHseoHhmOi81qIVGEkRgaJARF82KdVQDAY280ymXp2qTAwM1ElJJiHh5yxi+YiP0CvcLbb6l+uC2c5LzSTYcchJvsqgX42LaKmL41BzrR5fFdNuikun+OwE3tzs1S+WSM4edndh/0m2HV83V+9qhKSheqkw7TmcZxPaVBVzicjw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Y6W08nEDMFGExHU96pYcZ2LWSodPlkRhdUKfV8DBbFvIvQKaCK3dR0CTQhYrDXj8VuwmxxVd3KzIboI2yyQqJ6uGK8coqFvLUyiMPOuLIXI3J3IZP5N6r8oGLch0fkJpN4KQvtGh4fyeVwLNF2n+KmRtl2y4wzqKvAqphka3tOw=
+Received: by 10.100.108.20 with SMTP id g20mr12978237anc.8.1205228261014;
+        Tue, 11 Mar 2008 02:37:41 -0700 (PDT)
+Received: by 10.100.5.18 with HTTP; Tue, 11 Mar 2008 02:37:40 -0700 (PDT)
+In-Reply-To: <7vod9ld8iu.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76819>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76820>
 
-Christoph Duelli schrieb:
-> Yes, thank you, Johannes and Shawn, this works.
-> (A bit slow, though: with this test enabled my script takes 77 secs;
-> without it it takes 0.3 secs. The time is spent in 9000 calls to the
-> above test (the rev-parse version). (ok, the fact that there is a Perl
-> system call around it might take some time, too).)
+On Tue, Mar 11, 2008 at 3:28 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Ping Yin <pkufranky@gmail.com> writes:
+>
+>  > This patch does the hard work to show submodule commit summary.
+>  > ...
+>
+>  I've spent considerable amount of time cleaning up your commit log
+>  messages for the entire series from the last round when I queued them to
+>  'pu', but you seem to have discarded all of them.  As I do not have time
+>  to waste doing clean-ups only to have others to discard, and I do not have
+>  infinite amount of time, I won't be replacing them with this series
+>  tonight.
+>
 
-Oh, you said "a particular path from a bash script". If you had said "9000
-particular paths, and I have perl wrapped around it", then there might be
-(much) better solutions. Like parsing the output of "git ls-files
---others" or "git ls-tree -r" into a hash and then lookup therein.
+Sorry about this. This is my first big patch series and I have little
+experience about submiting patches again and again. So i don't even
+see your pu series except the documentation one you have mentioned in
+the email (I thought other ones didn't change).
 
--- Hannes
+I'll resend my patches finally merging you commit log.
+
+>
+>  > Signed-off-by: Ping Yin <pkufranky@gmail.com>
+>
+>  And you did not describe anything about the improvements from the previous
+>  round anywhere.  interdiff shows that this part is somewhat different:
+>
+>
+>  > +             then
+>  > +                     case "$mod_dst" in
+>  > +                             160000)
+>  > +                             sha1_dst=$(GIT_DIR="$name/.git" git rev-parse HEAD)
+>  > +                             ;;
+>  > +                             100644)
+>  > +                             sha1_dst=$(git hash-object $name)
+>  > +                             ;;
+>  > +                     esac
+>
+>  Earlier, you were ignoring the one that is not checked out anymore, but
+>  now you blindly assume "rev-parse HEAD" to give you a usable sha1_dst.
+>  Why?
+
+The path will not reach here for ignored submodules. Only user-cared
+modules will get into the "$modules" variables (see "# Get modified
+modules cared by user" part).
+>
+>  If a path that previously was a module is changed to a symlink, what
+>  happens?
+>
+
+
+
+-- 
+Ping Yin
