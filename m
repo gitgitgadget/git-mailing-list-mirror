@@ -1,120 +1,131 @@
-From: Frank Lichtenheld <frank@lichtenheld.de>
-Subject: Re: [RFC/PATCH] gitweb: Use list form of 'open "-|"' pipeline
-Date: Tue, 11 Mar 2008 19:59:16 +0100
-Message-ID: <20080311185916.GO10103@mail-vs.djpig.de>
-References: <20080308165245.15343.62914.stgit@localhost.localdomain> <20080311090100.GN10103@mail-vs.djpig.de> <200803111830.58392.jnareb@gmail.com>
+From: Jeff Garzik <jeff@garzik.org>
+Subject: Re: [ANNOUNCE] GIT 1.5.4.4
+Date: Tue, 11 Mar 2008 15:11:41 -0400
+Message-ID: <47D6D96D.2000302@garzik.org>
+References: <7vr6f31iwj.fsf@gitster.siamese.dyndns.org> <7vr6eknpjf.fsf@gitster.siamese.dyndns.org> <47D416C8.1020903@garzik.org> <7v1w6jod54.fsf@gitster.siamese.dyndns.org> <47D459D5.2020101@garzik.org> <7vmyp7kryp.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 11 20:01:10 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, linux-kernel@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 11 20:13:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JZ9iR-0006O1-Dx
-	for gcvg-git-2@gmane.org; Tue, 11 Mar 2008 20:00:47 +0100
+	id 1JZ9tk-0002Sl-OX
+	for gcvg-git-2@gmane.org; Tue, 11 Mar 2008 20:12:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753218AbYCKS7c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Mar 2008 14:59:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752965AbYCKS7c
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Mar 2008 14:59:32 -0400
-Received: from pauli.djpig.de ([78.46.38.139]:39030 "EHLO pauli.djpig.de"
+	id S1754989AbYCKTLt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Mar 2008 15:11:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754935AbYCKTLs
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Mar 2008 15:11:48 -0400
+Received: from srv5.dvmed.net ([207.36.208.214]:52871 "EHLO mail.dvmed.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752865AbYCKS7b (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Mar 2008 14:59:31 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by pauli.djpig.de (Postfix) with ESMTP id BD36790071;
-	Tue, 11 Mar 2008 19:59:29 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at pauli.djpig.de
-Received: from pauli.djpig.de ([127.0.0.1])
-	by localhost (pauli.djpig.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id TOmMPEu7pFFZ; Tue, 11 Mar 2008 19:59:20 +0100 (CET)
-Received: from mail-vs.djpig.de (mail-vs.djpig.de [78.47.136.189])
-	by pauli.djpig.de (Postfix) with ESMTP id 6184F9006E;
-	Tue, 11 Mar 2008 19:59:19 +0100 (CET)
-Received: from djpig by mail-vs.djpig.de with local (Exim 4.63)
-	(envelope-from <djpig@mail-vs.djpig.de>)
-	id 1JZ9gz-0003Si-3b; Tue, 11 Mar 2008 19:59:18 +0100
-Content-Disposition: inline
-In-Reply-To: <200803111830.58392.jnareb@gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1754545AbYCKTLr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Mar 2008 15:11:47 -0400
+Received: from cpe-069-134-071-233.nc.res.rr.com ([69.134.71.233] helo=core.yyz.us)
+	by mail.dvmed.net with esmtpsa (Exim 4.68 #1 (Red Hat Linux))
+	id 1JZ9sz-0000iP-V9; Tue, 11 Mar 2008 19:11:45 +0000
+User-Agent: Thunderbird 2.0.0.12 (X11/20080226)
+In-Reply-To: <7vmyp7kryp.fsf@gitster.siamese.dyndns.org>
+X-Spam-Score: -4.4 (----)
+X-Spam-Report: SpamAssassin version 3.2.4 on srv5.dvmed.net summary:
+	Content analysis details:   (-4.4 points, 5.0 required)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76893>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76894>
 
-On Tue, Mar 11, 2008 at 06:30:57PM +0100, Jakub Narebski wrote:
-> On Tue, 11 March 2008, Frank Lichtenheld wrote:
-> > On Sat, Mar 08, 2008 at 05:57:20PM +0100, Jakub Narebski wrote:
-> >>
-> >> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> >> index a5df2fe..ba97a7b 100755
-> >> --- a/gitweb/gitweb.perl
-> >> +++ b/gitweb/gitweb.perl
-> >> @@ -1455,6 +1455,35 @@ sub git_cmd_str {
-> >>  	return join(' ', git_cmd());
-> >>  }
-> >>  
-> >> +# my $fh = output_pipeline(['cmd_1', 'option'], ['cmd_2', 'argument']);
-> >> +# is equivalent to (is the "list form" of) the following
-> >> +# open my $fh, "-|", "cmd_1 option | cmd_2 argument"
-> >> +#
-> >> +# Based on http://www.perlmonks.org/?node_id=246397
+Junio C Hamano wrote:
+> Jeff Garzik <jeff@garzik.org> writes:
 > 
-> Note that this patch is a bit "cargo cult" (copy'n'paste) programming...
->  
-> > It might be worthwile to look into how e.g. IPC::Run does this.
+>> Yes, I regularly run both 'git gc' and 'git prune'.
+>>
+>> But since (ref original email) I was doing some rebasing, there are
+>> inevitably changesets left dangling after such an operation.
 > 
-> Thanks for the pointer. I look at it.
+> Yeah, I'd say it is stupid if "am" ran "gc --auto" for every patch.  I
+> recall that we had the same issue with git-svn and we made it run once
+> every 1k round, and we probably should do the same for "am" and "rebase",
+> running once at the very end.
 
-After taking a look at the IPC::Run code myself I'm not really sure it
-is really "worthwile", as I put it, to try to understand that.
+> Perhaps we would want to raise the default "gc --auto" limit?  Currently
 
-Creating a less flexible solution that is readable might be better.
 
-> >> +sub output_pipeline {
-> >> +	my @commands_list = @_;
-> >> +	exit unless @commands_list;
-> >> +
-> >> +	my $pid = open(my $fh, "-|");
-> >> +	#die "Couldn't fork: $!" unless defined $pid;
-> > 
-> > Why are all the die's commented out?
-> 
-> The goal is to have gitweb deal with errors gracefully. It should
-> generate some kind of '503 Server Error' page, instead of dieing
-> without output, or what would be even worse, in the middle of output.
-> 
-> I haven't examined how it should be writen for this RFC patch, so
-> I have commented out 'die' just in case. In the final version (if it
-> will be decided to go this route) it should be cleaned out.
+That seems quite reasonable.  This "feels" like a threshold-too-low problem.
 
-Ok, I guessed as much, but wanted to make sure ;)
 
-> > Thw whole concept of processing the array backwards might be shorter,
-> > I personally find it somewhat confusing though.
-> 
-> I'm not sure if it is not the only possible way, as the (first) parent,
-> I think, has to return filehandle. But I might be mistaken.
-> 
-> > What happens to all these child processes anyway if one of them fails to
-> > exec?
-> 
-> Original snippet returned in addition to filehandle also list of pids.
-> Perhaps I have oversimplified this snipped... or it was to simple to
-> begin with.
 
-I'm not really convinced yet that dealing with a shell is much worse
-than dealing with IPC ;)
+> when it estimates that you have roughly 6700 objects unpacked it runs
+> "repack --prune-packed", and if there still are that many unpacked objects
+> after that, it suggests you to run "git prune" to remove them.  If you are
+> rebasing, the commits in the old history that are rewritten will _not_
+> immediately become dangling because they will still be reachable from your
+> reflog.  If you are getting the message, these objects were already
+> dangling (ancient commits that are not even reachable from your reflog
+> entries that are by default kept for 90 days) even before you started your
+> rebase or am run.
 
-Jokes aside, my idea for implementing something like this would be to
-use explicit pipe()'s and fork()'s instead of the open() magic. With
-better control over the filehandles and pids you might be able to build
-a more robust solution.
+My workflow generally looks like this:
 
-Gruesse,
--- 
-Frank Lichtenheld <frank@lichtenheld.de>
-www: http://www.djpig.de/
+	# repo was created in this manner....  this was done ONCE,
+	# not every time I apply patches
+
+	git clone --reference ../linux-2.6 ../linux-2.6 libata-dev
+
+
+	# a patch-applying session
+
+	git checkout master
+	git pull ../linux-2.6
+	git fetch --tags ../linux-2.6	# yes, still necessary...
+
+	git branch -D ALL NEXT
+	git branch -D upstream-fixes upstream-linus
+
+	git checkout -b upstream-fixes master
+	git-am --utf8 --signoff -i /g/tmp/mbox	# repeat many times...
+	git branch upstream-linus upstream-fixes
+
+	git-checkout sii-lbt && git-rebase master
+	git-checkout mv-ahci-pata && git-rebase master
+	git-checkout new-eh && git-rebase master
+	git branch NEXT master
+	git branch ALL new-eh
+
+	git checkout master
+	git prune
+	git push --force --all $URL
+
+Thus, 'git prune' is run on a very regular basis, but 'git gc' is not.
+
+However, I presume the lack of 'git gc' regularity on libata-dev.git is 
+mitigated by the fact that I _do_ run 'git gc' regularly on 
+linux-2.6.git (listed in libata-dev's alternatives, as noted by 
+git-clone statement above)
+
+
+> After you finished your day's work on a typical day, what does the output
+> from "git count-objects -v" and "git fsck-objects" look like, I wonder?
+
+[jgarzik@pretzel libata-dev]$ git count-objects -v
+count: 51
+size: 244
+in-pack: 475
+packs: 4
+prune-packable: 0
+garbage: 0
+[jgarzik@pretzel libata-dev]$ git fsck-objects
+[jgarzik@pretzel libata-dev]$
+
+
+
+
+As an aside...  a git-debug-info might be a useful command, wrapping up 
+everything you (a git developer) would find interesting from me (a 
+humble and appreciative git user).  Users could attach the output from 
+git-debug-info to emails, when discussing problems in their repositories.
+
+	Jeff
