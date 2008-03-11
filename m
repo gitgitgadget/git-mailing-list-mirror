@@ -1,84 +1,62 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 05/10] http-push: Avoid calling setup_git_directory()
- twice
-Date: Tue, 11 Mar 2008 16:08:07 +0100 (CET)
-Message-ID: <alpine.LSU.1.00.0803111604240.3873@racer.site>
-References: <cover.1204453703.git.pclouds@gmail.com>  <20080302103419.GA8957@laptop>  <alpine.LSU.1.00.0803111427400.3873@racer.site> <fcaeb9bf0803110754v7191d8fckbde0e1313e6a69ec@mail.gmail.com>
+From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+Subject: Re: [PATCH 03/10] Make get_git_dir() and 'git rev-parse --git-dir' absolute path
+Date: Tue, 11 Mar 2008 22:06:23 +0700
+Message-ID: <fcaeb9bf0803110806u43fbd8b8v3ec2adf84fa1cd5e@mail.gmail.com>
+References: <cover.1204453703.git.pclouds@gmail.com>
+	 <20080302103348.GA8929@laptop>
+	 <alpine.LSU.1.00.0803111420080.3873@racer.site>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323584-1510989072-1205247929=:3873"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
 Cc: git@vger.kernel.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 11 16:09:18 2008
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Mar 11 16:09:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JZ666-00025P-37
-	for gcvg-git-2@gmane.org; Tue, 11 Mar 2008 16:08:58 +0100
+	id 1JZ65j-0001uC-8u
+	for gcvg-git-2@gmane.org; Tue, 11 Mar 2008 16:08:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757728AbYCKPIE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Mar 2008 11:08:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757700AbYCKPIE
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Mar 2008 11:08:04 -0400
-Received: from mail.gmx.net ([213.165.64.20]:52105 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757658AbYCKPIC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Mar 2008 11:08:02 -0400
-Received: (qmail invoked by alias); 11 Mar 2008 15:08:00 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp013) with SMTP; 11 Mar 2008 16:08:00 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+OzqcRb0COVqwNwwRomEw3011eRt3EqSd07/DROX
-	ZebZZAsVSkJnKW
-X-X-Sender: gene099@racer.site
-In-Reply-To: <fcaeb9bf0803110754v7191d8fckbde0e1313e6a69ec@mail.gmail.com>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-Content-ID: <alpine.LSU.1.00.0803111605460.3873@racer.site>
-X-Y-GMX-Trusted: 0
+	id S1753980AbYCKPGx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Mar 2008 11:06:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753499AbYCKPGx
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Mar 2008 11:06:53 -0400
+Received: from ug-out-1314.google.com ([66.249.92.168]:34685 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753465AbYCKPGw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Mar 2008 11:06:52 -0400
+Received: by ug-out-1314.google.com with SMTP id z38so15850ugc.16
+        for <git@vger.kernel.org>; Tue, 11 Mar 2008 08:06:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=+87HdC12/peFggq1fp4rEuhk4qhx9LgW79UiBOV76wg=;
+        b=fS/k+RpUi0jq1axmcwqraOZqTVrtbOUVh8XaJKtbw5eQfoOCkgEzgPuKjc75y2zEE/cajrEpLfxn1qCmSUs8GPi88KGfLLKTwpwK5Sr0m4EcymfjKKILr5C5Cl0TMTuHRYBzcdye2wDWUaxK9tQ6KWaxKuDbAI1qzNtYQmJZCNs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=kSOO34LVUV0ATyu4tCdWB76BpeNqV1mGG5r4G9pq3tIE01jAeGpG54LXyW1GQBzmZEjQk4maqPpeBgO30B83mPnQBeJwo2at1fxOZZqZ2aPehNfcG7pEsInso0LmpRXdjCFNbsaRffXGVZ5N200ZYGHt0hRxV5i632Skdph24+s=
+Received: by 10.66.220.17 with SMTP id s17mr27751ugg.20.1205248010312;
+        Tue, 11 Mar 2008 08:06:50 -0700 (PDT)
+Received: by 10.86.81.4 with HTTP; Tue, 11 Mar 2008 08:06:23 -0700 (PDT)
+In-Reply-To: <alpine.LSU.1.00.0803111420080.3873@racer.site>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76862>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76863>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---8323584-1510989072-1205247929=:3873
-Content-Type: TEXT/PLAIN; CHARSET=VISCII
-Content-Transfer-Encoding: 8BIT
-Content-ID: <alpine.LSU.1.00.0803111605461.3873@racer.site>
-
-Hi,
-
-On Tue, 11 Mar 2008, Nguyen Thai Ngoc Duy wrote:
-
-> On Tue, Mar 11, 2008 at 8:28 PM, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
->
-> >  On Sun, 2 Mar 2008, Nguy­n Thái Ng÷c Duy wrote:
-> >
-> >  > Signed-off-by: Nguy­n Thái Ng÷c Duy <pclouds@gmail.com>
-> >
-> >  This fix is completely independent of the rest of your series.
-> 
-> Not really. It would have no impact (good or bad) if sent separately. 
-> But it is required by the series (otherwise it would die() under certain 
-> condition because prefix cannot be recomputed properly).
-
-Well, it _is_ independent.  Either you say "we want to have this as an 
-example where you can call setup_git_directory() twice" (which I would not 
-find all that bad), or you say "this was calling setup_git_directory() 
-twice, fix that".
-
-In any case, it should be separate from this series.
-
-Back to the subject of this series: as I stated already, I do not like the 
-separation of work-tree and git directory, and I especially do not like 
-how much you had to work outside setup.c.  I think changing the semantics 
-for all callers was not necessary, and in fact, not desirable.
-
-Ciao,
-Dscho
-
---8323584-1510989072-1205247929=:3873--
+T24gVHVlLCBNYXIgMTEsIDIwMDggYXQgODoyMCBQTSwgSm9oYW5uZXMgU2NoaW5kZWxpbgo8Sm9o
+YW5uZXMuU2NoaW5kZWxpbkBnbXguZGU+IHdyb3RlOgo+IEhpLAo+Cj4KPiAgT24gU3VuLCAyIE1h
+ciAyMDA4LCBOZ3V54buFbiBUaMOhaSBOZ+G7jWMgRHV5IHdyb3RlOgo+Cj4gID4KPiAgPiBTaWdu
+ZWQtb2ZmLWJ5OiBOZ3V54buFbiBUaMOhaSBOZ+G7jWMgRHV5IDxwY2xvdWRzQGdtYWlsLmNvbT4K
+Pgo+ICBJIGRvIG5vdCBsaWtlIHRoaXMgY2hhbmdlLiAgSXQgaXMgSU1PIGNvbXBsZXRlbHkgdW5u
+ZWNlc3NhcnksIGFuZCBtaWdodAo+ICBicmVhayBhc3N1bXB0aW9ucy4KCkl0IGNvdWxkLiBBbmQg
+SSB0cmllZCBteSBiZXN0IHRvIG1ha2Ugc3VyZSBpdCBkaWQgbm90IGJyZWFrIGFueXRoaW5nLgpJ
+dCBpcyBhbHNvIGRvY3VtZW50ZWQgKGlmIG5vdCBjbGVhcmx5LCBJIGNhbiBjb3JyZWN0IHRoZSBk
+b2N1bWVudCkuCldoaWxlIGl0J3Mgbm90IHJlYWxseSBuZWNlc3NhcnksIGl0IHdvdWxkIGJlIElN
+SE8gYSBnb29kIGNoYW5nZSBhcyB5b3UKd291bGQgbm90IGhhdmUgdG8gcmVseSBvbiBgY3dkYCBh
+bnltb3JlICh0aGF0IHdvdWxkIG1lYW4gd2hldGhlcgptb3ZpbmcgY3dkIGJ5IHByZWZpeCBvciBu
+b3Qgd291bGQgbm8gbG9uZ2VyIG1hdHRlcikuCgo+ICBDaWFvLAo+ICBEc2Nobwo+Ci0tIApEdXkK
