@@ -1,73 +1,69 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] git-svn: find-rev error message when missing arg
-Date: Mon, 10 Mar 2008 22:19:10 -0700
-Message-ID: <20080311051910.GB9389@hand.yhbt.net>
-References: <1205200346-5537-1-git-send-email-marcandre.lureau@gmail.com>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH 1/2 resend] help: add "man.viewer" config var to use "woman" or "konqueror"
+Date: Tue, 11 Mar 2008 06:48:15 +0100
+Message-ID: <200803110648.16117.chriscool@tuxfamily.org>
+References: <20080307084628.0b311793.chriscool@tuxfamily.org> <200803110100.m2B102k9007026@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Marc-Andre Lureau (elmarco)" <marcandre.lureau@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 11 06:19:52 2008
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: junkio@cox.net, pascal@obry.net, nanako3@bluebottle.com,
+	git@vger.kernel.org
+To: Xavier Maillard <xma@gnu.org>
+X-From: git-owner@vger.kernel.org Tue Mar 11 06:43:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JYwtz-00020H-MB
-	for gcvg-git-2@gmane.org; Tue, 11 Mar 2008 06:19:52 +0100
+	id 1JYxGi-0007kH-Rk
+	for gcvg-git-2@gmane.org; Tue, 11 Mar 2008 06:43:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752832AbYCKFTN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Mar 2008 01:19:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752730AbYCKFTN
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Mar 2008 01:19:13 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:59788 "EHLO hand.yhbt.net"
+	id S1752841AbYCKFmk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Mar 2008 01:42:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752730AbYCKFmk
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Mar 2008 01:42:40 -0400
+Received: from smtp1-g19.free.fr ([212.27.42.27]:55288 "EHLO smtp1-g19.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752658AbYCKFTM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Mar 2008 01:19:12 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id 544427F4153;
-	Mon, 10 Mar 2008 22:19:11 -0700 (PDT)
+	id S1752514AbYCKFmj convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 11 Mar 2008 01:42:39 -0400
+Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 5F0F01AB2B4;
+	Tue, 11 Mar 2008 06:42:35 +0100 (CET)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id E713A1AB2A9;
+	Tue, 11 Mar 2008 06:42:34 +0100 (CET)
+User-Agent: KMail/1.9.7
+In-Reply-To: <200803110100.m2B102k9007026@localhost.localdomain>
 Content-Disposition: inline
-In-Reply-To: <1205200346-5537-1-git-send-email-marcandre.lureau@gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76797>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76798>
 
-"Marc-Andre Lureau (elmarco)" <marcandre.lureau@gmail.com> wrote:
-> Just let the user know that a revision argument is missing instead of
-> a perl error. This error message mimic the "init" error message, but
-> could be improved.
+Le mardi 11 mars 2008, Xavier Maillard a =E9crit :
+>    This patch makes it possible to view man pages using other tools
+>    than the "man" program. It also implements support for emacs'
+>    "woman" and konqueror with the man KIO slave to view man pages.
+>
+>    Note that "emacsclient" is used with option "-e" to launch "woman"
+>    on emacs and this works only on versions >=3D 22.
+>
+>    Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+>
+> Acked-off-by: Xavier Maillard <xma@gnu.org>
 
-Thanks Marc-Andre.  Three small things:
+Thanks. ("Tested-by:" may be better though.)=20
 
-* Minor spelling error noted below.
-* Please wrap your commit message lines at 72 characters or less.
-* Sign-off?
+> There is something wrong though. git cmd --help should wait for
+> the server to return in my opinion.
 
-Tentatively-Acked-by: Eric Wong <normalperson@yhbt.net>
+When I try something like the following on the command line:
 
-> ---
->  git-svn.perl |    3 ++-
->  1 files changed, 2 insertions(+), 1 deletions(-)
-> 
-> diff --git a/git-svn.perl b/git-svn.perl
-> index 1195569..2ee7ca5 100755
-> --- a/git-svn.perl
-> +++ b/git-svn.perl
-> @@ -522,7 +522,8 @@ sub cmd_dcommit {
->  }
->  
->  sub cmd_find_rev {
-> -	my $revision_or_hash = shift;
-> +	my $revision_or_hash = shift or die "SVN or git revison required ",
-                                                        revision
-> +	                                    "as a command-line argument\n";
->  	my $result;
->  	if ($revision_or_hash =~ /^r\d+$/) {
->  		my $head = shift;
-> -- 
+$ emacsclient -e '(woman "fork")'
 
--- 
-Eric Wong
+emacsclient doesn't wait for the server to return.
+
+So I don't see how and why we should wait.
+
+Thanks,
+Christian.
