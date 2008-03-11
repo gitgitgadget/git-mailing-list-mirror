@@ -1,63 +1,64 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 03/10] Make get_git_dir() and 'git rev-parse --git-dir'
- absolute path
-Date: Tue, 11 Mar 2008 14:20:37 +0100 (CET)
-Message-ID: <alpine.LSU.1.00.0803111420080.3873@racer.site>
-References: <cover.1204453703.git.pclouds@gmail.com> <20080302103348.GA8929@laptop>
+From: Michele Ballabio <barra_cuda@katamail.com>
+Subject: Re: git message
+Date: Tue, 11 Mar 2008 14:30:49 +0100
+Message-ID: <200803111430.49927.barra_cuda@katamail.com>
+References: <20080310144600.GA15556@roadking.ldev.net>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323584-736050073-1205241638=:3873"
-Cc: git@vger.kernel.org
-To: =?VISCII?Q?Nguy=ADn_Th=E1i_Ng=F7c_Duy?= <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 11 14:21:32 2008
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Mike Miller <mike.miller@hp.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 11 14:21:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JZ4Q1-0004F8-Le
-	for gcvg-git-2@gmane.org; Tue, 11 Mar 2008 14:21:26 +0100
+	id 1JZ4QN-0004MD-B2
+	for gcvg-git-2@gmane.org; Tue, 11 Mar 2008 14:21:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753122AbYCKNUk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Mar 2008 09:20:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751282AbYCKNUk
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Mar 2008 09:20:40 -0400
-Received: from mail.gmx.net ([213.165.64.20]:33523 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753403AbYCKNUd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Mar 2008 09:20:33 -0400
-Received: (qmail invoked by alias); 11 Mar 2008 13:20:31 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp024) with SMTP; 11 Mar 2008 14:20:31 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18PA99HynQPdy9GLyyITPj4RKp1eoW/8Wn/B9UEdg
-	/PY8DA/ezb7W1T
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20080302103348.GA8929@laptop>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1753398AbYCKNUy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Mar 2008 09:20:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751706AbYCKNUy
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Mar 2008 09:20:54 -0400
+Received: from smtp.katamail.com ([62.149.157.154]:49616 "HELO
+	smtp1.pc.aruba.it" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with SMTP id S1751282AbYCKNUx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Mar 2008 09:20:53 -0400
+Received: (qmail 9558 invoked by uid 89); 11 Mar 2008 13:19:59 -0000
+X-Spam-Checker-Version: SpamAssassin 3.2.3 (2007-08-08) on smtp2-pc
+X-Spam-Level: 
+X-Spam-Status: No, score=0.1 required=5.0 tests=RDNS_NONE autolearn=disabled
+	version=3.2.3
+Received: from unknown (HELO host41-56-static.104-80-b.business.telecomitalia.it) (barra?cuda@katamail.com@80.104.56.41)
+  by smtp2-pc with SMTP; 11 Mar 2008 13:19:58 -0000
+User-Agent: KMail/1.9.7
+In-Reply-To: <20080310144600.GA15556@roadking.ldev.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76840>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76841>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---8323584-736050073-1205241638=:3873
-Content-Type: TEXT/PLAIN; charset=utf-8
-Content-Transfer-Encoding: 8BIT
-
-Hi,
-
-On Sun, 2 Mar 2008, Nguyễn Thái Ngọc Duy wrote:
-
+On Monday 10 March 2008, Mike Miller wrote:
+> I see some patches referring to this message but I don't understand what it
+> means:
 > 
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+> Warning: Remote HEAD refers to nonexistent ref, unable to checkout.
+> 
+> Would someone please explain the message? Is my repository complete?
 
-I do not like this change.  It is IMO completely unnecessary, and might 
-break assumptions.
+When you clone from a repository, git clone does a default checkout using
+the branch referred to by HEAD. If HEAD does not exist on the remote repo,
+git clone simply does not checkout any branch (but your local repo is ok).
 
-Ciao,
-Dscho
+At least that's what I understood from reading git-clone.sh.
 
---8323584-736050073-1205241638=:3873--
+You can see all the remote branches with
+
+	git branch -a
+
+and checkout a new local branch on top of them with
+
+	git checkout -b local_branch remote_branch
