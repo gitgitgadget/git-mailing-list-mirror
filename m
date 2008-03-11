@@ -1,99 +1,69 @@
-From: colin@horizon.com
-Subject: Re: [RFC/PATCH] Fast forward strategies allow, never, and only
-Date: Tue, 11 Mar 2008 05:35:53 -0400
-Message-ID: <20080311093553.23191.qmail@science.horizon.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Mercurial's only true "plugin" extension: inotify... and can
+ it be done in Git?
+Date: Tue, 11 Mar 2008 10:42:55 +0100
+Message-ID: <47D6541F.8000503@op5.se>
+References: <200803091459.21354.jnareb@gmail.com> <200803101938.09300.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-To: hvammen@gmail.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 11 10:43:22 2008
+Cc: git@vger.kernel.org, mercurial@selenic.com
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 11 10:43:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JZ10x-000094-Cu
-	for gcvg-git-2@gmane.org; Tue, 11 Mar 2008 10:43:19 +0100
+	id 1JZ11J-0000H9-3g
+	for gcvg-git-2@gmane.org; Tue, 11 Mar 2008 10:43:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751265AbYCKJmf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Mar 2008 05:42:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752177AbYCKJmf
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Mar 2008 05:42:35 -0400
-Received: from science.horizon.com ([192.35.100.1]:13647 "HELO
-	science.horizon.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1750929AbYCKJme (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Mar 2008 05:42:34 -0400
-X-Greylist: delayed 398 seconds by postgrey-1.27 at vger.kernel.org; Tue, 11 Mar 2008 05:42:33 EDT
-Received: (qmail 23192 invoked by uid 1000); 11 Mar 2008 05:35:53 -0400
+	id S1752062AbYCKJm6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Mar 2008 05:42:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752177AbYCKJm6
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Mar 2008 05:42:58 -0400
+Received: from mail.op5.se ([193.201.96.20]:57985 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751740AbYCKJm5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Mar 2008 05:42:57 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id CFCA01F080BA;
+	Tue, 11 Mar 2008 10:43:49 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -4.399
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 4UXKZ9m6tjAC; Tue, 11 Mar 2008 10:43:49 +0100 (CET)
+Received: from clix.int.op5.se (unknown [192.168.1.27])
+	by mail.op5.se (Postfix) with ESMTP id 204B61F080B9;
+	Tue, 11 Mar 2008 10:43:49 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.12 (X11/20080226)
+In-Reply-To: <200803101938.09300.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76821>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76822>
 
-> What's lacking is "why this is a good idea".
+Jakub Narebski wrote:
+> 
+> Mercurial extension | git equivalent (or proposal)
+> --------------------+------------------------------------
+> bisect              | git-bisect
+> 
+> Footnotes:
+> ==========
+> (*) Directly inspired by git feature
+> (!) No direct equivalent, would be quite a work to add
+> (!!!) No equivalent, don't know if possible
+> 
 
-Seconded.  A long time ago (and I'm too lazy to find a link), Linus
-explained why disabling fast-forward merges was almost always a Bad Idea,
-and nobody has come up with a good reason why you'd want one since.
+IIRC, bisect should have a star here (or five, as it's a killer feature).
 
-But from memory, suppose that you have two developers, each working on
-their own branch:
-
-     a--a--a <-- A's head
-    /
-o--o
-    \
-     b--b--b <-- B's head
-
-Then suppose that they merge back and forth to get to the same state.
-With fast-forward merges, it will go like this:
-
-A merges from B:
-     a--a--a
-    /       \
-o--o         o <-- A's head
-    \       /
-     b--b--b <-- B's head
-
-Then B merges from A:
-     a--a--a
-    /       \
-o--o         o <-- Both heads
-    \       /
-     b--b--b
-
-
-And look, they are in sync and can go on to develop from a common base
-version.  Future merges will do nothing.
-
-
-If, instead, you have every merge generate a commit, then you get:
-     a--a--a
-    /       \
-o--o         o <-- A's head
-    \       / \
-     b--b--b---o <-- B's head
-
-     a--a--a
-    /       \
-o--o         o---o <-- A's head
-    \       / \ /
-     b--b--b---o <-- B's head
-
-     a--a--a
-    /       \
-o--o         o---o <-- A's head
-    \       / \ / \
-     b--b--b---o---o <-- B's head
-
-.. and it never ends.  All of the merged commits are identical trees, but
-if you insist on creating a new commit object each time, you can generate
-an infinite number of bogus commits, and more to the point, A and B will
-never actually agree on the current HEAD commit.
-
-With more developers, you can make even more of a mess.
-
-What use does the "--ff=never" option have except to generate this cruft?
-Flexibility is useful only as long as it provides the ability to do
-something desirable.  There's no point to having a button that should
-never be pushed.
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
