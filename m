@@ -1,127 +1,228 @@
-From: Mitch Tishmack <mitcht.git@gmail.com>
-Subject: Re: [PATCH v7] autoconf: Test FREAD_READS_DIRECTORIES
-Date: Tue, 11 Mar 2008 15:46:13 -0500
-Message-ID: <8FA8FE5C-373E-4E01-A6DB-0E438054B8F4@gmail.com>
-References: <200803110948.35353.michal.rokos@nextsoft.cz>
-Mime-Version: 1.0 (Apple Message framework v919.2)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: GIT <git@vger.kernel.org>
-To: Michal Rokos <michal.rokos@nextsoft.cz>
-X-From: git-owner@vger.kernel.org Tue Mar 11 21:47:44 2008
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] gc: call "prune --expire 2.weeks.ago"
+Date: Tue, 11 Mar 2008 21:58:20 +0100 (CET)
+Message-ID: <alpine.LSU.1.00.0803112157560.3873@racer.site>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Tue Mar 11 22:00:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JZBNM-0006OF-M4
-	for gcvg-git-2@gmane.org; Tue, 11 Mar 2008 21:47:09 +0100
+	id 1JZBYp-00039W-Dw
+	for gcvg-git-2@gmane.org; Tue, 11 Mar 2008 21:59:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753763AbYCKUqa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Mar 2008 16:46:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753606AbYCKUq3
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Mar 2008 16:46:29 -0400
-Received: from wx-out-0506.google.com ([66.249.82.225]:60754 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753368AbYCKUq2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Mar 2008 16:46:28 -0400
-Received: by wx-out-0506.google.com with SMTP id h31so2701430wxd.4
-        for <git@vger.kernel.org>; Tue, 11 Mar 2008 13:46:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:cc:message-id:from:to:in-reply-to:content-type:content-transfer-encoding:mime-version:subject:date:references:x-mailer;
-        bh=JYivcs4lyOwk8xLKLsFpEPyl9RgCaVnBMXsQrTq9n+4=;
-        b=iTR67D1rQKieI57rxz+nFB5xBcjh2HlUJq4EgEe41xRL9tswmx49FnYZeuZNNHv4s2rWZ3uujtvYAadhu5mLDqj66DeKfQ2FURpxZKsK27Gf/6eQOd/Cs+Lv69qaR5fNEnA/tZUp3W73MKBxt4MY8evYbrdZv/4XQfARsBYiB0U=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=cc:message-id:from:to:in-reply-to:content-type:content-transfer-encoding:mime-version:subject:date:references:x-mailer;
-        b=SRlxdAZjCw3MMmP7N0JGqiYUUvglyv5HPQJYsRGY8PYWwo/G5s4IEDVoFKvPk+KR98xEy67Id+p1M8m1jSiRYosbt9XJ644SBb9CugzHLJV3WziT6cvcYN94NRvN4tSsWREV4o9+GRkeY2cQewin1GaHrwMYtnPOqEgGIJz6v8c=
-Received: by 10.70.53.3 with SMTP id b3mr7814620wxa.82.1205268387395;
-        Tue, 11 Mar 2008 13:46:27 -0700 (PDT)
-Received: from ?192.168.3.124? ( [71.216.112.176])
-        by mx.google.com with ESMTPS id h37sm440155wxd.6.2008.03.11.13.46.20
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 11 Mar 2008 13:46:24 -0700 (PDT)
-In-Reply-To: <200803110948.35353.michal.rokos@nextsoft.cz>
-X-Mailer: Apple Mail (2.919.2)
+	id S1751008AbYCKU6S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Mar 2008 16:58:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751104AbYCKU6S
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Mar 2008 16:58:18 -0400
+Received: from mail.gmx.net ([213.165.64.20]:51043 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750992AbYCKU6R (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Mar 2008 16:58:17 -0400
+Received: (qmail invoked by alias); 11 Mar 2008 20:58:15 -0000
+Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
+  by mail.gmx.net (mp037) with SMTP; 11 Mar 2008 21:58:15 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19MFKBwsi5MKImqLBiSrP53NvjQXD09YWu8TsIU25
+	hd0iE36us2SNf1
+X-X-Sender: gene099@racer.site
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76898>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76899>
 
-Can add these systems.
 
-OS X 10.5 x86 - FREAD_READS_DIRECTORIES=UnfortunatelyYes
-Tested-by: Mitch Tishmack <mitch.tishmack@gmail.com>
+If "--prune" is passed to gc, it still just calls "git prune".
+Otherwise, "prune --expire 2.weeks.ago" is called, where the grace
+period is overrideable by the config variable gc.pruneExpire.
 
-Solaris 10 Update 4 (08/07) x86 - FREAD_READS_DIRECTORIES=
-Tested-by: Mitch Tishmack <mitch.tishmack@gmail.com>
+While adding a test to t5304-prune.sh (since it really tests the
+implicit call to "prune"), the original test for "prune --expire"
+is moved there from t1410-reflog.sh, where it did not belong.
 
-mitch
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
 
-On Mar 11, 2008, at 03:48 AM, Michal Rokos wrote:
+	I am really tempted to reduce the grace period further, but
+	I'd like to hear opinions first.  Is 3.days.ago too short?
 
-> Add test for FREAD_READS_DIRECTORIES to detect when fread() reads  
-> fopen'ed
-> directory.
->
-> Tested on:
-> AIX 5.3 - FREAD_READS_DIRECTORIES=UnfortunatelyYes
-> HP-UX B.11.11 - FREAD_READS_DIRECTORIES=UnfortunatelyYes
-> HP-UX B.11.23 - FREAD_READS_DIRECTORIES=UnfortunatelyYes
-> Linux 2.6.25-rc4 - FREAD_READS_DIRECTORIES=
-> Tru64 V5.1 - FREAD_READS_DIRECTORIES=UnfortunatelyYes
-> Windows - FREAD_READS_DIRECTORIES=
->
-> Signed-off-by: Michal Rokos <michal.rokos@nextsoft.cz>
-> Tested-by: Mike Ralphson <mike@abacus.co.uk>
-> Tested-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
->
-> diff --git a/config.mak.in b/config.mak.in
-> index 8e1cd5f..7868dfd 100644
-> --- a/config.mak.in
-> +++ b/config.mak.in
-> @@ -46,4 +46,5 @@ NO_MKDTEMP=@NO_MKDTEMP@
-> NO_ICONV=@NO_ICONV@
-> OLD_ICONV=@OLD_ICONV@
-> NO_DEFLATE_BOUND=@NO_DEFLATE_BOUND@
-> +FREAD_READS_DIRECTORIES=@FREAD_READS_DIRECTORIES@
-> SNPRINTF_RETURNS_BOGUS=@SNPRINTF_RETURNS_BOGUS@
-> diff --git a/configure.ac b/configure.ac
-> index 287149d..82584e9 100644
-> --- a/configure.ac
-> +++ b/configure.ac
-> @@ -327,6 +327,26 @@ else
-> fi
-> AC_SUBST(NO_C99_FORMAT)
-> #
-> +# Define FREAD_READS_DIRECTORIES if your are on a system which  
-> succeeds
-> +# when attempting to read from an fopen'ed directory.
-> +AC_CACHE_CHECK([whether system succeeds to read fopen'ed directory],
-> + [ac_cv_fread_reads_directories],
-> +[
-> +AC_RUN_IFELSE(
-> +	[AC_LANG_PROGRAM([AC_INCLUDES_DEFAULT],
-> +		[[char c;
-> +		FILE *f = fopen(".", "r");
-> +		return f && fread(&c, 1, 1, f)]])],
-> +	[ac_cv_fread_reads_directories=no],
-> +	[ac_cv_fread_reads_directories=yes])
-> +])
-> +if test $ac_cv_fread_reads_directories = yes; then
-> +	FREAD_READS_DIRECTORIES=UnfortunatelyYes
-> +else
-> +	FREAD_READS_DIRECTORIES=
-> +fi
-> +AC_SUBST(FREAD_READS_DIRECTORIES)
-> +#
-> # Define SNPRINTF_RETURNS_BOGUS if your are on a system which  
-> snprintf()
-> # or vsnprintf() return -1 instead of number of characters which would
-> # have been written to the final string if enough space had been  
-> available.
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+ Documentation/config.txt |    5 +++++
+ Documentation/git-gc.txt |   16 +++++++++++-----
+ builtin-gc.c             |   19 +++++++++++++++++--
+ t/t1410-reflog.sh        |   18 ------------------
+ t/t5304-prune.sh         |   36 ++++++++++++++++++++++++++++++++++++
+ 5 files changed, 69 insertions(+), 25 deletions(-)
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 14df635..adde89a 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -590,6 +590,11 @@ gc.packrefs::
+ 	at some stage, and setting this to `false` will continue to
+ 	prevent `git pack-refs` from being run from `git gc`.
+ 
++gc.pruneexpire::
++	When `git gc` is run without `--prune`, it will still call
++	`prune`, but with `--expire 2.weeks.ago`.  Override the value
++	with this config variable.
++
+ gc.reflogexpire::
+ 	`git reflog expire` removes reflog entries older than
+ 	this time; defaults to 90 days.
+diff --git a/Documentation/git-gc.txt b/Documentation/git-gc.txt
+index 2e7be91..2042d9f 100644
+--- a/Documentation/git-gc.txt
++++ b/Documentation/git-gc.txt
+@@ -28,13 +28,19 @@ OPTIONS
+ --prune::
+ 	Usually `git-gc` packs refs, expires old reflog entries,
+ 	packs loose objects,
+-	and removes old 'rerere' records.  Removal
++	and removes old 'rerere' records.  Unilateral removal
+ 	of unreferenced loose objects is an unsafe operation
+ 	while other git operations are in progress, so it is not
+-	done by default.  Pass this option if you want it, and only
+-	when you know nobody else is creating new objects in the
+-	repository at the same time (e.g. never use this option
+-	in a cron script).
++	done by default.
+++
++Instead, `git-prune` is called with an option telling it to expire
++only unreferenced loose objects that are at least 2 weeks old.  Set
++the config variable `gc.pruneexpire` to override this grace period.
+++
++Pass `--prune` to expire all unreferenced loose objects, but only
++when you know nobody else is creating new objects in the
++repository at the same time (e.g. never use this option
++in a cron script).
+ 
+ --aggressive::
+ 	Usually 'git-gc' runs very quickly while providing good disk
+diff --git a/builtin-gc.c b/builtin-gc.c
+index 7cad366..8d07350 100644
+--- a/builtin-gc.c
++++ b/builtin-gc.c
+@@ -26,12 +26,13 @@ static int pack_refs = 1;
+ static int aggressive_window = 250;
+ static int gc_auto_threshold = 6700;
+ static int gc_auto_pack_limit = 20;
++static char *prune_expire = "2.weeks.ago";
+ 
+ #define MAX_ADD 10
+ static const char *argv_pack_refs[] = {"pack-refs", "--all", "--prune", NULL};
+ static const char *argv_reflog[] = {"reflog", "expire", "--all", NULL};
+ static const char *argv_repack[MAX_ADD] = {"repack", "-d", "-l", NULL};
+-static const char *argv_prune[] = {"prune", NULL};
++static const char *argv_prune[] = {"prune", NULL, NULL, NULL};
+ static const char *argv_rerere[] = {"rerere", "gc", NULL};
+ 
+ static int gc_config(const char *var, const char *value)
+@@ -55,6 +56,14 @@ static int gc_config(const char *var, const char *value)
+ 		gc_auto_pack_limit = git_config_int(var, value);
+ 		return 0;
+ 	}
++	if (!strcmp(var, "gc.pruneexpire")) {
++		if (!value)
++			return config_error_nonbool(var);
++		if (!approxidate(value))
++			return error("Invalid gc.pruneExpire: '%s'", value);
++		prune_expire = xstrdup(value);
++		return 0;
++	}
+ 	return git_default_config(var, value);
+ }
+ 
+@@ -235,7 +244,13 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
+ 	if (run_command_v_opt(argv_repack, RUN_GIT_CMD))
+ 		return error(FAILED_RUN, argv_repack[0]);
+ 
+-	if (prune && run_command_v_opt(argv_prune, RUN_GIT_CMD))
++	if (!prune) {
++		argv_prune[1] = "--expire";
++		argv_prune[2] = prune_expire;
++		argv_prune[3] = NULL;
++	}
++
++	if (run_command_v_opt(argv_prune, RUN_GIT_CMD))
+ 		return error(FAILED_RUN, argv_prune[0]);
+ 
+ 	if (run_command_v_opt(argv_rerere, RUN_GIT_CMD))
+diff --git a/t/t1410-reflog.sh b/t/t1410-reflog.sh
+index 24476be..73f830d 100755
+--- a/t/t1410-reflog.sh
++++ b/t/t1410-reflog.sh
+@@ -202,22 +202,4 @@ test_expect_success 'delete' '
+ 
+ '
+ 
+-test_expect_success 'prune --expire' '
+-
+-	before=$(git count-objects | sed "s/ .*//") &&
+-	BLOB=$(echo aleph | git hash-object -w --stdin) &&
+-	BLOB_FILE=.git/objects/$(echo $BLOB | sed "s/^../&\//") &&
+-	test $((1 + $before)) = $(git count-objects | sed "s/ .*//") &&
+-	test -f $BLOB_FILE &&
+-	git reset --hard &&
+-	git prune --expire=1.hour.ago &&
+-	test $((1 + $before)) = $(git count-objects | sed "s/ .*//") &&
+-	test -f $BLOB_FILE &&
+-	test-chmtime -86500 $BLOB_FILE &&
+-	git prune --expire 1.day &&
+-	test $before = $(git count-objects | sed "s/ .*//") &&
+-	! test -f $BLOB_FILE
+-
+-'
+-
+ test_done
+diff --git a/t/t5304-prune.sh b/t/t5304-prune.sh
+index 6560af7..2a88b3f 100644
+--- a/t/t5304-prune.sh
++++ b/t/t5304-prune.sh
+@@ -29,4 +29,40 @@ test_expect_success 'prune stale packs' '
+ 
+ '
+ 
++test_expect_success 'prune --expire' '
++
++	before=$(git count-objects | sed "s/ .*//") &&
++	BLOB=$(echo aleph | git hash-object -w --stdin) &&
++	BLOB_FILE=.git/objects/$(echo $BLOB | sed "s/^../&\//") &&
++	test $((1 + $before)) = $(git count-objects | sed "s/ .*//") &&
++	test -f $BLOB_FILE &&
++	git prune --expire=1.hour.ago &&
++	test $((1 + $before)) = $(git count-objects | sed "s/ .*//") &&
++	test -f $BLOB_FILE &&
++	test-chmtime -86500 $BLOB_FILE &&
++	git prune --expire 1.day &&
++	test $before = $(git count-objects | sed "s/ .*//") &&
++	! test -f $BLOB_FILE
++
++'
++
++test_expect_success 'gc: implicit prune --expire' '
++
++	before=$(git count-objects | sed "s/ .*//") &&
++	BLOB=$(echo aleph_0 | git hash-object -w --stdin) &&
++echo blob: $BLOB &&
++	BLOB_FILE=.git/objects/$(echo $BLOB | sed "s/^../&\//") &&
++	test $((1 + $before)) = $(git count-objects | sed "s/ .*//") &&
++	test -f $BLOB_FILE &&
++	test-chmtime -$((86400*14-30)) $BLOB_FILE &&
++	git gc &&
++	test $((1 + $before)) = $(git count-objects | sed "s/ .*//") &&
++	test -f $BLOB_FILE &&
++	test-chmtime -$((86400*14+1)) $BLOB_FILE &&
++	git gc &&
++	test $before = $(git count-objects | sed "s/ .*//") &&
++	! test -f $BLOB_FILE
++
++'
++
+ test_done
+-- 
+1.5.4.4.646.ge37ad
