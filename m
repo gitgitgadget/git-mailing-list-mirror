@@ -1,83 +1,86 @@
-From: Thomas Harning <harningt@gmail.com>
-Subject: Re: [RFC] Idea for Git Bugtracking Tool
-Date: Mon, 10 Mar 2008 23:29:17 -0400
-Message-ID: <20080310232917.7c71ccbe@shiva>
-References: <20080306142246.5d9460b7@gmail.com>
-	<vpqskz3pqdo.fsf@bauges.imag.fr>
-	<m3zltaf7vs.fsf@localhost.localdomain>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+From: "Rhodes, Kate" <masukomi@gmail.com>
+Subject: [PATCH] Specified the expected formats of dates and timestamps in rev-list-options.
+Date: Mon, 10 Mar 2008 23:41:48 -0400
+Message-ID: <FC7C7E68-1D91-4719-9D11-8F65DEA43AFB@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v915)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Pierre Habouzit <madcoder@debian.org>, <git@vger.kernel.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 11 04:32:35 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 11 04:42:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JYvEB-0004Mb-BT
-	for gcvg-git-2@gmane.org; Tue, 11 Mar 2008 04:32:35 +0100
+	id 1JYvNy-0006SC-OW
+	for gcvg-git-2@gmane.org; Tue, 11 Mar 2008 04:42:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753757AbYCKDb4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Mar 2008 23:31:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753948AbYCKDb4
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Mar 2008 23:31:56 -0400
-Received: from py-out-1112.google.com ([64.233.166.183]:34185 "EHLO
+	id S1754469AbYCKDlz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Mar 2008 23:41:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754399AbYCKDlz
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Mar 2008 23:41:55 -0400
+Received: from py-out-1112.google.com ([64.233.166.178]:52448 "EHLO
 	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753718AbYCKDbz (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Mar 2008 23:31:55 -0400
-Received: by py-out-1112.google.com with SMTP id u52so3264956pyb.10
-        for <git@vger.kernel.org>; Mon, 10 Mar 2008 20:31:54 -0700 (PDT)
+	with ESMTP id S1754033AbYCKDly (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Mar 2008 23:41:54 -0400
+Received: by py-out-1112.google.com with SMTP id u52so3268913pyb.10
+        for <git@vger.kernel.org>; Mon, 10 Mar 2008 20:41:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer:mime-version:content-type:content-transfer-encoding;
-        bh=gCgVuKIvgI7xmO/X3Ly9elB6iBUSKBIQH7T6zLcfhAU=;
-        b=pOxB3t0YkBk62RCjcoKJDbI7tThsJYwEyacRmxiibVJFAT101s2Eeeck13mdWXesR5gA+o3ba0QexgYY+ss2bbDF7vTxBoVWMOXRXwg7fd5RYDPEuyA20PODO5p9fkNhO6LS8b68Lgaab8VW0mFhE6DAiFt9NBlPAVkgkCf/n54=
+        h=domainkey-signature:received:received:message-id:from:to:content-type:content-transfer-encoding:mime-version:subject:date:x-mailer;
+        bh=UVicGPni6ckoivrnIVReFAjvjsmR/7S+Nv98Z9BymSM=;
+        b=mHOZhQP2S3AU2mHhtA21mUHj/K96BtvJPooUIcmP7NEolYnty2T4Agc5VKbUoucoigPlf+Vx2MMeKElw5sQN0AwKn8dB8Bsi+M1hgwSXHEX7fjhU2ubDRkjJD/JKewg8I9Ca007Z8gInV042QDgc+wF4K/MyA7/JP0+oqAl2LPA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer:mime-version:content-type:content-transfer-encoding;
-        b=nxfkCHsv4/fcstL4L/NQ0pY+IrpAK3p1HbTxUVCz/+As5XOiGe+l+mKblp307wUDADCZFFz4BlbCojGZNZ6/kJCjRxybu1J3GKELHKTpzNHY5gGuS/0ZSglsK+Vxoi8pCo6MZ1q+TTYqGhAaeUQVKx274rzWxJ2+FE/gaHsKymM=
-Received: by 10.35.28.12 with SMTP id f12mr9060187pyj.9.1205206310377;
-        Mon, 10 Mar 2008 20:31:50 -0700 (PDT)
-Received: from shiva ( [69.245.236.18])
-        by mx.google.com with ESMTPS id i6sm893709wxd.21.2008.03.10.20.31.49
-        (version=SSLv3 cipher=OTHER);
-        Mon, 10 Mar 2008 20:31:49 -0700 (PDT)
-In-Reply-To: <m3zltaf7vs.fsf@localhost.localdomain>
-X-Mailer: Claws Mail 3.3.0 (GTK+ 2.12.5; x86_64-pc-linux-gnu)
+        h=message-id:from:to:content-type:content-transfer-encoding:mime-version:subject:date:x-mailer;
+        b=CgZMksIDT10s4aijpXIGe16lO30Ep52OyWA4LqBJ7KsjCjE6TsZcLlmoCFXS8tGKsKVIA/krk1vxt7W1KBulMGdxCdr9AKcTW513IQPfR0uwqScFyoBliFooRH3lCvVJOmguJ6mK0v00+5odR8sSnIJVs/Wc3tloqMrwkJznptk=
+Received: by 10.35.102.1 with SMTP id e1mr9076551pym.57.1205206911578;
+        Mon, 10 Mar 2008 20:41:51 -0700 (PDT)
+Received: from ?192.168.1.103? ( [71.126.228.202])
+        by mx.google.com with ESMTPS id 3sm12388303wrh.6.2008.03.10.20.41.49
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 10 Mar 2008 20:41:50 -0700 (PDT)
+X-Mailer: Apple Mail (2.915)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76792>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76793>
 
-On Fri, 07 Mar 2008 15:10:18 -0800 (PST)
-Jakub Narebski <jnareb@gmail.com> wrote:
+The docs didn't give users any indication of the expected format of  
+dates or timestamps. Now they do.
 
->  * Bugs Everywhere (http://bugseverywhere.org), written in Python,
->    developed in Bazaar, has Git backend support. Formerly written by
->    Panoramic Feedback (note that there is stale version of this tool),
->    picked up by one of developers
-This doesn't appear to let you mark bugs as existing at previous points
-in history... which partly removes the usefulness of branch tracking....
+---
 
-Grit has the same problems it seems... (at least at the state it was
-the last time I saw it).. besides the problem of being gone.
->  * DisTract (http://www.distract.wellquite.org), written in Haskell,
->    uses Monotone as backend. Has good reviews on blogs, e.g. by
->    Masukomi.
-Monotone+Haskell+Local Firefox...  doesn't look like this will go far
-in the real world where people w/o the entire actual would like to post
-bugs...
-> 
->  * DITrack (http://www.ditrack.org), written in Python, currently
->    uses Subversion as backend, has plans to be backend-agnostic.
->    Inspired by Subissue.
-Doesn't seem to be able to deal w/ branches particularly... looks more
-like a way to work as an offline-capable bug tracking system...
+Documentation/rev-list-options.txt |    9 +++++++--
+1 files changed, 7 insertions(+), 2 deletions(-)
 
-I've posted up a wiki @ http://www.eharning.us/wiki/stick/ for a
-working concept for how a branch-tracking w/ possibility for
-distribution...  Feel free to comment on the page or (preferable) use
-the Discussion page...
+diff --git a/Documentation/rev-list-options.txt b/Documentation/rev- 
+list-options.txt
+index a8138e2..bf0b881 100644
+--- a/Documentation/rev-list-options.txt
++++ b/Documentation/rev-list-options.txt
+@@ -124,15 +124,20 @@ limiting may be applied.
+
+--since='date', --after='date'::
+
+-	Show commits more recent than a specific date.
++	Show commits more recent than a date specified relatively
++	(e.g. "2 hours ago") or with any ISO 8601 or RFC 2822
++	date syntax.
++
+
+--until='date', --before='date'::
+
+-	Show commits older than a specific date.
++	Show commits older than a date specified relatively (e.g.
++	"2 hours ago") or with any ISO 8601 or RFC 2822 date syntax.
+
+--max-age='timestamp', --min-age='timestamp'::
+
+	Limit the commits output to specified time range.
++	The 'timestamp' should be the interger seconds since the epoch.
+
+--author='pattern', --committer='pattern'::
+
+-- 
+1.5.4.1.1278.gc75be
