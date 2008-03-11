@@ -1,75 +1,63 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: commit 0? (or: create new empty branch)
-Date: Tue, 11 Mar 2008 14:08:10 +0100
-Message-ID: <47D6843A.1030200@viscovery.net>
-References: <20080311123004.GA27577@bit.office.eurotux.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 03/10] Make get_git_dir() and 'git rev-parse --git-dir'
+ absolute path
+Date: Tue, 11 Mar 2008 14:20:37 +0100 (CET)
+Message-ID: <alpine.LSU.1.00.0803111420080.3873@racer.site>
+References: <cover.1204453703.git.pclouds@gmail.com> <20080302103348.GA8929@laptop>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323584-736050073-1205241638=:3873"
 Cc: git@vger.kernel.org
-To: Luciano Rocha <luciano@eurotux.com>
-X-From: git-owner@vger.kernel.org Tue Mar 11 14:08:56 2008
+To: =?VISCII?Q?Nguy=ADn_Th=E1i_Ng=F7c_Duy?= <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 11 14:21:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JZ4Dv-0000CY-3J
-	for gcvg-git-2@gmane.org; Tue, 11 Mar 2008 14:08:55 +0100
+	id 1JZ4Q1-0004F8-Le
+	for gcvg-git-2@gmane.org; Tue, 11 Mar 2008 14:21:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753369AbYCKNIN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Mar 2008 09:08:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753403AbYCKNIN
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Mar 2008 09:08:13 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:10753 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753050AbYCKNIN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Mar 2008 09:08:13 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1JZ4CV-000693-KG; Tue, 11 Mar 2008 14:07:27 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id C13F06EF; Tue, 11 Mar 2008 14:08:10 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <20080311123004.GA27577@bit.office.eurotux.com>
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1753122AbYCKNUk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Mar 2008 09:20:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751282AbYCKNUk
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Mar 2008 09:20:40 -0400
+Received: from mail.gmx.net ([213.165.64.20]:33523 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753403AbYCKNUd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Mar 2008 09:20:33 -0400
+Received: (qmail invoked by alias); 11 Mar 2008 13:20:31 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp024) with SMTP; 11 Mar 2008 14:20:31 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18PA99HynQPdy9GLyyITPj4RKp1eoW/8Wn/B9UEdg
+	/PY8DA/ezb7W1T
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20080302103348.GA8929@laptop>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76839>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76840>
 
-Luciano Rocha schrieb:
-> I'd like to create a new branch, without any pre-existing data, for
-> purposes similar to git's html/man/.....
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--8323584-736050073-1205241638=:3873
+Content-Type: TEXT/PLAIN; charset=utf-8
+Content-Transfer-Encoding: 8BIT
+
+Hi,
+
+On Sun, 2 Mar 2008, Nguyễn Thái Ngọc Duy wrote:
+
 > 
-> However, I've been unable to do that using the higher level tools.
-> 
-> Even starting from an empty git rep, I can't create a branch:
-> 
-> $ git init
-> Initialized empty Git repository in .git/
-> $ git branch empty
-> fatal: Not a valid object name: 'master'.
-> 
-> How were the different git.git branches created?
+> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 
-There are two ways:
+I do not like this change.  It is IMO completely unnecessary, and might 
+break assumptions.
 
-1. Plumbing level
+Ciao,
+Dscho
 
-  $ git symbolic-ref HEAD refs/heads/html
-  $ rm .git/index
-  ...commit new content...
-
-2. Porcelain level
-
-  $ mkdir ../html && cd ../html
-  $ git init
-  ...commit new content...
-  $ cd -   # go back
-  $ git fetch ../html master:html
-
--- Hannes
+--8323584-736050073-1205241638=:3873--
