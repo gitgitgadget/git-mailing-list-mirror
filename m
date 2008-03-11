@@ -1,63 +1,98 @@
-From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-Subject: Re: [PATCH 07/10] builtin-archive: mark unused prefix "unused_prefix"
-Date: Tue, 11 Mar 2008 21:50:24 +0700
-Message-ID: <fcaeb9bf0803110750rd70a303r3fc522b326ea93b@mail.gmail.com>
-References: <cover.1204453703.git.pclouds@gmail.com>
-	 <20080302103446.GA8983@laptop>
-	 <alpine.LSU.1.00.0803111432370.3873@racer.site>
+From: Andreas Hildebrandt <anhi@bioinf.uni-sb.de>
+Subject: Re: How to ignore deleted files
+Date: Tue, 11 Mar 2008 15:53:20 +0100
+Message-ID: <47D69CE0.3030505@bioinf.uni-sb.de>
+References: <47D68203.10905@bioinf.uni-sb.de> <m3y78pxsf5.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Mar 11 15:51:14 2008
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 11 15:54:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JZ5on-0003cd-Oh
-	for gcvg-git-2@gmane.org; Tue, 11 Mar 2008 15:51:06 +0100
+	id 1JZ5rj-0004lL-AO
+	for gcvg-git-2@gmane.org; Tue, 11 Mar 2008 15:54:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752728AbYCKOu1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Mar 2008 10:50:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752618AbYCKOu1
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Mar 2008 10:50:27 -0400
-Received: from fg-out-1718.google.com ([72.14.220.152]:11981 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751384AbYCKOu0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Mar 2008 10:50:26 -0400
-Received: by fg-out-1718.google.com with SMTP id e21so2440035fga.17
-        for <git@vger.kernel.org>; Tue, 11 Mar 2008 07:50:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=ulXqqWXvuos+Aovof4hfaxSEJJ0kZAL3KfVX71WR9pA=;
-        b=uj8+Zo9t1ASkuQR7V7DmB4P+iQISngbDwYJUD30hCewnSGdgi5UZJkrCEE67j2kxGCsc5eC4KBLaPuvBJWNXG+JxfFP3Qp/7VDCp2r7lbO+7FX077BC8Qpt4vOzD7R3pK/J7U0/yTWzSI2uJxd+T71yCH2fX+5NFaiYqh62OqTA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=vy1hK9pHMcwVyuhn9zEUK7EznlzQGMSuIPa7ERiq9CMd11/DonkJx/Ozl9HTYsPH0vpwQ7OzUO3n8YXEPitgzM/2/MWxMNToatGDamrx/sWdNSjZiMh9oglIQTgGX2bN88SPDwVvf/nVra3m7UR71/xwsL1xKSfd8wI1/YkR8k0=
-Received: by 10.86.70.8 with SMTP id s8mr8328865fga.29.1205247024998;
-        Tue, 11 Mar 2008 07:50:24 -0700 (PDT)
-Received: by 10.86.81.4 with HTTP; Tue, 11 Mar 2008 07:50:24 -0700 (PDT)
-In-Reply-To: <alpine.LSU.1.00.0803111432370.3873@racer.site>
-Content-Disposition: inline
+	id S1753379AbYCKOxX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Mar 2008 10:53:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753302AbYCKOxX
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Mar 2008 10:53:23 -0400
+Received: from theia.rz.uni-saarland.de ([134.96.7.31]:3040 "EHLO
+	theia.rz.uni-saarland.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752832AbYCKOxX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Mar 2008 10:53:23 -0400
+Received: from mail.cs.uni-sb.de (mail.cs.uni-sb.de [134.96.254.200])
+	by theia.rz.uni-saarland.de (8.14.1/8.14.0) with ESMTP id m2BErLA4027915
+	for <git@vger.kernel.org>; Tue, 11 Mar 2008 16:53:21 +0200
+Received: from domino.bioinf.uni-sb.de (domino.bioinf.uni-sb.de [134.96.237.60])
+	by mail.cs.uni-sb.de (8.14.2/2008022900) with ESMTP id m2BErLF2014022;
+	Tue, 11 Mar 2008 15:53:21 +0100 (CET)
+Received: from [134.96.237.57] ([134.96.237.57])
+          by domino.bioinf.uni-sb.de (Lotus Domino Release 8.0)
+          with ESMTP id 2008031116053302-17377 ;
+          Tue, 11 Mar 2008 16:05:33 +0100 
+User-Agent: Thunderbird 2.0.0.5 (X11/20070725)
+In-Reply-To: <m3y78pxsf5.fsf@localhost.localdomain>
+X-MIMETrack: Itemize by SMTP Server on domino/CBISaar(Release 8.0|August 02, 2007) at
+ 11.03.2008 16:05:33,
+	Serialize by Router on domino/CBISaar(Release 8.0|August 02, 2007) at
+ 11.03.2008 16:05:33,
+	Serialize complete at 11.03.2008 16:05:33
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (theia.rz.uni-saarland.de [134.96.7.31]); Tue, 11 Mar 2008 15:53:21 +0100 (CET)
+X-AntiVirus: checked by AntiVir MailGate (version: 2.1.2-14; AVE: 7.6.0.73; VDF: 7.0.3.16; host: AntiVir1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76856>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76857>
 
-T24gVHVlLCBNYXIgMTEsIDIwMDggYXQgODozMyBQTSwgSm9oYW5uZXMgU2NoaW5kZWxpbgo8Sm9o
-YW5uZXMuU2NoaW5kZWxpbkBnbXguZGU+IHdyb3RlOgo+IEhpLAo+Cj4KPiAgT24gU3VuLCAyIE1h
-ciAyMDA4LCBOZ3V54buFbiBUaMOhaSBOZ+G7jWMgRHV5IHdyb3RlOgo+Cj4gID4gY21kX2FyY2hp
-dmUoKSBpcyByZWdpc3RlcmVkIHdpdGhvdXQgUlVOX1NFVFVQIHNvIGl0cyBwcmVmaXgKPiAgPiB3
-aWxsIGJlIE5VTEwgZm9yZXZlci4gTGV0J3MgbWFrZSB0aGF0IGNsZWFyLgo+ICA+Cj4gID4gU2ln
-bmVkLW9mZi1ieTogTmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eSA8cGNsb3Vkc0BnbWFpbC5jb20+
-Cj4gID4gLS0tCj4KPiAgQUZBSUNUIHRoaXMgcGF0Y2ggaXMgLS0gbGlrZSB0d28gb3RoZXJzIC0t
-IGFuIGluZGVwZW5kZW50IGZpeCwgYW5kIHNob3VsZAo+ICBiZSBzdWJtaXR0ZWQgYXMgc3VjaC4K
-Ckl0J3Mgbm90IHJlYWxseSBpbmRlcGVuZGVudC4gQmVmb3JlIHRoZSBzZXJpZXMsIHNldHVwX2Rp
-cl9nZW50bHkoKQpfY2FuXyBjaGFuZ2UgdGhlIHByZWZpeC4gQWZ0ZXIgdGhlIHNlcmllcyBpdCBk
-b2VzIG5vdCAoc2VtYW50aWNzCmNoYW5nZSkuIFRoZSBmaXJzdCBwYXRjaCBvZiB0aGUgc2VyaWVz
-ICgiZ2l0IHJlYWQtdHJlZSAtbSIpIGlzCmluZGVwZW5kZW50IGFuZCBjYW4gYmUgY2hlcnJ5IHBp
-Y2tlZCBpZiBuZWNlc3NhcnkuCi0tIApEdXkK
+Dear Jakub!
+
+Jakub Narebski schrieb:
+>> our git repository contains a number of .tar.gz - files that are
+>> automatically extracted and then deleted during the build process.
+>> Unfortunately, commiting any changes after that step will mark those
+>> files as deleted and try to commit that to the repository. Is there any
+>> way to tell git to ignore those files automatically (apart from changing
+>> our build process not to use or not to delete those files)?
+>>     
+>
+> I don't quite understand: are those .tar.gz files stored in _source_
+> repository? That would be a bit strange...
+>
+>   
+
+I absolutetly agree that it's strange. The main reason for this is that
+we have some collections of data files (some of them pretty large) that
+can be compressed pretty effectively. At compilation time, it is decided
+if the files are needed or not. If so, they are extracted. In the end,
+the .tar.gz files are deleted since they are no longer needed. In
+addition, once a user obtained a checkout, the whole thing is supposed
+to work without a further net connection, so downloading the files
+during build is not really an option.
+
+> I guess that you have tried adding "*.tar.gz" to either .gitignore or
+> .git/info/excludes file?
+>   
+I did, but as far as I understand it, these only work for untracked
+files, and the files themselves are tracked (from time to time, they
+change and the idea was to track those changes). Or am I missing
+something here?
+
+btw: I just noted that
+
+git-commit $(git-ls-files -m --exclude-from=.git/info/exclude)
+
+with the correct entries in the exclude file seems to do pretty much
+what I want it to do, namely finding all modifications apart from those
+mentioned in the exclude file and commiting them. Would this be a sane
+strategy to handle things before we can maybe some day re-structure our
+build process?
+
+
+Thanks a lot for your help!
+
+Andreas Hildebrandt
