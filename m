@@ -1,161 +1,110 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC/PATCH] Additional fast forward strategies.
-Date: Tue, 11 Mar 2008 02:09:12 -0700 (PDT)
-Message-ID: <m37ig9zky7.fsf@localhost.localdomain>
-References: <402c10cd0803102004x7892f01cledfef6f277fba26a@mail.gmail.com>
+From: Rogan Dawes <lists@dawes.za.net>
+Subject: Re: [QUESTION] Selective fetch possible?
+Date: Tue, 11 Mar 2008 05:07:48 -0400
+Message-ID: <47D64BE4.9010009@dawes.za.net>
+References: <47D5AFF3.90000@yahoo.it> <20080310225302.GE8410@spearce.org> <m3d4q2ywyx.fsf@localhost.localdomain> <47D6341C.7030505@dawes.za.net> <20080311075053.GQ8410@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Sverre Hvammen Johansen" <hvammen@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 11 10:10:21 2008
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Filippo Zangheri <filippo.zangheri@yahoo.it>,
+	git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Mar 11 10:10:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JZ0V2-00065s-NE
-	for gcvg-git-2@gmane.org; Tue, 11 Mar 2008 10:10:21 +0100
+	id 1JZ0V2-00065s-2J
+	for gcvg-git-2@gmane.org; Tue, 11 Mar 2008 10:10:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751265AbYCKJJS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Mar 2008 05:09:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751384AbYCKJJR
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Mar 2008 05:09:17 -0400
-Received: from ug-out-1314.google.com ([66.249.92.170]:13077 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751040AbYCKJJP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Mar 2008 05:09:15 -0400
-Received: by ug-out-1314.google.com with SMTP id z38so5051971ugc.16
-        for <git@vger.kernel.org>; Tue, 11 Mar 2008 02:09:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
-        bh=xDsQZGZYAbUpD6L0clUaaUHTn61NR60t3Z2VSwZwqm8=;
-        b=OSD0HDbKyGSevwm7ejdvZksfoI0m5c07R4rz47eVzh8nvAVk4uXeAB2Fd7hAlsxIx/zcXj96ZUBEIaWoD0rCPBr9kpTrgcMP0OSZhpZsIh+Afpid6CATm98QbTNU+aVAcKieBWhRtZ9WClVRgJaq9unBHriedEd0C0qIlWL2X80=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
-        b=J2QSAMDyD2CTUx19nfsqjDPQNOSGx2n+7W33hwUMhbzlAEPqQJu/oZawfVCK49Qy4mIqvwT1SP0kKrDSp4oj6rmhECLOxWcwQbyMrgs7QtBAMW5B480M/uAxbbaZPxNnyTTo5pN4ytwcRX1ieZaUutM7S1bEcATqO5MRNLv6jTQ=
-Received: by 10.66.248.5 with SMTP id v5mr4585402ugh.17.1205226554278;
-        Tue, 11 Mar 2008 02:09:14 -0700 (PDT)
-Received: from localhost.localdomain ( [83.8.230.40])
-        by mx.google.com with ESMTPS id n34sm9964706ugc.64.2008.03.11.02.09.11
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 11 Mar 2008 02:09:12 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m2B996FI002705;
-	Tue, 11 Mar 2008 10:09:08 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m2B995ni002702;
-	Tue, 11 Mar 2008 10:09:05 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <402c10cd0803102004x7892f01cledfef6f277fba26a@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1750899AbYCKJJK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Mar 2008 05:09:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751008AbYCKJJJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Mar 2008 05:09:09 -0400
+Received: from sd-green-bigip-177.dreamhost.com ([208.97.132.177]:47621 "EHLO
+	spunkymail-a20.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1753499AbYCKJJF (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 11 Mar 2008 05:09:05 -0400
+X-Greylist: delayed 6088 seconds by postgrey-1.27 at vger.kernel.org; Tue, 11 Mar 2008 05:09:05 EDT
+Received: from [0.0.0.0] (lucas.dreamhost.com [64.111.99.14])
+	by spunkymail-a20.g.dreamhost.com (Postfix) with ESMTP id 4F5C9E250C;
+	Tue, 11 Mar 2008 02:09:03 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.12 (Windows/20080213)
+In-Reply-To: <20080311075053.GQ8410@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76814>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76815>
 
-"Sverre Hvammen Johansen" <hvammen@gmail.com> writes:
-
-> From: Sverre Hvammen Johansen <hvammen@gmail.com>
-> Subject: [PATCH] Additional fast forward strategies.
+Shawn O. Pearce wrote:
+> Rogan Dawes <lists@dawes.za.net> wrote:
+>> Jakub Narebski wrote:
+>>> "Shawn O. Pearce" <spearce@spearce.org> writes:
+>>>
+>>>> Filippo Zangheri <filippo.zangheri@yahoo.it> wrote:
+>>>>> Is it possible to git-fetch only a portion of the tree
+>>>>> of the specified repository, say, fetch only one directory or a
+>>>>> subset of files matching some regular expression?
+>>> The problem is twofold, as far as I understand it.  First, what to do
+>>> if there is merge conflicts outside checked out (selected) directory?
+>> This is something that has been repeated many times, and I fail to see 
+>> how it can be an issue. How can there be a conflict in a directory that 
+>> is not, and never has been, checked out, and therefore cannot have been 
+>> modified?
 > 
-> New fast forward strategies, common, fork, path, and same
-> is introduced.  These new fast forward strategies allows
-> additional work flows.
-
-It would be better (read: greater chance to be accepted) if you had
-provided examples of those "additional workflows", best in EXAMPLES
-section (or something like that) of fast-forward documentation, and
-"see documentation" (or something like that) in commit message.
- 
-> FF strategy "common" does a fast-forward to the common ancestor
-> of the specified heads.  The merge will fail unless HEAD is the
-> common ancestor or HEAD can be fast-forwarded to the common ancestor.
-
-Don't you mean "common descendant" here?
-
-> FF strategy "fork" does a fast-forward to the common ancestor
-> of the real heads.  The merge will fail unless HEAD is the
-> common ancestor of these heads or HEAD can be fast-forwarded
-> to the common ancestor of the real heads.
-
-What is the difference between 'real heads' and 'soecified heads'?
-Example, please.
-
-> FF strategy "path" does a fast-forward to the first possible
-> branch that no other branches are ahead of.  HEAD will be
-> fast-forwarded to such a branch if it exist.  If no such branch
-> exist, HEAD is considered to be up to date.
+> Given two branches:
 > 
-> FF strategy "same" does a fast forward where all branches are
-> required to point to the same commit.  HEAD will be
-> fast-forwarded to this branch unless it is up to date.
+> 	code
+> 	docs
 > 
-> Signed-off-by: Sverre Hvammen Johansen <sj@black.local>
+> and the code people checkout the "src/" subdirectory and the docs
+> people checkout the "Documentation/" subdirectory, and they *only*
+> every work in that subdirectory, things are fine.
+> 
+> Until one day some developer also checks out "Documentation/" and
+> fixes something in the documentation as part of the same commit
+> that makes a code change.  The push this to the code branch.
+> 
+> Someday in the future a documentation writer merges the code branch
+> over to the docs branch, "just keeping it current".
+> 
+> Now there arises a possiblity of a merge conflict in a part of the
+> tree that you do not have checked out.
+> 
+> 
+> If you want to say "don't ever modify stuff outside of your branch's
+> purpose" then why aren't you just using submodules (one for docs and
+> one for code) and using a supermodule to tie everything together into
+> a "release package"?
 
-It will be easier to understand those descriptions if you have
-provided with ASCII-art diagrams (in the documentation, not
-necessarily in fast-forward strategies^W options description, but
-perhaps somewhere below, above FAST-FORWARD OPTIONS EXAMPLES section).
+Ok, fair enough. Thanks for the example.
 
-For example, by default you can fast-forward only when doing single
-branch merge.
+I think that one should not *expect* to be able to complete merges with 
+only a partial checkout, though. It *may* work in cases where there are 
+no conflicts, but I think it would be a perfectly valid error path to 
+fail if there is a conflicting merge in a part of the tree that has not 
+been checked out.
 
-%%
+So, for a user working on partial trees, they would be able to modify 
+their partial tree, and check in their changes, but merges would have to 
+be done by someone with a complete checkout. For the given examples 
+where partial trees make sense (documentation workers), this seems like 
+a reasonable compromise.
 
-  A---B---C---D   <--- master <--- HEAD
-       \
-        \-1---2   <--- a
+>>> Second, how to make repository contain only relevant objects: git in
+>>> many places assumes full connectivity, and that if it has an object it
+>>> hass all objects depending on it.
+>>>
+>> Yes, this is the big problem as I see it.
+> 
+> This is easy enough that if the above problem could be resolved
+> sufficiently to the git gurus' satisfaction you would be able
+> to get some advice on how to solve it.  Its not difficult, just
+> damn annoying.  We already do it (to some extent) with grafts and
+> shallow clones.
 
-If you have situation as above, you are on branch 'master',
-and you do "git merge a" it would result in merge commit.
+How's my suggestion above?
 
-  A---B---C---D---M   <--- master <--- HEAD
-       \         /
-        \-1---2-/     <--- a
-
-%%
-
-  A---B           <--- master <--- HEAD
-       \
-        \-1---2   <--- a
-
-If you have situation as above, you are on branch 'master',
-and you do "git merge a" it would result in fast-forward.
-
-  A---B---1---2   <--- master <--- HEAD
-                    
-              ^------- a
-
-or
-
-  A---B---1---2   <--- master <--- HEAD
-              ^      
-               \------ a
-
-
-%%
-
-  A---B           <--- master <--- HEAD
-       \
-        \-1---2   <--- a
-              
-              ^------- b
-
-This I think is 'FF strategy "same"' situation.
-
-%%
-
-  A---B              <--- master <--- HEAD
-       \
-        \-1---2      <--- a
-               \
-                \-3  <--- b
-
-This I guess is either 'common' or 'fork' situation.
-
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Rogan
