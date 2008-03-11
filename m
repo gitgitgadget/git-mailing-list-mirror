@@ -1,67 +1,104 @@
-From: "=?ISO-8859-1?Q?Marc-Andr=E9_Lureau?=" <marcandre.lureau@gmail.com>
-Subject: Re: [PATCH] git-svn: find-rev error message when missing arg
-Date: Tue, 11 Mar 2008 10:04:55 +0200
-Message-ID: <e29894ca0803110104g62cda988vf933349995673afd@mail.gmail.com>
-References: <1205200346-5537-1-git-send-email-marcandre.lureau@gmail.com>
-	 <20080311051910.GB9389@hand.yhbt.net>
+From: Michal Rokos <michal.rokos@nextsoft.cz>
+Subject: [PATCH v7] autoconf: Test FREAD_READS_DIRECTORIES
+Date: Tue, 11 Mar 2008 09:48:34 +0100
+Organization: NextSoft
+Message-ID: <200803110948.35353.michal.rokos@nextsoft.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "Eric Wong" <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Tue Mar 11 09:06:12 2008
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+To: GIT <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Mar 11 09:49:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JYzUT-0004Bt-QI
-	for gcvg-git-2@gmane.org; Tue, 11 Mar 2008 09:05:48 +0100
+	id 1JZ0Am-0000GO-JL
+	for gcvg-git-2@gmane.org; Tue, 11 Mar 2008 09:49:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751461AbYCKIFB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Mar 2008 04:05:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751388AbYCKIFA
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Mar 2008 04:05:00 -0400
-Received: from hs-out-0708.google.com ([64.233.178.244]:45006 "EHLO
-	hs-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751096AbYCKIE7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 11 Mar 2008 04:04:59 -0400
-Received: by hs-out-0708.google.com with SMTP id 4so1741538hsl.5
-        for <git@vger.kernel.org>; Tue, 11 Mar 2008 01:04:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=+wOX35K1PjXNos5wxp13c8Lsrj1iT588nM8lY/ntnPo=;
-        b=bH6txUsmWwcRL8PdhO+7FeSZcACaAgCzYnSaxEbD+DMkDg6ToA1Bxfb+uYyqGon8PUb9vvisM9ZCj2/WBxftivYLA29A/r5Ce0m0Cd88hm24/4QAizuo/NdoiZtgZvLBxxpgqDJtAA1DQh1H9RnqZiO2DZ6mdQRmvSIFiETeN6Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=FQSSQZ50ejXq4y7K2ec1r39EYXH4VX9SHoBL0ISKuNRlXoxkQJ5eHWQmjNN3bwCS9wQz41oiD688DL9/13UD17exoQ/4YyAoJ7dF1RncxurATiXx760ug7LF3VPsy1IZB02sDF7zkkp7uhKUsu3KmN6yCD+yIZh5wOcy51TATFA=
-Received: by 10.115.73.20 with SMTP id a20mr4514926wal.32.1205222695807;
-        Tue, 11 Mar 2008 01:04:55 -0700 (PDT)
-Received: by 10.114.60.4 with HTTP; Tue, 11 Mar 2008 01:04:55 -0700 (PDT)
-In-Reply-To: <20080311051910.GB9389@hand.yhbt.net>
+	id S1751148AbYCKIsp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Mar 2008 04:48:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751107AbYCKIsp
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Mar 2008 04:48:45 -0400
+Received: from holub.nextsoft.cz ([195.122.198.235]:46091 "EHLO
+	holub.nextsoft.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750699AbYCKIso (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Mar 2008 04:48:44 -0400
+Received: by holub.nextsoft.cz (Postfix, from userid 111)
+	id DD1255C8; Tue, 11 Mar 2008 09:48:41 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by holub.nextsoft.cz (Postfix) with ESMTP id D29796B4
+	for <git@vger.kernel.org>; Tue, 11 Mar 2008 09:48:40 +0100 (CET)
+Received: from holub.nextsoft.cz ([127.0.0.1])
+	by localhost (holub.nextsoft.cz [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 26482-03 for <git@vger.kernel.org>;
+	Tue, 11 Mar 2008 09:48:40 +0100 (CET)
+Received: from 89-24-236-160.i4g.tmcz.cz (89-24-236-160.i4g.tmcz.cz [89.24.236.160])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	by holub.nextsoft.cz (Postfix) with ESMTP id 68E9D5AF
+	for <git@vger.kernel.org>; Tue, 11 Mar 2008 09:48:40 +0100 (CET)
 Content-Disposition: inline
+X-Bogosity: Ham, tests=bogofilter, spamicity=0.000000, version=1.0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76811>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76812>
 
-hi,
+Add test for FREAD_READS_DIRECTORIES to detect when fread() reads fopen'ed 
+directory.
 
-On Tue, Mar 11, 2008 at 7:19 AM, Eric Wong <normalperson@yhbt.net> wrot=
-e:
->
->  * Minor spelling error noted below.
->  * Please wrap your commit message lines at 72 characters or less.
->  * Sign-off?
->
->  Tentatively-Acked-by: Eric Wong <normalperson@yhbt.net>
+Tested on:
+AIX 5.3 - FREAD_READS_DIRECTORIES=UnfortunatelyYes
+HP-UX B.11.11 - FREAD_READS_DIRECTORIES=UnfortunatelyYes
+HP-UX B.11.23 - FREAD_READS_DIRECTORIES=UnfortunatelyYes
+Linux 2.6.25-rc4 - FREAD_READS_DIRECTORIES=
+Tru64 V5.1 - FREAD_READS_DIRECTORIES=UnfortunatelyYes
+Windows - FREAD_READS_DIRECTORIES=
 
-oups, I was too tired, I hope this second patch is fine.
-Thanks for reviewing :)
+Signed-off-by: Michal Rokos <michal.rokos@nextsoft.cz>
+Tested-by: Mike Ralphson <mike@abacus.co.uk>
+Tested-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 
-Regards,
-
---=20
-Marc-Andr=E9 Lureau
+diff --git a/config.mak.in b/config.mak.in
+index 8e1cd5f..7868dfd 100644
+--- a/config.mak.in
++++ b/config.mak.in
+@@ -46,4 +46,5 @@ NO_MKDTEMP=@NO_MKDTEMP@
+ NO_ICONV=@NO_ICONV@
+ OLD_ICONV=@OLD_ICONV@
+ NO_DEFLATE_BOUND=@NO_DEFLATE_BOUND@
++FREAD_READS_DIRECTORIES=@FREAD_READS_DIRECTORIES@
+ SNPRINTF_RETURNS_BOGUS=@SNPRINTF_RETURNS_BOGUS@
+diff --git a/configure.ac b/configure.ac
+index 287149d..82584e9 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -327,6 +327,26 @@ else
+ fi
+ AC_SUBST(NO_C99_FORMAT)
+ #
++# Define FREAD_READS_DIRECTORIES if your are on a system which succeeds
++# when attempting to read from an fopen'ed directory.
++AC_CACHE_CHECK([whether system succeeds to read fopen'ed directory],
++ [ac_cv_fread_reads_directories],
++[
++AC_RUN_IFELSE(
++	[AC_LANG_PROGRAM([AC_INCLUDES_DEFAULT],
++		[[char c;
++		FILE *f = fopen(".", "r");
++		return f && fread(&c, 1, 1, f)]])],
++	[ac_cv_fread_reads_directories=no],
++	[ac_cv_fread_reads_directories=yes])
++])
++if test $ac_cv_fread_reads_directories = yes; then
++	FREAD_READS_DIRECTORIES=UnfortunatelyYes
++else
++	FREAD_READS_DIRECTORIES=
++fi
++AC_SUBST(FREAD_READS_DIRECTORIES)
++#
+ # Define SNPRINTF_RETURNS_BOGUS if your are on a system which snprintf()
+ # or vsnprintf() return -1 instead of number of characters which would
+ # have been written to the final string if enough space had been available.
