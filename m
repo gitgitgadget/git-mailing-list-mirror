@@ -1,240 +1,74 @@
-From: Ping Yin <pkufranky@gmail.com>
-Subject: [PATCH] git-submodule summary: test
-Date: Tue, 11 Mar 2008 13:15:49 +0800
-Message-ID: <1205212549-31541-1-git-send-email-pkufranky@gmail.com>
-Cc: git@vger.kernel.org, Ping Yin <pkufranky@gmail.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Mar 11 06:16:45 2008
+From: "Ping Yin" <pkufranky@gmail.com>
+Subject: Re: [RFC/PATCH] Fast forward strategies allow, never, and only
+Date: Tue, 11 Mar 2008 13:17:57 +0800
+Message-ID: <46dff0320803102217s39f290c3k1f627a638b7aebf5@mail.gmail.com>
+References: <402c10cd0803101959q619efa86pbd501e5e2cc018c2@mail.gmail.com>
+	 <402c10cd0803102018k2f1dd9e0k6b766671f36ff5f0@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Sverre Hvammen Johansen" <hvammen@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 11 06:18:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JYwqx-0001O2-2f
-	for gcvg-git-2@gmane.org; Tue, 11 Mar 2008 06:16:43 +0100
+	id 1JYwso-0001n9-16
+	for gcvg-git-2@gmane.org; Tue, 11 Mar 2008 06:18:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751637AbYCKFP4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Mar 2008 01:15:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752425AbYCKFP4
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Mar 2008 01:15:56 -0400
-Received: from mail.qikoo.org ([60.28.205.235]:54365 "EHLO mail.qikoo.org"
-	rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751592AbYCKFPz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Mar 2008 01:15:55 -0400
-Received: by mail.qikoo.org (Postfix, from userid 1029)
-	id E5288470AE; Tue, 11 Mar 2008 13:15:49 +0800 (CST)
-X-Mailer: git-send-email 1.5.4.3.347.g5314c
+	id S1752717AbYCKFR7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Mar 2008 01:17:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752658AbYCKFR7
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Mar 2008 01:17:59 -0400
+Received: from an-out-0708.google.com ([209.85.132.245]:47159 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752475AbYCKFR6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Mar 2008 01:17:58 -0400
+Received: by an-out-0708.google.com with SMTP id d31so543956and.103
+        for <git@vger.kernel.org>; Mon, 10 Mar 2008 22:17:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=/6tA+lznY9cCKu+AHXF0VZ3NXvrWWT9NxO7fWAy0KkI=;
+        b=pgYu1yFdYUNcMKcZRXS4FM4Ove3QGcd/lFmWmHbLnURg/hcP/O4elwRzfcF7EXmqObsJj++gEQGzeKvr0UBiNTrqiSohDRNNTpASghelF/hVYtPwbrPcnAdYlIYEA8zGohTK1wZebNXqY+Zas4994cagkORnIUYPjyoB2rr2YCg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=U/GHA4OQndE55jxRVe8WnXDmbeFFV9WETeQtFHahn39t2OwolWhDbVd5+iaqpvQWL4Zfet6TL3dmTUZU7+2vl86NEOtzphAXdEEbFq086K+oilD/7y7lqShGd8xVdnzDAtQ+0/AzCVuYEyn6GTMrDEjN35hkLs8a1/LaiaYHHsA=
+Received: by 10.100.46.10 with SMTP id t10mr12532457ant.53.1205212677805;
+        Mon, 10 Mar 2008 22:17:57 -0700 (PDT)
+Received: by 10.100.5.18 with HTTP; Mon, 10 Mar 2008 22:17:57 -0700 (PDT)
+In-Reply-To: <402c10cd0803102018k2f1dd9e0k6b766671f36ff5f0@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76795>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76796>
 
-Signed-off-by: Ping Yin <pkufranky@gmail.com>
----
- t/t7401-submodule-summary.sh |  195 ++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 195 insertions(+), 0 deletions(-)
- create mode 100755 t/t7401-submodule-summary.sh
+On Tue, Mar 11, 2008 at 11:18 AM, Sverre Hvammen Johansen
+<hvammen@gmail.com> wrote:
+> Hi,
+>
+>  I have split the original patch I had for the fast forward strategies
+>  in two.  I hope to get something close to this patch accepted.  I need
+>  this feature for the Accurev integration I am working on.  I will be
+>  able to spend time on this the next two weeks.
+>
 
-diff --git a/t/t7401-submodule-summary.sh b/t/t7401-submodule-summary.sh
-new file mode 100755
-index 0000000..0f3c42a
---- /dev/null
-+++ b/t/t7401-submodule-summary.sh
-@@ -0,0 +1,195 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2008 Ping Yin
-+#
-+
-+test_description='Summary support for submodules
-+
-+This test tries to verify the sanity of summary subcommand of git-submodule.
-+'
-+
-+. ./test-lib.sh
-+
-+add_file () {
-+	sm=$1
-+	shift
-+	owd=$(pwd)
-+	cd "$sm"
-+	for name; do
-+		echo "$name" > "$name" &&
-+		git add "$name" &&
-+		test_tick &&
-+		git commit -m "Add $name"
-+	done >/dev/null
-+	git rev-parse --verify HEAD | cut -c1-7
-+	cd "$owd"
-+}
-+commit_file () {
-+	test_tick &&
-+	git commit "$@" -m "Commit $*" >/dev/null
-+}
-+
-+test_create_repo sm1 &&
-+add_file . foo
-+
-+head1=$(add_file sm1 foo1 foo2)
-+
-+test_expect_success 'added submodule' "
-+	git add sm1 &&
-+	git submodule summary >actual &&
-+	diff actual - <<-EOF
-+* sm1 0000000...$head1 (2):
-+  > Add foo2
-+
-+EOF
-+"
-+
-+commit_file sm1 &&
-+head2=$(add_file sm1 foo3)
-+
-+test_expect_success 'modified submodule(forward)' "
-+	git submodule summary >actual &&
-+	diff actual - <<-EOF
-+* sm1 $head1...$head2 (1):
-+  > Add foo3
-+
-+EOF
-+"
-+
-+commit_file sm1 &&
-+cd sm1 &&
-+git reset --hard HEAD~2 >/dev/null &&
-+head3=$(git rev-parse --verify HEAD | cut -c1-7) &&
-+cd ..
-+
-+test_expect_success 'modified submodule(backward)' "
-+    git submodule summary >actual &&
-+    diff actual - <<-EOF
-+* sm1 $head2...$head3 (2):
-+  < Add foo3
-+  < Add foo2
-+
-+EOF
-+"
-+
-+head4=$(add_file sm1 foo4 foo5) &&
-+head4_full=$(GIT_DIR=sm1/.git git rev-parse --verify HEAD)
-+test_expect_success 'modified submodule(backward and forward)' "
-+    git submodule summary >actual &&
-+    diff actual - <<-EOF
-+* sm1 $head2...$head4 (4):
-+  > Add foo5
-+  > Add foo4
-+  < Add foo3
-+  < Add foo2
-+
-+EOF
-+"
-+
-+test_expect_success '--summary-limit' "
-+    git submodule summary -n 3 >actual &&
-+    diff actual - <<-EOF
-+* sm1 $head2...$head4 (4):
-+  > Add foo5
-+  > Add foo4
-+  < Add foo3
-+
-+EOF
-+"
-+
-+commit_file sm1 &&
-+mv sm1 sm1-bak &&
-+echo sm1 >sm1 &&
-+head5=$(git hash-object sm1 | cut -c1-7) &&
-+git add sm1 &&
-+rm -f sm1 &&
-+mv sm1-bak sm1
-+
-+test_expect_success 'typechanged submodule(submodule->blob), --cached' "
-+    git submodule summary --cached >actual &&
-+    diff actual - <<-EOF
-+* sm1 $head4(submodule)->$head5(blob) (3):
-+  < Add foo5
-+
-+EOF
-+"
-+
-+rm -rf sm1 &&
-+git checkout-index sm1
-+test_expect_success 'typechanged submodule(submodule->blob)' "
-+    git submodule summary >actual &&
-+    diff actual - <<-EOF
-+* sm1 $head4(submodule)->$head5(blob):
-+
-+EOF
-+"
-+
-+rm -f sm1 &&
-+test_create_repo sm1 &&
-+head6=$(add_file sm1 foo6 foo7)
-+test_expect_success 'nonexistent commit' "
-+    git submodule summary >actual &&
-+    diff actual - <<-EOF
-+* sm1 $head4...$head6:
-+  Warn: sm1 doesn't contain commit $head4_full
-+
-+EOF
-+"
-+
-+commit_file
-+test_expect_success 'typechanged submodule(blob->submodule)' "
-+    git submodule summary >actual &&
-+    diff actual - <<-EOF
-+* sm1 $head5(blob)->$head6(submodule) (2):
-+  > Add foo7
-+
-+EOF
-+"
-+
-+commit_file sm1 &&
-+rm -rf sm1
-+test_expect_success 'deleted submodule' "
-+    git submodule summary >actual &&
-+    diff actual - <<-EOF
-+* sm1 $head6...0000000:
-+
-+EOF
-+"
-+
-+test_create_repo sm2 &&
-+head7=$(add_file sm2 foo8 foo9) &&
-+git add sm2
-+
-+test_expect_success 'multiple submodules' "
-+    git submodule summary >actual &&
-+    diff actual - <<-EOF
-+* sm1 $head6...0000000:
-+
-+* sm2 0000000...$head7 (2):
-+  > Add foo9
-+
-+EOF
-+"
-+
-+test_expect_success 'path filter' "
-+    git submodule summary sm2 >actual &&
-+    diff actual - <<-EOF
-+* sm2 0000000...$head7 (2):
-+  > Add foo9
-+
-+EOF
-+"
-+
-+commit_file sm2
-+test_expect_success 'given commit' "
-+    git submodule summary HEAD^ >actual &&
-+    diff actual - <<-EOF
-+* sm1 $head6...0000000:
-+
-+* sm2 0000000...$head7 (2):
-+  > Add foo9
-+
-+EOF
-+"
-+
-+test_done
+Expecting it will be accepted. It's a useful feature for me.
+
+>
+>  --
+>  Sverre Hvammen Johansen
+>  --
+>  To unsubscribe from this list: send the line "unsubscribe git" in
+>  the body of a message to majordomo@vger.kernel.org
+>  More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
+
+
+
 -- 
-1.5.4.3.347.g5314c
+Ping Yin
