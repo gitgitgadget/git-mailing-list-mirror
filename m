@@ -1,383 +1,73 @@
-From: "Imran M Yousuf" <imyousuf@gmail.com>
-Subject: Re: [jgit] index v2 pull request
-Date: Wed, 12 Mar 2008 14:19:41 +0600
-Message-ID: <7bfdc29a0803120119sdf55c23h3ca50105d027ffca@mail.gmail.com>
-References: <20080308025027.GZ8410@spearce.org>
-	 <200803102253.28469.robin.rosenberg@dewire.com>
-	 <7bfdc29a0803111952h3cd37b78jd884cec94afe1bc4@mail.gmail.com>
-	 <200803120807.01715.robin.rosenberg@dewire.com>
+From: "Ping Yin" <pkufranky@gmail.com>
+Subject: Re: [PATCH v5 2/5] git-submodule summary: show commit summary
+Date: Wed, 12 Mar 2008 16:27:31 +0800
+Message-ID: <46dff0320803120127o62d484eaw54ecebafe88a0eac@mail.gmail.com>
+References: <1205243539-797-1-git-send-email-pkufranky@gmail.com>
+	 <1205243539-797-2-git-send-email-pkufranky@gmail.com>
+	 <1205243539-797-3-git-send-email-pkufranky@gmail.com>
+	 <7vabl48tt4.fsf@gitster.siamese.dyndns.org>
+	 <46dff0320803112128j23337873jf1fb12f5716151d8@mail.gmail.com>
+	 <7vmyp479i9.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
-	"Dave Watson" <dwatson@mimvista.com>,
-	"Roger C. Soares" <rogersoares@intelinet.com.br>
-To: "Robin Rosenberg" <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Wed Mar 12 09:20:34 2008
+Cc: git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 12 09:28:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JZMCO-0006Uf-3i
-	for gcvg-git-2@gmane.org; Wed, 12 Mar 2008 09:20:32 +0100
+	id 1JZMJn-0008SD-CU
+	for gcvg-git-2@gmane.org; Wed, 12 Mar 2008 09:28:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750872AbYCLITs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Mar 2008 04:19:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750800AbYCLITq
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Mar 2008 04:19:46 -0400
-Received: from an-out-0708.google.com ([209.85.132.249]:51515 "EHLO
+	id S1750982AbYCLI1d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Mar 2008 04:27:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751229AbYCLI1d
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Mar 2008 04:27:33 -0400
+Received: from an-out-0708.google.com ([209.85.132.249]:1052 "EHLO
 	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750719AbYCLITo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Mar 2008 04:19:44 -0400
-Received: by an-out-0708.google.com with SMTP id d31so673709and.103
-        for <git@vger.kernel.org>; Wed, 12 Mar 2008 01:19:43 -0700 (PDT)
+	with ESMTP id S1750885AbYCLI1c (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Mar 2008 04:27:32 -0400
+Received: by an-out-0708.google.com with SMTP id d31so674356and.103
+        for <git@vger.kernel.org>; Wed, 12 Mar 2008 01:27:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=EUkDkTRGaxq0hzItnixDUaHVb9hBYTh8Z6QvWivEOqE=;
-        b=PElsUdNkoPB4HB5EIU7XHt9EJVQdo7fVhbC5W0ibBHzKATCuEq+IHvr5vNJ+TxNuCGwJ/PcuJPHA0EIYyvm0P3Q1b502f7NSyNybumG9SFucQ4BaKu60oEij9FXFtygL+3lij+PemmmOU2D4NfXmEy5fpLviSSPy/ANZtTkbfyk=
+        bh=aLwxpQ/S+wIXMMqk0L7W3sI+lf1Ou4U683rUutzld4Q=;
+        b=IyFHLTexGPdEZ+achKMhA5XO+k2JXsOEOjHbpai1AmJjhELN1BXfgrtdYLTpDuunCwyFFvMT7rjmjHIGdE7Uv3Q+kPN7ogvNZvVLOIe9/LAWHW+0or7T6jPWcSGGYK+rVB53SNaOwh+bnFXKFQkjXG2jyLjDbAvjN8wYmNWKJ5Y=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=BUDAuCXD4v1ujgzkesfJIuR4ntAJ+AeBcEdS4luY+KKjP/IKDJP02F73CZhCrof/pVJcJeLO2U7HZRDt+XaLaPwuyq2IqD2ps92ncioOqk6H7QpANe4DodDIDHtp4XihBmkHbW0a70pKTGhf0DLeY2K+ivxe61wJ82T9By8MbUk=
-Received: by 10.100.41.16 with SMTP id o16mr15434465ano.73.1205309982001;
-        Wed, 12 Mar 2008 01:19:42 -0700 (PDT)
-Received: by 10.100.58.14 with HTTP; Wed, 12 Mar 2008 01:19:41 -0700 (PDT)
-In-Reply-To: <200803120807.01715.robin.rosenberg@dewire.com>
+        b=jYxEqDwOW5df27DalNq71d0Lza9mBpE48+spfBCHvJmpjoFEbsQce5EdxKj0NBJj7ein8aHMGoQY/kAoQiLnPDkvK399vFhaVB+Nvojbr09UmcVeKo+vIwgB9PliQVHnPRX+oWmJwBrGJQlOLkNzbOP7hH+iAjg8jVTPNbCgzkg=
+Received: by 10.100.165.13 with SMTP id n13mr15429488ane.116.1205310451297;
+        Wed, 12 Mar 2008 01:27:31 -0700 (PDT)
+Received: by 10.100.5.18 with HTTP; Wed, 12 Mar 2008 01:27:31 -0700 (PDT)
+In-Reply-To: <7vmyp479i9.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76938>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76939>
 
-On Wed, Mar 12, 2008 at 1:07 PM, Robin Rosenberg
-<robin.rosenberg@dewire.com> wrote:
-> Den Wednesday 12 March 2008 03.52.05 skrev Imran M Yousuf:
+On Wed, Mar 12, 2008 at 2:15 PM, Junio C Hamano <gitster@pobox.com> wrote:
 >
-> > Maven: Does this mean mavenizing the project? If so I would start it
->  > this weekend. If you were referring to GIT Maven SCM please also let
->  > me know.
->  Not to build using, but create SCM functions for those so thay can use
->  git without <exec> tasks. Git isn't available in any of those, while much
->  worse SCM's have support.
+> "Ping Yin" <pkufranky@gmail.com> writes:
 >
 
-I know a team who are currently working with the GIT SCM plugin for
-Maven; I think they are using CLI for the purpose. I am more
-interested in GIT VCS Module for NB6; as I have some other projects
-which will be using it :).
-
 >
->  > I am currently looking into .git/config format as Shawn suggested.
+>  They never appear, as git tracks only one executable bit, so mode bits for
+>  regular file blobs are canonicalized to either 100755 or 100644.
 >
->  That's a good one too. I have code for parsing the remotes specs, though
->  e.g. "+refs/heads/master/*:refs/remotes/origin/*", but nothing for the "branch" config. I haven't used it yet, so it's a rip-out.
-
-I will have a look at it; currently we have a long tasklist in a
-project; I will have a look at them as soon as I can make some time
-:).
-
-- Imran
-
+>  Don't you ever see 000000 mode bits here?  There is no case arm for that
+>  in the code.
 >
->  -- robin
->
->  From 042fa0bef8b5d3ec8f5b1e385766ca61528e72aa Mon Sep 17 00:00:00 2001
->  From: Robin Rosenberg <robin.rosenberg@dewire.com>
->  Date: Wed, 5 Mar 2008 23:27:57 +0100
->  Subject: [PATCH] Add support for parsing remote specs
->
->  Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
->  ---
->   .../tst/org/spearce/jgit/lib/RemoteSpecTest.java   |   95 +++++++++++++
->   .../src/org/spearce/jgit/lib/RemoteSpec.java       |  142 ++++++++++++++++++++
->   .../src/org/spearce/jgit/lib/Repository.java       |   12 ++
->   3 files changed, 249 insertions(+), 0 deletions(-)
->   create mode 100644 org.spearce.jgit.test/tst/org/spearce/jgit/lib/RemoteSpecTest.java
->   create mode 100644 org.spearce.jgit/src/org/spearce/jgit/lib/RemoteSpec.java
->
->  diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/lib/RemoteSpecTest.java b/org.spearce.jgit.test/tst/org/spearce/jgit/lib/RemoteSpecTest.java
->  new file mode 100644
->  index 0000000..817e697
->  --- /dev/null
->  +++ b/org.spearce.jgit.test/tst/org/spearce/jgit/lib/RemoteSpecTest.java
->  @@ -0,0 +1,95 @@
->  +/*
->  + *  Copyright (C) 2007  Robin Rosenberg
->  + *
->  + *  This library is free software; you can redistribute it and/or
->  + *  modify it under the terms of the GNU General Public
->  + *  License, version 2, as published by the Free Software Foundation.
->  + *
->  + *  This library is distributed in the hope that it will be useful,
->  + *  but WITHOUT ANY WARRANTY; without even the implied warranty of
->  + *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
->  + *  General Public License for more details.
->  + *
->  + *  You should have received a copy of the GNU General Public
->  + *  License along with this library; if not, write to the Free Software
->  + *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
->  + */
->  +package org.spearce.jgit.lib;
->  +
->  +import java.io.File;
->  +import java.io.FileOutputStream;
->  +
->  +/**
->  + * Test parsing of git remotes
->  + */
->  +public class RemoteSpecTest extends RepositoryTestCase {
->  +
->  +       /**
->  +        * Test simplest case
->  +        *
->  +        * @throws Exception
->  +        *
->  +        */
->  +       public void testSimplestOk() throws Exception {
->  +               RemoteSpec spec = new RemoteSpec("their", "git://foo.bar/zip.git",
->  +                               "refs/heads/master:refs/heads/origin",null);
->  +               assertEquals("refs/heads/master", spec.getFetchRemoteRef());
->  +               assertEquals("refs/heads/origin", spec.getFetchLocalRef());
->  +               assertFalse(spec.isFetchMatchAny());
->  +               assertFalse(spec.isFetchOverwriteAlways());
->  +       }
->  +
->  +       /**
->  +        * Test a standard case
->  +        *
->  +        * @throws Exception
->  +        */
->  +       public void testStandardOk() throws Exception {
->  +               RemoteSpec spec = new RemoteSpec("their", "git://example.com/zip.git",
->  +                               "+refs/heads/master/*:refs/remotes/origin/*",null);
->  +               assertEquals("git://example.com/zip.git", spec.getUrl());
->  +               assertEquals("refs/heads/master", spec.getFetchRemoteRef());
->  +               assertEquals("refs/remotes/origin", spec.getFetchLocalRef());
->  +               assertTrue(spec.isFetchMatchAny());
->  +               assertTrue(spec.isFetchOverwriteAlways());
->  +       }
->  +
->  +       /**
->  +        * Test a <quote>safer</quote> almost standard case
->  +        *
->  +        * @throws Exception
->  +        */
->  +       public void testNonStandardSaferOk() throws Exception {
->  +               RemoteSpec spec = new RemoteSpec("their", "git://example.com/zip.git",
->  +                               "refs/heads/master/*:refs/remotes/origin/*",null);
->  +               assertEquals("git://example.com/zip.git", spec.getUrl());
->  +               assertEquals("refs/heads/master", spec.getFetchRemoteRef());
->  +               assertEquals("refs/remotes/origin", spec.getFetchLocalRef());
->  +               assertTrue(spec.isFetchMatchAny());
->  +               assertFalse(spec.isFetchOverwriteAlways());
->  +       }
->  +
->  +       /**
->  +        * Test a case copied from a real Git repo
->  +        *
->  +        * @throws Exception
->  +        */
->  +       public void testReadFromConfig() throws Exception {
->  +               File file = new File(db.getDirectory(),"config");
->  +               FileOutputStream stream = new FileOutputStream(file,true);
->  +               try {
->  +                       stream.write(("[remote \"spearce\"]\n"+
->  +               "url = http://www.spearce.org/projects/scm/egit.git\n"+
->  +               "fetch = +refs/heads/*:refs/remotes/spearce/*\n").getBytes());
->  +               } finally {
->  +                       stream.close();
->  +               }
->  +               db.getConfig().load();
->  +               RemoteSpec remoteSpec = db.getRemoteSpec("spearce");
->  +               assertEquals("http://www.spearce.org/projects/scm/egit.git", remoteSpec.getUrl());
->  +               assertEquals("refs/heads", remoteSpec.getFetchRemoteRef());
->  +               assertEquals("refs/remotes/spearce", remoteSpec.getFetchLocalRef());
->  +               assertTrue(remoteSpec.isFetchMatchAny());
->  +               assertTrue(remoteSpec.isFetchOverwriteAlways());
->  +       }
->  +}
->  diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/RemoteSpec.java b/org.spearce.jgit/src/org/spearce/jgit/lib/RemoteSpec.java
->  new file mode 100644
->  index 0000000..a6a3b6c
->  --- /dev/null
->  +++ b/org.spearce.jgit/src/org/spearce/jgit/lib/RemoteSpec.java
->  @@ -0,0 +1,142 @@
->  +/*
->  + *  Copyright (C) 2007  Robin Rosenberg
->  + *
->  + *  This library is free software; you can redistribute it and/or
->  + *  modify it under the terms of the GNU General Public
->  + *  License, version 2, as published by the Free Software Foundation.
->  + *
->  + *  This library is distributed in the hope that it will be useful,
->  + *  but WITHOUT ANY WARRANTY; without even the implied warranty of
->  + *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
->  + *  General Public License for more details.
->  + *
->  + *  You should have received a copy of the GNU General Public
->  + *  License along with this library; if not, write to the Free Software
->  + *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
->  + */
->  +package org.spearce.jgit.lib;
->  +
->  +/**
->  + * Information about how to synchronize with a remote Git repository.
->  + *
->  + * A remote is stored in the <GIT_DIR>/config as
->  + *
->  + * <pre>
->  + *  [remote &quot;name&quot;]
->  + *     url = URL:ish
->  + *     fetch = [+]remoteref:localref
->  + * </pre>
->  + *
->  + * There are more variants but we do not support them here yet.
->  + */
->  +public class RemoteSpec {
->  +
->  +       static class Info {
->  +               boolean overwriteAlways;
->  +
->  +               boolean matchAny;
->  +
->  +               String remoteRef;
->  +
->  +               String localRef;
->  +       }
->  +
->  +       Info fetch = new Info();
->  +
->  +       Info push = null;
->  +
->  +       private final String name;
->  +
->  +       private final String url;
->  +
->  +       /**
->  +        * @return name of remote. This is a local short identifier
->  +        */
->  +       public String getName() {
->  +               return name;
->  +       }
->  +
->  +       /**
->  +        * @return the URL:ish location of the remote Git repository
->  +        */
->  +       public String getUrl() {
->  +               return url;
->  +       }
->  +
->  +       /**
->  +        * @return the local ref part used for fetch heads info
->  +        */
->  +       public String getFetchLocalRef() {
->  +               return fetch.localRef;
->  +       }
->  +
->  +       /**
->  +        * @return the remote ref part used for fetching refs from the remote repo
->  +        */
->  +       public String getFetchRemoteRef() {
->  +               return fetch.remoteRef;
->  +       }
->  +
->  +       /**
->  +        * @return whether the fetch matches all branches under the ref or just the
->  +        *         named ref
->  +        */
->  +       public boolean isFetchMatchAny() {
->  +               return fetch.matchAny;
->  +       }
->  +
->  +       /**
->  +        * @return whether the tracking branch is always updated, or only when the
->  +        *         update is a fast forward
->  +        */
->  +       public boolean isFetchOverwriteAlways() {
->  +               return fetch.overwriteAlways;
->  +       }
->  +
->  +       /**
->  +        * Create a representation of a git remote specification.
->  +        *
->  +        * @param name A local short identifier
->  +        * @param url The URL:ish used for fetching / pushing
->  +        * @param fetchPattern refspec for fetching
->  +        * @param pushPattern refspec for pushing or null
->  +        */
->  +       public RemoteSpec(String name, String url, String fetchPattern,
->  +                       String pushPattern) {
->  +               this.name = name;
->  +               this.url = url;
->  +               parse(fetchPattern, fetch);
->  +               if (pushPattern != null) {
->  +                       push = new Info();
->  +                       parse(pushPattern, push);
->  +               }
->  +       }
->  +
->  +       private void parse(String fetchSpec, Info info) {
->  +               int p = 0;
->  +               if (fetchSpec.charAt(p) == '+') {
->  +                       info.overwriteAlways = true;
->  +                       ++p;
->  +               }
->  +               int cp = fetchSpec.indexOf(':');
->  +               if (cp < 0)
->  +                       throw new IllegalArgumentException("Bad remote format " + fetchSpec);
->  +               info.remoteRef = fetchSpec.substring(p, cp);
->  +               info.localRef = fetchSpec.substring(cp + 1);
->  +               if (info.remoteRef.endsWith("/*")) {
->  +                       info.matchAny = true;
->  +                       info.remoteRef = info.remoteRef.substring(0, info.remoteRef
->  +                                       .length() - 2);
->  +               }
->  +               if (info.localRef.endsWith("/*")) {
->  +                       if (!info.matchAny)
->  +                               throw new IllegalArgumentException("Bad remote format "
->  +                                               + fetchSpec);
->  +                       info.localRef = info.localRef.substring(0,
->  +                                       info.localRef.length() - 2);
->  +               } else
->  +                       if (info.matchAny)
->  +                               throw new IllegalArgumentException("Bad remote format " + fetchSpec);
->  +
->  +       }
->  +}
->  diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/Repository.java b/org.spearce.jgit/src/org/spearce/jgit/lib/Repository.java
->  index b3fa12e..821633d 100644
->  --- a/org.spearce.jgit/src/org/spearce/jgit/lib/Repository.java
->  +++ b/org.spearce.jgit/src/org/spearce/jgit/lib/Repository.java
->  @@ -1132,4 +1132,16 @@ public class Repository {
->                 relName = relName.replace(File.separatorChar, '/');
->                 return relName;
->         }
->  +
->  +       /**
->  +        * @param name
->  +        *            The "remote" name in this repo
->  +        * @return information about how a remote repository is beging tracked
->  +        */
->  +       public RemoteSpec getRemoteSpec(String name) {
->  +               String url = getConfig().getString("remote."+name, null, "url");
->  +               String fetchPattern = getConfig().getString("remote."+name, null, "fetch");
->  +               String pushPattern = getConfig().getString("remote."+name, null, "push");
->  +               return new RemoteSpec(name, url, fetchPattern, pushPattern);
->  +       }
->   }
->  --
->  1.5.4.3
->
->
-
+000000 mode will appear for added or deleted or unmerged modules. The
+deleted/added case has already been handled. However, the unmerged
+case is not handled yet which will appear at very low frequency. So
+this case can be delayed to handle.
 
 
 -- 
-Imran M Yousuf
-Entrepreneur & Software Engineer
-Smart IT Engineering
-Dhaka, Bangladesh
-Email: imran@smartitengineering.com
-Mobile: +880-1711402557
+Ping Yin
