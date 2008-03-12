@@ -1,85 +1,186 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4] gc: call "prune --expire 2.weeks.ago" by default
-Date: Wed, 12 Mar 2008 14:20:00 -0700
-Message-ID: <7vwso74p33.fsf@gitster.siamese.dyndns.org>
-References: <alpine.LSU.1.00.0803112157560.3873@racer.site>
- <7vskywadum.fsf@gitster.siamese.dyndns.org>
- <alpine.LFD.1.00.0803112234470.2947@xanadu.home>
- <alpine.LSU.1.00.0803121833210.1656@racer.site>
- <47D8193B.901@nrlssc.navy.mil> <m3prtzyens.fsf@localhost.localdomain>
- <47D83532.70103@nrlssc.navy.mil>
- <alpine.LSU.1.00.0803122058430.1656@racer.site>
- <47D83C53.7000602@nrlssc.navy.mil>
- <7vejaf65q0.fsf@gitster.siamese.dyndns.org>
- <alpine.LSU.1.00.0803122153440.1656@racer.site>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 00/16] solaris portability patches
+Date: Wed, 12 Mar 2008 17:29:32 -0400
+Message-ID: <20080312212932.GA26286@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Brandon Casey <casey@nrlssc.navy.mil>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Mar 12 22:21:10 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Whit Armstrong <armstrong.whit@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 12 22:30:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JZYNp-0002DQ-50
-	for gcvg-git-2@gmane.org; Wed, 12 Mar 2008 22:21:09 +0100
+	id 1JZYWc-0005zp-Jz
+	for gcvg-git-2@gmane.org; Wed, 12 Mar 2008 22:30:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751628AbYCLVUK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Mar 2008 17:20:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751634AbYCLVUK
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Mar 2008 17:20:10 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:50511 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751628AbYCLVUJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Mar 2008 17:20:09 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 432E819A9;
-	Wed, 12 Mar 2008 17:20:08 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 50F0419A4; Wed, 12 Mar 2008 17:20:02 -0400 (EDT)
-In-Reply-To: <alpine.LSU.1.00.0803122153440.1656@racer.site> (Johannes
- Schindelin's message of "Wed, 12 Mar 2008 21:55:47 +0100 (CET)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752093AbYCLV3g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Mar 2008 17:29:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751918AbYCLV3f
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Mar 2008 17:29:35 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4631 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751890AbYCLV3f (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Mar 2008 17:29:35 -0400
+Received: (qmail 2570 invoked by uid 111); 12 Mar 2008 21:29:33 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 12 Mar 2008 17:29:33 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 12 Mar 2008 17:29:32 -0400
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76989>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76990>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+I've been trying to run the testsuite under Solaris without using any of
+the more fancy tools available. Maybe this is foolhardy, and we should
+simply say "at least put /usr/ucb in your PATH if you're going to run
+the testsuite." Even with that, though, some of the patches below still
+fix problems, either because the ucb and xpg4 versions given with
+Solaris also don't work, or because the problem is in a git script
+itself, and I don't think we want to force users to have /usr/ucb at the
+front of their PATH.
 
-> ---prune::
+The series goes on top of the current master.  The first patch is a
+repost from this morning that was embedded in a thread, but the rest are
+new. The order of patches is roughly in the order that the bugs come up
+if you try to run the testsuite. :)
 
-I am fairly paranoid about end users wondering about what is described in
-ancient documentation and complaining that we do not talk about it
-anymore.  I am tempted to suggest:
+It may be that some are less controversial than others, and I can try to
+re-order if need be.
 
-	This is a no-op but you may see it mentioned in older docs and
-	scripts.  Older git-gc never ran 'prune' without being told, and
-	this option was a way to tell it to.
+With these patches applied, running
 
-but this would lead to littering the documentation with too much
-historical information in the long run.  I dunno.  I am inclined to favor
-the removal as your patch did, but somebody else may have clever ideas.
+  PATH=/usr/bin:/bin /path/to/gmake test
 
-> +	if (!strcmp(var, "gc.pruneexpire")) {
-> +		if (!value)
-> +			return config_error_nonbool(var);
-> +		if (strcmp(value, "now") &&
-> +				approxidate(value) - approxidate("now") >= 0)
-> +			return error("Invalid gc.pruneExpire: '%s'", value);
+passes with the following exceptions:
 
-Yuck; approxidate() returns ulong.  Can subtracting a ulong from another
-ever go negative?
+t3701-add-interactive.sh
+t7501-commit.sh (only interactive add test)
+  git-add--interactive doesn't work with perl 5.005. I haven't looked
+  into it any more closely.
 
-Besides, because there is no guarantee of the order of evaluation between
-these two approxidate() calls, you may get +1 or -1 on the second boundary.
+t9001-send-email.sh
+  send-email doesn't work with perl 5.005 (haven't looked closer)
 
-I think the reason why you did not catch it in your test is because your
-tests are half complete; they test only what you wanted to catch
-(misconfigured case) and do not test the other half (properly working
-case).
+t3900-i18n-commit.sh
+  I think there are some iconv issues with Japanese charsets. I tried
+  debugging this before but didn't get very far.
+
+t4109-apply-multifrag.sh
+t4110-apply-scan.sh
+  These tests invoke the system 'patch' which doesn't like our git
+  patches very much. Despite having stdout/stderr redirected, it insists
+  on printing "File to patch?" to the terminal and waiting for input.
+
+t4116-apply-reverse.sh
+  system tar doesn't recognize typeflag 'g' in our git-archive
+  generated tarfile. It returns an error, which prevents further setup
+  from happening.
+
+t5000-tar-tree.sh
+  The system awk complains about a long awk line. I ran out of time to
+  try tracking it down.
+
+t3901-i18n-patch.sh
+t4024-diff-optimize-common.sh
+  I ran out of time to look more closely at these ones. Grab bag of
+  portability bugs!
+
+The patches are:
+
+  tr portability fixes
+  t0050: perl portability fix
+  more tr portability test script fixes
+  grep portability fix: don't use "-e" or "-q"
+  remove use of "tail -n 1" and "tail -1"
+  add test_cmp function for test scripts
+  t4020: don't use grep -a
+  t4200: use cut instead of sed
+  t6000lib: tr portability fix
+  add NO_EXTERNAL_GREP build option
+  config: add --literal-match option
+  git-submodule: avoid sed input with no newline
+  filter-branch: don't use xargs -0
+  filter-branch: use $SHELL_PATH instead of 'sh'
+  t9112: add missing #!/bin/sh header
+  t7505: use SHELL_PATH in hook
+
+ Documentation/git-config.txt       |    7 ++++
+ Makefile                           |    8 ++++
+ builtin-config.c                   |   50 ++++++++++++++++++++-------
+ builtin-grep.c                     |    4 +-
+ builtin-remote.c                   |    2 +-
+ cache.h                            |    2 +-
+ config.c                           |   67 ++++++++++++++++++++++++------------
+ git-am.sh                          |    2 +-
+ git-bisect.sh                      |    4 +-
+ git-filter-branch.sh               |    8 ++--
+ git-rebase--interactive.sh         |    8 ++--
+ git-submodule.sh                   |   19 +++++-----
+ t/diff-lib.sh                      |    4 +-
+ t/t0003-attributes.sh              |    2 +-
+ t/t0020-crlf.sh                    |    2 +-
+ t/t0022-crlf-rename.sh             |    2 +-
+ t/t0030-stripspace.sh              |   34 +++++++++---------
+ t/t0050-filesystem.sh              |    4 +-
+ t/t1005-read-tree-reset.sh         |    2 +-
+ t/t1300-repo-config.sh             |   17 ++++++++-
+ t/t2200-add-update.sh              |    2 +-
+ t/t3001-ls-files-others-exclude.sh |    2 +-
+ t/t3050-subprojects-fetch.sh       |    4 +-
+ t/t3060-ls-files-with-tree.sh      |    2 +-
+ t/t3201-branch-contains.sh         |    6 ++--
+ t/t3300-funny-names.sh             |    6 ++--
+ t/t3404-rebase-interactive.sh      |   11 +++---
+ t/t3405-rebase-malformed.sh        |    4 +-
+ t/t3406-rebase-message.sh          |    2 +-
+ t/t3701-add-interactive.sh         |    4 +-
+ t/t3800-mktag.sh                   |    2 +-
+ t/t3902-quoted.sh                  |   16 ++++----
+ t/t3903-stash.sh                   |    2 +-
+ t/t4020-diff-external.sh           |    5 ++-
+ t/t4020/diff.NUL                   |  Bin 0 -> 116 bytes
+ t/t4022-diff-rewrite.sh            |    5 ++-
+ t/t4023-diff-rename-typechange.sh  |    6 ++--
+ t/t4024-diff-optimize-common.sh    |    2 +-
+ t/t4025-hunk-header.sh             |    2 +-
+ t/t4027-diff-submodule.sh          |    6 ++--
+ t/t4103-apply-binary.sh            |    4 +-
+ t/t4105-apply-fuzz.sh              |    2 +-
+ t/t4116-apply-reverse.sh           |    4 +-
+ t/t4125-apply-ws-fuzz.sh           |    8 ++--
+ t/t4150-am-subdir.sh               |   10 +++---
+ t/t4200-rerere.sh                  |    4 +-
+ t/t4201-shortlog.sh                |    2 +-
+ t/t5300-pack-object.sh             |    2 +-
+ t/t5302-pack-index.sh              |    4 +-
+ t/t5400-send-pack.sh               |    2 +-
+ t/t5505-remote.sh                  |    6 ++--
+ t/t5510-fetch.sh                   |    2 +-
+ t/t5512-ls-remote.sh               |    8 ++--
+ t/t6000lib.sh                      |    5 ++-
+ t/t6004-rev-list-path-optim.sh     |    2 +-
+ t/t6009-rev-list-parent.sh         |    2 +-
+ t/t6027-merge-binary.sh            |    4 +-
+ t/t6029-merge-subtree.sh           |    2 +-
+ t/t6030-bisect-porcelain.sh        |    6 ++--
+ t/t7003-filter-branch.sh           |    2 +-
+ t/t7010-setup.sh                   |   18 +++++-----
+ t/t7201-co.sh                      |   18 +++++-----
+ t/t7501-commit.sh                  |   14 ++++----
+ t/t7502-commit.sh                  |   14 ++++----
+ t/t7502-status.sh                  |    4 +-
+ t/t7505-prepare-commit-msg-hook.sh |    3 +-
+ t/t7600-merge.sh                   |    8 ++--
+ t/t8003-blame.sh                   |    4 +-
+ t/t9001-send-email.sh              |    2 +-
+ t/t9112-git-svn-md5less-file.sh    |    2 +
+ t/t9116-git-svn-log.sh             |   24 ++++++------
+ t/t9200-git-cvsexportcommit.sh     |   14 ++++----
+ t/t9400-git-cvsserver-server.sh    |   28 +++++++-------
+ t/test-lib.sh                      |   18 ++++++++++
+ test-sha1.sh                       |    4 +-
+ 75 files changed, 347 insertions(+), 246 deletions(-)
+ create mode 100644 t/t4020/diff.NUL
