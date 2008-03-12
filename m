@@ -1,63 +1,62 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 04/16] grep portability fix: don't use "-e" or "-q"
-Date: Wed, 12 Mar 2008 15:45:43 -0700
-Message-ID: <7v63vr4l48.fsf@gitster.siamese.dyndns.org>
-References: <cover.1205356737.git.peff@peff.net>
- <20080312213217.GE26286@coredump.intra.peff.net>
- <7vr6ef4mqa.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Whit Armstrong <armstrong.whit@gmail.com>, git@vger.kernel.org
+From: Pieter de Bie <pdebie@ai.rug.nl>
+Subject: Re: [PATCH] gc: call "prune --expire 2.weeks.ago"
+Date: Wed, 12 Mar 2008 23:50:04 +0100
+Message-ID: <B27EC8CF-482D-499B-B4E0-019049926C93@ai.rug.nl>
+References: <alpine.LSU.1.00.0803112157560.3873@racer.site> <7vskywadum.fsf@gitster.siamese.dyndns.org> <alpine.LFD.1.00.0803112234470.2947@xanadu.home> <7vbq5k77z0.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0803121153160.1656@racer.site> <alpine.LFD.1.00.0803121143170.2947@xanadu.home> <FE263BF7-9948-463C-B9B2-833B068EB10B@ai.rug.nl> <alpine.LSU.1.00.0803121705330.1656@racer.site> <20080312170155.GB11236@coredump.intra.peff.net>
+Mime-Version: 1.0 (Apple Message framework v919.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Mar 12 23:47:02 2008
+X-From: git-owner@vger.kernel.org Wed Mar 12 23:50:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JZZit-0001po-I8
-	for gcvg-git-2@gmane.org; Wed, 12 Mar 2008 23:46:59 +0100
+	id 1JZZmg-000356-JN
+	for gcvg-git-2@gmane.org; Wed, 12 Mar 2008 23:50:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753910AbYCLWp6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Mar 2008 18:45:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752865AbYCLWp5
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Mar 2008 18:45:57 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:45088 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752524AbYCLWp4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Mar 2008 18:45:56 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id DD3D122FF;
-	Wed, 12 Mar 2008 18:45:55 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 2A73422FA; Wed, 12 Mar 2008 18:45:51 -0400 (EDT)
-In-Reply-To: <7vr6ef4mqa.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
- message of "Wed, 12 Mar 2008 15:10:53 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752079AbYCLWuI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Mar 2008 18:50:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751804AbYCLWuI
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Mar 2008 18:50:08 -0400
+Received: from smtp-1.orange.nl ([193.252.22.241]:56330 "EHLO smtp-1.orange.nl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751864AbYCLWuH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Mar 2008 18:50:07 -0400
+Received: from me-wanadoo.net (localhost [127.0.0.1])
+	by mwinf6006.orange.nl (SMTP Server) with ESMTP id 358C9700008A
+	for <git@vger.kernel.org>; Wed, 12 Mar 2008 23:50:05 +0100 (CET)
+Received: from [192.168.1.11] (s5591931c.adsl.wanadoo.nl [85.145.147.28])
+	by mwinf6006.orange.nl (SMTP Server) with ESMTP id CF8A87000081;
+	Wed, 12 Mar 2008 23:50:04 +0100 (CET)
+X-ME-UUID: 20080312225004850.CF8A87000081@mwinf6006.orange.nl
+In-Reply-To: <20080312170155.GB11236@coredump.intra.peff.net>
+X-Mailer: Apple Mail (2.919.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77017>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77018>
 
-Junio C Hamano <gitster@pobox.com> writes:
 
-> Jeff King <peff@peff.net> writes:
->
->> System V versions of grep (such as Solaris /usr/bin/grep)
->> don't understand either of these options. git's usage of
->
-> It might be fair for other System V people to qualify the above statement
-> with "Historic System V" (personally I felt that Solaris without xpg4 was
-> unusable, and I wish you luck tackling it).
->
-> More seriously, you would need to disable "when grepping work-tree,
-> running the native grep is faster and just as capable" optimization in
-> builtin-grep.c::grep_cache().  Treat these problematic System V platforms
-> as if they are not __unix__.
->
-> I am surprised that you did not have issues with "tail -n$number".
-> Historic way to spell it was "tail -$number" wasn't it?
+On Mar 12, 2008, at 6:01 PM, Jeff King wrote:
 
-Heh, I notice you had to deal with these issues in the later patches ;-)
+> On Wed, Mar 12, 2008 at 05:05:51PM +0100, Johannes Schindelin wrote:
+>
+>>> I'd really like it to be at least 2 weeks
+>>
+>> Could you back that up with an explanation, as to why?
+>
+> I assume it's "because I wouldn't want to lose work I had done within
+> the last two weeks." Yes, I know that this expiration is actually  
+> after
+> the reflog has already expired
+
+Ah, I hadn't realised that. Then I don't really care, one week sounds  
+fine too. 2 weeks just seemed a bit short, as the default reflog is 30  
+days. But if it's 2 weeks after the 30 days, that should be more than  
+enough
+
+- Pieter
