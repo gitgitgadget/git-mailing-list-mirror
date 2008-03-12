@@ -1,105 +1,81 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH] help: implement multi-valued "man.viewer" config option
-Date: Wed, 12 Mar 2008 08:23:37 +0100
-Message-ID: <200803120823.38100.chriscool@tuxfamily.org>
-References: <20080311085113.176df1af.chriscool@tuxfamily.org> <200803120100.m2C105YM010496@localhost.localdomain>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH 1/3] builtin-status: submodule summary support
+Date: Wed, 12 Mar 2008 08:33:39 +0100
+Message-ID: <47D78753.2040902@viscovery.net>
+References: <1205288512-20435-1-git-send-email-pkufranky@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: junkio@cox.net, pascal@obry.net, nanako3@bluebottle.com,
-	git@vger.kernel.org
-To: Xavier Maillard <xma@gnu.org>
-X-From: git-owner@vger.kernel.org Wed Mar 12 08:18:39 2008
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Ping Yin <pkufranky@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 12 08:34:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JZLEU-0006XC-Tp
-	for gcvg-git-2@gmane.org; Wed, 12 Mar 2008 08:18:39 +0100
+	id 1JZLTr-00029v-BT
+	for gcvg-git-2@gmane.org; Wed, 12 Mar 2008 08:34:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751460AbYCLHSA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 Mar 2008 03:18:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751385AbYCLHSA
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Mar 2008 03:18:00 -0400
-Received: from smtp1-g19.free.fr ([212.27.42.27]:60704 "EHLO smtp1-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751192AbYCLHR7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 12 Mar 2008 03:17:59 -0400
-Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 69C421AB2E8;
-	Wed, 12 Mar 2008 08:17:57 +0100 (CET)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id ED3FF1AB2F2;
-	Wed, 12 Mar 2008 08:17:56 +0100 (CET)
-User-Agent: KMail/1.9.7
-In-Reply-To: <200803120100.m2C105YM010496@localhost.localdomain>
-Content-Disposition: inline
+	id S1751346AbYCLHdo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Mar 2008 03:33:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751282AbYCLHdo
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Mar 2008 03:33:44 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:21010 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751086AbYCLHdo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Mar 2008 03:33:44 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1JZLSK-0007Kb-10; Wed, 12 Mar 2008 08:32:56 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 933E66D9; Wed, 12 Mar 2008 08:33:39 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <1205288512-20435-1-git-send-email-pkufranky@gmail.com>
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76933>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76934>
 
-Le mercredi 12 mars 2008, Xavier Maillard a =E9crit :
->
-> Tested-by: Xavier Maillard <xma@gnu.org>
+Ping Yin schrieb:
+> +static void wt_status_print_submodule_summary(struct wt_status *s)
+> +{
+> +	struct child_process sm_summary;
+> +	const char *argv[] = {
+> +		"submodule",
+> +		"summary",
+> +		"--cached",
+> +		"--for-status",
+> +		"--summary-limit",
+> +		summary_limit,
 
-Thanks.
+Where is summary_limit? Did you split this patch series incorrectly?
 
-> Though, I thought that when one entry had failed we would have
-> switched to the next until none could be found thus
->
-> I (voluntary) made a typo in my .git/config file as reflected by:
->
-> [xma@localhost 23:57:18 git]$ git config --get-all man.viewer
-> woma  <- TYPO HERE
-> konqueror
-> man
->
-> and I then tried git config --help. I thought it would have tried
-> all entries and as a last resort would have failed back to man
-> but it did not act like this:
->
-> [xma@localhost 23:57:11 git]$ git config --help
-> error: 'woma': unsupported man viewer.
-> fatal: bad config file line 16 in .git/config
->
-> Ok, woma in not supported here and it is reported like this but
-> would it be possible to just throw an error on stdout and try
-> another viewer ?=20
+> +		s->amend ? "HEAD^" : "HEAD",
 
-Yes, with the following patch on top:
+Any chance that we avoid "HEAD^" here? Perhaps we have the SHA1 around
+somewhere? I fear that our MSYS bash mangles it into "HEAD". I shall test it.
 
-diff --git a/help.c b/help.c
-index 5da8c9c..ecaca77 100644
---- a/help.c
-+++ b/help.c
-@@ -139,7 +139,7 @@ static int add_man_viewer(const char *value)
-        else if (!strcasecmp(value, "konqueror"))
-                do_add_man_viewer(exec_man_konqueror);
-        else
--               return error("'%s': unsupported man viewer.", value);
-+               warning("'%s': unsupported man viewer.", value);
+BTW, you don't mention the prerequisites of this series. I assume it
+builds on top of your "[PATCH v5 0/5] git-submodule summary" series.
 
-        return 0;
- }
+> +	sm_summary.no_stderr = 1;
 
-> We could even imagine something even more=20
-> general like the possibility for the user to write his own man
-> viewer (a bash script for example) and set it as a candidate.
+Why this? If the submodule summary has errors we certainly want to see them.
 
-I will do that in a latter patch, it has been suggested a lot of times=20
-already.
+> @@ -321,6 +349,9 @@ void wt_status_print(struct wt_status *s)
+>  	}
+>  
+>  	wt_status_print_changed(s);
+> +	// must flush s->fp since following call will write to s->fp in a child process
+> +	fflush(s->fp);
+> +	wt_status_print_submodule_summary(s);
 
-> By the way, I do not see any reason to put man as a candidate.
-> "man" should be the default when nothing is specified or when all
-> candidates have failed.
+Hmm. Aren't you unconditionally spawning "git submodule summary" for each
+git-status/git-commit?
 
-It may be more explicit.
-
-Thanks,
-Christian.
-
-> Anyway, thank you for this implementation.
->
-> 	Xavier
+-- Hannes
