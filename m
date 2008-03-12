@@ -1,263 +1,73 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH v2] gc: call "prune --expire 2.weeks.ago" by default
-Date: Wed, 12 Mar 2008 18:35:02 +0100 (CET)
-Message-ID: <alpine.LSU.1.00.0803121833210.1656@racer.site>
-References: <alpine.LSU.1.00.0803112157560.3873@racer.site> <7vskywadum.fsf@gitster.siamese.dyndns.org> <alpine.LFD.1.00.0803112234470.2947@xanadu.home>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: [PATCH v2] gc: call "prune --expire 2.weeks.ago" by default
+Date: Wed, 12 Mar 2008 12:56:11 -0500
+Message-ID: <47D8193B.901@nrlssc.navy.mil>
+References: <alpine.LSU.1.00.0803112157560.3873@racer.site> <7vskywadum.fsf@gitster.siamese.dyndns.org> <alpine.LFD.1.00.0803112234470.2947@xanadu.home> <alpine.LSU.1.00.0803121833210.1656@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Wed Mar 12 18:36:21 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Nicolas Pitre <nico@cam.org>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Mar 12 18:57:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JZUrc-0004o2-A6
-	for gcvg-git-2@gmane.org; Wed, 12 Mar 2008 18:35:40 +0100
+	id 1JZVCo-0006Hi-9U
+	for gcvg-git-2@gmane.org; Wed, 12 Mar 2008 18:57:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755520AbYCLRe6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Mar 2008 13:34:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755513AbYCLRe5
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Mar 2008 13:34:57 -0400
-Received: from mail.gmx.net ([213.165.64.20]:34241 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755495AbYCLRe4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Mar 2008 13:34:56 -0400
-Received: (qmail invoked by alias); 12 Mar 2008 17:34:54 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp047) with SMTP; 12 Mar 2008 18:34:54 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/tl/sxtf/tAynH8FIX3ELeZfJ0FvAqOSUgHE6Zjx
-	8GM+J6UJWihNU9
-X-X-Sender: gene099@racer.site
-In-Reply-To: <alpine.LFD.1.00.0803112234470.2947@xanadu.home>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1752009AbYCLR4y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Mar 2008 13:56:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751909AbYCLR4y
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Mar 2008 13:56:54 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:51158 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751833AbYCLR4y (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Mar 2008 13:56:54 -0400
+Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
+	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id m2CHuBJK022649;
+	Wed, 12 Mar 2008 12:56:11 -0500
+Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
+	 Wed, 12 Mar 2008 12:56:11 -0500
+User-Agent: Thunderbird 2.0.0.9 (X11/20071031)
+In-Reply-To: <alpine.LSU.1.00.0803121833210.1656@racer.site>
+X-OriginalArrivalTime: 12 Mar 2008 17:56:11.0206 (UTC) FILETIME=[5B3B1E60:01C8846A]
+X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-5.0.0.1023-15778001
+X-TM-AS-Result: : Yes--12.302000-0-31-1
+X-TM-AS-Category-Info: : 31:0.000000
+X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNTY3LTE1MDcwNC0xNTA2?=
+	=?us-ascii?B?NjgtNzAwMDc1LTEzOTAxMC03MDE0NTUtNzAyMDQ0LTcwMDE5NC03?=
+	=?us-ascii?B?MDU3NTQtNzA0NDI1LTcwMzc4OC03MDUxMDItNzAzNzEyLTcwMjk2?=
+	=?us-ascii?B?Mi03MDQ5MjctNzA2MDYwLTcwMDY5My03MDE3MzUtNzAyMzU4LTEx?=
+	=?us-ascii?B?MDA1My03MDY0NTQtNzAxNzE5LTcwOTU4NC03MDQ5ODMtNzA0Nzgy?=
+	=?us-ascii?B?LTE0ODAzOS0xNDgwNTEtMjAwNDI=?=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76968>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76969>
 
+Johannes Schindelin wrote:
+> If you want to override this grace period, just set the config variable
+> gc.pruneExpire to a different value; an example would be
+> 
+> 	[gc]
+> 		pruneExpire = 6.months.ago
+> 
+> if you feel really paranoid.
+> 
+> Note that this new behaviour does not affect git-gc when you pass the
+> option --prune; in that case, prune will clean up the loose objects with no
+> grace period at all.
 
-The only reason we did not call "prune" in git-gc was that it is an
-inherently dangerous operation: if there is a commit going on, you will
-prune loose objects that were just created, and are, in fact, needed by the
-commit object just about to be created.
+Hmm. Perhaps 'git-gc' should always call 'prune' with the '--expire' argument
+for simplicity of the 'git-gc' interface and --prune should become a noop?
 
-Since it is dangerous, we told users so.  That led to many users not even
-daring to run it when it was actually safe. Besides, they are users, and
-should not have to remember such details as when to call git-gc with
---prune, or to call git-prune directly.
+Is 'git-gc --prune' still useful to end users when those in-the-know can use
+git-prune when they really want all loose unreferenced objects to be removed?
 
-Of course, the consequence was that "git gc --auto" gets triggered much
-more often than we would like, since unreferenced loose objects (such as
-left-overs from a rebase or a reset --hard) were never pruned.
+Also, what about clones created with --shared or --reference? Should there be
+a way to disable this functionality? gc.pruneExpire never
 
-Alas, git-prune recently learnt the option --expire <minimum-age>, which
-makes it a much safer operation.  This allows us to call prune from git-gc,
-with a grace period of 2 weeks for the unreferenced loose objects (this
-value was determined in a discussion on the git list as a safe one).
-
-If you want to override this grace period, just set the config variable
-gc.pruneExpire to a different value; an example would be
-
-	[gc]
-		pruneExpire = 6.months.ago
-
-if you feel really paranoid.
-
-Note that this new behaviour does not affect git-gc when you pass the
-option --prune; in that case, prune will clean up the loose objects with no
-grace period at all.
-
-While adding a test to t5304-prune.sh (since it really tests the implicit
-call to "prune"), also the original test for "prune --expire" was moved
-there from t1410-reflog.sh, where it did not belong.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-Acked-by: Nicolas Pitre <nico@cam.org>
-
----
-
-	Since my original suggestion of 2 weeks was more or less agreed 
-	upon, I only reworked the commit message, and added the Ack of 
-	Nico.
-
-	Junio, is this message good enough?
-
- Documentation/config.txt |    5 +++++
- Documentation/git-gc.txt |   16 +++++++++++-----
- builtin-gc.c             |   19 +++++++++++++++++--
- t/t1410-reflog.sh        |   18 ------------------
- t/t5304-prune.sh         |   36 ++++++++++++++++++++++++++++++++++++
- 5 files changed, 69 insertions(+), 25 deletions(-)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index f64b269..db5b2dc 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -590,6 +590,11 @@ gc.packrefs::
- 	at some stage, and setting this to `false` will continue to
- 	prevent `git pack-refs` from being run from `git gc`.
- 
-+gc.pruneexpire::
-+	When `git gc` is run without `--prune`, it will still call
-+	`prune`, but with `--expire 2.weeks.ago`.  Override the value
-+	with this config variable.
-+
- gc.reflogexpire::
- 	`git reflog expire` removes reflog entries older than
- 	this time; defaults to 90 days.
-diff --git a/Documentation/git-gc.txt b/Documentation/git-gc.txt
-index 2e7be91..2042d9f 100644
---- a/Documentation/git-gc.txt
-+++ b/Documentation/git-gc.txt
-@@ -28,13 +28,19 @@ OPTIONS
- --prune::
- 	Usually `git-gc` packs refs, expires old reflog entries,
- 	packs loose objects,
--	and removes old 'rerere' records.  Removal
-+	and removes old 'rerere' records.  Unilateral removal
- 	of unreferenced loose objects is an unsafe operation
- 	while other git operations are in progress, so it is not
--	done by default.  Pass this option if you want it, and only
--	when you know nobody else is creating new objects in the
--	repository at the same time (e.g. never use this option
--	in a cron script).
-+	done by default.
-++
-+Instead, `git-prune` is called with an option telling it to expire
-+only unreferenced loose objects that are at least 2 weeks old.  Set
-+the config variable `gc.pruneexpire` to override this grace period.
-++
-+Pass `--prune` to expire all unreferenced loose objects, but only
-+when you know nobody else is creating new objects in the
-+repository at the same time (e.g. never use this option
-+in a cron script).
- 
- --aggressive::
- 	Usually 'git-gc' runs very quickly while providing good disk
-diff --git a/builtin-gc.c b/builtin-gc.c
-index 7cad366..8d07350 100644
---- a/builtin-gc.c
-+++ b/builtin-gc.c
-@@ -26,12 +26,13 @@ static int pack_refs = 1;
- static int aggressive_window = 250;
- static int gc_auto_threshold = 6700;
- static int gc_auto_pack_limit = 20;
-+static char *prune_expire = "2.weeks.ago";
- 
- #define MAX_ADD 10
- static const char *argv_pack_refs[] = {"pack-refs", "--all", "--prune", NULL};
- static const char *argv_reflog[] = {"reflog", "expire", "--all", NULL};
- static const char *argv_repack[MAX_ADD] = {"repack", "-d", "-l", NULL};
--static const char *argv_prune[] = {"prune", NULL};
-+static const char *argv_prune[] = {"prune", NULL, NULL, NULL};
- static const char *argv_rerere[] = {"rerere", "gc", NULL};
- 
- static int gc_config(const char *var, const char *value)
-@@ -55,6 +56,14 @@ static int gc_config(const char *var, const char *value)
- 		gc_auto_pack_limit = git_config_int(var, value);
- 		return 0;
- 	}
-+	if (!strcmp(var, "gc.pruneexpire")) {
-+		if (!value)
-+			return config_error_nonbool(var);
-+		if (!approxidate(value))
-+			return error("Invalid gc.pruneExpire: '%s'", value);
-+		prune_expire = xstrdup(value);
-+		return 0;
-+	}
- 	return git_default_config(var, value);
- }
- 
-@@ -235,7 +244,13 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
- 	if (run_command_v_opt(argv_repack, RUN_GIT_CMD))
- 		return error(FAILED_RUN, argv_repack[0]);
- 
--	if (prune && run_command_v_opt(argv_prune, RUN_GIT_CMD))
-+	if (!prune) {
-+		argv_prune[1] = "--expire";
-+		argv_prune[2] = prune_expire;
-+		argv_prune[3] = NULL;
-+	}
-+
-+	if (run_command_v_opt(argv_prune, RUN_GIT_CMD))
- 		return error(FAILED_RUN, argv_prune[0]);
- 
- 	if (run_command_v_opt(argv_rerere, RUN_GIT_CMD))
-diff --git a/t/t1410-reflog.sh b/t/t1410-reflog.sh
-index 24476be..73f830d 100755
---- a/t/t1410-reflog.sh
-+++ b/t/t1410-reflog.sh
-@@ -202,22 +202,4 @@ test_expect_success 'delete' '
- 
- '
- 
--test_expect_success 'prune --expire' '
--
--	before=$(git count-objects | sed "s/ .*//") &&
--	BLOB=$(echo aleph | git hash-object -w --stdin) &&
--	BLOB_FILE=.git/objects/$(echo $BLOB | sed "s/^../&\//") &&
--	test $((1 + $before)) = $(git count-objects | sed "s/ .*//") &&
--	test -f $BLOB_FILE &&
--	git reset --hard &&
--	git prune --expire=1.hour.ago &&
--	test $((1 + $before)) = $(git count-objects | sed "s/ .*//") &&
--	test -f $BLOB_FILE &&
--	test-chmtime -86500 $BLOB_FILE &&
--	git prune --expire 1.day &&
--	test $before = $(git count-objects | sed "s/ .*//") &&
--	! test -f $BLOB_FILE
--
--'
--
- test_done
-diff --git a/t/t5304-prune.sh b/t/t5304-prune.sh
-index 6560af7..2a88b3f 100644
---- a/t/t5304-prune.sh
-+++ b/t/t5304-prune.sh
-@@ -29,4 +29,40 @@ test_expect_success 'prune stale packs' '
- 
- '
- 
-+test_expect_success 'prune --expire' '
-+
-+	before=$(git count-objects | sed "s/ .*//") &&
-+	BLOB=$(echo aleph | git hash-object -w --stdin) &&
-+	BLOB_FILE=.git/objects/$(echo $BLOB | sed "s/^../&\//") &&
-+	test $((1 + $before)) = $(git count-objects | sed "s/ .*//") &&
-+	test -f $BLOB_FILE &&
-+	git prune --expire=1.hour.ago &&
-+	test $((1 + $before)) = $(git count-objects | sed "s/ .*//") &&
-+	test -f $BLOB_FILE &&
-+	test-chmtime -86500 $BLOB_FILE &&
-+	git prune --expire 1.day &&
-+	test $before = $(git count-objects | sed "s/ .*//") &&
-+	! test -f $BLOB_FILE
-+
-+'
-+
-+test_expect_success 'gc: implicit prune --expire' '
-+
-+	before=$(git count-objects | sed "s/ .*//") &&
-+	BLOB=$(echo aleph_0 | git hash-object -w --stdin) &&
-+echo blob: $BLOB &&
-+	BLOB_FILE=.git/objects/$(echo $BLOB | sed "s/^../&\//") &&
-+	test $((1 + $before)) = $(git count-objects | sed "s/ .*//") &&
-+	test -f $BLOB_FILE &&
-+	test-chmtime -$((86400*14-30)) $BLOB_FILE &&
-+	git gc &&
-+	test $((1 + $before)) = $(git count-objects | sed "s/ .*//") &&
-+	test -f $BLOB_FILE &&
-+	test-chmtime -$((86400*14+1)) $BLOB_FILE &&
-+	git gc &&
-+	test $before = $(git count-objects | sed "s/ .*//") &&
-+	! test -f $BLOB_FILE
-+
-+'
-+
- test_done
--- 
-1.5.4.4.694.g43223
+-brandon
