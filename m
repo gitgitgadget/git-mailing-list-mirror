@@ -1,71 +1,81 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH] Fast forward strategies allow, never, and only
-Date: Tue, 11 Mar 2008 21:50:03 -0700
-Message-ID: <7v1w6g8s1w.fsf@gitster.siamese.dyndns.org>
-References: <402c10cd0803101959q619efa86pbd501e5e2cc018c2@mail.gmail.com>
- <m33aqxzknl.fsf@localhost.localdomain>
- <402c10cd0803112124i2726c32m75b9353d902df320@mail.gmail.com>
+Subject: Re: Unclear error message in "git remote update"
+Date: Tue, 11 Mar 2008 22:10:18 -0700
+Message-ID: <7vve3s7cjp.fsf@gitster.siamese.dyndns.org>
+References: <2008-03-09-13-37-55+trackit+sam@rfc1149.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org
-To: "Sverre Hvammen Johansen" <hvammen@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 12 05:51:16 2008
+Cc: git@vger.kernel.org
+To: Samuel Tardieu <sam@rfc1149.net>
+X-From: git-owner@vger.kernel.org Wed Mar 12 06:11:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JZIvr-00084Q-1i
-	for gcvg-git-2@gmane.org; Wed, 12 Mar 2008 05:51:15 +0100
+	id 1JZJF3-0003jO-Ka
+	for gcvg-git-2@gmane.org; Wed, 12 Mar 2008 06:11:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751391AbYCLEuU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Mar 2008 00:50:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751388AbYCLEuU
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Mar 2008 00:50:20 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:54516 "EHLO
+	id S1752020AbYCLFK2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Mar 2008 01:10:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753288AbYCLFK1
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Mar 2008 01:10:27 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:59760 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751337AbYCLEuT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Mar 2008 00:50:19 -0400
+	with ESMTP id S1751208AbYCLFK0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Mar 2008 01:10:26 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 05CAF335F;
-	Wed, 12 Mar 2008 00:50:16 -0400 (EDT)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 3B41F3501;
+	Wed, 12 Mar 2008 01:10:25 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
  certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 0E4EE335B; Wed, 12 Mar 2008 00:50:11 -0400 (EDT)
-In-Reply-To: <402c10cd0803112124i2726c32m75b9353d902df320@mail.gmail.com>
- (Sverre Hvammen Johansen's message of "Tue, 11 Mar 2008 20:24:02 -0800")
+ ESMTP id 8443534BF; Wed, 12 Mar 2008 01:10:22 -0400 (EDT)
+In-Reply-To: <2008-03-09-13-37-55+trackit+sam@rfc1149.net> (Samuel Tardieu's
+ message of "Sun, 09 Mar 2008 13:37:55 +0100")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76923>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76924>
 
-"Sverre Hvammen Johansen" <hvammen@gmail.com> writes:
+Samuel Tardieu <sam@rfc1149.net> writes:
 
-> On Tue, Mar 11, 2008 at 1:15 AM, Jakub Narebski <jnareb@gmail.com> wrote:
->>  > +never::
->>  > +     Generate a merge commit even if the merge resolved
->>  > +     as a fast-forward.
->>
->>  This is equivalent of current '--no-ff'; nevertheless I think that it
->>  would be better to name this strategy 'commit' or 'merge', as in
->>  --ff=merge, or --ff=commit.
+> One of my colleague seems to have destroyed one of its head in his
+> private repository. When fetching from it through "git remote update"
+> using next, the repository name is not output:
 >
-> If there is consensus to change this I will.
+> % git remote update
+> error: refs/heads/2.0-uobjects points nowhere!
+>
+> Using master, I get:
+>
+> % git remote update
+> Updating core
+> Updating matthieu
+> error: refs/heads/2.0-uobjects points nowhere!
+> Updating origin
+>
+> which is IMO much clearer. Also, I like seeing what remote repository
+> it is updating from in case anything gets stuck or slow.
+>
+> Any objection to reinstating the message as does the following patch?
 
-I do not think Jakub's suggestion makes much sense.  If --ff stands for
-"fast forward", then --ff=merge could be explained (very unnaturally) as
-"(in a) fast forward (situation, create a) merge", which might make some
-sense as an incomplete sentence, but I cannot explain "commit" like that
-even with a broken sentence.
+I do not have objections, but it feels that the message for normal case
+(success) is cluttering the output.
 
-Using "fast forward" as a verb ("instead of creating a needless merge,
-just move the head"), then the mode of operations your patch proposes can
-be described much clearer.  "Never fast forward, always create an
-artificial merge if needed", "Only fast forward is allowed, never advance
-this head by creating a true merge", etc.
+If the remote repository is in a bad shape to solicit a "points nowhere"
+error, perhaps
 
-So I think the wording is fine.  What's more necessary in the documention
-is how and why these restrictions are useful in what situations, workflows
-and management policies.
+ (1) that error message should be squelched out completely, as it does not
+     affect the outcome of the fetch anyway, or
+
+ (2) the dangling symref should cause "fetch" to error out but with a
+     different error status than the total failure case, so that this
+     caller can tell it is a non-grave error, or
+
+ (3) the dangling symref should actually make the fetch fail, as the
+     remote repository is corrupt.
+
+For now I'll take your patch, but this is something we may want to
+clean-up in 1.6.0 timeframe.
