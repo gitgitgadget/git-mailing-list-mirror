@@ -1,79 +1,65 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: I: git-fetch: -n option disappeared but git-fetch(1) still describe
- it
-Date: Wed, 12 Mar 2008 15:52:23 +0100
-Message-ID: <47D7EE27.50407@op5.se>
-References: <20080312105102.GE14040@wo.int.altlinux.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: git latest master: a6828f536119c3288b0be772e3870f1a464d017d --
+	error in t0050-filesystem.sh on Solaris
+Date: Wed, 12 Mar 2008 10:53:33 -0400
+Message-ID: <20080312145333.GA11236@coredump.intra.peff.net>
+References: <8ec76080803120649h587b1933x6ec513d4b51a29a9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: "Dmitry V. Levin" <ldv@altlinux.org>
-X-From: git-owner@vger.kernel.org Wed Mar 12 15:53:33 2008
+To: Whit Armstrong <armstrong.whit@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 12 15:54:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JZSKH-0003Eo-Fp
-	for gcvg-git-2@gmane.org; Wed, 12 Mar 2008 15:53:05 +0100
+	id 1JZSLO-0003gl-Gf
+	for gcvg-git-2@gmane.org; Wed, 12 Mar 2008 15:54:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751580AbYCLOw0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Mar 2008 10:52:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751483AbYCLOw0
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Mar 2008 10:52:26 -0400
-Received: from mail.op5.se ([193.201.96.20]:47683 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751392AbYCLOw0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Mar 2008 10:52:26 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 0EE371F08038;
-	Wed, 12 Mar 2008 15:53:26 +0100 (CET)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -4.399
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id WOYOxJOgPHhV; Wed, 12 Mar 2008 15:53:25 +0100 (CET)
-Received: from clix.int.op5.se (unknown [192.168.1.27])
-	by mail.op5.se (Postfix) with ESMTP id 33FE41F08032;
-	Wed, 12 Mar 2008 15:53:25 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.12 (X11/20080226)
-In-Reply-To: <20080312105102.GE14040@wo.int.altlinux.org>
+	id S1751642AbYCLOxg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Mar 2008 10:53:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751591AbYCLOxg
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Mar 2008 10:53:36 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3578 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751585AbYCLOxf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Mar 2008 10:53:35 -0400
+Received: (qmail 7131 invoked by uid 111); 12 Mar 2008 14:53:34 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 12 Mar 2008 10:53:34 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 12 Mar 2008 10:53:33 -0400
+Content-Disposition: inline
+In-Reply-To: <8ec76080803120649h587b1933x6ec513d4b51a29a9@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76952>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76953>
 
-Dmitry V. Levin wrote:
-> Hi,
-> 
-> git-fetch builtinification (commit v1.5.3.2-93-gb888d61) apparently
-> dropped -n option (alias to --no-tags) documented in
-> Documentation/fetch-options.txt
-> 
-> Either builtin-fetch.c or Documentation/fetch-options.txt should be
-> adjusted to sync the code with its docs.
-> 
-> Original bug report:
-> https://bugzilla.altlinux.org/show_bug.cgi?id=14870
-> 
+On Wed, Mar 12, 2008 at 09:49:25AM -0400, Whit Armstrong wrote:
 
-I have a (very) vague memory that git-fetch.sh had to iterate over
-tags one by one, making tag-heavy projects excruciatingly slow to
-fetch from with the shellscript version. Some pathological case
-with 2700 tags was presented where a fetch took nearly an hour,
-iirc. AFAIR, the builtinification (or was it a protocol extension?)
-reduced that time to something around 10 seconds for the pathological
-case.
+> xs5-trd-p1.grn:warmstro> uname -a
+> SunOS xs5-trd-p1.grn.tudor.com 5.9 Generic_118558-38 sun4u sparc
+> SUNW,Sun-Fire-V240 Solaris
+> 
+> the Unrecognized switch: -O is from the perl call:
+> 
+> ++ perl -CO -e 'print pack("U",0x00E4)'
+> Unrecognized switch: -O  (-h will show valid options).
+> + auml=
+> ++ perl -CO -e 'print pack("U",0x0061).pack("U",0x0308)'
+> Unrecognized switch: -O  (-h will show valid options).
+> + aumlcdiar=
 
-Does anyone else have a sharper memory of what caused the -n option
-to be dropped?
+Yes, perl 5.005 doesn't understand -CO. You can replace that with
+"binmode STDOUT, ':utf8'", but then you will find that it also doesn't
+understand "U" as a pack specifier. :)
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+While the perl code nicely shows what is going on, perhaps it would be
+simpler to just do something like:
+
+  auml=`printf '\xc3\xa4'`
+
+(which is the output that the perl gives on my Linux system).
+
+-Peff
