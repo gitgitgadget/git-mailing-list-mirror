@@ -1,86 +1,122 @@
-From: "Marko Kreen" <markokr@gmail.com>
-Subject: Re: [PATCH] gc: call "prune --expire 2.weeks.ago"
-Date: Wed, 12 Mar 2008 17:32:47 +0200
-Message-ID: <e51f66da0803120832p579d49fdmc4801b004e8cdabb@mail.gmail.com>
-References: <alpine.LSU.1.00.0803112157560.3873@racer.site>
-	 <7vskywadum.fsf@gitster.siamese.dyndns.org>
-	 <alpine.LFD.1.00.0803112234470.2947@xanadu.home>
-	 <7vbq5k77z0.fsf@gitster.siamese.dyndns.org>
-	 <alpine.LFD.1.00.0803121105481.2947@xanadu.home>
+From: ludo@gnu.org (Ludovic =?iso-8859-1?Q?Court=E8s?=)
+Subject: [PATCH] Fix Info documentation build with Docbook2X 0.8.8
+Date: Wed, 12 Mar 2008 16:30:10 +0100
+Message-ID: <87lk4o7yf1.fsf@inria.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: "Nicolas Pitre" <nico@cam.org>
-X-From: git-owner@vger.kernel.org Wed Mar 12 16:34:06 2008
+Content-Type: multipart/mixed; boundary="=-=-="
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 12 16:36:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JZSxT-0002YB-OT
-	for gcvg-git-2@gmane.org; Wed, 12 Mar 2008 16:33:36 +0100
+	id 1JZSzc-0003Qs-Ha
+	for gcvg-git-2@gmane.org; Wed, 12 Mar 2008 16:35:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751587AbYCLPcu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Mar 2008 11:32:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751391AbYCLPcu
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Mar 2008 11:32:50 -0400
-Received: from mu-out-0910.google.com ([209.85.134.186]:4733 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751280AbYCLPct (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Mar 2008 11:32:49 -0400
-Received: by mu-out-0910.google.com with SMTP id i10so8351126mue.5
-        for <git@vger.kernel.org>; Wed, 12 Mar 2008 08:32:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=C1Dl1Lw8yExOU4sIr2DHkqjBxYpRf6WYCGgyiIp4P2c=;
-        b=XL0yldw9+FnAoEHEeJsgwg6h+lIKHf1UyuhTJiGsq8hM95B6gJk9hVckDIhI69QnQADy4MIPq29VDJz+diIdYejY7jCVtCuKj/eBXzr2W/Fw1Y76l+eQSAd/jLw9QW/mZwcpx7o4L5qyZ6WE1e7FgS5Tw8Yn3xEhpaZWE/PrQN8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=dujqlXN9+4GzHyyX5OP93u9sjI6yc+1df54z/fmeacL4qwHInzbwZODDGXjQEsq1+njKgN32aowBdnoeHt2BHyi0m5vix8SFOMjTGvpZKGkCvRzxWOibtvVbRC1MpBAZXcOKltfalhgUrZwAJWvtw6Ajg3/fmKyq8aq3ZbGsQ/Y=
-Received: by 10.78.189.5 with SMTP id m5mr21967070huf.74.1205335967982;
-        Wed, 12 Mar 2008 08:32:47 -0700 (PDT)
-Received: by 10.78.145.9 with HTTP; Wed, 12 Mar 2008 08:32:47 -0700 (PDT)
-In-Reply-To: <alpine.LFD.1.00.0803121105481.2947@xanadu.home>
-Content-Disposition: inline
+	id S1751618AbYCLPfJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Mar 2008 11:35:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751626AbYCLPfJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Mar 2008 11:35:09 -0400
+Received: from main.gmane.org ([80.91.229.2]:48057 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751568AbYCLPfH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Mar 2008 11:35:07 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1JZSys-0005Yc-Qb
+	for git@vger.kernel.org; Wed, 12 Mar 2008 15:35:02 +0000
+Received: from 193.50.110.109 ([193.50.110.109])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 12 Mar 2008 15:35:02 +0000
+Received: from ludo by 193.50.110.109 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 12 Mar 2008 15:35:02 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 193.50.110.109
+X-Revolutionary-Date: 23 =?iso-8859-1?Q?Vent=F4se?= an 216 de la
+ =?iso-8859-1?Q?R=E9volution?=
+X-PGP-Key-ID: 0xEB1F5364
+X-PGP-Key: http://www.laas.fr/~lcourtes/ludovic.asc
+X-PGP-Fingerprint: 821D 815D 902A 7EAB 5CEE  D120 7FBA 3D4F EB1F 5364
+X-OS: i686-pc-linux-gnu
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+Cancel-Lock: sha1:jhzicR77DnY0Esj6KmS4K1HjPJg=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76956>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76957>
 
-On 3/12/08, Nicolas Pitre <nico@cam.org> wrote:
-> On Tue, 11 Mar 2008, Junio C Hamano wrote:
-> > Nicolas Pitre <nico@cam.org> writes:
->  > >> Can we also have "why this is a good idea", "what problem this solves"?
->  > >
->  > > FWIW, my agreeing with the "why this is a good idea" can be translated
->  > > into:
->  > >
->  > > Acked-by: Nicolas Pitre <nico@cam.org>
->  >
->  > Hmmm.  Is it _that_ obvious?
->
-> To the average user, maybe not.  But My ack is orthogonal to that issue.
+--=-=-=
 
-Well, I'm a newbie user and now I'm trained to always do "gc --prune",
-because "gc" itself does not make tree "really" clean.
+Hi,
 
-But this will quite likely bit me in the long run.
+The attached patch against 1.5.4.4 (from NixOS/Nixpkgs) fixes build of
+the user manual in Info (i.e., `git.info') through Docbook2X 0.8.8.
+Actually, it does two things:
 
-So from my newbie perspective, anything that decreases
-number of mandatory arguments to commands is good.
-*cough* commit -a *cough*
+  1. Fix the value of `DOCBOOK2TEXI' to match the name currently used in
+     Docbook2X (I don't know when that name change occurred).
 
-But the difference from 'commit -a' is that its not a style
-issue - "gc" without --prune will keep stuff around indefinitely,
-which makes occasional --prune usage mandatory.  As its annoying
-to memorize when it was last ran, its easier to use it always.
+  2. Disable build of `gitman.info', which cannot be built because of
+     duplicate node names:
 
-So from my newbie perpective, +1 for making plain "gc" work.
+     $ makeinfo gitman.texi
+     gitman.texi:273: Node `DESCRIPTION' previously defined at line 153.
+     gitman.texi:281: Node `OPTIONS' previously defined at line 163.
+     gitman.texi:360: Node `DISCUSSION' previously defined at line 205.
+     [...]
 
--- 
-marko
+A related patch against Docbook2X 0.8.8 is needed to make `--to-stdout'
+work as expected [0].
+
+Thanks,
+Ludovic.
+
+[0] http://sourceforge.net/tracker/index.php?func=detail&aid=1912754&group_id=7856&atid=107856
+
+
+--=-=-=
+Content-Type: text/x-patch
+Content-Disposition: inline; filename=docbook2texi.patch
+Content-Description: The patch
+
+This patch does two things: (1) use the right name for `docbook2texi',
+and (2) make sure `gitman.info' isn't produced since it's broken (duplicate
+node names).
+
+--- git-1.5.4.4/Documentation/Makefile~	2008-03-09 11:18:13.000000000 +0100
++++ git-1.5.4.4/Documentation/Makefile	2008-03-12 16:04:05.000000000 +0100
+@@ -53,7 +53,7 @@ DOC_REF = origin/man
+ infodir?=$(prefix)/share/info
+ MAKEINFO=makeinfo
+ INSTALL_INFO=install-info
+-DOCBOOK2X_TEXI=docbook2x-texi
++DOCBOOK2X_TEXI=docbook2texi
+ ifndef PERL_PATH
+ 	PERL_PATH = /usr/bin/perl
+ endif
+@@ -89,7 +89,7 @@ man1: $(DOC_MAN1)
+ man5: $(DOC_MAN5)
+ man7: $(DOC_MAN7)
+ 
+-info: git.info gitman.info
++info: git.info
+ 
+ install: man
+ 	$(INSTALL) -d -m 755 $(DESTDIR)$(man1dir)
+@@ -101,10 +101,9 @@ install: man
+ 
+ install-info: info
+ 	$(INSTALL) -d -m 755 $(DESTDIR)$(infodir)
+-	$(INSTALL) -m 644 git.info gitman.info $(DESTDIR)$(infodir)
++	$(INSTALL) -m 644 git.info $(DESTDIR)$(infodir)
+ 	if test -r $(DESTDIR)$(infodir)/dir; then \
+ 	  $(INSTALL_INFO) --info-dir=$(DESTDIR)$(infodir) git.info ;\
+-	  $(INSTALL_INFO) --info-dir=$(DESTDIR)$(infodir) gitman.info ;\
+ 	else \
+ 	  echo "No directory found in $(DESTDIR)$(infodir)" >&2 ; \
+ 	fi
+
+--=-=-=--
