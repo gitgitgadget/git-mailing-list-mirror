@@ -1,66 +1,61 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 11/16] config: add --literal-match option
-Date: Wed, 12 Mar 2008 22:46:43 +0100
-Organization: At home
-Message-ID: <fr9ivq$eh0$1@ger.gmane.org>
-References: <cover.1205356737.git.peff@peff.net> <20080312214019.GL26286@coredump.intra.peff.net>
+From: =?utf-8?q?=E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=81=AA=E3=81=93?= 
+	<nanako3@bluebottle.com>
+Subject: [Q] assume unchanged?
+Date: Thu, 13 Mar 2008 06:53:07 +0900
+Message-ID: <20080227222243.6117@nanako3.bluebottle.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 12 22:47:50 2008
+X-From: git-owner@vger.kernel.org Wed Mar 12 22:54:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JZYnS-0004p3-PQ
-	for gcvg-git-2@gmane.org; Wed, 12 Mar 2008 22:47:39 +0100
+	id 1JZYu4-0007Xv-CT
+	for gcvg-git-2@gmane.org; Wed, 12 Mar 2008 22:54:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752635AbYCLVqv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 Mar 2008 17:46:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751733AbYCLVqv
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Mar 2008 17:46:51 -0400
-Received: from main.gmane.org ([80.91.229.2]:50273 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751768AbYCLVqv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Mar 2008 17:46:51 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1JZYmZ-0000Dh-28
-	for git@vger.kernel.org; Wed, 12 Mar 2008 21:46:43 +0000
-Received: from abww110.neoplus.adsl.tpnet.pl ([83.8.246.110])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 12 Mar 2008 21:46:43 +0000
-Received: from jnareb by abww110.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 12 Mar 2008 21:46:43 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: abww110.neoplus.adsl.tpnet.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S1752371AbYCLVxk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Mar 2008 17:53:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752284AbYCLVxj
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Mar 2008 17:53:39 -0400
+Received: from mi0.bluebottle.com ([206.188.25.15]:47721 "EHLO
+	mi0.bluebottle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751695AbYCLVxj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Mar 2008 17:53:39 -0400
+Received: from fe1.bluebottle.com (internal.bluebottle.com [206.188.24.43])
+	by mi0.bluebottle.com (8.13.1/8.13.1) with ESMTP id m2CLrcJK003608
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
+	for <git@vger.kernel.org>; Wed, 12 Mar 2008 14:53:38 -0700
+DomainKey-Signature: a=rsa-sha1; s=mail; d=bluebottle.com; c=nofws; q=dns;
+	h=received:from:to:date:subject:message-id:mime-version:
+	content-type:content-transfer-encoding:x-trusted-delivery;
+	b=g9fE+6KtWpjVKnMSB930/fhSpQ96lYtvvGHT2xC78LT3WskVn1patooE6HVp//vsz
+	76X5gkgVbg495ugOyVwmYBIUsWVlflfT6pzUkRmQhoQPtrMOZg7unq84GNIGJNb
+Received: from nanako3.mail.bluebottle.com ([212.62.97.23])
+	(authenticated bits=0)
+	by fe1.bluebottle.com (8.13.1/8.13.1) with ESMTP id m2CLrTeY008857
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
+	for <git@vger.kernel.org>; Wed, 12 Mar 2008 14:53:36 -0700
+X-Trusted-Delivery: <d0d96063a2423081160bae2336763b06>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77008>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77009>
 
-Jeff King wrote:
+I was looking at the documentation of git-update-index because I thought git-add is the preferred way to do what the command was used for in the old versions of git, and wanted to see if the old command has more features that are missing from git-add.
 
-> +--literal-match::
-> +
-> +=A0=A0=A0=A0=A0=A0=A0Some invocations of git-config will limit their=
- actions based on
-> +=A0=A0=A0=A0=A0=A0=A0matching a config value to a regular expression=
-=2E If this option
-> +=A0=A0=A0=A0=A0=A0=A0is used, then any such matches are done as a st=
-ring comparison
-> +=A0=A0=A0=A0=A0=A0=A0rather than as a regular expression match.
-> +
+I noticed that there is --assume-unchanged option, and I read its description three times, but I do not understand it.  What is it good for?  Version control systems are used in order to keep track changes, and if using that option makes my changes ignored, how can it be a good thing?
 
-Why this option is not named --fixed-strings, as everywhere else, then?
+The manual says "This is sometimes helpful when working with a big project on a filesystem that has very slow lstat(2) system call", but unfortunately it does not answer my question.
 
---=20
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Could somebody explain, please?
+
+-- 
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
+
+----------------------------------------------------------------------
+Find out how you can get spam free email.
+http://www.bluebottle.com/tag/3
