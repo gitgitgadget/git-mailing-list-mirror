@@ -1,68 +1,118 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] gc: call "prune --expire 2.weeks.ago"
-Date: Tue, 11 Mar 2008 22:37:09 -0400 (EDT)
-Message-ID: <alpine.LFD.1.00.0803112234470.2947@xanadu.home>
-References: <alpine.LSU.1.00.0803112157560.3873@racer.site>
- <7vskywadum.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-filter-branch.txt: Add picture to explain the
+ graft-id
+Date: Tue, 11 Mar 2008 19:51:08 -0700
+Message-ID: <7vzlt48xk3.fsf@gitster.siamese.dyndns.org>
+References: <7igcz2xx.fsf@blue.sea.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 12 03:38:04 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jari Aalto <jari.aalto@cante.net>
+X-From: git-owner@vger.kernel.org Wed Mar 12 03:52:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JZGqx-0006QP-AN
-	for gcvg-git-2@gmane.org; Wed, 12 Mar 2008 03:38:03 +0100
+	id 1JZH4S-0001Gx-I4
+	for gcvg-git-2@gmane.org; Wed, 12 Mar 2008 03:52:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753229AbYCLChL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Mar 2008 22:37:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753176AbYCLChL
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Mar 2008 22:37:11 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:39712 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751461AbYCLChK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Mar 2008 22:37:10 -0400
-Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JXL00IZRJ9XRI70@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 11 Mar 2008 22:37:09 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <7vskywadum.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+	id S1751859AbYCLCvV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Mar 2008 22:51:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751853AbYCLCvV
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Mar 2008 22:51:21 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:55109 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751385AbYCLCvV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Mar 2008 22:51:21 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 4C6B23958;
+	Tue, 11 Mar 2008 22:51:18 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 598443956; Tue, 11 Mar 2008 22:51:13 -0400 (EDT)
+In-Reply-To: <7igcz2xx.fsf@blue.sea.net> (Jari Aalto's message of "Sun, 09
+ Mar 2008 11:01:14 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76914>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76915>
 
-On Tue, 11 Mar 2008, Junio C Hamano wrote:
+Jari Aalto <jari.aalto@cante.net> writes:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > If "--prune" is passed to gc, it still just calls "git prune".
-> > Otherwise, "prune --expire 2.weeks.ago" is called, where the grace
-> > period is overrideable by the config variable gc.pruneExpire.
-> 
-> "What it does."
-> 
-> > While adding a test to t5304-prune.sh (since it really tests the
-> > implicit call to "prune"), the original test for "prune --expire"
-> > is moved there from t1410-reflog.sh, where it did not belong.
-> 
-> "What the fallouts from this change were."
-> 
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> 
-> Can we also have "why this is a good idea", "what problem this solves"?
+> diff --git a/Documentation/git-filter-branch.txt b/Documentation/git-filter-branch.txt
+> index 543a1cf..73939e2 100644
+> --- a/Documentation/git-filter-branch.txt
+> +++ b/Documentation/git-filter-branch.txt
+> @@ -186,7 +186,7 @@ Now, you will get the rewritten history saved in HEAD.
+>  
+>  To set a commit (which typically is at the tip of another
+>  history) to be the parent of the current initial commit, in
+> -order to paste the other history behind the current history:
+> +order to paste the other history behind the current history.
+>  
+>  -------------------------------------------------------------------
+>  git filter-branch --parent-filter 'sed "s/^\$/-p <graft-id>/"' HEAD
 
-FWIW, my agreeing with the "why this is a good idea" can be translated 
-into:
+Why?  I think ":" in the original is correct here, just like what you can
+see in the pre-context in the next hunk.
 
-Acked-by: Nicolas Pitre <nico@cam.org>
+> @@ -198,6 +198,12 @@ history with a single root (that is, no merge without common ancestors
+>  happened).  If this is not the case, use:
+>  
+>  --------------------------------------------------------------------------
+> +
+> +    The plan: supposing we're merging A with B
+> +    commit sequence A: a-b-c			graft-id  = b
+> +    commit sequence B: c'-d'-e'			commit-id = c'
+> +    Result	     : a-b-c'-d'-e'
+> +
+>  git filter-branch --parent-filter \
+>  	'test $GIT_COMMIT = <commit-id> && echo "-p <graft-id>" || cat' HEAD
+>  --------------------------------------------------------------------------
 
+It is not "merging".  As seen in the first hunk you are "pasting" (or
+grafting).
 
-Nicolas
+Also I think it would be easier to read without made-up words like
+"xxx-id", if you are illustrating.
+
+The example is unclear what HEAD is.  If you are clarifying the example,
+it is better to state that we are filtering starting at the tip of the
+second sequence.
+
+Perhaps...
+
+    Suppose we have these two unrelated histories:
+
+	---A---B---C (tip of the branch "one")
+
+	---D---E---F (tip of the branch "two")
+
+    and the commits C and D have the same trees and are logically at the
+    corresponding places in the global history.  You want to rewrite these
+    histories by pasting them together at C/D, so that the result looks
+    like this:
+
+        ---A---B---D---E---F (rewritten branch "two")
+
+    You can use --parent-filter to rewrite the parent of D to be B by
+    telling it to say "the parent is B" when (and only when) filter-branch
+    reaches D and processes it (for other commits, you just say "whatever
+    parents the original commit had is just fine" by running "cat" to emit
+    what you get from your standard input).  Hence, the command line to
+    filter the history, starting at F, becomes:
+
+	git filter-branch --parent-filter '
+		if test $GIT_COMMIT = D
+                then
+                	echo "-p B
+		else
+                	cat
+		fi
+        ' two
+
+    After filter-branch finishes, the branch "two" would have the desired
+    history.
