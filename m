@@ -1,1235 +1,228 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 06/16] add test_cmp function for test scripts
-Date: Wed, 12 Mar 2008 17:36:36 -0400
-Message-ID: <20080312213636.GG26286@coredump.intra.peff.net>
-References: <cover.1205356737.git.peff@peff.net>
+From: Michele Ballabio <barra_cuda@katamail.com>
+Subject: [PATCH] git-gui: update Italian translation
+Date: Wed, 12 Mar 2008 22:47:10 +0100
+Message-ID: <200803122247.10441.barra_cuda@katamail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Whit Armstrong <armstrong.whit@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 12 22:37:28 2008
+Content-Type: Multipart/Mixed;
+  boundary="Boundary-00=_e9E2HWw146uJORw"
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Mar 12 22:38:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JZYdW-0000bt-47
-	for gcvg-git-2@gmane.org; Wed, 12 Mar 2008 22:37:23 +0100
+	id 1JZYe1-0000s5-V8
+	for gcvg-git-2@gmane.org; Wed, 12 Mar 2008 22:37:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752496AbYCLVgm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Mar 2008 17:36:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752613AbYCLVgm
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Mar 2008 17:36:42 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3427 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752299AbYCLVgk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Mar 2008 17:36:40 -0400
-Received: (qmail 3156 invoked by uid 111); 12 Mar 2008 21:36:38 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 12 Mar 2008 17:36:38 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 12 Mar 2008 17:36:36 -0400
-Content-Disposition: inline
-In-Reply-To: <cover.1205356737.git.peff@peff.net>
+	id S1752681AbYCLVhN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Mar 2008 17:37:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752670AbYCLVhN
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Mar 2008 17:37:13 -0400
+Received: from smtp.katamail.com ([62.149.157.154]:44288 "HELO
+	smtp1.pc.aruba.it" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with SMTP id S1752529AbYCLVhM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Mar 2008 17:37:12 -0400
+Received: (qmail 18562 invoked by uid 89); 12 Mar 2008 21:35:58 -0000
+X-Spam-Checker-Version: SpamAssassin 3.2.3 (2007-08-08) on smtp2-pc
+X-Spam-Level: 
+X-Spam-Status: No, score=0.1 required=5.0 tests=RDNS_NONE autolearn=disabled
+	version=3.2.3
+Received: from unknown (HELO host23-57-static.104-80-b.business.telecomitalia.it) (barra?cuda@katamail.com@80.104.57.23)
+  by smtp2-pc with SMTP; 12 Mar 2008 21:35:54 -0000
+User-Agent: KMail/1.9.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76996>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76997>
 
-Many scripts compare actual and expected output using
-"diff -u". This is nicer than "cmp" because the output shows
-how the two differ. However, not all versions of diff
-understand -u, leading to unnecessary test failure.
+--Boundary-00=_e9E2HWw146uJORw
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 
-This adds a test_cmp function to the test scripts and
-switches all "diff -u" invocations to use it. The function
-uses the contents of "$GIT_TEST_CMP" to compare its
-arguments; the default is "diff -u".
+Patch attached to avoid encoding issues.
 
-On systems with a less-capable diff, you can do:
+--Boundary-00=_e9E2HWw146uJORw
+Content-Type: application/x-gzip;
+  name="0001-git-gui-update-Italian-translation.patch.gz"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment;
+	filename="0001-git-gui-update-Italian-translation.patch.gz"
 
-  GIT_TEST_CMP=cmp make test
+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
+xcmJUHjOzoJX4fn8PD6fvXr1H56jH7pUlwAA
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-The replacements were done mechanically with:
-
-  perl -pi -e 's/(?<!git.)diff -u/test_cmp/' t/*.sh
-
-Perhaps this should be a command-line option instead of an environment
-variable? Maybe it should be auto-detected or set up in the Makefile?
-
- t/t0003-attributes.sh              |    2 +-
- t/t0022-crlf-rename.sh             |    2 +-
- t/t1005-read-tree-reset.sh         |    2 +-
- t/t2200-add-update.sh              |    2 +-
- t/t3001-ls-files-others-exclude.sh |    2 +-
- t/t3050-subprojects-fetch.sh       |    4 ++--
- t/t3060-ls-files-with-tree.sh      |    2 +-
- t/t3201-branch-contains.sh         |    6 +++---
- t/t3404-rebase-interactive.sh      |    4 ++--
- t/t3405-rebase-malformed.sh        |    4 ++--
- t/t3406-rebase-message.sh          |    2 +-
- t/t3701-add-interactive.sh         |    4 ++--
- t/t3902-quoted.sh                  |   16 ++++++++--------
- t/t3903-stash.sh                   |    2 +-
- t/t4023-diff-rename-typechange.sh  |    6 +++---
- t/t4024-diff-optimize-common.sh    |    2 +-
- t/t4025-hunk-header.sh             |    2 +-
- t/t4027-diff-submodule.sh          |    6 +++---
- t/t4105-apply-fuzz.sh              |    2 +-
- t/t4125-apply-ws-fuzz.sh           |    8 ++++----
- t/t4150-am-subdir.sh               |   10 +++++-----
- t/t4201-shortlog.sh                |    2 +-
- t/t5505-remote.sh                  |    6 +++---
- t/t5510-fetch.sh                   |    2 +-
- t/t5512-ls-remote.sh               |    8 ++++----
- t/t6004-rev-list-path-optim.sh     |    2 +-
- t/t6009-rev-list-parent.sh         |    2 +-
- t/t6027-merge-binary.sh            |    4 ++--
- t/t6029-merge-subtree.sh           |    2 +-
- t/t7010-setup.sh                   |   18 +++++++++---------
- t/t7201-co.sh                      |   18 +++++++++---------
- t/t7501-commit.sh                  |   14 +++++++-------
- t/t7502-commit.sh                  |   14 +++++++-------
- t/t7502-status.sh                  |    2 +-
- t/t7600-merge.sh                   |    2 +-
- t/t8003-blame.sh                   |    4 ++--
- t/t9001-send-email.sh              |    2 +-
- t/t9116-git-svn-log.sh             |   24 ++++++++++++------------
- t/t9200-git-cvsexportcommit.sh     |   14 +++++++-------
- t/test-lib.sh                      |   18 ++++++++++++++++++
- 40 files changed, 133 insertions(+), 115 deletions(-)
-
-diff --git a/t/t0003-attributes.sh b/t/t0003-attributes.sh
-index 47f08a4..3faf135 100755
---- a/t/t0003-attributes.sh
-+++ b/t/t0003-attributes.sh
-@@ -11,7 +11,7 @@ attr_check () {
- 
- 	git check-attr test -- "$path" >actual &&
- 	echo "$path: test: $2" >expect &&
--	diff -u expect actual
-+	test_cmp expect actual
- 
- }
- 
-diff --git a/t/t0022-crlf-rename.sh b/t/t0022-crlf-rename.sh
-index 430a1d1..7d1ce2d 100755
---- a/t/t0022-crlf-rename.sh
-+++ b/t/t0022-crlf-rename.sh
-@@ -26,7 +26,7 @@ test_expect_success 'diff -M' '
- 	git diff-tree -M -r --name-status HEAD^ HEAD |
- 	sed -e "s/R[0-9]*/RNUM/" >actual &&
- 	echo "RNUM	sample	elpmas" >expect &&
--	diff -u expect actual
-+	test_cmp expect actual
- 
- '
- 
-diff --git a/t/t1005-read-tree-reset.sh b/t/t1005-read-tree-reset.sh
-index 8c45564..b0d31f5 100755
---- a/t/t1005-read-tree-reset.sh
-+++ b/t/t1005-read-tree-reset.sh
-@@ -24,7 +24,7 @@ test_expect_success 'setup' '
- test_expect_success 'reset should work' '
-   git read-tree -u --reset HEAD^ &&
-   git ls-files >actual &&
--  diff -u expect actual
-+  test_cmp expect actual
- '
- 
- test_done
-diff --git a/t/t2200-add-update.sh b/t/t2200-add-update.sh
-index 24f892f..b664341 100755
---- a/t/t2200-add-update.sh
-+++ b/t/t2200-add-update.sh
-@@ -62,7 +62,7 @@ test_expect_success 'cache tree has not been corrupted' '
- 	sed -e "s/ 0	/	/" >expect &&
- 	git ls-tree -r $(git write-tree) |
- 	sed -e "s/ blob / /" >current &&
--	diff -u expect current
-+	test_cmp expect current
- 
- '
- 
-diff --git a/t/t3001-ls-files-others-exclude.sh b/t/t3001-ls-files-others-exclude.sh
-index b4297ba..55f057c 100755
---- a/t/t3001-ls-files-others-exclude.sh
-+++ b/t/t3001-ls-files-others-exclude.sh
-@@ -97,7 +97,7 @@ cat > expect << EOF
- EOF
- 
- test_expect_success 'git-status honours core.excludesfile' \
--	'diff -u expect output'
-+	'test_cmp expect output'
- 
- test_expect_success 'trailing slash in exclude allows directory match(1)' '
- 
-diff --git a/t/t3050-subprojects-fetch.sh b/t/t3050-subprojects-fetch.sh
-index 34f26a8..2b21b10 100755
---- a/t/t3050-subprojects-fetch.sh
-+++ b/t/t3050-subprojects-fetch.sh
-@@ -26,7 +26,7 @@ test_expect_success clone '
- 		cd cloned &&
- 		(git rev-parse HEAD; git ls-files -s) >../actual
- 	) &&
--	diff -u expected actual
-+	test_cmp expected actual
- '
- 
- test_expect_success advance '
-@@ -46,7 +46,7 @@ test_expect_success fetch '
- 		git pull &&
- 		(git rev-parse HEAD; git ls-files -s) >../actual
- 	) &&
--	diff -u expected actual
-+	test_cmp expected actual
- '
- 
- test_done
-diff --git a/t/t3060-ls-files-with-tree.sh b/t/t3060-ls-files-with-tree.sh
-index 68eb266..3ce501b 100755
---- a/t/t3060-ls-files-with-tree.sh
-+++ b/t/t3060-ls-files-with-tree.sh
-@@ -66,6 +66,6 @@ test_expect_success 'git -ls-files --with-tree should succeed from subdir' '
- cd ..
- test_expect_success \
-     'git -ls-files --with-tree should add entries from named tree.' \
--    'diff -u expected output'
-+    'test_cmp expected output'
- 
- test_done
-diff --git a/t/t3201-branch-contains.sh b/t/t3201-branch-contains.sh
-index 9ef593f..b4cf628 100755
---- a/t/t3201-branch-contains.sh
-+++ b/t/t3201-branch-contains.sh
-@@ -31,7 +31,7 @@ test_expect_success 'branch --contains=master' '
- 	{
- 		echo "  master" && echo "* side"
- 	} >expect &&
--	diff -u expect actual
-+	test_cmp expect actual
- 
- '
- 
-@@ -41,7 +41,7 @@ test_expect_success 'branch --contains master' '
- 	{
- 		echo "  master" && echo "* side"
- 	} >expect &&
--	diff -u expect actual
-+	test_cmp expect actual
- 
- '
- 
-@@ -51,7 +51,7 @@ test_expect_success 'branch --contains=side' '
- 	{
- 		echo "* side"
- 	} >expect &&
--	diff -u expect actual
-+	test_cmp expect actual
- 
- '
- 
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index 9c0acc5..9cf873f 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -146,8 +146,8 @@ EOF
- test_expect_success 'stop on conflicting pick' '
- 	git tag new-branch1 &&
- 	! git rebase -i master &&
--	diff -u expect .git/.dotest-merge/patch &&
--	diff -u expect2 file1 &&
-+	test_cmp expect .git/.dotest-merge/patch &&
-+	test_cmp expect2 file1 &&
- 	test 4 = $(grep -v "^#" < .git/.dotest-merge/done | wc -l) &&
- 	test 0 = $(grep -c "^[^#]" < .git/.dotest-merge/git-rebase-todo)
- '
-diff --git a/t/t3405-rebase-malformed.sh b/t/t3405-rebase-malformed.sh
-index e4e2e64..e5ad67c 100755
---- a/t/t3405-rebase-malformed.sh
-+++ b/t/t3405-rebase-malformed.sh
-@@ -41,8 +41,8 @@ test_expect_success rebase '
- 	git rebase master side &&
- 	git cat-file commit HEAD | sed -e "1,/^\$/d" >F1 &&
- 
--	diff -u F0 F1 &&
--	diff -u F F0
-+	test_cmp F0 F1 &&
-+	test_cmp F F0
- '
- 
- test_done
-diff --git a/t/t3406-rebase-message.sh b/t/t3406-rebase-message.sh
-index 332b2b2..5391080 100755
---- a/t/t3406-rebase-message.sh
-+++ b/t/t3406-rebase-message.sh
-@@ -37,7 +37,7 @@ test_expect_success 'rebase -m' '
- 	git rebase -m master >report &&
- 	sed -n -e "/^Already applied: /p" \
- 		-e "/^Committed: /p" report >actual &&
--	diff -u expect actual
-+	test_cmp expect actual
- 
- '
- 
-diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-index c8dc1ac..77c90f6 100755
---- a/t/t3701-add-interactive.sh
-+++ b/t/t3701-add-interactive.sh
-@@ -24,7 +24,7 @@ EOF
- test_expect_success 'diff works (initial)' '
- 	(echo d; echo 1) | git add -i >output &&
- 	sed -ne "/new file/,/content/p" <output >diff &&
--	diff -u expected diff
-+	test_cmp expected diff
- '
- test_expect_success 'revert works (initial)' '
- 	git add file &&
-@@ -57,7 +57,7 @@ EOF
- test_expect_success 'diff works (commit)' '
- 	(echo d; echo 1) | git add -i >output &&
- 	sed -ne "/^index/,/content/p" <output >diff &&
--	diff -u expected diff
-+	test_cmp expected diff
- '
- test_expect_success 'revert works (commit)' '
- 	git add file &&
-diff --git a/t/t3902-quoted.sh b/t/t3902-quoted.sh
-index 73da45f..fe4fb51 100755
---- a/t/t3902-quoted.sh
-+++ b/t/t3902-quoted.sh
-@@ -78,28 +78,28 @@ EOF
- 
- test_expect_success 'check fully quoted output from ls-files' '
- 
--	git ls-files >current && diff -u expect.quoted current
-+	git ls-files >current && test_cmp expect.quoted current
- 
- '
- 
- test_expect_success 'check fully quoted output from diff-files' '
- 
- 	git diff --name-only >current &&
--	diff -u expect.quoted current
-+	test_cmp expect.quoted current
- 
- '
- 
- test_expect_success 'check fully quoted output from diff-index' '
- 
- 	git diff --name-only HEAD >current &&
--	diff -u expect.quoted current
-+	test_cmp expect.quoted current
- 
- '
- 
- test_expect_success 'check fully quoted output from diff-tree' '
- 
- 	git diff --name-only HEAD^ HEAD >current &&
--	diff -u expect.quoted current
-+	test_cmp expect.quoted current
- 
- '
- 
-@@ -111,28 +111,28 @@ test_expect_success 'setting core.quotepath' '
- 
- test_expect_success 'check fully quoted output from ls-files' '
- 
--	git ls-files >current && diff -u expect.raw current
-+	git ls-files >current && test_cmp expect.raw current
- 
- '
- 
- test_expect_success 'check fully quoted output from diff-files' '
- 
- 	git diff --name-only >current &&
--	diff -u expect.raw current
-+	test_cmp expect.raw current
- 
- '
- 
- test_expect_success 'check fully quoted output from diff-index' '
- 
- 	git diff --name-only HEAD >current &&
--	diff -u expect.raw current
-+	test_cmp expect.raw current
- 
- '
- 
- test_expect_success 'check fully quoted output from diff-tree' '
- 
- 	git diff --name-only HEAD^ HEAD >current &&
--	diff -u expect.raw current
-+	test_cmp expect.raw current
- 
- '
- 
-diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-index aa282e1..2d3ee3b 100755
---- a/t/t3903-stash.sh
-+++ b/t/t3903-stash.sh
-@@ -34,7 +34,7 @@ EOF
- test_expect_success 'parents of stash' '
- 	test $(git rev-parse stash^) = $(git rev-parse HEAD) &&
- 	git diff stash^2..stash > output &&
--	diff -u output expect
-+	test_cmp output expect
- '
- 
- test_expect_success 'apply needs clean working directory' '
-diff --git a/t/t4023-diff-rename-typechange.sh b/t/t4023-diff-rename-typechange.sh
-index 255604e..4dbfc6e 100755
---- a/t/t4023-diff-rename-typechange.sh
-+++ b/t/t4023-diff-rename-typechange.sh
-@@ -57,7 +57,7 @@ test_expect_success 'cross renames to be detected for regular files' '
- 		echo "R100	foo	bar"
- 		echo "R100	bar	foo"
- 	} | sort >expect &&
--	diff -u expect actual
-+	test_cmp expect actual
- 
- '
- 
-@@ -68,7 +68,7 @@ test_expect_success 'cross renames to be detected for typechange' '
- 		echo "R100	foo	bar"
- 		echo "R100	bar	foo"
- 	} | sort >expect &&
--	diff -u expect actual
-+	test_cmp expect actual
- 
- '
- 
-@@ -79,7 +79,7 @@ test_expect_success 'moves and renames' '
- 		echo "R100	foo	bar"
- 		echo "T100	foo"
- 	} | sort >expect &&
--	diff -u expect actual
-+	test_cmp expect actual
- 
- '
- 
-diff --git a/t/t4024-diff-optimize-common.sh b/t/t4024-diff-optimize-common.sh
-index 3c66102..c4d733f 100755
---- a/t/t4024-diff-optimize-common.sh
-+++ b/t/t4024-diff-optimize-common.sh
-@@ -150,7 +150,7 @@ test_expect_success 'diff -U0' '
- 	do
- 		git diff -U0 file-?$n
- 	done | zc >actual &&
--	diff -u expect actual
-+	test_cmp expect actual
- 
- '
- 
-diff --git a/t/t4025-hunk-header.sh b/t/t4025-hunk-header.sh
-index 9ba06b7..7a3dbc1 100755
---- a/t/t4025-hunk-header.sh
-+++ b/t/t4025-hunk-header.sh
-@@ -37,7 +37,7 @@ test_expect_success 'hunk header truncation with an overly long line' '
- 		echo " A $N$N$N$N$N$N$N$N$N2"
- 		echo " L  $N$N$N$N$N$N$N$N$N1"
- 	) >expected &&
--	diff -u actual expected
-+	test_cmp actual expected
- 
- '
- 
-diff --git a/t/t4027-diff-submodule.sh b/t/t4027-diff-submodule.sh
-index 3d2d081..1fd3fb7 100755
---- a/t/t4027-diff-submodule.sh
-+++ b/t/t4027-diff-submodule.sh
-@@ -37,17 +37,17 @@ test_expect_success setup '
- 
- test_expect_success 'git diff --raw HEAD' '
- 	git diff --raw --abbrev=40 HEAD >actual &&
--	diff -u expect actual
-+	test_cmp expect actual
- '
- 
- test_expect_success 'git diff-index --raw HEAD' '
- 	git diff-index --raw HEAD >actual.index &&
--	diff -u expect actual.index
-+	test_cmp expect actual.index
- '
- 
- test_expect_success 'git diff-files --raw' '
- 	git diff-files --raw >actual.files &&
--	diff -u expect actual.files
-+	test_cmp expect actual.files
- '
- 
- test_done
-diff --git a/t/t4105-apply-fuzz.sh b/t/t4105-apply-fuzz.sh
-index 0e8d25f..3266e39 100755
---- a/t/t4105-apply-fuzz.sh
-+++ b/t/t4105-apply-fuzz.sh
-@@ -9,7 +9,7 @@ dotest () {
- 	test_expect_success "$name" "
- 		git checkout-index -f -q -u file &&
- 		git apply $* &&
--		diff -u expect file
-+		test_cmp expect file
- 	"
- }
- 
-diff --git a/t/t4125-apply-ws-fuzz.sh b/t/t4125-apply-ws-fuzz.sh
-index d6f15be..3b471b6 100755
---- a/t/t4125-apply-ws-fuzz.sh
-+++ b/t/t4125-apply-ws-fuzz.sh
-@@ -56,7 +56,7 @@ test_expect_success nofix '
- 	git apply --whitespace=nowarn patch-1 &&
- 
- 	# The result should obviously match.
--	diff -u file-1 file
-+	test_cmp file-1 file
- '
- 
- test_expect_success 'withfix (forward)' '
-@@ -70,7 +70,7 @@ test_expect_success 'withfix (forward)' '
- 	git apply --whitespace=fix patch-0 &&
- 	git apply --whitespace=fix patch-1 &&
- 
--	diff -u file-fixed file
-+	test_cmp file-fixed file
- '
- 
- test_expect_success 'withfix (backward)' '
-@@ -91,12 +91,12 @@ test_expect_success 'withfix (backward)' '
- 
- 	sed -e /h/d file-fixed >fixed-head &&
- 	sed -e /h/d file >file-head &&
--	diff -u fixed-head file-head &&
-+	test_cmp fixed-head file-head &&
- 
- 	sed -n -e /h/p file-fixed >fixed-tail &&
- 	sed -n -e /h/p file >file-tail &&
- 
--	! diff -u fixed-tail file-tail
-+	! test_cmp fixed-tail file-tail
- 
- '
- 
-diff --git a/t/t4150-am-subdir.sh b/t/t4150-am-subdir.sh
-index 929d2cb..52069b4 100755
---- a/t/t4150-am-subdir.sh
-+++ b/t/t4150-am-subdir.sh
-@@ -22,14 +22,14 @@ test_expect_success 'am regularly from stdin' '
- 	git checkout initial &&
- 	git am <patchfile &&
- 	git diff master >actual &&
--	diff -u expect actual
-+	test_cmp expect actual
- '
- 
- test_expect_success 'am regularly from file' '
- 	git checkout initial &&
- 	git am patchfile &&
- 	git diff master >actual &&
--	diff -u expect actual
-+	test_cmp expect actual
- '
- 
- test_expect_success 'am regularly from stdin in subdirectory' '
-@@ -41,7 +41,7 @@ test_expect_success 'am regularly from stdin in subdirectory' '
- 		git am <../patchfile
- 	) &&
- 	git diff master>actual &&
--	diff -u expect actual
-+	test_cmp expect actual
- '
- 
- test_expect_success 'am regularly from file in subdirectory' '
-@@ -53,7 +53,7 @@ test_expect_success 'am regularly from file in subdirectory' '
- 		git am ../patchfile
- 	) &&
- 	git diff master >actual &&
--	diff -u expect actual
-+	test_cmp expect actual
- '
- 
- test_expect_success 'am regularly from file in subdirectory with full path' '
-@@ -66,7 +66,7 @@ test_expect_success 'am regularly from file in subdirectory with full path' '
- 		git am "$P/patchfile"
- 	) &&
- 	git diff master >actual &&
--	diff -u expect actual
-+	test_cmp expect actual
- '
- 
- test_done
-diff --git a/t/t4201-shortlog.sh b/t/t4201-shortlog.sh
-index 6d12efb..91ea696 100755
---- a/t/t4201-shortlog.sh
-+++ b/t/t4201-shortlog.sh
-@@ -45,6 +45,6 @@ A U Thor (5):
- 
- EOF
- 
--test_expect_success 'shortlog wrapping' 'diff -u expect out'
-+test_expect_success 'shortlog wrapping' 'test_cmp expect out'
- 
- test_done
-diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-index 2822a65..ecfc999 100755
---- a/t/t5505-remote.sh
-+++ b/t/t5505-remote.sh
-@@ -24,7 +24,7 @@ setup_repository () {
- tokens_match () {
- 	echo "$1" | tr ' ' '\012' | sort | sed -e '/^$/d' >expect &&
- 	echo "$2" | tr ' ' '\012' | sort | sed -e '/^$/d' >actual &&
--	diff -u expect actual
-+	test_cmp expect actual
- }
- 
- check_remote_track () {
-@@ -73,7 +73,7 @@ test_expect_success 'add another remote' '
- 	sed -e "/^refs\/remotes\/origin\//d" \
- 	    -e "/^refs\/remotes\/second\//d" >actual &&
- 	>expect &&
--	diff -u expect actual
-+	test_cmp expect actual
- )
- '
- 
-@@ -93,7 +93,7 @@ test_expect_success 'remove remote' '
- 	git for-each-ref "--format=%(refname)" refs/remotes |
- 	sed -e "/^refs\/remotes\/origin\//d" >actual &&
- 	>expect &&
--	diff -u expect actual
-+	test_cmp expect actual
- )
- '
- 
-diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-index 9b948c1..6946557 100755
---- a/t/t5510-fetch.sh
-+++ b/t/t5510-fetch.sh
-@@ -249,7 +249,7 @@ test_expect_success 'bundle should record HEAD correctly' '
- 	do
- 		echo "$(git rev-parse --verify $h) $h"
- 	done >expect &&
--	diff -u expect actual
-+	test_cmp expect actual
- 
- '
- 
-diff --git a/t/t5512-ls-remote.sh b/t/t5512-ls-remote.sh
-index 6ec5f7c..c0dc949 100755
---- a/t/t5512-ls-remote.sh
-+++ b/t/t5512-ls-remote.sh
-@@ -24,28 +24,28 @@ test_expect_success setup '
- test_expect_success 'ls-remote --tags .git' '
- 
- 	git ls-remote --tags .git >actual &&
--	diff -u expected.tag actual
-+	test_cmp expected.tag actual
- 
- '
- 
- test_expect_success 'ls-remote .git' '
- 
- 	git ls-remote .git >actual &&
--	diff -u expected.all actual
-+	test_cmp expected.all actual
- 
- '
- 
- test_expect_success 'ls-remote --tags self' '
- 
- 	git ls-remote --tags self >actual &&
--	diff -u expected.tag actual
-+	test_cmp expected.tag actual
- 
- '
- 
- test_expect_success 'ls-remote self' '
- 
- 	git ls-remote self >actual &&
--	diff -u expected.all actual
-+	test_cmp expected.all actual
- 
- '
- 
-diff --git a/t/t6004-rev-list-path-optim.sh b/t/t6004-rev-list-path-optim.sh
-index 80d7198..5dabf1c 100755
---- a/t/t6004-rev-list-path-optim.sh
-+++ b/t/t6004-rev-list-path-optim.sh
-@@ -45,7 +45,7 @@ test_expect_success 'further setup' '
- test_expect_success 'path optimization 2' '
- 	( echo "$side"; echo "$initial" ) >expected &&
- 	git rev-list HEAD -- a >actual &&
--	diff -u expected actual
-+	test_cmp expected actual
- '
- 
- test_done
-diff --git a/t/t6009-rev-list-parent.sh b/t/t6009-rev-list-parent.sh
-index be3d238..f248a32 100755
---- a/t/t6009-rev-list-parent.sh
-+++ b/t/t6009-rev-list-parent.sh
-@@ -31,7 +31,7 @@ test_expect_failure 'one is ancestor of others and should not be shown' '
- 
- 	git rev-list one --not four >result &&
- 	>expect &&
--	diff -u expect result
-+	test_cmp expect result
- 
- '
- 
-diff --git a/t/t6027-merge-binary.sh b/t/t6027-merge-binary.sh
-index a7358f7..92ca1f0 100755
---- a/t/t6027-merge-binary.sh
-+++ b/t/t6027-merge-binary.sh
-@@ -45,7 +45,7 @@ test_expect_success resolve '
- 		false
- 	else
- 		git ls-files -s >current
--		diff -u current expect
-+		test_cmp current expect
- 	fi
- '
- 
-@@ -60,7 +60,7 @@ test_expect_success recursive '
- 		false
- 	else
- 		git ls-files -s >current
--		diff -u current expect
-+		test_cmp current expect
- 	fi
- '
- 
-diff --git a/t/t6029-merge-subtree.sh b/t/t6029-merge-subtree.sh
-index 35d66e8..43f5459 100755
---- a/t/t6029-merge-subtree.sh
-+++ b/t/t6029-merge-subtree.sh
-@@ -25,7 +25,7 @@ test_expect_success 'subtree available and works like recursive' '
- 
- 	git merge -s subtree side &&
- 	for i in mundo $s world; do echo $i; done >expect &&
--	diff -u expect hello
-+	test_cmp expect hello
- 
- '
- 
-diff --git a/t/t7010-setup.sh b/t/t7010-setup.sh
-index bc8ab6a..02cf7c5 100755
---- a/t/t7010-setup.sh
-+++ b/t/t7010-setup.sh
-@@ -18,7 +18,7 @@ test_expect_success 'git add (absolute)' '
- 	git add "$D/a/b/c/d" &&
- 	git ls-files >current &&
- 	echo a/b/c/d >expect &&
--	diff -u expect current
-+	test_cmp expect current
- 
- '
- 
-@@ -32,7 +32,7 @@ test_expect_success 'git add (funny relative)' '
- 	) &&
- 	git ls-files >current &&
- 	echo a/e/f >expect &&
--	diff -u expect current
-+	test_cmp expect current
- 
- '
- 
-@@ -43,7 +43,7 @@ test_expect_success 'git rm (absolute)' '
- 	git rm -f --cached "$D/a/b/c/d" &&
- 	git ls-files >current &&
- 	echo a/e/f >expect &&
--	diff -u expect current
-+	test_cmp expect current
- 
- '
- 
-@@ -57,7 +57,7 @@ test_expect_success 'git rm (funny relative)' '
- 	) &&
- 	git ls-files >current &&
- 	echo a/b/c/d >expect &&
--	diff -u expect current
-+	test_cmp expect current
- 
- '
- 
-@@ -67,7 +67,7 @@ test_expect_success 'git ls-files (absolute)' '
- 	git add a &&
- 	git ls-files "$D/a/e/../b" >current &&
- 	echo a/b/c/d >expect &&
--	diff -u expect current
-+	test_cmp expect current
- 
- '
- 
-@@ -80,7 +80,7 @@ test_expect_success 'git ls-files (relative #1)' '
- 		git ls-files "../b/c"
- 	)  >current &&
- 	echo c/d >expect &&
--	diff -u expect current
-+	test_cmp expect current
- 
- '
- 
-@@ -93,7 +93,7 @@ test_expect_success 'git ls-files (relative #2)' '
- 		git ls-files --full-name "../e/f"
- 	)  >current &&
- 	echo a/e/f >expect &&
--	diff -u expect current
-+	test_cmp expect current
- 
- '
- 
-@@ -126,13 +126,13 @@ test_expect_success 'log using absolute path names' '
- 
- 	git log a/b/c/d >f1.txt &&
- 	git log "$(pwd)/a/b/c/d" >f2.txt &&
--	diff -u f1.txt f2.txt
-+	test_cmp f1.txt f2.txt
- '
- 
- test_expect_success 'blame using absolute path names' '
- 	git blame a/b/c/d >f1.txt &&
- 	git blame "$(pwd)/a/b/c/d" >f2.txt &&
--	diff -u f1.txt f2.txt
-+	test_cmp f1.txt f2.txt
- '
- 
- test_expect_success 'setup deeper work tree' '
-diff --git a/t/t7201-co.sh b/t/t7201-co.sh
-index 63915cd..3111baa 100755
---- a/t/t7201-co.sh
-+++ b/t/t7201-co.sh
-@@ -83,13 +83,13 @@ test_expect_success "checkout with unrelated dirty tree without -m" '
- 	fill 0 1 2 3 4 5 6 7 8 >same &&
- 	cp same kept
- 	git checkout side >messages &&
--	diff -u same kept
-+	test_cmp same kept
- 	(cat > messages.expect <<EOF
- M	same
- EOF
- ) &&
- 	touch messages.expect &&
--	diff -u messages.expect messages
-+	test_cmp messages.expect messages
- '
- 
- test_expect_success "checkout -m with dirty tree" '
-@@ -106,19 +106,19 @@ test_expect_success "checkout -m with dirty tree" '
- M	one
- EOF
- ) &&
--	diff -u expect.messages messages &&
-+	test_cmp expect.messages messages &&
- 
- 	fill "M	one" "A	three" "D	two" >expect.master &&
- 	git diff --name-status master >current.master &&
--	diff -u expect.master current.master &&
-+	test_cmp expect.master current.master &&
- 
- 	fill "M	one" >expect.side &&
- 	git diff --name-status side >current.side &&
--	diff -u expect.side current.side &&
-+	test_cmp expect.side current.side &&
- 
- 	: >expect.index &&
- 	git diff --cached >current.index &&
--	diff -u expect.index current.index
-+	test_cmp expect.index current.index
- '
- 
- test_expect_success "checkout -m with dirty tree, renamed" '
-@@ -136,7 +136,7 @@ test_expect_success "checkout -m with dirty tree, renamed" '
- 
- 	git checkout -m renamer &&
- 	fill 1 3 4 5 7 8 >expect &&
--	diff -u expect uno &&
-+	test_cmp expect uno &&
- 	! test -f one &&
- 	git diff --cached >current &&
- 	! test -s current
-@@ -161,7 +161,7 @@ test_expect_success 'checkout -m with merge conflict' '
- 	git diff master:one :3:uno |
- 	sed -e "1,/^@@/d" -e "/^ /d" -e "s/^-/d/" -e "s/^+/a/" >current &&
- 	fill d2 aT d7 aS >expect &&
--	diff -u current expect &&
-+	test_cmp current expect &&
- 	git diff --cached two >current &&
- 	! test -s current
- '
-@@ -178,7 +178,7 @@ If you want to create a new branch from this checkout, you may do so
- HEAD is now at 7329388... Initial A one, A two
- EOF
- ) &&
--	diff -u messages.expect messages &&
-+	test_cmp messages.expect messages &&
- 	H=$(git rev-parse --verify HEAD) &&
- 	M=$(git show-ref -s --verify refs/heads/master) &&
- 	test "z$H" = "z$M" &&
-diff --git a/t/t7501-commit.sh b/t/t7501-commit.sh
-index 361886c..c0288f3 100755
---- a/t/t7501-commit.sh
-+++ b/t/t7501-commit.sh
-@@ -203,7 +203,7 @@ test_expect_success 'sign off (1)' '
- 		git var GIT_COMMITTER_IDENT |
- 		sed -e "s/>.*/>/" -e "s/^/Signed-off-by: /"
- 	) >expected &&
--	diff -u expected actual
-+	test_cmp expected actual
- 
- '
- 
-@@ -223,7 +223,7 @@ $existing" &&
- 		git var GIT_COMMITTER_IDENT |
- 		sed -e "s/>.*/>/" -e "s/^/Signed-off-by: /"
- 	) >expected &&
--	diff -u expected actual
-+	test_cmp expected actual
- 
- '
- 
-@@ -240,7 +240,7 @@ test_expect_success 'multiple -m' '
- 		echo
- 		echo three
- 	) >expected &&
--	diff -u expected actual
-+	test_cmp expected actual
- 
- '
- 
-@@ -301,12 +301,12 @@ test_expect_success 'same tree (merge and amend merge)' '
- 	git merge -s ours side -m "empty ok" &&
- 	git diff HEAD^ HEAD >actual &&
- 	: >expected &&
--	diff -u expected actual &&
-+	test_cmp expected actual &&
- 
- 	git commit --amend -m "empty really ok" &&
- 	git diff HEAD^ HEAD >actual &&
- 	: >expected &&
--	diff -u expected actual
-+	test_cmp expected actual
- 
- '
- 
-@@ -323,7 +323,7 @@ test_expect_success 'amend using the message from another commit' '
- 	git commit --allow-empty --amend -C "$old" &&
- 	git show --pretty="format:%ad %s" "$old" >expected &&
- 	git show --pretty="format:%ad %s" HEAD >actual &&
--	diff -u expected actual
-+	test_cmp expected actual
- 
- '
- 
-@@ -341,7 +341,7 @@ test_expect_success 'amend using the message from a commit named with tag' '
- 	git commit --allow-empty --amend -C tagged-old &&
- 	git show --pretty="format:%ad %s" "$old" >expected &&
- 	git show --pretty="format:%ad %s" HEAD >actual &&
--	diff -u expected actual
-+	test_cmp expected actual
- 
- '
- 
-diff --git a/t/t7502-commit.sh b/t/t7502-commit.sh
-index b780fdd..284c941 100755
---- a/t/t7502-commit.sh
-+++ b/t/t7502-commit.sh
-@@ -85,7 +85,7 @@ test_expect_success 'verbose' '
- 	git add negative &&
- 	git status -v | sed -ne "/^diff --git /p" >actual &&
- 	echo "diff --git a/negative b/negative" >expect &&
--	diff -u expect actual
-+	test_cmp expect actual
- 
- '
- 
-@@ -95,7 +95,7 @@ test_expect_success 'cleanup commit messages (verbatim,-t)' '
- 	{ echo;echo "# text";echo; } >expect &&
- 	git commit --cleanup=verbatim -t expect -a &&
- 	git cat-file -p HEAD |sed -e "1,/^\$/d" |head -n 3 >actual &&
--	diff -u expect actual
-+	test_cmp expect actual
- 
- '
- 
-@@ -104,7 +104,7 @@ test_expect_success 'cleanup commit messages (verbatim,-F)' '
- 	echo >>negative &&
- 	git commit --cleanup=verbatim -F expect -a &&
- 	git cat-file -p HEAD |sed -e "1,/^\$/d">actual &&
--	diff -u expect actual
-+	test_cmp expect actual
- 
- '
- 
-@@ -113,7 +113,7 @@ test_expect_success 'cleanup commit messages (verbatim,-m)' '
- 	echo >>negative &&
- 	git commit --cleanup=verbatim -m "$(cat expect)" -a &&
- 	git cat-file -p HEAD |sed -e "1,/^\$/d">actual &&
--	diff -u expect actual
-+	test_cmp expect actual
- 
- '
- 
-@@ -124,7 +124,7 @@ test_expect_success 'cleanup commit messages (whitespace,-F)' '
- 	echo "# text" >expect &&
- 	git commit --cleanup=whitespace -F text -a &&
- 	git cat-file -p HEAD |sed -e "1,/^\$/d">actual &&
--	diff -u expect actual
-+	test_cmp expect actual
- 
- '
- 
-@@ -135,7 +135,7 @@ test_expect_success 'cleanup commit messages (strip,-F)' '
- 	echo sample >expect &&
- 	git commit --cleanup=strip -F text -a &&
- 	git cat-file -p HEAD |sed -e "1,/^\$/d">actual &&
--	diff -u expect actual
-+	test_cmp expect actual
- 
- '
- 
-@@ -150,7 +150,7 @@ test_expect_success 'cleanup commit messages (strip,-F,-e)' '
- 	{ echo;echo sample;echo; } >text &&
- 	git commit -e -F text -a &&
- 	head -n 4 .git/COMMIT_EDITMSG >actual &&
--	diff -u expect actual
-+	test_cmp expect actual
- 
- '
- 
-diff --git a/t/t7502-status.sh b/t/t7502-status.sh
-index 70b802b..cd08516 100755
---- a/t/t7502-status.sh
-+++ b/t/t7502-status.sh
-@@ -146,7 +146,7 @@ cat <<EOF >expect
- EOF
- test_expect_success 'status of partial commit excluding new file in index' '
- 	git status dir1/modified >output &&
--	diff -u expect output
-+	test_cmp expect output
- '
- 
- test_done
-diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
-index 219411f..56869ac 100755
---- a/t/t7600-merge.sh
-+++ b/t/t7600-merge.sh
-@@ -108,7 +108,7 @@ create_merge_msgs() {
- }
- 
- verify_diff() {
--	if ! diff -u "$1" "$2"
-+	if ! test_cmp "$1" "$2"
- 	then
- 		echo "$3"
- 		false
-diff --git a/t/t8003-blame.sh b/t/t8003-blame.sh
-index db51b3a..966bb0a 100755
---- a/t/t8003-blame.sh
-+++ b/t/t8003-blame.sh
-@@ -112,7 +112,7 @@ test_expect_success 'blame wholesale copy' '
- 		echo mouse-Second
- 		echo mouse-Third
- 	} >expected &&
--	diff -u expected current
-+	test_cmp expected current
- 
- '
- 
-@@ -125,7 +125,7 @@ test_expect_success 'blame wholesale copy and more' '
- 		echo cow-Fifth
- 		echo mouse-Third
- 	} >expected &&
--	diff -u expected current
-+	test_cmp expected current
- 
- '
- 
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index cbbfa9c..c0973b4 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -81,7 +81,7 @@ test_expect_success 'Show all headers' '
- 		-e "s/^\(Message-Id:\).*/\1 MESSAGE-ID-STRING/" \
- 		-e "s/^\(X-Mailer:\).*/\1 X-MAILER-STRING/" \
- 		>actual-show-all-headers &&
--	diff -u expected-show-all-headers actual-show-all-headers
-+	test_cmp expected-show-all-headers actual-show-all-headers
- '
- 
- z8=zzzzzzzz
-diff --git a/t/t9116-git-svn-log.sh b/t/t9116-git-svn-log.sh
-index 902ed41..e1e8bdf 100755
---- a/t/t9116-git-svn-log.sh
-+++ b/t/t9116-git-svn-log.sh
-@@ -55,74 +55,74 @@ printf 'r1 \nr2 \nr4 \n' > expected-range-r1-r2-r4
- 
- test_expect_success 'test ascending revision range' "
- 	git reset --hard trunk &&
--	git svn log -r 1:4 | grep '^r[0-9]' | cut -d'|' -f1 | diff -u expected-range-r1-r2-r4 -
-+	git svn log -r 1:4 | grep '^r[0-9]' | cut -d'|' -f1 | test_cmp expected-range-r1-r2-r4 -
- 	"
- 
- printf 'r4 \nr2 \nr1 \n' > expected-range-r4-r2-r1
- 
- test_expect_success 'test descending revision range' "
- 	git reset --hard trunk &&
--	git svn log -r 4:1 | grep '^r[0-9]' | cut -d'|' -f1 | diff -u expected-range-r4-r2-r1 -
-+	git svn log -r 4:1 | grep '^r[0-9]' | cut -d'|' -f1 | test_cmp expected-range-r4-r2-r1 -
- 	"
- 
- printf 'r1 \nr2 \n' > expected-range-r1-r2
- 
- test_expect_success 'test ascending revision range with unreachable revision' "
- 	git reset --hard trunk &&
--	git svn log -r 1:3 | grep '^r[0-9]' | cut -d'|' -f1 | diff -u expected-range-r1-r2 -
-+	git svn log -r 1:3 | grep '^r[0-9]' | cut -d'|' -f1 | test_cmp expected-range-r1-r2 -
- 	"
- 
- printf 'r2 \nr1 \n' > expected-range-r2-r1
- 
- test_expect_success 'test descending revision range with unreachable revision' "
- 	git reset --hard trunk &&
--	git svn log -r 3:1 | grep '^r[0-9]' | cut -d'|' -f1 | diff -u expected-range-r2-r1 -
-+	git svn log -r 3:1 | grep '^r[0-9]' | cut -d'|' -f1 | test_cmp expected-range-r2-r1 -
- 	"
- 
- printf 'r2 \n' > expected-range-r2
- 
- test_expect_success 'test ascending revision range with unreachable upper boundary revision and 1 commit' "
- 	git reset --hard trunk &&
--	git svn log -r 2:3 | grep '^r[0-9]' | cut -d'|' -f1 | diff -u expected-range-r2 -
-+	git svn log -r 2:3 | grep '^r[0-9]' | cut -d'|' -f1 | test_cmp expected-range-r2 -
- 	"
- 
- test_expect_success 'test descending revision range with unreachable upper boundary revision and 1 commit' "
- 	git reset --hard trunk &&
--	git svn log -r 3:2 | grep '^r[0-9]' | cut -d'|' -f1 | diff -u expected-range-r2 -
-+	git svn log -r 3:2 | grep '^r[0-9]' | cut -d'|' -f1 | test_cmp expected-range-r2 -
- 	"
- 
- printf 'r4 \n' > expected-range-r4
- 
- test_expect_success 'test ascending revision range with unreachable lower boundary revision and 1 commit' "
- 	git reset --hard trunk &&
--	git svn log -r 3:4 | grep '^r[0-9]' | cut -d'|' -f1 | diff -u expected-range-r4 -
-+	git svn log -r 3:4 | grep '^r[0-9]' | cut -d'|' -f1 | test_cmp expected-range-r4 -
- 	"
- 
- test_expect_success 'test descending revision range with unreachable lower boundary revision and 1 commit' "
- 	git reset --hard trunk &&
--	git svn log -r 4:3 | grep '^r[0-9]' | cut -d'|' -f1 | diff -u expected-range-r4 -
-+	git svn log -r 4:3 | grep '^r[0-9]' | cut -d'|' -f1 | test_cmp expected-range-r4 -
- 	"
- 
- printf -- '------------------------------------------------------------------------\n' > expected-separator
- 
- test_expect_success 'test ascending revision range with unreachable boundary revisions and no commits' "
- 	git reset --hard trunk &&
--	git svn log -r 5:6 | diff -u expected-separator -
-+	git svn log -r 5:6 | test_cmp expected-separator -
- 	"
- 
- test_expect_success 'test descending revision range with unreachable boundary revisions and no commits' "
- 	git reset --hard trunk &&
--	git svn log -r 6:5 | diff -u expected-separator -
-+	git svn log -r 6:5 | test_cmp expected-separator -
- 	"
- 
- test_expect_success 'test ascending revision range with unreachable boundary revisions and 1 commit' "
- 	git reset --hard trunk &&
--	git svn log -r 3:5 | grep '^r[0-9]' | cut -d'|' -f1 | diff -u expected-range-r4 -
-+	git svn log -r 3:5 | grep '^r[0-9]' | cut -d'|' -f1 | test_cmp expected-range-r4 -
- 	"
- 
- test_expect_success 'test descending revision range with unreachable boundary revisions and 1 commit' "
- 	git reset --hard trunk &&
--	git svn log -r 5:3 | grep '^r[0-9]' | cut -d'|' -f1 | diff -u expected-range-r4 -
-+	git svn log -r 5:3 | grep '^r[0-9]' | cut -d'|' -f1 | test_cmp expected-range-r4 -
- 	"
- 
- test_done
-diff --git a/t/t9200-git-cvsexportcommit.sh b/t/t9200-git-cvsexportcommit.sh
-index 58c59ed..42b144b 100755
---- a/t/t9200-git-cvsexportcommit.sh
-+++ b/t/t9200-git-cvsexportcommit.sh
-@@ -37,7 +37,7 @@ check_entries () {
- 	else
- 		printf '%s\n' "$2" | tr '|' '\012' >expected
- 	fi
--	diff -u expected actual
-+	test_cmp expected actual
- }
- 
- test_expect_success \
-@@ -257,8 +257,8 @@ test_expect_success '-w option should work with relative GIT_DIR' '
-       (cd "$GIT_DIR" &&
-       GIT_DIR=. git cvsexportcommit -w "$CVSWORK" -c $id &&
-       check_entries "$CVSWORK/W" "file1.txt/1.1/|file2.txt/1.1/" &&
--      diff -u "$CVSWORK/W/file1.txt" ../W/file1.txt &&
--      diff -u "$CVSWORK/W/file2.txt" ../W/file2.txt
-+      test_cmp "$CVSWORK/W/file1.txt" ../W/file1.txt &&
-+      test_cmp "$CVSWORK/W/file2.txt" ../W/file2.txt
-       )
- '
- 
-@@ -279,9 +279,9 @@ test_expect_success 'check files before directories' '
- 	git cvsexportcommit -w "$CVSWORK" -c $id &&
- 	check_entries "$CVSWORK/E" "DS/1.1/|newfile5.txt/1.1/" &&
- 	check_entries "$CVSWORK" "DS/1.1/|release-notes/1.2/" &&
--	diff -u "$CVSWORK/DS" DS &&
--	diff -u "$CVSWORK/E/DS" E/DS &&
--	diff -u "$CVSWORK/release-notes" release-notes
-+	test_cmp "$CVSWORK/DS" DS &&
-+	test_cmp "$CVSWORK/E/DS" E/DS &&
-+	test_cmp "$CVSWORK/release-notes" release-notes
- 
- '
- 
-@@ -293,7 +293,7 @@ test_expect_success 'commit a file with leading spaces in the name' '
- 	id=$(git rev-parse HEAD) &&
- 	git cvsexportcommit -w "$CVSWORK" -c $id &&
- 	check_entries "$CVSWORK" " space/1.1/|DS/1.1/|release-notes/1.2/" &&
--	diff -u "$CVSWORK/ space" " space"
-+	test_cmp "$CVSWORK/ space" " space"
- 
- '
- 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 6aea0ea..268b26c 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -42,6 +42,7 @@ export GIT_MERGE_VERBOSITY
- export GIT_AUTHOR_EMAIL GIT_AUTHOR_NAME
- export GIT_COMMITTER_EMAIL GIT_COMMITTER_NAME
- export EDITOR VISUAL
-+GIT_TEST_CMP=${GIT_TEST_CMP:-diff -u}
- 
- # Protect ourselves from common misconfiguration to export
- # CDPATH into the environment
-@@ -302,6 +303,23 @@ test_must_fail () {
- 	test $? -gt 0 -a $? -le 128
- }
- 
-+# test_cmp is a helper function to compare actual and expected output.
-+# You can use it like:
-+#
-+#	test_expect_success 'foo works' '
-+#		echo expected >expected &&
-+#		foo >actual &&
-+#		test_cmp expected actual
-+#	'
-+#
-+# This could be written as either "cmp" or "diff -u", but:
-+# - cmp's output is not nearly as easy to read as diff -u
-+# - not all diff versions understand "-u"
-+
-+test_cmp() {
-+	$GIT_TEST_CMP "$@"
-+}
-+
- # Most tests can use the created repository, but some may need to create more.
- # Usage: test_create_repo <directory>
- test_create_repo () {
--- 
-1.5.4.4.543.g30fdd.dirty
+--Boundary-00=_e9E2HWw146uJORw--
