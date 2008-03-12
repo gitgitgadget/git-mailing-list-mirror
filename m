@@ -1,112 +1,81 @@
-From: Ping Yin <pkufranky@gmail.com>
-Subject: [PATCH] git-submodule summary: --for-status option
-Date: Wed, 12 Mar 2008 10:23:47 +0800
-Message-ID: <1205288627-20499-1-git-send-email-pkufranky@gmail.com>
-Cc: gitster@pobox.com, Ping Yin <pkufranky@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 12 03:24:59 2008
+From: "Ping Yin" <pkufranky@gmail.com>
+Subject: Re: [PATCH v5 2/5] git-submodule summary: show commit summary
+Date: Wed, 12 Mar 2008 10:30:35 +0800
+Message-ID: <46dff0320803111930r5ffe10b8k49a777ce3481643@mail.gmail.com>
+References: <1205243539-797-1-git-send-email-pkufranky@gmail.com>
+	 <1205243539-797-2-git-send-email-pkufranky@gmail.com>
+	 <1205243539-797-3-git-send-email-pkufranky@gmail.com>
+	 <46dff0320803111908m3f370ebbj89ee0511bb086cb0@mail.gmail.com>
+	 <7vwso8adxh.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 12 03:31:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JZGeH-0003dc-AK
-	for gcvg-git-2@gmane.org; Wed, 12 Mar 2008 03:24:57 +0100
+	id 1JZGkN-0004zy-AC
+	for gcvg-git-2@gmane.org; Wed, 12 Mar 2008 03:31:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751565AbYCLCXw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Mar 2008 22:23:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751527AbYCLCXw
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Mar 2008 22:23:52 -0400
-Received: from mail.qikoo.org ([60.28.205.235]:55396 "EHLO mail.qikoo.org"
-	rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751118AbYCLCXv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Mar 2008 22:23:51 -0400
-Received: by mail.qikoo.org (Postfix, from userid 1029)
-	id 2298D470AE; Wed, 12 Mar 2008 10:23:47 +0800 (CST)
-X-Mailer: git-send-email 1.5.4.3.347.g5314c
+	id S1751749AbYCLCah (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Mar 2008 22:30:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751754AbYCLCah
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Mar 2008 22:30:37 -0400
+Received: from hs-out-0708.google.com ([64.233.178.249]:8985 "EHLO
+	hs-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751722AbYCLCag (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Mar 2008 22:30:36 -0400
+Received: by hs-out-0708.google.com with SMTP id 4so2053656hsl.5
+        for <git@vger.kernel.org>; Tue, 11 Mar 2008 19:30:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=Ul6I49aBuKUbxUQopT3T2NSlj3KXLM4t7rpnMNOKUxI=;
+        b=qCy1bFwbtQAKgyPWXepJ1fZlgcm/qiQ/AjtpmagNVU/Hx6kHqz5DvltmQjkvO2ShWnkaq8q7yMHEwIDSIB5VLgKCQ4CoMYHFt6ja2azpRlCoc0OlaWoDOFqZrk01Qb0vjHJs8N+vkMeUnE3xGZ7mQa/f1rqJ5VGtmKI8+eVd6eU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=nZn1BpNR2azkZCwLFnoHFg/H5wL3sezonVhFHCVt5oqLHbXkkrqc8dIVyRdPsGEF1JNz0BF7yrlntypHgS8N4lZYXXkBmkHf1agjODgd34YdKLSvMFd4batgn/e5qWXI7XxlOCXkP6MgIU/QsxSfLZZBUl00ZgtgeRubloL7HhU=
+Received: by 10.100.153.6 with SMTP id a6mr14675916ane.91.1205289035588;
+        Tue, 11 Mar 2008 19:30:35 -0700 (PDT)
+Received: by 10.100.5.18 with HTTP; Tue, 11 Mar 2008 19:30:35 -0700 (PDT)
+In-Reply-To: <7vwso8adxh.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76912>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/76913>
 
-The --for-status option is mainly used by builtin-status/commit.
-It adds 'Modified submodules:' line at top and  '# ' prefix to all
-following lines.
----
- git-submodule.sh             |   17 ++++++++++++++++-
- t/t7401-submodule-summary.sh |   13 +++++++++++++
- 2 files changed, 29 insertions(+), 1 deletions(-)
+On Wed, Mar 12, 2008 at 10:12 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> "Ping Yin" <pkufranky@gmail.com> writes:
+>
+>  > On Tue, Mar 11, 2008 at 9:52 PM, Ping Yin <pkufranky@gmail.com> wrote:
+>  >> This patch does the hard work to show submodule commit summary.
+>  >>
+>  >
+>  >> +                       case "$mod_dst" in
+>  >>  +                               160000)
+>  >>  +                               sha1_dst=$(GIT_DIR="$name/.git" git rev-parse HEAD)
+>  >>  +                               ;;
+>  >>  +                               100644)
+>  >>  +                               sha1_dst=$(git hash-object $name)
+>  >>  +                               ;;
+>  >>  +                       esac
+>  >
+>  > please s/100644/100*/
+>
+>  How would that help symbolic links?
+>
 
-diff --git a/git-submodule.sh b/git-submodule.sh
-index c47b364..da9d5c8 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -342,6 +342,7 @@ set_name_rev () {
- #
- cmd_summary() {
- 	summary_limit=-1
-+	for_status=
- 
- 	# parse $args after "submodule ... summary".
- 	while test $# -ne 0
-@@ -350,6 +351,9 @@ cmd_summary() {
- 		--cached)
- 			cached="$1"
- 			;;
-+		--for-status)
-+			for_status="$1"
-+			;;
- 		-n|--summary-limit)
- 			if summary_limit=$(($2 + 0)) 2>/dev/null && test "$summary_limit" = "$2"
- 			then
-@@ -398,6 +402,12 @@ cmd_summary() {
- 	)
- 
- 	test -n "$modules" &&
-+	if test -n "$for_status"; then
-+		echo "# Modified submodules:"
-+		echo "#"
-+	else
-+		true
-+	fi &&
- 	git diff-index $cached --raw $head -- $modules |
- 	grep -e '^:160000' -e '^:[0-7]* 160000' |
- 	cut -c2- |
-@@ -493,7 +503,12 @@ cmd_summary() {
- 			echo
- 		fi
- 		echo
--	done
-+	done |
-+	if test -n "$for_status"; then
-+		sed -e "s|^|# |" -e 's|^# $|#|'
-+	else
-+		cat
-+	fi
- }
- #
- # List all submodules, prefixed with:
-diff --git a/t/t7401-submodule-summary.sh b/t/t7401-submodule-summary.sh
-index 0f3c42a..1dbb39d 100755
---- a/t/t7401-submodule-summary.sh
-+++ b/t/t7401-submodule-summary.sh
-@@ -192,4 +192,17 @@ test_expect_success 'given commit' "
- EOF
- "
- 
-+test_expect_success '--for-status' "
-+    git submodule summary --for-status HEAD^ >actual &&
-+    diff actual - <<-EOF
-+# Modified submodules:
-+#
-+# * sm1 $head6...0000000:
-+#
-+# * sm2 0000000...$head7 (2):
-+#   > Add foo9
-+#
-+EOF
-+"
-+
- test_done
+I am not familiar with git core code, could you tell me where to find
+all file mod for various types?
+
+
+
 -- 
-1.5.4.3.347.g5314c
+Ping Yin
