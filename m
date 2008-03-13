@@ -1,69 +1,51 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: [Q] Encrypted GIT?
-Date: Thu, 13 Mar 2008 08:58:54 -0400
-Message-ID: <20080313125853.GA12927@mit.edu>
-References: <c6c947f60803130148w7981a3f0r718c0801343c7b78@mail.gmail.com> <20080313114738.GC2414@genesis.frugalware.org> <alpine.LSU.1.00.0803131254580.1656@racer.site> <20080313121644.GD2414@genesis.frugalware.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 16/16] t7505: use SHELL_PATH in hook
+Date: Thu, 13 Mar 2008 09:00:41 -0400
+Message-ID: <20080313130041.GG19485@coredump.intra.peff.net>
+References: <cover.1205356737.git.peff@peff.net> <20080312214243.GQ26286@coredump.intra.peff.net> <47D8D39C.3070904@users.sourceforge.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Alexander Gladysh <agladysh@gmail.com>, git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Thu Mar 13 14:00:28 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Whit Armstrong <armstrong.whit@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Adam Piatyszek <ediap@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Thu Mar 13 14:02:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JZn2o-0001hW-Pu
-	for gcvg-git-2@gmane.org; Thu, 13 Mar 2008 14:00:27 +0100
+	id 1JZn4O-0002G9-Nh
+	for gcvg-git-2@gmane.org; Thu, 13 Mar 2008 14:02:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753565AbYCMM7l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Mar 2008 08:59:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753474AbYCMM7k
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Mar 2008 08:59:40 -0400
-Received: from www.church-of-our-saviour.ORG ([69.25.196.31]:32987 "EHLO
-	thunker.thunk.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753399AbYCMM7j (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Mar 2008 08:59:39 -0400
-Received: from root (helo=closure.thunk.org)
-	by thunker.thunk.org with local-esmtp   (Exim 4.50 #1 (Debian))
-	id 1JZn2x-0007zZ-QY; Thu, 13 Mar 2008 09:00:35 -0400
-Received: from tytso by closure.thunk.org with local (Exim 4.67)
-	(envelope-from <tytso@mit.edu>)
-	id 1JZn1P-0005B6-2e; Thu, 13 Mar 2008 08:58:59 -0400
+	id S1752858AbYCMNAp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Mar 2008 09:00:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752733AbYCMNAp
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Mar 2008 09:00:45 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4839 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751907AbYCMNAo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Mar 2008 09:00:44 -0400
+Received: (qmail 30200 invoked by uid 111); 13 Mar 2008 13:00:42 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Thu, 13 Mar 2008 09:00:42 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 13 Mar 2008 09:00:41 -0400
 Content-Disposition: inline
-In-Reply-To: <20080313121644.GD2414@genesis.frugalware.org>
-User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@mit.edu
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+In-Reply-To: <47D8D39C.3070904@users.sourceforge.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77073>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77074>
 
-On Thu, Mar 13, 2008 at 01:16:44PM +0100, Miklos Vajna wrote:
-> On Thu, Mar 13, 2008 at 12:55:11PM +0100, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > The latter can be remedied (somewhat) by encrypting each object 
-> > individually.  In that case, .gitattributes can help (you should be able 
-> > to find a mail to that extent, which I sent no more than 2 weeks ago).  
-> > However, you must make sure that the encryption is repeatable, i.e. two 
-> > different encryption runs _must_ result in _identical_ output.
-> 
-> afaik, this is not the case for gpg.
+On Thu, Mar 13, 2008 at 08:11:24AM +0100, Adam Piatyszek wrote:
 
-No, and you wouldn't want to use gpg because of the overhead it adds
-around an encrypted message.  You would need to use a raw encryption
-algorithm, or one with very minimal wrapping.  It's normally at this
-point that that you'd need to bring in a security expert to ask a
-whole lot of questions about your exact use scenario, do a formal
-threat analysis, since there are all sorts of unanswered questions
-about what kind of key management solution you really need for your
-situation.
+>> -cat > "$HOOK" <<'EOF'
+>> +echo "#!$SHELL_PATH" > "$HOOK"
+>> +cat >> "$HOOK" <<'EOF'
+>>  #!/bin/sh
+>    ^^^^^^^^^
+> The above line should be removed in my humble opinion.
 
-It's usually not as simple as "just encrypt it".  How many people need
-to have access to the to the repository?  Do you need to revoke access
-to the repository later?  Who is allowed to give a new person access
-to the repository?  etc., etc., etc.
+Oops, yes. I did delete it, but then accidentally editor-typo'd it back
+into existence. Good eyes.
 
-						- Ted
+-Peff
