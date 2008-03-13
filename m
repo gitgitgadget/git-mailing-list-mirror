@@ -1,65 +1,59 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH 10/16] add NO_EXTERNAL_GREP build option
-Date: Thu, 13 Mar 2008 08:50:24 +0100
-Message-ID: <47D8DCC0.9090303@viscovery.net>
-References: <cover.1205356737.git.peff@peff.net> <20080312213916.GK26286@coredump.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 00/16] solaris portability patches
+Date: Thu, 13 Mar 2008 00:56:21 -0700
+Message-ID: <7v4pbbys4a.fsf@gitster.siamese.dyndns.org>
+References: <20080312212932.GA26286@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Whit Armstrong <armstrong.whit@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Whit Armstrong <armstrong.whit@gmail.com>, git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Mar 13 08:51:08 2008
+X-From: git-owner@vger.kernel.org Thu Mar 13 08:57:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JZiDS-0002qI-Si
-	for gcvg-git-2@gmane.org; Thu, 13 Mar 2008 08:51:07 +0100
+	id 1JZiJM-0004ZL-Pc
+	for gcvg-git-2@gmane.org; Thu, 13 Mar 2008 08:57:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751572AbYCMHu2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Mar 2008 03:50:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751485AbYCMHu2
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Mar 2008 03:50:28 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:5188 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751480AbYCMHu2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Mar 2008 03:50:28 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1JZiC3-0001KR-Sb; Thu, 13 Mar 2008 08:49:40 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 4AA8C6B7; Thu, 13 Mar 2008 08:50:24 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <20080312213916.GK26286@coredump.intra.peff.net>
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1751798AbYCMH4d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Mar 2008 03:56:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751747AbYCMH4d
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Mar 2008 03:56:33 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:32859 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751246AbYCMH4d (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Mar 2008 03:56:33 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id F32252FD1;
+	Thu, 13 Mar 2008 03:56:29 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 559AD2FD0; Thu, 13 Mar 2008 03:56:26 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77050>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77051>
 
-Jeff King schrieb:
-> Previously, we just chose whether to allow external grep
-> based on the __unix__ define. However, there are systems
-> which define this macro but which have an inferior group
-> (e.g., one that does not support all options used by t7002).
-> This allows users to accept the potential speed penalty to
-> get a more consistent grep experience (and to pass the
-> testsuite).
-> 
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> This might have fallouts for msysgit (i.e., they need to define
-> NO_EXTERNAL_GREP instead of relying on __unix__ not being defined).
+Whew, a huge series.
 
-You name it. Would you mind converting exec_grep() to use run_command(),
-too? Or better inline it since it won't do a lot more than run_command()?
-That way we at least won't get a broken git when I merge git.git that has
-this patch.
+I've queued the following for now.
 
-Thanks,
--- Hannes
+    [PATCH 01/16] tr portability fixes
+    [PATCH 02/16] t0050: perl portability fix
+    [PATCH 03/16] more tr portability test script fixes
+    [PATCH 04/16] grep portability fix: don't use "-e" or "-q"
+    [PATCH 05/16] remove use of "tail -n 1" and "tail -1"
+    [PATCH 06/16] add test_cmp function for test scripts
+    [PATCH 07/16] t4020: don't use grep -a
+    [PATCH 09/16] t6000lib: tr portability fix
+    [PATCH 10/16] add NO_EXTERNAL_GREP build option
+    [PATCH 13/16] filter-branch: don't use xargs -0
+    [PATCH 14/16] filter-branch: use $SHELL_PATH instead of 'sh'
+    [PATCH 15/16] t9112: add missing #!/bin/sh header
+    [PATCH 16/16] t7505: use SHELL_PATH in hook
+
+but being this close to -rc0 I do not really enjoy too disruptive
+patches.
