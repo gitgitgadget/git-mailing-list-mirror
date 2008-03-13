@@ -1,63 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: "Ping Yin" <pkufranky@gmail.com>
 Subject: Re: [PATCH v2 4/4] buitin-status: Add tests for submodule summary
-Date: Thu, 13 Mar 2008 11:04:06 -0700
-Message-ID: <7vprtyxzzd.fsf@gitster.siamese.dyndns.org>
+Date: Fri, 14 Mar 2008 02:09:09 +0800
+Message-ID: <46dff0320803131109j165cfde9v85ea9b04a05819ef@mail.gmail.com>
 References: <1205416085-23431-1-git-send-email-pkufranky@gmail.com>
- <1205416085-23431-2-git-send-email-pkufranky@gmail.com>
- <1205416085-23431-3-git-send-email-pkufranky@gmail.com>
- <1205416085-23431-4-git-send-email-pkufranky@gmail.com>
- <1205416085-23431-5-git-send-email-pkufranky@gmail.com>
- <47D93875.1050407@viscovery.net>
+	 <1205416085-23431-2-git-send-email-pkufranky@gmail.com>
+	 <1205416085-23431-3-git-send-email-pkufranky@gmail.com>
+	 <1205416085-23431-4-git-send-email-pkufranky@gmail.com>
+	 <1205416085-23431-5-git-send-email-pkufranky@gmail.com>
+	 <47D93875.1050407@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ping Yin <pkufranky@gmail.com>, git@vger.kernel.org,
-	gitster@pobox.com
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu Mar 13 19:06:15 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: "Johannes Sixt" <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Thu Mar 13 19:10:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JZrnX-0005bm-Sv
-	for gcvg-git-2@gmane.org; Thu, 13 Mar 2008 19:05:00 +0100
+	id 1JZrsE-0007xB-LH
+	for gcvg-git-2@gmane.org; Thu, 13 Mar 2008 19:09:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754227AbYCMSET (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Mar 2008 14:04:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753816AbYCMSET
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Mar 2008 14:04:19 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:46999 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754215AbYCMSES (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Mar 2008 14:04:18 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 53D995E90;
-	Thu, 13 Mar 2008 14:04:16 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 835025E8B; Thu, 13 Mar 2008 14:04:08 -0400 (EDT)
-In-Reply-To: <47D93875.1050407@viscovery.net> (Johannes Sixt's message of
- "Thu, 13 Mar 2008 15:21:41 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752469AbYCMSJM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Mar 2008 14:09:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753844AbYCMSJL
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Mar 2008 14:09:11 -0400
+Received: from an-out-0708.google.com ([209.85.132.240]:61393 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752036AbYCMSJK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Mar 2008 14:09:10 -0400
+Received: by an-out-0708.google.com with SMTP id d31so842784and.103
+        for <git@vger.kernel.org>; Thu, 13 Mar 2008 11:09:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=vgJQqN5Xl4bmeyYOXhz1DvSguvTC5HG/FbUsJZsBWco=;
+        b=Qsb1MK8M0bzLiEwCA3TE4MYhhN1YXbEtvi4E+TrGRmGxsfMz1qh6m/Fkcmo5wHXlw94GYSagyIa1fD9H3B4bI0110gDik18DES9mZMlS1AcIl5w9Z72WwubaXwONB1tN3/Oa5SEP01FR0zyLL3l0waQZeenfHAvyX8hnkrjkfgs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=oPW6tor2zsfhiDJ/Vblq4QY75CPeMR6NPqBBHbpfENZnc3EhY0so/dbdKreVY9leFgLmJFKuZle6qJBVpwSDw3l6AgZLyIyQWSRnEWB73C88Bullgi4dv769w0eX5kHyszX8vpVricTYMkZKTnLV9TdGXg5f+81tYMEnb+0Bxjw=
+Received: by 10.100.207.5 with SMTP id e5mr3905003ang.95.1205431750136;
+        Thu, 13 Mar 2008 11:09:10 -0700 (PDT)
+Received: by 10.100.5.18 with HTTP; Thu, 13 Mar 2008 11:09:09 -0700 (PDT)
+In-Reply-To: <47D93875.1050407@viscovery.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77120>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77121>
 
-Johannes Sixt <j.sixt@viscovery.net> writes:
-
+On Thu, Mar 13, 2008 at 10:21 PM, Johannes Sixt <j.sixt@viscovery.net> wrote:
 > Ping Yin schrieb:
->> +cd sm &&
->> +head=$(git rev-parse --verify HEAD | cut -c1-7) &&
->> +cd ..
 >
-> I think you can make these three lines into:
+> > +cd sm &&
+>  > +head=$(git rev-parse --verify HEAD | cut -c1-7) &&
+>  > +cd ..
 >
-> test_expect_success 'get short SHA1 of submodule HEAD' '
+>  I think you can make these three lines into:
 >
-> 	head=$(cd sm && git rev-parse --verify HEAD | cut -c1-7)
-> '
+>  test_expect_success 'get short SHA1 of submodule HEAD' '
+>
+>         head=$(cd sm && git rev-parse --verify HEAD | cut -c1-7)
+>  '
+>
+>  (not tested, though).
 
-"git rev-parse --short=12 --verify HEAD" or whatever minimum length you
-would want would free you from an ugly "pipe to cut".
+Hmm, It doesn't work. Since i need $head1 outputed to file expect as follows
+
++cat > expect <<EOF
++# On branch master
++# Changes to be committed:
++#   (use "git reset HEAD^1 <file>..." to unstage)
++#
++#      new file:   dir2/added
++#      new file:   sm
++#
++# Changed but not updated:
++#   (use "git add <file>..." to update what will be committed)
++#
++#      modified:   dir1/modified
++#
++# Modified submodules:
++#
++# * sm 0000000...$head (1):
+
+Here we need $head.
+
+
+
+-- 
+Ping Yin
