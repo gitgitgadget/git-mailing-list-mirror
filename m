@@ -1,59 +1,64 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: git-cvsserver
-Date: Fri, 14 Mar 2008 09:30:16 +1300
-Message-ID: <46a038f90803131330l66498c43ja4cb2352fa07c986@mail.gmail.com>
-References: <57af99860803131038t71f3b76cx1f0c018f06bb9d8c@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 06/16] add test_cmp function for test scripts
+Date: Thu, 13 Mar 2008 13:48:35 -0700
+Message-ID: <7v63vqxsd8.fsf@gitster.siamese.dyndns.org>
+References: <cover.1205356737.git.peff@peff.net>
+ <20080312213636.GG26286@coredump.intra.peff.net>
+ <7vmyp34mn6.fsf@gitster.siamese.dyndns.org>
+ <20080313120821.GA19485@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Olivier Van Acker" <cyberroadie@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 13 21:31:02 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Whit Armstrong <armstrong.whit@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Mar 13 21:49:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JZu4q-00070M-DI
-	for gcvg-git-2@gmane.org; Thu, 13 Mar 2008 21:31:00 +0100
+	id 1JZuMn-00063M-LK
+	for gcvg-git-2@gmane.org; Thu, 13 Mar 2008 21:49:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750992AbYCMUaU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Mar 2008 16:30:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751948AbYCMUaT
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Mar 2008 16:30:19 -0400
-Received: from wr-out-0506.google.com ([64.233.184.226]:57829 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750972AbYCMUaS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Mar 2008 16:30:18 -0400
-Received: by wr-out-0506.google.com with SMTP id c48so2897331wra.1
-        for <git@vger.kernel.org>; Thu, 13 Mar 2008 13:30:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=iDGMDNIBeEcKPzY0SbzJJKxa/h3vz/JYlGFweWb3HHk=;
-        b=Pt3+uldUr6WzHncsE9L7uFL69lu60y5dCf28umPIaWfiquR8nWjLkMifp8VBPFPwnIr/pEEaxscW8k5SjZHuk47sD9MXQPIeT0wK6bMFNtzP7uNKAhE/oG3m0jM7NlBV0pEONrsrK7hPcagLkV/ptOEpPywhZLkhOKoW4Exn6kE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=K7mJ1PN1CDRmM9CRPKjETZIg9Ys1OV0IfYI6gkpt/PUaMa/agVKTluqUSv6zQ/9w/4k3T/oZhWAWMMAAmdgVAkFUgG9CS5N5hK0Vr9hKGngpzdDOOPtFHedtgeyJ1OcZloC3IoFZvY4jB+FWp9AMKmZlcGSha5b/uHNKR5X5ay8=
-Received: by 10.141.86.14 with SMTP id o14mr6089208rvl.278.1205440216802;
-        Thu, 13 Mar 2008 13:30:16 -0700 (PDT)
-Received: by 10.66.252.6 with HTTP; Thu, 13 Mar 2008 13:30:16 -0700 (PDT)
-In-Reply-To: <57af99860803131038t71f3b76cx1f0c018f06bb9d8c@mail.gmail.com>
-Content-Disposition: inline
+	id S1754486AbYCMUsx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Mar 2008 16:48:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754181AbYCMUsx
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Mar 2008 16:48:53 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:33546 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754138AbYCMUsw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Mar 2008 16:48:52 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id A694A21BB;
+	Thu, 13 Mar 2008 16:48:49 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id E74AA21BA; Thu, 13 Mar 2008 16:48:42 -0400 (EDT)
+In-Reply-To: <20080313120821.GA19485@coredump.intra.peff.net> (Jeff King's
+ message of "Thu, 13 Mar 2008 08:08:21 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77135>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77136>
 
-On Fri, Mar 14, 2008 at 6:38 AM, Olivier Van Acker
-<cyberroadie@gmail.com> wrote:
->  Is this this right place to ask a question about the workings of git-cvsserver?
+Jeff King <peff@peff.net> writes:
 
-yes. Might be worthwhile searching the list archives for earlier
-discussions on the matter ;-)
+> On Wed, Mar 12, 2008 at 03:12:45PM -0700, Junio C Hamano wrote:
+>
+>> I think I have an earlier round of this in 'pu'.
+>
+> Oops, so you do. I remember discussing it but didn't recall a patch
+> coming out of it.
+>
+> I see you have queued mine now in pu over yours. I actually think yours
+> looks a little nicer (you sanity-check the comparator, and you are more
+> careful with stdin (something that I considered, but figured we could
+> add if something actually broke)).
+>
+> Any reason not to keep your existing one over mine?
 
-cheers,
+Yours is much simpler.
 
-
-m
+And it is tested on the field, so if it ever breaks I have somebody else
+to blame ;-)
