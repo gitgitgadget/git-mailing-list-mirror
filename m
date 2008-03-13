@@ -1,94 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [Q] assume unchanged?
-Date: Thu, 13 Mar 2008 00:33:26 -0700
-Message-ID: <7vejafyt6h.fsf@gitster.siamese.dyndns.org>
-References: <20080227222243.6117@nanako3.bluebottle.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Whitespace on commit
+Date: Thu, 13 Mar 2008 08:34:40 +0100
+Message-ID: <47D8D910.5060901@op5.se>
+References: <fra7ji$7p9$1@ger.gmane.org> <7viqzr1dsp.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-2022-jp
-Cc: git@vger.kernel.org
-To: =?iso-2022-jp?B?GyRCJDckaSQkJDckSiRKJDMbKEI=?= 
-	<nanako3@bluebottle.com>
-X-From: git-owner@vger.kernel.org Thu Mar 13 08:34:50 2008
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Kenneth P. Turvey" <kt-usenet@squeakydolphin.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 13 08:35:27 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JZhxf-0007Ho-25
-	for gcvg-git-2@gmane.org; Thu, 13 Mar 2008 08:34:47 +0100
+	id 1JZhyH-0007QO-I2
+	for gcvg-git-2@gmane.org; Thu, 13 Mar 2008 08:35:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751651AbYCMHdn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Mar 2008 03:33:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753829AbYCMHdn
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Mar 2008 03:33:43 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:59864 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751651AbYCMHdm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Mar 2008 03:33:42 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 59A562C6A;
-	Thu, 13 Mar 2008 03:33:41 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 834512C69; Thu, 13 Mar 2008 03:33:36 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751796AbYCMHeo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Mar 2008 03:34:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751656AbYCMHen
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Mar 2008 03:34:43 -0400
+Received: from mail.op5.se ([193.201.96.20]:33810 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751480AbYCMHen (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Mar 2008 03:34:43 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id DDC2A1F080D8;
+	Thu, 13 Mar 2008 08:35:47 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -4.399
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 6zs17uX5V6mo; Thu, 13 Mar 2008 08:35:47 +0100 (CET)
+Received: from clix.int.op5.se (unknown [192.168.1.27])
+	by mail.op5.se (Postfix) with ESMTP id 3A0DF1F080D0;
+	Thu, 13 Mar 2008 08:35:47 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.12 (X11/20080226)
+In-Reply-To: <7viqzr1dsp.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77046>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77047>
 
-しらいしななこ  <nanako3@bluebottle.com> writes:
+Junio C Hamano wrote:
+> "Kenneth P. Turvey" <kt-usenet@squeakydolphin.com> writes:
+> 
+>> I keep getting annoying errors when I try to commit.  Git complains that I
+>> have whitespace in the wrong places.  
+>>
+>> This is fine.. I even like it.  What I don't like is having to change this
+>> stuff manually.  Is there anyway to tell git to just fix the stuff and do
+>> the commit?  
+>>
+>> I've tried setting
+>>
+>> apply.whitespace = fix 
+>>
+>> in my .gitconfig, but that doesn't seem to help when doing commits.
+> 
+> Yeah, that is to protect yourself from whitespace mess _other people_
+> threw at you in a patch form.
+> 
+> You can ask git to fix your own stuff up, by pretending that you are that
+> other person who made the mess, by doing:
+> 
+> 	git diff HEAD >P.diff
+>         git reset --hard HEAD
+>         git apply --index --whitespace=fix P.diff
+> 
 
-> I noticed that there is --assume-unchanged option, and I read its
-> description three times, but I do not understand it.  What is it good
-> for?  Version control systems are used in order to keep track changes,
-> and if using that option makes my changes ignored, how can it be a good
-> thing?
+I have exactly that (except my P.diff sits in /tmp under a different name)
+as an alias named wsfix. Here's how to make one of your own, Kenneth:
 
-[offtopic: I wrapped your lines...]
+git config --global alias wsfix '!git diff HEAD >P.diff && git reset --hard HEAD && git apply --index --whitespace=fix P.diff && rm -f P.diff'
 
-That's an ancient invention but I think it still has two uses (at least,
-its ideas, but honestly speaking, I do not know how hard recent built-in
-Porcelains tried to keep the concept maintained---the implementation may
-have decayed over time):
+Note that there are no newlines in the above command. When you get the whitespace
+warnings, just run "git wsfix" and you'll be good to go.
 
- - If your build system is broken such that it has a bad habit of
-   overwriting a tracked file (e.g. "make depend" overwriting tracked
-   Makefile), you would want to ignore such a change and keep going.  Of
-   course, you need to remember that you need to drop that assume
-   unchanged bit when you really make your own change to such a file,
-   which is a minor drawback, but when you do that you would need to clean
-   up the unrelated changes your broken build system leaves anyway, so it
-   is not a big deal.
-
- - If your filesystem is slow and you know upfront you are only going to
-   work inside a small corer of the source tree, you can tell the system
-   that "I won't be touching these paths, and even if I did, they were
-   modified by accident".  After that, git does not have to check for
-   modifications in the paths you marked as such.
-
-The idea is that if an entry had "assume unchanged" set, then whenever we
-check a work tree file for that entry (e.g. "have we changed it from the
-index?", "what's the contents of the path? give it to me so that I can
-compare it with what's in the HEAD commit", etc.) we instead return what
-is in the index.
-
-So it _should_ be usable as an ingredient for a narrow checkout, like:
-
-	git clone -n ;# no checkout
-        git read-tree HEAD ;# still no checkout
-        git checkout HEAD Documentation/ ;# only that part
-        git diff --name-only HEAD -- |
-        git update-index --assume-unchanged --stdin ;# set the magic
-
-and after doing that, git shouldn't notice that your work tree is missing
-everything outside Documentation/ hierarchy.  At least that is the idea.
-
-I would not, however, be so surprised if this bit is honored only for
-files that are actually checked out, as detecting of missing paths happens
-much earlier than checking if paths are modified, and the use of the bit
-was about "modified".  In addition, no serious workflow ever used this
-feature as far as I know in real life, so bugs remaining in the codepath
-involved in handling this bit are not so surprising.  It should not be too
-hard to fix them, though, if people are really interested.
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
