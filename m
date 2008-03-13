@@ -1,46 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git fetch: Take '-n' to mean '--no-tags'
-Date: Thu, 13 Mar 2008 00:30:36 -0700
-Message-ID: <7vlk4nytb7.fsf@gitster.siamese.dyndns.org>
-References: <20080312105102.GE14040@wo.int.altlinux.org>
- <47D7EE27.50407@op5.se> <alpine.LSU.1.00.0803121703010.1656@racer.site>
- <47D7FF8E.5040700@op5.se> <alpine.LSU.1.00.0803121710460.1656@racer.site>
- <47D8CEA6.5040301@op5.se> <47D8D40B.60409@op5.se>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH 01/16] tr portability fixes
+Date: Thu, 13 Mar 2008 08:32:37 +0100
+Message-ID: <47D8D895.4030309@viscovery.net>
+References: <cover.1205356737.git.peff@peff.net> <20080312212957.GB26286@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	"Dmitry V. Levin" <ldv@altlinux.org>, git@vger.kernel.org
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Thu Mar 13 08:31:30 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Whit Armstrong <armstrong.whit@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Mar 13 08:33:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JZhuU-0006YF-Av
-	for gcvg-git-2@gmane.org; Thu, 13 Mar 2008 08:31:30 +0100
+	id 1JZhwG-000717-1I
+	for gcvg-git-2@gmane.org; Thu, 13 Mar 2008 08:33:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751592AbYCMHaw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Mar 2008 03:30:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751585AbYCMHaw
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Mar 2008 03:30:52 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:59116 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751270AbYCMHav (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Mar 2008 03:30:51 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id E13CC2C55;
-	Thu, 13 Mar 2008 03:30:49 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 0B7132C52; Thu, 13 Mar 2008 03:30:44 -0400 (EDT)
-In-Reply-To: <47D8D40B.60409@op5.se> (Andreas Ericsson's message of "Thu, 13
- Mar 2008 08:13:15 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751139AbYCMHcl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Mar 2008 03:32:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751246AbYCMHcl
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Mar 2008 03:32:41 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:3790 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750924AbYCMHck (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Mar 2008 03:32:40 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1JZhuq-0000fJ-TI; Thu, 13 Mar 2008 08:31:53 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 4ECFF6B7; Thu, 13 Mar 2008 08:32:37 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <20080312212957.GB26286@coredump.intra.peff.net>
+X-Spam-Score: 0.2 (/)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_80=2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77044>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77045>
 
-Very well done.  Thanks.
+Jeff King schrieb:
+> We can mostly get around this by just using the bracket form
+> for both sets, as in:
+> 
+>   tr '[A-Z] '[a-z]'
+> 
+> in which case POSIX interpets this as "'[' becomes '['",
+> which is OK.
+> 
+> However, this doesn't work with multiple sequences, like:
+> 
+>   # rot13
+>   tr '[A-Z][a-z]' '[N-Z][A-M][n-z][a-m]'
+
+Not that it matters a lot, but I wonder whether
+
+   tr '[A-M][N-Z][a-m][n-z]' '[N-Z][A-M][n-z][a-m]'
+
+would have done the trick.
+
+-- Hannes
