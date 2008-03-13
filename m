@@ -1,68 +1,104 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Jeff King <peff@peff.net>
 Subject: Re: [Q] Encrypted GIT?
-Date: Thu, 13 Mar 2008 16:21:44 +0100 (CET)
-Message-ID: <alpine.LSU.1.00.0803131620270.1656@racer.site>
+Date: Thu, 13 Mar 2008 11:53:22 -0400
+Message-ID: <20080313155322.GA30847@coredump.intra.peff.net>
 References: <c6c947f60803130148w7981a3f0r718c0801343c7b78@mail.gmail.com> <20080313114738.GC2414@genesis.frugalware.org> <alpine.LSU.1.00.0803131254580.1656@racer.site> <20080313121644.GD2414@genesis.frugalware.org> <20080313125853.GA12927@mit.edu>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=utf-8
 Cc: Miklos Vajna <vmiklos@frugalware.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Alexander Gladysh <agladysh@gmail.com>, git@vger.kernel.org
 To: Theodore Tso <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Thu Mar 13 16:23:09 2008
+X-From: git-owner@vger.kernel.org Thu Mar 13 16:54:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JZpG6-00085M-JB
-	for gcvg-git-2@gmane.org; Thu, 13 Mar 2008 16:22:19 +0100
+	id 1JZpkx-0005gg-4q
+	for gcvg-git-2@gmane.org; Thu, 13 Mar 2008 16:54:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752757AbYCMPVk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Mar 2008 11:21:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752690AbYCMPVk
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Mar 2008 11:21:40 -0400
-Received: from mail.gmx.net ([213.165.64.20]:56229 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752536AbYCMPVj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Mar 2008 11:21:39 -0400
-Received: (qmail invoked by alias); 13 Mar 2008 15:21:37 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp004) with SMTP; 13 Mar 2008 16:21:37 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19mFEA8FL1m8ONUSknNqZXB/FOwFEgLTEGje5xbmo
-	NNVVA/uJcoIMg5
-X-X-Sender: gene099@racer.site
+	id S1753397AbYCMPx1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Mar 2008 11:53:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753321AbYCMPx1
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Mar 2008 11:53:27 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1657 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753290AbYCMPx0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Mar 2008 11:53:26 -0400
+Received: (qmail 9513 invoked by uid 111); 13 Mar 2008 15:53:23 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Thu, 13 Mar 2008 11:53:23 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 13 Mar 2008 11:53:22 -0400
+Content-Disposition: inline
 In-Reply-To: <20080313125853.GA12927@mit.edu>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77096>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77097>
 
-Hi,
+On Thu, Mar 13, 2008 at 08:58:54AM -0400, Theodore Tso wrote:
 
-On Thu, 13 Mar 2008, Theodore Tso wrote:
-
-> On Thu, Mar 13, 2008 at 01:16:44PM +0100, Miklos Vajna wrote:
-> > On Thu, Mar 13, 2008 at 12:55:11PM +0100, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > > The latter can be remedied (somewhat) by encrypting each object 
-> > > individually.  In that case, .gitattributes can help (you should be 
-> > > able to find a mail to that extent, which I sent no more than 2 
-> > > weeks ago).  However, you must make sure that the encryption is 
-> > > repeatable, i.e. two different encryption runs _must_ result in 
-> > > _identical_ output.
-> > 
-> > afaik, this is not the case for gpg.
-> 
 > No, and you wouldn't want to use gpg because of the overhead it adds
-> around an encrypted message.
+> around an encrypted message.  You would need to use a raw encryption
+> algorithm, or one with very minimal wrapping.  It's normally at this
 
-To the contrary: if your files are small (which they are most likely), you 
-_want_ the overhead, in order to make the encryption harder to crack.
+Well, "raw encryption algorithm" is a bit vague here. :)
 
-AFAICT gpg is a good all-round encryption tool, and reinventing the wheel 
-just for encrypting things in a git repository just does not cut it.
+I thought about this a while ago and come to a few conclusions:
 
-Ciao,
-Dscho
+  - encrypting before git sees content sucks, because you are either
+    sacrificing security (content X always encrypts to Y) or system
+    stability (git doesn't know that Y and Y' are really the same thing)
+
+  - encrypting at the object level (when we do zlib) sucks, because we
+    still want to name contents by their hash, which means the object
+    database index contains information about what's in your content.
+    There's also some per-object overhead. Plus any system without the
+    key can't do deltas.
+
+  - encrypting whole packfiles sucks for local storage, since you lose
+    the random access property (unless you go with something static like
+    an ECB mode, but then you are sacrificing security).
+
+  - encrypting whole packfiles is a bit better for transport. The
+    key-holding repo does the deltas and just treats the remote repo as
+    dumb storage (it can't be smart, since that would involve looking at
+    the data). Storage overhead is minimal if packfiles are a reasonable
+    size.
+
+So I think the last makes the most sense, where your local repo is
+totally unprotected, but you efficiently push git objects to a remote
+untrusted repo.
+
+You could probably do something totally external to git using bundles as
+the primitive. Store an encrypted index on the remote that says "here
+are the packs I have, and the objects they contain." Whenever you push,
+pull the index (which is of course more network-intensive than regular
+git protocol, but not as bad as pulling all the data) and calculate a
+thin-pack bundle yourself. Encrypt the bundle and store remotely.
+
+> point that that you'd need to bring in a security expert to ask a
+> whole lot of questions about your exact use scenario, do a formal
+> threat analysis, since there are all sorts of unanswered questions
+> about what kind of key management solution you really need for your
+> situation.
+
+I don't know if a formal thread analysis is necessary. I think most
+people are interested in "if the contents of remote storage X are
+known, how much do people know about the _contents_ of my repo stored on
+X?" and they don't care about masking the size, time of updates, etc.
+
+That's a fairly straightforward application of cryptography. The tricky
+part is doing it in a way that can still leverage some of git's
+efficiencies.
+
+> It's usually not as simple as "just encrypt it".  How many people need
+> to have access to the to the repository?  Do you need to revoke access
+> to the repository later?  Who is allowed to give a new person access
+> to the repository?  etc., etc., etc.
+
+Sure, those are all interesting questions for a complete system. But I
+think it makes sense to incrementally try the basics first.
+
+-Peff
