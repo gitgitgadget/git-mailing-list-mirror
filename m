@@ -1,177 +1,111 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: [PATCH] merge-recursive: handle file mode changes
-Date: Thu, 13 Mar 2008 23:47:41 +0100
-Message-ID: <20080313224741.GA5000@localhost>
-References: <20080308171726.GA16129@localhost> <alpine.LSU.1.00.0803081850470.3975@racer.site> <20080313125229.GA24758@localhost> <alpine.LSU.1.00.0803131607030.1656@racer.site> <20080313192246.GA30361@localhost> <alpine.LSU.1.00.0803132216580.4174@racer.site>
+From: "=?ISO-8859-1?Q?Marc-Andr=E9_Lureau?=" <marcandre.lureau@gmail.com>
+Subject: Re: [PATCH] git-cvsimport: fix initial checkout
+Date: Fri, 14 Mar 2008 01:04:13 +0200
+Message-ID: <e29894ca0803131604qa61adfbo22ff75d076feb899@mail.gmail.com>
+References: <1205435378-10411-1-git-send-email-marcandre.lureau@gmail.com>
+	 <47D9A836.9010601@catalyst.net.nz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Mar 13 23:48:21 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: "Martin Langhoff" <martin@catalyst.net.nz>
+X-From: git-owner@vger.kernel.org Fri Mar 14 00:05:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JZwDk-000166-TA
-	for gcvg-git-2@gmane.org; Thu, 13 Mar 2008 23:48:21 +0100
+	id 1JZwTp-0006nW-Bw
+	for gcvg-git-2@gmane.org; Fri, 14 Mar 2008 00:04:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755375AbYCMWrl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Mar 2008 18:47:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753021AbYCMWrl
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Mar 2008 18:47:41 -0400
-Received: from ug-out-1314.google.com ([66.249.92.175]:56812 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752471AbYCMWrk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Mar 2008 18:47:40 -0400
-Received: by ug-out-1314.google.com with SMTP id z38so567857ugc.16
-        for <git@vger.kernel.org>; Thu, 13 Mar 2008 15:47:36 -0700 (PDT)
-Received: by 10.66.251.3 with SMTP id y3mr1897053ugh.88.1205448456787;
-        Thu, 13 Mar 2008 15:47:36 -0700 (PDT)
-Received: from darc.dyndns.org ( [88.117.96.248])
-        by mx.google.com with ESMTPS id g30sm8361946ugd.54.2008.03.13.15.47.34
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 13 Mar 2008 15:47:35 -0700 (PDT)
-Received: from drizzd by darc.dyndns.org with local (Exim 4.69)
-	(envelope-from <drizzd@aon.at>)
-	id 1JZwD7-0002cy-EU; Thu, 13 Mar 2008 23:47:41 +0100
-Mail-Followup-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, gitster@pobox.com
+	id S1751687AbYCMXET convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 13 Mar 2008 19:04:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752053AbYCMXES
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Mar 2008 19:04:18 -0400
+Received: from wx-out-0506.google.com ([66.249.82.230]:64674 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751642AbYCMXES convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 13 Mar 2008 19:04:18 -0400
+Received: by wx-out-0506.google.com with SMTP id h31so3965444wxd.4
+        for <git@vger.kernel.org>; Thu, 13 Mar 2008 16:04:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=8+LoaIzgg2G7vlDYKrvkv2XZGswtgUj1vwdft3huwZo=;
+        b=uCsf+/XA1WKrI4tjC/iswOEUKCoGWLeQuJhFRCHzt+Q9AO9D519zhp7xP9+xK14umwdpLBzaXQXQIR75WDmzxTjdb8ZiXVGaRY89O3R+owO7l0ZeWSmQW5jlUTW6KF9PNWDEyAAXgRuvPHtZU4qejZZrszSxLKuJIw5IhLwJ+IM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Mi3gKdfytjptntjzQpChThGrR4pFCXj6wpdSd04m9SIH22hzu+e86hC72GEfuUWiPOJdYpivbpVQQKYf+WQmZRNKKRS2jTginVLUg8Xkaj2LuvO78wHC9RiEcXP2Vrj/CvYXRgQBXMuqYLGgBBcMBOxfh2UPTADbUWeLbykBz78=
+Received: by 10.115.18.1 with SMTP id v1mr10568153wai.81.1205449453231;
+        Thu, 13 Mar 2008 16:04:13 -0700 (PDT)
+Received: by 10.114.60.4 with HTTP; Thu, 13 Mar 2008 16:04:13 -0700 (PDT)
+In-Reply-To: <47D9A836.9010601@catalyst.net.nz>
 Content-Disposition: inline
-In-Reply-To: <alpine.LSU.1.00.0803132216580.4174@racer.site>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77143>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77144>
 
-Handle file mode changes similarly to changes of content. If the file mode
-changed in only one branch, keep the changed version. If the file mode
-changed in both branches, prompt the user to choose one by reporting a
-conflict.
+Hi
 
-This also fixes a bug which caused the merge to fail if the merged files were
-empty.
+On Fri, Mar 14, 2008 at 12:18 AM, Martin Langhoff
+<martin@catalyst.net.nz> wrote:
+> Marc-Andre Lureau wrote:
+>  > git-symbolic-ref HEAD returns master reference, even if the file d=
+oes
+>  > not exists. That prevents the initial checkout and fails in
+>  > git-rev-parse.
+>
+>  But you are patching the block that gets triggered on subsequent
+>  imports, this code does not deal with "initial checkout" unless
+>  something else is wrong. The line right above the open() is an else =
+that
+>  has the block that matters.
+>
 
-Signed-off-by: Clemens Buchacher <drizzd@aon.at>
----
+Yeah, it failed in the middle of a ~4h import, I did not restart it.
 
-Hi,
+git-cvsimport -r cvs -p b,HEAD -k -m -a -v -d
+:pserver:anoncvs@anoncvs.freedesktop.org:/cvs/gstreamer -C
+gst-plugins-good gst-plugins-good
 
-On Thu, Mar 13, 2008 at 10:17:07PM +0100, Johannes Schindelin wrote:
-> If the modes are different, the merge is not clean.
+This is a quite problematic CVS, btw. (missing patches/files in the
+end, branch merge fail ... see my previous patch)
 
-If the mode has only changed in either the head or the remote tree, I believe
-we should keep the changed version without conflict - just like we do for
-non-overlapping changes of content.
+>  > The patch checks the existence of the reference file
+>  > before assuming an original branch exists. There might be better
+>  > solutions than checking file existence.
+>
+>  There are indeed. If we need this patch -- then you can call git
+>  ref-parse right to see if you get a sha1.
 
-If, however, both files changed in a different way, we report a conflict and
-keep the remote version by default. I based this decision on the assumption
-that the user is more likely to have acknowledged the head branch, while he may
-want to think about whether or not the change in the remote version is ok.
+Ok, which one is prefered? ref-parse I guess? I am mostly ignorant of
+all the plumbing stuff.
 
-I cleaned up the code a bit and added a comment, so I hope the behavior is
-clearer now.
+>  > -     unless ($last_branch) {
+>  > +     if (-f "$git_dir/$last_branch") {
+>
+>  Note that the file won't exist there in any modern git. It will be i=
+n
+>  $git_dir/refs/heads/$last_branch. Did you test this patch?
+>
 
-> The point is not that they are empty.  Maybe you want to fix that message.
+Crap. The patch indeed worked, because the file did not exist. The
+second time it also worked:
 
-Indeed.
+skip patchset 5825: 1205277122 before 1205418644
+skip patchset 5826: 1205418644 before 1205418644
+DONE.
+Already up-to-date.
+*** Building gst-plugins-good *** [1/145]
+make -j2
 
-I am not exactly sure how I should set the result.merge flag. In this context
-it seems to have the exact opposite meaning of result.clean. Is that correct?
 
-Regards,
-Clemens
+Result is here: http://git.infradead.org/users/elmarco/gst-plugins-good=
+=2Egit
 
- merge-recursive.c          |   21 ++++++++++++++++-----
- t/t6031-merge-recursive.sh |   39 +++++++++++++++++++++++++++++++++++++++
- 2 files changed, 55 insertions(+), 5 deletions(-)
- create mode 100755 t/t6031-merge-recursive.sh
+Thanks for the review!!
 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 34e3167..d8938cc 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -1025,12 +1025,21 @@ static struct merge_file_info merge_file(struct diff_filespec *o,
- 			hashcpy(result.sha, b->sha1);
- 		}
- 	} else {
--		if (!sha_eq(a->sha1, o->sha1) && !sha_eq(b->sha1, o->sha1))
--			result.merge = 1;
--
--		result.mode = a->mode == o->mode ? b->mode: a->mode;
-+		/*
-+		 * If mode changed in only one branch, keep the changed
-+		 * version. Otherwise, keep remote version and create a
-+		 * conflict.
-+		 */
-+		if (a->mode != o->mode && b->mode != o->mode &&
-+				a->mode != b->mode) {
-+			result.clean = 0;
-+			result.mode = b->mode;
-+		} else
-+			result.mode = o->mode == a->mode ? b->mode : a->mode;
- 
--		if (sha_eq(a->sha1, o->sha1))
-+		if (sha_eq(a->sha1, b->sha1))
-+			hashcpy(result.sha, b->sha1);
-+		else if (sha_eq(a->sha1, o->sha1))
- 			hashcpy(result.sha, b->sha1);
- 		else if (sha_eq(b->sha1, o->sha1))
- 			hashcpy(result.sha, a->sha1);
-@@ -1062,6 +1071,8 @@ static struct merge_file_info merge_file(struct diff_filespec *o,
- 		} else {
- 			die("unsupported object type in the tree");
- 		}
-+
-+		result.merge = !result.clean;
- 	}
- 
- 	return result;
-diff --git a/t/t6031-merge-recursive.sh b/t/t6031-merge-recursive.sh
-new file mode 100755
-index 0000000..36cd664
---- /dev/null
-+++ b/t/t6031-merge-recursive.sh
-@@ -0,0 +1,39 @@
-+#!/bin/sh
-+
-+test_description='merge-recursive: handle file mode'
-+. ./test-lib.sh
-+
-+test_expect_success 'mode change in one branch: keep changed version' '
-+	: >file1 &&
-+	git add file1 &&
-+	git commit -m initial &&
-+	git checkout -b a1 master &&
-+	: >dummy &&
-+	git add dummy &&
-+	git commit -m a &&
-+	git checkout -b b1 master &&
-+	chmod +x file1 &&
-+	git add file1 &&
-+	git commit -m b1 &&
-+	git checkout a1 &&
-+	git merge-recursive master -- a1 b1 &&
-+	test -x file1
-+'
-+
-+test_expect_success 'mode change in both branches: expect conflict' '
-+	git reset --hard HEAD &&
-+	git checkout -b a2 master &&
-+	: >file2 &&
-+	chmod +x file2 &&
-+	git add file2 &&
-+	git commit -m a2 &&
-+	git checkout -b b2 master &&
-+	: >file2 &&
-+	git add file2 &&
-+	git commit -m b2 &&
-+	git checkout a2 &&
-+	! (git merge-recursive master -- a2 b2 || test $? -ne 1) &&
-+	! test -x file2
-+'
-+
-+test_done
--- 
-1.5.4.4
+--=20
+Marc-Andr=E9 Lureau
