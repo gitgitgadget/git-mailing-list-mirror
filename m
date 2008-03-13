@@ -1,71 +1,130 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: git-gui translators: gitgui-0.10.0 coming soon
-Date: Thu, 13 Mar 2008 01:42:15 -0400
-Message-ID: <20080313054215.GV8410@spearce.org>
-References: <20080313052713.GU8410@spearce.org> <7v4pbb18ze.fsf@gitster.siamese.dyndns.org>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH] Documentation: help: explain 'man.viewer' multiple values
+Date: Thu, 13 Mar 2008 06:48:46 +0100
+Message-ID: <20080313064846.b6b54c11.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 13 06:43:00 2008
+To: Junio Hamano <junkio@cox.net>, Pascal Obry <pascal@obry.net>,
+	Xavier Maillard <xma@gnu.org>,
+	=?UTF-8?Q?=E3=81=97=E3=82=89=E3=81=84=E3=81=97?=
+	 =?UTF-8?Q?=E3=81=AA=E3=81=AA=E3=81=93?=
+X-From: git-owner@vger.kernel.org Thu Mar 13 06:43:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JZgDT-00008e-06
-	for gcvg-git-2@gmane.org; Thu, 13 Mar 2008 06:42:59 +0100
+	id 1JZgEK-0000Jc-4c
+	for gcvg-git-2@gmane.org; Thu, 13 Mar 2008 06:43:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751246AbYCMFmU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Mar 2008 01:42:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751139AbYCMFmU
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Mar 2008 01:42:20 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:47274 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751116AbYCMFmT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Mar 2008 01:42:19 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1JZgCm-0006OQ-64; Thu, 13 Mar 2008 01:42:16 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 311F020FBAE; Thu, 13 Mar 2008 01:42:15 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <7v4pbb18ze.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1751369AbYCMFnJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Mar 2008 01:43:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750722AbYCMFnI
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Mar 2008 01:43:08 -0400
+Received: from smtp1-g19.free.fr ([212.27.42.27]:53620 "EHLO smtp1-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751369AbYCMFnH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Mar 2008 01:43:07 -0400
+Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 44B891AB2B0;
+	Thu, 13 Mar 2008 06:43:05 +0100 (CET)
+Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with SMTP id 8FAC01AB2BE;
+	Thu, 13 Mar 2008 06:43:04 +0100 (CET)
+X-Mailer: Sylpheed 2.4.8 (GTK+ 2.12.5; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77036>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77037>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> "Shawn O. Pearce" <spearce@spearce.org> writes:
-> >
-> > Current status of my master branch:
-> >
-> >     MSGFMT    po/de.msg 386 translated.
-> >     MSGFMT    po/fr.msg 371 translated.
-> >     MSGFMT    po/hu.msg 371 translated.
-> >     MSGFMT    po/it.msg 390 translated, 1 untranslated.
-> >     MSGFMT    po/ja.msg 371 translated.
-> >     MSGFMT    po/ru.msg 367 translated, 4 untranslated.
-> >     MSGFMT    po/sv.msg 371 translated.
-> >     MSGFMT po/zh_cn.msg 368 translated, 2 fuzzy, 1 untranslated.
-> 
-> Just curious.  Why do these languages have different totall number of
-> messages?
+Also add titles to paragraphs under "CONFIGURATION VARIABLES".
 
-I think its because they are on different versions of the pot file,
-and it may also be the case that the pot file is out of date relative
-to git-gui's source code.  :-|
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ Documentation/config.txt   |    2 +-
+ Documentation/git-help.txt |   29 ++++++++++++++++++++++++++++-
+ 2 files changed, 29 insertions(+), 2 deletions(-)
 
-I think my i18n "coordinater" has been busy making git-gc have a 2
-week delay and automatic pruning or something like that.  ;-)
-
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index f64b269..c72c2e6 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -749,7 +749,7 @@ log.showroot::
+ 	normally hide the root commit will now show it. True by default.
+ 
+ man.viewer::
+-	Specify the program that will be used to display help in the
++	Specify the programs that may be used to display help in the
+ 	'man' format. See linkgit:git-help[1].
+ 
+ merge.summary::
+diff --git a/Documentation/git-help.txt b/Documentation/git-help.txt
+index 73a51ae..89f6d25 100644
+--- a/Documentation/git-help.txt
++++ b/Documentation/git-help.txt
+@@ -43,7 +43,7 @@ OPTIONS
+ +
+ By default the 'man' program will be used to display the manual page,
+ but the 'man.viewer' configuration variable may be used to choose
+-another display program (see below).
++other display programs (see below).
+ 
+ -w|--web::
+ 	Display manual page for the command in the 'web' (HTML)
+@@ -58,6 +58,9 @@ linkgit:git-web--browse[1] for more information about this.
+ CONFIGURATION VARIABLES
+ -----------------------
+ 
++help.format
++~~~~~~~~~~~
++
+ If no command line option is passed, the 'help.format' configuration
+ variable will be checked. The following values are supported for this
+ variable; they make 'git-help' behave as their corresponding command
+@@ -67,11 +70,17 @@ line option:
+ * "info" corresponds to '-i|--info',
+ * "web" or "html" correspond to '-w|--web'.
+ 
++help.browser, web.browser and browser.<tool>.path
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++
+ The 'help.browser', 'web.browser' and 'browser.<tool>.path' will also
+ be checked if the 'web' format is chosen (either by command line
+ option or configuration variable). See '-w|--web' in the OPTIONS
+ section above and linkgit:git-web--browse[1].
+ 
++man.viewer
++~~~~~~~~~~
++
+ The 'man.viewer' config variable will be checked if the 'man' format
+ is chosen. Only the following values are currently supported:
+ 
+@@ -80,6 +89,24 @@ is chosen. Only the following values are currently supported:
+ (this only works starting with emacsclient versions 22),
+ * "konqueror": use a man KIO slave in konqueror.
+ 
++Multiple values may be given to this configuration variable. Their
++corresponding programs will be tried in the order listed in the
++configuration file.
++
++For example the following configuration:
++
++[man]
++	viewer = konqueror
++	viewer = woman
++
++will try to use konqueror first. But this may fail (for example if
++DISPLAY is not set) and in that case emacs' woman mode will be tried.
++
++If everythings fails the 'man' program will be tried anyway.
++
++Note about git config --global
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++
+ Note that all these configuration variables should probably be set
+ using the '--global' flag, for example like this:
+ 
 -- 
-Shawn.
+1.5.4.3.395.g492b.dirty
