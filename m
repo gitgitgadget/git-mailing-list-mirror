@@ -1,81 +1,63 @@
-From: "Ping Yin" <pkufranky@gmail.com>
-Subject: Re: [PATCH v2 2/4] builtin-status: submodule summary support
-Date: Fri, 14 Mar 2008 02:01:06 +0800
-Message-ID: <46dff0320803131101g62c16db2wf999c851672a8e0@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 4/4] buitin-status: Add tests for submodule summary
+Date: Thu, 13 Mar 2008 11:04:06 -0700
+Message-ID: <7vprtyxzzd.fsf@gitster.siamese.dyndns.org>
 References: <1205416085-23431-1-git-send-email-pkufranky@gmail.com>
-	 <1205416085-23431-2-git-send-email-pkufranky@gmail.com>
-	 <1205416085-23431-3-git-send-email-pkufranky@gmail.com>
-	 <47D935FE.8010107@viscovery.net>
+ <1205416085-23431-2-git-send-email-pkufranky@gmail.com>
+ <1205416085-23431-3-git-send-email-pkufranky@gmail.com>
+ <1205416085-23431-4-git-send-email-pkufranky@gmail.com>
+ <1205416085-23431-5-git-send-email-pkufranky@gmail.com>
+ <47D93875.1050407@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: "Johannes Sixt" <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu Mar 13 19:02:17 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Ping Yin <pkufranky@gmail.com>, git@vger.kernel.org,
+	gitster@pobox.com
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Thu Mar 13 19:06:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JZrkT-00045H-OS
-	for gcvg-git-2@gmane.org; Thu, 13 Mar 2008 19:01:50 +0100
+	id 1JZrnX-0005bm-Sv
+	for gcvg-git-2@gmane.org; Thu, 13 Mar 2008 19:05:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753686AbYCMSBK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Mar 2008 14:01:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753086AbYCMSBJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Mar 2008 14:01:09 -0400
-Received: from an-out-0708.google.com ([209.85.132.245]:45725 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752409AbYCMSBI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Mar 2008 14:01:08 -0400
-Received: by an-out-0708.google.com with SMTP id d31so842002and.103
-        for <git@vger.kernel.org>; Thu, 13 Mar 2008 11:01:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=7/2v2/nXj8LEUZsdSqffB8Temy24Oo/KBulNTHuDGu0=;
-        b=t2MUZ/29CgLSyfezUHjDfPvglcSUNXTF4m18RN1Tz3wLL7YKVLYpKo+s6autVgI/Kq6xu2CCcB2xW5NeeRLsByDX1pvRMoTmDBwqaPsYle6hKTvRlNhwCockS90KL+K+4/7QtwrkriUZNGmyazFH/2rSECHdMPr5u3kqjp3mqF4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=cPzmRS7f5DOaBQBCXOCpmCNWWLNWFMrsFYGjf1XlbMUudf6u5HJDt2A6y0Hhss9G//oRWUc6SldQwh8pBvEU0zx2/gQ6Zbo1qpsMOQ/FqBrOF1xbNenF8dCTvti9ajfIOAM2EXoR4D4jVdp1KfKs/6+QM55vowXwXJ4umVtKzZY=
-Received: by 10.100.91.17 with SMTP id o17mr20147097anb.62.1205431266878;
-        Thu, 13 Mar 2008 11:01:06 -0700 (PDT)
-Received: by 10.100.5.18 with HTTP; Thu, 13 Mar 2008 11:01:06 -0700 (PDT)
-In-Reply-To: <47D935FE.8010107@viscovery.net>
-Content-Disposition: inline
+	id S1754227AbYCMSET (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Mar 2008 14:04:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753816AbYCMSET
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Mar 2008 14:04:19 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:46999 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754215AbYCMSES (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Mar 2008 14:04:18 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 53D995E90;
+	Thu, 13 Mar 2008 14:04:16 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 835025E8B; Thu, 13 Mar 2008 14:04:08 -0400 (EDT)
+In-Reply-To: <47D93875.1050407@viscovery.net> (Johannes Sixt's message of
+ "Thu, 13 Mar 2008 15:21:41 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77119>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77120>
 
-On Thu, Mar 13, 2008 at 10:11 PM, Johannes Sixt <j.sixt@viscovery.net> wrote:
+Johannes Sixt <j.sixt@viscovery.net> writes:
+
 > Ping Yin schrieb:
+>> +cd sm &&
+>> +head=$(git rev-parse --verify HEAD | cut -c1-7) &&
+>> +cd ..
 >
->  >       wt_status_print_changed(s);
->  > +     // must flush s->fp since following call will write to s->fp in a child process
->  > +     fflush(s->fp);
->  > +     wt_status_print_submodule_summary(s);
->  >       wt_status_print_untracked(s);
+> I think you can make these three lines into:
 >
->  But then we don't need the fflush() here. Right?
+> test_expect_success 'get short SHA1 of submodule HEAD' '
 >
-You are right.
+> 	head=$(cd sm && git rev-parse --verify HEAD | cut -c1-7)
+> '
 
-diff --git a/wt-status.c b/wt-status.c
-index 2f47e36..468c14c 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -352,8 +352,6 @@ void wt_status_print(struct wt_status *s)
-        }
-
-        wt_status_print_changed(s);
--       // must flush s->fp since following call will write to s->fp
-in a child process
--       fflush(s->fp);
-        wt_status_print_submodule_summary(s);
-        wt_status_print_untracked(s)
-
-
--- 
-Ping Yin
+"git rev-parse --short=12 --verify HEAD" or whatever minimum length you
+would want would free you from an ugly "pipe to cut".
