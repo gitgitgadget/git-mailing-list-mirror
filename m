@@ -1,77 +1,91 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [Q] Encrypted GIT?
-Date: Thu, 13 Mar 2008 12:19:19 -0400
-Message-ID: <20080313161919.GA2050@coredump.intra.peff.net>
-References: <c6c947f60803130148w7981a3f0r718c0801343c7b78@mail.gmail.com> <20080313114738.GC2414@genesis.frugalware.org> <alpine.LSU.1.00.0803131254580.1656@racer.site> <20080313121644.GD2414@genesis.frugalware.org> <20080313125853.GA12927@mit.edu> <20080313155322.GA30847@coredump.intra.peff.net> <20080313161201.GA31653@mit.edu>
+From: Samuel Tardieu <sam@rfc1149.net>
+Subject: [PATCH] Add MIME information to outgoing email
+Date: Thu, 13 Mar 2008 17:40:19 +0100
+Message-ID: <1205426419-4594-1-git-send-email-sam@rfc1149.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Miklos Vajna <vmiklos@frugalware.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Alexander Gladysh <agladysh@gmail.com>, git@vger.kernel.org
-To: Theodore Tso <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Thu Mar 13 17:20:02 2008
+Content-Type: text/plain; charset=UTF-8;
+	format=fixed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Samuel Tardieu <sam@rfc1149.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 13 17:51:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JZq9x-0008SL-US
-	for gcvg-git-2@gmane.org; Thu, 13 Mar 2008 17:20:02 +0100
+	id 1JZqe3-0005dF-Uh
+	for gcvg-git-2@gmane.org; Thu, 13 Mar 2008 17:51:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751926AbYCMQTX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Mar 2008 12:19:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752033AbYCMQTW
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Mar 2008 12:19:22 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1758 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750982AbYCMQTW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Mar 2008 12:19:22 -0400
-Received: (qmail 11265 invoked by uid 111); 13 Mar 2008 16:19:20 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Thu, 13 Mar 2008 12:19:20 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 13 Mar 2008 12:19:19 -0400
-Content-Disposition: inline
-In-Reply-To: <20080313161201.GA31653@mit.edu>
+	id S1753901AbYCMQu2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 13 Mar 2008 12:50:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753022AbYCMQu1
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Mar 2008 12:50:27 -0400
+Received: from zaphod.rfc1149.net ([88.191.14.223]:55688 "EHLO
+	mail.rfc1149.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752036AbYCMQu1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Mar 2008 12:50:27 -0400
+X-Greylist: delayed 598 seconds by postgrey-1.27 at vger.kernel.org; Thu, 13 Mar 2008 12:50:27 EDT
+Received: from localhost (localhost [127.0.0.1])
+	by mail.rfc1149.net (Postfix) with ESMTP id 8A917E204F;
+	Thu, 13 Mar 2008 17:40:25 +0100 (CET)
+X-Virus-Scanned: amavisd-new at rfc1149.net
+Received: from mail.rfc1149.net ([127.0.0.1])
+	by localhost (zaphod.rfc1149.net [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id tT+kJRg1vjck; Thu, 13 Mar 2008 17:40:20 +0100 (CET)
+Received: from dawn.rfc1149.net (unknown [192.168.9.2])
+	by mail.rfc1149.net (Postfix) with ESMTP id 27EEBE1CA6;
+	Thu, 13 Mar 2008 17:40:20 +0100 (CET)
+Received: by dawn.rfc1149.net (Postfix, from userid 1000)
+	id 9D2978065; Thu, 13 Mar 2008 17:40:19 +0100 (CET)
+X-Mailer: git-send-email 1.5.4.4.653.g7cf1e.dirty
+Organisation: RFC1149 (see http://www.rfc1149.net/)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77102>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77103>
 
-On Thu, Mar 13, 2008 at 12:12:01PM -0400, Theodore Tso wrote:
+Add MIME-Version/Content-Type/Content-Transfer-Encoding headers in
+messages generated with git-format-patch. Without it, messages generate=
+d
+without using --attach or --inline didn't have any content type informa=
+tion.
 
-> If the main goal is primarily backup of your repository to an
-> untrusted remote server, yes, that makes perfect sense.  
-> 
-> If you assume multiple trusted developers would actually be
-> *operating* on an encrypted repo, the life gets much harder, as you've
-> pointed out.
+I got hit with this problem yesterday when sending a patch to linux-ker=
+nel
+with a commit message containing the name "P=C3=A1draig" in it. Moreove=
+r,
+the mailing-list software added an incorrect ISO-8859-1 encoding inform=
+ation
+which mangled P=C3=A1draig's name.
 
-Well, it depends on the meaning of "operate". :) I think you could still
-use it as a rendezvous point as you would any bare repository.  Pushing
-and pulling would have a little larger network overhead, and a lot more
-CPU overhead.
+Signed-off-by: Samuel Tardieu <sam@rfc1149.net>
+---
+ log-tree.c |   11 ++++++++++-
+ 1 files changed, 10 insertions(+), 1 deletions(-)
 
-But yes, that scheme is horrible for a working repo.
-
-> >   - encrypting before git sees content sucks, because you are either
-> >     sacrificing security (content X always encrypts to Y) or system
-> >     stability (git doesn't know that Y and Y' are really the same thing)
-> 
-> It's not clear that "content X always encrypts to Y" is a fatal flaw,
-> by the way.  Yes, it leaks a bit of information, but in a source code
-
-Agreed (I actually recommended in Dscho's original thread "you can do it
-by eliminating the salt, if you accept the consequences...").
-
-So after my saying "no formal threat analysis is necessary" you have
-clearly called me on making a bunch of usage assumptions. Oops. :)
-
-> management situation, it may not matter.  If you do absolutely care,
-> tough, it might be that the simplest solution is to store the entire
-> repository and working tree under cryptofs.  After all, what's the
-> point of encrypting the local repo if the checked-out working tree is
-> unprotected for all to see?  :-)
-
-Yes. And it doesn't involve any git-specific code at all. :)
-
--Peff
+diff --git a/log-tree.c b/log-tree.c
+index 608f697..0dacf63 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -198,7 +198,16 @@ void log_write_email_headers(struct rev_info *opt,=
+ const char *name,
+ 			 opt->no_inline ? "attachment" : "inline",
+ 			 name);
+ 		opt->diffopt.stat_sep =3D buffer;
+-	}
++	} else {
++		static char buffer[1024];
++		snprintf(buffer, sizeof(buffer) - 1,
++			 "%s"
++			 "MIME-Version: 1.0\n"
++			 "Content-Type: text/plain; charset=3DUTF-8; format=3Dfixed\n"
++			 "Content-Transfer-Encoding: 8bit\n",
++			 extra_headers ? extra_headers : "");
++		extra_headers =3D buffer;
++	};
+ 	*subject_p =3D subject;
+ 	*extra_headers_p =3D extra_headers;
+ }
+--=20
+1.5.4.4.653.g7cf1e.dirty
