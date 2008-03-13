@@ -1,159 +1,77 @@
-From: Michele Ballabio <barra_cuda@katamail.com>
-Subject: [PATCH] gitk: initial Italian translation
-Date: Thu, 13 Mar 2008 23:03:33 +0100
-Message-ID: <200803132303.33335.barra_cuda@katamail.com>
+From: Martin Langhoff <martin@catalyst.net.nz>
+Subject: Re: [PATCH] git-cvsimport: fix initial checkout
+Date: Fri, 14 Mar 2008 11:18:30 +1300
+Message-ID: <47D9A836.9010601@catalyst.net.nz>
+References: <1205435378-10411-1-git-send-email-marcandre.lureau@gmail.com>
 Mime-Version: 1.0
-Content-Type: Multipart/Mixed;
-  boundary="Boundary-00=_1Sa2HdVgPyQBwr0"
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Thu Mar 13 22:56:08 2008
+To: Marc-Andre Lureau <marcandre.lureau@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 13 23:20:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JZvP5-0006IA-8B
-	for gcvg-git-2@gmane.org; Thu, 13 Mar 2008 22:55:59 +0100
+	id 1JZvlk-0007JJ-Rp
+	for gcvg-git-2@gmane.org; Thu, 13 Mar 2008 23:19:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753865AbYCMVy6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Mar 2008 17:54:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754090AbYCMVy5
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Mar 2008 17:54:57 -0400
-Received: from smtp.katamail.com ([62.149.157.154]:60459 "HELO
-	smtp1.pc.aruba.it" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with SMTP id S1753959AbYCMVy4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Mar 2008 17:54:56 -0400
-Received: (qmail 20754 invoked by uid 89); 13 Mar 2008 21:52:02 -0000
-X-Spam-Checker-Version: SpamAssassin 3.2.3 (2007-08-08) on smtp1-pc
-X-Spam-Level: 
-X-Spam-Status: No, score=0.1 required=5.0 tests=RDNS_NONE autolearn=disabled
-	version=3.2.3
-Received: from unknown (HELO host98-56-static.104-80-b.business.telecomitalia.it) (barra?cuda@katamail.com@80.104.56.98)
-  by smtp1-pc with SMTP; 13 Mar 2008 21:51:59 -0000
-User-Agent: KMail/1.9.7
+	id S1752567AbYCMWSe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Mar 2008 18:18:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753121AbYCMWSe
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Mar 2008 18:18:34 -0400
+Received: from godel.catalyst.net.nz ([202.78.240.40]:51775 "EHLO
+	mail1.catalyst.net.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752057AbYCMWSd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Mar 2008 18:18:33 -0400
+Received: from leibniz.catalyst.net.nz ([202.78.240.7] helo=[192.168.2.113])
+	by mail1.catalyst.net.nz with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <martin@catalyst.net.nz>)
+	id 1JZvks-0005NE-Qq; Fri, 14 Mar 2008 11:18:30 +1300
+User-Agent: Thunderbird 2.0.0.12 (X11/20080227)
+In-Reply-To: <1205435378-10411-1-git-send-email-marcandre.lureau@gmail.com>
+X-Enigmail-Version: 0.95.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77141>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77142>
 
---Boundary-00=_1Sa2HdVgPyQBwr0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
+Marc-Andre Lureau wrote:
+> git-symbolic-ref HEAD returns master reference, even if the file does
+> not exists. That prevents the initial checkout and fails in
+> git-rev-parse.
 
-Patch attached to avoid encoding issues.
+But you are patching the block that gets triggered on subsequent
+imports, this code does not deal with "initial checkout" unless
+something else is wrong. The line right above the open() is an else that
+has the block that matters.
 
---Boundary-00=_1Sa2HdVgPyQBwr0
-Content-Type: application/x-gzip;
-  name="0001-gitk-initial-Italian-translation.patch.gz"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment;
-	filename="0001-gitk-initial-Italian-translation.patch.gz"
+> The patch checks the existence of the reference file
+> before assuming an original branch exists. There might be better
+> solutions than checking file existence.
 
-H4sICGxa2UcCAzAwMDEtZ2l0ay1pbml0aWFsLUl0YWxpYW4tdHJhbnNsYXRpb24ucGF0Y2gAtTzb
-cty4cu/6CpRPuWzVaiRyrpw5znpl+VprebWWvHmIUykMiZnBEYeYw4tsqfIxeTznNW95jX8s3QBB
-XEiOpJxka6vMIRvdjUaj0TfobS62ZDZn8Wg4maym8WhGx+FsFk9YPKbJaDQK2WgSJcPVeB6NybnI
-yCXbkXBGgmAh/yfDIAgP3gKaBTnn8YaljLyiaUqXXJAXS5rn9N/iKqG/XNOSbilPj2Ox/fngNS3Z
-glxtqiMSjsg5zRFPBIgX4+liFJCfgjAIDi6r5V9YXC7Iv1ycXp29/1ey5uX1gvCMl5ym5ENJU04z
-UuY0K1JacpEdHFzydcaSgVitBsvbR/E0GAwOyE6c8PJ4J8i/ExLNgZF/6L8DEpIVT1lB4g3N1iw5
-kkh5VrAc2S2e/3R4RAKSAIvq9+DwgMQ5A/GQrUgYATFMx+OGrYODhK9WZDAASRB60nC7bB4PMvZN
-0rTHH/AsYd9h0eR/x8dJsBrHQ4ZTJicJuznJqjQ9AIZtRL/8QgbBEYggPEKmf/nl4Kc/kSsjayJW
-ckHw9ZnY3eZ8vSnJ87NDXMvJQC7oBa1SWN74moHQC4lgwwvFH/yb8KLM+bIqWUIqYDEn5YaRgm4Z
-SXnMQEyEFvIdEiI7QETX7BjxPHxhj6Ru4SD5/7ZY84Q8eSKfgLx8fHKRC1S1wYdk8AfLC5jeQtL8
-muHXz2wn8nJwjkMHr6p1MbgSC6K+Xfx2NTjDFYMxA6XXSG8QjAag2qDRw7nUZg09+MxueNEHPBpb
-wB9pUQ60xEX+GG3WCLJ1BRIbXDEKG7TeMOrb+YfzN2au4XFN80xkJcuA7O0OmCvZ9/Jkl1Ke/RlV
-OC9Y+U9frt4OIg8YeVyxfPAmi0XCs/WCREteSiAQuhLlIgzDRvxv8lzkhH1ncVUCPAKQnN0MUtCI
-hbU2Eo6RjKXpM1YA9B2wy0BxWiMsOsNxQ+czo8iPhfEjK8sqp7AJSSzyQrhDJ6F6GIbz0EcC8Nst
-L4vj4+MOfLCHYWXyenF5g19BGxLD2aRBfEazZyWoNchVzicVayKqclc5Mviw3Ymi4EvcNAzWXeQU
-RMJJAjqnJQEjXSGMomkzE0Pwk9CTIAUoUgwbzyL0iRVFldFmEkwCocRBtRzsE7DOLZww5ZXIt8o4
-0BtQRbpMWQf+Gk4vZbEDecnZFZUjQ5fkfK4epsN6jWBik/rVeDhST7O5foqCaNjw+NuvFhvyh0E8
-1SMAXy2zaRjM9NMs0mAzTW2kOQC6E4MIaI8b2iN7kWOWWvRPMzS3rkCnU6Nub7kjtfqnDWuQf9mB
-FtjQp+s1F3nmY7d3BBirBIQM+5UBZ4U1+DOQgvEk5/CRb2Frcw+PUaWPsO+6sbxJ4Q3dg2TaIPm9
-4qU9soh92MiYjMSBPQdDs+KxP9F5A3/RyZx+e+fJdDaslSCaG7X5g7Nv1tg/YMoevZlZik9w8N7A
-ANc8fKrEDYX3MNK3BNPZWG/RkVba2XDoTLgDo554H9Jm34/GDVLD5Wt0NZhE6ywZ3/KsRunhMytw
-mqbKnbFGXlUlWCEu37sDre33nqU7W0d5VQoPWO/BUTgz9JZgDOV72xoa48HBYOjPNi6j7L+yW7IE
-5west830JVjmmMOZysH+UFLCOctZ7k58NjY78vL9aUg+vF4QG4f1zrYB9j7ObOt6lYMmeMBGRBmc
-tBZwUcWxB2vWcAcW0oKFnz6skYAyzRZ0Y9y9ITP9UJvZ4Uhbw+Fopt+Ng3qdxqNgqp+sPReDQwDO
-AnoAFslYuglgCJh7RkUQP6hVn2krC+Z2pGmNjChLUcUbPIJ3tNwUDm5wDsHzrGgOC8nJjuV46nKf
-UNggNcaHJqgXJznbihvEjb6oxzggp2AQK/DdT8CWwV4Gz5TWkNQjEgb6wdrD32nsWjhaeroP4DVz
-k7DesePhzKzgh3V2RgvmOqxdw8fBpEE0bBAFluVfs++7fjzaXIQNGm2WhpNp8zQL9LpH+skWqrIR
-LE26jERMtzvuUTXEQp/YeGQhfg+nVsozWw5XvBSpL8ypjw+xGEbrp2hozMwZbBFQTpvh+hW/Dzc8
-TdqCaajM9Ewm4FrYrszMqPZpVW5EbltHMI45e8SsZtapfCa3e8lshJ8bd05GluCqumYoGpvxl4zm
-8caWBGwoD3xi1Ps1RKO9CjUxOvxbmpAbFWvY5ymLYVdT/cWb82TqHq2t4fXR2j04shyVDAJwCFal
-GXKsLH6SwYT8VPgb03I+YBNiHFJACMrqYN4+k/ArxYgbT2ZpNFKOwHeuBs2HZk4XtHQEfa4HeyMM
-D1c5s4m+5mD3QVVu3QgmmOijNJhq1zUYuksGITVE34Ofu4IA+f2vFUpDQ6gIQPh0JvpJaz7QGbl0
-NH7EhDR9OhZ2BFFkfTqzhs6woWNU65xeMzwWXK0FRW9eOsi0SMKpEcmZSriUdO2jYCWuSOn5RICm
-iUUmZu/8c84BSx0LwYRWrh9/Gef8hlvBFUSIVdZ2nGDdtDxHwdxnEtM7Swi329MFXBnsCEFyuvVl
-aEUXZxuW57eDHY+vlRq0PIQLkYORkGtBXXZjvqWEppICgYOsom3eR9Z5U7CSvH9z+rrmGIUC1LvC
-FcJrrBK8Td2jMpvb84GZoKMoZ9OSzSkcPTdUa3SHbCI70N/iCd+NSPvIezCZM+U9X29SmRCTyEoh
-bEw3PIEIBCwfkmDdah/N+5CJLL3txFbAadiJbBRGduLricrevMOc2gCEXassxgQsJ+Be4zAFo/M8
-Or33339vsntTL7tnD/iCmbsMo0yT4rMyfHA+baVJxh/vPn0h78A9zEGxLqplymPyUSX/vBydwzVo
-O6gGKCC/u8PkmDTjJvsCfuA/PomSI3ZBmDUPlbQA9FtWFGDjBbhz4NngjMDvlVkg2jUlmY5rpmWv
-zXCqnyKddJhYOnmWCkcSZxteJdzDYZ3gUj7Xj4p7UHTv/DAKkM76kS4ejnXhowXF/tMRKeN0oNJF
-DZUXT4vB7z9/Lb+WXl7AfGhlCMLRxHi4L96LLZNw53Ifow3Oi7Jt4gzgH5QTzKaSXY7GrcfgjCZm
-QV68yRKHRko7SWiwmsKzKi33UjDn0Ysvu5+PyO6I8JpItSPSfWvRsACRzI7/+C+00zQFtkD8TjLP
-p2cM9YvX4lsGiLIjcl1TTOBND00H2Ka6pEVxP1lzcr/4yFYlYLo7In/5Wr4TgAAsOSACI4d+DcHU
-rk3Zgb9SxwaoIytzITPEYMlykYERXHPqkzUb5MVnNAKA5/sRSSVdUMNvED/uI+2OkUt6QyFAuJeu
-cfheXNA1gwVz13QHL1WuWNpgn24zpm95YTweSooNHN3KRPsczVyO5HL6q/4ArupxvQrweMaifXah
-3rDgRAmIMGH+pdgpp76TQ3uEyPN6j0v/JXk4R3stldrfhqElHgXb/TzpMYalFccc+INZmgb7WJKa
-UnNkMaF1zQufrRGSnz4WWhaFr301R/+yn61aVToYaxSug7Vm1L3MuYang7vhPu6aLdYvONwOHnfW
-qEcJT20Ln8HRfQw+QIQ9TP4vxdjNp2W8Lzd8VSr9wUSnNN5oRQvyvNrJBzCVELHkuuJ0aDNnjZZ5
-UXlCNsb8OQb1cLA+Q8kdWVxiWhT9rht26LM28VmrJy6Zqy088IbiqrljNE/5Xv5qFIpDnmmbX7MH
-IYsUmc0g5mJZgqmjFoPWSaCS8HCcLJsllXV99MD7dM4doxfzxlpMRKFKGw9TOusgeAWLJ3MbPz+c
-IXfM/wVDkbWENeIOdnoV3h5zPzsP0HYTgVWdnIBgwkiaLtvJrh7KgRZIjcP3lKzMbdIviA4GkkeL
-oI+DvVb9rRS1V+QwH9rlDkC41xC/c7xqLIjg6ZiAT+Yfo+8MBbMtfVqWf/uZlVXeeDn7kDeQ9yA3
-hvCkl+kjApE0RI5CvrGonHRwD8AkxlwrrofM4/gkjYF7aZPEYhAXVdE1nZeGkG1ffczGMq06Fc1M
-zElorR6kZ1TVDI3pbpGf7VOKS7WhZVpapiYkJxvZbWBY9PRDDZKpa8tsK1e0m02fp72+6Gefp2YN
-7uHrs8WXc+A9hrW9TumvFz8BjQ8ZZvoLBsxlJSn4ne8YKLDTCosclKxzmiXs7g4cZJpTrB74RKO9
-bucurYqHUK3hHkE23D/XAWB7ze6dqwTD5F3Fi5g/hO5eO4WIiodQbgAfRduyW28nUmFaTR76Q2ez
-RxjNp27iRp0WbCUbJ50SymXM0lIrXjsFNB+atMcnunV6ecSW+cB2k8mWbZcy28cLfyd85mAzkibH
-2+45CO2qx1ndr4RptixOq4SR5zRfSx2Sb+1GsMNFR90LO6X02FyNFrK657eRHXqpqvnILaxhRhMJ
-ysye7NDMWdNPZfhbuIVEGAWmHXsY5Tg89nPb806olcnMmc/D2ComZ+hOq4ZS5CWpK0Cc2eSPSJ2h
-lGe600iGfacwRhlk1oy/dQR0BB6RkOMxlPLZsdLSqofPZAlUsUc2f+n16Wzlw9qYswa6CsT8qMQl
-PgzGugodDme6INr0C0x0CwNY77Cp4EXN09zqWMvabWnusdRVaJ3MdfUISFmFLndvvvZ75VxURqG8
-ce6YqS6uw9PEat4pYpYlcJo5hTT5EtsrfBzW7hUQKXaNBllgC14fhkg/We0np9hSVbo1614Ec4cF
-2h6KDNCe4bZJ+ShicCVU6RX7qVl8zWTKTmo+tjcvq5JkQqdi3apmU10lKeKRgVrBtFcgD+IYNjQF
-BJl6hYc7h1Pd42jic1RlDT3N3ZFio83iPoaQsGHqx99dLswbxarD1XgU+BV8t+cVLK72hdo9r+OZ
-FQleUTe3/6YugHpmaTyLdKvKbB402yO0qtvgu9h69o7B4eP3NcBgy8JueJo4fY9gKDxWo8CI/5Vf
-oPvsV+QA3MzsLfi04ptTDWHryuMnCgO7fxBDea95EF95rbDW1lAmcQ0Cw4aiLcvXypMrenqaKUmd
-9mHLbwa7uKpkBt0V/WRmdeS9E6WwUcvEtA8fBa1Gto4+NndQhBrV7QJdbkReEjkMfj4tsJGfbpd8
-XYEHbDdX0AaILpdo07H3BOB//K2G93qKo7A3EnCp4e66ziD67aamSBSxyAS4XFXZItPrQYP2n2Cf
-0T46z5qegBNZsPapCa9r2Sm9g4bD6vpK7rYvBmFv8KEq6k+LR9TTAfieavo0GBsjfSV2jsPA77wt
-OA2sehve+3GOPh90YiG2ufTgbI3WzpXf0qE+dDR1TIPI5WjhsLTwge3J2qCnPuQ8sgSPKT+n5Se7
-wTs87pBQNzROh1by6DfZ0S+drkW7H6So0uaTg2rakklLGt4Q21WUhkj2e9Vtk/Gm1wYhmPG/qIG2
-kU/HTcuLLlOPrAsdrlHx7ck0tBwm2GUkg2hi4YUTptumNbihOAy8hhivC8YbaDXYfhLY4CMJk2LH
-Yjh9Oy8/NExoqNh36ADtdI8FIV+fPC2+PgE/Hxvtbwn7DqFF0W1CNCwrAAbvgPz4D+9uQtC7pjCb
-B67osz7BDq2kdB3gdAQv/iAr+SVbnlo67cHPA28K32CUuU/TO4kCkJnD0TJfHkOjcOpEqb5e+eBW
-VHeRygBerfQtWEqpHpjSwc6Uzl6rS60VOZMtV6i4GCyBwe1pv5rKukm3vqjoVp+itcbUoZh0HWtL
-DwCDAUiApukt/DOgux088PKlewSabi11LKFCKXSFLMU2ZwIgQxQ4jdSkHF/6fM+72sZc39Ib4sQc
-xl3vcMn1htvq+wy1r9vabmPL6TsT2YrnW4KOcumoagaOE/jvKp5XHx0c0/2HqpFziQJ62XGm4qUr
-+1RVUDaRMPCwlniLzulY3smEO61RYgjs769xaKZ7KVblgnxk9IaRbyK/lvs+Z6q5SkU9VSab4x3R
-1sMgrOKUyPUFx1XG+ZipvRE59jQ1UU+MKlwILwIGPozzfM6/s6STkYb8kRJ7O9Cph7rMlC43koUf
-fztqBEM6A53p2LL/2FH1nuaAW8m6Wz6qles5hrjY4nH68aMKuLRqHnpNZgpj40b18GukV+MHDxdN
-JYy4+nJ19Yao+7dOhHfoTcXKBcgJlO6+ahS5O2qbjq2wQ/ZA4txFVbZaH++a7s02ksnQuaeWySyB
-vCCE9i+ucoziwNDUsewA2yxbFtG+nxjLy26pvVdUnyhqOsNnvwAAPPT64yjaq43JsQnbHmKE+azE
-dzS7JQIYzuuvx/rWrrSW9YSagS+9Ff9oJ+NsG4kROW4LE5YXlczecQThNZWz9oxbhmHS37aBAbfU
-1g2Y/mIBY7uib2xBBJL1ZxuzdRi/5anb+I8vcv+i1dRtBVUncu7ccMXeGuxmurVvdP5ZSxCZVWVu
-vD2zkmE1jkVs6GHZt0C/8TQlS9Q+wLzDdTj2pN8bDFPNBW81Kyxwe3H3Hlgq6UvxM/zMGtGZkjzB
-C60Q88ulpDnqu8eZdSHKvuZw5XSGv+lsCncGfLCtsfxhA1peqczPy/pBvBGicJavTs7rQgFvX3Wb
-za0G8VfW0Ff+pTSLNZsz/zqW10a6u+cKZZsjwDH1nRvVpsKLXUphn+7kHzqwr+Pu1BqaJLjtueJd
-UtHTDgXE5tY9gO98W22xwrLbgOIl5YY8l6XxQ8dHytcbWX/ZUrBZqh0Mx4ClFuQ5WElZCD/0r4/1
-Nuh0kn2KXWA7mrFHkH4qf8Ig3AqixUBk51++uWeYk1aEf2jr7PGwWVYfbxsNVOZeJlCc/Fh9OYNQ
-AMIdHVNlxmWmZUOLjY83cq9/3L/oSfe699Y/o2AUWNtyKW/kuAfnJV67odKOlHRZpcpE+FjGFqeK
-yYzRfHmLYVWHQI05ueExz1pMza3rRqjzMuknm4MxsEvUvUXn5hFAocFzSuXm/iKRik/9G2jB2HaF
-U4BcyNNJklIWxHGKAYJLiC1WvjBMKWKsv/hlR0BsnD1s7FnnonJ6Fi7BSCXe/ajASvi+BSveGnSR
-c7DHO06z1siJoykLItKk1ciivtzIW2Kso0MlCqaBhwZDtm40mbq82YXE52VTZdfyPHbMsfrG5UUx
-J11SqOKVh9W64nepttdy3ZKnKX35oyeWZLGQtm+ZdSX5YSs9s9x6CgYPT58ubNgRn8V859/xiex0
-nbPN+zEBO70b2rrL86XAQBqrnCu8Z7cXnwbDqKIqW7WjKJj3ZrDlrYRajuDywCaRIb/jeimYRoYY
-6ktIRdxzw6Kx1UODfsilgGD5SP3Vmlj51XmF7hCcDqokrm4t4jlxFacnV9e1NymL8HDc/bWCqAMc
-Qzg9GV4vUEAkOh77DtTvdRW9vgaJFrUGlhWl6sd/EnoDUXWuTmuXDsedlTA9okECdAgoZwVzhTjI
-c42iyXTiRw2y+UhH3xAOcBkwYXLa5vdUV7MQDtkrsTepFC38vRGBTa7+u0BWgKayacddlyQlZJ1t
-M5SpR3ka9nZ+nOoSR1PdJs+eFs8W2Pe9aRwU6R1jOjdz2yVO63q30KWShRwtSwfcztvgmS1zSknH
-31SIplZB9BVNiN8Icb1oqbCptOMFp9K/GT+1S9KiShOMqdas9tpAPatMlrHUrIq+v0sjSrzhn2Nc
-XLtsCeP133nKMOxjBe0taUXTiZOnVR0O+u7oggwGqpLWpG3rUq9uhZDbU3Hp7w6VZKo70Mxl04UU
-fEndLC8wL3bKsmuSdUU45jK8kNFg76R8XbLOOMnKIybmCl3OEG0Hr2eC6PA2Yvn/MF1uSBhYboLh
-B8x8FrbSyn6DP968purmtcwxPzkYDMhBeDwBAzc6OPgfZCOEqJhOAAA=
+There are indeed. If we need this patch -- then you can call git
+ref-parse right to see if you get a sha1.
 
---Boundary-00=_1Sa2HdVgPyQBwr0--
+> -	unless ($last_branch) {
+> +	if (-f "$git_dir/$last_branch") {
+
+Note that the file won't exist there in any modern git. It will be in
+$git_dir/refs/heads/$last_branch. Did you test this patch?
+
+What's your workflow with cvsimport? Perhaps you are doing something
+strange with it... :-)
+
+cheers,
+
+
+martin
+-- 
+-----------------------------------------------------------------------
+Martin @ Catalyst .Net .NZ  Ltd, PO Box 11-053, Manners St,  Wellington
+WEB: http://catalyst.net.nz/           PHYS: Level 2, 150-154 Willis St
+NZ: +64(4)916-7224    MOB: +64(21)364-017    UK: 0845 868 5733 ext 7224
+      Make things as simple as possible, but no simpler - Einstein
+-----------------------------------------------------------------------
