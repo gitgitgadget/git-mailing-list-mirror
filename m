@@ -1,74 +1,69 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 08/16] t4200: use cut instead of sed
-Date: Thu, 13 Mar 2008 08:59:20 -0400
-Message-ID: <20080313125920.GF19485@coredump.intra.peff.net>
-References: <cover.1205356737.git.peff@peff.net> <20080312213756.GI26286@coredump.intra.peff.net> <7vejaf1b0d.fsf@gitster.siamese.dyndns.org>
+From: Theodore Tso <tytso@mit.edu>
+Subject: Re: [Q] Encrypted GIT?
+Date: Thu, 13 Mar 2008 08:58:54 -0400
+Message-ID: <20080313125853.GA12927@mit.edu>
+References: <c6c947f60803130148w7981a3f0r718c0801343c7b78@mail.gmail.com> <20080313114738.GC2414@genesis.frugalware.org> <alpine.LSU.1.00.0803131254580.1656@racer.site> <20080313121644.GD2414@genesis.frugalware.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Whit Armstrong <armstrong.whit@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 13 14:00:07 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Alexander Gladysh <agladysh@gmail.com>, git@vger.kernel.org
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Thu Mar 13 14:00:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JZn2Q-0001am-Ud
-	for gcvg-git-2@gmane.org; Thu, 13 Mar 2008 14:00:03 +0100
+	id 1JZn2o-0001hW-Pu
+	for gcvg-git-2@gmane.org; Thu, 13 Mar 2008 14:00:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753100AbYCMM7X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Mar 2008 08:59:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752968AbYCMM7X
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Mar 2008 08:59:23 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4831 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752691AbYCMM7W (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Mar 2008 08:59:22 -0400
-Received: (qmail 30078 invoked by uid 111); 13 Mar 2008 12:59:21 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Thu, 13 Mar 2008 08:59:21 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 13 Mar 2008 08:59:20 -0400
+	id S1753565AbYCMM7l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Mar 2008 08:59:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753474AbYCMM7k
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Mar 2008 08:59:40 -0400
+Received: from www.church-of-our-saviour.ORG ([69.25.196.31]:32987 "EHLO
+	thunker.thunk.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753399AbYCMM7j (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Mar 2008 08:59:39 -0400
+Received: from root (helo=closure.thunk.org)
+	by thunker.thunk.org with local-esmtp   (Exim 4.50 #1 (Debian))
+	id 1JZn2x-0007zZ-QY; Thu, 13 Mar 2008 09:00:35 -0400
+Received: from tytso by closure.thunk.org with local (Exim 4.67)
+	(envelope-from <tytso@mit.edu>)
+	id 1JZn1P-0005B6-2e; Thu, 13 Mar 2008 08:58:59 -0400
 Content-Disposition: inline
-In-Reply-To: <7vejaf1b0d.fsf@gitster.siamese.dyndns.org>
+In-Reply-To: <20080313121644.GD2414@genesis.frugalware.org>
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@mit.edu
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77072>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77073>
 
-On Wed, Mar 12, 2008 at 09:52:18PM -0700, Junio C Hamano wrote:
-
-> > Some versions of sed (like the one on Solaris) don't like to
-> > match literal tabs, and simply print nothing. Instead, let's
-> > use cut.
+On Thu, Mar 13, 2008 at 01:16:44PM +0100, Miklos Vajna wrote:
+> On Thu, Mar 13, 2008 at 12:55:11PM +0100, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > The latter can be remedied (somewhat) by encrypting each object 
+> > individually.  In that case, .gitattributes can help (you should be able 
+> > to find a mail to that extent, which I sent no more than 2 weeks ago).  
+> > However, you must make sure that the encryption is repeatable, i.e. two 
+> > different encryption runs _must_ result in _identical_ output.
 > 
-> > -sha1=$(sed -e 's/	.*//' .git/rr-cache/MERGE_RR)
-> 
-> This is a bit hard to believe.  On one of my ancient Sun box:
+> afaik, this is not the case for gpg.
 
-Ah, sorry. I tested this line by hand, found it didn't work, and
-stupidly jumped to the assumption that it was the literal tab (that
-being the only interesting thing in the input).
+No, and you wouldn't want to use gpg because of the overhead it adds
+around an encrypted message.  You would need to use a raw encryption
+algorithm, or one with very minimal wrapping.  It's normally at this
+point that that you'd need to bring in a security expert to ask a
+whole lot of questions about your exact use scenario, do a formal
+threat analysis, since there are all sorts of unanswered questions
+about what kind of key management solution you really need for your
+situation.
 
-But the actual problem is that MERGE_RR lacks a trailing newline. I
-don't see any code to add newlines, even though it seems possible that
-we will write out several paths. So I think we need a newline here:
+It's usually not as simple as "just encrypt it".  How many people need
+to have access to the to the repository?  Do you need to revoke access
+to the repository later?  Who is allowed to give a new person access
+to the repository?  etc., etc., etc.
 
-diff --git a/builtin-rerere.c b/builtin-rerere.c
-index c607aad..e4a1dc1 100644
---- a/builtin-rerere.c
-+++ b/builtin-rerere.c
-@@ -58,7 +58,8 @@ static int write_rr(struct path_list *rr, int out_fd)
- 		int length = strlen(path) + 1;
- 		if (write_in_full(out_fd, rr->items[i].util, 40) != 40 ||
- 		    write_in_full(out_fd, "\t", 1) != 1 ||
--		    write_in_full(out_fd, path, length) != length)
-+		    write_in_full(out_fd, path, length) != length ||
-+		    write_in_full(out_fd, "\n", 1) != 1)
- 			die("unable to write rerere record");
- 	}
- 	if (commit_lock_file(&write_lock) != 0)
-
-And unless I am missing something, rerere on multiple paths is very
-broken (but that seems weird, since this code is so old).
-
--Peff
+						- Ted
