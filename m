@@ -1,105 +1,74 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: Re: [PATCH] fix recursive-merge of empty files with different
-	permissions
-Date: Thu, 13 Mar 2008 13:52:29 +0100
-Message-ID: <20080313125229.GA24758@localhost>
-References: <20080308171726.GA16129@localhost> <alpine.LSU.1.00.0803081850470.3975@racer.site>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 08/16] t4200: use cut instead of sed
+Date: Thu, 13 Mar 2008 08:59:20 -0400
+Message-ID: <20080313125920.GF19485@coredump.intra.peff.net>
+References: <cover.1205356737.git.peff@peff.net> <20080312213756.GI26286@coredump.intra.peff.net> <7vejaf1b0d.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Mar 13 13:53:11 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Whit Armstrong <armstrong.whit@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 13 14:00:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JZmvm-0007hz-Sq
-	for gcvg-git-2@gmane.org; Thu, 13 Mar 2008 13:53:11 +0100
+	id 1JZn2Q-0001am-Ud
+	for gcvg-git-2@gmane.org; Thu, 13 Mar 2008 14:00:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752216AbYCMMwb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Mar 2008 08:52:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752000AbYCMMwb
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Mar 2008 08:52:31 -0400
-Received: from wx-out-0506.google.com ([66.249.82.224]:11933 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751794AbYCMMwa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Mar 2008 08:52:30 -0400
-Received: by wx-out-0506.google.com with SMTP id h31so3705460wxd.4
-        for <git@vger.kernel.org>; Thu, 13 Mar 2008 05:52:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:received:date:from:to:cc:subject:message-id:mail-followup-to:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:sender;
-        bh=MH5u96+TA9/6dn29R8uYUmUnLOfC/mFdxINI42xKkH4=;
-        b=wOmPIxh9/J57/c3PSPOyspn0YJQo61h+Fm5+UjxoaUuo+qdXHlyzodv4pCmT0eheOCj25AzLDSBV70NHvl2Plgxri/NvKMaXfAgQknJftr9nYO4Y7CagwQd4KR0B9DcjneuurIcewIhJmmQFvwTJvAp8/5oNaqEEJIOkEQO2DUI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:sender;
-        b=RzdT4Ix6jg0jNDt2tbbjW52S3H5dog7R9JatV/MsDnvaVJDJTMXpQ+rentxtydcDXQXRzil5AIKUWJwVa+S6nK7ksTysGB2EAlfMZ+vmMUDLVa2tHkDEkgKiTek73b9W2JDu1r72UqrcfVBG73zlQvkRKuyXqJw89cv66j5IPxk=
-Received: by 10.141.141.3 with SMTP id t3mr5698147rvn.52.1205412748689;
-        Thu, 13 Mar 2008 05:52:28 -0700 (PDT)
-Received: from darc.dyndns.org ( [88.117.51.108])
-        by mx.google.com with ESMTPS id u1sm6619314uge.14.2008.03.13.05.52.25
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 13 Mar 2008 05:52:26 -0700 (PDT)
-Received: from drizzd by darc.dyndns.org with local (Exim 4.69)
-	(envelope-from <drizzd@aon.at>)
-	id 1JZmv7-0006iA-Ma; Thu, 13 Mar 2008 13:52:29 +0100
-Mail-Followup-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
+	id S1753100AbYCMM7X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Mar 2008 08:59:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752968AbYCMM7X
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Mar 2008 08:59:23 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4831 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752691AbYCMM7W (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Mar 2008 08:59:22 -0400
+Received: (qmail 30078 invoked by uid 111); 13 Mar 2008 12:59:21 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Thu, 13 Mar 2008 08:59:21 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 13 Mar 2008 08:59:20 -0400
 Content-Disposition: inline
-In-Reply-To: <alpine.LSU.1.00.0803081850470.3975@racer.site>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+In-Reply-To: <7vejaf1b0d.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77071>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77072>
 
-Hi,
+On Wed, Mar 12, 2008 at 09:52:18PM -0700, Junio C Hamano wrote:
 
-On Sat, Mar 08, 2008 at 06:17:26PM +0100, Clemens Buchacher wrote:
-> If git-merge-recursive attempts to merge two empty new files with
-> different executable flags, eventually xdl_merge() is called and produces
-> empty diffs for both files and therefore does not choose either file as
-> successor. Make xdl_merge() choose one of the files instead.
-
-On Sat, Mar 08, 2008 at 06:51:48PM +0100, Johannes Schindelin wrote:
-> On Sat, 8 Mar 2008, Clemens Buchacher wrote:
-> > I do not understand why, but this does not happen if the file 
-> > permissions are the same.
+> > Some versions of sed (like the one on Solaris) don't like to
+> > match literal tabs, and simply print nothing. Instead, let's
+> > use cut.
 > 
-> I think this is the biggest problem.
+> > -sha1=$(sed -e 's/	.*//' .git/rr-cache/MERGE_RR)
 > 
-> >  t/t6031-merge-recursive.sh |   23 +++++++++++++++++++++++
-> >  xdiff/xmerge.c             |   30 ++++++++++++++----------------
-> 
-> ... because xdiff/xmerge.c is definitely the wrong place to "fix" this 
-> issue.  xdl_merge() does not even _know_ about permissions.
+> This is a bit hard to believe.  On one of my ancient Sun box:
 
-After analyzing the problem in greater detail, I have to disagree. It is true,
-of course, that xdl_merge() does not and should not know about permissions at
-all. However, the bug is still in xdl_merge(). Different permissions are only
-the trigger of the problem, because only then will xdl_merge() be called at
-all.
+Ah, sorry. I tested this line by hand, found it didn't work, and
+stupidly jumped to the assumption that it was the literal tab (that
+being the only interesting thing in the input).
 
-What happens is this. Before looking at the file contents directly
-merge_trees() attempts to resolve the merge trivially. If both sha1 and mode of
-the head and remote entries match, the merge will be resolved as per case #5ALT
-(see Documentation/trivial-merge.txt), i.e. head is chosen as the merge result.
+But the actual problem is that MERGE_RR lacks a trailing newline. I
+don't see any code to add newlines, even though it seems possible that
+we will write out several paths. So I think we need a newline here:
 
-If either sha1 _or_ mode differ between the head and remote entries, however,
-merge_trees() will use xdl_merge() to merge the file content and the remote
-entry's mode will be chosen as result mode.
+diff --git a/builtin-rerere.c b/builtin-rerere.c
+index c607aad..e4a1dc1 100644
+--- a/builtin-rerere.c
++++ b/builtin-rerere.c
+@@ -58,7 +58,8 @@ static int write_rr(struct path_list *rr, int out_fd)
+ 		int length = strlen(path) + 1;
+ 		if (write_in_full(out_fd, rr->items[i].util, 40) != 40 ||
+ 		    write_in_full(out_fd, "\t", 1) != 1 ||
+-		    write_in_full(out_fd, path, length) != length)
++		    write_in_full(out_fd, path, length) != length ||
++		    write_in_full(out_fd, "\n", 1) != 1)
+ 			die("unable to write rerere record");
+ 	}
+ 	if (commit_lock_file(&write_lock) != 0)
 
-One could argue that it would be better to mark the mismatching permissions as
-a conflict. However, this is how the merge currently silently succeeds _unless_
-both files are empty. If they are, xdl_merge() will effectively exit with an
-error status and git-merge-recursive will fail with an internal error (as shown
-in the testcase).
+And unless I am missing something, rerere on multiple paths is very
+broken (but that seems weird, since this code is so old).
 
-In any case, I think it is reasonable to expect xdl_merge() to work with empty
-files. Whether or not the current "mode merging" behavior is desired is a
-different matter.
-
-Regards,
-Clemens
+-Peff
