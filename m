@@ -1,121 +1,65 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: [PATCH] pack-objects: proper pack time stamping with --max-pack-size
-Date: Thu, 13 Mar 2008 14:59:29 -0400 (EDT)
-Message-ID: <alpine.LFD.1.00.0803131440590.2947@xanadu.home>
+From: Samuel Tardieu <sam@rfc1149.net>
+Subject: Re: [PATCH] Add MIME information to outgoing email
+Date: Thu, 13 Mar 2008 20:05:55 +0100
+Organization: RFC 1149 (see http://www.rfc1149.net/)
+Message-ID: <2008-03-13-20-05-55+trackit+sam@rfc1149.net>
+References: <1205426419-4594-1-git-send-email-sam@rfc1149.net> <7vhcfaxxxk.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8bit
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 13 20:00:41 2008
+X-From: git-owner@vger.kernel.org Thu Mar 13 20:07:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JZsfG-0004KH-Kx
-	for gcvg-git-2@gmane.org; Thu, 13 Mar 2008 20:00:31 +0100
+	id 1JZslI-0006mT-G1
+	for gcvg-git-2@gmane.org; Thu, 13 Mar 2008 20:06:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755913AbYCMS7b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Mar 2008 14:59:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755827AbYCMS7b
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Mar 2008 14:59:31 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:34058 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751618AbYCMS7a (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Mar 2008 14:59:30 -0400
-Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR003.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JXO004ZFNF57PF0@VL-MO-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 13 Mar 2008 14:59:29 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+	id S1753022AbYCMTGF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Mar 2008 15:06:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752216AbYCMTGE
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Mar 2008 15:06:04 -0400
+Received: from zaphod.rfc1149.net ([88.191.14.223]:37942 "EHLO
+	mail.rfc1149.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752530AbYCMTGD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Mar 2008 15:06:03 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mail.rfc1149.net (Postfix) with ESMTP id D3483E3713;
+	Thu, 13 Mar 2008 20:06:00 +0100 (CET)
+X-Virus-Scanned: amavisd-new at rfc1149.net
+Received: from mail.rfc1149.net ([127.0.0.1])
+	by localhost (zaphod.rfc1149.net [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 7NyCV1WZBYVE; Thu, 13 Mar 2008 20:05:56 +0100 (CET)
+Received: from dawn.rfc1149.net (unknown [192.168.9.2])
+	by mail.rfc1149.net (Postfix) with ESMTP id C9941E11CF;
+	Thu, 13 Mar 2008 20:05:55 +0100 (CET)
+Received: by dawn.rfc1149.net (Postfix, from userid 1000)
+	id 406D68065; Thu, 13 Mar 2008 20:05:55 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <7vhcfaxxxk.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+X-WWW: http://www.rfc1149.net/sam
+X-Jabber: <sam@rfc1149.net> (see http://www.jabber.org/)
+X-OpenPGP-Fingerprint: 79C0 AE3C CEA8 F17B 0EF1  45A5 F133 2241 1B80 ADE6 (see http://www.gnupg.org/)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77128>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77129>
 
-Runtime pack access is done in the pack file mtime order since recent 
-packs are more likely to contain frequently used objects than old packs.
-However the --max-pack-size option can produce multiple packs with mtime 
-in the reversed order as newer objects are always written first.
+On 13/03, Junio C Hamano wrote:
 
-Let's modify mtime of later pack files (when any) so they appear older 
-than preceding ones when a repack creates multiple packs.
+| Samuel Tardieu <sam@rfc1149.net> writes:
+| 
+| > Add MIME-Version/Content-Type/Content-Transfer-Encoding headers in
+| > messages generated with git-format-patch. Without it, messages generated
+| > without using --attach or --inline didn't have any content type information.
+| 
+| Isn't that job for send-email (or user's MUA)?  I really do not think we
+| want to clutter format-patch output any more than necessary.
 
-Signed-off-by: Nicolas Pitre <nico@cam.org>
----
-diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
-index f504cff..4c2ed70 100644
---- a/builtin-pack-objects.c
-+++ b/builtin-pack-objects.c
-@@ -17,6 +17,8 @@
- #include "progress.h"
- #include "refs.h"
- 
-+#include <utime.h>
-+
- #ifdef THREADED_DELTA_SEARCH
- #include "thread-utils.h"
- #include <pthread.h>
-@@ -454,6 +456,7 @@ static void write_pack_file(void)
- 	struct pack_header hdr;
- 	int do_progress = progress >> pack_to_stdout;
- 	uint32_t nr_remaining = nr_result;
-+	time_t last_mtime = 0;
- 
- 	if (do_progress)
- 		progress_state = start_progress("Writing objects", nr_result);
-@@ -504,6 +507,7 @@ static void write_pack_file(void)
- 
- 		if (!pack_to_stdout) {
- 			mode_t mode = umask(0);
-+			struct stat st;
- 			char *idx_tmp_name, tmpname[PATH_MAX];
- 
- 			umask(mode);
-@@ -511,6 +515,7 @@ static void write_pack_file(void)
- 
- 			idx_tmp_name = write_idx_file(NULL, written_list,
- 						      nr_written, sha1);
-+
- 			snprintf(tmpname, sizeof(tmpname), "%s-%s.pack",
- 				 base_name, sha1_to_hex(sha1));
- 			if (adjust_perm(pack_tmp_name, mode))
-@@ -519,6 +524,28 @@ static void write_pack_file(void)
- 			if (rename(pack_tmp_name, tmpname))
- 				die("unable to rename temporary pack file: %s",
- 				    strerror(errno));
-+
-+			/*
-+			 * Packs are runtime accessed in their mtime
-+			 * order since newer packs are more likely to contain
-+			 * younger objects.  So if we are creating multiple
-+			 * packs then we should modify the mtime of later ones
-+			 * to preserve this property.
-+			 */
-+			if (stat(tmpname, &st) < 0) {
-+				warning("failed to stat %s: %s",
-+					tmpname, strerror(errno));
-+			} else if (!last_mtime) {
-+				last_mtime = st.st_mtime;
-+			} else {
-+				struct utimbuf utb;
-+				utb.actime = st.st_atime;
-+				utb.modtime = --last_mtime;
-+				if (utime(tmpname, &utb) < 0)
-+					warning("failed utime() on %s: %s",
-+						tmpname, strerror(errno));
-+			}
-+
- 			snprintf(tmpname, sizeof(tmpname), "%s-%s.idx",
- 				 base_name, sha1_to_hex(sha1));
- 			if (adjust_perm(idx_tmp_name, mode))
-@@ -527,6 +554,7 @@ static void write_pack_file(void)
- 			if (rename(idx_tmp_name, tmpname))
- 				die("unable to rename temporary index file: %s",
- 				    strerror(errno));
-+
- 			free(idx_tmp_name);
- 			free(pack_tmp_name);
- 			puts(sha1_to_hex(sha1));
+Only format-patch knows what encoding has been used by itself to
+generate the message. Doing it at any later stage would have to guess
+what the correct charset is.
