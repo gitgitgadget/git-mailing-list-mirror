@@ -1,62 +1,68 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH v2 4/4] buitin-status: Add tests for submodule summary
-Date: Thu, 13 Mar 2008 15:21:41 +0100
-Message-ID: <47D93875.1050407@viscovery.net>
-References: <1205416085-23431-1-git-send-email-pkufranky@gmail.com> <1205416085-23431-2-git-send-email-pkufranky@gmail.com> <1205416085-23431-3-git-send-email-pkufranky@gmail.com> <1205416085-23431-4-git-send-email-pkufranky@gmail.com> <1205416085-23431-5-git-send-email-pkufranky@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Ping Yin <pkufranky@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 13 15:22:43 2008
+From: Emil Medve <Emilian.Medve@Freescale.com>
+Subject: [PATCH] git-cvsimport: Add support for CVSNT as an underlying client
+Date: Thu, 13 Mar 2008 10:08:23 -0500
+Message-ID: <1205420903-12557-1-git-send-email-Emilian.Medve@Freescale.com>
+Cc: Emil Medve <Emilian.Medve@Freescale.com>
+To: gitster@pobox.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 13 16:13:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JZoKA-00081p-Iq
-	for gcvg-git-2@gmane.org; Thu, 13 Mar 2008 15:22:27 +0100
+	id 1JZp7V-0004Ke-NS
+	for gcvg-git-2@gmane.org; Thu, 13 Mar 2008 16:13:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752459AbYCMOVq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Mar 2008 10:21:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752133AbYCMOVq
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Mar 2008 10:21:46 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:64977 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752077AbYCMOVp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Mar 2008 10:21:45 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1JZoIi-0005jr-Os; Thu, 13 Mar 2008 15:20:57 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 55FF86B7; Thu, 13 Mar 2008 15:21:41 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <1205416085-23431-5-git-send-email-pkufranky@gmail.com>
-X-Spam-Score: -0.8 (/)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_60=1
+	id S1752402AbYCMPMq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Mar 2008 11:12:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751672AbYCMPMq
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Mar 2008 11:12:46 -0400
+Received: from az33egw01.freescale.net ([192.88.158.102]:36433 "EHLO
+	az33egw01.freescale.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752000AbYCMPMq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Mar 2008 11:12:46 -0400
+Received: from az33smr01.freescale.net (az33smr01.freescale.net [10.64.34.199])
+	by az33egw01.freescale.net (8.12.11/az33egw01) with ESMTP id m2DFBh1q025905;
+	Thu, 13 Mar 2008 08:11:43 -0700 (MST)
+Received: from emmedve1-12.am.freescale.net (emmedve1-12.am.freescale.net [10.82.16.93])
+	by az33smr01.freescale.net (8.13.1/8.13.0) with ESMTP id m2DFBg5P025677;
+	Thu, 13 Mar 2008 10:11:42 -0500 (CDT)
+Received: by emmedve1-12.am.freescale.net (Postfix, from userid 1000)
+	id 63EBA5044B1; Thu, 13 Mar 2008 10:08:24 -0500 (CDT)
+X-Mailer: git-send-email 1.5.4.GIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77093>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77094>
 
-Ping Yin schrieb:
-> +cd sm &&
-> +head=$(git rev-parse --verify HEAD | cut -c1-7) &&
-> +cd ..
+CVSNT seems to feature the following relevant differences from classic CVS:
+	1. Keeps the password information in ~/.cvs/cvspass instead of ~/.cvspass
+	2. Used '=' to separate fields in cvspass instead of ' '
 
-I think you can make these three lines into:
+Signed-off-by: Emil Medve <Emilian.Medve@Freescale.com>
+---
+ git-cvsimport.perl |    5 +++--
+ 1 files changed, 3 insertions(+), 2 deletions(-)
 
-test_expect_success 'get short SHA1 of submodule HEAD' '
-
-	head=$(cd sm && git rev-parse --verify HEAD | cut -c1-7)
-'
-
-(not tested, though).
-
-> +test_expect_success "status submodule summary (--amend)" '
-
-Thanks for adding this one.
-
--- Hannes
+diff --git a/git-cvsimport.perl b/git-cvsimport.perl
+index 95c5eec..a23ae79 100755
+--- a/git-cvsimport.perl
++++ b/git-cvsimport.perl
+@@ -238,12 +238,13 @@ sub conn {
+ 		my $rr = ":pserver:$user\@$serv:$port$repo";
+ 
+ 		unless ($pass) {
+-			open(H,$ENV{'HOME'}."/.cvspass") and do {
++			open(H,$ENV{'HOME'}."/.cvspass") or
++			open(H,$ENV{'HOME'}."/.cvs/cvspass") and do {
+ 				# :pserver:cvs@mea.tmt.tele.fi:/cvsroot/zmailer Ah<Z
+ 				while (<H>) {
+ 					chomp;
+ 					s/^\/\d+\s+//;
+-					my ($w,$p) = split(/\s/,$_,2);
++					my ($w,$p) = split(/\s|=/,$_,2);
+ 					if ($w eq $rr or $w eq $rr2) {
+ 						$pass = $p;
+ 						last;
+-- 
+1.5.4.GIT
