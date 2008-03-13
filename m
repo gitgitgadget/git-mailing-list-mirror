@@ -1,111 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 10/16] add NO_EXTERNAL_GREP build option
-Date: Thu, 13 Mar 2008 00:56:30 -0700
-Message-ID: <7vy78nxdjl.fsf@gitster.siamese.dyndns.org>
-References: <cover.1205356737.git.peff@peff.net>
- <20080312213916.GK26286@coredump.intra.peff.net>
+From: Frank Lichtenheld <frank@lichtenheld.de>
+Subject: Re: [PATCH 03/16] more tr portability test script fixes
+Date: Thu, 13 Mar 2008 09:28:07 +0100
+Message-ID: <20080313082807.GT10103@mail-vs.djpig.de>
+References: <cover.1205356737.git.peff@peff.net> <20080312213106.GD26286@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Whit Armstrong <armstrong.whit@gmail.com>, git@vger.kernel.org
+Cc: Whit Armstrong <armstrong.whit@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Mar 13 08:57:26 2008
+X-From: git-owner@vger.kernel.org Thu Mar 13 09:29:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JZiJa-0004bs-7O
-	for gcvg-git-2@gmane.org; Thu, 13 Mar 2008 08:57:26 +0100
+	id 1JZioE-0004Cd-BH
+	for gcvg-git-2@gmane.org; Thu, 13 Mar 2008 09:29:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751747AbYCMH4j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Mar 2008 03:56:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751853AbYCMH4j
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Mar 2008 03:56:39 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:32882 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751728AbYCMH4i (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Mar 2008 03:56:38 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 372982FD3;
-	Thu, 13 Mar 2008 03:56:37 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 4D5672FD2; Thu, 13 Mar 2008 03:56:32 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1750985AbYCMI20 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Mar 2008 04:28:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751044AbYCMI20
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Mar 2008 04:28:26 -0400
+Received: from pauli.djpig.de ([78.46.38.139]:50620 "EHLO pauli.djpig.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750929AbYCMI2Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Mar 2008 04:28:25 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by pauli.djpig.de (Postfix) with ESMTP id 9F49790073;
+	Thu, 13 Mar 2008 09:28:23 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at pauli.djpig.de
+Received: from pauli.djpig.de ([127.0.0.1])
+	by localhost (pauli.djpig.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id VStYGGuFB9Av; Thu, 13 Mar 2008 09:28:09 +0100 (CET)
+Received: from mail-vs.djpig.de (mail-vs.djpig.de [78.47.136.189])
+	by pauli.djpig.de (Postfix) with ESMTP id 2D8999006E;
+	Thu, 13 Mar 2008 09:28:09 +0100 (CET)
+Received: from djpig by mail-vs.djpig.de with local (Exim 4.63)
+	(envelope-from <djpig@mail-vs.djpig.de>)
+	id 1JZinI-0002V5-0t; Thu, 13 Mar 2008 09:28:08 +0100
+Content-Disposition: inline
+In-Reply-To: <20080312213106.GD26286@coredump.intra.peff.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77052>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77053>
 
-There is one more reason other than you said in the Makefile patch one
-might want to avoid external grep.  Cygwin may have perfectly well working
-grep, but the reason they avoid external grep is because forking is too
-slow there.
+On Wed, Mar 12, 2008 at 05:31:06PM -0400, Jeff King wrote:
+> --- a/t/diff-lib.sh
+> +++ b/t/diff-lib.sh
+> @@ -21,8 +21,8 @@ compare_diff_raw_z () {
+>      # Also we do not check SHA1 hash generation in this test, which
+>      # is a job for t0000-basic.sh
+>  
+> -    tr '\000' '\012' <"$1" | sed -e "$sanitize_diff_raw_z" >.tmp-1
+> -    tr '\000' '\012' <"$2" | sed -e "$sanitize_diff_raw_z" >.tmp-2
+> +    perl -pe 'y/\000/\012/' <"$1" | sed -e "$sanitize_diff_raw_z" >.tmp-1
+> +    perl -pe 'y/\000/\012/' <"$2" | sed -e "$sanitize_diff_raw_z" >.tmp-2
 
----
+It might make sense performance-wise to integrate the job of the sed call into the perl
+call here. Haven't tested it, though.
 
- Makefile       |    5 ++---
- builtin-grep.c |   12 ++++++++++--
- 2 files changed, 12 insertions(+), 5 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index 8e80225..bc46fd4 100644
---- a/Makefile
-+++ b/Makefile
-@@ -149,8 +149,8 @@ all::
- # recommended if Git triggers O(n^2) behavior in your platform's qsort().
- #
- # Define NO_EXTERNAL_GREP if you don't want "git grep" to ever call
--# your external grep (e.g., if your system lacks grep, or if its grep is
--# not very featureful).
-+# your external grep (e.g., if your system lacks grep, if its grep is
-+# broken, or spawning external process is slower than built-in grep git has).
- 
- GIT-VERSION-FILE: .FORCE-GIT-VERSION-FILE
- 	@$(SHELL_PATH) ./GIT-VERSION-GEN
-@@ -470,7 +470,6 @@ ifeq ($(uname_O),Cygwin)
- 	NO_STRCASESTR = YesPlease
- 	NO_MEMMEM = YesPlease
- 	NO_SYMLINK_HEAD = YesPlease
--	NO_EXTERNAL_GREP = YesPlease
- 	NEEDS_LIBICONV = YesPlease
- 	NO_FAST_WORKING_DIRECTORY = UnfortunatelyYes
- 	NO_TRUSTABLE_FILEMODE = UnfortunatelyYes
-diff --git a/builtin-grep.c b/builtin-grep.c
-index f215b28..ef29910 100644
---- a/builtin-grep.c
-+++ b/builtin-grep.c
-@@ -12,6 +12,14 @@
- #include "builtin.h"
- #include "grep.h"
- 
-+#ifndef NO_EXTERNAL_GREP
-+#ifdef __unix__
-+#define NO_EXTERNAL_GREP 0
-+#else
-+#define NO_EXTERNAL_GREP 1
-+#endif
-+#endif
-+
- /*
-  * git grep pathspecs are somewhat different from diff-tree pathspecs;
-  * pathname wildcards are allowed.
-@@ -153,7 +161,7 @@ static int grep_file(struct grep_opt *opt, const char *filename)
- 	return i;
- }
- 
--#ifndef NO_EXTERNAL_GREP
-+#if !NO_EXTERNAL_GREP
- static int exec_grep(int argc, const char **argv)
- {
- 	pid_t pid;
-@@ -372,7 +380,7 @@ static int grep_cache(struct grep_opt *opt, const char **paths, int cached)
- 	int nr;
- 	read_cache();
- 
--#ifndef NO_EXTERNAL_GREP
-+#if !NO_EXTERNAL_GREP
- 	/*
- 	 * Use the external "grep" command for the case where
- 	 * we grep through the checked-out files. It tends to
+Gruesse,
+-- 
+Frank Lichtenheld <frank@lichtenheld.de>
+www: http://www.djpig.de/
