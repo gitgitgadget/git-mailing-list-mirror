@@ -1,106 +1,85 @@
-From: martin f krafft <madduck@madduck.net>
-Subject: git-svn -t/-b should respect existing *
-Date: Thu, 13 Mar 2008 12:27:38 +0100
-Message-ID: <20080313112738.GA28589@piper.oerlikon.madduck.net>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: git-svn clone duplicates content
+Date: Thu, 13 Mar 2008 12:30:13 +0100
+Message-ID: <20080313113013.GA31522@atjola.homenet>
+References: <20080313095215.GA22241@piper.oerlikon.madduck.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="fUYQa+Pmc3FrFX/N"
-Cc: normalperson@yhbt.net
-To: git discussion list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Mar 13 12:28:34 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git discussion list <git@vger.kernel.org>
+To: martin f krafft <madduck@madduck.net>
+X-From: git-owner@vger.kernel.org Thu Mar 13 12:30:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JZlbt-0002mP-JA
-	for gcvg-git-2@gmane.org; Thu, 13 Mar 2008 12:28:34 +0100
+	id 1JZleC-0003X3-Ay
+	for gcvg-git-2@gmane.org; Thu, 13 Mar 2008 12:30:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752316AbYCML1s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Mar 2008 07:27:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752197AbYCML1s
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Mar 2008 07:27:48 -0400
-Received: from clegg.madduck.net ([82.197.162.59]:59058 "EHLO
-	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752189AbYCML1r (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Mar 2008 07:27:47 -0400
-Received: from wall.oerlikon.madduck.net (84-75-158-163.dclient.hispeed.ch [84.75.158.163])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "wall.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by clegg.madduck.net (postfix) with ESMTP id 31722A800B;
-	Thu, 13 Mar 2008 12:27:40 +0100 (CET)
-Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [192.168.14.3])
-	by wall.oerlikon.madduck.net (Postfix) with ESMTP id E89BC9F18E;
-	Thu, 13 Mar 2008 12:27:38 +0100 (CET)
-Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
-	id A74C6442E; Thu, 13 Mar 2008 12:27:38 +0100 (CET)
+	id S1752699AbYCMLaR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 13 Mar 2008 07:30:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751744AbYCMLaR
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Mar 2008 07:30:17 -0400
+Received: from mail.gmx.net ([213.165.64.20]:42958 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751674AbYCMLaP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Mar 2008 07:30:15 -0400
+Received: (qmail invoked by alias); 13 Mar 2008 11:30:14 -0000
+Received: from i577ACFB7.versanet.de (EHLO atjola.local) [87.122.207.183]
+  by mail.gmx.net (mp041) with SMTP; 13 Mar 2008 12:30:14 +0100
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX1+e5V9oXRGezbbDimzHAEQYccnBhOCqzmmyhLu4lN
+	Uf2d7Rglo1A5Uj
 Content-Disposition: inline
-X-Motto: Keep the good times rollin'
-X-OS: Debian GNU/Linux lenny/sid kernel 2.6.24-1-amd64 x86_64
-X-Spamtrap: madduck.bogus@madduck.net
-X-Subliminal-Message: debian/rules!
+In-Reply-To: <20080313095215.GA22241@piper.oerlikon.madduck.net>
 User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-X-Virus-Scanned: ClamAV 0.91.2/6221/Thu Mar 13 11:10:51 2008 on clegg.madduck.net
-X-Virus-Status: Clean
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77060>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77061>
 
+On 2008.03.13 10:52:15 +0100, martin f krafft wrote:
+> Hi list,
+>=20
+> if I
+>=20
+>   git-svn clone --stdlayout svn://svn.debian.org/svn/python-modules/p=
+ackages/python-docutils
+>=20
+> then I get
+>=20
+>   drwx------ 3 madduck madduck 4096 2008-03-13 10:11 debian/
+>   drwx------ 3 madduck madduck 4096 2008-03-13 10:11 trunk/
+>   drwx------ 3 madduck madduck 4096 2008-03-13 10:11 trunk/debian/
+>=20
+> and the diff between the two debian directories is equivalent to the
+> last commit to the trunk. If I create a new branch off the remote
+> 'trunk' branch, then the trunk/ directory will be gone, as it
+> should.
+>=20
+> I am a bit wary to dcommit off anything else than master though for
+> I've already killed SVN repos with git-svn in the past. I'd rather
+> not to that to Debian's python-modules repo, or else would have to
+> spend the rest of my life hidden on some island.
+>=20
+> It seems that master is branched off a tag in this case.
+> Does anyone have an idea what's going on?
+> Is this something weird in the svn or with git-svn?
 
---fUYQa+Pmc3FrFX/N
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+The "fetch" part of git-svn will create a master branch if it doesn't
+exist(*) and makes it point to whatever branch was last fetched. In you=
+r
+case, it seems that the last change on the svn side was to create tag
+0.4-5, so master pointed to that one.
 
-Hi folks,
+As things are, a "git reset --hard remotes/trunk" (or wherever you want
+your master to descend from) is pretty mandatory after git svn clone.
+The example in the man page "kind of" mentions that. ;-)
 
-My git-svn target configuration is
+Bj=F6rn
 
-  [svn-remote "svn"]
-    url =3D svn://svn.berlios.de/docutils
-    fetch =3D trunk/docutils:refs/remotes/trunk
-    branches =3D branches/*/docutils:refs/remotes/*
-    tags =3D tags/*/docutils:refs/remotes/tags/*
-
-Unfortunately, when I run
-
-  git-svn init -T trunk/docutils -t 'tags/*/docutils' -b 'branches/*/docuti=
-ls' ...
-
-then I get (note the two asterisks on the left hand side):
-
-    branches =3D branches/*/docutils/*:refs/remotes/*
-    tags =3D tags/*/docutils/*:refs/remotes/tags/*
-
-I took a brief stab at the code but I can't even figure out where
-the /* is appended, so I defer to you.
-
-It should be trivial to keep git-svn from appending /* if the left
-side already contains an asterisk.
-
-Thanks,
-
---=20
-martin | http://madduck.net/ | http://two.sentenc.es/
-=20
-"auch der mutigste von uns hat nur selten den mut zu dem,
- was er eigentlich wei=DF."
-                                                 - friedrich nietzsche
-=20
-spamtraps: madduck.bogus@madduck.net
-
---fUYQa+Pmc3FrFX/N
-Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
-Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFH2Q+qIgvIgzMMSnURAuWtAJ4xxBHxwjm8wJFOAGPngD4Yrg6PuACgylmH
-0TuG/AYuVVjCmosb5XQixrk=
-=b0QF
------END PGP SIGNATURE-----
-
---fUYQa+Pmc3FrFX/N--
+(*) Which can be a bit "surprising", because even if you don't want a
+    master branch and deleted the original one, the next fetch will
+    create a new one.
