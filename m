@@ -1,75 +1,76 @@
-From: Thomas Harning <harningt@gmail.com>
+From: Theodore Tso <tytso@mit.edu>
 Subject: Re: [Q] Encrypted GIT?
-Date: Thu, 13 Mar 2008 12:10:27 -0400
-Message-ID: <20080313121027.5f51f852@gmail.com>
-References: <c6c947f60803130148w7981a3f0r718c0801343c7b78@mail.gmail.com>
+Date: Thu, 13 Mar 2008 12:12:01 -0400
+Message-ID: <20080313161201.GA31653@mit.edu>
+References: <c6c947f60803130148w7981a3f0r718c0801343c7b78@mail.gmail.com> <20080313114738.GC2414@genesis.frugalware.org> <alpine.LSU.1.00.0803131254580.1656@racer.site> <20080313121644.GD2414@genesis.frugalware.org> <20080313125853.GA12927@mit.edu> <20080313155322.GA30847@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Alexander Gladysh" <agladysh@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 13 17:11:59 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Miklos Vajna <vmiklos@frugalware.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Alexander Gladysh <agladysh@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Mar 13 17:13:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JZq1z-00055C-NV
-	for gcvg-git-2@gmane.org; Thu, 13 Mar 2008 17:11:48 +0100
+	id 1JZq3g-0005oe-Co
+	for gcvg-git-2@gmane.org; Thu, 13 Mar 2008 17:13:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752864AbYCMQLI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Mar 2008 12:11:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752752AbYCMQLH
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Mar 2008 12:11:07 -0400
-Received: from an-out-0708.google.com ([209.85.132.241]:33783 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752536AbYCMQLG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Mar 2008 12:11:06 -0400
-Received: by an-out-0708.google.com with SMTP id d31so832470and.103
-        for <git@vger.kernel.org>; Thu, 13 Mar 2008 09:11:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer:mime-version:content-type:content-transfer-encoding;
-        bh=Pnp6n9VEUkkUqOs6x4adxJ5fCODN+g6fXrGvA+CziUk=;
-        b=UPwCAnA58q962e0Skj1ralA691aC24uf3slsB22aLc3dhE8bwQByYOKGbxAfdyRYIRH7maDtyK0x0HkTobUJ687ztpyUAhAMJ/oZfSrebOcnxVdP+3tspvLZA9fRAF7KV9aqPaSw+OHDmbBEPOck+lpWVUzpAHuADfTIZErW5ro=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer:mime-version:content-type:content-transfer-encoding;
-        b=Knc+y8nCC0kPRbClGMyQeVb1XVWEdb0hz3AVOKQA4N1iTUfHw1P8CNyH8Ra+5kH11EQ15J7yj1IZuzTClrFRFLlFtv4Xtt1nJAUqYrNRRQ4yX1W1ghgtN7s0W5mV316if+cOlEHLxBUXJPau8EadAhJb9pj8bD83k6v/Gcbsaww=
-Received: by 10.100.121.12 with SMTP id t12mr19828297anc.113.1205424665703;
-        Thu, 13 Mar 2008 09:11:05 -0700 (PDT)
-Received: from localhost ( [149.164.193.61])
-        by mx.google.com with ESMTPS id d21sm7979871and.30.2008.03.13.09.11.04
-        (version=SSLv3 cipher=OTHER);
-        Thu, 13 Mar 2008 09:11:05 -0700 (PDT)
-In-Reply-To: <c6c947f60803130148w7981a3f0r718c0801343c7b78@mail.gmail.com>
-X-Mailer: Claws Mail 3.3.1 (GTK+ 2.10.11; x86_64-pc-linux-gnu)
+	id S1756907AbYCMQMm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Mar 2008 12:12:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756904AbYCMQMm
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Mar 2008 12:12:42 -0400
+Received: from www.church-of-our-saviour.ORG ([69.25.196.31]:41959 "EHLO
+	thunker.thunk.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1756897AbYCMQMl (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Mar 2008 12:12:41 -0400
+Received: from root (helo=closure.thunk.org)
+	by thunker.thunk.org with local-esmtp   (Exim 4.50 #1 (Debian))
+	id 1JZq3q-000081-AT; Thu, 13 Mar 2008 12:13:42 -0400
+Received: from tytso by closure.thunk.org with local (Exim 4.67)
+	(envelope-from <tytso@mit.edu>)
+	id 1JZq2I-00009v-FX; Thu, 13 Mar 2008 12:12:06 -0400
+Content-Disposition: inline
+In-Reply-To: <20080313155322.GA30847@coredump.intra.peff.net>
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@mit.edu
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77100>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77101>
 
-On Thu, 13 Mar 2008 11:48:53 +0300
-"Alexander Gladysh" <agladysh@gmail.com> wrote:
-
-> Hi, list!
+On Thu, Mar 13, 2008 at 11:53:22AM -0400, Jeff King wrote:
+>   - encrypting whole packfiles is a bit better for transport. The
+>     key-holding repo does the deltas and just treats the remote repo as
+>     dumb storage (it can't be smart, since that would involve looking at
+>     the data). Storage overhead is minimal if packfiles are a reasonable
+>     size.
 > 
-> I want to create a private GIT repo (without working copy) on a
-> machine in external data-center. While I do not actually believe that
-> it is possible that someone who has physical access to a machine would
-> be interested in peeking into my repo, I'd like to play safe and to
-> have this issue covered.
-> 
-> Please advise what is the best way to do it. Are there any existing
-> solutions?
-> 
-Potential solution to store arbitrary data in a safe manner:
+> So I think the last makes the most sense, where your local repo is
+> totally unprotected, but you efficiently push git objects to a remote
+> untrusted repo.
 
-mkdir remote_git_raw remote_git
-sshfs <data-center>:<path @ datacenter> $PWD/remote_git_raw
-encfs $PWD/remote_git_raw $PWD/remote_git
+If the main goal is primarily backup of your repository to an
+untrusted remote server, yes, that makes perfect sense.  
 
-This will lock your data in a remote encfs volume.  (Uses FUSE)
+If you assume multiple trusted developers would actually be
+*operating* on an encrypted repo, the life gets much harder, as you've
+pointed out.
 
-Not quite sure about the implications on performance... but this will
-certainly keep your data safe on that remote location.
+>   - encrypting before git sees content sucks, because you are either
+>     sacrificing security (content X always encrypts to Y) or system
+>     stability (git doesn't know that Y and Y' are really the same thing)
+
+It's not clear that "content X always encrypts to Y" is a fatal flaw,
+by the way.  Yes, it leaks a bit of information, but in a source code
+management situation, it may not matter.  If you do absolutely care,
+tough, it might be that the simplest solution is to store the entire
+repository and working tree under cryptofs.  After all, what's the
+point of encrypting the local repo if the checked-out working tree is
+unprotected for all to see?  :-)
+
+						- Ted
