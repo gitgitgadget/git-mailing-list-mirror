@@ -1,67 +1,57 @@
-From: Frank Lichtenheld <frank@lichtenheld.de>
-Subject: Re: [PATCH 03/16] more tr portability test script fixes
-Date: Thu, 13 Mar 2008 09:28:07 +0100
-Message-ID: <20080313082807.GT10103@mail-vs.djpig.de>
-References: <cover.1205356737.git.peff@peff.net> <20080312213106.GD26286@coredump.intra.peff.net>
+From: "Alexander Gladysh" <agladysh@gmail.com>
+Subject: [Q] Encrypted GIT?
+Date: Thu, 13 Mar 2008 11:48:53 +0300
+Message-ID: <c6c947f60803130148w7981a3f0r718c0801343c7b78@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Whit Armstrong <armstrong.whit@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Mar 13 09:29:06 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 13 09:49:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JZioE-0004Cd-BH
-	for gcvg-git-2@gmane.org; Thu, 13 Mar 2008 09:29:06 +0100
+	id 1JZj8L-0001HT-Kc
+	for gcvg-git-2@gmane.org; Thu, 13 Mar 2008 09:49:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750985AbYCMI20 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Mar 2008 04:28:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751044AbYCMI20
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Mar 2008 04:28:26 -0400
-Received: from pauli.djpig.de ([78.46.38.139]:50620 "EHLO pauli.djpig.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750929AbYCMI2Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Mar 2008 04:28:25 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by pauli.djpig.de (Postfix) with ESMTP id 9F49790073;
-	Thu, 13 Mar 2008 09:28:23 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at pauli.djpig.de
-Received: from pauli.djpig.de ([127.0.0.1])
-	by localhost (pauli.djpig.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id VStYGGuFB9Av; Thu, 13 Mar 2008 09:28:09 +0100 (CET)
-Received: from mail-vs.djpig.de (mail-vs.djpig.de [78.47.136.189])
-	by pauli.djpig.de (Postfix) with ESMTP id 2D8999006E;
-	Thu, 13 Mar 2008 09:28:09 +0100 (CET)
-Received: from djpig by mail-vs.djpig.de with local (Exim 4.63)
-	(envelope-from <djpig@mail-vs.djpig.de>)
-	id 1JZinI-0002V5-0t; Thu, 13 Mar 2008 09:28:08 +0100
+	id S1752216AbYCMIsz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Mar 2008 04:48:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752197AbYCMIsz
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Mar 2008 04:48:55 -0400
+Received: from wa-out-1112.google.com ([209.85.146.176]:28666 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751270AbYCMIsy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Mar 2008 04:48:54 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so3892686wah.23
+        for <git@vger.kernel.org>; Thu, 13 Mar 2008 01:48:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=/7cJ9O9JCUbc4mn/DSkSZDPJ2VX4sJuuLlL/amA5EdA=;
+        b=gbeZb6pHHiY1+/RIKeJdLL1VIlzaJ3lE9b9gRH7XiFDiMR5pSiPFgXekB4tgN3KEGVNjs/aIOFuNLXb+yMlRh7gX3qGSZKLABmWXl2R5iptBvbqwPoHELey3Jk2jN/Sx56buWXBuYLmJPhaCWa6eS/ULWgWige1cIGQ5MYHO5TE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=aR+VSBIyAPuUVMCl+tojqACUOk7+E0y2taG7WBmGYFy0kwxV91cdR+IAHC26aQCAllJ16NjJUl3q1dRUqcPKW37b+S1qOoxqwTwLNzgRtUo6oH7K8cgyLCY3DXv0rbIWW7dPH0aBrHk6OXzLCaTWabbGGwtoodK8GfMEjJmB20w=
+Received: by 10.114.255.1 with SMTP id c1mr8873067wai.93.1205398133531;
+        Thu, 13 Mar 2008 01:48:53 -0700 (PDT)
+Received: by 10.115.111.4 with HTTP; Thu, 13 Mar 2008 01:48:53 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20080312213106.GD26286@coredump.intra.peff.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77053>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77054>
 
-On Wed, Mar 12, 2008 at 05:31:06PM -0400, Jeff King wrote:
-> --- a/t/diff-lib.sh
-> +++ b/t/diff-lib.sh
-> @@ -21,8 +21,8 @@ compare_diff_raw_z () {
->      # Also we do not check SHA1 hash generation in this test, which
->      # is a job for t0000-basic.sh
->  
-> -    tr '\000' '\012' <"$1" | sed -e "$sanitize_diff_raw_z" >.tmp-1
-> -    tr '\000' '\012' <"$2" | sed -e "$sanitize_diff_raw_z" >.tmp-2
-> +    perl -pe 'y/\000/\012/' <"$1" | sed -e "$sanitize_diff_raw_z" >.tmp-1
-> +    perl -pe 'y/\000/\012/' <"$2" | sed -e "$sanitize_diff_raw_z" >.tmp-2
+Hi, list!
 
-It might make sense performance-wise to integrate the job of the sed call into the perl
-call here. Haven't tested it, though.
+I want to create a private GIT repo (without working copy) on a
+machine in external data-center. While I do not actually believe that
+it is possible that someone who has physical access to a machine would
+be interested in peeking into my repo, I'd like to play safe and to
+have this issue covered.
 
-Gruesse,
--- 
-Frank Lichtenheld <frank@lichtenheld.de>
-www: http://www.djpig.de/
+Please advise what is the best way to do it. Are there any existing solutions?
+
+Thanks,
+Alexander.
