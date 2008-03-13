@@ -1,59 +1,78 @@
-From: "=?ISO-8859-1?Q?Marc-Andr=E9_Lureau?=" <marcandre.lureau@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] git-cvsimport: fix initial checkout
-Date: Fri, 14 Mar 2008 01:07:05 +0200
-Message-ID: <e29894ca0803131607ld534fa2w318e7313913933ca@mail.gmail.com>
+Date: Thu, 13 Mar 2008 16:15:17 -0700
+Message-ID: <7vr6eew70a.fsf@gitster.siamese.dyndns.org>
 References: <1205435378-10411-1-git-send-email-marcandre.lureau@gmail.com>
-	 <47D9A836.9010601@catalyst.net.nz>
-	 <e29894ca0803131604qa61adfbo22ff75d076feb899@mail.gmail.com>
+ <47D9A836.9010601@catalyst.net.nz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "Martin Langhoff" <martin@catalyst.net.nz>
-X-From: git-owner@vger.kernel.org Fri Mar 14 00:11:55 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Marc-Andre Lureau <marcandre.lureau@gmail.com>, git@vger.kernel.org
+To: Martin Langhoff <martin@catalyst.net.nz>
+X-From: git-owner@vger.kernel.org Fri Mar 14 00:16:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JZwXB-0008W4-1G
-	for gcvg-git-2@gmane.org; Fri, 14 Mar 2008 00:08:25 +0100
+	id 1JZwee-0004GZ-CD
+	for gcvg-git-2@gmane.org; Fri, 14 Mar 2008 00:16:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757657AbYCMXHM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 13 Mar 2008 19:07:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757593AbYCMXHL
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Mar 2008 19:07:11 -0400
-Received: from wr-out-0506.google.com ([64.233.184.233]:63591 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757533AbYCMXHJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 13 Mar 2008 19:07:09 -0400
-Received: by wr-out-0506.google.com with SMTP id c48so2968802wra.1
-        for <git@vger.kernel.org>; Thu, 13 Mar 2008 16:07:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=ZqUsm6hhvtE6MSyv7RZamDS4raf0A0VBrK5oE/f0ssM=;
-        b=HUtIYbq/m+vn1jCNIud/wvssKbVIzlH/g0A6xex3zIxM7/3u3OPx2H64s9wzogCYl1hK4JEuEGbpP1mQTE4602yeQKS1lHZT537Cfh6JHf7jEPFgA2CzXGZm1xOsx9EySybTZodGWDvudVw0ZEBzs2+58rivInV684vpA3lfymU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=R/2FtCojIoIFwEp8DjHXDmcplMIyE+WOVOYsMCxg0zy7x/om89Xl6EHU++K+MmrNoRHnqLdgGl65VrwQUed7FrIZ+PTeXiYXATQvbpJp2CS1U81okmwOL6tlxLLPnz+eEtW8KEGdrASAqqmvWG9m75Hgq8+FAr+mZpH4vqUyuik=
-Received: by 10.114.77.1 with SMTP id z1mr10538240waa.123.1205449626338;
-        Thu, 13 Mar 2008 16:07:06 -0700 (PDT)
-Received: by 10.114.60.4 with HTTP; Thu, 13 Mar 2008 16:07:05 -0700 (PDT)
-In-Reply-To: <e29894ca0803131604qa61adfbo22ff75d076feb899@mail.gmail.com>
-Content-Disposition: inline
+	id S1752480AbYCMXP1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Mar 2008 19:15:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752567AbYCMXP1
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Mar 2008 19:15:27 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:45459 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752335AbYCMXP0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Mar 2008 19:15:26 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id D7E9B3FD9;
+	Thu, 13 Mar 2008 19:15:22 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 2A2DB3FD8; Thu, 13 Mar 2008 19:15:19 -0400 (EDT)
+In-Reply-To: <47D9A836.9010601@catalyst.net.nz> (Martin Langhoff's message of
+ "Fri, 14 Mar 2008 11:18:30 +1300")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77145>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77146>
 
-Hi again,
+Martin Langhoff <martin@catalyst.net.nz> writes:
 
-Btw, the missing checkout file is,
+> Marc-Andre Lureau wrote:
+>> git-symbolic-ref HEAD returns master reference, even if the file does
+>> not exists. That prevents the initial checkout and fails in
+>> git-rev-parse.
+>
+> But you are patching the block that gets triggered on subsequent
+> imports, this code does not deal with "initial checkout" unless
+> something else is wrong. The line right above the open() is an else that
+> has the block that matters.
+>
+>> The patch checks the existence of the reference file
+>> before assuming an original branch exists. There might be better
+>> solutions than checking file existence.
+>
+> There are indeed. If we need this patch -- then you can call git
+> ref-parse right to see if you get a sha1.
+>
+>> -	unless ($last_branch) {
+>> +	if (-f "$git_dir/$last_branch") {
+>
+> Note that the file won't exist there in any modern git. It will be in
+> $git_dir/refs/heads/$last_branch. Did you test this patch?
 
-sys / osxvideo / Makefile.am
+Martin, it may not even be in $git_dir/refs/heads/$last_branch ;-)  The
+refs can be packed.
 
-I have a clue why (strange version number), but no idea how to fix it.
---=20
-Marc-Andr=E9 Lureau
+By the way, doesn't cvsimport fail when your HEAD is detached with this
+code?
+
+I always have cvsimport update the pristine upstream branch and rebase my
+work against it, so I never have the branch cvsimport updates checked
+out, and  for meit seems to work wonderfully (well, at least as wonderful
+as a workflow that involves any CVS in it could be).  I do not see a
+reason why it should not to work similarly well when my HEAD is detached..
