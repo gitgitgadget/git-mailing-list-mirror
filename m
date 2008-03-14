@@ -1,104 +1,61 @@
-From: "Jay Soffian" <jaysoffian@gmail.com>
-Subject: Re: [PATCH] gitweb: Support caching projects list
-Date: Thu, 13 Mar 2008 20:07:09 -0400
-Message-ID: <76718490803131707g34fd40d4q21c69391c2597bc@mail.gmail.com>
-References: <20080313231413.27966.3383.stgit@rover>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] merge-recursive: handle file mode changes
+Date: Thu, 13 Mar 2008 17:08:26 -0700
+Message-ID: <7vejaew4jp.fsf@gitster.siamese.dyndns.org>
+References: <20080308171726.GA16129@localhost>
+ <alpine.LSU.1.00.0803081850470.3975@racer.site>
+ <20080313125229.GA24758@localhost>
+ <alpine.LSU.1.00.0803131607030.1656@racer.site>
+ <20080313192246.GA30361@localhost>
+ <alpine.LSU.1.00.0803132216580.4174@racer.site>
+ <20080313224741.GA5000@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
-To: "Petr Baudis" <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Fri Mar 14 01:07:53 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Mar 14 01:09:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JZxSi-000396-Ve
-	for gcvg-git-2@gmane.org; Fri, 14 Mar 2008 01:07:53 +0100
+	id 1JZxU7-0003Yr-Ff
+	for gcvg-git-2@gmane.org; Fri, 14 Mar 2008 01:09:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751743AbYCNAHN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Mar 2008 20:07:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754568AbYCNAHM
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Mar 2008 20:07:12 -0400
-Received: from wx-out-0506.google.com ([66.249.82.234]:58141 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751631AbYCNAHL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Mar 2008 20:07:11 -0400
-Received: by wx-out-0506.google.com with SMTP id h31so3992852wxd.4
-        for <git@vger.kernel.org>; Thu, 13 Mar 2008 17:07:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=9qqIfvGbLBLd1WRYCBPZZCclyj8Defi/+lBailKdm4Q=;
-        b=oqcTOmLUzdaJYVudgT5S40Zm928aey+xOShSgSxXuppxulrgXRa+oGpTjXCJUbeooE766uC1aM4D9lZ8IlyCkel9REcy8PZKvEMCWUWqGFG1dGZT/ToUVxloCk6lhJVcAleeRcm5ekpPinBtBSvPfapoFKbThER9YG/Da8hFRFI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=j5rlh+vcLHAVKAXMOm9me8mEMgNc1MK8lY1JBfAMUvixRHrpBnJR9WmipZfEy0w9P65mboeEfDa5WNuBRVKTmUXvob1uUrJGjf8H8XMDSWJZnCnYdru4cqjWnHkDIwVsYb2VJSZ4fTa74ktY5KI2qMaGzwuOLjE4p1E8lYCViCM=
-Received: by 10.141.22.1 with SMTP id z1mr6179055rvi.282.1205453229598;
-        Thu, 13 Mar 2008 17:07:09 -0700 (PDT)
-Received: by 10.141.29.7 with HTTP; Thu, 13 Mar 2008 17:07:09 -0700 (PDT)
-In-Reply-To: <20080313231413.27966.3383.stgit@rover>
-Content-Disposition: inline
+	id S1755234AbYCNAIj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Mar 2008 20:08:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755065AbYCNAIj
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Mar 2008 20:08:39 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:60908 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755564AbYCNAIi (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Mar 2008 20:08:38 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 81B101BAD;
+	Thu, 13 Mar 2008 20:08:36 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id D9CF61BAB; Thu, 13 Mar 2008 20:08:33 -0400 (EDT)
+In-Reply-To: <20080313224741.GA5000@localhost> (Clemens Buchacher's message
+ of "Thu, 13 Mar 2008 23:47:41 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77152>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77153>
 
-On Thu, Mar 13, 2008 at 7:14 PM, Petr Baudis <pasky@suse.cz> wrote:
->  diff --git a/gitweb/gitweb.css b/gitweb/gitweb.css
->  index 8e2bf3d..673077a 100644
->  --- a/gitweb/gitweb.css
->  +++ b/gitweb/gitweb.css
->  @@ -85,6 +85,12 @@ div.title, a.title {
->         color: #000000;
->   }
->
->  +div.stale_info {
->  +       display: block;
->  +       text-align: right;
->  +       font-style: italic;
->  +}
->  +
->   div.readme {
->         padding: 8px;
->   }
+Clemens Buchacher <drizzd@aon.at> writes:
 
-What does this have to do with it?
+> I am not exactly sure how I should set the result.merge flag. In this context
+> it seems to have the exact opposite meaning of result.clean. Is that correct?
 
->  diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
->  index bcb6193..0eee195 100755
->  --- a/gitweb/gitweb.perl
->  +++ b/gitweb/gitweb.perl
->  @@ -122,6 +122,15 @@ our $fallback_encoding = 'latin1';
+My reading of the code is that result.merge is "if a content level merge
+has happened", and result.clean is "given that a content level merge has
+been attempted, was it done cleanly, or are there conflicts for the user
+to fix in the result".  If result.clean is not true, we obviously cannot
+store the result in stage #0.
 
-...
-
->  +               if ($cache_lifetime and -f $cache_file) {
->  +                       # Postpone timeout by two minutes so that we get
->  +                       # enough time to do our job.
->  +                       my $time = time() - $cache_lifetime + 120;
->  +                       utime $time, $time, $cache_file;
->  +               }
-
-Race condition. I don't see any locking. Nothing keeps multiple instances from
-regenerating the cache concurrently...
-
->  +               @projects = git_get_projects_details($projlist, $check_forks);
->  +               if ($cache_lifetime and open (my $fd, '>'.$cache_file)) {
-
-...and then clobbering each other here. You have two choices:
-
-1) Use a lock file for the critical section.
-
-2) Assume the race condition is rare enough, but you still need to account for
-it. In that case, you want to write to a temporary file and then rename to the
-cache file name. The rename is atomic, so though N instances of gitweb may
-regenerate the cache (at some CPU/IO overhead), at least the cache file won't
-get corrupted.
-
-Out of curiosity, repo.or.cz isn't running this as a CGI is it? If so, wouldn't
-running it as a FastCGI or modperl be a vast improvement?
-
-j.
+The result.merge flag is used only for reporting purposes; I am not sure
+why the non-rename codepath does not pay attention to the result.merge,
+though.
