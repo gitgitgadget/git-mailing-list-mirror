@@ -1,66 +1,69 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: [PATCH] t/t6000lib.sh: tr portability fix fix
-Date: Fri, 14 Mar 2008 16:00:59 -0500
-Message-ID: <47DAE78B.6050602@nrlssc.navy.mil>
-References: <20080312213831.GJ26286@coredump.intra.peff.net> <47DAE469.7080409@nrlssc.navy.mil> <20080314205415.GA17728@coredump.intra.peff.net>
+From: "Jay Soffian" <jaysoffian@gmail.com>
+Subject: Re: [PATCH] gitweb: Support caching projects list
+Date: Fri, 14 Mar 2008 17:11:53 -0400
+Message-ID: <76718490803141411v24c31de5x8ba25fcd1654b4e7@mail.gmail.com>
+References: <20080313231413.27966.3383.stgit@rover>
+	 <76718490803131707g34fd40d4q21c69391c2597bc@mail.gmail.com>
+	 <m38x0lxr1k.fsf@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: armstrong.whit@gmail.com, Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Mar 14 22:03:09 2008
+Cc: "Petr Baudis" <pasky@suse.cz>, "Junio C Hamano" <junkio@cox.net>,
+	git@vger.kernel.org
+To: "Jakub Narebski" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 14 22:12:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JaH3K-0007fn-Nf
-	for gcvg-git-2@gmane.org; Fri, 14 Mar 2008 22:02:59 +0100
+	id 1JaHCe-0002qM-Sz
+	for gcvg-git-2@gmane.org; Fri, 14 Mar 2008 22:12:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756114AbYCNVCS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Mar 2008 17:02:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755739AbYCNVCS
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Mar 2008 17:02:18 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:34686 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753807AbYCNVCR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Mar 2008 17:02:17 -0400
-Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
-	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id m2EL0xj5005054;
-	Fri, 14 Mar 2008 16:01:00 -0500
-Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 14 Mar 2008 16:00:59 -0500
-User-Agent: Thunderbird 2.0.0.9 (X11/20071031)
-In-Reply-To: <20080314205415.GA17728@coredump.intra.peff.net>
-X-OriginalArrivalTime: 14 Mar 2008 21:00:59.0598 (UTC) FILETIME=[8140F6E0:01C88616]
-X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-5.0.0.1023-15784001
-X-TM-AS-Result: : Yes--9.473000-0-31-1
-X-TM-AS-Category-Info: : 31:0.000000
-X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNTY3LTcwMTE4Mi03MDAw?=
-	=?us-ascii?B?NzUtMTM5MDEwLTE4ODAxOS03MDMwOTYtNzA5NTg0LTcxMTQzMi03?=
-	=?us-ascii?B?MDM3ODgtNzAyMDIwLTcwMDYxOC03MDA2ODUtNzAwNzU2LTcwMjM1?=
-	=?us-ascii?B?OC0xNDgwMzktMjAwNDA=?=
+	id S1755467AbYCNVL5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Mar 2008 17:11:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755332AbYCNVL5
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Mar 2008 17:11:57 -0400
+Received: from el-out-1112.google.com ([209.85.162.178]:51678 "EHLO
+	el-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753807AbYCNVL5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Mar 2008 17:11:57 -0400
+Received: by el-out-1112.google.com with SMTP id v27so2669828ele.17
+        for <git@vger.kernel.org>; Fri, 14 Mar 2008 14:11:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=k0LKUm2DoUo7LEr/pkz+QBIEWN8ukmk+aEYsXngwJaI=;
+        b=L1h3fMZfmd1Kt20AaKz9Z8ES1v2RM5vQc7p4VHrU74uSJlQvu+jwTOE1zycz2JW+r+iYuwpJKF5+stqUa+uituOa163BukLHgT+JDFeQucerdL1HeyV2nrf+73p9PG6JbndQ3SZtOGRgSZv3BWgjmC5zEGUI+Xl7AGTr4uJmn/4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=hEoDqeFQDVP1QPaDL6E1l6XqCMhOAmF54W/smYS8hM2oOUk8S08KnNlc67CkCHQGrA66gTR/LalVFYRgMt0LOhJiNMG2G17L+kRg/I8XXx7ixx3/y5xXLi8Oz7noOzzd6+C8cWO3AZA7hAAocRP9Mhd9xSnBy07G6EVYJcb/faU=
+Received: by 10.115.78.1 with SMTP id f1mr12721088wal.100.1205529113164;
+        Fri, 14 Mar 2008 14:11:53 -0700 (PDT)
+Received: by 10.114.13.5 with HTTP; Fri, 14 Mar 2008 14:11:53 -0700 (PDT)
+In-Reply-To: <m38x0lxr1k.fsf@localhost.localdomain>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77283>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77284>
 
-Jeff King wrote:
-> On Fri, Mar 14, 2008 at 03:47:37PM -0500, Brandon Casey wrote:
->> If the dashdash notation is not portable, then
->> backslashing each dash also works. i.e. '\-\-\-\-..
+On Fri, Mar 14, 2008 at 11:29 AM, Jakub Narebski <jnareb@gmail.com> wrote:
+>  What should the code for this look like? Like below?
+>
+>         use File::Temp;
+>
+>         my ($fh, $temp_file) = tempfile();
+>         ...
+>         close $fh;
+>         rename $temp_file, $cache_file;
 
-> I wonder if there are
-> systems that will get confused about it being a range.
+I always use something like:
 
-Oh, now I understand _why_ backslashing the dashes worked. When your
-email arrived I was still trying to figure out why
+  my $temp_file = "$cache_file.tmp$$";
+  open(my $fh, ">$temp_file");
 
-  echo hello | tr aeiou '\-\-\-\-\-'
+to ensure that the temp file is on the same filesystem.
 
-correctly converted the e and o into dashes. Because tr must have a
-way for the user to escape the range notation. I don't use tr very
-often.
-
--brandon
+j.
