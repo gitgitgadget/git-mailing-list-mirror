@@ -1,73 +1,48 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH v2 0/5] builtin-status submodule summary
-Date: Fri, 14 Mar 2008 17:22:16 +0100
-Message-ID: <47DAA638.6060108@viscovery.net>
-References: <1205508521-7407-1-git-send-email-pkufranky@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: The meaning of x~0 and x~ as rev-spec.
+Date: Fri, 14 Mar 2008 09:24:45 -0700
+Message-ID: <7vwso5p92q.fsf@gitster.siamese.dyndns.org>
+References: <87bq5ho31d.fsf@osv.gnss.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: Ping Yin <pkufranky@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 14 17:23:02 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Sergei Organov <osv@javad.com>
+X-From: git-owner@vger.kernel.org Fri Mar 14 17:25:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JaCgP-0008AX-Jr
-	for gcvg-git-2@gmane.org; Fri, 14 Mar 2008 17:23:02 +0100
+	id 1JaCiy-0000vh-8J
+	for gcvg-git-2@gmane.org; Fri, 14 Mar 2008 17:25:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753688AbYCNQWW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Mar 2008 12:22:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753880AbYCNQWW
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Mar 2008 12:22:22 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:3101 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753548AbYCNQWV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Mar 2008 12:22:21 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1JaCex-0005I9-Le; Fri, 14 Mar 2008 17:21:31 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id EE3E84E4; Fri, 14 Mar 2008 17:22:16 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <1205508521-7407-1-git-send-email-pkufranky@gmail.com>
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1754384AbYCNQZB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Mar 2008 12:25:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754132AbYCNQZB
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Mar 2008 12:25:01 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:58646 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753446AbYCNQZA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Mar 2008 12:25:00 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 51C7D1A69;
+	Fri, 14 Mar 2008 12:24:57 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 82E2B1A3E; Fri, 14 Mar 2008 12:24:53 -0400 (EDT)
+In-Reply-To: <87bq5ho31d.fsf@osv.gnss.ru> (Sergei Organov's message of "Fri,
+ 14 Mar 2008 16:20:30 +0300")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77251>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77252>
 
-Ping Yin schrieb:
-> IMO, git submodule summary is not so useful for me if it's not
-> integrated into git-status. In fact i never use "git submodule
-> summary" directly. git-status with submodule summary support is very
-> useful to help user figure out what is going on in a more global level
-> when cooking the commit message.
-> 
-> So i think this series should go along with the submodule summary series.
+Sergei Organov <osv@javad.com> writes:
 
-I think so, too. The changes and defaults in wt-status.c are trivial
-enough that they don't penalize traditional git-status users.
+> Testing suggests that <name>~0 and <name>~ are the same and are just
+> synonyms for <name> as rev-specs. Is that correct? Is that by design, or
+> by accident?
 
-> The v2 series has following commits adding a new commit for documentation
-> 
->     1  git-submodule summary: --for-status option
->     2  builtin-status: submodule summary support
->     3  builtin-status: configurable submodule summary size
->     4  buitin-status: Add tests for submodule summary
->     5  git-status: Mention status.submodulesummary config in the documentation
-
-I'd actually squash 2, 3, and 5.
-
-You still have the statement before a declaration in 3/5.
-
-> +	if (! wt_status_submodule_summary) return;
-
-And here the important part (IMO) is actually that 'return' should go on a
-line of its own.
-
--- Hannes
+sed -n -e '/name~3/,/x = 0;/p' sha1_name.c
