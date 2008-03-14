@@ -1,68 +1,63 @@
-From: Samuel Tardieu <sam@rfc1149.net>
-Subject: Re: [PATCH] Add MIME information to outgoing email
-Date: Fri, 14 Mar 2008 15:40:29 +0100
-Organization: RFC 1149 (see http://www.rfc1149.net/)
-Message-ID: <2008-03-14-15-40-29+trackit+sam@rfc1149.net>
-References: <1205426419-4594-1-git-send-email-sam@rfc1149.net> <20080313170016.GA3439@sigill.intra.peff.net> <2008-03-13-18-14-36+trackit+sam@rfc1149.net> <20080314132949.GC2932@coredump.intra.peff.net> <2008-03-14-14-40-22+trackit+sam@rfc1149.net> <20080314134600.GA3968@coredump.intra.peff.net> <2008-03-14-14-50-48+trackit+sam@rfc1149.net> <20080314143536.GA5362@coredump.intra.peff.net>
+From: "Rafael Garcia-Suarez" <rgarciasuarez@gmail.com>
+Subject: Re: About detached heads
+Date: Fri, 14 Mar 2008 15:53:52 +0100
+Message-ID: <b77c1dce0803140753w21515021u4541796d6e6934b@mail.gmail.com>
+References: <93c3eada0803140246k53408c74m21f9dc277857202d@mail.gmail.com>
+	 <m3lk4ly3vy.fsf@localhost.localdomain>
+	 <20080314134205.GA19674@pe.Belkin>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8bit
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Mar 14 15:41:20 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Jakub Narebski" <jnareb@gmail.com>, geoffrey.russell@gmail.com,
+	git@vger.kernel.org
+To: "Chris Shoemaker" <c.shoemaker@cox.net>
+X-From: git-owner@vger.kernel.org Fri Mar 14 15:54:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JaB60-0001Ce-Cz
-	for gcvg-git-2@gmane.org; Fri, 14 Mar 2008 15:41:20 +0100
+	id 1JaBIy-0006Vl-CF
+	for gcvg-git-2@gmane.org; Fri, 14 Mar 2008 15:54:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752399AbYCNOkk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Mar 2008 10:40:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751780AbYCNOkk
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Mar 2008 10:40:40 -0400
-Received: from zaphod.rfc1149.net ([88.191.14.223]:35245 "EHLO
-	mail.rfc1149.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751832AbYCNOkj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Mar 2008 10:40:39 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mail.rfc1149.net (Postfix) with ESMTP id 762E3E2CED;
-	Fri, 14 Mar 2008 15:40:35 +0100 (CET)
-X-Virus-Scanned: amavisd-new at rfc1149.net
-Received: from mail.rfc1149.net ([127.0.0.1])
-	by localhost (zaphod.rfc1149.net [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id oXrSTt6zKUQr; Fri, 14 Mar 2008 15:40:30 +0100 (CET)
-Received: from mail2.rfc1149.net (unknown [IPv6:2a01:5d8:5138:2f95::3])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "mail2.rfc1149.net", Issuer "rfc1149.net" (verified OK))
-	by mail.rfc1149.net (Postfix) with ESMTP id B3D6BE0481;
-	Fri, 14 Mar 2008 15:40:30 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by mail2.rfc1149.net (Postfix) with ESMTP id CEEFAC408D;
-	Fri, 14 Mar 2008 15:40:29 +0100 (CET)
-Received: from mail2.rfc1149.net ([127.0.0.1])
-	by localhost (localhost [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 9-93tZY1kBf3; Fri, 14 Mar 2008 15:40:29 +0100 (CET)
-Received: by mail2.rfc1149.net (Postfix, from userid 1000)
-	id AA5BAC40B8; Fri, 14 Mar 2008 15:40:29 +0100 (CET)
+	id S1755467AbYCNOx6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Mar 2008 10:53:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754893AbYCNOx6
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Mar 2008 10:53:58 -0400
+Received: from rn-out-0910.google.com ([64.233.170.187]:60841 "EHLO
+	rn-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753418AbYCNOx5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Mar 2008 10:53:57 -0400
+Received: by rn-out-0910.google.com with SMTP id v46so2737784rnb.15
+        for <git@vger.kernel.org>; Fri, 14 Mar 2008 07:53:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=Kvj23EEaVe3Yugfoh7l9t2MgUEL5TIlc9yU5Ol1mxTs=;
+        b=cwHTPAP7bJf4KPvKxOrucq1+ucYCC8/UcfALLjx4BdHC3IUuD2auANdFq4o3CQtfDtLzvBQ15qplMphxiasKjtFRTLA269mcXIxDOLAIUT1VcwC13qMoaNs9ymcflO8bspuVeJWupY9NKOv2UuXU7PoIxmMZ7aS88YPQ2vpYWFc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=DLd/NenZ14VPfO8Qy3LTdSzzYQ/YdGpg5E8lZTydw1GMLra83qekexpUa8PoE28UIxpZ3b62Krvy2bwUSj6y1PRcjlG11UdQlVnJ2Qiswg7JB/rkbjqyHDRuPQe78ttLJqaE+noj5B4868vXQpExQjbd3N820OqfYlP0ct7dc7I=
+Received: by 10.142.226.2 with SMTP id y2mr4971481wfg.75.1205506432330;
+        Fri, 14 Mar 2008 07:53:52 -0700 (PDT)
+Received: by 10.142.156.10 with HTTP; Fri, 14 Mar 2008 07:53:52 -0700 (PDT)
+In-Reply-To: <20080314134205.GA19674@pe.Belkin>
 Content-Disposition: inline
-In-Reply-To: <20080314143536.GA5362@coredump.intra.peff.net>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-X-WWW: http://www.rfc1149.net/sam
-X-Jabber: <sam@rfc1149.net> (see http://www.jabber.org/)
-X-OpenPGP-Fingerprint: 79C0 AE3C CEA8 F17B 0EF1  45A5 F133 2241 1B80 ADE6 (see http://www.gnupg.org/)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77232>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77233>
 
-On 14/03, Jeff King wrote:
+On 14/03/2008, Chris Shoemaker wrote:
+>   This way you would get exactly:
+>
+>     1---2---3---4---5---3'   <--- master <--- HEAD
+>
+>
+>  While the 3' commit has the same contents as 3, it is a new, distinct
+>   commit with its own history.  Its commit message should explain why
+>   you want to go from 5 back to the contents of 3.
 
-| No, I don't. Having peeked a few days ago at the pretty-printing code,
-| that is almost certainly the problem (I think the extra_headers
-| parameter is overloaded to handle both of these conditions). Can you
-| work up a patch?
-
-Sure, but not before some time, I am quite busy with urgent work right
-now. If you want to beat me at it, be my guest :)
+Just a small question -- does that mean that 3 and 3' share the same
+tree object ?
