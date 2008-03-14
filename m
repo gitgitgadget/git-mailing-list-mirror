@@ -1,69 +1,126 @@
-From: "Jay Soffian" <jaysoffian@gmail.com>
-Subject: Re: [PATCH] gitweb: Support caching projects list
-Date: Fri, 14 Mar 2008 17:11:53 -0400
-Message-ID: <76718490803141411v24c31de5x8ba25fcd1654b4e7@mail.gmail.com>
-References: <20080313231413.27966.3383.stgit@rover>
-	 <76718490803131707g34fd40d4q21c69391c2597bc@mail.gmail.com>
-	 <m38x0lxr1k.fsf@localhost.localdomain>
+From: Jeff King <peff@peff.net>
+Subject: Re: Re* [PATCH] Add MIME information to outgoing email
+Date: Fri, 14 Mar 2008 17:27:07 -0400
+Message-ID: <20080314212707.GA1027@coredump.intra.peff.net>
+References: <1205426419-4594-1-git-send-email-sam@rfc1149.net> <20080313170016.GA3439@sigill.intra.peff.net> <7v4pb9qnuu.fsf@gitster.siamese.dyndns.org> <7vbq5hoy48.fsf_-_@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Petr Baudis" <pasky@suse.cz>, "Junio C Hamano" <junkio@cox.net>,
-	git@vger.kernel.org
-To: "Jakub Narebski" <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 14 22:12:37 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Samuel Tardieu <sam@rfc1149.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Mar 14 22:28:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JaHCe-0002qM-Sz
-	for gcvg-git-2@gmane.org; Fri, 14 Mar 2008 22:12:37 +0100
+	id 1JaHRP-0000EN-7i
+	for gcvg-git-2@gmane.org; Fri, 14 Mar 2008 22:27:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755467AbYCNVL5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Mar 2008 17:11:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755332AbYCNVL5
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Mar 2008 17:11:57 -0400
-Received: from el-out-1112.google.com ([209.85.162.178]:51678 "EHLO
-	el-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753807AbYCNVL5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Mar 2008 17:11:57 -0400
-Received: by el-out-1112.google.com with SMTP id v27so2669828ele.17
-        for <git@vger.kernel.org>; Fri, 14 Mar 2008 14:11:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=k0LKUm2DoUo7LEr/pkz+QBIEWN8ukmk+aEYsXngwJaI=;
-        b=L1h3fMZfmd1Kt20AaKz9Z8ES1v2RM5vQc7p4VHrU74uSJlQvu+jwTOE1zycz2JW+r+iYuwpJKF5+stqUa+uituOa163BukLHgT+JDFeQucerdL1HeyV2nrf+73p9PG6JbndQ3SZtOGRgSZv3BWgjmC5zEGUI+Xl7AGTr4uJmn/4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=hEoDqeFQDVP1QPaDL6E1l6XqCMhOAmF54W/smYS8hM2oOUk8S08KnNlc67CkCHQGrA66gTR/LalVFYRgMt0LOhJiNMG2G17L+kRg/I8XXx7ixx3/y5xXLi8Oz7noOzzd6+C8cWO3AZA7hAAocRP9Mhd9xSnBy07G6EVYJcb/faU=
-Received: by 10.115.78.1 with SMTP id f1mr12721088wal.100.1205529113164;
-        Fri, 14 Mar 2008 14:11:53 -0700 (PDT)
-Received: by 10.114.13.5 with HTTP; Fri, 14 Mar 2008 14:11:53 -0700 (PDT)
-In-Reply-To: <m38x0lxr1k.fsf@localhost.localdomain>
+	id S1754693AbYCNV1M convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Mar 2008 17:27:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754799AbYCNV1L
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Mar 2008 17:27:11 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3590 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754998AbYCNV1K convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 14 Mar 2008 17:27:10 -0400
+Received: (qmail 32059 invoked by uid 111); 14 Mar 2008 21:27:08 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Fri, 14 Mar 2008 17:27:08 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 14 Mar 2008 17:27:07 -0400
 Content-Disposition: inline
+In-Reply-To: <7vbq5hoy48.fsf_-_@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77284>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77285>
 
-On Fri, Mar 14, 2008 at 11:29 AM, Jakub Narebski <jnareb@gmail.com> wrote:
->  What should the code for this look like? Like below?
->
->         use File::Temp;
->
->         my ($fh, $temp_file) = tempfile();
->         ...
->         close $fh;
->         rename $temp_file, $cache_file;
+On Fri, Mar 14, 2008 at 01:21:27PM -0700, Junio C Hamano wrote:
 
-I always use something like:
+> I think the real culprit was the way the "after_subject" was added to=
+ the
+> callchain (it had loaded semantics -- "here is what we want to say af=
+ter
+> emitting Subject: line" and "have we done any MIME yet?"), not the po=
+or
+> guy who did format.headers.
+>=20
+> In any case, this patch would hopefully separate the two.  The old
+> "plain_non_ascii" parameter is now need_8bit_ct_header and now can ha=
+ve
+> one of three values:
 
-  my $temp_file = "$cache_file.tmp$$";
-  open(my $fh, ">$temp_file");
+I was just about to submit a patch splitting after_subject into
+"mime_headers" and "extra_headers".
 
-to ensure that the temp file is on the same filesystem.
+I noticed another bug while doing mine: we are sometimes not strict
+_enough_ in squelching headers. A patch made with "-s --attach" when th=
+e
+signoff has non-ascii characters would end up with duplicated MIME
+headers. Your patch handles this fine.
 
-j.
+I think your approach is a little nicer. Here is the test case I wrote
+for my patch. It covers the original problem and the one I mentioned
+above; both fail with current master but pass with your patch.
+
+---
+diff --git a/t/t4021-format-patch-signer-mime.sh b/t/t4021-format-patch=
+-signer-mime.sh
+index 67a70fa..9bc47a5 100755
+--- a/t/t4021-format-patch-signer-mime.sh
++++ b/t/t4021-format-patch-signer-mime.sh
+@@ -38,5 +38,13 @@ test_expect_success 'format with non ASCII signer na=
+me' '
+=20
+ '
+=20
++test_expect_success 'attach and signoff do not duplicate mime headers'=
+ '
++
++	GIT_COMMITTER_NAME=3D"=1B$B$O$^$N=1B(B =1B$B$U$K$*$&=1B(B" \
++	git format-patch -s --stdout -1 --attach >output &&
++	test `grep -ci ^MIME-Version: output` =3D 1
++
++'
++
+ test_done
+=20
+diff --git a/t/t4028-format-patch-mime-headers.sh b/t/t4028-format-patc=
+h-mime-headers.sh
+new file mode 100755
+index 0000000..204ba67
+--- /dev/null
++++ b/t/t4028-format-patch-mime-headers.sh
+@@ -0,0 +1,30 @@
++#!/bin/sh
++
++test_description=3D'format-patch mime headers and extra headers do not=
+ conflict'
++. ./test-lib.sh
++
++test_expect_success 'create commit with utf-8 body' '
++	echo content >file &&
++	git add file &&
++	git commit -m one &&
++	echo more >>file &&
++	git commit -a -m "two
++
++	utf-8 body: =C3=B1"
++'
++
++test_expect_success 'patch has mime headers' '
++	rm -f 0001-two.patch &&
++	git format-patch HEAD^ &&
++	grep -i "content-type: text/plain; charset=3Dutf-8" 0001-two.patch
++'
++
++test_expect_success 'patch has mime and extra headers' '
++	rm -f 0001-two.patch &&
++	git config format.headers "x-foo: bar" &&
++	git format-patch HEAD^ &&
++	grep -i "x-foo: bar" 0001-two.patch &&
++	grep -i "content-type: text/plain; charset=3Dutf-8" 0001-two.patch
++'
++
++test_done
