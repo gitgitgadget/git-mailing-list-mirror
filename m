@@ -1,72 +1,77 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Should 'git config' support key with dot such as 'a.b'
-Date: Fri, 14 Mar 2008 11:39:40 +0100 (CET)
-Message-ID: <alpine.LSU.1.00.0803141138340.24600@racer.site>
-References: <46dff0320803140124t1469defsf7002f720cf2002e@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: About detached heads
+Date: Fri, 14 Mar 2008 11:48:13 +0100
+Message-ID: <vpq1w6dvaxe.fsf@bauges.imag.fr>
+References: <93c3eada0803140246k53408c74m21f9dc277857202d@mail.gmail.com>
+	<9A4AC53D-BCFA-4BEE-BD53-AA7F29781454@wincent.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Ping Yin <pkufranky@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 14 11:40:18 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: geoffrey.russell@gmail.com, git@vger.kernel.org
+To: Wincent Colaiuta <win@wincent.com>
+X-From: git-owner@vger.kernel.org Fri Mar 14 11:50:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ja7Kk-0007bu-Gw
-	for gcvg-git-2@gmane.org; Fri, 14 Mar 2008 11:40:18 +0100
+	id 1Ja7Ua-0002Tn-3a
+	for gcvg-git-2@gmane.org; Fri, 14 Mar 2008 11:50:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753079AbYCNKjk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Mar 2008 06:39:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752922AbYCNKjj
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Mar 2008 06:39:39 -0400
-Received: from mail.gmx.net ([213.165.64.20]:51537 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752670AbYCNKjj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Mar 2008 06:39:39 -0400
-Received: (qmail invoked by alias); 14 Mar 2008 10:39:37 -0000
-Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
-  by mail.gmx.net (mp010) with SMTP; 14 Mar 2008 11:39:37 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18/Jp4VnAE/PnyEzGjjI6pEwCJtb+ngtxRrezIVDT
-	NUOfy9JE39sZS3
-X-X-Sender: gene099@racer.site
-In-Reply-To: <46dff0320803140124t1469defsf7002f720cf2002e@mail.gmail.com>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1752176AbYCNKtn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Mar 2008 06:49:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752116AbYCNKtn
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Mar 2008 06:49:43 -0400
+Received: from imag.imag.fr ([129.88.30.1]:64931 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752024AbYCNKtm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Mar 2008 06:49:42 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id m2EAmMdD025186
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 14 Mar 2008 11:48:23 +0100 (CET)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1Ja7SP-0002iG-BX; Fri, 14 Mar 2008 11:48:13 +0100
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1Ja7SP-0001KW-4w; Fri, 14 Mar 2008 11:48:13 +0100
+In-Reply-To: <9A4AC53D-BCFA-4BEE-BD53-AA7F29781454@wincent.com> (Wincent Colaiuta's message of "Fri\, 14 Mar 2008 11\:15\:11 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Fri, 14 Mar 2008 11:48:24 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77203>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77204>
 
-Hi,
+Wincent Colaiuta <win@wincent.com> writes:
 
-On Fri, 14 Mar 2008, Ping Yin wrote:
+> El 14/3/2008, a las 10:46, Geoff Russell escribi=F3:
+>
+>> This should be simple! I have a series of commits:
+>>
+>>           1---2---3---4---5
+>>
+>> I want to go back to 3 but not branch, so I want
+>>
+>>           1---2---3---4---5---3
+>
+> How about?
+>
+>   git cherry-pick the-sha-1-id-of-commit-3
 
-> I find it is so annoying to write submodule definition as follows
-> (yeah, only url, without path)
-> 
-> ------------------------------
-> [submodule 'crawler']
->     url = url1
-> [submodule 'search']
->     url = url2
-> ------------------------------
-> 
-> I think the following form is more simple
-> ---------------------------------
-> [submodule]
->      crawler.url = url1
->      search.url = url2
-> ---------------------------------
-> 
-> So, could we support such simpler form?
+Correct me if I'm wrong, but I believe this will try to re-apply
+commit 3 (probably a no-op since commit 3 is already in the history,
+perhaps tons of conflicts if 4 and 5 touched the same pieces of code).
 
-I don't like it at all.  Historically, we had much stricter rules on the 
-variable names than the second part of the section names.
+The OP wants to keep commit 3, and to revert commits 4 and 5. As
+mentionned in other messages, either "git revert" 4 and 5, or just
+commit a new revision with the same tree as 3 had.
 
-Also, your suggestion would make things even more confusing than beginners 
-already complain Git is.
-
-Ciao,
-Dscho
+--=20
+Matthieu
