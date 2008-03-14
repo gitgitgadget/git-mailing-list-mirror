@@ -1,89 +1,80 @@
-From: Teemu Likonen <tlikonen@iki.fi>
-Subject: builtin-remote bug: Stale tracking branch after "git clone"
-Date: Fri, 14 Mar 2008 09:51:36 +0200
-Message-ID: <200803140951.36514.tlikonen@iki.fi>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: git-fetch question/bug
+Date: Fri, 14 Mar 2008 08:52:58 +0100
+Organization: At home
+Message-ID: <frdasr$v81$1@ger.gmane.org>
+References: <5d46db230803132208r3f3f9e34q80bb9c03d65ab67c@mail.gmail.com> <7vbq5hub74.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 14 08:52:19 2008
+X-From: git-owner@vger.kernel.org Fri Mar 14 08:53:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ja4i9-000669-Fq
-	for gcvg-git-2@gmane.org; Fri, 14 Mar 2008 08:52:17 +0100
+	id 1Ja4jm-0006X6-RI
+	for gcvg-git-2@gmane.org; Fri, 14 Mar 2008 08:53:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751516AbYCNHvj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Mar 2008 03:51:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751347AbYCNHvj
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Mar 2008 03:51:39 -0400
-Received: from pne-smtpout4-sn2.hy.skanova.net ([81.228.8.154]:62184 "EHLO
-	pne-smtpout4-sn2.hy.skanova.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751078AbYCNHvi convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Mar 2008 03:51:38 -0400
-Received: from [192.168.0.2] (80.220.180.181) by pne-smtpout4-sn2.hy.skanova.net (7.3.129)
-        id 478BE663003348DF for git@vger.kernel.org; Fri, 14 Mar 2008 08:51:37 +0100
-User-Agent: KMail/1.9.5
-Content-Disposition: inline
+	id S1751692AbYCNHxR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Mar 2008 03:53:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751927AbYCNHxQ
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Mar 2008 03:53:16 -0400
+Received: from main.gmane.org ([80.91.229.2]:34321 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751641AbYCNHxQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Mar 2008 03:53:16 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Ja4iz-0007ef-VX
+	for git@vger.kernel.org; Fri, 14 Mar 2008 07:53:09 +0000
+Received: from abut199.neoplus.adsl.tpnet.pl ([83.8.191.199])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 14 Mar 2008 07:53:09 +0000
+Received: from jnareb by abut199.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 14 Mar 2008 07:53:09 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: abut199.neoplus.adsl.tpnet.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77188>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77189>
 
-Hi
+Junio C Hamano wrote:
 
-I have found a recently added bug. I'm using git version 
-1.5.4.4.537.gb75aa ('master' branch). I can't describe it technically 
-so I just type instructions how to reproduce it:
+> "Govind Salinas" <blix@sophiasuchtig.com> writes:
+>=20
+>> ... git-fetch when I discovered that it does not return
+>> error when the
+>> fetch fails due to it not being a ff...
+>=20
+> I think this is a regression introduced when "git-fetch" was
+> re-implemented in C. =A0git-fetch--tool's native-store subcommand see=
+ms to
+> have signaled this as an error, and it is reasonable to expect an err=
+or
+> exit from the command in this case.
+>=20
+> Probably something like this?
 
+[...]
 
-1) Clone some git repository. I think any repo will do.
+Wouldn't it be better to distinguish somehow remote side errors (like f=
+or
+example: could not connect to remote server) and local side errors (lik=
+e
+fetch refused because of being not fast-forward)? The former are usuall=
+y
+not recoverable (unless it is URL that is mistyped), the latter could b=
+e
+usually resolved (forced for example)...
 
-2) Type "git remote show origin" in that cloned repo. You'll see 
-something like this:
-
-* remote origin
-  URL: [...]
-  Remote branch merged with 'git pull' while on branch master
-    master
-  Stale tracking branch (use 'git remote prune')
-    HEAD
-  Tracked remote branch
-    master
-
-$ find .git/refs/remotes
-.git/refs/remotes/
-.git/refs/remotes/origin
-.git/refs/remotes/origin/HEAD
-.git/refs/remotes/origin/master
-
-3) As git asked, type "git remote prune origin".
-
-4) Do "git remote show origin" again and it will display this:
-
-* remote origin
-  URL: [...]
-  Remote branch merged with 'git pull' while on branch master
-    master
-  New remote branch (next fetch will store in remotes/origin)
-    master [Hmm, interesting]
-
-Seems like .git/refs/remotes/origin/master was deleted:
-
-$ find .git/refs/remotes/
-.git/refs/remotes/
-.git/refs/remotes/origin
-.git/refs/remotes/origin/HEAD
-
-5) Now fetch that "new" remote branch again with "git fetch" and you'll 
-see this:
-
-error: refs/remotes/origin/HEAD points nowhere!
-From [...]
- * [new branch]      master     -> origin/master
-
-6) Now we're back in the beginning. See item 2.
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
