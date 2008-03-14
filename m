@@ -1,90 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git-fetch question/bug
-Date: Thu, 13 Mar 2008 22:27:43 -0700
-Message-ID: <7vbq5hub74.fsf@gitster.siamese.dyndns.org>
-References: <5d46db230803132208r3f3f9e34q80bb9c03d65ab67c@mail.gmail.com>
+From: Peter Karlsson <peter@softwolves.pp.se>
+Subject: Re: git-gui translators: gitgui-0.10.0 coming soon
+Date: Fri, 14 Mar 2008 07:27:28 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <alpine.DEB.1.00.0803140723450.30157@perkele.intern.softwolves.pp.se>
+References: <20080313052713.GU8410@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Git Mailing List" <git@vger.kernel.org>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: "Govind Salinas" <blix@sophiasuchtig.com>
-X-From: git-owner@vger.kernel.org Fri Mar 14 06:28:36 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Mar 14 07:29:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ja2T1-0007h7-KF
-	for gcvg-git-2@gmane.org; Fri, 14 Mar 2008 06:28:32 +0100
+	id 1Ja3Pw-000346-HK
+	for gcvg-git-2@gmane.org; Fri, 14 Mar 2008 07:29:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753021AbYCNF1x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Mar 2008 01:27:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752405AbYCNF1x
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Mar 2008 01:27:53 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:57224 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752854AbYCNF1w (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Mar 2008 01:27:52 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 82A65154D;
-	Fri, 14 Mar 2008 01:27:49 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id AE924154C; Fri, 14 Mar 2008 01:27:45 -0400 (EDT)
-In-Reply-To: <5d46db230803132208r3f3f9e34q80bb9c03d65ab67c@mail.gmail.com>
- (Govind Salinas's message of "Fri, 14 Mar 2008 00:08:01 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751078AbYCNG2U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Mar 2008 02:28:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751160AbYCNG2U
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Mar 2008 02:28:20 -0400
+Received: from smtp.getmail.no ([84.208.20.33]:62397 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750972AbYCNG2T (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Mar 2008 02:28:19 -0400
+Received: from pmxchannel-daemon.no-osl-m323-srv-004-z2.isp.get.no by
+ no-osl-m323-srv-004-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ id <0JXP00801JB6OX00@no-osl-m323-srv-004-z2.isp.get.no> for
+ git@vger.kernel.org; Fri, 14 Mar 2008 07:28:18 +0100 (CET)
+Received: from smtp.getmail.no ([10.5.16.1])
+ by no-osl-m323-srv-004-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JXP004BSJ9SNJ30@no-osl-m323-srv-004-z2.isp.get.no> for
+ git@vger.kernel.org; Fri, 14 Mar 2008 07:27:28 +0100 (CET)
+Received: from perkele ([84.215.142.63]) by no-osl-m323-srv-009-z1.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JXP00M1NJ9SND10@no-osl-m323-srv-009-z1.isp.get.no> for
+ git@vger.kernel.org; Fri, 14 Mar 2008 07:27:28 +0100 (CET)
+Received: by perkele (Postfix, from userid 501)	id 090F12FC3B; Fri,
+ 14 Mar 2008 07:27:28 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])	by perkele (Postfix)
+ with ESMTP id 059332FB8C; Fri, 14 Mar 2008 07:27:28 +0100 (CET)
+In-reply-to: <20080313052713.GU8410@spearce.org>
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77183>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77184>
 
-"Govind Salinas" <blix@sophiasuchtig.com> writes:
+Shawn O. Pearce:
 
-> ... git-fetch when I discovered that it does not return
-> error when the
-> fetch fails due to it not being a ff...
+> If you get a chance, please review your translations and send a patch if 
+> there are any updates.
 
-I think this is a regression introduced when "git-fetch" was
-re-implemented in C.  git-fetch--tool's native-store subcommand seems to
-have signaled this as an error, and it is reasonable to expect an error
-exit from the command in this case.
+I've committed changes to the mob branch. They come in several steps, but 
+feel free to squash them if you want to. I also re-generated the translation 
+template ("make -B po/git-gui.pot") and merged the other translation files.
 
-Probably something like this?
+These are the relevant commits:
 
- builtin-fetch.c |    7 ++++---
- 1 files changed, 4 insertions(+), 3 deletions(-)
+6de2c8c334668020ba2a6c5ba9f19b6e149bceca Updated Swedish translation (391t0f0u).
+e5fba18e03555638a875343b7a228c27d66e6296 Re-generated template and merged translations with it.
+89f47ee07f8d1ae5ca3c025c0c8338d8db61428f Merged with git-gui.pot and updated (386t0f0u).
+60b941c229a9ddb756fa1f3bac8f3e029eda5b19 Additional fixes.
 
-diff --git a/builtin-fetch.c b/builtin-fetch.c
-index 55f611e..a2deb3e 100644
---- a/builtin-fetch.c
-+++ b/builtin-fetch.c
-@@ -297,7 +297,7 @@ static int store_updated_refs(const char *url, struct ref *ref_map)
- {
- 	FILE *fp;
- 	struct commit *commit;
--	int url_len, i, note_len, shown_url = 0;
-+	int url_len, i, note_len, shown_url = 0, err = 0;
- 	char note[1024];
- 	const char *what, *kind;
- 	struct ref *rm;
-@@ -364,7 +364,8 @@ static int store_updated_refs(const char *url, struct ref *ref_map)
- 			note);
- 
- 		if (ref) {
--			update_local_ref(ref, what, verbose, note);
-+			if (update_local_ref(ref, what, verbose, note))
-+				err = 1;
- 			if (*note) {
- 				if (!shown_url) {
- 					fprintf(stderr, "From %.*s\n",
-@@ -376,7 +377,7 @@ static int store_updated_refs(const char *url, struct ref *ref_map)
- 		}
- 	}
- 	fclose(fp);
--	return 0;
-+	return err;
- }
- 
- /*
+
+$ git push
+[...]
+To mob@repo.or.cz:/srv/git/git-gui/git-gui-i18n.git
+    48ed49f..6de2c8c  mob -> mob
+
+-- 
+\\// Peter - http://www.softwolves.pp.se/
