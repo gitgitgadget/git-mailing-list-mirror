@@ -1,39 +1,39 @@
 From: Xavier Maillard <xma@gnu.org>
-Subject: Re: [PATCH] Documentation: help: explain 'man.viewer' multiple values
-Date: Fri, 14 Mar 2008 02:00:07 +0100
+Subject: Re: [PATCH] help: implement multi-valued "man.viewer" config option
+Date: Fri, 14 Mar 2008 02:00:05 +0100
 Organization: GNU's Not UNIX!
-Message-ID: <200803140100.m2E107Zl004673@localhost.localdomain>
-References: <20080313064846.b6b54c11.chriscool@tuxfamily.org>
+Message-ID: <200803140100.m2E105o5004664@localhost.localdomain>
+References: <20080311085113.176df1af.chriscool@tuxfamily.org> <200803120100.m2C105YM010496@localhost.localdomain> <200803120823.38100.chriscool@tuxfamily.org>
 Reply-To: Xavier Maillard <xma@gnu.org>
 Cc: junkio@cox.net, pascal@obry.net, nanako3@bluebottle.com,
 	git@vger.kernel.org
 To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Fri Mar 14 02:36:35 2008
+X-From: git-owner@vger.kernel.org Fri Mar 14 02:36:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JZyqW-0001OA-9K
-	for gcvg-git-2@gmane.org; Fri, 14 Mar 2008 02:36:32 +0100
+	id 1JZyqU-0001OA-W1
+	for gcvg-git-2@gmane.org; Fri, 14 Mar 2008 02:36:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754002AbYCNBfz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Mar 2008 21:35:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754030AbYCNBfz
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Mar 2008 21:35:55 -0400
-Received: from master.uucpssh.org ([193.218.105.66]:36309 "EHLO
+	id S1753997AbYCNBfw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Mar 2008 21:35:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753525AbYCNBfv
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Mar 2008 21:35:51 -0400
+Received: from master.uucpssh.org ([193.218.105.66]:50805 "EHLO
 	master.uucpssh.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753488AbYCNBfu (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1752133AbYCNBfu (ORCPT <rfc822;git@vger.kernel.org>);
 	Thu, 13 Mar 2008 21:35:50 -0400
 Received: by master.uucpssh.org (Postfix, from userid 10)
-	id EBB69D3DBD; Fri, 14 Mar 2008 02:34:19 +0100 (CET)
+	id D5E2CD11F9; Fri, 14 Mar 2008 02:34:19 +0100 (CET)
 Received: from localhost.localdomain (IDENT:1000@localhost [127.0.0.1])
-	by localhost.localdomain (8.14.1/8.13.8) with ESMTP id m2E10Cnc004681;
-	Fri, 14 Mar 2008 02:00:13 +0100
+	by localhost.localdomain (8.14.1/8.13.8) with ESMTP id m2E106H3004671;
+	Fri, 14 Mar 2008 02:00:06 +0100
 Received: (from xma@localhost)
-	by localhost.localdomain (8.14.1/8.13.8/Submit) id m2E107Zl004673;
-	Fri, 14 Mar 2008 02:00:07 +0100
-In-reply-to: <20080313064846.b6b54c11.chriscool@tuxfamily.org> (message from
-	Christian Couder on Thu, 13 Mar 2008 06:48:46 +0100)
+	by localhost.localdomain (8.14.1/8.13.8/Submit) id m2E105o5004664;
+	Fri, 14 Mar 2008 02:00:05 +0100
+In-reply-to: <200803120823.38100.chriscool@tuxfamily.org> (message from
+	Christian Couder on Wed, 12 Mar 2008 08:23:37 +0100)
 User-Agent: Rmail in GNU Emacs 23.0.60.2 on GNU/Linux
 Jabber-ID: xma01@jabber.fr
 X-uucpssh: Found to be clean
@@ -45,28 +45,34 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77162>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77163>
 
 
-   Also add titles to paragraphs under "CONFIGURATION VARIABLES".
+   > Ok, woma in not supported here and it is reported like this but
+   > would it be possible to just throw an error on stdout and try
+   > another viewer ? 
 
-   Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+   Yes, with the following patch on top:
 
-<snip>
+See my "tested-by" message.
 
-    man.viewer::
-   -	Specify the program that will be used to display help in the
-   +	Specify the programs that may be used to display help in the
+   > We could even imagine something even more 
+   > general like the possibility for the user to write his own man
+   > viewer (a bash script for example) and set it as a candidate.
 
-I would have prefered the following wording:
+   I will do that in a latter patch, it has been suggested a lot of times 
+   already.
 
-"List of viewer candidates used to display help in"
+Glad to read that !
 
-   +If everythings fails the 'man' program will be tried anyway.
-       ^^^^^^^^^^^
-everything :)
+   > By the way, I do not see any reason to put man as a candidate.
+   > "man" should be the default when nothing is specified or when all
+   > candidates have failed.
 
-Regards
+   It may be more explicit.
+
+Well, I do not buy this argument and I am pretty sure that a
+simple note into the manual would suffice but, that's me :)
 
 	Xavier
 -- 
