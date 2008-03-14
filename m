@@ -1,80 +1,136 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: Re: [PATCH] merge-recursive: handle file mode changes
-Date: Fri, 14 Mar 2008 18:28:48 +0100
-Message-ID: <20080314172848.GA5080@localhost>
-References: <20080308171726.GA16129@localhost> <alpine.LSU.1.00.0803081850470.3975@racer.site> <20080313125229.GA24758@localhost> <alpine.LSU.1.00.0803131607030.1656@racer.site> <20080313192246.GA30361@localhost> <alpine.LSU.1.00.0803132216580.4174@racer.site> <20080313224741.GA5000@localhost> <7vhcf9r4qp.fsf@gitster.siamese.dyndns.org> <20080314121752.GB3315@localhost> <7vd4pxqoql.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 14 18:29:57 2008
+From: Frank Lichtenheld <frank@lichtenheld.de>
+Subject: [PATCH 2/4] Git.pm: Don't require a repository instance for config
+Date: Fri, 14 Mar 2008 18:29:28 +0100
+Message-ID: <1205515770-3424-3-git-send-email-frank@lichtenheld.de>
+References: <1205515770-3424-1-git-send-email-frank@lichtenheld.de>
+ <1205515770-3424-2-git-send-email-frank@lichtenheld.de>
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Frank Lichtenheld <frank@lichtenheld.de>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Fri Mar 14 18:30:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JaDir-0002nT-Ae
-	for gcvg-git-2@gmane.org; Fri, 14 Mar 2008 18:29:37 +0100
+	id 1JaDjU-00033R-0s
+	for gcvg-git-2@gmane.org; Fri, 14 Mar 2008 18:30:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753546AbYCNR26 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Mar 2008 13:28:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753079AbYCNR26
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Mar 2008 13:28:58 -0400
-Received: from qb-out-0506.google.com ([72.14.204.238]:24371 "EHLO
-	qb-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752402AbYCNR25 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Mar 2008 13:28:57 -0400
-Received: by qb-out-0506.google.com with SMTP id e11so4010041qbe.15
-        for <git@vger.kernel.org>; Fri, 14 Mar 2008 10:28:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:sender;
-        bh=jV3AB4lkg/SH0cCHczAy/sM68m6ThqSiA0lIYbfKVic=;
-        b=jO1c3hI5f2zUf9dZoz2vhXiS8BFExAIBk7Ocl9l9rxKwGnsbhiOOUY4BEkJRwt4ofcSh9nrbW9qpr2tSado2/xoTZWbD2Hz518LKQZYlSstkJAjI4wUal5t1v1gDf3DiEiDItYHvtghRmjExO2d/oK4EmCUihQxnvreemXS3weE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:sender;
-        b=qw8wiYLgV56PJb7U0UbfYci3NdKperIoH5Sn3cGgWbBUuyZdpPKbHy7GcOg6We/ZuOgzS83rjkHmunL2x8P0GCw1L9KjoZsoOJOGPcF/4bojqH80wHommuCcl6cIckEBZBNC4huMgJcNGaWvdcAVNHXBEjQ6CiEtTI5oYmzHX4E=
-Received: by 10.35.90.1 with SMTP id s1mr18757889pyl.36.1205515734154;
-        Fri, 14 Mar 2008 10:28:54 -0700 (PDT)
-Received: from darc.dyndns.org ( [84.154.73.161])
-        by mx.google.com with ESMTPS id e8sm436278muf.8.2008.03.14.10.28.51
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 14 Mar 2008 10:28:52 -0700 (PDT)
-Received: from drizzd by darc.dyndns.org with local (Exim 4.69)
-	(envelope-from <drizzd@aon.at>)
-	id 1JaDi4-0001Pi-BA; Fri, 14 Mar 2008 18:28:48 +0100
-Content-Disposition: inline
-In-Reply-To: <7vd4pxqoql.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1753971AbYCNR3j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Mar 2008 13:29:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754024AbYCNR3i
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Mar 2008 13:29:38 -0400
+Received: from aiolos.lenk.info ([85.214.124.154]:55107 "EHLO aiolos.lenk.info"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753688AbYCNR3e (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Mar 2008 13:29:34 -0400
+Received: from herkules.lenk.info
+	([213.239.194.154] helo=smtp.lenk.info ident=Debian-exim)
+	by mail.lenk.info with esmtpsa 
+	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA1:32) (Exim 4.63 1)
+	id 1JaDit-0003YL-WC; Fri, 14 Mar 2008 18:29:40 +0100
+Received: from host-82-135-33-74.customer.m-online.net ([82.135.33.74] helo=dirac.djpig.de)
+	by smtp.lenk.info with esmtpsa 
+	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA1:32) (Exim 4.63 1)
+	id 1JaDii-000844-Sg; Fri, 14 Mar 2008 18:29:28 +0100
+Received: from djpig by dirac.djpig.de with local (Exim 4.69)
+	(envelope-from <frank@lichtenheld.de>)
+	id 1JaDil-00013F-2H; Fri, 14 Mar 2008 18:29:31 +0100
+X-Mailer: git-send-email 1.5.4.4.555.g697b7.dirty
+In-Reply-To: <1205515770-3424-2-git-send-email-frank@lichtenheld.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77256>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77257>
 
-On Fri, Mar 14, 2008 at 09:01:06AM -0700, Junio C Hamano wrote:
-> Clemens Buchacher <drizzd@aon.at> writes:
-> >> Reading the rest of the function, I notice that it consistently favor "a"
-> >> over "b", when a conflict cannot be reconciled.
-> >
-> > Indeed. I think "b" should be favored over "a", however.
-> 
-> Why?
+git config itself doesn't require to be called in a repository,
+do don't add arbitrary restrictions.
 
->From the commit message to the latest version of my patch:
-http://marc.info/?l=git&m=120548648727308&w=2
+Signed-off-by: Frank Lichtenheld <frank@lichtenheld.de>
+---
+ perl/Git.pm |   33 +++++++++++++--------------------
+ 1 files changed, 13 insertions(+), 20 deletions(-)
 
-On Fri, Mar 14, 2008 at 10:21:05AM +0100, Clemens Buchacher wrote:
-> If the file mode or link changed in only one branch, keep the changed
-> version. If the file mode or link changed differently in both branches,
-> report a conflict. If this happens, the user is more likely to be aware of
-> the change in the head branch. Choose the remote version by default, in
-> order to make the user think about the change.
-
-In principle, both decisions are equally right or wrong. However, suggesting
-the remote version (i.e., "b") by default gives more incentive to think about
-it because the file now changed with respect to the head version (i.e., "a"),
-which the user started out with.
-
-Clemens
+diff --git a/perl/Git.pm b/perl/Git.pm
+index a2812ea..67b3749 100644
+--- a/perl/Git.pm
++++ b/perl/Git.pm
+@@ -487,22 +487,20 @@ does. In scalar context requires the variable to be set only one time
+ (exception is thrown otherwise), in array context returns allows the
+ variable to be set multiple times and returns all the values.
+ 
+-Must be called on a repository instance.
+-
+ This currently wraps command('config') so it is not so fast.
+ 
+ =cut
+ 
+ sub config {
+-	my ($self, $var) = @_;
+-	$self->repo_path()
+-		or throw Error::Simple("not a repository");
++	my ($self, $var) = _maybe_self(@_);
+ 
+ 	try {
++		my @cmd = ('config');
++		unshift @cmd, $self if $self;
+ 		if (wantarray) {
+-			return $self->command('config', '--get-all', $var);
++			return command(@cmd, '--get-all', $var);
+ 		} else {
+-			return $self->command_oneline('config', '--get', $var);
++			return command_oneline(@cmd, '--get', $var);
+ 		}
+ 	} catch Git::Error::Command with {
+ 		my $E = shift;
+@@ -522,20 +520,17 @@ Retrieve the bool configuration C<VARIABLE>. The return value
+ is usable as a boolean in perl (and C<undef> if it's not defined,
+ of course).
+ 
+-Must be called on a repository instance.
+-
+ This currently wraps command('config') so it is not so fast.
+ 
+ =cut
+ 
+ sub config_bool {
+-	my ($self, $var) = @_;
+-	$self->repo_path()
+-		or throw Error::Simple("not a repository");
++	my ($self, $var) = _maybe_self(@_);
+ 
+ 	try {
+-		my $val = $self->command_oneline('config', '--bool', '--get',
+-					      $var);
++		my @cmd = ('config', '--bool', '--get', $var);
++		unshift @cmd, $self if $self;
++		my $val = command_oneline(@cmd);
+ 		return undef unless defined $val;
+ 		return $val eq 'true';
+ 	} catch Git::Error::Command with {
+@@ -557,19 +552,17 @@ or 'g' in the config file will cause the value to be multiplied
+ by 1024, 1048576 (1024^2), or 1073741824 (1024^3) prior to output.
+ It would return C<undef> if configuration variable is not defined,
+ 
+-Must be called on a repository instance.
+-
+ This currently wraps command('config') so it is not so fast.
+ 
+ =cut
+ 
+ sub config_int {
+-	my ($self, $var) = @_;
+-	$self->repo_path()
+-		or throw Error::Simple("not a repository");
++	my ($self, $var) = _maybe_self(@_);
+ 
+ 	try {
+-		return $self->command_oneline('config', '--int', '--get', $var);
++		my @cmd = ('config', '--int', '--get', $var);
++		unshift @cmd, $self if $self;
++		return command_oneline(@cmd);
+ 	} catch Git::Error::Command with {
+ 		my $E = shift;
+ 		if ($E->value() == 1) {
+-- 
+1.5.4.4
