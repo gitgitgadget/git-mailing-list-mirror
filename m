@@ -1,73 +1,72 @@
-From: Frank Lichtenheld <frank@lichtenheld.de>
-Subject: Re: [PATCH] gitweb: Support caching projects list
-Date: Fri, 14 Mar 2008 09:35:15 +0100
-Message-ID: <20080314083515.GX10103@mail-vs.djpig.de>
-References: <20080313231413.27966.3383.stgit@rover>
+From: Peter Karlsson <peter@softwolves.pp.se>
+Subject: Re: git-gui translators: gitgui-0.10.0 coming soon
+Date: Fri, 14 Mar 2008 09:38:09 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <Pine.LNX.4.64.0803140936130.25570@ds9.cixit.se>
+References: <20080313052713.GU8410@spearce.org>
+ <alpine.DEB.1.00.0803140723450.30157@perkele.intern.softwolves.pp.se>
+ <20080314063817.GW8410@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Fri Mar 14 09:36:18 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Mar 14 09:39:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ja5Oi-00019p-Jh
-	for gcvg-git-2@gmane.org; Fri, 14 Mar 2008 09:36:17 +0100
+	id 1Ja5RO-0001zN-UQ
+	for gcvg-git-2@gmane.org; Fri, 14 Mar 2008 09:39:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752001AbYCNIfb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Mar 2008 04:35:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751927AbYCNIfb
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Mar 2008 04:35:31 -0400
-Received: from pauli.djpig.de ([78.46.38.139]:41237 "EHLO pauli.djpig.de"
+	id S1751927AbYCNIiY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Mar 2008 04:38:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751813AbYCNIiY
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Mar 2008 04:38:24 -0400
+Received: from ds9.cixit.se ([193.15.169.228]:59059 "EHLO ds9.cixit.se"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751790AbYCNIfa (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Mar 2008 04:35:30 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by pauli.djpig.de (Postfix) with ESMTP id 5A8E190073;
-	Fri, 14 Mar 2008 09:35:27 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at pauli.djpig.de
-Received: from pauli.djpig.de ([127.0.0.1])
-	by localhost (pauli.djpig.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Sb-nfd69e3KT; Fri, 14 Mar 2008 09:35:16 +0100 (CET)
-Received: from mail-vs.djpig.de (mail-vs.djpig.de [78.47.136.189])
-	by pauli.djpig.de (Postfix) with ESMTP id 852AC9006E;
-	Fri, 14 Mar 2008 09:35:16 +0100 (CET)
-Received: from djpig by mail-vs.djpig.de with local (Exim 4.63)
-	(envelope-from <djpig@mail-vs.djpig.de>)
-	id 1Ja5Nj-0005i6-Eu; Fri, 14 Mar 2008 09:35:15 +0100
-Content-Disposition: inline
-In-Reply-To: <20080313231413.27966.3383.stgit@rover>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1751078AbYCNIiX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Mar 2008 04:38:23 -0400
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id m2E8c9wE032588
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 14 Mar 2008 09:38:09 +0100
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id m2E8c9Dl032583;
+	Fri, 14 Mar 2008 09:38:09 +0100
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+In-Reply-To: <20080314063817.GW8410@spearce.org>
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (ds9.cixit.se [127.0.0.1]); Fri, 14 Mar 2008 09:38:09 +0100 (CET)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77191>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77192>
 
-On Fri, Mar 14, 2008 at 12:14:14AM +0100, Petr Baudis wrote:
-> +# projects list cache for busy sites with many projects;
-> +# if you set this to non-zero, it will be used as the cached
-> +# index lifetime in minutes
-> +# the cached list version is stored in /tmp and can be tweaked
-> +# by other scripts running with the same uid as gitweb - use this
-> +# only at secure installations; only single gitweb project root per
-> +# system is supported!
-> +our $projlist_cache_lifetime = 0;
+Shawn O. Pearce:
 
-I think that would a situation where a uppercase disclaimer would be
-appropriate ;)
+> Squashed.
 
-In addition to the race condition problem mentioned in other mails it
-also has a symlink vulnerability.
+Faster than lightning :-)
 
-I think one should seriously consider reusing an existing caching
-solution instead of reinventing the wheel here.
-There are a lot of CPAN modules to do that and at least apache also
-has modules for that which you could use without any code changes
-at all...
+Quick sanity check, is "Apple" really supposed to be translated here:
 
-Gruesse,
+  #: git-gui.sh:2092 lib/choose_repository.tcl:41
+  msgid "Apple"
+  msgstr ""
+
+In git-gui.sh:
+
+ .mbar add cascade -label [mc Apple] -menu .mbar.apple
+
+in choose_repository.tcl:
+
+  $w.mbar add cascade -label [mc Apple] -menu .mbar.apple
+
+Since the menu title is the Apple symbol, should it really have a
+translatable label?
+
 -- 
-Frank Lichtenheld <frank@lichtenheld.de>
-www: http://www.djpig.de/
+\\// Peter - http://www.softwolves.pp.se/
