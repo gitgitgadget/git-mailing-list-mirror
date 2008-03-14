@@ -1,79 +1,100 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: Support caching projects list
-Date: Fri, 14 Mar 2008 05:17:17 -0700 (PDT)
-Message-ID: <m3d4pxxzyp.fsf@localhost.localdomain>
-References: <20080313231413.27966.3383.stgit@rover>
-	<76718490803131707g34fd40d4q21c69391c2597bc@mail.gmail.com>
-	<20080314002205.GL10335@machine.or.cz>
-	<76718490803131727p451967hee96ff26206c97b7@mail.gmail.com>
-	<1205454601.2758.10.camel@localhost.localdomain>
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: Re: [PATCH] merge-recursive: handle file mode changes
+Date: Fri, 14 Mar 2008 13:17:52 +0100
+Message-ID: <20080314121752.GB3315@localhost>
+References: <20080308171726.GA16129@localhost> <alpine.LSU.1.00.0803081850470.3975@racer.site> <20080313125229.GA24758@localhost> <alpine.LSU.1.00.0803131607030.1656@racer.site> <20080313192246.GA30361@localhost> <alpine.LSU.1.00.0803132216580.4174@racer.site> <20080313224741.GA5000@localhost> <7vhcf9r4qp.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jay Soffian <jaysoffian@gmail.com>, Petr Baudis <pasky@suse.cz>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: "J.H." <warthog19@eaglescrag.net>
-X-From: git-owner@vger.kernel.org Fri Mar 14 13:18:04 2008
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Mar 14 13:18:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ja8rG-0007A4-9R
-	for gcvg-git-2@gmane.org; Fri, 14 Mar 2008 13:17:58 +0100
+	id 1Ja8rv-0007P1-Py
+	for gcvg-git-2@gmane.org; Fri, 14 Mar 2008 13:18:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753012AbYCNMRT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Mar 2008 08:17:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752972AbYCNMRT
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Mar 2008 08:17:19 -0400
-Received: from rv-out-0910.google.com ([209.85.198.190]:20372 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752039AbYCNMRS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Mar 2008 08:17:18 -0400
-Received: by rv-out-0910.google.com with SMTP id k20so2368927rvb.1
-        for <git@vger.kernel.org>; Fri, 14 Mar 2008 05:17:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
-        bh=2duNyDp5Wz6IBIqdLmExtHwAqYbVTfOdezE1q72gF28=;
-        b=iF9UWGd4fh6fQXuxB2IKHE4xfrADx7rIxDFbYDfHZOC59aA8mvYZoDaI4VMOV+O4whpB688ZOWu4IqMBHVaNfXvEuKhYx/upnDxuxQbUpi+u7Gcqy8v9kcm3nsHeBnwN5ujeLaBbcbbUWVfoK1mpPybLMXfgu7dNNgAlJXuiE9I=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
-        b=eOC8OZWq6K0NLmQxo+xSWUTaHketzd4kZqvyDGwn7Qv+G6Jh9EIJcep54LApY2Z8Q4Vb1KMjqvNATN4bZxGrTlUwbpKZ9piSmSEDkCfClJ1PkifnDohEC8VU8rEf6Lv7dG4dEYdtpgOQEgKDLEWoLJzWKwFvOdUFR/zIWnc4zP8=
-Received: by 10.140.192.9 with SMTP id p9mr1533089rvf.193.1205497038126;
-        Fri, 14 Mar 2008 05:17:18 -0700 (PDT)
-Received: from localhost.localdomain ( [83.8.191.199])
-        by mx.google.com with ESMTPS id 5sm404385ugc.25.2008.03.14.05.17.15
+	id S1753120AbYCNMSA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Mar 2008 08:18:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753455AbYCNMR7
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Mar 2008 08:17:59 -0400
+Received: from ug-out-1314.google.com ([66.249.92.171]:35863 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753066AbYCNMR6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Mar 2008 08:17:58 -0400
+Received: by ug-out-1314.google.com with SMTP id z38so53059ugc.16
+        for <git@vger.kernel.org>; Fri, 14 Mar 2008 05:17:57 -0700 (PDT)
+Received: by 10.67.106.13 with SMTP id i13mr319168ugm.49.1205497077041;
+        Fri, 14 Mar 2008 05:17:57 -0700 (PDT)
+Received: from darc.dyndns.org ( [88.117.54.52])
+        by mx.google.com with ESMTPS id 29sm408669uga.50.2008.03.14.05.17.54
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 14 Mar 2008 05:17:17 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m2ECHDVv025623;
-	Fri, 14 Mar 2008 13:17:13 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m2ECGkP8025617;
-	Fri, 14 Mar 2008 13:16:47 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <1205454601.2758.10.camel@localhost.localdomain>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        Fri, 14 Mar 2008 05:17:54 -0700 (PDT)
+Received: from drizzd by darc.dyndns.org with local (Exim 4.69)
+	(envelope-from <drizzd@aon.at>)
+	id 1Ja8rA-0001JZ-U1; Fri, 14 Mar 2008 13:17:52 +0100
+Mail-Followup-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Disposition: inline
+In-Reply-To: <7vhcf9r4qp.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77213>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77214>
 
-"J.H." <warthog19@eaglescrag.net> writes:
+On Fri, Mar 14, 2008 at 03:15:26AM -0700, Junio C Hamano wrote:
+> > diff --git a/merge-recursive.c b/merge-recursive.c
+> > index 34e3167..d8938cc 100644
+> > --- a/merge-recursive.c
+> > +++ b/merge-recursive.c
+> > @@ -1025,12 +1025,21 @@ static struct merge_file_info merge_file(struct diff_filespec *o,
+> >  			hashcpy(result.sha, b->sha1);
+> >  		}
+> >  	} else {
+> > -		if (!sha_eq(a->sha1, o->sha1) && !sha_eq(b->sha1, o->sha1))
+> > -			result.merge = 1;
+> > -
+> > -		result.mode = a->mode == o->mode ? b->mode: a->mode;
+> > +		/*
+> > +		 * If mode changed in only one branch, keep the changed
+> > +		 * version. Otherwise, keep remote version and create a
+> > +		 * conflict.
+> > +		 */
+> 
+> Reading the rest of the function, I notice that it consistently favor "a"
+> over "b", when a conflict cannot be reconciled.
 
-> You would be better off using some of the logic I've got in the caching
-> version of gitweb to prevent the race condition.
+Indeed. I think "b" should be favored over "a", however.
 
-Or use Cache::FileCache the CGI::Cache uses...
+> > +		if (a->mode != o->mode && b->mode != o->mode &&
+> > +				a->mode != b->mode) {
+> > +			result.clean = 0;
+> > +			result.mode = b->mode;
+> > +		} else
+> > +			result.mode = o->mode == a->mode ? b->mode : a->mode;
+> 
+> I think this is much easier to read:
+> 
+> 		if (a->mode == b->mode || a->mode == o->mode)
+> 			result.mode = b->mode;
+> 		else {
+> 			result.mode = a->mode;
+> 			if (b->mode != o->mode) {
+> 				result.clean = 0;
+> 				result.merge = 1;
+> 			}
+> 		}
+> 
+> We keep "b" only if "a" hasn't touched the mode, or it happens to be the
+> same as "a".  Otherwise we take "a" anyway, but taking "a" when "b" also
+> touched means we detected an unreconcilable conflict.
 
+Yes, but if "b" and "a" both changed in the same way, we should still set
+result.merge = 1, because that's more akin to an automatic merge than a
+fast-forward merge, IMO.
 
-By the way, J.H., would you have time and be interested in becoming
-"Gitweb caching" project mentor for Google Summer of Code 2008:
-
-  http://git.or.cz/gitwiki/SoC2008Ideas
-
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Clemens
