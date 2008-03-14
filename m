@@ -1,78 +1,65 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: About detached heads
-Date: Fri, 14 Mar 2008 16:21:47 +0100
-Message-ID: <200803141621.48321.jnareb@gmail.com>
-References: <93c3eada0803140246k53408c74m21f9dc277857202d@mail.gmail.com> <20080314134205.GA19674@pe.Belkin> <b77c1dce0803140753w21515021u4541796d6e6934b@mail.gmail.com>
+From: Sean <seanlkml@sympatico.ca>
+Subject: Re: How about cherry-pick --squash?
+Date: Fri, 14 Mar 2008 11:25:01 -0400
+Message-ID: <BAYC1-PASMTP015BC6B5B35F790E097CBEAE0A0@CEZ.ICE>
+References: <46dff0320803140815q5a342f5fjdde02c6b5fde4e5f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: "Chris Shoemaker" <c.shoemaker@cox.net>,
-	geoffrey.russell@gmail.com, git@vger.kernel.org
-To: "Rafael Garcia-Suarez" <rgarciasuarez@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 14 16:22:44 2008
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Ping Yin" <pkufranky@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 14 16:26:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JaBk3-0000tW-H9
-	for gcvg-git-2@gmane.org; Fri, 14 Mar 2008 16:22:43 +0100
+	id 1JaBnE-00028c-Bi
+	for gcvg-git-2@gmane.org; Fri, 14 Mar 2008 16:26:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754215AbYCNPV4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Mar 2008 11:21:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753597AbYCNPV4
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Mar 2008 11:21:56 -0400
-Received: from gv-out-0910.google.com ([216.239.58.185]:2375 "EHLO
-	gv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751131AbYCNPV4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Mar 2008 11:21:56 -0400
-Received: by gv-out-0910.google.com with SMTP id s4so810426gve.37
-        for <git@vger.kernel.org>; Fri, 14 Mar 2008 08:21:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=2aTS7BYUbrihK1ScFvNrTCqhvbJtasONaSylAz1lBn8=;
-        b=dXXyxCYNnsYFUPtumgL8qxsVAu/1zJGW+zJ2yCKGCVETuHzxqnj6HdGwvsCcAL/CnBdDFavbpOe8CeTApFNiIZKsZj34EzqmiUt2AJSiUhZyX0bgKkDE2LoCY1oK3wuFr6rnB3CdCPjaDsEOVJj0+VpjF3icC3eoJVNblWKj5q0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=DES3XT6IPJOneWfACnSglTYKd38IdYr0g4m3uaCQuekqgtXpNP0zg0Y/m3obhtXPzedLoY7FdEx5kuZQAL0V4zxeUS4Ae/P2f2oWRZdXCm3SjvFMkBO/APIYXiFkk6aZaq6XzLBUsnzQY3eNs+kf4vJKO8QyFBsFzFukLbrYVKo=
-Received: by 10.150.206.1 with SMTP id d1mr6399602ybg.4.1205508112706;
-        Fri, 14 Mar 2008 08:21:52 -0700 (PDT)
-Received: from ?192.168.1.11? ( [83.8.191.199])
-        by mx.google.com with ESMTPS id s10sm20143279muh.11.2008.03.14.08.21.49
-        (version=SSLv3 cipher=OTHER);
-        Fri, 14 Mar 2008 08:21:50 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <b77c1dce0803140753w21515021u4541796d6e6934b@mail.gmail.com>
-Content-Disposition: inline
+	id S1753433AbYCNPZV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Mar 2008 11:25:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753020AbYCNPZV
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Mar 2008 11:25:21 -0400
+Received: from bay0-omc2-s26.bay0.hotmail.com ([65.54.246.162]:8126 "EHLO
+	bay0-omc2-s26.bay0.hotmail.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752815AbYCNPZV (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 14 Mar 2008 11:25:21 -0400
+Received: from BAYC1-PASMTP01 ([65.54.191.161]) by bay0-omc2-s26.bay0.hotmail.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Fri, 14 Mar 2008 08:25:20 -0700
+X-Originating-IP: [70.54.5.51]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Received: from linux1.attic.local ([70.54.5.51]) by BAYC1-PASMTP01.CEZ.ICE over TLS secured channel with Microsoft SMTPSVC(6.0.3790.2668);
+	 Fri, 14 Mar 2008 08:25:20 -0700
+Received: from bud.attic.local ([10.10.10.20])
+	by linux1.attic.local with esmtp (Exim 4.43)
+	id 1JaCiQ-0007ve-Ne; Fri, 14 Mar 2008 11:25:06 -0500
+In-Reply-To: <46dff0320803140815q5a342f5fjdde02c6b5fde4e5f@mail.gmail.com>
+X-Mailer: Sylpheed 2.4.5 (GTK+ 2.12.5; x86_64-pc-linux-gnu)
+X-OriginalArrivalTime: 14 Mar 2008 15:25:20.0465 (UTC) FILETIME=[9D652410:01C885E7]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77237>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77238>
 
-On Fri, 14 Mar 2008, Rafael Garcia-Suarez wrote:
-> On 14/03/2008, Chris Shoemaker wrote:
->>
->>   This way you would get exactly:
->>
->>     1---2---3---4---5---3'   <--- master <--- HEAD
->>
->>
->>  While the 3' commit has the same contents as 3, it is a new, distinct
->>   commit with its own history.  Its commit message should explain why
->>   you want to go from 5 back to the contents of 3.
+On Fri, 14 Mar 2008 23:15:32 +0800
+"Ping Yin" <pkufranky@gmail.com> wrote:
+
+> Sometimes i want to cherry pick a commit, but i don't want the commit
+> message of this commit. What i  want is the patch corresponding to
+> this commit to be squashed to the top commit?
 > 
-> Just a small question -- does that mean that 3 and 3' share the same
-> tree object ?
+> Now i have to type
+> 
+> git format-patch -1 --stdout  <sha1> | git apply --index && git commit --amend
 
-Yes it does. 
 
-Commit object has link to a tree object in the form
-of its sha1 id, and repository's object store is content addressed,
-or to be more exact sha-1 id of contents addressed.
+Hi Ping,
 
--- 
-Jakub Narebski
-Poland
+There is an easier way:
+
+$  git cherry-pick -n <sha1>
+$  git commit -a --amend
+
+HTH,
+Sean
