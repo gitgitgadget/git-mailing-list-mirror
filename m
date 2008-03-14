@@ -1,65 +1,93 @@
-From: Samuel Tardieu <sam@rfc1149.net>
-Subject: Re: [PATCH] Add MIME information to outgoing email
-Date: Fri, 14 Mar 2008 14:50:48 +0100
-Organization: RFC 1149 (see http://www.rfc1149.net/)
-Message-ID: <2008-03-14-14-50-48+trackit+sam@rfc1149.net>
-References: <1205426419-4594-1-git-send-email-sam@rfc1149.net> <20080313170016.GA3439@sigill.intra.peff.net> <2008-03-13-18-14-36+trackit+sam@rfc1149.net> <20080314132949.GC2932@coredump.intra.peff.net> <2008-03-14-14-40-22+trackit+sam@rfc1149.net> <20080314134600.GA3968@coredump.intra.peff.net>
+From: "Olivier Van Acker" <cyberroadie@gmail.com>
+Subject: gti-cvsserver fatal - Don't understand command UseUnchanged
+Date: Fri, 14 Mar 2008 13:53:34 +0000
+Message-ID: <57af99860803140653t6b3c4116y8549162631a5d675@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8bit
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Mar 14 14:51:43 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 14 14:54:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JaAJw-0007bY-UB
-	for gcvg-git-2@gmane.org; Fri, 14 Mar 2008 14:51:41 +0100
+	id 1JaAMT-0000DP-Op
+	for gcvg-git-2@gmane.org; Fri, 14 Mar 2008 14:54:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752567AbYCNNvB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Mar 2008 09:51:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752405AbYCNNvA
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Mar 2008 09:51:00 -0400
-Received: from zaphod.rfc1149.net ([88.191.14.223]:53364 "EHLO
-	mail.rfc1149.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751832AbYCNNvA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Mar 2008 09:51:00 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mail.rfc1149.net (Postfix) with ESMTP id 24910E049C;
-	Fri, 14 Mar 2008 14:50:59 +0100 (CET)
-X-Virus-Scanned: amavisd-new at rfc1149.net
-Received: from mail.rfc1149.net ([127.0.0.1])
-	by localhost (zaphod.rfc1149.net [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id XgVRD8GFRwd9; Fri, 14 Mar 2008 14:50:51 +0100 (CET)
-Received: from mail2.rfc1149.net (unknown [IPv6:2a01:5d8:5138:2f95::3])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "mail2.rfc1149.net", Issuer "rfc1149.net" (verified OK))
-	by mail.rfc1149.net (Postfix) with ESMTP id 9EECFE27AB;
-	Fri, 14 Mar 2008 14:50:49 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by mail2.rfc1149.net (Postfix) with ESMTP id C1C61C408D;
-	Fri, 14 Mar 2008 14:50:48 +0100 (CET)
-Received: from mail2.rfc1149.net ([127.0.0.1])
-	by localhost (localhost [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 1NIf-SEl-rGD; Fri, 14 Mar 2008 14:50:48 +0100 (CET)
-Received: by mail2.rfc1149.net (Postfix, from userid 1000)
-	id 9D7F7C40B8; Fri, 14 Mar 2008 14:50:48 +0100 (CET)
+	id S1752529AbYCNNxi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Mar 2008 09:53:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751780AbYCNNxi
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Mar 2008 09:53:38 -0400
+Received: from el-out-1112.google.com ([209.85.162.182]:61621 "EHLO
+	el-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752423AbYCNNxh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Mar 2008 09:53:37 -0400
+Received: by el-out-1112.google.com with SMTP id v27so2470936ele.17
+        for <git@vger.kernel.org>; Fri, 14 Mar 2008 06:53:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=wu3mBDjnEMUQ2RY9MBOiis2r3azHIsGmnfsBuj+Yxb4=;
+        b=ILyNtrJek6ADCsJMTyF5pXOuYv3fzBI4jMrdzerXGsqZXKgjBJGRkvEMYdMquwGfsZ4I1PwYZiGUT44iM1C/UZCRC7Z08wDi2wjCAM7EqV7FUjWEdvIrYFuhyVtDogv/4/sxkoeoUXl8lvmmvr7V09HAwExaJ2ry89v5xlX+i3M=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=AkOG1GVH8l8dnX3PY5vPoG50MnvktxSGtrohj06GvYtVzNFzElf6SwZEwT5cpvijhgIqhdOrdXCXlAjD8yaxmqXZ+EHHcuUnk32TTUeAe1c4xYNyUkUau5WMwXeOFQMBzpeF7slLjT3riM68iZBekgL3en8vt06ZZenlH36KGXQ=
+Received: by 10.142.107.1 with SMTP id f1mr4919046wfc.10.1205502814324;
+        Fri, 14 Mar 2008 06:53:34 -0700 (PDT)
+Received: by 10.142.13.2 with HTTP; Fri, 14 Mar 2008 06:53:34 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20080314134600.GA3968@coredump.intra.peff.net>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-X-WWW: http://www.rfc1149.net/sam
-X-Jabber: <sam@rfc1149.net> (see http://www.jabber.org/)
-X-OpenPGP-Fingerprint: 79C0 AE3C CEA8 F17B 0EF1  45A5 F133 2241 1B80 ADE6 (see http://www.gnupg.org/)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77225>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77226>
 
-On 14/03, Jeff King wrote:
+Hi,
 
-| Yes, it works fine for me:
+I'm using an java implementation of cvs to access my git repository.
+(The reason I have to use cvs is because the continuous integration
+tool, TeamCity, I use doesn't know git)
 
-Ahhhhh, found it. It looks like you have no format.headers configuration
-variable, do you?
+Other cvs clients on the same computer work fine, however the
+continuous integration tool with it's java cvs implementation fails
+:-( The log of git-cvsserver gives the following error (The java cvs
+client doesn't get a reply at all and just quits):
+
+git-cvsserver log:
+
+2008-03-13 13:37:13 : INFO  - --------------- STARTING -----------------
+2008-03-13 13:37:13 : DEBUG - Temporary directory is '/tmp/RSuXzcgbiU'
+2008-03-13 13:37:13 : DEBUG - req_validrequests
+2008-03-13 13:37:13 : DEBUG - SEND : Valid-requests remove add status
+Entry watchers ci tag log co Modified Questionable admin Root history
+valid-requests Global_option Argumentx annotate Valid-responses
+Unchanged Directory rlog Argument expand-modules diff editors update
+2008-03-13 13:37:13 : DEBUG - SEND : ok
+2008-03-13 13:37:13 : DEBUG - req_Root : /var/git/dragon3d.git
+2008-03-13 13:37:13 : DEBUG - req_Validresponses : E M MT Updated
+Checked-in ok error Clear-static-directory Valid-requests Merged
+Removed Copy-file Mod-time Mode Kopt Template Set-static-directory
+Module-expansion Clear-sticky Set-sticky New-entry Mbinary
+EntriesExtra
+2008-03-13 13:37:13 : FATAL - Don't understand command UseUnchanged
+
+
+Now I don't now what is causing the error, the client or the server,
+but this is how far I got.
+
+And maybe this might help; the source code of the client:
+
+http://www.docjar.com/html/api/allensoft/javacvs/client/CVSClient.java.html
+(I'm guessing) Line 1995 sends the UseUnchanged command
+
+
+Any help welcome,
+
+PS and just as a side question; what continuous integration tools do
+git user like to use?
+
+
+Thanks,
+
+Olivier
