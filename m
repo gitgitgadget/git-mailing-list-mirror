@@ -1,87 +1,298 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: [PATCH] t/t6000lib.sh: tr portability fix fix
-Date: Fri, 14 Mar 2008 17:06:10 -0500
-Message-ID: <47DAF6D2.7050808@nrlssc.navy.mil>
-References: <20080314205415.GA17728@coredump.intra.peff.net> <47DAED87.1000408@nrlssc.navy.mil> <20080314214550.GA18326@coredump.intra.peff.net>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: [PATCH] git-gui: update russian translation
+Date: Fri, 14 Mar 2008 23:25:57 +0100
+Message-ID: <20080314222557.GC5914@steel.home>
+References: <200803141303.m2ED3nUj016918@mi1.bluebottle.com>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: armstrong.whit@gmail.com, Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Mar 14 23:07:54 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: spearce@spearce.org
+X-From: git-owner@vger.kernel.org Fri Mar 14 23:26:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JaI48-0006KD-VQ
-	for gcvg-git-2@gmane.org; Fri, 14 Mar 2008 23:07:53 +0100
+	id 1JaIMQ-0003tC-4K
+	for gcvg-git-2@gmane.org; Fri, 14 Mar 2008 23:26:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751560AbYCNWG5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Mar 2008 18:06:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751852AbYCNWG5
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Mar 2008 18:06:57 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:48616 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751508AbYCNWG4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Mar 2008 18:06:56 -0400
-Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
-	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id m2EM6O1j006176;
-	Fri, 14 Mar 2008 17:06:24 -0500
-Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 14 Mar 2008 17:06:11 -0500
-User-Agent: Thunderbird 2.0.0.9 (X11/20071031)
-In-Reply-To: <20080314214550.GA18326@coredump.intra.peff.net>
-X-OriginalArrivalTime: 14 Mar 2008 22:06:11.0173 (UTC) FILETIME=[9CBBF150:01C8861F]
-X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-5.0.0.1023-15784001
-X-TM-AS-Result: : Yes--11.836000-0-31-1
-X-TM-AS-Category-Info: : 31:0.000000
-X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNTY3LTcwMTE4Mi03MDAw?=
-	=?us-ascii?B?NzUtMTM5MDEwLTcwMDQ4MS03MDE0NTUtNzAwNzAxLTE4ODAxOS03?=
-	=?us-ascii?B?MDc0NTEtNzExNjY0LTEwNTI1MC03MDUxMDItNzAwNjQ4LTcwMTQ2?=
-	=?us-ascii?B?MS03MDUzODgtNzA2ODkxLTcwMzE1Ny03MDA5NzAtMTQ4MDM5LTIw?=
-	=?us-ascii?B?MDQy?=
+	id S1754566AbYCNW0G convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Mar 2008 18:26:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754366AbYCNW0F
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Mar 2008 18:26:05 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.189]:56539 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753945AbYCNW0E (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Mar 2008 18:26:04 -0400
+X-RZG-CLASS-ID: mo07
+X-RZG-AUTH: z4gQVF2k5XWuW3CculzxtolN9Q==
+Received: from tigra.home (Faa12.f.strato-dslnet.de [195.4.170.18])
+	by post.webmailer.de (klopstock mo50) (RZmta 16.10)
+	with ESMTP id z011fek2ELZG8r ; Fri, 14 Mar 2008 23:26:00 +0100 (MET)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 98F2C277BD;
+	Sat, 15 Mar 2008 07:25:32 +0100 (CET)
+Received: by steel.home (Postfix, from userid 1000)
+	id 7E11256D28; Fri, 14 Mar 2008 23:25:57 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <200803141303.m2ED3nUj016918@mi1.bluebottle.com>
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77293>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77294>
 
-Jeff King wrote:
-> On Fri, Mar 14, 2008 at 04:26:31PM -0500, Brandon Casey wrote:
-> 
->> Here's the version with escaped dashes. If you do the sed version, it's
->> something to compare to for readability.
->>
->> [...]
->>
->> -		   '------------------------------' |
->> +		   '\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-' |
-> 
-> Ugh. How about:
-> 
->   sed 'yA~`!@#$%^&*()_+={}[]|\;:"<>,/? A------------------------------A'
+Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+---
+ po/ru.po |   48 +++++++++++++++++++++---------------------------
+ 1 files changed, 21 insertions(+), 27 deletions(-)
 
-Not working. I get:
-
-*   ok 33: bisection diff --bisect u5 ^U <= 0
-sed: -e expression #1, char 64: unterminated `y' command
-* FAIL 34: --bisect l5 ^root
-        check_output  "git rev-list $_bisect_option l5 ^root"
-sed: -e expression #1, char 64: unterminated `y' command
-* FAIL 35: --bisect l5 ^root ^c3
-        check_output  "git rev-list $_bisect_option l5 ^root ^c3"
-sed: -e expression #1, char 64: unterminated `y' command
-* FAIL 36: --bisect l5 ^root ^c3 ^b4
-
-
-But this does:
-
-sed 'yA~`!@#$%^&*()_+={}\[]|\\;:"<>,/? A------------------------------A'
-
-I have to escape open bracket and backslash on my end (linux). :(
-
-Have to leave now, so if that doesn't work for you (which I'm thinking it
-won't), I won't be able to test on my end for a while.
-
--brandon
+diff --git a/po/ru.po b/po/ru.po
+index 849dc5c..db55b3e 100644
+--- a/po/ru.po
++++ b/po/ru.po
+@@ -806,7 +806,7 @@ msgstr "=D0=9E=D0=B1=D0=BD=D0=BE=D0=B2=D0=BB=D0=B5=D0=
+=BD=D0=B8=D0=B5 =D1=80=D0=B0=D0=B1=D0=BE=D1=87=D0=B5=D0=B3=D0=BE =D0=BA=
+=D0=B0=D1=82=D0=B0=D0=BB=D0=BE=D0=B3=D0=B0 =D0=B8=D0=B7 '%s'..."
+=20
+ #: lib/checkout_op.tcl:323
+ msgid "files checked out"
+-msgstr ""
++msgstr "=D1=84=D0=B0=D0=B9=D0=BB=D1=8B =D0=B8=D0=B7=D0=B2=D0=BB=D0=B5=D1=
+=87=D0=B5=D0=BD=D1=8B"
+=20
+ #: lib/checkout_op.tcl:353
+ #, tcl-format
+@@ -1250,7 +1250,6 @@ msgstr ""
+ "=D0=9F=D0=BE=D0=B4=D0=B3=D0=BE=D1=82=D0=BE=D0=B2=D1=8C=D1=82=D0=B5 =D1=
+=85=D0=BE=D1=82=D1=8F =D0=B1=D1=8B =D0=BE=D0=B4=D0=B8=D0=BD =D1=84=D0=B0=
+=D0=B9=D0=BB =D0=B4=D0=BE =D1=81=D0=BE=D0=B7=D0=B4=D0=B0=D0=BD=D0=B8=D1=
+=8F =D1=81=D0=BE=D1=85=D1=80=D0=B0=D0=BD=D0=B5=D0=BD=D0=BD=D0=BE=D0=B3=D0=
+=BE =D1=81=D0=BE=D1=81=D1=82=D0=BE=D1=8F=D0=BD=D0=B8=D1=8F.\n"
+=20
+ #: lib/commit.tcl:183
+-#, fuzzy
+ msgid ""
+ "Please supply a commit message.\n"
+ "\n"
+@@ -1275,32 +1274,31 @@ msgstr "=D0=BF=D1=80=D0=B5=D0=B4=D1=83=D0=BF=D1=
+=80=D0=B5=D0=B6=D0=B4=D0=B5=D0=BD=D0=B8=D0=B5: Tcl =D0=BD=D0=B5 =D0=BF=D0=
+=BE=D0=B4=D0=B4=D0=B5=D1=80=D0=B6=D0=B8=D0=B2=D0=B0=D0=B5=D1=82 =D0=BA=D0=
+=BE=D0=B4=D0=B8
+=20
+ #: lib/commit.tcl:221
+ msgid "Calling pre-commit hook..."
+-msgstr ""
++msgstr "=D0=92=D1=8B=D0=B7=D0=BE=D0=B2 =D0=BF=D1=80=D0=BE=D0=B3=D1=80=D0=
+=B0=D0=BC=D0=BC=D1=8B =D0=BF=D0=BE=D0=B4=D0=B4=D0=B5=D1=80=D0=B6=D0=BA=D0=
+=B8 =D1=80=D0=B5=D0=BF=D0=BE=D0=B7=D0=B8=D1=82=D0=BE=D1=80=D0=B8=D1=8F =
+pre-commit..."
+=20
+ #: lib/commit.tcl:236
+ msgid "Commit declined by pre-commit hook."
+-msgstr ""
++msgstr "=D0=A1=D0=BE=D1=85=D1=80=D0=B0=D0=BD=D0=B5=D0=BD=D0=B8=D0=B5 =D0=
+=BF=D1=80=D0=B5=D1=80=D0=B2=D0=B0=D0=BD=D0=BE =D0=BF=D1=80=D0=BE=D0=B3=D1=
+=80=D0=B0=D0=BC=D0=BC=D0=BE=D0=B9 =D0=BF=D0=BE=D0=B4=D0=B4=D0=B5=D1=80=D0=
+=B6=D0=BA=D0=B8 =D1=80=D0=B5=D0=BF=D0=BE=D0=B7=D0=B8=D1=82=D0=BE=D1=80=D0=
+=B8=D1=8F pre-commit"
+=20
+ #: lib/commit.tcl:259
+ msgid "Calling commit-msg hook..."
+-msgstr ""
++msgstr "=D0=92=D1=8B=D0=B7=D0=BE=D0=B2 =D0=BF=D1=80=D0=BE=D0=B3=D1=80=D0=
+=B0=D0=BC=D0=BC=D1=8B =D0=BF=D0=BE=D0=B4=D0=B4=D0=B5=D1=80=D0=B6=D0=BA=D0=
+=B8 =D1=80=D0=B5=D0=BF=D0=BE=D0=B7=D0=B8=D1=82=D0=BE=D1=80=D0=B8=D1=8F =
+commit-msg..."
+=20
+ #: lib/commit.tcl:274
+ msgid "Commit declined by commit-msg hook."
+-msgstr ""
++msgstr "=D0=A1=D0=BE=D1=85=D1=80=D0=B0=D0=BD=D0=B5=D0=BD=D0=B8=D0=B5 =D0=
+=BF=D1=80=D0=B5=D1=80=D0=B2=D0=B0=D0=BD=D0=BE =D0=BF=D1=80=D0=BE=D0=B3=D1=
+=80=D0=B0=D0=BC=D0=BC=D0=BE=D0=B9 =D0=BF=D0=BE=D0=B4=D0=B4=D0=B5=D1=80=D0=
+=B6=D0=BA=D0=B8 =D1=80=D0=B5=D0=BF=D0=BE=D0=B7=D0=B8=D1=82=D0=BE=D1=80=D0=
+=B8=D1=8F commit-msg"
+=20
+ #: lib/commit.tcl:287
+ msgid "Committing changes..."
+-msgstr ""
++msgstr "=D0=A1=D0=BE=D1=85=D1=80=D0=B0=D0=BD=D0=B5=D0=BD=D0=B8=D0=B5 =D0=
+=B8=D0=B7=D0=BC=D0=B5=D0=BD=D0=B5=D0=BD=D0=B8=D0=B9..."
+=20
+ #: lib/commit.tcl:303
+ msgid "write-tree failed:"
+ msgstr "=D0=9F=D1=80=D0=BE=D0=B3=D1=80=D0=B0=D0=BC=D0=BC=D0=B0 write-t=
+ree =D0=B7=D0=B0=D0=B2=D0=B5=D1=80=D1=88=D0=B8=D0=BB=D0=B0=D1=81=D1=8C =
+=D1=81 =D0=BE=D1=88=D0=B8=D0=B1=D0=BA=D0=BE=D0=B9:"
+=20
+ #: lib/commit.tcl:304 lib/commit.tcl:348 lib/commit.tcl:368
+-#, fuzzy
+ msgid "Commit failed."
+-msgstr "=D0=9A=D0=BB=D0=BE=D0=BD=D0=B8=D1=80=D0=BE=D0=B2=D0=B0=D0=BD=D0=
+=B8=D0=B5 =D0=BD=D0=B5 =D1=83=D0=B4=D0=B0=D0=BB=D0=BE=D1=81=D1=8C."
++msgstr "=D0=A1=D0=BE=D1=85=D1=80=D0=B0=D0=BD=D0=B8=D1=82=D1=8C =D1=81=D0=
+=BE=D1=81=D1=82=D0=BE=D1=8F=D0=BD=D0=B8=D0=B5 =D0=BD=D0=B5 =D1=83=D0=B4=
+=D0=B0=D0=BB=D0=BE=D1=81=D1=8C."
+=20
+ #: lib/commit.tcl:321
+ #, tcl-format
+@@ -1506,7 +1504,6 @@ msgid "Unstaging %s from commit"
+ msgstr "=D0=A3=D0=B4=D0=B0=D0=BB=D0=B5=D0=BD=D0=B8=D0=B5 %s =D0=B8=D0=B7=
+ =D0=BF=D0=BE=D0=B4=D0=B3=D0=BE=D1=82=D0=BE=D0=B2=D0=BB=D0=B5=D0=BD=D0=BD=
+=D0=BE=D0=B3=D0=BE"
+=20
+ #: lib/index.tcl:313
+-#, fuzzy
+ msgid "Ready to commit."
+ msgstr "=D0=9F=D0=BE=D0=B4=D0=B3=D0=BE=D1=82=D0=BE=D0=B2=D0=BB=D0=B5=D0=
+=BD=D0=BE =D0=B4=D0=BB=D1=8F =D1=81=D0=BE=D1=85=D1=80=D0=B0=D0=BD=D0=B5=
+=D0=BD=D0=B8=D1=8F"
+=20
+@@ -1602,9 +1599,8 @@ msgid "%s of %s"
+ msgstr "%s =D0=B8=D0=B7 %s"
+=20
+ #: lib/merge.tcl:119
+-#, fuzzy, tcl-format
+ msgid "Merging %s and %s..."
+-msgstr "=D0=9E=D0=B1=D1=8A=D0=B5=D0=B4=D0=B8=D0=BD=D0=B5=D0=BD=D0=B8=D0=
+=B5 %s =D0=B8 %s"
++msgstr "=D0=9E=D0=B1=D1=8A=D0=B5=D0=B4=D0=B8=D0=BD=D0=B5=D0=BD=D0=B8=D0=
+=B5 %s =D0=B8 %s..."
+=20
+ #: lib/merge.tcl:130
+ msgid "Merge completed successfully."
+@@ -1666,9 +1662,8 @@ msgid "Aborting"
+ msgstr "=D0=9F=D1=80=D0=B5=D1=80=D1=8B=D0=B2=D0=B0=D1=8E"
+=20
+ #: lib/merge.tcl:238
+-#, fuzzy
+ msgid "files reset"
+-msgstr "=D1=84=D0=B0=D0=B9=D0=BB=D0=BE=D0=B2"
++msgstr "=D0=B8=D0=B7=D0=BC=D0=B5=D0=BD=D0=B5=D0=BD=D0=B8=D1=8F =D0=B2 =
+=D1=84=D0=B0=D0=B9=D0=BB=D0=B0=D1=85 =D0=BE=D1=82=D0=BC=D0=B5=D0=BD=D0=B5=
+=D0=BD=D1=8B"
+=20
+ #: lib/merge.tcl:265
+ msgid "Abort failed."
+@@ -1701,7 +1696,7 @@ msgstr "=D0=98=D0=BC=D1=8F =D0=BF=D0=BE=D0=BB=D1=8C=
+=D0=B7=D0=BE=D0=B2=D0=B0=D1=82=D0=B5=D0=BB=D1=8F"
+=20
+ #: lib/option.tcl:117
+ msgid "Email Address"
+-msgstr "=D0=90=D0=B4=D0=B5=D1=81 =D1=8D=D0=BB=D0=B5=D0=BA=D1=82=D1=80=D0=
+=BE=D0=BD=D0=BD=D0=BE=D0=B9 =D0=BF=D0=BE=D1=87=D1=82=D1=8B"
++msgstr "=D0=90=D0=B4=D1=80=D0=B5=D1=81 =D1=8D=D0=BB=D0=B5=D0=BA=D1=82=D1=
+=80=D0=BE=D0=BD=D0=BD=D0=BE=D0=B9 =D0=BF=D0=BE=D1=87=D1=82=D1=8B"
+=20
+ #: lib/option.tcl:119
+ msgid "Summarize Merge Commits"
+@@ -1732,9 +1727,8 @@ msgid "Number of Diff Context Lines"
+ msgstr "=D0=A7=D0=B8=D1=81=D0=BB=D0=BE =D1=81=D1=82=D1=80=D0=BE=D0=BA =
+=D0=B2 =D0=BA=D0=BE=D0=BD=D1=82=D0=B5=D0=BA=D1=81=D1=82=D0=B5 diff"
+=20
+ #: lib/option.tcl:127
+-#, fuzzy
+ msgid "Commit Message Text Width"
+-msgstr "=D0=9A=D0=BE=D0=BC=D0=BC=D0=B5=D0=BD=D1=82=D0=B0=D1=80=D0=B8=D0=
+=B9 =D0=BA =D1=81=D0=BE=D1=81=D1=82=D0=BE=D1=8F=D0=BD=D0=B8=D1=8E:"
++msgstr "=D0=A8=D0=B8=D1=80=D0=B8=D0=BD=D0=B0 =D0=BA=D0=BE=D0=BC=D0=BC=D0=
+=B5=D0=BD=D1=82=D0=B0=D1=80=D0=B8=D1=8F =D0=BA =D1=81=D0=BE=D1=81=D1=82=
+=D0=BE=D1=8F=D0=BD=D0=B8=D1=8E:"
+=20
+ #: lib/option.tcl:128
+ msgid "New Branch Name Template"
+@@ -1742,7 +1736,7 @@ msgstr "=D0=A8=D0=B0=D0=B1=D0=BB=D0=BE=D0=BD =D0=B4=
+=D0=BB=D1=8F =D0=B8=D0=BC=D0=B5=D0=BD=D0=B8 =D0=BD=D0=BE=D0=B2=D0=BE=D0=
+=B9 =D0=B2=D0=B5=D1=82=D0=B2=D0=B8"
+=20
+ #: lib/option.tcl:192
+ msgid "Spelling Dictionary:"
+-msgstr ""
++msgstr "=D0=A1=D0=BB=D0=BE=D0=B2=D0=B0=D1=80=D1=8C =D0=B4=D0=BB=D1=8F =
+=D0=BF=D1=80=D0=BE=D0=B2=D0=B5=D1=80=D0=BA=D0=B8 =D0=BF=D1=80=D0=B0=D0=B2=
+=D0=BE=D0=BF=D0=B8=D1=81=D0=B0=D0=BD=D0=B8=D1=8F:"
+=20
+ #: lib/option.tcl:216
+ msgid "Change Font"
+@@ -1871,40 +1865,40 @@ msgstr "=D0=9D=D0=B5=D0=B2=D0=BE=D0=B7=D0=BC=D0=
+=BE=D0=B6=D0=BD=D0=BE =D0=B7=D0=B0=D0=BF=D0=B8=D1=81=D0=B0=D1=82=D1=8C =
+=D0=B7=D0=BD=D0=B0=D1=87=D0=BE=D0=BA:"
+=20
+ #: lib/spellcheck.tcl:57
+ msgid "Unsupported spell checker"
+-msgstr ""
++msgstr "=D0=9D=D0=B5=D0=BF=D0=BE=D0=B4=D0=B4=D0=B5=D1=80=D0=B6=D0=B8=D0=
+=B2=D0=B0=D0=B5=D0=BC=D0=B0=D1=8F =D0=BF=D1=80=D0=BE=D0=B3=D1=80=D0=B0=D0=
+=BC=D0=BC=D0=B0 =D0=BF=D1=80=D0=BE=D0=B2=D0=B5=D1=80=D0=BA=D0=B8 =D0=BF=
+=D1=80=D0=B0=D0=B2=D0=BE=D0=BF=D0=B8=D1=81=D0=B0=D0=BD=D0=B8=D1=8F"
+=20
+ #: lib/spellcheck.tcl:65
+ msgid "Spell checking is unavailable"
+-msgstr ""
++msgstr "=D0=9F=D1=80=D0=BE=D0=B2=D0=B5=D1=80=D0=BA=D0=B0 =D0=BF=D1=80=D0=
+=B0=D0=B2=D0=BE=D0=BF=D0=B8=D1=81=D0=B0=D0=BD=D0=B8=D1=8F =D0=BD=D0=B5 =
+=D0=B4=D0=BE=D1=81=D1=82=D1=83=D0=BF=D0=BD=D0=B0"
+=20
+ #: lib/spellcheck.tcl:68
+ msgid "Invalid spell checking configuration"
+-msgstr ""
++msgstr "=D0=9D=D0=B5=D0=BF=D1=80=D0=B0=D0=B2=D0=B8=D0=BB=D1=8C=D0=BD=D0=
+=B0=D1=8F =D0=BA=D0=BE=D0=BD=D1=84=D0=B8=D0=B3=D1=83=D1=80=D0=B0=D1=86=D0=
+=B8=D1=8F =D0=BF=D1=80=D0=BE=D0=B3=D1=80=D0=B0=D0=BC=D0=BC=D1=8B =D0=BF=
+=D1=80=D0=BE=D0=B2=D0=B5=D1=80=D0=BA=D0=B8 =D0=BF=D1=80=D0=B0=D0=B2=D0=BE=
+=D0=BF=D0=B8=D1=81=D0=B0=D0=BD=D0=B8=D1=8F"
+=20
+ #: lib/spellcheck.tcl:70
+ #, tcl-format
+ msgid "Reverting dictionary to %s."
+-msgstr ""
++msgstr "=D0=A1=D0=BB=D0=BE=D0=B2=D0=B0=D1=80=D1=8C =D0=B2=D0=B5=D1=80=D0=
+=BD=D1=83=D1=82 =D0=BA %s."
+=20
+ #: lib/spellcheck.tcl:73
+ msgid "Spell checker silently failed on startup"
+-msgstr ""
++msgstr "=D0=9F=D1=80=D0=BE=D0=B3=D1=80=D0=B0=D0=BC=D0=BC=D0=B0 =D0=BF=D1=
+=80=D0=BE=D0=B2=D0=B5=D1=80=D0=BA=D0=B8 =D0=BF=D1=80=D0=B0=D0=B2=D0=BE=D0=
+=BF=D0=B8=D1=81=D0=B0=D0=BD=D0=B8=D1=8F =D0=BD=D0=B5 =D1=81=D0=BC=D0=BE=
+=D0=B3=D0=BB=D0=B0 =D0=B7=D0=B0=D0=BF=D1=83=D1=81=D1=82=D0=B8=D1=82=D1=81=
+=D1=8F"
+=20
+ #: lib/spellcheck.tcl:80
+ msgid "Unrecognized spell checker"
+-msgstr ""
++msgstr "=D0=9D=D0=B5=D1=80=D0=B0=D1=81=D0=BF=D0=BE=D0=B7=D0=BD=D0=B0=D0=
+=BD=D0=B0=D1=8F =D0=BF=D1=80=D0=BE=D0=B3=D1=80=D0=B0=D0=BC=D0=BC=D0=B0 =
+=D0=BF=D1=80=D0=BE=D0=B2=D0=B5=D1=80=D0=BA=D0=B8 =D0=BF=D1=80=D0=B0=D0=B2=
+=D0=BE=D0=BF=D0=B8=D1=81=D0=B0=D0=BD=D0=B8=D1=8F"
+=20
+ #: lib/spellcheck.tcl:180
+ msgid "No Suggestions"
+-msgstr ""
++msgstr "=D0=98=D1=81=D0=BF=D1=80=D0=B0=D0=B2=D0=BB=D0=B5=D0=BD=D0=B8=D0=
+=B9 =D0=BD=D0=B5 =D0=BD=D0=B0=D0=B9=D0=B4=D0=B5=D0=BD=D0=BE"
+=20
+ #: lib/spellcheck.tcl:381
+ msgid "Unexpected EOF from spell checker"
+-msgstr ""
++msgstr "=D0=9F=D1=80=D0=BE=D0=B3=D1=80=D0=B0=D0=BC=D0=BC=D0=B0 =D0=BF=D1=
+=80=D0=BE=D0=B2=D0=B5=D1=80=D0=BA=D0=B8 =D0=BF=D1=80=D0=B0=D0=B2=D0=BE=D0=
+=BF=D0=B8=D1=81=D0=B0=D0=BD=D0=B8=D1=8F =D0=BF=D1=80=D0=B5=D1=80=D0=B2=D0=
+=B0=D0=BB=D0=B0 =D0=BF=D0=B5=D1=80=D0=B5=D0=B4=D0=B0=D1=87=D1=83 =D0=B4=
+=D0=B0=D0=BD=D0=BD=D1=8B=D1=85"
+=20
+ #: lib/spellcheck.tcl:385
+ msgid "Spell Checker Failed"
+-msgstr ""
++msgstr "=D0=9E=D1=88=D0=B8=D0=B1=D0=BA=D0=B0 =D0=BF=D1=80=D0=BE=D0=B2=D0=
+=B5=D1=80=D0=BA=D0=B8 =D0=BF=D1=80=D0=B0=D0=B2=D0=BE=D0=BF=D0=B8=D1=81=D0=
+=B0=D0=BD=D0=B8=D1=8F"
+=20
+ #: lib/status_bar.tcl:83
+ #, tcl-format
+--=20
+1.5.4.4.578.g182d
