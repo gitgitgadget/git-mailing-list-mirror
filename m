@@ -1,79 +1,67 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: git-gui translators: gitgui-0.10.0 coming soon
-Date: Fri, 14 Mar 2008 17:38:50 +0100
-Message-ID: <20080314163850.GO2414@genesis.frugalware.org>
-References: <20080313052713.GU8410@spearce.org> <alpine.DEB.1.00.0803140723450.30157@perkele.intern.softwolves.pp.se> <20080314063817.GW8410@spearce.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: builtin-status submodule summary
+Date: Fri, 14 Mar 2008 09:39:03 -0700
+Message-ID: <7vprtxp8ew.fsf@gitster.siamese.dyndns.org>
+References: <1205416085-23431-1-git-send-email-pkufranky@gmail.com>
+ <46dff0320803140730jeef5808r7da67a103ce7b171@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="B3XPdYri2NuANWBV"
-Cc: Peter Karlsson <peter@softwolves.pp.se>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Mar 14 17:39:41 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Ping Yin" <pkufranky@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 14 17:39:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JaCwQ-0006JB-Q7
-	for gcvg-git-2@gmane.org; Fri, 14 Mar 2008 17:39:35 +0100
+	id 1JaCwi-0006R0-Th
+	for gcvg-git-2@gmane.org; Fri, 14 Mar 2008 17:39:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753971AbYCNQiz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Mar 2008 12:38:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753502AbYCNQiz
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Mar 2008 12:38:55 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:54291 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752112AbYCNQiy (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Mar 2008 12:38:54 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id A8D501B2538;
-	Fri, 14 Mar 2008 17:38:50 +0100 (CET)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 57F5B44668;
-	Fri, 14 Mar 2008 17:36:00 +0100 (CET)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 19CAA1190200; Fri, 14 Mar 2008 17:38:50 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <20080314063817.GW8410@spearce.org>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1754957AbYCNQjO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Mar 2008 12:39:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754844AbYCNQjO
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Mar 2008 12:39:14 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:63476 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754729AbYCNQjK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Mar 2008 12:39:10 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id BF23C2178;
+	Fri, 14 Mar 2008 12:39:08 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id E09F72176; Fri, 14 Mar 2008 12:39:05 -0400 (EDT)
+In-Reply-To: <46dff0320803140730jeef5808r7da67a103ce7b171@mail.gmail.com>
+ (Ping Yin's message of "Fri, 14 Mar 2008 22:30:51 +0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77253>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77254>
 
+"Ping Yin" <pkufranky@gmail.com> writes:
 
---B3XPdYri2NuANWBV
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+> So i think this series should go along with the submodule summary series.
 
-On Fri, Mar 14, 2008 at 02:38:18AM -0400, "Shawn O. Pearce" <spearce@spearce.org> wrote:
->     MSGFMT    po/hu.msg 383 translated, 5 fuzzy, 3 untranslated.
+Perhaps eventually, but definitely not this round, I am afraid.
 
-The following changes since commit
-9065c36ea3945a21813bb3172f024e9bbc5869d2:
-  Peter Karlsson (1):
-        git-gui: updated Swedish translation
+The usefulness of the output in the current implementation of the
+"summary" itself is not even proven at this point.  Nobody other than you
+has jumped up-and-down and said "submodule summary is great and should be
+in status, I did not know what I was missing!" yet.
 
-are available in the git repository at:
+I hope we verified the code well enough to make sure that people who use
+"git submodule" command but do not type "git submodule summary" would not
+get hurt by the addition.  For a new feature, that is more important than
+how well the new feature works and how useful the new feature is.  And by
+shipping a release with it will give it a wider exposure and hopefully a
+chance for it to mature to get more useful.  The series just got into a
+"harmless to others and is releasable" shape.
 
-  mob@repo.or.cz:/srv/git/git-gui/git-gui-i18n.git mob
+Recall how many rounds "submodule summary" took to get into that state,
+and how much time and effort were spent on it.  Use it as a yardstick to
+guesstimate how much further effort and time will be needed to get the
+changes to git-status into a reasonable shape.
 
-Miklos Vajna (1):
-      Updated Hungarian translation (e5fba18)
-
- po/hu.po |   23 +++++++++--------------
- 1 files changed, 9 insertions(+), 14 deletions(-)
-
---B3XPdYri2NuANWBV
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (GNU/Linux)
-
-iD8DBQFH2qoae81tAgORUJYRAgmNAJ9JpH47w/9Kv3GatlI+Hs+VAcGIvACdG/BX
-PTXooPZiOEHy+uZao18AK8k=
-=05Q6
------END PGP SIGNATURE-----
-
---B3XPdYri2NuANWBV--
+It may happen eventually, but not before 1.5.5.
