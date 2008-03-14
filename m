@@ -1,109 +1,72 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: About detached heads
-Date: Fri, 14 Mar 2008 19:37:31 +0100
-Message-ID: <20080314183731.GA2994@atjola.homenet>
-References: <93c3eada0803140246k53408c74m21f9dc277857202d@mail.gmail.com> <alpine.LFD.1.00.0803141041080.3557@woody.linux-foundation.org>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: CVS to git: parsing ChangeLog entries?
+Date: Fri, 14 Mar 2008 19:40:33 +0100
+Message-ID: <47DAC6A1.7070400@alum.mit.edu>
+References: <20080312190827.GE3198@ins.uni-bonn.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Geoff Russell <geoffrey.russell@gmail.com>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri Mar 14 19:38:19 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 14 19:42:18 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JaEnF-0006bM-PN
-	for gcvg-git-2@gmane.org; Fri, 14 Mar 2008 19:38:14 +0100
+	id 1JaEqw-00087i-Bl
+	for gcvg-git-2@gmane.org; Fri, 14 Mar 2008 19:42:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753674AbYCNShe convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Mar 2008 14:37:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753201AbYCNShe
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Mar 2008 14:37:34 -0400
-Received: from mail.gmx.net ([213.165.64.20]:34731 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751416AbYCNShe (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Mar 2008 14:37:34 -0400
-Received: (qmail invoked by alias); 14 Mar 2008 18:37:32 -0000
-Received: from i577BA224.versanet.de (EHLO atjola.local) [87.123.162.36]
-  by mail.gmx.net (mp037) with SMTP; 14 Mar 2008 19:37:32 +0100
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX19H/ssPu2dHwq+OppC4vVt3y3Jf5fE0UBf0Vab5/A
-	bn+sgLMzE0RYLm
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.1.00.0803141041080.3557@woody.linux-foundation.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-X-Y-GMX-Trusted: 0
+	id S1757438AbYCNSlL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Mar 2008 14:41:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753830AbYCNSlK
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Mar 2008 14:41:10 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:47211 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753676AbYCNSlJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Mar 2008 14:41:09 -0400
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.142])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id m2EIf6Nr012742
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 14 Mar 2008 19:41:07 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.12) Gecko/20080227 Thunderbird/2.0.0.12 Mnenhy/0.7.5.666
+In-Reply-To: <20080312190827.GE3198@ins.uni-bonn.de>
+X-Enigmail-Version: 0.95.0
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77270>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77271>
 
-On 2008.03.14 10:53:25 -0700, Linus Torvalds wrote:
->=20
->=20
-> On Fri, 14 Mar 2008, Geoff Russell wrote:
-> >
-> > This should be simple! I have a series of commits:
-> >=20
-> >            1---2---3---4---5
-> >=20
-> > I want to go back to 3 but not branch, so I want
-> >=20
-> >            1---2---3---4---5---3
->=20
-> This is actually an uncommonly easy operation for core git, but it's =
-a=20
-> very unusual thing to want to do in general, so I don't think there i=
-s any=20
-> high-level command to do it directly. But it's really easy to do with=
-=20
-> a single so-called "plumbing" command, namely "git read-tree".
->=20
-> So the "core git" way to do it is to literally just do
->=20
-> 	git read-tree -u -m 3
-> 	git commit
->=20
-> (or use "--reset" instead of "-m" if you want to do it even in the=20
-> presense unmerged entries).
->=20
-> What the above does is to literally just read the tree state at "3", =
-and=20
-> make it the new index: the "-u" means that we also want to update the=
-=20
-> working tree to that state, and the "-m" means that we will merge in =
-the=20
-> old index stat information.
->=20
-> The commit then will then create the actual new commit: it will have =
-the=20
-> exact same tree as your commit '3', but it will be a new commit (so c=
-all=20
-> it 3').
->=20
-> Of course, people have already pointed out that another easy way to d=
-o it=20
-> is to just revert 5 and 4. That may be the more high-level way to do =
-it,=20
-> but the git-read-tree approach actually has the advantage that it wil=
-l=20
-> work even across merges etc, and it will be very unambiguous: we want=
-=20
-> *exactly* the state at commit 3 back, nothing else.
+I'll answer your questions from the point of view of cvs2git, a.k.a.
+cvs2svn (http://cvs2svn.tigris.org).
 
-Hm, that's just squashing revert commit. Squashing can be done via:
-git reset --soft HEAD~5    # Or wherever your squashed commit should st=
-art
-git commit -m "Squashed from HEAD~5 onwards"
+Ralf Wildenhues wrote:
+> when migrating a project that uses GNU-style ChangeLogs from CVS
+> to git, is it possible to extract patch author information from
+> the ChangeLog entries rather than from the CVS commit logs?
+> For simplicity let's first assume the project used only one
+> ChangeLog file.
+> 
+> Asking because it is not uncommon that patches are committed on
+> behalf of other people, and it would be nice to credit them.
 
-Now the "revert" version of that:
-git reset --hard HEAD~5      # Go back to the state that we want
-git reset --soft ORIG_HEAD   # Move HEAD back, but keep the index as is
-git commit -m "Back at the state of HEAD~5"
+There is no builtin support for this in cvs2git.  But the place where
+the author is determined knows about the whole changeset, including any
+simultaneous changes to the changelog.  So it should be possible to add
+this functionality without too much work.
 
-AFAICT that should have the same advantages as using read-tree, but
-doesn't feel so low-level :-)
+> Related question: when CVS commit logs have varying encoding,
+> say, some latin1 and some UTF-8, is it possible to have uniformly
+> encoded git log entries?
 
-Bj=F6rn
+cvs2git allows you to specify multiple encodings.  It tries one after
+the other until one works successfully.  It also has hooks where you can
+add your own decoder using arbitrary Python code.
+
+That reminds me that there is a Python universal decoder that uses
+heuristics to determine the encoding of an arbitrary octet stream.  That
+might be a nice thing to add support for....
+
+Michael
