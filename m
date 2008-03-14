@@ -1,81 +1,72 @@
-From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
-Subject: Re: About detached heads
-Date: Fri, 14 Mar 2008 11:39:10 +0100
-Message-ID: <87iqzpfv3l.fsf@lysator.liu.se>
-References: <93c3eada0803140246k53408c74m21f9dc277857202d@mail.gmail.com> <57518fd10803140251v425a0fa3ud11687a5043806cc@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Should 'git config' support key with dot such as 'a.b'
+Date: Fri, 14 Mar 2008 11:39:40 +0100 (CET)
+Message-ID: <alpine.LSU.1.00.0803141138340.24600@racer.site>
+References: <46dff0320803140124t1469defsf7002f720cf2002e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 14 11:39:43 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Ping Yin <pkufranky@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 14 11:40:18 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ja7K4-0007Og-Kc
-	for gcvg-git-2@gmane.org; Fri, 14 Mar 2008 11:39:37 +0100
+	id 1Ja7Kk-0007bu-Gw
+	for gcvg-git-2@gmane.org; Fri, 14 Mar 2008 11:40:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752251AbYCNKi5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Mar 2008 06:38:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752116AbYCNKi5
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Mar 2008 06:38:57 -0400
-Received: from main.gmane.org ([80.91.229.2]:50330 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751996AbYCNKi4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Mar 2008 06:38:56 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Ja7JK-0006jz-Ta
-	for git@vger.kernel.org; Fri, 14 Mar 2008 10:38:50 +0000
-Received: from 79.138.151.59.bredband.tre.se ([79.138.151.59])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 14 Mar 2008 10:38:50 +0000
-Received: from davidk by 79.138.151.59.bredband.tre.se with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 14 Mar 2008 10:38:50 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 79.138.151.59.bredband.tre.se
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-Cancel-Lock: sha1:JneHuopKm/ZfyrtXAKGG0u7fN/g=
+	id S1753079AbYCNKjk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Mar 2008 06:39:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752922AbYCNKjj
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Mar 2008 06:39:39 -0400
+Received: from mail.gmx.net ([213.165.64.20]:51537 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752670AbYCNKjj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Mar 2008 06:39:39 -0400
+Received: (qmail invoked by alias); 14 Mar 2008 10:39:37 -0000
+Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
+  by mail.gmx.net (mp010) with SMTP; 14 Mar 2008 11:39:37 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18/Jp4VnAE/PnyEzGjjI6pEwCJtb+ngtxRrezIVDT
+	NUOfy9JE39sZS3
+X-X-Sender: gene099@racer.site
+In-Reply-To: <46dff0320803140124t1469defsf7002f720cf2002e@mail.gmail.com>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77202>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77203>
 
-"Jonathan del Strother" <maillist@steelskies.com> writes:
+Hi,
 
-> On Fri, Mar 14, 2008 at 9:46 AM, Geoff Russell
-> <geoffrey.russell@gmail.com> wrote:
->> This should be simple! I have a series of commits:
->>
->>            1---2---3---4---5
->>
->>  I want to go back to 3 but not branch, so I want
->>
->>            1---2---3---4---5---3
->>
->>  ?
->>
->>          git checkout 3...
->>
->>  gets me the commit on a detached head, but I don't know how to put =
-this back
->>  as the HEAD.
->
->
-> Two options.  Either rewrite history, nuking commits 4 & 5 :
->   git reset --hard 3
->
-> or publicly reverse the changes introduced by 5 & 4 :
->   git revert 5
->   git revert 4
+On Fri, 14 Mar 2008, Ping Yin wrote:
 
-The revert can be done by resetting to the tree in 3:
+> I find it is so annoying to write submodule definition as follows
+> (yeah, only url, without path)
+> 
+> ------------------------------
+> [submodule 'crawler']
+>     url = url1
+> [submodule 'search']
+>     url = url2
+> ------------------------------
+> 
+> I think the following form is more simple
+> ---------------------------------
+> [submodule]
+>      crawler.url = url1
+>      search.url = url2
+> ---------------------------------
+> 
+> So, could we support such simpler form?
 
-  git checkout 3 -- .
-  git commit -m "reset to 3"
+I don't like it at all.  Historically, we had much stricter rules on the 
+variable names than the second part of the section names.
 
---=20
-David K=C3=A5gedal
+Also, your suggestion would make things even more confusing than beginners 
+already complain Git is.
+
+Ciao,
+Dscho
