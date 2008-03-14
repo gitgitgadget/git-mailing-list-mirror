@@ -1,67 +1,54 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: builtin-status submodule summary
-Date: Fri, 14 Mar 2008 09:39:03 -0700
-Message-ID: <7vprtxp8ew.fsf@gitster.siamese.dyndns.org>
-References: <1205416085-23431-1-git-send-email-pkufranky@gmail.com>
- <46dff0320803140730jeef5808r7da67a103ce7b171@mail.gmail.com>
+From: Sergei Organov <osv@javad.com>
+Subject: Re: The meaning of x~0 and x~ as rev-spec.
+Date: Fri, 14 Mar 2008 20:21:30 +0300
+Message-ID: <87zlt1mdb9.fsf@osv.gnss.ru>
+References: <87bq5ho31d.fsf@osv.gnss.ru>
+	<7vwso5p92q.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: "Ping Yin" <pkufranky@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 14 17:39:53 2008
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Mar 14 18:22:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JaCwi-0006R0-Th
-	for gcvg-git-2@gmane.org; Fri, 14 Mar 2008 17:39:53 +0100
+	id 1JaDcB-00085T-QK
+	for gcvg-git-2@gmane.org; Fri, 14 Mar 2008 18:22:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754957AbYCNQjO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Mar 2008 12:39:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754844AbYCNQjO
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Mar 2008 12:39:14 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:63476 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754729AbYCNQjK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Mar 2008 12:39:10 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id BF23C2178;
-	Fri, 14 Mar 2008 12:39:08 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id E09F72176; Fri, 14 Mar 2008 12:39:05 -0400 (EDT)
-In-Reply-To: <46dff0320803140730jeef5808r7da67a103ce7b171@mail.gmail.com>
- (Ping Yin's message of "Fri, 14 Mar 2008 22:30:51 +0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1755924AbYCNRV5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Mar 2008 13:21:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752567AbYCNRV5
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Mar 2008 13:21:57 -0400
+Received: from javad.com ([216.122.176.236]:1403 "EHLO javad.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751317AbYCNRV5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Mar 2008 13:21:57 -0400
+Received: from osv ([87.236.81.130])
+	by javad.com (8.11.6/8.11.0) with ESMTP id m2EHLaV02829;
+	Fri, 14 Mar 2008 17:21:36 GMT
+	(envelope-from s.organov@javad.com)
+Received: from osv by osv with local (Exim 4.63)
+	(envelope-from <s.organov@javad.com>)
+	id 1JaDb0-0004zj-TP; Fri, 14 Mar 2008 20:21:30 +0300
+In-Reply-To: <7vwso5p92q.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's message of "Fri\, 14 Mar 2008 09\:24\:45 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77254>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77255>
 
-"Ping Yin" <pkufranky@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> So i think this series should go along with the submodule summary series.
+> Sergei Organov <osv@javad.com> writes:
+>
+>> Testing suggests that <name>~0 and <name>~ are the same and are just
+>> synonyms for <name> as rev-specs. Is that correct? Is that by design, or
+>> by accident?
+>
+> sed -n -e '/name~3/,/x = 0;/p' sha1_name.c
 
-Perhaps eventually, but definitely not this round, I am afraid.
+OK, I'll send a patch for documentation.
 
-The usefulness of the output in the current implementation of the
-"summary" itself is not even proven at this point.  Nobody other than you
-has jumped up-and-down and said "submodule summary is great and should be
-in status, I did not know what I was missing!" yet.
-
-I hope we verified the code well enough to make sure that people who use
-"git submodule" command but do not type "git submodule summary" would not
-get hurt by the addition.  For a new feature, that is more important than
-how well the new feature works and how useful the new feature is.  And by
-shipping a release with it will give it a wider exposure and hopefully a
-chance for it to mature to get more useful.  The series just got into a
-"harmless to others and is releasable" shape.
-
-Recall how many rounds "submodule summary" took to get into that state,
-and how much time and effort were spent on it.  Use it as a yardstick to
-guesstimate how much further effort and time will be needed to get the
-changes to git-status into a reasonable shape.
-
-It may happen eventually, but not before 1.5.5.
+-- Sergei.
