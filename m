@@ -1,83 +1,90 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH] help: implement multi-valued "man.viewer" config option
-Date: Fri, 14 Mar 2008 06:26:15 +0100
-Message-ID: <200803140626.16075.chriscool@tuxfamily.org>
-References: <20080311085113.176df1af.chriscool@tuxfamily.org> <200803120823.38100.chriscool@tuxfamily.org> <200803140100.m2E105o5004664@localhost.localdomain>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git-fetch question/bug
+Date: Thu, 13 Mar 2008 22:27:43 -0700
+Message-ID: <7vbq5hub74.fsf@gitster.siamese.dyndns.org>
+References: <5d46db230803132208r3f3f9e34q80bb9c03d65ab67c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: junkio@cox.net, pascal@obry.net, nanako3@bluebottle.com,
-	git@vger.kernel.org
-To: Xavier Maillard <xma@gnu.org>
-X-From: git-owner@vger.kernel.org Fri Mar 14 06:21:47 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: "Git Mailing List" <git@vger.kernel.org>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: "Govind Salinas" <blix@sophiasuchtig.com>
+X-From: git-owner@vger.kernel.org Fri Mar 14 06:28:36 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ja2MT-0006Qx-9g
-	for gcvg-git-2@gmane.org; Fri, 14 Mar 2008 06:21:45 +0100
+	id 1Ja2T1-0007h7-KF
+	for gcvg-git-2@gmane.org; Fri, 14 Mar 2008 06:28:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756984AbYCNFUg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Mar 2008 01:20:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756928AbYCNFUg
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Mar 2008 01:20:36 -0400
-Received: from smtp1-g19.free.fr ([212.27.42.27]:38061 "EHLO smtp1-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756897AbYCNFUf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 14 Mar 2008 01:20:35 -0400
-Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 757E71AB2CB;
-	Fri, 14 Mar 2008 06:20:34 +0100 (CET)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 558971AB2B7;
-	Fri, 14 Mar 2008 06:20:34 +0100 (CET)
-User-Agent: KMail/1.9.7
-In-Reply-To: <200803140100.m2E105o5004664@localhost.localdomain>
-Content-Disposition: inline
+	id S1753021AbYCNF1x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Mar 2008 01:27:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752405AbYCNF1x
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Mar 2008 01:27:53 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:57224 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752854AbYCNF1w (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Mar 2008 01:27:52 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 82A65154D;
+	Fri, 14 Mar 2008 01:27:49 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id AE924154C; Fri, 14 Mar 2008 01:27:45 -0400 (EDT)
+In-Reply-To: <5d46db230803132208r3f3f9e34q80bb9c03d65ab67c@mail.gmail.com>
+ (Govind Salinas's message of "Fri, 14 Mar 2008 00:08:01 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77182>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77183>
 
-Le vendredi 14 mars 2008, Xavier Maillard a =E9crit :
->    > Ok, woma in not supported here and it is reported like this but
->    > would it be possible to just throw an error on stdout and try
->    > another viewer ?
->
->    Yes, with the following patch on top:
->
-> See my "tested-by" message.
+"Govind Salinas" <blix@sophiasuchtig.com> writes:
 
-Thank you Xavier for this message.
+> ... git-fetch when I discovered that it does not return
+> error when the
+> fetch fails due to it not being a ff...
 
->    > We could even imagine something even more
->    > general like the possibility for the user to write his own man
->    > viewer (a bash script for example) and set it as a candidate.
->
->    I will do that in a latter patch, it has been suggested a lot of t=
-imes
->    already.
->
-> Glad to read that !
+I think this is a regression introduced when "git-fetch" was
+re-implemented in C.  git-fetch--tool's native-store subcommand seems to
+have signaled this as an error, and it is reasonable to expect an error
+exit from the command in this case.
 
-I just sent a patch to do that in "git-web--browse.sh" and I will soon =
-work=20
-on the same stuff for man viewing.
+Probably something like this?
 
->    > By the way, I do not see any reason to put man as a candidate.
->    > "man" should be the default when nothing is specified or when al=
-l
->    > candidates have failed.
->
->    It may be more explicit.
->
-> Well, I do not buy this argument and I am pretty sure that a
-> simple note into the manual would suffice but, that's me :)
+ builtin-fetch.c |    7 ++++---
+ 1 files changed, 4 insertions(+), 3 deletions(-)
 
-As my patch is now on next and as I am not sure to understand exactly w=
-hat=20
-you want, I can only suggest to send a patch if you really care.
-
-Thanks,
-Christian.
+diff --git a/builtin-fetch.c b/builtin-fetch.c
+index 55f611e..a2deb3e 100644
+--- a/builtin-fetch.c
++++ b/builtin-fetch.c
+@@ -297,7 +297,7 @@ static int store_updated_refs(const char *url, struct ref *ref_map)
+ {
+ 	FILE *fp;
+ 	struct commit *commit;
+-	int url_len, i, note_len, shown_url = 0;
++	int url_len, i, note_len, shown_url = 0, err = 0;
+ 	char note[1024];
+ 	const char *what, *kind;
+ 	struct ref *rm;
+@@ -364,7 +364,8 @@ static int store_updated_refs(const char *url, struct ref *ref_map)
+ 			note);
+ 
+ 		if (ref) {
+-			update_local_ref(ref, what, verbose, note);
++			if (update_local_ref(ref, what, verbose, note))
++				err = 1;
+ 			if (*note) {
+ 				if (!shown_url) {
+ 					fprintf(stderr, "From %.*s\n",
+@@ -376,7 +377,7 @@ static int store_updated_refs(const char *url, struct ref *ref_map)
+ 		}
+ 	}
+ 	fclose(fp);
+-	return 0;
++	return err;
+ }
+ 
+ /*
