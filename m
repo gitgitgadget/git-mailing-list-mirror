@@ -1,75 +1,62 @@
-From: Frank Lichtenheld <frank@lichtenheld.de>
-Subject: [PATCH 1/4] var: Don't require to be in a git repository.
-Date: Fri, 14 Mar 2008 18:29:27 +0100
-Message-ID: <1205515770-3424-2-git-send-email-frank@lichtenheld.de>
-References: <1205515770-3424-1-git-send-email-frank@lichtenheld.de>
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Frank Lichtenheld <frank@lichtenheld.de>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri Mar 14 18:31:24 2008
+From: Sergei Organov <osv@javad.com>
+Subject: [PATCH] git-rev-parse.txt: clarify meaning of rev~ and rev~0.
+Date: Fri, 14 Mar 2008 20:20:06 +0300
+Message-ID: <87wso5mcs7.fsf@osv.gnss.ru>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 14 18:34:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JaDk6-0003Ll-II
-	for gcvg-git-2@gmane.org; Fri, 14 Mar 2008 18:30:54 +0100
+	id 1JaDmw-0004Xv-VO
+	for gcvg-git-2@gmane.org; Fri, 14 Mar 2008 18:33:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754067AbYCNR3l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Mar 2008 13:29:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754124AbYCNR3l
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Mar 2008 13:29:41 -0400
-Received: from aiolos.lenk.info ([85.214.124.154]:55119 "EHLO aiolos.lenk.info"
+	id S1754256AbYCNRdL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Mar 2008 13:33:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754190AbYCNRdK
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Mar 2008 13:33:10 -0400
+Received: from javad.com ([216.122.176.236]:1801 "EHLO javad.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753880AbYCNR3h (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Mar 2008 13:29:37 -0400
-Received: from herkules.lenk.info
-	([213.239.194.154] helo=smtp.lenk.info ident=Debian-exim)
-	by mail.lenk.info with esmtpsa 
-	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA1:32) (Exim 4.63 1)
-	id 1JaDiu-0003Yh-Sn; Fri, 14 Mar 2008 18:29:42 +0100
-Received: from host-82-135-33-74.customer.m-online.net ([82.135.33.74] helo=dirac.djpig.de)
-	by smtp.lenk.info with esmtpsa 
-	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA1:32) (Exim 4.63 1)
-	id 1JaDii-000843-T8; Fri, 14 Mar 2008 18:29:28 +0100
-Received: from djpig by dirac.djpig.de with local (Exim 4.69)
-	(envelope-from <frank@lichtenheld.de>)
-	id 1JaDik-00013D-N4; Fri, 14 Mar 2008 18:29:30 +0100
-X-Mailer: git-send-email 1.5.4.4.555.g697b7.dirty
-In-Reply-To: <1205515770-3424-1-git-send-email-frank@lichtenheld.de>
+	id S1754613AbYCNRdJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Mar 2008 13:33:09 -0400
+Received: from osv ([87.236.81.130])
+	by javad.com (8.11.6/8.11.0) with ESMTP id m2EHX3V04271;
+	Fri, 14 Mar 2008 17:33:03 GMT
+	(envelope-from s.organov@javad.com)
+Received: from osv by osv with local (Exim 4.63)
+	(envelope-from <s.organov@javad.com>)
+	id 1JaDm4-00056k-C1; Fri, 14 Mar 2008 20:32:56 +0300
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77261>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77262>
 
-git var works fine even when not called in a git repository. So
-don't require it.
 
-This will make it possible to remove this pre-condition for some
-other git commands as well.
-
-Signed-off-by: Frank Lichtenheld <frank@lichtenheld.de>
+Signed-off-by: Sergei Organov <osv@javad.com>
 ---
- var.c |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
+ Documentation/git-rev-parse.txt |    5 +++--
+ 1 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/var.c b/var.c
-index 0de0efa..c20ac91 100644
---- a/var.c
-+++ b/var.c
-@@ -51,11 +51,12 @@ static int show_config(const char *var, const char *value)
- int main(int argc, char **argv)
- {
- 	const char *val;
-+	int nongit;
- 	if (argc != 2) {
- 		usage(var_usage);
- 	}
+diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
+index 6513c2e..0234f89 100644
+--- a/Documentation/git-rev-parse.txt
++++ b/Documentation/git-rev-parse.txt
+@@ -200,8 +200,9 @@ blobs contained in a commit.
+   object that is the <n>th generation grand-parent of the named
+   commit object, following only the first parent.  I.e. rev~3 is
+   equivalent to rev{caret}{caret}{caret} which is equivalent to
+-  rev{caret}1{caret}1{caret}1.  See below for a illustration of
+-  the usage of this form.
++  rev{caret}1{caret}1{caret}1.  See below for an illustration of
++  the usage of this form.  'rev{tilde}' is equivalent to 'rev{tilde}0'
++  which in turn is equivalent to 'rev'.
  
--	setup_git_directory();
-+	setup_git_directory_gently(&nongit);
- 	val = NULL;
- 
- 	if (strcmp(argv[1], "-l") == 0) {
+ * A suffix '{caret}' followed by an object type name enclosed in
+   brace pair (e.g. `v0.99.8{caret}\{commit\}`) means the object
 -- 
-1.5.4.4
+1.5.4.4.551.g1658c
