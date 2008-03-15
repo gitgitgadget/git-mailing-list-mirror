@@ -1,104 +1,80 @@
-From: Eric Blake <ebb9@byu.net>
-Subject: Re: gnulib-tool --version
-Date: Fri, 14 Mar 2008 22:37:41 -0600
-Message-ID: <47DB5295.9080005@byu.net>
-References: <910CF843580B3C40A25CD0D04B3908E286A29C@exchange4.comune.prato.local>	<200803150052.44573.bruno@clisp.org> <47DB12F3.8020504@byu.net> <200803150512.53166.bruno@clisp.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Fix recent 'unpack_trees()'-related changes breaking 'git
+ stash'
+Date: Fri, 14 Mar 2008 21:40:02 -0700 (PDT)
+Message-ID: <alpine.LFD.1.00.0803142133160.3557@woody.linux-foundation.org>
+References: <20080315014133.GB32265@neumann> <alpine.LFD.1.00.0803142023490.3557@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: bug-gnulib@gnu.org, git@vger.kernel.org
-To: Bruno Haible <bruno@clisp.org>
-X-From: git-owner@vger.kernel.org Sat Mar 15 05:38:03 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+To: SZEDER G?bor <szeder@ira.uka.de>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Mar 15 05:41:27 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JaO9i-0005Me-W7
-	for gcvg-git-2@gmane.org; Sat, 15 Mar 2008 05:38:03 +0100
+	id 1JaOCz-0005wg-4f
+	for gcvg-git-2@gmane.org; Sat, 15 Mar 2008 05:41:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750796AbYCOEhX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Mar 2008 00:37:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750770AbYCOEhX
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Mar 2008 00:37:23 -0400
-Received: from qmta05.emeryville.ca.mail.comcast.net ([76.96.30.48]:53479 "EHLO
-	QMTA05.emeryville.ca.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750738AbYCOEhW (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 15 Mar 2008 00:37:22 -0400
-Received: from OMTA01.emeryville.ca.mail.comcast.net ([76.96.30.11])
-	by QMTA05.emeryville.ca.mail.comcast.net with comcast
-	id 10921Z0010EPchoA50ya00; Sat, 15 Mar 2008 04:36:04 +0000
-Received: from [192.168.0.103] ([67.166.125.73])
-	by OMTA01.emeryville.ca.mail.comcast.net with comcast
-	id 1GdL1Z0041b8C2B8M00000; Sat, 15 Mar 2008 04:37:22 +0000
-X-Authority-Analysis: v=1.0 c=1 a=xe8BsctaAAAA:8 a=qgmcPZE8zYQQlwg6NE0A:9
- a=MsDueHGLuxM_8Ns52_MA:7 a=NU_gmj25jMCNKv5D7azH-qVb6L0A:4 a=eDFNAWYWrCwA:10
- a=rPt6xJ-oxjAA:10
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.12) Gecko/20080213 Thunderbird/2.0.0.12 Mnenhy/0.7.5.666
-In-Reply-To: <200803150512.53166.bruno@clisp.org>
-X-Enigmail-Version: 0.95.6
+	id S1750856AbYCOEkr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Mar 2008 00:40:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750837AbYCOEkq
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Mar 2008 00:40:46 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:37018 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750824AbYCOEkq (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 15 Mar 2008 00:40:46 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m2F4f1cr011573
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 14 Mar 2008 21:41:02 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m2F4e2Qn001711;
+	Fri, 14 Mar 2008 21:40:03 -0700
+In-Reply-To: <alpine.LFD.1.00.0803142023490.3557@woody.linux-foundation.org>
+User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+X-Spam-Status: No, hits=-3.31 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77304>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77305>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-[adding the git list]
 
-According to Bruno Haible on 3/14/2008 10:12 PM:
-| Take an example: Until 3 days ago,
-|   $ git log 532f
-| was equivalent to
-|   $ git log 532f4b4a94e7df8e730e433d4cba9e4119641691
-|
-| But then there was a commit 532f65ac8de5a89ea0b159fc3b76ead5a53e9fea. Since
-| then,
-|   $ git log 532f
-| gives an error message
-|   error: short SHA1 532f is ambiguous.
-|   fatal: ambiguous argument '532f': unknown revision or path not in the
-working tree.
-|   Use '--' to separate paths from revisions
+On Fri, 14 Mar 2008, Linus Torvalds wrote:
+> 
+> The trivial fix is to just copy the index timestamp from the source index 
+> into the result index. But we only do this if we *have* a source index, of 
+> course, and if we will even bother to use the result.
 
-The message comes from 'git rev-parse', which is called under the hood by
-most other git commands to resolve a SHA1 prefix into a commit.
+Actually, that second part of the test is just unnecessarily clever, and 
+it's just asking for trouble.
 
-|
-| To exclude the problem of ambiguous commit ids, with a reasonable
-probability,
-| I would therefore take the first 8 hex digits, not only the first 4.
+Even if we never use the "result" for anything in the end, it's probably a 
+good idea to have its timestamp match the source timestamp just in case 
+somebody wants to do the "is_racy_timestamp()" on the result while it's 
+being generated (and before it is thrown away).
 
-'git rev-parse', and thus 'git describe', defaults to 7 hex digits, and
-will display no fewer than 4 (although it displays as many as are
-necessary to have a non-ambiguous output at the time it is run).  gnulib's
-git-version-gen script intentionally asks 'git describe' for the shortest
-prefix, on the grounds that developers don't like to type long random
-strings, rather than sticking with the default of 7.
+In particular, it would not be necessarily wrong to use ie_match_stat() on 
+the result index in a callback.
 
-What is really needed is a method in git where once a SHA1 prefix becomes
-ambiguous, you can still easily choose to resolve the ambiguity in favor
-of the oldest commit that matches the prefix.  This is on the grounds that
-there are times when the user knows that the prefix was generated by 'git
-describe', and was not ambiguous at the time it was abbreviated.
-Unfortunately, I don't know such a command option or special syntax to
-'git rev-parse' to make this resolution occur.  And what's worse, the
-error message from 'git rev-parse' doesn't help - it only states that the
-prefix is either missing or ambiguous.  It would be much nicer to know
-that the prefix is now too short (vs. never existed), to then know to try
-the option to list all the alternative candidates and/or pick the oldest.
+So it might be better to make that thing be just
 
-- --
-Don't work too hard, make some time for fun as well!
+>  	memset(&o->result, 0, sizeof(o->result));
+> +	if (o->src_index)
+> +		o->result.timestamp = o->src_index->timestamp;
+>  	o->merge_size = len;
 
-Eric Blake             ebb9@byu.net
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.8 (Cygwin)
-Comment: Public key at home.comcast.net/~ericblake/eblake.gpg
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+instead of checking both src_index *and* dst_index. The source index is 
+all that matters anyway. Even if 'o->result' isn't used in the end, who 
+cares? We can still give it the right timestamp.
 
-iEYEARECAAYFAkfbUpUACgkQ84KuGfSFAYDsewCgrD9hRriDEYGWd/WlWIxLDRk6
-yVYAoJMIPljUvCnqS4w38Kg2ckI9g88C
-=dDhg
------END PGP SIGNATURE-----
+And no, this really isn't likely to matter, but let's pick the simpler 
+version if it doesn't matter.
+
+		Linus
