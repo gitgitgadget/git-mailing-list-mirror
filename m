@@ -1,90 +1,136 @@
-From: Eyvind Bernhardsen <eyvind-git@orakel.ntnu.no>
-Subject: [PATCH/RFC] fast-import: allow "reset" without "from" to delete a branch
-Date: Sat, 15 Mar 2008 15:59:49 +0100
-Message-ID: <7AFA021C-062D-4FC2-85EB-1DD6C054BEA4@orakel.ntnu.no>
-Mime-Version: 1.0 (Apple Message framework v919.2)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sat Mar 15 16:00:55 2008
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Fix recent 'unpack_trees()'-related changes breaking 'git
+ stash'
+Date: Sat, 15 Mar 2008 09:51:21 -0700 (PDT)
+Message-ID: <alpine.LFD.1.00.0803150934100.3557@woody.linux-foundation.org>
+References: <20080315014133.GB32265@neumann> <alpine.LFD.1.00.0803142023490.3557@woody.linux-foundation.org> <7v1w6cpox6.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: SZEDER G?bor <szeder@ira.uka.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Mar 15 17:53:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JaXsT-0001Ks-3j
-	for gcvg-git-2@gmane.org; Sat, 15 Mar 2008 16:00:53 +0100
+	id 1JaZd8-000109-Vo
+	for gcvg-git-2@gmane.org; Sat, 15 Mar 2008 17:53:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751918AbYCOO7x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Mar 2008 10:59:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751907AbYCOO7x
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Mar 2008 10:59:53 -0400
-Received: from 97.84-49-228.nextgentel.com ([84.49.228.97]:49399 "EHLO
-	eyvind.bernhardsens.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751842AbYCOO7w (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Mar 2008 10:59:52 -0400
-Received: from vredefort.d.eyvind.bernhardsens.net (vredefort.d.eyvind.bernhardsens.net [172.16.3.223])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by eyvind.bernhardsens.net (Postfix) with ESMTP id 9C181142879;
-	Sat, 15 Mar 2008 15:59:49 +0100 (CET)
-X-Mailer: Apple Mail (2.919.2)
+	id S1751913AbYCOQwG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Mar 2008 12:52:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751898AbYCOQwF
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Mar 2008 12:52:05 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:58823 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751110AbYCOQwE (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 15 Mar 2008 12:52:04 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m2FGqMFn021414
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 15 Mar 2008 09:52:24 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m2FGpLuV024804;
+	Sat, 15 Mar 2008 09:51:21 -0700
+In-Reply-To: <7v1w6cpox6.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+X-Spam-Status: No, hits=-3.31 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77331>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77332>
 
-Resetting a branch without "from" and not making any further commits
-to it currently causes fast-import to fail with an error message.
 
-This patch prevents the error, allowing "reset" to be used to delete
-a branch.
 
-Signed-off-by: Eyvind Bernhardsen <eyvind-git@orakel.ntnu.no>
+On Fri, 14 Mar 2008, Junio C Hamano wrote:
+> 
+> It would be slightly simpler to write the above sequence like this:
+> 
+> 	w_tree=$( (
+> 		rm -f "$TMP-index" &&
+>                 git read-tree --index-output="$TMP-index" -m $i_tree &&
+
+Ack. That's an independent cleanup.
+
+In fact, I would almost prefer to try to stop using GIT_INDEX_FILE 
+entirely, and add it as a top-level git flag, so you can then make the 
+rest be:
+
+	git --index-file "$TMP-index" add -u &&
+	git --index-file "$TMP-index" write-tree &&
+	rm -f "$TMP-index"
+
+instead of doing that
+
+>                 GIT_INDEX_FILE="$TMP-index" &&
+>                 export GIT_INDEX_FILE &&
+>                 git add -u &&
+>                 git write-tree &&
+>                 rm -f "$TMP-index"
+
+thing.
+
+
+Something like the appended, in other words.
+
+Oh, and that whole git.c argument parsing should be made to use the proper 
+arg parser, too. But I'm too damn lazy and not comfy enough with 
+'parse_options()' usage. Somebody who is should take a look..
+
+		Linus
+
 ---
-Since commit c3b0dec ("Be more careful about updating refs"), git fast- 
-import has given the following error message on every import from  
-cvs2svn:
+ git-stash.sh |    9 +++------
+ git.c        |   15 +++++++++++++++
+ 2 files changed, 18 insertions(+), 6 deletions(-)
 
-	error: Trying to write ref refs/heads/TAG.FIXUP with nonexistant  
-object 0000000000000000000000000000000000000000
-	error: Unable to update refs/heads/TAG.FIXUP
-
-The imported repository is fine, but the error message finally bugged  
-me enough to figure out what was going on, and the explanation is  
-simple.  If a branch is reset in fast-import, and no further commits  
-are made on that branch, the final dump_branches() call in fast- 
-import.c fails.
-
-cvs2svn creates a TAG.FIXUP branch for every tag and then resets it  
-after the tag has been set. The intent is that TAG.FIXUP should be  
-deleted, and this patch makes that work without error (the branch is  
-actually deleted even without this patch).
-
-It's a small change and the test suite passes, but I'm not sure if  
-using reset to delete a branch is desired behaviour, so I would  
-appreciate it if someone who actually knows what they are doing could  
-take a look at it :)
-
-  fast-import.c |    5 +++--
-  1 files changed, 3 insertions(+), 2 deletions(-)
-
-diff --git a/fast-import.c b/fast-import.c
-index 655913d..989ba94 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -1539,8 +1539,9 @@ static int update_branch(struct branch *b)
-  			return -1;
-  		}
-  	}
--	if (write_ref_sha1(lock, b->sha1, msg) < 0)
--		return error("Unable to update %s", b->name);
-+	if (!is_null_sha1(b->sha1))
-+		if (write_ref_sha1(lock, b->sha1, msg) < 0)
-+			return error("Unable to update %s", b->name);
-  	return 0;
-  }
-
--- 
-1.5.4.4.555.ga98c.dirty
+diff --git a/git-stash.sh b/git-stash.sh
+index c2b6820..95b65dc 100755
+--- a/git-stash.sh
++++ b/git-stash.sh
+@@ -63,12 +63,9 @@ create_stash () {
+ 	# state of the working tree
+ 	w_tree=$( (
+ 		rm -f "$TMP-index" &&
+-		cp -p ${GIT_INDEX_FILE-"$GIT_DIR/index"} "$TMP-index" &&
+-		GIT_INDEX_FILE="$TMP-index" &&
+-		export GIT_INDEX_FILE &&
+-		git read-tree -m $i_tree &&
+-		git add -u &&
+-		git write-tree &&
++		git read-tree --index-output="$TMP-index" -m $i_tree &&
++		git --index-file "$TMP-index" add -u &&
++		git --index-file "$TMP-index" write-tree &&
+ 		rm -f "$TMP-index"
+ 	) ) ||
+ 		die "Cannot save the current worktree state"
+diff --git a/git.c b/git.c
+index 13de801..a615df9 100644
+--- a/git.c
++++ b/git.c
+@@ -55,6 +55,21 @@ static int handle_options(const char*** argv, int* argc, int* envchanged)
+ 			setenv(GIT_DIR_ENVIRONMENT, cmd + 10, 1);
+ 			if (envchanged)
+ 				*envchanged = 1;
++		} else if (!strcmp(cmd, "--index-file")) {
++			if (*argc < 2) {
++				fprintf(stderr, "No directory given for --index-file.\n" );
++				usage(git_usage_string);
++			}
++			setenv(INDEX_ENVIRONMENT, (*argv)[1], 1);
++			if (envchanged)
++				*envchanged = 1;
++			(*argv)++;
++			(*argc)--;
++			handled++;
++		} else if (!prefixcmp(cmd, "--index-file=")) {
++			setenv(INDEX_ENVIRONMENT, cmd + 13, 1);
++			if (envchanged)
++				*envchanged = 1;
+ 		} else if (!strcmp(cmd, "--work-tree")) {
+ 			if (*argc < 2) {
+ 				fprintf(stderr, "No directory given for --work-tree.\n" );
