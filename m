@@ -1,66 +1,56 @@
-From: Nick Warne <nick@ukfsn.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 Subject: Re: Possible git git config --global user.email BUG
-Date: Sun, 16 Mar 2008 19:35:32 +0000
-Message-ID: <20080316193532.14554328@linuxamd.linicks.net>
+Date: Sun, 16 Mar 2008 12:41:56 -0700 (PDT)
+Message-ID: <alpine.LFD.1.00.0803161241180.3020@woody.linux-foundation.org>
 References: <20080316192636.3075d0eb@linuxamd.linicks.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 16 20:36:50 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Nick Warne <nick@ukfsn.org>
+X-From: git-owner@vger.kernel.org Sun Mar 16 20:43:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jayeh-0002E3-38
-	for gcvg-git-2@gmane.org; Sun, 16 Mar 2008 20:36:27 +0100
+	id 1JaylD-0004nb-Re
+	for gcvg-git-2@gmane.org; Sun, 16 Mar 2008 20:43:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752792AbYCPTff (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Mar 2008 15:35:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752891AbYCPTff
-	(ORCPT <rfc822;git-outgoing>); Sun, 16 Mar 2008 15:35:35 -0400
-Received: from mx1.ukfsn.org ([77.75.108.10]:51022 "EHLO mail.ukfsn.org"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752286AbYCPTfe (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Mar 2008 15:35:34 -0400
-Received: from localhost (smtp-filter.ukfsn.org [192.168.54.205])
-	by mail.ukfsn.org (Postfix) with ESMTP id 8D921DECA1
-	for <git@vger.kernel.org>; Sun, 16 Mar 2008 19:39:33 +0000 (GMT)
-Received: from mail.ukfsn.org ([192.168.54.25])
-	by localhost (smtp-filter.ukfsn.org [192.168.54.205]) (amavisd-new, port 10024)
-	with ESMTP id OBoZxc8BQn1M for <git@vger.kernel.org>;
-	Sun, 16 Mar 2008 19:12:18 +0000 (GMT)
-Received: from linuxamd.linicks.net (linicks.net [87.127.191.50])
-	by mail.ukfsn.org (Postfix) with ESMTP id 4988BDEC44
-	for <git@vger.kernel.org>; Sun, 16 Mar 2008 19:39:33 +0000 (GMT)
+	id S1752434AbYCPTmc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Mar 2008 15:42:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752472AbYCPTmb
+	(ORCPT <rfc822;git-outgoing>); Sun, 16 Mar 2008 15:42:31 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:36495 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752286AbYCPTmb (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 16 Mar 2008 15:42:31 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m2GJh25h004270
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sun, 16 Mar 2008 12:43:03 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m2GJfu83010547;
+	Sun, 16 Mar 2008 12:41:57 -0700
 In-Reply-To: <20080316192636.3075d0eb@linuxamd.linicks.net>
-X-Mailer: Claws Mail 3.3.1 (GTK+ 2.10.14; i686-pc-linux-gnu)
+User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+X-Spam-Status: No, hits=-3.305 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77375>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77376>
 
-OK, ignore this.  I am an _IDIOT_
 
-On Sun, 16 Mar 2008 19:26:36 +0000
-Nick Warne <nick@ukfsn.org> wrote:
 
-> Hi all,
-> 
-> I have been using git clone for 'pull' only for a while (kernel, Xorg
-> etc. etc.), but today starting using local commit and creating patches
-> for Fluxbox project.
-> 
-> On a new clone of fluxbox, I issued:
+On Sun, 16 Mar 2008, Nick Warne wrote:
 > 
 > git config --global nick.email <real.mail.address>
 > git config --global nick.name "Nick Warne"
 
-All works fine... I issued the --global commands incorrectly.
+"nick.email/name"?
 
-Sorry for the noise.
+Should be "user", not "nick".
 
-Nick
--- 
-Free Software Foundation Associate Member 5508
+		Linus
