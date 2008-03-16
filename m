@@ -1,64 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Repository corruption
-Date: Sun, 16 Mar 2008 16:14:10 -0700
-Message-ID: <7v7ig2feil.fsf@gitster.siamese.dyndns.org>
-References: <20070903165255.6CEC78B8B2@rover.dkm.cz>
- <20070903174142.GK10749@pasky.or.cz>
- <20070910212550.GN1935@nan92-1-81-57-214-146.fbx.proxad.net>
- <20080315121903.GY10335@machine.or.cz>
- <20080315130441.GF4079@nan92-1-81-57-214-146.fbx.proxad.net>
- <20080316230151.GB6803@machine.or.cz>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: Support caching projects list
+Date: Mon, 17 Mar 2008 00:39:11 +0100
+Message-ID: <200803170039.14634.jnareb@gmail.com>
+References: <20080313231413.27966.3383.stgit@rover> <200803161937.07082.jnareb@gmail.com> <1205707048.2758.35.camel@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Yann Dirson <ydirson@altern.org>, GIT list <git@vger.kernel.org>
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Mon Mar 17 00:15:27 2008
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+Cc: Frank Lichtenheld <frank@lichtenheld.de>,
+	Petr Baudis <pasky@suse.cz>, Junio C Hamano <junkio@cox.net>,
+	git@vger.kernel.org
+To: "J.H." <warthog19@eaglescrag.net>
+X-From: git-owner@vger.kernel.org Mon Mar 17 00:39:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jb24K-0007xQ-An
-	for gcvg-git-2@gmane.org; Mon, 17 Mar 2008 00:15:08 +0100
+	id 1Jb2SB-0006kI-Lf
+	for gcvg-git-2@gmane.org; Mon, 17 Mar 2008 00:39:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752723AbYCPXO3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Mar 2008 19:14:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752536AbYCPXO3
-	(ORCPT <rfc822;git-outgoing>); Sun, 16 Mar 2008 19:14:29 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:38778 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752609AbYCPXO2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Mar 2008 19:14:28 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 2E9E42E6D;
-	Sun, 16 Mar 2008 19:14:27 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 063922E6C; Sun, 16 Mar 2008 19:14:20 -0400 (EDT)
-In-Reply-To: <20080316230151.GB6803@machine.or.cz> (Petr Baudis's message of
- "Mon, 17 Mar 2008 00:01:51 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753300AbYCPXjI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Mar 2008 19:39:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753253AbYCPXjI
+	(ORCPT <rfc822;git-outgoing>); Sun, 16 Mar 2008 19:39:08 -0400
+Received: from fg-out-1718.google.com ([72.14.220.157]:56729 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752858AbYCPXjG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Mar 2008 19:39:06 -0400
+Received: by fg-out-1718.google.com with SMTP id l27so1488884fgb.17
+        for <git@vger.kernel.org>; Sun, 16 Mar 2008 16:39:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        bh=vgQni/e9mQ+z4MKiITMBQNbShqX4cw53pEL9jbXlr5U=;
+        b=A+iB9xiS1oxyUupMOHFGnE8ddVJnGwiAmhwqdsV9yDUu4yu3GHcaIB1TgPM9EcUqcR7XQ12C0dTFV9eGlZeFn40delBnXXT0wSVZJRL4Az3vau/UkzGowkeuLLd6oUOuBOjMevJsJj2y3nXf22l+vKTs8aP5dCZjp86yUnSp9s4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=PZH9t1bM3R9E/WZ4KwkoDjTbyT7jwqSWFfFGsjFYsmySUKBdWu2MaMJk5Kjkdmjw/9WTT1jm223GDC0OpytALTx+UgFCWAye+bkcS/viyHdjS55XjpzdBvDWnYPpTJWoOqxqus3v5YDMcFkpkkUYeTpuyVApsSKyPMqDZ2zOZv8=
+Received: by 10.82.174.20 with SMTP id w20mr34109660bue.14.1205710744927;
+        Sun, 16 Mar 2008 16:39:04 -0700 (PDT)
+Received: from ?192.168.1.11? ( [83.8.232.138])
+        by mx.google.com with ESMTPS id f13sm12105029gvd.9.2008.03.16.16.39.02
+        (version=SSLv3 cipher=OTHER);
+        Sun, 16 Mar 2008 16:39:03 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <1205707048.2758.35.camel@localhost.localdomain>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77402>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77403>
 
-Petr Baudis <pasky@suse.cz> writes:
+J.H. wrote:
+> Jakub Narebski wrote:
+>>
+>> P.S. When searching CPAN for existing modules for caching and CGI
+>> caching I have found Cache::Adaptive::ByLoad which does what
+>> caching-gitweb does,
 
-> My idea I got few days ago when looking at the borken repositories is
-> that it was caused by interrupted git-repack, since there were stale
-> tmp_pack* files left in the repository - it seems like it removed old
-> "redundant" packs even though the new one weren't properly completed.
-> But that is just a speculation, and I did not get around to look at the
-> script yet whether this could really happen, or if something like this
-> got fixed recently.
+I'm not sure about quality of this code, though. It uses Cache::Cache, 
+by the way.
 
-Hmm, unless you are talking about ef07618 (git-repack: Properly abort in
-corrupt repository, 2005-11-21) as "recent", I do not see anything
-suspicious.
+>> and some solutions in newer caching interfaces, 
+>> either CHI or Cache, which try to avoid thundering horde problem.
+> 
+> Interesting - my have to take a look at that.
 
-We may want to refine the first comment in the remove-redundant loop to
-clarify, though.  We do check if elements of $existing are actually
-redundant or not in the loop against $fullbases these days, since ce85907
-(Only repack active packs by skipping over kept packs., 2006-10-29).
+CHI uses either 'busy_lock [DURATION]' (bump expiration time), or
+'expires_variance [FLOAT]' for fuzzy expiration time matching.
+
+Cache has LRU and FIFO removal strategies.
+
+-- 
+Jakub Narebski
+Poland
