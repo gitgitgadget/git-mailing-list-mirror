@@ -1,67 +1,99 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: On fetch refspecs and wildcards
-Date: Sun, 16 Mar 2008 15:33:05 -0700
-Message-ID: <7vve3mfgf2.fsf@gitster.siamese.dyndns.org>
-References: <1205499956.7589.4.camel@gentoo-jocke.transmode.se>
- <1205604534.7589.20.camel@gentoo-jocke.transmode.se>
- <7v1w6bj7f9.fsf_-_@gitster.siamese.dyndns.org>
- <200803161921.49274.tlikonen@iki.fi>
- <7v8x0igvdp.fsf_-_@gitster.siamese.dyndns.org>
+From: "J.H." <warthog19@eaglescrag.net>
+Subject: Re: [PATCH] gitweb: Support caching projects list
+Date: Sun, 16 Mar 2008 15:37:28 -0700
+Message-ID: <1205707048.2758.35.camel@localhost.localdomain>
+References: <20080313231413.27966.3383.stgit@rover>
+	 <20080316114151.GZ10103@mail-vs.djpig.de>
+	 <1205686355.2758.31.camel@localhost.localdomain>
+	 <200803161937.07082.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org,
-	Teemu Likonen <tlikonen@iki.fi>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Mar 16 23:34:06 2008
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Frank Lichtenheld <frank@lichtenheld.de>,
+	Petr Baudis <pasky@suse.cz>, Junio C Hamano <junkio@cox.net>,
+	git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 16 23:38:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jb1QW-0004fw-St
-	for gcvg-git-2@gmane.org; Sun, 16 Mar 2008 23:34:01 +0100
+	id 1Jb1Ui-0005po-Fm
+	for gcvg-git-2@gmane.org; Sun, 16 Mar 2008 23:38:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753400AbYCPWdX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Mar 2008 18:33:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752550AbYCPWdW
-	(ORCPT <rfc822;git-outgoing>); Sun, 16 Mar 2008 18:33:22 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:58432 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753400AbYCPWdW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Mar 2008 18:33:22 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 3393924C8;
-	Sun, 16 Mar 2008 18:33:21 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 068E524C5; Sun, 16 Mar 2008 18:33:14 -0400 (EDT)
-In-Reply-To: <7v8x0igvdp.fsf_-_@gitster.siamese.dyndns.org> (Junio C.
- Hamano's message of "Sun, 16 Mar 2008 15:24:34 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752727AbYCPWhl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Mar 2008 18:37:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752663AbYCPWhl
+	(ORCPT <rfc822;git-outgoing>); Sun, 16 Mar 2008 18:37:41 -0400
+Received: from shards.monkeyblade.net ([198.137.202.13]:40221 "EHLO
+	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752546AbYCPWhk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Mar 2008 18:37:40 -0400
+Received: from [10.0.2.243] (adsl-99-165-94-179.dsl.pltn13.sbcglobal.net [99.165.94.179])
+	(authenticated bits=0)
+	by shards.monkeyblade.net (8.14.1/8.13.8) with ESMTP id m2GMbP2l022289
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sun, 16 Mar 2008 15:37:25 -0700
+In-Reply-To: <200803161937.07082.jnareb@gmail.com>
+X-Mailer: Evolution 2.12.3 (2.12.3-1.fc8) 
+X-Virus-Scanned: ClamAV 0.88.7/6265/Sun Mar 16 12:49:23 2008 on shards.monkeyblade.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77396>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77397>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Sun, 2008-03-16 at 19:37 +0100, Jakub Narebski wrote:
+> On Sun, 16 Mar 2008, J.H. wrote:
+> > On Sun, 2008-03-16 at 12:41 +0100, Frank Lichtenheld wrote:
+> >> On Sat, Mar 15, 2008 at 02:44:42PM -0700, Jakub Narebski wrote:
+> >>>  
+> >>> This could be much simplified with perl-cache (perl-Cache-Cache).
+> >>> Unfortunately this is non-standard module, not distributed (yet?)
+> >>> with Perl.
+> >> 
+> >> I think somebody who actually needs this can be bothered to install a
+> >> CPAN perl module. This should probably not enabled by default anyway.
+> > 
+> > The people who need the caching are also likely those who are most
+> > averse to using things that don't either come with their distribution or
+> > aren't easily and readily available in something like an extras
+> > repository or a very well trusted contrib repository.  I can at least
+> > vouch for one large site that needs this that doesn't install things via
+> > cpan for a lot of different reasons.
+> 
+> Actually Cache::FileCache, which is part of CacheCache distribution,
+> should be available in contrib or even extras repository. I have
+> installed it as perl-Cache-Cache RPM (1.05-1.fc4.rf) on my Aurox 11.1
+> (which is old Fedora Core 4 based distribution), from Dries RPM
+> repository (part of FreshRPM now, IIRC).
 
-> ...
-> Fortunately or unfortunately, Documentation/pull-fetch-param.txt does not
-> talk about wildcard refspecs (not even the syntax, let alone the
-> semantics), so we can define whatever we want right now, and I think both
->
->     (1) allow duplicated destinations, including wildcard matches; and
+That would be fine, I don't think the larger sites would have issues
+finding a copy than.
 
-Clarification.
+> 
+> The problem is that at least according to what documentation of other,
+> never CPAN modules says Cache::FileCache is slow, as it always serialize
+> using Storable (Storable should be part of perl distribution).
 
-"s/;/, but do honor requests to copy one thing to multiple destinations;/"
-is what I meant here.
+That makes it much less interesting unfortunately.
 
->     (2) refuse duplicated destinations for explicit ones, and more than
->         one wildcard patterns that match the same ref, but omit explicitly
->         specified ones from wildcard matches;
->
-> are viable options.  I suspect the current code does not do either.  We
-> should pick one semantics, make sure the implementation matches that, and
-> document it.
+> We can always install local copy alongside gitweb...
+> 
+> 
+> P.S. When searching CPAN for existing modules for caching and CGI
+> caching I have found Cache::Adaptive::ByLoad which does what
+> caching-gitweb does, and some solutions in newer caching interfaces,
+> either CHI or Cache which try to avoid thundering horde problem.
+
+Interesting - my have to take a look at that.
+
+> P.P.S. Does kernel.org use memcached, or some kind of web cache
+> (reverse proxy cache) like Varnish or Squid?
+
+No - doesn't buy us anything really unfortunately.  And since I'm doing
+caching inside of gitweb itself having multiple layers of caching just
+makes things more complicated, adds unnecessary latency to updates, etc.
+
+- John
