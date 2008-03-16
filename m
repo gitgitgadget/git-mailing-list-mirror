@@ -1,84 +1,96 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] rebase [--onto O] A B: omit needless checkout
-Date: Sat, 15 Mar 2008 20:56:03 -0700
-Message-ID: <7vmyozl3u4.fsf@gitster.siamese.dyndns.org>
-References: <20080312191041.GF3198@ins.uni-bonn.de>
- <47D8D5B8.70809@viscovery.net> <20080315103954.GD14769@ins.uni-bonn.de>
- <7vk5k3n2ho.fsf_-_@gitster.siamese.dyndns.org>
- <20080315222140.GE24845@ins.uni-bonn.de>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH/RFC] fast-import: allow "reset" without "from" to delete a branch
+Date: Sun, 16 Mar 2008 00:12:40 -0400
+Message-ID: <20080316041240.GH8410@spearce.org>
+References: <7AFA021C-062D-4FC2-85EB-1DD6C054BEA4@orakel.ntnu.no>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Johannes Sixt <j.sixt@viscovery.net>
-To: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Mar 16 04:56:58 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Eyvind Bernhardsen <eyvind-git@orakel.ntnu.no>
+X-From: git-owner@vger.kernel.org Sun Mar 16 05:13:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JajzV-0000Yg-C4
-	for gcvg-git-2@gmane.org; Sun, 16 Mar 2008 04:56:57 +0100
+	id 1JakFu-0003J1-2V
+	for gcvg-git-2@gmane.org; Sun, 16 Mar 2008 05:13:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752373AbYCPD4P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Mar 2008 23:56:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752325AbYCPD4O
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Mar 2008 23:56:14 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:45525 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752134AbYCPD4N (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Mar 2008 23:56:13 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 34FDA1A0E;
-	Sat, 15 Mar 2008 23:56:13 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 01D201A0B; Sat, 15 Mar 2008 23:56:08 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1750758AbYCPEMp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Mar 2008 00:12:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750757AbYCPEMp
+	(ORCPT <rfc822;git-outgoing>); Sun, 16 Mar 2008 00:12:45 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:34535 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750747AbYCPEMo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Mar 2008 00:12:44 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1JakEl-0005ui-P9; Sun, 16 Mar 2008 00:12:43 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 7B9DF20FBAE; Sun, 16 Mar 2008 00:12:41 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <7AFA021C-062D-4FC2-85EB-1DD6C054BEA4@orakel.ntnu.no>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77349>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77350>
 
-Ralf Wildenhues <Ralf.Wildenhues@gmx.de> writes:
+Eyvind Bernhardsen <eyvind-git@orakel.ntnu.no> wrote:
+> It's a small change and the test suite passes, but I'm not sure if  
+> using reset to delete a branch is desired behaviour, so I would  
+> appreciate it if someone who actually knows what they are doing could  
+> take a look at it :)
 
-> Hello Junio,
->
-> * Junio C Hamano wrote on Sat, Mar 15, 2008 at 09:42:11PM CET:
->> This teaches "git rebase [--onto O] A B" to omit an unnecessary checkout
->> of branch B before it goes on.
->
->>  * Almost untested as I do not use this form very often.  Feedback would
->>    be good.
->
-> Nice, and seems to do exactly what I meant.  Actually the more important
-> speedup gained from this change is that files that have changed in the
-> non-common history of A but not in that of B, preserve their old time
-> stamps, so the rebuild of my bugfix topic B after having built master
-> is really quick now.
+I think this is a slightly better patch, as it avoids creating a
+lock file around the ref if we aren't going to actually alter it.
 
-Actually, you would need this on top.  Otherwise
+At present fast-import does not allow an application to delete a
+branch that existed when fast-import started, but if the branch
+was strictly transient within the fast-import process (like the
+cvs2svn TAG.FIXUP) then there is no problem.
 
-	$ git rebase master my-topic~3
-
-would misbehave.
-
----
-
- git-rebase.sh |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
-
-diff --git a/git-rebase.sh b/git-rebase.sh
-index 9273852..bd55ef6 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -320,7 +320,8 @@ case "$#" in
- 	branch_name="$2"
- 	switch_to="$2"
+Is this patch acceptable?  Note it is from you, I carried in your
+commit message, SBO, etc.
  
--	if branch=$(git rev-parse --verify "refs/heads/$2" 2>/dev/null)
-+	if git show-ref --verify --quiet -- "refs/heads/$2" &&
-+	   branch=$(git rev-parse --verify "refs/heads/$2" 2>/dev/null)
- 	then
- 		head_name="refs/heads/$2"
- 	elif branch=$(git rev-parse --verify "$2" 2>/dev/null)
+--8>--
+From: Eyvind Bernhardsen <eyvind-git@orakel.ntnu.no>
+Subject: [PATCH] fast-import: allow "reset" without "from" to delete temporary branch
+
+Resetting a branch without "from" and not making any further commits
+to it currently causes fast-import to fail with an error message.
+
+This patch prevents the error, allowing "reset" to be used to delete
+a branch.
+
+Signed-off-by: Eyvind Bernhardsen <eyvind-git@orakel.ntnu.no>
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ fast-import.c |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+
+diff --git a/fast-import.c b/fast-import.c
+index 655913d..73e5439 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -1516,6 +1516,8 @@ static int update_branch(struct branch *b)
+ 	struct ref_lock *lock;
+ 	unsigned char old_sha1[20];
+ 
++	if (is_null_sha1(b->sha1))
++		return 0;
+ 	if (read_ref(b->name, old_sha1))
+ 		hashclr(old_sha1);
+ 	lock = lock_any_ref_for_update(b->name, old_sha1, 0);
+-- 
+1.5.4.4.640.g8ae62
+
+-- 
+Shawn.
