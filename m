@@ -1,71 +1,83 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: [PATCH] gitweb: Support caching projects list
-Date: Sun, 16 Mar 2008 01:56:45 +0100
-Message-ID: <20080316005645.GY2414@genesis.frugalware.org>
-References: <20080313231413.27966.3383.stgit@rover> <m3ve3nwtl3.fsf@localhost.localdomain>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: tracking repository
+Date: Sat, 15 Mar 2008 19:42:23 -0700
+Message-ID: <7vabkzmltc.fsf@gitster.siamese.dyndns.org>
+References: <frh8dg$t9j$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="Vj8lTl3Roa4E9STX"
-Cc: Petr Baudis <pasky@suse.cz>, Junio C Hamano <junkio@cox.net>,
-	git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 16 01:57:59 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: kenneth johansson <ken@kenjo.org>
+X-From: git-owner@vger.kernel.org Sun Mar 16 03:43:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JahCI-0001Ih-KI
-	for gcvg-git-2@gmane.org; Sun, 16 Mar 2008 01:57:59 +0100
+	id 1Jaiqc-0004Yz-9e
+	for gcvg-git-2@gmane.org; Sun, 16 Mar 2008 03:43:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752010AbYCPA4x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Mar 2008 20:56:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752002AbYCPA4w
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Mar 2008 20:56:52 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:56923 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751798AbYCPA4w (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Mar 2008 20:56:52 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 411051B25B3;
-	Sun, 16 Mar 2008 01:56:48 +0100 (CET)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 6BC3244659;
-	Sun, 16 Mar 2008 01:53:54 +0100 (CET)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id B429611904C1; Sun, 16 Mar 2008 01:56:45 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <m3ve3nwtl3.fsf@localhost.localdomain>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1751640AbYCPCme (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Mar 2008 22:42:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751646AbYCPCme
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Mar 2008 22:42:34 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:57128 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751634AbYCPCmd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Mar 2008 22:42:33 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 2E0B71C74;
+	Sat, 15 Mar 2008 22:42:32 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id DF8811C73; Sat, 15 Mar 2008 22:42:26 -0400 (EDT)
+In-Reply-To: <frh8dg$t9j$1@ger.gmane.org> (kenneth johansson's message of
+ "Sat, 15 Mar 2008 19:35:12 +0000 (UTC)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77344>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77345>
 
+kenneth johansson <ken@kenjo.org> writes:
 
---Vj8lTl3Roa4E9STX
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+> This works great and it will track all changes in the remote repositories 
+> without me having to worry about it aborting due to merge issues with my 
+> local branch or remote  doing rebase on some branch.
+>
+> The problem is that it is useless :( I can't find any way to use a 
+> repository with only remotes in it. Is there a way to make a clone of a 
+> remote branch in a repository ??
 
-On Sat, Mar 15, 2008 at 02:44:42PM -0700, Jakub Narebski <jnareb@gmail.com> wrote:
-> It looks like repo.or.cz is overwhelmed by its success. I hope that
-> now that there are other software hosting sites with git hosting
-> (Savannah, GitHub, Gitorious,...) the number of projects wouldn't grow
-> as rapidly.
+Usually a clone with a work tree ("git clone $elsewhere") is configured to
+keep copies of branches at the remote in remotes/origin in order to track
+them, and that is done by having this in its .git/config:
 
-i think repo.or.cz is still the only one that offers mirroring of git
-repos while it's quite a handy feature.
+	[remote "origin"]
+		url = $elsewhere
+		fetch = +refs/heads/*:refs/remotes/origin/*
+	[branch "master"]
+        	remote = origin
+                merge = refs/heads/master
 
---Vj8lTl3Roa4E9STX
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+This lets you to have your own work on your own "master", and have changes
+on the other end merged when you "git pull" from there, while keeping
+track of other branches on the other end in remotes/origin/ namespace.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (GNU/Linux)
+You do not want to have any of your own work in this repository, however,
+so there is no reason to separate the remote ones in remotes/origin/
+namespace.  You would want "mirroring".
 
-iD8DBQFH3HBNe81tAgORUJYRAqjlAJ4ueFy0VruMIDBQMraEbjJprs5zLwCfS2Es
-pxkHCRrgmvkaH/KCmjrxiZI=
-=u29f
------END PGP SIGNATURE-----
+You can have in your $GIT_DIR/config something like this:
 
---Vj8lTl3Roa4E9STX--
+        [remote "origin"]
+		url = $elsewhere
+                fetch = +refs/heads/*:refs/heads/*
+
+You can edit the configuration file yourself to read like above, and then
+"git fetch" will keep a copy of remote "master" branch in your local
+"master" (and similarly to all the branches over there).
+
+Modern git allows this setup via "git remote add --mirror"; it is merely a
+convenience wrapper and it is perfectly fine to edit the configuration
+file yourself without using it.
