@@ -1,83 +1,82 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: tracking repository
-Date: Sat, 15 Mar 2008 19:42:23 -0700
-Message-ID: <7vabkzmltc.fsf@gitster.siamese.dyndns.org>
-References: <frh8dg$t9j$1@ger.gmane.org>
+Subject: Re: integrity of a repository
+Date: Sat, 15 Mar 2008 20:54:51 -0700
+Message-ID: <7v4pb7migk.fsf@gitster.siamese.dyndns.org>
+References: <20080315132645.GC17579@ins.uni-bonn.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: kenneth johansson <ken@kenjo.org>
-X-From: git-owner@vger.kernel.org Sun Mar 16 03:43:46 2008
+To: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Mar 16 04:56:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jaiqc-0004Yz-9e
-	for gcvg-git-2@gmane.org; Sun, 16 Mar 2008 03:43:42 +0100
+	id 1Jajyt-0000Sr-2d
+	for gcvg-git-2@gmane.org; Sun, 16 Mar 2008 04:56:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751640AbYCPCme (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Mar 2008 22:42:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751646AbYCPCme
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Mar 2008 22:42:34 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:57128 "EHLO
+	id S1752072AbYCPDzJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Mar 2008 23:55:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752051AbYCPDzJ
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Mar 2008 23:55:09 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:45160 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751634AbYCPCmd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Mar 2008 22:42:33 -0400
+	with ESMTP id S1751970AbYCPDzI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Mar 2008 23:55:08 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 2E0B71C74;
-	Sat, 15 Mar 2008 22:42:32 -0400 (EDT)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id AA745198E;
+	Sat, 15 Mar 2008 23:55:05 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
  certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id DF8811C73; Sat, 15 Mar 2008 22:42:26 -0400 (EDT)
-In-Reply-To: <frh8dg$t9j$1@ger.gmane.org> (kenneth johansson's message of
- "Sat, 15 Mar 2008 19:35:12 +0000 (UTC)")
+ ESMTP id 7BE50198D; Sat, 15 Mar 2008 23:55:01 -0400 (EDT)
+In-Reply-To: <20080315132645.GC17579@ins.uni-bonn.de> (Ralf Wildenhues's
+ message of "Sat, 15 Mar 2008 14:26:45 +0100")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77345>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77346>
 
-kenneth johansson <ken@kenjo.org> writes:
+Ralf Wildenhues <Ralf.Wildenhues@gmx.de> writes:
 
-> This works great and it will track all changes in the remote repositories 
-> without me having to worry about it aborting due to merge issues with my 
-> local branch or remote  doing rebase on some branch.
+> I am aware that git provides integrity of a commit (and thus, a branch
+> head) via its sha, which covers both the tree and its history.
 >
-> The problem is that it is useless :( I can't find any way to use a 
-> repository with only remotes in it. Is there a way to make a clone of a 
-> remote branch in a repository ??
+> But what about the integrity of a git repository as a whole?
+>
+> For example, if I have a set of branches, create a file listing
+>   branchname  sha-of-head
+>
+> for each such branch, and hash that file, and also 'git gc --prune',
+> can I then be sure that not only does the repository contain exactly
+> what I want (namely all history of all branches), but also that it does
+> not contain any other material (say, stuff that may not be disclosed)?
+>
+> Would I need the in file listing all local and remote branches?
+> What about all heads in .git/*HEAD (such as FETCH_HEAD)?
 
-Usually a clone with a work tree ("git clone $elsewhere") is configured to
-keep copies of branches at the remote in remotes/origin in order to track
-them, and that is done by having this in its .git/config:
+That's an incoherent question ;-)  First you talk about snapshotting all
+the refs, as if you would want to make sure you can detect anybody moving
+the tips of branches after that happens, but then you talk about something
+completely unrelated.
 
-	[remote "origin"]
-		url = $elsewhere
-		fetch = +refs/heads/*:refs/remotes/origin/*
-	[branch "master"]
-        	remote = origin
-                merge = refs/heads/master
+A freestanding git repository with a work tree consists of a set of refs
+(that includes your local branches in refs/heads, tags in refs/tags, and
+remote tracking branches refs/remotes but not limited to these three
+categories.  Anything under refs/ is a ref by definition, and it includes
+the stash), reflogs, the index, HEAD (which is typically a pointer into
+refs/heads/ somewhere but can directly be pointing at a commit), and an
+object store.  An object store of a repository that is not corrupt
+contains all objects that are reachable from refs, reflogs, the index and
+the HEAD, and "gc --prune" will remove everything else.
 
-This lets you to have your own work on your own "master", and have changes
-on the other end merged when you "git pull" from there, while keeping
-track of other branches on the other end in remotes/origin/ namespace.
+So the answer to the question in your later part of the message is that:
 
-You do not want to have any of your own work in this repository, however,
-so there is no reason to separate the remote ones in remotes/origin/
-namespace.  You would want "mirroring".
+ - FETCH_HEAD, ORIG_HEAD and MERGE_HEAD do not protect anything from
+   getting pruned;
 
-You can have in your $GIT_DIR/config something like this:
-
-        [remote "origin"]
-		url = $elsewhere
-                fetch = +refs/heads/*:refs/heads/*
-
-You can edit the configuration file yourself to read like above, and then
-"git fetch" will keep a copy of remote "master" branch in your local
-"master" (and similarly to all the branches over there).
-
-Modern git allows this setup via "git remote add --mirror"; it is merely a
-convenience wrapper and it is perfectly fine to edit the configuration
-file yourself without using it.
+ - Objects that are not reachable from the tip of branches will remain in
+   the object store after pruning, if they are reachable from non-branch
+   refs (e.g. tags and the stash), reflogs, or the index.
