@@ -1,66 +1,64 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: tracking repository
-Date: Sun, 16 Mar 2008 19:11:48 -0400 (EDT)
-Message-ID: <alpine.LNX.1.00.0803161904360.19665@iabervon.org>
-References: <frh8dg$t9j$1@ger.gmane.org> <7vabkzmltc.fsf@gitster.siamese.dyndns.org> <1205697779.12760.20.camel@duo> <7vwso2ieuu.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0803161716470.19665@iabervon.org> <7vwso2gwnf.fsf@gitster.siamese.dyndns.org>
- <alpine.LNX.1.00.0803161812340.19665@iabervon.org> <7vzlsyfgjg.fsf@gitster.siamese.dyndns.org> <7vbq5eff3e.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Repository corruption
+Date: Sun, 16 Mar 2008 16:14:10 -0700
+Message-ID: <7v7ig2feil.fsf@gitster.siamese.dyndns.org>
+References: <20070903165255.6CEC78B8B2@rover.dkm.cz>
+ <20070903174142.GK10749@pasky.or.cz>
+ <20070910212550.GN1935@nan92-1-81-57-214-146.fbx.proxad.net>
+ <20080315121903.GY10335@machine.or.cz>
+ <20080315130441.GF4079@nan92-1-81-57-214-146.fbx.proxad.net>
+ <20080316230151.GB6803@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, kenneth johansson <ken@kenjo.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 17 00:12:37 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Yann Dirson <ydirson@altern.org>, GIT list <git@vger.kernel.org>
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Mon Mar 17 00:15:27 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jb21r-0006wF-Fh
-	for gcvg-git-2@gmane.org; Mon, 17 Mar 2008 00:12:35 +0100
+	id 1Jb24K-0007xQ-An
+	for gcvg-git-2@gmane.org; Mon, 17 Mar 2008 00:15:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754862AbYCPXLv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Mar 2008 19:11:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754775AbYCPXLu
-	(ORCPT <rfc822;git-outgoing>); Sun, 16 Mar 2008 19:11:50 -0400
-Received: from iabervon.org ([66.92.72.58]:35088 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754234AbYCPXLu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Mar 2008 19:11:50 -0400
-Received: (qmail 16160 invoked by uid 1000); 16 Mar 2008 23:11:48 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 16 Mar 2008 23:11:48 -0000
-In-Reply-To: <7vbq5eff3e.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1752723AbYCPXO3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Mar 2008 19:14:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752536AbYCPXO3
+	(ORCPT <rfc822;git-outgoing>); Sun, 16 Mar 2008 19:14:29 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:38778 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752609AbYCPXO2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Mar 2008 19:14:28 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 2E9E42E6D;
+	Sun, 16 Mar 2008 19:14:27 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 063922E6C; Sun, 16 Mar 2008 19:14:20 -0400 (EDT)
+In-Reply-To: <20080316230151.GB6803@machine.or.cz> (Petr Baudis's message of
+ "Mon, 17 Mar 2008 00:01:51 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77401>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77402>
 
-On Sun, 16 Mar 2008, Junio C Hamano wrote:
+Petr Baudis <pasky@suse.cz> writes:
 
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
-> > Daniel Barkalow <barkalow@iabervon.org> writes:
-> >
-> >> Is "refs/*:refs/*" (mirror everything, including weird stuff) supposed to 
-> >> be prohibited?
-> >
-> > No.  In fact "remote add --mirror" actively creates such.  See my other
-> > message about design level issues.
-> 
-> I think something like this is needed.  It still has an independent issue
-> that this is now called by "git remote show" or "git remote prune", and it
-> will die with a nonsense "refusing to create" error message, though.
-> 
-> The error, as far as I can tell, is half about a misconfigured config
-> (e.g. "fetch = refs/heads/*:refs/remotes/[]?/*") and half about screwy
-> remote repository (e.g. a misnamed "[]?" branch on the remote end can try
-> to update a broken "refs/remotes/origin/[]?" even the configuration is a
-> perfectly valid "fetch = refs/heads/*:refs/remotes/origin/*").  It may
-> make sense to reword the error message to "ignoring" from "refusing" and
-> do just that without dying here.  I dunno.
+> My idea I got few days ago when looking at the borken repositories is
+> that it was caused by interrupted git-repack, since there were stale
+> tmp_pack* files left in the repository - it seems like it removed old
+> "redundant" packs even though the new one weren't properly completed.
+> But that is just a speculation, and I did not get around to look at the
+> script yet whether this could really happen, or if something like this
+> got fixed recently.
 
-Yeah, I think that's right. (And this patch is also right)
+Hmm, unless you are talking about ef07618 (git-repack: Properly abort in
+corrupt repository, 2005-11-21) as "recent", I do not see anything
+suspicious.
 
-	-Daniel
-*This .sig left intentionally blank*
+We may want to refine the first comment in the remove-redundant loop to
+clarify, though.  We do check if elements of $existing are actually
+redundant or not in the loop against $fullbases these days, since ce85907
+(Only repack active packs by skipping over kept packs., 2006-10-29).
