@@ -1,144 +1,93 @@
-From: kenneth johansson <ken@kenjo.org>
-Subject: Re: tracking repository
-Date: Sun, 16 Mar 2008 21:02:59 +0100
-Message-ID: <1205697779.12760.20.camel@duo>
-References: <frh8dg$t9j$1@ger.gmane.org>
-	 <7vabkzmltc.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: "git pull" throws away dirty state
+Date: Sun, 16 Mar 2008 13:50:23 -0700
+Message-ID: <7vprtuieb4.fsf@gitster.siamese.dyndns.org>
+References: <alpine.LFD.1.00.0803161055510.3020@woody.linux-foundation.org>
+ <alpine.LFD.1.00.0803161123260.3020@woody.linux-foundation.org>
+ <alpine.LFD.1.00.0803161434450.2947@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Mar 16 21:45:19 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Sun Mar 16 21:51:27 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JazjK-0007Hm-GH
-	for gcvg-git-2@gmane.org; Sun, 16 Mar 2008 21:45:18 +0100
+	id 1JazpE-0000c2-Uc
+	for gcvg-git-2@gmane.org; Sun, 16 Mar 2008 21:51:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752502AbYCPUok (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Mar 2008 16:44:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752440AbYCPUoj
-	(ORCPT <rfc822;git-outgoing>); Sun, 16 Mar 2008 16:44:39 -0400
-Received: from 1-1-4-20a.ras.sth.bostream.se ([82.182.72.90]:42193 "EHLO
-	garbo.kenjo.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752436AbYCPUoj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Mar 2008 16:44:39 -0400
-X-Greylist: delayed 2491 seconds by postgrey-1.27 at vger.kernel.org; Sun, 16 Mar 2008 16:44:38 EDT
-Received: from duo.kenjo.org ([172.16.0.10])
-	by garbo.kenjo.org with esmtp (Exim 4.69)
-	(envelope-from <ken@kenjo.org>)
-	id 1Jaz4O-0002f8-E5; Sun, 16 Mar 2008 21:03:00 +0100
-In-Reply-To: <7vabkzmltc.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Evolution 2.22.0 
+	id S1752565AbYCPUup (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Mar 2008 16:50:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752546AbYCPUup
+	(ORCPT <rfc822;git-outgoing>); Sun, 16 Mar 2008 16:50:45 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:58266 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751937AbYCPUuo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Mar 2008 16:50:44 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 5D77524C0;
+	Sun, 16 Mar 2008 16:50:43 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 20D7E24BF; Sun, 16 Mar 2008 16:50:36 -0400 (EDT)
+In-Reply-To: <alpine.LFD.1.00.0803161434450.2947@xanadu.home> (Nicolas
+ Pitre's message of "Sun, 16 Mar 2008 14:37:34 -0400 (EDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77381>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77382>
 
-On Sat, 2008-03-15 at 19:42 -0700, Junio C Hamano wrote:
+Nicolas Pitre <nico@cam.org> writes:
 
-> You do not want to have any of your own work in this repository, however,
-> so there is no reason to separate the remote ones in remotes/origin/
-> namespace.  You would want "mirroring".
-> 
-> You can have in your $GIT_DIR/config something like this:
-> 
->         [remote "origin"]
-> 		url = $elsewhere
->                 fetch = +refs/heads/*:refs/heads/*
+> On Sun, 16 Mar 2008, Linus Torvalds wrote:
+>
+>> On Sun, 16 Mar 2008, Linus Torvalds wrote:
+>> > 
+>> > Ok, this is distressing, and I suspect it's another bug of mine due to 
+>> > unpack-trees changes, but before I delve into it deeper I thought I'd 
+>> > report it here and see if others see it too, and maybe it's due to 
+>> > something else..
+>> 
+>> Nope, I bisected it down to
+>> 
+>> 	34110cd4e394e3f92c01a4709689b384c34645d8 is first bad commit
+>> 
+>> 	Make 'unpack_trees()' have a separate source and destination index
+>> 
+>> and I'm trying to figure out what part of that triggered this bug.
+>
+> We really should have more tests to cover all those bugs that were 
+> introduced and fixed lately.
+>
+> Given that Git should work fine in some cases even with a dirty work 
+> tree by design, I'm a bit surprised that we don't have any test case 
+> covering that.
 
-> Modern git allows this setup via "git remote add --mirror"; it is merely a
-> convenience wrapper and it is perfectly fine to edit the configuration
-> file yourself without using it.
+Yeah, I was wondering why these are not covered by
+t/t1000-read-tree-m-3way:
 
-I tried using the option --mirror but then the config end up in a way
-that 
-all remote repositories master branch maps to exactly the same name. 
+  "git read-tree -m O A B"
 
-However changing the config file manually I did get one that works more
-or 
-less as I intended. 
+       O       A       B         result      index requirements
+  -------------------------------------------------------------------
+    12  exists  O!=A    O!=B      take A      must match A, if exists.
+                        A==B
+    ------------------------------------------------------------------
+    13  exists  O!=A    O==B      take A      must match A, if exists.
+    ------------------------------------------------------------------
+    14  exists  O==A    O!=B      take B      if exists, must either (1)
+                                             match A and be up-to-date,
+                                             or (2) match B.
+   ------------------------------------------------------------------
 
-So with the below config I can create an empty directory and in that do 
-"git --bare init"
-copy in the config file and any objects I have laying around. 
-then simply put a cron job that once a day do a
-"git remote update"
+But this one tests only "read-tree -m", not "read-tree -m -u".  The tests
+for "-m -u" we have in t1004 is not about being comprehensive like t1000
+(which covers all cases in the case table) but seems to be more about
+randomly selected cases.
 
-the resulting repository is then possible to clone. And as long as no
-repacking is done the object data will be shared. But to share data even
-after a repack I guess I need to use GIT_ALTERNATE_OBJECT_DIRECTORIES
-for my local clone. And then I need to be very careful when doing any
-pruning on the download repository since my local clone could need data
-that is no longer needed in the download repository. 
-
-What would a safe procedure be ?? copy all data in the object hierarchy
-from the download repository to my local clones then do a gc in them
-starting from the download repository. 
-
-------------
-[core]
-	repositoryformatversion = 0
-	filemode = true
-	bare = true
-[remote "linus"]
-	url =
-git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
-	fetch = +refs/heads/*:refs/heads/*
-[remote "stable_2.6.12"]
-	url =
-git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-2.6.12.y.git
-	fetch = +refs/heads/*:refs/heads/stable_2.6.12_*
-[remote "stable_2.6.13"]
-	url =
-git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-2.6.13.y.git
-	fetch = +refs/heads/*:refs/heads/stable_2.6.13_*
-[remote "stable_2.6.14"]
-	url =
-git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-2.6.14.y.git
-	fetch = +refs/heads/*:refs/heads/stable_2.6.14_*
-[remote "stable_2.6.15"]
-	url =
-git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-2.6.15.y.git
-	fetch = +refs/heads/*:refs/heads/stable_2.6.15_*
-[remote "stable_2.6.16"]
-	url =
-git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-2.6.16.y.git
-	fetch = +refs/heads/*:refs/heads/stable_2.6.16_*
-[remote "stable_2.6.17"]
-	url =
-git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-2.6.17.y.git
-	fetch = +refs/heads/*:refs/heads/stable_2.6.17_*
-[remote "stable_2.6.18"]
-	url =
-git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-2.6.18.y.git
-	fetch = +refs/heads/*:refs/heads/stable_2.6.18_*
-[remote "stable_2.6.19"]
-	url =
-git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-2.6.19.y.git
-	fetch = +refs/heads/*:refs/heads/stable_2.6.19_*
-[remote "stable_2.6.20"]
-	url =
-git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-2.6.20.y.git
-	fetch = +refs/heads/*:refs/heads/stable_2.6.20_*
-[remote "stable_2.6.21"]
-	url =
-git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-2.6.21.y.git
-	fetch = +refs/heads/*:refs/heads/stable_2.6.21_*
-[remote "stable_2.6.22"]
-	url =
-git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-2.6.22.y.git
-	fetch = +refs/heads/*:refs/heads/stable_2.6.22_*
-[remote "stable_2.6.23"]
-	url =
-git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-2.6.23.y.git
-	fetch = +refs/heads/*:refs/heads/stable_2.6.23_*
-[remote "stable_2.6.24"]
-	url =
-git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-2.6.24.y.git
-	fetch = +refs/heads/*:refs/heads/stable_2.6.24_*
-
-------------
+Patches?
