@@ -1,60 +1,60 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH] Don't update unchanged merge entries
-Date: Sun, 16 Mar 2008 16:00:32 -0400 (EDT)
-Message-ID: <alpine.LNX.1.00.0803161548250.19665@iabervon.org>
-References: <alpine.LFD.1.00.0803161055510.3020@woody.linux-foundation.org> <alpine.LFD.1.00.0803161123260.3020@woody.linux-foundation.org> <alpine.LFD.1.00.0803161136060.3020@woody.linux-foundation.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: tracking repository
+Date: Sun, 16 Mar 2008 13:38:33 -0700
+Message-ID: <7vwso2ieuu.fsf@gitster.siamese.dyndns.org>
+References: <frh8dg$t9j$1@ger.gmane.org>
+ <7vabkzmltc.fsf@gitster.siamese.dyndns.org> <1205697779.12760.20.camel@duo>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sun Mar 16 21:01:21 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, kenneth johansson <ken@kenjo.org>
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Sun Mar 16 21:39:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jaz2h-0002cJ-R8
-	for gcvg-git-2@gmane.org; Sun, 16 Mar 2008 21:01:16 +0100
+	id 1Jazdk-0005nq-O7
+	for gcvg-git-2@gmane.org; Sun, 16 Mar 2008 21:39:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752402AbYCPUAg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Mar 2008 16:00:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752353AbYCPUAf
-	(ORCPT <rfc822;git-outgoing>); Sun, 16 Mar 2008 16:00:35 -0400
-Received: from iabervon.org ([66.92.72.58]:37393 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751880AbYCPUAf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Mar 2008 16:00:35 -0400
-Received: (qmail 4658 invoked by uid 1000); 16 Mar 2008 20:00:32 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 16 Mar 2008 20:00:32 -0000
-In-Reply-To: <alpine.LFD.1.00.0803161136060.3020@woody.linux-foundation.org>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1752476AbYCPUix (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Mar 2008 16:38:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752373AbYCPUiw
+	(ORCPT <rfc822;git-outgoing>); Sun, 16 Mar 2008 16:38:52 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:54498 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751880AbYCPUiw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Mar 2008 16:38:52 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id F17391C74;
+	Sun, 16 Mar 2008 16:38:47 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id C267D1C73; Sun, 16 Mar 2008 16:38:42 -0400 (EDT)
+In-Reply-To: <1205697779.12760.20.camel@duo> (kenneth johansson's message of
+ "Sun, 16 Mar 2008 21:02:59 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77378>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77379>
 
-On Sun, 16 Mar 2008, Linus Torvalds wrote:
+kenneth johansson <ken@kenjo.org> writes:
 
-> In commit 34110cd4e394e3f92c01a4709689b384c34645d8 ("Make 'unpack_trees()' 
-> have a separate source and destination index") I introduced a really 
-> stupid bug in that it would always add merged entries with the CE_UPDATE 
-> flag set. That caused us to always re-write the file, even when it was 
-> already up-to-date in the source index.
-> 
-> Not only is that really stupid from a performance angle, but more 
-> importantly it's actively wrong: if we have dirty state in the tree when 
-> we merge, overwriting it with the result of the merge will incorrectly 
-> overwrite that dirty state.
-> 
-> This trivially fixes the problem - simply don't set the CE_UPDATE flag 
-> when the merge result matches the old state.
+> git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
+> 	fetch = +refs/heads/*:refs/heads/*
+> [remote "stable_2.6.12"]
+> 	url =
+> git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-2.6.12.y.git
+> 	fetch = +refs/heads/*:refs/heads/stable_2.6.12_*
 
-While you're at it, you should at least fix the comment. I actually think 
-it would be better to have update start out 0 and be set to CE_UPDATE 
-after verify_uptodate() and verify_absent(), since those checks are what 
-verifies that using CE_UPDATE is okay.
+Daniel, I think we are looking at a regression.  The latter style, * at
+the end but not immediately following a slash, should never have worked.
+Wildcard expansion function should be erroring out when it sees something
+like this.
 
-	-Daniel
-*This .sig left intentionally blank*
+Once we fix that regression, the above would stop working (in)correctly.
+Rewrite it to something like this right now will make it keep working:
+
+ 	fetch = +refs/heads/*:refs/heads/stable_2.6.12/*
