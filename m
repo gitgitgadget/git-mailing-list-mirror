@@ -1,186 +1,157 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re* git remote --mirror bug?
-Date: Sun, 16 Mar 2008 03:21:30 -0700
-Message-ID: <7v1w6bj7f9.fsf_-_@gitster.siamese.dyndns.org>
-References: <1205499956.7589.4.camel@gentoo-jocke.transmode.se>
- <1205604534.7589.20.camel@gentoo-jocke.transmode.se>
+From: "Nazar Aziz" <mcnazar@gmail.com>
+Subject: git-svn dcommit fails in a repository with submodules
+Date: Sun, 16 Mar 2008 10:50:22 +0000
+Message-ID: <60dc6b330803160350o3481b7b5vee1795919101cce2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: joakim.tjernlund@transmode.se
-X-From: git-owner@vger.kernel.org Sun Mar 16 11:22:45 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: mcnazar@gmail.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 16 11:51:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jaq0q-0006nC-1D
-	for gcvg-git-2@gmane.org; Sun, 16 Mar 2008 11:22:44 +0100
+	id 1JaqSd-0004U5-6g
+	for gcvg-git-2@gmane.org; Sun, 16 Mar 2008 11:51:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751077AbYCPKVl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Mar 2008 06:21:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750928AbYCPKVl
-	(ORCPT <rfc822;git-outgoing>); Sun, 16 Mar 2008 06:21:41 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:59453 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750758AbYCPKVk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Mar 2008 06:21:40 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id A3DC5271B;
-	Sun, 16 Mar 2008 06:21:37 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 798302718; Sun, 16 Mar 2008 06:21:32 -0400 (EDT)
-In-Reply-To: <1205604534.7589.20.camel@gentoo-jocke.transmode.se> (Joakim
- Tjernlund's message of "Sat, 15 Mar 2008 19:08:53 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751754AbYCPKu0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Mar 2008 06:50:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751745AbYCPKu0
+	(ORCPT <rfc822;git-outgoing>); Sun, 16 Mar 2008 06:50:26 -0400
+Received: from an-out-0708.google.com ([209.85.132.249]:54963 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751505AbYCPKuZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Mar 2008 06:50:25 -0400
+Received: by an-out-0708.google.com with SMTP id d31so1138146and.103
+        for <git@vger.kernel.org>; Sun, 16 Mar 2008 03:50:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=FNIvX+wIOC0gij0ZO9UhldMGfscdlS3GMBSNt2YbUTI=;
+        b=EHt74h1DWCPtpnlCupA5yBgsDdYwRfZI6HrrgGKN/72Rw05uaNONYGYJ9qVdighTNoxFNY9CL3280m2EK2ANt5OWNDI2NYGzHAa+li88OiM0hui7quoCaRdtmgtZlgyrZQiKKhAWpA3iP5MR/hLSwuOsfdKlKHEs1WjmqVa9bKU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=h7QUNy2ppjz9gebSQKdHZ/9Z/pa5YgpEem42EhOjClclwya1kXbmlX0T754oiRB4sX0SofuY+wUKXfiaRnsStN4P72SKVNyADanuotb8DM9bXe/tNseZCjZ5Tr+q24+l2Rdsh+zG8BVd0WvAPuH60dUY/FHG9MBxQ5OTONmIGrA=
+Received: by 10.101.66.14 with SMTP id t14mr28935707ank.114.1205664622598;
+        Sun, 16 Mar 2008 03:50:22 -0700 (PDT)
+Received: by 10.100.94.17 with HTTP; Sun, 16 Mar 2008 03:50:22 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77359>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77360>
 
-Joakim Tjernlund <joakim.tjernlund@transmode.se> writes:
+Hi all.
 
->> git remote show os2kernel 
->> * remote os2kernel
->>   URL: /usr/local/src/os2kernel
->> Warning: unrecognized mapping in remotes.os2kernel.fetch: +refs/*:refs/*
+I am struggling with a git repository which I sync with an SVN repos
+using git-svn. git-svn dcommit fails with (dump from git-svn 1.5.4.1):
 
-This is very unfortunate.  What's more unfortunate is that, adding insult
-to injury, "git remote" reimplemented in C gives even worse nonsense:
+Committing to svn://epia/tmp/Trunc ...
+         A       modules/akismet
+fatal: git-cat-file 5f726f311613171310226d9bf040765
+6ad4a82f4: bad file
+ at /usr/bin/git-svn line 3537
+        SVN::Git::Editor::chg_file('SVN::Git::Editor=HASH(0xd0c26c)',
+'_p_void=SCALAR(0x9aee60)', 'HASH(0x9af340)') called at
+/usr/bin/git-svn line 3461
+         SVN::Git::Editor::A('SVN::Git::Editor=HASH(0xd0c26c)',
+'HASH(0x9af340)') called at /usr/bin/git-svn line 3592
+        SVN::Git::Editor::apply_diff('SVN::Git::Editor=HASH(0xd0c26c)')
+called at /usr/bin/git-svn line 450
+         main::cmd_dcommit() called at /usr/bin/git-svn line 246
+        eval {...} called at /usr/bin/git-svn line 244
+32768 at /usr/bin/git-svn line 450
 
-    $ git remote show git.git
-    fatal: * refusing to create funny ref 'refs/stash' locally
+Just to explain my setup. I've got an application that has shared
+code. This shared code was previously accessed in SVN via an
+svn:externals which pointed to a separate "shared code" svn
+repository. This setup allowed me to share this code in several apps
+whilst also giving me the ability to modify this shared code in any
+single application and commit it to the "shared code" repos for use in
+my other applications.
 
-This is with my test repository sitting next to my primary git.git
-repository with config entries like this:
+I've written an article on it here:
+http://panthersoftware.com/articles/view/3/svn-s-svn-externals-to-git-s-submodule-for-rails-plugins
 
-    [remote "git.git"]
-        url = ../git.git/
-        fetch = refs/*:refs/*
+I've tried hacking git-svn but my Perl fu is weak. So I would
+appreciate any pointers to help me solve this.
 
-The thing is that we obviously are _not_ attempting to create anything
-when we say "git remote show".
+I've done the following hack:
 
-Now, it happens that "stash" is purely a local matter, and propagating it
-with fetch (even with mirroring) may not make much sense.  Even if the
-mirroring is for backup purposes, its value is dubious (if you are backing
-up because you are afraid of disk failure, you should back up properly
-with disk back-up tools).
+sub valid_object {
+  #check if git-cat can process this sha1..if not then return false
+   my ($self, $sha1) = @_;
+    my $fh = IO::File->new_tmpfile or croak $!;
+    defined(my $pid = fork) or croak $!;
+    if (!$pid) {
+        open STDOUT, '>&', $fh or croak $!;
+        exec qw/git-cat-file blob/, $sha1 or croak $!;
+     }
+    waitpid $pid, 0;
+    if ($?) {
+     return 0;
+    } else {
+      return 1;
+    }
+}
 
-So in that sense, it could be argued that it is Ok not to propagate
-refs/stash and that was partly the reason why we create the "stash" ref
-directly underneath refs/ namespace.  Everything else that is propagatable
-has at least two level refnames, e.g. heads/master, tags/v1.5.0, and the
-plumbing layer has a way to enforce this, and "git remote" uses it.
+sub A {
+    my ($self, $m) = @_;
+    if ($self->valid_object($m->{sha1_b}) == 1) {
+      my ($dir, $file) = split_path($m->{file_b});
+       my $pbat = $self->ensure_path($dir);
+      my $fbat = $self->add_file($self->repo_path($m->{file_b}), $pbat,
+                    undef, -1);
+      print "\tA\t$m->{file_b}\n" unless $::_q;
+       $self->chg_file($fbat, $m);
+      $self->close_file($fbat,undef,$self->{pool});
+    }
+}
 
-But that is not an excuse to fail "git fetch" (which is the underlying
-mechanism "git remote" uses).
+I added sub valid_object to package SVN::Git::Editor. It is a brute
+method to see if git-cat-file will choke on a particular sha1. I am
+certain there is a more elegant method to check if a sha1 is actually
+a submodule... I just haven't found it yet.
 
-I think this patch may work the issue around for recent enough git, but
-I have to say that this is an interim fix.  With this, now you get a less
-nonsense output, but it still is nonsense nevertheless:
+The above almost works but not quite:
 
-    $ git remote show git.git
-    * remote git.git
-      URL: ../git.git/
-      New remote branch (next fetch will store in remotes/git.git)
-        refs/stash
-      Tracked remote branches
-        ar/sgid-bsd cb/mergetool cc/help cr/reset-parseopt db/diff...
+$ git-svn2 dcommit
+Committing to svn://epia/tmp/Trunc ...
+fatal: git-cat-file 5f726f311613171310226d9bf0407656ad4a82f4: bad file
+Committed r24
+W: ea1efb48fb6e03454f9264dd63cd609884c4f780 and refs/remotes/git-svn
+differ, using rebase:
+ :040000 040000 2bd02aa0d14fd5e16f90d8b9c5322cc101d7f026
+36fbd5e7d921cd5fabe32fe857455f7fec26f521 M      modules
+Current branch master is up to date.
+# of revisions changed
+before:
 
-Notice that it talks about storing refs/stash in remotes/git.git?
 
-It won't, and it shouldn't, as we told it to mirror refs/stash to
-refs/stash.
+after:
+ ea1efb48fb6e03454f9264dd63cd609884c4f780
+  If you are attempting to commit  merges, try running:
+         git rebase --interactive --preserve-merges  refs/remotes/git-svn
+Before dcommitting
 
-As a side note, I think remote, when doing "show" that does _not_ update
-the local side of tracking refs, should tweak the error behaviour that it
-can trigger when it calls get_fetch_map().  The callee may have originally
-been written for "fetch" and had a hardcoded "we are fetching and storing,
-so our behaviour when seeing a funny ref is to error out with "refusing to
-create" message and that is fine" mentality.  Calling such a function when
-it is not actually fetching, without modifying the callee's assumption to
-suit the error behaviour for its needs, is sloppy and needs to be fixed.
+"fatal: git-cat-file 5f726f311613171310226d9bf0407656ad4a82f4: bad
+file" comes from sub valid_object and is for info only. I can see that
+git-svn has bypassed the submodule as I was hoping.
 
-The scripted version if git-parse-remote, which is being phased out (it
-still is used somewhat by git-pull and git-clone) has similar logic to
-parse fetch refspec mapping, but it does not understand the mirroring
-layout (refs/*:refs/*) as you saw, so it fails way before it triggers
-these issues.  What the C reimplementation does (or at least tries to do)
-is an improvement in that sense, but because it is relatively a new
-feature, bugs in there are to be expected.
+Checking SVN's log I can see an empty commit (ie no files have been
+uploaded). In Git, my Master branch is still ahead of of the
+remotes/git-svn branch (ie not in synch with remotes/git-svn)
 
-We are going into 1.5.5-rc feature freeze tonight, and squashing these
-bugs now are of the highest priority.  Please keep the bug reports and
-fixes flowing.
+>From the above, I can see that I am so almost there... but just need
+one final push to get me to the finishing line.
 
-Thanks.
+Is there anyway I can tell git-svn to ignore submodules?
 
----
+Any hints, tips or help would be greatly appreciated.
 
- builtin-check-ref-format.c |    2 +-
- git-parse-remote.sh        |    9 +++++++--
- remote.c                   |   16 +++++++++++++---
- 3 files changed, 21 insertions(+), 6 deletions(-)
+Thank you in advance for any help.
 
-diff --git a/builtin-check-ref-format.c b/builtin-check-ref-format.c
-index fe04be7..e2b4eef 100644
---- a/builtin-check-ref-format.c
-+++ b/builtin-check-ref-format.c
-@@ -10,5 +10,5 @@ int cmd_check_ref_format(int argc, const char **argv, const char *prefix)
- {
- 	if (argc != 2)
- 		usage("git-check-ref-format refname");
--	return !!check_ref_format(argv[1]);
-+	return (-check_ref_format(argv[1]));
- }
-diff --git a/git-parse-remote.sh b/git-parse-remote.sh
-index 695a409..19d00e7 100755
---- a/git-parse-remote.sh
-+++ b/git-parse-remote.sh
-@@ -156,8 +156,13 @@ canon_refs_list_for_fetch () {
- 
- 		if local_ref_name=$(expr "z$local" : 'zrefs/\(.*\)')
- 		then
--		   git check-ref-format "$local_ref_name" ||
--		   die "* refusing to create funny ref '$local_ref_name' locally"
-+		   git check-ref-format "$local_ref_name"
-+		   case "$?" in
-+		   0 | 2) ;;
-+		   *)
-+			die "* refusing to create funny ref '$local_ref_name' locally"
-+			;;
-+		   esac
- 		fi
- 		echo "${dot_prefix}${force}${remote}:${local}"
- 	done
-diff --git a/remote.c b/remote.c
-index f3f7375..6a95b1e 100644
---- a/remote.c
-+++ b/remote.c
-@@ -1007,9 +1007,19 @@ int get_fetch_map(const struct ref *remote_refs,
- 	}
- 
- 	for (rm = ref_map; rm; rm = rm->next) {
--		if (rm->peer_ref && check_ref_format(rm->peer_ref->name + 5))
--			die("* refusing to create funny ref '%s' locally",
--			    rm->peer_ref->name);
-+		if (rm->peer_ref) {
-+			switch (check_ref_format(rm->peer_ref->name + 5)) {
-+			default:
-+				die("* refusing to create funny ref '%s' locally",
-+				    rm->peer_ref->name);
-+				break;
-+			case CHECK_REF_FORMAT_ONELEVEL:
-+				/* allow "refs/stash" to be propagated */
-+				break;
-+			case CHECK_REF_FORMAT_OK:
-+				break;
-+			}
-+		}
- 	}
- 
- 	if (ref_map)
+Nazar
