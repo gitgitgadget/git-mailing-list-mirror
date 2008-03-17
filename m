@@ -1,81 +1,80 @@
-From: Jonas Fonseca <fonseca@diku.dk>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [ANNOUNCE] tig-0.10
-Date: Mon, 17 Mar 2008 11:27:43 +0100
-Message-ID: <20080317102743.GB6830@diku.dk>
-References: <20080317020304.GA19249@diku.dk> <m3r6e9wup2.fsf@localhost.localdomain>
+Date: Mon, 17 Mar 2008 03:49:55 -0700
+Message-ID: <7vlk4hbp64.fsf@gitster.siamese.dyndns.org>
+References: <20080317020304.GA19249@diku.dk>
+ <7vr6e9bvuu.fsf@gitster.siamese.dyndns.org> <20080317102318.GA6830@diku.dk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 17 11:28:28 2008
+To: Jonas Fonseca <fonseca@diku.dk>
+X-From: git-owner@vger.kernel.org Mon Mar 17 11:50:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JbCZu-0006Rb-8k
-	for gcvg-git-2@gmane.org; Mon, 17 Mar 2008 11:28:26 +0100
+	id 1JbCvY-0005OP-Ul
+	for gcvg-git-2@gmane.org; Mon, 17 Mar 2008 11:50:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751946AbYCQK1q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Mar 2008 06:27:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751941AbYCQK1q
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Mar 2008 06:27:46 -0400
-Received: from mgw2.diku.dk ([130.225.96.92]:32899 "EHLO mgw2.diku.dk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751396AbYCQK1q (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Mar 2008 06:27:46 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mgw2.diku.dk (Postfix) with ESMTP id 3E22F19BB38;
-	Mon, 17 Mar 2008 11:27:45 +0100 (CET)
-Received: from mgw2.diku.dk ([127.0.0.1])
- by localhost (mgw2.diku.dk [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 12809-15; Mon, 17 Mar 2008 11:27:43 +0100 (CET)
-Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
-	by mgw2.diku.dk (Postfix) with ESMTP id F111E19BB37;
-	Mon, 17 Mar 2008 11:27:43 +0100 (CET)
-Received: from tyr.diku.dk (tyr.diku.dk [130.225.96.226])
-	by nhugin.diku.dk (Postfix) with ESMTP
-	id 42B886DF894; Mon, 17 Mar 2008 11:26:52 +0100 (CET)
-Received: by tyr.diku.dk (Postfix, from userid 3873)
-	id D9F751DC4B6; Mon, 17 Mar 2008 11:27:43 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <m3r6e9wup2.fsf@localhost.localdomain>
-User-Agent: Mutt/1.5.16 (2007-06-09)
-X-Virus-Scanned: amavisd-new at diku.dk
+	id S1752428AbYCQKuH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Mar 2008 06:50:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752461AbYCQKuH
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Mar 2008 06:50:07 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:54082 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752114AbYCQKuG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Mar 2008 06:50:06 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 9D4B82A06;
+	Mon, 17 Mar 2008 06:50:04 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id A504F271D; Mon, 17 Mar 2008 06:49:58 -0400 (EDT)
+In-Reply-To: <20080317102318.GA6830@diku.dk> (Jonas Fonseca's message of
+ "Mon, 17 Mar 2008 11:23:18 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77424>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77425>
 
-Jakub Narebski <jnareb@gmail.com> wrote Mon, Mar 17, 2008:
-> Jonas Fonseca <fonseca@diku.dk> writes:
-> 
-> > A new version of tig is available! It brings many documentation
-> > improvements, bug fixes, and some much needed updates to work better
-> > with git (e.g. by using --no-color and avoiding to use git-diff).
-> 
-> It seems like 'g', toggle revision graph visualization, doesn't work.
-> Checked with
->   $ tig log --pretty=oneline --abbrev=8 --abbrev-commit
+Jonas Fonseca <fonseca@diku.dk> writes:
 
-Well, the revgraph visualization only works for the main view, not the
-log view (which has been sort of deprecated).
+> Junio C Hamano <gitster@pobox.com> wrote Mon, Mar 17, 2008:
+>> Jonas Fonseca <fonseca@diku.dk> writes:
+>> 
+>> > ... Building the documentation
+>> > (sadly?) now depends on DocBook XSL 1.72 to reduce the number of
+>> > accumulated AsciiDoc and XSL hacks.
+>> 
+>> Well, I've been a quiet but big fan of tig for quite some time, but to me,
+>> requiring autoreconf is a much larger regression than DocBook dependency.
+>
+> I am not sure I understand. As far as I know, tig does not require
+> autoreconf unless you have cloned the repository and want to bootstrap
+> the configure script.
 
-> > On startup, tig will now attempt to first read a system-wide configuration
-> > file before loading the user specific configuration file. Cherry picking
-> > from inside tig has been generalized, making it possible to wire
-> > external commands, which can access information about the current
-> > commit, to a keybinding.
-> 
-> By thw ay, in tig(1), in the "FILES" section, there is 
-> 
->        /home/fonseca/etc/tigrc
->            System wide configuration file.
-> 
-> Is it a bug in code, or just in documentation.
+Yeah, but that was exactly what your announcement suggested to.  Show
+Tarball and Gitfeed alternatives to a git person, who already has a clone
+of the project, and guess which one he would go ;-).
 
-Oops, embarrasing. I will look into fixing it so that documentation
-installed from the tarball will insert the local sysconfdir path.
+Also INSTALL file begins with:
 
--- 
-Jonas Fonseca
+Installation instructions
+-------------------------
+
+Download a tarball from http://jonas.nitro.dk/tig/releases[] or clone the tig
+repository http://jonas.nitro.dk/tig/tig.git[]. Documentation files are
+available either in the tarballs or in the above repository in the branch named
+'release'.
+
+To install tig simply run:
+
+        $ autoreconf
+        $ ./configure
+        $ make install
+
+By the way, it would be nice if someday I can get tig work with CJK.
+Perhaps I need to tweak something in ncurses?
