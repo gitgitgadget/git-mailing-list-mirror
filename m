@@ -1,7 +1,7 @@
 From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: repo.or.cz renovation
-Date: Mon, 17 Mar 2008 13:41:39 -0700 (PDT)
-Message-ID: <m3myoxw0at.fsf@localhost.localdomain>
+Date: Mon, 17 Mar 2008 14:09:01 -0700 (PDT)
+Message-ID: <m3iqzlvz11.fsf@localhost.localdomain>
 References: <20080313231413.27966.3383.stgit@rover>
 	<76718490803131707g34fd40d4q21c69391c2597bc@mail.gmail.com>
 	<20080314002205.GL10335@machine.or.cz>
@@ -13,45 +13,45 @@ Content-Type: text/plain; charset=us-ascii
 Cc: Petr Baudis <pasky@suse.cz>, Jay Soffian <jaysoffian@gmail.com>,
 	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 To: "J.H." <warthog19@eaglescrag.net>
-X-From: git-owner@vger.kernel.org Mon Mar 17 21:42:28 2008
+X-From: git-owner@vger.kernel.org Mon Mar 17 22:10:27 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JbMA5-0004dU-KJ
-	for gcvg-git-2@gmane.org; Mon, 17 Mar 2008 21:42:26 +0100
+	id 1JbMay-00062D-QD
+	for gcvg-git-2@gmane.org; Mon, 17 Mar 2008 22:10:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752360AbYCQUlp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Mar 2008 16:41:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751675AbYCQUlp
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Mar 2008 16:41:45 -0400
-Received: from fk-out-0910.google.com ([209.85.128.190]:35763 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751081AbYCQUlo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Mar 2008 16:41:44 -0400
-Received: by fk-out-0910.google.com with SMTP id 19so2024117fkr.5
-        for <git@vger.kernel.org>; Mon, 17 Mar 2008 13:41:40 -0700 (PDT)
+	id S1753638AbYCQVJK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Mar 2008 17:09:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753388AbYCQVJI
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Mar 2008 17:09:08 -0400
+Received: from fg-out-1718.google.com ([72.14.220.154]:19660 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752292AbYCQVJH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Mar 2008 17:09:07 -0400
+Received: by fg-out-1718.google.com with SMTP id l27so1953415fgb.17
+        for <git@vger.kernel.org>; Mon, 17 Mar 2008 14:09:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
-        bh=8dYWJrEuDPM89r41DetMiYOp/AZg8LSOwd/VfxlShtY=;
-        b=pZcWyHJAz/jT3+x2/JhlsUAyjtXGwVcbkWUQyDFa95IzJBZBO6KUaJpuvxN74Tlvl4qoSh1ZIOXGeKwg5FAorDL/zVlhnzdO4xE13hczi6hqDuyjJAzoee5I7n8aw+94JWfG3B05mN64A0lRWLvh0ccCQ5DoRrSPMLAFg3T48Yc=
+        bh=l957WzxoS9Cku5dON2YscPtHjA4BjGvslRJAXv8Nqcw=;
+        b=g/pASBcdjwKZl/vljqIbZoDBGIV1OYMCn1aXlux8ZrEBL+Ib0DcQ6SV2O9ssth0vAsZSYmBRw6nxWE+3E3V2LPTiBfxRWSWzaSWfh7Ka4z8R7ZN6/Bj0tL23WeOGp0xC24cRsfhULWJZ3fmIy0G4CsyWSRJCMIq+YxwIl6gJMq0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
-        b=eShweEPC2l5KsfCkjDIT+CBUqkJgdHbL5TKwYetZyYDKqKTbnaUF3Bv3zz9Moyv5FM3r24mj6j4fpA+XLn/Z1Gj4kIiMUzgr+XI6OFnXYX7lkSVzsO6+Bde1Un/klJXJU6sK6b4vH65YFB5luo9ovGlutd4WLPtFRhKKWV0K+LM=
-Received: by 10.82.107.3 with SMTP id f3mr506782buc.0.1205786500369;
-        Mon, 17 Mar 2008 13:41:40 -0700 (PDT)
+        b=CNxkpX9GjtEfBpfvGe+Mwik7fzisxMotn0LLOU5vHWchH21ZBMF/riRkVw7lg50FsMG7qt0YO0cMpkP9+8COkwobcMjnNwPT5PohctmFo1G2Rq4tGsQ4rlnoY/BR53JUIvGttU9FZMJ2Dfmt9YkMrFoMRdZyTg3Rb0qSKz8ITH8=
+Received: by 10.86.98.18 with SMTP id v18mr9227597fgb.52.1205788142323;
+        Mon, 17 Mar 2008 14:09:02 -0700 (PDT)
 Received: from localhost.localdomain ( [83.8.213.235])
-        by mx.google.com with ESMTPS id 4sm19919794fge.3.2008.03.17.13.41.36
+        by mx.google.com with ESMTPS id d4sm20001264fga.2.2008.03.17.14.08.59
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 17 Mar 2008 13:41:39 -0700 (PDT)
+        Mon, 17 Mar 2008 14:09:01 -0700 (PDT)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m2HKfXjD016637;
-	Mon, 17 Mar 2008 21:41:33 +0100
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m2HL8xSl016791;
+	Mon, 17 Mar 2008 22:09:00 +0100
 Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m2HKfVGf016633;
-	Mon, 17 Mar 2008 21:41:31 +0100
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m2HL8wne016788;
+	Mon, 17 Mar 2008 22:08:58 +0100
 X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
 In-Reply-To: <1205779482.2758.52.camel@localhost.localdomain>
 User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
@@ -59,7 +59,7 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77465>
 
 "J.H." <warthog19@eaglescrag.net> writes:
 
@@ -67,15 +67,10 @@ Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77464>
 > back to one, which at that point means I can start bringing it back into
 > mainline and getting a patch series ready for submission.
 
-I plan on sending email with my ideas on gitweb caching somewhere
-between now and tomorrow. I'll try to cover my ideas about how to
-cache (support for cache validation for external cache, caching Perl
-structures / data from git commands, caching final output: HTML, RSS,
-etc.) and what solutions can be used.
-
-I wanted first to send my enchancements to Petr Baudis patch adding
-caching support for projects list, i.e. third patch in the series, and
-get comments (currently none) on *this* patch (idea).
+BTW it would be nice to have a merge strategy (blame-based perhaps?)
+which would allow to merge changes to split project easily into
+original, single file one...  But I guess you are not interested in
+writing such a merge strategy just for this ;-)
 
 -- 
 Jakub Narebski
