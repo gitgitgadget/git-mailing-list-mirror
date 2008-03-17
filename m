@@ -1,65 +1,79 @@
-From: "Ping Yin" <pkufranky@gmail.com>
-Subject: Re: [announce] text-based tree visualizer
-Date: Mon, 17 Mar 2008 21:40:43 +0800
-Message-ID: <46dff0320803170640g52411015g7bbe315df2b0bb56@mail.gmail.com>
-References: <Pine.LNX.4.64.0803061557320.7660@fbirervta.pbzchgretzou.qr>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: stg branch -r instructions
+Date: Mon, 17 Mar 2008 14:42:38 +0100
+Message-ID: <20080317134238.GA1271@diana.vm.bytemark.co.uk>
+References: <87d4ptczu8.fsf@lysator.liu.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
-Cc: git@vger.kernel.org
-To: "Jan Engelhardt" <jengelh@computergmbh.de>
-X-From: git-owner@vger.kernel.org Mon Mar 17 14:41:53 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Catalin Marinas <catalin.marinas@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: David =?iso-8859-1?Q?K=E5gedal?= <davidk@lysator.liu.se>
+X-From: git-owner@vger.kernel.org Mon Mar 17 14:43:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JbFah-0007sB-KW
-	for gcvg-git-2@gmane.org; Mon, 17 Mar 2008 14:41:28 +0100
+	id 1JbFci-0000BT-QM
+	for gcvg-git-2@gmane.org; Mon, 17 Mar 2008 14:43:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753512AbYCQNkr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Mar 2008 09:40:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753508AbYCQNkr
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Mar 2008 09:40:47 -0400
-Received: from hs-out-0708.google.com ([64.233.178.247]:1448 "EHLO
-	hs-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753505AbYCQNkq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Mar 2008 09:40:46 -0400
-Received: by hs-out-0708.google.com with SMTP id 4so4088930hsl.5
-        for <git@vger.kernel.org>; Mon, 17 Mar 2008 06:40:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=649POLAT3MUbepgwl/2MtSON5ANfRcv/ImUeLqHoSSk=;
-        b=ImQciznEIyq51B3RwGT09JK9ftiDL3atHShHJhUeK9BKl12SSu/IU7vqcUnsX1j1IyMffVZ4BROF+UB2AvnzdODcOnr5uUI6TmIRY3A+F1b8C4Y+HKKJ8LTUEyUdzjZZoazd0b4D06i1rDwOWvjmObXc0gsZxxERpPmBhG5PCwI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=DanH2FK3gT8FsvZFNl/+NEx71jkAH1EtYW6sUe3tjp+Dsv4O+//THnSlVz4yxE+43arFEGMsQOdDBzLz/8BgbZT50N3ckmIEmekT7mbFCzLhGzN5svZ8Sa8fNqOiwuxf4baNAgHqVx2P8vJK5jyYN/KDED+9A6tXhqAiAiGM0c0=
-Received: by 10.100.144.18 with SMTP id r18mr32583747and.112.1205761246140;
-        Mon, 17 Mar 2008 06:40:46 -0700 (PDT)
-Received: by 10.100.32.10 with HTTP; Mon, 17 Mar 2008 06:40:43 -0700 (PDT)
-In-Reply-To: <Pine.LNX.4.64.0803061557320.7660@fbirervta.pbzchgretzou.qr>
+	id S1752996AbYCQNmx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Mar 2008 09:42:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753111AbYCQNmx
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Mar 2008 09:42:53 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3482 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752954AbYCQNmx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Mar 2008 09:42:53 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1JbFbq-0000QL-00; Mon, 17 Mar 2008 13:42:38 +0000
 Content-Disposition: inline
+In-Reply-To: <87d4ptczu8.fsf@lysator.liu.se>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77430>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77431>
 
-T24gRnJpLCBNYXIgNywgMjAwOCBhdCAxOjQ4IEFNLCBKYW4gRW5nZWxoYXJkdCA8amVuZ2VsaEBj
-b21wdXRlcmdtYmguZGU+IHdyb3RlOgo+IEhlbGxvIGV2ZXJ5b25lLAo+Cj4KPiAgSSBzcGVudCB0
-aGUgbGFzdCB0d28gZGF5cyB3cml0aW5nIGEgdGV4dC1iYXNlZCB0cmVlIHZpc3VhbGl6ZXI7Cj4g
-IGdpdGsgaXMgcmVhbGx5IGNvbnZlbmllbnQsIGJ1dCB1bmZvcnR1bmF0ZWx5IGl0IG5lZWRzIGFu
-IFggZGlzcGxheSwKPiAgdGlncyB0cmVlIHZpZXcgbGVmdCBtZSB1bmltcHJlc3NlZCwgYW5kIEkg
-YWN0dWFsbHkgd2FudGVkIGEgdG9vbAo+ICB0aGF0IGRvZXMgbm90IHJlYWQgYWxsIGNvbW1pdHMg
-aW4gbGlrZSBnaXRrL3RpZyBkbywgYnV0IGp1c3QgZ2l2ZXMgbWUKPiAgdGhlIHRyZWV2aWV3Lgo+
-CkhlcmUgaXMgbXkgdmlldwrilZEg4pWRIOKVkSDilZ8gTWVyZ2UgYnJhbmNoICdqay9wb3J0YWJs
-ZScK4pWRIOKVkSDilZEg4pWg4pWQ4pWXCuKVkSDilZEg4pWRIOKVnyDilZEgTWVyZ2UgYnJhbmNo
-ICdweS9zdWJtb2R1bGUnCuKVkSDilZEg4pWRIOKVoOKVkOKVrOKVkOKVlwrilZEg4pWRIOKVkSDi
-lZ8g4pWRIOKVkSBNZXJnZSBicmFuY2ggJ2RiL2RpZmYtdG8tZnAnCuKVkSDilZEg4pWRIOKVoOKV
-kOKVrOKVkOKVrOKVkOKVlwrilZEg4pWRIOKVkSDilZ8g4pWRIOKVkSDilZEgTWVyZ2UgYnJhbmNo
-ICdjYy9oZWxwJwrilZEg4pWRIOKVkSDilaDilZDilazilZDilazilZDilazilZDilZcK4pWRIOKV
-kSDilZEg4pWfIOKVkSDilZEg4pWRIOKVkSBzaG9ydGxvZzogZG8gbm90IHJlcXVpcmUgdG8K4pWR
-IOKVkSDilZEg4pWfIOKVkSDilZEg4pWRIOKVkSBNZXJnZSBicmFuY2ggJ21haW50JwrilZEg4pWR
-IOKVkSDilaDilZDilazilZDilazilZDilazilZDilazilZDilZcKCkl0IHNlZW1zIG1lc3NlZCB1
-cC4KCgoKLS0gClBpbmcgWWluCg==
+On 2008-03-17 13:14:07 +0100, David K=E5gedal wrote:
+
+> so, the usage string is wrong. In fact, the described usage string
+> is only for the default action to create a new branch.
+
+Yes, this is far from pretty.
+
+> Maybe it would have been better to have separate stg subcommands?
+>
+>   stg branch NAME [COMMIT]
+>   stg list-branches
+>   stg rename-branch OLD NEW
+>   ... etc ...
+
+My first thought was another level of subcommands:
+
+  stg branch NAME [COMMIT]
+  stg branch list
+  stg branch rename OLD NEW
+
+But this would create ambiguities -- how do I create a branch called
+"list"?. One could go with something like
+
+  stg branch NAME [COMMIT]
+  stg branch/list
+  stg branch/rename OLD NEW
+
+but this is highly non-standard, and would probably confuse every
+single new user. Perhaps with dashes instead:
+
+  stg branch NAME [COMMIT]
+  stg branch-list
+  stg branch-rename OLD NEW
+
+Which is essentially what you proposed, but with more regular (and
+more tab-completion-friendly) names.
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
