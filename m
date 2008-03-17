@@ -1,78 +1,159 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: Support caching projects list
-Date: Mon, 17 Mar 2008 00:39:11 +0100
-Message-ID: <200803170039.14634.jnareb@gmail.com>
-References: <20080313231413.27966.3383.stgit@rover> <200803161937.07082.jnareb@gmail.com> <1205707048.2758.35.camel@localhost.localdomain>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: On fetch refspecs and wildcards
+Date: Sun, 16 Mar 2008 17:14:01 -0700
+Message-ID: <7v8x0idx6e.fsf@gitster.siamese.dyndns.org>
+References: <1205499956.7589.4.camel@gentoo-jocke.transmode.se>
+ <1205604534.7589.20.camel@gentoo-jocke.transmode.se>
+ <7v1w6bj7f9.fsf_-_@gitster.siamese.dyndns.org>
+ <200803161921.49274.tlikonen@iki.fi>
+ <7v8x0igvdp.fsf_-_@gitster.siamese.dyndns.org>
+ <alpine.LNX.1.00.0803161831330.19665@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-Cc: Frank Lichtenheld <frank@lichtenheld.de>,
-	Petr Baudis <pasky@suse.cz>, Junio C Hamano <junkio@cox.net>,
-	git@vger.kernel.org
-To: "J.H." <warthog19@eaglescrag.net>
-X-From: git-owner@vger.kernel.org Mon Mar 17 00:39:48 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, Teemu Likonen <tlikonen@iki.fi>
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Mon Mar 17 01:15:27 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jb2SB-0006kI-Lf
-	for gcvg-git-2@gmane.org; Mon, 17 Mar 2008 00:39:48 +0100
+	id 1Jb30c-0006Jq-2x
+	for gcvg-git-2@gmane.org; Mon, 17 Mar 2008 01:15:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753300AbYCPXjI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Mar 2008 19:39:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753253AbYCPXjI
-	(ORCPT <rfc822;git-outgoing>); Sun, 16 Mar 2008 19:39:08 -0400
-Received: from fg-out-1718.google.com ([72.14.220.157]:56729 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752858AbYCPXjG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Mar 2008 19:39:06 -0400
-Received: by fg-out-1718.google.com with SMTP id l27so1488884fgb.17
-        for <git@vger.kernel.org>; Sun, 16 Mar 2008 16:39:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=vgQni/e9mQ+z4MKiITMBQNbShqX4cw53pEL9jbXlr5U=;
-        b=A+iB9xiS1oxyUupMOHFGnE8ddVJnGwiAmhwqdsV9yDUu4yu3GHcaIB1TgPM9EcUqcR7XQ12C0dTFV9eGlZeFn40delBnXXT0wSVZJRL4Az3vau/UkzGowkeuLLd6oUOuBOjMevJsJj2y3nXf22l+vKTs8aP5dCZjp86yUnSp9s4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=PZH9t1bM3R9E/WZ4KwkoDjTbyT7jwqSWFfFGsjFYsmySUKBdWu2MaMJk5Kjkdmjw/9WTT1jm223GDC0OpytALTx+UgFCWAye+bkcS/viyHdjS55XjpzdBvDWnYPpTJWoOqxqus3v5YDMcFkpkkUYeTpuyVApsSKyPMqDZ2zOZv8=
-Received: by 10.82.174.20 with SMTP id w20mr34109660bue.14.1205710744927;
-        Sun, 16 Mar 2008 16:39:04 -0700 (PDT)
-Received: from ?192.168.1.11? ( [83.8.232.138])
-        by mx.google.com with ESMTPS id f13sm12105029gvd.9.2008.03.16.16.39.02
-        (version=SSLv3 cipher=OTHER);
-        Sun, 16 Mar 2008 16:39:03 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <1205707048.2758.35.camel@localhost.localdomain>
-Content-Disposition: inline
+	id S1753058AbYCQAOR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Mar 2008 20:14:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753051AbYCQAOR
+	(ORCPT <rfc822;git-outgoing>); Sun, 16 Mar 2008 20:14:17 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:57769 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752965AbYCQAOR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Mar 2008 20:14:17 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 552D81A0B;
+	Sun, 16 Mar 2008 20:14:14 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 3C4AE1A0A; Sun, 16 Mar 2008 20:14:06 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77403>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77404>
 
-J.H. wrote:
-> Jakub Narebski wrote:
->>
->> P.S. When searching CPAN for existing modules for caching and CGI
->> caching I have found Cache::Adaptive::ByLoad which does what
->> caching-gitweb does,
+Daniel Barkalow <barkalow@iabervon.org> writes:
 
-I'm not sure about quality of this code, though. It uses Cache::Cache, 
-by the way.
+> On Sun, 16 Mar 2008, Junio C Hamano wrote:
+> ...
+>> Fortunately or unfortunately, Documentation/pull-fetch-param.txt does not
+>> talk about wildcard refspecs (not even the syntax, let alone the
+>> semantics), so we can define whatever we want right now, and I think both
+>> 
+>>     (1) allow duplicated destinations, including wildcard matches; and
+>> 
+>>     (2) refuse duplicated destinations for explicit ones, and more than
+>>         one wildcard patterns that match the same ref, but omit explicitly
+>>         specified ones from wildcard matches;
+>> 
+>> are viable options.  I suspect the current code does not do either.  We
+>> should pick one semantics, make sure the implementation matches that, and
+>> document it.
+>
+> Actually, I think the current code is close to (2). get_fetch_map() 
+> returns everything, ref_remove_duplicates() removes any exact matches and 
+> gives errors if there's the same destination for two different sources.
+>
+> (Upon further consideration, there's one slight issue:
+>
+> [remote "origin"]
+> 	fetch = refs/heads/*:refs/remotes/origin/*
+> 	fetch = +refs/heads/pu:refs/remotes/origin/pu
+>
+> is not quite the same as:
+>
+> [remote "origin"]
+> 	fetch = +refs/heads/pu:refs/remotes/origin/pu
+> 	fetch = refs/heads/*:refs/remotes/origin/*
+>
+> in whether pu will be forced; the forcing flag on the first matching 
+> refspec is what matters.)
 
->> and some solutions in newer caching interfaces, 
->> either CHI or Cache, which try to avoid thundering horde problem.
-> 
-> Interesting - my have to take a look at that.
+Ok.
 
-CHI uses either 'busy_lock [DURATION]' (bump expiration time), or
-'expires_variance [FLOAT]' for fuzzy expiration time matching.
+As I said, I think either one is valid, and I only mentioned (1) because I
+thought refusing duplicates might be more work to get it right.  So if
+your code does _most of_ (2), that is good.  Please document what it is
+meant to do in Documentation/pull-fetch-param.txt, so that others can
+report deviation from the defined semantics, if any, in the implementation
+for us to fix.
 
-Cache has LRU and FIFO removal strategies.
+>> The issues are:
+>> 
+>>  (1) get_fetch_map() currently insists on refname to be check_ref_format()
+>>      clean; it even rejects CHECK_REF_FORMAT_ONELEVEL, which means that
+>>      refs/stash would not be considered Ok and the code will die().
+>
+> Yes, that's probably wrong. We probably do want to reject people whose 
+> servers send us "refs/heads/../../heads/master", but not "refs/stash".
 
--- 
-Jakub Narebski
-Poland
+The feeler patch I sent out would be Ok, then.  Can you test it, after
+updating it with the die() -> error() and message rewording we discussed
+in the other message, and send the result in?
+
+>>  (2) "git remote prune" seems to cull refs/remotes/one/HEAD if exists.
+>> 
+>> Currently we do not have a way to determine where HEAD at the remote
+>> points at at the protocol level (I've sent a patch to the list earlier for
+>> the necessary protocol extension on the upload-pack side, but receiver
+>> side never got implemented in remotes.c).  So we cannot propagate
+>> refs/HEAD information correctly right now, but when we accept the protocol
+>> extension to do so, issue (1) will matter also for HEAD.
+>
+> There's the issue that "HEAD" isn't "refs/HEAD". I'm not at all sure how 
+> the user should communicate the desire to update things to match the 
+> remote HEAD. FWIW, I was considering moving the code to guess where the 
+> remote HEAD points from builtin-clone to remotes.c, until I realized that 
+> it's not clear what configuration should control this.. I think it'd be 
+> necessary to have a special option to say "write HEAD here", but I may be 
+> wrong.
+
+I tend to agree.  I'd propose the semantics for refs/remotes/<name>/HEAD
+symref to be like this:
+
+ * It is under _local_ control.  That means fetch should not update it, and
+   "remote prune" should not prune it, nor even mention it is prunable.
+
+ * It is the means for the user (i.e. the owner of the local repository)
+   to express which branch from the remote he is most interested in.
+   I.e., it exists solely to make "<name>" => "refs/remotes/<name>/HEAD"
+   ref dwimming work as expected.
+
+ * It is set up by "git clone" to point at the branch the remote had its
+   HEAD pointing at when clone happened but that is merely a convenience
+   feature.
+
+ * We would probably want an explicit convenience subcommand "git remote
+   something <name> <branch>" that switches refs/remotes/<name>/HEAD to
+   point at a specific remote tracking branch, although you can do that
+   yourself with symbolic-ref.
+
+ * We may want to teach "git remote add <name>" to do the same HEAD
+   discovery as done by "git clone" (earlier JBF had a patch for it to the
+   scripted version), to have the same convenience feature as "git clone"
+   has.
+
+ * If we teach "git remote add" to set refs/remotes/<name>/HEAD, we may
+   also want to teach it an explicit way to let the user say "I want
+   <name> to mean refs/remotes/<name>/this", not whatever the remote side
+   currently points at with its HEAD.
+
+ * If we teach "git remote add" to do the HEAD discovery, we may also want
+   to teach "git remote update" a way to let the user request "my
+   refs/remotes/<name>/HEAD may not be pointing at the branch the remote
+   currently points at with its HEAD.  Please update mine to match
+   theirs".
+
+When true mirroring configuration "refs/*:refs/*" is employed, neither
+"refs/HEAD" nor "refs/heads/HEAD" is needed nor desired on the local side.
