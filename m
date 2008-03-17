@@ -1,90 +1,66 @@
-From: "J.H." <warthog19@eaglescrag.net>
-Subject: Re: repo.or.cz renovation
-Date: Mon, 17 Mar 2008 11:44:42 -0700
-Message-ID: <1205779482.2758.52.camel@localhost.localdomain>
-References: <20080313231413.27966.3383.stgit@rover>
-	 <76718490803131707g34fd40d4q21c69391c2597bc@mail.gmail.com>
-	 <20080314002205.GL10335@machine.or.cz>
-	 <1205454999.2758.14.camel@localhost.localdomain>
-	 <20080317174934.GC6803@machine.or.cz>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC/PATCH 2/3] gitweb: Support caching projects list
+Date: Mon, 17 Mar 2008 19:52:13 +0100
+Message-ID: <200803171952.15186.jnareb@gmail.com>
+References: <1205766570-13550-1-git-send-email-jnareb@gmail.com> <1205766570-13550-3-git-send-email-jnareb@gmail.com> <20080317165405.GD18624@mail-vs.djpig.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Jay Soffian <jaysoffian@gmail.com>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Mon Mar 17 19:45:39 2008
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Petr Baudis <pasky@suse.cz>,
+	"J.H." <warthog19@eaglescrag.net>
+To: Frank Lichtenheld <frank@lichtenheld.de>
+X-From: git-owner@vger.kernel.org Mon Mar 17 19:53:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JbKL0-0001uZ-3x
-	for gcvg-git-2@gmane.org; Mon, 17 Mar 2008 19:45:34 +0100
+	id 1JbKSQ-0004fs-IG
+	for gcvg-git-2@gmane.org; Mon, 17 Mar 2008 19:53:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752461AbYCQSo6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Mar 2008 14:44:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751338AbYCQSo5
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Mar 2008 14:44:57 -0400
-Received: from shards.monkeyblade.net ([198.137.202.13]:52911 "EHLO
-	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751526AbYCQSo4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Mar 2008 14:44:56 -0400
-Received: from [10.255.255.198] (65-115-68-195.dia.static.qwest.net [65.115.68.195])
-	(authenticated bits=0)
-	by shards.monkeyblade.net (8.14.1/8.13.8) with ESMTP id m2HIidPm025152
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 17 Mar 2008 11:44:39 -0700
-In-Reply-To: <20080317174934.GC6803@machine.or.cz>
-X-Mailer: Evolution 2.12.3 (2.12.3-1.fc8) 
-X-Virus-Scanned: ClamAV 0.88.7/6273/Sun Mar 16 20:03:58 2008 on shards.monkeyblade.net
-X-Virus-Status: Clean
+	id S1751704AbYCQSwf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Mar 2008 14:52:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751941AbYCQSwf
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Mar 2008 14:52:35 -0400
+Received: from ug-out-1314.google.com ([66.249.92.169]:14688 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751558AbYCQSwe (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Mar 2008 14:52:34 -0400
+Received: by ug-out-1314.google.com with SMTP id z38so690967ugc.16
+        for <git@vger.kernel.org>; Mon, 17 Mar 2008 11:52:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        bh=pxWyWJrgGVTOav/2UrZbDk4BmvuHiLkPyHY0vK7ak/Y=;
+        b=D75JD1LiFQGNjx5zIF/vng+HpDEl/eHzzTL2JA6pZoQU51Cw6miDDRIf3oFZ0t3vmH0D55z70nGw3y6wEnEZcwjvIdeS7UKvkSjk37DqXPShatn7W3d2AsmNHKIwyqNUglTTqtMqwQRr7h/+woGmTvO90/PXtgYDItljdrHFmj0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=a4GK9aV8pgzQJqT80n6s/behI9mjxrTgyttOr+6Lieq0knw5/sNHcHlf7HNTBTF5afpa6LDg2Z1r61GMfSjSX1m5NN1gZVmlNty+tcCYtECb6xoEHhKXvW4QPHs5cE3BYvoujrGQwX3OTWh9H1eFtVGJ/N9zgjgUfh41pRbbv4Y=
+Received: by 10.78.189.5 with SMTP id m5mr1621523huf.74.1205779938456;
+        Mon, 17 Mar 2008 11:52:18 -0700 (PDT)
+Received: from ?192.168.1.11? ( [83.8.232.138])
+        by mx.google.com with ESMTPS id e9sm714227muf.0.2008.03.17.11.52.15
+        (version=SSLv3 cipher=OTHER);
+        Mon, 17 Mar 2008 11:52:17 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20080317165405.GD18624@mail-vs.djpig.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77452>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77453>
 
-On Mon, 2008-03-17 at 18:49 +0100, Petr Baudis wrote:
-> On Thu, Mar 13, 2008 at 05:36:39PM -0700, J.H. wrote:
-> > 
-> > > You are of course right - I wanted to do the rename, but forgot to write
-> > > it in the actual code. :-)
-> > > 
-> > > There is a more conceptual problem though - in case of such big sites,
-> > > it really makes more sense to explicitly regenerate the cache
-> > > periodically instead of making random clients to have to wait it out.
-> > > We could add a 'force_update' parameter to accept from localhost only
-> > > that will always regenerate the cache, but that feels rather kludgy -
-> > > can anyone think of a more elegant solution? (I don't think taking the
-> > > @projects generating code out of gitweb and then having to worry during
-> > > gitweb upgrades is any better.)
-> > 
-> > You could do something similar to the gitweb caching I'm doing,
-> > basically if a file isn't generated you make a user wait (no good way
-> > around this really).  If a cache exists show it to the user unless the
-> > cache is older than $foo.  If a re-generation needs to happen it happens
-> > in the background so the user who triggers the regeneration sees
-> > something immediately vs. having to wait (at the cost of showing out of
-> > date data)
-> 
-> By the way, the index page is so far really the only bottleneck I'm
-> seeing, other than that even project pages for huge repositories are
-> shown pretty quickly. Did you ever try to just cache the index page on
-> kernel.org? What sort of impact did it have? What evere the hotspots -
-> project pages for the main repositories or some less obvious pages?
-> 
-> Just caching the index would be far less intrusive change than
-> introducing caching everywhere and it might help to bring kernel.org
-> gitweb back in sync with mainline. :-)
+Dnia poniedzia=B3ek 17. marca 2008 17:54, Frank Lichtenheld napisa=B3:
 
-I think we are likely going to want to keep caching everything vs. just
-the front page.  There are a few repos that get hit quite a bit and it
-would be better to have those cache vs. not.  Really I would argue this
-is just a step in the direction of integrating all of my caching changes
-back into gitweb vs. us dropping what we've done so far.
+>At the very least you should:
+[...]
+> =A0- Check if the file is owned by the uid gitweb is running under an=
+d
+> =A0 =A0not word-writable.
 
-BTW I'm about halfway through refactoring my tree from multiple files
-back to one, which at that point means I can start bringing it back into
-mainline and getting a patch series ready for submission.
+UID ($>) or PID ($$) should be equal to cache owner: stat($file)->uid?
 
-- John
+--=20
+Jakub Narebski
+Poland
