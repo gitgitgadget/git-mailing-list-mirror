@@ -1,75 +1,71 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] gitweb: Support caching projects list
-Date: Mon, 17 Mar 2008 18:40:50 +0100
-Message-ID: <20080317174050.GB10335@machine.or.cz>
-References: <20080313231413.27966.3383.stgit@rover> <m3hcf9y02p.fsf@localhost.localdomain>
+Subject: repo.or.cz renovation
+Date: Mon, 17 Mar 2008 18:49:34 +0100
+Message-ID: <20080317174934.GC6803@machine.or.cz>
+References: <20080313231413.27966.3383.stgit@rover> <76718490803131707g34fd40d4q21c69391c2597bc@mail.gmail.com> <20080314002205.GL10335@machine.or.cz> <1205454999.2758.14.camel@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 17 18:42:09 2008
+Cc: Jay Soffian <jaysoffian@gmail.com>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: "J.H." <warthog19@eaglescrag.net>
+X-From: git-owner@vger.kernel.org Mon Mar 17 18:50:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JbJLF-0000M6-TI
-	for gcvg-git-2@gmane.org; Mon, 17 Mar 2008 18:41:46 +0100
+	id 1JbJTT-0003iz-Mw
+	for gcvg-git-2@gmane.org; Mon, 17 Mar 2008 18:50:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752907AbYCQRkz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Mar 2008 13:40:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752970AbYCQRky
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Mar 2008 13:40:54 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:44617 "EHLO machine.or.cz"
+	id S1752120AbYCQRtg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Mar 2008 13:49:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752075AbYCQRtg
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Mar 2008 13:49:36 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:48575 "EHLO machine.or.cz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752907AbYCQRkx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Mar 2008 13:40:53 -0400
+	id S1751946AbYCQRtf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Mar 2008 13:49:35 -0400
 Received: by machine.or.cz (Postfix, from userid 2001)
-	id CA38D393BAF9; Mon, 17 Mar 2008 18:40:50 +0100 (CET)
+	id 35A57204C063; Mon, 17 Mar 2008 18:49:34 +0100 (CET)
 Content-Disposition: inline
-In-Reply-To: <m3hcf9y02p.fsf@localhost.localdomain>
+In-Reply-To: <1205454999.2758.14.camel@localhost.localdomain>
 User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77448>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77449>
 
-  Hi,
-
-On Fri, Mar 14, 2008 at 05:14:51AM -0700, Jakub Narebski wrote:
-> Petr Baudis <pasky@suse.cz> writes:
-> [...]
-> > +	if ($cache_lifetime and -f $cache_file
-> > +	    and stat($cache_file)->mtime + $cache_lifetime * 60 > time()
-> > +	    and open (my $fd, $cache_file)) {
-> > +		$stale = time() - stat($cache_file)->mtime;
-> > +		my @dump = <$fd>;
-> > +		close $fd;
-> > +		# Hack zone start
-> > +		my $VAR1;
-> > +		eval join("\n", @dump);
-> > +		@projects = @$VAR1;
-> > +		# Hack zone end
+On Thu, Mar 13, 2008 at 05:36:39PM -0700, J.H. wrote:
 > 
-> Why do you read line by line, only to join it, i.e.
->   my @dump = <$fd>; ... join("\n", @dump);
-> instead of slurping all file in one go:
->   local $/ = undef; my $dump = <$fd>; ... $dump;
+> > You are of course right - I wanted to do the rename, but forgot to write
+> > it in the actual code. :-)
+> > 
+> > There is a more conceptual problem though - in case of such big sites,
+> > it really makes more sense to explicitly regenerate the cache
+> > periodically instead of making random clients to have to wait it out.
+> > We could add a 'force_update' parameter to accept from localhost only
+> > that will always regenerate the cache, but that feels rather kludgy -
+> > can anyone think of a more elegant solution? (I don't think taking the
+> > @projects generating code out of gitweb and then having to worry during
+> > gitweb upgrades is any better.)
 > 
-> Besides, why do you use Data::Dumper instead of Storable? Both are
-> distributed with Perl; well, at least both are in perl-5.8.6-24.
+> You could do something similar to the gitweb caching I'm doing,
+> basically if a file isn't generated you make a user wait (no good way
+> around this really).  If a cache exists show it to the user unless the
+> cache is older than $foo.  If a re-generation needs to happen it happens
+> in the background so the user who triggers the regeneration sees
+> something immediately vs. having to wait (at the cost of showing out of
+> date data)
 
-  no particular reason - I simply never heard about Storable. I learned
-Perl too long ago it seems. ;-)
+By the way, the index page is so far really the only bottleneck I'm
+seeing, other than that even project pages for huge repositories are
+shown pretty quickly. Did you ever try to just cache the index page on
+kernel.org? What sort of impact did it have? What evere the hotspots -
+project pages for the main repositories or some less obvious pages?
 
-> [...]
-> > -	git_project_list_body(\@list, $order);
-> > +	git_project_list_body(\@list, $order, undef, undef, undef, undef, $projlist_cache_lifetime);
-> 
-> This is ugly. Why not use hash for "named parameters", as it is done
-> in a few separate places in gitweb (search for '%opts')?
-
-  I agree - I was simply too lazy to make another patch. :-)
+Just caching the index would be far less intrusive change than
+introducing caching everywhere and it might help to bring kernel.org
+gitweb back in sync with mainline. :-)
 
 -- 
 				Petr "Pasky" Baudis
