@@ -1,98 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: tracking repository
-Date: Mon, 17 Mar 2008 00:48:40 -0700
-Message-ID: <7v3aqpdc4n.fsf@gitster.siamese.dyndns.org>
-References: <frh8dg$t9j$1@ger.gmane.org>
- <7vabkzmltc.fsf@gitster.siamese.dyndns.org> <1205697779.12760.20.camel@duo>
- <7vwso2ieuu.fsf@gitster.siamese.dyndns.org>
- <alpine.LNX.1.00.0803161716470.19665@iabervon.org>
- <7vlk4ichm4.fsf@gitster.siamese.dyndns.org>
- <alpine.LNX.1.00.0803162234270.19665@iabervon.org>
+From: Paolo Bonzini <bonzini@gnu.org>
+Subject: Re: [PATCH] git-cvsserver: handle change type T
+Date: Mon, 17 Mar 2008 08:54:08 +0100
+Message-ID: <47DE23A0.6040100@gnu.org>
+References: <E1Jay7s-0000dO-IX@fencepost.gnu.org> <7v63vmicvf.fsf@gitster.siamese.dyndns.org> <47DD9890.3060005@gnu.org> <7v4pb6gv7x.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jay Soffian <jaysoffian@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, kenneth johansson <ken@kenjo.org>
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Mon Mar 17 08:50:11 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, beuc@gnu.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 17 08:55:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JbA6c-0008GM-Dm
-	for gcvg-git-2@gmane.org; Mon, 17 Mar 2008 08:50:02 +0100
+	id 1JbABb-0000wp-1b
+	for gcvg-git-2@gmane.org; Mon, 17 Mar 2008 08:55:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752534AbYCQHtA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Mar 2008 03:49:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752365AbYCQHtA
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Mar 2008 03:49:00 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:65026 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752292AbYCQHs7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Mar 2008 03:48:59 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id AA1D620D4;
-	Mon, 17 Mar 2008 03:48:57 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 4FD5920D3; Mon, 17 Mar 2008 03:48:51 -0400 (EDT)
-In-Reply-To: <alpine.LNX.1.00.0803162234270.19665@iabervon.org> (Daniel
- Barkalow's message of "Sun, 16 Mar 2008 22:37:53 -0400 (EDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754533AbYCQHyO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Mar 2008 03:54:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752649AbYCQHyN
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Mar 2008 03:54:13 -0400
+Received: from fg-out-1718.google.com ([72.14.220.155]:62916 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752640AbYCQHyM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Mar 2008 03:54:12 -0400
+Received: by fg-out-1718.google.com with SMTP id l27so1661798fgb.17
+        for <git@vger.kernel.org>; Mon, 17 Mar 2008 00:54:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:x-enigmail-version:content-type:content-transfer-encoding:sender;
+        bh=cQ0zm4WZC6sqcesZiF3e4x3bHEqQ7RAFtcUyFTuKcUE=;
+        b=es9x08/1l9UqGgpAhl5D1lKrf554750KAMmSRkFYdZMmUdBZFprTQAQHvdpRct9aRwZBJVUC21oQA6W2C6MF64q3+x7h1kS2zV+Vn90Li7eoQrG9ruoqK/ebPI0jQKiZFuaPiLKxNi1nFluHe/orpIPnKZLNhl4d25l7wQrayJc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:x-enigmail-version:content-type:content-transfer-encoding:sender;
+        b=pwlWtaMaZ69RcIGTJDbzr+SMbqFB/ZJ++IObYCTWELo0/dHouWIsLqVJLuLIa3fzohWZ5eOky5WsCJceK7I1ACy+GhdZ6lk8rk55KlONSo9BnIaNx28aaf3S7EGW6kxqw1tT9PfBbT13M6K2wWHFLJhNMqo2QTVzo1OpVFm/fk0=
+Received: by 10.86.28.5 with SMTP id b5mr5065079fgb.76.1205740451035;
+        Mon, 17 Mar 2008 00:54:11 -0700 (PDT)
+Received: from ?192.168.76.107? ( [195.176.176.226])
+        by mx.google.com with ESMTPS id 12sm21140069fgg.6.2008.03.17.00.54.09
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 17 Mar 2008 00:54:10 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.12 (Macintosh/20080213)
+In-Reply-To: <7v4pb6gv7x.fsf@gitster.siamese.dyndns.org>
+X-Enigmail-Version: 0.95.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77416>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77417>
 
-Daniel Barkalow <barkalow@iabervon.org> writes:
 
-> On Sun, 16 Mar 2008, Junio C Hamano wrote:
->
->> Daniel Barkalow <barkalow@iabervon.org> writes:
->> 
->> > We don't currently have any concept of an invalid refspec;
->> 
->> We don't? or just that parse_ref_spec() does not detect one?
->> 
->> > ... we just have 
->> > things that fall back to not being patterns and not being possible to 
->> > match (due to one or the other side being invalid as a ref name).
->> 
->> I am afraid that is an invitation for more bugs and confusions.
->
-> Yeah, we're definitely too lenient. t3200-branch has been using the 
-> refspec "=" since July without anybody noticing that it's wrong.
+> What I am questioning is what the code should do (IOW, what would be good
+> for cvs clients to see).  Should it send a symlink as a regular file, or
+> simply just omit it?  If the answer is "the former", then we do not have
+> to worry about it any further after applying your patch.  Otherwise we
+> still have to do something _else_ after applying your patch.  I did not
+> know which way we would want to proceed, and I still don't.
 
-You mean these that came in 6f084a5 (branch --track: code cleanup and
-saner handling of local branches, 2007-07-10), right?
+The reason why my patch was enough for me, is that users would just use 
+the cvs bridge to stay up-to-date, not to spelunk the history (maybe to 
+spelunk it with annotate, but not to look at old versions etc.).  For 
+that, all I need is that current checkouts are okay.  We have to decide 
+if other cvsserver use cases are common enough.
 
-Will you fix them while you come up with a patch to tighten the parsing?
-Fixing these does seem to trigger problems in later parts of the test
-sequence.
+If they are, I think the optimal way to proceed could be to detect 
+relative symlinks and resolve them (sending the linked file's content), 
+and do "something else" (omit it, send the destination path as a regular 
+file?) for absolute symlinks.
 
----
-
- t/t3200-branch.sh |    8 ++++----
- 1 files changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index 38a90ad..48b8a45 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -155,10 +155,10 @@ test_expect_success 'test tracking setup via config' \
- 
- test_expect_success 'avoid ambiguous track' '
- 	git config branch.autosetupmerge true &&
--	git config remote.ambi1.url = lalala &&
--	git config remote.ambi1.fetch = refs/heads/lalala:refs/heads/master &&
--	git config remote.ambi2.url = lilili &&
--	git config remote.ambi2.fetch = refs/heads/lilili:refs/heads/master &&
-+	git config remote.ambi1.url lalala &&
-+	git config remote.ambi1.fetch refs/heads/lalala:refs/heads/master &&
-+	git config remote.ambi2.url lilili &&
-+	git config remote.ambi2.fetch refs/heads/lilili:refs/heads/master &&
- 	git branch all1 master &&
- 	test -z "$(git config branch.all1.merge)"
- '
+Paolo
