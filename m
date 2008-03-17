@@ -1,73 +1,92 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: [PATCH] git-cvsserver: handle change type T
-Date: Tue, 18 Mar 2008 08:34:39 +1300
-Message-ID: <46a038f90803171234m7e3f1cbfgb65311bfb64e6e0d@mail.gmail.com>
-References: <E1Jay7s-0000dO-IX@fencepost.gnu.org>
-	 <7v63vmicvf.fsf@gitster.siamese.dyndns.org> <47DD9890.3060005@gnu.org>
-	 <7vve3lbwz9.fsf@gitster.siamese.dyndns.org>
+From: Theodore Tso <tytso@MIT.EDU>
+Subject: Re: repo.or.cz renovated
+Date: Mon, 17 Mar 2008 15:34:23 -0400
+Message-ID: <20080317193423.GI8368@mit.edu>
+References: <20080313231413.27966.3383.stgit@rover> <m3ve3nwtl3.fsf@localhost.localdomain> <20080317181015.GC10335@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Paolo Bonzini" <bonzini@gnu.org>, git@vger.kernel.org,
-	beuc@gnu.org, "Martin Langhoff" <martin@catalyst.net.nz>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 17 20:35:39 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakub Narebski <jnareb@gmail.com>, Junio C Hamano <junkio@cox.net>,
+	git@vger.kernel.org
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Mon Mar 17 20:35:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JbL7G-00041c-Dc
-	for gcvg-git-2@gmane.org; Mon, 17 Mar 2008 20:35:26 +0100
+	id 1JbL7f-0004AY-Uc
+	for gcvg-git-2@gmane.org; Mon, 17 Mar 2008 20:35:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753540AbYCQTen (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Mar 2008 15:34:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753313AbYCQTen
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Mar 2008 15:34:43 -0400
-Received: from ik-out-1112.google.com ([66.249.90.182]:56497 "EHLO
-	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752596AbYCQTem (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Mar 2008 15:34:42 -0400
-Received: by ik-out-1112.google.com with SMTP id c28so2466133ika.5
-        for <git@vger.kernel.org>; Mon, 17 Mar 2008 12:34:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=0DAWxpx7LMcs6miMBtqlRXBZpr5XcyDTPYQX0qLYGMo=;
-        b=terS9aDqmaTOhKgLxA8XMBqMYSfJJHZZEvPj+Cfri1SsuFWEKbucKJkserkgedgr6IHSatU8/BPDW04YIZqrt+boZLcUPg8Nt3zWMPEVm1Wx6+ZtB4m0afKObWYLpVKCPjwgKkqGgbSFHijqMIEp1ad/YzjDJ0J+TLvsF2apdVs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=XASJEoOqymA1iWNpBZ+OztjE7iLdLZxzwF+JSsLpanFHXfEWtqQ4Qp8PKDEbYrq7X8Fi7WM3F4sDadCU968fg4j+YzNPF0fyZgaV0YB+r5lqmGnAddlzK4gs/oAsAvwD61yhRsZ/aXNrNDbl47kyBLDcdZUaC+LnvFbQtZdf6vg=
-Received: by 10.142.180.17 with SMTP id c17mr607223wff.76.1205782479334;
-        Mon, 17 Mar 2008 12:34:39 -0700 (PDT)
-Received: by 10.66.252.6 with HTTP; Mon, 17 Mar 2008 12:34:39 -0700 (PDT)
-In-Reply-To: <7vve3lbwz9.fsf@gitster.siamese.dyndns.org>
+	id S1756653AbYCQTfG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Mar 2008 15:35:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756661AbYCQTfF
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Mar 2008 15:35:05 -0400
+Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:50630 "EHLO
+	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756346AbYCQTfD (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 17 Mar 2008 15:35:03 -0400
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id m2HJYZne028124;
+	Mon, 17 Mar 2008 15:34:36 -0400 (EDT)
+Received: from closure.thunk.org (c-98-216-98-217.hsd1.ma.comcast.net [98.216.98.217])
+	(authenticated bits=0)
+        (User authenticated as tytso@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id m2HJYOUY007017
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Mon, 17 Mar 2008 15:34:30 -0400 (EDT)
+Received: from tytso by closure.thunk.org with local (Exim 4.67)
+	(envelope-from <tytso@mit.edu>)
+	id 1JbL6F-00067f-Qb; Mon, 17 Mar 2008 15:34:23 -0400
 Content-Disposition: inline
+In-Reply-To: <20080317181015.GC10335@machine.or.cz>
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
+X-Scanned-By: MIMEDefang 2.42
+X-Spam-Flag: NO
+X-Spam-Score: 0.00
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77458>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77459>
 
-On Mon, Mar 17, 2008 at 9:01 PM, Junio C Hamano <gitster@pobox.com> wrote:
->  Martin, likes, dislikes?
+On Mon, Mar 17, 2008 at 07:10:15PM +0100, Petr Baudis wrote:
+> Actually, it was overwhelmed to so much by its success but by lack of
+> good maintenance. ;-) I gave it some love again for the past week and
+> the improvement was, well, overwhelming. :-)
+> 
+> I finally fixed tons of failures and broken repositories, and most
+> importantly repacked some of the big repositories with object databases
+> in pretty horrid shape. The effect has been immense, having everything
+> in database of 1/3 the size and single big pack drastically reduced the
+> I/O load.
 
-Hmmm. Trying to make up my mind on this. It looks like symlink support
-is broken in cvsserver, it is something we did not even consider, so I
-am trying to visualise _how_ broken it is, and what it would take to
+Are you making sure that repositories which are forks off of some
+parent repository are using objects/info/alternates to share objects?
+(If so you have to be careful when you prune not to drop objects, but
+it can make a huge difference in disk utilization and I/O bandwidth).
 
- - refuse to handle symlinks (temporarily, until we can guarantee our
-handling is sane)
- - translate symlinks that are internal - hard, and probably not even
-a good idea
- - handle symlinks directly - is the client safe from malicious symlinks?
+At least for master.kernel.org, and for those git repositories which I
+own, I make a point of periodically logging in and running git gc,
+copying over the object packs so I can do a prune operation safely,
+etc.  --- and I suspect most of the master.kernel.org git users do
+something similar.  On repo.or.cz we don't have shell access, so the
+project administrators can't do that for you.
 
-I have never used symlinks with either git or cvs, so I am unsure as
-to whether their handling is compatible. Do either of them perform any
-sanity checks on the targetof the symlink?
+> So for anyone running a hosting site, make sure your repositories are
+> nicely packed. It makes huge difference to the I/O load!
 
-cheers,
+It seems that a Really Good Idea would be do the the packing and
+pruning via cron scripts that run during the off hours...
+
+> My current plan is to have a [Search project] box at the front page,
+> together with direct link to 'show all'. Other than that, what makes
+> sense to display on the front page? I think recently added projects (age
+> < 1 week) for sure. I'm not so sure about recently changed projects -
+> maybe it is better to keep the front page cruft-free.
+
+There are plenty of ways which sites like freshmeat and sourceforge
+have come up to make it easy to browse a large number of software
+projects.  One way that might make sense is Sourceforge's Software Map
+(i.e., http://sourceforge.net/softwaremap/).
 
 
-
-m
+					- Ted
