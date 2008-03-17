@@ -1,62 +1,86 @@
-From: "Nigel Magnay" <nigel.magnay@gmail.com>
-Subject: submodule usage with links
-Date: Mon, 17 Mar 2008 13:52:52 +0000
-Message-ID: <320075ff0803170652i75041745v7825915f153fa577@mail.gmail.com>
+From: "Peter Harris" <git@peter.is-a-geek.org>
+Subject: Re: git-svn clone on a central server
+Date: Mon, 17 Mar 2008 11:01:39 -0400
+Message-ID: <eaa105840803170801p4155f21bpabc828a3be0e4aaa@mail.gmail.com>
+References: <frh8k1$lc8$1@ger.gmane.org>
+	 <eaa105840803151645j5e8ec443v991b9117df343b8f@mail.gmail.com>
+	 <frjbtf$rd0$1@ger.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Mar 17 14:53:58 2008
+Cc: git@vger.kernel.org
+To: "Bruno Harbulot" <Bruno.Harbulot@manchester.ac.uk>
+X-From: git-owner@vger.kernel.org Mon Mar 17 16:03:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JbFmY-0003iR-Pt
-	for gcvg-git-2@gmane.org; Mon, 17 Mar 2008 14:53:43 +0100
+	id 1JbGr1-0003rt-1k
+	for gcvg-git-2@gmane.org; Mon, 17 Mar 2008 16:02:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753520AbYCQNw6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Mar 2008 09:52:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753217AbYCQNw6
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Mar 2008 09:52:58 -0400
-Received: from ik-out-1112.google.com ([66.249.90.183]:29421 "EHLO
-	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753140AbYCQNw6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Mar 2008 09:52:58 -0400
-Received: by ik-out-1112.google.com with SMTP id c28so2317730ika.5
-        for <git@vger.kernel.org>; Mon, 17 Mar 2008 06:52:54 -0700 (PDT)
+	id S1753594AbYCQPBn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Mar 2008 11:01:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753512AbYCQPBn
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Mar 2008 11:01:43 -0400
+Received: from fk-out-0910.google.com ([209.85.128.188]:44629 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753468AbYCQPBm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Mar 2008 11:01:42 -0400
+Received: by fk-out-0910.google.com with SMTP id 19so1869983fkr.5
+        for <git@vger.kernel.org>; Mon, 17 Mar 2008 08:01:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=vLb/knd3rCwe7+XjudLQVl9WaTAl6ekQx1ha23Z2IxY=;
-        b=XWNvhm80G1GlKs1hwzGFdHa7v1UW1srptWHkl5418JYoWd5IVFmVJ4M3QQqe3rUahgH38MSrORVN1DnxI7fEP6tFhxUqA4lSrjI/8NN6telTekKSp2ZypSpAVcLtdTIWpH1nmDD4YSQFyYya0Bj6TaFRkmCpE1QysBY5dv05EjQ=
+        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        bh=BjRHoRyfDcv3hIFFOVM3+uU6aN/E1oJxcuR988hA4Fk=;
+        b=llqb2VdWxKSOx2/bWbVeXUWT6oReHX3mlBr9yhWeFDdF/QpV4gQqVbyRRzRtdm/wheMXEwdjNz2CEs2qH4De+9CYeaATuu8hKIqabKd4xUJV7XC5kW2/97oJgADBNYIWCwToDLxQpnHuyBR5Cy3pjAqtWHDa9bTAruWnCjSmaac=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=Bcfel06jdUB3FiqX7cW48yRByFuay66iZyxuRC2ZfaKxGSH4ZB3FHjtS0ukUnLE87Zbl7sGGsZ9vRVy+YNMVITlJEcOJk3pNd0/AvvTRfBM6ho0j1tAyEtC6VRqQPWHYno99XcW8Ya6BD59pEagEBRbTnqieTZ8ZEmj8y6qKZoE=
-Received: by 10.142.163.14 with SMTP id l14mr103379wfe.73.1205761972209;
-        Mon, 17 Mar 2008 06:52:52 -0700 (PDT)
-Received: by 10.66.243.3 with HTTP; Mon, 17 Mar 2008 06:52:52 -0700 (PDT)
+        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=dU+9RGqXDUtXtqH7TpusAhAyH3Lt05yc6LIkUY83dLx6IjuyHf1Eg1AsdLaz5YvoQqn15Teyum1IPP0RYAV4Rb6HkptDfHdl8eSpcDhLZUeyx3qU4jS0P2B6cj8E8IFAqBiHx3nludBfeKToCqDpKQ8DVZq6io9lylwt55xodWE=
+Received: by 10.78.107.8 with SMTP id f8mr42543893huc.40.1205766099288;
+        Mon, 17 Mar 2008 08:01:39 -0700 (PDT)
+Received: by 10.78.107.13 with HTTP; Mon, 17 Mar 2008 08:01:39 -0700 (PDT)
+In-Reply-To: <frjbtf$rd0$1@ger.gmane.org>
 Content-Disposition: inline
+X-Google-Sender-Auth: 5bd407e383ca8a84
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77432>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77433>
 
-Hi there
+On Sun, Mar 16, 2008 Bruno Harbulot wrote:
+>  The way I'm planning to use this is to create a "central" bare
+>  repository on the server (by moving the '.git' directory and setting
+>  bare=true in the config file) that I would like to keep in sync with the
+>  original SVN repository (and also push by own branches).
+>  I'd like then to pull these changes to my working copies of that central
+>  repository. I'm not quite sure how to update this central bare git
+>  repository (and then its clones) with the changes in the SVN repository
+>  upstream. (By the way, I'm not planning to 'dcommit' anything directly,
+>  just reading from this SVN.) Are there any recommendation on how to
+>  achieve this?
 
-We use a lot of repo links that I'd like to use submodule support for.
+I run "git svn fetch" hourly (and "git gc" daily) from cron on my
+'server'. My working copies, I just "git pull" when I want an update
+as usual.
 
-Instead of doing
-git submodule add ~/module/a
-or even
-git submodule add git://myhost/module/a
+I also occasionally "git svn (fetch|rebase|dcommit)" in my working
+copies. Just remember to blow away .git/svn after each "git
+(fetch|pull)" so that git-svn knows to rebuild the local index. Also,
+you just have to wait for the central 'server' to run another update
+before your next "git (fetch|pull)", or it will rewind the state of
+your svn branches.
 
-I'd like to share a, and do something like
+(Also note that state can get out of sync if an svn log message or
+author changes between the working copy's "git svn
+(fetch|rebase|dcommit)" and when the server's cron job triggers -
+basically never, unless you happen to have coworkers who like to
+ammend their svn log messages shortly after making a commit)
 
-<<add value to .gitmodules>>
-ln -s a ../modules/a
-?? do something to add 'A' to the index as a 'subproject commit'
-rather than a symlink ??
+I don't push branches to my 'svn fetch' repo (I use a separate repo
+for that), but I don't see why it would cause a problem.
 
-I'm stuck on the last bit - or is this not going to work?
+I'm sure there are other ways to do this.
+
+Peter Harris
