@@ -1,71 +1,56 @@
-From: Frank Lichtenheld <frank@lichtenheld.de>
-Subject: Re: [RFC/PATCH 2/3] gitweb: Support caching projects list
-Date: Mon, 17 Mar 2008 20:10:29 +0100
-Message-ID: <20080317191029.GE18624@mail-vs.djpig.de>
-References: <1205766570-13550-1-git-send-email-jnareb@gmail.com> <1205766570-13550-3-git-send-email-jnareb@gmail.com> <20080317165405.GD18624@mail-vs.djpig.de> <200803171952.15186.jnareb@gmail.com>
+From: =?ISO-8859-15?Q?Dirk_S=FCsserott?= <newsletter@dirk.my1.cc>
+Subject: gitk: how to apply '--color-words' to the diff command
+Date: Mon, 17 Mar 2008 20:18:53 +0100
+Message-ID: <47DEC41D.9050409@dirk.my1.cc>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Petr Baudis <pasky@suse.cz>,
-	"J.H." <warthog19@eaglescrag.net>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 17 20:11:37 2008
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Mar 17 20:19:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JbKk0-0002xU-Qq
-	for gcvg-git-2@gmane.org; Mon, 17 Mar 2008 20:11:25 +0100
+	id 1JbKs2-0006Ii-N7
+	for gcvg-git-2@gmane.org; Mon, 17 Mar 2008 20:19:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752754AbYCQTKp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Mar 2008 15:10:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752577AbYCQTKp
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Mar 2008 15:10:45 -0400
-Received: from pauli.djpig.de ([78.46.38.139]:47830 "EHLO pauli.djpig.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752499AbYCQTKo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Mar 2008 15:10:44 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by pauli.djpig.de (Postfix) with ESMTP id F34D990071;
-	Mon, 17 Mar 2008 20:10:42 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at pauli.djpig.de
-Received: from pauli.djpig.de ([127.0.0.1])
-	by localhost (pauli.djpig.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id TwR3uSkoYUqg; Mon, 17 Mar 2008 20:10:31 +0100 (CET)
-Received: from mail-vs.djpig.de (mail-vs.djpig.de [78.47.136.189])
-	by pauli.djpig.de (Postfix) with ESMTP id 8F03E90075;
-	Mon, 17 Mar 2008 20:10:31 +0100 (CET)
-Received: from djpig by mail-vs.djpig.de with local (Exim 4.63)
-	(envelope-from <djpig@mail-vs.djpig.de>)
-	id 1JbKj7-0007Ad-Ko; Mon, 17 Mar 2008 20:10:29 +0100
-Content-Disposition: inline
-In-Reply-To: <200803171952.15186.jnareb@gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1753051AbYCQTS7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Mar 2008 15:18:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753072AbYCQTS7
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Mar 2008 15:18:59 -0400
+Received: from smtprelay08.ispgateway.de ([80.67.29.8]:47969 "EHLO
+	smtprelay08.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753021AbYCQTS6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Mar 2008 15:18:58 -0400
+Received: from [84.176.117.149] (helo=[192.168.2.100])
+	by smtprelay08.ispgateway.de with esmtpa (Exim 4.68)
+	(envelope-from <newsletter@dirk.my1.cc>)
+	id 1JbKrG-00037H-OV
+	for git@vger.kernel.org; Mon, 17 Mar 2008 20:18:54 +0100
+User-Agent: Thunderbird 2.0.0.12 (Windows/20080213)
+X-Df-Sender: 757646
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77455>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77456>
 
-On Mon, Mar 17, 2008 at 07:52:13PM +0100, Jakub Narebski wrote:
-> Dnia poniedzia=C5=82ek 17. marca 2008 17:54, Frank Lichtenheld napisa=
-=C5=82:
->=20
-> >At the very least you should:
-> [...]
-> > =C2=A0- Check if the file is owned by the uid gitweb is running und=
-er and
-> > =C2=A0 =C2=A0not word-writable.
->=20
-> UID ($>) or PID ($$) should be equal to cache owner: stat($file)->uid=
-?
+Hello,
 
-I'm not sure what the PID has to do with anything here?
-But yeah, $> was what I meant.
-(Although I actually prefer to use POSIX::geteuid instead, since I can
-understand that faster).
+a few days ago I found a patch for gitk that adds a checkbox 'Ignore 
+space change' to the gitk GUI and -- when clicked -- adds the '-w' 
+switch to the diff command. I found that a very convenient way to see 
+'what has really changed'. The patch was contributed by Steffen Prohaska 
+and has sha1 b9b86007e27d9a06d58feab618a5be1d491ed13e in the
+git://git.kernel.org/pub/scm/git/git.git repository.
 
-Gruesse,
---=20
-=46rank Lichtenheld <frank@lichtenheld.de>
-www: http://www.djpig.de/
+Inspired by this, I thought a '--color-words' switch would be even more
+convenient. I took the patch as a template and kinda replaced all
+occurences of '-w' with '--color-words' (do not take this literally).
+
+Unfortunately gitk then shows the diffs not colorized but with those 
+ugly escape sequences instead. I'm not a Python person and just able to 
+'copy and waste', but probably some of you had the same idea and got it 
+right.
+
+Dirk
