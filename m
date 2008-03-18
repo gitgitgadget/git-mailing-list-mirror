@@ -1,91 +1,103 @@
-From: Russell Steicke <russellsteicke@gmail.com>
-Subject: [PATCH] (tig) Fix signed char comparison where char is unsigned by default.
-Date: Tue, 18 Mar 2008 17:47:43 +0900
-Message-ID: <20080318084743.GA16827@maggie.localnet>
-Reply-To: Russell Steicke <russellsteicke@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC/PATCH 3/3] gitweb: Fill project details lazily when caching
+Date: Tue, 18 Mar 2008 10:12:09 +0100
+Message-ID: <200803181012.11273.jnareb@gmail.com>
+References: <1205766570-13550-1-git-send-email-jnareb@gmail.com> <1205766570-13550-4-git-send-email-jnareb@gmail.com> <20080318031406.GH10335@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 18 09:48:45 2008
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "J.H." <warthog19@eaglescrag.net>,
+	Frank Lichtenheld <frank@lichtenheld.de>
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Tue Mar 18 10:13:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JbXUy-0005iy-Bq
-	for gcvg-git-2@gmane.org; Tue, 18 Mar 2008 09:48:44 +0100
+	id 1JbXtD-0004cX-6s
+	for gcvg-git-2@gmane.org; Tue, 18 Mar 2008 10:13:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751751AbYCRIr7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Mar 2008 04:47:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751746AbYCRIr7
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Mar 2008 04:47:59 -0400
-Received: from an-out-0708.google.com ([209.85.132.243]:23119 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751624AbYCRIrz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Mar 2008 04:47:55 -0400
-Received: by an-out-0708.google.com with SMTP id b6so1234565ana.37
-        for <git@vger.kernel.org>; Tue, 18 Mar 2008 01:47:54 -0700 (PDT)
+	id S1752006AbYCRJMh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Mar 2008 05:12:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751751AbYCRJMg
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Mar 2008 05:12:36 -0400
+Received: from fg-out-1718.google.com ([72.14.220.152]:7262 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753158AbYCRJMZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Mar 2008 05:12:25 -0400
+Received: by fg-out-1718.google.com with SMTP id l27so2215392fgb.17
+        for <git@vger.kernel.org>; Tue, 18 Mar 2008 02:12:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:subject:message-id:reply-to:mime-version:content-type:content-disposition:x-boo:x-message-flag:x-system:x-uptime:user-agent;
-        bh=8A8COM9Zqle4kuccLhgCHRZP5L+2857GRw2WTktKdJA=;
-        b=NTVFQrAZVTRmOQqSkalmSft1F9ApxJAyj40+8UUuX34iFLeMcF2NZgGNCqElg6ucTjJ3hFly62X6L6cD55jVZ5Bl/sTpHPg5m13XlNmTaovMlTlKnQc5jBFKQJ+n2e4A2POHmqQ1h6WdOxa4tmARrucLE8VdtARUgWhG7ExShWc=
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        bh=3kaD0z1GwjDEmIzxu+1Zt91+RN9BbUHHvF7Shd8/XSc=;
+        b=uFD9sg0xVYl8C6CNNDaBM0uYMvCH7EdtgQLxKM6HVENvZLONFWr+Az/z3PwyIO8PQxp2QKg+yE7voe75DDhoXGpDycoyvyH0y0SdP65Qvg3NJIf7v3TrFb2m8fdM4clh1xbuvZ3edHDxhw2Scj7dF2klqIw1txq5XDQVQLlzTwc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:subject:message-id:reply-to:mime-version:content-type:content-disposition:x-boo:x-message-flag:x-system:x-uptime:user-agent;
-        b=BBqIdX9dxgEN3v3tQjWPJh20y99wQNNG3ZxmpALheRwrQBu33QAmpOVGPsbJvJxb5TcfM9huGsCc8+7wW6cu+cQc0iq7iHQXfu8VVLurMn7MG2Ma9pSPnLzqYloI7v0RtPVZRuV7yyULgDGujKS/3TLy3Jr1R1zscIwwYIMwW0A=
-Received: by 10.100.201.16 with SMTP id y16mr1207320anf.72.1205830072357;
-        Tue, 18 Mar 2008 01:47:52 -0700 (PDT)
-Received: from localhost ( [203.33.247.40])
-        by mx.google.com with ESMTPS id d19sm36245052and.6.2008.03.18.01.47.49
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 18 Mar 2008 01:47:51 -0700 (PDT)
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=pHvc6Krxr4Gc+2213KO27gyqBiUgY6VplcJpQ1M6opodD1xOj4YwacjYZO7hQJ2iePjeEDFfp5OdUhoz3yFC11SKip+JfdxIf6viGLrU/bBGi2ikIgwKyfW1GwlHHrrUQ0Vpz2a8oEdp/w4Ko9lZU2qW4CNm7z5dwc316+KfdDI=
+Received: by 10.86.96.18 with SMTP id t18mr14374360fgb.13.1205831543676;
+        Tue, 18 Mar 2008 02:12:23 -0700 (PDT)
+Received: from ?192.168.1.11? ( [83.8.213.235])
+        by mx.google.com with ESMTPS id e20sm23224577fga.1.2008.03.18.02.12.20
+        (version=SSLv3 cipher=OTHER);
+        Tue, 18 Mar 2008 02:12:22 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20080318031406.GH10335@machine.or.cz>
 Content-Disposition: inline
-X-Boo: Boo!
-X-message-flag: I see that you run Outlook...
-X-System: Linux maggie 2.6.22-2-powerpc64
-X-Uptime: 14:42:16 up 39 days, 21:16, 18 users,  load average: 1.51, 1.82, 1.75
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77494>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77495>
 
-tig uses a char as a flag, and expects that to have three
-values: TRUE, FALSE, and -1.  When char is unsigned char (such
-as on PPC), this fails with the compiler warning "comparison is
-always false due to limited range of data type".
+On Tue, 18 March 2008, Petr Baudis wrote:
+> On Mon, Mar 17, 2008 at 04:09:30PM +0100, Jakub Narebski wrote:
+>>
+>> If caching is turned on project details can be filled in already from
+>> the cache.  When refreshing project info details for all project (when
+>> cache is stale and has to be refreshed) generate projects info only if
+>> modification time (as returned by lstat()) of projects repository
+>> gitdir changed.
+>> 
+>> This way we can avoid hitting repository refs, object database and
+>> repository config at the cost of additional lstat.
+>> 
+>> Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+>> ---
+>> This is an idea for further improvement of 'projects list caching'.
+>> Could you please: 
+>> 
+>>  1.) comment if it is a good idea, or why it works, or why it
+>>      couldn't work :),  
+> 
+> The idea is nice, but I'm surely missing something obvious again - why
+> do you use lstat() as opposed to stat()?
 
-So explicitly make the flag a signed char.
+Because in my home installation of gitweb (for tests) I have 
+/home/local/scm/git.git symlinked to /home/jnareb/git/.git
+And I want to follow changes in repository; link itself doesn't
+change.
 
-Detecting the int8_t type with the autoconf macro
-AC_CREATE_STDINT_H would probably be a better fix.
+> And more importantly, the mtime 
+> of projects repository unfortunately does not reflect almost any
+> changes per se; you would need to check mtime of description file,
+> config file and the refs instead.
 
-Signed-off-by: Russell Steicke <russellsteicke@gmail.com>
----
- tig.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+Well, I had hopes that because git uses "write to temporary file, rename
+temporary file to final name" to have atomic file writes any change in
+git repository would be reflected in mtime of topdir / GIT_DIR. I have
+checked it superficially... by doing a fetch, and a commit. But while
+both fetch and commit manipulate files in top dir (FETCH_HEAD, ORIG_HEAD,
+COMMIT_EDITMSG) it is not the case for push, unfortunately. If all
+pushes would result in pack transfer, it would be enough to watch for
+GIT_DIR/objects/pack/ directory.
 
-diff --git a/tig.c b/tig.c
-index 89a4c5d..448ce20 100644
---- a/tig.c
-+++ b/tig.c
-@@ -434,7 +434,7 @@ static iconv_t opt_iconv		= ICONV_NONE;
- static char opt_search[SIZEOF_STR]	= "";
- static char opt_cdup[SIZEOF_STR]	= "";
- static char opt_git_dir[SIZEOF_STR]	= "";
--static char opt_is_inside_work_tree	= -1; /* set to TRUE or FALSE */
-+static signed char opt_is_inside_work_tree	= -1; /* set to TRUE or FALSE */
- static char opt_editor[SIZEOF_STR]	= "";
- 
- enum option_type {
+I think that nothing short of inotify or equivalent would work: it is
+just too many files/directories to watch for changes... I hope I am
+mistaken here...
+
 -- 
-1.5.4.4
-
-
--- 
-Russell Steicke
-
--- Fortune says:
-Everything I like is either illegal, immoral or fattening.
-		-- Alexander Woollcott
+Jakub Narebski
+Poland
