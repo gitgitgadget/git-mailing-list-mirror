@@ -1,128 +1,103 @@
-From: "Govind Salinas" <blix@sophiasuchtig.com>
-Subject: [PYRITE] Update on the status of pyrite.
-Date: Tue, 18 Mar 2008 00:59:12 -0500
-Message-ID: <5d46db230803172259m4ca25a6cu9df606a4774e32e8@mail.gmail.com>
+From: Frank Lichtenheld <frank@lichtenheld.de>
+Subject: Re: [PATCH] Allow git-cvsserver database table name prefix to be specified.
+Date: Tue, 18 Mar 2008 09:09:13 +0100
+Message-ID: <20080318080913.GF18624@mail-vs.djpig.de>
+References: <12058051092735-git-send-email-josh@elsasser.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Mar 18 07:00:20 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Josh Elsasser <josh@elsasser.org>
+X-From: git-owner@vger.kernel.org Tue Mar 18 09:10:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JbUrx-0001AB-6j
-	for gcvg-git-2@gmane.org; Tue, 18 Mar 2008 07:00:17 +0100
+	id 1JbWtl-00043B-AH
+	for gcvg-git-2@gmane.org; Tue, 18 Mar 2008 09:10:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751802AbYCRF7P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Mar 2008 01:59:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751607AbYCRF7P
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Mar 2008 01:59:15 -0400
-Received: from wx-out-0506.google.com ([66.249.82.227]:51653 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751081AbYCRF7O (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Mar 2008 01:59:14 -0400
-Received: by wx-out-0506.google.com with SMTP id h31so6118229wxd.4
-        for <git@vger.kernel.org>; Mon, 17 Mar 2008 22:59:13 -0700 (PDT)
-Received: by 10.151.145.5 with SMTP id x5mr739013ybn.12.1205819952782;
-        Mon, 17 Mar 2008 22:59:12 -0700 (PDT)
-Received: by 10.150.156.18 with HTTP; Mon, 17 Mar 2008 22:59:12 -0700 (PDT)
+	id S1751530AbYCRIJh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Mar 2008 04:09:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751437AbYCRIJg
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Mar 2008 04:09:36 -0400
+Received: from pauli.djpig.de ([78.46.38.139]:45499 "EHLO pauli.djpig.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751081AbYCRIJe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Mar 2008 04:09:34 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by pauli.djpig.de (Postfix) with ESMTP id 0CEFE90071;
+	Tue, 18 Mar 2008 09:09:33 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at pauli.djpig.de
+Received: from pauli.djpig.de ([127.0.0.1])
+	by localhost (pauli.djpig.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id D8+gDRdMe1KL; Tue, 18 Mar 2008 09:09:15 +0100 (CET)
+Received: from mail-vs.djpig.de (mail-vs.djpig.de [78.47.136.189])
+	by pauli.djpig.de (Postfix) with ESMTP id 1200B90075;
+	Tue, 18 Mar 2008 09:09:14 +0100 (CET)
+Received: from djpig by mail-vs.djpig.de with local (Exim 4.63)
+	(envelope-from <djpig@mail-vs.djpig.de>)
+	id 1JbWsj-0003Cs-L0; Tue, 18 Mar 2008 09:09:13 +0100
 Content-Disposition: inline
-X-Google-Sender-Auth: 499d9d692be97c3b
+In-Reply-To: <12058051092735-git-send-email-josh@elsasser.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77491>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77492>
 
-Here is the latest info on Pyrite.  The blog entry can be found here
+On Mon, Mar 17, 2008 at 06:51:49PM -0700, Josh Elsasser wrote:
+> Adds a gitcvs.dbprefix config variable, the contents of which are
+> prepended to any database tables used by git-cvsserver. The same
+> substutions as gitcvs.dbname and gitcvs.dbuser are supported, and any
+> non-alphabetic characters are replaced with underscores.
+> ---
+> The purpose of this patch is to easily allow a single database (think
+> PostgreSQL or MySQL) to be shared by multiple repositories.
 
-http://pyrite.sophiasuchtig.com/2008/03/pyrite-gui.html
+For the record, I think that this is a good idea, but have no time
+to really test it.
 
-along with some screenshots of where the GUI part is headed.  The body of the
-post is as follows....
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index 0865f4e..ca232cf 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -661,6 +661,13 @@ gitcvs.dbuser, gitcvs.dbpass::
+>  	'gitcvs.dbuser' supports variable substitution (see
+>  	linkgit:git-cvsserver[1] for details).
+>  
+> +gitcvs.dbprefix::
+> +	Database table name prefix. This will be prepended to any
+> +	tables used, allowing a single database to be used for deveral
 
+Typo s/deveral/several/
 
----
-It has been a while since I have posted anything on here. Here is something to
-make sure people know about the current status of pyrite. I have been working
-toward getting pyrite able to handle the day to day activities of
-being a git wrapper.
-That is, it is a pass-through porcelain on top of git. The current
-TODO list looks
-something like this.
+> +gitcvs.dbprefix::
+> +	Database table name prefix. Supports variable substitution
+> +	(see below). Any non-alphabetic characters will be replaces
 
-    * Get basic commands to run on the command line. (this one is mostly done,
-      I just have to do some of the more interesting things like
-rebase, cherry-pick
-      etc)
-    * Add support for styles and templates. Think pretty-print or
-styles/templates
-      under Hg. ( I can probably tag v0.1 at this point)
-    * GUI (see below, should be v0.2)
-    * Built-in HTTP server. This will be similar to hg serve and use a similar
-     framework. The hg serve is very nice and one of the things that prompted me
-     to start this. (v0.3)
-    * Convert direct shell commands to c extensions that do the shell commands.
-      This doesn't make much sense by itself, but is very nice for the
-next step...(v0.5)
-    * Convert to libgit where libgit is currently implemented. Only
-part of git functions as
-       a c library, so much will still have to be done in
-sub-processes. This will probably
-       take a while (v0.9)
-    * Squeeze out bugs and I can call it v1.0.
+Typo s/replaces/replaced/
 
-After that we will see where things go. I expect that much of my work
-will go into
-converting the places where I am forced to run sub-processes to
-library functions in git.
+> +	with underscores.
+> +
+>  All variables can also be set per access method, see <<configaccessmethod,above>>.
+>  
+>  Variable substitution
+[...]
+> @@ -2427,10 +2431,10 @@ sub update
+>      # first lets get the commit list
+>      $ENV{GIT_DIR} = $self->{git_path};
+>  
+> -    my $commitsha1 = `git rev-parse $self->{module}`;
+> +    my $commitsha1 = `git-rev-parse $self->{module}`;
+>      chomp $commitsha1;
+>  
+> -    my $commitinfo = `git cat-file commit $self->{module} 2>&1`;
+> +    my $commitinfo = `git-cat-file commit $self->{module} 2>&1`;
+>      unless ( $commitinfo =~ /tree\s+[a-zA-Z0-9]{40}/ )
 
-Now on to the fun part, the GUI.
+Unrelated whitespace changes?
 
-Long ago, I was temted to create a GUI for git that ran on Windows and
-was written in
-C#. This was called Widgit. I did some work on it, but I could not convince my
-co-workers to be interested in git, and without someone to use what I
-was writting, it
-seemed kind of pointless. Fast forward a few months and I started
-working on Pyrite.
-Since this was more geared to the Linux crowd, I felt I could use
-python and GTK+ to
-make the GUI, but I liked several of the Ideas that I had for Widgit
-and I thought I could
-reuse them. Here is what the basic view looked like...
-
-http://bp2.blogger.com/_UFT2vGj15mM/R99T5sePnfI/AAAAAAAAAAU/UQwzPlwk3pU/
-s320/Screenshot-Widgit.png
-
-
-There was a status pane also...
-
-http://bp2.blogger.com/_UFT2vGj15mM/R99UVsePngI/AAAAAAAAAAc/vRnHrlW3VCs/
-s320/Screenshot-status-tree.png
-
-I was also fairly proud of the commit view filter, which I thought was handy...
-
-http://bp2.blogger.com/_UFT2vGj15mM/R99VAsePnhI/AAAAAAAAAAk/8TJkbWnuzKg/
-s320/Screenshot-CommitFilter.png
-
-And I plan to have all of these elements in Pyrite. Also, I really
-like some of the things
-I have seen in other GUIs that I want to borrow. For instance the graphical tree
-structure of Giggle is very nice and done using Cairo. Also, it shows
-the diffs a la gitk.
-
-http://bp1.blogger.com/_UFT2vGj15mM/R99VhcePniI/AAAAAAAAAAs/7iK79-42OK0/
-s1600-h/Screenshot--Giggle.png
-
-So all these things are nice. I have done a little bit of work on the
-GUI, but its just
-getting started. Here you can see what the current status of it is...
-
-http://bp1.blogger.com/_UFT2vGj15mM/R99V5cePnjI/AAAAAAAAAA0/RkbQlqdNl-o/
-s1600-h/Screenshot-Pyrite.png
-
-If anyone has any suggestions, I will be glad to hear them.
-
--Govind
+Gruesse,
+-- 
+Frank Lichtenheld <frank@lichtenheld.de>
+www: http://www.djpig.de/
