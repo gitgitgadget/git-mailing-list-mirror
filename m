@@ -1,91 +1,92 @@
-From: Xavier Maillard <xma@gnu.org>
-Subject: [PATCH] Shorten and simplify sendemail.alias* configuration variables.
-Date: Mon, 17 Mar 2008 23:53:04 +0100
-Message-ID: <1205794384-14513-1-git-send-email-xma@gnu.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 18 00:36:29 2008
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: renaming a file into a directory causes a pull error on older
+ repos
+Date: Mon, 17 Mar 2008 17:16:41 -0700
+Message-ID: <7vlk4ganti.fsf@gitster.siamese.dyndns.org>
+References: <20080316043138.GA7942@kroah.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Greg KH <greg@kroah.com>
+X-From: git-owner@vger.kernel.org Tue Mar 18 01:17:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JbOsH-00071k-Eu
-	for gcvg-git-2@gmane.org; Tue, 18 Mar 2008 00:36:13 +0100
+	id 1JbPWG-0001GC-HT
+	for gcvg-git-2@gmane.org; Tue, 18 Mar 2008 01:17:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753172AbYCQXfd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Mar 2008 19:35:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753021AbYCQXfd
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Mar 2008 19:35:33 -0400
-Received: from master.uucpssh.org ([193.218.105.66]:38811 "EHLO
-	master.uucpssh.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752843AbYCQXfc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Mar 2008 19:35:32 -0400
-Received: by master.uucpssh.org (Postfix, from userid 10)
-	id 38E88D5437; Tue, 18 Mar 2008 00:34:50 +0100 (CET)
-Received: from localhost.localdomain (IDENT:1000@localhost [127.0.0.1])
-	by localhost.localdomain (8.14.1/8.13.8) with ESMTP id m2HMr5EA014592
-	for <git@vger.kernel.org>; Mon, 17 Mar 2008 23:53:05 +0100
-Received: (from xma@localhost)
-	by localhost.localdomain (8.14.1/8.13.8/Submit) id m2HMr4cl014557
-	for git@vger.kernel.org; Mon, 17 Mar 2008 23:53:04 +0100
-X-Mailer: git-send-email 1.5.4.4.685.g64f14.dirty
-X-uucpssh: Found to be clean
-X-uucpssh-SpamCheck: not spam, SpamAssassin (not cached, score=-4.389,
-	required 4.6, autolearn=not spam, ALL_TRUSTED -1.80, AWL 0.01,
-	BAYES_00 -2.60, SPF_HELO_PASS -0.00)
-X-uucpssh-From: xma@gnu.org
+	id S1752708AbYCRAQw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Mar 2008 20:16:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752652AbYCRAQw
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Mar 2008 20:16:52 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:59960 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752632AbYCRAQv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Mar 2008 20:16:51 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 4F14220D0;
+	Mon, 17 Mar 2008 20:16:50 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id CBF3520CF; Mon, 17 Mar 2008 20:16:44 -0400 (EDT)
+In-Reply-To: <20080316043138.GA7942@kroah.com> (Greg KH's message of "Sat, 15
+ Mar 2008 21:31:38 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77470>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77471>
 
-I find it more consistent and less error prone to have aliasfile
-instead of aliasesfile and aliastype instead of aliasfiletype.
+Greg KH <greg@kroah.com> writes:
 
-Documentation is also updated to reflect the changes.
+> The problem:
+>   If you turn a file in a repository into a directory, and place files
+>   in that dir and commit it, any other person who had that repo cloned
+>   somewhere else will get an error when they try to pull and update
+>   their version.
+>
+> The error for me is:
+> 	fatal: Entry 'stats/results-18-22.txt' would be overwritten by merge. Cannot merge.
+> 	Merge with strategy recursive failed.
+>
+> I had turned the file "stats" into a directory.
 
-Signed-off-by: Xavier Maillard <xma@gnu.org>
----
- Documentation/git-send-email.txt |    8 ++++----
- git-send-email.perl              |    4 ++--
- 2 files changed, 6 insertions(+), 6 deletions(-)
+So...
 
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index 336d797..33fd589 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -192,12 +192,12 @@ sendemail.identity::
- 	identities and to hoist sensitive authentication information
- 	out of the repository and into the global configuration file.
- 
--sendemail.aliasesfile::
-+sendemail.aliasfile::
- 	To avoid typing long email addresses, point this to one or more
--	email aliases files.  You must also supply 'sendemail.aliasfiletype'.
-+	email aliases files.  You must also supply 'sendemail.aliastype'.
- 
--sendemail.aliasfiletype::
--	Format of the file(s) specified in sendemail.aliasesfile. Must be
-+sendemail.aliastype::
-+	Format of the file(s) specified in sendemail.aliasfile. Must be
- 	one of 'mutt', 'mailrc', 'pine', or 'gnus'.
- 
- sendemail.to::
-diff --git a/git-send-email.perl b/git-send-email.perl
-index be4a20d..1d8bb8e 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -203,9 +203,9 @@ my %config_settings = (
-     "smtppass" => \$smtp_authpass,
-     "to" => \@to,
-     "cccmd" => \$cc_cmd,
--    "aliasfiletype" => \$aliasfiletype,
-+    "aliastype" => \$aliasfiletype,
-     "bcc" => \@bcclist,
--    "aliasesfile" => \@alias_files,
-+    "aliasfile" => \@alias_files,
-     "suppresscc" => \@suppress_cc,
- );
- 
--- 
-1.5.4.4.685.g64f14.dirty
+ - originally "stats" was a file.
+
+ - then one branch removes it and creates stats/results-18-22.txt file.
+
+ - another branch keeps working elsewhere in the tree but has not touched
+   the "stats" file.
+
+Now, the above error message complains about stats/results-18-22.txt being
+overwritten, so I presume that:
+
+ - You have checked out the branch that has stats/results-18.22.txt;
+
+ - You are merging the other branch that still had stats as a file into
+   that checked out branch with stats/results-18.22.txt file.
+
+Are these presumptions correct?
+
+Now, merge-recursive may be riddled with bugs in directory-file conflict
+detection area.  The way it detects conflicts is quite bogus --- it builds
+a list of files and directories in ancestor, our side and the other side,
+and anything that changes directoryness is marked as conflict, when the
+right thing to do is to complain only if the checking out of the result
+needs to have a file and a directory at the same place.
+
+But I do not think the above error message is from merge-recursive proper.
+"Entry X would be overwritten by merge. Cannot merge." is an error message
+the 3-way read-tree (driven from merge-recursive) issues when you have
+local changes to file X that will go away as the result of the merge, to
+prevent us from losing your local changes to the file.  Didn't you have
+changes to that file when you did the merge?
+
+I have spotted an unrelated bug in git-merge-one-file.sh that would have
+caused something similar symptom when you had used "resolve" strategy, by
+the way (unfortunately I do not think it applies to merge-recursive).
