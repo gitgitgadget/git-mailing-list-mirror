@@ -1,74 +1,59 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] rebase [--onto O] A B: omit needless checkout
-Date: Wed, 19 Mar 2008 13:54:37 +0100
-Message-ID: <47E10D0D.2080702@viscovery.net>
-References: <20080312191041.GF3198@ins.uni-bonn.de> <47D8D5B8.70809@viscovery.net> <20080315103954.GD14769@ins.uni-bonn.de> <7vk5k3n2ho.fsf_-_@gitster.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 03/16] more tr portability test script fixes
+Date: Tue, 18 Mar 2008 18:44:37 -0400
+Message-ID: <20080318224436.GA6806@coredump.intra.peff.net>
+References: <cover.1205356737.git.peff@peff.net> <20080312213106.GD26286@coredump.intra.peff.net> <20080318222302.GA3450@steel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 19 21:48:57 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Whit Armstrong <armstrong.whit@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 19 21:49:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jc5DR-000683-SY
-	for gcvg-git-2@gmane.org; Wed, 19 Mar 2008 21:48:54 +0100
+	id 1Jc5Dd-000683-ID
+	for gcvg-git-2@gmane.org; Wed, 19 Mar 2008 21:49:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758819AbYCSU1H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Mar 2008 16:27:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933157AbYCSU1G
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Mar 2008 16:27:06 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:50935 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758665AbYCSU1E (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Mar 2008 16:27:04 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1Jbxnj-0005wu-0w; Wed, 19 Mar 2008 13:53:51 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id A801A6B7; Wed, 19 Mar 2008 13:54:37 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <7vk5k3n2ho.fsf_-_@gitster.siamese.dyndns.org>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S933551AbYCSUbY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Mar 2008 16:31:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933559AbYCSUbX
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Mar 2008 16:31:23 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3821 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933551AbYCSUbW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Mar 2008 16:31:22 -0400
+Received: (qmail 16808 invoked by uid 111); 18 Mar 2008 22:44:38 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Tue, 18 Mar 2008 18:44:38 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 18 Mar 2008 18:44:37 -0400
+Content-Disposition: inline
+In-Reply-To: <20080318222302.GA3450@steel.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77537>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77538>
 
-Junio C Hamano schrieb:
-> This teaches "git rebase [--onto O] A B" to omit an unnecessary checkout
-> of branch B before it goes on.
+On Tue, Mar 18, 2008 at 11:23:02PM +0100, Alex Riesen wrote:
+
+> Jeff King, Wed, Mar 12, 2008 22:31:06 +0100:
+> > -    tr '\000' '\012' <"$1" | sed -e "$sanitize_diff_raw_z" >.tmp-1
+> > -    tr '\000' '\012' <"$2" | sed -e "$sanitize_diff_raw_z" >.tmp-2
+> > +    perl -pe 'y/\000/\012/' <"$1" | sed -e "$sanitize_diff_raw_z" >.tmp-1
+> > +    perl -pe 'y/\000/\012/' <"$2" | sed -e "$sanitize_diff_raw_z" >.tmp-2
 > 
-> "git-rebase" originally was about rebasing the current branch to somewhere
-> else, and when the extra parameter to name which branch to rebase was
-> added, it defined the semantics to the safest but stupid "first switch to
-> the named branch and then operate exactly the same way as if we were
-> already on that branch".
+> These break in presence of ActiveState Perl on Windows.
 > 
-> But the first thing the real part of "rebase" does is to reset the work
-> tree and the index to the "onto" commit.  Which means the "rebase that
-> branch" form switched the work tree to the tip of the branch only to
-> immediately switch again to another commit.  This was wasteful.
+> I suggest replacing such simple construction with a simplified,
+> in-tree, version of tr.
 
-This works for a frequent use-case of mine:
+<sigh> It's sad that it must come to that, but your test-tr patches seem
+like the only sane choice. They seem to work fine on my Solaris box.
 
-  $ git rebase master devel
+Note that there are still a few uses of 'tr' in actual git scripts.
+However, they are pretty tame, so I think they should work everywhere.
+Otherwise, test-tr must become "git tr". :)
 
-where I am already on branch master, and now want to rebase devel on top
-of it.
-
-The code seems to take care of a lot of corner cases and less frequent
-use-cases, including using --onto, which I don't feel able to judge about.
-
-> +# git reset --hard "$onto^0"
-
-Don't forget to remove this line. ;)
-
--- Hannes
+-Peff
