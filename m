@@ -1,68 +1,68 @@
-From: Frank Lichtenheld <frank@lichtenheld.de>
-Subject: Re: [RFC/PATCH 3/3] gitweb: Fill project details lazily when caching
-Date: Tue, 18 Mar 2008 10:52:52 +0100
-Message-ID: <20080318095252.GH18624@mail-vs.djpig.de>
-References: <1205766570-13550-1-git-send-email-jnareb@gmail.com> <1205766570-13550-4-git-send-email-jnareb@gmail.com> <20080318031406.GH10335@machine.or.cz> <200803181012.11273.jnareb@gmail.com>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [PATCH] Documentation/git-merge: document subtree strategy.
+Date: Tue, 18 Mar 2008 13:26:43 +0100
+Message-ID: <20080318122643.GC15297@genesis.frugalware.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org,
-	"J.H." <warthog19@eaglescrag.net>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 18 10:53:49 2008
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 18 13:27:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JbYVw-0008Ae-Mm
-	for gcvg-git-2@gmane.org; Tue, 18 Mar 2008 10:53:49 +0100
+	id 1Jbauf-00075X-JX
+	for gcvg-git-2@gmane.org; Tue, 18 Mar 2008 13:27:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752451AbYCRJxH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Mar 2008 05:53:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752431AbYCRJxG
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Mar 2008 05:53:06 -0400
-Received: from pauli.djpig.de ([78.46.38.139]:59910 "EHLO pauli.djpig.de"
+	id S1752242AbYCRM0t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Mar 2008 08:26:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752261AbYCRM0s
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Mar 2008 08:26:48 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:11909 "EHLO virgo.iok.hu"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752309AbYCRJxF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Mar 2008 05:53:05 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by pauli.djpig.de (Postfix) with ESMTP id 8B02990077;
-	Tue, 18 Mar 2008 10:53:04 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at pauli.djpig.de
-Received: from pauli.djpig.de ([127.0.0.1])
-	by localhost (pauli.djpig.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id FYRjffIgrK2n; Tue, 18 Mar 2008 10:52:52 +0100 (CET)
-Received: from mail-vs.djpig.de (mail-vs.djpig.de [78.47.136.189])
-	by pauli.djpig.de (Postfix) with ESMTP id B536C90071;
-	Tue, 18 Mar 2008 10:52:52 +0100 (CET)
-Received: from djpig by mail-vs.djpig.de with local (Exim 4.63)
-	(envelope-from <djpig@mail-vs.djpig.de>)
-	id 1JbYV2-0000Ru-37; Tue, 18 Mar 2008 10:52:52 +0100
+	id S1752220AbYCRM0s (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Mar 2008 08:26:48 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id A88EF1B2503;
+	Tue, 18 Mar 2008 13:26:45 +0100 (CET)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 63BF044698;
+	Tue, 18 Mar 2008 13:23:49 +0100 (CET)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 48A6D1864058; Tue, 18 Mar 2008 13:26:43 +0100 (CET)
 Content-Disposition: inline
-In-Reply-To: <200803181012.11273.jnareb@gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77496>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77497>
 
-On Tue, Mar 18, 2008 at 10:12:09AM +0100, Jakub Narebski wrote:
-> On Tue, 18 March 2008, Petr Baudis wrote:
-> > The idea is nice, but I'm surely missing something obvious again - why
-> > do you use lstat() as opposed to stat()?
-> 
-> Because in my home installation of gitweb (for tests) I have 
-> /home/local/scm/git.git symlinked to /home/jnareb/git/.git
-> And I want to follow changes in repository; link itself doesn't
-> change.
+There was already some documentation about subtree under
+Documentation/howto but it was missing from git-merge manpage.
 
-Which means you have that backwards, since
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+---
 
-"lstat() is identical to stat(), except that if path is a symbolic link,
-then the link itself is stat-ed, not the file that it refers to."
-(from linux manpage)
+Based on the commit message of 68faf68938ee943fc251c702f2027e4dfda354db.
 
-Gruesse,
+ Documentation/merge-strategies.txt |    7 +++++++
+ 1 files changed, 7 insertions(+), 0 deletions(-)
+
+diff --git a/Documentation/merge-strategies.txt b/Documentation/merge-strategies.txt
+index 7df0266..1276f85 100644
+--- a/Documentation/merge-strategies.txt
++++ b/Documentation/merge-strategies.txt
+@@ -33,3 +33,10 @@ ours::
+ 	merge is always the current branch head.  It is meant to
+ 	be used to supersede old development history of side
+ 	branches.
++
++subtree::
++	This is a modified recursive strategy. When merging trees A and
++	B, if B corresponds to a subtree of A, B is first adjusted to
++	match the tree structure of A, instead of reading the trees at
++	the same level. This adjustment is also done to the common
++	ancestor tree.
 -- 
-Frank Lichtenheld <frank@lichtenheld.de>
-www: http://www.djpig.de/
+1.5.4.3
