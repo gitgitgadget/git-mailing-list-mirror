@@ -1,63 +1,65 @@
-From: Ping Yin <pkufranky@gmail.com>
-Subject: Re: [RFC/PATCH Second draft] Fast forward strategies allow, never, and only
-Date: Tue, 18 Mar 2008 21:57:04 +0800
-Organization: (kooxoo Corp.)
-Message-ID: <20080318135704.GA11922@kooxoo235>
-References: <402c10cd0803101959q619efa86pbd501e5e2cc018c2@mail.gmail.com> <402c10cd0803172127u480276c9s4f9d716b4912ad5e@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Re* git remote --mirror bug?
+Date: Tue, 18 Mar 2008 15:04:15 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0803181503240.3200@eeepc-johanness>
+References: <1205499956.7589.4.camel@gentoo-jocke.transmode.se> <1205604534.7589.20.camel@gentoo-jocke.transmode.se> <7v1w6bj7f9.fsf_-_@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Sverre Hvammen Johansen <hvammen@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 18 14:58:00 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: joakim.tjernlund@transmode.se, git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 18 15:04:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JbcK7-0006cG-JC
-	for gcvg-git-2@gmane.org; Tue, 18 Mar 2008 14:57:52 +0100
+	id 1JbcQy-0000gH-D0
+	for gcvg-git-2@gmane.org; Tue, 18 Mar 2008 15:04:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752566AbYCRN5L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Mar 2008 09:57:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752152AbYCRN5K
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Mar 2008 09:57:10 -0400
-Received: from mail.qikoo.org ([60.28.205.235]:39096 "EHLO mail.qikoo.org"
-	rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1750917AbYCRN5J (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Mar 2008 09:57:09 -0400
-Received: by mail.qikoo.org (Postfix, from userid 1029)
-	id ED8DF470AF; Tue, 18 Mar 2008 21:57:04 +0800 (CST)
-Mail-Followup-To: Sverre Hvammen Johansen <hvammen@gmail.com>,
-	git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <402c10cd0803172127u480276c9s4f9d716b4912ad5e@mail.gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1753082AbYCROEO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Mar 2008 10:04:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752959AbYCROEO
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Mar 2008 10:04:14 -0400
+Received: from mail.gmx.net ([213.165.64.20]:34597 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752852AbYCROEN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Mar 2008 10:04:13 -0400
+Received: (qmail invoked by alias); 18 Mar 2008 14:04:11 -0000
+Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO [192.168.0.59]) [132.187.25.128]
+  by mail.gmx.net (mp032) with SMTP; 18 Mar 2008 15:04:11 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/je4cMth3j27f3LZptyk1IiPDIXZfgAIhy0onDQq
+	WkFe8xOtI8vEam
+X-X-Sender: user@eeepc-johanness
+In-Reply-To: <7v1w6bj7f9.fsf_-_@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77501>
 
-* Sverre Hvammen Johansen <hvammen@gmail.com> [2008-03-17 20:27:13 -0800]:
+Hi,
 
-> New fast forward strategies, only, is introduced.  This new fast
-> forward strategy prevents real merges.
+On Sun, 16 Mar 2008, Junio C Hamano wrote:
+
+> Joakim Tjernlund <joakim.tjernlund@transmode.se> writes:
 > 
-> +                               fast_forward=allow ;;
-> +                       *)
-> +                               die "Available fast-forward strategies
-> are: allow, newer, and only" ;;
+> >> git remote show os2kernel 
+> >> * remote os2kernel
+> >>   URL: /usr/local/src/os2kernel
+> >> Warning: unrecognized mapping in remotes.os2kernel.fetch: +refs/*:refs/*
+> 
+> This is very unfortunate.
+>
+> [...]
+>
+>  builtin-check-ref-format.c |    2 +-
+>  git-parse-remote.sh        |    9 +++++++--
+>  remote.c                   |   16 +++++++++++++---
+>  3 files changed, 21 insertions(+), 6 deletions(-)
 
-I fail to apply this patch. It seems wrapped here. Do you use "git send-email"?
+Thanks for the fix, and sorry for not being available to fix it myself.
 
-> +                       esac
-> +                       ;;
-> +               --ff=*)
-> +                       fast_forward=${1#--ff=}
-> +                       case "$fast_forward" in
-> +                           allow|never|only)
-> +                               ;;
-> +                           *)
-> +                               die "Available fast-forward strategies
-> are: allow, newer, and only" ;;
-
-Wrapped again.
+Ciao,
+Dscho
