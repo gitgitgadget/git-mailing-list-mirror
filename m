@@ -1,68 +1,55 @@
-From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
-Subject: [StGit PATCH 0/6] Two bugfixes
-Date: Thu, 20 Mar 2008 01:31:28 +0100
-Message-ID: <20080320002604.13102.53757.stgit@yoghurt>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Erik Sandberg <mandolaerik@gmail.com>
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 20 01:32:58 2008
+From: "Rhodes, Kate" <masukomi@gmail.com>
+Subject: [RFC] git-bisect unsure
+Date: Tue, 18 Mar 2008 11:57:41 -0400
+Message-ID: <CE6D7D80-DC0F-4840-8B95-7482EE0E71A3@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v915)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 20 01:47:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jc8iE-0006sd-Bh
-	for gcvg-git-2@gmane.org; Thu, 20 Mar 2008 01:32:54 +0100
+	id 1Jc8wd-0002ip-0X
+	for gcvg-git-2@gmane.org; Thu, 20 Mar 2008 01:47:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758448AbYCTAcN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 19 Mar 2008 20:32:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935603AbYCTAcL
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Mar 2008 20:32:11 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2864 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754781AbYCTAcG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Mar 2008 20:32:06 -0400
-Received: from localhost ([127.0.0.1] helo=[127.0.1.1])
-	by diana.vm.bytemark.co.uk with esmtp (Exim 3.36 #1 (Debian))
-	id 1Jc8gq-0004rl-00; Thu, 20 Mar 2008 00:31:28 +0000
-User-Agent: StGIT/0.14.1
+	id S936510AbYCTAqw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Mar 2008 20:46:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765310AbYCTAqv
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Mar 2008 20:46:51 -0400
+Received: from an-out-0708.google.com ([209.85.132.246]:8774 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S936075AbYCTAqt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Mar 2008 20:46:49 -0400
+Received: by an-out-0708.google.com with SMTP id d31so174367and.103
+        for <git@vger.kernel.org>; Wed, 19 Mar 2008 17:46:48 -0700 (PDT)
+Received: by 10.100.122.8 with SMTP id u8mr2073701anc.103.1205855864779;
+        Tue, 18 Mar 2008 08:57:44 -0700 (PDT)
+Received: from ?172.30.3.237? ( [80.67.64.10])
+        by mx.google.com with ESMTPS id c27sm23488853ana.27.2008.03.18.08.57.43
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 18 Mar 2008 08:57:43 -0700 (PDT)
+X-Mailer: Apple Mail (2.915)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77602>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77603>
 
-This series fixes one rather benign bug (4/6) and one that caused
-patches to become empty, which is rather worse (6/6). (The patch
-contents could still be recovered via the patch log or reflog, but
-it's still a major inconvenience.)
+I'm in the middle of tracking down a bug, unfortunately one of the  
+commits that git-bisect chose had an unrelated problem in it that  
+broke my build. As a result I don't know if this version is good or  
+bad as far as the bug I'm trying to track down is concerned. I would  
+think of a number of situations where one bug could interfere with the  
+testing of another.
 
-Both bugs were discovered by Erik Sandberg.
+My proposal is to add an "unsure" option to git-bisect.
 
-These patches are also available in the kha/safe branch.
+I'm thinking that when you say "git bisect unsure" it would simply  
+shift one commit earlier or later and refrain from ever checking out  
+one marked unsure until there were only "unsure" ones left at which  
+point it would add a disclaimer when you called bad or good and throw  
+up it's hands in frustration if you were to say "unsure" again.
 
----
-
-Karl Hasselstr=C3=B6m (6):
-      Handle failed pushes differently depending on cause
-      New test: conflicting push in dirty worktree
-      Make sure that we only uncommit commits with exactly one parent
-      Try uncommitting a commit with not exactly one parent
-      Make sure patches with no parents have an empty list of parents
-      Use a special exit code for bugs
-
-
- stgit/commands/uncommit.py |   14 ++++++++++++--
- stgit/lib/git.py           |   23 +++++++++++++++--------
- stgit/lib/transaction.py   |    4 +++-
- stgit/main.py              |   11 +++++++----
- stgit/utils.py             |    1 +
- t/t1300-uncommit.sh        |    5 +++++
- t/t3000-dirty-merge.sh     |   35 +++++++++++++++++++++++++++++++++++
- 7 files changed, 78 insertions(+), 15 deletions(-)
- create mode 100755 t/t3000-dirty-merge.sh
-
---=20
-Karl Hasselstr=C3=B6m, kha@treskal.com
-      www.treskal.com/kalle
+-Kate
