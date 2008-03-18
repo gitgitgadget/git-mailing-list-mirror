@@ -1,65 +1,68 @@
-From: "Jonathan del Strother" <maillist@steelskies.com>
-Subject: Re: global hooks
-Date: Thu, 20 Mar 2008 01:04:33 +0000
-Message-ID: <57518fd10803191804g7b2ce670xe5d89b53c1bb8f6f@mail.gmail.com>
-References: <1205942671.691.8.camel@omicron.ep.petrobras.com.br>
+From: =?ISO-8859-15?Q?Dirk_S=FCsserott?= <newsletter@dirk.my1.cc>
+Subject: Re: gitk: how to apply '--color-words' to the diff command
+Date: Tue, 18 Mar 2008 21:58:40 +0100
+Message-ID: <47E02D00.2080703@dirk.my1.cc>
+References: <47DEC41D.9050409@dirk.my1.cc>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Victor Bogado da Silva Lins" <victor@bogado.net>
-X-From: git-owner@vger.kernel.org Thu Mar 20 02:06:09 2008
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Mar 20 02:11:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jc9E7-0007Bd-1W
-	for gcvg-git-2@gmane.org; Thu, 20 Mar 2008 02:05:51 +0100
+	id 1Jc9JU-0000TY-0T
+	for gcvg-git-2@gmane.org; Thu, 20 Mar 2008 02:11:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752480AbYCTBEg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Mar 2008 21:04:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752549AbYCTBEg
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Mar 2008 21:04:36 -0400
-Received: from wx-out-0506.google.com ([66.249.82.225]:47883 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752152AbYCTBEe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Mar 2008 21:04:34 -0400
-Received: by wx-out-0506.google.com with SMTP id h31so797033wxd.4
-        for <git@vger.kernel.org>; Wed, 19 Mar 2008 18:04:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        bh=QyBMHwY9cWXtx7zdeNUWJdRz0aTiAoByI8EFP9YLIVo=;
-        b=X7z87lZBGRxIDAXYugMdajIpirqcaYxYxu5TrInnkdG+z78lxPERWj7qXywAfkxrofY94oNqhVs6PhKW791zId7lwUGLaakcr2mwlawVQYI6yfVI8m5oA5xdfcFSycegLbpFTJ2XfwCxok1kSR0NU1rHBqrvQ31hwmilD+MQSD8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=NbR7H7D+3LVJUe49/YsJdmO+AZZQKTuDOF0DGpbYYnFtURk5bN5+CC88TAOgihCOKcLqyGKuuWFCPYXzGrAk+kNoxGgYva92lXs+/EVDIiE3PdIpcK8xYOQ/b5yswjEHdOKjwuMkNSyu1j8TsL34OoQwIjOvaxg6N9mkctxGzuI=
-Received: by 10.141.36.10 with SMTP id o10mr536459rvj.176.1205975073417;
-        Wed, 19 Mar 2008 18:04:33 -0700 (PDT)
-Received: by 10.141.86.15 with HTTP; Wed, 19 Mar 2008 18:04:33 -0700 (PDT)
-In-Reply-To: <1205942671.691.8.camel@omicron.ep.petrobras.com.br>
-Content-Disposition: inline
-X-Google-Sender-Auth: 0e9856302406a1ad
+	id S1758927AbYCTBKK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Mar 2008 21:10:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758350AbYCTBKJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Mar 2008 21:10:09 -0400
+Received: from smtprelay08.ispgateway.de ([80.67.29.8]:49496 "EHLO
+	smtprelay08.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758235AbYCTBKH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Mar 2008 21:10:07 -0400
+Received: from [84.176.99.154] (helo=[192.168.2.100])
+	by smtprelay08.ispgateway.de with esmtpa (Exim 4.68)
+	(envelope-from <newsletter@dirk.my1.cc>)
+	id 1JbitN-00039A-83
+	for git@vger.kernel.org; Tue, 18 Mar 2008 21:58:41 +0100
+User-Agent: Thunderbird 2.0.0.12 (Windows/20080213)
+In-Reply-To: <47DEC41D.9050409@dirk.my1.cc>
+X-Df-Sender: 757646
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77609>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77610>
 
-On Wed, Mar 19, 2008 at 4:04 PM, Victor Bogado da Silva Lins
-<victor@bogado.net> wrote:
-> Hi, I made a prepare-commit-msg hook today, it basically appends the
->  diff I am about to commit to the commented information that normally
->  appears.
 >
->  The problem is that if I want this hook in all projects I have, I have
->  to copy that file to every single project I have. This is an error prone
->  operation, not to mention a pain in the... .
+> a few days ago I found a patch for gitk that adds a checkbox 'Ignore 
+> space change' to the gitk GUI and -- when clicked -- adds the '-w' 
+> switch to the diff command. I found that a very convenient way to see 
+> 'what has really changed'. The patch was contributed by Steffen 
+> Prohaska and has sha1 b9b86007e27d9a06d58feab618a5be1d491ed13e in the
+> git://git.kernel.org/pub/scm/git/git.git repository.
 >
->  SO my question is, is there a way to make that hook global to all
->  projects? If not, would it be a good idea to allow this?
+> Inspired by this, I thought a '--color-words' switch would be even more
+> convenient. I took the patch as a template and kinda replaced all
+> occurences of '-w' with '--color-words' (do not take this literally).
+>
+> Unfortunately gitk then shows the diffs not colorized but with those 
+> ugly escape sequences instead. I'm not a Python person and just able 
+> to 'copy and waste', but probably some of you had the same idea and 
+> got it right.
+>
+I'm not only not a Python person but also not a Tcl person. Did't even 
+figure out the difference. Sorry for that.
 
-I'd love to see something along these lines - at the moment, I have a
-precommit hook to drop textmate's caret metadata from the commit file,
-and it's a pain having to symlink it into every git repo.
+However, what I figured out is that it's not as simple as I thought: The 
+colorization in question is hard coded in the last 'else' branch of 
+'getblobdiffline'. When a line starts with a '+' or '-', then it's shown 
+in green or red. To support the --color-words switch it would be 
+neccessary to actually parse diff's output wrt. to the colors.
+
+Sorry for the noise.
+
+Dirk
