@@ -1,68 +1,51 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: [PATCH] Documentation/git-merge: document subtree strategy.
-Date: Tue, 18 Mar 2008 13:26:43 +0100
-Message-ID: <20080318122643.GC15297@genesis.frugalware.org>
+From: "Yakov Lerner" <iler.ml@gmail.com>
+Subject: 'Use of uninitialized value in string' line 651 git-send-email (from the 'next' branch)
+Date: Tue, 18 Mar 2008 15:44:36 +0200
+Message-ID: <f36b08ee0803180644r23c21a21y9d753492be2189ec@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 18 13:27:33 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Mar 18 14:45:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jbauf-00075X-JX
-	for gcvg-git-2@gmane.org; Tue, 18 Mar 2008 13:27:30 +0100
+	id 1Jbc81-0001Zu-F7
+	for gcvg-git-2@gmane.org; Tue, 18 Mar 2008 14:45:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752242AbYCRM0t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Mar 2008 08:26:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752261AbYCRM0s
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Mar 2008 08:26:48 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:11909 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752220AbYCRM0s (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Mar 2008 08:26:48 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id A88EF1B2503;
-	Tue, 18 Mar 2008 13:26:45 +0100 (CET)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 63BF044698;
-	Tue, 18 Mar 2008 13:23:49 +0100 (CET)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 48A6D1864058; Tue, 18 Mar 2008 13:26:43 +0100 (CET)
+	id S1752676AbYCRNok (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Mar 2008 09:44:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752638AbYCRNok
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Mar 2008 09:44:40 -0400
+Received: from nf-out-0910.google.com ([64.233.182.190]:26262 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752618AbYCRNoj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Mar 2008 09:44:39 -0400
+Received: by nf-out-0910.google.com with SMTP id g13so2329323nfb.21
+        for <git@vger.kernel.org>; Tue, 18 Mar 2008 06:44:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=8jWGmpoNebkmRjY7QeY97OcEOz0kHN7Gr1CYVQG1XOo=;
+        b=EMlJpF+hbRQa4HEblXz9XYw0TTLn26seTEV9LdxilXf92/MuiTQ2PXKhxu7EtIlhPAbdaonKW6LGrPnn8we9DhFKVi7V5cfcFIpSAtCrFLYCXJLhxzt/GrW5Q5SWTVD3piDIoUmH2Wvy2+Ww2P7m6lnilEIhP8+roHWcKvrqEBA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=v0FfTth1DyVh974weJIdY/tjf4kXVtwlpYQi6QKWFspTdNhKL75oWgNIPwc/oi3pG2TYU4g1ri+Ck9ojTI/USViCJjs9hrCfXtu27SUUN+rPeQ6Gcg34sLiRMJVm7VecIibUV9+oZHfLgSz5fMR9Iz7kCd3SfbdWlwA8KXd9jbE=
+Received: by 10.78.162.4 with SMTP id k4mr1877449hue.43.1205847876324;
+        Tue, 18 Mar 2008 06:44:36 -0700 (PDT)
+Received: by 10.78.199.17 with HTTP; Tue, 18 Mar 2008 06:44:36 -0700 (PDT)
 Content-Disposition: inline
-User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77497>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77498>
 
-There was already some documentation about subtree under
-Documentation/howto but it was missing from git-merge manpage.
+line 651 git-send-email (from the 'next' branch), generates
+Use of uninitialized value in string eq at .../git-send-email line 651.
+sometimes. There are several ways to hush the warning.
+It's $cc undefined, as returned by  extract_valid_address() in previous line.
 
-Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
----
-
-Based on the commit message of 68faf68938ee943fc251c702f2027e4dfda354db.
-
- Documentation/merge-strategies.txt |    7 +++++++
- 1 files changed, 7 insertions(+), 0 deletions(-)
-
-diff --git a/Documentation/merge-strategies.txt b/Documentation/merge-strategies.txt
-index 7df0266..1276f85 100644
---- a/Documentation/merge-strategies.txt
-+++ b/Documentation/merge-strategies.txt
-@@ -33,3 +33,10 @@ ours::
- 	merge is always the current branch head.  It is meant to
- 	be used to supersede old development history of side
- 	branches.
-+
-+subtree::
-+	This is a modified recursive strategy. When merging trees A and
-+	B, if B corresponds to a subtree of A, B is first adjusted to
-+	match the tree structure of A, instead of reading the trees at
-+	the same level. This adjustment is also done to the common
-+	ancestor tree.
--- 
-1.5.4.3
+Yakov
