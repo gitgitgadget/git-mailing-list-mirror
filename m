@@ -1,93 +1,351 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: [PATCH] Fix tag following
-Date: Mon, 17 Mar 2008 22:15:02 -0400 (EDT)
-Message-ID: <alpine.LNX.1.00.0803172211060.19665@iabervon.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 18 03:16:05 2008
+From: Josh Elsasser <josh@elsasser.org>
+Subject: [PATCH] Allow git-cvsserver database table name prefix to be specified.
+Date: Mon, 17 Mar 2008 18:51:49 -0700
+Message-ID: <12058051092735-git-send-email-josh@elsasser.org>
+Cc: Josh Elsasser <josh@elsasser.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 18 03:21:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JbRMw-0006e5-3r
-	for gcvg-git-2@gmane.org; Tue, 18 Mar 2008 03:16:02 +0100
+	id 1JbRSQ-0007t4-Nq
+	for gcvg-git-2@gmane.org; Tue, 18 Mar 2008 03:21:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752292AbYCRCPH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Mar 2008 22:15:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752650AbYCRCPH
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Mar 2008 22:15:07 -0400
-Received: from iabervon.org ([66.92.72.58]:60755 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751675AbYCRCPF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Mar 2008 22:15:05 -0400
-Received: (qmail 16878 invoked by uid 1000); 18 Mar 2008 02:15:02 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 18 Mar 2008 02:15:02 -0000
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1751746AbYCRCUh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Mar 2008 22:20:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751864AbYCRCUh
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Mar 2008 22:20:37 -0400
+Received: from opal.elsasser.org ([198.145.64.114]:13304 "EHLO
+	opal.elsasser.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751594AbYCRCUg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Mar 2008 22:20:36 -0400
+X-Greylist: delayed 1726 seconds by postgrey-1.27 at vger.kernel.org; Mon, 17 Mar 2008 22:20:36 EDT
+Received: by opal.elsasser.org (Postfix, from userid 1000)
+	id 78BF83E247; Mon, 17 Mar 2008 18:51:49 -0700 (PDT)
+X-Mailer: git-send-email 1.5.2.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77482>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77483>
 
-Before the second fetch-pack connection in the same process, unmark
-all of the objects marked in the first connection, in order that we'll
-list them as things we have instead of thinking we've already
-mentioned them.
-
-Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
+Adds a gitcvs.dbprefix config variable, the contents of which are
+prepended to any database tables used by git-cvsserver. The same
+substutions as gitcvs.dbname and gitcvs.dbuser are supported, and any
+non-alphabetic characters are replaced with underscores.
 ---
-This fixes David Brownell's test case, at least as far as failing to find 
-any common commits. There's still some issue I haven't been able to track 
-down where it seems to list the same "have" values for refs the second 
-time, despite them having been updated, but that's a much much smaller 
-issue.
+The purpose of this patch is to easily allow a single database (think
+PostgreSQL or MySQL) to be shared by multiple repositories.
 
- builtin-fetch-pack.c |   16 ++++++++++++++++
- 1 files changed, 16 insertions(+), 0 deletions(-)
+ Documentation/config.txt               |    7 +++
+ Documentation/git-cvsserver.txt        |    5 ++
+ contrib/completion/git-completion.bash |    2 +-
+ git-cvsserver.perl                     |   77 ++++++++++++++++++-------------
+ 4 files changed, 58 insertions(+), 33 deletions(-)
 
-diff --git a/builtin-fetch-pack.c b/builtin-fetch-pack.c
-index 7b28024..65350ca 100644
---- a/builtin-fetch-pack.c
-+++ b/builtin-fetch-pack.c
-@@ -26,6 +26,8 @@ static const char fetch_pack_usage[] =
- #define SEEN		(1U << 3)
- #define POPPED		(1U << 4)
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 0865f4e..ca232cf 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -661,6 +661,13 @@ gitcvs.dbuser, gitcvs.dbpass::
+ 	'gitcvs.dbuser' supports variable substitution (see
+ 	linkgit:git-cvsserver[1] for details).
  
-+static int marked;
++gitcvs.dbprefix::
++	Database table name prefix. This will be prepended to any
++	tables used, allowing a single database to be used for deveral
++	repositories. Supports variable substitution (see
++	linkgit:git-cvsserver[1] for details). Any non-alphabetic
++	characters will be replaces with underscores.
 +
- /*
-  * After sending this many "have"s if we do not get any new ACK , we
-  * give up traversing our history.
-@@ -61,6 +63,16 @@ static int rev_list_insert_ref(const char *path, const unsigned char *sha1, int
- 	return 0;
+ All gitcvs variables except for 'gitcvs.allbinary' can also be
+ specified as 'gitcvs.<access_method>.<varname>' (where 'access_method'
+ is one of "ext" and "pserver") to make them apply only for the given
+diff --git a/Documentation/git-cvsserver.txt b/Documentation/git-cvsserver.txt
+index d3e9993..abd0ebe 100644
+--- a/Documentation/git-cvsserver.txt
++++ b/Documentation/git-cvsserver.txt
+@@ -227,6 +227,11 @@ gitcvs.dbpass::
+ 	Database password.  Only useful if setting `dbdriver`, since
+ 	SQLite has no concept of database passwords.
+ 
++gitcvs.dbprefix::
++	Database table name prefix. Supports variable substitution
++	(see below). Any non-alphabetic characters will be replaces
++	with underscores.
++
+ All variables can also be set per access method, see <<configaccessmethod,above>>.
+ 
+ Variable substitution
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 5046f69..7d77374 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -999,7 +999,7 @@ _git_config ()
+ 		gitcvs.enabled
+ 		gitcvs.logfile
+ 		gitcvs.allbinary
+-		gitcvs.dbname gitcvs.dbdriver gitcvs.dbuser gitcvs.dvpass
++		gitcvs.dbname gitcvs.dbdriver gitcvs.dbuser gitcvs.dbpass gitcvs.dbprefix
+ 		gc.packrefs
+ 		gc.reflogexpire
+ 		gc.reflogexpireunreachable
+diff --git a/git-cvsserver.perl b/git-cvsserver.perl
+index 7f632af..7098b35 100755
+--- a/git-cvsserver.perl
++++ b/git-cvsserver.perl
+@@ -2326,6 +2326,8 @@ sub new
+         $cfg->{gitcvs}{dbuser} || "";
+     $self->{dbpass} = $cfg->{gitcvs}{$state->{method}}{dbpass} ||
+         $cfg->{gitcvs}{dbpass} || "";
++    $self->{dbprefix} = $cfg->{gitcvs}{$state->{method}}{dbprefix} ||
++        $cfg->{gitcvs}{dbprefix} || "";
+     my %mapping = ( m => $module,
+                     a => $state->{method},
+                     u => getlogin || getpwuid($<) || $<,
+@@ -2334,6 +2336,8 @@ sub new
+                     );
+     $self->{dbname} =~ s/%([mauGg])/$mapping{$1}/eg;
+     $self->{dbuser} =~ s/%([mauGg])/$mapping{$1}/eg;
++    $self->{dbprefix} =~ s/%([mauGg])/$mapping{$1}/eg;
++    $self->{dbprefix} = mangle_tablename($self->{dbprefix});
+ 
+     die "Invalid char ':' in dbdriver" if $self->{dbdriver} =~ /:/;
+     die "Invalid char ';' in dbname" if $self->{dbname} =~ /;/;
+@@ -2349,10 +2353,10 @@ sub new
+     }
+ 
+     # Construct the revision table if required
+-    unless ( $self->{tables}{revision} )
++    unless ( $self->{tables}{"$self->{dbprefix}revision"} )
+     {
+         $self->{dbh}->do("
+-            CREATE TABLE revision (
++            CREATE TABLE $self->{dbprefix}revision (
+                 name       TEXT NOT NULL,
+                 revision   INTEGER NOT NULL,
+                 filehash   TEXT NOT NULL,
+@@ -2363,20 +2367,20 @@ sub new
+             )
+         ");
+         $self->{dbh}->do("
+-            CREATE INDEX revision_ix1
+-            ON revision (name,revision)
++            CREATE INDEX $self->{dbprefix}revision_ix1
++            ON $self->{dbprefix}revision (name,revision)
+         ");
+         $self->{dbh}->do("
+-            CREATE INDEX revision_ix2
+-            ON revision (name,commithash)
++            CREATE INDEX $self->{dbprefix}revision_ix2
++            ON $self->{dbprefix}revision (name,commithash)
+         ");
+     }
+ 
+     # Construct the head table if required
+-    unless ( $self->{tables}{head} )
++    unless ( $self->{tables}{"$self->{dbprefix}head"} )
+     {
+         $self->{dbh}->do("
+-            CREATE TABLE head (
++            CREATE TABLE $self->{dbprefix}head (
+                 name       TEXT NOT NULL,
+                 revision   INTEGER NOT NULL,
+                 filehash   TEXT NOT NULL,
+@@ -2387,16 +2391,16 @@ sub new
+             )
+         ");
+         $self->{dbh}->do("
+-            CREATE INDEX head_ix1
+-            ON head (name)
++            CREATE INDEX $self->{dbprefix}head_ix1
++            ON $self->{dbprefix}head (name)
+         ");
+     }
+ 
+     # Construct the properties table if required
+-    unless ( $self->{tables}{properties} )
++    unless ( $self->{tables}{"$self->{dbprefix}properties"} )
+     {
+         $self->{dbh}->do("
+-            CREATE TABLE properties (
++            CREATE TABLE $self->{dbprefix}properties (
+                 key        TEXT NOT NULL PRIMARY KEY,
+                 value      TEXT
+             )
+@@ -2404,10 +2408,10 @@ sub new
+     }
+ 
+     # Construct the commitmsgs table if required
+-    unless ( $self->{tables}{commitmsgs} )
++    unless ( $self->{tables}{"$self->{dbprefix}commitmsgs"} )
+     {
+         $self->{dbh}->do("
+-            CREATE TABLE commitmsgs (
++            CREATE TABLE $self->{dbprefix}commitmsgs (
+                 key        TEXT NOT NULL PRIMARY KEY,
+                 value      TEXT
+             )
+@@ -2427,10 +2431,10 @@ sub update
+     # first lets get the commit list
+     $ENV{GIT_DIR} = $self->{git_path};
+ 
+-    my $commitsha1 = `git rev-parse $self->{module}`;
++    my $commitsha1 = `git-rev-parse $self->{module}`;
+     chomp $commitsha1;
+ 
+-    my $commitinfo = `git cat-file commit $self->{module} 2>&1`;
++    my $commitinfo = `git-cat-file commit $self->{module} 2>&1`;
+     unless ( $commitinfo =~ /tree\s+[a-zA-Z0-9]{40}/ )
+     {
+         die("Invalid module '$self->{module}'");
+@@ -2783,7 +2787,7 @@ sub insert_rev
+     my $author = shift;
+     my $mode = shift;
+ 
+-    my $insert_rev = $self->{dbh}->prepare_cached("INSERT INTO revision (name, revision, filehash, commithash, modified, author, mode) VALUES (?,?,?,?,?,?,?)",{},1);
++    my $insert_rev = $self->{dbh}->prepare_cached("INSERT INTO $self->{dbprefix}revision (name, revision, filehash, commithash, modified, author, mode) VALUES (?,?,?,?,?,?,?)",{},1);
+     $insert_rev->execute($name, $revision, $filehash, $commithash, $modified, $author, $mode);
  }
  
-+static int clear_marks(const char *path, const unsigned char *sha1, int flag, void *cb_data)
-+{
-+	struct object *o = deref_tag(parse_object(sha1), path, 0);
+@@ -2793,7 +2797,7 @@ sub insert_mergelog
+     my $key = shift;
+     my $value = shift;
+ 
+-    my $insert_mergelog = $self->{dbh}->prepare_cached("INSERT INTO commitmsgs (key, value) VALUES (?,?)",{},1);
++    my $insert_mergelog = $self->{dbh}->prepare_cached("INSERT INTO $self->{dbprefix}commitmsgs (key, value) VALUES (?,?)",{},1);
+     $insert_mergelog->execute($key, $value);
+ }
+ 
+@@ -2801,7 +2805,7 @@ sub delete_head
+ {
+     my $self = shift;
+ 
+-    my $delete_head = $self->{dbh}->prepare_cached("DELETE FROM head",{},1);
++    my $delete_head = $self->{dbh}->prepare_cached("DELETE FROM $self->{dbprefix}head",{},1);
+     $delete_head->execute();
+ }
+ 
+@@ -2816,7 +2820,7 @@ sub insert_head
+     my $author = shift;
+     my $mode = shift;
+ 
+-    my $insert_head = $self->{dbh}->prepare_cached("INSERT INTO head (name, revision, filehash, commithash, modified, author, mode) VALUES (?,?,?,?,?,?,?)",{},1);
++    my $insert_head = $self->{dbh}->prepare_cached("INSERT INTO $self->{dbprefix}head (name, revision, filehash, commithash, modified, author, mode) VALUES (?,?,?,?,?,?,?)",{},1);
+     $insert_head->execute($name, $revision, $filehash, $commithash, $modified, $author, $mode);
+ }
+ 
+@@ -2825,7 +2829,7 @@ sub _headrev
+     my $self = shift;
+     my $filename = shift;
+ 
+-    my $db_query = $self->{dbh}->prepare_cached("SELECT filehash, revision, mode FROM head WHERE name=?",{},1);
++    my $db_query = $self->{dbh}->prepare_cached("SELECT filehash, revision, mode FROM $self->{dbprefix}head WHERE name=?",{},1);
+     $db_query->execute($filename);
+     my ( $hash, $revision, $mode ) = $db_query->fetchrow_array;
+ 
+@@ -2837,7 +2841,7 @@ sub _get_prop
+     my $self = shift;
+     my $key = shift;
+ 
+-    my $db_query = $self->{dbh}->prepare_cached("SELECT value FROM properties WHERE key=?",{},1);
++    my $db_query = $self->{dbh}->prepare_cached("SELECT value FROM $self->{dbprefix}properties WHERE key=?",{},1);
+     $db_query->execute($key);
+     my ( $value ) = $db_query->fetchrow_array;
+ 
+@@ -2850,12 +2854,12 @@ sub _set_prop
+     my $key = shift;
+     my $value = shift;
+ 
+-    my $db_query = $self->{dbh}->prepare_cached("UPDATE properties SET value=? WHERE key=?",{},1);
++    my $db_query = $self->{dbh}->prepare_cached("UPDATE $self->{dbprefix}properties SET value=? WHERE key=?",{},1);
+     $db_query->execute($value, $key);
+ 
+     unless ( $db_query->rows )
+     {
+-        $db_query = $self->{dbh}->prepare_cached("INSERT INTO properties (key, value) VALUES (?,?)",{},1);
++        $db_query = $self->{dbh}->prepare_cached("INSERT INTO $self->{dbprefix}properties (key, value) VALUES (?,?)",{},1);
+         $db_query->execute($key, $value);
+     }
+ 
+@@ -2872,7 +2876,7 @@ sub gethead
+ 
+     return $self->{gethead_cache} if ( defined ( $self->{gethead_cache} ) );
+ 
+-    my $db_query = $self->{dbh}->prepare_cached("SELECT name, filehash, mode, revision, modified, commithash, author FROM head ORDER BY name ASC",{},1);
++    my $db_query = $self->{dbh}->prepare_cached("SELECT name, filehash, mode, revision, modified, commithash, author FROM $self->{dbprefix}head ORDER BY name ASC",{},1);
+     $db_query->execute();
+ 
+     my $tree = [];
+@@ -2895,7 +2899,7 @@ sub getlog
+     my $self = shift;
+     my $filename = shift;
+ 
+-    my $db_query = $self->{dbh}->prepare_cached("SELECT name, filehash, author, mode, revision, modified, commithash FROM revision WHERE name=? ORDER BY revision DESC",{},1);
++    my $db_query = $self->{dbh}->prepare_cached("SELECT name, filehash, author, mode, revision, modified, commithash FROM $self->{dbprefix}revision WHERE name=? ORDER BY revision DESC",{},1);
+     $db_query->execute($filename);
+ 
+     my $tree = [];
+@@ -2923,15 +2927,15 @@ sub getmeta
+     my $db_query;
+     if ( defined($revision) and $revision =~ /^\d+$/ )
+     {
+-        $db_query = $self->{dbh}->prepare_cached("SELECT * FROM revision WHERE name=? AND revision=?",{},1);
++        $db_query = $self->{dbh}->prepare_cached("SELECT * FROM $self->{dbprefix}revision WHERE name=? AND revision=?",{},1);
+         $db_query->execute($filename, $revision);
+     }
+     elsif ( defined($revision) and $revision =~ /^[a-zA-Z0-9]{40}$/ )
+     {
+-        $db_query = $self->{dbh}->prepare_cached("SELECT * FROM revision WHERE name=? AND commithash=?",{},1);
++        $db_query = $self->{dbh}->prepare_cached("SELECT * FROM $self->{dbprefix}revision WHERE name=? AND commithash=?",{},1);
+         $db_query->execute($filename, $revision);
+     } else {
+-        $db_query = $self->{dbh}->prepare_cached("SELECT * FROM head WHERE name=?",{},1);
++        $db_query = $self->{dbh}->prepare_cached("SELECT * FROM $self->{dbprefix}head WHERE name=?",{},1);
+         $db_query->execute($filename);
+     }
+ 
+@@ -2951,7 +2955,7 @@ sub commitmessage
+     die("Need commithash") unless ( defined($commithash) and $commithash =~ /^[a-zA-Z0-9]{40}$/ );
+ 
+     my $db_query;
+-    $db_query = $self->{dbh}->prepare_cached("SELECT value FROM commitmsgs WHERE key=?",{},1);
++    $db_query = $self->{dbh}->prepare_cached("SELECT value FROM $self->{dbprefix}commitmsgs WHERE key=?",{},1);
+     $db_query->execute($commithash);
+ 
+     my ( $message ) = $db_query->fetchrow_array;
+@@ -2981,7 +2985,7 @@ sub gethistory
+     my $filename = shift;
+ 
+     my $db_query;
+-    $db_query = $self->{dbh}->prepare_cached("SELECT revision, filehash, commithash FROM revision WHERE name=? ORDER BY revision DESC",{},1);
++    $db_query = $self->{dbh}->prepare_cached("SELECT revision, filehash, commithash FROM $self->{dbprefix}revision WHERE name=? ORDER BY revision DESC",{},1);
+     $db_query->execute($filename);
+ 
+     return $db_query->fetchall_arrayref;
+@@ -3003,7 +3007,7 @@ sub gethistorydense
+     my $filename = shift;
+ 
+     my $db_query;
+-    $db_query = $self->{dbh}->prepare_cached("SELECT revision, filehash, commithash FROM revision WHERE name=? AND filehash!='deleted' ORDER BY revision DESC",{},1);
++    $db_query = $self->{dbh}->prepare_cached("SELECT revision, filehash, commithash FROM $self->{dbprefix}revision WHERE name=? AND filehash!='deleted' ORDER BY revision DESC",{},1);
+     $db_query->execute($filename);
+ 
+     return $db_query->fetchall_arrayref;
+@@ -3061,4 +3065,13 @@ sub mangle_dirname {
+     return $dirname;
+ }
+ 
++sub mangle_tablename {
++    my $tablename = shift;
++    return unless defined $tablename;
 +
-+	if (o && o->type == OBJ_COMMIT)
-+		clear_commit_marks((struct commit *)o,
-+				   COMMON | COMMON_REF | SEEN | POPPED);
-+	return 0;
++    $tablename =~ s/[^\w_]/_/g;
++
++    return $tablename;
 +}
 +
- /*
-    This function marks a rev and its ancestors as common.
-    In some cases, it is desirable to mark only the ancestors (for example
-@@ -153,6 +165,10 @@ static int find_common(int fd[2], unsigned char *result_sha1,
- 	unsigned in_vain = 0;
- 	int got_continue = 0;
- 
-+	if (marked)
-+		for_each_ref(clear_marks, NULL);
-+	marked = 1;
-+
- 	for_each_ref(rev_list_insert_ref, NULL);
- 
- 	fetching = 0;
+ 1;
 -- 
-1.5.4.3.610.gea6cd
+1.5.4.2
