@@ -1,97 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] Add tests to catch problems with un-unlinkable symlinks
-Date: Tue, 18 Mar 2008 21:59:39 -0700
-Message-ID: <7v7ifz5mx0.fsf@gitster.siamese.dyndns.org>
+From: "Josef 'Jeff' Sipek" <jeffpc@josefsipek.net>
+Subject: [ANNOUNCE] Guilt v0.29
+Date: Wed, 19 Mar 2008 01:29:32 -0400
+Message-ID: <20080319052932.GC11349@josefsipek.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 19 20:45:57 2008
+Cc: linux-kernel@vger.kernel.org, git@vger.kernel.org
+To: guilt@josefsipek.net
+X-From: git-owner@vger.kernel.org Wed Mar 19 21:01:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jc4C8-0002JK-Bl
-	for gcvg-git-2@gmane.org; Wed, 19 Mar 2008 20:43:28 +0100
+	id 1Jc4T6-0001jY-1R
+	for gcvg-git-2@gmane.org; Wed, 19 Mar 2008 21:01:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756264AbYCSTkH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Mar 2008 15:40:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754878AbYCSTkG
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Mar 2008 15:40:06 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:49335 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757427AbYCSTkB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Mar 2008 15:40:01 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 848801A92;
-	Wed, 19 Mar 2008 00:59:53 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id C045D1A91; Wed, 19 Mar 2008 00:59:50 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1759410AbYCSTtL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Mar 2008 15:49:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759405AbYCSTtK
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Mar 2008 15:49:10 -0400
+Received: from filer.fsl.cs.sunysb.edu ([130.245.126.2]:34756 "EHLO
+	filer.fsl.cs.sunysb.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756135AbYCSTtI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Mar 2008 15:49:08 -0400
+Received: from josefsipek.net (baal.fsl.cs.sunysb.edu [130.245.126.78])
+	by filer.fsl.cs.sunysb.edu (8.12.11.20060308/8.13.1) with ESMTP id m2J5TV2p001988;
+	Wed, 19 Mar 2008 01:29:31 -0400
+Received: by josefsipek.net (Postfix, from userid 1000)
+	id B2C1A1C008A2; Wed, 19 Mar 2008 01:29:32 -0400 (EDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.16 (2007-06-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77524>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77525>
 
-This currently fails not because we refuse to check out, but because we
-detect error but incorrectly discard it in the callchain.
+Guilt v0.29 is available for download (once it mirrors out on kernel.org).
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
+Guilt (Git Quilt) is a series of bash scripts which add a Mercurial
+queues-like functionality and interface to git.
 
- * The next one will fix it.
+Tarballs:
+http://www.kernel.org/pub/linux/kernel/people/jsipek/guilt/
 
- t/t1004-read-tree-m-u-wf.sh |   35 +++++++++++++++++++++++++++++++++++
- 1 files changed, 35 insertions(+), 0 deletions(-)
+Git repo:
+git://git.kernel.org/pub/scm/linux/kernel/git/jsipek/guilt.git
 
-diff --git a/t/t1004-read-tree-m-u-wf.sh b/t/t1004-read-tree-m-u-wf.sh
-index 283e77c..1356148 100755
---- a/t/t1004-read-tree-m-u-wf.sh
-+++ b/t/t1004-read-tree-m-u-wf.sh
-@@ -157,6 +157,41 @@ test_expect_success '3-way not overwriting local changes (their side)' '
- 
- '
- 
-+test_expect_success 'funny symlink in work tree' '
-+
-+	git reset --hard &&
-+	git checkout -b sym-b side-b &&
-+	mkdir -p a &&
-+	>a/b &&
-+	git add a/b &&
-+	git commit -m "side adds a/b" &&
-+
-+	rm -fr a &&
-+	git checkout -b sym-a side-a &&
-+	mkdir -p a &&
-+	ln -s ../b a/b &&
-+	git add a/b &&
-+	git commit -m "we add a/b" &&
-+
-+	git read-tree -m -u sym-a sym-a sym-b
-+
-+'
-+
-+test_expect_failure 'funny symlink in work tree, un-unlink-able' '
-+
-+	rm -fr a b &&
-+	git reset --hard &&
-+
-+	git checkout sym-a &&
-+	chmod a-w a &&
-+	test_must_fail git read-tree -m -u sym-a sym-a sym-b
-+
-+'
-+
-+# clean-up from the above test
-+chmod a+w a
-+rm -fr a b
-+
- test_expect_success 'D/F setup' '
- 
- 	git reset --hard &&
--- 
-1.5.5.rc0.122.g8e28f
+
+This release is quite uneventful.  It is made up of a few fixes here and
+there, and complete regression suite rewrite.  Unfortunately, most of the
+exciting Guilt development went on in a topic branch, but the changes are
+far too invasive for me to include them in v0.29, so I'm going to merge that
+in for v0.30.
+
+As always, patches, and other feedback is welcome.
+
+Josef "Jeff" Sipek.
+
+------------
+Changes since v0.28:
+
+Josef 'Jeff' Sipek (20):
+      repair: new command to repair repository state
+      patchbomb: Git parses the patch mboxes and extracts Cc lines automatically
+      push: fix whitespace handling
+      regression: rewrote regression suite core
+      regression: test 010: test the init code
+      regression: test 011: test failure of commands on non-init'd repo
+      regression: test 020: test push code
+      regression: test 023: test top code
+      regression: test 021: test pop code
+      regression: test 060: test files code
+      regression: test 022: test applied code
+      regression: test 024: test unapplied code
+      regression: test 025: test new code
+      regression: test 026: test delete code
+      regression: test 027: test refresh code
+      push: output current patch name, not cmd-line argument
+      Use 'git <cmd>' instead of 'git-cmd'
+      header: fix patch name existence in the series
+      regression: add tests for guilt-header
+      Guilt v0.29
