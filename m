@@ -1,127 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: No whitespace check during merge conflict resolution
-Date: Wed, 19 Mar 2008 14:07:18 -0700
-Message-ID: <7vk5jy2zjt.fsf@gitster.siamese.dyndns.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: "commit"s without "from" in fast-import
+Date: Tue, 18 Mar 2008 22:06:25 -0400
+Message-ID: <20080319020625.GA3535@spearce.org>
+References: <F6F70627-FAE7-43F1-BECC-E70A4A561982@orakel.ntnu.no> <20080318034321.GK8410@spearce.org> <F4486D8E-3256-4FA7-89A7-3EC7E7D64162@orakel.ntnu.no>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 19 22:13:30 2008
+Content-Type: text/plain; charset=utf-8
+Cc: James Westby <jw+debian@jameswestby.net>, git@vger.kernel.org,
+	Ian Clatworthy <ian.clatworthy@internode.on.net>
+To: Eyvind Bernhardsen <eyvind-git@orakel.ntnu.no>
+X-From: git-owner@vger.kernel.org Wed Mar 19 22:13:36 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jc5aw-0007aG-SE
-	for gcvg-git-2@gmane.org; Wed, 19 Mar 2008 22:13:11 +0100
+	id 1Jc5ay-0007aG-9G
+	for gcvg-git-2@gmane.org; Wed, 19 Mar 2008 22:13:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756378AbYCSVHh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Mar 2008 17:07:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965586AbYCSVHf
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Mar 2008 17:07:35 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:46371 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760183AbYCSVHa (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Mar 2008 17:07:30 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id CB71238D1;
-	Wed, 19 Mar 2008 17:07:28 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 86B4B38CD; Wed, 19 Mar 2008 17:07:26 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S965588AbYCSVIF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Mar 2008 17:08:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764146AbYCSVIE
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Mar 2008 17:08:04 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:51811 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1764123AbYCSVH7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Mar 2008 17:07:59 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1Jbnh2-0007km-TV; Tue, 18 Mar 2008 22:06:17 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 3D67020FBAE; Tue, 18 Mar 2008 22:06:26 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <F4486D8E-3256-4FA7-89A7-3EC7E7D64162@orakel.ntnu.no>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77547>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77548>
 
-If you are merging from somebody else, and the merge needs manual conflict
-resolution, eventually you will complete it by calling "git commit".
+Eyvind Bernhardsen <eyvind-git@orakel.ntnu.no> wrote:
+> On 18. mars. 2008, at 04.43, Shawn O. Pearce wrote:
+> [...]
+> >Maybe we should make this more formalized in the documentation as
+> >allowable, so if it does break for an importer the importer author
+> >has to fix git-fast-import, bzr-fast-import, *-fast-import instead.
+> 
+> In the interests of language strictness, I think it should be  
+> explicitly either allowed or forbidden, and if it is forbidden I think  
+> fast-import should barf on it.
 
-Now, if the tree you are merging in introduces whitespace breakages, what
-should we do?
-
-Currently the situation is:
-
- - If the merge does not conflict, you do not have to complete it by
-   running "git commit", and whitespace breakages will be accepted as part
-   of the merge.
-
- - If you need to run "git commit", however, pre-commit hook can kick in.
-   The sample pre-commit hook will complain.
-
-I think the semantics of "merge" is "I trust him and take his changes";
-accepting whitespace broken tree, just like we do in non-conflicting case,
-is fine.  Even though the sample hook is, eh, just "sample", we should
-make it consistent.
-
-So perhaps something like this patch would take us in the right
-direction.
-
-Note that this I think still has issues when amending a merge.  From
-inside hooks, I do not think you can detect that you are called to handle
-amending.  Worse yet, I suspect that "HEAD" may not be the right thing to
-compare with when amending, in which case further fixups (even if we do
-not want to deal with this whitespace check issues) is required.
-
----
-diff --git a/templates/hooks--pre-commit b/templates/hooks--pre-commit
-index b25dce6..10b3743 100644
---- a/templates/hooks--pre-commit
-+++ b/templates/hooks--pre-commit
-@@ -11,6 +11,12 @@
- # Lines you introduce should not have trailing whitespace.
- # Also check for an indentation that has SP before a TAB.
+Agreed.
  
-+in_merge=0
-+if test -f $GIT_DIR/MERGE_HEAD
-+then
-+	in_merge=1
-+fi
-+
- if git-rev-parse --verify HEAD 2>/dev/null
- then
- 	git-diff-index -p -M --cached HEAD --
-@@ -24,6 +30,7 @@ perl -e '
-     my $filename;
-     my $reported_filename = "";
-     my $lineno;
-+    my $in_merge = $ARGV[0];
-     sub bad_line {
- 	my ($why, $line) = @_;
- 	if (!$found_bad) {
-@@ -39,7 +46,7 @@ perl -e '
- 	print STDERR "* $why (line $lineno)\n";
- 	print STDERR "$filename:$lineno:$line\n";
-     }
--    while (<>) {
-+    while (<STDIN>) {
- 	if (m|^diff --git a/(.*) b/\1$|) {
- 	    $filename = $1;
- 	    next;
-@@ -55,16 +62,18 @@ perl -e '
- 	if (s/^\+//) {
- 	    $lineno++;
- 	    chomp;
--	    if (/\s$/) {
--		bad_line("trailing whitespace", $_);
--	    }
--	    if (/^\s* \t/) {
--		bad_line("indent SP followed by a TAB", $_);
-+	    if (!$in_merge) {
-+		if (/\s$/) {
-+		    bad_line("trailing whitespace", $_);
-+		}
-+		if (/^\s* \t/) {
-+		    bad_line("indent SP followed by a TAB", $_);
-+		}
- 	    }
--	    if (/^([<>])\1{6} |^={7}$/) {
-+	    if ($in_merge && /^([<>])\1{6} |^={7}$/) {
- 		bad_line("unresolved merge conflict", $_);
- 	    }
- 	}
-     }
-     exit($found_bad);
--'
-+' "$in_merge"
+> From a git perspective it seems ok to allow it, since a commit is  
+> only really a tree and a set of parent commits.  "from" adds a parent  
+> and initialises the tree, "merge" adds a parent without touching the  
+> tree.  But maybe I'm thinking too git-centrically.
+> 
+> I can try to make a documentation patch that allows it and see if  
+> having it "on paper" makes it more or less reasonable.
+
+I'm leaning towards leaving it in the language as allowed, and thus
+documenting that this is not only possible, but actively used by
+importers as it can be an easy way to setup a subsequent change
+with no initial files.
+
+But I have to wonder what the bzr-fast-import folks would say.
+I've CC'd in James and Ian, as they have been working on the bzr
+side for a little.
+
+James, Ian -- to give you the short backstory we are talking about
+creating a new branch _without_ a "from", but instead using a single
+"merge" to specify the sole ancestor revision of a new commit to
+be placed on the new branch.  This allows the frontend to supply
+all files for the tree as none were inherited from the sole ancestor.
+
+The other (more obvious?) approach to accomplish the same result
+is to use "from" followed by a "filedeleteall" to clear the files,
+then supply the new files.  Both approaches have the exact same
+result in git-fast-import.
+
+-- 
+Shawn.
