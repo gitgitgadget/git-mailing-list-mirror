@@ -1,119 +1,84 @@
-From: Adam Piatyszek <ediap@users.sourceforge.net>
-Subject: git push sometimes reports failure, but push operations seems to
- be OK
-Date: Tue, 18 Mar 2008 18:10:43 +0100
-Message-ID: <47DFF793.1080905@users.sourceforge.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Possible Solaris problem in 'checkout_entry()'
+Date: Tue, 18 Mar 2008 18:05:24 -0700
+Message-ID: <7vwsnz5xrf.fsf@gitster.siamese.dyndns.org>
+References: <alpine.LFD.1.00.0803170756390.3020@woody.linux-foundation.org>
+ <118833cc0803170823q1e1e29a9p18b9a41f6975e268@mail.gmail.com>
+ <alpine.LFD.1.00.0803170832280.3020@woody.linux-foundation.org>
+ <alpine.LFD.1.00.0803170850090.3020@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Mar 19 20:32:28 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Morten Welinder <mwelinder@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Mar 19 20:32:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jc415-0006jn-Kp
-	for gcvg-git-2@gmane.org; Wed, 19 Mar 2008 20:32:04 +0100
+	id 1Jc41J-0006jn-9H
+	for gcvg-git-2@gmane.org; Wed, 19 Mar 2008 20:32:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753728AbYCST1S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Mar 2008 15:27:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752620AbYCST1R
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Mar 2008 15:27:17 -0400
-Received: from dorado.et.put.poznan.pl ([150.254.11.146]:55023 "EHLO
-	dorado.et.put.poznan.pl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754001AbYCST1K (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Mar 2008 15:27:10 -0400
-Received: from hydrus.et.put.poznan.pl (hydrus.et.put.poznan.pl [150.254.11.145])
-	by dorado.et.put.poznan.pl (8.13.8/8.13.8) with ESMTP id m2IHBVjQ024698
-	for <git@vger.kernel.org>; Tue, 18 Mar 2008 18:11:37 +0100 (CET)
-	(envelope-from ediap@users.sourceforge.net)
-Received: from [192.168.1.4] (adfy188.neoplus.adsl.tpnet.pl [79.184.128.188])
-	by hydrus.et.put.poznan.pl (8.11.7p1+Sun/8.11.6) with ESMTP id m2IHAh606595
-	for <git@vger.kernel.org>; Tue, 18 Mar 2008 18:10:43 +0100 (MET)
-User-Agent: Thunderbird 2.0.0.12 (X11/20080229)
-X-Enigmail-Version: 0.95.6
-OpenPGP: id=1F115CCB
-X-PMX-Version: 5.4.1.325704, Antispam-Engine: 2.6.0.325393, Antispam-Data: 2008.3.18.93259
-X-PMX-Spam: Gauge=IIIIIII, Probability=7%, Report='__CT 0, __CTE 0, __CT_TEXT_PLAIN 0, __HAS_MSGID 0, __MIME_TEXT_ONLY 0, __MIME_VERSION 0, __SANE_MSGID 0, __STOCK_PHRASE_7 0, __USER_AGENT 0'
+	id S1755134AbYCSTaG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Mar 2008 15:30:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753534AbYCSTaF
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Mar 2008 15:30:05 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:45928 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755118AbYCSTaB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Mar 2008 15:30:01 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 3A2F322D5;
+	Tue, 18 Mar 2008 21:05:31 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 534EE22C6; Tue, 18 Mar 2008 21:05:26 -0400 (EDT)
+In-Reply-To: <alpine.LFD.1.00.0803170850090.3020@woody.linux-foundation.org>
+ (Linus Torvalds's message of "Mon, 17 Mar 2008 08:56:27 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77510>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77511>
 
-Hi,
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-I am using git with git-svn for working with two branches from one SVN 
-repository. For backup purposes, I have also one remote repository to 
-which I push my local Git branches (topic) and these two tracked SVN 
-branches. The remote Git repository is only for my private purposes so I 
-sometimes rewind it.
-When pushing my changes to this remote Git repository I usually (but not 
-always) get this error message:
+> On Mon, 17 Mar 2008, Linus Torvalds wrote:
+>>
+>> IOW, the real "checking" is taking place in "create_file()", so if the 
+>> unlinking failed (due to a read-only directory or something), that's where 
+>> we'll do the proper error reporting.
+>
+> Thinking about this, I'm probably full of sh*t.
+>
+> My argument is admittedly true in general, but there is one case it is 
+> *not* true for: if the old entry was a symlink.
+>
+> IOW, let's imagine that the directory is read-only (or other permission 
+> issue), and we want to unlink the old symlink, which points somewhere we 
+> can write to. In that case, the symlink removal is important, because we 
+> won't necessarily catch the error when we create the file in place later 
+> (because that will just follow the symlink).
+>
+> So I retract my statement. We *should* check the result of the unlink.
 
-=====8<=====
-Counting objects: 22, done.
-Compressing objects: 100% (12/12), done.
-Writing objects: 100% (12/12), 1.92 KiB, done.
-Total 12 (delta 11), reused 0 (delta 0)
-To boreas.<hidden-domain>:/home/ediap/git/itpp.git
-    410c244..09d4d2e  itpp-4-0 -> itpp-4-0
-    0ecd5bb..a9fce92  master -> master
-error: failed to push some refs to 
-'boreas.<hidden-domain>:/home/ediap/git/itpp.git'
-=====8<=====
+While I agree we should check the result, I think we are safe against the
+un-unlinkable symlink case.  If you have a stale symlink at "dir/file"
+where you are checking out a new blob, and the directory "dir" the symlink
+is in is unwritable, then our callpath would look like this:
 
-*) please ignore the <hidden-domain> in the above ;)
+	checkout_entry()
+         unlink("dir/file") -- failure silently ignored which is bad
+	 write_entry()
+          create_file("dir/file")
+           open("dir/file", O_WRONLY | O_CREAT | O_EXCL)
 
-However, the push operation seems to be OK (all commits are properly 
-transferred to the remote repository). By adding some fprintf() into git 
-code I managed to check that the finish_connect() function returns -255.
+which would fail, and we get:
 
+    error: git-checkout-index: unable to create file a/b (File exists)
 
-Here is the relevant part of configuration of my local Git repository:
-=====8<=====
-[remote "boreas"]
-	url = boreas.<hidden-domain>:/home/ediap/git/itpp.git
-	fetch = +refs/heads/*:refs/remotes/boreas/*
-	push = master
-	push = itpp-4-0
-=====8<=====
+from around ll.135 in entry.c::write_entry()
 
-Remote repository is on quite old SUN OS Solaris system:
-=====8<=====
-ediap@boreas ~/git/itpp.git % uname -a
-SunOS boreas 5.9 Generic_112233-10 sun4u sparc SUNW,Sun-Blade-100
-=====8<=====
-
-The remote host uses the stable git version:
-=====8<=====
-ediap@boreas ~/git/itpp.git % git --version
-git version 1.5.4.4
-=====8<=====
-
-My local git installation is:
-=====8<=====
-ediap@lespaul ~/tmp/build/itpp-git $ git --version
-git version 1.5.4.4.532.ga6828.dirty
-=====8<=====
-on a Gentoo Linux x86 system:
-=====8<=====
-ediap@lespaul ~/tmp/build/itpp-git $ uname -a
-Linux lespaul 2.6.24-gentoo-r3 #2 SMP Fri Mar 14 10:24:13 CET 2008 i686 
-Intel(R) Core(TM)2 CPU T7200 @ 2.00GHz GenuineIntel GNU/Linux
-=====8<=====
-
-Have you encountered similar issues with git push? Do you have any idea 
-what should I check in my setup?
-
-Thanks for any hints.
-BR,
-/Adam
-
-PS. This problem is nothing new, so it is definitely not a regression in 
-one the latest Git releases.
-
-
--- 
-.:.  Adam Piatyszek (ediap)  .:.....................................:.
-.:.  ediap@users.sourceforge.net  .:................................:.
+So I'll apply the patch purely as "Root on Solaris safety fix".
