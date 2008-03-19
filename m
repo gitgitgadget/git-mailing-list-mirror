@@ -1,59 +1,57 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 03/16] more tr portability test script fixes
-Date: Tue, 18 Mar 2008 18:44:37 -0400
-Message-ID: <20080318224436.GA6806@coredump.intra.peff.net>
-References: <cover.1205356737.git.peff@peff.net> <20080312213106.GD26286@coredump.intra.peff.net> <20080318222302.GA3450@steel.home>
+From: "Jean-Baptiste Quenot" <jbq@caraldi.com>
+Subject: Using gitk over the network
+Date: Wed, 19 Mar 2008 15:31:14 +0100
+Message-ID: <ae63f8b50803190731h49e224cby33344f8737f83718@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Whit Armstrong <armstrong.whit@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 19 21:49:09 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 19 21:49:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jc5Dd-000683-ID
-	for gcvg-git-2@gmane.org; Wed, 19 Mar 2008 21:49:05 +0100
+	id 1Jc5DW-000683-6O
+	for gcvg-git-2@gmane.org; Wed, 19 Mar 2008 21:48:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933551AbYCSUbY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Mar 2008 16:31:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933559AbYCSUbX
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Mar 2008 16:31:23 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3821 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933551AbYCSUbW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Mar 2008 16:31:22 -0400
-Received: (qmail 16808 invoked by uid 111); 18 Mar 2008 22:44:38 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Tue, 18 Mar 2008 18:44:38 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 18 Mar 2008 18:44:37 -0400
+	id S1759887AbYCSU2X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Mar 2008 16:28:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756042AbYCSU2W
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Mar 2008 16:28:22 -0400
+Received: from nf-out-0910.google.com ([64.233.182.191]:20892 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759887AbYCSU2T (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Mar 2008 16:28:19 -0400
+Received: by nf-out-0910.google.com with SMTP id g13so332356nfb.21
+        for <git@vger.kernel.org>; Wed, 19 Mar 2008 13:28:18 -0700 (PDT)
+Received: by 10.78.68.18 with SMTP id q18mr797675hua.72.1205937074930;
+        Wed, 19 Mar 2008 07:31:14 -0700 (PDT)
+Received: by 10.78.130.20 with HTTP; Wed, 19 Mar 2008 07:31:14 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20080318222302.GA3450@steel.home>
+X-Google-Sender-Auth: fe9bb63342c87221
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77538>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77539>
 
-On Tue, Mar 18, 2008 at 11:23:02PM +0100, Alex Riesen wrote:
+Hi there,
 
-> Jeff King, Wed, Mar 12, 2008 22:31:06 +0100:
-> > -    tr '\000' '\012' <"$1" | sed -e "$sanitize_diff_raw_z" >.tmp-1
-> > -    tr '\000' '\012' <"$2" | sed -e "$sanitize_diff_raw_z" >.tmp-2
-> > +    perl -pe 'y/\000/\012/' <"$1" | sed -e "$sanitize_diff_raw_z" >.tmp-1
-> > +    perl -pe 'y/\000/\012/' <"$2" | sed -e "$sanitize_diff_raw_z" >.tmp-2
-> 
-> These break in presence of ActiveState Perl on Windows.
-> 
-> I suggest replacing such simple construction with a simplified,
-> in-tree, version of tr.
+I'm using gitk through an SSH-tunnelled X11 connection.  Once loaded,
+the GUI is usable on a DSL connection, but the problem is that gitk
+loads the whole commit history, not only the commits that will fit on
+screen.  It can take up to a minute with our repository for the GUI to
+be ready, especially when visualizing all branches.
 
-<sigh> It's sad that it must come to that, but your test-tr patches seem
-like the only sane choice. They seem to work fine on my Solaris box.
+I thought I'd let you know, in the case there is the possibility to
+have some sort of progressive loading in the future.  Compared to
+gitk, git-gui works fine in this environment.
 
-Note that there are still a few uses of 'tr' in actual git scripts.
-However, they are pretty tame, so I think they should work everywhere.
-Otherwise, test-tr must become "git tr". :)
+NOTE: I discovered tig today on this very mailing-list, and I admit
+it's fulfilling part of our usecase, but maybe there are some people
+in my team that are reluctant to text-based interfaces, who knows.
 
--Peff
+Cheers,
+-- 
+Jean-Baptiste Quenot
+http://caraldi.com/jbq/blog/
