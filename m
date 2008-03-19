@@ -1,74 +1,85 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: auto gc again
-Date: Wed, 19 Mar 2008 18:56:20 -0400 (EDT)
-Message-ID: <alpine.LFD.1.00.0803191855030.2947@xanadu.home>
-References: <20080318180118.GC17940@kernel.dk>
- <alpine.LFD.1.00.0803181112270.3020@woody.linux-foundation.org>
- <20080318181948.GH17940@kernel.dk>
- <alpine.LFD.1.00.0803191629240.2947@xanadu.home>
- <47E18540.4020908@nrlssc.navy.mil>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH 03/16] more tr portability test script fixes
+Date: Wed, 19 Mar 2008 23:56:17 +0100
+Message-ID: <20080319225617.GA3139@steel.home>
+References: <cover.1205356737.git.peff@peff.net> <20080312213106.GD26286@coredump.intra.peff.net> <20080318222302.GA3450@steel.home> <20080318224436.GA6806@coredump.intra.peff.net> <7v8x0e2xzq.fsf@gitster.siamese.dyndns.org>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Jens Axboe <jens.axboe@oracle.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	git@vger.kernel.org
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Wed Mar 19 23:58:14 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>,
+	Whit Armstrong <armstrong.whit@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 19 23:58:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jc7EA-0008FA-HB
-	for gcvg-git-2@gmane.org; Wed, 19 Mar 2008 23:57:46 +0100
+	id 1Jc7E9-0008FA-32
+	for gcvg-git-2@gmane.org; Wed, 19 Mar 2008 23:57:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S941761AbYCSW4Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Mar 2008 18:56:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S941753AbYCSW4X
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Mar 2008 18:56:23 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:31300 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S941747AbYCSW4V (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Mar 2008 18:56:21 -0400
-Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JY000H9D2DWD921@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 19 Mar 2008 18:56:20 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <47E18540.4020908@nrlssc.navy.mil>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+	id S941752AbYCSW4W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Mar 2008 18:56:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S941748AbYCSW4V
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Mar 2008 18:56:21 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.190]:32454 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S941741AbYCSW4U (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Mar 2008 18:56:20 -0400
+X-RZG-CLASS-ID: mo07
+X-RZG-AUTH: z4gQVF2k5XWuW3Cculz1E3jGqw==
+Received: from tigra.home (Fae0f.f.strato-dslnet.de [195.4.174.15])
+	by post.webmailer.de (mrclete mo51) (RZmta 16.14)
+	with ESMTP id a0018bk2JGMwSB ; Wed, 19 Mar 2008 23:56:17 +0100 (MET)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 5A44B277BD;
+	Wed, 19 Mar 2008 23:56:17 +0100 (CET)
+Received: by steel.home (Postfix, from userid 1000)
+	id 4365156D28; Wed, 19 Mar 2008 23:56:17 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <7v8x0e2xzq.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77583>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77584>
 
-On Wed, 19 Mar 2008, Brandon Casey wrote:
-
-> Nicolas Pitre wrote:
-> > On Tue, 18 Mar 2008, Jens Axboe wrote:
-> > 
-> >> But freshly pulled repo, git auto gc is enabled. And that is my main
-> >> annoyance, I just don't think that type of policy should be in there.
-> > 
-> > Just do this once:
-> > 
-> > 	git config --global gc.auto 0
-> > 	git config --global gc.autopacklimit 0
+Junio C Hamano, Wed, Mar 19, 2008 22:40:57 +0100:
+> Jeff King <peff@peff.net> writes:
 > 
-> Is there any reason why gc.auto=0 couldn't be used to disable auto
-> packing entirely?
-
-I think that would be a good thing to do indeed.
-
-> Said differently, are there valid use cases where one might want automatic
-> repacking based on the number of packs but _not_ based on the number of
-> loose objects?
+> > On Tue, Mar 18, 2008 at 11:23:02PM +0100, Alex Riesen wrote:
+> >
+> >> Jeff King, Wed, Mar 12, 2008 22:31:06 +0100:
+> >> > -    tr '\000' '\012' <"$1" | sed -e "$sanitize_diff_raw_z" >.tmp-1
+> >> > -    tr '\000' '\012' <"$2" | sed -e "$sanitize_diff_raw_z" >.tmp-2
+> >> > +    perl -pe 'y/\000/\012/' <"$1" | sed -e "$sanitize_diff_raw_z" >.tmp-1
+> >> > +    perl -pe 'y/\000/\012/' <"$2" | sed -e "$sanitize_diff_raw_z" >.tmp-2
+> >> 
+> >> These break in presence of ActiveState Perl on Windows.
+> >> 
+> >> I suggest replacing such simple construction with a simplified,
+> >> in-tree, version of tr.
+> >
+> > <sigh> It's sad that it must come to that, but your test-tr patches seem
+> > like the only sane choice. They seem to work fine on my Solaris box.
 > 
-> If the answer is "no", then "gc.auto=0 means completely disable auto-gc"
-> seems intuitive and would have protected Jens in this case.
+> I am very tempted to say that it might make more sense to declare
+> ActiveState unsupported.
 
-Agreed.
+I am not asking to really support it, it is too offending a thought.
+I am just asking to consider the patch, which removes another
+dependency on local system. Wasn't there issues with tr already?
 
+> How many times have we suffered from it, and notice it was only from
+> Alex every time, nobody else?
 
-Nicolas
+Well, I say that every time. I think by know everyone, who seen a
+patch from me, noticed how very specially stupid my kind of setup is.
+
+BTW, who suffered from what?
+
+> Are there silent majorities involved here?
+
+Yeah, the windows-people. They are used to silently workaround their
+system.
