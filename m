@@ -1,70 +1,100 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: auto gc again
-Date: Wed, 19 Mar 2008 22:44:20 +0100 (CET)
-Message-ID: <alpine.LSU.1.00.0803192243270.3983@racer.site>
-References: <20080318180118.GC17940@kernel.dk> <alpine.LFD.1.00.0803181112270.3020@woody.linux-foundation.org> <20080318181948.GH17940@kernel.dk> <20080318182421.GI17940@kernel.dk> <alpine.LFD.1.00.0803181130240.3020@woody.linux-foundation.org>
- <20080318183906.GL17940@kernel.dk> <alpine.LSU.1.00.0803192121090.3983@racer.site> <20080319211436.GC17940@kernel.dk>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [patch] Import "git-forest" into contrib/
+Date: Wed, 19 Mar 2008 14:52:35 -0700
+Message-ID: <7v4pb22xgc.fsf@gitster.siamese.dyndns.org>
+References: <alpine.LNX.1.00.0803181924560.8851@fbirervta.pbzchgretzou.qr>
+ <20080319211140.GK2663@genesis.frugalware.org>
+ <alpine.LNX.1.00.0803192222350.25695@fbirervta.pbzchgretzou.qr>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
-To: Jens Axboe <jens.axboe@oracle.com>
-X-From: git-owner@vger.kernel.org Wed Mar 19 22:47:16 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Miklos Vajna <vmiklos@frugalware.org>, git@vger.kernel.org
+To: Jan Engelhardt <jengelh@computergmbh.de>
+X-From: git-owner@vger.kernel.org Wed Mar 19 22:54:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jc67k-00058d-E5
-	for gcvg-git-2@gmane.org; Wed, 19 Mar 2008 22:47:04 +0100
+	id 1Jc6F6-00083h-Pj
+	for gcvg-git-2@gmane.org; Wed, 19 Mar 2008 22:54:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762217AbYCSVoc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Mar 2008 17:44:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S938345AbYCSVob
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Mar 2008 17:44:31 -0400
-Received: from mail.gmx.net ([213.165.64.20]:45027 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S938332AbYCSVoW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Mar 2008 17:44:22 -0400
-Received: (qmail invoked by alias); 19 Mar 2008 21:44:20 -0000
-Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
-  by mail.gmx.net (mp025) with SMTP; 19 Mar 2008 22:44:20 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+gONtQo1mgGF1XZpBOPt3qIJ0fFYeBWCezCg8IqU
-	Ru9vKg+kc+Yv9k
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20080319211436.GC17940@kernel.dk>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S939149AbYCSVww convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 19 Mar 2008 17:52:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S939144AbYCSVwv
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Mar 2008 17:52:51 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:60869 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S939139AbYCSVwt convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 19 Mar 2008 17:52:49 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 2A38E1151;
+	Wed, 19 Mar 2008 17:52:48 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 32A3F114E; Wed, 19 Mar 2008 17:52:43 -0400 (EDT)
+In-Reply-To: <alpine.LNX.1.00.0803192222350.25695@fbirervta.pbzchgretzou.qr>
+ (Jan Engelhardt's message of "Wed, 19 Mar 2008 22:22:54 +0100 (CET)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77562>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77563>
 
-Hi,
+Jan Engelhardt <jengelh@computergmbh.de> writes:
 
-On Wed, 19 Mar 2008, Jens Axboe wrote:
+> On Mar 19 2008 22:11, Miklos Vajna wrote:
+>
+>> On Tue, Mar 18, 2008 at 07:25:38PM +0100, Jan Engelhardt <jengelh@co=
+mputergmbh.de> wrote:
+>>> commit b6612a2efe93660be7ecdb799625015efedadff1
+>>> Author: Jan Engelhardt <jengelh@computergmbh.de>
+>>> Date:   Tue Mar 18 19:24:33 2008 +0100
+>>>
+>>>     Import "git-forest" into contrib/
+>>
+>> missing signed-off-by?
+>>
+>
+> Wasnot sure if it's used for git too;
 
-> On Wed, Mar 19 2008, Johannes Schindelin wrote:
-> 
-> > On Tue, 18 Mar 2008, Jens Axboe wrote:
-> > 
-> > > But you never answer the question on whether you really consider any 
-> > > form of autopacking or auto gc sane? Next time some other limit is 
-> > > added for auto gc, it'll be annoying once more.
-> > 
-> > The problem is: if people do not bother to "git gc" their 
-> > repositories, git operations get slow.  We just had enough of that, 
-> > and decided to "git gc" automatically for people who did not know 
-> > about it, or were to lazy and then complained about git for being 
-> > slow.
-> 
-> Sorry I disagree,
+Yes.
 
-In this case, you can disagree as much as you want and you are still 
-wrong.
+git also expects the kernel style e-mails, and it is _NOT_ "dump output
+from 'git show' in the message, commit/Author:/Date: headers and messag=
+e
+indented by 4-spaces" format.
 
-The problem is that you are more intelligent than most others, and now you 
-experience the downsides of it.
+As to the contents, I did not understand this part.
 
-Ciao,
-Dscho
++Notes on interpretation:
++
++'=E2=95=AC' (or variants thereof, like =E2=95=AA) is meant to be a "pa=
+th bridge", i.e.
++traversal is only "allowed" horizontal OR vertical direction.
++
++Branching:
++C D E F G
++=E2=95=A0=E2=95=90=E2=95=AC=E2=95=90=E2=95=A9=E2=95=90=E2=95=A9=E2=95=90=
+=E2=95=9D  A->{C,E,F,G} and B->D.
++A B
+
+So the horizontal line bridge goes over the vertical road between B and=
+ D
+and these two will not get connection to anything else.  That part I
+understand.
+
+ (1) Why then is that horizontal bridge connected to E, F and G?  Do
+     pluses and inverted Ts have different meaning?  What about the
+     sideway T between A and C?
+
+ (2) If you want to express D is merge between A and B, and C, E, F, G =
+are
+     independent children of A, how would you write it?
+
+Did you mean "Connection with three legs (T, inverted T, sideways T) me=
+an
+all sides are connected, connection with four legs (+) mean horizontal =
+and
+vertical are independent and disconnected"?
