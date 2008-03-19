@@ -1,98 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: auto gc again
-Date: Wed, 19 Mar 2008 15:28:17 -0700
-Message-ID: <7vod9a1h8e.fsf@gitster.siamese.dyndns.org>
-References: <20080318180118.GC17940@kernel.dk>
- <7vd4pq2ymo.fsf@gitster.siamese.dyndns.org>
- <alpine.LFD.1.00.0803191444490.3020@woody.linux-foundation.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH] gitweb: Remove commit title from comitdiff_plain body
+Date: Wed, 19 Mar 2008 23:28:58 +0100
+Message-ID: <20080319222858.733.79714.stgit@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jens Axboe <jens.axboe@oracle.com>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Mar 19 23:29:34 2008
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 19 23:31:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jc6mk-0005RO-D6
-	for gcvg-git-2@gmane.org; Wed, 19 Mar 2008 23:29:26 +0100
+	id 1Jc6oM-00067Z-GV
+	for gcvg-git-2@gmane.org; Wed, 19 Mar 2008 23:31:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763421AbYCSW2f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Mar 2008 18:28:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S941218AbYCSW2f
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Mar 2008 18:28:35 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:38679 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S941214AbYCSW2b (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Mar 2008 18:28:31 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id DDC771EFF;
-	Wed, 19 Mar 2008 18:28:28 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 16AF01EDC; Wed, 19 Mar 2008 18:28:24 -0400 (EDT)
-In-Reply-To: <alpine.LFD.1.00.0803191444490.3020@woody.linux-foundation.org>
- (Linus Torvalds's message of "Wed, 19 Mar 2008 14:52:14 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S941271AbYCSW3R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Mar 2008 18:29:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S941269AbYCSW3P
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Mar 2008 18:29:15 -0400
+Received: from ug-out-1314.google.com ([66.249.92.169]:39700 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S935794AbYCSW3N (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Mar 2008 18:29:13 -0400
+Received: by ug-out-1314.google.com with SMTP id z38so1342899ugc.16
+        for <git@vger.kernel.org>; Wed, 19 Mar 2008 15:29:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:received:from:subject:to:date:message-id:user-agent:mime-version:content-type:content-transfer-encoding;
+        bh=UX03uvyueBnAkVpXWaKdRHilybFe55+L8vW2Dp8TcgI=;
+        b=QBf0z0rE5dpyrDI0ulSL/GfCnHgGaDpQeerEW4vLWzOjyw5QASPXZ9R82wspONACSOh9w6T1X3wJK0whD+7rTimLoFzbL8CTwEpaUGWj8rjjIqYAz1ZZ+TIOrcde2FOO98AtA7mAEJM98q+LMpJcEJ77/fCRAL8Rl9rRJkD1Jq8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=from:subject:to:date:message-id:user-agent:mime-version:content-type:content-transfer-encoding;
+        b=tx4v2cGFeQu0Q9FEmMH3otumLtBw1r8uhEQjomV9xDPZgP8+NcST3qLUk4oHVpXpNcl8XbsaDu+4FsKpXPdnPhsC/YU/6dB4wRC9FC6qk/J+OhoNSPOmq025gQnHD3VkGbYb+eNtepCdJ09kzRcsg12iQUD3tL1dk0mI2xOUSHY=
+Received: by 10.78.172.5 with SMTP id u5mr2718922hue.10.1205965748558;
+        Wed, 19 Mar 2008 15:29:08 -0700 (PDT)
+Received: from localhost.localdomain ( [83.8.232.48])
+        by mx.google.com with ESMTPS id d2sm1323706nfc.11.2008.03.19.15.29.04
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 19 Mar 2008 15:29:05 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m2JMSwFU000759
+	for <git@vger.kernel.org>; Wed, 19 Mar 2008 23:28:59 +0100
+User-Agent: StGIT/0.14.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77573>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77574>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> On Wed, 19 Mar 2008, Junio C Hamano wrote:
->> 
->> Having said that, I am not sure how the auto gc is triggering for your
->> (presumably reasonably well maintained) repository that has only small
->> number of loose objects.  I haven't seen auto-gc annoyance myself (and
->> git.git is not the only project I have my git experience with), and Linus
->> also said he hasn't seen breakages.
->
-> I think it was 'autopacklimit'.
->
-> I think the correct solution is along the following lines:
->
->  - disable "git gc --auto" entirely when "gc.auto <= 0" (ie we don't even 
->    care about 'autopacklimit' unless automatic packing is on at all)
->
->    Rationale: I do think that if you set gc.auto to zero, you should 
->    expect git gc --auto to be disabled.
 
-Sensible, I would say.
+Remove commit title (first line of commit message) from the "body" of
+commitdiff_plain view: it is present there already in format-patch
+like Subject: header.
 
->  - make the default for autopacklimit rather higher (pick number at 
->    random: 50 instead of 20).
->
->    Rationale: the reason for "git gc --auto" wasn't to keep things 
->    perfectly packed, but to avoid the _really_ bad cases. The old default 
->    of 20 may be fine if you want to always keep the repo very tight, but 
->    that wasn't why "git gc --auto" was done, was it?
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
 
-I do not think "very tight" was the reason, but on the other hand, my
-personal feeling is that 20 was already 10 too many pack idx files we have
-to walk linearly while looking for objects at runtime.
+ gitweb/gitweb.perl |    5 ++++-
+ 1 files changed, 4 insertions(+), 1 deletions(-)
 
-Each auto gc that sees too many loose objects will add a new packfile (we
-do not do "repack -a" for obvious reasons) that would hopefully contain
-6-7k objects, so you would need to generate 120-140k objects before
-hitting the existing 20 limit.
 
-And then auto gc will notice you have too many packs, and "repack -A" to
-pack them down in a single new pack, and you are back to "single pack with
-less than 6-7k loose objects" situation for the cycle to continue.
-
-At least, that is the theory.
-
-The kernel history with 87k commits have 720k objects, which roughly
-translates to 8 objects per commit on average.  You would need to perform
-13k commits to generate 100k new loose objects.  I am sensing that Jens is
-mightily annoyed, rightfully so, by observing much shorter cycle than that
-for "gc --auto" to kick in ("rev-list --author=Jens --since=8.month master"
-tells me there are 145 commits in the last 8 months, far smaller than
-13k).  So there is something else going on.
-
-Perhaps fetching with dumb transports should run "gc --auto" (or even an
-unconditional "repack -a -d") at the end?
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index ec73cb1..6e3ab85 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -5122,8 +5122,11 @@ sub git_commitdiff {
+ 		print "Subject: " . to_utf8($co{'title'}) . "\n";
+ 
+ 		print "X-Git-Tag: $tagname\n" if $tagname;
+-		print "X-Git-Url: " . $cgi->self_url() . "\n\n";
++		print "X-Git-Url: " . $cgi->self_url() . "\n";
+ 
++		# remove title, i.e. first line of log
++		shift @{$co{'comment'}};
++		# leading empty lines would separate headers from body
+ 		foreach my $line (@{$co{'comment'}}) {
+ 			print to_utf8($line) . "\n";
+ 		}
