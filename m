@@ -1,85 +1,95 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH 03/16] more tr portability test script fixes
-Date: Wed, 19 Mar 2008 23:56:17 +0100
-Message-ID: <20080319225617.GA3139@steel.home>
-References: <cover.1205356737.git.peff@peff.net> <20080312213106.GD26286@coredump.intra.peff.net> <20080318222302.GA3450@steel.home> <20080318224436.GA6806@coredump.intra.peff.net> <7v8x0e2xzq.fsf@gitster.siamese.dyndns.org>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: auto gc again
+Date: Wed, 19 Mar 2008 19:05:37 -0400 (EDT)
+Message-ID: <alpine.LFD.1.00.0803191856290.2947@xanadu.home>
+References: <20080318180118.GC17940@kernel.dk>
+ <alpine.LFD.1.00.0803181112270.3020@woody.linux-foundation.org>
+ <20080318181948.GH17940@kernel.dk>
+ <alpine.LFD.1.00.0803191629240.2947@xanadu.home>
+ <20080319211733.GD17940@kernel.dk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>,
-	Whit Armstrong <armstrong.whit@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 19 23:58:22 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
+To: Jens Axboe <jens.axboe@oracle.com>
+X-From: git-owner@vger.kernel.org Thu Mar 20 00:06:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jc7E9-0008FA-32
-	for gcvg-git-2@gmane.org; Wed, 19 Mar 2008 23:57:45 +0100
+	id 1Jc7Mo-0003U1-LQ
+	for gcvg-git-2@gmane.org; Thu, 20 Mar 2008 00:06:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S941752AbYCSW4W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Mar 2008 18:56:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S941748AbYCSW4V
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Mar 2008 18:56:21 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.190]:32454 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S941741AbYCSW4U (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Mar 2008 18:56:20 -0400
-X-RZG-CLASS-ID: mo07
-X-RZG-AUTH: z4gQVF2k5XWuW3Cculz1E3jGqw==
-Received: from tigra.home (Fae0f.f.strato-dslnet.de [195.4.174.15])
-	by post.webmailer.de (mrclete mo51) (RZmta 16.14)
-	with ESMTP id a0018bk2JGMwSB ; Wed, 19 Mar 2008 23:56:17 +0100 (MET)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 5A44B277BD;
-	Wed, 19 Mar 2008 23:56:17 +0100 (CET)
-Received: by steel.home (Postfix, from userid 1000)
-	id 4365156D28; Wed, 19 Mar 2008 23:56:17 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <7v8x0e2xzq.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
+	id S1766001AbYCSXFo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Mar 2008 19:05:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1162767AbYCSXFl
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Mar 2008 19:05:41 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:36179 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1766001AbYCSXFi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Mar 2008 19:05:38 -0400
+Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR005.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0JY000M8V2T1M9J0@VL-MO-MR005.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 19 Mar 2008 19:05:25 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <20080319211733.GD17940@kernel.dk>
+User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77584>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77585>
 
-Junio C Hamano, Wed, Mar 19, 2008 22:40:57 +0100:
-> Jeff King <peff@peff.net> writes:
+On Wed, 19 Mar 2008, Jens Axboe wrote:
+
+> On Wed, Mar 19 2008, Nicolas Pitre wrote:
+> > On Tue, 18 Mar 2008, Jens Axboe wrote:
+> > 
+> > > But freshly pulled repo, git auto gc is enabled. And that is my main
+> > > annoyance, I just don't think that type of policy should be in there.
+> > 
+> > Just do this once:
+> > 
+> > 	git config --global gc.auto 0
+> > 	git config --global gc.autopacklimit 0
+> > 
+> > and be happy.
 > 
-> > On Tue, Mar 18, 2008 at 11:23:02PM +0100, Alex Riesen wrote:
-> >
-> >> Jeff King, Wed, Mar 12, 2008 22:31:06 +0100:
-> >> > -    tr '\000' '\012' <"$1" | sed -e "$sanitize_diff_raw_z" >.tmp-1
-> >> > -    tr '\000' '\012' <"$2" | sed -e "$sanitize_diff_raw_z" >.tmp-2
-> >> > +    perl -pe 'y/\000/\012/' <"$1" | sed -e "$sanitize_diff_raw_z" >.tmp-1
-> >> > +    perl -pe 'y/\000/\012/' <"$2" | sed -e "$sanitize_diff_raw_z" >.tmp-2
-> >> 
-> >> These break in presence of ActiveState Perl on Windows.
-> >> 
-> >> I suggest replacing such simple construction with a simplified,
-> >> in-tree, version of tr.
-> >
-> > <sigh> It's sad that it must come to that, but your test-tr patches seem
-> > like the only sane choice. They seem to work fine on my Solaris box.
+> You don't get it. I did gc.auto 0. And know some other limit crops up, I
+> have to do gc.autopacklimit 0. I have LOTS of git trees. On many
+> machines. It's just annoying, period.
+
+As suggested, gc.auto = 0 should probably be made to disable it 
+entirely, regardless of any other parameters that might exist.
+
+> > > Print the warning, include info on how to run git gc or even how to turn
+> > > it on automatically. But I'll bet you that most users will NOT want auto
+> > > gc. Ever.
+> > 
+> > Unfortunately, the harshest complaints about this whole issue were the 
+> > opposite.
 > 
-> I am very tempted to say that it might make more sense to declare
-> ActiveState unsupported.
+> I just don't buy that, I have more faith in users.
 
-I am not asking to really support it, it is too offending a thought.
-I am just asking to consider the patch, which removes another
-dependency on local system. Wasn't there issues with tr already?
+We also did in the past... even for a long period...
 
-> How many times have we suffered from it, and notice it was only from
-> Alex every time, nobody else?
+Alas, it is the users who made us (and actually made Linus, who was the 
+last to resist) change our minds.
 
-Well, I say that every time. I think by know everyone, who seen a
-patch from me, noticed how very specially stupid my kind of setup is.
+> If they come around and complain it's slow, heck you told them it 
+> would be.
 
-BTW, who suffered from what?
+But they don't.  They just presume that Git is crap and move on.
 
-> Are there silent majorities involved here?
+> But it's not a big deal, I'll just carry a local patch that disables
+> this crap and forget the whole deal. I just worry that if this is where
+> git 'usability' is heading, it wont be a good thing in the long run.
 
-Yeah, the windows-people. They are used to silently workaround their
-system.
+I wish the majority of users was thinking like you.  I, too, have some 
+conceptual problems with this auto gc things.  With the experience 
+we've gathered, the current state appears to be the 
+lesser of all evils though.
+
+
+Nicolas
