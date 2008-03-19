@@ -1,68 +1,66 @@
-From: Jens Axboe <jens.axboe@oracle.com>
-Subject: Re: auto gc again
-Date: Wed, 19 Mar 2008 22:17:34 +0100
-Message-ID: <20080319211733.GD17940@kernel.dk>
-References: <20080318180118.GC17940@kernel.dk> <alpine.LFD.1.00.0803181112270.3020@woody.linux-foundation.org> <20080318181948.GH17940@kernel.dk> <alpine.LFD.1.00.0803191629240.2947@xanadu.home>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [patch] Import "git-forest" into contrib/
+Date: Wed, 19 Mar 2008 22:21:47 +0100
+Organization: At home
+Message-ID: <frs05b$qke$1@ger.gmane.org>
+References: <alpine.LNX.1.00.0803181924560.8851@fbirervta.pbzchgretzou.qr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Wed Mar 19 22:19:13 2008
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 19 22:23:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jc5gm-0001kn-0N
-	for gcvg-git-2@gmane.org; Wed, 19 Mar 2008 22:19:12 +0100
+	id 1Jc5l0-0003Xw-Ht
+	for gcvg-git-2@gmane.org; Wed, 19 Mar 2008 22:23:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965590AbYCSVRl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Mar 2008 17:17:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934465AbYCSVRl
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Mar 2008 17:17:41 -0400
-Received: from brick.kernel.dk ([87.55.233.238]:9331 "EHLO kernel.dk"
+	id S1765810AbYCSVWI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 19 Mar 2008 17:22:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765803AbYCSVWI
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Mar 2008 17:22:08 -0400
+Received: from main.gmane.org ([80.91.229.2]:53203 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S936906AbYCSVRj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Mar 2008 17:17:39 -0400
-Received: by kernel.dk (Postfix, from userid 500)
-	id 6CD0725880A; Wed, 19 Mar 2008 22:17:34 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.1.00.0803191629240.2947@xanadu.home>
+	id S1765684AbYCSVWF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Mar 2008 17:22:05 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Jc5jT-0005kK-Ht
+	for git@vger.kernel.org; Wed, 19 Mar 2008 21:21:59 +0000
+Received: from abwi48.neoplus.adsl.tpnet.pl ([83.8.232.48])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 19 Mar 2008 21:21:59 +0000
+Received: from jnareb by abwi48.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 19 Mar 2008 21:21:59 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: abwi48.neoplus.adsl.tpnet.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77551>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77552>
 
-On Wed, Mar 19 2008, Nicolas Pitre wrote:
-> On Tue, 18 Mar 2008, Jens Axboe wrote:
-> 
-> > But freshly pulled repo, git auto gc is enabled. And that is my main
-> > annoyance, I just don't think that type of policy should be in there.
-> 
-> Just do this once:
-> 
-> 	git config --global gc.auto 0
-> 	git config --global gc.autopacklimit 0
-> 
-> and be happy.
+Jan Engelhardt wrote:
 
-You don't get it. I did gc.auto 0. And know some other limit crops up, I
-have to do gc.autopacklimit 0. I have LOTS of git trees. On many
-machines. It's just annoying, period.
+> diff --git a/contrib/git-forest/git-forest b/contrib/git-forest/git-f=
+orest
+> new file mode 100755
+> index 0000000..f5d6f81
+> --- /dev/null
+> +++ b/contrib/git-forest/git-forest
+> @@ -0,0 +1,391 @@
+> +#!/usr/bin/perl
+> +#
+> +#=A0=A0=A0=A0=A0=A0git-??
 
-> > Print the warning, include info on how to run git gc or even how to turn
-> > it on automatically. But I'll bet you that most users will NOT want auto
-> > gc. Ever.
-> 
-> Unfortunately, the harshest complaints about this whole issue were the 
-> opposite.
+Eh?
 
-I just don't buy that, I have more faith in users. If they come around
-and complain it's slow, heck you told them it would be.
-
-But it's not a big deal, I'll just carry a local patch that disables
-this crap and forget the whole deal. I just worry that if this is where
-git 'usability' is heading, it wont be a good thing in the long run.
-
--- 
-Jens Axboe
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
