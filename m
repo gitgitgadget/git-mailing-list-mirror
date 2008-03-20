@@ -1,104 +1,88 @@
-From: Jens Axboe <jens.axboe@oracle.com>
-Subject: Re: auto gc again
-Date: Thu, 20 Mar 2008 08:40:57 +0100
-Message-ID: <20080320074057.GH17940@kernel.dk>
-References: <20080318180118.GC17940@kernel.dk> <alpine.LFD.1.00.0803181112270.3020@woody.linux-foundation.org> <20080318181948.GH17940@kernel.dk> <alpine.LFD.1.00.0803191629240.2947@xanadu.home> <20080319211733.GD17940@kernel.dk> <alpine.LFD.1.00.0803191856290.2947@xanadu.home>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH 1/2] help: use man viewer path from "man.<tool>.path" config var
+Date: Thu, 20 Mar 2008 08:49:14 +0100
+Message-ID: <200803200849.14664.chriscool@tuxfamily.org>
+References: <20080318062236.7b5e515f.chriscool@tuxfamily.org> <7vabkv7t4c.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Thu Mar 20 08:41:59 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Pascal Obry <pascal@obry.net>, Xavier Maillard <xma@gnu.org>,
+	=?utf-8?q?=E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=81=AA=E3=81=93?=
+	 =?utf-8?q?_?= <nanako3@bluebottle.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 20 08:44:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JcFPQ-0002gm-Hw
-	for gcvg-git-2@gmane.org; Thu, 20 Mar 2008 08:41:56 +0100
+	id 1JcFS6-0003Hl-Uc
+	for gcvg-git-2@gmane.org; Thu, 20 Mar 2008 08:44:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753822AbYCTHlE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Mar 2008 03:41:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754204AbYCTHlD
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Mar 2008 03:41:03 -0400
-Received: from brick.kernel.dk ([87.55.233.238]:10814 "EHLO kernel.dk"
+	id S1755640AbYCTHno convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 20 Mar 2008 03:43:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755618AbYCTHno
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Mar 2008 03:43:44 -0400
+Received: from smtp1-g19.free.fr ([212.27.42.27]:33266 "EHLO smtp1-g19.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753710AbYCTHlA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Mar 2008 03:41:00 -0400
-Received: by kernel.dk (Postfix, from userid 500)
-	id C7F62257AD5; Thu, 20 Mar 2008 08:40:57 +0100 (CET)
+	id S1755373AbYCTHnl convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 20 Mar 2008 03:43:41 -0400
+Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 1F5E41AB309;
+	Thu, 20 Mar 2008 08:43:39 +0100 (CET)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id D7CED1AB313;
+	Thu, 20 Mar 2008 08:43:38 +0100 (CET)
+User-Agent: KMail/1.9.7
+In-Reply-To: <7vabkv7t4c.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
-In-Reply-To: <alpine.LFD.1.00.0803191856290.2947@xanadu.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77638>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77639>
 
-On Wed, Mar 19 2008, Nicolas Pitre wrote:
-> On Wed, 19 Mar 2008, Jens Axboe wrote:
-> 
-> > On Wed, Mar 19 2008, Nicolas Pitre wrote:
-> > > On Tue, 18 Mar 2008, Jens Axboe wrote:
-> > > 
-> > > > But freshly pulled repo, git auto gc is enabled. And that is my main
-> > > > annoyance, I just don't think that type of policy should be in there.
-> > > 
-> > > Just do this once:
-> > > 
-> > > 	git config --global gc.auto 0
-> > > 	git config --global gc.autopacklimit 0
-> > > 
-> > > and be happy.
-> > 
-> > You don't get it. I did gc.auto 0. And know some other limit crops up, I
-> > have to do gc.autopacklimit 0. I have LOTS of git trees. On many
-> > machines. It's just annoying, period.
-> 
-> As suggested, gc.auto = 0 should probably be made to disable it 
-> entirely, regardless of any other parameters that might exist.
+Le mardi 18 mars 2008, Junio C Hamano a =E9crit :
+> Christian Couder <chriscool@tuxfamily.org> writes:
+> > This makes it possible to use different version of the tools
+> > than the one on the current PATH, or maybe a custom script.
+> >
+> > In this patch we also try to launch "konqueror" using
+> > "kfmclient" even if a path to a konqueror binary is given
+> > in "man.konqueror.path".
+>
+> It may be true that allowing customizable paths may be more useful th=
+an
+> not allowing them, so I do not have fundamental objection to this
+> enhancement.  However, I doubt this s/konqueror/kfmclient/ is a good
+> idea.
+>
+> As a general rule, if you allow the user to explicitly say "instead o=
+f
+> what you would normally use, use _this_", you should not try to outsm=
+art
+> the user by using something else that you derived from that "_this_" =
+the
+> user gave you.
+>
+> If the user wants to use kfmclient, then the user can say so. =20
 
-Yes, agree.
+Yes, but if the user just wants to use a konq that is not in the path, =
+then=20
+the konq specified with "man.konqueror.path" should behave the same as =
+when=20
+using the konq in the path. That means that we should also try to open =
+a=20
+new tab on an existing konq, and this will not be the case if we=20
+use "/path/konqueror URL" instead of "/path/kfmclient newTab URL".
 
-> > > > Print the warning, include info on how to run git gc or even how to turn
-> > > > it on automatically. But I'll bet you that most users will NOT want auto
-> > > > gc. Ever.
-> > > 
-> > > Unfortunately, the harshest complaints about this whole issue were the 
-> > > opposite.
-> > 
-> > I just don't buy that, I have more faith in users.
-> 
-> We also did in the past... even for a long period...
-> 
-> Alas, it is the users who made us (and actually made Linus, who was the 
-> last to resist) change our minds.
+> If the
+> user wants to really launch konq instead of using kfmclient for whate=
+ver
+> reason, the outsmarting code will interfere and make it impossible.
 
-OK, that's at least reassuring :-)
+I think it will still be possible using custom commands. I am working o=
+n the=20
+patch. It should be ready in a few days.
 
-> > If they come around and complain it's slow, heck you told them it 
-> > would be.
-> 
-> But they don't.  They just presume that Git is crap and move on.
-
-That's pretty sad, I like to have high hopes for users.
-
-> > But it's not a big deal, I'll just carry a local patch that disables
-> > this crap and forget the whole deal. I just worry that if this is where
-> > git 'usability' is heading, it wont be a good thing in the long run.
-> 
-> I wish the majority of users was thinking like you.  I, too, have some 
-> conceptual problems with this auto gc things.  With the experience 
-> we've gathered, the current state appears to be the 
-> lesser of all evils though.
-
-Alright, I must bow down to empirical evidence... The conceptual policy
-problem is indeed what is bothering me so much, even more so than the
-actual gc running on my machine.
-
-gc.auto covering everything is good enough for me, GIT_GC_AUTO
-environment variable would be better because of the way that I work. But
-I can get by knowing that the gc.auto thing will at least only bite me
-once per tree. And perhaps just wrap git clone in one of my scripts
-that'll then do the gc.auto thing automatically.
-
--- 
-Jens Axboe
+Thanks,
+Christian.
