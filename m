@@ -1,96 +1,102 @@
-From: Julian Phillips <julian@quantumfyre.co.uk>
-Subject: Re: [SoC RFC] libsvn-fs-git: A git backend for the subversion
- filesystem
-Date: Thu, 20 Mar 2008 09:22:58 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0803200910410.21580@reaper.quantumfyre.co.uk>
-References: <3e8340490803182108y40a9aec2q8e5bcb78b907bbb5@mail.gmail.com>
- <20080320045632.GB8410@spearce.org>
+From: Alex Bennee <kernel-hacker@bennee.com>
+Subject: Re: Importing all modules in a CVS repo with git-cvsimport
+Date: Thu, 20 Mar 2008 09:58:50 +0000
+Message-ID: <1206007130.24610.6.camel@pitcairn.cambridgebroadband.com>
+References: <1205951736.24610.3.camel@pitcairn.cambridgebroadband.com>
+	 <20080319204154.GA19556@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Bryan Donlan <bdonlan@gmail.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Mar 20 10:24:50 2008
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Mar 20 10:59:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JcH0r-0006yP-Q7
-	for gcvg-git-2@gmane.org; Thu, 20 Mar 2008 10:24:42 +0100
+	id 1JcHYY-0002VX-LV
+	for gcvg-git-2@gmane.org; Thu, 20 Mar 2008 10:59:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753372AbYCTJXv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Mar 2008 05:23:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752765AbYCTJXv
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Mar 2008 05:23:51 -0400
-Received: from electron.quantumfyre.co.uk ([87.106.55.16]:46110 "EHLO
-	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751984AbYCTJXu (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 20 Mar 2008 05:23:50 -0400
-Received: from neutron.quantumfyre.co.uk (neutron.datavampyre.co.uk [212.159.54.235])
-	by electron.quantumfyre.co.uk (Postfix) with ESMTP id 1D8BF79C6D3
-	for <git@vger.kernel.org>; Thu, 20 Mar 2008 09:23:49 +0000 (GMT)
-Received: (qmail 21656 invoked by uid 103); 20 Mar 2008 09:22:58 +0000
-Received: from 212.159.54.234 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
- (spamassassin: 3.2.1. perlscan: 1.25st.  
- Clear:RC:1(212.159.54.234):. 
- Processed in 0.030247 secs); 20 Mar 2008 09:22:58 -0000
-Received: from darkphoton.datavampyre.co.uk (212.159.54.234)
-  by neutron.datavampyre.co.uk with SMTP; 20 Mar 2008 09:22:57 +0000
-X-X-Sender: jp3@reaper.quantumfyre.co.uk
-In-Reply-To: <20080320045632.GB8410@spearce.org>
+	id S1753614AbYCTJ6u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Mar 2008 05:58:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753652AbYCTJ6u
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Mar 2008 05:58:50 -0400
+Received: from nf-out-0910.google.com ([64.233.182.188]:35943 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753056AbYCTJ6t (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Mar 2008 05:58:49 -0400
+Received: by nf-out-0910.google.com with SMTP id g13so402334nfb.21
+        for <git@vger.kernel.org>; Thu, 20 Mar 2008 02:58:47 -0700 (PDT)
+Received: by 10.78.123.4 with SMTP id v4mr4278030huc.50.1206007126993;
+        Thu, 20 Mar 2008 02:58:46 -0700 (PDT)
+Received: from ?10.0.0.166? ( [212.44.17.78])
+        by mx.google.com with ESMTPS id f4sm9096748nfh.26.2008.03.20.02.58.45
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 20 Mar 2008 02:58:45 -0700 (PDT)
+In-Reply-To: <20080319204154.GA19556@coredump.intra.peff.net>
+X-Mailer: Evolution 2.12.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77645>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77646>
 
-On Thu, 20 Mar 2008, Shawn O. Pearce wrote:
 
-> Bryan Donlan <bdonlan@gmail.com> wrote:
->> I'm planning to apply for the git summer of code project. My proposal
->> is based on the project idea of a subversion gateway for git,
->> implemented with a new subversion filesystem layer. A draft of my
->> proposal follows; I'd appreciate any comments/questions on it before
->> the application period proper begins.
->
-> Very cool.  Have you had a chance to look at the prototype python
-> implementation of an SVN server that Julian Phillips started?
->
->  http://git.q42.co.uk/w/git_svn_server.git
+On Wed, 2008-03-19 at 16:41 -0400, Jeff King wrote:
+> On Wed, Mar 19, 2008 at 06:35:36PM +0000, Alex Bennee wrote:
+> 
+> > I'm wanting to import the entirety of a CVS repository into git rather
+> > than an individual module. However every approach I've tried to do this
+> > fails as the underlying cvsps tool seems to only be able to deal with
+> > modules rather than the whole project.
+> > 
+> > Is there any invocation I could do that would do the whole import?
+> 
+> What do you want the result to look like? If you have CVS modules 'foo',
+> 'bar', and 'baz', I assume you want a repository with subdirectories
+> 'foo', 'bar', and 'baz'?
+> 
+> In that case, you can create a CVS module that just includes all three:
+> 
+>   cd /path/to/cvsroot
+>   mkdir all
+>   cd all
+>   for i in foo bar baz; do
+>     ln -s ../$i
+>   done
+> 
+> and then:
+> 
+>   git cvsimport all
 
-(now with partial support for 'svn log' ... ;))
+Hmm that fails:
 
->> /props/{trunk/,branches/,tags/} - file properties; props on directories will be
->>   represented with a reserved filename (._GIT-SVN-DIRPROPS perhaps)
->>   copyfrom information might be in /props, or in a seperate tree
->
-> How critical are file properties to an SVN client for proper
-> functioning?  Given the challenges already in front of you for this
-> project I would almost encourage you to avoid dealing with file
-> level properties.  Its hard enough to make something that speaks SVN
-> on the wire but reads/writes Git on disk, not to mention you have
-> to somehow "flatten" the Git DAG down into a sequential revision
-> namespace to make the SVN clients happy.  So deferring property
-> support until later may be wise.
+09:55 ajb@pitcairn/x86_64 [test.cvs] >perl /export/src/git.git/git-cvsimport.perl -v -C /export/csrc/import_test/test.git all
+Initialized empty Git repository in /export/csrc/import_test/test.git/.git/
+Running cvsps...
+cvs rlog: Logging .
+WARNING: file /newcvs/.cvsignore doesn't match strip_path /newcvs/all/. ignoring
+WARNING: file /newcvs/Attic/Make.rules doesn't match strip_path /newcvs/all/. ignoring
+WARNING: file /newcvs/Makefile doesn't match strip_path /newcvs/all/. ignoring
+WARNING: file /newcvs/Makefile.voip doesn't match strip_path /newcvs/all/. ignoring
+WARNING: file /newcvs/Attic/Vectastar.bom doesn't match strip_path /newcvs/all/. ignoring
+WARNING: file /newcvs/Attic/dMakefile doesn't match strip_path /newcvs/all/. ignoring
+cvs rlog: Logging CVSROOT
+WARNING: file /newcvs/CVSROOT/checkoutlist doesn't match strip_path /newcvs/all/. ignoring
+WARNING: file /newcvs/CVSROOT/commitinfo doesn't match strip_path /newcvs/all/. ignoring
+WARNING: file /newcvs/CVSROOT/config doesn't match strip_path /newcvs/all/. ignoring
+WARNING: file /newcvs/CVSROOT/cvsignore doesn't match strip_path /newcvs/all/. ignoring
 
-You might need to get svn:eol-style working to prevent the svn client from 
-munging any binary files?  Can't think of any other vital properties atm.
+test.cvs is a fresh checkout of the whole tree. "newcvs" is the root of
+CVS on the server. The warnings are the same when I try with "." as the
+module. Or where you saying do this with the actually CVS repo itself?
 
->> /revprops/NNN - revision properties for the given revision number
->
-> Ditto.  Aside from the special merge properties you mentioned,
-> I wonder if you can simply avoid implementing support for these
-> early on.
+> You might be able to do something similar with the CVSROOT/modules file,
+> but I haven't tried.
 
-Since you have to explicitly enable revprop editing in the subversion 
-repository by enabling a hook script, I should think that this was 
-definately something that could be left at the bottom of the TODO list ...
 
-Though you do need to be able to convert commit info into the appropriate 
-revprops (e.g. commit msg -> svn:log revprop)
 
--- 
-Julian
-
-  ---
-Often statistics are used as a drunken man uses lampposts -- for support
-rather than illumination.
+> 
+> -Peff
+Alex, homepage: http://www.bennee.com/~alex/ There is no fool to the old
+fool. -- John Heywood
