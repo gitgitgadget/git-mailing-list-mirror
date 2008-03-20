@@ -1,91 +1,105 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] New test for preserve merges and squash
-Date: Wed, 19 Mar 2008 17:28:34 -0700
-Message-ID: <7v1w661bnx.fsf@gitster.siamese.dyndns.org>
-References: <1205971432-12641-1-git-send-email-joerg@alea.gnuu.de>
+From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
+Subject: [StGit PATCH 4/6] Make sure that we only uncommit commits with
+	exactly one parent
+Date: Thu, 20 Mar 2008 01:31:51 +0100
+Message-ID: <20080320003151.13102.44813.stgit@yoghurt>
+References: <20080320002604.13102.53757.stgit@yoghurt>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?Q?J=C3=B6rg?= Sommer <joerg@alea.gnuu.de>
-X-From: git-owner@vger.kernel.org Thu Mar 20 01:29:41 2008
+Cc: git@vger.kernel.org, Erik Sandberg <mandolaerik@gmail.com>
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 20 01:32:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jc8f4-00065c-8W
-	for gcvg-git-2@gmane.org; Thu, 20 Mar 2008 01:29:39 +0100
+	id 1Jc8iC-0006sd-L9
+	for gcvg-git-2@gmane.org; Thu, 20 Mar 2008 01:32:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1163190AbYCTA2w convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 19 Mar 2008 20:28:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967318AbYCTA2v
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Mar 2008 20:28:51 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:40030 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S967306AbYCTA2t convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 19 Mar 2008 20:28:49 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 6A7122C58;
-	Wed, 19 Mar 2008 20:28:46 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 93AD82C56; Wed, 19 Mar 2008 20:28:42 -0400 (EDT)
-In-Reply-To: <1205971432-12641-1-git-send-email-joerg@alea.gnuu.de>
- (=?utf-8?Q?J=C3=B6rg?= Sommer's message of "Thu, 20 Mar 2008 01:03:52 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1163274AbYCTAb7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 19 Mar 2008 20:31:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763870AbYCTAb6
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Mar 2008 20:31:58 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2858 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761904AbYCTAb4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Mar 2008 20:31:56 -0400
+Received: from localhost ([127.0.0.1] helo=[127.0.1.1])
+	by diana.vm.bytemark.co.uk with esmtp (Exim 3.36 #1 (Debian))
+	id 1Jc8hC-0004sb-00; Thu, 20 Mar 2008 00:31:50 +0000
+In-Reply-To: <20080320002604.13102.53757.stgit@yoghurt>
+User-Agent: StGIT/0.14.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77595>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77596>
 
-J=C3=B6rg Sommer <joerg@alea.gnuu.de> writes:
+If we encounter a commit with 0, or 2 or more parents, fail with a
+nice error message instead of crashing.
 
-> Signed-off-by: J=C3=B6rg Sommer <joerg@alea.gnuu.de>
-> ---
->  t/t3404-rebase-interactive.sh |   20 ++++++++++++++++++++
->  1 files changed, 20 insertions(+), 0 deletions(-)
->
-> The current version of git fails this test. I think it's a bug, becau=
-se
-> the patch is what I expect to happen. Or am I wrong?
+Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
 
-Please mark such tests with test_expect_fail.
+---
 
-And also Cc: the guilty parties.
+ stgit/commands/uncommit.py |   14 ++++++++++++--
+ t/t1300-uncommit.sh        |    2 +-
+ 2 files changed, 13 insertions(+), 3 deletions(-)
 
-	$ git-blame master -- git-rebase--interactive.sh
-        $ git shortlog -n -s master -- git-rebase--interactive.sh
 
-would tell you who they are ;-).
-
-> +test_expect_success 'squash and preserve merges' '
-> +	test_tick &&
-> +	git checkout -b squash-and-preserve-merges master &&
-> +	echo A > file1 &&
-> +	git commit -m SaPM-1 file1 &&
-> +	echo B > file1 &&
-> +	git commit -m SaPM-2 file1 &&
-> +	git merge to-be-preserved &&
-> +	echo C > file1 &&
-> +	git commit -m SaPM-3 file1 &&
-> +
-> +        EXPECT_COUNT=3D4 FAKE_LINES=3D"1 2 squash 4 3" \
-> +          git rebase -i -p --onto branch1 master &&
-> +	test $(git rev-parse HEAD^2) =3D $(git rev-parse to-be-preserved) &=
-&
-> +	test $(git rev-parse HEAD~3) =3D $(git rev-parse branch1) &&
-> +	test $(git show HEAD:file1) =3D C &&
-> +	test $(git show HEAD~2:file1) =3D A
-> +'
-
-Please split such a test into two parts, a part that sets things up (wh=
-ich
-would succeed), and the part that runs the command it tries to test
-("rebase -i" followed by the validation of the result, which you are
-expecting to fail).  That way, somebody who is trying to fix the breaka=
-ge
-can stop the test script by inserting "exit" between the two, run the
-rebase command by hand to see what is going on, etc. to diagnose the
-issue.
+diff --git a/stgit/commands/uncommit.py b/stgit/commands/uncommit.py
+index 933ec60..272c5db 100644
+--- a/stgit/commands/uncommit.py
++++ b/stgit/commands/uncommit.py
+@@ -85,13 +85,23 @@ def func(parser, options, args):
+         patchnames =3D args
+         patch_nr =3D len(patchnames)
+=20
++    def get_parent(c):
++        next =3D c.data.parents
++        try:
++            [next] =3D next
++        except ValueError:
++            raise common.CmdException(
++                'Trying to uncommit %s, which does not have exactly on=
+e parent'
++                % c.sha1)
++        return next
++
+     commits =3D []
+     next_commit =3D stack.base
+     if patch_nr:
+         out.start('Uncommitting %d patches' % patch_nr)
+         for i in xrange(patch_nr):
+             commits.append(next_commit)
+-            next_commit =3D next_commit.data.parent
++            next_commit =3D get_parent(next_commit)
+     else:
+         if options.exclusive:
+             out.start('Uncommitting to %s (exclusive)' % to_commit)
+@@ -103,7 +113,7 @@ def func(parser, options, args):
+                     commits.append(next_commit)
+                 break
+             commits.append(next_commit)
+-            next_commit =3D next_commit.data.parent
++            next_commit =3D get_parent(next_commit)
+         patch_nr =3D len(commits)
+=20
+     taken_names =3D set(stack.patchorder.applied + stack.patchorder.un=
+applied)
+diff --git a/t/t1300-uncommit.sh b/t/t1300-uncommit.sh
+index 0d952a7..a906d13 100755
+--- a/t/t1300-uncommit.sh
++++ b/t/t1300-uncommit.sh
+@@ -78,7 +78,7 @@ test_expect_success \
+     stg commit --all
+ '
+=20
+-test_expect_failure 'Uncommit a commit with not precisely one parent' =
+'
++test_expect_success 'Uncommit a commit with not precisely one parent' =
+'
+     stg uncommit -n 5 ; [ $? =3D 2 ] &&
+     [ "$(echo $(stg series))" =3D "" ]
+ '
