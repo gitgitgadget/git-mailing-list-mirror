@@ -1,71 +1,85 @@
-From: Samuel Tardieu <sam@rfc1149.net>
-Subject: Invalid refspec?
-Date: Thu, 20 Mar 2008 11:53:31 +0100
-Organization: RFC 1149 (see http://www.rfc1149.net/)
-Message-ID: <2008-03-20-11-53-31+trackit+sam@rfc1149.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] New test for preserve merges and squash
+Date: Thu, 20 Mar 2008 12:09:34 +0100 (CET)
+Message-ID: <alpine.LSU.1.00.0803201208080.3983@racer.site>
+References: <1205971432-12641-1-git-send-email-joerg@alea.gnuu.de> <7v1w661bnx.fsf@gitster.siamese.dyndns.org> <20080320101809.GA23108@alea.gnuu.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 20 11:54:28 2008
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323584-1510358137-1206011376=:3983"
+Cc: git@vger.kernel.org
+To: =?ISO-8859-15?Q?J=F6rg_Sommer?= <joerg@alea.gnuu.de>
+X-From: git-owner@vger.kernel.org Thu Mar 20 12:10:18 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JcIPj-0002U5-Hv
-	for gcvg-git-2@gmane.org; Thu, 20 Mar 2008 11:54:27 +0100
+	id 1JcIf3-0007M0-FK
+	for gcvg-git-2@gmane.org; Thu, 20 Mar 2008 12:10:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752011AbYCTKxn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Mar 2008 06:53:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752008AbYCTKxn
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Mar 2008 06:53:43 -0400
-Received: from zaphod.rfc1149.net ([88.191.14.223]:53064 "EHLO
-	mail.rfc1149.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751862AbYCTKxm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Mar 2008 06:53:42 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mail.rfc1149.net (Postfix) with ESMTP id E6149E08F1
-	for <git@vger.kernel.org>; Thu, 20 Mar 2008 11:53:39 +0100 (CET)
-X-Virus-Scanned: amavisd-new at rfc1149.net
-Received: from mail.rfc1149.net ([127.0.0.1])
-	by localhost (zaphod.rfc1149.net [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id cdNS9WbIK3jr for <git@vger.kernel.org>;
-	Thu, 20 Mar 2008 11:53:32 +0100 (CET)
-Received: from mail2.rfc1149.net (unknown [IPv6:2a01:5d8:5138:2f95::3])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "mail2.rfc1149.net", Issuer "rfc1149.net" (verified OK))
-	by mail.rfc1149.net (Postfix) with ESMTPS id 6FCF5E0496
-	for <git@vger.kernel.org>; Thu, 20 Mar 2008 11:53:32 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by mail2.rfc1149.net (Postfix) with ESMTP id 7AC2DC408D;
-	Thu, 20 Mar 2008 11:53:31 +0100 (CET)
-Received: from mail2.rfc1149.net ([127.0.0.1])
-	by localhost (localhost [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id RtpVOYTg1KTX; Thu, 20 Mar 2008 11:53:31 +0100 (CET)
-Received: by mail2.rfc1149.net (Postfix, from userid 1000)
-	id 4A1BDC40B8; Thu, 20 Mar 2008 11:53:31 +0100 (CET)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-WWW: http://www.rfc1149.net/sam
-X-Jabber: <sam@rfc1149.net> (see http://www.jabber.org/)
-X-OpenPGP-Fingerprint: 79C0 AE3C CEA8 F17B 0EF1  45A5 F133 2241 1B80 ADE6 (see http://www.gnupg.org/)
+	id S1752241AbYCTLJh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Mar 2008 07:09:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752197AbYCTLJh
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Mar 2008 07:09:37 -0400
+Received: from mail.gmx.net ([213.165.64.20]:54200 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752153AbYCTLJg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Mar 2008 07:09:36 -0400
+Received: (qmail invoked by alias); 20 Mar 2008 11:09:34 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp042) with SMTP; 20 Mar 2008 12:09:34 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+QXqkLJWGQyiF9IUowUBm29mU1Bu9xcykrInTbIA
+	FWM1bI7UDPVY1G
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20080320101809.GA23108@alea.gnuu.de>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77649>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77650>
 
-I am using git master branch locally (1.5.5.rc0.133.g7e207), and the
-server is using 1.5.4.rc3.g16335. I want to push my HEAD~1 revision
-into the 2.0 branch on the server, and it looks like it is not
-expanded anymore in the refspec:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-% git push origin HEAD~1:2.0
-fatal: Invalid refspec 'HEAD~1:2.0'
-fatal: The remote end hung up unexpectedly
+--8323584-1510358137-1206011376=:3983
+Content-Type: TEXT/PLAIN; charset=ISO-8859-15
+Content-Transfer-Encoding: 8BIT
 
-Isn't HEAD~1 supposed to be expanded locally? Using the SHA-1 instead
-of HEAD~1 works fine.
+Hi,
 
-  Sam
--- 
-Samuel Tardieu -- sam@rfc1149.net -- http://www.rfc1149.net/
+On Thu, 20 Mar 2008, Jörg Sommer wrote:
+
+> Junio C Hamano schrieb am Wed 19. Mar, 17:28 (-0700):
+> > Jörg Sommer <joerg@alea.gnuu.de> writes:
+> > 
+> > > Signed-off-by: Jörg Sommer <joerg@alea.gnuu.de>
+> > > ---
+> > >  t/t3404-rebase-interactive.sh |   20 ++++++++++++++++++++
+> > >  1 files changed, 20 insertions(+), 0 deletions(-)
+> > >
+> > > The current version of git fails this test. I think it's a bug, 
+> > > because the patch is what I expect to happen. Or am I wrong?
+> > 
+> > Please mark such tests with test_expect_fail.
+> 
+> No, I expect the test succeeds. Currently, it fails. This might be, 
+> because my expectations are wrong or there's a bug.
+
+The definition of "test_expect_fail" is: this should succeed, but needs 
+fixin'.
+
+> > And also Cc: the guilty parties.
+> 
+> Okay, I've added Johannes the author of f09c9b8c5ff to the Cc: list.
+> 
+> Johannes, can you explain why this test fails?
+
+At the moment, I can't, because I indeed missed your original mail.  Maybe 
+I'll find time this afternoon to dive into gmane to find your original 
+mail.
+
+Ciao,
+Dscho
+
+--8323584-1510358137-1206011376=:3983--
