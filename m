@@ -1,61 +1,58 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] rebase [--onto O] A B: omit needless checkout
-Date: Thu, 20 Mar 2008 00:53:01 -0700
-Message-ID: <7vlk4dygpu.fsf@gitster.siamese.dyndns.org>
-References: <20080312191041.GF3198@ins.uni-bonn.de>
- <47D8D5B8.70809@viscovery.net> <20080315103954.GD14769@ins.uni-bonn.de>
- <7vk5k3n2ho.fsf_-_@gitster.siamese.dyndns.org>
- <47E10D0D.2080702@viscovery.net> <7vhcf24j3e.fsf@gitster.siamese.dyndns.org>
- <47E21510.6020009@viscovery.net>
+Subject: Re: auto gc again
+Date: Thu, 20 Mar 2008 00:55:51 -0700
+Message-ID: <7vhcf1ygl4.fsf@gitster.siamese.dyndns.org>
+References: <20080318180118.GC17940@kernel.dk>
+ <alpine.LFD.1.00.0803181112270.3020@woody.linux-foundation.org>
+ <20080318181948.GH17940@kernel.dk>
+ <alpine.LFD.1.00.0803191629240.2947@xanadu.home>
+ <20080319211733.GD17940@kernel.dk>
+ <alpine.LFD.1.00.0803191856290.2947@xanadu.home>
+ <20080320074057.GH17940@kernel.dk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu Mar 20 08:54:02 2008
+Cc: Nicolas Pitre <nico@cam.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	git@vger.kernel.org
+To: Jens Axboe <jens.axboe@oracle.com>
+X-From: git-owner@vger.kernel.org Thu Mar 20 08:56:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JcFb8-0005uD-6V
-	for gcvg-git-2@gmane.org; Thu, 20 Mar 2008 08:54:02 +0100
+	id 1JcFdq-0006es-BP
+	for gcvg-git-2@gmane.org; Thu, 20 Mar 2008 08:56:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753288AbYCTHxQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Mar 2008 03:53:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752924AbYCTHxQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Mar 2008 03:53:16 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:58802 "EHLO
+	id S1753866AbYCTH4K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Mar 2008 03:56:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753879AbYCTH4J
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Mar 2008 03:56:09 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:59544 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752841AbYCTHxP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Mar 2008 03:53:15 -0400
+	with ESMTP id S1753695AbYCTH4I (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Mar 2008 03:56:08 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id E65D01CAF;
-	Thu, 20 Mar 2008 03:53:11 -0400 (EDT)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 009411FCD;
+	Thu, 20 Mar 2008 03:56:07 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
  certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 3D3D31CAC; Thu, 20 Mar 2008 03:53:08 -0400 (EDT)
-In-Reply-To: <47E21510.6020009@viscovery.net> (Johannes Sixt's message of
- "Thu, 20 Mar 2008 08:41:04 +0100")
+ ESMTP id 4C2861FCB; Thu, 20 Mar 2008 03:56:00 -0400 (EDT)
+In-Reply-To: <20080320074057.GH17940@kernel.dk> (Jens Axboe's message of
+ "Thu, 20 Mar 2008 08:40:57 +0100")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77641>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77642>
 
-Johannes Sixt <j.sixt@viscovery.net> writes:
+Jens Axboe <jens.axboe@oracle.com> writes:
 
-> But given how intrusive the patch is ("just to remove an unnecessary
-> checkout"), I'd say this is post-1.5.5 material. Also, the fact that you
-> had to post a fix-up is an indication that there are probably a number of
-> corner cases that need an extended testing period.
+> gc.auto covering everything is good enough for me, GIT_GC_AUTO
+> environment variable would be better because of the way that I work. But
+> I can get by knowing that the gc.auto thing will at least only bite me
+> once per tree. And perhaps just wrap git clone in one of my scripts
+> that'll then do the gc.auto thing automatically.
 
-The fixup came from a real-world corner case.  I actually do fairly
-esoteric varieties of rebases all the time, starting with my HEAD
-detached, rebasing --onto a non-branch, explicitly stating where the
-bottom is, etc, etc.
-
-Although I am comfortable enough with the patch itself to queue it in
-'next' for my daily use, I do not intend it for 1.5.5 at all.  The merge
-window is a discipline, a line must be drawn somewhere, and when the line
-is drawn, it must be honoured.
+You missed --global part of the suggestion, perhaps?
