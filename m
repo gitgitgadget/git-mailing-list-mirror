@@ -1,93 +1,103 @@
 From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
-Subject: [StGit PATCH 1/6] Use a special exit code for bugs
-Date: Thu, 20 Mar 2008 01:31:34 +0100
-Message-ID: <20080320003134.13102.73631.stgit@yoghurt>
+Subject: [StGit PATCH 5/6] New test: conflicting push in dirty worktree
+Date: Thu, 20 Mar 2008 01:31:57 +0100
+Message-ID: <20080320003157.13102.10350.stgit@yoghurt>
 References: <20080320002604.13102.53757.stgit@yoghurt>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org, Erik Sandberg <mandolaerik@gmail.com>
 To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 20 01:32:53 2008
+X-From: git-owner@vger.kernel.org Thu Mar 20 01:32:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jc8iA-0006sd-I5
-	for gcvg-git-2@gmane.org; Thu, 20 Mar 2008 01:32:51 +0100
+	id 1Jc8iD-0006sd-En
+	for gcvg-git-2@gmane.org; Thu, 20 Mar 2008 01:32:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1163276AbYCTAbo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 19 Mar 2008 20:31:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1163195AbYCTAbm
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Mar 2008 20:31:42 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2849 "EHLO
+	id S1763171AbYCTAcG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 19 Mar 2008 20:32:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1163279AbYCTAcF
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Mar 2008 20:32:05 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2861 "EHLO
 	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1763323AbYCTAbk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Mar 2008 20:31:40 -0400
+	with ESMTP id S1163278AbYCTAcD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Mar 2008 20:32:03 -0400
 Received: from localhost ([127.0.0.1] helo=[127.0.1.1])
 	by diana.vm.bytemark.co.uk with esmtp (Exim 3.36 #1 (Debian))
-	id 1Jc8gv-0004ry-00; Thu, 20 Mar 2008 00:31:33 +0000
+	id 1Jc8hI-0004so-00; Thu, 20 Mar 2008 00:31:56 +0000
 In-Reply-To: <20080320002604.13102.53757.stgit@yoghurt>
 User-Agent: StGIT/0.14.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77597>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77598>
 
-Use a special exit code (4) for any error condition that indicates a
-bug in StGit. This will be useful in the test suite.
+When the result of a conflicting push can't be represented in the
+worktree because the worktree is dirty, the push should be aborted.
+Similarly, the push should be aborted if we have to do the merge in
+the worktree, but can't because the worktree is dirty.
+
+Add a new test that tests for this. It currently fails, in a bad way:
+the contents of the pushed patch is lost.
+
+(The test uses goto instead of push, because push doesn't use the new
+infrastructure yet. And old-infrastructure commands never have this
+bug, because they refuse to run with a dirty worktree.)
+
+This bug was found by Erik Sandberg <mandolaerik@gmail.com>, who also
+came up with the minimal test case that I turned into this new test.
 
 Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
 
 ---
 
- stgit/main.py  |   11 +++++++----
- stgit/utils.py |    1 +
- 2 files changed, 8 insertions(+), 4 deletions(-)
+ t/t3000-dirty-merge.sh |   35 +++++++++++++++++++++++++++++++++++
+ 1 files changed, 35 insertions(+), 0 deletions(-)
+ create mode 100755 t/t3000-dirty-merge.sh
 
 
-diff --git a/stgit/main.py b/stgit/main.py
-index 79044b0..663fdec 100644
---- a/stgit/main.py
-+++ b/stgit/main.py
-@@ -18,7 +18,7 @@ along with this program; if not, write to the Free So=
-ftware
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 US=
-A
- """
-=20
--import sys, os
-+import sys, os, traceback
- from optparse import OptionParser
-=20
- import stgit.commands
-@@ -279,10 +279,13 @@ def main():
-     except (StgException, IOError, ParsingError, NoSectionError), err:
-         out.error(str(err), title =3D '%s %s' % (prog, cmd))
-         if debug_level > 0:
--            raise
--        else:
--            sys.exit(utils.STGIT_COMMAND_ERROR)
-+            traceback.print_exc()
-+        sys.exit(utils.STGIT_COMMAND_ERROR)
-     except KeyboardInterrupt:
-         sys.exit(utils.STGIT_GENERAL_ERROR)
-+    except:
-+        out.error('Unhandled exception:')
-+        traceback.print_exc()
-+        sys.exit(utils.STGIT_BUG_ERROR)
-=20
-     sys.exit(ret or utils.STGIT_SUCCESS)
-diff --git a/stgit/utils.py b/stgit/utils.py
-index b75c3b4..cd52382 100644
---- a/stgit/utils.py
-+++ b/stgit/utils.py
-@@ -327,6 +327,7 @@ STGIT_SUCCESS =3D 0        # everything's OK
- STGIT_GENERAL_ERROR =3D 1  # seems to be non-command-specific error
- STGIT_COMMAND_ERROR =3D 2  # seems to be a command that failed
- STGIT_CONFLICT =3D 3       # merge conflict, otherwise OK
-+STGIT_BUG_ERROR =3D 4      # a bug in StGit
-=20
- def strip_leading(prefix, s):
-     """Strip leading prefix from a string. Blow up if the prefix isn't
+diff --git a/t/t3000-dirty-merge.sh b/t/t3000-dirty-merge.sh
+new file mode 100755
+index 0000000..dd81c9e
+--- /dev/null
++++ b/t/t3000-dirty-merge.sh
+@@ -0,0 +1,35 @@
++#!/bin/sh
++
++test_description=3D'Try a push that requires merging a file that is di=
+rty'
++
++. ./test-lib.sh
++
++test_expect_success 'Initialize StGit stack with two patches' '
++    stg init &&
++    touch a &&
++    git add a &&
++    git commit -m a &&
++    echo 1 > a &&
++    git commit -a -m p1 &&
++    echo 2 > a &&
++    git commit -a -m p2 &&
++    stg uncommit -n 2
++'
++
++test_expect_success 'Pop one patch and update the other' '
++    stg goto p1 &&
++    echo 3 > a &&
++    stg refresh
++'
++
++test_expect_failure 'Push with dirty worktree' '
++    echo 4 > a &&
++    [ "$(echo $(stg applied))" =3D "p1" ] &&
++    [ "$(echo $(stg unapplied))" =3D "p2" ] &&
++    ! stg goto p2 &&
++    [ "$(echo $(stg applied))" =3D "p1" ] &&
++    [ "$(echo $(stg unapplied))" =3D "p2" ] &&
++    [ "$(echo $(cat a))" =3D "4" ]
++'
++
++test_done
