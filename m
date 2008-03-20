@@ -1,75 +1,59 @@
-From: Alex Bennee <kernel-hacker@bennee.com>
+From: Jeff King <peff@peff.net>
 Subject: Re: Importing all modules in a CVS repo with git-cvsimport
-Date: Thu, 20 Mar 2008 15:33:35 +0000
-Message-ID: <1206027215.24610.20.camel@pitcairn.cambridgebroadband.com>
-References: <1205951736.24610.3.camel@pitcairn.cambridgebroadband.com>
-	 <200803200646.08631.robin.rosenberg.lists@dewire.com>
+Date: Thu, 20 Mar 2008 11:37:28 -0400
+Message-ID: <20080320153728.GA7798@sigill.intra.peff.net>
+References: <1205951736.24610.3.camel@pitcairn.cambridgebroadband.com> <20080319204154.GA19556@coredump.intra.peff.net> <1206007130.24610.6.camel@pitcairn.cambridgebroadband.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Thu Mar 20 16:34:37 2008
+To: Alex Bennee <kernel-hacker@bennee.com>
+X-From: git-owner@vger.kernel.org Thu Mar 20 16:38:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JcMmZ-0004Sq-EL
-	for gcvg-git-2@gmane.org; Thu, 20 Mar 2008 16:34:19 +0100
+	id 1JcMqJ-0005y0-F9
+	for gcvg-git-2@gmane.org; Thu, 20 Mar 2008 16:38:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756387AbYCTPdj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Mar 2008 11:33:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756393AbYCTPdj
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Mar 2008 11:33:39 -0400
-Received: from gv-out-0910.google.com ([216.239.58.184]:40456 "EHLO
-	gv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755614AbYCTPdi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Mar 2008 11:33:38 -0400
-Received: by gv-out-0910.google.com with SMTP id s4so277916gve.37
-        for <git@vger.kernel.org>; Thu, 20 Mar 2008 08:33:34 -0700 (PDT)
-Received: by 10.150.58.5 with SMTP id g5mr900430yba.158.1206027213194;
-        Thu, 20 Mar 2008 08:33:33 -0700 (PDT)
-Received: from ?10.0.0.166? ( [212.44.17.78])
-        by mx.google.com with ESMTPS id i7sm464004nfh.14.2008.03.20.08.33.30
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 20 Mar 2008 08:33:31 -0700 (PDT)
-In-Reply-To: <200803200646.08631.robin.rosenberg.lists@dewire.com>
-X-Mailer: Evolution 2.12.1 
+	id S1756462AbYCTPhb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Mar 2008 11:37:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754082AbYCTPhb
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Mar 2008 11:37:31 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4669 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752038AbYCTPhb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Mar 2008 11:37:31 -0400
+Received: (qmail 7235 invoked by uid 111); 20 Mar 2008 15:37:29 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Thu, 20 Mar 2008 11:37:29 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 20 Mar 2008 11:37:28 -0400
+Content-Disposition: inline
+In-Reply-To: <1206007130.24610.6.camel@pitcairn.cambridgebroadband.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77665>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77666>
 
+On Thu, Mar 20, 2008 at 09:58:50AM +0000, Alex Bennee wrote:
 
-On Thu, 2008-03-20 at 06:46 +0100, Robin Rosenberg wrote:
-> Den Wednesday 19 March 2008 19.35.36 skrev du:
-> > Hi,
-> >
-> > I'm wanting to import the entirety of a CVS repository into git rather
-> > than an individual module. However every approach I've tried to do this
-> > fails as the underlying cvsps tool seems to only be able to deal with
-> > modules rather than the whole project.
-> >
-> > Is there any invocation I could do that would do the whole import?
+> WARNING: file /newcvs/CVSROOT/cvsignore doesn't match strip_path /newcvs/all/. ignoring
 > 
-> You didnt' mention anything about you tried, but I recall that using ',' for 
-> the module name is possible. Some version of CVS do not like it however
-> and will bug out.
-> 
+> test.cvs is a fresh checkout of the whole tree. "newcvs" is the root of
+> CVS on the server. The warnings are the same when I try with "." as the
+> module. Or where you saying do this with the actually CVS repo itself?
 
-I tried:
+Hmm. I tested and it worked fine on my system. I'm not sure what you
+mean by "the CVS repo itself." I actually linked within the $CVSROOT
+hierarchy. If your version of CVS isn't happy with the symlinks for some
+reason, you could just munge your cvs hierarchy (assuming you are just
+doing a one-shot import):
 
-git-cvsimport -v  -C /export/csrc/import_test/test.git -d $CVSROOT .
-git-cvsimport -v  -C /export/csrc/import_test/test.git -d $CVSROOT ,
+  cd /newcvs
+  mkdir all
+  for i in `ls | grep -v all | grep -v CVSROOT`; do
+      mv $i all
+  done
 
-as well as the suggested ln -s tricks and none worked. I've now got a
-copy of the actual repo from the cvs server so I'll try and fake up a
-"supermodule" to contain the tree.
-
-Any pointers always appreciated :-)
-
-
-> -- robin
-Alex, homepage: http://www.bennee.com/~alex/ Art is anything you can get
-away with. -- Marshall McLuhan.
+-Peff
