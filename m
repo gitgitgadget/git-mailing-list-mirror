@@ -1,104 +1,135 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: global hooks
-Date: Thu, 20 Mar 2008 13:56:16 +0100
-Message-ID: <200803201356.16512.johan@herland.net>
-References: <1205942671.691.8.camel@omicron.ep.petrobras.com.br>
- <200803201220.47503.johan@herland.net>
- <46dff0320803200526x7b2a535fu25bae005348bb8e6@mail.gmail.com>
+From: =?utf-8?q?J=C3=B6rg=20Sommer?= <joerg@alea.gnuu.de>
+Subject: [PATCH] New test for rebase with preserve merges and squash
+Date: Thu, 20 Mar 2008 14:01:10 +0100
+Message-ID: <1206018070-3402-1-git-send-email-joerg@alea.gnuu.de>
+References: <alpine.LSU.1.00.0803201208080.3983@racer.site>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Victor Bogado da Silva Lins <victor@bogado.net>
-To: Ping Yin <pkufranky@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 20 13:57:48 2008
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes.Schindelin@gmx.de,
+	=?utf-8?q?J=C3=B6rg=20Sommer?= <joerg@alea.gnuu.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 20 14:02:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JcKKo-0002FY-T8
-	for gcvg-git-2@gmane.org; Thu, 20 Mar 2008 13:57:31 +0100
+	id 1JcKPy-00043F-6K
+	for gcvg-git-2@gmane.org; Thu, 20 Mar 2008 14:02:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756094AbYCTM4t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Mar 2008 08:56:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754721AbYCTM4t
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Mar 2008 08:56:49 -0400
-Received: from smtp.getmail.no ([84.208.20.33]:35756 "EHLO smtp.getmail.no"
+	id S1754721AbYCTNCJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 20 Mar 2008 09:02:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754671AbYCTNCJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Mar 2008 09:02:09 -0400
+Received: from banki.eumelnet.de ([83.246.114.63]:1668 "EHLO uucp.gnuu.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753472AbYCTM4s (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Mar 2008 08:56:48 -0400
-Received: from pmxchannel-daemon.no-osl-m323-srv-004-z2.isp.get.no by
- no-osl-m323-srv-004-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- id <0JY1008035AMFA00@no-osl-m323-srv-004-z2.isp.get.no> for
- git@vger.kernel.org; Thu, 20 Mar 2008 13:56:46 +0100 (CET)
-Received: from smtp.getmail.no ([10.5.16.1])
- by no-osl-m323-srv-004-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JY100KQ759T8D40@no-osl-m323-srv-004-z2.isp.get.no> for
- git@vger.kernel.org; Thu, 20 Mar 2008 13:56:17 +0100 (CET)
-Received: from alpha.herland ([84.215.102.95])
- by no-osl-m323-srv-004-z1.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JY10030E59SAQ50@no-osl-m323-srv-004-z1.isp.get.no> for
- git@vger.kernel.org; Thu, 20 Mar 2008 13:56:16 +0100 (CET)
-In-reply-to: <46dff0320803200526x7b2a535fu25bae005348bb8e6@mail.gmail.com>
-Content-disposition: inline
-User-Agent: KMail/1.9.9
+	id S1754688AbYCTNCI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Mar 2008 09:02:08 -0400
+Received: by uucp.gnuu.de (Postfix, from userid 10)
+	id C2950488062; Thu, 20 Mar 2008 14:02:06 +0100 (CET)
+Received: from ibook.localnet ([192.168.0.5] helo=alea.gnuu.de)
+	by alea.gnuu.de with esmtp (Exim 4.63)
+	(envelope-from <joerg@alea.gnuu.de>)
+	id 1JcKNX-0001rs-VS; Thu, 20 Mar 2008 14:00:20 +0100
+Received: from joerg by alea.gnuu.de with local (Exim 4.69)
+	(envelope-from <joerg@alea.gnuu.de>)
+	id 1JcKOM-0000tC-TT; Thu, 20 Mar 2008 14:01:11 +0100
+X-Mailer: git-send-email 1.5.4.4
+In-Reply-To: <alpine.LSU.1.00.0803201208080.3983@racer.site>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77654>
-
-On Thursday 20 March 2008, Ping Yin wrote:
-> On Thu, Mar 20, 2008 at 7:20 PM, Johan Herland <johan@herland.net> wrote:
-> > On Thursday 20 March 2008, Junio C Hamano wrote:
-> >  > Victor Bogado da Silva Lins <victor@bogado.net> writes:
-> >  > > SO my question is, is there a way to make that hook global to all
-> >  > > projects? If not, would it be a good idea to allow this?
-> >  >
-> >  > Probably a post- git-init hook that lets you do anything to your newly
-> >  > created repository would be the only thing that you need.  Then you can
-> >  > copy, untar or even use symlink to muck with .git/hooks/ in whatever way
-> >  > you please.
-> >  >
-> >  > There needs a mechanism for you to specify what that hook is, and it
-> >  > cannot be in individual repositories, so it has to live in ~/.gitconfig
-> >  > somewhere.
-> >
-> >  Or you could add the hook (either the post-init hook, or for that matter
-> >  the hook you want to make global) to the Git template directory on your
-> >  system (/usr/share/git-core/templates by default). If you don't want to
-> >  make it system-global (only user-global), I guess you could make your
-> >  own Git template directory somewhere (copy the system's template dir,
-> >  and add/enable whatever hooks you like), and set up an alias to
-> >  "git init --template=<your_template_dir>". Then use this alias instead
-> >  of "git init".
-> 
-> template dir is meaningful for static hooks. However, sometimes we
-> need dynamic hooks which change over time. Having a real global hook
-> can help to implement a single logic or policy spreading among
-> multiple repositories.
-
-If you need to centralize the logic, you can just keep the actual hook
-outside the template directory, and store an (absolute) symlink within
-the template dir pointing to the hook. All your git repos will now
-exercise the centralized hook instead of each having a separate copy.
-
-> For example, we can enfore a policy to help to update the test or
-> deploy environent automatically: when repositories are pushed into a
-> central place, they are checked out into different places or hosts
-> automatically.
-> 
-> I think ~/.gitconfig is a good place to give such an entry point.
-
-Still, I think this can be solved with the existing tools, without
-adding more features and config directives.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77655>
 
 
-...Johan
+Signed-off-by: J=C3=B6rg Sommer <joerg@alea.gnuu.de>
+---
+ t/t3404-rebase-interactive.sh |   52 +++++++++++++++++++++++++++++++++=
+++++++++
+ 1 files changed, 52 insertions(+), 0 deletions(-)
 
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+> > >=20
+> > > Please mark such tests with test_expect_fail.
+> >=20
+> > No, I expect the test succeeds. Currently, it fails. This might be,=
+=20
+> > because my expectations are wrong or there's a bug.
+>=20
+> The definition of "test_expect_fail" is: this should succeed, but nee=
+ds=20
+> fixin'.
+
+Ahh, I didn't know this. Here's a new one:
+
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive=
+=2Esh
+index 62e65d7..c849415 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -362,4 +362,56 @@ test_expect_success 'rebase with a file named HEAD=
+ in worktree' '
+=20
+ '
+=20
++test_expect_success 'squash and preserve merges' '
++	test_tick &&
++	git checkout -b squash-and-preserve-merges master &&
++	echo A > file1 &&
++	git commit -m SaPM-1 file1 &&
++	echo B > file1 &&
++	git commit -m SaPM-2 file1 &&
++	git merge to-be-preserved &&
++	echo C > file1 &&
++	git commit -m SaPM-3 file1
++'
++
++# This test should fail, because the prompt includes the commit from t=
+he
++# merge not only the merge:
++# -> pick 9604163 unrelated
++#    pick 5ef0364 SaPM-1
++#    pick 22aadcf SaPM-2
++#    pick 828f7d8 Merge branch 'to-be-preserved' into squash-and-prese=
+rve-merges
++#    pick 2a15a54 SaPM-3
++test_expect_failure 'expect preserve merges shown not commits from mer=
+ge' '
++        EXPECT_COUNT=3D4 FAKE_LINES=3D"1 2 squash 4 3" \
++          git rebase -i -p --onto branch1 master ||
++        { git rebase --abort;
++          EXPECT_COUNT=3D5 FAKE_LINES=3D"1 2 3 squash 5 4" \
++          git rebase -i -p --onto branch1 master;
++          false; }
++'
++
++# The rebase changes nothing: SaPM-3 is still the last commit while it
++# should have been merged with SaMP-2 and the branch is not rebased on
++# branch1
++#
++# % git forest squash-and-preserve-merges
++# =E2=95=93=E2=94=80[squash-and-preserve-merges]=E2=94=80=E2=94=80SaPM=
+-3
++# =E2=95=9F Merge branch 'to-be-preserved' into squash-and-preserve-me=
+rges
++# =E2=95=A0=E2=95=90=E2=95=97=20
++# =E2=95=9F =E2=95=91 SaPM-2
++# =E2=95=9F =E2=95=91 SaPM-1
++# =E2=95=91 =E2=95=9F=E2=94=80[to-be-preserved]=E2=94=80=E2=94=80unrel=
+ated
++# =E2=95=9F=E2=94=80=E2=95=91=E2=94=80[master]=E2=94=80=E2=94=80E
++# =E2=95=A0=E2=95=90=E2=95=9D=20
++# =E2=95=9F D
++# =E2=95=9F C
++# =E2=95=9F B
++# =E2=95=99=E2=94=80[A]=E2=94=80=E2=94=80A
++test_expect_failure 'squash and preserve merges' '
++	test $(git rev-parse HEAD^2) =3D $(git rev-parse to-be-preserved) &&
++	test $(git rev-parse HEAD~3) =3D $(git rev-parse branch1) &&
++	test $(git show HEAD:file1) =3D C &&
++	test $(git show HEAD~2:file1) =3D A
++'
++
+ test_done
+--=20
+1.5.4.4
