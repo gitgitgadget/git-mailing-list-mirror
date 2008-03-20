@@ -1,66 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: auto gc again
-Date: Wed, 19 Mar 2008 21:09:16 -0700
-Message-ID: <7vfxumyr2r.fsf@gitster.siamese.dyndns.org>
-References: <20080318180118.GC17940@kernel.dk>
- <7vd4pq2ymo.fsf@gitster.siamese.dyndns.org>
- <alpine.LFD.1.00.0803191444490.3020@woody.linux-foundation.org>
- <7vod9a1h8e.fsf@gitster.siamese.dyndns.org>
- <alpine.LFD.1.00.0803191910170.2947@xanadu.home>
- <7vd4pq1el3.fsf@gitster.siamese.dyndns.org>
- <alpine.LFD.1.00.0803192228260.2947@xanadu.home>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Two bugs with renaming
+Date: Wed, 19 Mar 2008 21:12:02 -0700 (PDT)
+Message-ID: <alpine.LFD.1.00.0803192059120.3020@woody.linux-foundation.org>
+References: <slrnfu37vn.d2i.jgoerzen@katherina.lan.complete.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Jens Axboe <jens.axboe@oracle.com>, git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Thu Mar 20 05:10:15 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: John Goerzen <jgoerzen@complete.org>
+X-From: git-owner@vger.kernel.org Thu Mar 20 05:13:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JcC6S-0000d2-Aj
-	for gcvg-git-2@gmane.org; Thu, 20 Mar 2008 05:10:08 +0100
+	id 1JcC9G-0001Jy-6j
+	for gcvg-git-2@gmane.org; Thu, 20 Mar 2008 05:13:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750831AbYCTEJ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Mar 2008 00:09:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750816AbYCTEJ1
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Mar 2008 00:09:27 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:34556 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750729AbYCTEJZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Mar 2008 00:09:25 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 343062630;
-	Thu, 20 Mar 2008 00:09:24 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 569B8262E; Thu, 20 Mar 2008 00:09:19 -0400 (EDT)
-In-Reply-To: <alpine.LFD.1.00.0803192228260.2947@xanadu.home> (Nicolas
- Pitre's message of "Wed, 19 Mar 2008 23:13:52 -0400 (EDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1750866AbYCTEMW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Mar 2008 00:12:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750848AbYCTEMW
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Mar 2008 00:12:22 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:54111 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750794AbYCTEMV (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 20 Mar 2008 00:12:21 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m2K4C5fs014262
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 19 Mar 2008 21:12:06 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m2K4C2GE020837;
+	Wed, 19 Mar 2008 21:12:04 -0700
+In-Reply-To: <slrnfu37vn.d2i.jgoerzen@katherina.lan.complete.org>
+User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+X-Spam-Status: No, hits=-3.281 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77620>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77621>
 
-Nicolas Pitre <nico@cam.org> writes:
 
-> So you have 17.1 seconds for a single pack vs 18.4 seconds for 66 packs.
+
+On Wed, 19 Mar 2008, John Goerzen wrote:
 >
-> Compare that to 24.9s without that patch.
+> #######
+> # Set up bug #2
+> 
+> jgoerzen@katherina:/tmp/testrepo$ echo foo > foo
+> jgoerzen@katherina:/tmp/testrepo$ git add foo
+> jgoerzen@katherina:/tmp/testrepo$ git commit -m 'Added foo'
+> jgoerzen@katherina:/tmp/testrepo$ git checkout testbranch
+> Switched to branch "testbranch"
+> jgoerzen@katherina:/tmp/testrepo$ ls -l
+> total 0
+> lrwxrwxrwx 1 jgoerzen jgoerzen 16 Mar 19 18:14 files -> /tmp/nonexistant
+> drwxr-xr-x 2 jgoerzen jgoerzen 22 Mar 19 18:14 files.upstream
+> jgoerzen@katherina:/tmp/testrepo$ git merge master
+> fatal: Entry 'files/delete.me' would be overwritten by merge. Cannot merge.
+> Merge with strategy recursive failed.
 
-Very interesting --- why should it affect a single pack case at all?
+Ok, so if I read this right, you have a D/F conflict, with the current 
+branch having a file (or rather, a symlink) called "files", and the branch 
+you are trying to merge has a *directory* called "files" in it, and the 
+merge gets really unhappy about that conflict.
 
-> And I still have some further optimizations to implement eventually 
-> (http://marc.info/?l=git&m=118062793413099&w=2), but which would 
-> probably make a significant difference only in the hundreds-of-packs 
-> case anyway.
->
-> So I really think that the default gc.autopacklimit could be raised.
+Now, arguably, it should just see them as two independent issues, and then 
+the rename detection will notice that the "files/delete.me" file got 
+renamed as "files.upstream/delete.me", so *after* rename detection there 
+will be no D/F conflict in the end result, but we see the conflict before 
+that all even happens.
 
-Thanks, let's raise it to 50 then.
+Ho humm. 
 
-But I am still puzzled...
+With the new unpack-trees logic it's pretty easy to *not* unpack with DF 
+conflicts (add a flag that tells us to use "base_name_compare()" instead 
+of "df_name_compare()" in do_compare_entry()), and maybe we can then make 
+builtin-merge-recursive.c set that flag. But then builtin-merge-recursive
+would also have to understand about D/F conflicts itself (since now 
+unpack_trees() wouldn't give them as conflicts any more).
+
+			Linus
