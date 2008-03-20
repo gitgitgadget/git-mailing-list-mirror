@@ -1,117 +1,99 @@
-From: James Utter <james.utter@gmail.com>
-Subject: strange git delays
-Date: Fri, 21 Mar 2008 00:32:48 +1100
-Message-ID: <1206019968.27619.26.camel@localhost>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: Make git-merge and helpers Builtins
+Date: Thu, 20 Mar 2008 10:02:03 -0400 (EDT)
+Message-ID: <alpine.LNX.1.00.0803200927440.19665@iabervon.org>
+References: <47E25925.4050703@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 20 14:34:00 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Bo Yang <techrazy.yang@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 20 15:03:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JcKtp-0006sW-QB
-	for gcvg-git-2@gmane.org; Thu, 20 Mar 2008 14:33:42 +0100
+	id 1JcLM9-0001DV-5S
+	for gcvg-git-2@gmane.org; Thu, 20 Mar 2008 15:02:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754468AbYCTNc6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Mar 2008 09:32:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754530AbYCTNc6
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Mar 2008 09:32:58 -0400
-Received: from wf-out-1314.google.com ([209.85.200.174]:29014 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754430AbYCTNc5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Mar 2008 09:32:57 -0400
-Received: by wf-out-1314.google.com with SMTP id 28so971726wff.4
-        for <git@vger.kernel.org>; Thu, 20 Mar 2008 06:32:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:subject:from:to:content-type:date:message-id:mime-version:x-mailer:content-transfer-encoding;
-        bh=bYIdOS0yY9dlFpKyMFyMTYv22llyjC++x3MA2qzpgLE=;
-        b=D1B6/hBlEYs4cezk5qEYQCNfEvc0AfafZHXk+6OK+ORZJd8AycATZ37X6XrdW6Nm5W5nY8mKrZCrpejtvGDW/u2ZZGL7olKOZ1Hv/WE2vJtWzhPd2d6QzVJPMMbcX05BS0tJSk0UVuwNLdj+eOCuyMC/T63LpSgS/YAW+AdO7RM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=subject:from:to:content-type:date:message-id:mime-version:x-mailer:content-transfer-encoding;
-        b=Te2KRij0hcoY5T/MB5xTveGNUJKbUHDvtSVV8fHVoGY236nSyIIGiva1ivTHs2jDJakQHRxbHs9hORsUBp/Vzq8aUKaiHDfBAPdbzp/X7R/w/UfpqXcTRlB6g77qVp6NrcP9VurZX9szG+Zh/pejVyuEW4Hhb9srnJHVpnEGVsI=
-Received: by 10.143.187.2 with SMTP id o2mr1153150wfp.239.1206019975434;
-        Thu, 20 Mar 2008 06:32:55 -0700 (PDT)
-Received: from ?10.5.5.2? ( [121.44.240.112])
-        by mx.google.com with ESMTPS id h34sm417575wxd.10.2008.03.20.06.32.50
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 20 Mar 2008 06:32:53 -0700 (PDT)
-X-Mailer: Evolution 2.12.3 
+	id S1755112AbYCTOCI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Mar 2008 10:02:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755044AbYCTOCH
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Mar 2008 10:02:07 -0400
+Received: from iabervon.org ([66.92.72.58]:56627 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755016AbYCTOCG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Mar 2008 10:02:06 -0400
+Received: (qmail 16366 invoked by uid 1000); 20 Mar 2008 14:02:03 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 20 Mar 2008 14:02:03 -0000
+In-Reply-To: <47E25925.4050703@gmail.com>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77657>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77658>
 
-Hi,
+On Thu, 20 Mar 2008, Bo Yang wrote:
 
-Many git operations are running really slowly for me.
-For example 'git commit' and 'git branch' are taking 10 seconds to
-complete, even on an almost empty repository, and no longer on a 60MB
-repository with plenty of history.
+> Hi,
+>   I have used Git for one year, and I join into this list for 3 or 4 monthes.
+> Sometime, I post some questions here and followed some disscusions. I have
+> noticed that, there is a potential project in this GSoC "make git-merge and
+> helplers builtins". I think I am one of the suitable students for this project
+> because I am familiar with shell script programming and c language. And I post
+> this message here to hope I can discuss more with the community about this
+> project.    I have git clone the Git's source code for some days. And with
+> some insight into the code, I found that some of the merge related code is
+> located in sh script:  git-merge-octopus.sh  git-merge-one-file.sh
+> git-merge-resovle.sh git-merge.sh git-mergetool.sh . And others are located in
+> c source code: builtin-merge-base.c builtin-merge-file.c builtin-merge-ours.c
+> builtin-merge-recrusive.c and merge-file.c merge-tree.c merge-index.c
+> merge-recursive.h for two simple declarations.
+>   And git-mergetool.sh is itself an interactive shell process, I think there
+> is no need to deal with it. So, the main work for this project is to change
+> the other four scripts into c format. For deatails, instead of call the git
+> merge-base in the shell, we make the final corresponding c code to call the
+> functions in the builtin-merge-base.c. Could you please tell more about the
+> work if I miss something?
 
-There does not appear to be any CPU or disk activity caused by git.
+I think the main interesting shell script is "git-merge.sh"; the others 
+are helpers of various sorts.
 
-I would appreciate your help in resolving this problem.
+>   Finally, I have some questions about the merge code. I found there are many
+> merge related code and I can't understand them at a short time. So, pleaes
+> help me if you can.
+> 
+>   1. git-merge-file is used to merge one file, but what are merge-octopus and
+> merge-resovle?
 
-Regards,
+They are different "merge strategies". When merging, you can use "-s 
+<name>" to select a program that will be used to figure out what the 
+result should be. Some of these strategies (ours, theirs, recursive) have 
+been built in already. "merge-octopus" is used when you're merging more 
+than two branches at the same time, and "merge-resolve" is the usual 
+simple merge.
 
-James Utter
+>   2. I see in builtin-merge-file.c and merge-file.c, there are both functions
+> used to merge file. And finally, they both call the xdl_merge . Could you
+> please tell me how differenct of these to methods? I ask this question because
+> I think there are some redundant code in the git source. Forgive me if I am
+> wrong, I have no hostility but want to know why things are like that.
 
+builtin-merge-file has the command-line parsing code, while merge-file is 
+called by C code. They could probably share the code around calling 
+xdl_merge.
 
-Details of my environment:
--------------------------------
-Linux 2.6.24-1-amd64 #1 SMP x86_64 (from debian testing) [1]
-git-core 1:1.5.4.3-1 (from debian testing) [2]
-Core 2 duo, 2Ghz
+We often have duplicate functions from the point of view of functionality, 
+where one is cmd_*(int argc, const char **argv, const char *prefix) and 
+the other has arguments particular to the function; the cmd_*() one is 
+used by the command line dispatcher.
 
-[1] I have been experiencing this problem across several kernels
-[2] possibly over several git versions too (not sure)
+There's also a certain amount of redundant code that's there for 
+historical reasons. People tend to clean it up when they find it, but 
+we've never had enough clarity in naming that somebody who needs a 
+function to do some particular task will necessarily find an existing 
+function for that task if there is one.
 
-Here is a test run on my computer
----------------------------------
-james@timesink:~$ mkdir testgit
-james@timesink:~$ cd testgit/
-james@timesink:~/testgit$ time git init-db
-Initialized empty Git repository in .git/
-
-real	0m0.013s
-user	0m0.000s
-sys	0m0.008s
-james@timesink:~/testgit$ echo "hai there" > hello
-james@timesink:~/testgit$ time git add .
-
-real	0m0.103s
-user	0m0.000s
-sys	0m0.004s
-james@timesink:~/testgit$ time git commit --message "initial commit"
-Created initial commit 4f4b3a3: initial commit
- 1 files changed, 1 insertions(+), 0 deletions(-)
- create mode 100644 hello
-
-real	0m10.008s
-user	0m0.000s
-sys	0m0.008s
-james@timesink:~/testgit$ time git branch new
-
-real	0m10.006s
-user	0m0.000s
-sys	0m0.004s
-james@timesink:~/testgit$ time git branch -d new
-Deleted branch new.
-
-real	0m0.005s
-user	0m0.000s
-sys	0m0.004s
-james@timesink:~/testgit$ echo "im in ur git\n slowin ur workflo" >>
-hello
-james@timesink:~/testgit$ time git commit -a --message "how long"
-Created commit 2392de6: how long
- 1 files changed, 1 insertions(+), 0 deletions(-)
-
-real	0m10.059s
-user	0m0.000s
-sys	0m0.008s
+	-Daniel
+*This .sig left intentionally blank*
