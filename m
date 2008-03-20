@@ -1,121 +1,102 @@
-From: "Sverre Hvammen Johansen" <hvammen@gmail.com>
-Subject: Re: [RFC/PATCH Second draft] Fast forward strategies allow, never, and only
-Date: Wed, 19 Mar 2008 20:44:27 -0800
-Message-ID: <402c10cd0803192144n716cf66dgd4d660f4917a80fc@mail.gmail.com>
-References: <402c10cd0803101959q619efa86pbd501e5e2cc018c2@mail.gmail.com>
-	 <m363vkvvzb.fsf@localhost.localdomain>
-	 <402c10cd0803182320k134116cas5f62389482f2650a@mail.gmail.com>
-	 <200803192220.59035.jnareb@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Two bugs with renaming
+Date: Wed, 19 Mar 2008 21:45:53 -0700
+Message-ID: <7vbq5aypdq.fsf@gitster.siamese.dyndns.org>
+References: <slrnfu37vn.d2i.jgoerzen@katherina.lan.complete.org>
+ <alpine.LFD.1.00.0803192059120.3020@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Jakub Narebski" <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 20 05:45:40 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: John Goerzen <jgoerzen@complete.org>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Mar 20 05:46:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JcCep-0007p5-BF
-	for gcvg-git-2@gmane.org; Thu, 20 Mar 2008 05:45:39 +0100
+	id 1JcCfw-00080v-Av
+	for gcvg-git-2@gmane.org; Thu, 20 Mar 2008 05:46:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751200AbYCTEob (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Mar 2008 00:44:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751299AbYCTEob
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Mar 2008 00:44:31 -0400
-Received: from fg-out-1718.google.com ([72.14.220.157]:54645 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751200AbYCTEo3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Mar 2008 00:44:29 -0400
-Received: by fg-out-1718.google.com with SMTP id l27so658070fgb.17
-        for <git@vger.kernel.org>; Wed, 19 Mar 2008 21:44:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=IY0q5Z2mRr3CPHZkucFbV+hdoxROAWSbZB9GrGUxqGc=;
-        b=LhpOS6DY6bU/Y3Dfc3CZWJEz7XJEHAJe9sEeG7OvXoDBaNPXKmZ0BAnbLF0pgPXtq6qICc5KX79s0/UP+L1e1tfmCUIY4nTOc6hoWHRWYldV3cE3BRgF80g3OlqcgARGaKn8VLgJc1FDbVCY3eSn6pJtOOja7d/VFUlNBlgZ7FY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Jp0K13Jy00quqGj6b0AQP4MLiSnJZXmgmP5X2zmPsQtNv4W1ODmocr60ojD9aiUvzC2Iuvd/ffcJKj9kAUCIrVBfT9+9wZNoIcnVaZsG/aEVcLF1eBSl992aJlrw2893ilA9bKjAqjabZZ4ZFkgpnYUFjj5z/H3NU3YAXPEMPA8=
-Received: by 10.82.177.5 with SMTP id z5mr955045bue.14.1205988268011;
-        Wed, 19 Mar 2008 21:44:28 -0700 (PDT)
-Received: by 10.82.172.14 with HTTP; Wed, 19 Mar 2008 21:44:27 -0700 (PDT)
-In-Reply-To: <200803192220.59035.jnareb@gmail.com>
-Content-Disposition: inline
+	id S1751318AbYCTEqH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Mar 2008 00:46:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751213AbYCTEqH
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Mar 2008 00:46:07 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:44338 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751187AbYCTEqE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Mar 2008 00:46:04 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 14F75171F;
+	Thu, 20 Mar 2008 00:46:03 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 22476171B; Thu, 20 Mar 2008 00:45:56 -0400 (EDT)
+In-Reply-To: <alpine.LFD.1.00.0803192059120.3020@woody.linux-foundation.org>
+ (Linus Torvalds's message of "Wed, 19 Mar 2008 21:12:02 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77625>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77626>
 
-On Wed, Mar 19, 2008 at 1:20 PM, Jakub Narebski <jnareb@gmail.com> wrote:
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
->  > +The following shows master and three topic branches.  TopicB is based
->  > +on TopicA, TopicA is previously branched off from master, and TopicC
->  > +is based on the current `HEAD` of master:
->  > +
->  > +------------
->  > +                    o---o---o  TopicB
->  > +                   /
->  > +          o---o---o  TopicA
->  > +         /
->  > +    o---o---o---o---o---o  master
->  > +                         \
->  > +                          o---o  TopicC
->  > +------------
->
->  I'd provide first simpler example without 'TopicC'.
+> Now, arguably, it should just see them as two independent issues, and then 
+> the rename detection will notice that the "files/delete.me" file got 
+> renamed as "files.upstream/delete.me", so *after* rename detection there 
+> will be no D/F conflict in the end result, but we see the conflict before 
+> that all even happens.
 
-If we are to explain how this is recorded this is how simple we can
-make it without leaving anything out.  However, I am not sure we
-should have this in the documentation at all.  Most users probably
-don't care exactly how this is recorded as long as the history down
-the road is not to complicated.
+The common ancestor had files/delete.me.
 
->  If I understand correctly you have implemented here always using
->  "parent" (or "dependent") reduction of merge heads. IMHO this reduction
->  contradict stated idea of using --ff=never (--no-ff) to always mark
->  where topic branch has ended.
+Our side (test_branch) deleted files/delete.me, created
+files.upstream/delete.me and created files.
 
-When using --ff=never this reduction will not be done and that is also
-how current git works (except that you need to say --no-ff).
+Their side (master)kept files/delete.me without changing, created foo.
 
->  > +         % git co master
->  > +         % git merge TopicA TopicB TopicC
->  > +
->  > +                    o---o---o  TopicB
->  > +                   /         \
->  > +          o---o---o  TopicA   \
->  > +         /                     \
->  > +    o---o---o---o---o---o.......o  master
->  > +                         \     /
->  > +                          o---o  TopicC
->  > +------------
->
->  This... is a bit unexpected. I thought that there should be line where
->  I have added dotted line.
+So I would think we should not even trigger D/F conflict at all.
 
-The graph also describes how current git record this.  Try the example
-and see for yourself.  The main difference between the patch and
-current git is that the patch is trying to be smarter about how it
-selects the merge algorithm, and which commits are passed on to the
-real merge algorithm.  In the example above it makes no difference
-since octopus is used and whether octopus is getting three or four
-branches does not matter at all since the octopus merge is able to do
-this reduction internally.  But in the case where we end up with two
-branches it makes a huge difference since we then can use the more
-smarter merge algorithms, and more cases will be merged automatically.
- However, all this does not make much of a difference in most cases.
-Git rocks whether we decide to do this or not.
+ - files/delete.me is deleted by only one side (our side) and it should go.
 
->  I'd really prefer if you would resurrect merge head reduction options
->  (strategies?) as it was, i.e. as separate patch. And of course talk
->  about reducing heads, not fast-forward options/strategies... this issue
->  is IMVHO orthogonal to options for allowing/forcing/denying fast-forward.
+ - files and files.upstream/delete.me are created by only one side (ours)
+   and it should stay.
 
-The first patch had the same features, was implemented slightly
-differently, but lacked a lot of documentation.
+ - foo is created by only one side (theirs) and it should come.
 
--- 
-Sverre Hvammen Johansen
+However, we wanted to allow policy decision to happen after read-tree, and
+we traditionally kept "one side removes" case as an internal conflict in
+the index, later to be resolved by merge-one-file (and merge-recursive).
+
+So I think the resulting index should look like this:
+
+        100644 xxxxxxx 0	files.upstream/delete.me
+        100644 xxxxxxx 1	files/delete.me
+        100644 xxxxxxx 3	files/delete.me
+        120000 xxxxxxx 0	files
+        100644 xxxxxxx 0	foo
+
+or (if we also want to leave policy decision for "one side adds" case to
+merge-one-file and merge-recursive) even:
+
+        100644 xxxxxxx 1	files/delete.me
+        100644 xxxxxxx 3	files/delete.me
+        120000 xxxxxxx 2	files
+        100644 xxxxxxx 2	files.upstream/delete.me
+        100644 xxxxxxx 2	foo
+
+But that is not what is happening here.  In fact, if you did not have
+"files" in the test branch, here is what you will see:
+
+        100644 xxxxxxx 0	files.upstream/delete.me
+        100644 xxxxxxx 1	files/delete.me
+        100644 xxxxxxx 3	files/delete.me
+        100644 xxxxxxx 0	foo
+
+and merge-recursive knows how to match up the first three entries and if
+there are changes between stages #1 and #3 of files/delete.me, that is
+carried forward to files.upstream/delete.me
+
+Your unpack_trees() is bug-to-bug compatibile with Daniel's that is in
+1.5.4.  Both "read-tree -m -u" bails out with the same error, without
+even leaving higher stage entries in the index.
