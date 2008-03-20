@@ -1,77 +1,121 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: auto gc again
-Date: Thu, 20 Mar 2008 00:40:20 -0400 (EDT)
-Message-ID: <alpine.LFD.1.00.0803200030020.2947@xanadu.home>
-References: <20080318180118.GC17940@kernel.dk>
- <7vd4pq2ymo.fsf@gitster.siamese.dyndns.org>
- <alpine.LFD.1.00.0803191444490.3020@woody.linux-foundation.org>
- <7vod9a1h8e.fsf@gitster.siamese.dyndns.org>
- <alpine.LFD.1.00.0803191910170.2947@xanadu.home>
- <7vd4pq1el3.fsf@gitster.siamese.dyndns.org>
- <alpine.LFD.1.00.0803192228260.2947@xanadu.home>
- <7vfxumyr2r.fsf@gitster.siamese.dyndns.org>
+From: "Sverre Hvammen Johansen" <hvammen@gmail.com>
+Subject: Re: [RFC/PATCH Second draft] Fast forward strategies allow, never, and only
+Date: Wed, 19 Mar 2008 20:44:27 -0800
+Message-ID: <402c10cd0803192144n716cf66dgd4d660f4917a80fc@mail.gmail.com>
+References: <402c10cd0803101959q619efa86pbd501e5e2cc018c2@mail.gmail.com>
+	 <m363vkvvzb.fsf@localhost.localdomain>
+	 <402c10cd0803182320k134116cas5f62389482f2650a@mail.gmail.com>
+	 <200803192220.59035.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Jens Axboe <jens.axboe@oracle.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 20 05:41:22 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Jakub Narebski" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 20 05:45:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JcCaZ-00072a-10
-	for gcvg-git-2@gmane.org; Thu, 20 Mar 2008 05:41:15 +0100
+	id 1JcCep-0007p5-BF
+	for gcvg-git-2@gmane.org; Thu, 20 Mar 2008 05:45:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753657AbYCTEkg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Mar 2008 00:40:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753646AbYCTEkg
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Mar 2008 00:40:36 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:29469 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753440AbYCTEkV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Mar 2008 00:40:21 -0400
-Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR002.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JY000JC4IB8SPF0@VL-MO-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 20 Mar 2008 00:40:20 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <7vfxumyr2r.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+	id S1751200AbYCTEob (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Mar 2008 00:44:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751299AbYCTEob
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Mar 2008 00:44:31 -0400
+Received: from fg-out-1718.google.com ([72.14.220.157]:54645 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751200AbYCTEo3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Mar 2008 00:44:29 -0400
+Received: by fg-out-1718.google.com with SMTP id l27so658070fgb.17
+        for <git@vger.kernel.org>; Wed, 19 Mar 2008 21:44:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=IY0q5Z2mRr3CPHZkucFbV+hdoxROAWSbZB9GrGUxqGc=;
+        b=LhpOS6DY6bU/Y3Dfc3CZWJEz7XJEHAJe9sEeG7OvXoDBaNPXKmZ0BAnbLF0pgPXtq6qICc5KX79s0/UP+L1e1tfmCUIY4nTOc6hoWHRWYldV3cE3BRgF80g3OlqcgARGaKn8VLgJc1FDbVCY3eSn6pJtOOja7d/VFUlNBlgZ7FY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Jp0K13Jy00quqGj6b0AQP4MLiSnJZXmgmP5X2zmPsQtNv4W1ODmocr60ojD9aiUvzC2Iuvd/ffcJKj9kAUCIrVBfT9+9wZNoIcnVaZsG/aEVcLF1eBSl992aJlrw2893ilA9bKjAqjabZZ4ZFkgpnYUFjj5z/H3NU3YAXPEMPA8=
+Received: by 10.82.177.5 with SMTP id z5mr955045bue.14.1205988268011;
+        Wed, 19 Mar 2008 21:44:28 -0700 (PDT)
+Received: by 10.82.172.14 with HTTP; Wed, 19 Mar 2008 21:44:27 -0700 (PDT)
+In-Reply-To: <200803192220.59035.jnareb@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77624>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77625>
 
-On Wed, 19 Mar 2008, Junio C Hamano wrote:
+On Wed, Mar 19, 2008 at 1:20 PM, Jakub Narebski <jnareb@gmail.com> wrote:
 
-> Nicolas Pitre <nico@cam.org> writes:
-> 
-> > So you have 17.1 seconds for a single pack vs 18.4 seconds for 66 packs.
-> >
-> > Compare that to 24.9s without that patch.
-> 
-> Very interesting --- why should it affect a single pack case at all?
+>  > +The following shows master and three topic branches.  TopicB is based
+>  > +on TopicA, TopicA is previously branched off from master, and TopicC
+>  > +is based on the current `HEAD` of master:
+>  > +
+>  > +------------
+>  > +                    o---o---o  TopicB
+>  > +                   /
+>  > +          o---o---o  TopicA
+>  > +         /
+>  > +    o---o---o---o---o---o  master
+>  > +                         \
+>  > +                          o---o  TopicC
+>  > +------------
+>
+>  I'd provide first simpler example without 'TopicC'.
 
-It is not:
+If we are to explain how this is recorded this is how simple we can
+make it without leaving anything out.  However, I am not sure we
+should have this in the documentation at all.  Most users probably
+don't care exactly how this is recorded as long as the history down
+the road is not to complicated.
 
-Single pack = 17.1s
-66 packs with commit f7c22cc6 = 18.4s
-66 packs without commit f7c22cc6 = 24.9s
+>  If I understand correctly you have implemented here always using
+>  "parent" (or "dependent") reduction of merge heads. IMHO this reduction
+>  contradict stated idea of using --ff=never (--no-ff) to always mark
+>  where topic branch has ended.
 
-The point is that having many packs doesn't impose a significant 
-overhead anymore when comparing to the single pack case.
+When using --ff=never this reduction will not be done and that is also
+how current git works (except that you need to say --no-ff).
 
-> Thanks, let's raise it to 50 then.
+>  > +         % git co master
+>  > +         % git merge TopicA TopicB TopicC
+>  > +
+>  > +                    o---o---o  TopicB
+>  > +                   /         \
+>  > +          o---o---o  TopicA   \
+>  > +         /                     \
+>  > +    o---o---o---o---o---o.......o  master
+>  > +                         \     /
+>  > +                          o---o  TopicC
+>  > +------------
+>
+>  This... is a bit unexpected. I thought that there should be line where
+>  I have added dotted line.
 
-Having only to set gc.auto=0 to disable it entirely is also a good 
-thing.
+The graph also describes how current git record this.  Try the example
+and see for yourself.  The main difference between the patch and
+current git is that the patch is trying to be smarter about how it
+selects the merge algorithm, and which commits are passed on to the
+real merge algorithm.  In the example above it makes no difference
+since octopus is used and whether octopus is getting three or four
+branches does not matter at all since the octopus merge is able to do
+this reduction internally.  But in the case where we end up with two
+branches it makes a huge difference since we then can use the more
+smarter merge algorithms, and more cases will be merged automatically.
+ However, all this does not make much of a difference in most cases.
+Git rocks whether we decide to do this or not.
 
-> But I am still puzzled...
+>  I'd really prefer if you would resurrect merge head reduction options
+>  (strategies?) as it was, i.e. as separate patch. And of course talk
+>  about reducing heads, not fast-forward options/strategies... this issue
+>  is IMVHO orthogonal to options for allowing/forcing/denying fast-forward.
 
-Please tell me why if this is still the case.
+The first patch had the same features, was implemented slightly
+differently, but lacked a lot of documentation.
 
-
-Nicolas
+-- 
+Sverre Hvammen Johansen
