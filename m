@@ -1,66 +1,104 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] rebase [--onto O] A B: omit needless checkout
-Date: Thu, 20 Mar 2008 08:41:04 +0100
-Message-ID: <47E21510.6020009@viscovery.net>
-References: <20080312191041.GF3198@ins.uni-bonn.de> <47D8D5B8.70809@viscovery.net> <20080315103954.GD14769@ins.uni-bonn.de> <7vk5k3n2ho.fsf_-_@gitster.siamese.dyndns.org> <47E10D0D.2080702@viscovery.net> <7vhcf24j3e.fsf@gitster.siamese.dyndns.org>
+From: Jens Axboe <jens.axboe@oracle.com>
+Subject: Re: auto gc again
+Date: Thu, 20 Mar 2008 08:40:57 +0100
+Message-ID: <20080320074057.GH17940@kernel.dk>
+References: <20080318180118.GC17940@kernel.dk> <alpine.LFD.1.00.0803181112270.3020@woody.linux-foundation.org> <20080318181948.GH17940@kernel.dk> <alpine.LFD.1.00.0803191629240.2947@xanadu.home> <20080319211733.GD17940@kernel.dk> <alpine.LFD.1.00.0803191856290.2947@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 20 08:41:58 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Thu Mar 20 08:41:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JcFPR-0002gm-6Q
-	for gcvg-git-2@gmane.org; Thu, 20 Mar 2008 08:41:57 +0100
+	id 1JcFPQ-0002gm-Hw
+	for gcvg-git-2@gmane.org; Thu, 20 Mar 2008 08:41:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753772AbYCTHlM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Mar 2008 03:41:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754269AbYCTHlM
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Mar 2008 03:41:12 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:24081 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753772AbYCTHlK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Mar 2008 03:41:10 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1JcFNn-0001gO-LI; Thu, 20 Mar 2008 08:40:16 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 0F66B4E4; Thu, 20 Mar 2008 08:41:05 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <7vhcf24j3e.fsf@gitster.siamese.dyndns.org>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1753822AbYCTHlE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Mar 2008 03:41:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754204AbYCTHlD
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Mar 2008 03:41:03 -0400
+Received: from brick.kernel.dk ([87.55.233.238]:10814 "EHLO kernel.dk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753710AbYCTHlA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Mar 2008 03:41:00 -0400
+Received: by kernel.dk (Postfix, from userid 500)
+	id C7F62257AD5; Thu, 20 Mar 2008 08:40:57 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.1.00.0803191856290.2947@xanadu.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77637>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77638>
 
-Junio C Hamano schrieb:
-> Johannes Sixt <j.sixt@viscovery.net> writes:
+On Wed, Mar 19 2008, Nicolas Pitre wrote:
+> On Wed, 19 Mar 2008, Jens Axboe wrote:
 > 
->> Junio C Hamano schrieb:
->>> This teaches "git rebase [--onto O] A B" to omit an unnecessary checkout
->>> of branch B before it goes on.
->>> ...
->> This works for a frequent use-case of mine:
+> > On Wed, Mar 19 2008, Nicolas Pitre wrote:
+> > > On Tue, 18 Mar 2008, Jens Axboe wrote:
+> > > 
+> > > > But freshly pulled repo, git auto gc is enabled. And that is my main
+> > > > annoyance, I just don't think that type of policy should be in there.
+> > > 
+> > > Just do this once:
+> > > 
+> > > 	git config --global gc.auto 0
+> > > 	git config --global gc.autopacklimit 0
+> > > 
+> > > and be happy.
+> > 
+> > You don't get it. I did gc.auto 0. And know some other limit crops up, I
+> > have to do gc.autopacklimit 0. I have LOTS of git trees. On many
+> > machines. It's just annoying, period.
 > 
-> "Works" meaning "does not break", or "gives a great performance
-> improvement that it is worth having it early in a tagged release"?
+> As suggested, gc.auto = 0 should probably be made to disable it 
+> entirely, regardless of any other parameters that might exist.
 
-Sorry for being so terse. "Works", of course, means "works as expected",
-and the "expected" part of that is that the annoyance is no longer
-present, which is the unnecessary checkout.
+Yes, agree.
 
-But given how intrusive the patch is ("just to remove an unnecessary
-checkout"), I'd say this is post-1.5.5 material. Also, the fact that you
-had to post a fix-up is an indication that there are probably a number of
-corner cases that need an extended testing period.
+> > > > Print the warning, include info on how to run git gc or even how to turn
+> > > > it on automatically. But I'll bet you that most users will NOT want auto
+> > > > gc. Ever.
+> > > 
+> > > Unfortunately, the harshest complaints about this whole issue were the 
+> > > opposite.
+> > 
+> > I just don't buy that, I have more faith in users.
+> 
+> We also did in the past... even for a long period...
+> 
+> Alas, it is the users who made us (and actually made Linus, who was the 
+> last to resist) change our minds.
 
--- Hannes
+OK, that's at least reassuring :-)
+
+> > If they come around and complain it's slow, heck you told them it 
+> > would be.
+> 
+> But they don't.  They just presume that Git is crap and move on.
+
+That's pretty sad, I like to have high hopes for users.
+
+> > But it's not a big deal, I'll just carry a local patch that disables
+> > this crap and forget the whole deal. I just worry that if this is where
+> > git 'usability' is heading, it wont be a good thing in the long run.
+> 
+> I wish the majority of users was thinking like you.  I, too, have some 
+> conceptual problems with this auto gc things.  With the experience 
+> we've gathered, the current state appears to be the 
+> lesser of all evils though.
+
+Alright, I must bow down to empirical evidence... The conceptual policy
+problem is indeed what is bothering me so much, even more so than the
+actual gc running on my machine.
+
+gc.auto covering everything is good enough for me, GIT_GC_AUTO
+environment variable would be better because of the way that I work. But
+I can get by knowing that the gc.auto thing will at least only bite me
+once per tree. And perhaps just wrap git clone in one of my scripts
+that'll then do the gc.auto thing automatically.
+
+-- 
+Jens Axboe
