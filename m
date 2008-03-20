@@ -1,68 +1,93 @@
-From: Samuel Tardieu <sam@rfc1149.net>
-Subject: Re: [PATCH] Easier setup for the vim contribs.
-Date: Thu, 20 Mar 2008 17:56:01 +0100
-Organization: RFC 1149 (see http://www.rfc1149.net/)
-Message-ID: <2008-03-20-17-56-01+trackit+sam@rfc1149.net>
-References: <1206031364.1717.11.camel@omicron.ep.petrobras.com.br>
+From: Steven Walter <stevenrwalter@gmail.com>
+Subject: git-svn stomps on user properties
+Date: Thu, 20 Mar 2008 13:01:08 -0400
+Message-ID: <20080320170108.GA27194@dervierte>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8bit
-Cc: git@vger.kernel.org
-To: Victor Bogado da Silva Lins <victor@bogado.net>
-X-From: git-owner@vger.kernel.org Thu Mar 20 17:57:23 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="VbJkn9YxBvnuCH5J"
+Cc: normalperson@yhbt.net
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 20 18:02:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JcO4V-00061v-9l
-	for gcvg-git-2@gmane.org; Thu, 20 Mar 2008 17:56:55 +0100
+	id 1JcO9K-0008LP-PN
+	for gcvg-git-2@gmane.org; Thu, 20 Mar 2008 18:01:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756663AbYCTQ4P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Mar 2008 12:56:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754628AbYCTQ4O
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Mar 2008 12:56:14 -0400
-Received: from zaphod.rfc1149.net ([88.191.14.223]:58324 "EHLO
-	mail.rfc1149.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756586AbYCTQ4O (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Mar 2008 12:56:14 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mail.rfc1149.net (Postfix) with ESMTP id F32B5E0FBF;
-	Thu, 20 Mar 2008 17:56:11 +0100 (CET)
-X-Virus-Scanned: amavisd-new at rfc1149.net
-Received: from mail.rfc1149.net ([127.0.0.1])
-	by localhost (zaphod.rfc1149.net [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id XnnGMRoaF8FZ; Thu, 20 Mar 2008 17:56:02 +0100 (CET)
-Received: from mail2.rfc1149.net (unknown [IPv6:2a01:5d8:5138:2f95::3])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "mail2.rfc1149.net", Issuer "rfc1149.net" (verified OK))
-	by mail.rfc1149.net (Postfix) with ESMTPS id 17CF7E062F;
-	Thu, 20 Mar 2008 17:56:02 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by mail2.rfc1149.net (Postfix) with ESMTP id 4E9FEC408D;
-	Thu, 20 Mar 2008 17:56:01 +0100 (CET)
-Received: from mail2.rfc1149.net ([127.0.0.1])
-	by localhost (localhost [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 1xBj49qE1w6b; Thu, 20 Mar 2008 17:56:01 +0100 (CET)
-Received: by mail2.rfc1149.net (Postfix, from userid 1000)
-	id 288ACC40B8; Thu, 20 Mar 2008 17:56:01 +0100 (CET)
-In-Reply-To: <1206031364.1717.11.camel@omicron.ep.petrobras.com.br> (Victor Bogado da Silva Lins's message of "Thu\, 20 Mar 2008 13\:42\:44 -0300")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-WWW: http://www.rfc1149.net/sam
-X-Jabber: <sam@rfc1149.net> (see http://www.jabber.org/)
-X-OpenPGP-Fingerprint: 79C0 AE3C CEA8 F17B 0EF1  45A5 F133 2241 1B80 ADE6 (see http://www.gnupg.org/)
+	id S1757781AbYCTRBQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Mar 2008 13:01:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756008AbYCTRBP
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Mar 2008 13:01:15 -0400
+Received: from an-out-0708.google.com ([209.85.132.240]:48414 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757781AbYCTRBO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Mar 2008 13:01:14 -0400
+Received: by an-out-0708.google.com with SMTP id d31so254245and.103
+        for <git@vger.kernel.org>; Thu, 20 Mar 2008 10:01:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:received:date:from:to:cc:subject:message-id:mime-version:content-type:content-disposition:user-agent;
+        bh=WDQNubPprimtBjUm6Vnp+h1+tH16EvHFv58sGaGM/QU=;
+        b=A/5J8+Lh4Wy9uagQzQTs2WK+wceYFtcp9OtTgNAC/IdPmohBkO5I6l7k8a9KATC7Fq3mfF/zUhBafU1PIFy1ysmqdg+lY59fSJdAe6ElBJrNzQZRCvrVb85oeXSOEMDhgLyBumIYr2ucfSOejpZ7HDboRx3Y/wJPCCXZQnyifp0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=date:from:to:cc:subject:message-id:mime-version:content-type:content-disposition:user-agent;
+        b=p6Hdrp9+1NAU4yMboDsEtfCNwJbzuX3xv8pik3pgPGt251PiPmGNrG5Ipp6M+P4t7+L9wZ+SudWmo/G1HgUzE5fd00Bsj+vBcpJvH6M//zPX3Lda3fI9yEy7xuyaJC69HTLeGGAlsj990RKLSxUn+o6dc2E0J19Hg/3rQ5JQowU=
+Received: by 10.100.140.1 with SMTP id n1mr5547663and.99.1206032473480;
+        Thu, 20 Mar 2008 10:01:13 -0700 (PDT)
+Received: from dasbrennen.isa-geek.org ( [76.177.32.143])
+        by mx.google.com with ESMTPS id 7sm2548933agd.25.2008.03.20.10.01.09
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 20 Mar 2008 10:01:09 -0700 (PDT)
+Received: by dasbrennen.isa-geek.org (Postfix, from userid 1000)
+	id 2F05E1333BE; Thu, 20 Mar 2008 13:01:07 -0400 (EDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77673>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77674>
 
->>>>> "Victor" == Victor Bogado da Silva Lins <victor@bogado.net> writes:
 
-Victor> Just copy all files in the vim contrib directory to your .vim
-Victor> and it will configure the syntax.
+--VbJkn9YxBvnuCH5J
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Do you know if it has been submitted for inclusion in vim?
+I'm using git-svn to track an upstream subversion repository.  This
+upstream repository has several "user" SVN properties (i.e., not in the
+svn: namespace).  A recent git-svn dcommit resulted in one of these
+properties being reverted.
 
-  Sam
--- 
-Samuel Tardieu -- sam@rfc1149.net -- http://www.rfc1149.net/
+Here's what happened.  I started a git-svn dcommit of 3 very large
+commits.  In between commits 2 and 3, a commit was made by another
+person that changed one of our user properties.  When git-svn sent the
+third commit, it also reverted the property to its value before the
+other's user's change.
+
+Why did that happen?  Surely it isn't expected behavior.  Glancing
+through git-svn, I don't see anywhere that it deals with properties
+directly, outside of svm/svnsync properties.
+
+Thanks for any help or insight you can provide
+--=20
+-Steven Walter <stevenrwalter@gmail.com>
+Freedom is the freedom to say that 2 + 2 =3D 4
+B2F1 0ECC E605 7321 E818  7A65 FC81 9777 DC28 9E8F=20
+
+--VbJkn9YxBvnuCH5J
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFH4phT/IGXd9wono8RAp2TAJ9XSndMhMih/3KG3eUPgIJ7MixJgQCeKf3x
+TkIvv0xmZ0PqqTq2uZu+Lng=
+=SfjG
+-----END PGP SIGNATURE-----
+
+--VbJkn9YxBvnuCH5J--
