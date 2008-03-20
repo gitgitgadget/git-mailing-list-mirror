@@ -1,96 +1,129 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Two bugs with renaming
-Date: Wed, 19 Mar 2008 21:22:57 -0700 (PDT)
-Message-ID: <alpine.LFD.1.00.0803192120410.3020@woody.linux-foundation.org>
-References: <slrnfu37vn.d2i.jgoerzen@katherina.lan.complete.org> <alpine.LFD.1.00.0803192059120.3020@woody.linux-foundation.org>
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: [SoC RFC] libsvn-fs-git: A git backend for the subversion filesystem
+Date: Thu, 20 Mar 2008 17:31:57 +1300
+Message-ID: <47E1E8BD.7000209@vilain.net>
+References: <3e8340490803182108y40a9aec2q8e5bcb78b907bbb5@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 20 05:23:48 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Bryan Donlan <bdonlan@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 20 05:30:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JcCJe-0003hO-Vo
-	for gcvg-git-2@gmane.org; Thu, 20 Mar 2008 05:23:47 +0100
+	id 1JcCPi-0004pP-0h
+	for gcvg-git-2@gmane.org; Thu, 20 Mar 2008 05:30:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751000AbYCTEXG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Mar 2008 00:23:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751117AbYCTEXF
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Mar 2008 00:23:05 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:43247 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750896AbYCTEXD (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 20 Mar 2008 00:23:03 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m2K4MxgI014716
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 19 Mar 2008 21:23:00 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m2K4MvqM021203;
-	Wed, 19 Mar 2008 21:22:58 -0700
-In-Reply-To: <alpine.LFD.1.00.0803192059120.3020@woody.linux-foundation.org>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
-X-Spam-Status: No, hits=-3.28 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1751102AbYCTE3P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Mar 2008 00:29:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751177AbYCTE3P
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Mar 2008 00:29:15 -0400
+Received: from watts.utsl.gen.nz ([202.78.240.73]:52325 "EHLO mail.utsl.gen.nz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751070AbYCTE3O (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Mar 2008 00:29:14 -0400
+Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
+	id 514EC21C944; Thu, 20 Mar 2008 17:29:12 +1300 (NZDT)
+X-Spam-Checker-Version: SpamAssassin 3.1.7-deb (2006-10-05) on 
+	mail.musashi.utsl.gen.nz
+X-Spam-Level: 
+X-Spam-Status: No, score=-3.5 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00 
+	autolearn=ham version=3.1.7-deb
+Received: from [192.168.69.233] (203-97-235-49.cable.telstraclear.net [203.97.235.49])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.utsl.gen.nz (Postfix) with ESMTP id 3938721C923;
+	Thu, 20 Mar 2008 17:29:07 +1300 (NZDT)
+User-Agent: Thunderbird 2.0.0.6 (X11/20071022)
+In-Reply-To: <3e8340490803182108y40a9aec2q8e5bcb78b907bbb5@mail.gmail.com>
+X-Enigmail-Version: 0.95.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77622>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77623>
 
+Bryan Donlan wrote:
 
+> Here are some tentative milestones:
+> * Read-only access from SVN to the master branch (no trunk/ etc layout)
+>   = Conversion of git commit information into svn revprops
+>   = git mode/.gitignore -> svn property conversion here?
 
-On Wed, 19 Mar 2008, Linus Torvalds wrote:
+This seems like a large milestone.  Can you break this up any more?
+
+For instance, your design notes on storing the necessary mapping
+information are good.  How about a separate milestone of having a test
+suite for the library functions you make for accessing that information.
+
+I would be tempted to check the protocol -
+http://svn.collab.net/repos/svn/trunk/subversion/libsvn_ra_svn/protocol
+- and make milestones for each request type that the protocol allows
+for.  Perhaps there is a more relevant list that you can find, such as
+groups of tests in the back-end test suite that ships with Subversion.
+Even taking the list of svn sub-commands, and deciding which fit into
+each category would be a good enhancement.
+
+> * Read-write access from SVN to the master branch
+>   = Map svn usernames to git full name/email according to a configuration map
+>     - how should git commits with names unknown to svn be handled? Just pass
+>       them through, spaces and <@> as well?
+
+Meh.  Just ignore them, and set revprops with all of the git committer
+information.
+
+>   = Bidirectional svn:execute and svn:ignore conversion.
+>   = Copyfrom and file property information needs to be recorded
+>   = Test importing a largish repository (without converting merge information)
+>     to git (the svn toplevel stuff would be left as-is in the git tree)
+>   = Consider developing git-svn-fs on a git-svn-fs repository itself for
+>     testing purposes
+
+An honourable notion, but I'd steer away from worrying about
+self-hosting, if it is irrelevant to the task at hand.  Focus more on a
+finding a good test suite to check you supported all the operations.
+Eg, can the test suite bundled with the Subversion project run against
+your back-end?
+
+> * Standard toplevel SVN layout (trunk/ tags/ branches/)
+>   = SVN branch creation might come a bit later
+>   = Test importing a largish repository with tags and branches carried across
+>     (might not efficiently support copy-from information)
+> * Merge information annotation (git->svn)
+>   = Try to guess the copy source for a new tag or branch - and for merges
+
+I don't like this word "guess".  It might be dangerous to not
+deterministically or repeatably answer a request.  If any random
+decisions were made, or information derived based on things that might
+change, then it should be stored in your mapping information branch.  In
+this instance, we didn't 'guess', we decided.
+
+> * Merge information annotation (svn->git)
+> * Import of a largish repository with svk or similar merge information into git,
+>   and vice versa (eg, exporting git.git with merge tracking as a subversion
+>   repo)
+
+Whew!  That's a lot of big milestones, but it's your summer ... :)
+
+I think the merging thing is a nice-to-have, and doing it would just
+prove that you can use the metadata that you have collected well.
+
+One thing I like about your approach is that the tracking branch itself
+could be replicated, leaving an audit of what happened.
+
+> === Interfaces ===
 > 
-> With the new unpack-trees logic it's pretty easy to *not* unpack with DF 
-> conflicts (add a flag that tells us to use "base_name_compare()" instead 
-> of "df_name_compare()" in do_compare_entry()), and maybe we can then make 
-> builtin-merge-recursive.c set that flag. [...]
+> As mentioned before, this driver will plug into the existing subversion stack
+> as a filesystem driver. This immediately allows access using any of subversion's
+> access methods (direct filesystem access, mod_dav_svn, svnserve).
+> 
+> On the git side I intend to use libgit for all git repository access. If I find
+> it lacking a necessary feature, I will attempt to add the missing interfaces
+> to libgit if at all feasable.
 
-Looking at that, the first thing we should probably do is to make those 
-existing flags be bitfields rather than "int" before we add even more 
-flags there.
+AFAIK the interface for libgit is not yet finalized, so bear in mind the
+application will possibly need porting work for each release.
 
-Hmm?
-
-			Linus
-
----
- unpack-trees.h |   20 ++++++++++----------
- 1 files changed, 10 insertions(+), 10 deletions(-)
-
-diff --git a/unpack-trees.h b/unpack-trees.h
-index 50453ed..ad8cc65 100644
---- a/unpack-trees.h
-+++ b/unpack-trees.h
-@@ -9,16 +9,16 @@ typedef int (*merge_fn_t)(struct cache_entry **src,
- 		struct unpack_trees_options *options);
- 
- struct unpack_trees_options {
--	int reset;
--	int merge;
--	int update;
--	int index_only;
--	int nontrivial_merge;
--	int trivial_merges_only;
--	int verbose_update;
--	int aggressive;
--	int skip_unmerged;
--	int gently;
-+	unsigned int reset:1,
-+		     merge:1,
-+		     update:1,
-+		     index_only:1,
-+		     nontrivial_merge:1,
-+		     trivial_merges_only:1,
-+		     verbose_update:1,
-+		     aggressive:1,
-+		     skip_unmerged:1,
-+		     gently:1;
- 	const char *prefix;
- 	int pos;
- 	struct dir_struct *dir;
+Sam.
