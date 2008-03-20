@@ -1,99 +1,69 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Make git-merge and helpers Builtins
-Date: Thu, 20 Mar 2008 10:02:03 -0400 (EDT)
-Message-ID: <alpine.LNX.1.00.0803200927440.19665@iabervon.org>
-References: <47E25925.4050703@gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: strange git delays
+Date: Thu, 20 Mar 2008 15:05:26 +0100
+Message-ID: <47E26F26.10301@viscovery.net>
+References: <1206019968.27619.26.camel@localhost>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Bo Yang <techrazy.yang@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 20 15:03:15 2008
+To: James Utter <james.utter@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 20 15:06:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JcLM9-0001DV-5S
-	for gcvg-git-2@gmane.org; Thu, 20 Mar 2008 15:02:57 +0100
+	id 1JcLPF-0002AZ-QC
+	for gcvg-git-2@gmane.org; Thu, 20 Mar 2008 15:06:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755112AbYCTOCI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Mar 2008 10:02:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755044AbYCTOCH
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Mar 2008 10:02:07 -0400
-Received: from iabervon.org ([66.92.72.58]:56627 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755016AbYCTOCG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Mar 2008 10:02:06 -0400
-Received: (qmail 16366 invoked by uid 1000); 20 Mar 2008 14:02:03 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 20 Mar 2008 14:02:03 -0000
-In-Reply-To: <47E25925.4050703@gmail.com>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1755044AbYCTOFa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Mar 2008 10:05:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754980AbYCTOFa
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Mar 2008 10:05:30 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:35874 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754698AbYCTOF3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Mar 2008 10:05:29 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1JcLNl-0008O2-6y; Thu, 20 Mar 2008 15:04:37 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id AA9F14E4; Thu, 20 Mar 2008 15:05:26 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <1206019968.27619.26.camel@localhost>
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77658>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77659>
 
-On Thu, 20 Mar 2008, Bo Yang wrote:
-
-> Hi,
->   I have used Git for one year, and I join into this list for 3 or 4 monthes.
-> Sometime, I post some questions here and followed some disscusions. I have
-> noticed that, there is a potential project in this GSoC "make git-merge and
-> helplers builtins". I think I am one of the suitable students for this project
-> because I am familiar with shell script programming and c language. And I post
-> this message here to hope I can discuss more with the community about this
-> project.    I have git clone the Git's source code for some days. And with
-> some insight into the code, I found that some of the merge related code is
-> located in sh script:  git-merge-octopus.sh  git-merge-one-file.sh
-> git-merge-resovle.sh git-merge.sh git-mergetool.sh . And others are located in
-> c source code: builtin-merge-base.c builtin-merge-file.c builtin-merge-ours.c
-> builtin-merge-recrusive.c and merge-file.c merge-tree.c merge-index.c
-> merge-recursive.h for two simple declarations.
->   And git-mergetool.sh is itself an interactive shell process, I think there
-> is no need to deal with it. So, the main work for this project is to change
-> the other four scripts into c format. For deatails, instead of call the git
-> merge-base in the shell, we make the final corresponding c code to call the
-> functions in the builtin-merge-base.c. Could you please tell more about the
-> work if I miss something?
-
-I think the main interesting shell script is "git-merge.sh"; the others 
-are helpers of various sorts.
-
->   Finally, I have some questions about the merge code. I found there are many
-> merge related code and I can't understand them at a short time. So, pleaes
-> help me if you can.
+James Utter schrieb:
+> Many git operations are running really slowly for me.
+> For example 'git commit' and 'git branch' are taking 10 seconds to
+> complete, even on an almost empty repository, and no longer on a 60MB
+> repository with plenty of history.
 > 
->   1. git-merge-file is used to merge one file, but what are merge-octopus and
-> merge-resovle?
+> There does not appear to be any CPU or disk activity caused by git.
 
-They are different "merge strategies". When merging, you can use "-s 
-<name>" to select a program that will be used to figure out what the 
-result should be. Some of these strategies (ours, theirs, recursive) have 
-been built in already. "merge-octopus" is used when you're merging more 
-than two branches at the same time, and "merge-resolve" is the usual 
-simple merge.
+...
 
->   2. I see in builtin-merge-file.c and merge-file.c, there are both functions
-> used to merge file. And finally, they both call the xdl_merge . Could you
-> please tell me how differenct of these to methods? I ask this question because
-> I think there are some redundant code in the git source. Forgive me if I am
-> wrong, I have no hostility but want to know why things are like that.
+> james@timesink:~/testgit$ time git commit --message "initial commit"
+> Created initial commit 4f4b3a3: initial commit
+>  1 files changed, 1 insertions(+), 0 deletions(-)
+>  create mode 100644 hello
+> 
+> real	0m10.008s
+> user	0m0.000s
+> sys	0m0.008s
 
-builtin-merge-file has the command-line parsing code, while merge-file is 
-called by C code. They could probably share the code around calling 
-xdl_merge.
+What does
 
-We often have duplicate functions from the point of view of functionality, 
-where one is cmd_*(int argc, const char **argv, const char *prefix) and 
-the other has arguments particular to the function; the cmd_*() one is 
-used by the command line dispatcher.
+  strace -c git commit --message "initial commit"
 
-There's also a certain amount of redundant code that's there for 
-historical reasons. People tend to clean it up when they find it, but 
-we've never had enough clarity in naming that somebody who needs a 
-function to do some particular task will necessarily find an existing 
-function for that task if there is one.
+report? 'strace -tt' or 'strace -T'?
 
-	-Daniel
-*This .sig left intentionally blank*
+-- Hannes
