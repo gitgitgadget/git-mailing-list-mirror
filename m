@@ -1,55 +1,47 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: strange git delays
-Date: Thu, 20 Mar 2008 15:05:26 +0100
-Message-ID: <47E26F26.10301@viscovery.net>
+Date: Thu, 20 Mar 2008 15:19:29 +0100 (CET)
+Message-ID: <alpine.LSU.1.00.0803201518520.4124@racer.site>
 References: <1206019968.27619.26.camel@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
 To: James Utter <james.utter@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 20 15:06:40 2008
+X-From: git-owner@vger.kernel.org Thu Mar 20 15:20:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JcLPF-0002AZ-QC
-	for gcvg-git-2@gmane.org; Thu, 20 Mar 2008 15:06:10 +0100
+	id 1JcLct-0007aA-QC
+	for gcvg-git-2@gmane.org; Thu, 20 Mar 2008 15:20:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755044AbYCTOFa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Mar 2008 10:05:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754980AbYCTOFa
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Mar 2008 10:05:30 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:35874 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754698AbYCTOF3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Mar 2008 10:05:29 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1JcLNl-0008O2-6y; Thu, 20 Mar 2008 15:04:37 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id AA9F14E4; Thu, 20 Mar 2008 15:05:26 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+	id S1755859AbYCTOTb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Mar 2008 10:19:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755751AbYCTOTa
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Mar 2008 10:19:30 -0400
+Received: from mail.gmx.net ([213.165.64.20]:53914 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755316AbYCTOTa (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Mar 2008 10:19:30 -0400
+Received: (qmail invoked by alias); 20 Mar 2008 14:19:27 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp006) with SMTP; 20 Mar 2008 15:19:28 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/Z0p1OD1HZpmFzFoczuASzxkaDrsPjQcxK+0gnyO
+	uvX7Z95wlnpRUT
+X-X-Sender: gene099@racer.site
 In-Reply-To: <1206019968.27619.26.camel@localhost>
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77659>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77660>
 
-James Utter schrieb:
-> Many git operations are running really slowly for me.
-> For example 'git commit' and 'git branch' are taking 10 seconds to
-> complete, even on an almost empty repository, and no longer on a 60MB
-> repository with plenty of history.
-> 
-> There does not appear to be any CPU or disk activity caused by git.
+Hi,
 
-...
+On Fri, 21 Mar 2008, James Utter wrote:
 
 > james@timesink:~/testgit$ time git commit --message "initial commit"
 > Created initial commit 4f4b3a3: initial commit
@@ -60,10 +52,7 @@ James Utter schrieb:
 > user	0m0.000s
 > sys	0m0.008s
 
-What does
+I'd try to oprofile it to know what is taking so long.
 
-  strace -c git commit --message "initial commit"
-
-report? 'strace -tt' or 'strace -T'?
-
--- Hannes
+Hth,
+Dscho
