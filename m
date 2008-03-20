@@ -1,68 +1,80 @@
-From: "Elijah Newren" <newren@gmail.com>
-Subject: Re: How to undo git-rm?
-Date: Wed, 19 Mar 2008 20:54:40 -0600
-Message-ID: <51419b2c0803191954q1811c351jc65ff1ac541f07a2@mail.gmail.com>
-References: <20080318230441.GA664@arctrix.com>
-	 <51419b2c0803191953y7842ddf8l7a6de37226cb12e2@mail.gmail.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: auto gc again
+Date: Wed, 19 Mar 2008 23:13:52 -0400 (EDT)
+Message-ID: <alpine.LFD.1.00.0803192228260.2947@xanadu.home>
+References: <20080318180118.GC17940@kernel.dk>
+ <7vd4pq2ymo.fsf@gitster.siamese.dyndns.org>
+ <alpine.LFD.1.00.0803191444490.3020@woody.linux-foundation.org>
+ <7vod9a1h8e.fsf@gitster.siamese.dyndns.org>
+ <alpine.LFD.1.00.0803191910170.2947@xanadu.home>
+ <7vd4pq1el3.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Neil Schemenauer" <nas@arctrix.com>
-X-From: git-owner@vger.kernel.org Thu Mar 20 03:55:22 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Jens Axboe <jens.axboe@oracle.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 20 04:14:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JcAw5-0000F0-90
-	for gcvg-git-2@gmane.org; Thu, 20 Mar 2008 03:55:21 +0100
+	id 1JcBEm-0004oJ-UN
+	for gcvg-git-2@gmane.org; Thu, 20 Mar 2008 04:14:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753001AbYCTCyl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Mar 2008 22:54:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753067AbYCTCyl
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Mar 2008 22:54:41 -0400
-Received: from wa-out-1112.google.com ([209.85.146.177]:35060 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752928AbYCTCyk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Mar 2008 22:54:40 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so778731wah.23
-        for <git@vger.kernel.org>; Wed, 19 Mar 2008 19:54:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=PCTq2u3SuLPETwbfTVKbUyxZOjyuQSqkrFyGn92HlF8=;
-        b=HK0eYo7h/YBz2Ex1tg28r9ArBpCXpw2U7dnvyipvDC14n/gvFqlOoZp2l+fcdaZEbSer+N5f1WjWwdVQ9XnKN7cS1LYMVQOHSNkIv6E3XLCdT9ZnkvR+RV9GcMFpQ5m4OjR5LkGUxjJWqoI3h47J0I59qq/qcXjnH1B1FKdCDZg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=rDy05t0Z3+O7s8QxF15p0383AahjbZdLhiRdoNscVu3F2M9QZeT2udyPRCDbVexHigOXhuw2+GvDtNkzmC9etzL810xpneMgD9V9J9lvlbSxyY+Mu+4dOVa8pf4EWoLn+tyc4V+fmD+MDr23mocBD8N1mgQRyrWok17i6JpqvAo=
-Received: by 10.114.202.15 with SMTP id z15mr2634443waf.72.1205981680196;
-        Wed, 19 Mar 2008 19:54:40 -0700 (PDT)
-Received: by 10.114.205.19 with HTTP; Wed, 19 Mar 2008 19:54:40 -0700 (PDT)
-In-Reply-To: <51419b2c0803191953y7842ddf8l7a6de37226cb12e2@mail.gmail.com>
-Content-Disposition: inline
+	id S1753136AbYCTDNz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Mar 2008 23:13:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752322AbYCTDNy
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Mar 2008 23:13:54 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:28568 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751355AbYCTDNy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Mar 2008 23:13:54 -0400
+Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR003.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0JY0008NBEB4FKJ0@VL-MO-MR003.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 19 Mar 2008 23:13:53 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <7vd4pq1el3.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77617>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77618>
 
-On Wed, Mar 19, 2008 at 8:53 PM, Elijah Newren <newren@gmail.com> wrote:
-> On Tue, Mar 18, 2008 at 5:04 PM, Neil Schemenauer <nas@arctrix.com> wrote:
->  > Hi,
->  >
->  >  This seemingly simple operation has me stumped.  I removed something
->  >  from my try using "git rm" and now I want it back.  With SVN I would
->  >  use "svn cat <path> > <path>".  After some searching around, I
->  >  though git-cat-file would do the trick.  Alas, it appears as though
->  >  it looks up the SHA for the path in the index and so it too fails.
->
->  Try
->   git checkout HEAD eg
+On Wed, 19 Mar 2008, Junio C Hamano wrote:
 
-doh, that should be
-  git checkout HEAD <path>
-of course.
+> Nicolas Pitre <nico@cam.org> writes:
+> 
+> >On Wed, 19 Mar 2008, Junio C Hamano wrote:
+> >
+> >> I do not think "very tight" was the reason, but on the other hand, my
+> >> personal feeling is that 20 was already 10 too many pack idx files we have
+> >> to walk linearly while looking for objects at runtime.
+> >
+> > Since commit f7c22cc68ccb this is no longer such an issue.
+> 
+> Notice that I did not say "19 too many".  I know f7c22cc (always start
+> looking up objects in the last used pack first, 2007-05-30) was meant to
+> alleviate the situation, but isn't "no longer" a gross exaggeration?
 
->  or
->   git show HEAD:<path> > <path>
+Not at all.  Please have a second look at the performance numbers in 
+that commit log, and take into accound the most important metric that I 
+unfortunately failed to mention there (although I subsequently posted it 
+to the list: http://marc.info/?l=git&m=118058197921642&w=2), wich is the 
+time to perform the same operation with a single pack.
+
+So you have 17.1 seconds for a single pack vs 18.4 seconds for 66 packs.
+
+Compare that to 24.9s without that patch.
+
+And I still have some further optimizations to implement eventually 
+(http://marc.info/?l=git&m=118062793413099&w=2), but which would 
+probably make a significant difference only in the hundreds-of-packs 
+case anyway.
+
+So I really think that the default gc.autopacklimit could be raised.
+
+
+Nicolas
