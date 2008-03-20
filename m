@@ -1,82 +1,61 @@
-From: John Goerzen <jgoerzen@complete.org>
-Subject: Re: Two bugs with renaming
-Date: Wed, 19 Mar 2008 21:30:17 -0500
-Message-ID: <200803192130.17649.jgoerzen@complete.org>
-References: <slrnfu37vn.d2i.jgoerzen@katherina.lan.complete.org> <7vwsnyz07y.fsf@gitster.siamese.dyndns.org>
+From: "Elijah Newren" <newren@gmail.com>
+Subject: Re: How to undo git-rm?
+Date: Wed, 19 Mar 2008 20:53:34 -0600
+Message-ID: <51419b2c0803191953y7842ddf8l7a6de37226cb12e2@mail.gmail.com>
+References: <20080318230441.GA664@arctrix.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="ansi_x3.4-1968"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 20 03:31:23 2008
+To: "Neil Schemenauer" <nas@arctrix.com>
+X-From: git-owner@vger.kernel.org Thu Mar 20 03:54:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JcAYs-0003Io-PF
-	for gcvg-git-2@gmane.org; Thu, 20 Mar 2008 03:31:23 +0100
+	id 1JcAv3-0008SW-Jq
+	for gcvg-git-2@gmane.org; Thu, 20 Mar 2008 03:54:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753251AbYCTCai (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Mar 2008 22:30:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753183AbYCTCai
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Mar 2008 22:30:38 -0400
-Received: from b01s02mr.corenetworks.net ([64.85.160.192]:46304 "EHLO
-	glockenspiel.complete.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752533AbYCTCah (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Mar 2008 22:30:37 -0400
-Received: from 63-245-179-205.kitusa.com ([63.245.179.205] helo=erwin.lan.complete.org)
-	by glockenspiel.complete.org with esmtps
-	(with TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(TLS peer CN erwin.complete.org, certificate verified)
-	(Exim 4.63)
-	id 1JcAXu-0004zD-C8; Wed, 19 Mar 2008 21:30:29 -0500
-Received: from katherina.lan.complete.org ([10.200.0.4])
-	by erwin.lan.complete.org with esmtps
-	(with TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(No TLS peer certificate)
-	(Exim 4.67)
-	id 1JcAXq-0006Lt-3j; Wed, 19 Mar 2008 21:30:18 -0500
-Received: from jgoerzen by katherina.lan.complete.org with local (Exim 4.69)
-	(envelope-from <jgoerzen@complete.org>)
-	id 1JcAXp-0004k0-Ls; Wed, 19 Mar 2008 21:30:17 -0500
-User-Agent: KMail/1.9.7
-In-Reply-To: <7vwsnyz07y.fsf@gitster.siamese.dyndns.org>
+	id S1752727AbYCTCxh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Mar 2008 22:53:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752824AbYCTCxh
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Mar 2008 22:53:37 -0400
+Received: from wa-out-1112.google.com ([209.85.146.179]:30339 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752312AbYCTCxf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Mar 2008 22:53:35 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so778252wah.23
+        for <git@vger.kernel.org>; Wed, 19 Mar 2008 19:53:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=WmbPCkZSOaA76b+S8s5CFmDsUCfaZC7ZvYqkWuweVBo=;
+        b=RQ5yXgeItTvayCqjh5PxO2VsLb2KhvygN1C4E8tV2Ob8W6mOEM/H/hW5iDqf3yPciPJNlLt1+kAhRr+FAw2R9EzaEiNLRWhzpiwcdah6K0u2H2abE/QOSppQcJfB5MzBQO34U1qVwb6l+iLV53/9kYroAgt1gQrRJQepuAUde6E=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=fJU1Vvlg3ZJg2obDp9RPdS+R8GeSbaTsdyJqIzBttEfJbwa0ARgLhGEXPbtkOMnXyjQKTNak/d2X3ehrZd9RTqSFvQ+pL2iIjERHI7bWeHSaGHvkTQGi/aAUJgFGkIroZm8S90ZkYMWr1HWW+JhulEy2bpkAV0bM+LQ4Cb/KAhs=
+Received: by 10.114.106.1 with SMTP id e1mr2612710wac.95.1205981614895;
+        Wed, 19 Mar 2008 19:53:34 -0700 (PDT)
+Received: by 10.114.205.19 with HTTP; Wed, 19 Mar 2008 19:53:34 -0700 (PDT)
+In-Reply-To: <20080318230441.GA664@arctrix.com>
 Content-Disposition: inline
-X-Spam-Status: No (score 0.2): AWL=0.163
-X-Virus-Scanned: by Exiscan on glockenspiel.complete.org at Wed, 19 Mar 2008 21:30:29 -0500
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77615>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77616>
 
-On Wednesday 19 March 2008 7:51:45 pm Junio C Hamano wrote:
-> John Goerzen <jgoerzen@complete.org> writes:
-> > # Now here comes bug #1...
+On Tue, Mar 18, 2008 at 5:04 PM, Neil Schemenauer <nas@arctrix.com> wrote:
+> Hi,
 >
-> Please try 1.5.5-rc0 or newer.  I think Linus's unpack_trees() updates,
-> even though it was sort of a rocky road to get there, addresses this.
->
-> Namely, v1.5.5-rc0~25 was the commit that fixed this issue.
+>  This seemingly simple operation has me stumped.  I removed something
+>  from my try using "git rm" and now I want it back.  With SVN I would
+>  use "svn cat <path> > <path>".  After some searching around, I
+>  though git-cat-file would do the trick.  Alas, it appears as though
+>  it looks up the SHA for the path in the index and so it too fails.
 
-Correct, bug #1 is gone with current git master.
-
->
-> > # Set up bug #2
->
-> This hasn't been addressed, I think.
-
-Also correct.  Bug #2 is still present with current git master.  It shows:
-
-jgoerzen@katherina:/tmp/testrepo$ git merge master
-error: Entry 'files.upstream/delete.me' would be overwritten by merge. Cannot 
-merge.
-fatal: merging of trees 5cec043802758b3a4cd617905c395a9f12bf89a2 and 
-9671b5181cb0649f39cfae372af1aed56a24010d failed
-Merge with strategy recursive failed.
-
-Is there any other information I can provide to assist with tracking that one 
-down?
-
--- John
+Try
+  git checkout HEAD eg
+or
+  git show HEAD:<path> > <path>
