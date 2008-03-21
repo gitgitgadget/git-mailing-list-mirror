@@ -1,66 +1,86 @@
-From: "David Symonds" <dsymonds@gmail.com>
-Subject: Re: [PATCH] pretty.c: add %z specifier.
-Date: Fri, 21 Mar 2008 16:50:04 +1100
-Message-ID: <ee77f5c20803202250w1b1f4228y3613109762c93454@mail.gmail.com>
-References: <5d46db230803201745mb736e98w4925e14b5d92d71d@mail.gmail.com>
-	 <7veja4u1gv.fsf@gitster.siamese.dyndns.org>
-	 <20080321045137.GA5563@coredump.intra.peff.net>
-	 <7vtzj0slx4.fsf@gitster.siamese.dyndns.org>
-	 <5d46db230803202242j60b0e9f6q798afd6c5f468207@mail.gmail.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH] Permit refspec source side to parse as a sha1
+Date: Fri, 21 Mar 2008 01:57:52 -0400 (EDT)
+Message-ID: <alpine.LNX.1.00.0803210134070.19665@iabervon.org>
+References: <alpine.LNX.1.00.0803202049090.19665@iabervon.org> <7v4pb0vhrg.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0803210014100.19665@iabervon.org> <7vmyosskyu.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>, "Jeff King" <peff@peff.net>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Govind Salinas" <govind@sophiasuchtig.com>
-X-From: git-owner@vger.kernel.org Fri Mar 21 06:51:07 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Samuel Tardieu <sam@rfc1149.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Mar 21 06:58:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jca9i-000330-Ca
-	for gcvg-git-2@gmane.org; Fri, 21 Mar 2008 06:51:06 +0100
+	id 1JcaHA-0004NR-Hf
+	for gcvg-git-2@gmane.org; Fri, 21 Mar 2008 06:58:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753380AbYCUFuI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Mar 2008 01:50:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753379AbYCUFuI
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Mar 2008 01:50:08 -0400
-Received: from wf-out-1314.google.com ([209.85.200.170]:19130 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753370AbYCUFuH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Mar 2008 01:50:07 -0400
-Received: by wf-out-1314.google.com with SMTP id 28so1348237wff.4
-        for <git@vger.kernel.org>; Thu, 20 Mar 2008 22:50:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=kLoADnjOfx5SPWkyZLSjFu4h2PV7ItPvpT0RuZlYzKo=;
-        b=IO609y6N5CoLpkUyOX33TnEdy/QtubMBiU1/NRM/bnqyYYyIvWsGGr8eusA9igOkAU5KebRh6fzl1Z9GKpXpqdZcQcacbQnVDdlu/UAlLVdhdXniF5UmiRoYAOcxT7dXDKFHCxiKamnRHXmSGVhRXIdXAsJwTlDcTCqAOaUKVCI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=gD7xyhpbL4Cmb+OucGR4il5NrumMj8hh1A+/5GKfLTt/QizJXjny7RchnMRbo3I2Rw3E84XHYwK5+HZ+puDusExG/vsuaHZ2EbF5Co7RgpCNqupyFOU22pv0eOK2zFe6XVxYSaFHVsjjD/36dc43xmbJgjp6Ndvf50WDQtlnRa4=
-Received: by 10.142.11.2 with SMTP id 2mr2072029wfk.223.1206078604873;
-        Thu, 20 Mar 2008 22:50:04 -0700 (PDT)
-Received: by 10.142.173.10 with HTTP; Thu, 20 Mar 2008 22:50:04 -0700 (PDT)
-In-Reply-To: <5d46db230803202242j60b0e9f6q798afd6c5f468207@mail.gmail.com>
-Content-Disposition: inline
+	id S1753398AbYCUF54 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Mar 2008 01:57:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753388AbYCUF54
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Mar 2008 01:57:56 -0400
+Received: from iabervon.org ([66.92.72.58]:50776 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753379AbYCUF5z (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Mar 2008 01:57:55 -0400
+Received: (qmail 23644 invoked by uid 1000); 21 Mar 2008 05:57:52 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 21 Mar 2008 05:57:52 -0000
+In-Reply-To: <7vmyosskyu.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77718>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77719>
 
-On Fri, Mar 21, 2008 at 4:42 PM, Govind Salinas
-<govind@sophiasuchtig.com> wrote:
->
->  Sorry, I'm a bit confused.  Should I alter the patch to use a different code
->  for null, that would be fine by me?  The above seems to be an unrelated issue.
+On Thu, 20 Mar 2008, Junio C Hamano wrote:
 
-I'm pretty sure the suggestion is that you should change the patch to
-allow for *any* specific byte value, where the null byte is just a
-special case. %x00 would be used instead of %z, in other words, and
-%x20 would be a space character, etc.
+> Daniel Barkalow <barkalow@iabervon.org> writes:
+> 
+> > So we should call the same code to parse the string, have that code do no 
+> > validation at all, and have the caller validate the return as appropriate. 
+> > The parsing doesn't depend at all on whether it's for fetching or pushing.
+> 
+> Obviously you did not read my patch before responding.
+> 
+> While I would agree that removing the check from parsing and add necessary
+> checks to all callers would be another way to catch the same kind of
+> breakages,
+> 
+>  (1) it would be more code to change, and I do not see a clear advantage,
+>      in that approach, especially given the discussion that lead to
+>      $gmane/77413;
 
+Surely it's no more code to change all of the callers of parse_ref_spec to 
+also call a function to validate it as appropriate than it is to change 
+all of the callers of parse_ref_spec to call a different function instead.
+ 
+>  (2) the error reporting by the callers that use the parsed result will
+>      not be able to say "Invalid refspec '%s'" on the source string,
+>      simply because the source string is not available to them anymore;
 
-Dave.
+That's easy enough to keep, and likely even worthwhile; it would probably 
+be nice, for example, to have "git fetch origin typo/*:something/*" give 
+an error when the pattern doesn't match anything, and that error would 
+need the refspec string.
+
+>  (3) worse yet, the older code even discarded part of the user input, so
+>      the error reporting that uses the parsed src/dst pair may not even be
+>      similar to the problematic input the user gave us to begin with,
+>      making it harder for the user to spot what we did not like and
+>      correct it.
+
+That was a bug that was fixed in the intermediate version.
+
+> In any case, don't you agree that the patch you responded to is much
+> easier to understand what we are (and we are not) checking than the
+> original code?
+
+No, I think it's much more complicated. It mixes the semantics of what an 
+empty side means for a particular use of refspecs into the parsing of the 
+string. At the very least, the checks should be outside of _internal() in 
+the functions for particular uses.
+
+	-Daniel
+*This .sig left intentionally blank*
