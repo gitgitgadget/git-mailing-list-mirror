@@ -1,68 +1,75 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [SoC RFC] git statistics - information about commits
-Date: Fri, 21 Mar 2008 02:24:28 -0700
-Message-ID: <7vmyospgz7.fsf@gitster.siamese.dyndns.org>
-References: <bd6139dc0803210152o529f3b4fi15c515f5385d8f88@mail.gmail.com>
+From: "Jean-Baptiste Quenot" <jbq@caraldi.com>
+Subject: Recording cherry-picked commits
+Date: Fri, 21 Mar 2008 13:33:11 +0100
+Message-ID: <ae63f8b50803210533n12645fb3w9a8be601c4cc394@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "alturin marlinon" <alturin@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 21 10:25:32 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 21 13:34:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JcdVD-0001Hy-CW
-	for gcvg-git-2@gmane.org; Fri, 21 Mar 2008 10:25:31 +0100
+	id 1JcgRX-0000xQ-PN
+	for gcvg-git-2@gmane.org; Fri, 21 Mar 2008 13:33:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753090AbYCUJYv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Mar 2008 05:24:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753071AbYCUJYu
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Mar 2008 05:24:50 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:44949 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753050AbYCUJYt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Mar 2008 05:24:49 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 635DD2CBF;
-	Fri, 21 Mar 2008 05:24:46 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 9F7632CBE; Fri, 21 Mar 2008 05:24:39 -0400 (EDT)
-In-Reply-To: <bd6139dc0803210152o529f3b4fi15c515f5385d8f88@mail.gmail.com>
- (alturin marlinon's message of "Fri, 21 Mar 2008 09:52:38 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754600AbYCUMdO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Mar 2008 08:33:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754414AbYCUMdO
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Mar 2008 08:33:14 -0400
+Received: from gv-out-0910.google.com ([216.239.58.189]:46262 "EHLO
+	gv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753423AbYCUMdN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Mar 2008 08:33:13 -0400
+Received: by gv-out-0910.google.com with SMTP id s4so329780gve.37
+        for <git@vger.kernel.org>; Fri, 21 Mar 2008 05:33:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition:x-google-sender-auth;
+        bh=92zIuH/AiSA7hBNyYhOHvruHnBgEEwKk2oJjbJtPYl8=;
+        b=Lm6lw23xIacfdh85+iD8q2fUZvHo/o6UTGk0nFGURX/G3gVUYLCYM6cA6E8TAKCwer5Uba3Ng/hcB+l5ByilGz+uucEKpoQ6R+jfNhF1DnePAwVNFPRwhIjuuCg8JflXWc5IvUdGpvtDBX9gzjAvWk7BJoyGEDfZyKPYsjWf6BA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=message-id:date:from:sender:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition:x-google-sender-auth;
+        b=Sm6qOnoeZ2DPLGJA0yD6A1nlSdo+QUEsX4j23I9Hsmhmg+UYz1ibQlfOdIRWAepyNyittKcG5cSA67PrPB13WUdy4H4QuKnLWIG+rBQWas5L1WzP1XnEBC20MYUP7v2HQdzvLx2UAqiqNRAQntILaShLlhA5cZAme/UvVqunPaY=
+Received: by 10.78.134.7 with SMTP id h7mr6669863hud.76.1206102791270;
+        Fri, 21 Mar 2008 05:33:11 -0700 (PDT)
+Received: by 10.78.130.20 with HTTP; Fri, 21 Mar 2008 05:33:11 -0700 (PDT)
+Content-Disposition: inline
+X-Google-Sender-Auth: ba39819f686cd32b
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77733>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77734>
 
-"alturin marlinon" <alturin@gmail.com> writes:
+Hi there,
 
-> My plan for this summer is to create a 'statistics' feature for git.
->
-> It would provide the following functionality:
-> * Show how many commits a specific user made.
-> * Show the (average) size of their changes (in lines for example).
-> * Show a 'total diff', that is, take the difference between the source
-> with, and without their changes, including its size (with for example
-> a -c switch).
-> * Show which contributors have contributed to the part of the code
-> that a patch modifies.
-> * Show what part of the code a maintainer is working on the most.
-> * Define an output format for this information that can be used by
-> other tools (such as gitk and git-web)
-> * (Optional) Integrate all this information with gitk and git-web.
+Cherry-picking is great with Git, both with git-cherry-pick and
+git-cherry.   I use them to pick commits from my development branch to
+my stable maintenance branch that goes to production.
 
-* Within reasonable amount of time suitable for interactive use, if you
-  intend it to work with gitk.
+But when a particular commit is slightly different between the two
+branches (due to eg a conflict resolution in my stable branch), then
+git-cherry still lists the commit as only present in the development
+branch.  This is a feature, as documented in the man page, because
+git-cherry compares the changeset rather than the commit id.
 
-What's the ballpack performance goal for e.g. post 2.6.12 kernel history
-which is about 85k commits, 3800 authors, 24k files?
+So I'm wondering if there's a way to record the commit ID as being
+already picked from the development branch to the stable branch, so
+that it's not listed again when I provide the same arguments to
+cherry-pick.  I was used to this kind of feature with svnmerge, a
+wrapper script around svn that records cherry-picked commits in a
+Subversion property called svnmerge-integrated on the root directory.
+But with Git, what is the best practice for knowing which commits you
+already picked?
 
-* Who contributed the most code that needed the many fix-ups on top?
+Ideally, the set of already-picked commits would be versioned in the
+Git repo itself, so that other developers can watch what commits are
+available to pick as well.
 
-* Which part of the codebase had the most commits that had "oops, screwed
-  up, I am fixing this but this is a tricky code" fixes?
+Thanks in advance,
+-- 
+Jean-Baptiste Quenot
+http://caraldi.com/jbq/blog/
