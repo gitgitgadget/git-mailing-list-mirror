@@ -1,79 +1,52 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] help: use man viewer path from "man.<tool>.path"
- config var
-Date: Fri, 21 Mar 2008 01:56:33 -0700
-Message-ID: <7vd4poqwu6.fsf@gitster.siamese.dyndns.org>
-References: <20080318062236.7b5e515f.chriscool@tuxfamily.org>
- <200803200849.14664.chriscool@tuxfamily.org>
- <7vtzj1wd7u.fsf@gitster.siamese.dyndns.org>
- <200803210823.47899.chriscool@tuxfamily.org>
+From: Paul Gardiner <osronline@glidos.net>
+Subject: How to find where a branch was taken from.
+Date: Fri, 21 Mar 2008 09:05:39 +0000
+Message-ID: <47E37A63.9070209@glidos.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Pascal Obry <pascal@obry.net>, Xavier Maillard <xma@gnu.org>,
-	=?iso-2022-jp?B?GyRCJDckaSQkJDckSiRKJDMbKEI=?= 
-	<nanako3@bluebottle.com>, git@vger.kernel.org
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Fri Mar 21 09:57:44 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: osronline@glidos.net
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 21 10:06:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jcd4K-0002oc-AI
-	for gcvg-git-2@gmane.org; Fri, 21 Mar 2008 09:57:44 +0100
+	id 1JcdCm-0004sH-8D
+	for gcvg-git-2@gmane.org; Fri, 21 Mar 2008 10:06:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753133AbYCUI4v convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 21 Mar 2008 04:56:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752631AbYCUI4v
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Mar 2008 04:56:51 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:37774 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753127AbYCUI4u convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 21 Mar 2008 04:56:50 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id A34F62473;
-	Fri, 21 Mar 2008 04:56:48 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id AC3482472; Fri, 21 Mar 2008 04:56:41 -0400 (EDT)
-In-Reply-To: <200803210823.47899.chriscool@tuxfamily.org> (Christian Couder's
- message of "Fri, 21 Mar 2008 08:23:47 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752422AbYCUJFp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Mar 2008 05:05:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752571AbYCUJFp
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Mar 2008 05:05:45 -0400
+Received: from mk-outboundfilter-1.mail.uk.tiscali.com ([212.74.114.37]:57485
+	"EHLO mk-outboundfilter-1.mail.uk.tiscali.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752385AbYCUJFo (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 21 Mar 2008 05:05:44 -0400
+X-Trace: 70778391/mk-outboundfilter-1.mail.uk.tiscali.com/PIPEX/$ACCEPTED/pipex-customers/81.86.57.226
+X-SBRS: None
+X-RemoteIP: 81.86.57.226
+X-IP-MAIL-FROM: osronline@glidos.net
+X-IP-BHB: Once
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AvoAAK8W40dRVjni/2dsb2JhbAAIqhI
+X-IP-Direction: IN
+Received: from 81-86-57-226.dsl.pipex.com (HELO [10.0.0.24]) ([81.86.57.226])
+  by smtp.pipex.tiscali.co.uk with ESMTP; 21 Mar 2008 09:05:41 +0000
+User-Agent: Thunderbird 2.0.0.12 (Windows/20080213)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77729>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77730>
 
-Christian Couder <chriscool@tuxfamily.org> writes:
+I need a command that will find the remote branch from which
+the currently checked out branch was started. I don't know
+git very well, and the only way I can think to do it so far
+is to iterate over the remote branches and find the one
+for which git-rev-list <branch>..HEAD gives the smallest
+number of objects. I'm guessing there must be a better
+way. Any ideas?
 
-> Le jeudi 20 mars 2008, Junio C Hamano a =C3=A9crit :
-> ...
->> If that inconsistency bothers you, you probably should rename the
->> built-in konqueror support to "kfmclient", which is more honest appr=
-oach,
->> I would think.
->
-> It's perhaps more honest, but kfmclient is not as well known as konqu=
-eror.
->
-> Isn't a documentation patch like this enough:
-
-I dunno.  I am not a KDE use to begin with.
-
-But I am somewhat uncomfortable with this kind of magic, and very much
-more so with basing the magic on the name of a binary.
-
-=46or example, if a distro offers two versions of konq to co-exist on t=
-he
-same system as konqueror-3 and konqueror-4 (with the usual symlink tric=
-ks
-/etc/alternatives/konqueror -> konqueror-3 and /usr/bin/konqueror ->
-/etc/alternatives/konqueror to make one version the systemwide default)=
-,
-people who want a particular version may say /usr/bin/konqueror-4 and
-would get frustrated to see kfmclient magic would not kick in.  By taki=
-ng
-honest route without magic, you would not have to worry about such
-potential confusion.
+Cheers,
+	Paul.
