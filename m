@@ -1,115 +1,86 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH] Permit refspec source side to parse as a sha1
-Date: Fri, 21 Mar 2008 01:09:24 -0400 (EDT)
-Message-ID: <alpine.LNX.1.00.0803210014100.19665@iabervon.org>
-References: <alpine.LNX.1.00.0803202049090.19665@iabervon.org> <7v4pb0vhrg.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] pretty.c: add %z specifier.
+Date: Thu, 20 Mar 2008 22:09:27 -0700
+Message-ID: <7vtzj0slx4.fsf@gitster.siamese.dyndns.org>
+References: <5d46db230803201745mb736e98w4925e14b5d92d71d@mail.gmail.com>
+ <7veja4u1gv.fsf@gitster.siamese.dyndns.org>
+ <20080321045137.GA5563@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Samuel Tardieu <sam@rfc1149.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 21 06:10:17 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Govind Salinas <govind@sophiasuchtig.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Mar 21 06:10:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JcZWD-0004U6-Bw
-	for gcvg-git-2@gmane.org; Fri, 21 Mar 2008 06:10:17 +0100
+	id 1JcZWO-0004Vs-Ti
+	for gcvg-git-2@gmane.org; Fri, 21 Mar 2008 06:10:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752656AbYCUFJ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Mar 2008 01:09:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751545AbYCUFJ1
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Mar 2008 01:09:27 -0400
-Received: from iabervon.org ([66.92.72.58]:44393 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751442AbYCUFJ0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Mar 2008 01:09:26 -0400
-Received: (qmail 22251 invoked by uid 1000); 21 Mar 2008 05:09:24 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 21 Mar 2008 05:09:24 -0000
-In-Reply-To: <7v4pb0vhrg.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1751546AbYCUFJn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Mar 2008 01:09:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752683AbYCUFJn
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Mar 2008 01:09:43 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:45031 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751545AbYCUFJm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Mar 2008 01:09:42 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 888AA2D12;
+	Fri, 21 Mar 2008 01:09:41 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 380F42D11; Fri, 21 Mar 2008 01:09:35 -0400 (EDT)
+In-Reply-To: <20080321045137.GA5563@coredump.intra.peff.net> (Jeff King's
+ message of "Fri, 21 Mar 2008 00:51:37 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77714>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77715>
 
-On Thu, 20 Mar 2008, Junio C Hamano wrote:
+Jeff King <peff@peff.net> writes:
 
-> Daniel Barkalow <barkalow@iabervon.org> writes:
-> 
-> > This fixes "git push origin HEAD~1:foo". "git fetch origin HEAD~1:foo"
-> > will report "Couldn't find remote ref HEAD~1", while
-> > "git fetch origin HEAD**1:foo" reports "Invalid refspec 'HEAD**1:foo'"
-> >
-> > That is, HEAD~1 is something you're not allowed to ask the remote for, 
-> > while HEAD**1 doesn't mean anything.
-> >
-> > Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
-> > ---
-> > Note that this actually tries to look up the source side, so "git 
-> > fetch origin HEAD^3:foo" usually gives a wrongish error message.
-> 
-> This is very wrong.  When you do not have anything on your own (i.e. HEAD
-> points at an unborn branch), "git fetch origin HEAD:master" would barf?
+> On Thu, Mar 20, 2008 at 09:48:16PM -0700, Junio C Hamano wrote:
+>
+>> > +	case 'z':		/* null */
+>> > +		strbuf_addch(sb, '\0');
+>> > +		return 1;
+>> >  	}
+>> >
+>> >  	/* these depend on the commit */
+>> 
+>> I do not like this at all.  Why aren't we doing %XX (2 hexadecimal digits
+>> for an octet)?
+>
+> Because %ad is already taken? :)
+>
+> %x* is still available, though, so maybe %x00?
 
-No, HEAD is syntactically valid as a ref, so it's accepted regardless of 
-anything else.
+Perhaps, but before I forget.
 
-> We should _never_ look at the refs we have; the check is about the syntax.
+My much bigger niggle about the "--pretty=format:<>" code I have is that
+the "log" machinery does not change the usual record "delimiter" to record
+"terminator" when --pretty=format:<> is in effect.
 
-Unfortunately, there's not (so far as I know) a handy way to check the 
-syntax of a sha1 name.
+The "log" family generally treats LF/NUL as record delimiter, not
+terminator, and it is by a very good conscious design.  When you are
+looking at the output from "git log -2", you would want to have a
+delimiting LF between the first commit and the second commit, but you do
+not want an extra LF after the second commit.
 
-> Why are fetch and push refspec parsing code share the same function and
-> enforce exactly the same error checking to begin with?  Is it because we
-> are too lazy to implement two semantics that has to be different and try
-> to "share" code by only implementing checks for "common denominator"?
+However, when "--pretty=format:<>" is in effect, it is inconvenient that
+the machinery inserts a LF between each record but not at the end.
 
-We enforce additional, purpose-specific error-checking after parsing, when 
-we're actually trying to use the refspecs. The problem is that we can't 
-make the syntactic check sufficient lenient to cover all valid syntax, but 
-tight enough to prohibit any syntax errors, without getting tangled in a 
-bit of semantics.
+    $ git log -2 --pretty=format:%s
 
-> I think that is the root of the problem, because their syntax are designed
-> to look similar, but their semantics are different [*1*].
+may look sane when the pager immediately returns the control to you, but
+it is not really.  To view it:
 
-The syntax is identical. The semantics is not the parser's problem, and is 
-more appropriate for the callers to handle.
+    $ git log -2 --pretty=format:%s | cat
 
-> For a fetch refspec, LHS is the remote end and you do not even know what
-> refs are available over there; the _only_ thing you care about is that it
-> is well formed.
-> 
-> On the other hand, for a push refspec, LHS is the local end and _must_
-> name a valid commit you are pushing (unless you are pushing empty to
-> delete the ref).
-
-Not really. If you're fetching, and you have a push refspec configured for 
-the same ref, and that refspec has a LHS which, for the current HEAD, 
-doesn't refer to a valid commit at the moment, that's fine. It's only a 
-problem if you try to use it while it doesn't point at a valid commit, or 
-if it isn't valid syntax for a sha1 name (like HEAD*2).
-
-> I really think we cannot afford piling hacks on top of hacks to hide the
-> broken interface forever.  We have two different things to validate, and
-> the callers all know what they have when calling us to validate.  We
-> should not have a single loose validation that only catches "it cannot be
-> either fetch nor push refspec" breakage.
-
-So we should call the same code to parse the string, have that code do no 
-validation at all, and have the caller validate the return as appropriate. 
-The parsing doesn't depend at all on whether it's for fetching or pushing.
-
->         As a side note, I have a vague recollection that we used to treat
->         a refspec from the command line and a refspec from the config
->         differently in some contexts, and rules applied to them might have
->         been different.  I do not think of what the context was offhand,
->         but we might need to further split the implementation of the
->         rules.
-
-I think it was that we used to break "push = HEAD", but we support it now.
-
-	-Daniel
-*This .sig left intentionally blank*
+This would show that there is no LF after the final output, which is quite
+bad.
