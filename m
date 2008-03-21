@@ -1,77 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH resend 1/2] Make git-svn tests behave better on OS X
-Date: Fri, 21 Mar 2008 00:04:27 -0700
-Message-ID: <7vod98r210.fsf@gitster.siamese.dyndns.org>
-References: <1206043729-61810-1-git-send-email-kevin@sb.org>
- <20080321065824.GB28144@muzzle>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH 1/2] help: use man viewer path from "man.<tool>.path" config var
+Date: Fri, 21 Mar 2008 08:23:47 +0100
+Message-ID: <200803210823.47899.chriscool@tuxfamily.org>
+References: <20080318062236.7b5e515f.chriscool@tuxfamily.org> <200803200849.14664.chriscool@tuxfamily.org> <7vtzj1wd7u.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Kevin Ballard <kevin@sb.org>, git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Fri Mar 21 08:05:55 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Pascal Obry <pascal@obry.net>, Xavier Maillard <xma@gnu.org>,
+	=?utf-8?q?=E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=81=AA=E3=81=93?=
+	 =?utf-8?q?_?= <nanako3@bluebottle.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Mar 21 08:19:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JcbJb-0001LC-KZ
-	for gcvg-git-2@gmane.org; Fri, 21 Mar 2008 08:05:49 +0100
+	id 1JcbWr-00047L-Be
+	for gcvg-git-2@gmane.org; Fri, 21 Mar 2008 08:19:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753514AbYCUHEn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Mar 2008 03:04:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752514AbYCUHEn
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Mar 2008 03:04:43 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:41425 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751891AbYCUHEn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Mar 2008 03:04:43 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id E90FA1060;
-	Fri, 21 Mar 2008 03:04:40 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 33148105F; Fri, 21 Mar 2008 03:04:34 -0400 (EDT)
-In-Reply-To: <20080321065824.GB28144@muzzle> (Eric Wong's message of "Thu, 20
- Mar 2008 23:58:24 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752993AbYCUHSO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 21 Mar 2008 03:18:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752817AbYCUHSO
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Mar 2008 03:18:14 -0400
+Received: from smtp1-g19.free.fr ([212.27.42.27]:47482 "EHLO smtp1-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752788AbYCUHSN convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 21 Mar 2008 03:18:13 -0400
+Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 932A01AB2D0;
+	Fri, 21 Mar 2008 08:18:12 +0100 (CET)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id E35C51AB2EC;
+	Fri, 21 Mar 2008 08:18:11 +0100 (CET)
+User-Agent: KMail/1.9.7
+In-Reply-To: <7vtzj1wd7u.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77726>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77727>
 
-Eric Wong <normalperson@yhbt.net> writes:
+Le jeudi 20 mars 2008, Junio C Hamano a =E9crit :
+> Christian Couder <chriscool@tuxfamily.org> writes:
+> > Yes, but if the user just wants to use a konq that is not in the pa=
+th,
+> > then the konq specified with "man.konqueror.path" should behave the
+> > same as when using the konq in the path. That means that we should =
+also
+> > try to open a new tab on an existing konq, and this will not be the
+> > case if we use "/path/konqueror URL" instead of "/path/kfmclient ne=
+wTab
+> > URL".
+>
+> If that inconsistency bothers you, you probably should rename the
+> built-in konqueror support to "kfmclient", which is more honest appro=
+ach,
+> I would think.
 
-> Kevin Ballard <kevin@sb.org> wrote:
-> ...
-> I seem to recall seeing a RHEL or CentOS machine using /usr/sbin/httpd,
-> somewhere, too.  Any non-Debian users care to comment/add more paths?
-> ...
->> -SVN_HTTPD_MODULE_PATH=${SVN_HTTPD_MODULE_PATH-'/usr/lib/apache2/modules'}
->> -SVN_HTTPD_PATH=${SVN_HTTPD_PATH-'/usr/sbin/apache2'}
->> +if test `uname -s` = Darwin
->> +then
->> +	SVN_HTTPD_MODULE_PATH=${SVN_HTTPD_MODULE_PATH-'/usr/libexec/apache2'}
->> +	SVN_HTTPD_PATH=${SVN_HTTPD_PATH-'/usr/sbin/httpd'}
->> +else
->> +	SVN_HTTPD_MODULE_PATH=${SVN_HTTPD_MODULE_PATH-'/usr/lib/apache2/modules'}
->> +	SVN_HTTPD_PATH=${SVN_HTTPD_PATH-'/usr/sbin/apache2'}
->> +fi
+It's perhaps more honest, but kfmclient is not as well known as konquer=
+or.
 
-I really hate this patch.
+Isn't a documentation patch like this enough:
 
-Why do we even _care_ about uname?
+------8<---------
 
-Wouldn't something like this be a lot easier to maintain in the longer run?
+diff --git a/Documentation/git-help.txt b/Documentation/git-help.txt
+index 4c6cb21..0ece412 100644
+--- a/Documentation/git-help.txt
++++ b/Documentation/git-help.txt
+@@ -87,7 +87,8 @@ is chosen. Only the following values are currently=20
+supported:
+ * "man": use the 'man' program as usual,
+ * "woman": use 'emacsclient' to launch the "woman" mode in emacs
+ (this only works starting with emacsclient versions 22),
+-* "konqueror": use a man KIO slave in konqueror.
++* "konqueror": use kfmclient to open the man page in a new konqueror
++tab.
 
-    for d in \
-            "$SVN_HTTPD_MODULE_PATH" \
-            /usr/lib/apache2/modules \
-            /usr/libexec/apache2 \
-    ; do
-            if test -d "$d"
-            then
-                    SVN_HTTPD_MODULE_PATH="$d"
-                    break
-            fi
-    done
+ Multiple values may be given to this configuration variable. Their
+ corresponding programs will be tried in the order listed in the
+
+------8<---------
+
+I also wonder if you want some changes in "git-web--browse.sh" as there=
+ is=20
+the same logic ?
+
+Thanks,
+Christian.
