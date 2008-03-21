@@ -1,75 +1,67 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH] Permit refspec source side to parse as a sha1
-Date: Fri, 21 Mar 2008 12:08:47 -0400 (EDT)
-Message-ID: <alpine.LNX.1.00.0803211148120.19665@iabervon.org>
-References: <alpine.LNX.1.00.0803202049090.19665@iabervon.org> <7v4pb0vhrg.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0803210014100.19665@iabervon.org> <7vmyosskyu.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0803210134070.19665@iabervon.org>
- <7v3aqksic6.fsf@gitster.siamese.dyndns.org>
+From: Frank <streamlake@tiscali.it>
+Subject: Cygwin: problem with renaming and case
+Date: Fri, 21 Mar 2008 17:07:04 +0100
+Message-ID: <47E3DD28.4030302@tiscali.it>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Samuel Tardieu <sam@rfc1149.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 21 17:10:02 2008
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 21 17:23:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JcjoD-0002JJ-CX
-	for gcvg-git-2@gmane.org; Fri, 21 Mar 2008 17:09:33 +0100
+	id 1Jck1L-00088q-62
+	for gcvg-git-2@gmane.org; Fri, 21 Mar 2008 17:23:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755354AbYCUQIv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Mar 2008 12:08:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754636AbYCUQIv
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Mar 2008 12:08:51 -0400
-Received: from iabervon.org ([66.92.72.58]:46748 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753587AbYCUQIu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Mar 2008 12:08:50 -0400
-Received: (qmail 25193 invoked by uid 1000); 21 Mar 2008 16:08:47 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 21 Mar 2008 16:08:47 -0000
-In-Reply-To: <7v3aqksic6.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1754740AbYCUQW0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Mar 2008 12:22:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754185AbYCUQW0
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Mar 2008 12:22:26 -0400
+Received: from smtp-out28.alice.it ([85.33.2.28]:4667 "EHLO
+	smtp-out28.alice.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754465AbYCUQWZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Mar 2008 12:22:25 -0400
+X-Greylist: delayed 912 seconds by postgrey-1.27 at vger.kernel.org; Fri, 21 Mar 2008 12:22:24 EDT
+Received: from FBCMMO01.fbc.local ([192.168.68.195]) by smtp-out28.alice.it with Microsoft SMTPSVC(6.0.3790.1830);
+	 Fri, 21 Mar 2008 17:07:07 +0100
+Received: from FBCMCL01B04.fbc.local ([192.168.69.85]) by FBCMMO01.fbc.local with Microsoft SMTPSVC(6.0.3790.1830);
+	 Fri, 21 Mar 2008 17:07:07 +0100
+Received: from [192.0.0.91] ([82.50.146.159]) by FBCMCL01B04.fbc.local with Microsoft SMTPSVC(6.0.3790.1830);
+	 Fri, 21 Mar 2008 17:07:06 +0100
+User-Agent: Thunderbird 2.0.0.12 (Windows/20080213)
+X-OriginalArrivalTime: 21 Mar 2008 16:07:06.0495 (UTC) FILETIME=[9BFF38F0:01C88B6D]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77746>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77747>
 
-On Thu, 20 Mar 2008, Junio C Hamano wrote:
+Hi,
+Don't know exactly if this is a bug or a feature or something in the 
+middle, but I have a lot of problems while changing just the casing of 
+file names and using git mv und cygwin. Here's a test case:
 
-> Daniel Barkalow <barkalow@iabervon.org> writes:
-> 
-> > On Thu, 20 Mar 2008, Junio C Hamano wrote:
-> > ...
-> >> In any case, don't you agree that the patch you responded to is much
-> >> easier to understand what we are (and we are not) checking than the
-> >> original code?
-> >
-> > No, I think it's much more complicated. It mixes the semantics of what an 
-> > empty side means for a particular use of refspecs into the parsing of the 
-> > string. At the very least, the checks should be outside of _internal() in 
-> > the functions for particular uses.
-> 
-> The thing is, the syntax is the same between fetch and push only to a
-> degree.  They are both <LHS> ':' <RHS>.  What is allowed on LHS and RHS
-> are quite different even at the syntactic level.
+mkdir testrename
+cd testrename
+git init
+echo "AAA" >aaa.txt
+echo "BBB" >bbb.txt
+git add aaa.txt
+git add bbb.txt
+git commit -m "First commit"
+git checkout -b new_branch
+git mv aaa.txt ccc.txt
+git commit -a -m "Moved file"
+echo "NEW AAA" >Aaa.txt
+git add Aaa.txt
+git commit -m "Added Aaa"
+#aaa.txt exists in master, Aaa.txt in new_branch
+git checkout master
 
-There's also the optional + at the beginning and the way of forming 
-patterns, and the need to distinguish not having a colon with not having 
-anything on one or the other side of the colon.
-
-> I already know our criteria when judging if a particular code is clean or
-> complex are _vastly_ different, from the experience working with you in
-> other parts of the system (namely, read-tree 3-way rules and
-> unpack_trees() rewrite that happened quite a long time ago).
-
-Agreed.
-
-And I do think that the rewrite of the part of the function before the 
-semantic checks is clearer than the corresponding original (although the 
-patch text made it hard to see; we really need some magic to make diff not 
-bother to save 4 identifier-free lines and just show it as a complete 
-replacement).
-
-	-Daniel
-*This .sig left intentionally blank*
+Last command gives: "fatal: Untracked working tree file 'aaa.txt' would 
+be overwritten by merge".
+I know I can use git checkout -f but the problem returns while others do 
+merging/pulling from my repo, etc.
+Thanks,
+Frank
