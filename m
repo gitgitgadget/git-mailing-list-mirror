@@ -1,83 +1,69 @@
-From: "Govind Salinas" <govind@sophiasuchtig.com>
-Subject: [PATCH] pretty.c: add %z specifier.
-Date: Thu, 20 Mar 2008 19:45:26 -0500
-Message-ID: <5d46db230803201745mb736e98w4925e14b5d92d71d@mail.gmail.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: [PATCH] Permit refspec source side to parse as a sha1
+Date: Thu, 20 Mar 2008 20:54:54 -0400 (EDT)
+Message-ID: <alpine.LNX.1.00.0803202049090.19665@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Mar 21 01:46:17 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Samuel Tardieu <sam@rfc1149.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Mar 21 01:55:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JcVOc-00051m-QW
-	for gcvg-git-2@gmane.org; Fri, 21 Mar 2008 01:46:11 +0100
+	id 1JcVXl-0007IC-Fk
+	for gcvg-git-2@gmane.org; Fri, 21 Mar 2008 01:55:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752336AbYCUAp3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Mar 2008 20:45:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752302AbYCUAp2
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Mar 2008 20:45:28 -0400
-Received: from wr-out-0506.google.com ([64.233.184.238]:56635 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752046AbYCUAp1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Mar 2008 20:45:27 -0400
-Received: by wr-out-0506.google.com with SMTP id c48so1116691wra.1
-        for <git@vger.kernel.org>; Thu, 20 Mar 2008 17:45:27 -0700 (PDT)
-Received: by 10.150.143.14 with SMTP id q14mr1258209ybd.44.1206060326476;
-        Thu, 20 Mar 2008 17:45:26 -0700 (PDT)
-Received: by 10.150.156.18 with HTTP; Thu, 20 Mar 2008 17:45:26 -0700 (PDT)
-Content-Disposition: inline
+	id S1752416AbYCUAy5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Mar 2008 20:54:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752403AbYCUAy5
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Mar 2008 20:54:57 -0400
+Received: from iabervon.org ([66.92.72.58]:52550 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752214AbYCUAy4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Mar 2008 20:54:56 -0400
+Received: (qmail 26986 invoked by uid 1000); 21 Mar 2008 00:54:54 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 21 Mar 2008 00:54:54 -0000
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77691>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77692>
 
-This adds a %z format which prints out a null character.  This allows for
-easier machine parsing of multiline data.  It is also necessary to use write
-to print out the data since printf will terminate at a null.  That in turn
-requires that an fflush be executed before the write to preserve the order
-the data is printed.
+This fixes "git push origin HEAD~1:foo". "git fetch origin HEAD~1:foo"
+will report "Couldn't find remote ref HEAD~1", while
+"git fetch origin HEAD**1:foo" reports "Invalid refspec 'HEAD**1:foo'"
 
-Signed-off-by: Govind Salinas <blix@sophiasuchtig.com>
+That is, HEAD~1 is something you're not allowed to ask the remote for, 
+while HEAD**1 doesn't mean anything.
+
+Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
 ---
- log-tree.c |    7 +++++--
- pretty.c   |    3 +++
- 2 files changed, 8 insertions(+), 2 deletions(-)
+Note that this actually tries to look up the source side, so "git 
+fetch origin HEAD^3:foo" usually gives a wrongish error message. But this 
+only applies to error cases which nobody is likely to attempt anyway, and 
+they still come out as errors regardless.
 
-diff --git a/log-tree.c b/log-tree.c
-index 608f697..e116a1f 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -308,8 +308,11 @@ void show_log(struct rev_info *opt, const char *sep)
- 	if (opt->show_log_size)
- 		printf("log size %i\n", (int)msgbuf.len);
+ remote.c |    4 +++-
+ 1 files changed, 3 insertions(+), 1 deletions(-)
 
--	if (msgbuf.len)
--		printf("%s%s%s", msgbuf.buf, extra, sep);
-+	if (msgbuf.len) {
-+		fflush(stdout);
-+		write(STDOUT_FILENO, msgbuf.buf, msgbuf.len);
-+		printf("%s%s", extra, sep);
-+	}
- 	strbuf_release(&msgbuf);
- }
-
-diff --git a/pretty.c b/pretty.c
-index 703f521..fd155ec 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -478,6 +478,9 @@ static size_t format_commit_item(struct strbuf
-*sb, const char *placeholder,
- 	case 'n':		/* newline */
- 		strbuf_addch(sb, '\n');
- 		return 1;
-+	case 'z':		/* null */
-+		strbuf_addch(sb, '\0');
-+		return 1;
- 	}
-
- 	/* these depend on the commit */
+diff --git a/remote.c b/remote.c
+index 9700a33..d737579 100644
+--- a/remote.c
++++ b/remote.c
+@@ -434,8 +434,10 @@ struct refspec *parse_ref_spec(int nr_refspec, const char **refspec)
+ 		rs[i].src = xstrndup(sp, ep - sp);
+ 
+ 		if (*rs[i].src) {
++			unsigned char sha1[20];
+ 			st = check_ref_format(rs[i].src);
+-			if (st && st != CHECK_REF_FORMAT_ONELEVEL)
++			if (st && st != CHECK_REF_FORMAT_ONELEVEL &&
++			    get_sha1(rs[i].src, sha1))
+ 				die("Invalid refspec '%s'", refspec[i]);
+ 		}
+ 		if (rs[i].dst && *rs[i].dst) {
 -- 
-1.5.4.4.552.g9987b
+1.5.4.3.610.gea6cd
