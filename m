@@ -1,114 +1,112 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] New test for rebase with preserve merges and squash
-Date: Fri, 21 Mar 2008 00:46:34 +0100 (CET)
-Message-ID: <alpine.LSU.1.00.0803210040270.4124@racer.site>
-References: <alpine.LSU.1.00.0803201208080.3983@racer.site> <1206018070-3402-1-git-send-email-joerg@alea.gnuu.de>
+From: James Utter <james.utter@gmail.com>
+Subject: [Fwd: Re: strange git delays]
+Date: Fri, 21 Mar 2008 11:32:59 +1100
+Message-ID: <1206059579.29416.26.camel@localhost>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323584-1836515949-1206056796=:4124"
-Cc: git@vger.kernel.org
-To: =?ISO-8859-15?Q?J=F6rg_Sommer?= <joerg@alea.gnuu.de>
-X-From: git-owner@vger.kernel.org Fri Mar 21 00:47:21 2008
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 21 01:33:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JcUTc-0004yg-8g
-	for gcvg-git-2@gmane.org; Fri, 21 Mar 2008 00:47:16 +0100
+	id 1JcVCf-0001uO-Ny
+	for gcvg-git-2@gmane.org; Fri, 21 Mar 2008 01:33:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755272AbYCTXqf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Mar 2008 19:46:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755102AbYCTXqf
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Mar 2008 19:46:35 -0400
-Received: from mail.gmx.net ([213.165.64.20]:47126 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754824AbYCTXqf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Mar 2008 19:46:35 -0400
-Received: (qmail invoked by alias); 20 Mar 2008 23:46:32 -0000
-Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
-  by mail.gmx.net (mp009) with SMTP; 21 Mar 2008 00:46:32 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18ZugkRF6kZ7sUhSYqTP7u5hXcTY73fAVxmI6pQE9
-	9hB8hRy08zSn32
-X-X-Sender: gene099@racer.site
-In-Reply-To: <1206018070-3402-1-git-send-email-joerg@alea.gnuu.de>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1751558AbYCUAdI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Mar 2008 20:33:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751156AbYCUAdG
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Mar 2008 20:33:06 -0400
+Received: from wr-out-0506.google.com ([64.233.184.229]:47431 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751558AbYCUAdF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Mar 2008 20:33:05 -0400
+Received: by wr-out-0506.google.com with SMTP id c48so1111901wra.1
+        for <git@vger.kernel.org>; Thu, 20 Mar 2008 17:33:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:subject:from:to:content-type:date:message-id:mime-version:x-mailer:content-transfer-encoding;
+        bh=JYhrlswNG5UxO7OdXc8fc1eeBlm+N0XurQW5JqCr4W4=;
+        b=d8aTPEZKKIuLTfDm1hCe8HAYSqWAteNq8oMP88PM1+owCFQndrbzwWqyu7YqZLAjvDkE80IxIHHf75Qqs5QIaimsFqCFWpUkmF0duDBr2mqJFS/LY8SqZ52q+JKKr9LgmINy9xSMS6mHXMwZ5ekbOF1Ru/GK6wGixTlf20DO4iU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=subject:from:to:content-type:date:message-id:mime-version:x-mailer:content-transfer-encoding;
+        b=Uf6Idf9Z59+AmHqCBMouQGQtewuISvnJcM11vE8FdHh5FahpvjMs9fqjpzvyCR42jVmUTdKQRjIRHEUFkYx32JzVbaGQGmFF853/Fnd1AdNmgpQdfuFz9lQnVfgehcvmwv0NpzLr+2P/ghXzSyVBwf+v5FiAnrQiQqhhBp7gyMY=
+Received: by 10.150.122.13 with SMTP id u13mr1245104ybc.131.1206059584447;
+        Thu, 20 Mar 2008 17:33:04 -0700 (PDT)
+Received: from ?10.5.5.2? ( [121.44.247.12])
+        by mx.google.com with ESMTPS id h14sm541805wxd.26.2008.03.20.17.33.02
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 20 Mar 2008 17:33:03 -0700 (PDT)
+X-Mailer: Evolution 2.12.3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77689>
-
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---8323584-1836515949-1206056796=:4124
-Content-Type: TEXT/PLAIN; charset=utf-8
-Content-Transfer-Encoding: 8BIT
-
-Hi,
-
-On Thu, 20 Mar 2008, Jörg Sommer wrote:
-
-> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-> index 62e65d7..c849415 100755
-> --- a/t/t3404-rebase-interactive.sh
-> +++ b/t/t3404-rebase-interactive.sh
-> @@ -362,4 +362,56 @@ test_expect_success 'rebase with a file named HEAD in worktree' '
->  
->  '
->  
-> +test_expect_success 'squash and preserve merges' '
-> +	test_tick &&
-> +	git checkout -b squash-and-preserve-merges master &&
-> +	echo A > file1 &&
-> +	git commit -m SaPM-1 file1 &&
-> +	echo B > file1 &&
-> +	git commit -m SaPM-2 file1 &&
-> +	git merge to-be-preserved &&
-> +	echo C > file1 &&
-> +	git commit -m SaPM-3 file1
-> +'
-> +
-> +# This test should fail, because the prompt includes the commit from the
-> +# merge not only the merge:
-> +# -> pick 9604163 unrelated
-> +#    pick 5ef0364 SaPM-1
-> +#    pick 22aadcf SaPM-2
-> +#    pick 828f7d8 Merge branch 'to-be-preserved' into squash-and-preserve-merges
-> +#    pick 2a15a54 SaPM-3
-> +test_expect_failure 'expect preserve merges shown not commits from merge' '
-> +        EXPECT_COUNT=4 FAKE_LINES="1 2 squash 4 3" \
-> +          git rebase -i -p --onto branch1 master ||
-> +        { git rebase --abort;
-> +          EXPECT_COUNT=5 FAKE_LINES="1 2 3 squash 5 4" \
-> +          git rebase -i -p --onto branch1 master;
-> +          false; }
-> +'
-
-I'm sorry, but I have to tell you: I do not like that style at all (for 
-one, your expect_failure can succeed for all kind of reasons, the exit 
-value of git rebase --abort is not even checked).
-
-And I do not understand the message "expect preserve merges shown not 
-commits from merge".
-
-Which makes things kinda awkwardly hard for me.
-
-So I have to guess that you think that in this case:
-
-  B---D-E-F-G
- /   ,---'
-A---C
-
-a revision range B..G excludes C?  Not so.  "^B ^C G" would, but there is 
-no way to specify this with a call to rebase.
-
-So I find it quite logical that your test case fails.
-
-Hth,
-Dscho
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77690>
 
 
+On Thu, 2008-03-20 at 14:53 -0700, Linus Torvalds wrote:
+> 
+> On Fri, 21 Mar 2008, James Utter wrote:
+> >
+> > james@timesink:~/testgit$ time git commit --message "initial commit"
+> > Created initial commit 4f4b3a3: initial commit
+> >  1 files changed, 1 insertions(+), 0 deletions(-)
+> >  create mode 100644 hello
+> > 
+> > real	0m10.008s
+> > user	0m0.000s
+> > sys	0m0.008s
+> 
+> Ok, that is almost exactly 10 seconds longer than it should take.
+> 
+> And I can almost guarantee that it's something like a problem looking up 
+> your hostname or perhaps user identity - I would guess you have some name 
+> service problem.
+> 
+> Do an
+> 
+> 	strace -tT git commit --message "initial commit"
+> 
+> on that git commit to make sure, but I would almost bet that it's when git 
+> does tget "getpwuid()" thing to get your name from the gecos fields, and 
+> you have some setup problem with nscd o similar.
+> 
+> It might just go away if you set up your user name and email manually, ie 
+> try doing
+> 
+> 	git config --global user.name "James Utter"
+> 	git config --global user.email james.utter@gmail.com
+> 
+> and see if that makes the delay go away. It probably tries to look up your 
+> login info from some non-existent NIS setup, and then times out after ten 
+> seconds and picks the data from your /etc/passwd file instead.
+> 
+> (There can be other things that do similar things - misconfigured name 
+> servers etc can cause delay etc. So maybe I'm wrogn on blaming nscd, but 
+> it would be my first guess).
+> 
+> 		Linus
 
---8323584-1836515949-1206056796=:4124--
+It looks like you are right. Setting the git config --global settings
+makes the problem disappear. I am not aware of (actively) setting up any
+NIS, but there may be trouble in the DNS server.
+
+>From the strace (attached):
+
+10:55:34 sendto(3, "\307\304\1\0\0\1\0\0\0\0\0\0\ttimesink\n\5svana
+\3net"..., 37, MSG_NOSIGNAL, NULL, 0) = 37 <0.000159>
+10:55:34 poll([{fd=3, events=POLLIN}], 1, 5000) = 0 <4.995564>
+10:55:39 poll([{fd=3, events=POLLOUT, revents=POLLOUT}], 1, 0) = 1
+<0.000098>
+10:55:39 sendto(3, "\307\304\1\0\0\1\0\0\0\0\0\0\ttimesink\n\5svana
+\3net"..., 37, MSG_NOSIGNAL, NULL, 0) = 37 <0.000130>
+10:55:39 poll([{fd=3, events=POLLIN}], 1, 5000) = 0 <4.999161>
+10:55:44 close(3)                       = 0 <0.000111>
+10:55:44 open("/etc/ld.so.cache", O_RDONLY) = 3 <0.000066>
+
+Thank you,
+
+James Utter
