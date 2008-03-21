@@ -1,68 +1,69 @@
-From: "Jean-Baptiste Quenot" <jbq@caraldi.com>
-Subject: Re: [PATCH] gitweb: Add hash parameter in feed URL when a hash is specified in the current request
-Date: Fri, 21 Mar 2008 20:14:16 +0100
-Message-ID: <ae63f8b50803211214i59184fd7jde7d640d6a8580b8@mail.gmail.com>
-References: <ae63f8b50803211138y6355fd11pa64cda50a1f53011@mail.gmail.com>
-	 <m3skyjvrgr.fsf@localhost.localdomain>
+From: streamlake@tiscali.it
+Subject: Re: Cygwin: problem with renaming and case
+Date: Fri, 21 Mar 2008 20:37:48 +0100
+Message-ID: <47E40E8C.9040805@tiscali.it>
+References: <47E3DD28.4030302@tiscali.it> <37fcd2780803211157n15cec620gb5ab1d3e57ccd37b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Jakub Narebski" <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 21 20:15:12 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 21 20:43:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jcmhg-0005lx-0l
-	for gcvg-git-2@gmane.org; Fri, 21 Mar 2008 20:15:00 +0100
+	id 1Jcn9Z-00080l-Mo
+	for gcvg-git-2@gmane.org; Fri, 21 Mar 2008 20:43:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754139AbYCUTOS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Mar 2008 15:14:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753609AbYCUTOS
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Mar 2008 15:14:18 -0400
-Received: from mu-out-0910.google.com ([209.85.134.186]:34242 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752642AbYCUTOR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Mar 2008 15:14:17 -0400
-Received: by mu-out-0910.google.com with SMTP id i10so2103211mue.5
-        for <git@vger.kernel.org>; Fri, 21 Mar 2008 12:14:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        bh=gquIEC41EoC4NUlago6ERllmkDz8lhzQjugv5xuDvjs=;
-        b=QyMPKf7M1FpgwUtv4CDsdZxkjsVONeqmXEef5fwn9I4aTAosnoGwG4scTIRBQVl0QRhltO6SFeWfB+DxHkdC8i24pvRhHIQusSPX0eMSkmQZ4QzWsPnAUsfoqPkK304UxX00eBMGG5tzBaz3lmWLhAFLk2DkwmDBo/UhE85X9/Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=Ykci7n+ce+jOsCd04Xd+VlLWctWV8ElBuR+FiYlPq1g6o/xyUs6L0Ia3+xUg8MSmBUug3j+VGhtwMpRZzsCJAilqxHyLQf4Lq4i4/1mo5tcV2W6ZmO9isPYOwlO45R7UFxoX9yR55EDB/710y6H/ZyQVd8zdf7r5p7c4/XRIWt8=
-Received: by 10.78.138.14 with SMTP id l14mr4502356hud.63.1206126856013;
-        Fri, 21 Mar 2008 12:14:16 -0700 (PDT)
-Received: by 10.78.130.20 with HTTP; Fri, 21 Mar 2008 12:14:16 -0700 (PDT)
-In-Reply-To: <m3skyjvrgr.fsf@localhost.localdomain>
-Content-Disposition: inline
-X-Google-Sender-Auth: 3a8eb332b9f91908
+	id S1754008AbYCUTnG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Mar 2008 15:43:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753882AbYCUTnG
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Mar 2008 15:43:06 -0400
+Received: from jack.mail.tiscali.it ([213.205.33.53]:43358 "EHLO
+	jack.mail.tiscali.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753651AbYCUTnE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Mar 2008 15:43:04 -0400
+X-Greylist: delayed 313 seconds by postgrey-1.27 at vger.kernel.org; Fri, 21 Mar 2008 15:43:04 EDT
+Received: from [192.168.1.11] (84.222.23.64) by jack.mail.tiscali.it (7.3.135)
+        id 47DE997C00377206 for git@vger.kernel.org; Fri, 21 Mar 2008 20:37:49 +0100
+User-Agent: Thunderbird 2.0.0.12 (Windows/20080213)
+In-Reply-To: <37fcd2780803211157n15cec620gb5ab1d3e57ccd37b@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77760>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77761>
 
-I just read your initial post, and IMHO we should keep it simple.  I
-tested the various links, and it appears to be good-enough to pass the
-hash parameter for all URLs that do not specify the hash parameter
-explicitly.  You can still pass it on a per-link basis if you think
-it's too simplistic.
+Dmitry Potapov ha scritto:
+>
+>
+> I wonder do you really need to have two files on different branches whose
+> name only differ by case, especially when you work on case insensitive
+> filesystem? I suspect the answer is no. In this case, you can choose one
+> policy for file naming and stick to it. For instance, that all names should
+> be in low case except Makefile, or something like that. This policy can be
+> enforced using pre-commit hook.
+>
+> Dmitry
+>
+>   
 
-Maybe it's not the perfect solution, but at least it will improve the
-current situation where some people are apparently deceived by not
-having a per-branch RSS feed.  Not everyone forges URLs like we do :D
+You're right, in fact it usually happens as the result of a mistake in 
+naming a file between two branches or deleting a file and creating 
+another one months later with the same name, not really a question of 
+policies... :-)
 
-Oh, and about the title, just appending the hash is sufficient.
-What's important is the contents of the feed.  Users will probably end
-up editing the feed title in their reader after all.
+@Linus
+As always, I'm absolutely not a windz fan (and this is demonstrated by 
+the fact that I've been using cygwin for long time instead of the crappy 
+win command prompt, and use linux every day for a few non-strictly-windz 
+projects), but I 'must' use it if I want to work, there's no choice 
+where I come from, and I can't change the market by myself, even if I 
+strongly support linux as a substitute...
+So, given the fact that git is almost 'officially' supported at least 
+under cygwin, I think it would be a good idea, if technically possible, 
+to have a look at this kind of features. Not to mention the fact that 
+having a broader audience for a project like git can be positive...
 
-Cheers,
--- 
-Jean-Baptiste Quenot
-http://caraldi.com/jbq/blog/
+Thanks for your help,
+Frank
