@@ -1,75 +1,149 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Path filtered history not maximally simplified
-Date: Fri, 21 Mar 2008 13:46:48 +0100
-Message-ID: <47E3AE38.5060405@viscovery.net>
+From: =?iso-8859-1?Q?J=F6rg?= Sommer <joerg@alea.gnuu.de>
+Subject: Why rebase with preserve merges asks for merged commits
+Date: Fri, 21 Mar 2008 13:56:50 +0100
+Message-ID: <20080321125650.GA4587@alea.gnuu.de>
+References: <alpine.LSU.1.00.0803201208080.3983@racer.site> <1206018070-3402-1-git-send-email-joerg@alea.gnuu.de> <alpine.LSU.1.00.0803210040270.4124@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Mar 21 13:47:38 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="oyUTqETQ0mS9luUI"
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Mar 21 14:06:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jcgem-0005Qq-P7
-	for gcvg-git-2@gmane.org; Fri, 21 Mar 2008 13:47:37 +0100
+	id 1JcgwZ-000300-IU
+	for gcvg-git-2@gmane.org; Fri, 21 Mar 2008 14:06:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754998AbYCUMqv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Mar 2008 08:46:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754011AbYCUMqv
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Mar 2008 08:46:51 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:7730 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754892AbYCUMqu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Mar 2008 08:46:50 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1JcgdC-0000zo-4Y
-	for git@vger.kernel.org; Fri, 21 Mar 2008 13:45:58 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP id 5B856AFCC
-	for <git@vger.kernel.org>; Fri, 21 Mar 2008 13:46:48 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1754912AbYCUNFT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Mar 2008 09:05:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754600AbYCUNFS
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Mar 2008 09:05:18 -0400
+Received: from banki.eumelnet.de ([83.246.114.63]:3370 "EHLO uucp.gnuu.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754011AbYCUNFQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Mar 2008 09:05:16 -0400
+Received: by uucp.gnuu.de (Postfix, from userid 10)
+	id 204EA488024; Fri, 21 Mar 2008 14:05:12 +0100 (CET)
+Received: from ibook.localnet ([192.168.0.5] helo=alea.gnuu.de)
+	by alea.gnuu.de with esmtp (Exim 4.63)
+	(envelope-from <joerg@alea.gnuu.de>)
+	id 1JcgnB-0006HL-55; Fri, 21 Mar 2008 13:56:21 +0100
+Received: from joerg by alea.gnuu.de with local (Exim 4.69)
+	(envelope-from <joerg@alea.gnuu.de>)
+	id 1Jcgni-0005lB-Aa; Fri, 21 Mar 2008 13:56:50 +0100
+Content-Disposition: inline
+In-Reply-To: <alpine.LSU.1.00.0803210040270.4124@racer.site>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77735>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77736>
 
-While investigating a path-filtered history in gitk, I noticed a layout
-like this:
 
-     --A---------M--4--N
-        \       /     /
-         1--2--3-----5
+--oyUTqETQ0mS9luUI
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-There are no commits displayed on the upper line between A and M.
-Shouldn't this have been simplified to:
+Hallo Johannes,
 
-                  4--N
-                 /  /
-     --A--1--2--3--5
+Johannes Schindelin schrieb am Fri 21. Mar, 00:46 (+0100):
+> On Thu, 20 Mar 2008, J=F6rg Sommer wrote:
+>=20
+> > diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive=
+=2Esh
+> > index 62e65d7..c849415 100755
+> > --- a/t/t3404-rebase-interactive.sh
+> > +++ b/t/t3404-rebase-interactive.sh
+> > @@ -362,4 +362,56 @@ test_expect_success 'rebase with a file named HEAD=
+ in worktree' '
+> > =20
+> >  '
+> > =20
+> > +test_expect_success 'squash and preserve merges' '
+> > +	test_tick &&
+> > +	git checkout -b squash-and-preserve-merges master &&
+> > +	echo A > file1 &&
+> > +	git commit -m SaPM-1 file1 &&
+> > +	echo B > file1 &&
+> > +	git commit -m SaPM-2 file1 &&
+> > +	git merge to-be-preserved &&
+> > +	echo C > file1 &&
+> > +	git commit -m SaPM-3 file1
+> > +'
+> > +
+> > +# This test should fail, because the prompt includes the commit from t=
+he
+> > +# merge not only the merge:
+> > +# -> pick 9604163 unrelated
+> > +#    pick 5ef0364 SaPM-1
+> > +#    pick 22aadcf SaPM-2
+> > +#    pick 828f7d8 Merge branch 'to-be-preserved' into squash-and-prese=
+rve-merges
+> > +#    pick 2a15a54 SaPM-3
+> > +test_expect_failure 'expect preserve merges shown not commits from mer=
+ge' '
+> > +        EXPECT_COUNT=3D4 FAKE_LINES=3D"1 2 squash 4 3" \
+> > +          git rebase -i -p --onto branch1 master ||
+> > +        { git rebase --abort;
+> > +          EXPECT_COUNT=3D5 FAKE_LINES=3D"1 2 3 squash 5 4" \
+> > +          git rebase -i -p --onto branch1 master;
+> > +          false; }
+> > +'
+>=20
+> I'm sorry, but I have to tell you: I do not like that style at all (for=
+=20
+> one, your expect_failure can succeed for all kind of reasons, the exit=20
+> value of git rebase --abort is not even checked).
 
-The gitk command used is simply:
+Yes, it's ugly. So, let me step back. Think of the following situation:
 
-     $ gitk some/file
+M----------U          to-be-preserved
+ \          \
+  `--A---B---+---C    squash-and-preserve-merges
 
-and if I run
+When I do a rebase M..C with preserve merges I can decide about all commits
+including U which came in with the merge.
 
-     $ git log some/file
+U  pick 9604163 unrelated
+A  pick 5ef0364 SaPM-1
+B  pick 22aadcf SaPM-2
++  pick 828f7d8 Merge branch 'to-be-preserved' into squash-and-preserve-mer=
+ges
+C  pick 2a15a54 SaPM-3
 
-then M is reported with two parents (so it's not gitk's fault). The above
-is just the most recent part of the history; there's a lot more older
-history, and it is non-trivial with numerous merges (in the complete
-history). In particular, there _are_ commits on the upper branch between A
-and M, but none of them touches some/file.
+Why I can decide about the commit U from the branch to-be-preserved? I
+expect to see not the commit from the merged branches, because they
+aren't related to the branch to be rebased.
 
-Do I need to adjust my expectations or does this look like a bug?
+Let's take a different situation:
 
--- Hannes
+M--U1--U2--U3
+ \           \
+  `---A---B---+---C
 
-PS: This is with 1.5.5.rc0.21.g740fd.
+A rebase M..C with preserve merges asks you about the commits M..U3, too.
+Why? I preserve the merge that pulls in these commmits.
+
+Bye, J=F6rg.
+--=20
+Die meisten Menschen wollen lieber durch Lob ruiniert
+als durch Kritik gerettet werden.
+
+--oyUTqETQ0mS9luUI
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature http://en.wikipedia.org/wiki/OpenPGP
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFH47CSwe0mZwH1VIARAhsOAJ9nGn/OYRiUNV/teRuA6oK95S7X7gCglxv/
+sNnPr3fLYBa690L4zB5ZAgI=
+=74iG
+-----END PGP SIGNATURE-----
+
+--oyUTqETQ0mS9luUI--
