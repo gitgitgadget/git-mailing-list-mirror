@@ -1,76 +1,110 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [SoC RFC] git statistics - information about commits
-Date: Fri, 21 Mar 2008 07:49:49 -0700 (PDT)
-Message-ID: <m3wsnwuo6y.fsf@localhost.localdomain>
-References: <bd6139dc0803210152o529f3b4fi15c515f5385d8f88@mail.gmail.com>
+From: "Govind Salinas" <govind@sophiasuchtig.com>
+Subject: [PATCH v3] pretty.c: add %x00 format specifier.
+Date: Fri, 21 Mar 2008 10:05:06 -0500
+Message-ID: <5d46db230803210805j95c6029m19b284836dcb504a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Alturin Marlinon" <alturin@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 21 15:50:36 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: "Git Mailing List" <git@vger.kernel.org>,
+	"Junio C Hamano" <gitster@pobox.com>, "Jeff King" <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Mar 21 16:05:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JciZk-0007YJ-LM
-	for gcvg-git-2@gmane.org; Fri, 21 Mar 2008 15:50:33 +0100
+	id 1Jcioe-0004OL-Dw
+	for gcvg-git-2@gmane.org; Fri, 21 Mar 2008 16:05:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754475AbYCUOtw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Mar 2008 10:49:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754490AbYCUOtw
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Mar 2008 10:49:52 -0400
-Received: from el-out-1112.google.com ([209.85.162.182]:15810 "EHLO
-	el-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752970AbYCUOtv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Mar 2008 10:49:51 -0400
-Received: by el-out-1112.google.com with SMTP id v27so1009195ele.17
-        for <git@vger.kernel.org>; Fri, 21 Mar 2008 07:49:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
-        bh=blLzwSDgzTVGSKcmZGVgxT1dsf0iI98/5ah7NGn8EdA=;
-        b=iFVuhpPMmlLZXPQYfLgz6m3KiP/vndqeEZAO4yfsKfU7YsUc5+u6c8wAc0mNUuRkeM5MIUqKZYOIwxhaq/9cUxC7MPep4jOPTb9AGPl/4rzM3SOD+NCswd7cSk+0vwqaw+hwGKmxJfbbKegaF05tF7FzHpR3Rx32jCsDrjHOgQI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
-        b=NtsR6yfLbZ8vb8lghbpC0d/JLM6BOCKijzA7qJPMrTURp2sOEtUChrMq+b2r5chT4DMXg130Gdhs93fCnM1ur4r86FFrbe5CcDzskWlhFXKv82kjfk4r+dtCq2HMOr7bID6Yb6b3f/FQ7LAmj7BA+JHly1fQeMywQ14Twtvx86o=
-Received: by 10.150.199.21 with SMTP id w21mr1616927ybf.60.1206110990311;
-        Fri, 21 Mar 2008 07:49:50 -0700 (PDT)
-Received: from localhost.localdomain ( [83.8.195.99])
-        by mx.google.com with ESMTPS id d27sm5504318nfh.2.2008.03.21.07.49.47
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 21 Mar 2008 07:49:49 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m2LEngoQ010349;
-	Fri, 21 Mar 2008 15:49:43 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m2LEngJU010346;
-	Fri, 21 Mar 2008 15:49:42 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <bd6139dc0803210152o529f3b4fi15c515f5385d8f88@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1754332AbYCUPFO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Mar 2008 11:05:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752954AbYCUPFO
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Mar 2008 11:05:14 -0400
+Received: from nf-out-0910.google.com ([64.233.182.187]:44139 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752871AbYCUPFM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Mar 2008 11:05:12 -0400
+Received: by nf-out-0910.google.com with SMTP id g13so628868nfb.21
+        for <git@vger.kernel.org>; Fri, 21 Mar 2008 08:05:08 -0700 (PDT)
+Received: by 10.151.67.17 with SMTP id u17mr1623924ybk.75.1206111907117;
+        Fri, 21 Mar 2008 08:05:07 -0700 (PDT)
+Received: by 10.150.156.18 with HTTP; Fri, 21 Mar 2008 08:05:06 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77742>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77743>
 
-"alturin marlinon" <alturin@gmail.com> writes:
+This adds a %x00 format which parses the 00 as hex encoding for a byte and
+prints the resulting byte.  This can be used to add null bytes or other bytes
+that can make machine parsing easier.  It is also necessary to use fwrite to
+print out the data since printf will terminate if you feed it a null.
 
-> Consider Ohloh, an external tool that provides commit information
-> about contributors to a project.
+Junio supplied the hex decoding.
 
-Ohloh currently doesn't make the statictics part of Ohloh code
-available: only ohcount[1] is open source.
+Signed-off-by: Govind Salinas <blix@sophiasuchtig.com>
+---
+ Documentation/pretty-formats.txt |    1 +
+ log-tree.c                       |    6 ++++--
+ pretty.c                         |   11 +++++++++++
+ 3 files changed, 16 insertions(+), 2 deletions(-)
 
-But there is other similar project, but is fully open source:
-GitStat[2]. It is also geared towards using it from web browser;
-nevertheles it is worth examining to avoid "reinventing the wheel".
+diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
+index 0193c3c..e8bea3e 100644
+--- a/Documentation/pretty-formats.txt
++++ b/Documentation/pretty-formats.txt
+@@ -123,3 +123,4 @@ The placeholders are:
+ - '%Creset': reset color
+ - '%m': left, right or boundary mark
+ - '%n': newline
++- '%x00': print a byte from a hex code
+diff --git a/log-tree.c b/log-tree.c
+index 608f697..3bb6e49 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -308,8 +308,10 @@ void show_log(struct rev_info *opt, const char *sep)
+ 	if (opt->show_log_size)
+ 		printf("log size %i\n", (int)msgbuf.len);
 
-References:
-[1] http://labs.ohloh.net/ohcount
-[2] http://tree.celinuxforum.org/gitstat/
+-	if (msgbuf.len)
+-		printf("%s%s%s", msgbuf.buf, extra, sep);
++	if (msgbuf.len) {
++		fwrite(msgbuf.buf, sizeof(char), msgbuf.len, stdout);
++		printf("%s%s", extra, sep);
++	}
+ 	strbuf_release(&msgbuf);
+ }
+
+diff --git a/pretty.c b/pretty.c
+index 703f521..cb4944c 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -457,6 +457,7 @@ static size_t format_commit_item(struct strbuf
+*sb, const char *placeholder,
+ 	const struct commit *commit = c->commit;
+ 	const char *msg = commit->buffer;
+ 	struct commit_list *p;
++	int h1, h2;
+
+ 	/* these are independent of the commit */
+ 	switch (placeholder[0]) {
+@@ -478,6 +479,16 @@ static size_t format_commit_item(struct strbuf
+*sb, const char *placeholder,
+ 	case 'n':		/* newline */
+ 		strbuf_addch(sb, '\n');
+ 		return 1;
++	case 'x':
++		/* %x00 == NUL, %x0a == LF, etc. */
++		if (0 <= (h1 = hexval_table[0xff & placeholder[1]]) &&
++		    h1 <= 16 &&
++		    0 <= (h2 = hexval_table[0xff & placeholder[2]]) &&
++		    h2 <= 16) {
++			strbuf_addch(sb, (h1<<4)|h2);
++			return 3;
++		} else
++			return 0;
+ 	}
+
+ 	/* these depend on the commit */
 -- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+1.5.4.4.552.g7113.dirty
