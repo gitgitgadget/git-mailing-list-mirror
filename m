@@ -1,50 +1,48 @@
-From: Joe Fiorini <joe@faithfulgeek.org>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: Switching branches without committing changes
-Date: Fri, 21 Mar 2008 00:40:46 -0400
-Message-ID: <0A5FD247-A09E-4E3A-8BB5-35F9390E7FB3@faithfulgeek.org>
-References: <A17C3E8C-3D0E-41B4-8A43-37EC8C3F55C2@faithfulgeek.org> <20080321040647.GE8410@spearce.org> <20080321041013.GA2502@coredump.intra.peff.net>
-Mime-Version: 1.0 (Apple Message framework v919.2)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+Date: Thu, 20 Mar 2008 21:42:56 -0700
+Message-ID: <7vod98u1pr.fsf@gitster.siamese.dyndns.org>
+References: <A17C3E8C-3D0E-41B4-8A43-37EC8C3F55C2@faithfulgeek.org>
+ <20080321040647.GE8410@spearce.org>
+ <20080321041013.GA2502@coredump.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Joe Fiorini <joe@faithfulgeek.org>, git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Mar 21 05:41:49 2008
+X-From: git-owner@vger.kernel.org Fri Mar 21 05:43:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JcZ4e-00085A-Ki
-	for gcvg-git-2@gmane.org; Fri, 21 Mar 2008 05:41:49 +0100
+	id 1JcZ6h-0008Mn-6Q
+	for gcvg-git-2@gmane.org; Fri, 21 Mar 2008 05:43:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751853AbYCUEk5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Mar 2008 00:40:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750713AbYCUEk5
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Mar 2008 00:40:57 -0400
-Received: from mail-out1.fuse.net ([216.68.8.175]:62621 "EHLO
-	mail-out1.fuse.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751106AbYCUEk4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Mar 2008 00:40:56 -0400
-X-CNFS-Analysis: v=1.0 c=1 a=wnOyx2Aoai8A:10 a=o9CV-XpjGkir8lJqPdwA:9 a=GNKFg6X9nWcllmSN0iW26WU_GfcA:4 a=XF7b4UCPwd8A:10
-X-CM-Score: 0
-X-Scanned-by: Cloudmark Authority Engine
-Authentication-Results: gwout1 smtp.user=jfiorini@zoomtown.com; auth=pass (LOGIN)
-Received: from [66.93.11.195] ([66.93.11.195:52971] helo=[192.168.1.33])
-	by mail-out1.fuse.net (ecelerity 2.1.1.22 r(17669)) with ESMTPA
-	id FE/29-08390-E4C33E74 for <peff@peff.net>; Fri, 21 Mar 2008 00:40:55 -0400
-In-Reply-To: <20080321041013.GA2502@coredump.intra.peff.net>
-X-Mailer: Apple Mail (2.919.2)
+	id S1752105AbYCUEnP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Mar 2008 00:43:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752540AbYCUEnO
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Mar 2008 00:43:14 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:38280 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751952AbYCUEnO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Mar 2008 00:43:14 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 4E51F2499;
+	Fri, 21 Mar 2008 00:43:12 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 43A312498; Fri, 21 Mar 2008 00:43:05 -0400 (EDT)
+In-Reply-To: <20080321041013.GA2502@coredump.intra.peff.net> (Jeff King's
+ message of "Fri, 21 Mar 2008 00:10:13 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77707>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77708>
 
-Thanks for the replies.  I definitely like the stashing approach.  Is  
-there any overhead or caveat to using stash a lot?
-
--Joe
-
-On Mar 21, 2008, at 12:10 AM, Jeff King wrote:
+Jeff King <peff@peff.net> writes:
 
 > On Fri, Mar 21, 2008 at 12:06:47AM -0400, Shawn O. Pearce wrote:
 >
@@ -54,11 +52,57 @@ On Mar 21, 2008, at 12:10 AM, Jeff King wrote:
 >> not prepared to resolve, or simply cannot resolve in a reasonable
 >> period of time.
 >
-> Ah, for some reason I didn't think of '-m' in the advice I gave (I  
-> guess
-> I have just never used it). It is almost certainly simpler than  
-> using a
+> Ah, for some reason I didn't think of '-m' in the advice I gave (I guess
+> I have just never used it). It is almost certainly simpler than using a
 > 'stash' at this point (but I do think stashing _beforehand_ still has
 > advantages).
->
-> -Peff
+
+The thing is, that -m is really to mollify people who are _too_ accustomed
+to CVS/SVN update behaviour.  Over there, "scm update" does not give you
+any choice other than having to merge.
+
+With git, stashing or creating Park commits are very cheap operation and
+unless you are reasonably sure that your local changes do not conflict
+with the branch you are switching to, there is no strong reason to prefer
+"checkout -m".
+
+Switching branches with dirty state can have three scenarios:
+
+ (1) you are getting interrupted and your current local changes do not
+     belong to what you are going to commit after switching (e.g. "the
+     boss says fix that right away").
+
+     recommendation: stash, or Park commit
+
+ (2) you have started working but realized what you are working on belongs
+     to a new topic.
+
+     recommendation: checkout -b
+
+ (3) you have started working but realized what you are working on belongs
+     to an existing topic.
+
+     recommendation: checkout -m
+
+In case (1), if the change is small, trivial or independent from what you
+are switching branches to work on, you can "git checkout" (if the change
+is about an unrelated thing, hopefully there won't be any overlap at the
+file level) or "git checkout -m" (again, if the change is about an
+unrelated thing, the merge hopefully would be trivial) to switch branches,
+perform the unrelated change and commit only that unrelated change, and
+"git checkout" (or "git checkout -m") to come back to where you started.
+But if you had to use "-m" when switching branches, that means the change
+you need to commit in the switched branch may have to include some changes
+you will do to that modified file, and you would need per-hunk commit with
+"git add -i" to exclude existing changes.  In such a case, stashing the
+local changes away before branch switching would be much easier workflow.
+
+In case (2), the solution is always "checkout -b".  There is no other
+choice.
+
+In case (3), the solution is always "checkout -m".  Stashing, switching
+and then unstashing will give the same conflicts as "checkout -m" would
+give you, and the change you were working on has to be done on that
+switched to branch, so there is no escaping from conflict resolution,
+unless you are willing to redo your change on the breanch you switched to
+again.
