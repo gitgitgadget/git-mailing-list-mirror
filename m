@@ -1,72 +1,68 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: How to find where a branch was taken from.
-Date: Fri, 21 Mar 2008 02:15:48 -0700
-Message-ID: <7vzlssphdn.fsf@gitster.siamese.dyndns.org>
-References: <47E37A63.9070209@glidos.net>
- <7v4pb0qw28.fsf@gitster.siamese.dyndns.org>
+Subject: Re: [SoC RFC] git statistics - information about commits
+Date: Fri, 21 Mar 2008 02:24:28 -0700
+Message-ID: <7vmyospgz7.fsf@gitster.siamese.dyndns.org>
+References: <bd6139dc0803210152o529f3b4fi15c515f5385d8f88@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Paul Gardiner <osronline@glidos.net>
-X-From: git-owner@vger.kernel.org Fri Mar 21 10:16:44 2008
+To: "alturin marlinon" <alturin@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 21 10:25:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JcdMc-0007TX-Ei
-	for gcvg-git-2@gmane.org; Fri, 21 Mar 2008 10:16:38 +0100
+	id 1JcdVD-0001Hy-CW
+	for gcvg-git-2@gmane.org; Fri, 21 Mar 2008 10:25:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752872AbYCUJP6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Mar 2008 05:15:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752866AbYCUJP5
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Mar 2008 05:15:57 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:42810 "EHLO
+	id S1753090AbYCUJYv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Mar 2008 05:24:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753071AbYCUJYu
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Mar 2008 05:24:50 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:44949 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752844AbYCUJP5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Mar 2008 05:15:57 -0400
+	with ESMTP id S1753050AbYCUJYt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Mar 2008 05:24:49 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id A11232C62;
-	Fri, 21 Mar 2008 05:15:55 -0400 (EDT)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 635DD2CBF;
+	Fri, 21 Mar 2008 05:24:46 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
  certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 096002C61; Fri, 21 Mar 2008 05:15:51 -0400 (EDT)
-In-Reply-To: <7v4pb0qw28.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
- message of "Fri, 21 Mar 2008 02:13:19 -0700")
+ ESMTP id 9F7632CBE; Fri, 21 Mar 2008 05:24:39 -0400 (EDT)
+In-Reply-To: <bd6139dc0803210152o529f3b4fi15c515f5385d8f88@mail.gmail.com>
+ (alturin marlinon's message of "Fri, 21 Mar 2008 09:52:38 +0100")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77732>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77733>
 
-Junio C Hamano <gitster@pobox.com> writes:
+"alturin marlinon" <alturin@gmail.com> writes:
 
-> Paul Gardiner <osronline@glidos.net> writes:
+> My plan for this summer is to create a 'statistics' feature for git.
 >
->> I need a command that will find the remote branch from which
->> the currently checked out branch was started. I don't know
->> git very well, and the only way I can think to do it so far
->> is to iterate over the remote branches and find the one
->> for which git-rev-list <branch>..HEAD gives the smallest
->> number of objects. I'm guessing there must be a better
->> way. Any ideas?
->
-> There will be _no_ way.  It is simply impossible.
->
->     $ git checkout -b my-new-branch origin/somerandombranch~27^2^2~23
->
-> is a perfectly valid way to create a new branch.
->
-> You would probably want to re-think in a bigger picture, _why_
-> you would want to find such information, in other words, how you would
-> want to use the information (if such a thing were possible) to solve
-> _what_ problem.  That true problem you did not mention (and assumed that
-> "the remote branch the branch was branched from" would be a good tool to
-> solve it) might have a better solution.
+> It would provide the following functionality:
+> * Show how many commits a specific user made.
+> * Show the (average) size of their changes (in lines for example).
+> * Show a 'total diff', that is, take the difference between the source
+> with, and without their changes, including its size (with for example
+> a -c switch).
+> * Show which contributors have contributed to the part of the code
+> that a patch modifies.
+> * Show what part of the code a maintainer is working on the most.
+> * Define an output format for this information that can be used by
+> other tools (such as gitk and git-web)
+> * (Optional) Integrate all this information with gitk and git-web.
 
-Having said that, have you tried:
+* Within reasonable amount of time suitable for interactive use, if you
+  intend it to work with gitk.
 
-	$ git reflog show that_local_branch
+What's the ballpack performance goal for e.g. post 2.6.12 kernel history
+which is about 85k commits, 3800 authors, 24k files?
 
-and looked for "branch: Created from blah"?
+* Who contributed the most code that needed the many fix-ups on top?
+
+* Which part of the codebase had the most commits that had "oops, screwed
+  up, I am fixing this but this is a tricky code" fixes?
