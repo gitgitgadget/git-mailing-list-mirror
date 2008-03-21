@@ -1,97 +1,73 @@
-From: Charles Bailey <charles@hashpling.org>
-Subject: Re: How to find where a branch was taken from.
-Date: Fri, 21 Mar 2008 18:32:25 +0000
-Message-ID: <20080321183225.GA13583@hashpling.org>
-References: <47E37A63.9070209@glidos.net> <7v4pb0qw28.fsf@gitster.siamese.dyndns.org> <32541b130803211039h1f5b8da5k8fb353d46e57b05e@mail.gmail.com>
+From: "Jean-Baptiste Quenot" <jbq@caraldi.com>
+Subject: [PATCH] gitweb: Add hash parameter in feed URL when a hash is specified in the current request
+Date: Fri, 21 Mar 2008 19:38:38 +0100
+Message-ID: <ae63f8b50803211138y6355fd11pa64cda50a1f53011@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Paul Gardiner <osronline@glidos.net>, git@vger.kernel.org
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 21 19:33:42 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 21 19:39:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jcm3V-0005ik-1R
-	for gcvg-git-2@gmane.org; Fri, 21 Mar 2008 19:33:29 +0100
+	id 1Jcm9B-000881-S4
+	for gcvg-git-2@gmane.org; Fri, 21 Mar 2008 19:39:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753031AbYCUScn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Mar 2008 14:32:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755846AbYCUScn
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Mar 2008 14:32:43 -0400
-Received: from ptb-relay03.plus.net ([212.159.14.214]:59357 "EHLO
-	ptb-relay03.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752885AbYCUScm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Mar 2008 14:32:42 -0400
-Received: from [212.159.69.125] (helo=hashpling.plus.com)
-	 by ptb-relay03.plus.net with esmtp (Exim) id 1Jcm2W-0004Ue-Ch; Fri, 21 Mar 2008 18:32:28 +0000
-Received: from cayley.hashpling.org (cayley.hashpling.org [192.168.76.254])
-	by hashpling.plus.com (8.14.2/8.14.2) with ESMTP id m2LIWPtQ014024;
-	Fri, 21 Mar 2008 18:32:25 GMT
-Received: (from charles@localhost)
-	by cayley.hashpling.org (8.14.2/8.14.2/Submit) id m2LIWPlO014023;
-	Fri, 21 Mar 2008 18:32:25 GMT
+	id S1755631AbYCUSil (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Mar 2008 14:38:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753433AbYCUSil
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Mar 2008 14:38:41 -0400
+Received: from fk-out-0910.google.com ([209.85.128.185]:41500 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753310AbYCUSik (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Mar 2008 14:38:40 -0400
+Received: by fk-out-0910.google.com with SMTP id 19so2020939fkr.5
+        for <git@vger.kernel.org>; Fri, 21 Mar 2008 11:38:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition:x-google-sender-auth;
+        bh=2/Oy6Zo0vUYAGdMh71kW/sdrZfs3f3CYqvFEYR7TbOE=;
+        b=j+IL3zzJU7zAQ76TTUsBoiFS79J1KBupOR5aA5XM2ZvRyN5XTt5BVRlz6kcS61h6ydCDXZXHX8AEXQAbGj+AQiGGJJYdG50JyVFx8JzU1ZCXNQe7kANNdirPC17UH1BrwGHs1vMbvv8rXmIXDaWJWaKzrM21jUG50AypaOG9GGc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=message-id:date:from:sender:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition:x-google-sender-auth;
+        b=gvVAsn0Wp4ZpNF/VPMmLJPG5eKizSI+/MKAz3hqbidEyDiNtNzTKZ+Q9/V9X2Q1Pva5c2XfOFnfScj1Dp8aIyNWDIRUyMBLRCJ8xBf7t7AATMJy/XfwItTBbcPRHlI2bnzcuGMEs8BUVkB0HkEawS58w0Z3QiZiq3aKzzYaK/C4=
+Received: by 10.78.183.8 with SMTP id g8mr621845huf.78.1206124718384;
+        Fri, 21 Mar 2008 11:38:38 -0700 (PDT)
+Received: by 10.78.130.20 with HTTP; Fri, 21 Mar 2008 11:38:38 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <32541b130803211039h1f5b8da5k8fb353d46e57b05e@mail.gmail.com>
-User-Agent: Mutt/1.5.17 (2007-11-01)
-X-Plusnet-Relay: fc47712e3e33c323c261b00843463655
+X-Google-Sender-Auth: 2471c12054dc73ba
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77754>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77755>
 
-On Fri, Mar 21, 2008 at 01:39:11PM -0400, Avery Pennarun wrote:
-> On Fri, Mar 21, 2008 at 5:13 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> > Paul Gardiner <osronline@glidos.net> writes:
-> >  > I need a command that will find the remote branch from which
-> >  > the currently checked out branch was started. I don't know
-> >  > git very well, and the only way I can think to do it so far
-> >  > is to iterate over the remote branches and find the one
-> >  > for which git-rev-list <branch>..HEAD gives the smallest
-> >  > number of objects. I'm guessing there must be a better
-> >  > way. Any ideas?
-> >
-> >  There will be _no_ way.  It is simply impossible.
-> >
-> >     $ git checkout -b my-new-branch origin/somerandombranch~27^2^2~23
-> >
-> >  is a perfectly valid way to create a new branch.
-> >
-> >  You would probably want to re-think in a bigger picture, _why_
-> >  you would want to find such information, [...]
-> 
-> I frequently want to do this.  Basically, I start from "some version"
-> of the upstream program, and I put together some patches, then I want
-> to use rebase to reorder and recombine them before I send them in.
+Hi list,
 
-So you're looking to do a git rebase -i?
+I was annoyed with the RSS feed link at the bottom of gitweb because I
+couldn't find a way to have a specific feed for every branch.  With
+this patch, the generated links include the hash parameter so that
+feeds are context-dependant.
 
-> In order to do this, however, I'm forced to remember where I got my
-> "original" version from, which isn't even that important.  As the
-> developer of a particular patch, all I *really* should have to know
-> is: a) here are the things I added since I made my topic branch, and
-> b) here is the branch I want to rebase them onto so I can submit my
-> cleaned patches upstream.
+Hope it helps!
 
-Why are you forced to remember?
+---
+ gitweb/gitweb.perl |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
-If you don't want to transplant the patches onto where the remote
-branch is now, then you just need to pick a commit on your current
-branch that is before any commit that you want to reorder/recombine
-and do a git rebase -i <sha1>. (It should be easy to pick a commit
-from git log. Perhaps it's the first one with and author that isn't
-you.  Alternatively, if you don't want to look at the log and you know
-you haven't made more than N commits you could just git rebase -i
-HEAD~N.)
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index ec73cb1..7d013bd 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -615,6 +615,7 @@ sub href(%) {
+        my %mapping = @mapping;
 
-If you want to rebase them on to the latest version of the remote
-branch then it's even simpler. You just do:
+        $params{'project'} = $project unless exists $params{'project'};
++       $params{'hash'} = $hash unless exists $params{'hash'};
 
-git rebase -i remote/branch
-
-I'm not sure I understand why you need to know where your original
-branch was made from?
-
-Charles.
+        if ($params{-replay}) {
+                while (my ($name, $symbol) = each %mapping) {
+-- 
+1.5.4.1-dirty
