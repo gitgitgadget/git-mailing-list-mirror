@@ -1,72 +1,95 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Permit refspec source side to parse as a sha1
-Date: Thu, 20 Mar 2008 22:30:01 -0700
-Message-ID: <7vmyosskyu.fsf@gitster.siamese.dyndns.org>
-References: <alpine.LNX.1.00.0803202049090.19665@iabervon.org>
- <7v4pb0vhrg.fsf@gitster.siamese.dyndns.org>
- <alpine.LNX.1.00.0803210014100.19665@iabervon.org>
+From: "Govind Salinas" <govind@sophiasuchtig.com>
+Subject: Re: [PATCH] pretty.c: add %z specifier.
+Date: Fri, 21 Mar 2008 00:42:55 -0500
+Message-ID: <5d46db230803202242j60b0e9f6q798afd6c5f468207@mail.gmail.com>
+References: <5d46db230803201745mb736e98w4925e14b5d92d71d@mail.gmail.com>
+	 <7veja4u1gv.fsf@gitster.siamese.dyndns.org>
+	 <20080321045137.GA5563@coredump.intra.peff.net>
+	 <7vtzj0slx4.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Samuel Tardieu <sam@rfc1149.net>
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Fri Mar 21 06:31:12 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Jeff King" <peff@peff.net>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Mar 21 06:43:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JcZqR-000810-Hs
-	for gcvg-git-2@gmane.org; Fri, 21 Mar 2008 06:31:11 +0100
+	id 1Jca2T-0001jW-MI
+	for gcvg-git-2@gmane.org; Fri, 21 Mar 2008 06:43:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753351AbYCUFaO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Mar 2008 01:30:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753343AbYCUFaO
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Mar 2008 01:30:14 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:50391 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753342AbYCUFaM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Mar 2008 01:30:12 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id D0FB51054;
-	Fri, 21 Mar 2008 01:30:10 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 23A9D1051; Fri, 21 Mar 2008 01:30:04 -0400 (EDT)
-In-Reply-To: <alpine.LNX.1.00.0803210014100.19665@iabervon.org> (Daniel
- Barkalow's message of "Fri, 21 Mar 2008 01:09:24 -0400 (EDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753368AbYCUFm5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Mar 2008 01:42:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753362AbYCUFm4
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Mar 2008 01:42:56 -0400
+Received: from wx-out-0506.google.com ([66.249.82.239]:24432 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753359AbYCUFm4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Mar 2008 01:42:56 -0400
+Received: by wx-out-0506.google.com with SMTP id h31so1479968wxd.4
+        for <git@vger.kernel.org>; Thu, 20 Mar 2008 22:42:55 -0700 (PDT)
+Received: by 10.150.203.8 with SMTP id a8mr1347765ybg.56.1206078175194;
+        Thu, 20 Mar 2008 22:42:55 -0700 (PDT)
+Received: by 10.150.156.18 with HTTP; Thu, 20 Mar 2008 22:42:55 -0700 (PDT)
+In-Reply-To: <7vtzj0slx4.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77716>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77717>
 
-Daniel Barkalow <barkalow@iabervon.org> writes:
+On Fri, Mar 21, 2008 at 12:09 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Jeff King <peff@peff.net> writes:
+>
+>  > On Thu, Mar 20, 2008 at 09:48:16PM -0700, Junio C Hamano wrote:
+>  >
+>  >> > +  case 'z':               /* null */
+>  >> > +          strbuf_addch(sb, '\0');
+>  >> > +          return 1;
+>  >> >    }
+>  >> >
+>  >> >    /* these depend on the commit */
+>  >>
+>  >> I do not like this at all.  Why aren't we doing %XX (2 hexadecimal digits
+>  >> for an octet)?
+>  >
+>  > Because %ad is already taken? :)
+>  >
+>  > %x* is still available, though, so maybe %x00?
+>
+>  Perhaps, but before I forget.
+>
+>  My much bigger niggle about the "--pretty=format:<>" code I have is that
+>  the "log" machinery does not change the usual record "delimiter" to record
+>  "terminator" when --pretty=format:<> is in effect.
+>
+>  The "log" family generally treats LF/NUL as record delimiter, not
+>  terminator, and it is by a very good conscious design.  When you are
+>  looking at the output from "git log -2", you would want to have a
+>  delimiting LF between the first commit and the second commit, but you do
+>  not want an extra LF after the second commit.
+>
+>  However, when "--pretty=format:<>" is in effect, it is inconvenient that
+>  the machinery inserts a LF between each record but not at the end.
+>
+>     $ git log -2 --pretty=format:%s
+>
+>  may look sane when the pager immediately returns the control to you, but
+>  it is not really.  To view it:
+>
+>     $ git log -2 --pretty=format:%s | cat
+>
+>  This would show that there is no LF after the final output, which is quite
+>  bad.
+>
 
-> So we should call the same code to parse the string, have that code do no 
-> validation at all, and have the caller validate the return as appropriate. 
-> The parsing doesn't depend at all on whether it's for fetching or pushing.
+Sorry, I'm a bit confused.  Should I alter the patch to use a different code
+for null, that would be fine by me?  The above seems to be an unrelated issue.
 
-Obviously you did not read my patch before responding.
 
-While I would agree that removing the check from parsing and add necessary
-checks to all callers would be another way to catch the same kind of
-breakages,
-
- (1) it would be more code to change, and I do not see a clear advantage,
-     in that approach, especially given the discussion that lead to
-     $gmane/77413;
-
- (2) the error reporting by the callers that use the parsed result will
-     not be able to say "Invalid refspec '%s'" on the source string,
-     simply because the source string is not available to them anymore;
-
- (3) worse yet, the older code even discarded part of the user input, so
-     the error reporting that uses the parsed src/dst pair may not even be
-     similar to the problematic input the user gave us to begin with,
-     making it harder for the user to spot what we did not like and
-     correct it.
-
-In any case, don't you agree that the patch you responded to is much
-easier to understand what we are (and we are not) checking than the
-original code?
+Thanks,
+Govind.
