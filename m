@@ -1,110 +1,97 @@
-From: "Govind Salinas" <govind@sophiasuchtig.com>
-Subject: [PATCH v3] pretty.c: add %x00 format specifier.
-Date: Fri, 21 Mar 2008 10:05:06 -0500
-Message-ID: <5d46db230803210805j95c6029m19b284836dcb504a@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+From: Eyvind Bernhardsen <eyvind-git@orakel.ntnu.no>
+Subject: [PATCH v2] fast-import: Document the effect of "merge" with no "from" in a commit
+Date: Fri, 21 Mar 2008 16:25:18 +0100
+Message-ID: <BDCF3EE6-0813-40B1-96D8-CCBADCCDAEA6@orakel.ntnu.no>
+References: <F6F70627-FAE7-43F1-BECC-E70A4A561982@orakel.ntnu.no> <20080318034321.GK8410@spearce.org> <F4486D8E-3256-4FA7-89A7-3EC7E7D64162@orakel.ntnu.no> <20080319020625.GA3535@spearce.org> <9A41E5AD-2305-457B-A214-7A11A1B559F6@orakel.ntnu.no> <20080320034031.GX8410@spearce.org> <6FC571BB-D304-4D25-B1F2-1E03BD5438F8@orakel.ntnu.no> <FB8C4A1F-3DC1-4D7B-910B-5F721F39B244@orakel.ntnu.no>
+Mime-Version: 1.0 (Apple Message framework v919.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>,
-	"Junio C Hamano" <gitster@pobox.com>, "Jeff King" <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Mar 21 16:05:56 2008
+Cc: James Westby <jw+debian@jameswestby.net>,
+	Ian Clatworthy <ian.clatworthy@internode.on.net>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Git Mailing List <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Mar 21 16:26:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jcioe-0004OL-Dw
-	for gcvg-git-2@gmane.org; Fri, 21 Mar 2008 16:05:56 +0100
+	id 1Jcj8E-0003Lz-Jt
+	for gcvg-git-2@gmane.org; Fri, 21 Mar 2008 16:26:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754332AbYCUPFO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Mar 2008 11:05:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752954AbYCUPFO
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Mar 2008 11:05:14 -0400
-Received: from nf-out-0910.google.com ([64.233.182.187]:44139 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752871AbYCUPFM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Mar 2008 11:05:12 -0400
-Received: by nf-out-0910.google.com with SMTP id g13so628868nfb.21
-        for <git@vger.kernel.org>; Fri, 21 Mar 2008 08:05:08 -0700 (PDT)
-Received: by 10.151.67.17 with SMTP id u17mr1623924ybk.75.1206111907117;
-        Fri, 21 Mar 2008 08:05:07 -0700 (PDT)
-Received: by 10.150.156.18 with HTTP; Fri, 21 Mar 2008 08:05:06 -0700 (PDT)
-Content-Disposition: inline
+	id S1753476AbYCUPZ0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Mar 2008 11:25:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753325AbYCUPZ0
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Mar 2008 11:25:26 -0400
+Received: from 97.84-49-228.nextgentel.com ([84.49.228.97]:58737 "EHLO
+	eyvind.bernhardsens.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753305AbYCUPZZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Mar 2008 11:25:25 -0400
+Received: from [192.168.0.3] (ip-254-5-149-91.dialup.ice.no [91.149.5.254])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by eyvind.bernhardsens.net (Postfix) with ESMTP id 28E3D14619F;
+	Fri, 21 Mar 2008 16:25:20 +0100 (CET)
+In-Reply-To: <FB8C4A1F-3DC1-4D7B-910B-5F721F39B244@orakel.ntnu.no>
+X-Mailer: Apple Mail (2.919.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77743>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77744>
 
-This adds a %x00 format which parses the 00 as hex encoding for a byte and
-prints the resulting byte.  This can be used to add null bytes or other bytes
-that can make machine parsing easier.  It is also necessary to use fwrite to
-print out the data since printf will terminate if you feed it a null.
+The fast-import documentation currently does not document the behaviour
+of "merge" when there is no "from" in a commit.  This patch adds a
+description of what happens: the commit is created with a parent, but
+no files.  This behaviour is equivalent to "from" followed by
+"filedeleteall".
 
-Junio supplied the hex decoding.
-
-Signed-off-by: Govind Salinas <blix@sophiasuchtig.com>
+Signed-off-by: Eyvind Bernhardsen <eyvind-git@orakel.ntnu.no>
 ---
- Documentation/pretty-formats.txt |    1 +
- log-tree.c                       |    6 ++++--
- pretty.c                         |   11 +++++++++++
- 3 files changed, 16 insertions(+), 2 deletions(-)
+On 21. mars. 2008, at 14.57, Eyvind Bernhardsen wrote:
+> It turns out that I'm an idiot and you're right.  I'll rewrite the  
+> patch to reflect that the "merge" behaviour only applies when  
+> creating a branch.
 
-diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
-index 0193c3c..e8bea3e 100644
---- a/Documentation/pretty-formats.txt
-+++ b/Documentation/pretty-formats.txt
-@@ -123,3 +123,4 @@ The placeholders are:
- - '%Creset': reset color
- - '%m': left, right or boundary mark
- - '%n': newline
-+- '%x00': print a byte from a hex code
-diff --git a/log-tree.c b/log-tree.c
-index 608f697..3bb6e49 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -308,8 +308,10 @@ void show_log(struct rev_info *opt, const char *sep)
- 	if (opt->show_log_size)
- 		printf("log size %i\n", (int)msgbuf.len);
+Second attempt, now with 58% more understanding.
 
--	if (msgbuf.len)
--		printf("%s%s%s", msgbuf.buf, extra, sep);
-+	if (msgbuf.len) {
-+		fwrite(msgbuf.buf, sizeof(char), msgbuf.len, stdout);
-+		printf("%s%s", extra, sep);
-+	}
- 	strbuf_release(&msgbuf);
- }
+  Documentation/git-fast-import.txt |   11 ++++++++---
+  1 files changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/pretty.c b/pretty.c
-index 703f521..cb4944c 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -457,6 +457,7 @@ static size_t format_commit_item(struct strbuf
-*sb, const char *placeholder,
- 	const struct commit *commit = c->commit;
- 	const char *msg = commit->buffer;
- 	struct commit_list *p;
-+	int h1, h2;
+diff --git a/Documentation/git-fast-import.txt b/Documentation/git- 
+fast-import.txt
+index 96f6767..c29a4f8 100644
+--- a/Documentation/git-fast-import.txt
++++ b/Documentation/git-fast-import.txt
+@@ -385,6 +385,9 @@ new commit.
+  Omitting the `from` command in the first commit of a new branch
+  will cause fast-import to create that commit with no ancestor. This
+  tends to be desired only for the initial commit of a project.
++If the frontend creates all files from scratch when making a new
++branch, a `merge` command may be used instead of `from` to start
++the commit with an empty tree.
+  Omitting the `from` command on existing branches is usually desired,
+  as the current commit on that branch is automatically assumed to
+  be the first ancestor of the new commit.
+@@ -427,13 +430,15 @@ existing value of the branch.
 
- 	/* these are independent of the commit */
- 	switch (placeholder[0]) {
-@@ -478,6 +479,16 @@ static size_t format_commit_item(struct strbuf
-*sb, const char *placeholder,
- 	case 'n':		/* newline */
- 		strbuf_addch(sb, '\n');
- 		return 1;
-+	case 'x':
-+		/* %x00 == NUL, %x0a == LF, etc. */
-+		if (0 <= (h1 = hexval_table[0xff & placeholder[1]]) &&
-+		    h1 <= 16 &&
-+		    0 <= (h2 = hexval_table[0xff & placeholder[2]]) &&
-+		    h2 <= 16) {
-+			strbuf_addch(sb, (h1<<4)|h2);
-+			return 3;
-+		} else
-+			return 0;
- 	}
+  `merge`
+  ^^^^^^^
+-Includes one additional ancestor commit, and makes the current
+-commit a merge commit.  An unlimited number of `merge` commands per
++Includes one additional ancestor commit.  If the `from` command is
++omitted when creating a new branch, the first `merge` commit will be
++the first ancestor of the current commit, and the branch will start
++out with no files.  An unlimited number of `merge` commands per
+  commit are permitted by fast-import, thereby establishing an n-way  
+merge.
+  However Git's other tools never create commits with more than 15
+  additional ancestors (forming a 16-way merge).  For this reason
+  it is suggested that frontends do not use more than 15 `merge`
+-commands per commit.
++commands per commit; 16, if starting a new, empty branch.
 
- 	/* these depend on the commit */
+  Here `<committish>` is any of the commit specification expressions
+  also accepted by `from` (see above).
 -- 
-1.5.4.4.552.g7113.dirty
+1.5.5.rc0.9.g6e103
