@@ -1,91 +1,111 @@
-From: "Avery Pennarun" <apenwarr@gmail.com>
-Subject: Re: How to find where a branch was taken from.
-Date: Fri, 21 Mar 2008 14:48:28 -0400
-Message-ID: <32541b130803211148r651d03eev98a478b13e69f710@mail.gmail.com>
-References: <47E37A63.9070209@glidos.net>
-	 <7v4pb0qw28.fsf@gitster.siamese.dyndns.org>
-	 <32541b130803211039h1f5b8da5k8fb353d46e57b05e@mail.gmail.com>
-	 <20080321183225.GA13583@hashpling.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: Add hash parameter in feed URL when a hash is specified in the current request
+Date: Fri, 21 Mar 2008 11:53:48 -0700 (PDT)
+Message-ID: <m3skyjvrgr.fsf@localhost.localdomain>
+References: <ae63f8b50803211138y6355fd11pa64cda50a1f53011@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Paul Gardiner" <osronline@glidos.net>, git@vger.kernel.org
-To: "Charles Bailey" <charles@hashpling.org>
-X-From: git-owner@vger.kernel.org Fri Mar 21 19:49:59 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Jean-Baptiste Quenot" <jbq@caraldi.com>
+X-From: git-owner@vger.kernel.org Fri Mar 21 19:55:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JcmIj-00048Y-Ii
-	for gcvg-git-2@gmane.org; Fri, 21 Mar 2008 19:49:14 +0100
+	id 1JcmOJ-0006fj-Eb
+	for gcvg-git-2@gmane.org; Fri, 21 Mar 2008 19:54:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755968AbYCUSsb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Mar 2008 14:48:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754143AbYCUSsb
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Mar 2008 14:48:31 -0400
-Received: from fg-out-1718.google.com ([72.14.220.156]:18464 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754113AbYCUSsa (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Mar 2008 14:48:30 -0400
-Received: by fg-out-1718.google.com with SMTP id l27so1437018fgb.17
-        for <git@vger.kernel.org>; Fri, 21 Mar 2008 11:48:28 -0700 (PDT)
+	id S1757308AbYCUSxz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Mar 2008 14:53:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755850AbYCUSxy
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Mar 2008 14:53:54 -0400
+Received: from nf-out-0910.google.com ([64.233.182.185]:23129 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756914AbYCUSxx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Mar 2008 14:53:53 -0400
+Received: by nf-out-0910.google.com with SMTP id g13so669274nfb.21
+        for <git@vger.kernel.org>; Fri, 21 Mar 2008 11:53:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=X5hBAu3NkfRa5JMQTzM/O1mcNEruD4gKrLdXrPQck6E=;
-        b=peUYskz/E6SAr8mStjcH8r7PcrWZVOjTeL2z0VMgAIX2eJ0VhL3Tp6aBeA1o0MCZywZ2RmdIfyo4qC+kDxEUVpdXh62wyOn7sKUGPEmVpPDo7KCyp5n7wbwj0Ior9OC1ipG7eF1MUvdrwMnStE84fSRpxg3ZgGWSMsa2GPT4EHA=
+        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
+        bh=vblPI6WRQZUCtJe8+C9ij7juZkl9IYZ6W0vYprIJ4Fw=;
+        b=hxjEwfOKheutyohkXLoKM5Fm2P965kWEe1h8Ukr5zVCDcjggBdEU+yQEbMoQ6cZy+n1CpYXsLunUAPnte+JHjjXwO8B6xbbiJi2Ejf4ripYLtTEjCDxxX4li6Mv5zqXnoC29JFc2+fK/boo+iT4M3+gpHd04Ffk1cKnb4VzsWEU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=pEs1tYek9uPnI2XGB6PuGJKr2ht4ESQHZgjOniyZ0mJcr/+Sx0+ezg86apHowER5W5sRJFp1yBd/JXfJZ2uxqyV2farDWypg1tXlgVxZffl+6tqTqg5xQadvGCzGsRq7cSCUSgSqpwM+dSZ3SFmnMKcOS54wDRN23WSiMer/bQ8=
-Received: by 10.82.118.2 with SMTP id q2mr8178876buc.27.1206125308268;
-        Fri, 21 Mar 2008 11:48:28 -0700 (PDT)
-Received: by 10.82.166.12 with HTTP; Fri, 21 Mar 2008 11:48:28 -0700 (PDT)
-In-Reply-To: <20080321183225.GA13583@hashpling.org>
-Content-Disposition: inline
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
+        b=EYSHmcqjLjt+Is2J3dx9BEVES+q2kktZ0sycS8YgO5Rh4MvXufSCVp+AvuB75G/88rY2TKg+On5HU/ELZ/bNsLhsyuH4oD4wuYmUnL3J/IMadf6hqqyAshpFEr0Sv5yj5Fr5aG1O9sAze0gcfRdhcE+PBj0rQBbiMlyD/EYCauQ=
+Received: by 10.78.157.15 with SMTP id f15mr9918433hue.2.1206125630051;
+        Fri, 21 Mar 2008 11:53:50 -0700 (PDT)
+Received: from localhost.localdomain ( [83.8.195.99])
+        by mx.google.com with ESMTPS id k10sm5996948nfh.17.2008.03.21.11.53.47
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 21 Mar 2008 11:53:48 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m2LIrg0b011628;
+	Fri, 21 Mar 2008 19:53:44 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m2LIrexK011625;
+	Fri, 21 Mar 2008 19:53:40 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <ae63f8b50803211138y6355fd11pa64cda50a1f53011@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77757>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77758>
 
-On Fri, Mar 21, 2008 at 2:32 PM, Charles Bailey <charles@hashpling.org> wrote:
->  > In order to do this, however, I'm forced to remember where I got my
->  > "original" version from, which isn't even that important.  As the
->  > developer of a particular patch, all I *really* should have to know
->  > is: a) here are the things I added since I made my topic branch, and
->  > b) here is the branch I want to rebase them onto so I can submit my
->  > cleaned patches upstream.
->
->  Why are you forced to remember?
->
->  If you don't want to transplant the patches onto where the remote
->  branch is now, then you just need to pick a commit on your current
->  branch that is before any commit that you want to reorder/recombine
->  and do a git rebase -i <sha1>. (It should be easy to pick a commit
->  from git log. Perhaps it's the first one with and author that isn't
->  you.  [...]
+"Jean-Baptiste Quenot" <jbq@caraldi.com> writes:
 
-All these things work, but they're unnecessarily tedious manual
-remembering.  If I have a lot of topic branches on the go at once,
-things start getting a little messy and it's hard to remember which
-patches came from where, particularly if I'm aggregating, reviewing,
-and cleaning up patches from several people at work before sending
-them upstream (in which case I don't always recognize the checkin
-messages presented in git-rebase -i).
+> Hi list,
+> 
+> I was annoyed with the RSS feed link at the bottom of gitweb because I
+> couldn't find a way to have a specific feed for every branch.  With
+> this patch, the generated links include the hash parameter so that
+> feeds are context-dependant.
+> 
+> Hope it helps!
+> 
+> ---
+>  gitweb/gitweb.perl |    1 +
+>  1 files changed, 1 insertions(+), 0 deletions(-)
+> 
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index ec73cb1..7d013bd 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -615,6 +615,7 @@ sub href(%) {
+>         my %mapping = @mapping;
+> 
+>         $params{'project'} = $project unless exists $params{'project'};
+> +       $params{'hash'} = $hash unless exists $params{'hash'};
+> 
+>         if ($params{-replay}) {
+>                 while (my ($name, $symbol) = each %mapping) {
 
-svn has "svn log --stop-on-copy", which is useful in exactly this
-situation.  A git branch is not really a "copy", of course, so the
-actual implementation can't be the same.
+It is *a* solution, but I don't think it is a *correct* solution for
+this problem.  This adds 'hash' parameter to *every* link if parent
+view had hash parameter passed or just defined $hash variable for
+convenience.  
 
-"git show-branch" has logic very close to what we need here: if you
-give it the names of your current branch and its parent, it'll show
-you just the changes on both branches since the branchpoint.  But I
-don't really want to know about additional changes on the parent, only
-on the branch I'm working with, and I often prefer the output to be in
-git-log's (very flexible) format instead of git-show-branch.
+The project parameter is added implicitely unless turned off 
+('project => undef) because almost all links need this parameter;
+IMHO this is not the case for hash parameter.
 
-Have fun,
+Besides this solution doesn't address the naming of feed links.
 
-Avery
+
+I was planning to add context-dependent feed links, both in page
+header (<link .../> elements in HTML <head>) and at the bottom of the
+page.  Unfortunately to do this *rigth* took me more time than I
+though.  (Additionally I got no responses to the post asking about
+thoughs on how should this be done:)
+  "[RFC] gitweb: Use feed link according to current view"
+  Message-Id: <200802111900.12325.jnareb@gmail.com>
+I was derailed for a bit, but I can try to do this... but after the
+Easter.
+
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
