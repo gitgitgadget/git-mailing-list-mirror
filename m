@@ -1,67 +1,55 @@
-From: Frank <streamlake@tiscali.it>
-Subject: Cygwin: problem with renaming and case
-Date: Fri, 21 Mar 2008 17:07:04 +0100
-Message-ID: <47E3DD28.4030302@tiscali.it>
+From: "Andrew Arnott" <andrewarnott@gmail.com>
+Subject: Re: How to rewrite author history
+Date: Fri, 21 Mar 2008 09:41:14 -0700
+Message-ID: <216e54900803210941i7fe345c2va850fa3ded8eabc8@mail.gmail.com>
+References: <216e54900803210938q4981b5d1t535af419f5b15ad8@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 21 17:23:14 2008
+X-From: git-owner@vger.kernel.org Fri Mar 21 17:42:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jck1L-00088q-62
-	for gcvg-git-2@gmane.org; Fri, 21 Mar 2008 17:23:07 +0100
+	id 1JckJb-0007HT-0j
+	for gcvg-git-2@gmane.org; Fri, 21 Mar 2008 17:41:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754740AbYCUQW0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Mar 2008 12:22:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754185AbYCUQW0
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Mar 2008 12:22:26 -0400
-Received: from smtp-out28.alice.it ([85.33.2.28]:4667 "EHLO
-	smtp-out28.alice.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754465AbYCUQWZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Mar 2008 12:22:25 -0400
-X-Greylist: delayed 912 seconds by postgrey-1.27 at vger.kernel.org; Fri, 21 Mar 2008 12:22:24 EDT
-Received: from FBCMMO01.fbc.local ([192.168.68.195]) by smtp-out28.alice.it with Microsoft SMTPSVC(6.0.3790.1830);
-	 Fri, 21 Mar 2008 17:07:07 +0100
-Received: from FBCMCL01B04.fbc.local ([192.168.69.85]) by FBCMMO01.fbc.local with Microsoft SMTPSVC(6.0.3790.1830);
-	 Fri, 21 Mar 2008 17:07:07 +0100
-Received: from [192.0.0.91] ([82.50.146.159]) by FBCMCL01B04.fbc.local with Microsoft SMTPSVC(6.0.3790.1830);
-	 Fri, 21 Mar 2008 17:07:06 +0100
-User-Agent: Thunderbird 2.0.0.12 (Windows/20080213)
-X-OriginalArrivalTime: 21 Mar 2008 16:07:06.0495 (UTC) FILETIME=[9BFF38F0:01C88B6D]
+	id S1755602AbYCUQlQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Mar 2008 12:41:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755383AbYCUQlQ
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Mar 2008 12:41:16 -0400
+Received: from wa-out-1112.google.com ([209.85.146.178]:28484 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755304AbYCUQlP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Mar 2008 12:41:15 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so1726087wah.23
+        for <git@vger.kernel.org>; Fri, 21 Mar 2008 09:41:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=+s2jFwlXYA12WQmUBU5XooBjkOo9BxyJS8bHly/q7Ak=;
+        b=MllkVzcIp9oJV4+0Rr7C5QkSCSdc+AE0+KEaivp/XoMlb2pu1CYR8FLXG9GlUHf68R0XviBDaLwIpr/S7xWZvQioe4Rf5v9XXkjtYHQLRJtnZp+Ahx4cNuetyJsTPGcRbB9LGJIrophx7KL1Sd+NW7MgQYjRSUfgC2H3rMc3vVU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=D5bMAL1MiZoTdrF6pnbrOLNsVAFzInfPlvPpK7Y8fFJPRIR4knZAnz10KCSU/TxpTs53zrz2xFJJQjx/5FPtkKgsqmaXdf69aitV0qLNZAkt4/VjX+Qn7ZUfshLys0LvnyzirBWHwobVcg8qXRHqL/chslKfOUIkkBJFYfKQE2A=
+Received: by 10.115.60.1 with SMTP id n1mr6232733wak.37.1206117674946;
+        Fri, 21 Mar 2008 09:41:14 -0700 (PDT)
+Received: by 10.114.94.20 with HTTP; Fri, 21 Mar 2008 09:41:14 -0700 (PDT)
+In-Reply-To: <216e54900803210938q4981b5d1t535af419f5b15ad8@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77747>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77748>
 
-Hi,
-Don't know exactly if this is a bug or a feature or something in the 
-middle, but I have a lot of problems while changing just the casing of 
-file names and using git mv und cygwin. Here's a test case:
-
-mkdir testrename
-cd testrename
-git init
-echo "AAA" >aaa.txt
-echo "BBB" >bbb.txt
-git add aaa.txt
-git add bbb.txt
-git commit -m "First commit"
-git checkout -b new_branch
-git mv aaa.txt ccc.txt
-git commit -a -m "Moved file"
-echo "NEW AAA" >Aaa.txt
-git add Aaa.txt
-git commit -m "Added Aaa"
-#aaa.txt exists in master, Aaa.txt in new_branch
-git checkout master
-
-Last command gives: "fatal: Untracked working tree file 'aaa.txt' would 
-be overwritten by merge".
-I know I can use git checkout -f but the problem returns while others do 
-merging/pulling from my repo, etc.
-Thanks,
-Frank
+I imported my git repo from an SVN repo, and the authors have
+email@SOME-GUID for their email address rather than their actual one
+(probably courtesy of Google Code hosting).  Rewriting history and
+changing all the commit hashes isn't a problem at this point in
+development, so how can I do a massive search-and-replace to replace
+several specific author emails with the valid ones?
+-- 
+Andrew Arnott
