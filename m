@@ -1,92 +1,94 @@
-From: Johan Herland <johan@herland.net>
-Subject: [PATCH 3/3] Teach "git clone" to pack refs
-Date: Sat, 22 Mar 2008 02:13:54 +0100
-Message-ID: <200803220213.54923.johan@herland.net>
-References: <200803220210.30957.johan@herland.net>
+From: =?utf-8?q?J=C3=B6rg=20Sommer?= <joerg@alea.gnuu.de>
+Subject: [PATCH] New tests to check rebase with preserve merges
+Date: Sat, 22 Mar 2008 02:19:45 +0100
+Message-ID: <1206148785-29466-4-git-send-email-joerg@alea.gnuu.de>
+References: <1206148785-29466-1-git-send-email-joerg@alea.gnuu.de>
+ <1206148785-29466-2-git-send-email-joerg@alea.gnuu.de>
+ <1206148785-29466-3-git-send-email-joerg@alea.gnuu.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Sat Mar 22 02:15:25 2008
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: gitster@pobox.com,
+	=?utf-8?q?J=C3=B6rg=20Sommer?= <joerg@alea.gnuu.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 22 02:21:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JcsKP-0005tv-D4
-	for gcvg-git-2@gmane.org; Sat, 22 Mar 2008 02:15:21 +0100
+	id 1JcsQN-0007nL-Pn
+	for gcvg-git-2@gmane.org; Sat, 22 Mar 2008 02:21:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754344AbYCVBOl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Mar 2008 21:14:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754226AbYCVBOl
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Mar 2008 21:14:41 -0400
-Received: from smtp.getmail.no ([84.208.20.33]:36909 "EHLO smtp.getmail.no"
+	id S1754422AbYCVBUs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 21 Mar 2008 21:20:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754449AbYCVBUh
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Mar 2008 21:20:37 -0400
+Received: from banki.eumelnet.de ([83.246.114.63]:3296 "EHLO uucp.gnuu.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754125AbYCVBOk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Mar 2008 21:14:40 -0400
-Received: from pmxchannel-daemon.no-osl-m323-srv-004-z2.isp.get.no by
- no-osl-m323-srv-004-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- id <0JY30070BY4GTL00@no-osl-m323-srv-004-z2.isp.get.no> for
- git@vger.kernel.org; Sat, 22 Mar 2008 02:14:40 +0100 (CET)
-Received: from smtp.getmail.no ([10.5.16.1])
- by no-osl-m323-srv-004-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JY3000ULY378Q30@no-osl-m323-srv-004-z2.isp.get.no> for
- git@vger.kernel.org; Sat, 22 Mar 2008 02:13:55 +0100 (CET)
-Received: from alpha.herland ([84.215.102.95])
- by no-osl-m323-srv-009-z1.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JY3001ZBY36JS30@no-osl-m323-srv-009-z1.isp.get.no> for
- git@vger.kernel.org; Sat, 22 Mar 2008 02:13:55 +0100 (CET)
-In-reply-to: <200803220210.30957.johan@herland.net>
-Content-disposition: inline
-User-Agent: KMail/1.9.9
+	id S1754422AbYCVBUe (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Mar 2008 21:20:34 -0400
+Received: by uucp.gnuu.de (Postfix, from userid 10)
+	id 742DF48802C; Sat, 22 Mar 2008 02:20:32 +0100 (CET)
+Received: from ibook.localnet ([192.168.0.5] helo=alea.gnuu.de)
+	by alea.gnuu.de with esmtp (Exim 4.63)
+	(envelope-from <joerg@alea.gnuu.de>)
+	id 1JcsOX-0007WC-3b; Sat, 22 Mar 2008 02:19:37 +0100
+Received: from joerg by alea.gnuu.de with local (Exim 4.69)
+	(envelope-from <joerg@alea.gnuu.de>)
+	id 1JcsOg-0007fr-MH; Sat, 22 Mar 2008 02:19:46 +0100
+X-Mailer: git-send-email 1.5.4.4
+In-Reply-To: <1206148785-29466-3-git-send-email-joerg@alea.gnuu.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77783>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77784>
 
-In repos with many refs, it is unlikely that most refs will ever change.
-This fact is already exploited by "git gc" by executing "git pack-refs"
-to consolidate all refs into a single file.
 
-When cloning a repo with many refs, it does not make sense to create the
-loose refs in the first place, just to have the next "git gc" consolidate
-them into one file. Instead, make "git clone" create the packed refs file
-immediately, and forego the loose refs completely.
-
-Signed-off-by: Johan Herland <johan@herland.net>
+Signed-off-by: J=C3=B6rg Sommer <joerg@alea.gnuu.de>
 ---
- builtin-clone.c |    8 ++++++--
- 1 files changed, 6 insertions(+), 2 deletions(-)
+ t/t3404-rebase-interactive.sh |   27 +++++++++++++++++++++++++++
+ 1 files changed, 27 insertions(+), 0 deletions(-)
 
-diff --git a/builtin-clone.c b/builtin-clone.c
-index 0a9c873..01c595e 100644
---- a/builtin-clone.c
-+++ b/builtin-clone.c
-@@ -18,6 +18,7 @@
- #include "transport.h"
- #include "strbuf.h"
- #include "dir.h"
-+#include "pack-refs.h"
- 
- /*
-  * Overall FIXMEs:
-@@ -313,8 +314,11 @@ static struct ref *write_remote_refs(const struct ref *refs, struct refspec *ref
- 	get_fetch_map(refs, tag_refspec, &tail, 0);
- 
- 	for (r = local_refs; r; r = r->next)
--		update_ref(reflog,
--			   r->peer_ref->name, r->old_sha1, NULL, 0, DIE_ON_ERR);
-+		add_extra_ref(r->peer_ref->name, r->old_sha1, 0);
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive=
+=2Esh
+index 7d1e469..50974f0 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -212,6 +212,33 @@ test_expect_success 'preserve merges with -p' '
+ 	test $(git show HEAD~2:file1) =3D B
+ '
+=20
++test_expect_success 'preserve merges with -p (case 2)' '
++	test_tick &&
++	EXPECT_COUNT=3D3 FAKE_LINES=3D"1 3 2" git rebase -v -i -p branch1 &&
++	test $(git rev-parse HEAD^2) =3D $(git rev-parse to-be-preserved) &&
++	test $(git rev-parse HEAD~3) =3D $(git rev-parse branch1) &&
++	test $(git show HEAD~2:file1) =3D B &&
++	test $(git show HEAD~1:file1) =3D C
++'
 +
-+	pack_refs(PACK_REFS_ALL);
-+	clear_extra_refs();
++test_expect_success 'preserve merges with -p (case 3)' '
++	test_tick &&
++	EXPECT_COUNT=3D3 FAKE_LINES=3D"3 1 2" git rebase -i -p branch1 &&
++	test $(git rev-parse HEAD~2^2) =3D $(git rev-parse to-be-preserved) &=
+&
++	test $(git rev-parse HEAD~3) =3D $(git rev-parse branch1) &&
++	test $(git show HEAD~1:file1) =3D B &&
++	test $(git show HEAD:file1) =3D C
++'
 +
- 	return local_refs;
- }
- 
--- 
-1.5.5.rc0.117.ga5237
++test_expect_success 'preserve merges really uses fast forward' '
++	head=3D$(git rev-parse HEAD) &&
++	test_tick &&
++	EXPECT_COUNT=3D3 git rebase -v -i -p branch1 2>pm-ff-err &&
++	cat pm-ff-err &&
++	test $(grep "^Fast forward" pm-ff-err | wc -l) -eq 3 &&
++	test $(git rev-parse HEAD) =3D $head
++'
++
+ test_expect_success '--continue tries to commit' '
+ 	test_tick &&
+ 	! git rebase -i --onto new-branch1 HEAD^ &&
+--=20
+1.5.4.4
