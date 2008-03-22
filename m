@@ -1,68 +1,62 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [PATCH 1/7] Make unpack_trees_options bit flags actual
  bitfields
-Date: Sat, 22 Mar 2008 10:47:59 -0700 (PDT)
-Message-ID: <alpine.LFD.1.00.0803221045280.3020@woody.linux-foundation.org>
-References: <alpine.LFD.1.00.0803220955140.3020@woody.linux-foundation.org> <alpine.LFD.1.00.0803221021220.3020@woody.linux-foundation.org> <alpine.LSU.1.00.0803221835240.4353@racer.site>
+Date: Sat, 22 Mar 2008 18:57:52 +0100 (CET)
+Message-ID: <alpine.LSU.1.00.0803221857360.4353@racer.site>
+References: <alpine.LFD.1.00.0803220955140.3020@woody.linux-foundation.org> <alpine.LFD.1.00.0803221021220.3020@woody.linux-foundation.org> <alpine.LSU.1.00.0803221835240.4353@racer.site> <alpine.LFD.1.00.0803221045280.3020@woody.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Git Mailing List <git@vger.kernel.org>,
 	Frank <streamlake@tiscali.it>,
 	Dmitry Potapov <dpotapov@gmail.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Mar 22 18:49:28 2008
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sat Mar 22 18:58:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jd7qQ-0001gv-2Y
-	for gcvg-git-2@gmane.org; Sat, 22 Mar 2008 18:49:26 +0100
+	id 1Jd7zI-0004iB-Ej
+	for gcvg-git-2@gmane.org; Sat, 22 Mar 2008 18:58:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754575AbYCVRso (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Mar 2008 13:48:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754621AbYCVRso
-	(ORCPT <rfc822;git-outgoing>); Sat, 22 Mar 2008 13:48:44 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:38152 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754439AbYCVRso (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 22 Mar 2008 13:48:44 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m2MHm1xJ003584
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 22 Mar 2008 10:48:02 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m2MHlxr2020189;
-	Sat, 22 Mar 2008 10:48:00 -0700
-In-Reply-To: <alpine.LSU.1.00.0803221835240.4353@racer.site>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
-X-Spam-Status: No, hits=-3.755 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1755330AbYCVR5w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Mar 2008 13:57:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755340AbYCVR5w
+	(ORCPT <rfc822;git-outgoing>); Sat, 22 Mar 2008 13:57:52 -0400
+Received: from mail.gmx.net ([213.165.64.20]:39518 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755107AbYCVR5w (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Mar 2008 13:57:52 -0400
+Received: (qmail invoked by alias); 22 Mar 2008 17:57:50 -0000
+Received: from host86-148-26-43.range86-148.btcentralplus.com (EHLO racer.home) [86.148.26.43]
+  by mail.gmx.net (mp011) with SMTP; 22 Mar 2008 18:57:50 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+aRkoPlYeaUhTgogl5k7rNv56ABOtBQZmLPh7vtY
+	lXteLWdmESlqOT
+X-X-Sender: gene099@racer.site
+In-Reply-To: <alpine.LFD.1.00.0803221045280.3020@woody.linux-foundation.org>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77836>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77837>
 
+Hi,
 
+On Sat, 22 Mar 2008, Linus Torvalds wrote:
 
-On Sat, 22 Mar 2008, Johannes Schindelin wrote:
+> On Sat, 22 Mar 2008, Johannes Schindelin wrote:
 > 
-> Any point in doing the "From:" and "Date:" inside the mail body?
+> > Any point in doing the "From:" and "Date:" inside the mail body?
+> 
+> I encourage people to do that for the kernel ("From:" in particular), 
+> because while git-am will pick them up from the email headers, that is 
+> only true if the emails don't get passed around and commented upon by 
+> others.
 
-I encourage people to do that for the kernel ("From:" in particular), 
-because while git-am will pick them up from the email headers, that is 
-only true if the emails don't get passed around and commented upon by 
-others.
+Okay.
 
-Now, in git, the chain-of-command is very short (everybody -> Junio), so 
-it really doesn't matter, but in the kernel, when people send out patches 
-like this, the patches may be forwarded by others (who add their sign-off 
-lines etc), and then it's really good to have that "From:" line in 
-particular in the body of the email, because it's more likely that it will 
-remain there (otherwise we depend on the person who signs off and forwards 
-it to add it!)
-
-			Linus
+Thanks,
+Dscho
