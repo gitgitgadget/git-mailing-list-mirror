@@ -1,94 +1,88 @@
-From: =?iso-8859-1?Q?J=F6rg?= Sommer <joerg@alea.gnuu.de>
-Subject: Re: [PATCH] rebase with preserve merges should not show merged
-	commits
-Date: Sat, 22 Mar 2008 15:06:48 +0100
-Message-ID: <20080322140648.GA3189@alea.gnuu.de>
-References: <1206148785-29466-1-git-send-email-joerg@alea.gnuu.de> <20080322015252.GA7570@atjola.homenet>
+From: =?utf-8?q?J=C3=B6rg=20Sommer?= <joerg@alea.gnuu.de>
+Subject: [PATCH v2 1/5] rebase with preserve merges should not show merged commits
+Date: Sat, 22 Mar 2008 15:08:23 +0100
+Message-ID: <1206194907-3340-1-git-send-email-joerg@alea.gnuu.de>
+References: <1206148785-29466-1-git-send-email-joerg@alea.gnuu.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="sdtB3X0nJg68CQEu"
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Mar 22 15:10:41 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: gitster@pobox.com,
+	=?utf-8?q?J=C3=B6rg=20Sommer?= <joerg@alea.gnuu.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 22 15:10:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jd4Qj-0004oD-Ex
-	for gcvg-git-2@gmane.org; Sat, 22 Mar 2008 15:10:41 +0100
+	id 1Jd4Qk-0004oD-3Z
+	for gcvg-git-2@gmane.org; Sat, 22 Mar 2008 15:10:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754417AbYCVOJs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Mar 2008 10:09:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754366AbYCVOJs
+	id S1754459AbYCVOKA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 22 Mar 2008 10:10:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754413AbYCVOJs
 	(ORCPT <rfc822;git-outgoing>); Sat, 22 Mar 2008 10:09:48 -0400
-Received: from banki.eumelnet.de ([83.246.114.63]:1550 "EHLO uucp.gnuu.de"
+Received: from banki.eumelnet.de ([83.246.114.63]:1551 "EHLO uucp.gnuu.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753773AbYCVOJr (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1754176AbYCVOJr (ORCPT <rfc822;git@vger.kernel.org>);
 	Sat, 22 Mar 2008 10:09:47 -0400
 Received: by uucp.gnuu.de (Postfix, from userid 10)
-	id 22D89488030; Sat, 22 Mar 2008 15:09:44 +0100 (CET)
+	id 6C2F5488033; Sat, 22 Mar 2008 15:09:45 +0100 (CET)
 Received: from ibook.localnet ([192.168.0.5] helo=alea.gnuu.de)
 	by alea.gnuu.de with esmtp (Exim 4.63)
 	(envelope-from <joerg@alea.gnuu.de>)
-	id 1Jd4Mw-0002Li-BR; Sat, 22 Mar 2008 15:06:46 +0100
+	id 1Jd4OX-0002Ln-VB; Sat, 22 Mar 2008 15:08:26 +0100
 Received: from joerg by alea.gnuu.de with local (Exim 4.69)
 	(envelope-from <joerg@alea.gnuu.de>)
-	id 1Jd4My-0000rl-1i; Sat, 22 Mar 2008 15:06:48 +0100
-Content-Disposition: inline
-In-Reply-To: <20080322015252.GA7570@atjola.homenet>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id 1Jd4OZ-0000sD-9b; Sat, 22 Mar 2008 15:08:27 +0100
+X-Mailer: git-send-email 1.5.4.4
+In-Reply-To: <1206148785-29466-1-git-send-email-joerg@alea.gnuu.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77807>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77808>
 
-
---sdtB3X0nJg68CQEu
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-Hallo Bj=C3=B6rn,
-
-Bj=C3=B6rn Steinbrink schrieb am Sat 22. Mar, 02:52 (+0100):
-> On 2008.03.22 02:19:42 +0100, J=C3=B6rg Sommer wrote:
-> > The current version of git-rebase--interactive shows the user the commi=
+The current version of git-rebase--interactive shows the user the commi=
 ts
-> > coming from a merge.
-> >=20
-> > M---A---B
-> >  \       \
-> >   o---o---+---o branch
-> >=20
-> > Rebasing branch on M with preserve merges gives the commits A and B. But
-> > if you mark them for editing or remove them the rebase fails. You must
-> > keep them as they are. It's useless to bother the user with these commi=
+coming from a merge.
+
+M---A---B
+ \       \
+  o---o---+---o branch
+
+Rebasing branch on M with preserve merges gives the commits A and B. Bu=
+t
+if you mark them for editing or remove them the rebase fails. You must
+keep them as they are. It's useless to bother the user with these commi=
 ts
-> > and might lead to mistakes.
->=20
-> Uhm, why do you completely remove the possibility to edit A
+and might lead to mistakes.
 
-Ahh, now I see what you've tried to say. I did add the option
---first-parent for rebase interactive *without* preserve merges, too.
-I'll update my patch.
+Signed-off-by: J=C3=B6rg Sommer <joerg@alea.gnuu.de>
+---
+ git-rebase--interactive.sh |    4 +++-
+ 1 files changed, 3 insertions(+), 1 deletions(-)
 
-Bye, J=C3=B6rg.
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index 8aa7371..e1ce44e 100755
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -162,6 +162,8 @@ pick_one_preserving_merges () {
+ 				new_parents=3D"$new_parents $new_p"
+ 				;;
+ 			esac
++		else
++			new_parents=3D"$new_parents $p"
+ 		fi
+ 	done
+ 	case $fast_forward in
+@@ -513,7 +515,7 @@ do
+ 				echo $ONTO > "$REWRITTEN"/$c ||
+ 					die "Could not init rewritten commits"
+ 			done
+-			MERGES_OPTION=3D
++			MERGES_OPTION=3D--first-parent
+ 		else
+ 			MERGES_OPTION=3D--no-merges
+ 		fi
 --=20
-=E2=80=9CScience is the game we play with God to find out what his rules ar=
-e.=E2=80=9D
-
---sdtB3X0nJg68CQEu
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature http://en.wikipedia.org/wiki/OpenPGP
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFH5RJ3we0mZwH1VIARAnpPAKC4M7F4KZoXqLLUHsyEJdEvAbyHFACdGCh/
-oWrB/6NlR8EZ/hG7IcEmzIw=
-=YF+S
------END PGP SIGNATURE-----
-
---sdtB3X0nJg68CQEu--
+1.5.4.4
