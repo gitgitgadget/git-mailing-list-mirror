@@ -1,76 +1,139 @@
 From: =?utf-8?q?J=C3=B6rg=20Sommer?= <joerg@alea.gnuu.de>
-Subject: [PATCH] =?utf-8?q?Check=20for=20non=E2=80=90foreign=20commits=20in=20rebase-interactive=20test?=
-Date: Sat, 22 Mar 2008 02:19:43 +0100
-Message-ID: <1206148785-29466-2-git-send-email-joerg@alea.gnuu.de>
+Subject: [PATCH] Handle fast forward correctly in rebase with preserve merges
+Date: Sat, 22 Mar 2008 02:19:44 +0100
+Message-ID: <1206148785-29466-3-git-send-email-joerg@alea.gnuu.de>
 References: <1206148785-29466-1-git-send-email-joerg@alea.gnuu.de>
+ <1206148785-29466-2-git-send-email-joerg@alea.gnuu.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: gitster@pobox.com,
 	=?utf-8?q?J=C3=B6rg=20Sommer?= <joerg@alea.gnuu.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 22 02:21:32 2008
+X-From: git-owner@vger.kernel.org Sat Mar 22 02:21:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JcsQN-0007nL-3q
-	for gcvg-git-2@gmane.org; Sat, 22 Mar 2008 02:21:31 +0100
+	id 1JcsQO-0007nL-FU
+	for gcvg-git-2@gmane.org; Sat, 22 Mar 2008 02:21:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754540AbYCVBUj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 21 Mar 2008 21:20:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754391AbYCVBUg
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Mar 2008 21:20:36 -0400
-Received: from banki.eumelnet.de ([83.246.114.63]:3294 "EHLO uucp.gnuu.de"
+	id S1754436AbYCVBUs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 21 Mar 2008 21:20:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754391AbYCVBUs
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Mar 2008 21:20:48 -0400
+Received: from banki.eumelnet.de ([83.246.114.63]:3295 "EHLO uucp.gnuu.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754117AbYCVBUe (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1754346AbYCVBUe (ORCPT <rfc822;git@vger.kernel.org>);
 	Fri, 21 Mar 2008 21:20:34 -0400
 Received: by uucp.gnuu.de (Postfix, from userid 10)
-	id 75925488025; Sat, 22 Mar 2008 02:20:32 +0100 (CET)
+	id 11CFE48802B; Sat, 22 Mar 2008 02:20:32 +0100 (CET)
 Received: from ibook.localnet ([192.168.0.5] helo=alea.gnuu.de)
 	by alea.gnuu.de with esmtp (Exim 4.63)
 	(envelope-from <joerg@alea.gnuu.de>)
-	id 1JcsOW-0007W6-BX; Sat, 22 Mar 2008 02:19:36 +0100
+	id 1JcsOW-0007WA-RG; Sat, 22 Mar 2008 02:19:37 +0100
 Received: from joerg by alea.gnuu.de with local (Exim 4.69)
 	(envelope-from <joerg@alea.gnuu.de>)
-	id 1JcsOf-0007fd-Nu; Sat, 22 Mar 2008 02:19:45 +0100
+	id 1JcsOg-0007fo-5R; Sat, 22 Mar 2008 02:19:46 +0100
 X-Mailer: git-send-email 1.5.4.4
-In-Reply-To: <1206148785-29466-1-git-send-email-joerg@alea.gnuu.de>
+In-Reply-To: <1206148785-29466-2-git-send-email-joerg@alea.gnuu.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77785>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77786>
 
+Rebase-interactive with preserve merges does fast forward commits while
+the parent of the old commit is not the parent of the new commit. If th=
+e
+parent of the changed commit is not touched, e.g. has no entry in the
+REWRITTEN database, a fast forward happens. With these commits
+=E2=80=9CA---B---C=E2=80=9D and rebase =E2=80=9CA---C---B=E2=80=9D woul=
+d do a fast forward for C which
+leads to an incorrect result.
+
+The fast forward is also not realised, i.e. the HEAD is not updated.
+
+After all is done, it was assumed that the new head is the rewritten ol=
+d
+head. But if the old head was applied before current head=E2=80=94as in=
+ the
+example above=E2=80=94the commits after the rewritten old head are lost=
+=2E
 
 Signed-off-by: J=C3=B6rg Sommer <joerg@alea.gnuu.de>
 ---
- t/t3404-rebase-interactive.sh |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+ git-rebase--interactive.sh |   35 ++++++++++++++++++-----------------
+ 1 files changed, 18 insertions(+), 17 deletions(-)
 
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive=
-=2Esh
-index 9cf873f..7d1e469 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -185,7 +185,7 @@ test_expect_success 'retain authorship when squashi=
-ng' '
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index 3879841..04fe3bf 100755
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -144,6 +144,7 @@ pick_one_preserving_merges () {
+ 		die "Cannot write current commit's replacement sha1"
+ 	fi
 =20
- test_expect_success '-p handles "no changes" gracefully' '
- 	HEAD=3D$(git rev-parse HEAD) &&
--	git rebase -i -p HEAD^ &&
-+	EXPECT_COUNT=3D1 git rebase -i -p HEAD^ &&
- 	test $HEAD =3D $(git rev-parse HEAD)
- '
++	current_sha1=3D$(git rev-parse --verify HEAD)
+ 	# rewrite parents; if none were rewritten, we can fast-forward.
+ 	fast_forward=3Dt
+ 	preserve=3Dt
+@@ -166,18 +167,31 @@ pick_one_preserving_merges () {
+ 			new_parents=3D"$new_parents $p"
+ 		fi
+ 	done
++
++	# Don't do a fast forward, if current commit is not the parent of
++	# the new commit
++	case "$new_parents" in
++	""|" $current_sha1"*)
++		;;
++	*)
++		fast_forward=3Df
++		;;
++	esac
++
+ 	case $fast_forward in
+ 	t)
+ 		output warn "Fast forward to $sha1"
+ 		test $preserve =3D f || echo $sha1 > "$REWRITTEN"/$sha1
++		output git reset --hard $sha1
++		if test "a$1" =3D a-n
++		then
++			output git reset --soft $current_sha1
++		fi
+ 		;;
+ 	f)
+ 		test "a$1" =3D a-n && die "Refusing to squash a merge: $sha1"
 =20
-@@ -205,7 +205,7 @@ test_expect_success 'preserve merges with -p' '
- 	test_tick &&
- 	git commit -m K file1 &&
- 	test_tick &&
--	git rebase -i -p --onto branch1 master &&
-+	EXPECT_COUNT=3D3 git rebase -i -p --onto branch1 master &&
- 	test $(git rev-parse HEAD^^2) =3D $(git rev-parse to-be-preserved) &&
- 	test $(git rev-parse HEAD~3) =3D $(git rev-parse branch1) &&
- 	test $(git show HEAD:file1) =3D C &&
+ 		first_parent=3D$(expr "$new_parents" : ' \([^ ]*\)')
+-		# detach HEAD to current parent
+-		output git checkout $first_parent 2> /dev/null ||
+-			die "Cannot move HEAD to $first_parent"
+=20
+ 		echo $sha1 > "$DOTEST"/current-commit
+ 		case "$new_parents" in
+@@ -330,20 +344,7 @@ do_next () {
+ 	HEADNAME=3D$(cat "$DOTEST"/head-name) &&
+ 	OLDHEAD=3D$(cat "$DOTEST"/head) &&
+ 	SHORTONTO=3D$(git rev-parse --short $(cat "$DOTEST"/onto)) &&
+-	if test -d "$REWRITTEN"
+-	then
+-		test -f "$DOTEST"/current-commit &&
+-			current_commit=3D$(cat "$DOTEST"/current-commit) &&
+-			git rev-parse HEAD > "$REWRITTEN"/$current_commit
+-		if test -f "$REWRITTEN"/$OLDHEAD
+-		then
+-			NEWHEAD=3D$(cat "$REWRITTEN"/$OLDHEAD)
+-		else
+-			NEWHEAD=3D$OLDHEAD
+-		fi
+-	else
+-		NEWHEAD=3D$(git rev-parse HEAD)
+-	fi &&
++	NEWHEAD=3D$(git rev-parse HEAD) &&
+ 	case $HEADNAME in
+ 	refs/*)
+ 		message=3D"$GIT_REFLOG_ACTION: $HEADNAME onto $SHORTONTO)" &&
 --=20
 1.5.4.4
