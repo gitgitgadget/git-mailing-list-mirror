@@ -1,55 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: 'Use of uninitialized value in string' line 651 git-send-email
- (from the 'next' branch)
-Date: Sat, 22 Mar 2008 12:55:33 -0700
-Message-ID: <7vr6e2h6tm.fsf@gitster.siamese.dyndns.org>
-References: <f36b08ee0803180644r23c21a21y9d753492be2189ec@mail.gmail.com>
- <7vprtr44hj.fsf@gitster.siamese.dyndns.org>
- <f36b08ee0803220207j60eacbbet279c62f642cdaed0@mail.gmail.com>
+From: =?ISO-8859-1?Q?Nagy_Bal=E1zs?= <js@iksz.hu>
+Subject: Re: Cygwin: problem with renaming and case
+Date: Sat, 22 Mar 2008 20:58:45 +0100
+Message-ID: <47E564F5.6010005@iksz.hu>
+References: <47E3DD28.4030302@tiscali.it> <37fcd2780803211157n15cec620gb5ab1d3e57ccd37b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Frank Lichtenheld <frank@lichtenheld.de>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Yakov Lerner" <iler.ml@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 22 20:56:25 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Frank <streamlake@tiscali.it>, git@vger.kernel.org
+To: Dmitry Potapov <dpotapov@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 22 21:00:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jd9pG-0006lr-1q
-	for gcvg-git-2@gmane.org; Sat, 22 Mar 2008 20:56:22 +0100
+	id 1Jd9sc-0007f6-Mp
+	for gcvg-git-2@gmane.org; Sat, 22 Mar 2008 20:59:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750952AbYCVTzm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Mar 2008 15:55:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751152AbYCVTzm
-	(ORCPT <rfc822;git-outgoing>); Sat, 22 Mar 2008 15:55:42 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:47901 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750946AbYCVTzl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Mar 2008 15:55:41 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 1D4151702;
-	Sat, 22 Mar 2008 15:55:39 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 0904A15BC; Sat, 22 Mar 2008 15:55:34 -0400 (EDT)
-In-Reply-To: <f36b08ee0803220207j60eacbbet279c62f642cdaed0@mail.gmail.com>
- (Yakov Lerner's message of "Sat, 22 Mar 2008 11:07:43 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751200AbYCVT7K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Mar 2008 15:59:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751191AbYCVT7J
+	(ORCPT <rfc822;git-outgoing>); Sat, 22 Mar 2008 15:59:09 -0400
+Received: from smtp.aranyoroszlan.hu ([195.56.77.57]:54237 "EHLO
+	smtp.aranyoroszlan.hu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751197AbYCVT7I (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Mar 2008 15:59:08 -0400
+Received: (qmail 3098 invoked by uid 263); 22 Mar 2008 20:08:13 -0000
+Received: from 213.178.104.196 (js@iksz.hu@213.178.104.196) by tcb.aranyoroszlan.hu (envelope-from <js@iksz.hu>, uid 256) with qmail-scanner-2.02st 
+ (clamdscan: 0.92/5779. spamassassin: 3.2.4. perlscan: 2.02st.  
+ Clear:RC:0(213.178.104.196):SA:0(-1.4/5.0):. 
+ Processed in 3.679647 secs); 22 Mar 2008 20:08:13 -0000
+X-Spam-Status: No, hits=-1.4 required=5.0
+X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on tcb.aranyoroszlan.hu
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.4 required=5.0 tests=AWL,BAYES_00,RCVD_IN_PBL,
+	RDNS_NONE autolearn=no version=3.2.4
+X-Envelope-From: js@iksz.hu
+Received: from unknown (HELO ?192.168.1.100?) (js@iksz.hu@213.178.104.196)
+  by tcb.aranyoroszlan.hu with SMTP; 22 Mar 2008 20:08:09 -0000
+User-Agent: Thunderbird 2.0.0.12 (Windows/20080213)
+In-Reply-To: <37fcd2780803211157n15cec620gb5ab1d3e57ccd37b@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77847>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77848>
 
-"Yakov Lerner" <iler.ml@gmail.com> writes:
+Dmitry Potapov wrote:
+> I wonder do you really need to have two files on different branches whose
+> name only differ by case, especially when you work on case insensitive
+> filesystem? I suspect the answer is no. In this case, you can choose one
+> policy for file naming and stick to it. For instance, that all names should
+> be in low case except Makefile, or something like that. This policy can be
+> enforced using pre-commit hook.
+>   
 
-> On Wed, Mar 19, 2008 at 8:23 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> Does it happen with "master" as well?
->
-> Yes. Happens both in master and in next, when patchfile begins
-> either with empty line, or with paragraph indented by 1 space.
+qmail-1.03 is one of the rare species which has two files which differ 
+only in their case, namely INSTALL and install.  The first one contains 
+the documentation, the latter one is compiled from source.  Apart from 
+that I don't know any other affected projects.
 
-Thanks for responding, but I think this was already identified by Frank to
-be a malformed user input and not a bug, wasn't it?
+On the other hand, most of the software developers are morons, 
+especially in a corporate environment.  The problem is you cannot refuse 
+their work all the way, and they like to create evil twins (file names 
+which were removed and added again), and case collisions.  I could even 
+see a lot of symlinks in a clearcase vob which poined to 
+`..\..\..\../a/b/c'.  Developer stupidity is unlimited.
+
+Regards,
+-- 
+-jul-
