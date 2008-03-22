@@ -1,86 +1,76 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: [PATCH] rebase with preserve merges should not show merged
-	commits
-Date: Sat, 22 Mar 2008 13:37:34 +0100
-Message-ID: <20080322123734.GA10467@atjola.homenet>
-References: <1206148785-29466-1-git-send-email-joerg@alea.gnuu.de> <20080322015252.GA7570@atjola.homenet> <20080322094051.GA30074@alea.gnuu.de>
+From: Sven Marnach <sven@pantoffel-wg.de>
+Subject: Rebasing a complete revision graph
+Date: Sat, 22 Mar 2008 13:19:55 +0100
+Message-ID: <20080322121954.GA5578@pantoffel-wg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: =?iso-8859-1?Q?J=F6rg?= Sommer <joerg@alea.gnuu.de>
-X-From: git-owner@vger.kernel.org Sat Mar 22 13:38:30 2008
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 22 13:42:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jd2zU-0004kt-RQ
-	for gcvg-git-2@gmane.org; Sat, 22 Mar 2008 13:38:29 +0100
+	id 1Jd33g-0005u1-4f
+	for gcvg-git-2@gmane.org; Sat, 22 Mar 2008 13:42:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754934AbYCVMhi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 22 Mar 2008 08:37:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754845AbYCVMhi
-	(ORCPT <rfc822;git-outgoing>); Sat, 22 Mar 2008 08:37:38 -0400
-Received: from mail.gmx.net ([213.165.64.20]:42471 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754646AbYCVMhh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Mar 2008 08:37:37 -0400
-Received: (qmail invoked by alias); 22 Mar 2008 12:37:35 -0000
-Received: from i577AC47C.versanet.de (EHLO atjola.local) [87.122.196.124]
-  by mail.gmx.net (mp027) with SMTP; 22 Mar 2008 13:37:35 +0100
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX1/zOL9V+nHz9FIvI/NiMoHXWUSOlReYfbYFyr+8Vz
-	2F5org+Zv/ebx+
+	id S1755009AbYCVMmG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Mar 2008 08:42:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754954AbYCVMmF
+	(ORCPT <rfc822;git-outgoing>); Sat, 22 Mar 2008 08:42:05 -0400
+Received: from relay.uni-heidelberg.de ([129.206.100.212]:56586 "EHLO
+	relay.uni-heidelberg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753999AbYCVMmE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Mar 2008 08:42:04 -0400
+X-Greylist: delayed 1321 seconds by postgrey-1.27 at vger.kernel.org; Sat, 22 Mar 2008 08:42:04 EDT
+Received: from ix.urz.uni-heidelberg.de (cyrus1.urz.uni-heidelberg.de [129.206.119.235])
+	by relay.uni-heidelberg.de (8.14.1/8.14.1) with ESMTP id m2MCJuAd014055
+	for <git@vger.kernel.org>; Sat, 22 Mar 2008 13:19:57 +0100
+Received: from extmail.urz.uni-heidelberg.de (extmail.urz.uni-heidelberg.de [129.206.100.140])
+	by ix.urz.uni-heidelberg.de (8.8.8/8.8.8) with ESMTP id NAA14630980
+	for <git@vger.kernel.org>; Sat, 22 Mar 2008 13:19:56 +0100
+Received: from bagheera.suspekt (dslb-084-056-239-215.pools.arcor-ip.net [84.56.239.215])
+	(authenticated bits=0)
+	by extmail.urz.uni-heidelberg.de (8.13.4/8.13.1) with ESMTP id m2MCJoFO019931
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO)
+	for <git@vger.kernel.org>; Sat, 22 Mar 2008 13:19:52 +0100
+Received: from sven by bagheera.suspekt with local (Exim 4.69)
+	(envelope-from <sven@pantoffel-wg.de>)
+	id 1Jd2hX-0002Ga-2F
+	for git@vger.kernel.org; Sat, 22 Mar 2008 13:19:55 +0100
 Content-Disposition: inline
-In-Reply-To: <20080322094051.GA30074@alea.gnuu.de>
 User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77800>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77801>
 
-On 2008.03.22 10:40:51 +0100, J=F6rg Sommer wrote:
-> Hallo Bj=F6rn,
->=20
-> Bj=F6rn Steinbrink schrieb am Sat 22. Mar, 02:52 (+0100):
-> > On 2008.03.22 02:19:42 +0100, J=F6rg Sommer wrote:
-> > > The current version of git-rebase--interactive shows the user the=
- commits
-> > > coming from a merge.
-> > >=20
-> > > M---A---B
-> > >  \       \
-> > >   o---o---+---o branch
-> > >=20
-> > > Rebasing branch on M with preserve merges gives the commits A and=
- B. But
-> > > if you mark them for editing or remove them the rebase fails. You=
- must
-> > > keep them as they are. It's useless to bother the user with these=
- commits
-> > > and might lead to mistakes.
-> >=20
-> > Uhm, why do you completely remove the possibility to edit A instead=
- of
-> > fixing the code so that the editing actually works?
->=20
-> Because I didn't see why it's useful to edit A and create A' and merg=
-e in
-> A again, later.
->=20
-> M---A---B
->  \       \
->   C---D---+---o branch
->=20
-> M---A--------------B
->  \                  \
->   C---B'---D'---A'---+---o branch
+Hi,
 
-Hm? Why do you have A' and B' on the other side of the merge? Using -p
-means that you deliberately _disable_ the linearization. The structure
-of the history is not supposed to change at all. You're just editing A
-and the merge should pull A(edited) and B in.
+I'm wondering if there is a way of rebasing a wohle revision graph
+with multiple branches and merges, but I didn't find anything in the
+documentation or on the mailing list.
 
-Bj=F6rn
+My use case is as follows: I imported an svn repository to git using
+git-svn, but threw away all svn metadata because I just wanted a
+one-shot import.  Now I changed my mind and I would like to use "git
+svn dcommit" to push the master branch commits to that old svn
+repository stil lying around.  There were no changes to that
+repository meanwhile, and I'm the only one committing to the git
+repository.
+
+So my idea is to reimport the svn repository with git-svn, this time
+preserving metadata, and rebasing all the branches in my old git
+repository on that new import.  (I don't care about all the commits
+being rewritten.)  Doing this manually is a big mess, because you have
+to do it for every branch and you have to decide each time onto which
+commit the branch should be rebased.  If the graph is more complex, it
+seems completely impossible to me to do this using git-rebase.
+Moreover, all tags must be moved manually to the new repository.
+
+Is there some automated way to to this?
+
+(I'm not on the list, please reply directly to me.)
+
+Greetings and thanks,
+    Sven
