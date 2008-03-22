@@ -1,102 +1,69 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH] remote.c: Fix overtight refspec validation
-Date: Fri, 21 Mar 2008 20:36:42 -0400 (EDT)
-Message-ID: <alpine.LNX.1.00.0803212021190.19665@iabervon.org>
-References: <alpine.LNX.1.00.0803202049090.19665@iabervon.org> <7v4pb0vhrg.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0803210014100.19665@iabervon.org> <7vmyosskyu.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0803210134070.19665@iabervon.org>
- <7v3aqksic6.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0803211148120.19665@iabervon.org> <7vlk4boh6v.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0803211840480.19665@iabervon.org> <7vy78bmxx1.fsf@gitster.siamese.dyndns.org>
+From: Johan Herland <johan@herland.net>
+Subject: [RFC/PATCH 0/3] Teach builtin-clone to pack refs
+Date: Sat, 22 Mar 2008 02:10:30 +0100
+Message-ID: <200803220210.30957.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Samuel Tardieu <sam@rfc1149.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Mar 22 01:37:27 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Sat Mar 22 02:11:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jcrjh-0003qQ-LA
-	for gcvg-git-2@gmane.org; Sat, 22 Mar 2008 01:37:26 +0100
+	id 1JcsH5-000502-7A
+	for gcvg-git-2@gmane.org; Sat, 22 Mar 2008 02:11:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753753AbYCVAgq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Mar 2008 20:36:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752315AbYCVAgq
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Mar 2008 20:36:46 -0400
-Received: from iabervon.org ([66.92.72.58]:36500 "EHLO iabervon.org"
+	id S1753599AbYCVBLM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Mar 2008 21:11:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753653AbYCVBLK
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Mar 2008 21:11:10 -0400
+Received: from smtp.getmail.no ([84.208.20.33]:34399 "EHLO smtp.getmail.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751816AbYCVAgp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Mar 2008 20:36:45 -0400
-Received: (qmail 338 invoked by uid 1000); 22 Mar 2008 00:36:42 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 22 Mar 2008 00:36:42 -0000
-In-Reply-To: <7vy78bmxx1.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1752933AbYCVBLJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Mar 2008 21:11:09 -0400
+Received: from pmxchannel-daemon.no-osl-m323-srv-004-z2.isp.get.no by
+ no-osl-m323-srv-004-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ id <0JY30070DXYJLH00@no-osl-m323-srv-004-z2.isp.get.no> for
+ git@vger.kernel.org; Sat, 22 Mar 2008 02:11:07 +0100 (CET)
+Received: from smtp.getmail.no ([10.5.16.1])
+ by no-osl-m323-srv-004-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JY3000P4XXJ8R30@no-osl-m323-srv-004-z2.isp.get.no> for
+ git@vger.kernel.org; Sat, 22 Mar 2008 02:10:31 +0100 (CET)
+Received: from alpha.herland ([84.215.102.95])
+ by no-osl-m323-srv-009-z1.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JY3001BVXXJJ930@no-osl-m323-srv-009-z1.isp.get.no> for
+ git@vger.kernel.org; Sat, 22 Mar 2008 02:10:31 +0100 (CET)
+Content-disposition: inline
+User-Agent: KMail/1.9.9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77779>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77780>
 
-On Fri, 21 Mar 2008, Junio C Hamano wrote:
+The following series builds on top of Barkalow's existing builtin-clone work, available in the "builtin-clone" branch at:
+	git://iabervon.org/~barkalow/git.git
 
-> Daniel Barkalow <barkalow@iabervon.org> writes:
-> 
-> >> +		/*
-> >> +		 * Do we want to validate LHS?
-> >> + ...
-> >> +		 * Hence we check non-empty LHS for fetch, and
-> >> +		 * colonless or glob LHS for push here.
-> >> +		 */
-> >
-> > Wouldn't this be clearer and not meaningfully harder in 
-> > parse_fetch_refspec and parse_push_refspec?
-> 
-> Do you mean you want the callers of this internal implementation to also
-> loop over the input set of refs?  I think that would be more complex code
-> but I do not see much gain by doing so.
+This patch series teaches builtin-clone to create packed refs. Creating packed refs directly in clone (instead of creating loose refs and have the next "git gc" (re)pack them), makes cloning considerably faster on repos with many refs. In a test repo with 11000 refs (1000 branches, 10000 tags) I get the following numbers (Core 2 Quad, 4GB RAM running Gentoo Linux):
 
-I think it's more breadth but less depth. It would make the internal 
-implementation not depend on fetch, and put the checks that only apply to 
-fetch out of the push code path and vice versa.
+- Current "next": ~24.8 seconds
+- Barkalow's "builtin-clone" branch: 1.47 seconds
+- "builtin-clone" plus this series: 0.31 seconds
 
-Or just have a section
+Although most of the speedup from current "next" is achieved by the builtin-clone work, there is still a considerable additional improvement from writing all refs to a single file instead of writing one file per ref. I expect the performance improvement to be much bigger on platforms with slower filesystem (aka. Windows).
 
-	if (fetch) {
-		// checks for fetch LHS
-		// checks for fetch RHS
-	} else {
-		// checks for push LHS
-		// checks for push RHS
-	}
+A side-effect of this series is that the cloned refs will not get reflog entries. I don't know how important these "clone: from $URL" entries are to people; I, for one, wouldn't miss them at all.
 
-The body of the condition is only four lines, after all.
 
-> >> +		if (fetch ? (*rs[i].src) : (!rhs || is_glob)) {
-> >
-> > This is an odd combination of locals and struct members.
-> >                                        : (!rs[i].dst || rs[i].pattern) {
-> 
-> Sorry, I do not understand what's wrong about it.
-> 
-> 	!!rhs === (did we see a colon) === !!rs[].dst
->         is_glob === (did they both end with "/*") === rs[].pattern
-> 
-> They are equivalent, and local variables are primarily what the logic
-> works on and bases its decisions to store what in rs[] structures.
+Have fun! :)
 
-Considering that it's already stored values into the struct, it might as 
-well use those, and those are presumably more familiar to the average 
-reader, because all of the git code that uses refspecs other than this 
-function uses them.
+...Johan
 
-> Ahh...  do you mean:
-> 
-> 	(*rs[i].src) === (is lhs non empty?) === !!llen
-> 
-> I guess using "llen" there is more consistent and is moderately cleaner.
-
-I'd go the other way, but having them all from the same set makes more 
-sense than one from one set and two from the other, regardless of which 
-way. If you go this way, you should probably also include the the rhs 
-checks, and the argument to check_ref_format().
-
-	-Daniel
-*This .sig left intentionally blank*
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
