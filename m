@@ -1,225 +1,110 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [SoC] egit: pre-proposal, problem recognition
-Date: Sun, 23 Mar 2008 03:52:41 -0400
-Message-ID: <20080323075241.GL8410@spearce.org>
-References: <47E532DD.7030901@gmail.com>
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Store autocrlf during init-db (was [msysGit] autocrlf
+ problems with Git-preview20080301.exe)
+Date: Sun, 23 Mar 2008 10:31:36 +0100 (CET)
+Message-ID: <alpine.OSX.1.00.0803230943500.7541@cougar>
+References: <f5d99ae7-e4b3-4632-ad86-8ebe0e683d49@d62g2000hsf.googlegroups.com> <alpine.LSU.1.00.0803101327390.3975@racer.site> <bdca99240803100611s3c8b3b9djb1b993c9fbad712@mail.gmail.com> <alpine.LSU.1.00.0803101448430.3975@racer.site> <cb8f4255-2bf8-4489-aeb0-c18d6e932342@s13g2000prd.googlegroups.com> <ab311292-809f-4e45-a19d-a600c2333ab6@a23g2000hsc.googlegroups.com> <alpine.OSX.1.00.0803221036230.7618@cougar> <7vzlsqfe2h.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0803230310500.4353@racer.site>
+Reply-To: prohaska@zib.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, gsoc@spearce.org
-To: Marek Zawirski <marek.zawirski@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 23 08:53:42 2008
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junio@pobox.com>, prohaska@zib.de, tormod.hystad@gmail.com, msysGit <msysgit@googlegroups.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Sun Mar 23 10:31:38 2008
+Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from py-out-1314.google.com ([64.233.166.174])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JdL1O-0008Ht-OE
-	for gcvg-git-2@gmane.org; Sun, 23 Mar 2008 08:53:39 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753244AbYCWHwq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 23 Mar 2008 03:52:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753130AbYCWHwq
-	(ORCPT <rfc822;git-outgoing>); Sun, 23 Mar 2008 03:52:46 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:57200 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753120AbYCWHwp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 Mar 2008 03:52:45 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1JdL0T-0005FW-Oq; Sun, 23 Mar 2008 03:52:41 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 164B720FBAE; Sun, 23 Mar 2008 03:52:42 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <47E532DD.7030901@gmail.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-Sender: git-owner@vger.kernel.org
+	id 1JdMYC-0001F9-OH
+	for gcvm-msysgit@m.gmane.org; Sun, 23 Mar 2008 10:31:37 +0100
+Received: by py-out-1314.google.com with SMTP id u10so4249893pyb.2
+        for <gcvm-msysgit@m.gmane.org>; Sun, 23 Mar 2008 02:30:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=gamma;
+        h=domainkey-signature:received:received:x-sender:x-apparently-to:received:received:received-spf:authentication-results:received:received:date:from:to:cc:subject:in-reply-to:message-id:references:user-agent:mime-version:content-type:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
+        bh=0Ep2urCdNrdgcBpqt7y6fx0wAwjQgowCPpxlJnBSUVg=;
+        b=R5avZAVMUmKqPW6NyGNsAJ6CBsBd62u5BjrhynWjDSrYxyn7sQkb/nNIhcrVRBVT8NrOvOO31pV3cLx3Acs35LMfuNY8t+tz6Ke2ErnVVgZdMxTamJy4gC5niBIhtSXEgBOR267FS4lTcwhXMEWskzj0t8MPXJEuBQuQuP8VXjU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlegroups.com; s=gamma;
+        h=x-sender:x-apparently-to:received-spf:authentication-results:date:from:to:cc:subject:in-reply-to:message-id:references:user-agent:mime-version:content-type:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
+        b=zIQFfN7nhZ6HhxUF1XD1IXYRP4XRtZ9VqL+W3I/0dmsM7LF9Ya42lHrvp4zeRXmIs5sdyIEWNuNMlCg8EBYsUHFtRtYLyD+hyx5NKPRL2h1/prkFAqbb8yBoOSnOQo0LzssFOS5bNIwLxBoVowuKcG0ntd9ZYQkASGJrE3pD0bk=
+Received: by 10.150.152.17 with SMTP id z17mr483657ybd.15.1206264656462;
+        Sun, 23 Mar 2008 02:30:56 -0700 (PDT)
+Received: by 10.44.74.68 with SMTP id w68gr1992hsa.0;
+	Sun, 23 Mar 2008 02:30:56 -0700 (PDT)
+X-Sender: prohaska@zib.de
+X-Apparently-To: msysgit@googlegroups.com
+Received: by 10.35.43.2 with SMTP id v2mr6223742pyj.3.1206264655889; Sun, 23 Mar 2008 02:30:55 -0700 (PDT)
+Received: from mailer.zib.de (mailer.zib.de [130.73.108.11]) by mx.google.com with ESMTP id x46si7328361pyg.2.2008.03.23.02.30.55; Sun, 23 Mar 2008 02:30:55 -0700 (PDT)
+Received-SPF: pass (google.com: best guess record for domain of prohaska@zib.de designates 130.73.108.11 as permitted sender) client-ip=130.73.108.11;
+Authentication-Results: mx.google.com; spf=pass (google.com: best guess record for domain of prohaska@zib.de designates 130.73.108.11 as permitted sender) smtp.mail=prohaska@zib.de
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31]) by mailer.zib.de (8.14.2/8.14.2) with ESMTP id m2N9Uqnq011384; Sun, 23 Mar 2008 10:30:52 +0100 (CET)
+Received: from cougar (brln-4db97827.pool.einsundeins.de [77.185.120.39]) (authenticated bits=0) by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m2N9Uiir006027 (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO); Sun, 23 Mar 2008 10:30:47 +0100 (MET)
+In-Reply-To: <alpine.LSU.1.00.0803230310500.4353@racer.site>
+User-Agent: Alpine 1.00 (OSX 882 2007-12-20)
+Sender: msysgit@googlegroups.com
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77871>
+X-Google-Loop: groups
+Mailing-List: list msysgit@googlegroups.com;
+	contact msysgit-owner@googlegroups.com
+List-Id: <msysgit.googlegroups.com>
+List-Post: <mailto:msysgit@googlegroups.com>
+List-Help: <mailto:msysgit-help@googlegroups.com>
+List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
+	<mailto:msysgit-unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77872>
 
-Marek Zawirski <marek.zawirski@gmail.com> wrote:
+
+On Sun, 23 Mar 2008, Johannes Schindelin wrote:
+
+> On Sat, 22 Mar 2008, Junio C Hamano wrote:
 > 
-> Let's start from some clean-up:
-> http://git.or.cz/gitwiki/EclipsePluginWishlist - isn't this site a 
-> little outdated? It appears that tasks: Commit, Switch Branch (without 
-> dirty workspace/merge support) are already done, aren't they?
+> > 
+> > Steffen Prohaska <prohaska@zib.de> writes:
+> > 
+> > >> I suppose autocrlf enabled by default could be useful for new 
+> > >> repositories, but not for working with existing repositories.
+> > >
+> > > We changed the global default to a sane setting for cross-platform 
+> > > projects to avoid such problems in the future.  This means that from 
+> > > now on git will take care that any repository newly created will have 
+> > > sane line endings (LF in the repository; and CRLF in the work tree if 
+> > > checked out on Windows respectively LF if checked out on Unix).
+> > 
+> > I've always wondered why you guys used /etc/gitconfig instead of setting 
+> > it in the templates (or a patch to git-init).
+> > 
+> > I was against the idea of /etc/gitconfig from the very beginning (even 
+> > before msysgit existed) in git.git itself, but this is a very good 
+> > example why /etc/gitconfig is a bad idea.  It affects _existing_ setups.
+> > 
+> > How about fixing msys port so that it sets the configuration when the 
+> > user initializes a _new_ repository, without breaking repositories the 
+> > user has been happily using?
+> 
+> Makes sense.
 
-Yea, I think you may be right.  I haven't been too current on egit
-lately, but I think these did get implemented.  Sometimes the wiki
-is out of date.  Happens because we would rather be working on code
-than updating the wiki.  :)
+Hmm.  I am not convinced.
 
-> Some operations look for me as rather straight-forward to implement - 
-> not appropriate for a whole GSoC project (or do I underestimate?). 
-> Namely: Create/Delete Branch, Create/Delete Tag, Gitignore, Checkout(?).
+Setting autocrlf for every repository limits the user's options to
+override the default.  Currently we provide a global default and the
+user can either override globally for all his repositories or on
+a per-repository basis.  Hence, users can decide that they want autocrlf
+to never happen and can easily set this in ~/.gitconfig.  If we stored
+autocrlf in every newly created repository, the user would need to
+override our default again and again for every new repository.
 
-I think you are right.  Doing all of them might be a GSoC project,
-but a lot of it is just busy work and not that interesting of a
-challenge.  Sure, it has to be done by someone, and everyone will
-appreciate the effort once its complete, especially if its done well.
-But doing just one of them as a GSoC project would be too small.
+Maybe what we want is to conserve the setup that exists when a new
+repository is created.  Changing autocrlf later is tricky because the
+work tree's line endings depend on the settings during checkout.
+Therefore, it makes sense to preserve the value of autocrlf that exists
+during the first checkout.  In this regards autocrlf is different from,
+for example, author because author can be easily changed later without
+requiring any conversion of existing files in the work tree.
 
-> GSoC2008 site states, that most wanted tasks are (that's reasonable) 
-> Push and Merge implementation. Fetch operation also looks to be not 
-> implemented yet?
+Patch follows.
 
-Fetch and clone are in progress.  Robin Rosenburg (the current egit
-maintainer) has it just about finished and will probably contribute
-it soon.  But I think its going to cause merge conflicts with my own
-revwalk work.  So that's why fetch isn't on the GSoC 2008 ideas list.
+Unfortunately the proposed change won't change the fact that existing
+msysgit setups still break.  I still do not see an easy way to avoid
+this.
 
-> So what can I do:
-> I think that 1-2 from 3 main jgit+egit tasks (Push, Fetch, Merge) appear 
-> to be well-sized for a GSoC project. IMO, there is also need for a lot 
-> of smaller improvements in egit itself: preferences, preference page, 
-> user-friendliness related: more icons and information, help in dialogs, 
-> wizards, menus etc. I'm thinking of taking 1 main task - implementing 
-> first jgit part, then egit part. And if I finish it before time, I could 
-> work on set of such smaller improvements in egit itself, to make it 
-> easier/nicer for user.
-
-Yes, I agree with that, except no fetch, as it will hopefully merge
-before GSoC summer officially starts.  A lot of the polish you are
-talking about leaving to the end of the project is critical for any
-good GUI.  I would not mind seeing it worked once the major features
-are completed.
-
-I did want to start on push work myself.  But if a student comes
-along and does it for me, then awesome. :)
-
-> operation) as main-task, but Merge also looks interesting. What is more, 
-> I perceive Merge and Fetch operations as most wanted, because being on 
-> project critical-path, blocking implementation of other tasks. Merge 
-> seems also to be used very often itself.
-
-Yes.  Lots of interesting git features (cherry-pick, revert, rebase)
-are heavily based upon diff/apply and merge.  diff/apply can be
-implemented in terms of merge in many cases, and we do that a lot
-in C Git. So we do really need a working merge implementation.
- 
-> Current implementation status:
-> There is currently no Eclipse (GUI, workspace logic) code directly for 
-> each of main tasks.
-> What about jgit? I haven't looked at details of implementation yet 
-> (sorry, I'm starting), but...
-
-Yea, aside from fetch there is no support yet in jgit for any of
-the main tasks you were talking about, and the fetch part hasn't
-merged to the public egit tree yet.
-
-> For Fetch or Push: I'll need to implement protocol(s) for sure: git, ssh 
-> protocols first as wiki-recommends - wisely, I think. What about support 
-> from jgit internals: do I need to add some git structures implementation 
-> to accomplish Fetch or Push: like object packing, needed objects 
-> tracking?
-
-The object packing (aka git-pack-objects in Java) is required
-for push.  Object tracking to feed the packer is almost finished
-in my revwalk branch, which also has not merged yet.  I started
-that work to improve the performance and feature capabilities of
-the History view, but its also to provide the object enumeration
-functions required for the packfile generator, which is needed for
-push to be implemented.
-
-> Or is almost everything available, so I just need to use this 
-> structures and concentrate on upload/receive operation and protocol 
-> implementation?
-
-Some of it is there.  The packer isn't, and the packer is a key
-part of the protocol.  Its what is actually doing the data transfer.
-The command part of the protocol is actually fairly simple, and is
-even easier on the push side (the fetch side is more complex).
-
-> I've got also some doubts 
-> concerning SSH vs git access protocols. Are git-receive-pack and 
-> git-upload-pack used by both of these access protocols? If so, it make 
-> things easier:)
-
-Yes.  If you dig into the C implementation what we are actually doing for
-fetch over SSH is:
-
-	ssh user@hostname git-upload-pack path/to/project.git
-
-and for push:
-
-	ssh user@hostname git-receive-pack path/to/project.git
-
-Now the git:// native protocol just opens a TCP connection to a
-server running git-daemon, sends the service name and directory
-(which is the last args you see above to SSH), and then the daemon
-executes that program.  After that point the SSH vs. native Git
-are identical.  The major reason for SSH wrapping is its obvious
-security benefits.  The major reason for the native Git protocol
-is efficient anonymous publication, especially for popular open
-source projects.
-
-> For Merge: I'll need to implement 3-way merge algorithm. Wiki says that 
-> one can look at Eclipse, if it is already implemented there. IMHO it's 
-> better to implement it at jgit level, independently of egit, basing on 
-> original git implementation, don't you think (I've seen that there are 
-> some efforts to implement git plugin for NetMeans, basing on jgit 
-> library)? I wonder how laborious this task is, i.e. as for Fetch/Push: 
-> does translation of this algorithm written in C to Java requires 
-> significant changes or improvements to existing jgit code?
-
-Yea, I wrote that statement about using merge code from Eclipse,
-but lately I have been thinking that is a bad idea.  Another person
-has stated to talk about using jgit to build a Git NetBeans plugin,
-and in another case there may be some idea of compiling jgit to
-CLR and using it for a Git Mono plugin.
-
-There is currently little-to-no merge support in jgit.  All of it
-needs to be ported in, or obtained from a suitable Java library that
-we can embed and ship as part of the package.  C Git for example
-embeds and ships libxdiff for most of its diff/merge code.
- 
-> What do you think about importance of each task and what is your feeling 
-> about time needed to implement each?
-
-I think merge is a huge task, especially if you have to do your own
-file level merge implementation by porting in say libxdiff to Java.
-Focusing on merge may take the better part (or all!) of a GSoC
-summer, but if you finished early then I would suggest doing the
-much needed UI additions like you discussed above.
- 
-> I've got some experiences with JSch (bad experience...) and Trilead SSH 
-> (much more postive) - BSD-licensed SSH implementations for Java.
-
-Interesting that JSch wasn't a good experience.  Eclipse has just made it
-an official part of the core platform, even without the IDE and its CVS
-plugin.  I was sort of hoping that given it is now fully integrated into
-Eclipse, and its key management is just part of the workspace, that we
-could take advantage of that in egit.
- 
-> To this time I was working on many smaller projects, and one bigger (>1 
-> year, BSc and grids related), mostly in small teams, sometimes 
-> distributed. It seems to be great experience if I can join git community:)
-
-You can join any time.  GSoC is just a good execuse.  :)
-
-> PS BTW: I've wonder what "Checkpoint project" in Eclipse Team menu 
-> stands for?
-
-That's my fault.  A long time ago egit stored the workspace back
-out as trees, rather than using the standard .git/index file.
-It was slow and cost a lot of time, so I tried to put that activity
-onto a low priority background job.  The job caused more problems,
-so Robin got rid of it.  But the menu option to allow the user to
-force a checkpoint is still there.
-
-A checkpoint lets egit construct a tree object for the current
-files, so a commit is faster as all of the blobs are already in the
-object store.  But with the index and add (aka stage) now in egit,
-and the commit dialog, that is less of an issue as the tree gets
-created from the index, which you already staged files into.
-
-In short, that menu option needs to come out at some point.
-
--- 
-Shawn.
+            Steffen
