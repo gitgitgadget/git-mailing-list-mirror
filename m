@@ -1,103 +1,71 @@
-From: "Elijah Newren" <newren@gmail.com>
-Subject: Re: Working copy revision and push pain
-Date: Sun, 23 Mar 2008 08:06:57 -0600
-Message-ID: <51419b2c0803230706w5ff88fc7oc7e8e34ab8afa1fd@mail.gmail.com>
-References: <47E64F71.3020204@jwatt.org>
-	 <alpine.LSU.1.00.0803231401340.4353@racer.site>
-	 <47E658D3.1060104@jwatt.org>
-	 <51419b2c0803230645l5b07bbf5h9cbf9b6f47373efa@mail.gmail.com>
-	 <47E6612A.5020408@jwatt.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [msysGit] Re: Store autocrlf during init-db (was [msysGit]
+ autocrlf problems with Git-preview20080301.exe)
+Date: Sun, 23 Mar 2008 15:07:28 +0100 (CET)
+Message-ID: <alpine.LSU.1.00.0803231506000.4353@racer.site>
+References: <f5d99ae7-e4b3-4632-ad86-8ebe0e683d49@d62g2000hsf.googlegroups.com> <alpine.LSU.1.00.0803101327390.3975@racer.site> <bdca99240803100611s3c8b3b9djb1b993c9fbad712@mail.gmail.com> <alpine.LSU.1.00.0803101448430.3975@racer.site>
+ <cb8f4255-2bf8-4489-aeb0-c18d6e932342@s13g2000prd.googlegroups.com> <ab311292-809f-4e45-a19d-a600c2333ab6@a23g2000hsc.googlegroups.com> <alpine.OSX.1.00.0803221036230.7618@cougar> <7vzlsqfe2h.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0803230310500.4353@racer.site>
+ <alpine.OSX.1.00.0803230943500.7541@cougar> <alpine.LSU.1.00.0803231200010.4353@racer.site> <alpine.OSX.1.00.0803231326290.11994@cougar> <alpine.LSU.1.00.0803231404390.4353@racer.site> <alpine.OSX.1.00.0803231428220.13789@cougar>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: "Jonathan Watt" <jwatt@jwatt.org>
-X-From: git-owner@vger.kernel.org Sun Mar 23 15:07:40 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junio@pobox.com>, tormod.hystad@gmail.com,
+	msysGit <msysgit@googlegroups.com>, git@vger.kernel.org
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Sun Mar 23 15:08:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JdQrL-00068p-9f
-	for gcvg-git-2@gmane.org; Sun, 23 Mar 2008 15:07:39 +0100
+	id 1JdQrq-0006Fr-DI
+	for gcvg-git-2@gmane.org; Sun, 23 Mar 2008 15:08:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757327AbYCWOG6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 23 Mar 2008 10:06:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756439AbYCWOG6
-	(ORCPT <rfc822;git-outgoing>); Sun, 23 Mar 2008 10:06:58 -0400
-Received: from wa-out-1112.google.com ([209.85.146.177]:41703 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756027AbYCWOG5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 Mar 2008 10:06:57 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so2857700wah.23
-        for <git@vger.kernel.org>; Sun, 23 Mar 2008 07:06:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=YM5RiswHeltgpwNwgGMKrPXqcQscUUe4Xy3kquOu7Vg=;
-        b=t30wd3aDGTo6oziVoujPqtSoXMmr4xDmd2LavSQsi8D0x3llDuj9iGX1MbYXPKfepPUOwK1mmdKF55O0RzTgjHV3Slbc7jteWiTDWsnxPzUPvjgM1SVsSNnF6wcFuspPrYdSDCSHF+dIIz64DhyZduaMBNhlHe6luATPOLQHiOo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=KaOLfFewgZegjaueqyfaDBOXiU0NN2AJlow9yceDkUcbWhGdqVhDM/fn/anhToHUix19hByhklIyGwO1QoPpySZvWJm+WQONeo1eDnzGs/D6dx78lwyBkPUjRl6HHgAWnsWvaQh9I1MqCEpSi+C87X40e+Ze2Im/JIGMa0A9xv8=
-Received: by 10.114.134.20 with SMTP id h20mr9699029wad.91.1206281217392;
-        Sun, 23 Mar 2008 07:06:57 -0700 (PDT)
-Received: by 10.114.205.19 with HTTP; Sun, 23 Mar 2008 07:06:57 -0700 (PDT)
-In-Reply-To: <47E6612A.5020408@jwatt.org>
-Content-Disposition: inline
+	id S1758611AbYCWOH3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 23 Mar 2008 10:07:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756439AbYCWOH3
+	(ORCPT <rfc822;git-outgoing>); Sun, 23 Mar 2008 10:07:29 -0400
+Received: from mail.gmx.net ([213.165.64.20]:60434 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756027AbYCWOH3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Mar 2008 10:07:29 -0400
+Received: (qmail invoked by alias); 23 Mar 2008 14:07:27 -0000
+Received: from host86-148-26-43.range86-148.btcentralplus.com (EHLO racer.home) [86.148.26.43]
+  by mail.gmx.net (mp004) with SMTP; 23 Mar 2008 15:07:27 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+SzUxpyrWSEZC5RlJcXtjYVwvcuY6EYW6rctAzaR
+	7ltVkwBOeNlPAi
+X-X-Sender: gene099@racer.site
+In-Reply-To: <alpine.OSX.1.00.0803231428220.13789@cougar>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77900>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77901>
 
-On Sun, Mar 23, 2008 at 7:54 AM, Jonathan Watt <jwatt@jwatt.org> wrote:
-> Elijah Newren wrote:
->  > On Sun, Mar 23, 2008 at 7:19 AM, Jonathan Watt <jwatt@jwatt.org> wrote:
->  >> Johannes Schindelin wrote:
->  >>  > Hi,
->  >>  >
->  >>  > On Sun, 23 Mar 2008, Jonathan Watt wrote:
->  >>  >
->  >>  >> There seems to be a problem with git-push when the working copy of the
->  >>  >> directory being pushed to came from the magic revision HEAD, but not
->  >>  >> when the working copy came from some other revision.
->  >>  >
->  >>  > http://git.or.cz/gitwiki/GitFaq#head-b96f48bc9c925074be9f95c0fce69bcece5f6e73
->  >>  >
->  >>  > Sidenote: I am constantly amazed how people have no problem accepting that
->  >>  > a CVS-Server has no working directory, but all of a sudden think that a
->  >>  > Git-server should have one, and auto-update it.
->  >>
->  >>  Hi Dscho. I think you've misread my email. (Or not read it. ;-)) I do not expect
->  >>  git-push to update the working copy of the repository being pushed to. In fact
->  >>  my complaint would be more that it *does* appear to modify the working copy
->  >>  (well, not so much modify the working copy as get confused about which revision
->  >>  the working copy came from) when the working copy came from HEAD.
->  >
->  > Ah, I hadn't thought of it that way before.  I think you are
->  > suggesting that pushing to the active branch of a repository with an
->  > associated working copy should cause the HEAD to become detached.  Is
->  > that right?
->
->  To be honest, I'm not sure what you mean by "HEAD to become detached". If you
->  mean that the git-push should, if necessary, stop associating the working copy
->  with HEAD if it's going to change HEAD, then absolutely. It wasn't the same
->  solution as I was thinking of (stop associating the working copy with HEAD and
->  instead associate it with the sha1 HEAD currently points to), but I guess it's
->  the same result. :-)
->
->  Jonathan
+Hi,
 
-In git, HEAD always refers to the currently active branch...if there
-is one.  (Also note that each branch tracks its most recent commit.)
-If there is no currently active branch because you checked out a tag
-or some arbitrary commit, then HEAD is said to be detached, and HEAD
-will track the particular commit you checked out.  The end result is
-that HEAD is always the most recent commit to which your working copy
-is relative to.  See also
-http://www.kernel.org/pub/software/scm/git/docs/glossary.html
+On Sun, 23 Mar 2008, Steffen Prohaska wrote:
 
-So, it sounds like we're both saying that in your case, you'd like the
-HEAD become detached and track the sha1 that it previously pointed to
-before your push rather than continuing to track the updated branch.
+> On Sun, 23 Mar 2008, Johannes Schindelin wrote:
+> 
+> > The point is: if we use /etc/gitconfig, we also touch _existing_ 
+> > setups (as Junio pointed out).  Which, in the case of autocrlf, is not 
+> > desirable.
+> 
+> I proposed a mechanism that would avoid such problems in the future.
+
+Yes, but your solution feels a bit limited and "hot-needled" for just one 
+purpose.
+
+> Maybe we can improve the installer to warn the users that the default 
+> has changed and existing repositories must either be converted or the 
+> global default must be overridden.  The installer could ask the user to 
+> confirm this change.  Maybe this is sufficient to avoid further 
+> complains about weird behavior after upgrading.
+
+Maybe.  My experience is that people do not even read the big red warnings 
+in the installer.  Whatever.
+
+Ciao,
+Dscho
