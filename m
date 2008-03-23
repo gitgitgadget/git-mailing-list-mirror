@@ -1,61 +1,91 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Recording cherry-picked commits
-Date: Sun, 23 Mar 2008 15:12:38 +0100 (CET)
-Message-ID: <alpine.LSU.1.00.0803231512110.4353@racer.site>
-References: <ae63f8b50803210533n12645fb3w9a8be601c4cc394@mail.gmail.com>  <ae63f8b50803220937k78571fbdl1eeb60966ec7aa40@mail.gmail.com>  <b77c1dce0803221548x3250cb90taa9a9d53464f7ea7@mail.gmail.com>  <ae63f8b50803230407u7062586dy26fab7d98090efb9@mail.gmail.com>
-  <alpine.LSU.1.00.0803231309370.4353@racer.site> <b77c1dce0803230657i6d61abefg3b0ee7b42119927c@mail.gmail.com>
+Subject: Re: git-config: aliases with parameter expansion ($1 and such)
+Date: Sun, 23 Mar 2008 15:19:01 +0100 (CET)
+Message-ID: <alpine.LSU.1.00.0803231518340.4353@racer.site>
+References: <47E65AF5.4060708@dirk.my1.cc> <76718490803230645k13471472sc99932563b0239da@mail.gmail.com> <47E66382.5030800@dirk.my1.cc>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jean-Baptiste Quenot <jbq@caraldi.com>, git@vger.kernel.org
-To: Rafael Garcia-Suarez <rgarciasuarez@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 23 15:13:21 2008
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323584-948370244-1206281944=:4353"
+Cc: Git Mailing List <git@vger.kernel.org>
+To: =?ISO-8859-15?Q?Dirk_S=FCsserott?= <newsletter@dirk.my1.cc>
+X-From: git-owner@vger.kernel.org Sun Mar 23 15:20:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JdQwq-0007dK-0I
-	for gcvg-git-2@gmane.org; Sun, 23 Mar 2008 15:13:20 +0100
+	id 1JdR3H-00015X-PM
+	for gcvg-git-2@gmane.org; Sun, 23 Mar 2008 15:20:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759074AbYCWOMj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 23 Mar 2008 10:12:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758973AbYCWOMj
-	(ORCPT <rfc822;git-outgoing>); Sun, 23 Mar 2008 10:12:39 -0400
-Received: from mail.gmx.net ([213.165.64.20]:58894 "HELO mail.gmx.net"
+	id S1758575AbYCWOTG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 23 Mar 2008 10:19:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757604AbYCWOTF
+	(ORCPT <rfc822;git-outgoing>); Sun, 23 Mar 2008 10:19:05 -0400
+Received: from mail.gmx.net ([213.165.64.20]:41468 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754674AbYCWOMj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 Mar 2008 10:12:39 -0400
-Received: (qmail invoked by alias); 23 Mar 2008 14:12:37 -0000
+	id S1754776AbYCWOTD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Mar 2008 10:19:03 -0400
+Received: (qmail invoked by alias); 23 Mar 2008 14:19:01 -0000
 Received: from host86-148-26-43.range86-148.btcentralplus.com (EHLO racer.home) [86.148.26.43]
-  by mail.gmx.net (mp056) with SMTP; 23 Mar 2008 15:12:37 +0100
+  by mail.gmx.net (mp053) with SMTP; 23 Mar 2008 15:19:01 +0100
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/VaXBL+DjVqXJwAi6yBayPBqCjlz86pjCdzfD7aC
-	daZ8nBhMQJmqVv
+X-Provags-ID: V01U2FsdGVkX19wCsBieEhwZvqpdsHZVJiCsRKjPTqSBJW8U2hMhS
+	WCKbTfPIka3cHV
 X-X-Sender: gene099@racer.site
-In-Reply-To: <b77c1dce0803230657i6d61abefg3b0ee7b42119927c@mail.gmail.com>
+In-Reply-To: <47E66382.5030800@dirk.my1.cc>
 User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77904>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77905>
+
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--8323584-948370244-1206281944=:4353
+Content-Type: TEXT/PLAIN; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 
 Hi,
 
-On Sun, 23 Mar 2008, Rafael Garcia-Suarez wrote:
+On Sun, 23 Mar 2008, Dirk Süsserott wrote:
 
-> On 23/03/2008, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > Actually, you should not store it in the root of the working tree, but in
-> >  the git dir (because it should never be tracked!), and then you can make
-> >  it non-hidden:
+> Jay Soffian schrieb:
+> > On Sun, Mar 23, 2008 at 9:28 AM, Dirk Süsserott <newsletter@dirk.my1.cc>
+> > wrote:
+> >   
+> > > Hi, I've a question concerning git config and the alias things.
+> > >  I'd like to create an alias 'atag' that creates an annotated
+> > >  tag with the message being the same as the tag. Usually I create
+> > >  annotated tags like this:
+> > >
+> > >  $ git tag -a -m "mytag" mytag
+> > >
+> > >  (BTW: It's not documented, but I have the impression that
+> > >  the '-a' switch is implicitely added when the '-m' switch
+> > >  is present. Is that true?)
+> > >
+> > >  I'd like to have an alias like this:
+> > >
+> > >  [alias]
+> > >     atag = tag -a -m "$1"
+> > >
+> > >  So that I can simply call
+> > >
+> > >  $ git atag mytag
+> > >
+> > >  Is it possible to pass parameters to the alias definition?
+> > >  With the definition above I got a tag with message "$1".
+> > >     
 > >
-> >         file="$(git rev-parse --git-dir)"/cherry
-> 
-> But this way, how can it be shared among several repositories?
+> > atag = !git tag -a -m "$1"
 
-As I said, I would not want it shared.  Or tracked.
+Why so complicated?
 
-You can still do what you want to, though.
+	atag = tag -a -m
 
-Ciao,
+should work already.
+
+Hth,
 Dscho
+--8323584-948370244-1206281944=:4353--
