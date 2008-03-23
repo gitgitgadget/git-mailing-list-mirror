@@ -1,87 +1,69 @@
-From: =?UTF-8?Q?J=C3=B6rg?= Sommer <joerg@alea.gnuu.de>
-Subject: git-merge adds test to a message -- bug?
-Date: Sun, 23 Mar 2008 23:13:31 +0000 (UTC)
-Message-ID: <slrnfudp0q.19k.joerg@alea.gnuu.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [msysGit] Re: Store autocrlf during init-db (was [msysGit]
+ autocrlf problems with Git-preview20080301.exe)
+Date: Mon, 24 Mar 2008 00:39:27 +0100 (CET)
+Message-ID: <alpine.LSU.1.00.0803240038180.4353@racer.site>
+References: <f5d99ae7-e4b3-4632-ad86-8ebe0e683d49@d62g2000hsf.googlegroups.com> <alpine.LSU.1.00.0803101327390.3975@racer.site> <bdca99240803100611s3c8b3b9djb1b993c9fbad712@mail.gmail.com> <alpine.LSU.1.00.0803101448430.3975@racer.site>
+ <cb8f4255-2bf8-4489-aeb0-c18d6e932342@s13g2000prd.googlegroups.com> <ab311292-809f-4e45-a19d-a600c2333ab6@a23g2000hsc.googlegroups.com> <alpine.OSX.1.00.0803221036230.7618@cougar> <7vzlsqfe2h.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0803230310500.4353@racer.site>
+ <alpine.OSX.1.00.0803230943500.7541@cougar> <alpine.LSU.1.00.0803231200010.4353@racer.site> <alpine.OSX.1.00.0803231326290.11994@cougar> <alpine.LSU.1.00.0803231404390.4353@racer.site> <alpine.OSX.1.00.0803231428220.13789@cougar> <alpine.LSU.1.00.0803231506000.4353@racer.site>
+ <alpine.OSX.1.00.0803231643040.16879@cougar> <alpine.LSU.1.00.0803231734190.4353@racer.site> <alpine.OSX.1.00.0803232237400.19285@cougar>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 24 00:16:01 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junio@pobox.com>, tormod.hystad@gmail.com,
+	msysGit <msysgit@googlegroups.com>, git@vger.kernel.org
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Mon Mar 24 00:40:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JdZPw-0007Nl-UI
-	for gcvg-git-2@gmane.org; Mon, 24 Mar 2008 00:15:57 +0100
+	id 1JdZnT-00052j-PN
+	for gcvg-git-2@gmane.org; Mon, 24 Mar 2008 00:40:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756048AbYCWXPQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 23 Mar 2008 19:15:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755962AbYCWXPQ
-	(ORCPT <rfc822;git-outgoing>); Sun, 23 Mar 2008 19:15:16 -0400
-Received: from banki.eumelnet.de ([83.246.114.63]:1937 "EHLO uucp.gnuu.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755983AbYCWXPP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 Mar 2008 19:15:15 -0400
-Received: by uucp.gnuu.de (Postfix, from userid 10)
-	id 42F4348802B; Mon, 24 Mar 2008 00:15:13 +0100 (CET)
-Received: from news by alea.gnuu.de with local (Exim 4.63)
-	(envelope-from <news@alea.gnuu.de>)
-	id 1JdZNb-0005jX-NA
-	for git@vger.kernel.org; Mon, 24 Mar 2008 00:13:31 +0100
-Path: not-for-mail
-Newsgroups: local.mailinglist.git
-X-Trace: alea.gnuu.de 1206314011 22041 192.168.0.5 (23 Mar 2008 23:13:31 GMT)
-X-Complaints-To: usenet@alea.gnuu.de
-User-Agent: slrn/pre0.9.9-97 (Debian)
+	id S1756909AbYCWXj1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 23 Mar 2008 19:39:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756864AbYCWXj1
+	(ORCPT <rfc822;git-outgoing>); Sun, 23 Mar 2008 19:39:27 -0400
+Received: from mail.gmx.net ([213.165.64.20]:52915 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756771AbYCWXj1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Mar 2008 19:39:27 -0400
+Received: (qmail invoked by alias); 23 Mar 2008 23:39:25 -0000
+Received: from host86-148-26-43.range86-148.btcentralplus.com (EHLO racer.home) [86.148.26.43]
+  by mail.gmx.net (mp022) with SMTP; 24 Mar 2008 00:39:25 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX185rZNHsMU56aDqZlyINQ39RivPAi666qME+Qh7Hf
+	0oPlOAeaRtbeKK
+X-X-Sender: gene099@racer.site
+In-Reply-To: <alpine.OSX.1.00.0803232237400.19285@cougar>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77975>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77976>
 
 Hi,
 
-is it correct, that this test fails?
+On Sun, 23 Mar 2008, Steffen Prohaska wrote:
 
-diff --git a/t/t6032-merge-message.sh b/t/t6032-merge-message.sh
-new file mode 100755
-index 0000000..97157bd
---- /dev/null
-+++ b/t/t6032-merge-message.sh
-@@ -0,0 +1,30 @@
-+#!/bin/sh
-+
-+test_description=3D'test for merge message'
-+
-+. ./test-lib.sh
-+
-+test_expect_success setup '
-+	: > file1 &&
-+	git add file1 &&
-+        test_tick &&
-+	git commit -m "commit 1" &&
-+	: > file2 &&
-+	git add file2 &&
-+        test_tick &&
-+	git commit -m "commit 2" &&
-+
-+	git checkout -b new-branch HEAD~1 &&
-+	: > file3 &&
-+	git add file3 &&
-+        test_tick &&
-+	git commit -m "commit 3"
-+'
-+
-+test_expect_success merge 'git merge -m master-merge master'
-+
-+test_expect_failure 'merge message check' '
-+	test "$(git cat-file commit HEAD | sed "1,/^\$/d")" =3D master-merge
-+'
-+
-+test_done
+> On Sun, 23 Mar 2008, Johannes Schindelin wrote:
+> 
+> > I have the impression that a problem just like this will arise again, 
+> > just not with corelf, but with another setting that the admin might 
+> > want to set per default in git-init, but the user might want to 
+> > override.
+> 
+> My patch does not set the default in git-init, but only stores the
+> current choice of autocrlf in the repository's config.  autocrlf is
+> special because it cannot be easily changed after the initial checkout.
 
-Bye, J=C3=B6rg.
---=20
-Unsere Zweifel sind Verr=C3=A4ter und oft genug verspielen wir den m=C3=
-=B6glichen
-Gewinn, weil wir den Versuch nicht wagen.
+But basically all clean/smudge filters have exactly the same problem!  And 
+core.ignorecase, too!
+
+There must be a way to do it elegantly, without catering just for 
+autocrlf.
+
+Ciao,
+Dscho
