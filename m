@@ -1,53 +1,68 @@
-From: Jon Loeliger <jdl@jdl.com>
-Subject: Freedesktop.org's Git Pages
-Date: Sun, 23 Mar 2008 17:33:41 -0500
-Message-ID: <E1JdYl3-0006n9-99@jdl.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 23 23:34:27 2008
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 3/4] Add a function for get the parents of a commit
+Date: Sun, 23 Mar 2008 23:33:56 +0100 (CET)
+Message-ID: <alpine.LSU.1.00.0803232332150.4353@racer.site>
+References: <1206308562-31489-1-git-send-email-joerg@alea.gnuu.de> <1206308562-31489-2-git-send-email-joerg@alea.gnuu.de> <1206308562-31489-3-git-send-email-joerg@alea.gnuu.de>
+Mime-Version: 1.0
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323584-1715906408-1206311638=:4353"
+Cc: git@vger.kernel.org, gitster@pobox.com, B.Steinbrink@gmx.de
+To: =?ISO-8859-15?Q?J=F6rg_Sommer?= <joerg@alea.gnuu.de>
+X-From: git-owner@vger.kernel.org Sun Mar 23 23:34:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JdYlj-0002iP-Dm
-	for gcvg-git-2@gmane.org; Sun, 23 Mar 2008 23:34:23 +0100
+	id 1JdYlx-0002l5-RE
+	for gcvg-git-2@gmane.org; Sun, 23 Mar 2008 23:34:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755838AbYCWWdm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 23 Mar 2008 18:33:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755744AbYCWWdm
-	(ORCPT <rfc822;git-outgoing>); Sun, 23 Mar 2008 18:33:42 -0400
-Received: from jdl.com ([208.123.74.7]:48686 "EHLO jdl.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755538AbYCWWdm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 Mar 2008 18:33:42 -0400
-Received: from jdl (helo=jdl.com)
-	by jdl.com with local-esmtp (Exim 4.63)
-	(envelope-from <jdl@jdl.com>)
-	id 1JdYl3-0006n9-99
-	for git@vger.kernel.org; Sun, 23 Mar 2008 17:33:41 -0500
+	id S1755835AbYCWWd4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 23 Mar 2008 18:33:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755846AbYCWWd4
+	(ORCPT <rfc822;git-outgoing>); Sun, 23 Mar 2008 18:33:56 -0400
+Received: from mail.gmx.net ([213.165.64.20]:59754 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755744AbYCWWdz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Mar 2008 18:33:55 -0400
+Received: (qmail invoked by alias); 23 Mar 2008 22:33:54 -0000
+Received: from host86-148-26-43.range86-148.btcentralplus.com (EHLO racer.home) [86.148.26.43]
+  by mail.gmx.net (mp018) with SMTP; 23 Mar 2008 23:33:54 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX195SjhGWRZ53gHhir9Ci0cTkqvFEdkj91Vt+lOPl3
+	zXfolLDf6uJM6w
+X-X-Sender: gene099@racer.site
+In-Reply-To: <1206308562-31489-3-git-send-email-joerg@alea.gnuu.de>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77969>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77970>
 
-Guys,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-The freedesktop.org git pages are woefully out of date.
+--8323584-1715906408-1206311638=:4353
+Content-Type: TEXT/PLAIN; charset=utf-8
+Content-Transfer-Encoding: 8BIT
 
-I'm looking at these pages for example:
+Hi,
 
-    http://www.freedesktop.org/wiki/Infrastructure/git/UIFlaws
-    http://www.freedesktop.org/wiki/Infrastructure/git/Developers
+On Sun, 23 Mar 2008, Jörg Sommer wrote:
 
-They seem very pre-1.5-ish to me...
+> 
+> Signed-off-by: Jörg Sommer <joerg@alea.gnuu.de>
 
-Can anyone here influence their update?
-Or should a fd.o bug against the wiki be submitted?
+"for get"?  You mean "to get".
 
-Anyone know?
+> +parents_of_commit() {
+> +	git rev-list --parents -1 "$1" | cut -d' ' -f2-
+> +}
 
-Thanks,
-jdl
+>From the rest of Git's source code, I would have expected this to be 
+called "get_parents", and to have a space before the parens.  In general, 
+it is always good to imitate the style around the code you are writing.
 
-PS -- Yeah, I know we kinda had this discussion a little
-      bit ago, but nothing came from it, apparently.
+Ciao,
+Dscho
+--8323584-1715906408-1206311638=:4353--
