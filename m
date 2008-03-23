@@ -1,73 +1,100 @@
-From: Jonathan Watt <jwatt@jwatt.org>
-Subject: Re: Working copy revision and push pain
-Date: Sun, 23 Mar 2008 16:25:17 +0100
-Message-ID: <47E6765D.2020103@jwatt.org>
-References: <47E64F71.3020204@jwatt.org>  <alpine.LSU.1.00.0803231401340.4353@racer.site>  <47E658D3.1060104@jwatt.org>  <51419b2c0803230645l5b07bbf5h9cbf9b6f47373efa@mail.gmail.com>  <47E6612A.5020408@jwatt.org> <51419b2c0803230706w5ff88fc7oc7e8e34ab8afa1fd@mail.gmail.com> <alpine.LSU.1.00.0803231519380.4353@racer.site> <47E66DAA.4080807@jwatt.org> <alpine.LSU.1.00.0803231555380.4353@racer.site>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH 6/7] Make branch merging aware of underlying case-insensitive
+ filsystems
+Date: Sun, 23 Mar 2008 08:41:06 -0700 (PDT)
+Message-ID: <alpine.LFD.1.00.0803230829001.16824@woody.linux-foundation.org>
+References: <alpine.LFD.1.00.0803220955140.3020@woody.linux-foundation.org> <alpine.LFD.1.00.0803221021220.3020@woody.linux-foundation.org> <alpine.LFD.1.00.0803221022480.3020@woody.linux-foundation.org> <alpine.LFD.1.00.0803221025410.3020@woody.linux-foundation.org>
+ <alpine.LFD.1.00.0803221028170.3020@woody.linux-foundation.org> <alpine.LFD.1.00.0803221030380.3020@woody.linux-foundation.org> <alpine.LFD.1.00.0803221033430.3020@woody.linux-foundation.org> <7v7ifueznu.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Elijah Newren <newren@gmail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Mar 23 16:26:11 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Frank <streamlake@tiscali.it>,
+	Dmitry Potapov <dpotapov@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Mar 23 16:42:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JdS5E-0003N6-AE
-	for gcvg-git-2@gmane.org; Sun, 23 Mar 2008 16:26:04 +0100
+	id 1JdSKq-0007rE-5J
+	for gcvg-git-2@gmane.org; Sun, 23 Mar 2008 16:42:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751941AbYCWPZX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 23 Mar 2008 11:25:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752058AbYCWPZX
-	(ORCPT <rfc822;git-outgoing>); Sun, 23 Mar 2008 11:25:23 -0400
-Received: from balanced.mail.policyd.dreamhost.com ([208.97.132.119]:40902
-	"EHLO spunkymail-a12.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1750917AbYCWPZX (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 23 Mar 2008 11:25:23 -0400
-Received: from [192.168.1.6] (ip1-182-173-82.adsl2.versatel.nl [82.173.182.1])
-	by spunkymail-a12.g.dreamhost.com (Postfix) with ESMTP id 2CE987FA8;
-	Sun, 23 Mar 2008 08:25:20 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.12 (Windows/20080213)
-In-Reply-To: <alpine.LSU.1.00.0803231555380.4353@racer.site>
+	id S1750884AbYCWPlU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 23 Mar 2008 11:41:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750789AbYCWPlU
+	(ORCPT <rfc822;git-outgoing>); Sun, 23 Mar 2008 11:41:20 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:42084 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750785AbYCWPlT (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 23 Mar 2008 11:41:19 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m2NFf866013125
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sun, 23 Mar 2008 08:41:09 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m2NFf71K031229;
+	Sun, 23 Mar 2008 08:41:07 -0700
+In-Reply-To: <7v7ifueznu.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+X-Spam-Status: No, hits=-3.752 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77916>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77917>
 
-Johannes Schindelin wrote:
-> Hi,
+
+
+On Sat, 22 Mar 2008, Junio C Hamano wrote:
 > 
-> On Sun, 23 Mar 2008, Jonathan Watt wrote:
-> 
->> Would detaching HEAD really be a problem in git workflows?
-> 
-> If recovering is painful?  Yes.
-> 
-> If it is not what you want?  Yes.
+> I wonder what happens when the file with the same case does exist that we
+> are trying to make sure is missing?
 
-If you push to the current branch of a non-bare repository, then as things
-stand, whatever was pushed to the current branch will be reverted on the next
-commit(!). Push hasn't just pushed changesets to the repository, it's
-essentially screwed up the working copy. I personally can't see how this
-behavior is useful or in any way "right", or why you'd want it that way. On the
-other hand detaching HEAD makes sure that all push has done is push changesets,
-and you've essentially created a branch. To me that seems like the only correct
-thing to do. (It also happens to be the way Mercurial behaves.)
+Can't happen. This whole code-path only triggers if the entry didn't exist 
+in the index when we merge a tree.
 
-I'd venture that if you're pushing into a non-bare repository then you know the
-state of the working copy, and you know if you're going to cause pain. (And it's
-probably local.) If it's a shared repository, why is there a working copy? If
-it's someone else's repository, the two of you probably know what you're doing.
-These two seem like relative edge cases though, and even then, detaching HEAD
-seems like the right think to me.
+So we know a priori that the source index didn't contain the thing.
 
-> Just to give you a small clue what other people would like: 
-> http://utsl.gen.nz/git/post-update
-> 
-> BTW that was in the link I sent you earlier.
+> As far as I can tell, icase_exists() does not ask "does a file with this
+> name in different case exist, and a file with this exact case doesn't?"
+> but asks "does a file with this name, or another name that is different
+> only in case, exist?".
 
-As I said, I don't want to update the files in the working copy. Seems like a
-different issue to me.
+Correct. But see the call chain - this thing is only called if index is 
+NULL, ie "there was no entry in the index".
 
-Jonathan
+So in this case, the other comment (above "icase_exists()") talks about 
+that:
+
+	This gets called when there was no index entry for the tree entry 
+	'dst', but we found a file in the working tree that 'lstat()' said 
+	was fine, [...]
+
+and you can verify that "verify_absent()" only gets called by things where 
+"index" was NULL (only three callers, and two of them are expressly inside 
+a "if (!old)" case, and the third one is right after a "if (index) return"
+statement.
+
+[ There's _one_ special case: the "index" thing may have been NULL not 
+  because there was no path in the source index, but because we didn't 
+  even look at the index in the first place! So strictly speaking, we 
+  should have a test for "o->merge" being set, but afaik that must always 
+  be true if we have "o->update" set, and again, this logic only triggers 
+  for that case.
+
+  So the only case that doesn't set "o->merge" to get the index is 
+  "builtin-read-tree.c" when you do a plain tree-only merge, but that one 
+  has
+
+	if ((opts.update||opts.index_only) && !opts.merge)
+		usage(read_tree_usage);
+
+  to make sure that you cannot update the working tree without taking the 
+  index into account ]
+
+Anyway, I think it's all good. 
+
+			Linus
