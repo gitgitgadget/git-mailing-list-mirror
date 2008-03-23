@@ -1,87 +1,77 @@
-From: "alturin marlinon" <alturin@gmail.com>
-Subject: Re: [SoC RFC] git statistics - information about commits
-Date: Sun, 23 Mar 2008 22:32:57 +0100
-Message-ID: <bd6139dc0803231432s4a1f9d86r7ec97847fa70ca82@mail.gmail.com>
-References: <bd6139dc0803210152o529f3b4fi15c515f5385d8f88@mail.gmail.com>
-	 <7vmyospgz7.fsf@gitster.siamese.dyndns.org>
-	 <7v3aqik0nz.fsf@gitster.siamese.dyndns.org>
-	 <bd6139dc0803230707w29e31d89kf65cf4ac7ad3c8@mail.gmail.com>
-	 <7vzlsp73fs.fsf@gitster.siamese.dyndns.org>
+From: =?utf-8?q?J=C3=B6rg=20Sommer?= <joerg@alea.gnuu.de>
+Subject: [PATCH 3/4] Add a function for get the parents of a commit
+Date: Sun, 23 Mar 2008 22:42:41 +0100
+Message-ID: <1206308562-31489-3-git-send-email-joerg@alea.gnuu.de>
+References: <1206308562-31489-1-git-send-email-joerg@alea.gnuu.de>
+ <1206308562-31489-2-git-send-email-joerg@alea.gnuu.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Mar 23 22:33:42 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: gitster@pobox.com, B.Steinbrink@gmx.de,
+	=?utf-8?q?J=C3=B6rg=20Sommer?= <joerg@alea.gnuu.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 23 22:47:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JdXoy-0003sB-Ar
-	for gcvg-git-2@gmane.org; Sun, 23 Mar 2008 22:33:40 +0100
+	id 1JdY2T-0007dT-AK
+	for gcvg-git-2@gmane.org; Sun, 23 Mar 2008 22:47:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754934AbYCWVc7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 23 Mar 2008 17:32:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754632AbYCWVc7
-	(ORCPT <rfc822;git-outgoing>); Sun, 23 Mar 2008 17:32:59 -0400
-Received: from wf-out-1314.google.com ([209.85.200.174]:46836 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754025AbYCWVc6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 Mar 2008 17:32:58 -0400
-Received: by wf-out-1314.google.com with SMTP id 28so2674279wff.4
-        for <git@vger.kernel.org>; Sun, 23 Mar 2008 14:32:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=iLfdvpnnLUUMQNSnZt3P/OAc9RXtTWpkd5/yl/vtdNQ=;
-        b=l2FaGTwVBkhDr+ZdkIrEFTVJvxlD/iwDxtcH3iNEIGA521mkrywBQshMWSgthP63Ap9TZNUrZBewHjuGn7Nm05Z0wwLYdHPD6x6kzDglEBTaBxeaB2UeS7RgkeywFDEXgaITXKomgfBiWjk6D3VgWG6yux5+Pq5wseq2zWCZNtw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=E74TZZ4lpE4MhdpqI6Jbzj2RnX22Y62YdTCtjSiAHDQpglv/Jo4c6Bob4TIo21XxucvjwugEbOx0yvaNmOIOIQNlDq0dVlqPYK51hKGJjbkE+O13XrAMXGnHenk7RO2Z8zkAxZeEnma0jWy/u8TlSh8T8LyrsFBj8SH/E7vkSBg=
-Received: by 10.142.178.13 with SMTP id a13mr3928712wff.226.1206307977511;
-        Sun, 23 Mar 2008 14:32:57 -0700 (PDT)
-Received: by 10.142.77.6 with HTTP; Sun, 23 Mar 2008 14:32:57 -0700 (PDT)
-In-Reply-To: <7vzlsp73fs.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1755357AbYCWVqs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 23 Mar 2008 17:46:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755098AbYCWVqs
+	(ORCPT <rfc822;git-outgoing>); Sun, 23 Mar 2008 17:46:48 -0400
+Received: from banki.eumelnet.de ([83.246.114.63]:4009 "EHLO uucp.gnuu.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754167AbYCWVqr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Mar 2008 17:46:47 -0400
+Received: by uucp.gnuu.de (Postfix, from userid 10)
+	id 73A6F48802D; Sun, 23 Mar 2008 22:46:45 +0100 (CET)
+Received: from ibook.localnet ([192.168.0.5] helo=alea.gnuu.de)
+	by alea.gnuu.de with esmtp (Exim 4.63)
+	(envelope-from <joerg@alea.gnuu.de>)
+	id 1JdXxk-0004pD-CS; Sun, 23 Mar 2008 22:42:48 +0100
+Received: from joerg by alea.gnuu.de with local (Exim 4.69)
+	(envelope-from <joerg@alea.gnuu.de>)
+	id 1JdXxi-0008CS-Mg; Sun, 23 Mar 2008 22:42:42 +0100
+X-Mailer: git-send-email 1.5.4.4
+In-Reply-To: <1206308562-31489-2-git-send-email-joerg@alea.gnuu.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77961>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77962>
 
-On Sun, Mar 23, 2008 at 6:31 PM, Junio C Hamano <gitster@pobox.com> wrote:
->  Hey, don't get me wrong.  Please do not start your thought with "which of
->  these features".  Proposed feature set should come from you.  It's your
->  project after all.
 
-Ah, perhaps I should have phrased it more like "which of these
-features are of most interest to the community".
+Signed-off-by: J=C3=B6rg Sommer <joerg@alea.gnuu.de>
+---
+ git-rebase--interactive.sh |    6 +++++-
+ 1 files changed, 5 insertions(+), 1 deletions(-)
 
->  I was NOT giving you an instruction "You should do all of these" (I am not
->  your mentor), an opinion "These are all important" (I haven't thought
->  things through), nor criteria "Unless you do your feature this way, you
->  fail" (I am not GSoC admin to judge your application nor evaluate at the
->  end of project).  Nothing of that sort.  They are just random ideas, I
->  haven't even thought through the feasibility of, and/or possible approach
->  to solution for, some of them.
-
-Even so, most of them are very interesting, although I agree that the
-feasibility should perhaps be looked at more closely.
-
->  If you find any of them interesting, you are welcome to include them in
->  your target feature set.  Other uninteresting ones and unrealistic ones
->  you can discard without even commenting.
-
-I think I will divide the features into subsets and list the
-dependencies between them.
-Then based upon 'popularity' an easy selection could be made.
-Johannes said:
-
-> I think it can be vague about the order in which things will be
-> implemented.  And the features which you think might be too complicated
-> should be marked as such: "possible extension (which might not be finished
-> within this project): <blabla>".
-
-Would such a list be allowed to include such a list of grouped
-features which then can be selected later on?
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index ffd4823..94c6827 100755
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -131,6 +131,10 @@ redo_merge() {
+ 	fi
+ }
+=20
++parents_of_commit() {
++	git rev-list --parents -1 "$1" | cut -d' ' -f2-
++}
++
+ pick_one () {
+ 	no_ff=3D
+ 	case "$1" in -n) sha1=3D$2; no_ff=3Dt ;; *) sha1=3D$1 ;; esac
+@@ -166,7 +170,7 @@ pick_one_preserving_merges () {
+ 	fast_forward=3Dt
+ 	preserve=3Dt
+ 	new_parents=3D
+-	for p in $(git rev-list --parents -1 $sha1 | cut -d' ' -f2-)
++	for p in $(parents_of_commit $sha1)
+ 	do
+ 		if test -f "$REWRITTEN"/$p
+ 		then
+--=20
+1.5.4.4
