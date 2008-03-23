@@ -1,79 +1,75 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Recording cherry-picked commits
-Date: Sun, 23 Mar 2008 13:11:59 +0100 (CET)
-Message-ID: <alpine.LSU.1.00.0803231309370.4353@racer.site>
-References: <ae63f8b50803210533n12645fb3w9a8be601c4cc394@mail.gmail.com>  <ae63f8b50803220937k78571fbdl1eeb60966ec7aa40@mail.gmail.com>  <b77c1dce0803221548x3250cb90taa9a9d53464f7ea7@mail.gmail.com>
- <ae63f8b50803230407u7062586dy26fab7d98090efb9@mail.gmail.com>
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Re: Store autocrlf during init-db (was [msysGit] autocrlf
+ problems with Git-preview20080301.exe)
+Date: Sun, 23 Mar 2008 13:30:59 +0100 (CET)
+Message-ID: <alpine.OSX.1.00.0803231326290.11994@cougar>
+References: <f5d99ae7-e4b3-4632-ad86-8ebe0e683d49@d62g2000hsf.googlegroups.com> <alpine.LSU.1.00.0803101327390.3975@racer.site> <bdca99240803100611s3c8b3b9djb1b993c9fbad712@mail.gmail.com> <alpine.LSU.1.00.0803101448430.3975@racer.site> <cb8f4255-2bf8-4489-aeb0-c18d6e932342@s13g2000prd.googlegroups.com> <ab311292-809f-4e45-a19d-a600c2333ab6@a23g2000hsc.googlegroups.com> <alpine.OSX.1.00.0803221036230.7618@cougar> <7vzlsqfe2h.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0803230310500.4353@racer.site> <alpine.OSX.1.00.0803230943500.7541@cougar> <alpine.LSU.1.00.0803231200010.4353@racer.site>
+Reply-To: prohaska@zib.de
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Rafael Garcia-Suarez <rgarciasuarez@gmail.com>, git@vger.kernel.org
-To: Jean-Baptiste Quenot <jbq@caraldi.com>
-X-From: git-owner@vger.kernel.org Sun Mar 23 13:12:50 2008
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Cc: Steffen Prohaska <prohaska@zib.de>, Junio C Hamano <junio@pobox.com>, tormod.hystad@gmail.com, msysGit <msysgit@googlegroups.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Sun Mar 23 13:30:56 2008
+Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from ug-out-1516.google.com ([66.249.92.163])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JdP48-0001da-OG
-	for gcvg-git-2@gmane.org; Sun, 23 Mar 2008 13:12:45 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759267AbYCWMMD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 23 Mar 2008 08:12:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759241AbYCWMMB
-	(ORCPT <rfc822;git-outgoing>); Sun, 23 Mar 2008 08:12:01 -0400
-Received: from mail.gmx.net ([213.165.64.20]:51254 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1759177AbYCWMMA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 Mar 2008 08:12:00 -0400
-Received: (qmail invoked by alias); 23 Mar 2008 12:11:58 -0000
-Received: from host86-148-26-43.range86-148.btcentralplus.com (EHLO racer.home) [86.148.26.43]
-  by mail.gmx.net (mp021) with SMTP; 23 Mar 2008 13:11:58 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19SejBixRZSRieg+xhbYG/6ffs2qfYa97YqpXr4Zk
-	QyOK1tUqIMAqxm
-X-X-Sender: gene099@racer.site
-In-Reply-To: <ae63f8b50803230407u7062586dy26fab7d98090efb9@mail.gmail.com>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-Sender: git-owner@vger.kernel.org
+	id 1JdPLg-0006R2-AK
+	for gcvm-msysgit@m.gmane.org; Sun, 23 Mar 2008 13:30:52 +0100
+Received: by ug-out-1516.google.com with SMTP id 1so6876903uga.9
+        for <gcvm-msysgit@m.gmane.org>; Sun, 23 Mar 2008 05:30:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=gamma;
+        h=domainkey-signature:received:received:x-sender:x-apparently-to:received:received:received-spf:authentication-results:received:received:date:from:to:cc:subject:in-reply-to:message-id:references:user-agent:mime-version:content-type:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
+        bh=OaHMdKbqWhU7JotZPw+U3V1bWNjUpL6jP1RxWCmaiA4=;
+        b=BC4sPAMSqH9AOWZP5qa8p42kjOKtDxOSyk8fkaxnFM+eKhje3eXiNimvLBmhKOOr3gntRU4VanYD1Qoeq+wgbcChR/yhzFY1PB2neTtz7x7dJXEqxV2wRRrfWFRp1idUXwpI4Dq4Mp4hgdJhXhLmjytoNJwIVqWPYio9Sw6ARwU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlegroups.com; s=gamma;
+        h=x-sender:x-apparently-to:received-spf:authentication-results:date:from:to:cc:subject:in-reply-to:message-id:references:user-agent:mime-version:content-type:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
+        b=IE6u/fEhGSgqMQUP2bTbTNtcphj3w/WfPwkkudhV+TS5L9P2icbcE0JmGsHZPZ7PfGkJC2F6W4nlpY3aN3TXV6FpC46Z7auugCrQ63QghD7FYez/EGjvlc8Gf2UqshlCveK+4jbeoH9zH42wtsN0PrRSWkJgyd1pDtpXAfuRCm4=
+Received: by 10.150.185.14 with SMTP id i14mr489164ybf.7.1206275412414;
+        Sun, 23 Mar 2008 05:30:12 -0700 (PDT)
+Received: by 10.44.77.7 with SMTP id z7gr1998hsa.0;
+	Sun, 23 Mar 2008 05:30:12 -0700 (PDT)
+X-Sender: prohaska@zib.de
+X-Apparently-To: msysgit@googlegroups.com
+Received: by 10.35.126.2 with SMTP id d2mr6353252pyn.1.1206275411893; Sun, 23 Mar 2008 05:30:11 -0700 (PDT)
+Received: from mailer.zib.de (mailer.zib.de [130.73.108.11]) by mx.google.com with ESMTP id x46si7499104pyg.2.2008.03.23.05.30.11; Sun, 23 Mar 2008 05:30:11 -0700 (PDT)
+Received-SPF: pass (google.com: best guess record for domain of prohaska@zib.de designates 130.73.108.11 as permitted sender) client-ip=130.73.108.11;
+Authentication-Results: mx.google.com; spf=pass (google.com: best guess record for domain of prohaska@zib.de designates 130.73.108.11 as permitted sender) smtp.mail=prohaska@zib.de
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31]) by mailer.zib.de (8.14.2/8.14.2) with ESMTP id m2NCU7SL026208; Sun, 23 Mar 2008 13:30:07 +0100 (CET)
+Received: from cougar (brln-4db97827.pool.einsundeins.de [77.185.120.39]) (authenticated bits=0) by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m2NCU5gD005659 (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO); Sun, 23 Mar 2008 13:30:06 +0100 (MET)
+In-Reply-To: <alpine.LSU.1.00.0803231200010.4353@racer.site>
+User-Agent: Alpine 1.00 (OSX 882 2007-12-20)
+Sender: msysgit@googlegroups.com
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77883>
+X-Google-Loop: groups
+Mailing-List: list msysgit@googlegroups.com;
+	contact msysgit-owner@googlegroups.com
+List-Id: <msysgit.googlegroups.com>
+List-Post: <mailto:msysgit@googlegroups.com>
+List-Help: <mailto:msysgit-help@googlegroups.com>
+List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
+	<mailto:msysgit-unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77884>
 
-Hi,
 
-On Sun, 23 Mar 2008, Jean-Baptiste Quenot wrote:
+On Sun, 23 Mar 2008, Johannes Schindelin wrote:
 
-> 2008/3/22, Rafael Garcia-Suarez <rgarciasuarez@gmail.com>:
-> > On 22/03/2008, Jean-Baptiste Quenot <jbq@caraldi.com> wrote:
-> >  > What about using a hidden ".gitcherry" file in the current branch 
-> >  > to store the commits that have been applied?  With the simple shell 
-> >  > scripts below I'm able to achieve the same effect as svnmerge:
-> >
-> > (.gitcherry should really be at the root of the git repository, not in 
-> > the current directory)
+> On Sun, 23 Mar 2008, Steffen Prohaska wrote:
 > 
-> Yes that's what I meant.  Usually I'm always at the root when I'm 
-> cherry-picking changes but you're right the script could be improved in 
-> this regard.  Is there a trick to find the root repository directory?
-
-Actually, you should not store it in the root of the working tree, but in 
-the git dir (because it should never be tracked!), and then you can make 
-it non-hidden:
-
-	file="$(git rev-parse --git-dir)"/cherry
-
-> > What happens to .gitcherry across merges ?  I think your solution 
-> > isn't robust enough.
+> > On Sun, 23 Mar 2008, Johannes Schindelin wrote:
+> > 
+> > Setting autocrlf for every repository limits the user's options to
+> > override the default.
 > 
-> The .gitcherry is merged like any other file.  I'm just trying to
-> mimic svnmerge here, not to reinvent anything.  As Git does not have
-> file metadata, I'm using a plain text file to achieve this.
+> Then maybe a way for the user to override the global templates is what we 
+> need?  I can see that this would be useful outside of the crlf issue.
 
-Ah, I see, so you _want_ to track it.  I do not like this idea personally, 
-but then, I will not use .gitcherry anyway.
+I do not think we need this.  autocrlf is a configurable variable and we
+already have a mechanism for the user to override configuration
+variables.  The user can use "git config --global ..." to sets his
+preferences.  This mechanism is well established.  I do not see a reason
+not to use it.
 
-	file="$(git rev-parse --show-cdup)"/.gitcherry
-
-Hth,
-Dscho
+            Steffen
