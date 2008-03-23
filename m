@@ -1,90 +1,162 @@
-From: "Elijah Newren" <newren@gmail.com>
-Subject: Re: Working copy revision and push pain
-Date: Sun, 23 Mar 2008 13:48:23 -0600
-Message-ID: <51419b2c0803231248h6b161fa7qa120fd18e60e274@mail.gmail.com>
-References: <47E64F71.3020204@jwatt.org>
-	 <alpine.LSU.1.00.0803231401340.4353@racer.site>
-	 <47E658D3.1060104@jwatt.org>
-	 <51419b2c0803230645l5b07bbf5h9cbf9b6f47373efa@mail.gmail.com>
-	 <47E6612A.5020408@jwatt.org>
-	 <51419b2c0803230706w5ff88fc7oc7e8e34ab8afa1fd@mail.gmail.com>
-	 <alpine.LSU.1.00.0803231519380.4353@racer.site>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH 1/2] Introduce receive.guardCurrentBranch
+Date: Sun, 23 Mar 2008 21:43:43 +0100 (CET)
+Message-ID: <alpine.LSU.1.00.0803232142460.4353@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Jonathan Watt" <jwatt@jwatt.org>, git@vger.kernel.org
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Mar 23 20:49:07 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Sun Mar 23 21:44:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JdWBm-0007G0-Jg
-	for gcvg-git-2@gmane.org; Sun, 23 Mar 2008 20:49:07 +0100
+	id 1JdX3n-0005lC-4C
+	for gcvg-git-2@gmane.org; Sun, 23 Mar 2008 21:44:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753522AbYCWTs0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 23 Mar 2008 15:48:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754074AbYCWTs0
-	(ORCPT <rfc822;git-outgoing>); Sun, 23 Mar 2008 15:48:26 -0400
-Received: from hs-out-0708.google.com ([64.233.178.243]:36152 "EHLO
-	hs-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752963AbYCWTsZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 Mar 2008 15:48:25 -0400
-Received: by hs-out-0708.google.com with SMTP id 4so1932511hsl.5
-        for <git@vger.kernel.org>; Sun, 23 Mar 2008 12:48:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=/DTwCZpn3URoBuSvTo4MQK4EDTy1eVTu/Cw0MEjbH3I=;
-        b=aqJI2BPO7d4Xa7yoOtHu/PgWL/Oo0E4fAZB84Sr0b5tuuuJWjVMR7tBj130xwL2/oerScYkkgSBMdWzZeZaVfJ7h7O552xeTX1WekMi5Lb9igAvPkwcqqimORHQJfI08Y9F0uUCcTFF2p9PpCh0NbpU0LhxeXMT5YmOlhjBXdCk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=VKpyuMOtlLiNAFqpXWvBtrREWQNGwCMG+BFx7QDtCZdajWl2zkH/x7OpblUh5MafsliFm5WczpgH/rNGdZQQ2lksmz2mgdQMHw5CDFAHfoedyqnkTTrXyP9kOQslvm5T2pT+m3DPRsy8bA8e02ueE1U/OCbus5/1wpapG4dUMI4=
-Received: by 10.114.110.1 with SMTP id i1mr10123331wac.112.1206301703934;
-        Sun, 23 Mar 2008 12:48:23 -0700 (PDT)
-Received: by 10.114.205.19 with HTTP; Sun, 23 Mar 2008 12:48:23 -0700 (PDT)
-In-Reply-To: <alpine.LSU.1.00.0803231519380.4353@racer.site>
-Content-Disposition: inline
+	id S1753780AbYCWUn7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 23 Mar 2008 16:43:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754147AbYCWUn7
+	(ORCPT <rfc822;git-outgoing>); Sun, 23 Mar 2008 16:43:59 -0400
+Received: from mail.gmx.net ([213.165.64.20]:48965 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753003AbYCWUn6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Mar 2008 16:43:58 -0400
+Received: (qmail invoked by alias); 23 Mar 2008 20:43:55 -0000
+Received: from host86-148-26-43.range86-148.btcentralplus.com (EHLO racer.home) [86.148.26.43]
+  by mail.gmx.net (mp014) with SMTP; 23 Mar 2008 21:43:55 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19NXTJZprhNtUQbLKSUyHoSZBJbkAVwceCTCfDtiF
+	YtY70iothO3kWI
+X-X-Sender: gene099@racer.site
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77954>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77955>
 
-Hi,
 
-On Sun, Mar 23, 2008 at 8:22 AM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
->  On Sun, 23 Mar 2008, Elijah Newren wrote:
->
->  > If there is no currently active branch because you checked out a tag
->  > or some arbitrary commit, then HEAD is said to be detached, and HEAD
->  > will track the particular commit you checked out.
->
->  I'd say that "track" is the wrong verb here.
+Setting this config variable to "true" makes git-receive-pack refuse
+to update whatever happens to be the current branch.
 
-Good point.
+This option can be used to avoid havoc in a non-bare repository into
+which somebody pushes.
 
->  > The end result is that HEAD is always the most recent commit to which
->  > your working copy is relative to.  See also
->  > http://www.kernel.org/pub/software/scm/git/docs/glossary.html
->  >
->  > So, it sounds like we're both saying that in your case, you'd like the
->  > HEAD become detached and track the sha1 that it previously pointed to
->  > before your push rather than continuing to track the updated branch.
->
->  If you ever propose to detach the HEAD in a remote repository when
->  somebody pushed into the referenced branch, I am totally opposed to that.
->
->  You can play your own games with the update and post-update hooks as much
->  as you want, but please leave official Git alone.  Thankyouverymuch.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
 
-Obviously such a change in isolation would merely shift to a new kind
-of gotcha for users; I was thinking that I'd be able to figure out an
-accompanying change that would make things work nicely (or that
-someone else on the list might think of something)...but no such luck.
- Further, I think Junio's latest post describes why I likely couldn't
-come up with anything else and the idea is just plain bad.
+	I thought about this a while (see also
+	http://thread.gmane.org/gmane.comp.version-control.git/66490),
+	and I think it is time to push for this change.
 
-Elijah
+	On the one hand, of course, it is nice to have so many users
+	that not all of them know the Git source intimately.  On the
+	other hand, we will have to introduce many more safeguards
+	like this now.  Sigh...
+
+	Maybe this is even 1.5.5 material.  I'm undecided.
+
+ Documentation/config.txt           |    5 +++++
+ Documentation/git-receive-pack.txt |    3 +++
+ receive-pack.c                     |   18 ++++++++++++++++++
+ t/t5400-send-pack.sh               |   13 +++++++++++++
+ 4 files changed, 39 insertions(+), 0 deletions(-)
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 5df8ea9..efde54d 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1006,6 +1006,11 @@ receive.denyNonFastForwards::
+ 	even if that push is forced. This configuration variable is
+ 	set when initializing a shared repository.
+ 
++receive.guardCurrentBranch::
++	If set to true, git-receive-pack will deny to update the ref that
++	HEAD points to, if HEAD is not detached.  This configuration
++	variable is set when initializing a non-bare repository.
++
+ transfer.unpackLimit::
+ 	When `fetch.unpackLimit` or `receive.unpackLimit` are
+ 	not set, the value of this variable is used instead.
+diff --git a/Documentation/git-receive-pack.txt b/Documentation/git-receive-pack.txt
+index 4111434..0c82af9 100644
+--- a/Documentation/git-receive-pack.txt
++++ b/Documentation/git-receive-pack.txt
+@@ -32,6 +32,9 @@ git-receive-pack honours the receive.denyNonFastForwards config
+ option, which tells it if updates to a ref should be denied if they
+ are not fast-forwards.
+ 
++git-receive-pack honors the receive.guardCurrentBranch config options,
++which tells it if it is okay to update the branch HEAD points to.
++
+ OPTIONS
+ -------
+ <directory>::
+diff --git a/receive-pack.c b/receive-pack.c
+index 828d490..6423c7c 100644
+--- a/receive-pack.c
++++ b/receive-pack.c
+@@ -15,6 +15,7 @@ static int receive_unpack_limit = -1;
+ static int transfer_unpack_limit = -1;
+ static int unpack_limit = 100;
+ static int report_status;
++static char *guard_current_branch;
+ 
+ static char capabilities[] = " report-status delete-refs ";
+ static int capabilities_sent;
+@@ -41,6 +42,19 @@ static int receive_pack_config(const char *var, const char *value)
+ 		return 0;
+ 	}
+ 
++	if (strcmp(var, "receive.guardhead") == 0) {
++		guard_current_branch = NULL;
++		if (git_config_bool(var, value)) {
++			unsigned char sha1[20];
++			int flag;
++			const char *head = resolve_ref("HEAD", sha1, 0, &flag);
++			if (flag & REF_ISSYMREF)
++				guard_current_branch = xstrdup(head);
++		}
++
++		return 0;
++	}
++
+ 	return git_default_config(var, value);
+ }
+ 
+@@ -183,6 +197,10 @@ static const char *update(struct command *cmd)
+ 		      "but I can't find it!", sha1_to_hex(new_sha1));
+ 		return "bad pack";
+ 	}
++	if (guard_current_branch && !strcmp(name, guard_current_branch)) {
++		error("refusing to update current branch: '%s'", name);
++		return "current branch";
++	}
+ 	if (deny_non_fast_forwards && !is_null_sha1(new_sha1) &&
+ 	    !is_null_sha1(old_sha1) &&
+ 	    !prefixcmp(name, "refs/heads/")) {
+diff --git a/t/t5400-send-pack.sh b/t/t5400-send-pack.sh
+index 2b6b6e3..af8d5a3 100755
+--- a/t/t5400-send-pack.sh
++++ b/t/t5400-send-pack.sh
+@@ -171,4 +171,17 @@ test_expect_success \
+ 	rewound_push_succeeded
+ '
+ 
++test_expect_success 'receive.guardCurrentBranch' '
++
++	rewound_push_setup &&
++	(cd ../parent &&
++	 git config receive.guardCurrentBranch true) &&
++	test_must_fail git-send-pack ../parent/.git refs/heads/master &&
++	rewound_push_failed &&
++	(cd ../parent &&
++	 git config receive.guardCurrentBranch false) &&
++	git-send-pack ../parent/.git +refs/heads/*:refs/heads/* &&
++	rewound_push_succeeded
++'
++
+ test_done
+-- 
+1.5.5.rc1.174.g591a9
