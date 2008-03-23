@@ -1,102 +1,89 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [SoC RFC] git statistics - information about commits
-Date: Sun, 23 Mar 2008 17:32:31 +0100 (CET)
-Message-ID: <alpine.LSU.1.00.0803231729150.4353@racer.site>
-References: <bd6139dc0803210152o529f3b4fi15c515f5385d8f88@mail.gmail.com>  <7vmyospgz7.fsf@gitster.siamese.dyndns.org>  <7v3aqik0nz.fsf@gitster.siamese.dyndns.org>  <bd6139dc0803230707w29e31d89kf65cf4ac7ad3c8@mail.gmail.com>  <alpine.LSU.1.00.0803231523110.4353@racer.site>
- <bd6139dc0803230841l93cdd0do39bf6c35a5d732fa@mail.gmail.com>
+Subject: Re: Store autocrlf during init-db (was [msysGit] autocrlf
+ problems with Git-preview20080301.exe)
+Date: Sun, 23 Mar 2008 17:35:13 +0100 (CET)
+Message-ID: <alpine.LSU.1.00.0803231734190.4353@racer.site>
+References: <f5d99ae7-e4b3-4632-ad86-8ebe0e683d49@d62g2000hsf.googlegroups.com> <alpine.LSU.1.00.0803101327390.3975@racer.site> <bdca99240803100611s3c8b3b9djb1b993c9fbad712@mail.gmail.com> <alpine.LSU.1.00.0803101448430.3975@racer.site> <cb8f4255-2bf8-4489-aeb0-c18d6e932342@s13g2000prd.googlegroups.com> <ab311292-809f-4e45-a19d-a600c2333ab6@a23g2000hsc.googlegroups.com> <alpine.OSX.1.00.0803221036230.7618@cougar> <7vzlsqfe2h.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0803230310500.4353@racer.site> <alpine.OSX.1.00.0803230943500.7541@cougar> <alpine.LSU.1.00.0803231200010.4353@racer.site> <alpine.OSX.1.00.0803231326290.11994@cougar> <alpine.LSU.1.00.0803231404390.4353@racer.site> <alpine.OSX.1.00.0803231428220.13789@cougar> <alpine.LSU.1.00.0803231506000.4353@racer.site> <alpine.OSX.1
+ .00.0803231643040.16879@cougar>
+Reply-To: Johannes.Schindelin@gmx.de
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: alturin marlinon <alturin@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 23 17:33:16 2008
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Cc: Junio C Hamano <junio@pobox.com>, tormod.hystad@gmail.com,  msysGit <msysgit@googlegroups.com>, git@vger.kernel.org
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Sun Mar 23 17:35:57 2008
+Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from wr-out-0708.google.com ([64.233.184.250])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JdT8E-0005c8-LT
-	for gcvg-git-2@gmane.org; Sun, 23 Mar 2008 17:33:15 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752963AbYCWQcd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 23 Mar 2008 12:32:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753009AbYCWQcd
-	(ORCPT <rfc822;git-outgoing>); Sun, 23 Mar 2008 12:32:33 -0400
-Received: from mail.gmx.net ([213.165.64.20]:56353 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752963AbYCWQcc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 Mar 2008 12:32:32 -0400
-Received: (qmail invoked by alias); 23 Mar 2008 16:32:31 -0000
-Received: from host86-148-26-43.range86-148.btcentralplus.com (EHLO racer.home) [86.148.26.43]
-  by mail.gmx.net (mp025) with SMTP; 23 Mar 2008 17:32:31 +0100
+	id 1JdTAq-0006Gx-1G
+	for gcvm-msysgit@m.gmane.org; Sun, 23 Mar 2008 17:35:56 +0100
+Received: by wr-out-0708.google.com with SMTP id c3so586531wra.9
+        for <gcvm-msysgit@m.gmane.org>; Sun, 23 Mar 2008 09:35:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=gamma;
+        h=domainkey-signature:received:received:x-sender:x-apparently-to:received:received:received-spf:authentication-results:received:received:x-authenticated:x-provags-id:date:from:x-x-sender:to:cc:subject:in-reply-to:message-id:references:user-agent:mime-version:content-type:x-y-gmx-trusted:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
+        bh=FKB3hDO2a1FLbJl209A/V689jNS2pbJm6/Ls+V8mOVA=;
+        b=wIC6yrbL2fu3G75+y86bi1D5P74/lIncNoLsMpu5n5gDfuYo7cfU2MI0z/gx6nBJx4x4axq2RADxOCNKiyiIg/ZSrbRzCFdpfHUBFF+hD+mN4eB44oErjyX4HH2ZNDOEGYoZPMyMaB4m27Nt60kqlOaL4gwF+PyjJmsdYXmjCwg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlegroups.com; s=gamma;
+        h=x-sender:x-apparently-to:received-spf:authentication-results:x-authenticated:x-provags-id:date:from:x-x-sender:to:cc:subject:in-reply-to:message-id:references:user-agent:mime-version:content-type:x-y-gmx-trusted:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
+        b=1t1Cj5cCh65cppIawD+CIOtie7aSAa/2h+3uYlgUcrz2SuZeQHTn5m6lRojZA0mkTydbQVld94g4uc/3efX66S3UrLNlme8VgEiz4flkz4eHbO5dNuYFyo7WeMtyIYO2VxKt06GcVL8Rh0FabOumEeUP5PAKCmuYyutHyMs89As=
+Received: by 10.100.144.18 with SMTP id r18mr1351091and.14.1206290115610;
+        Sun, 23 Mar 2008 09:35:15 -0700 (PDT)
+Received: by 10.44.74.68 with SMTP id w68gr2005hsa.0;
+	Sun, 23 Mar 2008 09:35:15 -0700 (PDT)
+X-Sender: Johannes.Schindelin@gmx.de
+X-Apparently-To: msysgit@googlegroups.com
+Received: by 10.35.13.4 with SMTP id q4mr6617310pyi.7.1206290114122; Sun, 23 Mar 2008 09:35:14 -0700 (PDT)
+Received: from mail.gmx.net (mail.gmx.net [213.165.64.20]) by mx.google.com with SMTP id a28si7852569pye.0.2008.03.23.09.35.13; Sun, 23 Mar 2008 09:35:14 -0700 (PDT)
+Received-SPF: pass (google.com: domain of Johannes.Schindelin@gmx.de designates 213.165.64.20 as permitted sender) client-ip=213.165.64.20;
+Authentication-Results: mx.google.com; spf=pass (google.com: domain of Johannes.Schindelin@gmx.de designates 213.165.64.20 as permitted sender) smtp.mail=Johannes.Schindelin@gmx.de
+Received: (qmail invoked by alias); 23 Mar 2008 16:35:12 -0000
+Received: from host86-148-26-43.range86-148.btcentralplus.com (EHLO racer.home) [86.148.26.43] by mail.gmx.net (mp035) with SMTP; 23 Mar 2008 17:35:12 +0100
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+i1O5Pyr+ixAfp043dE6Sdzz+FMwHYJqcKwP+lOg
-	VhsnrC6DfCgfOG
+X-Provags-ID: V01U2FsdGVkX1+2428rn222k3U8OtRXqe1kByT2jQvuicBH9S4HYE JLAW5iJayK7Kty
 X-X-Sender: gene099@racer.site
-In-Reply-To: <bd6139dc0803230841l93cdd0do39bf6c35a5d732fa@mail.gmail.com>
+In-Reply-To: <alpine.OSX.1.00.0803231643040.16879@cougar>
 User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
 X-Y-GMX-Trusted: 0
-Sender: git-owner@vger.kernel.org
+Sender: msysgit@googlegroups.com
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77923>
+X-Google-Loop: groups
+Mailing-List: list msysgit@googlegroups.com;
+	contact msysgit-owner@googlegroups.com
+List-Id: <msysgit.googlegroups.com>
+List-Post: <mailto:msysgit@googlegroups.com>
+List-Help: <mailto:msysgit-help@googlegroups.com>
+List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
+	<mailto:msysgit-unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77924>
+
 
 Hi,
 
-On Sun, 23 Mar 2008, alturin marlinon wrote:
+On Sun, 23 Mar 2008, Steffen Prohaska wrote:
 
-> On Sun, Mar 23, 2008 at 3:28 PM, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> >  I think you will have to go to the line level to achieve what Junio 
-> >  suggested.
+> On Sun, 23 Mar 2008, Johannes Schindelin wrote:
 > 
-> I'm not sure what you mean with "go to the line level"? Do you mean that 
-> using a Graph is not possible?
-
-IIUC you suggested having a graph of the files.  But I think you have to 
-have a graph of file _parts_, i.e.
-
-	git.c:111-137
-
-which you can split even further should the need arise.
-
-> >  > >  * Identify "buggy commits" from history, without testing.  
-> >  > >    Zeroth order
-> >  >
-> >  > A feature like this would fit well with the other "buggy 
-> >  > commit/maintainer detection" but would require a lot of 
-> >  > customization. However, considering git already comes with a good 
-> >  > customization system it should still be feasible.
-> >
-> >  Yes.  And it would be really interesting for me.  Until it shows that 
-> >  I am the biggest offender, of course.
+> > On Sun, 23 Mar 2008, Steffen Prohaska wrote:
+> > 
+> > > On Sun, 23 Mar 2008, Johannes Schindelin wrote:
+> > > 
+> > > > The point is: if we use /etc/gitconfig, we also touch _existing_ 
+> > > > setups (as Junio pointed out).  Which, in the case of autocrlf, is 
+> > > > not desirable.
+> > > 
+> > > I proposed a mechanism that would avoid such problems in the future.
+> > 
+> > Yes, but your solution feels a bit limited and "hot-needled" for just 
+> > one purpose.
 > 
-> Maybe we can put in an if-check for user "Johannes Schindelin"? ;)
+> What limits do you mean (except that it does still break existing 
+> msysgit setups; but would avoid this problem in the future)?
 
-I thought about something like this, actually ;-)
-
-> >  I think the bigger problem is not visualising it, but finding what is 
-> >  buggy, and what not.
-> 
-> Yes, ofcourse, I think I'll be busy mostly following lines across 
-> commits and after that determining if a commit is buggy or not.
-
-But as Junio said, there are improvements, and even in the same commit 
-series, you can touch the same _line_ multiple times, to make the patch 
-more obvious.
-
-See for example Linus' nice commit series regarding core.ignorecase.  
-Very nicely done, very easy to understand, no buggy code.
-
-> >  I think it can be vague about the order in which things will be 
-> >  implemented.  And the features which you think might be too 
-> >  complicated should be marked as such: "possible extension (which 
-> >  might not be finished within this project): <blabla>".
-> 
-> Cool, I think I can start on a RC for my application then! (Maybe I 
-> should'of tracked it with git, then I could tag it...)
-
-Hehe.  You'll come around putting even your photo collection into git, 
-like I do.
+I have the impression that a problem just like this will arise again, just 
+not with corelf, but with another setting that the admin might want to 
+set per default in git-init, but the user might want to override.
 
 Ciao,
 Dscho
