@@ -1,75 +1,90 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: Store autocrlf during init-db (was [msysGit] autocrlf
- problems with Git-preview20080301.exe)
-Date: Sun, 23 Mar 2008 13:30:59 +0100 (CET)
-Message-ID: <alpine.OSX.1.00.0803231326290.11994@cougar>
-References: <f5d99ae7-e4b3-4632-ad86-8ebe0e683d49@d62g2000hsf.googlegroups.com> <alpine.LSU.1.00.0803101327390.3975@racer.site> <bdca99240803100611s3c8b3b9djb1b993c9fbad712@mail.gmail.com> <alpine.LSU.1.00.0803101448430.3975@racer.site> <cb8f4255-2bf8-4489-aeb0-c18d6e932342@s13g2000prd.googlegroups.com> <ab311292-809f-4e45-a19d-a600c2333ab6@a23g2000hsc.googlegroups.com> <alpine.OSX.1.00.0803221036230.7618@cougar> <7vzlsqfe2h.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0803230310500.4353@racer.site> <alpine.OSX.1.00.0803230943500.7541@cougar> <alpine.LSU.1.00.0803231200010.4353@racer.site>
-Reply-To: prohaska@zib.de
+From: Jonathan Watt <jwatt@jwatt.org>
+Subject: Working copy revision and push pain
+Date: Sun, 23 Mar 2008 13:39:13 +0100
+Message-ID: <47E64F71.3020204@jwatt.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Steffen Prohaska <prohaska@zib.de>, Junio C Hamano <junio@pobox.com>, tormod.hystad@gmail.com, msysGit <msysgit@googlegroups.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Sun Mar 23 13:30:56 2008
-Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from ug-out-1516.google.com ([66.249.92.163])
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 23 13:41:43 2008
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JdPLg-0006R2-AK
-	for gcvm-msysgit@m.gmane.org; Sun, 23 Mar 2008 13:30:52 +0100
-Received: by ug-out-1516.google.com with SMTP id 1so6876903uga.9
-        for <gcvm-msysgit@m.gmane.org>; Sun, 23 Mar 2008 05:30:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=gamma;
-        h=domainkey-signature:received:received:x-sender:x-apparently-to:received:received:received-spf:authentication-results:received:received:date:from:to:cc:subject:in-reply-to:message-id:references:user-agent:mime-version:content-type:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
-        bh=OaHMdKbqWhU7JotZPw+U3V1bWNjUpL6jP1RxWCmaiA4=;
-        b=BC4sPAMSqH9AOWZP5qa8p42kjOKtDxOSyk8fkaxnFM+eKhje3eXiNimvLBmhKOOr3gntRU4VanYD1Qoeq+wgbcChR/yhzFY1PB2neTtz7x7dJXEqxV2wRRrfWFRp1idUXwpI4Dq4Mp4hgdJhXhLmjytoNJwIVqWPYio9Sw6ARwU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=gamma;
-        h=x-sender:x-apparently-to:received-spf:authentication-results:date:from:to:cc:subject:in-reply-to:message-id:references:user-agent:mime-version:content-type:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
-        b=IE6u/fEhGSgqMQUP2bTbTNtcphj3w/WfPwkkudhV+TS5L9P2icbcE0JmGsHZPZ7PfGkJC2F6W4nlpY3aN3TXV6FpC46Z7auugCrQ63QghD7FYez/EGjvlc8Gf2UqshlCveK+4jbeoH9zH42wtsN0PrRSWkJgyd1pDtpXAfuRCm4=
-Received: by 10.150.185.14 with SMTP id i14mr489164ybf.7.1206275412414;
-        Sun, 23 Mar 2008 05:30:12 -0700 (PDT)
-Received: by 10.44.77.7 with SMTP id z7gr1998hsa.0;
-	Sun, 23 Mar 2008 05:30:12 -0700 (PDT)
-X-Sender: prohaska@zib.de
-X-Apparently-To: msysgit@googlegroups.com
-Received: by 10.35.126.2 with SMTP id d2mr6353252pyn.1.1206275411893; Sun, 23 Mar 2008 05:30:11 -0700 (PDT)
-Received: from mailer.zib.de (mailer.zib.de [130.73.108.11]) by mx.google.com with ESMTP id x46si7499104pyg.2.2008.03.23.05.30.11; Sun, 23 Mar 2008 05:30:11 -0700 (PDT)
-Received-SPF: pass (google.com: best guess record for domain of prohaska@zib.de designates 130.73.108.11 as permitted sender) client-ip=130.73.108.11;
-Authentication-Results: mx.google.com; spf=pass (google.com: best guess record for domain of prohaska@zib.de designates 130.73.108.11 as permitted sender) smtp.mail=prohaska@zib.de
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31]) by mailer.zib.de (8.14.2/8.14.2) with ESMTP id m2NCU7SL026208; Sun, 23 Mar 2008 13:30:07 +0100 (CET)
-Received: from cougar (brln-4db97827.pool.einsundeins.de [77.185.120.39]) (authenticated bits=0) by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m2NCU5gD005659 (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO); Sun, 23 Mar 2008 13:30:06 +0100 (MET)
-In-Reply-To: <alpine.LSU.1.00.0803231200010.4353@racer.site>
-User-Agent: Alpine 1.00 (OSX 882 2007-12-20)
-Sender: msysgit@googlegroups.com
+	id 1JdPWB-0000iU-CY
+	for gcvg-git-2@gmane.org; Sun, 23 Mar 2008 13:41:43 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1755684AbYCWMkw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 23 Mar 2008 08:40:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755883AbYCWMkw
+	(ORCPT <rfc822;git-outgoing>); Sun, 23 Mar 2008 08:40:52 -0400
+Received: from hapkido.dreamhost.com ([66.33.216.122]:46669 "EHLO
+	hapkido.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755641AbYCWMkv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Mar 2008 08:40:51 -0400
+Received: from spunkymail-a19.g.dreamhost.com (balanced.mail.policyd.dreamhost.com [208.97.132.119])
+	by hapkido.dreamhost.com (Postfix) with ESMTP id 460EC17A8BF
+	for <git@vger.kernel.org>; Sun, 23 Mar 2008 05:40:51 -0700 (PDT)
+Received: from [192.168.1.6] (ip1-182-173-82.adsl2.versatel.nl [82.173.182.1])
+	by spunkymail-a19.g.dreamhost.com (Postfix) with ESMTP id D6A1F11F00
+	for <git@vger.kernel.org>; Sun, 23 Mar 2008 05:39:19 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.12 (Windows/20080213)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Google-Loop: groups
-Mailing-List: list msysgit@googlegroups.com;
-	contact msysgit-owner@googlegroups.com
-List-Id: <msysgit.googlegroups.com>
-List-Post: <mailto:msysgit@googlegroups.com>
-List-Help: <mailto:msysgit-help@googlegroups.com>
-List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
-	<mailto:msysgit-unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77884>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77885>
 
+Hi,
 
-On Sun, 23 Mar 2008, Johannes Schindelin wrote:
+There seems to be a problem with git-push when the working copy of the directory
+being pushed to came from the magic revision HEAD, but not when the working copy
+came from some other revision.
 
-> On Sun, 23 Mar 2008, Steffen Prohaska wrote:
-> 
-> > On Sun, 23 Mar 2008, Johannes Schindelin wrote:
-> > 
-> > Setting autocrlf for every repository limits the user's options to
-> > override the default.
-> 
-> Then maybe a way for the user to override the global templates is what we 
-> need?  I can see that this would be useful outside of the crlf issue.
+Say I've got a repository called a:
 
-I do not think we need this.  autocrlf is a configurable variable and we
-already have a mechanism for the user to override configuration
-variables.  The user can use "git config --global ..." to sets his
-preferences.  This mechanism is well established.  I do not see a reason
-not to use it.
+  mkdir a
+  cd a
+  git-init
+  echo "line 1" > file
+  git-add file
+  git-commit -m "commit 1" file
+  echo "line 2" >> file
+  git-commit -m "commit 2" file
+  echo "line 3" >> file
+  git-commit -m "commit 3" file
 
-            Steffen
+Now let's say there's a clone of repository a called b, and b has HEAD checked
+out. If I make changes in a and push them to b, there's a problem:
+
+  git-clone . ../b
+  echo "line 4" >> file
+  git-commit -m "commit 4" file
+  git-push ../b
+  cd ../b
+  git-log file # says the working copy came from commit 4, but...
+  cat file # only lists up to line 3 :-/
+
+If on the other hand I have a clone of repository a called c that has a non-HEAD
+revision checked out, there's no problem:
+
+  git-clone ../a ../c
+  cd ../c
+  git-checkout HEAD^
+  cd ../a
+  echo "line 5" >> file
+  git-commit -m "commit 5" file
+  git-push ../c
+  cd ../c
+  git-log file # says the working copy came from commit 3, and...
+  cat file # only lists up to line 3. great!
+
+I don't know anything about the implementation of git, but could this mean that
+when the working copy comes from HEAD git tracks it as coming from the revision
+"HEAD" instead of the underlying revision's sha1? If so, this seems like an
+unnecessary gotcha/pain point. Couldn't git be changed to always track the sha1
+of the revision it really came from? That would seem like the correct thing to
+do, and it would be nice to avoid unnecessarily breaking working copies.
+
+Regards,
+Jonathan
