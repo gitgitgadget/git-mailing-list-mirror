@@ -1,58 +1,65 @@
-From: Florian Weimer <fw@deneb.enyo.de>
+From: Daniel Barkalow <barkalow@iabervon.org>
 Subject: Re: What I miss from Cogito...
-Date: Sun, 23 Mar 2008 20:14:47 +0100
-Message-ID: <87r6e1b6c8.fsf@mid.deneb.enyo.de>
-References: <47E69044.3000207@zytor.com> <20080323173841.GA24943@mit.edu>
-	<20080323182102.GA22551@bit.office.eurotux.com>
+Date: Sun, 23 Mar 2008 15:16:15 -0400 (EDT)
+Message-ID: <alpine.LNX.1.00.0803231509060.19665@iabervon.org>
+References: <47E69044.3000207@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 23 20:15:46 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+To: "H. Peter Anvin" <hpa@zytor.com>
+X-From: git-owner@vger.kernel.org Sun Mar 23 20:17:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JdVfP-0006ZH-QE
-	for gcvg-git-2@gmane.org; Sun, 23 Mar 2008 20:15:40 +0100
+	id 1JdVgi-00070a-UK
+	for gcvg-git-2@gmane.org; Sun, 23 Mar 2008 20:17:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755681AbYCWTOu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 23 Mar 2008 15:14:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755684AbYCWTOu
-	(ORCPT <rfc822;git-outgoing>); Sun, 23 Mar 2008 15:14:50 -0400
-Received: from mail.enyo.de ([212.9.189.167]:53436 "EHLO mail.enyo.de"
+	id S1752963AbYCWTQU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 23 Mar 2008 15:16:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750951AbYCWTQU
+	(ORCPT <rfc822;git-outgoing>); Sun, 23 Mar 2008 15:16:20 -0400
+Received: from iabervon.org ([66.92.72.58]:33996 "EHLO iabervon.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755602AbYCWTOu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 Mar 2008 15:14:50 -0400
-Received: from deneb.vpn.enyo.de ([212.9.189.177] helo=deneb.enyo.de)
-	by mail.enyo.de with esmtp id 1JdVea-0007yg-DF
-	for git@vger.kernel.org; Sun, 23 Mar 2008 20:14:48 +0100
-Received: from fw by deneb.enyo.de with local (Exim 4.69)
-	(envelope-from <fw@deneb.enyo.de>)
-	id 1JdVeZ-000566-Vv
-	for git@vger.kernel.org; Sun, 23 Mar 2008 20:14:47 +0100
-In-Reply-To: <20080323182102.GA22551@bit.office.eurotux.com> (Luciano Rocha's
-	message of "Sun, 23 Mar 2008 18:21:02 +0000")
+	id S1750789AbYCWTQU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Mar 2008 15:16:20 -0400
+Received: (qmail 19386 invoked by uid 1000); 23 Mar 2008 19:16:15 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 23 Mar 2008 19:16:15 -0000
+In-Reply-To: <47E69044.3000207@zytor.com>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77947>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77948>
 
-* Luciano Rocha:
+On Sun, 23 Mar 2008, H. Peter Anvin wrote:
 
->>         git show HEAD:$prefix$i > $i
+> This much later, there are a few minor things I still miss from Cogito.  I
+> believe fixing either would be quite trivial, so I thought I'd post a note.
+> 
+> 1. The ability to clone into the current directory
+> 
+>    cg-clone had a -c option, which allowed cloning into the current
+>    directory.  This is particularly useful, since I keep my common
+>    dot files in a git repository, so all I need to do to set up a new
+>    machine is to clone that git repository over my empty home directory.
+> 
+>    Native git doesn't have any equivalent, other than:
+> 
+>    git clone -n .... tmp
+>    mv tmp/.git .
+>    rm -rf tmp
+>    git checkout HEAD
 
-> I use git checkout path ...
->
-> Isn't that the same thing?
+Maybe "git --work-tree=. clone <remote>"? It currently complains about the 
+directory existing, but we could have a flag to override that. And this 
+ends up with a sort of neat arrangement where your home directory is "Not 
+a git repository", but if you go into the subdirectory that has the repo 
+files, you can do all the usual stuff. This helps to avoid the case where 
+you forget to do "git init" in a new project and accidentally check things 
+into your dotfiles.
 
-No, it restores the file version in the index.  "git checkout HEAD --
-$path" should be the same.
-
-Personally, I'm not all that happy with the multiple different meanings
-of "git reset" and "git checkout", either.  Depending on the parameters,
-the two comments manipulate both the contents of the working copy, or
-the location at which the working copy is hooked in the history.  If we
-need to have two separate commands for this, it would make more sense to
-draw distinction between the two aspects, and not the mess we have now.
-OTOH, it's probably too late for that.
+	-Daniel
+*This .sig left intentionally blank*
