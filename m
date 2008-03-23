@@ -1,57 +1,75 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Working copy revision and push pain
-Date: Sun, 23 Mar 2008 14:02:48 +0100 (CET)
-Message-ID: <alpine.LSU.1.00.0803231401340.4353@racer.site>
-References: <47E64F71.3020204@jwatt.org>
+Subject: Re: [msysGit] Re: Store autocrlf during init-db (was [msysGit]
+ autocrlf problems with Git-preview20080301.exe)
+Date: Sun, 23 Mar 2008 14:05:59 +0100 (CET)
+Message-ID: <alpine.LSU.1.00.0803231404390.4353@racer.site>
+References: <f5d99ae7-e4b3-4632-ad86-8ebe0e683d49@d62g2000hsf.googlegroups.com> <alpine.LSU.1.00.0803101327390.3975@racer.site> <bdca99240803100611s3c8b3b9djb1b993c9fbad712@mail.gmail.com> <alpine.LSU.1.00.0803101448430.3975@racer.site>
+ <cb8f4255-2bf8-4489-aeb0-c18d6e932342@s13g2000prd.googlegroups.com> <ab311292-809f-4e45-a19d-a600c2333ab6@a23g2000hsc.googlegroups.com> <alpine.OSX.1.00.0803221036230.7618@cougar> <7vzlsqfe2h.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0803230310500.4353@racer.site>
+ <alpine.OSX.1.00.0803230943500.7541@cougar> <alpine.LSU.1.00.0803231200010.4353@racer.site> <alpine.OSX.1.00.0803231326290.11994@cougar>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Jonathan Watt <jwatt@jwatt.org>
-X-From: git-owner@vger.kernel.org Sun Mar 23 14:04:27 2008
+Cc: Junio C Hamano <junio@pobox.com>, tormod.hystad@gmail.com,
+	msysGit <msysgit@googlegroups.com>, git@vger.kernel.org
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Sun Mar 23 14:07:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JdPs4-0006HL-0K
-	for gcvg-git-2@gmane.org; Sun, 23 Mar 2008 14:04:20 +0100
+	id 1JdPug-0006zs-CF
+	for gcvg-git-2@gmane.org; Sun, 23 Mar 2008 14:07:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759762AbYCWNDj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 23 Mar 2008 09:03:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761860AbYCWNDj
-	(ORCPT <rfc822;git-outgoing>); Sun, 23 Mar 2008 09:03:39 -0400
-Received: from mail.gmx.net ([213.165.64.20]:42028 "HELO mail.gmx.net"
+	id S1760497AbYCWNGQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 23 Mar 2008 09:06:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756411AbYCWNGQ
+	(ORCPT <rfc822;git-outgoing>); Sun, 23 Mar 2008 09:06:16 -0400
+Received: from mail.gmx.net ([213.165.64.20]:33677 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1759717AbYCWNDi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 Mar 2008 09:03:38 -0400
-Received: (qmail invoked by alias); 23 Mar 2008 13:03:02 -0000
+	id S1760471AbYCWNGP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Mar 2008 09:06:15 -0400
+Received: (qmail invoked by alias); 23 Mar 2008 13:06:10 -0000
 Received: from host86-148-26-43.range86-148.btcentralplus.com (EHLO racer.home) [86.148.26.43]
-  by mail.gmx.net (mp040) with SMTP; 23 Mar 2008 14:03:02 +0100
+  by mail.gmx.net (mp005) with SMTP; 23 Mar 2008 14:06:10 +0100
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX188G+k5Ha08Jy+JpIflbXQDdoEiMN4bH/P8QYP4f/
-	lZpdZYy/EQ/ver
+X-Provags-ID: V01U2FsdGVkX1+Tv/YTCUKTg3GOn318xp+/ARWIv+ajxNpGGLDele
+	ul1Kc8QbHmrEBU
 X-X-Sender: gene099@racer.site
-In-Reply-To: <47E64F71.3020204@jwatt.org>
+In-Reply-To: <alpine.OSX.1.00.0803231326290.11994@cougar>
 User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77887>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77888>
 
 Hi,
 
-On Sun, 23 Mar 2008, Jonathan Watt wrote:
+On Sun, 23 Mar 2008, Steffen Prohaska wrote:
 
-> There seems to be a problem with git-push when the working copy of the 
-> directory being pushed to came from the magic revision HEAD, but not 
-> when the working copy came from some other revision.
+> On Sun, 23 Mar 2008, Johannes Schindelin wrote:
+> 
+> > On Sun, 23 Mar 2008, Steffen Prohaska wrote:
+> > 
+> > > On Sun, 23 Mar 2008, Johannes Schindelin wrote:
+> > > 
+> > > Setting autocrlf for every repository limits the user's options to
+> > > override the default.
+> > 
+> > Then maybe a way for the user to override the global templates is what we 
+> > need?  I can see that this would be useful outside of the crlf issue.
+> 
+> I do not think we need this.  autocrlf is a configurable variable and we 
+> already have a mechanism for the user to override configuration 
+> variables.  The user can use "git config --global ..." to sets his 
+> preferences.  This mechanism is well established.  I do not see a reason 
+> not to use it.
 
-http://git.or.cz/gitwiki/GitFaq#head-b96f48bc9c925074be9f95c0fce69bcece5f6e73
+The point is: if we use /etc/gitconfig, we also touch _existing_ setups 
+(as Junio pointed out).  Which, in the case of autocrlf, is not desirable.
 
-Sidenote: I am constantly amazed how people have no problem accepting that 
-a CVS-Server has no working directory, but all of a sudden think that a 
-Git-server should have one, and auto-update it.
+And if we go the route via templates, $HOME/.gitconfig will do no good, as 
+the configuration in the repository trumps the --global configuration.
 
 Ciao,
 Dscho
