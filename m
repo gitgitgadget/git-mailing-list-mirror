@@ -1,65 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: List all SHA1 hashes in repo
-Date: Sun, 23 Mar 2008 11:23:06 -0700
-Message-ID: <7v8x097111.fsf@gitster.siamese.dyndns.org>
-References: <c6c947f60803230617if9606baxea21fa99dc3df37c@mail.gmail.com>
- <alpine.LSU.1.00.0803231459100.4353@racer.site>
- <540004BB-49C4-456B-ABA3-62659D85C15E@ai.rug.nl>
- <alpine.LSU.1.00.0803231532150.4353@racer.site>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: What I miss from Cogito...
+Date: Sun, 23 Mar 2008 19:31:54 +0100 (CET)
+Message-ID: <alpine.LSU.1.00.0803231930280.4353@racer.site>
+References: <47E69044.3000207@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Pieter de Bie <pdebie@ai.rug.nl>,
-	Alexander Gladysh <agladysh@gmail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Mar 23 19:24:09 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+To: "H. Peter Anvin" <hpa@zytor.com>
+X-From: git-owner@vger.kernel.org Sun Mar 23 19:32:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JdUrW-0006MX-Oz
-	for gcvg-git-2@gmane.org; Sun, 23 Mar 2008 19:24:07 +0100
+	id 1JdUzx-0000QP-HK
+	for gcvg-git-2@gmane.org; Sun, 23 Mar 2008 19:32:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754162AbYCWSX0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 23 Mar 2008 14:23:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750951AbYCWSX0
-	(ORCPT <rfc822;git-outgoing>); Sun, 23 Mar 2008 14:23:26 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:59390 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750789AbYCWSXZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 Mar 2008 14:23:25 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 56E08120A;
-	Sun, 23 Mar 2008 14:23:24 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 98F5311DB; Sun, 23 Mar 2008 14:23:16 -0400 (EDT)
-In-Reply-To: <alpine.LSU.1.00.0803231532150.4353@racer.site> (Johannes
- Schindelin's message of "Sun, 23 Mar 2008 15:33:20 +0100 (CET)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753009AbYCWSb4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 23 Mar 2008 14:31:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752884AbYCWSb4
+	(ORCPT <rfc822;git-outgoing>); Sun, 23 Mar 2008 14:31:56 -0400
+Received: from mail.gmx.net ([213.165.64.20]:51229 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750951AbYCWSbz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Mar 2008 14:31:55 -0400
+Received: (qmail invoked by alias); 23 Mar 2008 18:31:53 -0000
+Received: from host86-148-26-43.range86-148.btcentralplus.com (EHLO racer.home) [86.148.26.43]
+  by mail.gmx.net (mp011) with SMTP; 23 Mar 2008 19:31:53 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19UJsMujB9Ugq3Sp0fEK07H6w1DanD6vOUV+F56UX
+	dTgPU6//IyNmAw
+X-X-Sender: gene099@racer.site
+In-Reply-To: <47E69044.3000207@zytor.com>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77936>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77937>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hi,
 
-> Hi,
->
-> On Sun, 23 Mar 2008, Pieter de Bie wrote:
->
->> On Mar 23, 2008, at 2:59 PM, Johannes Schindelin wrote:
->> > > The git rev-list --all gives nice list, but, as I understand, that 
->> > > is only commit objects, and there are much more of SHA1 hidden 
->> > > inside.
->> >
->> > Just add --objects.
->> 
->> I thought --all --objects only shows reachable objects?
->
-> Ah yes.  But usually the objects in packs are reachable...
->
-> So you're right, it does not really show _all_ objects.
+On Sun, 23 Mar 2008, H. Peter Anvin wrote:
 
-"rev-list --objects --all"?
+> 1. The ability to clone into the current directory
+> 
+>    cg-clone had a -c option, which allowed cloning into the current
+>    directory.  This is particularly useful, since I keep my common
+>    dot files in a git repository, so all I need to do to set up a new
+>    machine is to clone that git repository over my empty home directory.
+> 
+>    Native git doesn't have any equivalent, other than:
+> 
+>    git clone -n .... tmp
+>    mv tmp/.git .
+>    rm -rf tmp
+>    git checkout HEAD
+
+Well, it has:
+
+	$ git init
+	$ git remote add -f origin <url>
+	$ git checkout -b master origin/master
+
+If you really want to track /etc with Git, you can do that easily, and you 
+can easily take the flak for a not-so-popular workflow.
+
+Ciao,
+Dscho
