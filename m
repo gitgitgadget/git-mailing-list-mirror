@@ -1,62 +1,74 @@
-From: "Jay Soffian" <jaysoffian@gmail.com>
-Subject: Re: git-config: aliases with parameter expansion ($1 and such)
-Date: Sun, 23 Mar 2008 09:45:34 -0400
-Message-ID: <76718490803230645k13471472sc99932563b0239da@mail.gmail.com>
-References: <47E65AF5.4060708@dirk.my1.cc>
+From: Jonathan Watt <jwatt@jwatt.org>
+Subject: Re: Working copy revision and push pain
+Date: Sun, 23 Mar 2008 14:54:50 +0100
+Message-ID: <47E6612A.5020408@jwatt.org>
+References: <47E64F71.3020204@jwatt.org>	 <alpine.LSU.1.00.0803231401340.4353@racer.site>	 <47E658D3.1060104@jwatt.org> <51419b2c0803230645l5b07bbf5h9cbf9b6f47373efa@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "=?UTF-8?Q?Dirk_S=C3=BCsserott?=" <newsletter@dirk.my1.cc>
-X-From: git-owner@vger.kernel.org Sun Mar 23 14:46:24 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Elijah Newren <newren@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 23 14:55:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JdQWe-0000n2-4s
-	for gcvg-git-2@gmane.org; Sun, 23 Mar 2008 14:46:16 +0100
+	id 1JdQfj-00031s-5K
+	for gcvg-git-2@gmane.org; Sun, 23 Mar 2008 14:55:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757015AbYCWNpf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 23 Mar 2008 09:45:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757541AbYCWNpf
-	(ORCPT <rfc822;git-outgoing>); Sun, 23 Mar 2008 09:45:35 -0400
-Received: from wa-out-1112.google.com ([209.85.146.180]:45892 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757002AbYCWNpe (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 Mar 2008 09:45:34 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so2848865wah.23
-        for <git@vger.kernel.org>; Sun, 23 Mar 2008 06:45:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=rx2hR3uFCC2mvtxl3wHEurlyZpQJ/cHF5Rm//eueGQM=;
-        b=kkwWeEIMVgRj9feWlxdzvgULb2EwIOdQw8VuC0rVhh+BXzYO26lZpPHZ2Dcf0Gvu4jGgKc3BJAjmTtw19Fz/NAzKdccW9TLKBfbgn2exCDzjIZQkiVt1JOM0huSsn5CpajSagkQSSVLqeHHXOSbhdJa/1DIeFzotHZLH29EsjeU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=QVMkvpTidqguypM5ad1jzctVB6Bc49UTZve4c49U9xVYYeEBsjiLMWxWB85MbeyRbQ1Rf3ETOau864yr5zPFviesn2vJUutPHOZoHNzAmjthAI1HnNHszTXrY55HRD/IVBqDR3CoBd4rgdrX4iv3MYDkhlnpgkzJJdaMlxLCcfs=
-Received: by 10.114.26.18 with SMTP id 18mr9641249waz.130.1206279934482;
-        Sun, 23 Mar 2008 06:45:34 -0700 (PDT)
-Received: by 10.114.13.5 with HTTP; Sun, 23 Mar 2008 06:45:34 -0700 (PDT)
-In-Reply-To: <47E65AF5.4060708@dirk.my1.cc>
-Content-Disposition: inline
+	id S1756468AbYCWNy6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 23 Mar 2008 09:54:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758840AbYCWNy6
+	(ORCPT <rfc822;git-outgoing>); Sun, 23 Mar 2008 09:54:58 -0400
+Received: from sd-green-bigip-145.dreamhost.com ([208.97.132.145]:33656 "EHLO
+	spunkymail-a17.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1756412AbYCWNy5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 23 Mar 2008 09:54:57 -0400
+Received: from [192.168.1.6] (ip1-182-173-82.adsl2.versatel.nl [82.173.182.1])
+	by spunkymail-a17.g.dreamhost.com (Postfix) with ESMTP id 657EF73CF4;
+	Sun, 23 Mar 2008 06:54:55 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.12 (Windows/20080213)
+In-Reply-To: <51419b2c0803230645l5b07bbf5h9cbf9b6f47373efa@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77895>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77896>
 
-T24gU3VuLCBNYXIgMjMsIDIwMDggYXQgOToyOCBBTSwgRGlyayBTw7xzc2Vyb3R0IDxuZXdzbGV0
-dGVyQGRpcmsubXkxLmNjPiB3cm90ZToKPiBIaSwgSSd2ZSBhIHF1ZXN0aW9uIGNvbmNlcm5pbmcg
-Z2l0IGNvbmZpZyBhbmQgdGhlIGFsaWFzIHRoaW5ncy4KPiAgSSdkIGxpa2UgdG8gY3JlYXRlIGFu
-IGFsaWFzICdhdGFnJyB0aGF0IGNyZWF0ZXMgYW4gYW5ub3RhdGVkCj4gIHRhZyB3aXRoIHRoZSBt
-ZXNzYWdlIGJlaW5nIHRoZSBzYW1lIGFzIHRoZSB0YWcuIFVzdWFsbHkgSSBjcmVhdGUKPiAgYW5u
-b3RhdGVkIHRhZ3MgbGlrZSB0aGlzOgo+Cj4gICQgZ2l0IHRhZyAtYSAtbSAibXl0YWciIG15dGFn
-Cj4KPiAgKEJUVzogSXQncyBub3QgZG9jdW1lbnRlZCwgYnV0IEkgaGF2ZSB0aGUgaW1wcmVzc2lv
-biB0aGF0Cj4gIHRoZSAnLWEnIHN3aXRjaCBpcyBpbXBsaWNpdGVseSBhZGRlZCB3aGVuIHRoZSAn
-LW0nIHN3aXRjaAo+ICBpcyBwcmVzZW50LiBJcyB0aGF0IHRydWU/KQo+Cj4gIEknZCBsaWtlIHRv
-IGhhdmUgYW4gYWxpYXMgbGlrZSB0aGlzOgo+Cj4gIFthbGlhc10KPiAgICAgYXRhZyA9IHRhZyAt
-YSAtbSAiJDEiCj4KPiAgU28gdGhhdCBJIGNhbiBzaW1wbHkgY2FsbAo+Cj4gICQgZ2l0IGF0YWcg
-bXl0YWcKPgo+ICBJcyBpdCBwb3NzaWJsZSB0byBwYXNzIHBhcmFtZXRlcnMgdG8gdGhlIGFsaWFz
-IGRlZmluaXRpb24/Cj4gIFdpdGggdGhlIGRlZmluaXRpb24gYWJvdmUgSSBnb3QgYSB0YWcgd2l0
-aCBtZXNzYWdlICIkMSIuCgphdGFnID0gIWdpdCB0YWcgLWEgLW0gIiQxIgoKai4K
+Elijah Newren wrote:
+> On Sun, Mar 23, 2008 at 7:19 AM, Jonathan Watt <jwatt@jwatt.org> wrote:
+>> Johannes Schindelin wrote:
+>>  > Hi,
+>>  >
+>>  > On Sun, 23 Mar 2008, Jonathan Watt wrote:
+>>  >
+>>  >> There seems to be a problem with git-push when the working copy of the
+>>  >> directory being pushed to came from the magic revision HEAD, but not
+>>  >> when the working copy came from some other revision.
+>>  >
+>>  > http://git.or.cz/gitwiki/GitFaq#head-b96f48bc9c925074be9f95c0fce69bcece5f6e73
+>>  >
+>>  > Sidenote: I am constantly amazed how people have no problem accepting that
+>>  > a CVS-Server has no working directory, but all of a sudden think that a
+>>  > Git-server should have one, and auto-update it.
+>>
+>>  Hi Dscho. I think you've misread my email. (Or not read it. ;-)) I do not expect
+>>  git-push to update the working copy of the repository being pushed to. In fact
+>>  my complaint would be more that it *does* appear to modify the working copy
+>>  (well, not so much modify the working copy as get confused about which revision
+>>  the working copy came from) when the working copy came from HEAD.
+> 
+> Ah, I hadn't thought of it that way before.  I think you are
+> suggesting that pushing to the active branch of a repository with an
+> associated working copy should cause the HEAD to become detached.  Is
+> that right?
+
+To be honest, I'm not sure what you mean by "HEAD to become detached". If you
+mean that the git-push should, if necessary, stop associating the working copy
+with HEAD if it's going to change HEAD, then absolutely. It wasn't the same
+solution as I was thinking of (stop associating the working copy with HEAD and
+instead associate it with the sha1 HEAD currently points to), but I guess it's
+the same result. :-)
+
+Jonathan
