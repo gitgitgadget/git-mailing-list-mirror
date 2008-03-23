@@ -1,74 +1,63 @@
-From: Jonathan Watt <jwatt@jwatt.org>
-Subject: Re: Working copy revision and push pain
-Date: Sun, 23 Mar 2008 14:54:50 +0100
-Message-ID: <47E6612A.5020408@jwatt.org>
-References: <47E64F71.3020204@jwatt.org>	 <alpine.LSU.1.00.0803231401340.4353@racer.site>	 <47E658D3.1060104@jwatt.org> <51419b2c0803230645l5b07bbf5h9cbf9b6f47373efa@mail.gmail.com>
+From: "Rafael Garcia-Suarez" <rgarciasuarez@gmail.com>
+Subject: Re: Recording cherry-picked commits
+Date: Sun, 23 Mar 2008 14:57:33 +0100
+Message-ID: <b77c1dce0803230657i6d61abefg3b0ee7b42119927c@mail.gmail.com>
+References: <ae63f8b50803210533n12645fb3w9a8be601c4cc394@mail.gmail.com>
+	 <ae63f8b50803220937k78571fbdl1eeb60966ec7aa40@mail.gmail.com>
+	 <b77c1dce0803221548x3250cb90taa9a9d53464f7ea7@mail.gmail.com>
+	 <ae63f8b50803230407u7062586dy26fab7d98090efb9@mail.gmail.com>
+	 <alpine.LSU.1.00.0803231309370.4353@racer.site>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Elijah Newren <newren@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 23 14:55:43 2008
+Cc: "Jean-Baptiste Quenot" <jbq@caraldi.com>, git@vger.kernel.org
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Mar 23 14:58:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JdQfj-00031s-5K
-	for gcvg-git-2@gmane.org; Sun, 23 Mar 2008 14:55:39 +0100
+	id 1JdQiE-0003f6-Tn
+	for gcvg-git-2@gmane.org; Sun, 23 Mar 2008 14:58:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756468AbYCWNy6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 23 Mar 2008 09:54:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758840AbYCWNy6
-	(ORCPT <rfc822;git-outgoing>); Sun, 23 Mar 2008 09:54:58 -0400
-Received: from sd-green-bigip-145.dreamhost.com ([208.97.132.145]:33656 "EHLO
-	spunkymail-a17.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1756412AbYCWNy5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 23 Mar 2008 09:54:57 -0400
-Received: from [192.168.1.6] (ip1-182-173-82.adsl2.versatel.nl [82.173.182.1])
-	by spunkymail-a17.g.dreamhost.com (Postfix) with ESMTP id 657EF73CF4;
-	Sun, 23 Mar 2008 06:54:55 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.12 (Windows/20080213)
-In-Reply-To: <51419b2c0803230645l5b07bbf5h9cbf9b6f47373efa@mail.gmail.com>
+	id S1759386AbYCWN5e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 23 Mar 2008 09:57:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758973AbYCWN5e
+	(ORCPT <rfc822;git-outgoing>); Sun, 23 Mar 2008 09:57:34 -0400
+Received: from wf-out-1314.google.com ([209.85.200.172]:10357 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756164AbYCWN5d (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Mar 2008 09:57:33 -0400
+Received: by wf-out-1314.google.com with SMTP id 28so2501273wff.4
+        for <git@vger.kernel.org>; Sun, 23 Mar 2008 06:57:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=BcqFdZYwhRZUCzf5YflytQhSALCMAZtHljpCulu2TRs=;
+        b=CmBYdunP9jGwFQ/9Vi8XK+n4MM4dcLUU7W5oFYoQBdlhPqTYhuw5Ul+ZXhRvvJGjSuhOGMC97oMll9jYlfvNgCEz9HM2Bahnd2YX48OLCoe2GNF9LIGbemHOqlt363ynGD2r3ojkfHA4Ba8GQ20cbtUXaik6tNfOb7ESTVtAp80=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=VKyGoa4xPXooWzyC0PnFmuQMg/6iSkSygdo24Jaij60pH16neZMojwvk7jLRmgZNDg8f5tx6pQ3NXHz9BpvX0+H5jDNsCpM0fB5dg34gPTnOzmNpraLL/amkzDGgksdq4XhrbrWrblcLKrkPjQgXUcSyLj6ax5EtdBVdcgXHxfM=
+Received: by 10.142.178.13 with SMTP id a13mr3745423wff.50.1206280653064;
+        Sun, 23 Mar 2008 06:57:33 -0700 (PDT)
+Received: by 10.142.156.10 with HTTP; Sun, 23 Mar 2008 06:57:33 -0700 (PDT)
+In-Reply-To: <alpine.LSU.1.00.0803231309370.4353@racer.site>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77896>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77897>
 
-Elijah Newren wrote:
-> On Sun, Mar 23, 2008 at 7:19 AM, Jonathan Watt <jwatt@jwatt.org> wrote:
->> Johannes Schindelin wrote:
->>  > Hi,
->>  >
->>  > On Sun, 23 Mar 2008, Jonathan Watt wrote:
->>  >
->>  >> There seems to be a problem with git-push when the working copy of the
->>  >> directory being pushed to came from the magic revision HEAD, but not
->>  >> when the working copy came from some other revision.
->>  >
->>  > http://git.or.cz/gitwiki/GitFaq#head-b96f48bc9c925074be9f95c0fce69bcece5f6e73
->>  >
->>  > Sidenote: I am constantly amazed how people have no problem accepting that
->>  > a CVS-Server has no working directory, but all of a sudden think that a
->>  > Git-server should have one, and auto-update it.
->>
->>  Hi Dscho. I think you've misread my email. (Or not read it. ;-)) I do not expect
->>  git-push to update the working copy of the repository being pushed to. In fact
->>  my complaint would be more that it *does* appear to modify the working copy
->>  (well, not so much modify the working copy as get confused about which revision
->>  the working copy came from) when the working copy came from HEAD.
-> 
-> Ah, I hadn't thought of it that way before.  I think you are
-> suggesting that pushing to the active branch of a repository with an
-> associated working copy should cause the HEAD to become detached.  Is
-> that right?
+On 23/03/2008, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> Actually, you should not store it in the root of the working tree, but in
+>  the git dir (because it should never be tracked!), and then you can make
+>  it non-hidden:
+>
+>         file="$(git rev-parse --git-dir)"/cherry
 
-To be honest, I'm not sure what you mean by "HEAD to become detached". If you
-mean that the git-push should, if necessary, stop associating the working copy
-with HEAD if it's going to change HEAD, then absolutely. It wasn't the same
-solution as I was thinking of (stop associating the working copy with HEAD and
-instead associate it with the sha1 HEAD currently points to), but I guess it's
-the same result. :-)
-
-Jonathan
+But this way, how can it be shared among several repositories?
+(without patching git-clone itself, that might be a solution.) The use
+case being many commiters cherry-picking patches from a development
+branch to a maintainance one.
