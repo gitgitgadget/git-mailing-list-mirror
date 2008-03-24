@@ -1,53 +1,51 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/2] parse-options.c: introduce OPT_DATE
-Date: Mon, 24 Mar 2008 13:10:18 -0700
-Message-ID: <7vwsnrubmd.fsf@gitster.siamese.dyndns.org>
-References: <200803232150.29971.barra_cuda@katamail.com>
- <200803241331.17986.barra_cuda@katamail.com>
- <alpine.LSU.1.00.0803241409400.4353@racer.site>
- <200803241502.21465.barra_cuda@katamail.com>
+From: Jan Engelhardt <jengelh@computergmbh.de>
+Subject: Re: [ANNOUNCE] Stacked GIT 0.14.2
+Date: Mon, 24 Mar 2008 21:15:06 +0100 (CET)
+Message-ID: <alpine.LNX.1.10.0803242113070.9368@fbirervta.pbzchgretzou.qr>
+References: <b0943d9e0803241259s5280cdc1o255a4412b3fa7bfc@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Michele Ballabio <barra_cuda@katamail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 24 21:11:18 2008
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
+Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
+Cc: git <git@vger.kernel.org>,
+	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+	Josef Sipek <jsipek@fsl.cs.sunysb.edu>
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1753862AbYCXUPp@vger.kernel.org Mon Mar 24 21:17:06 2008
+Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1753862AbYCXUPp@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jdt0i-0001KD-8C
-	for gcvg-git-2@gmane.org; Mon, 24 Mar 2008 21:11:12 +0100
+	id 1Jdt6C-0003Gc-ON
+	for glk-linux-kernel-3@gmane.org; Mon, 24 Mar 2008 21:16:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751546AbYCXUKb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Mar 2008 16:10:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751359AbYCXUKa
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Mar 2008 16:10:30 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:53505 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751266AbYCXUKa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Mar 2008 16:10:30 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 54118105A;
-	Mon, 24 Mar 2008 16:10:28 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id B38141056; Mon, 24 Mar 2008 16:10:22 -0400 (EDT)
-In-Reply-To: <200803241502.21465.barra_cuda@katamail.com> (Michele Ballabio's
- message of "Mon, 24 Mar 2008 15:02:21 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-Sender: git-owner@vger.kernel.org
+	id S1753862AbYCXUPp (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Mon, 24 Mar 2008 16:15:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751880AbYCXUP2
+	(ORCPT <rfc822;linux-kernel-outgoing>);
+	Mon, 24 Mar 2008 16:15:28 -0400
+Received: from sovereign.computergmbh.de ([85.214.69.204]:41514 "EHLO
+	sovereign.computergmbh.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752826AbYCXUPH (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Mon, 24 Mar 2008 16:15:07 -0400
+Received: by sovereign.computergmbh.de (Postfix, from userid 25121)
+	id 665171803165B; Mon, 24 Mar 2008 21:15:06 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by sovereign.computergmbh.de (Postfix) with ESMTP id 5C92B1C00E290;
+	Mon, 24 Mar 2008 21:15:06 +0100 (CET)
+In-Reply-To: <b0943d9e0803241259s5280cdc1o255a4412b3fa7bfc@mail.gmail.com>
+User-Agent: Alpine 1.10 (LNX 962 2008-03-14)
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78091>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78092>
 
-Michele Ballabio <barra_cuda@katamail.com> writes:
+On Monday 2008-03-24 20:59, Catalin Marinas wrote:
 
-> +int parse_opt_approxidate_cb(const struct option *opt, const char *arg,
-> +		int unset)
-> +{
-> +	*(unsigned int *)(opt->value) = approxidate(arg);
+> Stacked GIT 0.14.2 release is available from http://www.procode.org/stgit/.
+>
+> StGIT is a Python application providing similar functionality to Quilt
+> (i.e. pushing/popping patches to/from a stack) on top of GIT.
 
-Doesn't approxidate return ulong, not uint?
+I always wondered what the difference between stgit and guilt is.
+Does anyone have a comparison up?
