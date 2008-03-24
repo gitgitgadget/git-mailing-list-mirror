@@ -1,96 +1,96 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] Documentation: git-tag '-m' implies '-a'
-Date: Mon, 24 Mar 2008 15:43:08 -0400
-Message-ID: <20080324194308.GE14002@coredump.intra.peff.net>
-References: <47E7BDB2.3030304@dirk.my1.cc>
+From: "Bryan Donlan" <bdonlan@gmail.com>
+Subject: Re: thread-safe libgit.a as a GSoC project, was Re: [SoC RFC] libsvn-fs-git: A git backend for the subversion filesystem
+Date: Mon, 24 Mar 2008 15:50:04 -0400
+Message-ID: <3e8340490803241250w186d6ae2l38031521c2d5c6c2@mail.gmail.com>
+References: <3e8340490803182108y40a9aec2q8e5bcb78b907bbb5@mail.gmail.com>
+	 <3e8340490803212202r6dbaa9eel544ba2b4b8e8d0c7@mail.gmail.com>
+	 <alpine.LSU.1.00.0803221229410.4124@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Dirk =?utf-8?Q?S=C3=BCsserott?= <newsletter@dirk.my1.cc>
-X-From: git-owner@vger.kernel.org Mon Mar 24 20:44:08 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Mar 24 20:50:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JdsaL-0007w1-Uw
-	for gcvg-git-2@gmane.org; Mon, 24 Mar 2008 20:43:58 +0100
+	id 1Jdsh1-0001yc-0R
+	for gcvg-git-2@gmane.org; Mon, 24 Mar 2008 20:50:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753586AbYCXTnN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Mar 2008 15:43:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753503AbYCXTnM
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Mar 2008 15:43:12 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4357 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751228AbYCXTnL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Mar 2008 15:43:11 -0400
-Received: (qmail 8708 invoked by uid 111); 24 Mar 2008 19:43:09 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Mon, 24 Mar 2008 15:43:09 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 24 Mar 2008 15:43:08 -0400
+	id S1751301AbYCXTuI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Mar 2008 15:50:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751266AbYCXTuI
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Mar 2008 15:50:08 -0400
+Received: from rn-out-0910.google.com ([64.233.170.189]:35950 "EHLO
+	rn-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751190AbYCXTuF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Mar 2008 15:50:05 -0400
+Received: by rn-out-0910.google.com with SMTP id v46so1474974rnb.15
+        for <git@vger.kernel.org>; Mon, 24 Mar 2008 12:50:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=0Y9WXFUWLXtwzUgznz8XiNDm7oO6JRG1MKIUSJAYHFA=;
+        b=oHT6bL6R33f43bJI62yGT9bkCl/2avFy3+rvZa8UFKSiDKh5n4cPYcugjFSQLLyG0CjjjmRxf+XpNhLI8K5zro3bdLRso2yjI1+XKvQy06UmlrNw5d3WG2H5oS0MsEufEh1ndCeUk0EdB20X5UOJgKAQcxI5QZxykKCMD98nUSI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=nZkqOSbMFw1HwobiUHNc9kGga78i1VP6tqUN6dp6skdspa+E5dXakfp4+ahZppqTKhsAUx5/Z1OYKrcSZa3kVt06ayNn+JkVuFShn9+jEAjnvmNU52TbFRasJ58/0oheh/S6WY6FY2A4RCYKeBg0Vr+S2qr9CCASoSiOcANudHY=
+Received: by 10.115.108.1 with SMTP id k1mr12568924wam.14.1206388204084;
+        Mon, 24 Mar 2008 12:50:04 -0700 (PDT)
+Received: by 10.64.49.9 with HTTP; Mon, 24 Mar 2008 12:50:04 -0700 (PDT)
+In-Reply-To: <alpine.LSU.1.00.0803221229410.4124@racer.site>
 Content-Disposition: inline
-In-Reply-To: <47E7BDB2.3030304@dirk.my1.cc>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78084>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78085>
 
-=46rom: Dirk S=C3=BCsserott <newsletter@dirk.my1.cc>
+On Sat, Mar 22, 2008 at 7:35 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi,
+>
+>  On Sat, 22 Mar 2008, Bryan Donlan wrote:
+>
+>  > On Wed, Mar 19, 2008 at 12:08 AM, Bryan Donlan <bdonlan@gmail.com> wrote:
+>  >
+>  > >  I'm planning to apply for the git summer of code project. My proposal
+>  > >  is based on the project idea of a subversion gateway for git,
+>  > >  implemented with a new subversion filesystem layer. A draft of my
+>  > >  proposal follows; I'd appreciate any comments/questions on it before
+>  > >  the application period proper begins.
+>  >
+>  > Thanks for all the comments. To try to avoid spamming the list, I've
+>  > replied in a single message, if it'd be better to reply individually
+>  > in the future please let me know.
+>
+>  My preference is to have single replies, possibly changing the subject
+>  ("xyz, was Re: blabla"), but it is maybe just me.
+>
+>  > Also, after looking at libgit in a bit more detail, I think it might be
+>  > necessary to not use it after all, as subversion requires support for
+>  > multiple open repositories, as well as thread safety (at least when
+>  > accessing different open repo from different threads). Perhaps a
+>  > thread-safe git library would be a nice SoC project as well?
+>
+>  As I said on IRC yesterday, I think that such a libgit.a would be nice,
+>  _but_
+>
+>  - a lot of git programs expect to be one-shot, and libgit.a shows that,
+>
+>  - not many people will help you with your effort, but just ignore it and
+>   actively introduce things that do not help libification (at least that's
+>   my experience),
+>
+>  - unless you have a proper need for such a library, I do not think there
+>   is enough motivation to actually get it to completion.
+>
+>  I once thought that libification would be nice, and important, but as I do
+>  not need it myself, I reversed my opinion.
 
-Described that '-a' is implied when '-m' or '-F' is present.
----
-On Mon, Mar 24, 2008 at 03:41:54PM +0100, Dirk S=C3=BCsserott wrote:
-
-> Described that '-a' is implied when '-m' or '-F' is present.
-
-Oh, I see you already took my suggestion before I made it. :)
-
-The text looks good to me, but the patch would not apply here. I think
-there are some wrapping issues, and it looks like some tabs have been
-mangled to spaces.
-
-Also, it is generally a good idea to:
-  - at least cc Junio on patch submissions to make sure he sees it
-  - sign off your patch (either with commit -s or format-patch -s).
-
-Here is an unmangled version of the patch.
-
- Documentation/git-tag.txt |    7 +++++++
- 1 files changed, 7 insertions(+), 0 deletions(-)
-
-diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
-index b62a3d1..c22fb71 100644
---- a/Documentation/git-tag.txt
-+++ b/Documentation/git-tag.txt
-@@ -26,6 +26,9 @@ creates a 'tag' object, and requires the tag message.=
-  Unless
- `-m <msg>` or `-F <file>` is given, an editor is started for the user =
-to type
- in the tag message.
-=20
-+If `-m <msg>` or `-F <file>` is given and `-a`, `-s`, and `-u <key-id>=
-`
-+are absent, `-a` is implied.
-+
- Otherwise just the SHA1 object name of the commit object is
- written (i.e. a lightweight tag).
-=20
-@@ -68,10 +71,14 @@ OPTIONS
- 	Use the given tag message (instead of prompting).
- 	If multiple `-m` options are given, there values are
- 	concatenated as separate paragraphs.
-+	Implies `-a` if none of `-a`, `-s`, or `-u <key-id>`
-+	is given.
-=20
- -F <file>::
- 	Take the tag message from the given file.  Use '-' to
- 	read the message from the standard input.
-+	Implies `-a` if none of `-a`, `-s`, or `-u <key-id>`
-+	is given.
-=20
- CONFIGURATION
- -------------
---=20
-1.5.5.rc1.123.ge5f4e6
+All right. If I do end up having to recreate (thread-safe,
+multiple-git-dir-safe) logic for my project, I'll try to keep in mind
+the possibility of spinning it off into a proper library later though
+:)
