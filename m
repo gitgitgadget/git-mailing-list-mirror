@@ -1,56 +1,100 @@
-From: "Carlos Rica" <jasampler@gmail.com>
-Subject: Re: [PATCH] gitk: Changes in Spanish translation after review by Wincent Colaiuta
-Date: Mon, 24 Mar 2008 19:49:44 +0100
-Message-ID: <1b46aba20803241149v5d3bb64co5f23665fcd3384e1@mail.gmail.com>
-References: <1206316703-15481-1-git-send-email-sgala@apache.org>
-	 <1206376672-7194-1-git-send-email-sgala@apache.org>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: [PATCH 2/2] filter-branch.sh: support nearly proper tag name
+ filtering
+Date: Mon, 24 Mar 2008 14:02:37 -0500
+Message-ID: <47E7FACD.7020409@nrlssc.navy.mil>
+References: <1206031893-29599-1-git-send-email-casey@nrlssc.navy.mil> <47E298A5.6050508@nrlssc.navy.mil> <alpine.LSU.1.00.0803201812560.4124@racer.site> <7vr6e01xja.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Santiago Gala" <sgala@apache.org>,
-	"Wincent Colaiuta" <win@wincent.com>
-To: sgala@marlow.memojo.com
-X-From: git-owner@vger.kernel.org Mon Mar 24 19:50:38 2008
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 24 20:03:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jdrkd-00062v-P0
-	for gcvg-git-2@gmane.org; Mon, 24 Mar 2008 19:50:32 +0100
+	id 1JdrxP-0002AL-Ds
+	for gcvg-git-2@gmane.org; Mon, 24 Mar 2008 20:03:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759106AbYCXSts (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Mar 2008 14:49:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759111AbYCXSts
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Mar 2008 14:49:48 -0400
-Received: from wr-out-0506.google.com ([64.233.184.227]:56022 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758951AbYCXStr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Mar 2008 14:49:47 -0400
-Received: by wr-out-0506.google.com with SMTP id c48so1843613wra.1
-        for <git@vger.kernel.org>; Mon, 24 Mar 2008 11:49:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=2if50nAGJ783x/RCeYr1EH1G7pB9kADtalbGFFTq2Vo=;
-        b=TfSlhSkFzCGEKwcl7X/QdpOzU9PtQh7Ux+Rn33xtuYlLWOHIKgX3k7WHNLbB/nSksSNHuTdrWnI+xXHvIo0K40XkTc9xzaw19B0M/J+fQsKKL8P5/BdiOe/bEqehug8u4XQYxWeletcS0H91S6Xxx2+4IHts/4iawKuZ+tQ0er8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=epAKxI865JkzGuFe7xj2BJEl0g+vkHTNgE1mWuMbswCjAeiSkYSm9ir/1LAgbcgXnYwwsaTBcCFRLHlXWch/I6u/PmQpK1gfrYOW5/JDja5rKguuYEpNbJzVVG9veTnqA0fcadRtu26O8Bb0jHxpsCJZBWwdmKQdqnCsBhjn3cs=
-Received: by 10.140.172.19 with SMTP id u19mr2462129rve.133.1206384584578;
-        Mon, 24 Mar 2008 11:49:44 -0700 (PDT)
-Received: by 10.141.115.5 with HTTP; Mon, 24 Mar 2008 11:49:44 -0700 (PDT)
-In-Reply-To: <1206376672-7194-1-git-send-email-sgala@apache.org>
-Content-Disposition: inline
+	id S1759316AbYCXTDA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Mar 2008 15:03:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759244AbYCXTDA
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Mar 2008 15:03:00 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:57683 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758552AbYCXTC7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Mar 2008 15:02:59 -0400
+Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
+	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id m2OJ2bnZ030076;
+	Mon, 24 Mar 2008 14:02:37 -0500
+Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 24 Mar 2008 14:02:37 -0500
+User-Agent: Thunderbird 2.0.0.9 (X11/20071031)
+In-Reply-To: <7vr6e01xja.fsf@gitster.siamese.dyndns.org>
+X-OriginalArrivalTime: 24 Mar 2008 19:02:37.0338 (UTC) FILETIME=[A01B97A0:01C88DE1]
+X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-5.0.0.1023-15806001
+X-TM-AS-Result: : Yes--18.045400-0-31-1
+X-TM-AS-Category-Info: : 31:0.000000
+X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNTY3LTgzMzUxOC03MDAw?=
+	=?us-ascii?B?NzUtMTM5MDEwLTcwMzczMS03MDQ0MjEtNzA0NDI1LTcxMTYxMi03?=
+	=?us-ascii?B?MDA0NzYtNzAzOTY5LTcwMzc4OC03MDA2MzAtNzAxMjIwLTcwMTIz?=
+	=?us-ascii?B?Ni03MDUxMDItNzAwNjk1LTcwNTE3OC03MDE2MTktNzAwNzAxLTEz?=
+	=?us-ascii?B?NjA3MC03MDIzNTgtMTg4MDE5LTcwNDkzNC03MDI3OTEtNzA0NDEw?=
+	=?us-ascii?B?LTcwMTUwNi03MDA5NzEtNzAwNjI0LTEyMTYyNC03MDM3MjAtMTA1?=
+	=?us-ascii?B?NjMwLTcwMDg0Ni03MDY0NTQtNzA4MjU3LTcwNzc1MC03MDYxNTAt?=
+	=?us-ascii?B?NzAxOTE0LTcwNjExNC04MzQ2NjgtMTQ4MDM5LTE0ODA1MS0yMDA0?=
+	=?us-ascii?B?Mg==?=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78078>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78079>
 
-I'm tracking all those changes. There are some issues still missing,
-this night (here) I will report them if Wincent don't review them first.
-Just a little more and we will be this new translation done.
+Junio C Hamano wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+>> On Thu, 20 Mar 2008, Brandon Casey wrote:
+>>
+>>> Add support for creating a new tag object and retaining the tag message, 
+>>> author, and date when rewriting tags. The gpg signature, if one exists, 
+>>> will be stripped.
+>>>
+>>> This adds nearly proper tag name filtering to filter-branch. Proper tag 
+>>> name filtering would include the ability to change the tagger, tag date, 
+>>> tag message, and _not_ strip a gpg signature if the tag did not change.
+>> I think such a change in semantics merits a new option.
+> 
+> It is a different story if the fix is a good one, or has room for
+> improvement.  For example, the sed script that knows what is on the first
+> and second line and relies on that knowledge to use 1c...2c... looked very
+> fragile to me.
 
---
-Carlos
+This tag format is described in the documentation for git-mktag as follows:
+
+   Tag Format
+   ----------
+   A tag signature file has a very simple fixed format: four lines of
+
+     object <sha1>
+     type <typename>
+     tag <tagname>
+     tagger <tagger>
+
+   followed by some 'optional' free-form message (some tags created
+   [...]
+
+So, as long as git-cat-file succeeds, shouldn't we get this format piped
+to sed? The type is hard coded to "commit", since $new_ref will always be
+a commit (the old tag could have referenced another tag), otherwise the
+earlier rev-parse would have failed.
+
+The portion that strips the signature, does rely on the fact that git-tag
+always adds the signature to the end of the tag object. Rather than
+stripping only between the pgp BEGIN and END markers. And the 'Q' directive
+may not be portable, but I really don't know.
+
+Suggestions?
+
+-brandon
