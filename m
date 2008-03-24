@@ -1,78 +1,70 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: RFC: Use TranslationProject.org for git, gitk, git-gui
-Date: Mon, 24 Mar 2008 02:43:45 +0100
-Message-ID: <20080324014345.GW14567@genesis.frugalware.org>
-References: <Pine.LNX.4.64.0803140846270.25570@ds9.cixit.se> <20080315045913.GD8410@spearce.org>
+From: "Jay Soffian" <jaysoffian@gmail.com>
+Subject: Re: git-config: aliases with parameter expansion ($1 and such)
+Date: Sun, 23 Mar 2008 21:54:49 -0400
+Message-ID: <76718490803231854u6ee76437h5acf37b0b602f3b1@mail.gmail.com>
+References: <47E65AF5.4060708@dirk.my1.cc>
+	 <76718490803230645k13471472sc99932563b0239da@mail.gmail.com>
+	 <47E66382.5030800@dirk.my1.cc>
+	 <20080323193842.GA23227@coredump.intra.peff.net>
+	 <20080323194514.GA23492@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="c/UxJciryulPFo89"
-Cc: Peter Karlsson <peter@softwolves.pp.se>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Mar 24 02:44:36 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "=?UTF-8?Q?Dirk_S=C3=BCsserott?=" <newsletter@dirk.my1.cc>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Jeff King" <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Mar 24 02:55:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jdbjh-0001pe-1b
-	for gcvg-git-2@gmane.org; Mon, 24 Mar 2008 02:44:29 +0100
+	id 1JdbuZ-0004Fg-P7
+	for gcvg-git-2@gmane.org; Mon, 24 Mar 2008 02:55:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753017AbYCXBns (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 23 Mar 2008 21:43:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752705AbYCXBns
-	(ORCPT <rfc822;git-outgoing>); Sun, 23 Mar 2008 21:43:48 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:25714 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752090AbYCXBns (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 Mar 2008 21:43:48 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id CE8371B258D;
-	Mon, 24 Mar 2008 02:43:46 +0100 (CET)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 0982944698;
-	Mon, 24 Mar 2008 02:40:45 +0100 (CET)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id CB2D31B64142; Mon, 24 Mar 2008 02:43:45 +0100 (CET)
+	id S1754266AbYCXByv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 23 Mar 2008 21:54:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753330AbYCXByv
+	(ORCPT <rfc822;git-outgoing>); Sun, 23 Mar 2008 21:54:51 -0400
+Received: from wa-out-1112.google.com ([209.85.146.177]:53089 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753119AbYCXByu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Mar 2008 21:54:50 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so3153608wah.23
+        for <git@vger.kernel.org>; Sun, 23 Mar 2008 18:54:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=O9SjNAyigclHatiUMoty3jPWFmw7Ja6tlcPYikQJQfw=;
+        b=bJE4to31TJDxOG7JbSJs/MWLtPo6T6ouRpywE11ECilUM9MMdsUasVzLbANkfkY88zp9c49f3whiVI53CupeCR6EZXcIiW9mIGIGrp0idURvdMNGF4bmeGt84/sfMTEv0j83ESDFSNVQGj1BB32pb5z3Ind+Fvofne3AlEMYBjI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=T/7PNgDRWXsHq2ojx6eSrewqlHFAi09naYDoEndDnFfe88U2IgIoDMAULiD6RIu4+4uIgN4xx7u8/p1KXpdNJEFXITGq4hL0WJ8sn8Z0DIAPjKGtudNktVGMJ3epXavZnlTM5plW0p6WXH/UVAp6W949CxTY0Cv9RR2iEPLWN80=
+Received: by 10.114.25.3 with SMTP id 3mr10614405way.22.1206323689895;
+        Sun, 23 Mar 2008 18:54:49 -0700 (PDT)
+Received: by 10.114.13.5 with HTTP; Sun, 23 Mar 2008 18:54:49 -0700 (PDT)
+In-Reply-To: <20080323194514.GA23492@coredump.intra.peff.net>
 Content-Disposition: inline
-In-Reply-To: <20080315045913.GD8410@spearce.org>
-User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77988>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77989>
 
+On Sun, Mar 23, 2008 at 3:45 PM, Jeff King <peff@peff.net> wrote:
+>  Hmm, I take it back. Git is doing the right thing, but it is a quirk of
+>  the shell that it counts the first argument as the "name of the script"
+>  even though the script actually comes from "-c".
+>
+>   $ sh -c 'echo $0' foo
+>   foo
+>   $ echo 'echo $0' | sh
+>   sh
 
---c/UxJciryulPFo89
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+All my shell aliases therefor look like:
 
-On Sat, Mar 15, 2008 at 12:59:13AM -0400, "Shawn O. Pearce" <spearce@spearce.org> wrote:
-> I'm open to using it for git-gui.  What do the other translators
-> active on the list think?
+h          = "!sh -c 'git alias \"$1\" || git help \"$1\"' -"
 
-i think when we want a good translation, we want somebody, who:
+(Notice the trailing '-'.)
 
-1) understands how git works (as a user), so he/she won't misunderstand
-the messages to translate
-
-2) is a good translator.
-
-i think it's hard to find someone who is good in both. probably the
-current translations are 1)-like, and TranslationProject.org provides a
-2)-like one.
-
-not sure which one is better.
-
---c/UxJciryulPFo89
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (GNU/Linux)
-
-iD8DBQFH5wdRe81tAgORUJYRApO3AJ9IsZoHEH/bpZuFs0S6IrMDx/AvKQCgp3fW
-5QfdhNcxRKimSi9wVdkHVj0=
-=er6B
------END PGP SIGNATURE-----
-
---c/UxJciryulPFo89--
+j.
