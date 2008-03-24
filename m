@@ -1,80 +1,124 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: [ANNOUNCE] Stacked GIT 0.14.2
-Date: Mon, 24 Mar 2008 23:24:20 +0000
-Message-ID: <b0943d9e0803241624ne83602emc1fb4727402555d3@mail.gmail.com>
-References: <b0943d9e0803241259s5280cdc1o255a4412b3fa7bfc@mail.gmail.com>
-	 <alpine.LNX.1.10.0803242113070.9368@fbirervta.pbzchgretzou.qr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 4/4] git-rebase -i: New option to support rebase with
+ merges
+Date: Mon, 24 Mar 2008 16:30:57 -0700
+Message-ID: <7v7ifrsnri.fsf@gitster.siamese.dyndns.org>
+References: <1206308562-31489-1-git-send-email-joerg@alea.gnuu.de>
+ <1206308562-31489-2-git-send-email-joerg@alea.gnuu.de>
+ <1206308562-31489-3-git-send-email-joerg@alea.gnuu.de>
+ <1206308562-31489-4-git-send-email-joerg@alea.gnuu.de>
+ <alpine.LSU.1.00.0803232334130.4353@racer.site>
+ <20080324111413.GA18488@alea.gnuu.de>
+ <7vabkoufzq.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>,
-	"Linux Kernel Mailing List" <linux-kernel@vger.kernel.org>,
-	"Josef Sipek" <jsipek@fsl.cs.sunysb.edu>
-To: "Jan Engelhardt" <jengelh@computergmbh.de>
-X-From: git-owner@vger.kernel.org Tue Mar 25 00:25:10 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, B.Steinbrink@gmx.de
+To: =?utf-8?Q?J=C3=B6rg?= Sommer <joerg@alea.gnuu.de>
+X-From: git-owner@vger.kernel.org Tue Mar 25 00:32:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jdw2N-00054h-FW
-	for gcvg-git-2@gmane.org; Tue, 25 Mar 2008 00:25:07 +0100
+	id 1Jdw98-0006tO-2o
+	for gcvg-git-2@gmane.org; Tue, 25 Mar 2008 00:32:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755354AbYCXXYZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Mar 2008 19:24:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755218AbYCXXYZ
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Mar 2008 19:24:25 -0400
-Received: from wr-out-0506.google.com ([64.233.184.225]:17247 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754686AbYCXXYY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Mar 2008 19:24:24 -0400
-Received: by wr-out-0506.google.com with SMTP id c48so1962150wra.1
-        for <git@vger.kernel.org>; Mon, 24 Mar 2008 16:24:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=KunBbbDnicW1dUT1hqc4H2T9O1QPXGIXzDT3EfHyepE=;
-        b=FIm9jJB+PNkplSx83YRnbeEKDQO+bmlrESP+AIKiRUavoleKOzOXMjPqBGzHeXXsJtbzZ0PqpPGKR3zyKAuRYFnGH1XPCRrqaOYtV7u141By320qBy8EvYQ+QfQK6wkv4LLynq+veS5OhJ0cPFbnrkPSFCsLoeaibZCUmZYPYSA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=WB8KFUmLVCr/cB0uNHuFRrUqsscKpQ3wMxxXGuXN3mxtWf7LZNQqT2xVhPXxfTnYVP9R/vCtmhV2HfT1Vv2ME/TG5v5R67CV2nZVlKjzv9uVg9UEBoSWCS57lA1HVXJPGHvkXD6imOe0dk4QPdEkzmjUrzwdRQvI0QJCxgpsG48=
-Received: by 10.141.29.18 with SMTP id g18mr2701147rvj.162.1206401060859;
-        Mon, 24 Mar 2008 16:24:20 -0700 (PDT)
-Received: by 10.141.175.11 with HTTP; Mon, 24 Mar 2008 16:24:20 -0700 (PDT)
-In-Reply-To: <alpine.LNX.1.10.0803242113070.9368@fbirervta.pbzchgretzou.qr>
-Content-Disposition: inline
+	id S1753405AbYCXXbT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Mar 2008 19:31:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752644AbYCXXbT
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Mar 2008 19:31:19 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:45791 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751726AbYCXXbS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Mar 2008 19:31:18 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 4E3502F9F;
+	Mon, 24 Mar 2008 19:31:14 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 39FD62F9A; Mon, 24 Mar 2008 19:31:08 -0400 (EDT)
+In-Reply-To: <7vabkoufzq.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Mon, 24 Mar 2008 11:35:53 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78125>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78126>
 
-On 24/03/2008, Jan Engelhardt <jengelh@computergmbh.de> wrote:
-> On Monday 2008-03-24 20:59, Catalin Marinas wrote:
->
->  > Stacked GIT 0.14.2 release is available from http://www.procode.org/stgit/.
->  >
->  > StGIT is a Python application providing similar functionality to Quilt
->  > (i.e. pushing/popping patches to/from a stack) on top of GIT.
->
->
-> I always wondered what the difference between stgit and guilt is.
->  Does anyone have a comparison up?
+I'll extend this topic a bit for the last time, but first a word of
+caution.  What I am going to draw is probably not what the current -p
+implementation does.  They illustrate what I think should happen.
 
-There was a thread last year:
+Again, starting from this topology:
 
-http://kerneltrap.org/mailarchive/git/2007/6/14/249310
+       o---o---o---o---o---Z
+      /
+     X---Y---A---B
+          \       \
+           C---D---M---E
 
-I don't follow the guilt development to be able to comment. They are
-pretty similar regarding patch management but it's probably best to
-try both and see which tool you like. StGIT might have a few more
-features as it was around for longer (e-mail templates, patch
-synchronisation between branches etc.) but guilt seems actively
-developed as well.
+and the goal is to rebase your development leading to E on top of the
+updated mainline Z.
 
-I might be wrong here but I'm not sure whether guilt uses three-way
-merging when pushing a patch or just a two-way diff apply. The
-three-way merging has several advantages in dealing with conflicts.
+The earlier example was when you want to end up with this topology:
 
--- 
-Catalin
+       o---o---o---o---o---Z---Y'--A'--B'      
+      /                         \       \      
+     X---Y---A---B               C'--D'--M'--E'
+          \       \
+           C---D---M---E
+
+In this case, "pick M" cannot be "merge B after pick D".  It needs to
+merge in the rewritten B (which is B').
+
+But if you want to end up with this topology:
+
+       o---o---o---o---o---Z---Y'--A'--B'
+      /                                 \     
+     X---Y---A---B                       M'--E'
+          \       \                     /
+           C---D---M---E               /
+                \                     /
+                 `-------------------'
+
+redoing the merge from D when reproducing M' is the right thing to do.
+
+Unfortunately, you cannot express that you would want to rewrite only the
+Y--A--B--M--E ancestry from the command line.  We would need a syntax to
+do this cleanly first if we want to pursue this.
+
+The "first parent" hack can be used in this case (--first-parent X..E),
+but it will probably meet with the same resistance at the philosophical
+level (i.e. "merge parents are equal") as the --first-parent option was
+criticised for.  But other than that, a sequence to pick Y A B M E in this
+order can be presented in the todo list to be edited, and swapping A and M
+(for example) should result in this:
+
+       o---o---o---o---o---Z---Y'
+      /                         \
+     X---Y---A---B               M'--A'--B'
+          \       \             /
+           C---D---M---E       /
+                \             /
+                 `-----------'
+
+The existing revision range arithmetic can only come close with "E ^Z ^D"
+(or "^D Z..E"), but that would exclude Y as "uninteresting" (because Y is
+reachable from D).  You would end up with A--B--M--E.  So even though I am
+sympathetic to poeple who complained that the command line parameter to
+rebase is different from the log family, using revision range syntax is
+not a solution to this.
+
+Just for completeness of the illustration, linealizing form aims to
+produce the history like this:
+
+       o---o---o---o---o---Z---Y'--A'--B'--C'--D'--E'
+      /
+     X---Y---A---B
+          \       \
+           C---D---M---E
+
+You can freely to reorder anything in the "todo" list without additional
+constraints in this form (sequence of "pick" Y, A, B, C, D and E).
