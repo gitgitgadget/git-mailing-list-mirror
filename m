@@ -1,50 +1,69 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: [PATCH] gitk: Changes in Spanish translation after review by Wincent Colaiuta
-Date: Mon, 24 Mar 2008 23:35:27 +0100
-Message-ID: <35880147-229E-4FE9-AB13-8334A3976858@wincent.com>
-References: <1206316703-15481-1-git-send-email-sgala@apache.org> <1206376672-7194-1-git-send-email-sgala@apache.org> <1b46aba20803241400h643d4b56jd49835dc4f9cbc05@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v919.2)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: sgala@marlow.memojo.com, git@vger.kernel.org,
-	"Santiago Gala" <sgala@apache.org>
-To: Carlos Rica <jasampler@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 24 23:37:57 2008
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] Introduce core.initHook
+Date: Mon, 24 Mar 2008 15:40:01 -0700
+Message-ID: <7vhcevu4ou.fsf@gitster.siamese.dyndns.org>
+References: <alpine.LSU.1.00.0803230310500.4353@racer.site>
+ <alpine.OSX.1.00.0803230943500.7541@cougar>
+ <alpine.LSU.1.00.0803231200010.4353@racer.site>
+ <alpine.OSX.1.00.0803231326290.11994@cougar>
+ <alpine.LSU.1.00.0803231404390.4353@racer.site>
+ <alpine.OSX.1.00.0803231428220.13789@cougar>
+ <20080323235610.GB25381@dpotapov.dyndns.org>
+ <alpine.LSU.1.00.0803240101220.4353@racer.site>
+ <20080324002302.GD25381@dpotapov.dyndns.org>
+ <alpine.LSU.1.00.0803241155300.4353@racer.site>
+ <20080324122153.GF25381@dpotapov.dyndns.org>
+ <alpine.LSU.1.00.0803241611200.4353@racer.site>
+ <7vr6dzuaxf.fsf@gitster.siamese.dyndns.org>
+ <alpine.LSU.1.00.0803242232410.4353@racer.site>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Dmitry Potapov <dpotapov@gmail.com>,
+	Steffen Prohaska <prohaska@zib.de>, tormod.hystad@gmail.com,
+	msysGit <msysgit@googlegroups.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Mar 24 23:41:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JdvIi-0006zL-3A
-	for gcvg-git-2@gmane.org; Mon, 24 Mar 2008 23:37:56 +0100
+	id 1JdvLj-00086G-0T
+	for gcvg-git-2@gmane.org; Mon, 24 Mar 2008 23:41:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753818AbYCXWhP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Mar 2008 18:37:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753672AbYCXWhO
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Mar 2008 18:37:14 -0400
-Received: from wincent.com ([72.3.236.74]:41514 "EHLO s69819.wincent.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753812AbYCXWhN convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 24 Mar 2008 18:37:13 -0400
-Received: from cuzco.lan (localhost [127.0.0.1])
-	(authenticated bits=0)
-	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id m2OMZTj9022311;
-	Mon, 24 Mar 2008 17:35:30 -0500
-In-Reply-To: <1b46aba20803241400h643d4b56jd49835dc4f9cbc05@mail.gmail.com>
-X-Mailer: Apple Mail (2.919.2)
+	id S1753828AbYCXWkV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Mar 2008 18:40:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753717AbYCXWkU
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Mar 2008 18:40:20 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:40300 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753164AbYCXWkT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Mar 2008 18:40:19 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id DF21922D8;
+	Mon, 24 Mar 2008 18:40:17 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id EFA2122C9; Mon, 24 Mar 2008 18:40:09 -0400 (EDT)
+In-Reply-To: <alpine.LSU.1.00.0803242232410.4353@racer.site> (Johannes
+ Schindelin's message of "Mon, 24 Mar 2008 22:40:07 +0100 (CET)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78112>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78113>
 
-El 24/3/2008, a las 22:00, Carlos Rica escribi=F3:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> Hi Santiago, this is my list of the missing things:
+> 	> > +	if (run_init_hook())
+> 	> > +		return 1;
+> 	> > +
+> 	> 
+> 	> Hmm.  Exit without a message even under !quiet?
+>
+> 	Even under quiet, run_init_hook() will complain if the hook is 
+> 	invalid.
 
-Yep, I agree with everything that Carlos has said. If you can =20
-incorporate his feedback I think the translation will be in pretty =20
-good shape.
-
-Saludos,
-Wincent
+Sorry, I may have been unclear but I was wondering more about the case the
+hook script errored out silently.
