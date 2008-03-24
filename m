@@ -1,89 +1,90 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: [PATCH 2/2] filter-branch.sh: support nearly proper tag name
- filtering
-Date: Mon, 24 Mar 2008 11:45:59 -0500
-Message-ID: <47E7DAC7.9020607@nrlssc.navy.mil>
-References: <1206031893-29599-1-git-send-email-casey@nrlssc.navy.mil> <47E298A5.6050508@nrlssc.navy.mil> <alpine.LSU.1.00.0803201812560.4124@racer.site> <7vr6e01xja.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0803241152050.4353@racer.site> <7viqzc18j9.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0803241609540.4353@racer.site> <47E7D818.7090501@nrlssc.navy.mil>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Documentation/git-checkout: Update summary to reflect
+ current abilities
+Date: Mon, 24 Mar 2008 09:49:33 -0700
+Message-ID: <7vbq54vzhe.fsf@gitster.siamese.dyndns.org>
+References: <7vtziw3k9a.fsf@gitster.siamese.dyndns.org>
+ <47E69044.3000207@zytor.com> <20080323173841.GA24943@mit.edu>
+ <20080323182102.GA22551@bit.office.eurotux.com>
+ <87r6e1b6c8.fsf@mid.deneb.enyo.de> <20080324001617.GB24943@mit.edu>
+ <20080324014030.GA24695@atjola.homenet> <20080324021411.GE24943@mit.edu>
+ <20080324030946.9328.76091.julian@quantumfyre.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Mar 24 17:47:14 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: =?utf-8?Q?Bj=C3=B6rn?= Steinbrink <B.Steinbrink@gmx.de>,
+	Florian Weimer <fw@deneb.enyo.de>, git@vger.kernel.org
+To: Julian Phillips <julian@quantumfyre.co.uk>
+X-From: git-owner@vger.kernel.org Mon Mar 24 17:50:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JdppG-0004iN-UO
-	for gcvg-git-2@gmane.org; Mon, 24 Mar 2008 17:47:11 +0100
+	id 1JdpsW-0005rL-N9
+	for gcvg-git-2@gmane.org; Mon, 24 Mar 2008 17:50:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755105AbYCXQqU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Mar 2008 12:46:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755190AbYCXQqU
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Mar 2008 12:46:20 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:41969 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755026AbYCXQqT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Mar 2008 12:46:19 -0400
-Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
-	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id m2OGk2nq027479;
-	Mon, 24 Mar 2008 11:46:02 -0500
-Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 24 Mar 2008 11:45:59 -0500
-User-Agent: Thunderbird 2.0.0.9 (X11/20071031)
-In-Reply-To: <47E7D818.7090501@nrlssc.navy.mil>
-X-OriginalArrivalTime: 24 Mar 2008 16:45:59.0852 (UTC) FILETIME=[8A067EC0:01C88DCE]
-X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-5.0.0.1023-15806001
-X-TM-AS-Result: : Yes-0.043500-0-31-1
-X-TM-AS-Category-Info: : 31:0.000000
-X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNTY3LTcwMDA3NS0xMzkw?=
-	=?us-ascii?B?MTAtODMzNTE4LTcwMzczMS03MDE0NTUtNzA3NDUxLTcwOTE4NS03?=
-	=?us-ascii?B?MDA3NjUtNzAwNjMwLTcwNjExNC03MDEyMjAtNzAwODA3LTcwMzc4?=
-	=?us-ascii?B?OC03MDA3NTYtNzA0OTgwLTcwMjA1Ny03MDIwMzctNzAxOTI0LTcw?=
-	=?us-ascii?B?MjAyMC03MDQ5MjctNzEwODQyLTE0ODAzOS0xNDgwNTEtMjAwNDM=?=
+	id S1753787AbYCXQtv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Mar 2008 12:49:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752873AbYCXQtv
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Mar 2008 12:49:51 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:60960 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752687AbYCXQtu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Mar 2008 12:49:50 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 75F3C1234;
+	Mon, 24 Mar 2008 12:49:48 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 9B3F91231; Mon, 24 Mar 2008 12:49:43 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78060>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78061>
 
-Brandon Casey wrote:
-> Johannes Schindelin wrote:
->> Hi,
+Julian Phillips <julian@quantumfyre.co.uk> writes:
+
+>> Theodore Tso <tytso@MIT.EDU> writes:
 >>
->> On Mon, 24 Mar 2008, Junio C Hamano wrote:
->>
->>> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>>>        git-checkout - Checkout and switch to a branch
 >>>
->>>> On Sun, 23 Mar 2008, Junio C Hamano wrote:
->>>>
->>>>> If you tell filter-branch to filter a branch A and a tag T, as the 
->>>>> command is advertised to rewrite positive refs that were given from 
->>>>> the command line, isn't it natural to expect that the command would 
->>>>> attempt its best effort to rewrite such a tag object?
->>>> The thing is: signed tags cannot be rewritten.
->>> I know that, and you know I know that if you read what you responded 
->>> again ;-)
->>>
->>> And I think stripping of gpg signature part is a reasonable best effort 
->>> for the command, _when_ the user told a signed tag to be rewritten.
->> Yes.
+>>> At the very least, will you admit that the summary in the man page is
+>>> perhaps just a wee bit misleading?
 >>
->> BUT.
+>> It's not "wee bit misleading" but it just is outright stale.
 >>
->> You can say "--all", and I actually expect quite a few people to do 
->> exactly that.  And then you cannot really say "the user explicitely asked 
->> to have that signed tag rewritten".
-> 
-> That sounds like saying that specifying "HEAD" as the revision (_and_
-> using --tag-name-filter) is not explicitly asking for tags to be rewritten.
+>> Back then, before people realized the operation "to check out the path out
+>> of index or tree-ish" belongs naturally to a command whose name is
+>> "checkout", "to check out the named branch or a commit" was the only thing
+>> that you could do with the command.  The one-line description you quoted
+>> above reflects that history.
+>>
+>> Patches very much welcome; I did not notice it was kept stale.
+>
+> Something like this perhaps?
+>
+>  Documentation/git-checkout.txt |    2 +-
+>  1 files changed, 1 insertions(+), 1 deletions(-)
+>
+> diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
+> index 4014e72..1b8caf1 100644
+> --- a/Documentation/git-checkout.txt
+> +++ b/Documentation/git-checkout.txt
+> @@ -3,7 +3,7 @@ git-checkout(1)
+>  
+>  NAME
+>  ----
+> -git-checkout - Checkout and switch to a branch
+> +git-checkout - Checkout/update/refresh items in the working tree
 
-Maybe that should be qualified. I think your statement is similar to my
-example and so "not explicitly asking for tags" (by your definition) since
-neither explicitly named the tags to be rewritten on the command line.
+Hmm.
 
-In both cases, tag objects would currently be replaced by lightweight tags
-when --tag-name-filter is used.
+The glossary may be a good place to define what the verb "checkout" means.
+I think using that defined word without adding "/update/refresh" to
+muddy its meaning would be more appropriate, after we establish what
+"checkout" means in the glossary.
 
--brandon
+So how about saying "Check out a whole branch, or paths to the work tree"
+or something like that?
