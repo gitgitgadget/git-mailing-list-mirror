@@ -1,72 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [ANNOUNCE] Stacked GIT 0.14.2
-Date: Mon, 24 Mar 2008 13:43:00 -0700
-Message-ID: <7vlk47ua3v.fsf@gitster.siamese.dyndns.org>
-References: <b0943d9e0803241259s5280cdc1o255a4412b3fa7bfc@mail.gmail.com>
- <alpine.LNX.1.10.0803242113070.9368@fbirervta.pbzchgretzou.qr>
- <47E81037.5030808@keyaccess.nl>
+From: Gilles Chehade <gilles@poolp.org>
+Subject: Re: Where to rent the best dedicated servers?
+Date: Mon, 24 Mar 2008 15:35:52 -0500
+Message-ID: <20080324203552.GA11478@poolp.org>
+References: <fbfafb78b9db.47e85ef5@broadpark.no> <20080324144446.8ef2ce92.wmoran@potentialtech.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Catalin Marinas <catalin.marinas@gmail.com>,
-	Jan Engelhardt <jengelh@computergmbh.de>,
-	git <git@vger.kernel.org>,
-	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-	Josef Sipek <jsipek@fsl.cs.sunysb.edu>
-To: Rene Herman <rene.herman@keyaccess.nl>
-X-From: git-owner@vger.kernel.org Mon Mar 24 21:44:24 2008
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Cc: Kyrre Nyg?rd <kyrreny@broadpark.no>, rubyonrails-talk@googlegroups.com,
+        misc@openbsd.org, questions@freebsd.org, git@vger.kernel.org
+To: Bill Moran <wmoran@potentialtech.com>
+X-From: owner-misc+M67856@openbsd.org Mon Mar 24 21:46:17 2008
+Return-path: <owner-misc+M67856@openbsd.org>
+Envelope-to: goom-misc@gmane.org
+Received: from lists.openbsd.org ([192.43.244.163] helo=shear.ucar.edu)
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JdtWU-0006Iz-Ds
-	for gcvg-git-2@gmane.org; Mon, 24 Mar 2008 21:44:02 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752772AbYCXUnT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Mar 2008 16:43:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752430AbYCXUnT
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Mar 2008 16:43:19 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:58258 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751880AbYCXUnS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Mar 2008 16:43:18 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id C77481309;
-	Mon, 24 Mar 2008 16:43:15 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id C5AFC1308; Mon, 24 Mar 2008 16:43:05 -0400 (EDT)
-In-Reply-To: <47E81037.5030808@keyaccess.nl> (Rene Herman's message of "Mon,
- 24 Mar 2008 21:33:59 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78096>
+	id 1JdtYZ-0007Dw-Ob
+	for goom-misc@gmane.org; Mon, 24 Mar 2008 21:46:12 +0100
+Received: from openbsd.org (localhost.ucar.edu [127.0.0.1])
+	by shear.ucar.edu (8.14.1/8.13.6) with ESMTP id m2OKddkZ004805;
+	Mon, 24 Mar 2008 14:39:39 -0600 (MDT)
+Received: from poolp.org (root@evilkittens.org [72.232.81.178])
+	by shear.ucar.edu (8.14.1/8.14.1) with ESMTP id m2OKYWZj031344 (version=TLSv1/SSLv3 cipher=DHE-DSS-AES256-SHA bits=256 verify=FAIL)
+	for <misc@openbsd.org>; Mon, 24 Mar 2008 14:34:32 -0600 (MDT)
+Received: from poolp.org (gilles@localhost.layeredtech.com [127.0.0.1])
+	by poolp.org (8.14.1/8.14.1) with ESMTP id m2OKZrJN014089 (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO); Mon, 24 Mar 2008 15:35:53 -0500 (CDT)
+Received: (from gilles@localhost)
+	by poolp.org (8.14.1/8.14.1/Submit) id m2OKZqWn002848; Mon, 24 Mar 2008 15:35:52 -0500 (CDT)
+Mail-Followup-To: Gilles Chehade <gilles@poolp.org>, Bill Moran <wmoran@potentialtech.com>, Kyrre Nyg?rd <kyrreny@broadpark.no>, rubyonrails-talk@googlegroups.com, misc@openbsd.org, questions@freebsd.org, git@vger.kernel.org
+In-Reply-To: <20080324144446.8ef2ce92.wmoran@potentialtech.com>
+X-Operating-System: OpenBSD poolp.org 4.2 GENERIC
+User-Agent: Mutt/1.5.16 (2007-06-09)
+X-Loop: misc@openbsd.org
+Precedence: list
+Sender: owner-misc@openbsd.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78097>
 
-Rene Herman <rene.herman@keyaccess.nl> writes:
+On Mon, Mar 24, 2008 at 02:44:46PM -0400, Bill Moran wrote:
+> In response to "Kyrre Nygerd" <kyrreny@broadpark.no>:
+> 
+> > Sorry, I really don't know where else to ask.
+> >
+> > I've been using Staminus for a while now and I've had it with the downtime.
+> >
+> > Basically I want a place to host my Ruby on Rails / Git projects, an IRC
+> server as well as an internet radio channel.
+> >
+> > Simple website / control panel design is ofcourse a plus. None of that
+> cpanel bullshit though, I prefer to meddle around with simple text files the
+> way it's meant to be done.
+> >
+> > So, layeredtech.com? rackspace.com?
+> 
+> pair.com ?
+> 
 
-> On 24-03-08 21:15, Jan Engelhardt wrote:
->
->> On Monday 2008-03-24 20:59, Catalin Marinas wrote:
->>
->>> Stacked GIT 0.14.2 release is available from
->>> http://www.procode.org/stgit/.
->>>
->>> StGIT is a Python application providing similar functionality to Quilt
->>> (i.e. pushing/popping patches to/from a stack) on top of GIT.
->>
->> I always wondered what the difference between stgit and guilt is.
->> Does anyone have a comparison up?
->
-> And I remember some mumblings about git growing quilt-like
-> functionality itself. Anything on that?
+If asked a couple weeks ago I would have suggested layeredtech, but I'd tend
+to discourage it now as I ran into a succession of issues that they took too
+many time to fix (ip addresses not routed to my box, almost 72h of downtime)
 
-Not my mumbling, but I am quite open to slurp in guilt as a subdirectory
-in git.git at some point in the future just like we bundle git-gui and
-gitk if asked by the maintainer.
+Actually, if you aren't running a very critical service that you rely on, it
+is a pretty good service. It's just that when they fuck up, they fuck up big
+time :)
 
-The same applies to StGIT for that matter, although I somehow feel that is
-much less likely to happen, because it lived long enough as a standalone
-project with enough following to achieve sustainable momentum by itself.
+Gilles
+
+-- 
+Gilles Chehade
