@@ -1,81 +1,73 @@
-From: Theodore Tso <tytso@MIT.EDU>
-Subject: Re: What I miss from Cogito...
-Date: Sun, 23 Mar 2008 20:16:17 -0400
-Message-ID: <20080324001617.GB24943@mit.edu>
-References: <47E69044.3000207@zytor.com> <20080323173841.GA24943@mit.edu> <20080323182102.GA22551@bit.office.eurotux.com> <87r6e1b6c8.fsf@mid.deneb.enyo.de>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: [msysGit] Re: Store autocrlf during init-db (was [msysGit] autocrlf problems with Git-preview20080301.exe)
+Date: Mon, 24 Mar 2008 03:23:02 +0300
+Message-ID: <20080324002302.GD25381@dpotapov.dyndns.org>
+References: <alpine.OSX.1.00.0803221036230.7618@cougar> <7vzlsqfe2h.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0803230310500.4353@racer.site> <alpine.OSX.1.00.0803230943500.7541@cougar> <alpine.LSU.1.00.0803231200010.4353@racer.site> <alpine.OSX.1.00.0803231326290.11994@cougar> <alpine.LSU.1.00.0803231404390.4353@racer.site> <alpine.OSX.1.00.0803231428220.13789@cougar> <20080323235610.GB25381@dpotapov.dyndns.org> <alpine.LSU.1.00.0803240101220.4353@racer.site>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Florian Weimer <fw@deneb.enyo.de>
-X-From: git-owner@vger.kernel.org Mon Mar 24 01:17:22 2008
+Cc: Steffen Prohaska <prohaska@zib.de>,
+	Junio C Hamano <junio@pobox.com>, tormod.hystad@gmail.com,
+	msysGit <msysgit@googlegroups.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Mar 24 01:23:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JdaNL-0005hT-2x
-	for gcvg-git-2@gmane.org; Mon, 24 Mar 2008 01:17:19 +0100
+	id 1JdaTg-0007RE-JE
+	for gcvg-git-2@gmane.org; Mon, 24 Mar 2008 01:23:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757448AbYCXAQg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 23 Mar 2008 20:16:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757447AbYCXAQg
-	(ORCPT <rfc822;git-outgoing>); Sun, 23 Mar 2008 20:16:36 -0400
-Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:54737 "EHLO
-	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757375AbYCXAQg (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 23 Mar 2008 20:16:36 -0400
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id m2O0GO8B017588;
-	Sun, 23 Mar 2008 20:16:24 -0400 (EDT)
-Received: from closure.thunk.org (c-98-216-98-217.hsd1.ma.comcast.net [98.216.98.217])
-	(authenticated bits=0)
-        (User authenticated as tytso@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id m2O0GI9h001122
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sun, 23 Mar 2008 20:16:23 -0400 (EDT)
-Received: from tytso by closure.thunk.org with local (Exim 4.67)
-	(envelope-from <tytso@mit.edu>)
-	id 1JdaML-00070b-Ot; Sun, 23 Mar 2008 20:16:17 -0400
+	id S1757823AbYCXAXL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 23 Mar 2008 20:23:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757857AbYCXAXL
+	(ORCPT <rfc822;git-outgoing>); Sun, 23 Mar 2008 20:23:11 -0400
+Received: from fg-out-1718.google.com ([72.14.220.156]:44676 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757823AbYCXAXK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Mar 2008 20:23:10 -0400
+Received: by fg-out-1718.google.com with SMTP id l27so2689194fgb.17
+        for <git@vger.kernel.org>; Sun, 23 Mar 2008 17:23:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
+        bh=3nK8n+KqqEndPPo4BXe3XMlQ8TYok60EFBXXPz4GbmU=;
+        b=BFO89oGVXBqYZpgc4RYPRL9OHsZSlz6LAzve7i923KxgXMgCYiiGuDUF49HceKsbKI/kQeQVZaNLjvBA10JKTPAV9vxJrPDodmxTX6Rk6Z7lu97Q8Yx1Yy2p9QRZiLDUhuDYgTDn+o7KSY93gA+spDmqx5HbnkbUGCuB7HcClT8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
+        b=um18VqHKmPdJYjTyZiwIC5Gvgi7xHmYYMBul/O1Yrfuc7DJVZhMwEZjXDR84Tjrf7QqI0yPeBA+ZzKZ64p9SPuAfDKTIcQU+vKdy2vQbGRpl6vlvbhMpd/K1KbCR8km6TGWW+n8UYmBzamzGaM3H96SFz2A+MQQvMrvarI+qvwY=
+Received: by 10.82.161.19 with SMTP id j19mr15615951bue.9.1206318188280;
+        Sun, 23 Mar 2008 17:23:08 -0700 (PDT)
+Received: from localhost ( [85.140.170.114])
+        by mx.google.com with ESMTPS id n10sm7403864mue.18.2008.03.23.17.23.04
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 23 Mar 2008 17:23:05 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <87r6e1b6c8.fsf@mid.deneb.enyo.de>
-User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
-X-Scanned-By: MIMEDefang 2.42
-X-Spam-Flag: NO
-X-Spam-Score: 0.00
+In-Reply-To: <alpine.LSU.1.00.0803240101220.4353@racer.site>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77980>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77981>
 
-On Sun, Mar 23, 2008 at 08:14:47PM +0100, Florian Weimer wrote:
+On Mon, Mar 24, 2008 at 01:01:54AM +0100, Johannes Schindelin wrote:
 > 
-> Personally, I'm not all that happy with the multiple different meanings
-> of "git reset" and "git checkout", either.  Depending on the parameters,
-> the two comments manipulate both the contents of the working copy, or
-> the location at which the working copy is hooked in the history.  If we
-> need to have two separate commands for this, it would make more sense to
-> draw distinction between the two aspects, and not the mess we have now.
-> OTOH, it's probably too late for that.
+> On Mon, 24 Mar 2008, Dmitry Potapov wrote:
+> 
+> > We already have templates for different hooks, info/exclude, etc. So, 
+> > instead of placing autocrlf in /etc/gitconfig, you should place this 
+> > variable to /usr/share/git/templates/config and this file should be 
+> > copied by git init or git clone as any other file in templates.
+> 
+> I thought we discussed that already?  And the consensus was that this does 
+> not allow for per-user overriding.
 
-Yeah, it's not at all intuitive.  I've been using git for quite some
-time and had *absolutely* *no* *idea* that "git checkout <treeish> --
-path" did what "bk revert" and "hg revert" does.  In fact, I'm pretty
-sure I remember asking for this functionality a while back, and being
-told the right answer was "git show HEAD:pathname > pathname", and I
-kept on typing it until I got sick and tired of it, and so I created
-my short-hand shell script.  
+I am sorry I missed this discussion. In this case, I believe that the
+idea of templates should be extended, so any user may have his/her own
+templates in $HOME/.gittemplates. IMHO, it makes much more sense than
+making an exception for autocrlf in builtin-init-db.c and breaking
+existing repositories...
 
-And the fact that Peter was using "git reset --hard -- pathname" is
-another hint that it isn't at *all* obvious that "git checkout" does
-two completely different things, and it's not something that you're
-likely to intuit from the name or looking at the top-level git man
-page (where the summary in the top-level git manpage is, "checkout and
-switch to a branch").
 
-If we were going to separate the two commands out, I'd use the name
-"git revert-file", because that's what people who are coming from bk
-or hg are used to (where "revert" means to undo the local edits done
-to a particular file, as opposed to the git meaning of undoing a
-particular commit).
-
-						- Ted
+Dmitry
