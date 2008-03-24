@@ -1,72 +1,57 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Working copy revision and push pain
-Date: Mon, 24 Mar 2008 16:22:28 +0100 (CET)
-Message-ID: <alpine.LSU.1.00.0803241621210.4353@racer.site>
-References: <47E64F71.3020204@jwatt.org> <47E668E1.80804@jwatt.org> <alpine.LSU.1.00.0803231534050.4353@racer.site> <200803231720.44320.johan@herland.net>
+From: "Carlos Rica" <jasampler@gmail.com>
+Subject: Re: [PATCH] Spanish translation of gitk.
+Date: Mon, 24 Mar 2008 16:35:25 +0100
+Message-ID: <1b46aba20803240835l5573f709nf63a4282b4a71b7f@mail.gmail.com>
+References: <1206316703-15481-1-git-send-email-sgala@apache.org>
+	 <9D1D2D11-8C2E-4B8E-BB75-59D155AFF6BF@wincent.com>
+	 <loom.20080324T091855-5@post.gmane.org>
+	 <F90B5D52-0E47-4231-A9D3-4078C5EB6594@wincent.com>
+	 <1b46aba20803240643m57c509d2i60028280fbb05e0e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Jonathan Watt <jwatt@jwatt.org>,
-	Elijah Newren <newren@gmail.com>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Mon Mar 24 16:23:40 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Santiago Gala" <sgala@apache.org>, git@vger.kernel.org
+To: "Wincent Colaiuta" <win@wincent.com>
+X-From: git-owner@vger.kernel.org Mon Mar 24 16:36:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JdoVw-0000C4-Dv
-	for gcvg-git-2@gmane.org; Mon, 24 Mar 2008 16:23:08 +0100
+	id 1JdoiZ-0004cG-9W
+	for gcvg-git-2@gmane.org; Mon, 24 Mar 2008 16:36:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759609AbYCXPW1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Mar 2008 11:22:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759689AbYCXPW0
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Mar 2008 11:22:26 -0400
-Received: from mail.gmx.net ([213.165.64.20]:46365 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1759014AbYCXPW0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Mar 2008 11:22:26 -0400
-Received: (qmail invoked by alias); 24 Mar 2008 15:22:24 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp047) with SMTP; 24 Mar 2008 16:22:24 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+bfgA4zzyb9mY6H5aSUciJM0mheJY4DZ5ivBPDi+
-	ymiNTqMCCZFr7d
-X-X-Sender: gene099@racer.site
-In-Reply-To: <200803231720.44320.johan@herland.net>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1752127AbYCXPfa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Mar 2008 11:35:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751692AbYCXPf3
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Mar 2008 11:35:29 -0400
+Received: from el-out-1112.google.com ([209.85.162.177]:54952 "EHLO
+	el-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751456AbYCXPf3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Mar 2008 11:35:29 -0400
+Received: by el-out-1112.google.com with SMTP id v27so1294119ele.17
+        for <git@vger.kernel.org>; Mon, 24 Mar 2008 08:35:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=6o1XL/mLD+zUOyf4e9tewAdA6CTeSV2pwWJboE0I9ts=;
+        b=Ah7uY7NEP3BvZEBQo9HtuQeFUYeWcpz1+vRnr79kW7ijhikWv3Y1ZpPk/IpsTK3PmcdxZdOVdD7LvczU1EfYA4aLFuuROmUKYQ8624WRhQ+0aemR7poKa0f8vplqpo2Str4ABnPcWk+ZX8tWd7VdJTbRd+o+cO/jxp6KPzo7UYM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Oxd5A2W5AJMTx4CQVsPP48jWm5D66PmPhqPtqyja4eVjiPj6bd3UPklpLyvjPnX1GDUu3wTQesQ4pSUDtScMVPTmQMYlOXgIH1Xyui1pajYvQLMBF4Q88Po0mgVdUhJQjj+FD0t9u4gqQRa0GrI+O8Wyo9E1Cc/2BfassUwr8qE=
+Received: by 10.141.86.14 with SMTP id o14mr2253399rvl.278.1206372925313;
+        Mon, 24 Mar 2008 08:35:25 -0700 (PDT)
+Received: by 10.141.115.5 with HTTP; Mon, 24 Mar 2008 08:35:25 -0700 (PDT)
+In-Reply-To: <1b46aba20803240643m57c509d2i60028280fbb05e0e@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78053>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78054>
 
-Hi,
+On Mon, Mar 24, 2008 at 2:43 PM, Carlos Rica <jasampler@gmail.com> wrote:
+>  This requires more analysis, I'm seeing many things that could be changed,
+>  but also some suggestions from Vincent that need to be addressed,
 
-On Sun, 23 Mar 2008, Johan Herland wrote:
-
-> I'm starting to think it's worth changing the default behaviour of push 
-> as follows:
-> 
-> Upon receiving a push into a non-bare repository, if the working copy is 
-> on the same branch as is being pushed, then refuse the push with a 
-> helpful message describing why the push was refused, and how to resolve 
-> this issue (i.e. referring to the tutorials you mention).
-> 
-> This would:
-> - Not clobber the working copy
-> - Tell newbies what happened and why
-> - Hopefully make this issue pop up less frequently
-> - Not affect you if you only push into bare repos
-> - Not affect you if you take care to never push into a checked-out 
->   branch
-> 
-> Of course, you should be able to set a config option to get the old 
-> behaviour, and from there you can write hooks to either update the 
-> working copy, or detach HEAD, or whatever you please.
-
-I think I sent out a sensible patch, which does not change the behaviour 
-in existing repositories.  This should be safer (read: nicer) for 
-Git old-timers.
-
-Ciao,
-Dscho
+Ups, sorry, Wincent, not Vincent.
