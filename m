@@ -1,81 +1,138 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: [PATCH] Spanish translation of gitk.
-Date: Mon, 24 Mar 2008 12:08:26 +0100
-Message-ID: <F90B5D52-0E47-4231-A9D3-4078C5EB6594@wincent.com>
-References: <1206316703-15481-1-git-send-email-sgala@apache.org> <9D1D2D11-8C2E-4B8E-BB75-59D155AFF6BF@wincent.com> <loom.20080324T091855-5@post.gmane.org>
-Mime-Version: 1.0 (Apple Message framework v919.2)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Santiago Gala <sgala@apache.org>
-X-From: git-owner@vger.kernel.org Mon Mar 24 12:10:33 2008
+From: =?iso-8859-1?Q?J=F6rg?= Sommer <joerg@alea.gnuu.de>
+Subject: Re: [PATCH 4/4] git-rebase -i: New option to support rebase with
+	merges
+Date: Mon, 24 Mar 2008 12:14:13 +0100
+Message-ID: <20080324111413.GA18488@alea.gnuu.de>
+References: <1206308562-31489-1-git-send-email-joerg@alea.gnuu.de> <1206308562-31489-2-git-send-email-joerg@alea.gnuu.de> <1206308562-31489-3-git-send-email-joerg@alea.gnuu.de> <1206308562-31489-4-git-send-email-joerg@alea.gnuu.de> <alpine.LSU.1.00.0803232334130.4353@racer.site>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="9amGYk9869ThD9tj"
+Cc: git@vger.kernel.org, B.Steinbrink@gmx.de
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Mar 24 12:17:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JdkYy-0007Y0-NP
-	for gcvg-git-2@gmane.org; Mon, 24 Mar 2008 12:10:01 +0100
+	id 1JdkgG-0001or-0A
+	for gcvg-git-2@gmane.org; Mon, 24 Mar 2008 12:17:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757799AbYCXLJG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Mar 2008 07:09:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757844AbYCXLJF
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Mar 2008 07:09:05 -0400
-Received: from wincent.com ([72.3.236.74]:39875 "EHLO s69819.wincent.com"
+	id S1757920AbYCXLQu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Mar 2008 07:16:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757917AbYCXLQu
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Mar 2008 07:16:50 -0400
+Received: from banki.eumelnet.de ([83.246.114.63]:2340 "EHLO uucp.gnuu.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757652AbYCXLJE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 24 Mar 2008 07:09:04 -0400
-Received: from cuzco.lan (localhost [127.0.0.1])
-	(authenticated bits=0)
-	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id m2OB8SaD007300;
-	Mon, 24 Mar 2008 06:08:29 -0500
-In-Reply-To: <loom.20080324T091855-5@post.gmane.org>
-X-Mailer: Apple Mail (2.919.2)
+	id S1757915AbYCXLQt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Mar 2008 07:16:49 -0400
+Received: by uucp.gnuu.de (Postfix, from userid 10)
+	id 87E6F48802C; Mon, 24 Mar 2008 12:16:47 +0100 (CET)
+Received: from ibook.localnet ([192.168.0.5] helo=alea.gnuu.de)
+	by alea.gnuu.de with esmtp (Exim 4.63)
+	(envelope-from <joerg@alea.gnuu.de>)
+	id 1Jdkd3-00010a-J1; Mon, 24 Mar 2008 12:14:13 +0100
+Received: from joerg by alea.gnuu.de with local (Exim 4.69)
+	(envelope-from <joerg@alea.gnuu.de>)
+	id 1Jdkd3-0004ow-6a; Mon, 24 Mar 2008 12:14:13 +0100
+Content-Disposition: inline
+In-Reply-To: <alpine.LSU.1.00.0803232334130.4353@racer.site>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78023>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78024>
 
-El 24/3/2008, a las 11:07, Santiago Gala escribi=F3:
 
-> Wincent Colaiuta <win <at> wincent.com> writes:
->
->> Great job on the translation! Some feedback follows:
->>
->> El 24/3/2008, a las 0:58, sgala <at> marlow.memojo.com escribi=F3:
->>
->>> +#: gitk:275
->>> +msgid "Can't parse git log output:"
->>> +msgstr "No puedo analizar la salida de git log:"
->>
->> Wouldn't it be normal to use an impersonal form there? ie. "No se
->> puede analizar" instead of "No puedo analizar"
->
-> Well, "no se puede" has 3 more characters than "no puedo", this was =20
-> the
-> primary reason why I switched to the first person form. Spanish is =20
-> way more
-> verbose than English.
+--9amGYk9869ThD9tj
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Yes, I know, in many cases it is.
+Hi Johannes,
 
-> what about "Error analizando la salida de git log:"?
-> it is impersonal and shorter than the original one.
-
-I think that's better. The first person form really stands out like a =20
-sore thumb because basically _all_ of the output from the computer is =20
-in an impersonal form, and all of a sudden the computer starts telling =
+Johannes Schindelin schrieb am Sun 23. Mar, 23:41 (+0100):
+> On Sun, 23 Mar 2008, J=F6rg Sommer wrote:
+>=20
+> > @@ -150,7 +152,18 @@ pick_one () {
+> >  		sha1=3D$(git rev-parse --short $sha1)
+> >  		output warn Fast forward to $sha1
+> >  	else
+> > -		output git cherry-pick "$@"
+> > +		if test t =3D "$LINEAR_HISTORY" &&
+> > +			other_parents=3D"$(parents_of_commit $sha1 | cut -s -d' ' -f2-)" &&
+> > +			test -n "$other_parents"
+> > +		then
+> > +			if test a"$1" =3D a-n
+> > +			then
+> > +				merge_opt=3D--no-commit
+> > +			fi
+> > +			redo_merge $sha1 $no_commit $other_parents
+> > +		else
+> > +			output git cherry-pick "$@"
+> > +		fi
+>=20
+> Now, that is funny.  In case of --preserve-merges, I would have expected=
 =20
-you "_I_ couldn't process this!" as though it were a person.
+> you to touch pick_one_preserving_merges(), not pick_one().
+>=20
+> I would find it highly illogical to try to redo merges _without_ -p.
 
-If you really care about length, you _might_ consider saving 3 more =20
-chars with:
+Me too, but I think it's not possible to do what I want with -p. -p
+misses a definition of the (new) parent of a commit. It tries to preserve
+all commits from all branches. But going through the _list_ of commands
+couldn't preserve this structure.
 
-"Error al leer la salida de git log"
+o--A--B
+ \     \
+  C--D--M--E
 
-But that's arguably starting to drift further away from the original =20
-English meaning (parse -> read as opposed to parse -> analyze).
+How should the graph look like after these commands:
 
-Cheers,
-Wincent
+pick A
+pick C
+squash E
+# pick D
+pick B
+pick M
+
+Should
+
+pick A
+pick B
+pick C
+pick D
+pick M
+pick E
+
+give a same graph like
+
+pick C
+pick A
+pick D
+pick B
+pick M
+pick E
+
+Bye, J=F6rg.
+--=20
+< Mr X.> jo: contact an admin to mount it for you
+< jo> The admin is not, well how should I say it, he isn't very familiar wi=
+th
+      the system. What should I tell my admin, what he should do?
+< Mr X.> taking a sun solaris administration course.
+
+--9amGYk9869ThD9tj
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature http://en.wikipedia.org/wiki/OpenPGP
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFH540Fwe0mZwH1VIARAlsqAJ4vxt9jiTzNhSYJ8deW5uZSlHW7/wCgiLr/
+r+BTjVX4EhFlMUqlEOWdg8M=
+=mgYU
+-----END PGP SIGNATURE-----
+
+--9amGYk9869ThD9tj--
