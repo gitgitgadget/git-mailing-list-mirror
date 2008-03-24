@@ -1,93 +1,190 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Store autocrlf during init-db (was [msysGit] autocrlf
- problems with Git-preview20080301.exe)
-Date: Mon, 24 Mar 2008 11:57:19 +0100 (CET)
-Message-ID: <alpine.LSU.1.00.0803241155300.4353@racer.site>
-References: <alpine.OSX.1.00.0803221036230.7618@cougar> <7vzlsqfe2h.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0803230310500.4353@racer.site> <alpine.OSX.1.00.0803230943500.7541@cougar> <alpine.LSU.1.00.0803231200010.4353@racer.site> <alpine.OSX.1.00.0803231326290.11994@cougar> <alpine.LSU.1.00.0803231404390.4353@racer.site> <alpine.OSX.1.00.0803231428220.13789@cougar> <20080323235610.GB25381@dpotapov.dyndns.org> <alpine.LSU.1.00.0803240101220.4353@racer.site> <20080324002302.GD25381@dpotapov.dyndns.org>
-Reply-To: Johannes.Schindelin@gmx.de
+From: Santiago Gala <sgala@apache.org>
+Subject: Re: [PATCH] Spanish translation of gitk.
+Date: Mon, 24 Mar 2008 10:07:08 +0000 (UTC)
+Message-ID: <loom.20080324T091855-5@post.gmane.org>
+References: <1206316703-15481-1-git-send-email-sgala@apache.org> <9D1D2D11-8C2E-4B8E-BB75-59D155AFF6BF@wincent.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Steffen Prohaska <prohaska@zib.de>, Junio C Hamano <junio@pobox.com>,  tormod.hystad@gmail.com, msysGit <msysgit@googlegroups.com>,  git@vger.kernel.org
-To: Dmitry Potapov <dpotapov@gmail.com>
-X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Mon Mar 24 11:58:01 2008
-Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from wr-out-0708.google.com ([64.233.184.242])
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 24 12:00:57 2008
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JdkNN-0003sn-72
-	for gcvm-msysgit@m.gmane.org; Mon, 24 Mar 2008 11:58:01 +0100
-Received: by wr-out-0708.google.com with SMTP id c3so1386689wra.9
-        for <gcvm-msysgit@m.gmane.org>; Mon, 24 Mar 2008 03:57:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=gamma;
-        h=domainkey-signature:received:received:x-sender:x-apparently-to:received:received:received-spf:authentication-results:received:received:x-authenticated:x-provags-id:date:from:x-x-sender:to:cc:subject:in-reply-to:message-id:references:user-agent:mime-version:content-type:x-y-gmx-trusted:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
-        bh=3FV8g9zHA8Jycjr28FeeR6Lc9pfJ4jGmBkMLXOtHkMQ=;
-        b=DZAGDtzPmHAfzivD7z9jZOsN5eJWE8+C019M8LnYz8/A2RFpwbQ56v1dVI4eZOqIisq6reP+LSJZ2cY4g+XPWDwxkpXxNq7ZK40NxvNdCSjPg6NK7Ux3qW8K/AR/vKlVOZIP3so1vKp3iur4SqThFSnl31NELp9c0DVSsOJnp2c=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=gamma;
-        h=x-sender:x-apparently-to:received-spf:authentication-results:x-authenticated:x-provags-id:date:from:x-x-sender:to:cc:subject:in-reply-to:message-id:references:user-agent:mime-version:content-type:x-y-gmx-trusted:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
-        b=23EA344dR2r2M5VO8nzOxzx0+iru7UOWYaH6qXAwTgMtQx8LLpK6qW4tF3hrZQJTeuIymp4DRyxFC4M2JZtbxdDB3axuAxZwAYrFSyCWZ9ONN7Gc+gtr4pDo2rQu+0EwtZN+MOODjMiS2Gvpt9tdT+q3pdKpT+cdoDzeRIcnltI=
-Received: by 10.100.96.9 with SMTP id t9mr1407873anb.10.1206356238830;
-        Mon, 24 Mar 2008 03:57:18 -0700 (PDT)
-Received: by 10.44.116.1 with SMTP id o1gr2012hsc.0;
-	Mon, 24 Mar 2008 03:57:18 -0700 (PDT)
-X-Sender: Johannes.Schindelin@gmx.de
-X-Apparently-To: msysgit@googlegroups.com
-Received: by 10.35.126.2 with SMTP id d2mr7655828pyn.1.1206356237969; Mon, 24 Mar 2008 03:57:17 -0700 (PDT)
-Received: from mail.gmx.net (mail.gmx.net [213.165.64.20]) by mx.google.com with SMTP id z53si9034643pyg.1.2008.03.24.03.57.17; Mon, 24 Mar 2008 03:57:17 -0700 (PDT)
-Received-SPF: pass (google.com: domain of Johannes.Schindelin@gmx.de designates 213.165.64.20 as permitted sender) client-ip=213.165.64.20;
-Authentication-Results: mx.google.com; spf=pass (google.com: domain of Johannes.Schindelin@gmx.de designates 213.165.64.20 as permitted sender) smtp.mail=Johannes.Schindelin@gmx.de
-Received: (qmail invoked by alias); 24 Mar 2008 10:57:16 -0000
-Received: from host86-148-26-43.range86-148.btcentralplus.com (EHLO racer.home) [86.148.26.43] by mail.gmx.net (mp011) with SMTP; 24 Mar 2008 11:57:16 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX184cf9JW904cWXmemQ4vW0pc2vd7vIPBLUxLzOk2y A5iGoKCJJ9XbW8
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20080324002302.GD25381@dpotapov.dyndns.org>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-Sender: msysgit@googlegroups.com
+	id 1JdkQ3-0004ml-QG
+	for gcvg-git-2@gmane.org; Mon, 24 Mar 2008 12:00:48 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1757430AbYCXLAG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Mar 2008 07:00:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756296AbYCXLAG
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Mar 2008 07:00:06 -0400
+Received: from main.gmane.org ([80.91.229.2]:37111 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756084AbYCXLAF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Mar 2008 07:00:05 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1JdkPL-0002lg-AV
+	for git@vger.kernel.org; Mon, 24 Mar 2008 11:00:03 +0000
+Received: from 233.Red-81-33-31.staticIP.rima-tde.net ([81.33.31.233])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 24 Mar 2008 11:00:03 +0000
+Received: from sgala by 233.Red-81-33-31.staticIP.rima-tde.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 24 Mar 2008 11:00:03 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 81.33.31.233 (Mozilla/5.0 (X11; U; Linux x86_64; es-ES; rv:1.8.1.12) Gecko/20080209 Firefox/2.0.0.12)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Google-Loop: groups
-Mailing-List: list msysgit@googlegroups.com;
-	contact msysgit-owner@googlegroups.com
-List-Id: <msysgit.googlegroups.com>
-List-Post: <mailto:msysgit@googlegroups.com>
-List-Help: <mailto:msysgit-help@googlegroups.com>
-List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
-	<mailto:msysgit-unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78018>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78019>
 
+Wincent Colaiuta <win <at> wincent.com> writes:
 
-Hi,
+>=20
+> Great job on the translation! Some feedback follows:
+>=20
+> El 24/3/2008, a las 0:58, sgala <at> marlow.memojo.com escribi=C3=B3:
+>=20
+> > +#: gitk:275
+> > +msgid "Can't parse git log output:"
+> > +msgstr "No puedo analizar la salida de git log:"
+>=20
+> Wouldn't it be normal to use an impersonal form there? ie. "No se =20
+> puede analizar" instead of "No puedo analizar"
+>=20
 
-On Mon, 24 Mar 2008, Dmitry Potapov wrote:
+Well, "no se puede" has 3 more characters than "no puedo", this was the
+primary reason why I switched to the first person form. Spanish is way =
+more
+verbose than English. what about "Error analizando la salida de git log=
+:"?
+it is impersonal and shorter than the original one.
 
-> On Mon, Mar 24, 2008 at 01:01:54AM +0100, Johannes Schindelin wrote:
-> > 
-> > On Mon, 24 Mar 2008, Dmitry Potapov wrote:
-> > 
-> > > We already have templates for different hooks, info/exclude, etc. 
-> > > So, instead of placing autocrlf in /etc/gitconfig, you should place 
-> > > this variable to /usr/share/git/templates/config and this file 
-> > > should be copied by git init or git clone as any other file in 
-> > > templates.
-> > 
-> > I thought we discussed that already?  And the consensus was that this 
-> > does not allow for per-user overriding.
-> 
-> I am sorry I missed this discussion. In this case, I believe that the 
-> idea of templates should be extended, so any user may have his/her own 
-> templates in $HOME/.gittemplates. IMHO, it makes much more sense than 
-> making an exception for autocrlf in builtin-init-db.c and breaking 
-> existing repositories...
+(...)
 
-I think I actually suggested something like that.  But that gets only even 
-more complicated: if you have a template for .git/config in 
-$HOME/.gittemplates/, then the global template will be _disregarded_, even 
-if the administrator puts something vital in there.
+>=20
+> "Move down" would be "Bajar", not "Subir".
+>=20
 
-Maybe the best idea would be an "init" hook, settable from the config, 
-after all.
+done.
 
-Ciao,
-Dscho
+(...)
+> > +#: gitk:6050
+> > +msgid "From"
+> > +msgstr "Da"
+>=20
+
+(...)
+
+> Whoops! Some Italian crept in there!
+>=20
+
+This is not a good thing, as it means that I lost changes with my poor =
+git
+abilities :( I actually translated those lines, but the last changes go=
+t lost
+when I collapsed the commits into something decent to send.
+
+> > #: gitk:8030
+> > +msgid "Tab spacing"
+> > +msgstr "Espaciado de  tabulador"
+>=20
+> Excess whitespace.
+>=20
+
+done.
+
+> > +#: gitk:8039
+> > +msgid "Limit diffs to listed paths"
+> > +msgstr "Limita las diferencias a los path seleccionados"
+>=20
+> You want the infinitive there, "Limitar".
+>=20
+> > +#: gitk:8071
+> > +msgid "Select bg"
+> > +msgstr "Seleccione color de fondo"
+>=20
+> That's actually a misleading string in the English version of gitk. I=
+t =20
+> actually means "Selection background", not "Select a background". So =
+=20
+> the translation should be something like "Color de fondo de selecci=C3=
+=B3n".
+>=20
+> > +#: gitk:8565
+> > +msgid "Cannot find a git repository here."
+> > +msgstr "No encuentro un repositorio git aqu=C3=AD."
+>=20
+> Personalized form "No encuentro" is not appropriate. "No se encuentra=
+" =20
+> would be better.
+>=20
+> > +#: gitk:8569
+> > +#, tcl-format
+> > +msgid "Cannot find the git directory \"%s\"."
+> > +msgstr "No encuentro el directorio git \"%s\"."
+>=20
+> Again, "No se encuentra".
+>=20
+> > +#: gitk:8636
+> > +msgid "Couldn't get list of unmerged files:"
+> > +msgstr "Imposible obtener la lista de archivos pendientes de mezcl=
+a:"
+>=20
+> Here you use "mezclar" (mix) as a translation for "merge", but =20
+> previously you used "fusionar". I think you need to choose one or the=
+ =20
+> other and use it consistently. Personally, I think "fusionar" sounds =
+=20
+> better.
+>=20
+> > +#: gitk:8652
+> > +msgid "No files selected: --merge specified but no files are =20
+> > unmerged."
+> > +msgstr ""
+> > +"No hay archivos seleccionados: se seleccion=C3=B3 la opci=C3=B3n =
+--merge =20
+> > pero no hay "
+> > +"archivos a falta de fusi=C3=B3nError al escribir revisi=C3=B3n:."
+>=20
+> This is munged, the "Error al escribir revisi=C3=B3n:" doesn't belong=
+ there.
+>=20
+> Also, here you use "a falta de [fusi=C3=B3n]" for "unmerged", whereas=
+ above =20
+> you used "pendientes de [mezcla]". I think it would be best to always=
+ =20
+> use "pendientes de ...".
+>=20
+> Great job though, thanks a lot for the translation!
+>=20
+
+I think I have taken care of most/all of the suggestions. It would be e=
+asier,
+IMO, if I send an incremental commit and don't collapse them, so that w=
+e can
+keep the discussion on (hopefully) smaller patches each time :)
+
+So I'm sending a patch assuming this one is committed, instead of rebas=
+ing the
+old and this one.
+
+Regards
+Santiago
+
+> Cheers,
+> Wincent
+>=20
+>=20
+
+PD: the gmane UI does not allow me to post unless I remove the quotes, =
+so I'm
+cutting most of the detailed comments to be able to post or loose my ti=
+me
+answering. :(
