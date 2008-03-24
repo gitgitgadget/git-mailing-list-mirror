@@ -1,68 +1,63 @@
-From: Jeremy Maitin-Shepard <jbms@cmu.edu>
-Subject: Re: Yet another "emacs-git" mode on emacs
-Date: Mon, 24 Mar 2008 13:05:52 -0400
-Message-ID: <87myoot5lb.fsf@jeremyms.com>
-References: <1206363318.8927.28.camel@prosummer>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: [PATCH 2/2] filter-branch.sh: support nearly proper tag name
+ filtering
+Date: Mon, 24 Mar 2008 12:06:53 -0500
+Message-ID: <47E7DFAD.4060209@nrlssc.navy.mil>
+References: <1206031893-29599-1-git-send-email-casey@nrlssc.navy.mil> <47E298A5.6050508@nrlssc.navy.mil> <alpine.LSU.1.00.0803201812560.4124@racer.site> <7vr6e01xja.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0803241152050.4353@racer.site> <7viqzc18j9.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0803241609540.4353@racer.site> <47E7D818.7090501@nrlssc.navy.mil> <alpine.LSU.1.00.0803241745240.4353@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: tsgatesv <tsgatesv@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 24 18:07:05 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Mar 24 18:07:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jdq8W-0003sW-01
-	for gcvg-git-2@gmane.org; Mon, 24 Mar 2008 18:07:04 +0100
+	id 1Jdq9H-0004Aq-6H
+	for gcvg-git-2@gmane.org; Mon, 24 Mar 2008 18:07:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759342AbYCXRF4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Mar 2008 13:05:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760165AbYCXRF4
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Mar 2008 13:05:56 -0400
-Received: from deleuze.hcoop.net ([69.90.123.67]:45318 "EHLO deleuze.hcoop.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754748AbYCXRFz (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Mar 2008 13:05:55 -0400
-Received: from c-67-165-107-197.hsd1.pa.comcast.net ([67.165.107.197] helo=localhost)
-	by deleuze.hcoop.net with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.63)
-	(envelope-from <jbms@cmu.edu>)
-	id 1Jdq7N-0005gh-4R; Mon, 24 Mar 2008 13:05:53 -0400
-X-Habeas-SWE-9: mark in spam to <http://www.habeas.com/report/>.
-X-Habeas-SWE-8: Message (HCM) and not spam. Please report use of this
-X-Habeas-SWE-7: warrant mark warrants that this is a Habeas Compliant
-X-Habeas-SWE-6: email in exchange for a license for this Habeas
-X-Habeas-SWE-5: Sender Warranted Email (SWE) (tm). The sender of this
-X-Habeas-SWE-4: Copyright 2002 Habeas (tm)
-X-Habeas-SWE-3: like Habeas SWE (tm)
-X-Habeas-SWE-2: brightly anticipated
-X-Habeas-SWE-1: winter into spring
-In-Reply-To: <1206363318.8927.28.camel@prosummer> (tsgatesv@gmail.com's
-	message of "Mon, 24 Mar 2008 21:55:18 +0900")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.50 (gnu/linux)
+	id S1755615AbYCXRHK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Mar 2008 13:07:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755497AbYCXRHK
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Mar 2008 13:07:10 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:48060 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754560AbYCXRHJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Mar 2008 13:07:09 -0400
+Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
+	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id m2OH6rhj027868;
+	Mon, 24 Mar 2008 12:06:53 -0500
+Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 24 Mar 2008 12:06:53 -0500
+User-Agent: Thunderbird 2.0.0.9 (X11/20071031)
+In-Reply-To: <alpine.LSU.1.00.0803241745240.4353@racer.site>
+X-OriginalArrivalTime: 24 Mar 2008 17:06:53.0282 (UTC) FILETIME=[7520BC20:01C88DD1]
+X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-5.0.0.1023-15806001
+X-TM-AS-Result: : Yes--6.129000-0-31-1
+X-TM-AS-Category-Info: : 31:0.000000
+X-TM-AS-MatchedID: : 
+	150567-700075-139010-113922-700630-700999-701455-700782-148039-148051-20042
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78063>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78064>
 
-One thing that stood out in your guided tour is the "Commit with an
-automatically generated log message" if there are files not "up to date"
-(which I guess means index does not match HEAD, OR working dir does not
-match index).  It seems that this is almost certainly a bad feature to
-have.
+Johannes Schindelin wrote:
+> Hi,
+> 
+> On Mon, 24 Mar 2008, Brandon Casey wrote:
+> 
+>> So right now, tags matching the refspec are rewritten. They are currently
+>> rewritten with a lightweight tag.
+> 
+> That is unintended.  My understanding of a tag was always that it is 
+> something immutable.  I mean, _really_ immutable.  If you released a 
+> certain version, then that is tagged.  You must not rewrite the tag.  
+> Ever.
 
-More generally, it seems that your package does not have the right
-conceptual organization with respect to the index.  (The lack of the
-word index in the guided tour document provides strong evidence of
-this.)
+Then what is the intended behavior for --tag-name-filter?
 
-Git is in many ways much more powerful than other version control
-systems, but much of this power comes from having a more complicated
-conceptual framework (in particular, it has the concept of the index,
-which seems to be fairly unique to git).  In designing an Emacs UI for
-git that can support all of its functionality, the same conceptual
-organization must be used as git itself has.
-
--- 
-Jeremy Maitin-Shepard
+-brandon
