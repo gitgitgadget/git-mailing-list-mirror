@@ -1,71 +1,57 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [StGit PATCH 0/6] Two bugfixes
-Date: Mon, 24 Mar 2008 19:12:25 +0100
-Message-ID: <20080324181225.GC23337@diana.vm.bytemark.co.uk>
-References: <20080320002604.13102.53757.stgit@yoghurt> <b0943d9e0803200819k7300fd1fn8a21896c7ad2a1@mail.gmail.com>
+From: "Carlos Rica" <jasampler@gmail.com>
+Subject: Re: [PATCH] Documentation/git-tag.txt: Clarify tagging of objects
+Date: Mon, 24 Mar 2008 19:16:26 +0100
+Message-ID: <1b46aba20803241116k20072dc8wdb70e6de90ed25aa@mail.gmail.com>
+References: <1206371505-7698-1-git-send-email-pdebie@ai.rug.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Erik Sandberg <mandolaerik@gmail.com>
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 24 19:13:19 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: "Pieter de Bie" <pdebie@ai.rug.nl>
+X-From: git-owner@vger.kernel.org Mon Mar 24 19:17:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JdrAc-0000vN-83
-	for gcvg-git-2@gmane.org; Mon, 24 Mar 2008 19:13:18 +0100
+	id 1JdrEm-0002Up-Hh
+	for gcvg-git-2@gmane.org; Mon, 24 Mar 2008 19:17:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757205AbYCXSMf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Mar 2008 14:12:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756764AbYCXSMf
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Mar 2008 14:12:35 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2225 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756852AbYCXSMf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Mar 2008 14:12:35 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1Jdr9l-00089N-00; Mon, 24 Mar 2008 18:12:25 +0000
+	id S1762493AbYCXSQ3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Mar 2008 14:16:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762473AbYCXSQ2
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Mar 2008 14:16:28 -0400
+Received: from rn-out-0910.google.com ([64.233.170.186]:5227 "EHLO
+	rn-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762328AbYCXSQ1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Mar 2008 14:16:27 -0400
+Received: by rn-out-0910.google.com with SMTP id v46so1417739rnb.15
+        for <git@vger.kernel.org>; Mon, 24 Mar 2008 11:16:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=OFr9A7rQOeJ09TlYhQabcp854J13RUrdbSf7uySba+o=;
+        b=YnN1lR4MaPjvVQGzEmNaICn6yhGkA9jiesO8iIiEf3AXDuI1DDiWjoO0JA4SD25ZWf758pjMs71G8eItE2y9On89oybQqx7AIrVVctOoUYmgsSug/ZqAii3/jXE+JAH6uZqlnAA9Cm3/YTIaZp6okVFghIzqUdDfxHsJsuyP0OY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=oepsiAdtm7YA8ucxgYvYPfKVi6o/7vFVRd9KHYK070S/9ORx4eTLjFpBfA5udaiB4sgI6BYH2715fwvLPvpyDOfmUDY7mAeia9p8EBvSuvEuMpjK7Bk8r9vMDBInY8akIXLtL4iI6v39thCE7j5ybFY0aW/WVOjsMPHnIztWtrY=
+Received: by 10.141.172.6 with SMTP id z6mr2432944rvo.54.1206382586057;
+        Mon, 24 Mar 2008 11:16:26 -0700 (PDT)
+Received: by 10.141.115.5 with HTTP; Mon, 24 Mar 2008 11:16:26 -0700 (PDT)
+In-Reply-To: <1206371505-7698-1-git-send-email-pdebie@ai.rug.nl>
 Content-Disposition: inline
-In-Reply-To: <b0943d9e0803200819k7300fd1fn8a21896c7ad2a1@mail.gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78070>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78071>
 
-On 2008-03-20 15:19:12 +0000, Catalin Marinas wrote:
+On Mon, Mar 24, 2008 at 4:11 PM, Pieter de Bie <pdebie@ai.rug.nl> wrote:
+>  -'git-tag' [-a | -s | -u <key-id>] [-f] [-m <msg> | -F <file>]  <name> [<head>]
+>  +'git-tag' [-a | -s | -u <key-id>] [-f] [-m <msg> | -F <file>]  <name> [<object>]
 
-> As I wrote on the patch system, I'd like to put back the explicit
-> --keep option in goto.
+Note that you need to change also the corresponding string inside
+builtin-tag.c , the lines printed when you run "git tag -h".
 
-There are three possible values of "keepiness":
-
-  1. Make sure there are _no_ local changes. (Default for old
-     infrastructure.)
-
-  2. Make sure there are no local changes in the files we need to
-     touch. (Default for new infrastructure.)
-
-  3. Bring along local changes by means of a merge. (What the --keep
-     option does.)
-
-git defaults to doing (2), and optionally does (3). (1) is
-significantly slower than (2); I don't know how slow (3) is.
-
-There are two questions: what subset of these options do we support,
-and which of the supported modes should be the default?
-
-I think that (2) should be the default, because it's faster, it's what
-git does, and I don't really see the point in complaining about local
-changes in a file we won't need to touch anyway. Having an option for
-(3) might be handy, though.
-
-But I gather you want (1) to be the default (with (3) as an option).
-Correct?
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+--
+Carlos
