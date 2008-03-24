@@ -1,89 +1,101 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: [ANNOUNCE] Stacked GIT 0.14.2
-Date: Mon, 24 Mar 2008 22:50:49 +0000
-Message-ID: <b0943d9e0803241550k3ef0dbe8nae3b00bac34fa20@mail.gmail.com>
-References: <b0943d9e0803241259s5280cdc1o255a4412b3fa7bfc@mail.gmail.com>
-	 <alpine.LNX.1.10.0803242113070.9368@fbirervta.pbzchgretzou.qr>
-	 <47E81037.5030808@keyaccess.nl>
-	 <7vlk47ua3v.fsf@gitster.siamese.dyndns.org>
-	 <47E82BDD.9060507@keyaccess.nl>
+From: Damien Diederen <dash@foobox.net>
+Subject: [PATCH 7/7] cvsserver: Use the user part of the email in log and annotate results
+Date: Mon, 24 Mar 2008 23:50:55 +0100
+Message-ID: <01e5947cde524f4eb97a86785d0e1f28e2d040e0.1206393086.git.dash@foobox.net>
+References: <cover.1206393086.git.dash@foobox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Jan Engelhardt" <jengelh@computergmbh.de>,
-	git <git@vger.kernel.org>,
-	"Linux Kernel Mailing List" <linux-kernel@vger.kernel.org>,
-	"Josef Sipek" <jsipek@fsl.cs.sunysb.edu>,
-	"Linus Torvalds" <torvalds@linux-foundation.org>
-To: "Rene Herman" <rene.herman@keyaccess.nl>
-X-From: git-owner@vger.kernel.org Mon Mar 24 23:51:39 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Martin Langhoff <martin@catalyst.net.nz>,
+	Frank Lichtenheld <frank@lichtenheld.de>
+X-From: git-owner@vger.kernel.org Mon Mar 24 23:51:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JdvVr-000319-WF
-	for gcvg-git-2@gmane.org; Mon, 24 Mar 2008 23:51:32 +0100
+	id 1JdvW8-00037V-RN
+	for gcvg-git-2@gmane.org; Mon, 24 Mar 2008 23:51:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754226AbYCXWux (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Mar 2008 18:50:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754136AbYCXWuw
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Mar 2008 18:50:52 -0400
-Received: from wr-out-0506.google.com ([64.233.184.232]:53838 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754085AbYCXWuv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Mar 2008 18:50:51 -0400
-Received: by wr-out-0506.google.com with SMTP id c48so1947811wra.1
-        for <git@vger.kernel.org>; Mon, 24 Mar 2008 15:50:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=xpxJnOnXIUvTLNgOAM58EpoTrrQfd9yBdKZiyBqt/zo=;
-        b=LKrbPBoCTdnR5NZmBVhTkduwgol6XW8q3YyERYWtKyibUblFP8RFFPSCx+ZExofpQd7nMj/hyCq5+RQGQWNxEoA5ZPgrBO8g7N2JjLGZjtXPHgHDyheKYs9ng7oehFqQiDZw9OAD5B3B9fCHRNFJmpW2Krb9+x11SNWwnA+P/+s=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Ey2cfk0IbvsJW/cK2uSqwij0xfL4LJ4v+9nYLAgSa/J31/w8FM/70SvEp5/5srqOutLsVKyEv3bxUhf1U6YoWKhV8pi+rKwZbyEVd7Gc+Dqqerad3qeMCwZyGuOFZhDmtGA6lS+ui1KaH3Cjt2W89LFjYr5H8BcS67M9MBttbi8=
-Received: by 10.140.201.1 with SMTP id y1mr2690015rvf.200.1206399049480;
-        Mon, 24 Mar 2008 15:50:49 -0700 (PDT)
-Received: by 10.141.175.11 with HTTP; Mon, 24 Mar 2008 15:50:49 -0700 (PDT)
-In-Reply-To: <47E82BDD.9060507@keyaccess.nl>
-Content-Disposition: inline
+	id S1754828AbYCXWvA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Mar 2008 18:51:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754656AbYCXWu7
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Mar 2008 18:50:59 -0400
+Received: from mail-in-16.arcor-online.net ([151.189.21.56]:48238 "EHLO
+	mail-in-16.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754620AbYCXWu6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 24 Mar 2008 18:50:58 -0400
+Received: from mail-in-18-z2.arcor-online.net (mail-in-18-z2.arcor-online.net [151.189.8.35])
+	by mail-in-16.arcor-online.net (Postfix) with ESMTP id EE6411F7146;
+	Mon, 24 Mar 2008 23:50:56 +0100 (CET)
+Received: from mail-in-12.arcor-online.net (mail-in-12.arcor-online.net [151.189.21.52])
+	by mail-in-18-z2.arcor-online.net (Postfix) with ESMTP id D723A51013F;
+	Mon, 24 Mar 2008 23:50:56 +0100 (CET)
+Received: from keem.bcc (dslb-084-057-018-240.pools.arcor-ip.net [84.57.18.240])
+	by mail-in-12.arcor-online.net (Postfix) with ESMTP id 4A5A88C468;
+	Mon, 24 Mar 2008 23:50:56 +0100 (CET)
+In-Reply-To: <cover.1206393086.git.dash@foobox.net>
+X-From-Line: 01e5947cde524f4eb97a86785d0e1f28e2d040e0 Mon Sep 17 00:00:00 2001
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/23.0.60 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.92.1/6378/Mon Mar 24 22:24:31 2008 on mail-in-12.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78121>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78122>
 
-On 24/03/2008, Rene Herman <rene.herman@keyaccess.nl> wrote:
-> On 24-03-08 21:43, Junio C Hamano wrote:
->
->  > Rene Herman <rene.herman@keyaccess.nl> writes:
->  >
->  >> On 24-03-08 21:15, Jan Engelhardt wrote:
->  >>
->  >>> On Monday 2008-03-24 20:59, Catalin Marinas wrote:
->  >>>
->  >>>> Stacked GIT 0.14.2 release is available from
->  >>>> http://www.procode.org/stgit/.
->  >>>>
->  >>>> StGIT is a Python application providing similar functionality to Quilt
->  >>>> (i.e. pushing/popping patches to/from a stack) on top of GIT.
->  >>> I always wondered what the difference between stgit and guilt is.
->  >>> Does anyone have a comparison up?
->  >> And I remember some mumblings about git growing quilt-like
->  >> functionality itself. Anything on that?
->  >
->  > Not my mumbling
->
->
-> Believe it was Linus. Seem to remember him saying something about possibly
->  adding a native queues-like interface not too long ago but it's proving
->  impossible to google for.
+Generate the CVS author names by taking the first eight characters of
+the user part of the email address.  The resulting names are more
+likely to make sense (or at least reduce ambiguities) in "corporate"
+environments.
 
-It was Linus indeed, on the linux-arch mailing list:
+Signed-off-by: Damien Diederen <dash@foobox.net>
+---
+ git-cvsserver.perl |   18 ++++++++++++++----
+ 1 files changed, 14 insertions(+), 4 deletions(-)
 
-http://www.mail-archive.com/linux-arch@vger.kernel.org/msg05012.html
-
+diff --git a/git-cvsserver.perl b/git-cvsserver.perl
+index 3c97226..9d845c8 100755
+--- a/git-cvsserver.perl
++++ b/git-cvsserver.perl
+@@ -1728,8 +1728,7 @@ sub req_log
+             print "M revision 1.$revision->{revision}\n";
+             # reformat the date for log output
+             $revision->{modified} = sprintf('%04d/%02d/%02d %s', $3, $DATE_LIST->{$2}, $1, $4 ) if ( $revision->{modified} =~ /(\d+)\s+(\w+)\s+(\d+)\s+(\S+)/ and defined($DATE_LIST->{$2}) );
+-            $revision->{author} =~ s/\s+.*//;
+-            $revision->{author} =~ s/^(.{8}).*/$1/;
++            $revision->{author} = cvs_author($revision->{author});
+             print "M date: $revision->{modified};  author: $revision->{author};  state: " . ( $revision->{filehash} eq "deleted" ? "dead" : "Exp" ) . ";  lines: +2 -3\n";
+             my $commitmessage = $updater->commitmessage($revision->{commithash});
+             $commitmessage =~ s/^/M /mg;
+@@ -1844,8 +1843,7 @@ sub req_annotate
+                 unless ( defined ( $metadata->{$commithash} ) )
+                 {
+                     $metadata->{$commithash} = $updater->getmeta($filename, $commithash);
+-                    $metadata->{$commithash}{author} =~ s/\s+.*//;
+-                    $metadata->{$commithash}{author} =~ s/^(.{8}).*/$1/;
++                    $metadata->{$commithash}{author} = cvs_author($metadata->{$commithash}{author});
+                     $metadata->{$commithash}{modified} = sprintf("%02d-%s-%02d", $1, $2, $3) if ( $metadata->{$commithash}{modified} =~ /^(\d+)\s(\w+)\s\d\d(\d\d)/ );
+                 }
+                 printf("M 1.%-5d      (%-8s %10s): %s\n",
+@@ -2136,6 +2134,18 @@ sub kopts_from_path
+     }
+ }
+ 
++# Generate a CVS author name from Git author information, by taking
++# the first eight characters of the user part of the email address.
++sub cvs_author
++{
++    my $author = shift;
++
++    $author =~ s/.*<([^>]+)\@[^>]+>$/$1/;
++    $author =~ s/^(.{8}).*/$1/;
++
++    $author;
++}
++
+ package GITCVS::log;
+ 
+ ####
 -- 
-Catalin
+1.5.5.rc1.6.gd183
