@@ -1,57 +1,54 @@
-From: "Jean-Baptiste Quenot" <jbq@caraldi.com>
-Subject: Re: [PATCH] git-cherry-pick -x works with conflicting commits
-Date: Mon, 24 Mar 2008 14:55:28 +0100
-Message-ID: <ae63f8b50803240655k5d6413e5s8d6ceebca462370f@mail.gmail.com>
-References: <1206355274-6052-1-git-send-email-rgarciasuarez@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 3/2] parse-options.c: introduce OPT_DATE
+Date: Mon, 24 Mar 2008 14:59:03 +0100 (CET)
+Message-ID: <alpine.LSU.1.00.0803241458430.4353@racer.site>
+References: <200803232150.29971.barra_cuda@katamail.com> <200803241331.17986.barra_cuda@katamail.com> <alpine.LSU.1.00.0803241409400.4353@racer.site> <200803241502.21465.barra_cuda@katamail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Rafael Garcia-Suarez" <rgarciasuarez@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 24 14:56:26 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Michele Ballabio <barra_cuda@katamail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 24 14:59:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jdn9z-0003aG-Eg
-	for gcvg-git-2@gmane.org; Mon, 24 Mar 2008 14:56:23 +0100
+	id 1JdnDF-0004lA-9W
+	for gcvg-git-2@gmane.org; Mon, 24 Mar 2008 14:59:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758438AbYCXNzm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Mar 2008 09:55:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758452AbYCXNzm
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Mar 2008 09:55:42 -0400
-Received: from nf-out-0910.google.com ([64.233.182.190]:58659 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758438AbYCXNzm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Mar 2008 09:55:42 -0400
-Received: by nf-out-0910.google.com with SMTP id g13so805027nfb.21
-        for <git@vger.kernel.org>; Mon, 24 Mar 2008 06:55:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        bh=kexYuIid3bK8JSaT6b7U5Xq/5jZx5CwJhN3KwKmpwJs=;
-        b=DTgGBDXwldXoWLW2J2tLNTc77fcP8hVb2PLw0lOTn97skdVNmRW5wG8SwJp33/qRPjtA7By1RHn5ixdUiDJmKgda1Vw40V7ke7pMnGHLQHCMyFLVdx2XGUPv56GNWuVjNRyeAgG04P/APUaxqsnhD4HToXoYavnDRz4g+URW3y4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=QVOqXm4WcdMCgPzh11b/zQtw0QIrE2D+861XwKE4kRBgHBXSpFIKF3DNKHma2kLKUqLqhLxi+McpqsLIx7Q8JktOPnj4o2ei91I133AMzemwj1cj+vGdXAVDjxKtEHfpg9qMaWrHu6GpoIt3RV7rHK+8VEkPEjBg7i5vWvOw+O4=
-Received: by 10.78.146.11 with SMTP id t11mr20590583hud.70.1206366928282;
-        Mon, 24 Mar 2008 06:55:28 -0700 (PDT)
-Received: by 10.78.130.20 with HTTP; Mon, 24 Mar 2008 06:55:28 -0700 (PDT)
-In-Reply-To: <1206355274-6052-1-git-send-email-rgarciasuarez@gmail.com>
-Content-Disposition: inline
-X-Google-Sender-Auth: b99a8e8962d22097
+	id S1758604AbYCXN7D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Mar 2008 09:59:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758367AbYCXN7D
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Mar 2008 09:59:03 -0400
+Received: from mail.gmx.net ([213.165.64.20]:47269 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1757131AbYCXN7A (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Mar 2008 09:59:00 -0400
+Received: (qmail invoked by alias); 24 Mar 2008 13:58:59 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp022) with SMTP; 24 Mar 2008 14:58:59 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19YaFwXHt5Y3EUSEU1SJuFx15II7fudIlL5lrjKOE
+	Zal+1yyqJ1gpeG
+X-X-Sender: gene099@racer.site
+In-Reply-To: <200803241502.21465.barra_cuda@katamail.com>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78036>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78037>
 
-When I'm using "git commit -c <id>" as suggested by git-cherry-pick
-upon conflict, I do not get the mention "(cherry picked from commit
-<id>)", at least with version 1.5.4.1.  How did you get it?
+Hi,
 
-Cheers,
--- 
-Jean-Baptiste Quenot
-http://caraldi.com/jbq/blog/
+On Mon, 24 Mar 2008, Michele Ballabio wrote:
+
+> There are quite a few places that will need to call approxidate(), when 
+> they'll adopt the parse-options system, so this patch adds the function 
+> parse_opt_approxidate_cb(), used by OPT_DATE, and converts the only user 
+> so far.
+
+Thanks!
+
+Ciao,
+Dscho
