@@ -1,83 +1,78 @@
-From: "James Sadler" <freshtonic@gmail.com>
-Subject: Committer authentication in git-send-pack/git-receive-pack
-Date: Mon, 24 Mar 2008 15:01:56 +1100
-Message-ID: <e5e204700803232101l431919e0ic8e9fb10c18867d2@mail.gmail.com>
+From: Asheesh Laroia <asheesh@asheesh.org>
+Subject: Re: A script that keeps track of your favorite Git/SVN projects?
+Date: Sun, 23 Mar 2008 21:04:06 -0700 (PDT)
+Message-ID: <alpine.DEB.1.10.0803232051320.6107@dell.linuxdev.us.dell.com>
+References: <fbede933c733.47e73470@broadpark.no>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 24 05:02:48 2008
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-1248610553-1206331446=:6107"
+Cc: git@vger.kernel.org
+To: =?ISO-8859-15?Q?Kyrre_Nyg=E5rd?= <kyrreny@broadpark.no>
+X-From: git-owner@vger.kernel.org Mon Mar 24 05:04:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JddtU-0002Vn-MV
-	for gcvg-git-2@gmane.org; Mon, 24 Mar 2008 05:02:45 +0100
+	id 1JddvZ-0002sC-2B
+	for gcvg-git-2@gmane.org; Mon, 24 Mar 2008 05:04:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750787AbYCXEB5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Mar 2008 00:01:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750744AbYCXEB5
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Mar 2008 00:01:57 -0400
-Received: from wa-out-1112.google.com ([209.85.146.182]:2254 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750729AbYCXEB4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Mar 2008 00:01:56 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so3203756wah.23
-        for <git@vger.kernel.org>; Sun, 23 Mar 2008 21:01:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=jINGGKI5d0LidmOiGkABtZRnxNgtyf/4mmZw8AgqGVM=;
-        b=JJxRDzY+H+Rs9w8vVx1DrW+KQV+pUHBYIrOgYicjjrbKLq5Tz8DRED8ekZtDo1/MyYIMsiB/WLTlWoO4Y85gezkhYUDx+pXAyTO1nG5CwQnu4UD1qnTUL5pBRwIIj9GrHUCeTKsuYHdxH1BC1asdiQ8HxrmnOYWPFNEnZMMCXS0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=uu3r9Zb7DSZlj0eLoZYD9NOwOj6krSyZO331zxAH2vJTvRmgaYixVcafH0JA5jLXX6k9Q1C3/S3f8H//Yzkp8F7dl9iXT/nvnNMu0PspLBsSFdMuCXzcRVEulTirWO5T2DRte2P6OrpE9RWR4E1ZwRyc9bHV4V0xt1oYzLxyvcs=
-Received: by 10.114.15.1 with SMTP id 1mr10750988wao.27.1206331316142;
-        Sun, 23 Mar 2008 21:01:56 -0700 (PDT)
-Received: by 10.114.254.7 with HTTP; Sun, 23 Mar 2008 21:01:56 -0700 (PDT)
-Content-Disposition: inline
+	id S1750853AbYCXEEM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Mar 2008 00:04:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750808AbYCXEEM
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Mar 2008 00:04:12 -0400
+Received: from wide-rose.makesad.us ([203.178.130.147]:39677 "EHLO
+	rose.makesad.us" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750803AbYCXEEL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Mar 2008 00:04:11 -0400
+Received: from sf.creativecommons.org (localhost [127.0.0.1])
+	by rose.makesad.us (Postfix) with ESMTP id B8B77A0097;
+	Mon, 24 Mar 2008 00:04:09 -0400 (EDT)
+Received: from localhost (localhost [127.0.0.1])
+	by sf.creativecommons.org (Postfix) with ESMTP id C553F134CC41;
+	Sun, 23 Mar 2008 21:04:06 -0700 (PDT)
+X-X-Sender: paulproteus@dell.linuxdev.us.dell.com
+In-Reply-To: <fbede933c733.47e73470@broadpark.no>
+User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78000>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78001>
 
-A while ago, there was some discussion about authenticating commits
-using gnupg signatures.
-(see http://kerneltrap.org/mailarchive/git/2008/1/29/634209).
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-I have searched through all of the branches in the main git repo and I
-can't see any commits relating to this functionality, so I was
-wondering if the work had stalled or perhaps not even been started.
-If that's the case, I'm willing to give it a shot and would welcome
-some discussion on how to get started.
+--8323329-1248610553-1206331446=:6107
+Content-Type: TEXT/PLAIN; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-The posts in the aforementioned thread expand upon the concept beyond
-mere authentication and into full audit trail territory.  It sounds
-like a significant chunk of work.
+On Mon, 24 Mar 2008, "Kyrre Nygård" wrote:
 
-However, the first logical step (at least to me!) would be to extend
-git-send-pack and git-receive-pack to sign and verify communications.
+> Hi there, Hasanybody ever written a script that keeps track of your 
+> favorite Git(and SVN) projects? E.g. sends you an e-mail every time a 
+> revision hasbeen made, with details like the summary, time and date, 
+> author andcode differences.
 
-git-send-pack could be extended with a '--sign' argument.  This should
-produce a signature generated by passing the 'command' part of the
-git-send-pack output through to gpg.  The rest of the pack need not be
-signed, as the SHA-1s in the command section already are
-cryptographically associated with the pack itself.
+I don't know of a "subscribe to a source repository" program myself, 
+actually.
 
-At the  other end, git-receive-pack would need to be invoked in such a
-way that it knows only to accept signed communications, and where to
-find a list of public keys that will be used to authenticate the data.
-It will check that the committer's key is known and that the signature
-matches the command section generated by send-pack.  If the
-communication is not signed, or committer is unknown or it fails
-verification for any reason, git-receive-pack should die with an
-appropriate message.
+> I've modified a few projects to my liking, somuch that any change made 
+> to the original would have to be addedmanually. I also think it would be 
+> a great way to learn.
 
->From this starting point, other features (discussed in aforementioned
-thread) could eventually be added.
+It does seem interesting!
 
-Thoughts/advice/opinions/critique welcome.
+> I can't imagine anything better than a neat little Ruby script stacked 
+> inside my crontab. I'm still a rookie though, otherwise I'd have made my 
+> own already.
+
+The other thing you might do is run git-svn nightly, and have post-commit 
+hook for git that emails out the diffs you like.
+
+Whatever you do, keep me posted!
+
+-- Asheesh.
+
 -- 
-James
+I prefer rogues to imbeciles because they sometimes take a rest.
+ 		-- Alexandre Dumas, fils
+--8323329-1248610553-1206331446=:6107--
