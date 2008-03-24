@@ -1,75 +1,87 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/2] filter-branch.sh: support nearly proper tag name
- filtering
-Date: Mon, 24 Mar 2008 16:10:43 +0100 (CET)
-Message-ID: <alpine.LSU.1.00.0803241609540.4353@racer.site>
-References: <1206031893-29599-1-git-send-email-casey@nrlssc.navy.mil> <47E298A5.6050508@nrlssc.navy.mil> <alpine.LSU.1.00.0803201812560.4124@racer.site> <7vr6e01xja.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0803241152050.4353@racer.site>
- <7viqzc18j9.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Brandon Casey <casey@nrlssc.navy.mil>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 24 16:11:27 2008
+From: Pieter de Bie <pdebie@ai.rug.nl>
+Subject: [PATCH] Documentation/git-tag.txt: Clarify tagging of objects
+Date: Mon, 24 Mar 2008 16:11:45 +0100
+Message-ID: <1206371505-7698-1-git-send-email-pdebie@ai.rug.nl>
+Cc: Pieter de Bie <pdebie@ai.rug.nl>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Mar 24 16:12:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JdoKZ-0004fG-RA
-	for gcvg-git-2@gmane.org; Mon, 24 Mar 2008 16:11:24 +0100
+	id 1JdoLg-00050K-FT
+	for gcvg-git-2@gmane.org; Mon, 24 Mar 2008 16:12:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760490AbYCXPKl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Mar 2008 11:10:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760452AbYCXPKl
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Mar 2008 11:10:41 -0400
-Received: from mail.gmx.net ([213.165.64.20]:49224 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1760474AbYCXPKk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Mar 2008 11:10:40 -0400
-Received: (qmail invoked by alias); 24 Mar 2008 15:10:39 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp053) with SMTP; 24 Mar 2008 16:10:39 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19WUCkGWo5WHLAtCDALlj6SsbyXVqTSETNmAeHU1h
-	bA0GExtjibheZL
-X-X-Sender: gene099@racer.site
-In-Reply-To: <7viqzc18j9.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1760344AbYCXPLt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Mar 2008 11:11:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759138AbYCXPLt
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Mar 2008 11:11:49 -0400
+Received: from smtp-4.orange.nl ([193.252.22.249]:54619 "EHLO smtp-4.orange.nl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759042AbYCXPLs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Mar 2008 11:11:48 -0400
+Received: from me-wanadoo.net (localhost [127.0.0.1])
+	by mwinf6307.orange.nl (SMTP Server) with ESMTP id C6CB6700009A
+	for <git@vger.kernel.org>; Mon, 24 Mar 2008 16:11:46 +0100 (CET)
+Received: from localhost.localdomain (s5591931c.adsl.wanadoo.nl [85.145.147.28])
+	by mwinf6307.orange.nl (SMTP Server) with ESMTP id 7970B700008F;
+	Mon, 24 Mar 2008 16:11:46 +0100 (CET)
+X-ME-UUID: 20080324151146497.7970B700008F@mwinf6307.orange.nl
+X-Mailer: git-send-email 1.5.4.4.594.g91c25
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78049>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78050>
 
-Hi,
+Change the synopsis and description of git-tag to reflect that any
+object can be tagged, not just a committish.
+---
+This surprised me, so I guess the documentation deserves some attention.
+I'm only able to build the HTML documentation, so I hope this looks correct
+in manpages too.
 
-On Mon, 24 Mar 2008, Junio C Hamano wrote:
+-  Pieter
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > On Sun, 23 Mar 2008, Junio C Hamano wrote:
-> >
-> >> If you tell filter-branch to filter a branch A and a tag T, as the 
-> >> command is advertised to rewrite positive refs that were given from 
-> >> the command line, isn't it natural to expect that the command would 
-> >> attempt its best effort to rewrite such a tag object?
-> >
-> > The thing is: signed tags cannot be rewritten.
-> 
-> I know that, and you know I know that if you read what you responded 
-> again ;-)
-> 
-> And I think stripping of gpg signature part is a reasonable best effort 
-> for the command, _when_ the user told a signed tag to be rewritten.
 
-Yes.
+ Documentation/git-tag.txt |   11 ++++++++---
+ 1 files changed, 8 insertions(+), 3 deletions(-)
 
-BUT.
-
-You can say "--all", and I actually expect quite a few people to do 
-exactly that.  And then you cannot really say "the user explicitely asked 
-to have that signed tag rewritten".
-
-Ciao,
-Dscho
+diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
+index b62a3d1..9702f2f 100644
+--- a/Documentation/git-tag.txt
++++ b/Documentation/git-tag.txt
+@@ -9,7 +9,7 @@ git-tag - Create, list, delete or verify a tag object signed with GPG
+ SYNOPSIS
+ --------
+ [verse]
+-'git-tag' [-a | -s | -u <key-id>] [-f] [-m <msg> | -F <file>]  <name> [<head>]
++'git-tag' [-a | -s | -u <key-id>] [-f] [-m <msg> | -F <file>]  <name> [<object>]
+ 'git-tag' -d <name>...
+ 'git-tag' [-n [<num>]] -l [<pattern>]
+ 'git-tag' -v <name>...
+@@ -18,6 +18,11 @@ DESCRIPTION
+ -----------
+ Adds a 'tag' reference in `.git/refs/tags/`
+ 
++If `<object>` is given, the given object will be tagged. While
++this usually is a committish, other objects may be tagged
++as well. If `<object>` is not given, the current HEAD will be
++tagged.
++
+ Unless `-f` is given, the tag must not yet exist in
+ `.git/refs/tags/` directory.
+ 
+@@ -26,8 +31,8 @@ creates a 'tag' object, and requires the tag message.  Unless
+ `-m <msg>` or `-F <file>` is given, an editor is started for the user to type
+ in the tag message.
+ 
+-Otherwise just the SHA1 object name of the commit object is
+-written (i.e. a lightweight tag).
++Otherwise just the SHA1 object name of the object is written
++(i.e. a lightweight tag).
+ 
+ A GnuPG signed tag object will be created when `-s` or `-u
+ <key-id>` is used.  When `-u <key-id>` is not used, the
+-- 
+1.5.4.4.594.g91c25
