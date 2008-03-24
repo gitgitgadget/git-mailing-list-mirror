@@ -1,94 +1,71 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: [ANNOUNCE] Stacked GIT 0.14.2
-Date: Mon, 24 Mar 2008 19:59:00 +0000
-Message-ID: <b0943d9e0803241259s5280cdc1o255a4412b3fa7bfc@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 3/2] parse-options.c: introduce OPT_DATE
+Date: Mon, 24 Mar 2008 21:03:04 +0100 (CET)
+Message-ID: <alpine.LSU.1.00.0803242102140.4353@racer.site>
+References: <200803232150.29971.barra_cuda@katamail.com> <alpine.LSU.1.00.0803241409400.4353@racer.site> <200803241502.21465.barra_cuda@katamail.com> <200803241725.42940.barra_cuda@katamail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git <git@vger.kernel.org>,
-	"Linux Kernel Mailing List" <linux-kernel@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Mar 24 21:00:03 2008
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323584-233973954-1206388985=:4353"
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Michele Ballabio <barra_cuda@katamail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 24 21:04:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jdspr-0005Th-Qo
-	for gcvg-git-2@gmane.org; Mon, 24 Mar 2008 21:00:00 +0100
+	id 1JdstW-0006sA-Qi
+	for gcvg-git-2@gmane.org; Mon, 24 Mar 2008 21:03:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753563AbYCXT7I convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Mar 2008 15:59:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752379AbYCXT7H
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Mar 2008 15:59:07 -0400
-Received: from el-out-1112.google.com ([209.85.162.178]:8382 "EHLO
-	el-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753181AbYCXT7E convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 24 Mar 2008 15:59:04 -0400
-Received: by el-out-1112.google.com with SMTP id v27so1407705ele.17
-        for <git@vger.kernel.org>; Mon, 24 Mar 2008 12:59:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=YFYxfsOYIIZSbGWN1nD3/iESnlTXjwSp7AVaPifD398=;
-        b=TyRYLQYKZ+P4RE7PNp/WPD8bZ5zWo42zHDUzQ2qwSJapc/O4HG89o7uex7Cwl8WXzBmcOjgnNO5Lp4h3kmIxlQKUYlOHFibXwUKluPDV9XKpwTehusv7v1vBdudc1unIySiE4qwjUfW8TUgOscGG/AzTaCN0dOIlnhJJibADpLk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=RJgxaSjBXqe1X8ssRKBiIjfj6+v62lyCPPpPWlG4bpRqis+3t0JkfTWdFyed0knDbJFcPo9QYyv/pRQP839x6C7eLHN3x38A2TVwDGGagM7TOB6csBw1DupR2UtQi3r0zZcRLEM0MTzEw8aoJ8jAwKdnGqOvQscKLVczLGvYhyQ=
-Received: by 10.140.187.10 with SMTP id k10mr2538625rvf.86.1206388740084;
-        Mon, 24 Mar 2008 12:59:00 -0700 (PDT)
-Received: by 10.141.175.11 with HTTP; Mon, 24 Mar 2008 12:59:00 -0700 (PDT)
-Content-Disposition: inline
+	id S1750937AbYCXUDD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Mar 2008 16:03:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750833AbYCXUDB
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Mar 2008 16:03:01 -0400
+Received: from mail.gmx.net ([213.165.64.20]:34276 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750772AbYCXUDB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Mar 2008 16:03:01 -0400
+Received: (qmail invoked by alias); 24 Mar 2008 20:02:58 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp049) with SMTP; 24 Mar 2008 21:02:58 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/ONhJb+TLOQphq1iijC7u/2jCwmGNO48FvPp0RAX
+	qqKXDuU8wH7heP
+X-X-Sender: gene099@racer.site
+In-Reply-To: <200803241725.42940.barra_cuda@katamail.com>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78088>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78089>
 
-Stacked GIT 0.14.2 release is available from http://www.procode.org/stg=
-it/.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-StGIT is a Python application providing similar functionality to Quilt
-(i.e. pushing/popping patches to/from a stack) on top of GIT. These
-operations are performed using GIT commands and the patches are stored
-as GIT commit objects, allowing easy merging of the StGIT patches into
-other repositories using standard GIT functionality.
+--8323584-233973954-1206388985=:4353
+Content-Type: TEXT/PLAIN; charset=iso-8859-1
+Content-Transfer-Encoding: 8BIT
 
-This is a maintenance release including bug-fixes and a few user
-interface enhancements. Acknowledgements:
+Hi,
 
-Catalin Marinas (13):
-      Don't set the default authdate if none specified
-      Allow pick to import multiple patches
-      Check for unnecessary push/pop in 'float'
-      Allow the synchronisation of the unapplied patches
-      Modify 'series' to use '#' instead of '|'
-      Set umask to 0022 during the setup.py execution
-      Refuse to send empty patches
-      Add a boundary to parse_patches in pick.py
-      Fix sync to push the popped patches back after sync'ing
-      Remove the reordering side-effect of the latter sync changes
-      Allow picking of one commit id
-      Remove a newline from the e-mail template
-      Release 0.14.2
+On Mon, 24 Mar 2008, Michele Ballabio wrote:
 
-Onno Kortmann (2):
-      Simple rename of top-most patch
-      Test the 'stg rename' command
+> On Monday 24 March 2008, Michele Ballabio wrote:
+> > +               OPT_DATE(0, "expire", &expire,
+> 
+> [...]
+> 
+> > +#define OPT_DATE(s, l, v, h) \
+> 
+> Ooops. To be consistent, these should be OPT__DATE (with two 
+> underscores) instead (and in the commit message, too).
 
-Alex Chiang (1):
-      Better "stg rebase" help text
+I thought OPT__BLA was reserved for --bla options?  IOW OPT__DATE would 
+not be usable to implement --expire, but only --date.
 
-Angus Salkeld (1):
-      stg mail crashes when there is no patch description
+I might be wrong, though.
 
-Karl Hasselstr=F6m (1):
-      Make documentation less confusing
+Ciao,
+Dscho
 
-Peter Oberndorfer (1):
-      replace "git repo-config" usage by "git config"
-
-Toby Allsopp (1):
-      Fix "stg branch --delete" on a nonexistent branch
-
---=20
-Catalin
+--8323584-233973954-1206388985=:4353--
