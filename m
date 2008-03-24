@@ -1,124 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/4] git-rebase -i: New option to support rebase with
- merges
-Date: Mon, 24 Mar 2008 16:30:57 -0700
-Message-ID: <7v7ifrsnri.fsf@gitster.siamese.dyndns.org>
-References: <1206308562-31489-1-git-send-email-joerg@alea.gnuu.de>
- <1206308562-31489-2-git-send-email-joerg@alea.gnuu.de>
- <1206308562-31489-3-git-send-email-joerg@alea.gnuu.de>
- <1206308562-31489-4-git-send-email-joerg@alea.gnuu.de>
- <alpine.LSU.1.00.0803232334130.4353@racer.site>
- <20080324111413.GA18488@alea.gnuu.de>
- <7vabkoufzq.fsf@gitster.siamese.dyndns.org>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: [ANNOUNCE] Stacked GIT 0.14.2
+Date: Mon, 24 Mar 2008 23:40:04 +0000
+Message-ID: <b0943d9e0803241640h500e43ffgee55bb9e1b2b04e2@mail.gmail.com>
+References: <b0943d9e0803241259s5280cdc1o255a4412b3fa7bfc@mail.gmail.com>
+	 <alpine.LNX.1.10.0803242113070.9368@fbirervta.pbzchgretzou.qr>
+	 <47E81037.5030808@keyaccess.nl>
+	 <7vlk47ua3v.fsf@gitster.siamese.dyndns.org>
+	 <47E82BDD.9060507@keyaccess.nl>
+	 <b0943d9e0803241550k3ef0dbe8nae3b00bac34fa20@mail.gmail.com>
+	 <47E837E8.7000606@keyaccess.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, B.Steinbrink@gmx.de
-To: =?utf-8?Q?J=C3=B6rg?= Sommer <joerg@alea.gnuu.de>
-X-From: git-owner@vger.kernel.org Tue Mar 25 00:32:09 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <gitster@pobox.com>,
+	"Jan Engelhardt" <jengelh@computergmbh.de>,
+	git <git@vger.kernel.org>,
+	"Linux Kernel Mailing List" <linux-kernel@vger.kernel.org>,
+	"Josef Sipek" <jsipek@fsl.cs.sunysb.edu>,
+	"Linus Torvalds" <torvalds@linux-foundation.org>
+To: "Rene Herman" <rene.herman@keyaccess.nl>
+X-From: git-owner@vger.kernel.org Tue Mar 25 00:40:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jdw98-0006tO-2o
-	for gcvg-git-2@gmane.org; Tue, 25 Mar 2008 00:32:06 +0100
+	id 1JdwHd-0000y7-Qg
+	for gcvg-git-2@gmane.org; Tue, 25 Mar 2008 00:40:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753405AbYCXXbT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Mar 2008 19:31:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752644AbYCXXbT
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Mar 2008 19:31:19 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:45791 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751726AbYCXXbS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Mar 2008 19:31:18 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 4E3502F9F;
-	Mon, 24 Mar 2008 19:31:14 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 39FD62F9A; Mon, 24 Mar 2008 19:31:08 -0400 (EDT)
-In-Reply-To: <7vabkoufzq.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
- message of "Mon, 24 Mar 2008 11:35:53 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1755804AbYCXXkI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Mar 2008 19:40:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755776AbYCXXkH
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Mar 2008 19:40:07 -0400
+Received: from wx-out-0506.google.com ([66.249.82.235]:61597 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755805AbYCXXkF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Mar 2008 19:40:05 -0400
+Received: by wx-out-0506.google.com with SMTP id h31so3235632wxd.4
+        for <git@vger.kernel.org>; Mon, 24 Mar 2008 16:40:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=583aWPyzbYpsrW2Pu5X74STA8acB1I+POkpCVopNbXc=;
+        b=YT26IexU3KazGFVnqmV6SWQB7svhfMMzQn5q+ZpC82G6nt5tRCkrInFh/TeZGIB5+BPiVcPFwKvLQFg71bgjlSeZCq9yxAhxwWWrI0IJnJUIPmVNdj+4XFkLS+jwVHUDVauC1rkF23qwZ6nyBx+AM62R7UjyyAjA8k5RDeH6N1Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=DF18G7oBreAe6d8vdW5rZlvLyW4Svpo+Deepn8KjaFZubsPJbZMFJpBT+HWA1a/GnMwAaweBdKTETtuxSKzlgsrs3UrwcecdK6yJI71bhTCKPiXHMwkLtApygnyJIQpfEMWc/BM9rRoy0eKJVDaLkJTDzWrfNqj9Ed0Whbn3Muc=
+Received: by 10.141.145.11 with SMTP id x11mr2712349rvn.215.1206402004466;
+        Mon, 24 Mar 2008 16:40:04 -0700 (PDT)
+Received: by 10.141.175.11 with HTTP; Mon, 24 Mar 2008 16:40:04 -0700 (PDT)
+In-Reply-To: <47E837E8.7000606@keyaccess.nl>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78126>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78127>
 
-I'll extend this topic a bit for the last time, but first a word of
-caution.  What I am going to draw is probably not what the current -p
-implementation does.  They illustrate what I think should happen.
+On 24/03/2008, Rene Herman <rene.herman@keyaccess.nl> wrote:
+> used to use quilt and although I
+>  didn't much care for its linear nature when managing an entire tree, it
+>  probably works out well for private topic branches. Not overly sure of added
+>  practical value over git rebase, but I did like the simple nature of
+>  shuffling things around by just editing a series file back when I was using
+>  quilt. Keeps one on top of things, so to speak (<-- amusing play on words).
 
-Again, starting from this topology:
+Git rebasing is useful but using a patch management tool is much
+easier, especially when you need to post a series of patches multiple
+times while implementing others' comments. And this is not only for
+private branches but public ones that are meant for upstream merging.
+The problem with these tools is that they rewrite the history of the
+repository but they are OK if you aren't in a position where people
+need to base their work on your tree.
 
-       o---o---o---o---o---Z
-      /
-     X---Y---A---B
-          \       \
-           C---D---M---E
+I would much prefer to simply commit the additional comments at the
+top of a branch without changing the history but this makes patch
+posting and reviewing more difficult. Because of this requirement to
+keep clean patches (which I think is fair), people using maintainers'
+branches can only use rebasing (or some patch management tool).
 
-and the goal is to rebase your development leading to E on top of the
-updated mainline Z.
+>  Moreover not too keen on using many tools do do one thing, so getting this
+>  inside git itself sounded like a possibly nice notion.
 
-The earlier example was when you want to end up with this topology:
+I don't like using many tools either, hence I use mostly StGIT :-).
 
-       o---o---o---o---o---Z---Y'--A'--B'      
-      /                         \       \      
-     X---Y---A---B               C'--D'--M'--E'
-          \       \
-           C---D---M---E
-
-In this case, "pick M" cannot be "merge B after pick D".  It needs to
-merge in the rewritten B (which is B').
-
-But if you want to end up with this topology:
-
-       o---o---o---o---o---Z---Y'--A'--B'
-      /                                 \     
-     X---Y---A---B                       M'--E'
-          \       \                     /
-           C---D---M---E               /
-                \                     /
-                 `-------------------'
-
-redoing the merge from D when reproducing M' is the right thing to do.
-
-Unfortunately, you cannot express that you would want to rewrite only the
-Y--A--B--M--E ancestry from the command line.  We would need a syntax to
-do this cleanly first if we want to pursue this.
-
-The "first parent" hack can be used in this case (--first-parent X..E),
-but it will probably meet with the same resistance at the philosophical
-level (i.e. "merge parents are equal") as the --first-parent option was
-criticised for.  But other than that, a sequence to pick Y A B M E in this
-order can be presented in the todo list to be edited, and swapping A and M
-(for example) should result in this:
-
-       o---o---o---o---o---Z---Y'
-      /                         \
-     X---Y---A---B               M'--A'--B'
-          \       \             /
-           C---D---M---E       /
-                \             /
-                 `-----------'
-
-The existing revision range arithmetic can only come close with "E ^Z ^D"
-(or "^D Z..E"), but that would exclude Y as "uninteresting" (because Y is
-reachable from D).  You would end up with A--B--M--E.  So even though I am
-sympathetic to poeple who complained that the command line parameter to
-rebase is different from the log family, using revision range syntax is
-not a solution to this.
-
-Just for completeness of the illustration, linealizing form aims to
-produce the history like this:
-
-       o---o---o---o---o---Z---Y'--A'--B'--C'--D'--E'
-      /
-     X---Y---A---B
-          \       \
-           C---D---M---E
-
-You can freely to reorder anything in the "todo" list without additional
-constraints in this form (sequence of "pick" Y, A, B, C, D and E).
+-- 
+Catalin
