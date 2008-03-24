@@ -1,83 +1,61 @@
-From: Theodore Tso <tytso@MIT.EDU>
-Subject: Re: What I miss from Cogito...
-Date: Sun, 23 Mar 2008 22:14:11 -0400
-Message-ID: <20080324021411.GE24943@mit.edu>
-References: <47E69044.3000207@zytor.com> <20080323173841.GA24943@mit.edu> <20080323182102.GA22551@bit.office.eurotux.com> <87r6e1b6c8.fsf@mid.deneb.enyo.de> <20080324001617.GB24943@mit.edu> <20080324014030.GA24695@atjola.homenet>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git-config: aliases with parameter expansion ($1 and such)
+Date: Sun, 23 Mar 2008 19:47:35 -0700
+Message-ID: <7vzlso3kjc.fsf@gitster.siamese.dyndns.org>
+References: <47E65AF5.4060708@dirk.my1.cc>
+ <76718490803230645k13471472sc99932563b0239da@mail.gmail.com>
+ <47E66382.5030800@dirk.my1.cc>
+ <20080323193842.GA23227@coredump.intra.peff.net>
+ <20080323194514.GA23492@coredump.intra.peff.net>
+ <76718490803231854u6ee76437h5acf37b0b602f3b1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Florian Weimer <fw@deneb.enyo.de>, git@vger.kernel.org
-To: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Mar 24 03:15:09 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: "Jeff King" <peff@peff.net>,
+	=?utf-8?Q?Dirk_S=C3=BCsserott?= <newsletter@dirk.my1.cc>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Jay Soffian" <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 24 03:48:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JdcDL-000806-7t
-	for gcvg-git-2@gmane.org; Mon, 24 Mar 2008 03:15:07 +0100
+	id 1Jdcjg-0005pH-Jg
+	for gcvg-git-2@gmane.org; Mon, 24 Mar 2008 03:48:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754599AbYCXCO0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 23 Mar 2008 22:14:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754571AbYCXCO0
-	(ORCPT <rfc822;git-outgoing>); Sun, 23 Mar 2008 22:14:26 -0400
-Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:62906 "EHLO
-	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754567AbYCXCO0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 23 Mar 2008 22:14:26 -0400
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id m2O2EL26019124;
-	Sun, 23 Mar 2008 22:14:21 -0400 (EDT)
-Received: from closure.thunk.org (c-98-216-98-217.hsd1.ma.comcast.net [98.216.98.217])
-	(authenticated bits=0)
-        (User authenticated as tytso@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id m2O2EDSX009515
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sun, 23 Mar 2008 22:14:21 -0400 (EDT)
-Received: from tytso by closure.thunk.org with local (Exim 4.67)
-	(envelope-from <tytso@mit.edu>)
-	id 1JdcCR-0007BQ-P4; Sun, 23 Mar 2008 22:14:11 -0400
-Content-Disposition: inline
-In-Reply-To: <20080324014030.GA24695@atjola.homenet>
-User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
-X-Scanned-By: MIMEDefang 2.42
-X-Spam-Flag: NO
-X-Spam-Score: 0.00
+	id S1752579AbYCXCrv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 23 Mar 2008 22:47:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752443AbYCXCrv
+	(ORCPT <rfc822;git-outgoing>); Sun, 23 Mar 2008 22:47:51 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:40387 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752094AbYCXCru (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Mar 2008 22:47:50 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 9D66B1ADD;
+	Sun, 23 Mar 2008 22:47:48 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 16FEC1ADC; Sun, 23 Mar 2008 22:47:43 -0400 (EDT)
+In-Reply-To: <76718490803231854u6ee76437h5acf37b0b602f3b1@mail.gmail.com>
+ (Jay Soffian's message of "Sun, 23 Mar 2008 21:54:49 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77994>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/77995>
 
-On Mon, Mar 24, 2008 at 02:40:30AM +0100, Bj=F6rn Steinbrink wrote:
-> > If we were going to separate the two commands out, I'd use the name
-> > "git revert-file", because that's what people who are coming from b=
-k
-> > or hg are used to (where "revert" means to undo the local edits don=
-e
-> > to a particular file, as opposed to the git meaning of undoing a
-> > particular commit).
->=20
-> Nah, that would create confusion within git, because it does somethin=
-g
-> totally different from git revert. And checkout can also checkout a
-> whole tree, not just a file. So you would either need revert-tree as
-> well... Or add more confusion, because revert-file "reverting" a tree=
- is
-> not quite intuitive.
+"Jay Soffian" <jaysoffian@gmail.com> writes:
 
-That's why I said "git revert-file" as being different from "git
-revert".  If you want to revert the entire tree in the sense of
-"undoing local edits", most people today use "git reset --hard".
+> All my shell aliases therefor look like:
+>
+> h          = "!sh -c 'git alias \"$1\" || git help \"$1\"' -"
+>
+> (Notice the trailing '-'.)
 
-> Maybe it's just a misunderstanding on my side, but to me "checkout"
-> means as much as "get me something out of the repo".=20
+Just for my curiosity, why aren't they
 
-If that's true, why is the one-line summary in the git-checkout man
-page and in the git top-level man page read as follows?
+> h          = "!sh -c 'git alias \"$0\" || git help \"$0\"'"
 
-       git-checkout - Checkout and switch to a branch
-
-At the very least, will you admit that the summary in the man page is
-perhaps just a wee bit misleading?
-
-						- Ted
+without trailing '-'?
