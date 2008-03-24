@@ -1,95 +1,126 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: [PATCH 2/2] filter-branch.sh: support nearly proper tag name
- filtering
-Date: Mon, 24 Mar 2008 13:37:23 -0500
-Message-ID: <47E7F4E3.8050406@nrlssc.navy.mil>
-References: <1206031893-29599-1-git-send-email-casey@nrlssc.navy.mil> <47E298A5.6050508@nrlssc.navy.mil> <alpine.LSU.1.00.0803201812560.4124@racer.site> <7vr6e01xja.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0803241152050.4353@racer.site> <7viqzc18j9.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0803241609540.4353@racer.site> <47E7D818.7090501@nrlssc.navy.mil> <alpine.LSU.1.00.0803241745240.4353@racer.site> <47E7DFAD.4060209@nrlssc.navy.mil> <alpine.LSU.1.00.0803241812230.4353@racer.site>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Mar 24 19:39:03 2008
+From: Julian Phillips <julian@quantumfyre.co.uk>
+Subject: [PATCH] Documentation/git-checkout: Update summary to reflect current
+	abilities
+Date: Mon, 24 Mar 2008 03:06:20 +0000
+Message-ID: <20080324183347.16465.93600.julian@quantumfyre.co.uk>
+References: <7vtziw3k9a.fsf@gitster.siamese.dyndns.org>
+	<47E69044.3000207@zytor.com> <20080323173841.GA24943@mit.edu>
+	<20080323182102.GA22551@bit.office.eurotux.com>
+	<87r6e1b6c8.fsf@mid.deneb.enyo.de> <20080324001617.GB24943@mit.edu>
+	<20080324014030.GA24695@atjola.homenet>
+	<20080324021411.GE24943@mit.edu>
+	<20080324030946.9328.76091.julian@quantumfyre.co.uk>
+	<7vbq54vzhe.fsf@gitster.siamese.dyndns.org>
+Cc: =?utf-8?Q?Bj=C3=B6rn?= Steinbrink <B.Steinbrink@gmx.de>,
+	Florian Weimer <fw@deneb.enyo.de>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 24 19:40:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JdrZN-0001H9-0x
-	for gcvg-git-2@gmane.org; Mon, 24 Mar 2008 19:38:53 +0100
+	id 1Jdraj-0001lr-R7
+	for gcvg-git-2@gmane.org; Mon, 24 Mar 2008 19:40:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758254AbYCXSiL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Mar 2008 14:38:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759111AbYCXSiK
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Mar 2008 14:38:10 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:54849 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757638AbYCXSiJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Mar 2008 14:38:09 -0400
-Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
-	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id m2OIbPuW029629;
-	Mon, 24 Mar 2008 13:37:25 -0500
-Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 24 Mar 2008 13:37:24 -0500
-User-Agent: Thunderbird 2.0.0.9 (X11/20071031)
-In-Reply-To: <alpine.LSU.1.00.0803241812230.4353@racer.site>
-X-OriginalArrivalTime: 24 Mar 2008 18:37:24.0965 (UTC) FILETIME=[1AA9C950:01C88DDE]
-X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-5.0.0.1023-15806001
-X-TM-AS-Result: : Yes--15.025000-0-31-1
-X-TM-AS-Category-Info: : 31:0.000000
-X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNTY3LTcwMDA3NS0xMzkw?=
-	=?us-ascii?B?MTAtMTEzOTIyLTcwMDYzMC03MDA5OTktNzAxNDU1LTcwMDc4Mi03?=
-	=?us-ascii?B?MDIwMTYtNzA5NTg0LTcwMjYwOS03MDM1MjktNzA5MTg1LTEzNjA3?=
-	=?us-ascii?B?MC03MTA5ODktNzA1MTAyLTcwMDc1Ni03MDEyMzYtNzEwODQyLTcw?=
-	=?us-ascii?B?Mzg1MS03MDc3NTAtNzA4MjU3LTcwNDQyNS03MDA3MDEtMTA2NDcw?=
-	=?us-ascii?B?LTcwNjgyMy03MDE3NDctNzAxMjAyLTcwNTkwMS0xNDgwMzktMTQ4?=
-	=?us-ascii?B?MDUxLTIwMDQz?=
+	id S1763353AbYCXSjO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Mar 2008 14:39:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760708AbYCXSjN
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Mar 2008 14:39:13 -0400
+Received: from electron.quantumfyre.co.uk ([87.106.55.16]:32881 "EHLO
+	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1763353AbYCXSjL (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 24 Mar 2008 14:39:11 -0400
+Received: from neutron.quantumfyre.co.uk (neutron.datavampyre.co.uk [212.159.54.235])
+	by electron.quantumfyre.co.uk (Postfix) with ESMTP id C39F2C6365
+	for <git@vger.kernel.org>; Mon, 24 Mar 2008 18:39:09 +0000 (GMT)
+Received: (qmail 27352 invoked by uid 103); 24 Mar 2008 18:38:09 +0000
+Received: from 192.168.0.4 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
+ (spamassassin: 3.2.1. perlscan: 1.25st.  
+ Clear:RC:1(192.168.0.4):. 
+ Processed in 0.025081 secs); 24 Mar 2008 18:38:09 -0000
+Received: from elfhelm.quantumfyre.co.uk (HELO kaos.quantumfyre.co.uk) (192.168.0.4)
+  by neutron.datavampyre.co.uk with SMTP; 24 Mar 2008 18:38:09 +0000
+X-git-sha1: 3972d940af73ad0dcc94454f4ff29c9e09a443c5 
+X-Mailer: git-mail-commits v0.1
+In-Reply-To: <7vbq54vzhe.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78075>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78076>
 
-Johannes Schindelin wrote:
-> Hi,
-> 
-> On Mon, 24 Mar 2008, Brandon Casey wrote:
-> 
->> Johannes Schindelin wrote:
+For a while now, git-checkout has been more powerful than the man-page
+summary would suggest (the main text does describe the new features),
+so update the summary to hopefully better reflect the current
+functionality.  Also update the glossary description of the word checkout.
+
+Signed-off-by: Julian Phillips <julian@quantumfyre.co.uk>
+---
+On Mon, 24 Mar 2008, Junio C Hamano wrote:
+
+> Julian Phillips <julian@quantumfyre.co.uk> writes:
+>
+>> diff --git a/Documentation/git-checkout.txt
+b/Documentation/git-checkout.txt
+>> index 4014e72..1b8caf1 100644
+>> --- a/Documentation/git-checkout.txt
+>> +++ b/Documentation/git-checkout.txt
+>> @@ -3,7 +3,7 @@ git-checkout(1)
 >>
->>> On Mon, 24 Mar 2008, Brandon Casey wrote:
->>>
->>>> So right now, tags matching the refspec are rewritten. They are 
->>>> currently rewritten with a lightweight tag.
->>> That is unintended.  My understanding of a tag was always that it is 
->>> something immutable.  I mean, _really_ immutable.  If you released a 
->>> certain version, then that is tagged.  You must not rewrite the tag.  
->>> Ever.
->> Then what is the intended behavior for --tag-name-filter?
-> 
-> To be honest, I wanted to rip that part out before posting the initial 
-> filter-branch patches, and forgot/was too lazy.
-> 
-> IMO there should be clean semantics first, and a default mode that does 
-> _not_ rewrite tags at all first.
+>>  NAME
+>>  ----
+>> -git-checkout - Checkout and switch to a branch
+>> +git-checkout - Checkout/update/refresh items in the working tree
+>
+> Hmm.
+>
+> The glossary may be a good place to define what the verb "checkout" means.
+> I think using that defined word without adding "/update/refresh" to
+> muddy its meaning would be more appropriate, after we establish what
+> "checkout" means in the glossary.
+>
+> So how about saying "Check out a whole branch, or paths to the work tree"
+> or something like that?
 
-There isn't really a "default" mode for --tag-name-filter, a script must
-always be supplied. The name of the option (--tag- _name_ -filter) implies
-that it is intended for changing the names of tags. If the user decides
-not to change the name, then I think the user would expect the old tag to
-be replaced.
+Ok, so more like this?  I've updated the glossary entry for checkout too,
+though I'm thinking that there ought to be a clearer way to explain it ...
 
-So the user could choose to:
+ Documentation/git-checkout.txt |    2 +-
+ Documentation/glossary.txt     |    9 ++++++---
+ 2 files changed, 7 insertions(+), 4 deletions(-)
 
-          Rewrite tag ref: --tag-name-filter cat
-                        or
- Give new tags a new name: --tag-name-filter 'sed -e s/$/.new/'
-                        or
-       Save original tags: --tag-name-filter 'sed -e s/$/.orig/'
-     Then create new ones: --tag-name-filter 'sed -e s/\.orig$//' [plus additional filtering]
-
-More precise control over tag filtering should probably have an option
-with a different name like --tag-filter, at which point --tag-name-filter
-could be deprecated.
-
--brandon
+diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
+index 4014e72..e11cddb 100644
+--- a/Documentation/git-checkout.txt
++++ b/Documentation/git-checkout.txt
+@@ -3,7 +3,7 @@ git-checkout(1)
+ 
+ NAME
+ ----
+-git-checkout - Checkout and switch to a branch
++git-checkout - Checkout a branch or paths to the working tree
+ 
+ SYNOPSIS
+ --------
+diff --git a/Documentation/glossary.txt b/Documentation/glossary.txt
+index ab4caf4..51b6353 100644
+--- a/Documentation/glossary.txt
++++ b/Documentation/glossary.txt
+@@ -45,9 +45,12 @@ GIT Glossary
+ 	"changesets" with git.
+ 
+ [[def_checkout]]checkout::
+-	The action of updating the <<def_working_tree,working tree>> to a
+-	<<def_revision,revision>> which was stored in the
+-	<<def_object_database,object database>>.
++	The action of updating all or part of the
++	<<def_working_tree,working tree>> with a <<def_tree_object,tree object>>
++	or <<def_blob_object,blob>> from the
++	<<def_object_database,object database>>, and updating the
++	<<def_index,index>> and <<def_HEAD,HEAD>> if the whole working tree has
++	been pointed at a new <<def_branch,branch>>.
+ 
+ [[def_cherry-picking]]cherry-picking::
+ 	In <<def_SCM,SCM>> jargon, "cherry pick" means to choose a subset of
+-- 
+1.5.4.4
