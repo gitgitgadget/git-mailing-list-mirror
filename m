@@ -1,62 +1,137 @@
-From: "Carlos Rica" <jasampler@gmail.com>
-Subject: Re: [PATCH] Spanish translation of gitk.
-Date: Mon, 24 Mar 2008 14:43:40 +0100
-Message-ID: <1b46aba20803240643m57c509d2i60028280fbb05e0e@mail.gmail.com>
-References: <1206316703-15481-1-git-send-email-sgala@apache.org>
-	 <9D1D2D11-8C2E-4B8E-BB75-59D155AFF6BF@wincent.com>
-	 <loom.20080324T091855-5@post.gmane.org>
-	 <F90B5D52-0E47-4231-A9D3-4078C5EB6594@wincent.com>
+From: Michele Ballabio <barra_cuda@katamail.com>
+Subject: [PATCH 3/2] parse-options.c: introduce OPT_DATE
+Date: Mon, 24 Mar 2008 15:02:21 +0100
+Message-ID: <200803241502.21465.barra_cuda@katamail.com>
+References: <200803232150.29971.barra_cuda@katamail.com> <200803241331.17986.barra_cuda@katamail.com> <alpine.LSU.1.00.0803241409400.4353@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: "Santiago Gala" <sgala@apache.org>, git@vger.kernel.org
-To: "Wincent Colaiuta" <win@wincent.com>
-X-From: git-owner@vger.kernel.org Mon Mar 24 14:44:24 2008
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Mar 24 14:52:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JdmyO-00081o-E4
-	for gcvg-git-2@gmane.org; Mon, 24 Mar 2008 14:44:24 +0100
+	id 1Jdn6I-0002He-W4
+	for gcvg-git-2@gmane.org; Mon, 24 Mar 2008 14:52:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758367AbYCXNnn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Mar 2008 09:43:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758301AbYCXNnn
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Mar 2008 09:43:43 -0400
-Received: from wx-out-0506.google.com ([66.249.82.229]:8983 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754668AbYCXNnm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Mar 2008 09:43:42 -0400
-Received: by wx-out-0506.google.com with SMTP id h31so2985304wxd.4
-        for <git@vger.kernel.org>; Mon, 24 Mar 2008 06:43:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=AY97AV8JNxbnTrELtAYbz0P+dxyID1migefK6sYF0Pw=;
-        b=AAA8aSwdBvmTdAedHrg6J3HQ5/mrAr9ZdAhxtVASBAIFmYBIDezZv+Fzst9mZNjzYxDB51GDURqA69coD0mKiEsjgbQVTnSX/+Kyw77oJZoctsPgKyh+hfr+OifFxi2sUerTnmvr5hXcOq8eQMTjIV1cMjdVaqSZjZ6a8ErBv9k=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=B7AkUVFtz/gc9ruEDm8hbz1c/G5nqIoHRw9qaok4iMdKHATuUglFvN4LYioehv+Gh8XbLRzMl3LVQ9K8w6JAxKuZNoDW1S0BhChBQTNqJorm7Eru7muUYdDBEeim8uREobFkLWEK/Acs3YGlvuNDkFZuZogh/wiz3ASUN38Cq50=
-Received: by 10.140.136.1 with SMTP id j1mr2144088rvd.233.1206366221156;
-        Mon, 24 Mar 2008 06:43:41 -0700 (PDT)
-Received: by 10.141.115.5 with HTTP; Mon, 24 Mar 2008 06:43:40 -0700 (PDT)
-In-Reply-To: <F90B5D52-0E47-4231-A9D3-4078C5EB6594@wincent.com>
+	id S1758422AbYCXNvw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Mar 2008 09:51:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758406AbYCXNvw
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Mar 2008 09:51:52 -0400
+Received: from smtp.katamail.com ([62.149.157.154]:35473 "HELO
+	smtp1.pc.aruba.it" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with SMTP id S1758374AbYCXNvv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Mar 2008 09:51:51 -0400
+Received: (qmail 14260 invoked by uid 89); 24 Mar 2008 13:48:12 -0000
+X-Spam-Checker-Version: SpamAssassin 3.2.3 (2007-08-08) on smtp2-pc
+X-Spam-Level: 
+X-Spam-Status: No, score=0.1 required=5.0 tests=RDNS_NONE autolearn=disabled
+	version=3.2.3
+Received: from unknown (HELO host45-56-static.104-80-b.business.telecomitalia.it) (barra?cuda@katamail.com@80.104.56.45)
+  by smtp2-pc with SMTP; 24 Mar 2008 13:48:11 -0000
+User-Agent: KMail/1.9.7
+In-Reply-To: <alpine.LSU.1.00.0803241409400.4353@racer.site>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78034>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78035>
 
-I can also review the translation to enhance it. To start, it is a
-very good job!
+There are quite a few places that will need to call approxidate(),
+when they'll adopt the parse-options system, so this patch adds the
+function parse_opt_approxidate_cb(), used by OPT_DATE, and converts
+the only user so far.
 
-I also think that to choose between two options we can compare with translations
-in other programs, since often they already have been had this discussion.
+Signed-off-by: Michele Ballabio <barra_cuda@katamail.com>
+---
+On Monday 24 March 2008, Johannes Schindelin wrote:
+> And maybe a
+> 
+> #define OPT_DATE(s, l, v, h)    { OPTION_CALLBACK, (s), (l), (v), "time", 
+> (h), 0, parse_opt_approxidate_cb }
 
-This requires more analysis, I'm seeing many things that could be changed,
-but also some suggestions from Vincent that need to be addressed, for example
-the "hijo" and "hija" use, because in this case it adopts the gender
-of the thing
-being qualified as child, so it depends on the context where it is used.
+Oh, right. Somehow I thought it was simpler not to do this.
+
+Thank you for your review and suggestions.
+
+This is on top of
+[PATCH 2/2] builtin-prune.c: fix object parsing and use parse_options()
+
+ builtin-prune.c |   12 ++----------
+ parse-options.c |    7 +++++++
+ parse-options.h |    5 +++++
+ 3 files changed, 14 insertions(+), 10 deletions(-)
+
+diff --git a/builtin-prune.c b/builtin-prune.c
+index 7b3e15d..40581df 100644
+--- a/builtin-prune.c
++++ b/builtin-prune.c
+@@ -125,13 +125,6 @@ static void remove_temporary_files(void)
+ 	closedir(dir);
+ }
+ 
+-static int parse_opt_expire(const struct option *opt, const char *arg,
+-		int unset)
+-{
+-	expire = approxidate(arg);
+-	return 0;
+-}
+-
+ int cmd_prune(int argc, const char **argv, const char *prefix)
+ {
+ 	struct rev_info revs;
+@@ -139,9 +132,8 @@ int cmd_prune(int argc, const char **argv, const char *prefix)
+ 	const struct option options[] = {
+ 		OPT_BOOLEAN('n', NULL, &show_only,
+ 				"do not remove, show only"),
+-		OPT_CALLBACK(0, "expire", &expire, "time",
+-				"expire objects older than <time>",
+-				parse_opt_expire),
++		OPT_DATE(0, "expire", &expire,
++				"expire objects older than <time>"),
+ 		OPT_END()
+ 	};
+ 
+diff --git a/parse-options.c b/parse-options.c
+index 8e64316..6ec7fe8 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -409,3 +409,10 @@ int parse_opt_abbrev_cb(const struct option *opt, const char *arg, int unset)
+ 	*(int *)(opt->value) = v;
+ 	return 0;
+ }
++
++int parse_opt_approxidate_cb(const struct option *opt, const char *arg,
++		int unset)
++{
++	*(unsigned int *)(opt->value) = approxidate(arg);
++	return 0;
++}
+diff --git a/parse-options.h b/parse-options.h
+index 1af62b0..c98f89e 100644
+--- a/parse-options.h
++++ b/parse-options.h
+@@ -110,6 +110,8 @@ extern NORETURN void usage_with_options(const char * const *usagestr,
+ 
+ /*----- some often used options -----*/
+ extern int parse_opt_abbrev_cb(const struct option *, const char *, int);
++extern int parse_opt_approxidate_cb(const struct option *, const char *,
++		int);
+ 
+ #define OPT__VERBOSE(var)  OPT_BOOLEAN('v', "verbose", (var), "be verbose")
+ #define OPT__QUIET(var)    OPT_BOOLEAN('q', "quiet",   (var), "be quiet")
+@@ -118,5 +120,8 @@ extern int parse_opt_abbrev_cb(const struct option *, const char *, int);
+ 	{ OPTION_CALLBACK, 0, "abbrev", (var), "n", \
+ 	  "use <n> digits to display SHA-1s", \
+ 	  PARSE_OPT_OPTARG, &parse_opt_abbrev_cb, 0 }
++#define OPT_DATE(s, l, v, h) \
++	{ OPTION_CALLBACK, (s), (l), (v), "time",(h), 0, \
++	  parse_opt_approxidate_cb }
+ 
+ #endif
+-- 
+1.5.4.3
