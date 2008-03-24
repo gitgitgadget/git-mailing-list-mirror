@@ -1,81 +1,54 @@
-From: sgala@marlow.memojo.com
-Subject: [PATCH] gitk: One \t missing in the help file (for <Return>)
-Date: Mon, 24 Mar 2008 09:16:53 +0100
-Message-ID: <1206346613-29382-1-git-send-email-sgala@apache.org>
-Cc: Santiago Gala <sgala@apache.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 24 09:17:58 2008
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [StGit PATCH 0/6] Two bugfixes
+Date: Mon, 24 Mar 2008 09:35:50 +0100
+Message-ID: <20080324083550.GB23337@diana.vm.bytemark.co.uk>
+References: <20080320002604.13102.53757.stgit@yoghurt> <b0943d9e0803200819k7300fd1fn8a21896c7ad2a1@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Erik Sandberg <mandolaerik@gmail.com>
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 24 09:36:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JdhsO-0006Zf-TI
-	for gcvg-git-2@gmane.org; Mon, 24 Mar 2008 09:17:53 +0100
+	id 1JdiAq-0001xQ-IB
+	for gcvg-git-2@gmane.org; Mon, 24 Mar 2008 09:36:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752788AbYCXIQ7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Mar 2008 04:16:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752321AbYCXIQ7
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Mar 2008 04:16:59 -0400
-Received: from 233.Red-81-33-31.staticIP.rima-tde.net ([81.33.31.233]:2736
-	"EHLO mail.hisitech.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751816AbYCXIQ6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Mar 2008 04:16:58 -0400
-Received: by mail.hisitech.com (Postfix, from userid 65534)
-	id 0286115CC71; Mon, 24 Mar 2008 09:16:52 +0100 (CET)
-X-Spam-Checker-Version: SpamAssassin 3.1.9 (2007-02-13) on
-	webserver2.intranet.hisitech.com
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00,
-	NO_REAL_NAME autolearn=ham version=3.1.9
-Received: from marlow.memojo.com (unknown [172.27.70.188])
-	by mail.hisitech.com (Postfix) with SMTP id 55EAB15CC39;
-	Mon, 24 Mar 2008 09:16:51 +0100 (CET)
-Received: by marlow.memojo.com (sSMTP sendmail emulation); Mon, 24 Mar 2008 09:16:53 +0100
-X-Mailer: git-send-email 1.5.4.4
+	id S1754274AbYCXIgO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Mar 2008 04:36:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754259AbYCXIgO
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Mar 2008 04:36:14 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1076 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754003AbYCXIgO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Mar 2008 04:36:14 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1Jdi9m-000664-00; Mon, 24 Mar 2008 08:35:50 +0000
+Content-Disposition: inline
+In-Reply-To: <b0943d9e0803200819k7300fd1fn8a21896c7ad2a1@mail.gmail.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78009>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78010>
 
-Add it in the source and the Italian translation,
-the German translation does not have the string. The
-Spanish translation already contains it. Without it
-the formatting of the help page is not right here.
+On 2008-03-20 15:19:12 +0000, Catalin Marinas wrote:
 
-Signed-off-by: Santiago Gala <sgala@apache.org>
----
- gitk-git/gitk     |    2 +-
- gitk-git/po/it.po |    4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+> BTW, I have about 5 patches that apply to the stable and master
+> branch, mainly UI updates I needed recently (like picking multiple
+> patches at once). Since the master branch still needs some work
+> (which I'll try to help with), maybe it's worth releasing a 0.14.2,
+> together with some of the bugs reported so far.
 
-diff --git a/gitk-git/gitk b/gitk-git/gitk
-index 84ab02e..6fe454b 100644
---- a/gitk-git/gitk
-+++ b/gitk-git/gitk
-@@ -1370,7 +1370,7 @@ proc keys {} {
- [mc "d		Scroll diff view down 18 lines"]
- [mc "<%s-F>		Find" $M1T]
- [mc "<%s-G>		Move to next find hit" $M1T]
--[mc "<Return>	Move to next find hit"]
-+[mc "<Return>		Move to next find hit"]
- [mc "/		Move to next find hit, or redo find"]
- [mc "?		Move to previous find hit"]
- [mc "f		Scroll diff view to next file"]
-diff --git a/gitk-git/po/it.po b/gitk-git/po/it.po
-index d0f4c2e..e4d49ea 100644
---- a/gitk-git/po/it.po
-+++ b/gitk-git/po/it.po
-@@ -389,8 +389,8 @@ msgid "<%s-G>\t\tMove to next find hit"
- msgstr "<%s-G>\t\tTrova in avanti"
- 
- #: gitk:1373
--msgid "<Return>\tMove to next find hit"
--msgstr "<Return>\tTrova in avanti"
-+msgid "<Return>\t\tMove to next find hit"
-+msgstr "<Return>\t\tTrova in avanti"
- 
- #: gitk:1374
- msgid "/\t\tMove to next find hit, or redo find"
--- 
-1.5.4.4
+Absolutely. I think it would be worthwhile to treat "stable" much like
+Junio handles his "maint" -- apply minor and/or important fixes there,
+and release minor releases from it somewhat frequently. And merge it
+to master often, so that master always has everything stable has.
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
