@@ -1,71 +1,68 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 3/2] parse-options.c: introduce OPT_DATE
-Date: Mon, 24 Mar 2008 21:03:04 +0100 (CET)
-Message-ID: <alpine.LSU.1.00.0803242102140.4353@racer.site>
-References: <200803232150.29971.barra_cuda@katamail.com> <alpine.LSU.1.00.0803241409400.4353@racer.site> <200803241502.21465.barra_cuda@katamail.com> <200803241725.42940.barra_cuda@katamail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Documentation: git-tag '-m' implies '-a'
+Date: Mon, 24 Mar 2008 13:07:15 -0700
+Message-ID: <7v1w5zvqbw.fsf@gitster.siamese.dyndns.org>
+References: <47E7BDB2.3030304@dirk.my1.cc>
+ <20080324194308.GE14002@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323584-233973954-1206388985=:4353"
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Michele Ballabio <barra_cuda@katamail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 24 21:04:09 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Dirk =?utf-8?Q?S=C3=BCsserott?= <newsletter@dirk.my1.cc>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Mar 24 21:08:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JdstW-0006sA-Qi
-	for gcvg-git-2@gmane.org; Mon, 24 Mar 2008 21:03:47 +0100
+	id 1JdsyL-0000Mh-KE
+	for gcvg-git-2@gmane.org; Mon, 24 Mar 2008 21:08:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750937AbYCXUDD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Mar 2008 16:03:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750833AbYCXUDB
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Mar 2008 16:03:01 -0400
-Received: from mail.gmx.net ([213.165.64.20]:34276 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750772AbYCXUDB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Mar 2008 16:03:01 -0400
-Received: (qmail invoked by alias); 24 Mar 2008 20:02:58 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp049) with SMTP; 24 Mar 2008 21:02:58 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/ONhJb+TLOQphq1iijC7u/2jCwmGNO48FvPp0RAX
-	qqKXDuU8wH7heP
-X-X-Sender: gene099@racer.site
-In-Reply-To: <200803241725.42940.barra_cuda@katamail.com>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1752825AbYCXUH2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Mar 2008 16:07:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754261AbYCXUH1
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Mar 2008 16:07:27 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:53155 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752825AbYCXUH0 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 24 Mar 2008 16:07:26 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 8D3012FC5;
+	Mon, 24 Mar 2008 16:07:24 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id BDB5D2FC3; Mon, 24 Mar 2008 16:07:19 -0400 (EDT)
+In-Reply-To: <20080324194308.GE14002@coredump.intra.peff.net> (Jeff King's
+ message of "Mon, 24 Mar 2008 15:43:08 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78089>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78090>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Jeff King <peff@peff.net> writes:
 
---8323584-233973954-1206388985=:4353
-Content-Type: TEXT/PLAIN; charset=iso-8859-1
-Content-Transfer-Encoding: 8BIT
+> From: Dirk S=C3=BCsserott <newsletter@dirk.my1.cc>
+>
+> Described that '-a' is implied when '-m' or '-F' is present.
+> ---
+> On Mon, Mar 24, 2008 at 03:41:54PM +0100, Dirk S=C3=BCsserott wrote:
+>
+>> Described that '-a' is implied when '-m' or '-F' is present.
+>
+> Oh, I see you already took my suggestion before I made it. :)
+>
+> The text looks good to me, but the patch would not apply here. I thin=
+k
+> there are some wrapping issues, and it looks like some tabs have been
+> mangled to spaces.
 
-Hi,
+Thanks for tidying up.  It makes my life easier.
 
-On Mon, 24 Mar 2008, Michele Ballabio wrote:
+> Also, it is generally a good idea to:
+>   - at least cc Junio on patch submissions to make sure he sees it
+>   - sign off your patch (either with commit -s or format-patch -s).
 
-> On Monday 24 March 2008, Michele Ballabio wrote:
-> > +               OPT_DATE(0, "expire", &expire,
-> 
-> [...]
-> 
-> > +#define OPT_DATE(s, l, v, h) \
-> 
-> Ooops. To be consistent, these should be OPT__DATE (with two 
-> underscores) instead (and in the commit message, too).
-
-I thought OPT__BLA was reserved for --bla options?  IOW OPT__DATE would 
-not be usable to implement --expire, but only --date.
-
-I might be wrong, though.
-
-Ciao,
-Dscho
-
---8323584-233973954-1206388985=:4353--
+Heh, and you did not sign it off when you forwarded? ;-)
