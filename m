@@ -1,68 +1,91 @@
-From: Yoann Padioleau <padator@wanadoo.fr>
-Subject: Re: merging git repositories history for full history of linux
-Date: Mon, 24 Mar 2008 16:10:38 -0500
-Message-ID: <87ej9zomk1.fsf@wanadoo.fr>
-References: <87iqzcne7b.fsf@wanadoo.fr>
-	<7v63vbvr2b.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Yoann Padioleau <padator@wanadoo.fr>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 24 22:14:50 2008
+From: Eyvind Bernhardsen <eyvind-git@orakel.ntnu.no>
+Subject: filter-branch --all?
+Date: Mon, 24 Mar 2008 22:22:46 +0100
+Message-ID: <263C0D8D-0454-402A-B65C-08E91F7BD5C7@orakel.ntnu.no>
+References: <1206031893-29599-1-git-send-email-casey@nrlssc.navy.mil> <47E298A5.6050508@nrlssc.navy.mil> <alpine.LSU.1.00.0803201812560.4124@racer.site> <7vr6e01xja.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0803241152050.4353@racer.site> <7viqzc18j9.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0803241609540.4353@racer.site>
+Mime-Version: 1.0 (Apple Message framework v919.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Mar 24 22:24:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jdu06-0001W1-89
-	for gcvg-git-2@gmane.org; Mon, 24 Mar 2008 22:14:38 +0100
+	id 1Jdu96-0004ny-1X
+	for gcvg-git-2@gmane.org; Mon, 24 Mar 2008 22:23:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752838AbYCXVN4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Mar 2008 17:13:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752669AbYCXVN4
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Mar 2008 17:13:56 -0400
-Received: from expredir6.cites.uiuc.edu ([128.174.5.97]:49637 "EHLO
-	expredir6.cites.uiuc.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752703AbYCXVNz (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Mar 2008 17:13:55 -0400
-Received: from axyr (aryx.cs.uiuc.edu [128.174.236.106])
-	by expredir6.cites.uiuc.edu (8.14.2/8.14.2) with ESMTP id m2OLDVRS004301;
-	Mon, 24 Mar 2008 16:13:31 -0500 (CDT)
-In-Reply-To: <7v63vbvr2b.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's message of "Mon, 24 Mar 2008 12:51:24 -0700")
-User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (gnu/linux)
+	id S1755176AbYCXVWw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Mar 2008 17:22:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755224AbYCXVWw
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Mar 2008 17:22:52 -0400
+Received: from 97.84-49-228.nextgentel.com ([84.49.228.97]:61897 "EHLO
+	eyvind.bernhardsens.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755176AbYCXVWu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Mar 2008 17:22:50 -0400
+Received: from vredefort.d.eyvind.bernhardsens.net (vredefort.d.eyvind.bernhardsens.net [172.16.3.223])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by eyvind.bernhardsens.net (Postfix) with ESMTP id 90F3F1479CF;
+	Mon, 24 Mar 2008 22:22:47 +0100 (CET)
+In-Reply-To: <alpine.LSU.1.00.0803241609540.4353@racer.site>
+X-Mailer: Apple Mail (2.919.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78099>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78100>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On 24. mars. 2008, at 16.10, Johannes Schindelin wrote:
 
-> Yoann Padioleau <padator@wanadoo.fr> writes:
->
->> I would like to merge the 3 git repositories of the history
->> of linux, the one by Dave Jones from linux 0.01 to linux 2.4.0, 
->> the one by tglx from 2.4.0 to 2.6.12 and the one from 2.6.12
->> by torvalds until the last version of Linux.
->
-> I think you can install two grafts (one that says the root in tglx history
-> has one parent that is tip of Dave Jones history, another that says that
-> the 2.6.12-rc2 commit which is the root in Linus history has one parent
-> that is near the tip of tglx history), and if you want the result to use
-> locally then you are done.  Otherwise you can run filter-branch on the
-> result, but the future commits from Linus tree will all be different.
+[Regarding filter-branch rewriting tags]
 
-Thanks, I'll try that. 
+> You can say "--all", and I actually expect quite a few people to do
+> exactly that.  And then you cannot really say "the user explicitely  
+> asked
+> to have that signed tag rewritten".
 
-Also the Dave jones commits have the wrong date. All the 1040 commits
-are set to December 2007. I can get all the dates for the different
-versions of Linux but is there an easy way then to change the date for
-those 1040 commitid ? and also author ? The reasons for this is I want
-to use 'git annotate' on the full history of Linux to do some statistics
-about the evolution of Linux so I need the good date for each commit.
 
-Also, why the diff produce by git log -p can not be applied as 
-is on another git repositories ? I tried to do a script that just
-duplicate a git repository by getting the patch for each commit
-with 'git log -p' and applies them in turn to a fresh repo with
-git applypatch but it fails, git returns some error such as 
-"b/Makefile already exist".
+Sorry to hijack the thread.  I've seen you mention using "--all" to  
+filter-branch everything before, but I can't get it to work:
+
+
+	% git filter-branch --all
+	Usage: /usr/local/bin/git-filter-branch [--env-filter <command>] [-- 
+tree-filter <command>] [--index-filter <command>] [--parent-filter  
+<command>] [--msg-filter <command>] [--commit-filter <command>] [--tag- 
+name-filter <command>] [--subdirectory-filter <directory>] [--original  
+<namespace>] [-d <directory>] [-f | --force] [<rev-list options>...]
+
+
+I'm trying to rewrite history to match .git/info/grafts without going  
+through every graft, hence the lack of an actual filter command.   
+Thinking that might be the problem, I also tried the "update-index -- 
+remove <filename>" example, but it wouldn't let me use "--all" either:
+
+
+	% git filter-branch --index-filter 'git update-index --remove RELEASE- 
+NOTES' --all
+	Usage: /usr/local/bin/git-filter-branch [--env-filter <command>] [-- 
+tree-filter <command>] [--index-filter <command>] [--parent-filter  
+<command>] [--msg-filter <command>] [--commit-filter <command>] [--tag- 
+name-filter <command>] [--subdirectory-filter <directory>] [--original  
+<namespace>] [-d <directory>] [-f | --force] [<rev-list options>...]
+
+
+as opposed to:
+
+
+	% git filter-branch --index-filter 'git update-index --remove RELEASE- 
+NOTES' HEAD
+	Rewrite 266da463b4e59eaf06287b36b6435b8218db9f40 (611/4040)
+	^C
+
+
+git version 1.5.5.rc0.10.g7881f.dirty (the dirtiness is in git- 
+submodule.sh, and I've tried it with older, cleaner versions).
+
+Am I just stupid and/or crazy, or does it not work?
+-- 
+Eyvind Bernhardsen
