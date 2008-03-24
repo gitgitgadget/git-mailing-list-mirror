@@ -1,63 +1,62 @@
-From: "Roger C. Soares" <rogersoares@intelinet.com.br>
-Subject: Re: faster egit history page and a pure java "gitk"
-Date: Mon, 24 Mar 2008 10:33:23 -0300
-Message-ID: <47E7ADA3.2060906@intelinet.com.br>
-References: <20080324092726.GQ8410@spearce.org>
+From: "Carlos Rica" <jasampler@gmail.com>
+Subject: Re: [PATCH] Spanish translation of gitk.
+Date: Mon, 24 Mar 2008 14:43:40 +0100
+Message-ID: <1b46aba20803240643m57c509d2i60028280fbb05e0e@mail.gmail.com>
+References: <1206316703-15481-1-git-send-email-sgala@apache.org>
+	 <9D1D2D11-8C2E-4B8E-BB75-59D155AFF6BF@wincent.com>
+	 <loom.20080324T091855-5@post.gmane.org>
+	 <F90B5D52-0E47-4231-A9D3-4078C5EB6594@wincent.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>,
-	Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Mon Mar 24 14:37:13 2008
+Cc: "Santiago Gala" <sgala@apache.org>, git@vger.kernel.org
+To: "Wincent Colaiuta" <win@wincent.com>
+X-From: git-owner@vger.kernel.org Mon Mar 24 14:44:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JdmrP-0005ZZ-Sk
-	for gcvg-git-2@gmane.org; Mon, 24 Mar 2008 14:37:12 +0100
+	id 1JdmyO-00081o-E4
+	for gcvg-git-2@gmane.org; Mon, 24 Mar 2008 14:44:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757131AbYCXNg3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Mar 2008 09:36:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758047AbYCXNg3
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Mar 2008 09:36:29 -0400
-Received: from cvxbsd.convex.com.br ([200.152.177.10]:1850 "HELO
-	cvxbsd.convex.com.br" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1757056AbYCXNg2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Mar 2008 09:36:28 -0400
-Received: (qmail 28212 invoked by uid 0); 24 Mar 2008 10:38:52 -0300
-Received: from rogersoares@intelinet.com.br by cvxbsd.convex.com.br by uid 82 with qmail-scanner-1.20rc3 
- (uvscan: v4.3.20/v4817.  Clear:RC:1:. 
- Processed in 0.995968 secs); 24 Mar 2008 13:38:52 -0000
-Received: from unknown (HELO ?200.152.180.33?) (200.152.180.33)
-  by cvxbsd.convex.com.br with SMTP; 24 Mar 2008 13:38:50 -0000
-User-Agent: Thunderbird 1.5.0.12 (X11/20080213)
-In-Reply-To: <20080324092726.GQ8410@spearce.org>
+	id S1758367AbYCXNnn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Mar 2008 09:43:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758301AbYCXNnn
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Mar 2008 09:43:43 -0400
+Received: from wx-out-0506.google.com ([66.249.82.229]:8983 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754668AbYCXNnm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Mar 2008 09:43:42 -0400
+Received: by wx-out-0506.google.com with SMTP id h31so2985304wxd.4
+        for <git@vger.kernel.org>; Mon, 24 Mar 2008 06:43:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=AY97AV8JNxbnTrELtAYbz0P+dxyID1migefK6sYF0Pw=;
+        b=AAA8aSwdBvmTdAedHrg6J3HQ5/mrAr9ZdAhxtVASBAIFmYBIDezZv+Fzst9mZNjzYxDB51GDURqA69coD0mKiEsjgbQVTnSX/+Kyw77oJZoctsPgKyh+hfr+OifFxi2sUerTnmvr5hXcOq8eQMTjIV1cMjdVaqSZjZ6a8ErBv9k=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=B7AkUVFtz/gc9ruEDm8hbz1c/G5nqIoHRw9qaok4iMdKHATuUglFvN4LYioehv+Gh8XbLRzMl3LVQ9K8w6JAxKuZNoDW1S0BhChBQTNqJorm7Eru7muUYdDBEeim8uREobFkLWEK/Acs3YGlvuNDkFZuZogh/wiz3ASUN38Cq50=
+Received: by 10.140.136.1 with SMTP id j1mr2144088rvd.233.1206366221156;
+        Mon, 24 Mar 2008 06:43:41 -0700 (PDT)
+Received: by 10.141.115.5 with HTTP; Mon, 24 Mar 2008 06:43:40 -0700 (PDT)
+In-Reply-To: <F90B5D52-0E47-4231-A9D3-4078C5EB6594@wincent.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78033>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78034>
 
+I can also review the translation to enhance it. To start, it is a
+very good job!
 
-Shawn O. Pearce escreveu:
-> OK, so I decided a few weeks back that the history page was not fast
-> enough.  I think I've spent the past 3 weeks writing true revision
-> machinary for jgit, and now connecting it up to a UI visualizer.
->
->   git://repo.or.cz/egit/spearce.git plotter
->
-> The history page has been completely replaced.  I saw Roger has
-> some patches against the current history page.  :-|
->   
-Hi Shawn. This is awesome, I can't wait to see this integrated in the 
-main repo :)
+I also think that to choose between two options we can compare with translations
+in other programs, since often they already have been had this discussion.
 
-I don't spend much time working on egit so I usually take a while to 
-make small things, but I can certainly merge my patches on top of yours.
-
-Robin, how should I proceed, resend all my patches from the weekend on 
-top of Shawn's tree?
-
-[]s,
-Roger.
+This requires more analysis, I'm seeing many things that could be changed,
+but also some suggestions from Vincent that need to be addressed, for example
+the "hijo" and "hija" use, because in this case it adopts the gender
+of the thing
+being qualified as child, so it depends on the context where it is used.
