@@ -1,90 +1,79 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: Working copy revision and push pain
-Date: Mon, 24 Mar 2008 19:00:38 +0100
-Message-ID: <200803241900.38816.johan@herland.net>
-References: <47E64F71.3020204@jwatt.org> <200803231720.44320.johan@herland.net>
- <alpine.LSU.1.00.0803241621210.4353@racer.site>
+From: =?iso-8859-1?Q?=22Kyrre_Nyg=E5rd=22?= <kyrreny-gyXR7Lt7FVk/G1V5fR+Y7Q@public.gmane.org>
+Subject: Where to rent the best dedicated servers?
+Date: Tue, 25 Mar 2008 02:09:57 +0800
+Message-ID: <fbfafb78b9db.47e85ef5@broadpark.no>
+Reply-To: rubyonrails-talk-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7BIT
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jonathan Watt <jwatt@jwatt.org>,
-	Elijah Newren <newren@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 24 19:01:39 2008
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Cc: git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, questions-h+KGxgPPiopAfugRpC6u6w@public.gmane.org, misc-7YlrpqBBQ3VAfugRpC6u6w@public.gmane.org
+To: rubyonrails-talk-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+X-From: grbounce-DJQ-3gUAAAACItPav3U2wzEvJXqJ08kD=gclrr-rails=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Mon Mar 24 19:11:06 2008
+Return-path: <grbounce-DJQ-3gUAAAACItPav3U2wzEvJXqJ08kD=gclrr-rails=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Envelope-to: gclrr-rails@m.gmane.org
+Received: from py-out-1314.google.com ([64.233.166.170])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JdqzH-0005Ld-Dz
-	for gcvg-git-2@gmane.org; Mon, 24 Mar 2008 19:01:35 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755758AbYCXSAu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Mar 2008 14:00:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757091AbYCXSAu
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Mar 2008 14:00:50 -0400
-Received: from smtp.getmail.no ([84.208.20.33]:50490 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755758AbYCXSAt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Mar 2008 14:00:49 -0400
-Received: from pmxchannel-daemon.no-osl-m323-srv-009-z2.isp.get.no by
- no-osl-m323-srv-009-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- id <0JY80031YY1CIR00@no-osl-m323-srv-009-z2.isp.get.no> for
- git@vger.kernel.org; Mon, 24 Mar 2008 19:00:48 +0100 (CET)
-Received: from smtp.getmail.no ([10.5.16.1])
- by no-osl-m323-srv-009-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JY800IV0Y13U7D0@no-osl-m323-srv-009-z2.isp.get.no> for
- git@vger.kernel.org; Mon, 24 Mar 2008 19:00:39 +0100 (CET)
-Received: from alpha.herland ([84.215.102.95])
- by no-osl-m323-srv-004-z1.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JY80093GY12FXF0@no-osl-m323-srv-004-z1.isp.get.no> for
- git@vger.kernel.org; Mon, 24 Mar 2008 19:00:39 +0100 (CET)
-In-reply-to: <alpine.LSU.1.00.0803241621210.4353@racer.site>
-Content-disposition: inline
-User-Agent: KMail/1.9.9
-Sender: git-owner@vger.kernel.org
+	id 1Jdr8O-0008V8-4c
+	for gclrr-rails@m.gmane.org; Mon, 24 Mar 2008 19:11:00 +0100
+Received: by py-out-1314.google.com with SMTP id u10so6090146pyb.2
+        for <gclrr-rails@m.gmane.org>; Mon, 24 Mar 2008 11:10:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=gamma;
+        h=domainkey-signature:received:received:x-sender:x-apparently-to:received:received:received-spf:authentication-results:mime-version:content-type:content-transfer-encoding:received:received:from:to:cc:message-id:date:x-mailer:content-language:subject:x-accept-language:priority:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
+        bh=bRNfzZsbCz4Q0by3B2C3RXn5ovintXZOv0Z6cne/k/4=;
+        b=AnoU6yLNlsY+sbg9hxd6r6UH4ZYUjgSQPBgtlcIpZ38sw3xOo37x1Bw0lcvhdZGbhOEwG2KA2wtByc59PUfHjTY9Q5RkTUsb/jAEzFakVW9tALtg07NnCYTJ34ZF44ie18JbXbgISPQk0QWbRrJHzgkAcLkRzH4kF5gyGIWonkY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlegroups.com; s=gamma;
+        h=x-sender:x-apparently-to:received-spf:authentication-results:mime-version:content-type:content-transfer-encoding:from:to:cc:message-id:date:x-mailer:content-language:subject:x-accept-language:priority:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
+        b=ohNszgMbG5mnfr7rVN0FmrRSCxQFxJAa/oz3PBc/0hgBqEQoh0aVkRC1tWRxTGX+GSeF5NhbseTvNAEBM3Z9lfkIroSD0bSvg6URR0UTVcWALrab95AMsISt8G8t+613IW4xYm/1c5dLePjHZ2DAJkbIknbrjxP3vRYYx/g/bLw=
+Received: by 10.140.187.10 with SMTP id k10mr1193868rvf.6.1206382209127;
+        Mon, 24 Mar 2008 11:10:09 -0700 (PDT)
+Received: by 10.107.167.35 with SMTP id u35gr90417pro.0;
+	Mon, 24 Mar 2008 11:10:03 -0700 (PDT)
+X-Sender: kyrreny-gyXR7Lt7FVk/G1V5fR+Y7Q@public.gmane.org
+X-Apparently-To: rubyonrails-talk-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+Received: by 10.115.60.1 with SMTP id n1mr16281316wak.0.1206382203296; Mon, 24 Mar 2008 11:10:03 -0700 (PDT)
+Received: from osl1smout1.broadpark.no (osl1smout1.broadpark.no [80.202.4.58]) by mx.google.com with ESMTP id k36si10867223waf.1.2008.03.24.11.10.01; Mon, 24 Mar 2008 11:10:03 -0700 (PDT)
+Received-SPF: pass (google.com: best guess record for domain of kyrreny-gyXR7Lt7FVk/G1V5fR+Y7Q@public.gmane.org designates 80.202.4.58 as permitted sender) client-ip=80.202.4.58;
+Authentication-Results: mx.google.com; spf=pass (google.com: best guess record for domain of kyrreny-gyXR7Lt7FVk/G1V5fR+Y7Q@public.gmane.org designates 80.202.4.58 as permitted sender) smtp.mail=kyrreny-gyXR7Lt7FVk/G1V5fR+Y7Q@public.gmane.org
+Received: from broadpark.no ([80.202.4.61]) by osl1smout1.broadpark.no (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit)) with ESMTP id <0JY800M3EYGL2430-G8ckG5p2w7XO/NNvPvlN1Vw6qKna4nhA@public.gmane.org> for rubyonrails-talk-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org; Mon, 24 Mar 2008 19:09:57 +0100 (CET)
+Received: from [80.202.4.61] by osl1mux1.broadpark.no (mshttpd); Tue, 25 Mar 2008 02:09:57 +0800
+X-Mailer: Sun Java(tm) System Messenger Express 6.3-3.01 (built Jul 12 2007; 32bit)
+Content-language: en
+X-Accept-Language: en
+Priority: normal
+Sender: rubyonrails-talk-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78068>
-
-On Monday 24 March 2008, Johannes Schindelin wrote:
-> On Sun, 23 Mar 2008, Johan Herland wrote:
-> > I'm starting to think it's worth changing the default behaviour of push 
-> > as follows:
-> > 
-> > Upon receiving a push into a non-bare repository, if the working copy is 
-> > on the same branch as is being pushed, then refuse the push with a 
-> > helpful message describing why the push was refused, and how to resolve 
-> > this issue (i.e. referring to the tutorials you mention).
-> > 
-> > This would:
-> > - Not clobber the working copy
-> > - Tell newbies what happened and why
-> > - Hopefully make this issue pop up less frequently
-> > - Not affect you if you only push into bare repos
-> > - Not affect you if you take care to never push into a checked-out 
-> >   branch
-> > 
-> > Of course, you should be able to set a config option to get the old 
-> > behaviour, and from there you can write hooks to either update the 
-> > working copy, or detach HEAD, or whatever you please.
-> 
-> I think I sent out a sensible patch, which does not change the behaviour 
-> in existing repositories.  This should be safer (read: nicer) for 
-> Git old-timers.
-
-Yes, I'm following the discussion between you and Junio with great interest. Will post if I have anything worthwhile to contribute. So far you both make a lot of sense.
-
-Thanks a lot for the patch.
+X-Google-Loop: groups
+Mailing-List: list rubyonrails-talk-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org;
+	contact rubyonrails-talk-owner-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+List-Id: <rubyonrails-talk.googlegroups.com>
+List-Post: <mailto:rubyonrails-talk-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Help: <mailto:rubyonrails-talk-help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Unsubscribe: <http://googlegroups.com/group/rubyonrails-talk/subscribe>,
+	<mailto:rubyonrails-talk-unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78069>
 
 
-Have fun! :)
+Sorry, I really don't know where else to ask.
 
-...Johan
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+I've been using Staminus for a while now and I've had it with the downtime.
+
+Basically I want a place to host my Ruby on Rails / Git projects, an IRC server as well as an internet radio channel.
+
+Simple website / control panel design is ofcourse a plus. None of that cpanel bullshit though, I prefer to meddle around with simple text files the way it's meant to be done.
+
+So, layeredtech.com? rackspace.com?
+
+And is there a place that reviews dedicated server providers?
+
+Thanks,
+Kyrre
+
+
+--~--~---------~--~----~------------~-------~--~----~
+You received this message because you are subscribed to the Google Groups "Ruby on Rails: Talk" group.
+To post to this group, send email to rubyonrails-talk-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+To unsubscribe from this group, send email to rubyonrails-talk-unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+For more options, visit this group at http://groups.google.com/group/rubyonrails-talk?hl=en
+-~----------~----~----~----~------~----~------~--~---
