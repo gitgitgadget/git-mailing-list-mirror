@@ -1,87 +1,78 @@
-From: Julian Phillips <julian@quantumfyre.co.uk>
-Subject: Re: [bug] git-add won't add foo/.git/bar
-Date: Tue, 25 Mar 2008 00:55:56 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0803250045120.30488@kaos.quantumfyre.co.uk>
-References: <fs9f0o$jge$1@ger.gmane.org> <Pine.LNX.4.64.0803242359230.24262@kaos.quantumfyre.co.uk>
- <7v1w5zslv5.fsf@gitster.siamese.dyndns.org> <7vve3br6ct.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/7] Enhance TkCVS interoperability
+Date: Mon, 24 Mar 2008 18:08:46 -0700
+Message-ID: <7vd4pjr4o1.fsf@gitster.siamese.dyndns.org>
+References: <cover.1206393086.git.dash@foobox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Michael Gebetsroither <gebi@sbox.tugraz.at>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 25 01:57:08 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Martin Langhoff <martin@catalyst.net.nz>,
+	Frank Lichtenheld <frank@lichtenheld.de>, git@vger.kernel.org
+To: Damien Diederen <dash@foobox.net>
+X-From: git-owner@vger.kernel.org Tue Mar 25 02:09:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JdxTQ-0003xE-Bb
-	for gcvg-git-2@gmane.org; Tue, 25 Mar 2008 01:57:08 +0100
+	id 1Jdxfk-0006w6-Na
+	for gcvg-git-2@gmane.org; Tue, 25 Mar 2008 02:09:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754601AbYCYA41 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Mar 2008 20:56:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754586AbYCYA41
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Mar 2008 20:56:27 -0400
-Received: from electron.quantumfyre.co.uk ([87.106.55.16]:59047 "EHLO
-	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752799AbYCYA40 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 24 Mar 2008 20:56:26 -0400
-Received: from neutron.quantumfyre.co.uk (neutron.datavampyre.co.uk [212.159.54.235])
-	by electron.quantumfyre.co.uk (Postfix) with ESMTP id 0D16175C8D
-	for <git@vger.kernel.org>; Tue, 25 Mar 2008 00:56:24 +0000 (GMT)
-Received: (qmail 12630 invoked by uid 103); 25 Mar 2008 00:55:56 +0000
-Received: from 192.168.0.4 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
- (spamassassin: 3.2.1. perlscan: 1.25st.  
- Clear:RC:1(192.168.0.4):. 
- Processed in 0.029791 secs); 25 Mar 2008 00:55:56 -0000
-Received: from elfhelm.quantumfyre.co.uk (HELO kaos.quantumfyre.co.uk) (192.168.0.4)
-  by neutron.datavampyre.co.uk with SMTP; 25 Mar 2008 00:55:56 +0000
-X-X-Sender: jp3@kaos.quantumfyre.co.uk
-In-Reply-To: <7vve3br6ct.fsf@gitster.siamese.dyndns.org>
+	id S1752321AbYCYBI6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Mar 2008 21:08:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752482AbYCYBI5
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Mar 2008 21:08:57 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:56985 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750833AbYCYBI5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Mar 2008 21:08:57 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id A96081126;
+	Mon, 24 Mar 2008 21:08:55 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id DF2C11122; Mon, 24 Mar 2008 21:08:50 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78137>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78138>
 
-On Mon, 24 Mar 2008, Junio C Hamano wrote:
+Damien Diederen <dash@foobox.net> writes:
 
-> Junio C Hamano <gitster@pobox.com> writes:
+> This series was developed to improve interoperability between
+> git-cvsserver and TkCVS, a CVS client that is fairly popular at least
+> in some corporate environments.
 >
->>> Well, git won't allow .git as a element anywhere in the path, when we
->>> should only care about the _first_ one - and also, if you use
->>> --git-dir=banana then we still check for '.git' ... oops.
->>
->> That's not how git-dir is supposed to used, so there is no oops.
->
-> The only purpose of git-dir is to have $GIT_DIR elsewhere _outside_ the
-> work tree.
+> Patches 1-6 are "obvious" improvements, implementing missing features
+> or fixing incorrect behaviour.  7 is more questionable, but likely to
+> result in more intelligible log output in a majority of cases.
 
-That's fair enough.  It's not enforced, or discourgaed in the 
-documentation though.  Would a patch to mention that using 
---git-dir/GIT_DIR to change the name _inside_ the work tree is not 
-supported be accepted?
+If anything, I think 7/7 is an improvement that consolidates a few
+duplicated code that massage authorship information in the commit object
+into CVS form.  I cannot readily tell what is going on from this old code
+sequence:
 
-> A few weeks ago somebody wanted to rename .git and I thought I responded
-> well enough.  You certainly did not ask CVS or SVN folks to rename the
-> control directories they sprinkle in your work trees to .cvs or .svn, did
-> you?
+-    $metadata->{$commithash}{author} =~ s/\s+.*//;
+-    $metadata->{$commithash}{author} =~ s/^(.{8}).*/$1/;
 
-Well, no - but then I hold git to a higher standard. ;)
+but I can tell what is going on in the latter even without the help from
+the leading comment.
 
-> Leave .git alone so that people don't get confused.
++# Generate a CVS author name from Git author information, by taking
++# the first eight characters of the user part of the email address.
++sub cvs_author
++{
++    my $author = shift;
++
++    $author =~ s/.*<([^>]+)\@[^>]+>$/$1/;
++    $author =~ s/^(.{8}).*/$1/;
++
++    $author;
++}
 
-Agreed, it is a) a lot simpler to explain, b) less likely to break things. 
-Sorry for wasting your time :$, an interesting poke around the code 
-though. :)
+And 1/7-6/7 looked all good, but this is just from _looking_.  I do not
+run cvsserver myself, so people should take this with a moderate amount of
+salt.
 
-Something I noticed that seemed a bit odd when playing with this, should I 
-expect git to stop me from trying to add files inside subprojects to the 
-main project?  It seems to just discard the submodule and turn it into a 
-normal directory when I do.  Is that intended behaviour?
-
--- 
-Julian
-
-  ---
-Excess on occasion is exhilarating.  It prevents moderation from
-acquiring the deadening effect of a habit.
- 		-- W. Somerset Maugham
+Martin, Frank?
