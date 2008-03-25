@@ -1,62 +1,103 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: git-format-patch|git-send-email sucks
-Date: Tue, 25 Mar 2008 14:06:36 -0500
-Message-ID: <47E94D3C.3080306@nrlssc.navy.mil>
-References: <alpine.LNX.1.10.0803251914060.2240@fbirervta.pbzchgretzou.qr> <alpine.LNX.1.10.0803251928500.7062@fbirervta.pbzchgretzou.qr>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jan Engelhardt <jengelh@computergmbh.de>
-X-From: git-owner@vger.kernel.org Tue Mar 25 20:07:45 2008
+From: Teemu Likonen <tlikonen@iki.fi>
+Subject: [PATCH] bash: Add long option completion for 'git send-email'
+Date: Tue, 25 Mar 2008 21:15:55 +0200
+Message-ID: <1206472555-9593-1-git-send-email-tlikonen@iki.fi>
+Cc: gitster@pobox.com, spearce@spearce.org,
+	Teemu Likonen <tlikonen@iki.fi>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 25 20:17:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JeEUX-0003RB-Q0
-	for gcvg-git-2@gmane.org; Tue, 25 Mar 2008 20:07:26 +0100
+	id 1JeEdl-0007Ko-Gc
+	for gcvg-git-2@gmane.org; Tue, 25 Mar 2008 20:16:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757067AbYCYTGn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Mar 2008 15:06:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757068AbYCYTGn
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Mar 2008 15:06:43 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:47265 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757067AbYCYTGm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2008 15:06:42 -0400
-Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
-	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id m2PJ6aed017888;
-	Tue, 25 Mar 2008 14:06:36 -0500
-Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
-	 Tue, 25 Mar 2008 14:06:36 -0500
-User-Agent: Thunderbird 2.0.0.9 (X11/20071031)
-In-Reply-To: <alpine.LNX.1.10.0803251928500.7062@fbirervta.pbzchgretzou.qr>
-X-OriginalArrivalTime: 25 Mar 2008 19:06:36.0301 (UTC) FILETIME=[58F433D0:01C88EAB]
-X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-5.0.0.1023-15806001
-X-TM-AS-Result: : Yes--7.852000-0-31-1
-X-TM-AS-Category-Info: : 31:0.000000
-X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNTY3LTE1MTA2My03MDAw?=
-	=?us-ascii?B?NzUtMTM5MDEwLTcwNzQ1MS03MDc4NjYtNzAyNzkxLTcwMTI5Ni03?=
-	=?us-ascii?B?MDEyMzItNzAxNTkwLTcxMDIyNC0xODgwMTktNzAwNjE4LTcwNjcx?=
-	=?us-ascii?B?OS03MDAzNDUtNzAwMDQwLTcwNzc4OC0xNDgwMzktMTQ4MDUxLTIw?=
-	=?us-ascii?B?MDQw?=
+	id S1757325AbYCYTQA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Mar 2008 15:16:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755988AbYCYTQA
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Mar 2008 15:16:00 -0400
+Received: from pne-smtpout4-sn2.hy.skanova.net ([81.228.8.154]:51146 "EHLO
+	pne-smtpout4-sn2.hy.skanova.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754793AbYCYTP7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 25 Mar 2008 15:15:59 -0400
+Received: from mithlond.arda.local (80.220.180.181) by pne-smtpout4-sn2.hy.skanova.net (7.3.129)
+        id 478BE663003D107B; Tue, 25 Mar 2008 20:15:58 +0100
+Received: from dtw by mithlond.arda.local with local (Exim 4.63)
+	(envelope-from <tlikonen@iki.fi>)
+	id 1JeEcl-0002V3-UK; Tue, 25 Mar 2008 21:15:55 +0200
+X-Mailer: git-send-email 1.5.5.rc1.6.g5cc8f
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78206>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78207>
 
-Jan Engelhardt wrote:
+Add the following long options to be completed with 'git send-email':
 
-> To be in the picture, the command issued was:
-> 
-> rm -f 00*; git-format-patch -C -M --stat=72 --summary -p --thread -n
-> origin/symbolic/upstream..HEAD; git-send-email --thread
-> --no-signed-off-by-cc --no-chain --to user2@localhost 00*
+--bcc --cc --cc-cmd --chain-reply-to --compose --dry-run
+--envelope-sender --from --identity --in-reply-to --no-chain-reply-to
+--no-signed-off-by-cc --no-suppress-from --no-thread --quiet
+--signed-off-by-cc --smtp-pass --smtp-server --smtp-server-port
+--smtp-ssl --smtp-user --subject --suppress-cc --suppress-from
+--thread --to
 
-Maybe adding --suppress-from would help?
+Signed-off-by: Teemu Likonen <tlikonen@iki.fi>
+---
 
-See the --suppress-* family in the git-send-email docs along with the
-sendemail.suppress* configuration counterparts.
+The shorter options like '--to' and '--cc' are not useful for actual
+completion because there are longer options which start with same
+letters (--thread, --cc-cmd). It's still useful to have these shorter
+ones shown when user presses TAB key after typing two dashes (--).
 
--brandon
+
+ contrib/completion/git-completion.bash |   20 ++++++++++++++++++++
+ 1 files changed, 20 insertions(+), 0 deletions(-)
+
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 5046f69..38a5cdc 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -871,6 +871,24 @@ _git_rebase ()
+ 	__gitcomp "$(__git_refs)"
+ }
+ 
++_git_send_email ()
++{
++	local cur="${COMP_WORDS[COMP_CWORD]}"
++	case "$cur" in
++	--*)
++		__gitcomp "--bcc --cc --cc-cmd --chain-reply-to --compose
++			--dry-run --envelope-sender --from --identity
++			--in-reply-to --no-chain-reply-to --no-signed-off-by-cc
++			--no-suppress-from --no-thread --quiet
++			--signed-off-by-cc --smtp-pass --smtp-server
++			--smtp-server-port --smtp-ssl --smtp-user --subject
++			--suppress-cc --suppress-from --thread --to"
++		return
++		;;
++	esac
++	__git_complete_file
++}
++
+ _git_config ()
+ {
+ 	local cur="${COMP_WORDS[COMP_CWORD]}"
+@@ -1325,6 +1343,7 @@ _git ()
+ 	rebase)      _git_rebase ;;
+ 	remote)      _git_remote ;;
+ 	reset)       _git_reset ;;
++	send-email)  _git_send_email ;;
+ 	shortlog)    _git_shortlog ;;
+ 	show)        _git_show ;;
+ 	show-branch) _git_log ;;
+@@ -1377,6 +1396,7 @@ complete -o default -o nospace -F _git_rebase git-rebase
+ complete -o default -o nospace -F _git_config git-config
+ complete -o default -o nospace -F _git_remote git-remote
+ complete -o default -o nospace -F _git_reset git-reset
++complete -o default -o nospace -F _git_send_email git-send-email
+ complete -o default -o nospace -F _git_shortlog git-shortlog
+ complete -o default -o nospace -F _git_show git-show
+ complete -o default -o nospace -F _git_stash git-stash
+-- 
+1.5.5.rc1.6.g5cc8f
