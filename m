@@ -1,101 +1,97 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: [StGit PATCH 0/6] Two bugfixes
-Date: Tue, 25 Mar 2008 10:46:00 +0000
-Message-ID: <b0943d9e0803250346h7405c37egc9ba170a6dcc06bf@mail.gmail.com>
-References: <20080320002604.13102.53757.stgit@yoghurt>
-	 <b0943d9e0803200819k7300fd1fn8a21896c7ad2a1@mail.gmail.com>
-	 <20080324181225.GC23337@diana.vm.bytemark.co.uk>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: [PATCH v2] git-init: autodetect core.ignorecase
+Date: Tue, 25 Mar 2008 13:49:31 +0300
+Message-ID: <20080325104931.GJ25381@dpotapov.dyndns.org>
+References: <alpine.LFD.1.00.0803220955140.3020@woody.linux-foundation.org> <1206428273-15926-1-git-send-email-dpotapov@gmail.com> <alpine.LSU.1.00.0803251056520.10660@wbgn129.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, "Erik Sandberg" <mandolaerik@gmail.com>
-To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Tue Mar 25 11:46:53 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Frank <streamlake@tiscali.it>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 25 11:50:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Je6g2-0001gc-FF
-	for gcvg-git-2@gmane.org; Tue, 25 Mar 2008 11:46:46 +0100
+	id 1Je6jX-0002o0-3i
+	for gcvg-git-2@gmane.org; Tue, 25 Mar 2008 11:50:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753056AbYCYKqF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2008 06:46:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753015AbYCYKqE
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Mar 2008 06:46:04 -0400
-Received: from rv-out-0910.google.com ([209.85.198.184]:23380 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753014AbYCYKqC convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 25 Mar 2008 06:46:02 -0400
-Received: by rv-out-0910.google.com with SMTP id k20so1724845rvb.1
-        for <git@vger.kernel.org>; Tue, 25 Mar 2008 03:46:01 -0700 (PDT)
+	id S1754957AbYCYKtk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Mar 2008 06:49:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754958AbYCYKtj
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Mar 2008 06:49:39 -0400
+Received: from fg-out-1718.google.com ([72.14.220.153]:45754 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754957AbYCYKti (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2008 06:49:38 -0400
+Received: by fg-out-1718.google.com with SMTP id l27so3442948fgb.17
+        for <git@vger.kernel.org>; Tue, 25 Mar 2008 03:49:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=KST+Rl8sPdEbcEG3ONsDp5YLB7WJDSayr3w/4g/43dw=;
-        b=CvbiW4F3QQX9psjS+iES7oI54hfGrFhydnHcs1xzTJPjIOAguYXZ6m8lBTOjYStOyV4NFcwSjEoCfv2bTF3N4C45DtziMZWmccOTcVoiP9z5IZ9mftkNS3KUtps2/k0QRWzQRjhg2f681G25yy+iD+MeA4HyDBHHn4ht+nXrLdg=
+        h=domainkey-signature:received:received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
+        bh=13x5g6LDgnIzPNJiQWmKsMgEz5LoiqRKuxviHvifL/w=;
+        b=XqRg2aUnNtiUmLx/voYFvOpjMI9AKQVdQsYQExiUTyBnSTinNJWB0WqIqe+hDqHYnU19GQiN1NbA9nAMzwbbXJzwBFJPDBx2HIEz8pv+IwqXLz1sN/PGE5zTBmzIyYah10kPlmZUaKdkO+pNLstZ0Y7q8J4kRgA/E16HFLkYOR8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=tbRZX8ll4yCq8mLw0+2Jcb8bfQ9L5Yuzt6gcCXNFXvU4Lb3zIuP/O52fAtP3TJo+vq/wp2tY6Ez596Rlks+jU+osWjll6IsD6V4ZesY5aJgRKHE0O2FZP63cDYX/jh+j8MMcCKY5rtiRWgt3vr95sOJHSgTr0/uzR9t2xwIpXSA=
-Received: by 10.141.212.5 with SMTP id o5mr3124462rvq.20.1206441961021;
-        Tue, 25 Mar 2008 03:46:01 -0700 (PDT)
-Received: by 10.141.175.11 with HTTP; Tue, 25 Mar 2008 03:46:00 -0700 (PDT)
-In-Reply-To: <20080324181225.GC23337@diana.vm.bytemark.co.uk>
+        h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
+        b=QhjVnLGv0GP5xG7dE3xfT8NByAI/JDE2hmSAcBrSXtxJzt8f7u1JIo4rnVace/s1HujYdJ+3/izE98wdh9nJchbLA9cnfM17/EslTMlNyPQowhItYY4az3trz8O04n1HOmKwgESnnXzUFh2pL0yqQByZwLvMHUr5XLWvz5f55xc=
+Received: by 10.86.61.13 with SMTP id j13mr5343463fga.48.1206442174940;
+        Tue, 25 Mar 2008 03:49:34 -0700 (PDT)
+Received: from localhost ( [83.237.187.35])
+        by mx.google.com with ESMTPS id 3sm9266543fge.7.2008.03.25.03.49.33
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 25 Mar 2008 03:49:34 -0700 (PDT)
 Content-Disposition: inline
+In-Reply-To: <alpine.LSU.1.00.0803251056520.10660@wbgn129.biozentrum.uni-wuerzburg.de>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78175>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78176>
 
-On 24/03/2008, Karl Hasselstr=F6m <kha@treskal.com> wrote:
-> On 2008-03-20 15:19:12 +0000, Catalin Marinas wrote:
->
->
-> > As I wrote on the patch system, I'd like to put back the explicit
->  > --keep option in goto.
->
->
-> There are three possible values of "keepiness":
->
->   1. Make sure there are _no_ local changes. (Default for old
->      infrastructure.)
->
->   2. Make sure there are no local changes in the files we need to
->      touch. (Default for new infrastructure.)
->
->   3. Bring along local changes by means of a merge. (What the --keep
->      option does.)
->
->  git defaults to doing (2), and optionally does (3). (1) is
->  significantly slower than (2); I don't know how slow (3) is.
+We already detect if symbolic links are supported by the filesystem.
+This patch adds autodetect for case-insensitive filesystems, such
+as VFAT and others.
 
-With the current functionality (see below), I prefer (1) to be the
-default and (3) as optional (on stable, it does a reverse-apply of the
-diff and it's kind of combination between 2 and 3 but without the
-conflicts you could get with only 3).
+Signed-off-by: Dmitry Potapov <dpotapov@gmail.com>
+---
 
-My reason for this is that usually you "goto" a patch to do some
-changes followed by "refresh". If there were local changes, they would
-be included in the refreshed patch since this is the default StGIT
-behaviour. To avoid this, I find myself running "status" before any
-"goto".
+There was a stupid mistake in a previous patch...  (Inadvertantly,
+I sent the old version of my patch, which was incorrect, and did not
+realize that until saw Johannes' reply to my email.)
 
->  I think that (2) should be the default, because it's faster, it's wh=
-at
->  git does, and I don't really see the point in complaining about loca=
-l
->  changes in a file we won't need to touch anyway.
+ builtin-init-db.c |    8 +++++++-
+ 1 files changed, 7 insertions(+), 1 deletions(-)
 
-But in git, for committing, you usually need to run "git add" on the
-files or specify "commit -a" explicitly. We would need to change the
-"refresh" behaviour in the same way and, in this case, I would be OK
-with (2) as the default.
-
-I personally prefer the current "refresh" way but maybe because I'm
-used to it. It would be useful to get other users' opinion on this UI
-change. Might not be a bad change since git does this already, quilt
-needs an explicit "add" (anyone knows about guilt?).
-
---=20
-Catalin
+diff --git a/builtin-init-db.c b/builtin-init-db.c
+index 79eaf8d..62f7c08 100644
+--- a/builtin-init-db.c
++++ b/builtin-init-db.c
+@@ -254,8 +254,8 @@ static int create_default_files(const char *git_dir, const char *template_path)
+ 			git_config_set("core.worktree", work_tree);
+ 	}
+ 
+-	/* Check if symlink is supported in the work tree */
+ 	if (!reinit) {
++		/* Check if symlink is supported in the work tree */
+ 		path[len] = 0;
+ 		strcpy(path + len, "tXXXXXX");
+ 		if (!close(xmkstemp(path)) &&
+@@ -266,6 +266,12 @@ static int create_default_files(const char *git_dir, const char *template_path)
+ 			unlink(path); /* good */
+ 		else
+ 			git_config_set("core.symlinks", "false");
++
++		/* Check if the filesystem is case-insensitive */
++		path[len] = 0;
++		strcpy(path + len, "CoNfIg");
++		if (!access(path, F_OK))
++			git_config_set("core.ignorecase", "true");
+ 	}
+ 
+ 	return reinit;
+-- 
+1.5.5.rc1.10.g3948
