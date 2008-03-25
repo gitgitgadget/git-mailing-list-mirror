@@ -1,134 +1,98 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: faster egit history page and a pure java "gitk"
-Date: Tue, 25 Mar 2008 01:36:49 -0400
-Message-ID: <20080325053649.GE4759@spearce.org>
-References: <20080324092726.GQ8410@spearce.org> <47E8889E.6090403@intelinet.com.br>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH 1/2] help: use man viewer path from "man.<tool>.path" config var
+Date: Tue, 25 Mar 2008 07:19:01 +0100
+Message-ID: <200803250719.02044.chriscool@tuxfamily.org>
+References: <20080318062236.7b5e515f.chriscool@tuxfamily.org> <200803210823.47899.chriscool@tuxfamily.org> <7vd4poqwu6.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Robin Rosenberg <robin.rosenberg@dewire.com>, git@vger.kernel.org
-To: "Roger C. Soares" <rogersoares@intelinet.com.br>
-X-From: git-owner@vger.kernel.org Tue Mar 25 06:37:49 2008
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Pascal Obry <pascal@obry.net>, Xavier Maillard <xma@gnu.org>,
+	=?utf-8?q?=E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=81=AA=E3=81=93?=
+	 =?utf-8?q?_?= <nanako3@bluebottle.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 25 07:14:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Je1r1-0002dp-TG
-	for gcvg-git-2@gmane.org; Tue, 25 Mar 2008 06:37:48 +0100
+	id 1Je2QF-0000mi-PZ
+	for gcvg-git-2@gmane.org; Tue, 25 Mar 2008 07:14:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754902AbYCYFhD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Mar 2008 01:37:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754861AbYCYFhB
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Mar 2008 01:37:01 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:46099 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754842AbYCYFgy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2008 01:36:54 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1Je1q6-00071i-Uo; Tue, 25 Mar 2008 01:36:51 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id E2ABB20FBAE; Tue, 25 Mar 2008 01:36:49 -0400 (EDT)
+	id S1756217AbYCYGN2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2008 02:13:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755718AbYCYGN2
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Mar 2008 02:13:28 -0400
+Received: from smtp1-g19.free.fr ([212.27.42.27]:58155 "EHLO smtp1-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756217AbYCYGN1 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 25 Mar 2008 02:13:27 -0400
+Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 1E46D1AB2D7;
+	Tue, 25 Mar 2008 07:13:25 +0100 (CET)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id BB2531AB2D5;
+	Tue, 25 Mar 2008 07:13:24 +0100 (CET)
+User-Agent: KMail/1.9.7
+In-Reply-To: <7vd4poqwu6.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
-In-Reply-To: <47E8889E.6090403@intelinet.com.br>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78148>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78149>
 
-"Roger C. Soares" <rogersoares@intelinet.com.br> wrote:
-> Shawn O. Pearce escreveu:
-> >The history page has been completely replaced.
-> 
-> I have a git.git clone on my eclipse and now egit can open it, cool! :) 
+Le vendredi 21 mars 2008, Junio C Hamano a =C3=A9crit :
+> Christian Couder <chriscool@tuxfamily.org> writes:
+> >
+> > It's perhaps more honest, but kfmclient is not as well known as
+> > konqueror.
+> >
+> > Isn't a documentation patch like this enough:
+>
+> I dunno.  I am not a KDE use to begin with.
+>
+> But I am somewhat uncomfortable with this kind of magic, and very muc=
+h
+> more so with basing the magic on the name of a binary.
 
-Yea, that was my impression too.  "Yay, it can open git.git!"  :)
+I think in this case it should be ok if it's properly documented.
 
-> But it wasn't that fast, it took some minutes to finish building the 
-> whole tree. Also, changing projects (different git repos) makes the cpu 
-> go very high, and what opened fast the first time takes minutes after...
+It's good to have a consistent user interface with meaningfull names fo=
+r the=20
+available options. And we are right to try to do the same thing as when=
+=20
+browsing an HTML man page.
 
-Hmm.  How long does C Git take for "git rev-list HEAD >/dev/null" ?
-I have thus far only tuned the lower level machinary, and there
-may still be tuning left there, but I _really_ have not tried to
-tune the plotting portion yet.
+In the documentation patch for "man.<tool>.cmd" that I will send just a=
+fter=20
+this email, there is also enough information to understand what is goin=
+g on=20
+and to find a good way around the magic if needed.
 
-I did push something out a few minutes ago (b66eae Limit the number
-of UI refreshes ...) that may help improve performance on larger
-histories.
+I can send the same kind of documentation patch for git-web--browse too=
+, so=20
+we are completely consistent.
 
-Another thing is how many pack files/loose objects do you have?
-The loose objects are harder to access, and jgit is currently
-lacking some of the pack search tricks that C Git uses to get
-good performance.  As such all of my testing has been working on
-a fully packed repository that has exactly one packfile in it,
-with no alternates.
+> For example, if a distro offers two versions of konq to co-exist on t=
+he
+> same system as konqueror-3 and konqueror-4 (with the usual symlink tr=
+icks
+> /etc/alternatives/konqueror -> konqueror-3 and /usr/bin/konqueror ->
+> /etc/alternatives/konqueror to make one version the systemwide defaul=
+t),
+> people who want a particular version may say /usr/bin/konqueror-4 and
+> would get frustrated to see kfmclient magic would not kick in.  By ta=
+king
+> honest route without magic, you would not have to worry about such
+> potential confusion.
 
-Its _almost_ acceptable to me.  We can still do better, but there's
-a point at which we just can't get past.  We probably can't beat
-rev-list, but I think we should be able to beat gitk almost always.
-In the simple fully packed case "jgit glog" beats gitk at opening
-the full graph and displaying it.
+In my experience KDE people have never changed the binary names like th=
+at.=20
+They just use (or advice users to use) different directory names and ch=
+ange=20
+environment variables (QTDIR, KDEDIR and maybe others) to point to the =
+new=20
+dirs.
 
-> When reading the email I thought the new history page would have the 
-> same features from the current, but it doesn't. It looks promissing thought.
-
-Nope.  Sorry.  Its basically a rewrite.
- 
-> My first impression is that I like the current way of showing files in 
-> the strutucture compare better.
-
-I actually prefer the individual files in the right pane, like gitk
-does, as I like to browse up and down sometimes looking at changes.
-Maybe we can make it an option to show that right side panel,
-and give a button (or IOpenListener on the graph table?) to let
-you open the whole commit in the structure compare view.
-
-> In the future I would like the option to 
-> make it open on the left pane (where package explorer is) and have the 
-> options to collapse/expand directories, present in flat/hierarchical 
-> modes, have the fast view, etc.
-
-Oooh.  Sounds fun.
- 
-> Comments now can't be automatically wrapped.
-
-Oversight/planned loss of feature.  I'm a strong believer of showing
-the commit message *exactly* as recorded, which means don't do
-line wrapping of it.  Things like character encoding translation
-and indenting the left side 2-4 spaces to keep it unambiguous from
-headers is fine when showing it to a human, but otherwise it should
-match what the user wrote.
-
-I forgot to offer a wrap option.  If we do enable line wrapping I
-think we should give the user a way to toggle it on/off for the
-message area viewer so that if line wrapping is enabled and its
-borking the current message (e.g. a nice pretty ASCII diagram)
-you can disable it.
-
-> I actually prefer to leave 
-> wrapping to the computer, I don't like having to manually fix line 
-> lenghts when amending a comment, I think eclipse should do it. Also, 
-> currently, the history page usually has little space allocated for it 
-> and currently the first lines of the comment are visible. In the new 
-> page I have to scroll to see the comment when the history page is not 
-> maximized.
-
-Yea, I started to notice that myself today.  The area isn't quite
-wide enough, and I was using Eclipse on a very high resolution CRT
-and it was taking up a good 80% of the display.  Most users can't
-sanely devote the area I did to the History view, and it was still
-not wide enough for some git.git messages.
-
-Thanks for the feedback.  Obviously its still got a lot of areas
-for improvements.
-
--- 
-Shawn.
+Thanks,
+Christian.
