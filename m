@@ -1,103 +1,82 @@
-From: Teemu Likonen <tlikonen@iki.fi>
-Subject: [PATCH] bash: Add long option completion for 'git send-email'
-Date: Tue, 25 Mar 2008 21:15:55 +0200
-Message-ID: <1206472555-9593-1-git-send-email-tlikonen@iki.fi>
-Cc: gitster@pobox.com, spearce@spearce.org,
-	Teemu Likonen <tlikonen@iki.fi>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 25 20:17:09 2008
+From: "Jay Soffian" <jaysoffian@gmail.com>
+Subject: Re: MIME headers in introductory message (git send-email --compose)
+Date: Tue, 25 Mar 2008 15:17:10 -0400
+Message-ID: <76718490803251217q27ae4381h298ec6de8a4d965a@mail.gmail.com>
+References: <1205426419-4594-1-git-send-email-sam@rfc1149.net>
+	 <7vhcfaxxxk.fsf@gitster.siamese.dyndns.org>
+	 <200803252031.17017.tlikonen@iki.fi>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Junio C Hamano" <gitster@pobox.com>,
+	"Samuel Tardieu" <sam@rfc1149.net>
+To: "Teemu Likonen" <tlikonen@iki.fi>
+X-From: git-owner@vger.kernel.org Tue Mar 25 20:18:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JeEdl-0007Ko-Gc
-	for gcvg-git-2@gmane.org; Tue, 25 Mar 2008 20:16:57 +0100
+	id 1JeEei-0007nV-JQ
+	for gcvg-git-2@gmane.org; Tue, 25 Mar 2008 20:17:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757325AbYCYTQA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Mar 2008 15:16:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755988AbYCYTQA
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Mar 2008 15:16:00 -0400
-Received: from pne-smtpout4-sn2.hy.skanova.net ([81.228.8.154]:51146 "EHLO
-	pne-smtpout4-sn2.hy.skanova.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754793AbYCYTP7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 25 Mar 2008 15:15:59 -0400
-Received: from mithlond.arda.local (80.220.180.181) by pne-smtpout4-sn2.hy.skanova.net (7.3.129)
-        id 478BE663003D107B; Tue, 25 Mar 2008 20:15:58 +0100
-Received: from dtw by mithlond.arda.local with local (Exim 4.63)
-	(envelope-from <tlikonen@iki.fi>)
-	id 1JeEcl-0002V3-UK; Tue, 25 Mar 2008 21:15:55 +0200
-X-Mailer: git-send-email 1.5.5.rc1.6.g5cc8f
+	id S1757438AbYCYTRN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Mar 2008 15:17:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757358AbYCYTRN
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Mar 2008 15:17:13 -0400
+Received: from rv-out-0910.google.com ([209.85.198.186]:31009 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756906AbYCYTRM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2008 15:17:12 -0400
+Received: by rv-out-0910.google.com with SMTP id k20so1848756rvb.1
+        for <git@vger.kernel.org>; Tue, 25 Mar 2008 12:17:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=VxQbrXpIHQinXGM/I4QnCmQxDWIFGmkaGol+IAQ66xY=;
+        b=sKcldRyKv/L4MIAUJRhCyzGAzuELNuU7MVcq9IWeXgp8W1UTq/oNmlSUe03sh/5IgJfEzujOgAVkGugtTlL/HZhssK0KSqWA8aRBcZEFyPNuux2PpQZ/8/UTOB3Xw9rTSL7Fj1Mq6Q6t3861BXw0gw7Gn0UG8MwUToZpUg68rEo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=jCTTQKTvx47YCh7xE03NBG3PDV7P9pQdTAKCk/kIi8wpUlPLF5himLWmD+zLxFIunZCxoTH7yncdEGKDxhUqh043CT/ITsL7YIJ0o8CK/d9mrzdLhHd8AL3a0uXYXY1nnmCrD7Qr6EyubTPzUpyiowWqV9Bpx0XZBjPt4qyV41Y=
+Received: by 10.141.129.14 with SMTP id g14mr3669815rvn.209.1206472631012;
+        Tue, 25 Mar 2008 12:17:11 -0700 (PDT)
+Received: by 10.141.33.18 with HTTP; Tue, 25 Mar 2008 12:17:10 -0700 (PDT)
+In-Reply-To: <200803252031.17017.tlikonen@iki.fi>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78207>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78208>
 
-Add the following long options to be completed with 'git send-email':
+On Tue, Mar 25, 2008 at 2:31 PM, Teemu Likonen <tlikonen@iki.fi> wrote:
+> Junio C Hamano kirjoitti:
+>
+>  > Samuel Tardieu <sam@rfc1149.net> writes:
+>  > > Add MIME-Version/Content-Type/Content-Transfer-Encoding headers in
+>  > > messages generated with git-format-patch. Without it, messages
+>  > > generated without using --attach or --inline didn't have any
+>  > > content type information.
+>  >
+>  > Isn't that job for send-email (or user's MUA)?  I really do not think
+>  > we want to clutter format-patch output any more than necessary.
+>
+>  By the way, 'git send-email --compose' does not add MIME headers to
+>  introductory message. All non-Ascii chars will output something
+>  undefined in receivers' end.
+>
+>  I guess the right way would be to detect user's charset (locale) and add
+>  appropriate MIME headers. Also, the Subject field should be encoded if
+>  it contains non-Ascii characters.
 
---bcc --cc --cc-cmd --chain-reply-to --compose --dry-run
---envelope-sender --from --identity --in-reply-to --no-chain-reply-to
---no-signed-off-by-cc --no-suppress-from --no-thread --quiet
---signed-off-by-cc --smtp-pass --smtp-server --smtp-server-port
---smtp-ssl --smtp-user --subject --suppress-cc --suppress-from
---thread --to
+I stuck this in my config and it works-for-me:
 
-Signed-off-by: Teemu Likonen <tlikonen@iki.fi>
----
+[format]
+	headers = \
+"MIME-Version: 1.0\n\
+Content-Type: text/plain; charset=UTF-8\n\
+Content-Transfer-Encoding: 8bit\n"
 
-The shorter options like '--to' and '--cc' are not useful for actual
-completion because there are longer options which start with same
-letters (--thread, --cc-cmd). It's still useful to have these shorter
-ones shown when user presses TAB key after typing two dashes (--).
+Shrug. (Never tried putting non-ascii in the subject tho.)
 
-
- contrib/completion/git-completion.bash |   20 ++++++++++++++++++++
- 1 files changed, 20 insertions(+), 0 deletions(-)
-
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 5046f69..38a5cdc 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -871,6 +871,24 @@ _git_rebase ()
- 	__gitcomp "$(__git_refs)"
- }
- 
-+_git_send_email ()
-+{
-+	local cur="${COMP_WORDS[COMP_CWORD]}"
-+	case "$cur" in
-+	--*)
-+		__gitcomp "--bcc --cc --cc-cmd --chain-reply-to --compose
-+			--dry-run --envelope-sender --from --identity
-+			--in-reply-to --no-chain-reply-to --no-signed-off-by-cc
-+			--no-suppress-from --no-thread --quiet
-+			--signed-off-by-cc --smtp-pass --smtp-server
-+			--smtp-server-port --smtp-ssl --smtp-user --subject
-+			--suppress-cc --suppress-from --thread --to"
-+		return
-+		;;
-+	esac
-+	__git_complete_file
-+}
-+
- _git_config ()
- {
- 	local cur="${COMP_WORDS[COMP_CWORD]}"
-@@ -1325,6 +1343,7 @@ _git ()
- 	rebase)      _git_rebase ;;
- 	remote)      _git_remote ;;
- 	reset)       _git_reset ;;
-+	send-email)  _git_send_email ;;
- 	shortlog)    _git_shortlog ;;
- 	show)        _git_show ;;
- 	show-branch) _git_log ;;
-@@ -1377,6 +1396,7 @@ complete -o default -o nospace -F _git_rebase git-rebase
- complete -o default -o nospace -F _git_config git-config
- complete -o default -o nospace -F _git_remote git-remote
- complete -o default -o nospace -F _git_reset git-reset
-+complete -o default -o nospace -F _git_send_email git-send-email
- complete -o default -o nospace -F _git_shortlog git-shortlog
- complete -o default -o nospace -F _git_show git-show
- complete -o default -o nospace -F _git_stash git-stash
--- 
-1.5.5.rc1.6.g5cc8f
+j.
