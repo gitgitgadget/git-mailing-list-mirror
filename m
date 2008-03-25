@@ -1,65 +1,86 @@
-From: Jan Hudec <bulb@ucw.cz>
-Subject: Re: Apply patch on server w/o git
-Date: Tue, 25 Mar 2008 20:46:31 +0100
-Message-ID: <20080325194631.GD4857@efreet.light.src>
-References: <CA08AA77-A9EA-4490-B1BE-25E8B7402290@faithfulgeek.org> <3e8340490803251141x6d199d8ch8828b396da202d81@mail.gmail.com>
+From: Junio C Hamano <junio@pobox.com>
+Subject: Re: [PATCH] gitweb: Uniquify usage of subroutine prototypes
+Date: Tue, 25 Mar 2008 12:47:34 -0700
+Message-ID: <7vlk46lh61.fsf@gitster.siamese.dyndns.org>
+References: <1206447114-29349-1-git-send-email-jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Joe Fiorini <joe@faithfulgeek.org>, git@vger.kernel.org
-To: Bryan Donlan <bdonlan@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 25 20:47:30 2008
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 25 20:48:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JeF7C-0002Ju-D0
-	for gcvg-git-2@gmane.org; Tue, 25 Mar 2008 20:47:22 +0100
+	id 1JeF8I-0002pH-VH
+	for gcvg-git-2@gmane.org; Tue, 25 Mar 2008 20:48:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752214AbYCYTql (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Mar 2008 15:46:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752188AbYCYTqk
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Mar 2008 15:46:40 -0400
-Received: from ns1.bluetone.cz ([212.158.128.13]:54074 "EHLO ns1.bluetone.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752175AbYCYTqk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2008 15:46:40 -0400
-Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
-	by ns1.bluetone.cz (Postfix) with ESMTP id 300E276DBD;
-	Tue, 25 Mar 2008 20:46:39 +0100 (CET)
-Received: from ns1.bluetone.cz ([192.168.13.1])
-	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
-	with ESMTP id z9IPeeRfXb2K; Tue, 25 Mar 2008 20:46:36 +0100 (CET)
-Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
-	by ns1.bluetone.cz (Postfix) with ESMTP id 34DDA76DB2;
-	Tue, 25 Mar 2008 20:46:34 +0100 (CET)
-Received: from bulb by efreet.light.src with local (Exim 4.69)
-	(envelope-from <bulb@ucw.cz>)
-	id 1JeF6N-0001WG-M7; Tue, 25 Mar 2008 20:46:31 +0100
-Content-Disposition: inline
-In-Reply-To: <3e8340490803251141x6d199d8ch8828b396da202d81@mail.gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1752315AbYCYTru (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Mar 2008 15:47:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752250AbYCYTru
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Mar 2008 15:47:50 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:53307 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752144AbYCYTrt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2008 15:47:49 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 5D2081032;
+	Tue, 25 Mar 2008 15:47:44 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 5CCCF1031; Tue, 25 Mar 2008 15:47:41 -0400 (EDT)
+In-Reply-To: Junio C. Hamano's message of "(unknown date)"
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78212>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78213>
 
-On Tue, Mar 25, 2008 at 14:41:04 -0400, Bryan Donlan wrote:
-> Just a guess, but the gnuwin32 tools might not like unix line endings.
-> Try opening and re-saving in wordpad (or vim :set ff=dos, or $insert
-> your favorite method here).
+Junio C Hamano <gitster@pobox.com> writes:
 
-That won't actually work! The problem is, that:
- - The headers (+++/---/@@ lines) should have dos line endings (but does not
-   matter too much).
- - The bodies must have the same line endings the actual code does.
+> Jakub Narebski <jnareb@gmail.com> writes:
+>
+>> The idea is NOT to use subroutine prototypes to create new syntax;
+>> prototypes are to be purely informational and optional.
 
-Question is, what the code has (it could have been transfered by some method
-that converted the line-endings or something).
+That's unfortunately a grave misconception, isn't it?
 
-Also trying to patch with ignoring whitespace could work (I believe I did
-that the other way 'round -- applying windowsy newline-damaged patch on
-unix). And if it does not, it's not the newlines problem.
+For example, can you explain (1) how these three calls behave before
+running them, and (2) why these three behave the way they do?
 
--- 
-						 Jan 'Bulb' Hudec <bulb@ucw.cz>
+        sub foo       { my ($s, %f) = @_; print "s = $s\n"; }
+        sub bar ($;%) { my ($s, %f) = @_; print "s = $s\n"; }
+
+        my @it = ('This is my string');
+        my %hash = (rose => 'blue', violet => 'green');
+
+        foo @it, %hash;		# call 1
+        bar @it, %hash;		# call 2
+	bar $it[0], %hash;	# call 3
+
+By adding ($;%) to an existing function that did not have prototype, you
+changed the semantics of the function and:
+
+ (1) it is your responsibility to make sure you did not break existing
+     callers when you made such a change, and
+
+ (2) programmers who want to call any existing function in your program
+     need to check how the function groks its parameters and make sure
+     they do not fall into the same pitfalls as the call sites you had to
+     fix in step (1).  They cannot rely on the old fashioned "arguments
+     are passed as a flattened list" idiom anymore before checking if you
+     have prototypes to the function they want to call.
+
+Prototypes used carelessly tend to force users to do unnecessary things,
+because the caller cannot rely on the old fashioned "arguments are passed
+as a flattened list" semantics and check how each and every function is
+prototyped before making a call.
+
+I am not saying that Perl prototypes is a bad thing.  The point of the
+prototype is to change the syntax and semantics so that you can write a
+function to which arguments are _not_ passed as a flattend list, and
+without them you cannot write something that emulates "push @a, $b, $c".
+
+But you need to be aware of what it does to your callers.
