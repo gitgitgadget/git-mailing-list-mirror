@@ -1,63 +1,72 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Auto detaching head options (Re: Working copy revision and push
- pain)
-Date: Tue, 25 Mar 2008 20:58:40 +0100 (CET)
-Message-ID: <alpine.LSU.1.00.0803252056400.10660@wbgn129.biozentrum.uni-wuerzburg.de>
-References: <alpine.LSU.1.00.0803231401340.4353@racer.site> <47E658D3.1060104@jwatt.org> <51419b2c0803230645l5b07bbf5h9cbf9b6f47373efa@mail.gmail.com> <47E6612A.5020408@jwatt.org> <51419b2c0803230706w5ff88fc7oc7e8e34ab8afa1fd@mail.gmail.com>
- <alpine.LSU.1.00.0803231519380.4353@racer.site> <47E66DAA.4080807@jwatt.org> <alpine.LSU.1.00.0803231555380.4353@racer.site> <47E6765D.2020103@jwatt.org> <alpine.LSU.1.00.0803231658460.4353@racer.site> <20080325192552.GC4857@efreet.light.src>
+From: "Jonas Fonseca" <jonas.fonseca@gmail.com>
+Subject: Re: [PATCH] shortlog: initialize nongit variable
+Date: Tue, 25 Mar 2008 20:58:50 +0100
+Message-ID: <2c6b72b30803251258j313e0d94qe290b8b7c7b377f0@mail.gmail.com>
+References: <1206456377-2735-1-git-send-email-szeder@ira.uka.de>
+	 <fcaeb9bf0803250839p721e1870l8fbc8715b3c6e7cb@mail.gmail.com>
+	 <20080325160356.GC6506@neumann>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jonathan Watt <jwatt@jwatt.org>, Elijah Newren <newren@gmail.com>,
-	git@vger.kernel.org
-To: Jan Hudec <bulb@ucw.cz>
-X-From: git-owner@vger.kernel.org Tue Mar 25 20:59:48 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>,
+	"Junio C Hamano" <gitster@pobox.com>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "=?ISO-8859-1?Q?SZEDER_G=E1bor?=" <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Tue Mar 25 20:59:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JeFIs-0007Tl-L1
-	for gcvg-git-2@gmane.org; Tue, 25 Mar 2008 20:59:27 +0100
+	id 1JeFJ7-0007bK-W4
+	for gcvg-git-2@gmane.org; Tue, 25 Mar 2008 20:59:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753350AbYCYT6p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Mar 2008 15:58:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752250AbYCYT6p
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Mar 2008 15:58:45 -0400
-Received: from mail.gmx.net ([213.165.64.20]:59289 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751964AbYCYT6o (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2008 15:58:44 -0400
-Received: (qmail invoked by alias); 25 Mar 2008 19:58:42 -0000
-Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO wrzx67.rz.uni-wuerzburg.de) [132.187.25.128]
-  by mail.gmx.net (mp018) with SMTP; 25 Mar 2008 20:58:42 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19aEYJ8eR1aibHOlwWXBjkWzgJF1tSI7D2YxrUTfe
-	p4nNsjYLhwXiI2
-X-X-Sender: gene099@wbgn129.biozentrum.uni-wuerzburg.de
-In-Reply-To: <20080325192552.GC4857@efreet.light.src>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1753188AbYCYT6w convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2008 15:58:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753029AbYCYT6w
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Mar 2008 15:58:52 -0400
+Received: from wr-out-0506.google.com ([64.233.184.238]:36880 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752250AbYCYT6v convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 25 Mar 2008 15:58:51 -0400
+Received: by wr-out-0506.google.com with SMTP id c48so2445664wra.1
+        for <git@vger.kernel.org>; Tue, 25 Mar 2008 12:58:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=vNxKKKW71wX2Ej3pObUYfuM0WKjPPyV7NeH1FdeS4WY=;
+        b=a8L8G309BnRY86i0RZfHBa4Rnb8cRfNvSYj98tvMjuwfYLChHj/hCYH1i4ebemCu7k9/BEW+oRWaZSLxNlOZvHCTiqQHvjJ/xF/Kroff61RUCREsIPwO1gtCOdbANwk573lfL8+aGUwN8zFTdihANk2BiNZHQ/4cLPwUU+rLjJY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=O3S3j6CbeZx4XvcvbVkxwGXXKVf04JKcdHoBxJlFhx+NriDhz14J+liJ5e54HBxUt+snDk6qRUELOr6cCEQ8VL1lrdfgscfDopLYUv8EQl4UOwBNzhOFKhF7x7hEgRANcVc00JbTH8VgmqSv1FeIXdqNrEOT8kr7aCbbjrpu3XY=
+Received: by 10.140.207.2 with SMTP id e2mr3715431rvg.104.1206475129987;
+        Tue, 25 Mar 2008 12:58:49 -0700 (PDT)
+Received: by 10.141.91.15 with HTTP; Tue, 25 Mar 2008 12:58:50 -0700 (PDT)
+In-Reply-To: <20080325160356.GC6506@neumann>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78216>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78217>
 
-Hi,
+2008/3/25 SZEDER G=E1bor <szeder@ira.uka.de>:
+>  However, it might be better to let setup_git_directory_gently() set
+>  *nongit_ok to 0 if we are in a git repository.  Patch appended.
 
-On Tue, 25 Mar 2008, Jan Hudec wrote:
+As the one responsible for introducing this bug into shortlog, I can on=
+ly agree.
 
-> The proponents of this (and I also) think, that meaning of HEAD is, or 
-> rather should be, "the revision your work tree is derived from".
+>   builtin-bundle.c     |    2 +-
+>   builtin-config.c     |    2 +-
+>   builtin-diff-files.c |    2 +-
+>   builtin-ls-remote.c  |    2 +-
+>   git.c                |    2 +-
+>   setup.c              |    8 ++++++++
+>   6 files changed, 13 insertions(+), 5 deletions(-)
 
-By far the most operation I do with HEAD is to _advance_ it.  So for me, 
-HEAD must be a pointer to the ref which is to be advanced.
+git grep reveals that builtin-{apply,diff}.c, help.c and var.c also
+belongs on this list.
 
-I don't care about detaching the HEAD when pushing into the current 
-branch, which you are not supposed to do anyway.  Really.  I could not 
-care less about that.
-
-You can do it -- I already pointed out that you can do that with hooks -- 
-but please do not bother me with it.
-
-Hth,
-Dscho
+--=20
+Jonas Fonseca
