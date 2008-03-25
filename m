@@ -1,229 +1,218 @@
-From: Marek Zawirski <marek.zawirski@gmail.com>
-Subject: Re: [SoC] egit: pre-proposal, problem recognition
-Date: Tue, 25 Mar 2008 17:29:41 +0100
-Message-ID: <47E92875.6030208@gmail.com>
-References: <47E532DD.7030901@gmail.com> <20080323075241.GL8410@spearce.org> <200803232244.11031.robin.rosenberg.lists@dewire.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [RFD] Gitweb caching, part 2 (long)
+Date: Tue, 25 Mar 2008 18:06:56 +0100
+Message-ID: <200803251806.58290.jnareb@gmail.com>
+References: <200803190154.55532.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain;
+  charset="iso-8859-2"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gsoc@spearce.org
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Mar 25 17:31:31 2008
+Cc: Petr Baudis <pasky@suse.cz>, "J.H." <warthog19@eaglescrag.net>,
+	Frank Lichtenheld <frank@lichtenheld.de>,
+	"Lars Hjemli" <hjemli@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 25 18:08:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JeC2g-0005xQ-Di
-	for gcvg-git-2@gmane.org; Tue, 25 Mar 2008 17:30:31 +0100
+	id 1JeCdE-0005R9-7H
+	for gcvg-git-2@gmane.org; Tue, 25 Mar 2008 18:08:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756301AbYCYQ3s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Mar 2008 12:29:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756243AbYCYQ3r
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Mar 2008 12:29:47 -0400
-Received: from fg-out-1718.google.com ([72.14.220.157]:1716 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756204AbYCYQ3q (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2008 12:29:46 -0400
-Received: by fg-out-1718.google.com with SMTP id l27so3562905fgb.17
-        for <git@vger.kernel.org>; Tue, 25 Mar 2008 09:29:44 -0700 (PDT)
+	id S1752905AbYCYRHH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Mar 2008 13:07:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752553AbYCYRHH
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Mar 2008 13:07:07 -0400
+Received: from fk-out-0910.google.com ([209.85.128.184]:17969 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752793AbYCYRHE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2008 13:07:04 -0400
+Received: by fk-out-0910.google.com with SMTP id 19so4264473fkr.5
+        for <git@vger.kernel.org>; Tue, 25 Mar 2008 10:07:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        bh=K7PPJ9a9vWrgFsr+xuaGN2aQqRUnN22rTi7Dlc3NSTA=;
-        b=ew+9xjQlJVJFglu8kHzdW5IqWZBGEulgKiRsLde4uAwIHK1Nte/deBxzB5fMsNJ9LSpe+ny3ZYJBcsmQb27GYwrDESt3nfv98VLsINI2EigL5XnFG4Rt44eqfZfzg3jhuXdqStwcw3XKgHQMYJIPjuxtKHT3N+DpZqqIZFQMzrc=
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        bh=/reb+7Ui3djY6uFe5lM4jyvuVRN9RFSj7zCZZWP9MMg=;
+        b=qyUxikTOT/98DX+Xu/Sd5UrX8tslZs84jw4UEBrIyOSyRS1Z298i6WILFTiaJv7EfWo3lGGynrARsluBaZ27uMGABI90Uf0j6hVq6SoDC+vRaX4mSkqdPwenz786D9HENFctKJiQAwuPNXLG1IMxsGlgGuCz86ABgVaEtToyqnQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=qmfSN+E4bVsP/Xkdsq9S6hMpR8ep5tJ4bDGHKZE/XNtR8iU0syegDnfQBOPq+QpOijmyFbyUJAhR2HJ60X16Us82wMMSSe+neLEqNyZbdTqADOlX4L2HsOyym1xPgnrRYBQnDmDNsvNPFJKN/cqWMs3JvIMG9eXvr9MQXH6No68=
-Received: by 10.82.175.17 with SMTP id x17mr21470828bue.19.1206462584820;
-        Tue, 25 Mar 2008 09:29:44 -0700 (PDT)
-Received: from ?62.21.4.140? ( [62.21.4.140])
-        by mx.google.com with ESMTPS id d4sm8520542fga.2.2008.03.25.09.29.43
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 25 Mar 2008 09:29:44 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.12) Gecko/20080129 Iceape/1.1.8 (Debian-1.1.8-2)
-In-Reply-To: <200803232244.11031.robin.rosenberg.lists@dewire.com>
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=W2xCUpfADY2Px4dckq69/GfZWR36YJKRVHJlFhp8D9FxFoINCI/Wnn9FRLCbBk0q9UI7Aahc6sQdITyyWKCHnsa3sYey7qYkrAJXzx7HFffOBXkaeef3buZoIEO8+WLS/KIesmmv18ehY/x+QVA4ZmkFN6B7R7mMmTAQdpng5r4=
+Received: by 10.82.152.16 with SMTP id z16mr21599931bud.36.1206464822785;
+        Tue, 25 Mar 2008 10:07:02 -0700 (PDT)
+Received: from ?192.168.1.11? ( [83.8.226.89])
+        by mx.google.com with ESMTPS id g9sm16215597gvc.4.2008.03.25.10.06.59
+        (version=SSLv3 cipher=OTHER);
+        Tue, 25 Mar 2008 10:07:01 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <200803190154.55532.jnareb@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78196>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78197>
+
+In previous part:
+
+What to cache.
+1. Support for caching in HTTP (external caching)
+2. Caching Perl structures (and serialization)
+3. Caching gitweb output: formatted pages
 
 
-Hi, coming back to git-dev. Was nice to get some valuable comments from 
-Shawn and Robin :]
-
-Robin Rosenberg <robin.rosenberg.lists@dewire.com> wrote:
->> Fetch and clone are in progress.  Robin Rosenburg (the current egit
->> maintainer) has it just about finished and will probably contribute
->> it soon.  But I think its going to cause merge conflicts with my own
->> revwalk work.  So that's why fetch isn't on the GSoC 2008 ideas list.
-> Yes, fetch (and clone) over git and git+ssh works on my machine. I did not go 
-> into the http based version which is a different story altoghether so it is 
-> still open.
-> 
->> I did want to start on push work myself.  But if a student comes
->> along and does it for me, then awesome. :)
-> 
-> Push implies writing a highly efficient packing mechanism (actually could
-> work without the efficiency in form of delya packing, but I'm not sure we want 
-> that).
-
-I've tried to look at this problem closer.
-I've seen that egit supports packed objects reading already. What makes
-me not-sleeping is builtin-pack-objects.c code - mentioned packs
-creation support. Hacking git story.... IMHO porting it into Java is a 
-really big task , also because of its dependencies - especially 
-delta/diff related code. It looks for me that it could be as difficult 
-as merge support, or even harder :/
-
-So... by not efficient packing you probably mean only compressing 
-objects (+possibly arranging some order), but not finding deltas? I 
-believe that the main reason why Robin said that he don't know whether 
-it is wanted, is that when we are creating and sending such packs, 
-they'll be stored on remote side in such inefficient way. Until repo 
-admin make some cleanup (packing). I suspect that it's not enough reason 
-for creating git-receive-pack --repack option (configuration/protocol 
-negotiated, in SSH case, simply forced by client)?
-BTW it shows that git receiver is very trusty (efficiency on top?) for
-repo users: not only about what they transfer, but also about the way
-they transfer and format it.
-
-Anyway, I though that even push code without highly efficient
-packing mechanism may be valuable for a meantime - at least as a base 
-for further enhancements. I imagine that it maybe easy to abstract packs 
-creation algorithm, that could be enhanced later. While rest of a commit 
-operation would be already implemented.
-In a meantime user could get warning in Commit dialog, that produced 
-pack is not so efficient (yeah, not so pretty...).
-
->> Yes.  Lots of interesting git features (cherry-pick, revert, rebase)
->> are heavily based upon diff/apply and merge.  diff/apply can be
->> implemented in terms of merge in many cases, and we do that a lot
->> in C Git. So we do really need a working merge implementation.
-
-.. so I now see that merge and packing operations look like most needed 
-and most hard to do;)
-
-> A subproject of that is making graphical merge resolution inside Eclipse. That
-> might not be such a big project though depending on how much support
-> there is in eclipse. I haven't looked into it really.
-
-I've been looking around. There is general Eclipse Synchronization API 
-as part of Team API, and related Synchronize View to provide user 
-similar look&feel across different synchronization schemes.
-Subclipse and CVS for Eclipse implements this API. I'm not very 
-experienced CVS user, but saw that there are 2 Synchronization Views for 
-CVS: for synchronization with repository (head?) and merging/conflicts 
-resolutions. The second one is easier, and is what you probably mean. So 
-there is pretty nice support from Eclipse. However, without stable merge 
-API (not existing yet) is hard to do anything around that.
-
-At the beginning, there could be just Compare Editor (CompareUI) for 
-conflicting file edition without whole synchronization perspective and 
-view  - not a big project. It is nice Eclipse editor, that "only" needs 
-tree of DiffNode objects as input: result tree of three-way or two-way 
-merge algorithm. Maybe some ad-hoc version could be provided without 
-merge API (not sure), basing on git-merge result file with marked 
-conflicts for creation of DiffNode tree (showing just two-way merge).
+TO WHOM IT MAY CONCERN:  John 'Warthog9' Hawley (J.H.) who created
+caching for gitweb at kernel.org; Petr 'Pasky' Baudis who maintains
+repo.or.cz fork of gitweb and lately added caching of projects list
+info; Lars Hjemli who is the author of cgit, git web interface in C
+which includes some caching.  (BTW. I'd like to hear your thoughs on
+git web interface caching, and about solutions you have implemented).
 
 
->> Yea, I wrote that statement about using merge code from Eclipse,
->> but lately I have been thinking that is a bad idea.  Another person
->> has stated to talk about using jgit to build a Git NetBeans plugin,
->> and in another case there may be some idea of compiling jgit to
->> CLR and using it for a Git Mono plugin.
+This is continuation of my thoughts about how to implement caching in
+gitweb, what problems we could encounter, and what existing solutions
+(what code/what packages) can we (re)use.
 
-Wow;) However, it seems that Microsoft is abandonning J# language? Don't 
-know what is current status, I've been coding in C# only.
 
->> There is currently little-to-no merge support in jgit.  All of it
->> needs to be ported in, or obtained from a suitable Java library that
->> we can embed and ship as part of the package.  C Git for example
->> embeds and ships libxdiff for most of its diff/merge code.
+One of the more important issues to think about when implementing
+caching is to decide when to regenerate cache, i.e. issues of cache
+(in)validation and lifetime.
 
-That makes things harder. On the other hand, some people also faced this 
-problem before. SVNKit ("jgit for svn") provides some 3-way merge and 
-Differencer class from Eclipse org.eclipse.compare, possibly used by 
-CVS. However, both of these solutions are product specific, so the code 
-(if used; license issues) need to be copied & adapted for jgit. 
-Especially SVNKit seems to depend on their own classes.
 
->> I think merge is a huge task, especially if you have to do your own
->> file level merge implementation by porting in say libxdiff to Java.
->> Focusing on merge may take the better part (or all!) of a GSoC
->> summer, but if you finished early then I would suggest doing the
->> much needed UI additions like you discussed above.
+1. Static cache, external refreshing (invalidation).
 
-Well, words "better part (or all!)" doesn't sound very enthiusiatic for 
-me... (explanation below)
+The easiest situation is when cache can be invalidated (removed)
+externally; caching support in gitweb would then need only to either
+use cached information or cached output if it exists, and generate
+information and/or output and cache appropriate things if cache
+doesn't exist.
 
->> Interesting that JSch wasn't a good experience.  Eclipse has just made it
->> an official part of the core platform, even without the IDE and its CVS
->> plugin.  I was sort of hoping that given it is now fully integrated into
->> Eclipse, and its key management is just part of the workspace, that we
->> could take advantage of that in egit.
-> The current fetch uses Ganymedes for SSH. It seesm to work well and has
-> lots of features for key management. There is an SHA-1 implementation there
-> also that should be a bit faster than Sun's default.
+In closed-up git hosting system like repo.or.cz new contents can
+appear in repository only via push (if repo is manually updated) or
+via automated fetch (if repo is mirrored automatically).  This means
+that it is known when infomration about given repository gets stale
+(out of sync).  It would be then enought to make 'update' or
+'post-receive' hook to delete cache, or invalidate parts of cached
+info about given repository.  Creation and deletion of repositories
+should also be handled by scripts; they affect caching too.
 
-Trilead for SSH is successor of Ganymed for SSH, as WWW tells. Yes, it 
-was surprising for me, that JSch became official Eclipse core part. 
-AFAIR especially annoying things were 1) you had to do polling for 
-checking results of some operations(!) 2) no javadoc. I thought that in 
-21st century people used to blocking operations, or non-blocking with 
-Listener pattern and so on;> Or maybe something changed in library or 
-I'm stupid and couldn't read library usage examples correctly.
-Both libraries uses same OpenSSH key formats possibly, so maybe key 
-management in workspace is possible even if case of "mixing" them.
+This of course assumes that we can control repository hooks (perhaps
+git should learn hook multiplexing first, as proposed some time ago on
+a mailing list).  This is not the case when developers are given shell
+access, and gitweb is offered as a part of service rather than as a
+part of git hosting; repositories are not under web administrator
+control.  This is the case (according to J.H. on git mailing list) for
+kernel.org.
 
->> You can join any time.  GSoC is just a good execuse.  :)
+So we have to examine also more generic solutions.
 
-Especially good if I don't have much of free time except holidays for 
-GSoC :)
 
-To sum up a little. If you don't mind much, I would prefer doing some 
-jgit task that will not fill my whole project, as I would like to do 
-some Eclipse-related stuff also. Full merge implementation (with 
-diff&merge algorithm adaptation) and full push operation (with efficient 
-packing)  seems to be tasks that may take a really long time, as I've 
-learned from your comments.
+2. Checking filesystem (stat and/or inotify).
 
-My reasons for interesting in tasks that are related to Eclipse are:
-- it's nice to play with Eclipse, learn it more
-- don't want to dig into real git internals for whole summer, if 
-possible; I believe that coming into details for git-newbie may take 
-much time
-- There is friendly IBM Eclipse Support Center team in Poznan. As they 
-are very enthusiastic about supporting Eclipse-related products, they've 
-proposed to support GSOC Eclipse-related projects for free:) This means 
-that I can work on GSoC in their office and get advices, ask for their 
-knowledge (they are pros, Eclipse Foundation contributors) anytime. I 
-think it's reasonable to benefit from such proposal.
+If new objects come to repository via commit or via fetch it is enough
+(I guess) to watch for modifications of GIT_DIR of a project (I think
+due to doing atomic writes via "create temporary file, then rename it
+to final filename" of files in GIT_DIR: COMMIT_MSG and FETCH_HEAD).
+So it should be enough to check and compare stat info for GIT_DIR of a
+project, or of possible implement some inotify (or equivalent on other
+operating systems than Linux) checking, to see if cache can contain
+stale info.  In practice what we can truly check is that nothing
+changed with repo.
 
-Reasons for taking tasks related more to git:
-- I always appreciate some network/distributed stuff ;)
-- possibly interesting algorithms or Java profiling
-- merge&packing is much NEEDED
+Unfortunately the above is not the case if objects come to repository
+via push.  Note that both push resulting in crating a pack (this I
+think could use the same mechanism, only checking GIT_DIR/objects/pack
+directory), and push resulting in creation of loose objects has to be
+supported; additionally the refs pushed can have deeply hierarchical
+names.
 
-So I would balance them if possible. For example, providing push 
-implementation for GIT and SSH with some simple (extensible) packing 
-algorithm at first and/or providing HTTP-based (commit walkers as you 
-name them) fetch. Then moving to Eclipse/UI related stuff. What do you 
-think?
+I would be grateful if somebody could think a way to check if anything
+could have changed for such situation... but as it is now we have to
+go to more complicated ways of cache invalidation.
 
-I also see that project is very dynamic, so in 2 months some things may 
-change, even some basic merge may support may come? If you agree, I can 
-make in my application/proposal longer tasks list with priorities, and 
-annotation that specific tasks for implementation will be chosen from 
-top, depending on what is current dependencies status.
 
-Maybe it would be easier to chat on IRC for us. What are your nicks if 
-you are there (mine: zawir)?
+3. Cache lifetime.
 
-Again, RFC & thanks for support :)
+Finally, for cases such as gitweb where validating cache (checking if
+the cached information isn't stale, out of sync with reality) is
+almost as costly as calculating the whole information without using
+cache at all, there is one possible solution to cache validation:
+simply keep cache for some time.  For longer cache lifetimes gitweb
+perhaps should put some notification that information is from cache,
+perhaps with the time in human readable form how much time ago was
+this information generated (human readable means no "1325 seconds ago"
+info ;-).  And if we want to be thorough, put it also in the HTTP
+header "Warning:" (at least for HTTP/1.1, see sections 13.1.2 and
+14.46 of RFC 2616), e.g.:
+
+  Warning: 110 git.kernel.org "Response is stale"
+
+The question is what timeout, or how to choose lifetime of a cache.
+J.H. kernel.org's gitweb tries to adjust cache lifetime to server
+load, making cache lifetime longer if server load is higher, but
+ensuring that cache lifetime stays within specified bounds.  
+
+I have found among CPAN modules Cache::Adaptive where you can also
+specify bounds for expire time and subroutine to adjust cache
+lifetime, e.g. according to load average, process time for building
+the cache entry, etc. (it can use specified backend, for example
+Cache::FileCache from Cache::Cache distribution).  Its subclass
+Cache::Adaptive::ByLoad which tries to adjust cache lifetime for
+bottlenecks under heavy load.  Neither of modules I think is
+distributed as ready package in extras on trusted contrib packages
+repositories.  Nevertheless we can "borrow" the algorithms used by
+those modules.
+
+We should also try to avoid 'thundering herd' problem, namely that
+cache expires, gitweb gets N requests before cache gets re-created,
+and [poorly designed] cache architecture makes all N do the work
+regenerating cache.  There are several ideas of how to deal with this
+problem:
+
+ * If (part of) cache has expired, set its expiration time to the
+   current time plus specified duration (slop) needed to regenerate
+   cache.  It was used by original Pasky solution (and is used by
+   further solutions for caching projects list sent here); in can be
+   used by CHI (caching infrastructure) with busy_lock option... well,
+   kind of.
+
+ * Use some kind of locking so only one process does the work and
+   updates the cache.  From what I've briefly checked that is what
+   kernel.org gitweb does (using flock()).
+
+   The patch implementing projects list info caching does protect
+   using O_EXCL on temporary/lock file against more than one process
+   writing the cache, but doesn't protect against more than one
+   process doing the work, unformtunately.
+
+ * Allows items to expire a little earlier than the stated expiration
+   time to help prevent cache miss stampedes.  This is what CHI module
+   does with expires_variance option.
+
+   The probability of expiration increases as a function of how far
+   along we are in the potential expiration window, with the
+   probability being near 0 at the beginning of the window and
+   approaching 1 at the end.
+
+If cache size becomes issue there will be additional complications
+like which entries (which cached values) to remove first when we go
+over the cache size limit; but lets us leave it for later, if it would
+be needed at all.
+
+%%
+In next part:
+
+CPAN packages we could use, or take inspiration from
+1. Cache::Cache (standard)
+2. CHI - Unified cache interface
+3. Cache - the Cache interface 
+4. other interesting packages
+  * Cache::Adaptive for adaptive cache lifetime solutions
+  * Cache::Memcached and/or Cache::Swifty
+    for caching using cache daemon 
+  * Cache::FastMmap (also example of callbacks),
+    and caching benchmark mentioned there
 
 -- 
-Marek Zawirski [zawir]
-marek.zawirski@gmail.com
+Jakub Narebski
+Poland
