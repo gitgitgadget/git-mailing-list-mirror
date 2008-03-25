@@ -1,71 +1,72 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH 2/5] test_must_fail: 129 is a valid error code from  
- usage()
-Date: Tue, 25 Mar 2008 12:21:50 +0100
-Message-ID: <47E8E04E.6060606@viscovery.net>
-References: <200803232150.29971.barra_cuda@katamail.com> <200803241502.21465.barra_cuda@katamail.com> <7vwsnrubmd.fsf@gitster.siamese.dyndns.org> <200803242218.44026.barra_cuda@katamail.com> <7vbq53nvaz.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0803251100520.10660@wbgn129.biozentrum.uni-wuerzburg.de>
+From: Derek Fawcus <dfawcus@cisco.com>
+Subject: Re: [PATCH 0/7] Case-insensitive filesystem support, take 1
+Date: Tue, 25 Mar 2008 11:39:56 +0000
+Message-ID: <20080325113956.GA7559@cisco.com>
+References: <alpine.LFD.1.00.0803220955140.3020@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junio@pobox.com>,
-	Michele Ballabio <barra_cuda@katamail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Mar 25 12:23:05 2008
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 25 12:50:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Je7Ex-000543-TG
-	for gcvg-git-2@gmane.org; Tue, 25 Mar 2008 12:22:52 +0100
+	id 1Je7fi-0006BU-Nu
+	for gcvg-git-2@gmane.org; Tue, 25 Mar 2008 12:50:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753394AbYCYLWA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Mar 2008 07:22:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753389AbYCYLV7
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Mar 2008 07:21:59 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:43501 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753320AbYCYLV7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2008 07:21:59 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1Je7D9-0005MM-8U; Tue, 25 Mar 2008 12:21:02 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 436BC6B7; Tue, 25 Mar 2008 12:21:52 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <alpine.LSU.1.00.0803251100520.10660@wbgn129.biozentrum.uni-wuerzburg.de>
-X-Spam-Score: -0.8 (/)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_60=1
+	id S1753719AbYCYLts (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Mar 2008 07:49:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753768AbYCYLts
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Mar 2008 07:49:48 -0400
+Received: from ams-iport-1.cisco.com ([144.254.224.140]:24738 "EHLO
+	ams-iport-1.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753698AbYCYLtr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2008 07:49:47 -0400
+X-Greylist: delayed 582 seconds by postgrey-1.27 at vger.kernel.org; Tue, 25 Mar 2008 07:49:47 EDT
+X-IronPort-AV: E=Sophos;i="4.25,551,1199660400"; 
+   d="scan'208";a="4362804"
+Received: from ams-dkim-1.cisco.com ([144.254.224.138])
+  by ams-iport-1.cisco.com with ESMTP; 25 Mar 2008 12:40:03 +0100
+Received: from ams-core-1.cisco.com (ams-core-1.cisco.com [144.254.224.150])
+	by ams-dkim-1.cisco.com (8.12.11/8.12.11) with ESMTP id m2PBe3pD026178
+	for <git@vger.kernel.org>; Tue, 25 Mar 2008 12:40:03 +0100
+Received: from edi-view2.cisco.com (edi-view2.cisco.com [64.103.71.156])
+	by ams-core-1.cisco.com (8.13.8/8.13.8) with ESMTP id m2PBe3eh011416
+	for <git@vger.kernel.org>; Tue, 25 Mar 2008 11:40:03 GMT
+Received: from dfawcus-laptop (localhost [127.0.0.1]) by edi-view2.cisco.com (8.11.2/CISCO.WS.1.2) with ESMTP id m2PBe3X28596 for <git@vger.kernel.org>; Tue, 25 Mar 2008 11:40:03 GMT
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.1.00.0803220955140.3020@woody.linux-foundation.org>
+User-Agent: Mutt/1.4.2.3i
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; l=565; t=1206445203; x=1207309203;
+	c=relaxed/simple; s=amsdkim1002;
+	h=Content-Type:From:Subject:Content-Transfer-Encoding:MIME-Version;
+	d=cisco.com; i=dfawcus@cisco.com;
+	z=From:=20Derek=20Fawcus=20<dfawcus@cisco.com>
+	|Subject:=20Re=3A=20[PATCH=200/7]=20Case-insensitive=20file
+	system=20support,=20take=201
+	|Sender:=20;
+	bh=0HlILdxWLjHfRtktH6q5kuJndihVcDOGrvF9hVX0ojs=;
+	b=e3gXDJehLW/MA4v3Fm/hmnPX4KWDsm0MkMmkSr/phetdNYgTa+89Rnr4er
+	s0Wcl8Fe2TpIlVSwuPmIykMzHyLBd5HPy/4qKH2DmR3VL3U4kPP4duLoXqDf
+	BspIp5fWs0;
+Authentication-Results: ams-dkim-1; header.From=dfawcus@cisco.com; dkim=pass (
+	sig from cisco.com/amsdkim1002 verified; ); 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78181>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78182>
 
-Johannes Schindelin schrieb:
-> Hi,
-> 
-> On Mon, 24 Mar 2008, Junio C Hamano wrote:
-> 
->> diff --git a/t/test-lib.sh b/t/test-lib.sh
->> index 870b255..7c2a8ba 100644
->> --- a/t/test-lib.sh
->> +++ b/t/test-lib.sh
->> @@ -300,7 +300,7 @@ test_expect_code () {
->>  
->>  test_must_fail () {
->>  	"$@"
->> -	test $? -gt 0 -a $? -le 128
->> +	test $? -gt 0 -a $? -le 129
-> 
-> IIRC exit status is a signed byte on Win32.  Can somebody check?
+On Sat, Mar 22, 2008 at 10:21:05AM -0700, Linus Torvalds wrote:
+>    ... and on a vfat filesystem under Linux (which is 
+>    case-insensitive and *really* odd wrt case preservation - it remembers 
+>    the name of removed files, so it preserves case even across removal and 
+>    re-creation!)
 
-Not at the shell level. This command:
+Interesting.
+That sounds a bit like the claimed windows 95 properly of 'tunneling' renames.
+ISTR that it was to catch a move via 'shortname' which then preserved the longname.
 
-   git branch foo bar baz
+However I'd have expected the Linux version to always use the long name...
 
-exits with 129 both when invoked by bash ($?) and CMD (%ERRORLEVEL%).
-
--- Hannes
+DF
