@@ -1,77 +1,62 @@
-From: "Bryan Donlan" <bdonlan@gmail.com>
-Subject: Re: Apply patch on server w/o git
-Date: Tue, 25 Mar 2008 14:41:04 -0400
-Message-ID: <3e8340490803251141x6d199d8ch8828b396da202d81@mail.gmail.com>
-References: <CA08AA77-A9EA-4490-B1BE-25E8B7402290@faithfulgeek.org>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: git-format-patch|git-send-email sucks
+Date: Tue, 25 Mar 2008 14:06:36 -0500
+Message-ID: <47E94D3C.3080306@nrlssc.navy.mil>
+References: <alpine.LNX.1.10.0803251914060.2240@fbirervta.pbzchgretzou.qr> <alpine.LNX.1.10.0803251928500.7062@fbirervta.pbzchgretzou.qr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: "Joe Fiorini" <joe@faithfulgeek.org>
-X-From: git-owner@vger.kernel.org Tue Mar 25 19:42:20 2008
+To: Jan Engelhardt <jengelh@computergmbh.de>
+X-From: git-owner@vger.kernel.org Tue Mar 25 20:07:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JeE5r-0008Py-TX
-	for gcvg-git-2@gmane.org; Tue, 25 Mar 2008 19:41:56 +0100
+	id 1JeEUX-0003RB-Q0
+	for gcvg-git-2@gmane.org; Tue, 25 Mar 2008 20:07:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753571AbYCYSlJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Mar 2008 14:41:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755105AbYCYSlI
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Mar 2008 14:41:08 -0400
-Received: from py-out-1112.google.com ([64.233.166.183]:21680 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754459AbYCYSlH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2008 14:41:07 -0400
-Received: by py-out-1112.google.com with SMTP id u52so5106472pyb.10
-        for <git@vger.kernel.org>; Tue, 25 Mar 2008 11:41:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=AYayOPU6q4wJdrgx1/oBuR185jqM8xlCCsX48nRLGLk=;
-        b=KloeUWoIraWyrtxUBxLcDNHnR937uNs1pUpUsBEs14i2X5fnbQZeMTGfBvFTa1chLHdqN5bLTOiiD4ZoXrqBR2BP8lk9Ni0sYbqhgidBlfty9hInn5qk6YcWMptblWwfyeApQQQTgvEyY2mWvcNofIHryR4PYrF+uXZGN4OGdTI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=CXnzFxCP8L+Fw0UQ4uWMIAW7t7nU/AKkQH/ZCSynfUxXxPo15BKWX+mmrNWPnvyb/A2MEy/L1IZ/99cqnL0qy8Xm/CrqraQquybAUZEYQFRNcTEFa/XAklpJAZ6JV97mxKvfI9N+QeuegiAxP9I2YStjRtIQausoXvpQLolVfKk=
-Received: by 10.65.73.16 with SMTP id a16mr17249388qbl.85.1206470464473;
-        Tue, 25 Mar 2008 11:41:04 -0700 (PDT)
-Received: by 10.64.49.9 with HTTP; Tue, 25 Mar 2008 11:41:04 -0700 (PDT)
-In-Reply-To: <CA08AA77-A9EA-4490-B1BE-25E8B7402290@faithfulgeek.org>
-Content-Disposition: inline
+	id S1757067AbYCYTGn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Mar 2008 15:06:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757068AbYCYTGn
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Mar 2008 15:06:43 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:47265 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757067AbYCYTGm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2008 15:06:42 -0400
+Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
+	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id m2PJ6aed017888;
+	Tue, 25 Mar 2008 14:06:36 -0500
+Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
+	 Tue, 25 Mar 2008 14:06:36 -0500
+User-Agent: Thunderbird 2.0.0.9 (X11/20071031)
+In-Reply-To: <alpine.LNX.1.10.0803251928500.7062@fbirervta.pbzchgretzou.qr>
+X-OriginalArrivalTime: 25 Mar 2008 19:06:36.0301 (UTC) FILETIME=[58F433D0:01C88EAB]
+X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-5.0.0.1023-15806001
+X-TM-AS-Result: : Yes--7.852000-0-31-1
+X-TM-AS-Category-Info: : 31:0.000000
+X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNTY3LTE1MTA2My03MDAw?=
+	=?us-ascii?B?NzUtMTM5MDEwLTcwNzQ1MS03MDc4NjYtNzAyNzkxLTcwMTI5Ni03?=
+	=?us-ascii?B?MDEyMzItNzAxNTkwLTcxMDIyNC0xODgwMTktNzAwNjE4LTcwNjcx?=
+	=?us-ascii?B?OS03MDAzNDUtNzAwMDQwLTcwNzc4OC0xNDgwMzktMTQ4MDUxLTIw?=
+	=?us-ascii?B?MDQw?=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78205>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78206>
 
-On Tue, Mar 25, 2008 at 2:25 PM, Joe Fiorini <joe@faithfulgeek.org> wrote:
-> I am trying to generate a diff patch on my local dev box.  I want to
->  upload this patch to a server (running Windows Server 2008) and apply
->  it to my staging code.  The catch is: I cannot install git on the
->  server to accept the patch.  Therefore, I would like to use a generic
->  patching tool (such as patch from the GnuWin32 tools).  I tried
->  generating a unified diff with the following command:
->
->  git diff -U > diff.patch
->
->  and then tried to apply it using:
->
->  patch -u -i ..\other_dir\diff.patch
->
->  and I got the error:
->
->  "patch unexpectedly ends in middle of line" ... "Only garbage was
->  found in the patch input"
->
->  It might be a problem with how I'm using patch, and if so, forgive
->  me.  If not, then how can I generate a generic diff format from git so
->  I can do what I want?
->
->  Thanks all!
->  Joe Fiorini
+Jan Engelhardt wrote:
 
-Just a guess, but the gnuwin32 tools might not like unix line endings.
-Try opening and re-saving in wordpad (or vim :set ff=dos, or $insert
-your favorite method here).
+> To be in the picture, the command issued was:
+> 
+> rm -f 00*; git-format-patch -C -M --stat=72 --summary -p --thread -n
+> origin/symbolic/upstream..HEAD; git-send-email --thread
+> --no-signed-off-by-cc --no-chain --to user2@localhost 00*
+
+Maybe adding --suppress-from would help?
+
+See the --suppress-* family in the git-send-email docs along with the
+sendemail.suppress* configuration counterparts.
+
+-brandon
