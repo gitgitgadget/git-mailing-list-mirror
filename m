@@ -1,86 +1,63 @@
-From: Junio C Hamano <junio@pobox.com>
-Subject: Re: [PATCH] gitweb: Uniquify usage of subroutine prototypes
-Date: Tue, 25 Mar 2008 12:47:34 -0700
-Message-ID: <7vlk46lh61.fsf@gitster.siamese.dyndns.org>
-References: <1206447114-29349-1-git-send-email-jnareb@gmail.com>
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: Re: faster egit history page and a pure java "gitk"
+Date: Tue, 25 Mar 2008 19:48:48 +0000
+Message-ID: <200803252048.48531.robin.rosenberg@dewire.com>
+References: <20080324092726.GQ8410@spearce.org> <20080325053649.GE4759@spearce.org> <47E90246.3030509@intelinet.com.br>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 25 20:48:50 2008
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: "Roger C. Soares" <rogersoares@intelinet.com.br>
+X-From: git-owner@vger.kernel.org Tue Mar 25 20:50:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JeF8I-0002pH-VH
-	for gcvg-git-2@gmane.org; Tue, 25 Mar 2008 20:48:31 +0100
+	id 1JeFA8-0003Zk-1R
+	for gcvg-git-2@gmane.org; Tue, 25 Mar 2008 20:50:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752315AbYCYTru (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Mar 2008 15:47:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752250AbYCYTru
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Mar 2008 15:47:50 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:53307 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752144AbYCYTrt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2008 15:47:49 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 5D2081032;
-	Tue, 25 Mar 2008 15:47:44 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 5CCCF1031; Tue, 25 Mar 2008 15:47:41 -0400 (EDT)
-In-Reply-To: Junio C. Hamano's message of "(unknown date)"
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1758022AbYCYTtV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Mar 2008 15:49:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752520AbYCYTtU
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Mar 2008 15:49:20 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:21447 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1758017AbYCYTtU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2008 15:49:20 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 69DAB802659;
+	Tue, 25 Mar 2008 20:49:18 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id CJTzASl+jJ9j; Tue, 25 Mar 2008 20:49:17 +0100 (CET)
+Received: from [10.9.0.5] (unknown [10.9.0.5])
+	by dewire.com (Postfix) with ESMTP id D4A8180069D;
+	Tue, 25 Mar 2008 20:49:17 +0100 (CET)
+User-Agent: KMail/1.9.9
+In-Reply-To: <47E90246.3030509@intelinet.com.br>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78213>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78214>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Den Tuesday 25 March 2008 14.46.46 skrev Roger C. Soares:
+> I understand that you guys use a lot of ASCII art and wrapping can mess
+> this. But here we track more things in bugzilla and there's some
+> copy&pasting going on, so wrapping makes comments more readable.
+> Currently it's a toogle preference in the local toolbar menu (like the
+> CVS plugin).
 
-> Jakub Narebski <jnareb@gmail.com> writes:
->
->> The idea is NOT to use subroutine prototypes to create new syntax;
->> prototypes are to be purely informational and optional.
+It seems to me ASCII art should be auto-detectable... Maybe enough to 
+make the wrap flag unneeded in most cases. (wrap/nowrap/auto). At first
+I was thinking about looking for special chars, but then it may be simpler
+and just as useful to look for comment lines start with spaces ane a few
+special characters.
 
-That's unfortunately a grave misconception, isn't it?
+Try this command: git log | sed 's/^    [\t |\\\/>]/|    /' | less. It seems 
+to detect lines that I do not want wrapped pretty well.
 
-For example, can you explain (1) how these three calls behave before
-running them, and (2) why these three behave the way they do?
-
-        sub foo       { my ($s, %f) = @_; print "s = $s\n"; }
-        sub bar ($;%) { my ($s, %f) = @_; print "s = $s\n"; }
-
-        my @it = ('This is my string');
-        my %hash = (rose => 'blue', violet => 'green');
-
-        foo @it, %hash;		# call 1
-        bar @it, %hash;		# call 2
-	bar $it[0], %hash;	# call 3
-
-By adding ($;%) to an existing function that did not have prototype, you
-changed the semantics of the function and:
-
- (1) it is your responsibility to make sure you did not break existing
-     callers when you made such a change, and
-
- (2) programmers who want to call any existing function in your program
-     need to check how the function groks its parameters and make sure
-     they do not fall into the same pitfalls as the call sites you had to
-     fix in step (1).  They cannot rely on the old fashioned "arguments
-     are passed as a flattened list" idiom anymore before checking if you
-     have prototypes to the function they want to call.
-
-Prototypes used carelessly tend to force users to do unnecessary things,
-because the caller cannot rely on the old fashioned "arguments are passed
-as a flattened list" semantics and check how each and every function is
-prototyped before making a call.
-
-I am not saying that Perl prototypes is a bad thing.  The point of the
-prototype is to change the syntax and semantics so that you can write a
-function to which arguments are _not_ passed as a flattend list, and
-without them you cannot write something that emulates "push @a, $b, $c".
-
-But you need to be aware of what it does to your callers.
+-- robin
