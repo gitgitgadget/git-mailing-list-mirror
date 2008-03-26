@@ -1,188 +1,146 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: [PATCH v4] filter-branch.sh: support nearly proper tag name filtering
-Date: Wed, 26 Mar 2008 10:47:09 -0500
-Message-ID: <47EA6FFD.1090805@nrlssc.navy.mil>
-References: <7vmyolgbor.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH 3/4] Head reduction before selecting merge strategy
+Date: Wed, 26 Mar 2008 09:17:56 -0700
+Message-ID: <7vlk45e9xn.fsf@gitster.siamese.dyndns.org>
+References: <402c10cd0803252058k2f35b33fr99ec7446235eeb6e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 26 16:49:05 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Sverre Hvammen Johansen" <hvammen@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 26 17:21:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JeXrc-000389-4g
-	for gcvg-git-2@gmane.org; Wed, 26 Mar 2008 16:48:32 +0100
+	id 1JeYM2-0007xu-Ua
+	for gcvg-git-2@gmane.org; Wed, 26 Mar 2008 17:19:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755382AbYCZPre (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Mar 2008 11:47:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754788AbYCZPre
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Mar 2008 11:47:34 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:54048 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754171AbYCZPrd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Mar 2008 11:47:33 -0400
-Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
-	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id m2QFlALd004102;
-	Wed, 26 Mar 2008 10:47:11 -0500
-Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
-	 Wed, 26 Mar 2008 10:47:09 -0500
-User-Agent: Thunderbird 2.0.0.9 (X11/20071031)
-In-Reply-To: <7vmyolgbor.fsf@gitster.siamese.dyndns.org>
-X-OriginalArrivalTime: 26 Mar 2008 15:47:09.0712 (UTC) FILETIME=[A6B96100:01C88F58]
-X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-5.0.0.1023-15806001
-X-TM-AS-Result: : Yes--19.362400-0-31-1
-X-TM-AS-Category-Info: : 31:0.000000
-X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNjQzLTcwNDQyMS03MDQ0?=
-	=?us-ascii?B?MjUtNzExNjEyLTcwMDQ3Ni03MDM5NjktNzAzNzg4LTcwMDYzMC03?=
-	=?us-ascii?B?MDEyMjAtNzAxMjM2LTcwMDE2MC04MzM1MTgtNzAwMDc1LTEzOTAx?=
-	=?us-ascii?B?MC03MDM3MzEtNzA1NTg0LTcwMjM1OC03MDAwNzQtNzAwODM5LTcw?=
-	=?us-ascii?B?MTQ1NS0xODgwMTktMTg3MDY3LTcwMDcwMS03MDAxMDctNzA0NDEw?=
-	=?us-ascii?B?LTcwODI1Ny03MDIxNDMtNzAzNzEyLTcwNDkzMC03MDYyNDktNzA5?=
-	=?us-ascii?B?NTg0LTcwNDkyNy03MDAxMzMtNzAwOTQ5LTEyMTYyOC0xMDYzOTAt?=
-	=?us-ascii?B?NzA2NDU0LTcwMzY1Ny0xMDY0MjAtNzAxOTQwLTcwNTkwMS03MDI1?=
-	=?us-ascii?B?NTEtNzA3NzUwLTEyMTYyNC03MDA5NzEtODM0NjY4LTEyMTMzOC03?=
-	=?us-ascii?B?MDAzMjQtNzAwOTcwLTcwMzE4Ny03MDI1OTgtMTM5NjI5LTcwMDA3?=
-	=?us-ascii?B?My03MDA2NDgtMTg4MTk5LTcwNTQ1MC0xNDgwMzktMTQ4MDUxLTEw?=
-	=?us-ascii?B?MDAzLTIwMDQy?=
+	id S1757943AbYCZQSM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Mar 2008 12:18:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756816AbYCZQSM
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Mar 2008 12:18:12 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:41709 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756813AbYCZQSK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Mar 2008 12:18:10 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 4BDB42F8D;
+	Wed, 26 Mar 2008 12:18:09 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 7B0B62F88; Wed, 26 Mar 2008 12:18:04 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78286>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78287>
 
-Add support for creating a new tag object and retaining the tag message,
-author, and date when rewriting tags. The gpg signature, if one exists,
-will be stripped.
+"Sverre Hvammen Johansen" <hvammen@gmail.com> writes:
 
-This adds nearly proper tag name filtering to filter-branch. Proper tag
-name filtering would include the ability to change the tagger, tag date,
-tag message, and _not_ strip a gpg signature if the tag did not change.
+> @@ -133,6 +133,47 @@ merge (which is typically a fraction of the whole
+> tree), you can
+>  have local modifications in your working tree as long as they do
+>  not overlap with what the merge updates.
+>
+> +If more than one commit are specified for the merge, git will try to
+> +reduce the number of commits (real parents) by eliminating commits
+> +than can be reached from other commits...
 
-Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
----
+In 3/4 you defined "real parents" as "the commits specified to be merged
+from the command line", and you are picking only the independent ones out
+of "real parents" to change the set of parents used for the merge
+operation.  What is the reduced set called?
 
+> +...  The commit message will
+> +reflect the actual commits specified but the merge strategy will be
+> +selected based on the real parents, but always including `HEAD`....
 
-Junio C Hamano wrote:
-> Brandon Casey <casey@nrlssc.navy.mil> writes:
->> Of course, if we use ranges, we may have to worry about matching against
->> the tag body if the header gets any longer.
-> 
-> I do not think you have to worry if you did this:
-> 
->         1,/^$/{
->                 s/object .*/object $newobject/
->                 s/type .*/type $newtype/
->                 ...
->         }
+Now your terminology gets the other way around and reduced ones are called
+"real" and the earlier "real parents" are now called "actual".
 
-I am a sed light-weight. Thanks for teaching.
+I think "real" vs "actual" is an invitation for "which is which"
+confusion.  How about calling them "given" vs "reduced"?
 
--brandon
+Anyway, "the commit log message talks about the commits specified by the
+end user, but the command outsmarts the user and does something different".
 
+> +... The
+> +real parents (only including `HEAD` if it is real) are the parents
+> +recorded in the merge commit object.
 
- Documentation/git-filter-branch.txt |   14 ++++++++++----
- git-filter-branch.sh                |   18 ++++++++++++++++--
- t/t7003-filter-branch.sh            |   32 ++++++++++++++++++++++++++++++++
- 3 files changed, 58 insertions(+), 6 deletions(-)
+Specifically, "does something different" above is "does not record some of
+the commits given by the end user as parent commit of the resulting
+merge".  Hence the name of the operation: "head reduction".
 
-diff --git a/Documentation/git-filter-branch.txt b/Documentation/git-filter-branch.txt
-index 2a78549..9d11b41 100644
---- a/Documentation/git-filter-branch.txt
-+++ b/Documentation/git-filter-branch.txt
-@@ -133,10 +133,16 @@ use "--tag-name-filter cat" to simply update the tags.  In this
- case, be very careful and make sure you have the old tags
- backed up in case the conversion has run afoul.
- +
--Note that there is currently no support for proper rewriting of
--tag objects; in layman terms, if the tag has a message or signature
--attached, the rewritten tag won't have it.  Sorry.  (It is by
--definition impossible to preserve signatures at any rate.)
-+Nearly proper rewriting of tag objects is supported. If the tag has
-+a message attached, a new tag object will be created with the same message,
-+author, and timestamp. If the tag has a signature attached, the
-+signature will be stripped. It is by definition impossible to preserve
-+signatures. The reason this is "nearly" proper, is because ideally if
-+the tag did not change (points to the same object, has the same name, etc.)
-+it should retain any signature. That is not the case, signatures will always
-+be removed, buyer beware. There is also no support for changing the
-+author or timestamp (or the tag message for that matter). Tags which point
-+to other tags will be rewritten to point to the underlying commit.
- 
- --subdirectory-filter <directory>::
- 	Only look at the history which touches the given subdirectory.
-diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-index 22b6ed4..ee90660 100755
---- a/git-filter-branch.sh
-+++ b/git-filter-branch.sh
-@@ -406,8 +406,22 @@ if [ "$filter_tag_name" ]; then
- 		echo "$ref -> $new_ref ($sha1 -> $new_sha1)"
- 
- 		if [ "$type" = "tag" ]; then
--			# Warn that we are not rewriting the tag object itself.
--			warn "unreferencing tag object $sha1t"
-+			new_sha1=$(git cat-file tag "$ref" |
-+				sed -n \
-+				    -e "1,/^$/{
-+					  s/^object .*/object $new_sha1/
-+					  s/^type .*/type commit/
-+					  s/^tag .*/tag $new_ref/
-+					}" \
-+				    -e '/^-----BEGIN PGP SIGNATURE-----/q' \
-+				    -e 'p' |
-+				git mktag) ||
-+				die "Could not create new tag object for $ref"
-+			if git cat-file tag "$ref" | \
-+			   grep '^-----BEGIN PGP SIGNATURE-----' >/dev/null 2>&1
-+			then
-+				warn "gpg signature stripped from tag object $sha1t"
-+			fi
- 		fi
- 
- 		git update-ref "refs/tags/$new_ref" "$new_sha1" ||
-diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
-index 6827249..1daaf54 100755
---- a/t/t7003-filter-branch.sh
-+++ b/t/t7003-filter-branch.sh
-@@ -203,4 +203,36 @@ test_expect_success 'Subdirectory filter with disappearing trees' '
- 	test $(git rev-list master | wc -l) = 3
- '
- 
-+test_expect_success 'Tag name filtering retains tag message' '
-+	git tag -m atag T &&
-+	git cat-file tag T > expect &&
-+	git filter-branch -f --tag-name-filter cat &&
-+	git cat-file tag T > actual &&
-+	git diff expect actual
-+'
-+
-+faux_gpg_tag='object XXXXXX
-+type commit
-+tag S
-+tagger T A Gger <tagger@example.com> 1206026339 -0500
-+
-+This is a faux gpg signed tag.
-+-----BEGIN PGP SIGNATURE-----
-+Version: FauxGPG v0.0.0 (FAUX/Linux)
-+
-+gdsfoewhxu/6l06f1kxyxhKdZkrcbaiOMtkJUA9ITAc1mlamh0ooasxkH1XwMbYQ
-+acmwXaWET20H0GeAGP+7vow=
-+=agpO
-+-----END PGP SIGNATURE-----
-+'
-+test_expect_success 'Tag name filtering strips gpg signature' '
-+	sha1=$(git rev-parse HEAD) &&
-+	sha1t=$(echo "$faux_gpg_tag" | sed -e s/XXXXXX/$sha1/ | git mktag) &&
-+	git update-ref "refs/tags/S" "$sha1t" &&
-+	echo "$faux_gpg_tag" | sed -e s/XXXXXX/$sha1/ | head -n 6 > expect &&
-+	git filter-branch -f --tag-name-filter cat &&
-+	git cat-file tag S > actual &&
-+	git diff expect actual
-+'
-+
- test_done
--- 
-1.5.4.4.481.g5075
+While I suspect that it would make sense to simplify parents, I do not
+see why the seemingly deliberate discrepancy between what is recorded as
+the parents (i.e. "reduced parents" on "parent " lines of the resulting
+merge) and what the log message talks about (i.e. "given parents" you feed
+to fmt-merge-msg) is a good idea.  Isn't it more consistent and easier to
+explain to the users if they match?  Also it might be arguable that this
+head reduction should be an optional feature.
+
+> +The following shows master and three topic branches.  topicB is based
+> +on topicA, topicA is previously branched off from master, and topicC
+> +is based on the current `HEAD` of master:
+
+We do not say "HEAD of branch".  HEAD spelled in all capital always means
+"that pointer thing directly under $GIT_DIR that typically talks about
+which branch we are on but sometimes can be detached to name a commit
+directly."  Call it the "tip of the master branch".
+
+> +------------
+> +                    o---o---o  topicB
+> +                   /
+> +          o---o---o  topicA
+> +         /
+> +    o---o---o---o---o---o  master
+> +                         \
+> +                          o---o  topicC
+> +------------
+> +
+> +A merger of master with topicA, topicB, and topicC will select the
+
+"Merging topicA, B and C to the master branch will select" may be easier
+to understand.
+
+> +merge strategy based on the three branches master, topicB, and topicC
+> +(topicA is eliminated since it can be reached from topicB).  topicB
+> +and topicC are the only real parents and are therefore the only
+> +parents recorded in the merge commit object:
+
+> +------------
+> +         % git checkout master
+> +         % git merge topicA topicB topicC
+
+Please do not use C-shell in our examples.
+
+> +
+> +                    o---o---o  topicB
+> +                   /         \
+> +          o---o---o  topicA   \
+> +         /                     \
+> +    o---o---o---o---o---o       o  master
+> +                         \     /
+> +                          o---o  topicC
+> +------------
+
+I suspect this would be a _very_ unexpected behaviour to untrained eyes
+and would be a source of confusion.  You were on 'master' and merged many
+things into it, but the resulting commit does not have 'master' as its
+first parent.  So far, ORIG_HEAD would always have matched HEAD^1 unless
+you fast-forwarded.  This alone may be a reason enough that this behaviour
+can never be the default.
+
+> diff --git a/git-merge.sh b/git-merge.sh
+> index 2acd2cc..5398606 100755
+> --- a/git-merge.sh
+> +++ b/git-merge.sh
+> @@ -209,24 +209,41 @@ parse_config () {
+> ...
+> +                       # This will preserve the order the user gave.
+> +                       ff_head=${real_parents%%$LF*}
+
+"%%$LF*"?  Heh, that's clever.
