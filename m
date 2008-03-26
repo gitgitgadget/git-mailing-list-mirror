@@ -1,71 +1,94 @@
-From: Joe Fiorini <joe@faithfulgeek.org>
-Subject: Re: Apply patch on server w/o git
-Date: Tue, 25 Mar 2008 23:03:58 -0400
-Message-ID: <323B72DF-3387-40ED-8235-213A9FAD6CDD@faithfulgeek.org>
-References: <CA08AA77-A9EA-4490-B1BE-25E8B7402290@faithfulgeek.org> <200803252057.38326.robin.rosenberg.lists@dewire.com>
-Mime-Version: 1.0 (Apple Message framework v919.2)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Wed Mar 26 04:05:04 2008
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] remote.c: Fix overtight refspec validation
+Date: Tue, 25 Mar 2008 20:31:49 -0700
+Message-ID: <7vod92jh3u.fsf@gitster.siamese.dyndns.org>
+References: <alpine.LNX.1.00.0803202049090.19665@iabervon.org>
+ <7v4pb0vhrg.fsf@gitster.siamese.dyndns.org>
+ <alpine.LNX.1.00.0803210014100.19665@iabervon.org>
+ <7vmyosskyu.fsf@gitster.siamese.dyndns.org>
+ <alpine.LNX.1.00.0803210134070.19665@iabervon.org>
+ <7v3aqksic6.fsf@gitster.siamese.dyndns.org>
+ <alpine.LNX.1.00.0803211148120.19665@iabervon.org>
+ <7vlk4boh6v.fsf@gitster.siamese.dyndns.org>
+ <alpine.LFD.1.00.0803251841420.2775@woody.linux-foundation.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org,
+	Samuel Tardieu <sam@rfc1149.net>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Mar 26 04:32:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JeLwe-0001d0-BI
-	for gcvg-git-2@gmane.org; Wed, 26 Mar 2008 04:04:56 +0100
+	id 1JeMNZ-0000bR-3z
+	for gcvg-git-2@gmane.org; Wed, 26 Mar 2008 04:32:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753914AbYCZDEK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Mar 2008 23:04:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753894AbYCZDEJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Mar 2008 23:04:09 -0400
-Received: from mail-out2.fuse.net ([216.68.8.171]:47665 "EHLO
-	mail-out2.fuse.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753794AbYCZDEI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2008 23:04:08 -0400
-X-CNFS-Analysis: v=1.0 c=1 a=VwQbUJbxAAAA:8 a=KZoMnzppOcJ4f3GpYxcA:9 a=RuS_QZMff0q8G51i8BUA:7 a=K8Qwyg0R74emVT3SKkCn1rcYVcYA:4 a=XF7b4UCPwd8A:10
-X-CM-Score: 0
-X-Scanned-by: Cloudmark Authority Engine
-Authentication-Results: gwout2 smtp.user=jfiorini@zoomtown.com; auth=pass (LOGIN)
-Received: from [66.93.11.195] ([66.93.11.195:64046] helo=[192.168.1.33])
-	by mail-out2.fuse.net (ecelerity 2.1.1.22 r(17669)) with ESMTPA
-	id E9/D0-05263-02DB9E74 for <robin.rosenberg.lists@dewire.com>; Tue, 25 Mar 2008 23:04:07 -0400
-In-Reply-To: <200803252057.38326.robin.rosenberg.lists@dewire.com>
-X-Mailer: Apple Mail (2.919.2)
+	id S1752286AbYCZDcB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Mar 2008 23:32:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752846AbYCZDcB
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Mar 2008 23:32:01 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:46946 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752253AbYCZDcA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2008 23:32:00 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id E44081C18;
+	Tue, 25 Mar 2008 23:31:58 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id F10191C17; Tue, 25 Mar 2008 23:31:52 -0400 (EDT)
+In-Reply-To: <alpine.LFD.1.00.0803251841420.2775@woody.linux-foundation.org>
+ (Linus Torvalds's message of "Tue, 25 Mar 2008 18:45:25 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78247>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78248>
 
-Thanks for all your replies.  Unfortunately, I cannot use git apply  
-because I will not have access to git on the server where I'm doing  
-the patch.  I will try Jan's suggestion of ignoring whitespace.
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
--Joe
-
-On Mar 25, 2008, at 3:57 PM, Robin Rosenberg wrote:
-
-> Den Tuesday 25 March 2008 19.25.58 skrev Joe Fiorini:
->> I am trying to generate a diff patch on my local dev box.  I want to
->> upload this patch to a server (running Windows Server 2008) and apply
->> it to my staging code.  The catch is: I cannot install git on the
->> server to accept the patch.  Therefore, I would like to use a generic
->> patching tool (such as patch from the GnuWin32 tools).  I tried
->> generating a unified diff with the following command:
+> On Fri, 21 Mar 2008, Junio C Hamano wrote:
 >>
->> git diff -U > diff.patch
->>
->> and then tried to apply it using:
->>
->> patch -u -i ..\other_dir\diff.patch
+>> We tightened the refspec validation code in an earlier ef00d15 (Tighten
+>> refspec processing, 2008-03-17) per my suggestion, but the suggestion was
+>> misguided to begin with and it broke this usage:
 >
-> You can try git-apply instead of patch. It is a bit smarter (and not
-> outsmarting itself either).
+> It seems to have also broken "git push --tags".
 >
-> -- robin
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> I now get 
+>
+> 	fatal: Invalid refspec 'refs/tags/*'
+>
+> which seems a bit sad.
+
+Yeah that indeed is very sad.  Given that Andrew identified another
+regression on the fetch side today, I am beginning to suspect that 1.5.4
+was still too early to merge the C rewrite.  On the other hand, until we
+tag, new features are not tested in the field, so...
+
+Especially that "refs/tags/*" is sad in that it is leaking an internal
+implementation detail.  I do not think the original code ever used
+wildcards on the push side, and it probably was a good idea to allow
+wildcards when the code was rewritten.
+
+In any case, this should fix it.
+
+ builtin-push.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/builtin-push.c b/builtin-push.c
+index b68c681..5316d6d 100644
+--- a/builtin-push.c
++++ b/builtin-push.c
+@@ -120,7 +120,7 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+ 	if (verbose)
+ 		flags |= TRANSPORT_PUSH_VERBOSE;
+ 	if (tags)
+-		add_refspec("refs/tags/*");
++		add_refspec("refs/tags/*:refs/tags/*");
+ 	if (all)
+ 		flags |= TRANSPORT_PUSH_ALL;
+ 	if (mirror)
