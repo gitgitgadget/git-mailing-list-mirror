@@ -1,74 +1,104 @@
-From: "Carlos Rica" <jasampler@gmail.com>
-Subject: Re: [PATCH] mktag.c: improve verification of tagger field and tests
-Date: Wed, 26 Mar 2008 12:21:57 +0100
-Message-ID: <1b46aba20803260421t4db4987gc6fc8b2e556032e0@mail.gmail.com>
-References: <1206490795-13247-1-git-send-email-casey@nrlssc.navy.mil>
-	 <47E99B98.1060506@nrlssc.navy.mil>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC/PATCH 2/4] Restructuring git-merge.sh
+Date: Wed, 26 Mar 2008 05:40:43 -0700 (PDT)
+Message-ID: <m3od91vetv.fsf@localhost.localdomain>
+References: <402c10cd0803252056n122cae6cv1a6f4e46a5fb5096@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Brandon Casey" <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Wed Mar 26 12:22:43 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+To: "Sverre Hvammen Johansen" <hvammen@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 26 13:41:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JeTiM-0002td-G4
-	for gcvg-git-2@gmane.org; Wed, 26 Mar 2008 12:22:42 +0100
+	id 1JeUwa-00050F-G3
+	for gcvg-git-2@gmane.org; Wed, 26 Mar 2008 13:41:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752426AbYCZLWA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Mar 2008 07:22:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752654AbYCZLWA
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Mar 2008 07:22:00 -0400
-Received: from wx-out-0506.google.com ([66.249.82.234]:62562 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751172AbYCZLV7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Mar 2008 07:21:59 -0400
-Received: by wx-out-0506.google.com with SMTP id h31so4043604wxd.4
-        for <git@vger.kernel.org>; Wed, 26 Mar 2008 04:21:58 -0700 (PDT)
+	id S1756241AbYCZMkr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Mar 2008 08:40:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756231AbYCZMkr
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Mar 2008 08:40:47 -0400
+Received: from wa-out-1112.google.com ([209.85.146.182]:42087 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756202AbYCZMkq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Mar 2008 08:40:46 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so4345494wah.23
+        for <git@vger.kernel.org>; Wed, 26 Mar 2008 05:40:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=82ajmZBotSwA2sx+co2uKg/hPGj7v8bHR0SdkOKd4S8=;
-        b=oqs8PMgcSFeRzE8a/CUOZoAhsnzpxOE8fWfnO1abVHzXGtsze+pYgVF1eCBhJ34NDp6GxLVCMX0FXKqJyXcfN2pX6WZbhmWJn1O3GYc9nz0uuto9DWWysvHVNtpS0n+v7uduSTsAXOfdcRzVe7838ppP7RDKLo+x7O9y/lWro8o=
+        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
+        bh=Qunm7ef5zsGkPSlj7H2yvr1vzbVILsrTRhmI/WRZJIU=;
+        b=Ri+QW8pCqhKiYJ9UwPvlfiM4vwk0gF1PBFVIyL0iFoAc+WUECom8nw95SCQ3tw0xekDtMBjL8egxPP6GSCCxcC8bAGAZyDe4AjQqExlscLrVDXliHfwAYntNrodfIaZj+RlfRRLWJ03CBokW3d4M+okgKdQbHB3FqNCEnNAu94o=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=UM5y/woUJa33kAnZhOoUrcoI+lKywxG8c5T5qgtutmV8cdvkqaBxpwcAxOOpSGDrvt1EUzA8Q3mih0HPTm2nCM8xaIigo+AOUNo5nBHFsd/f0HyGoy2iauZiMHCl/UuTIvRD1yKqGOdzBr2WtLdKuqdBDx0FAhYEW+7MlLn95cw=
-Received: by 10.141.91.12 with SMTP id t12mr4301078rvl.138.1206530517901;
-        Wed, 26 Mar 2008 04:21:57 -0700 (PDT)
-Received: by 10.141.115.5 with HTTP; Wed, 26 Mar 2008 04:21:57 -0700 (PDT)
-In-Reply-To: <47E99B98.1060506@nrlssc.navy.mil>
-Content-Disposition: inline
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
+        b=Yy4aeGtnzaFPNNjOu5/P0PyJMSUFy11wgr0DEpCtsQJDiL/l+rz5HqLPz5fzHKCRw1AWbQg44Lr9JE15WZ0Xrkc5IWLrgsfjWZIF1XCaUMAiL/ecPzRDSu4/YRYKBJAgLl5YKmnOVlpSB8PL7W2pUYLRr2zX+uPy23oSzWrQ+S8=
+Received: by 10.114.180.1 with SMTP id c1mr915528waf.121.1206535244480;
+        Wed, 26 Mar 2008 05:40:44 -0700 (PDT)
+Received: from localhost.localdomain ( [83.8.230.153])
+        by mx.google.com with ESMTPS id g12sm17985721nfb.27.2008.03.26.05.40.41
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 26 Mar 2008 05:40:43 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m2QCeSbg005143;
+	Wed, 26 Mar 2008 13:40:34 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m2QCeOwl005136;
+	Wed, 26 Mar 2008 13:40:24 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <402c10cd0803252056n122cae6cv1a6f4e46a5fb5096@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78281>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78282>
 
-On Wed, Mar 26, 2008 at 1:40 AM, Brandon Casey <casey@nrlssc.navy.mil> wrote:
->  Well, since I looked at this code and used it in filter-branch, I figured I
->  should fix the verification code for the tagger field (even though it's
->  probably dieing soon).
->
->  I'm thinking this utility should be fairly strict about the format it accepts.
+"Sverre Hvammen Johansen" <hvammen@gmail.com> writes:
 
-Why not using git-tag to make tags in filter-branch?
+> for preparation of new feature:
 
-git-mktag was used in git-tag.sh before convert it into
-builtin-tag.c, and I didn't know that anyone was using it.
+A bit of nit-picking: I'd like to have full sentences in commit
+message (in the commit description); continuing first line isn't the
+best style, IMHO.  I'd write instead the following:
 
-I agree that, if this program exists and it is used,
-we should double-check the accepted format and data,
-so this patch is a good addition.
+  Restructure git-merge.sh, adding find_real_parents() function,
+  in preparation for new feature:
+ 
+>    Head reduction before selecting merge strategy
+> 
+> Signed-off-by: Sverre Hvammen Johansen <hvammen@gmail.com>
+> ---
+>  git-merge.sh |  166 ++++++++++++++++++++++++++++++----------------------------
+>  1 files changed, 85 insertions(+), 81 deletions(-)
+> 
+> diff --git a/git-merge.sh b/git-merge.sh
+> index 17f40f2..2acd2cc 100755
+> --- a/git-merge.sh
+> +++ b/git-merge.sh
+> @@ -207,6 +207,29 @@ parse_config () {
+>         args_left=$#
+>  }
+> 
+> +# Find real parents
+> +# Set the following variables as followd:
+> +#   real_parents: The parents specified on the command line
 
-However, I think that we should progressively deprecate its
-use to avoid mantaining two different ways for creating tags,
-so you must have a very good reason to keep using
-this tool in a script...
+Not specified_parents, or arg_parents?
 
-Regards
+> +#   common:       All common ancestors or not_queried
+> +#   ff_head:      Fast forward of head
+> +find_real_parents () {
 
---
-Carlos
+Very nice.
+
+> +       real_parents=$(git rev-parse "$@")
+> +       real_parents=${real_parents#$LF}
+
+Why this trick with adding $LF?
+
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
