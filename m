@@ -1,180 +1,101 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] fsck --lost-found: show found commits human readably
-Date: Tue, 25 Mar 2008 23:45:47 -0700
-Message-ID: <7vbq52gezo.fsf@gitster.siamese.dyndns.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH] Fix branches file configuration
+Date: Wed, 26 Mar 2008 02:51:28 -0400 (EDT)
+Message-ID: <alpine.LNX.1.00.0803260240570.19665@iabervon.org>
+References: <alpine.LNX.1.00.0803251931500.19665@iabervon.org> <7v3aqel5ms.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 26 07:46:53 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Andrew Morton <akpm@linux-foundation.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 26 07:52:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JePPM-0006Ic-Fc
-	for gcvg-git-2@gmane.org; Wed, 26 Mar 2008 07:46:48 +0100
+	id 1JePUc-0007IR-7a
+	for gcvg-git-2@gmane.org; Wed, 26 Mar 2008 07:52:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752426AbYCZGqG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Mar 2008 02:46:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752790AbYCZGqG
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Mar 2008 02:46:06 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:34157 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751452AbYCZGqF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Mar 2008 02:46:05 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id EC8B2193F;
-	Wed, 26 Mar 2008 02:46:02 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id DFCCE193E; Wed, 26 Mar 2008 02:45:59 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751965AbYCZGvb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Mar 2008 02:51:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751599AbYCZGva
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Mar 2008 02:51:30 -0400
+Received: from iabervon.org ([66.92.72.58]:38823 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751375AbYCZGva (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Mar 2008 02:51:30 -0400
+Received: (qmail 16235 invoked by uid 1000); 26 Mar 2008 06:51:28 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 26 Mar 2008 06:51:28 -0000
+In-Reply-To: <7v3aqel5ms.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78267>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78268>
 
-An earlier commit fc8b5f0 (Deprecate git-lost-found, 2007-11-08) declared
-"lost-found" deprecated, because "fsck" learned "--lost-found" option that
-drops the found objects in $GIT_DIR/lost-found.
+On Tue, 25 Mar 2008, Junio C Hamano wrote:
 
-But the output from the lost-found program has been much more informative
-than the plain vanilla "git fsck" (or "git fsck --lost-found") output.  In
-that sense, forcing users to use "fsck --lost-found" when they want to use
-"lost-found" is a regression.
+> Daniel Barkalow <barkalow@iabervon.org> writes:
+> 
+> > It turns out that .git/branches/foo should fetch into refs/heads/foo.
+> >
+> > Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
+> > ---
+> > We still don't have a test for that bit of the behavior, so I could have 
+> > it still doing the wrong thing. But it at least should do what I think 
+> > people want.
+> >
+> > Andrew, could you give this a try, on top of current master (or, for that 
+> > matter, any released version that doesn't work), and let me know if it 
+> > does the wrong thing?
+> 
+> To give bystanders a bit of context, Andrew had an old Cogito-style
+> 
+> 	.git/branches/foo
+> 
+> that had a URL (and no #frag) in it.  "git fetch foo" should have fetched
+> from the 'master' branch of the named repository and stored it in his
+> refs/heads/foo, and git up to 1.5.3.X series do so correctly, but we had
+> this uncaught regression in 1.5.4 (the support for "branches" file is not
+> deprecated, even though I personally do not see a reason to use it in new
+> repositories).
+> 
+> Now, Daniel, I was independently fixing this one and had a question about
+> this code.
+> 
+> What is the deal with this "slash" magic?  It appears that when you are
+> fed:
+> 
+> 	git fetch foo/bar
+> 
+> you look up ".git/branches/foo" for $URL and #$branch, then use "$URL/bar"
+> as the URL and $branch (or 'master' if you did not see '#') as the branch
+> to fetch from, and store it in "foo/bar" locally.  Is that really what
+> should have happened?  I am reasonably sure about "fetching from $URL/bar"
+> part, but I am unsure about "store in foo/bar" part.
+> 
+> Any Cogito survivers out there who knows how this was supposed to have
+> worked?  We can go back and look at git-fetch.sh (in contrib/examples),
+> but I'd rather be lazy ;-)
 
-This patch slightly enhances the output from "fsck --lost-found" to add
-oneline description at the end of the usual "dangling <type> <sha-1>"
-message for commit objects it found.
+This code actually is from Linus, nearly 2 years ago, converting 
+git-push.sh; I then moved it from builtin-push.c to remote.c and later 
+added support to remote.c for the fetch side aspects while leaving that 
+part of the code alone. Of course, I didn't realize at any point that, as 
+a fetch configuration, a branches configuration ever stored things 
+anywhere, and it looks like it didn't with a slash. (See line 115 of 
+755225de:git-parse-remote.sh)
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
+So I guess there should be:
 
- * Is it just me, or were we very sloppy during 1.5.4 cycle that we are
-   getting hit by regressions left and right today from that period?
+> >  	add_url_alias(remote, p);
+> > -	add_fetch_refspec(remote, branch);
+        if (!slash)
+> > +	strbuf_addf(&branch, ":refs/heads/%s", remote->name);
+> > +	add_fetch_refspec(remote, strbuf_detach(&branch, 0));
+> >  	remote->fetch_tags = 1; /* always auto-follow */
+> >  }
 
-   This looks bigger than it really is because most of it is about
-   moving a deeply nested part of another function into a separate
-   function.
-
-   This is _not_ a 1.5.5 material, as we are not removing git-lost-found
-   yet.  We might however want to revert fc8b5f0, though, until an
-   enhancement along this line is in the mainline.
-
- builtin-fsck.c |   94 ++++++++++++++++++++++++++++++++++++++------------------
- 1 files changed, 64 insertions(+), 30 deletions(-)
-
-diff --git a/builtin-fsck.c b/builtin-fsck.c
-index 78a6e1f..b57cc78 100644
---- a/builtin-fsck.c
-+++ b/builtin-fsck.c
-@@ -145,6 +145,68 @@ static void check_reachable_object(struct object *obj)
- 	}
- }
- 
-+static void dangling_object(struct object *obj)
-+{
-+	char *filename;
-+	FILE *f;
-+	enum object_type type;
-+	unsigned long size;
-+	char *buf = NULL;
-+
-+	if (!write_lost_and_found)
-+		goto report_and_exit;
-+
-+	filename = git_path("lost-found/%s/%s",
-+			    obj->type == OBJ_COMMIT ? "commit" : "other",
-+			    sha1_to_hex(obj->sha1));
-+
-+	if (safe_create_leading_directories(filename)) {
-+		error("Could not create lost-found");
-+		return;
-+	}
-+	if (!(f = fopen(filename, "w")))
-+		die("Could not open %s", filename);
-+	if (obj->type == OBJ_BLOB || obj->type == OBJ_COMMIT)
-+		buf = read_sha1_file(obj->sha1, &type, &size);
-+
-+	if (obj->type == OBJ_BLOB) {
-+		if (buf) {
-+			fwrite(buf, size, 1, f);
-+			free(buf);
-+		}
-+	} else
-+		fprintf(f, "%s\n", sha1_to_hex(obj->sha1));
-+	fclose(f);
-+
-+	if (obj->type == OBJ_COMMIT) {
-+		struct strbuf sb = STRBUF_INIT;
-+		struct commit *commit = lookup_commit(obj->sha1);
-+		int reported = 0;
-+
-+		if (!commit->buffer)
-+			commit->buffer = buf;
-+		if (commit->buffer) {
-+			parse_commit(commit);
-+			pretty_print_commit(CMIT_FMT_ONELINE, commit, &sb,
-+					    0, NULL, NULL, 0, 0);
-+			printf("dangling commit %s (%s)\n",
-+			       sha1_to_hex(obj->sha1), sb.buf);
-+			reported = 1;
-+		}
-+		strbuf_release(&sb);
-+		free(commit->buffer);
-+		if (buf && commit->buffer != buf)
-+			free(buf);
-+		commit->buffer = NULL;
-+		if (reported)
-+			return;
-+	}
-+
-+ report_and_exit:
-+	printf("dangling %s %s\n", typename(obj->type),
-+	       sha1_to_hex(obj->sha1));
-+}
-+
- /*
-  * Check a single unreachable object
-  */
-@@ -180,36 +242,8 @@ static void check_unreachable_object(struct object *obj)
- 	 * deleted a branch by mistake, this is a prime candidate to
- 	 * start looking at, for example.
- 	 */
--	if (!obj->used) {
--		printf("dangling %s %s\n", typename(obj->type),
--		       sha1_to_hex(obj->sha1));
--		if (write_lost_and_found) {
--			char *filename = git_path("lost-found/%s/%s",
--				obj->type == OBJ_COMMIT ? "commit" : "other",
--				sha1_to_hex(obj->sha1));
--			FILE *f;
--
--			if (safe_create_leading_directories(filename)) {
--				error("Could not create lost-found");
--				return;
--			}
--			if (!(f = fopen(filename, "w")))
--				die("Could not open %s", filename);
--			if (obj->type == OBJ_BLOB) {
--				enum object_type type;
--				unsigned long size;
--				char *buf = read_sha1_file(obj->sha1,
--						&type, &size);
--				if (buf) {
--					fwrite(buf, size, 1, f);
--					free(buf);
--				}
--			} else
--				fprintf(f, "%s\n", sha1_to_hex(obj->sha1));
--			fclose(f);
--		}
--		return;
--	}
-+	if (!obj->used)
-+		dangling_object(obj);
- 
- 	/*
- 	 * Otherwise? It's there, it's unreachable, and some other unreachable
+	-Daniel
+*This .sig left intentionally blank*
