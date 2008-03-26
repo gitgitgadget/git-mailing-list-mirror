@@ -1,66 +1,74 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: Undo git-rm without commit?
-Date: Wed, 26 Mar 2008 10:48:03 +0100
-Message-ID: <vpqve3995po.fsf@bauges.imag.fr>
-References: <D6386C1A-92D3-4E11-8DE6-CC7553211A33@faithfulgeek.org>
-	<20080326062635.GC26286@coredump.intra.peff.net>
-	<0535D2B4-0C4A-40D0-879A-7E0C5B3B48E4@faithfulgeek.org>
+From: "Carlos Rica" <jasampler@gmail.com>
+Subject: Re: [PATCH] mktag.c: improve verification of tagger field and tests
+Date: Wed, 26 Mar 2008 12:21:57 +0100
+Message-ID: <1b46aba20803260421t4db4987gc6fc8b2e556032e0@mail.gmail.com>
+References: <1206490795-13247-1-git-send-email-casey@nrlssc.navy.mil>
+	 <47E99B98.1060506@nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Joe Fiorini <joe@faithfulgeek.org>
-X-From: git-owner@vger.kernel.org Wed Mar 26 10:50:09 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Brandon Casey" <casey@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Wed Mar 26 12:22:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JeSGR-0003Be-VT
-	for gcvg-git-2@gmane.org; Wed, 26 Mar 2008 10:49:48 +0100
+	id 1JeTiM-0002td-G4
+	for gcvg-git-2@gmane.org; Wed, 26 Mar 2008 12:22:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753825AbYCZJtF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Mar 2008 05:49:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753706AbYCZJtE
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Mar 2008 05:49:04 -0400
-Received: from harmonie.imag.fr ([147.171.130.40]:38290 "EHLO harmonie.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753254AbYCZJtB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Mar 2008 05:49:01 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by harmonie.imag.fr (8.13.8/8.13.8) with ESMTP id m2Q9m72V007725;
-	Wed, 26 Mar 2008 10:48:08 +0100 (CET)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1JeSEl-00032j-Mc; Wed, 26 Mar 2008 10:48:03 +0100
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1JeSEl-0008Hl-KO; Wed, 26 Mar 2008 10:48:03 +0100
-In-Reply-To: <0535D2B4-0C4A-40D0-879A-7E0C5B3B48E4@faithfulgeek.org> (Joe Fiorini's message of "Wed\, 26 Mar 2008 02\:38\:42 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (harmonie.imag.fr [147.171.130.40]); Wed, 26 Mar 2008 10:48:08 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1752426AbYCZLWA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Mar 2008 07:22:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752654AbYCZLWA
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Mar 2008 07:22:00 -0400
+Received: from wx-out-0506.google.com ([66.249.82.234]:62562 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751172AbYCZLV7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Mar 2008 07:21:59 -0400
+Received: by wx-out-0506.google.com with SMTP id h31so4043604wxd.4
+        for <git@vger.kernel.org>; Wed, 26 Mar 2008 04:21:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=82ajmZBotSwA2sx+co2uKg/hPGj7v8bHR0SdkOKd4S8=;
+        b=oqs8PMgcSFeRzE8a/CUOZoAhsnzpxOE8fWfnO1abVHzXGtsze+pYgVF1eCBhJ34NDp6GxLVCMX0FXKqJyXcfN2pX6WZbhmWJn1O3GYc9nz0uuto9DWWysvHVNtpS0n+v7uduSTsAXOfdcRzVe7838ppP7RDKLo+x7O9y/lWro8o=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=UM5y/woUJa33kAnZhOoUrcoI+lKywxG8c5T5qgtutmV8cdvkqaBxpwcAxOOpSGDrvt1EUzA8Q3mih0HPTm2nCM8xaIigo+AOUNo5nBHFsd/f0HyGoy2iauZiMHCl/UuTIvRD1yKqGOdzBr2WtLdKuqdBDx0FAhYEW+7MlLn95cw=
+Received: by 10.141.91.12 with SMTP id t12mr4301078rvl.138.1206530517901;
+        Wed, 26 Mar 2008 04:21:57 -0700 (PDT)
+Received: by 10.141.115.5 with HTTP; Wed, 26 Mar 2008 04:21:57 -0700 (PDT)
+In-Reply-To: <47E99B98.1060506@nrlssc.navy.mil>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78280>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78281>
 
-Joe Fiorini <joe@faithfulgeek.org> writes:
+On Wed, Mar 26, 2008 at 1:40 AM, Brandon Casey <casey@nrlssc.navy.mil> wrote:
+>  Well, since I looked at this code and used it in filter-branch, I figured I
+>  should fix the verification code for the tagger field (even though it's
+>  probably dieing soon).
+>
+>  I'm thinking this utility should be fairly strict about the format it accepts.
 
-> Yeah, it warned me, I wasn't being careful enough.  I guess I didn't
-> think it would remove from the working tree, just the repository.  My
-> err for not reading the docs until _after_ the mistake.
+Why not using git-tag to make tags in filter-branch?
 
-Reading the error message would have done it also :-\.
+git-mktag was used in git-tag.sh before convert it into
+builtin-tag.c, and I didn't know that anyone was using it.
 
->>  error: 'file' has changes staged in the index
->>  (use --cached to keep the file, or -f to force removal)
-         ^^^^^^^^^^^^^^^^^^^^^^^^^
+I agree that, if this program exists and it is used,
+we should double-check the accepted format and data,
+so this patch is a good addition.
 
-Good luck with lost+found, still !
+However, I think that we should progressively deprecate its
+use to avoid mantaining two different ways for creating tags,
+so you must have a very good reason to keep using
+this tool in a script...
 
--- 
-Matthieu
+Regards
+
+--
+Carlos
