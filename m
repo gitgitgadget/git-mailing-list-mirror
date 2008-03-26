@@ -1,89 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Auto detaching head options (Re: Working copy revision and push
- pain)
-Date: Wed, 26 Mar 2008 11:49:44 -0700
-Message-ID: <7v3aqde2wn.fsf@gitster.siamese.dyndns.org>
-References: <47E658D3.1060104@jwatt.org>
- <51419b2c0803230645l5b07bbf5h9cbf9b6f47373efa@mail.gmail.com>
- <47E6612A.5020408@jwatt.org>
- <51419b2c0803230706w5ff88fc7oc7e8e34ab8afa1fd@mail.gmail.com>
- <alpine.LSU.1.00.0803231519380.4353@racer.site> <47E66DAA.4080807@jwatt.org>
- <alpine.LSU.1.00.0803231555380.4353@racer.site> <47E6765D.2020103@jwatt.org>
- <alpine.LSU.1.00.0803231658460.4353@racer.site>
- <20080325192552.GC4857@efreet.light.src>
- <20080325232424.GB5273@coredump.intra.peff.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: fallback to system-wide config file if default config does not exist
+Date: Wed, 26 Mar 2008 20:20:52 +0100
+Organization: At home
+Message-ID: <fse7mi$pop$1@ger.gmane.org>
+References: <20080326181119.25618.qmail@065038ef0fc11c.315fe32.mid.smarden.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jan Hudec <bulb@ucw.cz>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jonathan Watt <jwatt@jwatt.org>,
-	Elijah Newren <newren@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Mar 26 19:51:00 2008
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 26 20:21:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jeai0-0001AP-VN
-	for gcvg-git-2@gmane.org; Wed, 26 Mar 2008 19:50:49 +0100
+	id 1JebBy-0005rZ-BS
+	for gcvg-git-2@gmane.org; Wed, 26 Mar 2008 20:21:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758148AbYCZSuF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Mar 2008 14:50:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756352AbYCZSuF
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Mar 2008 14:50:05 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:40990 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753505AbYCZSuE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Mar 2008 14:50:04 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 29F6B54BE;
-	Wed, 26 Mar 2008 14:50:02 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id B8D2954BB; Wed, 26 Mar 2008 14:49:53 -0400 (EDT)
-In-Reply-To: <20080325232424.GB5273@coredump.intra.peff.net> (Jeff King's
- message of "Tue, 25 Mar 2008 19:24:24 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754730AbYCZTVB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 Mar 2008 15:21:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754676AbYCZTVB
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Mar 2008 15:21:01 -0400
+Received: from main.gmane.org ([80.91.229.2]:59805 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754595AbYCZTVA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Mar 2008 15:21:00 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1JebBA-0001Ex-Ea
+	for git@vger.kernel.org; Wed, 26 Mar 2008 19:20:56 +0000
+Received: from abwg153.neoplus.adsl.tpnet.pl ([83.8.230.153])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 26 Mar 2008 19:20:56 +0000
+Received: from jnareb by abwg153.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 26 Mar 2008 19:20:56 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: abwg153.neoplus.adsl.tpnet.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78299>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78300>
 
-Jeff King <peff@peff.net> writes:
+Gerrit Pape wrote:
 
-> FWIW, I also initially thought this was only a "HEAD" problem, but I
-> think Junio's recent argument makes a lot of sense: the problem is not
-> one of working tree and HEAD sync, nor even of detached versus ref HEAD.
-> The problem is that somebody is using the non-bare repository to do
-> stuff (why else would it be non-bare), and you are changing the state
-> behind their back.
+> From a distribution point of view, configuration files for applicatio=
+ns
+> should reside in /etc/. =A0On the other hand it's convenient for mult=
+iple
+> instances of gitweb (e.g. virtual web servers on a single machine) to=
+ have
+> a per-instance configuration file, just as gitweb currently supports
+> through the file gitweb_config.perl next to the cgi.
+>=20
+> To support both at runtime, this commit introduces GITWEB_CONFIG_SYST=
+EM as
+> a system-wide configuration file which will be used as a fallback if =
+the
+> config file sprecified throug GITWEB_CONFIG does not exist.
+>=20
+> See also
+> =A0http://bugs.debian.org/450592
 
-For people who are overwhelmed by the volume of the list traffic, the
-relevant thread is:
+Acked-by: Jakub Narebski <jnareb@gmail.com>
 
-  http://thread.gmane.org/gmane.comp.version-control.git/77955/focus=78062
-
-> Isn't this essentially the 'base' index extension that Junio did a
-> while back? It was eventually reverted (or perhaps never merged, I don't
-> recall).
-
-It was in 'next' for a while but was reverted before it hit 'master':
-
-  http://thread.gmane.org/gmane.comp.version-control.git/44360/focus=44508
-
-> But maybe you are referencing it here:
->
->>    It would really be similar to the revision number in index proposal,
->>    except less invasive and I actually believe there is a case (some form of
->>    checkout or reset), where we want to read-tree, but not change this ref.
->
-> I don't recall the reasons the base extension was not accepted, but I
-> think it would make sense to frame your argument as "this is like X;
-> people didn't like X for reason Y, but my proposal fixes this by..."
-
-But if you take the position "work tree belongs to the repository owner
-and nobody has any business pushing into it sideways; push into acceptance
-branch and let the work tree owner merge it when able", the history of the
-failed index base experiment becomes irrelevant.
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
