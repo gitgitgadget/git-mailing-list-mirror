@@ -1,96 +1,113 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: faster egit history page and a pure java "gitk"
-Date: Wed, 26 Mar 2008 00:52:44 -0400
-Message-ID: <20080326045244.GH4759@spearce.org>
-References: <20080324092726.GQ8410@spearce.org> <47E8889E.6090403@intelinet.com.br> <20080325053649.GE4759@spearce.org> <47E9A8BE.4010606@intelinet.com.br>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH] remote.c: Fix overtight refspec validation
+Date: Wed, 26 Mar 2008 01:42:02 -0400 (EDT)
+Message-ID: <alpine.LNX.1.00.0803260130390.19665@iabervon.org>
+References: <alpine.LNX.1.00.0803202049090.19665@iabervon.org> <7v4pb0vhrg.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0803210014100.19665@iabervon.org> <7vmyosskyu.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0803210134070.19665@iabervon.org>
+ <7v3aqksic6.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0803211148120.19665@iabervon.org> <7vlk4boh6v.fsf@gitster.siamese.dyndns.org> <alpine.LFD.1.00.0803251841420.2775@woody.linux-foundation.org> <7vod92jh3u.fsf@gitster.siamese.dyndns.org>
+ <7vfxuejf9d.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Robin Rosenberg <robin.rosenberg@dewire.com>, git@vger.kernel.org
-To: "Roger C. Soares" <rogersoares@intelinet.com.br>
-X-From: git-owner@vger.kernel.org Wed Mar 26 05:53:35 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	git@vger.kernel.org, Samuel Tardieu <sam@rfc1149.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 26 06:43:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JeNdl-0000jO-I7
-	for gcvg-git-2@gmane.org; Wed, 26 Mar 2008 05:53:33 +0100
+	id 1JeOPa-00014Q-Lc
+	for gcvg-git-2@gmane.org; Wed, 26 Mar 2008 06:42:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751781AbYCZEww (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Mar 2008 00:52:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752111AbYCZEww
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Mar 2008 00:52:52 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:33483 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750934AbYCZEww (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Mar 2008 00:52:52 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1JeNd0-0004Uv-Av; Wed, 26 Mar 2008 00:52:46 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id B1EFE20FBAE; Wed, 26 Mar 2008 00:52:44 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <47E9A8BE.4010606@intelinet.com.br>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1751161AbYCZFmH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Mar 2008 01:42:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751537AbYCZFmG
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Mar 2008 01:42:06 -0400
+Received: from iabervon.org ([66.92.72.58]:48792 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751062AbYCZFmF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Mar 2008 01:42:05 -0400
+Received: (qmail 13585 invoked by uid 1000); 26 Mar 2008 05:42:02 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 26 Mar 2008 05:42:02 -0000
+In-Reply-To: <7vfxuejf9d.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78256>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78257>
 
-"Roger C. Soares" <rogersoares@intelinet.com.br> wrote:
-> Shawn O. Pearce escreveu:
-> >Hmm.  How long does C Git take for "git rev-list HEAD >/dev/null" ?
-> >I have thus far only tuned the lower level machinary, and there
-> >may still be tuning left there, but I _really_ have not tried to
-> >tune the plotting portion yet.
-> >
-> >I did push something out a few minutes ago (b66eae Limit the number
-> >of UI refreshes ...) that may help improve performance on larger
-> >histories.
->  
-> "git rev-list HEAD >/dev/null" returns very fast, around 1 sec I'd say. 
-> My git clone has 0 loose objects and 1 pack.
+On Tue, 25 Mar 2008, Junio C Hamano wrote:
 
-OK, so its well packed and C Git behaves nicely.  :)
+> This however has unintended side effect of allowing 
+> 
+> 	[remote "bour"]
+>         	url = ../neighbour
+>                 fetch = refs/heads/*
+> 
+> at the syntax level.  I do not know offhand the fetch backends are
+> prepared to deal with such wildcard patterns.
+> 
+> Daniel?
 
-> I updated from your repo some minutes ago and it's pretty decent now. 
-> The history appears very fast, even changing projects, and for the git 
-> clone the progress bar disapears in around 7 seconds. :)
+It's not a matter of the backends, which don't implement any of the 
+control flow in the fetch direction; it's get_expanded_map(), which needs 
+to be told that you can have something match a pattern but not have a 
+local tracking ref.
 
-So it must have been the massive flurry of UI updates that I used to
-be doing during revision walking.  I backed it off to at most 4 times
-per second, which seems to help.
+OTOH, the only use for such a pattern is an octopus merge of whatever 
+branches a remote happens to have, right? I remember thinking this was a 
+non-useful refspec when I was dealing with the fetch code (and then 
+forgetting that it was useful for push). It might be better to just 
+disallow it in the direction-specific semantic checks.
 
-FWIW I just pushed another update out:
+Here's the patch to make it work, anyway:
+----
 
- * re-activates the old preferences for hiding/showing the commit
-   message and file list;
+commit 6a8bcb917e1aa9b3c972f14f618ab573e457ebee
+Author: Daniel Barkalow <barkalow@iabervon.org>
+Date:   Wed Mar 26 01:39:07 2008 -0400
 
- * word wrap setting for the comment viewer area;
+    Support fetching refspecs like "refs/heads/*"
+    
+    Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
 
- * saves the geometry (split pane positions) of the history page
-   in a hidden preference;
-
- * copy and select all global actions (Edit->Copy aka Ctrl-C) now
-   works to copy:
-     - selected text in comment area;
-	 - selected path names in the file list;
-	 - commit SHA-1s of selected commits in DAG;
-
- * the window cache is now managed by Eclipse workspace settings
-   when inside Eclipse;
-
- * the window cache now defaults to 8k/10m/10m/no-mmap as that is
-   working very well for me on multiple systems;
-
- * global workspace preferences (Team -> Git) now shows the history
-   preferences and the window cache settings
-
--- 
-Shawn.
+diff --git a/remote.c b/remote.c
+index a027bca..f8f4b34 100644
+--- a/remote.c
++++ b/remote.c
+@@ -998,22 +998,24 @@ static struct ref *get_expanded_map(const struct ref *remote_refs,
+ 	struct ref **tail = &ret;
+ 
+ 	int remote_prefix_len = strlen(refspec->src);
+-	int local_prefix_len = strlen(refspec->dst);
++	int local_prefix_len = refspec->dst ? strlen(refspec->dst) : 0;
+ 
+ 	for (ref = remote_refs; ref; ref = ref->next) {
+ 		if (strchr(ref->name, '^'))
+ 			continue; /* a dereference item */
+ 		if (!prefixcmp(ref->name, refspec->src)) {
+-			const char *match;
+ 			struct ref *cpy = copy_ref(ref);
+-			match = ref->name + remote_prefix_len;
+-
+-			cpy->peer_ref = alloc_ref(local_prefix_len +
+-						  strlen(match) + 1);
+-			sprintf(cpy->peer_ref->name, "%s%s",
+-				refspec->dst, match);
+-			if (refspec->force)
+-				cpy->peer_ref->force = 1;
++
++			if (refspec->dst) {
++				const char *match = ref->name + 
++					remote_prefix_len;
++				cpy->peer_ref = alloc_ref(local_prefix_len +
++							  strlen(match) + 1);
++				sprintf(cpy->peer_ref->name, "%s%s",
++					refspec->dst, match);
++				if (refspec->force)
++					cpy->peer_ref->force = 1;
++			}
+ 			*tail = cpy;
+ 			tail = &cpy->next;
+ 		}
