@@ -1,55 +1,85 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git failure on Solaris t3701-add-interactive.sh -- git version
-	5cc8f372509298d13632d8784bc851a587937550
-Date: Wed, 26 Mar 2008 14:34:54 -0400
-Message-ID: <20080326183453.GA4471@coredump.intra.peff.net>
-References: <8ec76080803250529i5765cc9ar2d6fc3356800cb14@mail.gmail.com> <8ec76080803250534x5373b0c6p6165a7dc17971e4a@mail.gmail.com> <20080325234033.GA18348@coredump.intra.peff.net> <8ec76080803260519s6088b773qc3a9cf982993f53@mail.gmail.com>
+From: Gerrit Pape <pape@smarden.org>
+Subject: [PATCH] tcl/tk8.5: fix changing colors through Edit->Preferences
+Date: Wed, 26 Mar 2008 18:45:26 +0000
+Message-ID: <20080326184526.2240.qmail@b31b9595cabb35.315fe32.mid.smarden.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Whit Armstrong <armstrong.whit@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 26 19:36:43 2008
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org, Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Wed Mar 26 19:46:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JeaTM-0002pl-B7
-	for gcvg-git-2@gmane.org; Wed, 26 Mar 2008 19:35:40 +0100
+	id 1JeadX-0007Zl-8u
+	for gcvg-git-2@gmane.org; Wed, 26 Mar 2008 19:46:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758210AbYCZSe5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Mar 2008 14:34:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758078AbYCZSe5
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Mar 2008 14:34:57 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1688 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755246AbYCZSe4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Mar 2008 14:34:56 -0400
-Received: (qmail 29204 invoked by uid 111); 26 Mar 2008 18:34:55 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 26 Mar 2008 14:34:55 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 26 Mar 2008 14:34:54 -0400
+	id S1757773AbYCZSpK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Mar 2008 14:45:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760219AbYCZSpJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Mar 2008 14:45:09 -0400
+Received: from a.ns.smarden.org ([212.42.242.37]:59570 "HELO a.mx.smarden.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1757773AbYCZSpI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Mar 2008 14:45:08 -0400
+Received: (qmail 2241 invoked by uid 1000); 26 Mar 2008 18:45:26 -0000
 Content-Disposition: inline
-In-Reply-To: <8ec76080803260519s6088b773qc3a9cf982993f53@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78297>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78298>
 
-On Wed, Mar 26, 2008 at 08:19:48AM -0400, Whit Armstrong wrote:
+With tcl/tk8.5 the lset command seems to behave differently.  When
+changing the background color through Edit->Preferences, the changes
+are applied, but new dialogs, such as View->New view... barf with
 
-> You mean for Solaris 5.8, you don't get as far as this test?  All the
-> systems here are on Solaris 5.9, but they are years away from
-> upgrading to Solaris 10.
+ Error: unknown color name "{#ffffff}"
 
-I mean when I run t3701, add-interactive barfs way before the error you
-mention. It doesn't even like the 'our' keyword.
+Additionally when closing gitk, and starting it up again, a bad value
+has been saved to ~/.gitk, preventing gitk from running properly; it
+fails with
 
-> we have perl 5.6.1 on our systems:
+ Error in startup script: unknown color name "{#ffffff}"
+ ...
 
-Ah, that's recent-ish. Solaris 5.8 comes with perl 5.005. I think in
-general git tries to target perl 5.6.
+This commit changes the color dialogs to not handle variables containing
+just a single color value as tcl lists, which fixes the issue.  Tested
+with tcl/tk8.4 and 8.5.
 
-I'll see if I can dig up perl 5.6.1 to do some testing on.
+Dmitry Potapov reported this problem through
+ http://bugs.debian.org/472615
 
--Peff
+Signed-off-by: Gerrit Pape <pape@smarden.org>
+---
+ gitk |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/gitk b/gitk
+index 84ab02e..9a4d9c4 100755
+--- a/gitk
++++ b/gitk
+@@ -8045,11 +8045,11 @@ proc doprefs {} {
+     grid $top.cdisp - -sticky w -pady 10
+     label $top.bg -padx 40 -relief sunk -background $bgcolor
+     button $top.bgbut -text [mc "Background"] -font optionfont \
+-	-command [list choosecolor bgcolor 0 $top.bg background setbg]
++	-command [list choosecolor bgcolor {} $top.bg background setbg]
+     grid x $top.bgbut $top.bg -sticky w
+     label $top.fg -padx 40 -relief sunk -background $fgcolor
+     button $top.fgbut -text [mc "Foreground"] -font optionfont \
+-	-command [list choosecolor fgcolor 0 $top.fg foreground setfg]
++	-command [list choosecolor fgcolor {} $top.fg foreground setfg]
+     grid x $top.fgbut $top.fg -sticky w
+     label $top.diffold -padx 40 -relief sunk -background [lindex $diffcolors 0]
+     button $top.diffoldbut -text [mc "Diff: old lines"] -font optionfont \
+@@ -8069,7 +8069,7 @@ proc doprefs {} {
+     grid x $top.hunksepbut $top.hunksep -sticky w
+     label $top.selbgsep -padx 40 -relief sunk -background $selectbgcolor
+     button $top.selbgbut -text [mc "Select bg"] -font optionfont \
+-	-command [list choosecolor selectbgcolor 0 $top.selbgsep background setselbg]
++	-command [list choosecolor selectbgcolor {} $top.selbgsep background setselbg]
+     grid x $top.selbgbut $top.selbgsep -sticky w
+ 
+     label $top.cfont -text [mc "Fonts: press to choose"]
+-- 
+1.5.4.4
