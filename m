@@ -1,57 +1,62 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t9600-cvsimport.sh: set HOME before checking for cvsps
- availability
-Date: Wed, 26 Mar 2008 10:55:21 -0700
-Message-ID: <7v8x05e5fa.fsf@gitster.siamese.dyndns.org>
-References: <20080326173420.16383.qmail@4b0e1e5c705f62.315fe32.mid.smarden.org>
+From: Gerrit Pape <pape@smarden.org>
+Subject: [PATCH] imap-send: properly error out if imap.host is not set in
+	config
+Date: Wed, 26 Mar 2008 18:05:17 +0000
+Message-ID: <20080326180517.23968.qmail@945917b39a7083.315fe32.mid.smarden.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Gerrit Pape <pape@smarden.org>
-X-From: git-owner@vger.kernel.org Wed Mar 26 18:57:45 2008
+To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 26 19:06:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JeZs1-0002OR-6B
-	for gcvg-git-2@gmane.org; Wed, 26 Mar 2008 18:57:05 +0100
+	id 1Jea0b-0005ti-Li
+	for gcvg-git-2@gmane.org; Wed, 26 Mar 2008 19:05:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757057AbYCZRzj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Mar 2008 13:55:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753342AbYCZRzi
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Mar 2008 13:55:38 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:64733 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756733AbYCZRzi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Mar 2008 13:55:38 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 2415321B6;
-	Wed, 26 Mar 2008 13:55:34 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 81F8A21B4; Wed, 26 Mar 2008 13:55:23 -0400 (EDT)
-In-Reply-To: <20080326173420.16383.qmail@4b0e1e5c705f62.315fe32.mid.smarden.org> (Gerrit
- Pape's message of "Wed, 26 Mar 2008 17:34:20 +0000")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1755091AbYCZSFA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Mar 2008 14:05:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754454AbYCZSFA
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Mar 2008 14:05:00 -0400
+Received: from a.ns.smarden.org ([212.42.242.37]:59138 "HELO a.mx.smarden.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753505AbYCZSE7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Mar 2008 14:04:59 -0400
+Received: (qmail 23969 invoked by uid 1000); 26 Mar 2008 18:05:17 -0000
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78293>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78294>
 
-Gerrit Pape <pape@smarden.org> writes:
+If no imap host is specified in the git config, git imap-send used
+to try to lookup a null pointer through gethostbyname(), causing a
+segfault.  Since setting the imap.host variable is mandatory,
+imap-send now properly fails with an explanatory error message.
 
-> From: Frank Lichtenheld <djpig@debian.org>
->
-> This actually sounds like a bug in cvsps, which requires an existing
-> home directory when asked for the usage through -h
->
->  $ HOME=/nonexistent cvsps -h
->  Cannot create the cvsps directory '.cvsps': No such file or directory
+The problem has been reported by picca through
+ http://bugs.debian.org/472632
 
-Thanks.
+Signed-off-by: Gerrit Pape <pape@smarden.org>
+---
+ imap-send.c |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
 
-In the longer run, we probably would want to do something similar for all
-tests to ensure a stable testing environment, don't we?  $HOME/.gitconfig
-may affect the way tested programs behave otherwise.
+diff --git a/imap-send.c b/imap-send.c
+index 10cce15..04afbc4 100644
+--- a/imap-send.c
++++ b/imap-send.c
+@@ -1302,6 +1302,10 @@ main(int argc, char **argv)
+ 		fprintf( stderr, "no imap store specified\n" );
+ 		return 1;
+ 	}
++	if (!server.host) {
++		fprintf( stderr, "no imap host specified\n" );
++		return 1;
++	}
+ 
+ 	/* read the messages */
+ 	if (!read_message( stdin, &all_msgs )) {
+-- 
+1.5.4.4
