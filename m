@@ -1,127 +1,96 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] remote.c: Fix overtight refspec validation
-Date: Tue, 25 Mar 2008 21:11:42 -0700
-Message-ID: <7vfxuejf9d.fsf@gitster.siamese.dyndns.org>
-References: <alpine.LNX.1.00.0803202049090.19665@iabervon.org>
- <7v4pb0vhrg.fsf@gitster.siamese.dyndns.org>
- <alpine.LNX.1.00.0803210014100.19665@iabervon.org>
- <7vmyosskyu.fsf@gitster.siamese.dyndns.org>
- <alpine.LNX.1.00.0803210134070.19665@iabervon.org>
- <7v3aqksic6.fsf@gitster.siamese.dyndns.org>
- <alpine.LNX.1.00.0803211148120.19665@iabervon.org>
- <7vlk4boh6v.fsf@gitster.siamese.dyndns.org>
- <alpine.LFD.1.00.0803251841420.2775@woody.linux-foundation.org>
- <7vod92jh3u.fsf@gitster.siamese.dyndns.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: faster egit history page and a pure java "gitk"
+Date: Wed, 26 Mar 2008 00:52:44 -0400
+Message-ID: <20080326045244.GH4759@spearce.org>
+References: <20080324092726.GQ8410@spearce.org> <47E8889E.6090403@intelinet.com.br> <20080325053649.GE4759@spearce.org> <47E9A8BE.4010606@intelinet.com.br>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org,
-	Samuel Tardieu <sam@rfc1149.net>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Mar 26 05:12:42 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Robin Rosenberg <robin.rosenberg@dewire.com>, git@vger.kernel.org
+To: "Roger C. Soares" <rogersoares@intelinet.com.br>
+X-From: git-owner@vger.kernel.org Wed Mar 26 05:53:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JeN0D-0000Xz-13
-	for gcvg-git-2@gmane.org; Wed, 26 Mar 2008 05:12:41 +0100
+	id 1JeNdl-0000jO-I7
+	for gcvg-git-2@gmane.org; Wed, 26 Mar 2008 05:53:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750823AbYCZEL6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Mar 2008 00:11:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750815AbYCZEL5
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Mar 2008 00:11:57 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:51695 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750806AbYCZEL5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Mar 2008 00:11:57 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 49C982A38;
-	Wed, 26 Mar 2008 00:11:54 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 18F982A32; Wed, 26 Mar 2008 00:11:44 -0400 (EDT)
-In-Reply-To: <7vod92jh3u.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
- message of "Tue, 25 Mar 2008 20:31:49 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751781AbYCZEww (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Mar 2008 00:52:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752111AbYCZEww
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Mar 2008 00:52:52 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:33483 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750934AbYCZEww (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Mar 2008 00:52:52 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1JeNd0-0004Uv-Av; Wed, 26 Mar 2008 00:52:46 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id B1EFE20FBAE; Wed, 26 Mar 2008 00:52:44 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <47E9A8BE.4010606@intelinet.com.br>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78255>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78256>
 
-Junio C Hamano <gitster@pobox.com> writes:
+"Roger C. Soares" <rogersoares@intelinet.com.br> wrote:
+> Shawn O. Pearce escreveu:
+> >Hmm.  How long does C Git take for "git rev-list HEAD >/dev/null" ?
+> >I have thus far only tuned the lower level machinary, and there
+> >may still be tuning left there, but I _really_ have not tried to
+> >tune the plotting portion yet.
+> >
+> >I did push something out a few minutes ago (b66eae Limit the number
+> >of UI refreshes ...) that may help improve performance on larger
+> >histories.
+>  
+> "git rev-list HEAD >/dev/null" returns very fast, around 1 sec I'd say. 
+> My git clone has 0 loose objects and 1 pack.
 
-> Especially that "refs/tags/*" is sad in that it is leaking an internal
-> implementation detail.  I do not think the original code ever used
-> wildcards on the push side, and it probably was a good idea to allow
-> wildcards when the code was rewritten.
+OK, so its well packed and C Git behaves nicely.  :)
 
-Having thought about this a bit more, I think this patch would be more
-useful.  Please discard the previous patch to builtin-push.c and replace
-with this patch.
+> I updated from your repo some minutes ago and it's pretty decent now. 
+> The history appears very fast, even changing projects, and for the git 
+> clone the progress bar disapears in around 7 seconds. :)
 
-Now it allows you to say:
+So it must have been the massive flurry of UI updates that I used to
+be doing during revision walking.  I backed it off to at most 4 times
+per second, which seems to help.
 
-	[remote "neigh"]
-        	url = ../neighbour
-                push = refs/tags/*
+FWIW I just pushed another update out:
 
-to propagate all tags one-to-one, without having to say
-"refs/tags/*:refs/tags/*".
+ * re-activates the old preferences for hiding/showing the commit
+   message and file list;
 
-This however has unintended side effect of allowing 
+ * word wrap setting for the comment viewer area;
 
-	[remote "bour"]
-        	url = ../neighbour
-                fetch = refs/heads/*
+ * saves the geometry (split pane positions) of the history page
+   in a hidden preference;
 
-at the syntax level.  I do not know offhand the fetch backends are
-prepared to deal with such wildcard patterns.
+ * copy and select all global actions (Edit->Copy aka Ctrl-C) now
+   works to copy:
+     - selected text in comment area;
+	 - selected path names in the file list;
+	 - commit SHA-1s of selected commits in DAG;
 
-Daniel?
+ * the window cache is now managed by Eclipse workspace settings
+   when inside Eclipse;
 
----
- remote.c |   18 +++++++++++-------
- 1 files changed, 11 insertions(+), 7 deletions(-)
+ * the window cache now defaults to 8k/10m/10m/no-mmap as that is
+   working very well for me on multiple systems;
 
-diff --git a/remote.c b/remote.c
-index 40ed246..c39d831 100644
---- a/remote.c
-+++ b/remote.c
-@@ -417,17 +417,21 @@ static struct refspec *parse_refspec_internal(int nr_refspec, const char **refsp
- 			rhs++;
- 			rlen = strlen(rhs);
- 			is_glob = (2 <= rlen && !strcmp(rhs + rlen - 2, "/*"));
--			rs[i].dst = xstrndup(rhs, rlen - is_glob * 2);
-+			if (is_glob)
-+				rlen -= 2;
-+			rs[i].dst = xstrndup(rhs, rlen);
- 		}
- 
- 		llen = (rhs ? (rhs - lhs - 1) : strlen(lhs));
--		if (is_glob != (2 <= llen && !memcmp(lhs + llen - 2, "/*", 2)))
--			goto invalid;
--
--		if (is_glob) {
-+		if (2 <= llen && !memcmp(lhs + llen - 2, "/*", 2)) {
-+			if (rhs && !is_glob)
-+				goto invalid;
-+			is_glob = 1;
- 			llen -= 2;
--			rlen -= 2;
-+		} else if (rhs && is_glob) {
-+			goto invalid;
- 		}
-+
- 		rs[i].pattern = is_glob;
- 		rs[i].src = xstrndup(lhs, llen);
- 
-@@ -446,7 +450,7 @@ static struct refspec *parse_refspec_internal(int nr_refspec, const char **refsp
- 			}
- 			/*
- 			 * RHS
--			 * - missing is allowed.
-+			 * - missing is ok, and is same as empty.
- 			 * - empty is ok; it means not to store.
- 			 * - otherwise it must be a valid looking ref.
- 			 */
+ * global workspace preferences (Team -> Git) now shows the history
+   preferences and the window cache settings
+
+-- 
+Shawn.
