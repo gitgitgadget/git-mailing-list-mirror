@@ -1,59 +1,58 @@
-From: "Roger C. Soares" <rogersoares@intelinet.com.br>
-Subject: Re: faster egit history page and a pure java "gitk"
-Date: Tue, 25 Mar 2008 22:37:02 -0300
-Message-ID: <47E9A8BE.4010606@intelinet.com.br>
-References: <20080324092726.GQ8410@spearce.org> <47E8889E.6090403@intelinet.com.br> <20080325053649.GE4759@spearce.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Robin Rosenberg <robin.rosenberg@dewire.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Mar 26 02:41:46 2008
+From: Xavier Maillard <xma@gnu.org>
+Subject: Re: [PATCH] documentation: help: add info about "man.<tool>.cmd" config
+ var
+Date: Wed, 26 Mar 2008 02:00:15 +0100
+Organization: GNU's Not UNIX!
+Message-ID: <200803260100.m2Q10FEd005105@localhost.localdomain>
+References: <20080325072111.7a8774bd.chriscool@tuxfamily.org>
+Reply-To: Xavier Maillard <xma@gnu.org>
+Cc: junkio@cox.net, pascal@obry.net, nanako3@bluebottle.com,
+	git@vger.kernel.org
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Wed Mar 26 02:41:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JeKe9-0005o5-Mu
-	for gcvg-git-2@gmane.org; Wed, 26 Mar 2008 02:41:46 +0100
+	id 1JeKe7-0005o5-7w
+	for gcvg-git-2@gmane.org; Wed, 26 Mar 2008 02:41:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758691AbYCZBkX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Mar 2008 21:40:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757520AbYCZBkW
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Mar 2008 21:40:22 -0400
-Received: from cvxbsd.convex.com.br ([200.152.177.10]:1026 "HELO
-	cvxbsd.convex.com.br" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1760829AbYCZBkV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2008 21:40:21 -0400
-Received: (qmail 94993 invoked by uid 0); 25 Mar 2008 22:42:35 -0300
-Received: from rogersoares@intelinet.com.br by cvxbsd.convex.com.br by uid 82 with qmail-scanner-1.20rc3 
- (uvscan: v4.3.20/v4817.  Clear:RC:1:. 
- Processed in 0.245792 secs); 26 Mar 2008 01:42:35 -0000
-Received: from unknown (HELO ?200.152.180.33?) (200.152.180.33)
-  by cvxbsd.convex.com.br with SMTP; 26 Mar 2008 01:42:35 -0000
-User-Agent: Thunderbird 1.5.0.12 (X11/20080213)
-In-Reply-To: <20080325053649.GE4759@spearce.org>
+	id S1760105AbYCZBjd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Mar 2008 21:39:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760069AbYCZBjd
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Mar 2008 21:39:33 -0400
+Received: from master.uucpssh.org ([193.218.105.66]:47334 "EHLO
+	master.uucpssh.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759997AbYCZBj3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2008 21:39:29 -0400
+Received: by master.uucpssh.org (Postfix, from userid 10)
+	id 616F2D677E; Wed, 26 Mar 2008 02:36:20 +0100 (CET)
+Received: from localhost.localdomain (IDENT:1000@localhost [127.0.0.1])
+	by localhost.localdomain (8.14.1/8.13.8) with ESMTP id m2Q10RUG005130;
+	Wed, 26 Mar 2008 02:00:27 +0100
+Received: (from xma@localhost)
+	by localhost.localdomain (8.14.1/8.13.8/Submit) id m2Q10FEd005105;
+	Wed, 26 Mar 2008 02:00:15 +0100
+In-reply-to: <20080325072111.7a8774bd.chriscool@tuxfamily.org> (message from
+	Christian Couder on Tue, 25 Mar 2008 07:21:10 +0100)
+User-Agent: Rmail in GNU Emacs 23.0.60.3 on GNU/Linux
+Jabber-ID: xma01@jabber.fr
+X-uucpssh: Found to be clean
+X-uucpssh-SpamCheck: not spam, SpamAssassin (not cached, score=-4.4,
+	required 4.6, autolearn=not spam, ALL_TRUSTED -1.80, BAYES_00 -2.60,
+	SPF_HELO_PASS -0.00)
+X-uucpssh-From: xma@gnu.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78241>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78242>
 
-Shawn O. Pearce escreveu:
-> Hmm.  How long does C Git take for "git rev-list HEAD >/dev/null" ?
-> I have thus far only tuned the lower level machinary, and there
-> may still be tuning left there, but I _really_ have not tried to
-> tune the plotting portion yet.
->
-> I did push something out a few minutes ago (b66eae Limit the number
-> of UI refreshes ...) that may help improve performance on larger
-> histories.
->   
-"git rev-list HEAD >/dev/null" returns very fast, around 1 sec I'd say. 
-My git clone has 0 loose objects and 1 pack.
 
-I updated from your repo some minutes ago and it's pretty decent now. 
-The history appears very fast, even changing projects, and for the git 
-clone the progress bar disapears in around 7 seconds. :)
+The given explanations are ok (for me).
 
-[]s,
-Roger.
+	Xavier
+-- 
+http://www.gnu.org
+http://www.april.org
+http://www.lolica.org
