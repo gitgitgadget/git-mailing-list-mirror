@@ -1,53 +1,55 @@
-From: merlyn@stonehenge.com (Randal L. Schwartz)
-Subject: git under OSX leopard?
-Date: Wed, 26 Mar 2008 11:10:17 -0700
-Message-ID: <867ifp5pbq.fsf@blue.stonehenge.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: git failure on Solaris t3701-add-interactive.sh -- git version
+	5cc8f372509298d13632d8784bc851a587937550
+Date: Wed, 26 Mar 2008 14:34:54 -0400
+Message-ID: <20080326183453.GA4471@coredump.intra.peff.net>
+References: <8ec76080803250529i5765cc9ar2d6fc3356800cb14@mail.gmail.com> <8ec76080803250534x5373b0c6p6165a7dc17971e4a@mail.gmail.com> <20080325234033.GA18348@coredump.intra.peff.net> <8ec76080803260519s6088b773qc3a9cf982993f53@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Mar 26 19:34:42 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Whit Armstrong <armstrong.whit@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 26 19:36:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JeaR1-0001pI-5l
-	for gcvg-git-2@gmane.org; Wed, 26 Mar 2008 19:33:15 +0100
+	id 1JeaTM-0002pl-B7
+	for gcvg-git-2@gmane.org; Wed, 26 Mar 2008 19:35:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757359AbYCZScd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Mar 2008 14:32:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757206AbYCZScd
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Mar 2008 14:32:33 -0400
-Received: from blue.stonehenge.com ([209.223.236.162]:9673 "EHLO
-	blue.stonehenge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751878AbYCZScc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Mar 2008 14:32:32 -0400
-X-Greylist: delayed 1334 seconds by postgrey-1.27 at vger.kernel.org; Wed, 26 Mar 2008 14:32:32 EDT
-Received: by blue.stonehenge.com (Postfix, from userid 1001)
-	id CC7311DE262; Wed, 26 Mar 2008 11:10:17 -0700 (PDT)
-x-mayan-date: Long count = 12.19.15.3.9; tzolkin = 2 Muluc; haab = 17 Cumku
-User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (berkeley-unix)
+	id S1758210AbYCZSe5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Mar 2008 14:34:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758078AbYCZSe5
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Mar 2008 14:34:57 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1688 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755246AbYCZSe4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Mar 2008 14:34:56 -0400
+Received: (qmail 29204 invoked by uid 111); 26 Mar 2008 18:34:55 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 26 Mar 2008 14:34:55 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 26 Mar 2008 14:34:54 -0400
+Content-Disposition: inline
+In-Reply-To: <8ec76080803260519s6088b773qc3a9cf982993f53@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78296>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78297>
 
+On Wed, Mar 26, 2008 at 08:19:48AM -0400, Whit Armstrong wrote:
 
-I'm trying to build git on leopard for the first time.  Getting this
-error (after git clean -d -f and no unusual flags):
+> You mean for Solaris 5.8, you don't get as far as this test?  All the
+> systems here are on Solaris 5.9, but they are years away from
+> upgrading to Solaris 10.
 
-    LINK git-daemon
-/usr/libexec/gcc/i686-apple-darwin8/4.0.1/ld: /usr/lib/gcc/i686-apple-darwin8/4.0.1/../../../libcurl.dylib load command 8 unknown cmd field
-/usr/libexec/gcc/i686-apple-darwin8/4.0.1/ld: /usr/lib/gcc/i686-apple-darwin8/4.0.1/../../../libSystem.dylib unknown flags (type) of section 6 (__TEXT,__literal16) in load command 0
-/usr/libexec/gcc/i686-apple-darwin8/4.0.1/ld: /usr/lib/libSystem.B.dylib unknown flags (type) of section 6 (__TEXT,__literal16) in load command 0
-/usr/libexec/gcc/i686-apple-darwin8/4.0.1/ld: /usr/lib/libgcc_s.1.dylib load command 8 unknown cmd field
-collect2: ld returned 1 exit status
-make: *** [git-daemon] Error 1
+I mean when I run t3701, add-interactive barfs way before the error you
+mention. It doesn't even like the 'our' keyword.
 
-Same thing builds fine on tiger.
+> we have perl 5.6.1 on our systems:
 
--- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
-See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
+Ah, that's recent-ish. Solaris 5.8 comes with perl 5.005. I think in
+general git tries to target perl 5.6.
+
+I'll see if I can dig up perl 5.6.1 to do some testing on.
+
+-Peff
