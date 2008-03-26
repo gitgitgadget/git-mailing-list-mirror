@@ -1,75 +1,71 @@
-From: "Jay Soffian" <jaysoffian@gmail.com>
-Subject: Re: MIME headers in introductory message (git send-email --compose)
-Date: Tue, 25 Mar 2008 22:46:42 -0400
-Message-ID: <76718490803251946t2640a8d2ga1e68ad06405c076@mail.gmail.com>
-References: <1205426419-4594-1-git-send-email-sam@rfc1149.net>
-	 <7vhcfaxxxk.fsf@gitster.siamese.dyndns.org>
-	 <200803252031.17017.tlikonen@iki.fi>
-	 <20080325230649.GA5273@coredump.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+From: Joe Fiorini <joe@faithfulgeek.org>
+Subject: Re: Apply patch on server w/o git
+Date: Tue, 25 Mar 2008 23:03:58 -0400
+Message-ID: <323B72DF-3387-40ED-8235-213A9FAD6CDD@faithfulgeek.org>
+References: <CA08AA77-A9EA-4490-B1BE-25E8B7402290@faithfulgeek.org> <200803252057.38326.robin.rosenberg.lists@dewire.com>
+Mime-Version: 1.0 (Apple Message framework v919.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
-Cc: "Teemu Likonen" <tlikonen@iki.fi>, git@vger.kernel.org,
-	"Junio C Hamano" <gitster@pobox.com>,
-	"Samuel Tardieu" <sam@rfc1149.net>
-To: "Jeff King" <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Mar 26 03:47:26 2008
+Cc: git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+X-From: git-owner@vger.kernel.org Wed Mar 26 04:05:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JeLfg-0005tz-QR
-	for gcvg-git-2@gmane.org; Wed, 26 Mar 2008 03:47:25 +0100
+	id 1JeLwe-0001d0-BI
+	for gcvg-git-2@gmane.org; Wed, 26 Mar 2008 04:04:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750953AbYCZCqo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Mar 2008 22:46:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750952AbYCZCqn
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Mar 2008 22:46:43 -0400
-Received: from wa-out-1112.google.com ([209.85.146.182]:16617 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750915AbYCZCqn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2008 22:46:43 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so4099661wah.23
-        for <git@vger.kernel.org>; Tue, 25 Mar 2008 19:46:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=E0/iWdtqfFVNi9I94QhLz9NvyC8J8iAYswPReE2i2sM=;
-        b=EnkmceW9UgwIlrLK7QiEqC5959Az9oRcFAHtKqov3Wn+ABpt3sIn0hA3ibmyZVWWHP2maxNirKGBmkHoRmeJQ5/SjiqGO2u0oKGO92d/Sq6mjWyM+MwL+KYyDe64xi2tfsEnExMMPM/VW+93Refaq2kbBM8DVfuv4WDTJUbD4PM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=jeFIJ7Pq/m42ILoM34nTe+QQICcqtoxXIQw5ly/T4ZIJj6MHog5zLOcwdE1Z8xZffFo2j5NZAJpjOR1qrZonsuCctH9ci4WiiN3wMniImU9onVf+egwkys4E4bBShE2ajKNvOrM6PWwqt6D6Pb5GWkpK3v0njv16xR2xWN2YyOY=
-Received: by 10.115.79.1 with SMTP id g1mr14622148wal.43.1206499602468;
-        Tue, 25 Mar 2008 19:46:42 -0700 (PDT)
-Received: by 10.114.13.5 with HTTP; Tue, 25 Mar 2008 19:46:42 -0700 (PDT)
-In-Reply-To: <20080325230649.GA5273@coredump.intra.peff.net>
-Content-Disposition: inline
+	id S1753914AbYCZDEK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Mar 2008 23:04:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753894AbYCZDEJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Mar 2008 23:04:09 -0400
+Received: from mail-out2.fuse.net ([216.68.8.171]:47665 "EHLO
+	mail-out2.fuse.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753794AbYCZDEI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2008 23:04:08 -0400
+X-CNFS-Analysis: v=1.0 c=1 a=VwQbUJbxAAAA:8 a=KZoMnzppOcJ4f3GpYxcA:9 a=RuS_QZMff0q8G51i8BUA:7 a=K8Qwyg0R74emVT3SKkCn1rcYVcYA:4 a=XF7b4UCPwd8A:10
+X-CM-Score: 0
+X-Scanned-by: Cloudmark Authority Engine
+Authentication-Results: gwout2 smtp.user=jfiorini@zoomtown.com; auth=pass (LOGIN)
+Received: from [66.93.11.195] ([66.93.11.195:64046] helo=[192.168.1.33])
+	by mail-out2.fuse.net (ecelerity 2.1.1.22 r(17669)) with ESMTPA
+	id E9/D0-05263-02DB9E74 for <robin.rosenberg.lists@dewire.com>; Tue, 25 Mar 2008 23:04:07 -0400
+In-Reply-To: <200803252057.38326.robin.rosenberg.lists@dewire.com>
+X-Mailer: Apple Mail (2.919.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78246>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78247>
 
-On Tue, Mar 25, 2008 at 7:06 PM, Jeff King <peff@peff.net> wrote:
-> On Tue, Mar 25, 2008 at 08:31:16PM +0200, Teemu Likonen wrote:
+Thanks for all your replies.  Unfortunately, I cannot use git apply  
+because I will not have access to git on the server where I'm doing  
+the patch.  I will try Jan's suggestion of ignoring whitespace.
+
+-Joe
+
+On Mar 25, 2008, at 3:57 PM, Robin Rosenberg wrote:
+
+> Den Tuesday 25 March 2008 19.25.58 skrev Joe Fiorini:
+>> I am trying to generate a diff patch on my local dev box.  I want to
+>> upload this patch to a server (running Windows Server 2008) and apply
+>> it to my staging code.  The catch is: I cannot install git on the
+>> server to accept the patch.  Therefore, I would like to use a generic
+>> patching tool (such as patch from the GnuWin32 tools).  I tried
+>> generating a unified diff with the following command:
+>>
+>> git diff -U > diff.patch
+>>
+>> and then tried to apply it using:
+>>
+>> patch -u -i ..\other_dir\diff.patch
 >
->  > By the way, 'git send-email --compose' does not add MIME headers to
->  > introductory message. All non-Ascii chars will output something
->  > undefined in receivers' end.
->  >
->  > I guess the right way would be to detect user's charset (locale) and add
->  > appropriate MIME headers. Also, the Subject field should be encoded if
->  > it contains non-Ascii characters.
+> You can try git-apply instead of patch. It is a bit smarter (and not
+> outsmarting itself either).
 >
->  I just posted some patches to fix this; however, they always encode as
->  utf-8. I'm not sure what is the best way to find the user's encoding.
->  AIUI, locale environment variables are not enough, since, e.g., "en_US"
->  could come in iso8859-1 and utf-8 flavors. Is there a portable way to
->  figure this out? Should we be pulling it from .git/config?
-
-I think so. There's no reason the message encoding necessarily matches the
-locale anyway. There are ways to guess, but I think .git/config is sanest
-with UTF-8 as the default.
-
-j.
+> -- robin
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
