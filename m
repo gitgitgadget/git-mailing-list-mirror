@@ -1,124 +1,105 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Fix branches file configuration
-Date: Wed, 26 Mar 2008 01:03:01 -0700
-Message-ID: <7v7ifpgbey.fsf@gitster.siamese.dyndns.org>
-References: <alpine.LNX.1.00.0803251931500.19665@iabervon.org>
- <7v3aqel5ms.fsf@gitster.siamese.dyndns.org>
- <alpine.LNX.1.00.0803260240570.19665@iabervon.org>
- <7v4paugcyn.fsf@gitster.siamese.dyndns.org>
+From: Teemu Likonen <tlikonen@iki.fi>
+Subject: Re: [PATCH 2/2] send-email: rfc2047-quote subject lines with non-ascii characters
+Date: Wed, 26 Mar 2008 10:30:33 +0200
+Message-ID: <20080326083033.GA13933@mithlond.arda.local>
+References: <7caf19ae394accab538d2f94953bb62b55a2c79f.1206486012.git.peff@peff.net> <200803260759.48922.tlikonen@iki.fi> <20080326062029.GA26286@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Andrew Morton <akpm@linux-foundation.org>
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Wed Mar 26 09:04:05 2008
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Mar 26 09:31:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JeQc5-0006ft-TD
-	for gcvg-git-2@gmane.org; Wed, 26 Mar 2008 09:04:02 +0100
+	id 1JeR2y-0005FS-Kw
+	for gcvg-git-2@gmane.org; Wed, 26 Mar 2008 09:31:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752654AbYCZIDU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Mar 2008 04:03:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752604AbYCZIDT
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Mar 2008 04:03:19 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:41473 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750724AbYCZIDR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Mar 2008 04:03:17 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id A1B2D2487;
-	Wed, 26 Mar 2008 04:03:16 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 9417C2486; Wed, 26 Mar 2008 04:03:10 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753210AbYCZIa6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Mar 2008 04:30:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752113AbYCZIa5
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Mar 2008 04:30:57 -0400
+Received: from pne-smtpout4-sn1.fre.skanova.net ([81.228.11.168]:40281 "EHLO
+	pne-smtpout4-sn1.fre.skanova.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751219AbYCZIa4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 26 Mar 2008 04:30:56 -0400
+Received: from mithlond.arda.local (80.220.180.181) by pne-smtpout4-sn1.fre.skanova.net (7.3.129)
+        id 47A7970A002B5D62; Wed, 26 Mar 2008 09:30:35 +0100
+Received: from dtw by mithlond.arda.local with local (Exim 4.63)
+	(envelope-from <tlikonen@iki.fi>)
+	id 1JeR1l-0003dI-Dv; Wed, 26 Mar 2008 10:30:33 +0200
+Content-Disposition: inline
+In-Reply-To: <20080326062029.GA26286@coredump.intra.peff.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78272>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78273>
 
-From: Daniel Barkalow <barkalow@iabervon.org>
-Date: Tue, 25 Mar 2008 19:35:28 -0400
-Subject: [PATCH] Fix branches file configuration
+Jeff King wrote:
 
-Fetched remote branch from .git/branches/foo should fetch into
-refs/heads/foo.  Also when partial URL is given, the fetched head should
-always be remote HEAD, and the result should not be stored anywhere.
+> On Wed, Mar 26, 2008 at 07:59:48AM +0200, Teemu Likonen wrote:
+> > These patches seem to work except that the quoting of Subject field
+> > works only if user types a non-Ascii text to the "What subject
+> > should the initial email start with?" prompt. If she changes the
+> > subject in editor it won't be rfc2047-quoted.
+>
+> Ah, yes, I hadn't considered that. We should definitely do the quoting
+> after all of the user's input. Replace 2/2 from my series with the
+> patch below, which handles this case correctly (and as a bonus, the
+> user sees the unencoded subject in the editor, which is much more
+> readable).
 
-Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
+It seems to work nicely after I fixed one unmatching bracket. See below.
 
- Junio C Hamano <gitster@pobox.com> writes:
+> git-format-patch recently got a --cover-letter option which does the
+> same thing. I actually use a real MUA (mutt) instead of send-email,
+> and this way you can avoid the message-id cutting and pasting that is
+> required. It automatically does the right thing with encodings because
+> I end up sending the message using my MUA.
 
- > Daniel Barkalow <barkalow@iabervon.org> writes:
- >
- >> ... (See line 115 of 755225de:git-parse-remote.sh)
- >
- > Yeah, sounds like it.  Will queue in 'next', for eventual inclusion in
- > 'maint'.  This is a 1.5.4 regression fix, together with "push --tags" fix
- > we discussed today.
+I had missed the --cover-letter option completely. It may be useful too.
+I'm still trying to find the best way to send pathces. If I send intro
+message with real MUA I either need to wait for the message to show up
+on a mailing list or check my sent-mail folder to find the Message-Id.
+Once I know the Message-Id I can send the actual patch series with 'git
+send-email' as replies to the intro message. Well, this is OK.
 
- Actually there seems to be one more difference.  Here is what I think is
- needed for 'maint'.
+> > If portable content encoding detection is difficult or considered
+> > unnecessary, then I think a documented configurable option is fine
+> > (UTF-8 by default).
+>
+> I think that is sensible. Want to try adding it on top of my patches?
 
- remote.c |   28 ++++++++++++++++++++++------
- 1 files changed, 22 insertions(+), 6 deletions(-)
+I'd like to, but I can only do sh/bash stuff and possibly some
+copy-and-paste programming with other scripting languages. You'd end up
+fixing my code anyway, sorry.
 
-diff --git a/remote.c b/remote.c
-index 95d65a0..d8a4671 100644
---- a/remote.c
-+++ b/remote.c
-@@ -171,7 +171,7 @@ static void read_branches_file(struct remote *remote)
- {
- 	const char *slash = strchr(remote->name, '/');
- 	char *frag;
--	char *branch;
-+	struct strbuf branch;
- 	int n = slash ? slash - remote->name : 1000;
- 	FILE *f = fopen(git_path("branches/%.*s", n, remote->name), "r");
- 	char *s, *p;
-@@ -197,17 +197,33 @@ static void read_branches_file(struct remote *remote)
- 	strcpy(p, s);
- 	if (slash)
- 		strcat(p, slash);
-+
-+	/*
-+	 * With "slash", e.g. "git fetch jgarzik/netdev-2.6" when
-+	 * reading from $GIT_DIR/branches/jgarzik fetches "HEAD" from
-+	 * the partial URL obtained from the branches file plus
-+	 * "/netdev-2.6" and does not store it in any tracking ref.
-+	 * #branch specifier in the file is ignored.
-+	 *
-+	 * Otherwise, the branches file would have URL and optionally
-+	 * #branch specified.  The "master" (or specified) branch is
-+	 * fetched and stored in the local branch of the same name.
-+	 */
-+	strbuf_init(&branch, 0);
- 	frag = strchr(p, '#');
- 	if (frag) {
- 		*(frag++) = '\0';
--		branch = xmalloc(strlen(frag) + 12);
--		strcpy(branch, "refs/heads/");
--		strcat(branch, frag);
-+		strbuf_addf(&branch, "refs/heads/%s", frag);
-+	} else
-+		strbuf_addstr(&branch, "refs/heads/master");
-+	if (!slash) {
-+		strbuf_addf(&branch, ":refs/heads/%s", remote->name);
- 	} else {
--		branch = "refs/heads/master";
-+		strbuf_reset(&branch);
-+		strbuf_addstr(&branch, "HEAD:");
- 	}
- 	add_url(remote, p);
--	add_fetch_refspec(remote, branch);
-+	add_fetch_refspec(remote, strbuf_detach(&branch, 0));
- 	remote->fetch_tags = 1; /* always auto-follow */
- }
- 
--- 
-1.5.5.rc1.128.g340c
+As you noticed, I accidentally sent you a couple of test emails because
+send-email CCed mails to patches' author (I think). Now I have set
+"suppresscc = all" and "suppressfrom = true" which should prevent such
+accidents. Shouldn't these be defaults? In my opinion it's generally the
+best practice to always explicitly define what parties emails are sent
+to.
+
+There is unmatching bracket in your patch:
+
+> diff --git a/git-send-email.perl b/git-send-email.perl
+> index 7c4f06c..3694f81 100755
+> --- a/git-send-email.perl
+> +++ b/git-send-email.perl
+> @@ -536,6 +536,15 @@ EOT
+>  		if (!$in_body && /^MIME-Version:/i) {
+>  			$need_8bit_cte = 0;
+>  		}
+> +		if (!$in_body && /^Subject: ?(.*)/i) {
+> +			my $subject = $1;
+> +			$_ = "Subject: " .
+> +				($subject =~ /[^[:ascii:]]/ ?
+> +				 quote_rfc2047($subject) :
+> +				 $subject) .
+> +				"\n";
+> +			}
+                        ^-- Shouldn't we remove this one?
+> +		}
