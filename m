@@ -1,89 +1,73 @@
-From: Toby Corkindale <toby.corkindale@rea-group.com>
-Subject: [PATCH] Add notes that some $GIT_DIR/info/ files are not copied by
- clone, etc.
-Date: Thu, 27 Mar 2008 15:36:58 +1100
-Organization: REA Group
-Message-ID: <47EB246A.1030402@rea-group.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: .git/info/attributes not cloned
+Date: Thu, 27 Mar 2008 00:29:25 -0400
+Message-ID: <20080327042925.GA6426@coredump.intra.peff.net>
+References: <47EB0FAE.5000102@rea-group.com> <20080327033341.GB5417@coredump.intra.peff.net> <47EB213F.1020503@rea-group.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------030609060206050208000104"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 27 05:29:57 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Toby Corkindale <toby.corkindale@rea-group.com>
+X-From: git-owner@vger.kernel.org Thu Mar 27 05:30:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JejkQ-0002Aw-FP
-	for gcvg-git-2@gmane.org; Thu, 27 Mar 2008 05:29:54 +0100
+	id 1Jejkh-0002EU-AE
+	for gcvg-git-2@gmane.org; Thu, 27 Mar 2008 05:30:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751065AbYC0E27 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Mar 2008 00:28:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751023AbYC0E27
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Mar 2008 00:28:59 -0400
-Received: from mel-nat68.realestate.com.au ([210.50.192.68]:14909 "EHLO
-	mel-nat68.realestate.com.au" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750976AbYC0E26 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 27 Mar 2008 00:28:58 -0400
-Received: from [192.168.53.6] ([192.168.53.6]) by mel-nat68.realestate.com.au with Microsoft SMTPSVC(6.0.3790.1830);
-	 Thu, 27 Mar 2008 15:28:36 +1100
-User-Agent: Thunderbird 2.0.0.12 (X11/20080227)
-X-OriginalArrivalTime: 27 Mar 2008 04:28:36.0276 (UTC) FILETIME=[0609CF40:01C88FC3]
+	id S1751063AbYC0E32 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Mar 2008 00:29:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751146AbYC0E32
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Mar 2008 00:29:28 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1033 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750893AbYC0E32 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Mar 2008 00:29:28 -0400
+Received: (qmail 4268 invoked by uid 111); 27 Mar 2008 04:29:26 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Thu, 27 Mar 2008 00:29:26 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 27 Mar 2008 00:29:25 -0400
+Content-Disposition: inline
+In-Reply-To: <47EB213F.1020503@rea-group.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78329>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78330>
 
-This is a multi-part message in MIME format.
---------------030609060206050208000104
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+On Thu, Mar 27, 2008 at 03:23:27PM +1100, Toby Corkindale wrote:
 
+> Ah, OK.
+> I was hoping not to use .gitattributes, as then the attributes are  
+> ignored when doing something like:
+> git archive --remote=example.com:/path/to/repo release/v2.1 | tar xf -
 
---------------030609060206050208000104
-Content-Type: text/x-patch;
- name="0001-Add-notes-that-GIT_DIR-info-files-are-not-copied-b.patch"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline;
- filename*0="0001-Add-notes-that-GIT_DIR-info-files-are-not-copied-b.patc";
- filename*1="h"
+I vaguely recall some discussion of this in the past, so maybe it isn't
+a good idea. But I would think changing git-archive to respect
+.gitattributes might be worth doing (presumably the version of
+.gitattributes from the tree that is being exported).
 
----
- Documentation/gitattributes.txt |    4 ++++
- Documentation/gitignore.txt     |    3 +++
- 2 files changed, 7 insertions(+), 0 deletions(-)
+> That gives a clue that the /info/ files are repo-specific.
+> However in gitignore(5) and gitattributes(5), there is no explanation of  
+> this - it simply mentions that the info version is a higher priority than 
+> the .git{ignore,attributes} version.
+>
+> I suggest that the individual docs/man-pages should mention that too.
+> I'll submit a patch in a separate email, as long as I'm not still  
+> misunderstanding the mechanism.
 
-diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
-index 84ec962..b3b497b 100644
---- a/Documentation/gitattributes.txt
-+++ b/Documentation/gitattributes.txt
-@@ -63,6 +63,10 @@ path in question, and its parent directories (the further the
- directory that contains `.gitattributes` is from the path in
- question, the lower its precedence).
- 
-+The $GIT_DIR/info/attributes file is used when you wish to only affect certain
-+repositories. It will not be copied to other repositories by automatic
-+operations such as clone, fetch, etc.
-+
- Sometimes you would need to override an setting of an attribute
- for a path to `unspecified` state.  This can be done by listing
- the name of the attribute prefixed with an exclamation point `!`.
-diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.txt
-index e847b3b..435f23c 100644
---- a/Documentation/gitignore.txt
-+++ b/Documentation/gitignore.txt
-@@ -34,6 +34,9 @@ precedence, the last matching pattern decides the outcome):
-    files generated as part of the project build.
- 
-  * Patterns read from `$GIT_DIR/info/exclude`.
-+ * The $GIT_DIR/info/exclude file is used when you wish to only affect
-+   certain repositories. It will not be copied to other repositories by
-+   automatic operations such as clone, fetch, etc.
- 
-  * Patterns read from the file specified by the configuration
-    variable 'core.excludesfile'.
--- 
-1.5.4.3
+I think you understand what is going on. A clarification to both pages
+would be helpful, I think, just saying "here is why you might use one
+over the other."
 
+> Is there a recommended way to make attributes apply to commands run on a  
+> remote repository, or is that a different bug?
 
---------------030609060206050208000104--
+I'm not sure what you mean here. Very few commands talk to remote
+repositories. I had assumed in your git-archive example that you wanted
+.gitattributes on the remote repo to affect the tarfile generated by
+that repo. But now it sounds like you want to edit a local file to
+impact the archive generated remotely. I don't think there is a way to
+do that.
+
+-Peff
