@@ -1,54 +1,60 @@
-From: Jeff King <peff@peff.net>
+From: Wincent Colaiuta <win@wincent.com>
 Subject: Re: git add -i doesn't update permissions
-Date: Thu, 27 Mar 2008 02:29:32 -0400
-Message-ID: <20080327062932.GA11697@coredump.intra.peff.net>
+Date: Thu, 27 Mar 2008 07:32:13 +0100
+Message-ID: <0F970CFF-EA4A-46D8-BB1D-345C3513B124@wincent.com>
 References: <20080326102332.GA26842@alea.gnuu.de> <20080327055746.GA8469@coredump.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: =?utf-8?B?SsO2cmc=?= Sommer <joerg@alea.gnuu.de>
-X-From: git-owner@vger.kernel.org Thu Mar 27 07:30:20 2008
+Mime-Version: 1.0 (Apple Message framework v919.2)
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed	delsp=yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?ISO-8859-1?Q?J=F6rg_Sommer?= <joerg@alea.gnuu.de>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Mar 27 07:33:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jelcv-0002cR-Ry
-	for gcvg-git-2@gmane.org; Thu, 27 Mar 2008 07:30:18 +0100
+	id 1Jelff-00038S-KN
+	for gcvg-git-2@gmane.org; Thu, 27 Mar 2008 07:33:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753820AbYC0G3g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Mar 2008 02:29:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753692AbYC0G3f
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Mar 2008 02:29:35 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3192 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753425AbYC0G3f (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Mar 2008 02:29:35 -0400
-Received: (qmail 11802 invoked by uid 111); 27 Mar 2008 06:29:33 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Thu, 27 Mar 2008 02:29:33 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 27 Mar 2008 02:29:32 -0400
-Content-Disposition: inline
+	id S1753692AbYC0Gc0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 27 Mar 2008 02:32:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753063AbYC0Gc0
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Mar 2008 02:32:26 -0400
+Received: from wincent.com ([72.3.236.74]:47536 "EHLO s69819.wincent.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753425AbYC0GcZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 27 Mar 2008 02:32:25 -0400
+Received: from cuzco.lan (localhost [127.0.0.1])
+	(authenticated bits=0)
+	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id m2R6WEha022930;
+	Thu, 27 Mar 2008 01:32:15 -0500
 In-Reply-To: <20080327055746.GA8469@coredump.intra.peff.net>
+X-Mailer: Apple Mail (2.919.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78336>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78337>
 
-On Thu, Mar 27, 2008 at 01:57:46AM -0400, Jeff King wrote:
+El 27/3/2008, a las 6:57, Jeff King escribi=F3:
 
->   2. 'p' will show you each patch hunk from the file, which can then
->      either be added or not.
-> 
-> You are using 'p' and expecting it to work with the file mode, when it
-> is purely about picking content hunks.
+> Now, if you are interested in adding the mode change of a file but =20
+> _not_
+> its content, I think that is a reasonable thing to ask for. And it's
+> something that is not possible with "add -i" right now, I don't think=
+=2E
+> You seemed to expect that 'p' would present the mode change and say =20
+> "do
+> you want to stage this?" which I think is a reasonable interface. =20
+> Though
+> in that case "[p]atch" should perhaps be "[p]artial update".
 
-Actually, it is a little more complex than that. "git add -p" will reuse
-the header from "git diff", so it will not apply a mode change _unless_
-any hunk is selected.
+Or even "[p]ick" (changes to be staged), which is a bit shorter.
 
-So probably the right behavior is to split the header into "boilerplate"
-and "mode change", and then ask whether the mode change should be
-included.
+But yes, I've always thought that "[p]atch" didn't really describe =20
+what that subcommand really does.
 
--Peff
+Cheers,
+Wincent
