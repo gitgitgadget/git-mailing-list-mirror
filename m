@@ -1,79 +1,100 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/2] add--interactive: ignore mode change in 'p'atch
-	command
-Date: Thu, 27 Mar 2008 15:31:47 -0400
-Message-ID: <20080327193147.GA10034@sigill.intra.peff.net>
-References: <cover.1206602393.git.peff@peff.net> <20080327073043.GB22444@coredump.intra.peff.net> <7v7ifob0et.fsf@gitster.siamese.dyndns.org> <20080327171022.GA27189@coredump.intra.peff.net> <7vprtg9g0p.fsf@gitster.siamese.dyndns.org>
+From: Todd Zullinger <tmz@pobox.com>
+Subject: Re: [PATCH 2/2] send-email: rfc2047-quote subject lines with
+ non-ascii characters
+Date: Thu, 27 Mar 2008 15:44:57 -0400
+Message-ID: <20080327194457.GU18510@inocybe.teonanacatl.org>
+References: <7caf19ae394accab538d2f94953bb62b55a2c79f.1206486012.git.peff@peff.net>
+ <200803260759.48922.tlikonen@iki.fi>
+ <20080326062029.GA26286@coredump.intra.peff.net>
+ <20080326083033.GA13933@mithlond.arda.local>
+ <20080326083925.GA31475@coredump.intra.peff.net>
+ <20080326092303.GA17835@mithlond.arda.local>
+ <20080326093310.GA937@coredump.intra.peff.net>
+ <20080327073808.GA22548@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org,
-	=?utf-8?B?SsO2cmc=?= Sommer <joerg@alea.gnuu.de>,
-	Wincent Colaiuta <win@wincent.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 27 20:32:42 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature"; boundary="sDhuxz86kt5qlkuV"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 27 20:46:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jexpy-0005UD-2g
-	for gcvg-git-2@gmane.org; Thu, 27 Mar 2008 20:32:34 +0100
+	id 1Jey2q-00036I-No
+	for gcvg-git-2@gmane.org; Thu, 27 Mar 2008 20:45:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755995AbYC0Tbw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Mar 2008 15:31:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756708AbYC0Tbv
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Mar 2008 15:31:51 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4046 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755776AbYC0Tbv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Mar 2008 15:31:51 -0400
-Received: (qmail 29178 invoked by uid 111); 27 Mar 2008 19:31:49 -0000
-Received: from lawn-128-61-25-125.lawn.gatech.edu (HELO sigill.intra.peff.net) (128.61.25.125)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Thu, 27 Mar 2008 15:31:49 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 27 Mar 2008 15:31:47 -0400
+	id S1757785AbYC0TpK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Mar 2008 15:45:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757753AbYC0TpK
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Mar 2008 15:45:10 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:49921 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757294AbYC0TpI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Mar 2008 15:45:08 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 770B32037
+	for <git@vger.kernel.org>; Thu, 27 Mar 2008 15:45:03 -0400 (EDT)
+Received: from inocybe.teonanacatl.org (c-68-39-203-93.hsd1.pa.comcast.net
+ [68.39.203.93]) (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+ (No client certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com
+ (Postfix) with ESMTP id 2A77D2035 for <git@vger.kernel.org>; Thu, 27 Mar 2008
+ 15:45:01 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <7vprtg9g0p.fsf@gitster.siamese.dyndns.org>
+In-Reply-To: <20080327073808.GA22548@coredump.intra.peff.net>
+X-Listening-To: Tool - Right In Two
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78362>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78363>
 
-On Thu, Mar 27, 2008 at 11:29:58AM -0700, Junio C Hamano wrote:
 
-> Yeah, but the user is really into microcommits, like "separate mode
-> change" thing really matters, maybe the user would want to make three
-> commits (1) chmod +x, (2) pure rename, and (3) content changes.
-> 
-> I personally think that is not worth it, so I am agreeing with you on the
-> "rename" one.
+--sDhuxz86kt5qlkuV
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-My feeling on the rename microcommit is that it is reasonable (though I
-am not such a microcommitter), but that "git add -p" is probably not the
-right tool for doing it. My view is that mode change and hunks are
-_actual_ changes to the file, and you can pick and choose the changes
-you have made. "rename" is not a change you made, but rather something
-we infer from the changes that are available.
+Jeff King wrote:
+> Since it looks like you are using mutt also, I will warn you that
+> there is a problem with this workflow: when mutt does the resend, it
+> generates a new message-id. Thus the patches are all connected in a
+> thread because they all in-reply-to the cover letter, but the cover
+> letter is not connected, since it has a new message-id.
+>=20
+> I'm not sure if there is a way to fix this short of patching mutt.
+> :(
 
-But I can also see how one has the opposite view. I dunno. It's hard to
-speculate since I don't actually want to _use_ rename. ;)
+I don't know if it would help, but perhaps you could try:
 
-> Even though your two patches make perfect sense at the philosophical level
-> and I very much like it, I doubt "separating mode change" is so useful
-> from the practical point of view for that matter.
-> [...]
-> ...then a patch came to make it the current "not asking
-> about mode change separately and if the user chooses to add anything from
-> the patch hunks, stage the mode change along with it" behaviour, people
-> might even think that such a patch is an improvement in usability by
-> asking one less question.  I dunno.
+:set postponed=3D/path/to/your/format-patch-mbox
 
-I don't think I would probably use mode change very often, but I found
-the current behavior quite non-intuitive, and I think I would prefer if
-it were explicit (and in 99% of cases, it won't come up at all, since
-you haven't changed the mode!).
+instead of opening the mbox using -f, and then recall the messages to
+send.  That *might* prevent mutt from rewriting the message-id, but I
+haven't tested it at all.
 
-But this is all clearly post-1.5.5, so hopefully we can let it stew and
-get some more comments from the list on what makes sense to people.
+--=20
+Todd        OpenPGP -> KeyID: 0xBEAF0CE3 | URL: www.pobox.com/~tmz/pgp
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Between two evils, I always pick the one I never tried before.
+    -- Mae West
 
--Peff
+
+--sDhuxz86kt5qlkuV
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (GNU/Linux)
+
+iQFDBAEBAgAtBQJH6/k0JhhodHRwOi8vd3d3LnBvYm94LmNvbS9+dG16L3BncC90
+bXouYXNjAAoJEEMlk4u+rwzjgm8H/j+YRQ1Bc3HXL3/W8ENXmeawX2k7BYP6FOtI
+biK9icCojvPN1yI/oQT54m7HBIRK9rcXjNsfN7f/KdLWE+WZ9wdlWskpY85z6wFV
+erAvexYAIMLQA0DWifBTBF+En5gkyPLmOLk7YEohUjQWQKgTfM2ycXLZUAH4q8oh
+BvrxFmIjCQrCyhBSKm6e97SwIlJMeh4IUi/MnJSWJ/3CSe/n2iu3DgbY2KfPnmUR
+6niR4PBalv0erL8mFsHtDl4Vt5RDylepUgtrS3lTJ43MEwjL/SyG9Cp6evbsWinc
+noXWZSGHgkId/OVjcnKEX/XHOzDpXgiuQhCY4XmisYzQgtuCJzw=
+=HB9W
+-----END PGP SIGNATURE-----
+
+--sDhuxz86kt5qlkuV--
