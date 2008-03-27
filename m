@@ -1,60 +1,61 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Push merges?
-Date: Wed, 26 Mar 2008 23:09:35 -0400
-Message-ID: <20080327030935.GA4974@coredump.intra.peff.net>
-References: <ba5eca00803261452r4b5a7b6bi600c30e79b945477@mail.gmail.com>
+From: Toby Corkindale <toby.corkindale@rea-group.com>
+Subject: .git/info/attributes not cloned
+Date: Thu, 27 Mar 2008 14:08:30 +1100
+Organization: REA Group
+Message-ID: <47EB0FAE.5000102@rea-group.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Ryan Leigh <ryanl.pi@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 27 04:11:29 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 27 04:16:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JeiWJ-0002Ec-RZ
-	for gcvg-git-2@gmane.org; Thu, 27 Mar 2008 04:11:16 +0100
+	id 1JeibG-0003Tw-9W
+	for gcvg-git-2@gmane.org; Thu, 27 Mar 2008 04:16:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754293AbYC0DJ6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Mar 2008 23:09:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756650AbYC0DJn
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Mar 2008 23:09:43 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4870 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755074AbYC0DJi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Mar 2008 23:09:38 -0400
-Received: (qmail 31672 invoked by uid 111); 27 Mar 2008 03:09:36 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 26 Mar 2008 23:09:36 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 26 Mar 2008 23:09:35 -0400
-Content-Disposition: inline
-In-Reply-To: <ba5eca00803261452r4b5a7b6bi600c30e79b945477@mail.gmail.com>
+	id S1755319AbYC0DPY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Mar 2008 23:15:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757469AbYC0DPY
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Mar 2008 23:15:24 -0400
+Received: from mel-nat68.realestate.com.au ([210.50.192.68]:14391 "EHLO
+	mel-nat68.realestate.com.au" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755319AbYC0DPW (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 26 Mar 2008 23:15:22 -0400
+X-Greylist: delayed 913 seconds by postgrey-1.27 at vger.kernel.org; Wed, 26 Mar 2008 23:15:22 EDT
+Received: from [192.168.53.6] ([192.168.53.6]) by mel-nat68.realestate.com.au with Microsoft SMTPSVC(6.0.3790.1830);
+	 Thu, 27 Mar 2008 13:59:47 +1100
+User-Agent: Thunderbird 2.0.0.12 (X11/20080227)
+X-OriginalArrivalTime: 27 Mar 2008 02:59:47.0032 (UTC) FILETIME=[9D8FB580:01C88FB6]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78324>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78325>
 
-On Wed, Mar 26, 2008 at 02:52:06PM -0700, Ryan Leigh wrote:
+Hi.
+If one creates a .git/info/attributes file in a Git repo, it will not be 
+present in cloned repos.
+I don't know if this is a bug or not, but it /seems/ wrong behaviour to 
+me, and reading from the manual pages.
 
-> I've been getting to know git and I've stumbled across a "problem" and
-> I haven't yet been able to find a solution. For example, say I have a
-> branch "base" and two branches of that "foo" and "bar". I make some
-> change in "base", commit it, and now I would like to have it in both
-> "foo" and "bar". Is there a command that rather than get another
-> branch and merge with the current branch will instead take the current
-> branch and apply a merge on other branches? I've done google searches
+This shell script demonstrates the issue:
 
-No, there isn't such a command. Merges must be done one at a time
-because they use the index and working tree to report conflicts.
-
-So what you are asking for is the moral equivalent of:
-
-  for i in foo bar; do
-    git checkout $i && git merge master
-  done
-
-and you could do it that way, except that the 'merge' step may fail with
-conflicts that need to be fixed up by hand.
-
--Peff
+#!/bin/bash
+mkdir testgit
+cd testgit
+mkdir original
+cd original
+git init --shared
+echo -e "# gitattributes(5) file\n*.pm ident" > .git/info/attributes
+echo "# \$Ident\$" > example.pm
+git add example.pm
+git commit -m "initial commit"
+cd ..
+git clone --bare original copy
+if [ -e copy/info/attributes ]; then
+     echo "Good, attributes file exists."
+else
+     echo "Bad! attributes file does not exist in copy."
+fi
