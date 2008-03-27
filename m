@@ -1,57 +1,79 @@
-From: Sergio Callegari <sergio.callegari@gmail.com>
-Subject: Re: symbolic link management in git-archive
-Date: Thu, 27 Mar 2008 19:20:16 +0000 (UTC)
-Message-ID: <loom.20080327T191845-374@post.gmane.org>
-References: <loom.20080327T112740-539@post.gmane.org> <7v3aqcb02s.fsf@gitster.siamese.dyndns.org> <loom.20080327T175844-199@post.gmane.org> <7vd4pg9edm.fsf@gitster.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/2] add--interactive: ignore mode change in 'p'atch
+	command
+Date: Thu, 27 Mar 2008 15:31:47 -0400
+Message-ID: <20080327193147.GA10034@sigill.intra.peff.net>
+References: <cover.1206602393.git.peff@peff.net> <20080327073043.GB22444@coredump.intra.peff.net> <7v7ifob0et.fsf@gitster.siamese.dyndns.org> <20080327171022.GA27189@coredump.intra.peff.net> <7vprtg9g0p.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 27 20:21:15 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org,
+	=?utf-8?B?SsO2cmc=?= Sommer <joerg@alea.gnuu.de>,
+	Wincent Colaiuta <win@wincent.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 27 20:32:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jexeu-0000KZ-Rf
-	for gcvg-git-2@gmane.org; Thu, 27 Mar 2008 20:21:09 +0100
+	id 1Jexpy-0005UD-2g
+	for gcvg-git-2@gmane.org; Thu, 27 Mar 2008 20:32:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755731AbYC0TU1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Mar 2008 15:20:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755704AbYC0TU1
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Mar 2008 15:20:27 -0400
-Received: from main.gmane.org ([80.91.229.2]:59046 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755588AbYC0TU0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Mar 2008 15:20:26 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1JexeA-0005sK-Pm
-	for git@vger.kernel.org; Thu, 27 Mar 2008 19:20:22 +0000
-Received: from host45-62-dynamic.6-87-r.retail.telecomitalia.it ([87.6.62.45])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 27 Mar 2008 19:20:22 +0000
-Received: from sergio.callegari by host45-62-dynamic.6-87-r.retail.telecomitalia.it with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 27 Mar 2008 19:20:22 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 87.6.62.45 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.13) Gecko/20080325 Ubuntu/7.10 (gutsy) Firefox/2.0.0.13)
+	id S1755995AbYC0Tbw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Mar 2008 15:31:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756708AbYC0Tbv
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Mar 2008 15:31:51 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4046 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755776AbYC0Tbv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Mar 2008 15:31:51 -0400
+Received: (qmail 29178 invoked by uid 111); 27 Mar 2008 19:31:49 -0000
+Received: from lawn-128-61-25-125.lawn.gatech.edu (HELO sigill.intra.peff.net) (128.61.25.125)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Thu, 27 Mar 2008 15:31:49 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 27 Mar 2008 15:31:47 -0400
+Content-Disposition: inline
+In-Reply-To: <7vprtg9g0p.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78361>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78362>
 
-Junio C Hamano <gitster <at> pobox.com> writes:
+On Thu, Mar 27, 2008 at 11:29:58AM -0700, Junio C Hamano wrote:
 
+> Yeah, but the user is really into microcommits, like "separate mode
+> change" thing really matters, maybe the user would want to make three
+> commits (1) chmod +x, (2) pure rename, and (3) content changes.
 > 
-> Under such an option, at least the comment in the archive (both for zip
-> and tar) that notes which revision the tarball was taken from should be
-> omitted.  As long as that is done, I think it is Ok to have such an
-> optional behaviour.
-> 
+> I personally think that is not worth it, so I am agreeing with you on the
+> "rename" one.
 
-yes, I overlooked this, but it makes perfect sense: if it is not an exact copy
-of the tracked state, it should not pretend to be so by indicating a revision.
+My feeling on the rename microcommit is that it is reasonable (though I
+am not such a microcommitter), but that "git add -p" is probably not the
+right tool for doing it. My view is that mode change and hunks are
+_actual_ changes to the file, and you can pick and choose the changes
+you have made. "rename" is not a change you made, but rather something
+we infer from the changes that are available.
+
+But I can also see how one has the opposite view. I dunno. It's hard to
+speculate since I don't actually want to _use_ rename. ;)
+
+> Even though your two patches make perfect sense at the philosophical level
+> and I very much like it, I doubt "separating mode change" is so useful
+> from the practical point of view for that matter.
+> [...]
+> ...then a patch came to make it the current "not asking
+> about mode change separately and if the user chooses to add anything from
+> the patch hunks, stage the mode change along with it" behaviour, people
+> might even think that such a patch is an improvement in usability by
+> asking one less question.  I dunno.
+
+I don't think I would probably use mode change very often, but I found
+the current behavior quite non-intuitive, and I think I would prefer if
+it were explicit (and in 99% of cases, it won't come up at all, since
+you haven't changed the mode!).
+
+But this is all clearly post-1.5.5, so hopefully we can let it stew and
+get some more comments from the list on what makes sense to people.
+
+-Peff
