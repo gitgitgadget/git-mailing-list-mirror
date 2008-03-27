@@ -1,73 +1,87 @@
-From: Jeff King <peff@peff.net>
+From: Toby Corkindale <toby.corkindale@rea-group.com>
 Subject: Re: .git/info/attributes not cloned
-Date: Thu, 27 Mar 2008 00:29:25 -0400
-Message-ID: <20080327042925.GA6426@coredump.intra.peff.net>
-References: <47EB0FAE.5000102@rea-group.com> <20080327033341.GB5417@coredump.intra.peff.net> <47EB213F.1020503@rea-group.com>
+Date: Thu, 27 Mar 2008 15:48:31 +1100
+Organization: REA Group
+Message-ID: <47EB271F.1050307@rea-group.com>
+References: <47EB0FAE.5000102@rea-group.com> <20080327033341.GB5417@coredump.intra.peff.net> <47EB213F.1020503@rea-group.com> <20080327042925.GA6426@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Toby Corkindale <toby.corkindale@rea-group.com>
-X-From: git-owner@vger.kernel.org Thu Mar 27 05:30:12 2008
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 27 05:41:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jejkh-0002EU-AE
-	for gcvg-git-2@gmane.org; Thu, 27 Mar 2008 05:30:11 +0100
+	id 1JejvY-0004Xu-KA
+	for gcvg-git-2@gmane.org; Thu, 27 Mar 2008 05:41:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751063AbYC0E32 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Mar 2008 00:29:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751146AbYC0E32
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Mar 2008 00:29:28 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1033 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750893AbYC0E32 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Mar 2008 00:29:28 -0400
-Received: (qmail 4268 invoked by uid 111); 27 Mar 2008 04:29:26 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Thu, 27 Mar 2008 00:29:26 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 27 Mar 2008 00:29:25 -0400
-Content-Disposition: inline
-In-Reply-To: <47EB213F.1020503@rea-group.com>
+	id S1751263AbYC0Ekd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Mar 2008 00:40:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751255AbYC0Ekd
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Mar 2008 00:40:33 -0400
+Received: from mel-nat68.realestate.com.au ([210.50.192.68]:34824 "EHLO
+	mel-nat68.realestate.com.au" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751249AbYC0Ekd (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 27 Mar 2008 00:40:33 -0400
+Received: from [192.168.53.6] ([192.168.53.6]) by mel-nat68.realestate.com.au with Microsoft SMTPSVC(6.0.3790.1830);
+	 Thu, 27 Mar 2008 15:40:09 +1100
+User-Agent: Thunderbird 2.0.0.12 (X11/20080227)
+In-Reply-To: <20080327042925.GA6426@coredump.intra.peff.net>
+X-OriginalArrivalTime: 27 Mar 2008 04:40:09.0986 (UTC) FILETIME=[A3858E20:01C88FC4]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78330>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78331>
 
-On Thu, Mar 27, 2008 at 03:23:27PM +1100, Toby Corkindale wrote:
+Jeff King wrote:
+> On Thu, Mar 27, 2008 at 03:23:27PM +1100, Toby Corkindale wrote:
+> 
+>> Ah, OK.
+>> I was hoping not to use .gitattributes, as then the attributes are  
+>> ignored when doing something like:
+>> git archive --remote=example.com:/path/to/repo release/v2.1 | tar xf -
+> 
+> I vaguely recall some discussion of this in the past, so maybe it isn't
+> a good idea. But I would think changing git-archive to respect
+> .gitattributes might be worth doing (presumably the version of
+> .gitattributes from the tree that is being exported).
 
-> Ah, OK.
-> I was hoping not to use .gitattributes, as then the attributes are  
-> ignored when doing something like:
-> git archive --remote=example.com:/path/to/repo release/v2.1 | tar xf -
+Respecting the repo's .gitattributes would feel right. It seems unusual 
+(to me) that it bypasses $REMOTE/.gitattributes, but DOES check 
+$REMOTE/info/attributes.
 
-I vaguely recall some discussion of this in the past, so maybe it isn't
-a good idea. But I would think changing git-archive to respect
-.gitattributes might be worth doing (presumably the version of
-.gitattributes from the tree that is being exported).
 
-> That gives a clue that the /info/ files are repo-specific.
-> However in gitignore(5) and gitattributes(5), there is no explanation of  
-> this - it simply mentions that the info version is a higher priority than 
-> the .git{ignore,attributes} version.
->
-> I suggest that the individual docs/man-pages should mention that too.
-> I'll submit a patch in a separate email, as long as I'm not still  
-> misunderstanding the mechanism.
+>> That gives a clue that the /info/ files are repo-specific.
+>> However in gitignore(5) and gitattributes(5), there is no explanation of  
+>> this - it simply mentions that the info version is a higher priority than 
+>> the .git{ignore,attributes} version.
+>>
+>> I suggest that the individual docs/man-pages should mention that too.
+>> I'll submit a patch in a separate email, as long as I'm not still  
+>> misunderstanding the mechanism.
+> 
+> I think you understand what is going on. A clarification to both pages
+> would be helpful, I think, just saying "here is why you might use one
+> over the other."
 
-I think you understand what is going on. A clarification to both pages
-would be helpful, I think, just saying "here is why you might use one
-over the other."
+Cheers. I've submitted my patch now. I hope I have the doc syntax right.
 
-> Is there a recommended way to make attributes apply to commands run on a  
-> remote repository, or is that a different bug?
+>> Is there a recommended way to make attributes apply to commands run on a  
+>> remote repository, or is that a different bug?
+> 
+> I'm not sure what you mean here. Very few commands talk to remote
+> repositories. I had assumed in your git-archive example that you wanted
+> .gitattributes on the remote repo to affect the tarfile generated by
+> that repo. But now it sounds like you want to edit a local file to
+> impact the archive generated remotely. I don't think there is a way to
+> do that.
 
-I'm not sure what you mean here. Very few commands talk to remote
-repositories. I had assumed in your git-archive example that you wanted
-.gitattributes on the remote repo to affect the tarfile generated by
-that repo. But now it sounds like you want to edit a local file to
-impact the archive generated remotely. I don't think there is a way to
-do that.
+Ah, no, you were right in your first assumption. I just wanted 
+git-archive to apply gitattributes to the resulting tarball.
+(I should have phrased that last line as "..apply to commands connecting 
+to a remote repo.." and it would make more sense.)
 
--Peff
+thanks,
+Toby
