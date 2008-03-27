@@ -1,72 +1,68 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 1/2] help: use man viewer path from "man.<tool>.path" config var
-Date: Thu, 27 Mar 2008 00:42:16 +0100
-Message-ID: <200803270042.16822.chriscool@tuxfamily.org>
-References: <20080318062236.7b5e515f.chriscool@tuxfamily.org> <200803250719.02044.chriscool@tuxfamily.org> <7vzlsnpaj3.fsf@gitster.siamese.dyndns.org>
+From: Josef Sipek <jsipek@fsl.cs.sunysb.edu>
+Subject: Re: slurping in guilt, was Re: [ANNOUNCE] Stacked GIT 0.14.2
+Date: Wed, 26 Mar 2008 20:03:59 -0400
+Message-ID: <20080327000359.GA24097@josefsipek.net>
+References: <b0943d9e0803241259s5280cdc1o255a4412b3fa7bfc@mail.gmail.com> <alpine.LNX.1.10.0803242113070.9368@fbirervta.pbzchgretzou.qr> <47E81037.5030808@keyaccess.nl> <7vlk47ua3v.fsf@gitster.siamese.dyndns.org> <20080324235534.GE32221@josefsipek.net> <alpine.LSU.1.00.0803251048320.10660@wbgn129.biozentrum.uni-wuerzburg.de> <7v1w5xch6h.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Pascal Obry <pascal@obry.net>, Xavier Maillard <xma@gnu.org>,
-	=?utf-8?q?=E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=81=AA=E3=81=93?=
-	 =?utf-8?q?_?= <nanako3@bluebottle.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 27 00:37:24 2008
+X-From: git-owner@vger.kernel.org Thu Mar 27 01:05:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JefBK-0006CA-Nh
-	for gcvg-git-2@gmane.org; Thu, 27 Mar 2008 00:37:23 +0100
+	id 1Jefbw-0006GR-IP
+	for gcvg-git-2@gmane.org; Thu, 27 Mar 2008 01:04:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752899AbYCZXgm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 Mar 2008 19:36:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753077AbYCZXgl
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Mar 2008 19:36:41 -0400
-Received: from smtp1-g19.free.fr ([212.27.42.27]:39702 "EHLO smtp1-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752887AbYCZXgl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 26 Mar 2008 19:36:41 -0400
-Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 4C3421AB2AD;
-	Thu, 27 Mar 2008 00:36:40 +0100 (CET)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id E13651AB2AC;
-	Thu, 27 Mar 2008 00:36:39 +0100 (CET)
-User-Agent: KMail/1.9.7
-In-Reply-To: <7vzlsnpaj3.fsf@gitster.siamese.dyndns.org>
+	id S1754224AbYC0AEL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Mar 2008 20:04:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754171AbYC0AEJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Mar 2008 20:04:09 -0400
+Received: from filer.fsl.cs.sunysb.edu ([130.245.126.2]:58578 "EHLO
+	filer.fsl.cs.sunysb.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753751AbYC0AEI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Mar 2008 20:04:08 -0400
+Received: from josefsipek.net (baal.fsl.cs.sunysb.edu [130.245.126.78])
+	by filer.fsl.cs.sunysb.edu (8.12.11.20060308/8.13.1) with ESMTP id m2R03wDo004705;
+	Wed, 26 Mar 2008 20:03:58 -0400
+Received: by josefsipek.net (Postfix, from userid 1000)
+	id D51B71C00124; Wed, 26 Mar 2008 20:03:59 -0400 (EDT)
 Content-Disposition: inline
+In-Reply-To: <7v1w5xch6h.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.16 (2007-06-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78319>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78320>
 
-Le mardi 25 mars 2008, Junio C Hamano a =C3=A9crit :
-> Christian Couder <chriscool@tuxfamily.org> writes:
-> >
-> > In my experience KDE people have never changed the binary names lik=
-e
-> > that. They just use (or advice users to use) different directory na=
-mes
-> > and change environment variables (QTDIR, KDEDIR and maybe others) t=
-o
-> > point to the new dirs.
->
-> I was more worried about what distro people do, not "KDE people".  Fo=
-r
-> example, Contents-i386.gz file from an unnamed distribution lists a
-> handful /usr/bin/k*[0-9] files with their counterparts without the
-> trailing digit.
+On Wed, Mar 26, 2008 at 02:24:22PM -0700, Junio C Hamano wrote:
+... 
+> In any case, the answer to Josef's question is to make sure I won't hear
+> objections on the list that say "No, the stuff is still too premature to
+> live in git.git itself and needs this and that fixups to be usable for the
+> general public." ;-) IOW, keep up the good work.
 
-You are right. This is probably because of the current switch from KDE3=
- to=20
-KDE4. But as I could find no "konqueror4", we are probably safe for at=20
-least a few years.
+Great...of course _I_ know all the things in guilt that _I_ would like to
+see changed (the maintainer syndrome?). :)
 
-By the way I just sent a documentation patch to add a "Note about konqu=
-eror"=20
-in "Documentation/git-web--browse.txt", to be consistent with the note=20
-in "Documentation/git-help.txt".
+> Gathering a bit more followers, preferably outside this mailing list (such
+> as wine, x.org and/or the kernel community), would not hurt.
 
-Thanks,
-Christian.
+The git mailing list is interesting because it tends to have people from all
+the other projects as well.  From the looks of things, Guilt seems to have a
+pretty strong following the Linux filesystem area.
+
+If things go well, I'll be able to go to OLS and have a BoF session about
+Guilt (already got an Ok from the conference folks, it's just a matter of
+figuring out travel/hotel).
+
+Overall, sounds like a plan.
+
+Josef 'Jeff' Sipek.
+
+-- 
+Failure is not an option,
+It comes bundled with your Microsoft product.
