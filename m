@@ -1,61 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [PATCH 5/5] builtin-prune: protect objects listed on the command
  line
-Date: Thu, 27 Mar 2008 09:32:35 -0700
-Message-ID: <7vve389lgc.fsf@gitster.siamese.dyndns.org>
-References: <200803232150.29971.barra_cuda@katamail.com>
- <200803241502.21465.barra_cuda@katamail.com>
- <7vwsnrubmd.fsf@gitster.siamese.dyndns.org>
- <200803242218.44026.barra_cuda@katamail.com>
- <7vtzivmgpg.fsf@gitster.siamese.dyndns.org>
+Date: Thu, 27 Mar 2008 17:35:46 +0100 (CET)
+Message-ID: <alpine.LSU.1.00.0803271735010.3802@racer.site>
+References: <200803232150.29971.barra_cuda@katamail.com> <200803241502.21465.barra_cuda@katamail.com> <7vwsnrubmd.fsf@gitster.siamese.dyndns.org> <200803242218.44026.barra_cuda@katamail.com> <7vtzivmgpg.fsf@gitster.siamese.dyndns.org>
+ <7vve389lgc.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Michele Ballabio <barra_cuda@katamail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 27 17:34:04 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Michele Ballabio <barra_cuda@katamail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 27 17:37:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jev2l-0001br-CK
-	for gcvg-git-2@gmane.org; Thu, 27 Mar 2008 17:33:35 +0100
+	id 1Jev5x-0003O3-Sg
+	for gcvg-git-2@gmane.org; Thu, 27 Mar 2008 17:36:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758363AbYC0Qcx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Mar 2008 12:32:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757560AbYC0Qcx
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Mar 2008 12:32:53 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:51910 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757538AbYC0Qcw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Mar 2008 12:32:52 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 1E8B5529F;
-	Thu, 27 Mar 2008 12:32:46 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id AE4F0529A; Thu, 27 Mar 2008 12:32:38 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1758996AbYC0Qft (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Mar 2008 12:35:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758412AbYC0Qft
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Mar 2008 12:35:49 -0400
+Received: from mail.gmx.net ([213.165.64.20]:48600 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1758776AbYC0Qft (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Mar 2008 12:35:49 -0400
+Received: (qmail invoked by alias); 27 Mar 2008 16:35:47 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp015) with SMTP; 27 Mar 2008 17:35:47 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18J5lkmXrgJNuceHgB9AQuM7ZWP9MTUHV7Q5L7HOt
+	5sMEMAyhYOhoU5
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7vve389lgc.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78354>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78355>
 
-Junio C Hamano <junio@pobox.com> writes:
+Hi,
 
-> From: Junio C Hamano <gitster@pobox.com>
-> Date: Mon, 24 Mar 2008 23:20:51 -0700
->
-> Finally, this resurrects the documented behaviour to protect other
-> objects listed on the command line from getting pruned.
->
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  * This is done deliberately differently from what you did.  Because we do
->    not want to accept "we allow losing what's reachable from master" with
->    "git prune master..next", setup_revisions() is not the right thing to
->    use for this command.
+On Thu, 27 Mar 2008, Junio C Hamano wrote:
 
-Ping?
+> Junio C Hamano <junio@pobox.com> writes:
+> 
+> > From: Junio C Hamano <gitster@pobox.com>
+> > Date: Mon, 24 Mar 2008 23:20:51 -0700
+> >
+> > Finally, this resurrects the documented behaviour to protect other 
+> > objects listed on the command line from getting pruned.
+> >
+> > Signed-off-by: Junio C Hamano <gitster@pobox.com> ---
+> >  * This is done deliberately differently from what you did.  Because 
+> >    we do not want to accept "we allow losing what's reachable from 
+> >    master" with "git prune master..next", setup_revisions() is not the 
+> >    right thing to use for this command.
+> 
+> Ping?
+
+I did not see any problem with your implementation, but I thought Michele 
+would look more deeply, as he obviously cares about the to-be-fixed 
+behaviour.
+
+Ciao,
+Dscho
