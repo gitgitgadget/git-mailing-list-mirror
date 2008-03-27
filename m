@@ -1,56 +1,71 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] send-email: rfc2047-quote subject lines with
-	non-ascii characters
-Date: Thu, 27 Mar 2008 03:38:08 -0400
-Message-ID: <20080327073808.GA22548@coredump.intra.peff.net>
-References: <7caf19ae394accab538d2f94953bb62b55a2c79f.1206486012.git.peff@peff.net> <200803260759.48922.tlikonen@iki.fi> <20080326062029.GA26286@coredump.intra.peff.net> <20080326083033.GA13933@mithlond.arda.local> <20080326083925.GA31475@coredump.intra.peff.net> <20080326092303.GA17835@mithlond.arda.local> <20080326093310.GA937@coredump.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Teemu Likonen <tlikonen@iki.fi>
-X-From: git-owner@vger.kernel.org Thu Mar 27 08:39:22 2008
+From: Wincent Colaiuta <win@wincent.com>
+Subject: Re: [PATCH 0/2] add--interactive: better mode change handling
+Date: Thu, 27 Mar 2008 09:34:00 +0100
+Message-ID: <C96B3392-9B17-4703-A4BC-250A70108924@wincent.com>
+References: <20080327072931.GA22444@coredump.intra.peff.net>
+Mime-Version: 1.0 (Apple Message framework v919.2)
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed	delsp=yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	=?ISO-8859-1?Q?J=F6rg_Sommer?= <joerg@alea.gnuu.de>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Mar 27 09:36:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JemhI-0000x8-SZ
-	for gcvg-git-2@gmane.org; Thu, 27 Mar 2008 08:38:53 +0100
+	id 1Jena4-0008CU-Nk
+	for gcvg-git-2@gmane.org; Thu, 27 Mar 2008 09:35:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755068AbYC0HiL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Mar 2008 03:38:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754699AbYC0HiL
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Mar 2008 03:38:11 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1588 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751878AbYC0HiK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Mar 2008 03:38:10 -0400
-Received: (qmail 16118 invoked by uid 111); 27 Mar 2008 07:38:09 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Thu, 27 Mar 2008 03:38:09 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 27 Mar 2008 03:38:08 -0400
-Content-Disposition: inline
-In-Reply-To: <20080326093310.GA937@coredump.intra.peff.net>
+	id S1754385AbYC0IeS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 27 Mar 2008 04:34:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758787AbYC0IeR
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Mar 2008 04:34:17 -0400
+Received: from wincent.com ([72.3.236.74]:47715 "EHLO s69819.wincent.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758747AbYC0IeO convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 27 Mar 2008 04:34:14 -0400
+Received: from cuzco.lan (localhost [127.0.0.1])
+	(authenticated bits=0)
+	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id m2R8Y1gT024819;
+	Thu, 27 Mar 2008 03:34:02 -0500
+In-Reply-To: <20080327072931.GA22444@coredump.intra.peff.net>
+X-Mailer: Apple Mail (2.919.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78341>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78342>
 
-On Wed, Mar 26, 2008 at 05:33:10AM -0400, Jeff King wrote:
+El 27/3/2008, a las 8:29, Jeff King escribi=F3:
 
-> No, I have format-patch do the threading. So something like:
-> 
->   git format-patch --cover-letter --thread --stdout upstream >mbox
->   mutt -f mbox
-> 
-> and then in mutt I bind a key to <resend-message>. For each message, I
+> There may potentially be a "[3/2] change the name of the 'p'atch
+> command" since it is now not just about the patch (actually, since gi=
+t
+> patches _do_ include mode changes, it maybe is appropriate). Wincent
+> suggested "pick" which I think is reasonable. I'm not planning on =20
+> doing
+> such a 3/2, but I'm sure some industrious soul can make arguments =20
+> for or
+> against changing the name. I will let them handle the ensuing bikeshe=
+d
+> jamboree.
 
-Since it looks like you are using mutt also, I will warn you that there
-is a problem with this workflow: when mutt does the resend, it generates
-a new message-id. Thus the patches are all connected in a thread because
-they all in-reply-to the cover letter, but the cover letter is not
-connected, since it has a new message-id.
+I don't really want to participate in such a jamboree either, but I =20
+will add this one last comment that I should have mentioned in my =20
+previous email: one thing to bear in mind when considering changing =20
+the subcommand name is that "git add" itself has a "--patch" option =20
+since a couple of releases ago, and that means that changing the =20
+subcommand name either means introducing a mismatch between the option =
+=20
+name and subcommand name, or going through a deprecate/rename cycle =20
+for the option name too, which we just introduced.
 
-I'm not sure if there is a way to fix this short of patching mutt. :(
+I don't really care either way. My muscle memory is trained for =20
+"patch" at this point, but changing wouldn't be a problem either.
 
--Peff
+In any case, your patches 1 and 2 look pretty sane to me.
+
+Cheers,
+Wincent
