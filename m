@@ -1,60 +1,62 @@
-From: Xavier Maillard <xma@gnu.org>
-Subject: Re: git diff odds
-Date: Thu, 27 Mar 2008 02:00:01 +0100
-Organization: GNU's Not UNIX!
-Message-ID: <200803270100.m2R101GJ003814@localhost.localdomain>
-References: <200803260100.m2Q10v2l005189@localhost.localdomain> <alpine.LFD.1.00.0803251914150.2775@woody.linux-foundation.org>
-Reply-To: Xavier Maillard <xma@gnu.org>
-Cc: git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Mar 27 02:40:35 2008
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: What I miss from Cogito...
+Date: Thu, 27 Mar 2008 03:36:54 +0100
+Message-ID: <20080327023654.GE6803@machine.or.cz>
+References: <47E69044.3000207@zytor.com> <20080323173841.GA24943@mit.edu> <47E6978C.4040207@zytor.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Theodore Tso <tytso@MIT.EDU>,
+	Git Mailing List <git@vger.kernel.org>
+To: "H. Peter Anvin" <hpa@zytor.com>
+X-From: git-owner@vger.kernel.org Thu Mar 27 03:38:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jeh6X-0006e1-6i
-	for gcvg-git-2@gmane.org; Thu, 27 Mar 2008 02:40:33 +0100
+	id 1Jei0G-0002us-36
+	for gcvg-git-2@gmane.org; Thu, 27 Mar 2008 03:38:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754261AbYC0Bjm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Mar 2008 21:39:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754777AbYC0Bjl
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Mar 2008 21:39:41 -0400
-Received: from master.uucpssh.org ([193.218.105.66]:35202 "EHLO
-	master.uucpssh.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753647AbYC0Bjl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Mar 2008 21:39:41 -0400
-Received: by master.uucpssh.org (Postfix, from userid 10)
-	id 57DA4D5448; Thu, 27 Mar 2008 02:36:22 +0100 (CET)
-Received: from localhost.localdomain (IDENT:1000@localhost [127.0.0.1])
-	by localhost.localdomain (8.14.1/8.13.8) with ESMTP id m2R102oL003817;
-	Thu, 27 Mar 2008 02:00:02 +0100
-Received: (from xma@localhost)
-	by localhost.localdomain (8.14.1/8.13.8/Submit) id m2R101GJ003814;
-	Thu, 27 Mar 2008 02:00:01 +0100
-In-reply-to: <alpine.LFD.1.00.0803251914150.2775@woody.linux-foundation.org>
-	(message from Linus Torvalds on Tue, 25 Mar 2008 19:19:36 -0700 (PDT))
-User-Agent: Rmail in GNU Emacs 23.0.60.3 on GNU/Linux
-Jabber-ID: xma01@jabber.fr
-X-uucpssh: Found to be clean
-X-uucpssh-SpamCheck: not spam, SpamAssassin (not cached, score=-4.324,
-	required 4.6, autolearn=not spam, ALL_TRUSTED -1.80, AWL 0.08,
-	BAYES_00 -2.60, SPF_HELO_PASS -0.00)
-X-uucpssh-From: xma@gnu.org
+	id S1754650AbYC0ChF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Mar 2008 22:37:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753701AbYC0ChF
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Mar 2008 22:37:05 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:54751 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754650AbYC0ChE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Mar 2008 22:37:04 -0400
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id 10113393A2E2; Thu, 27 Mar 2008 03:36:54 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <47E6978C.4040207@zytor.com>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78321>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78322>
 
+On Sun, Mar 23, 2008 at 10:46:52AM -0700, H. Peter Anvin wrote:
+> Theodore Tso wrote:
+>> #!/bin/sh
+>> #
+>> prefix=$(git rev-parse --show-prefix)
+>> for i in $*
+>> do
+>>         git show HEAD:$prefix$i > $i
+>> done
+>
+> FWIW, cg-restore is a 131-line shell script, so one can assume it's not 
+> just doing it for fun.
 
-   > Is this a bug ?
+Actually, such an assumption is not safe, simply since it was written
+long before the :-syntax and many other nice features were invented; if
+one wants to do things in Git sanely these days, it's not even safe to
+look at Cogito's source code for inspiration anymore as it had to work
+only with really hardcore primitives.
 
-   No, it's documented less behaviour. See "man less".
+(And 38 lines is documentation.  ;-)
 
-Thank you very much for your explanations.
-
-	Xavier
 -- 
-http://www.gnu.org
-http://www.april.org
-http://www.lolica.org
+				Petr "Pasky" Baudis
+Whatever you can do, or dream you can, begin it.
+Boldness has genius, power, and magic in it.	-- J. W. von Goethe
