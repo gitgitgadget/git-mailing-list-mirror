@@ -1,69 +1,50 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/2] add--interactive: ignore mode change in 'p'atch
-	command
-Date: Thu, 27 Mar 2008 13:10:23 -0400
-Message-ID: <20080327171022.GA27189@coredump.intra.peff.net>
-References: <cover.1206602393.git.peff@peff.net> <20080327073043.GB22444@coredump.intra.peff.net> <7v7ifob0et.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org,
-	=?utf-8?B?SsO2cmc=?= Sommer <joerg@alea.gnuu.de>,
-	Wincent Colaiuta <win@wincent.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 27 18:11:51 2008
+From: Joe Fiorini <joe@faithfulgeek.org>
+Subject: git-svn merging into branch?
+Date: Thu, 27 Mar 2008 13:30:14 -0400
+Message-ID: <AF82B803-0999-4C9F-95EE-184E829F2569@faithfulgeek.org>
+Mime-Version: 1.0 (Apple Message framework v919.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 27 18:33:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jevd7-00036h-BU
-	for gcvg-git-2@gmane.org; Thu, 27 Mar 2008 18:11:09 +0100
+	id 1Jevy2-0004rJ-BN
+	for gcvg-git-2@gmane.org; Thu, 27 Mar 2008 18:32:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756918AbYC0RK1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Mar 2008 13:10:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756335AbYC0RK1
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Mar 2008 13:10:27 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3187 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755503AbYC0RK0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Mar 2008 13:10:26 -0400
-Received: (qmail 20143 invoked by uid 111); 27 Mar 2008 17:10:24 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Thu, 27 Mar 2008 13:10:24 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 27 Mar 2008 13:10:23 -0400
-Content-Disposition: inline
-In-Reply-To: <7v7ifob0et.fsf@gitster.siamese.dyndns.org>
+	id S1753526AbYC0RcD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Mar 2008 13:32:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752183AbYC0RcD
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Mar 2008 13:32:03 -0400
+Received: from mail-out2.fuse.net ([216.68.8.171]:53744 "EHLO
+	mail-out2.fuse.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750710AbYC0RcA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Mar 2008 13:32:00 -0400
+X-CNFS-Analysis: v=1.0 c=1 a=iKmq7lysAAAA:8 a=XCqsXJLxntG6PhXZankA:9 a=fjB9WvDhYPA1RLSlahrVXg4sXvoA:4 a=oH_WKSxD8ioA:10
+X-CM-Score: 0
+X-Scanned-by: Cloudmark Authority Engine
+Authentication-Results: gwout2 smtp.user=jfiorini@zoomtown.com; auth=pass (LOGIN)
+Received: from [66.93.11.195] ([66.93.11.195:55517] helo=[192.168.1.33])
+	by mail-out2.fuse.net (ecelerity 2.1.1.22 r(17669)) with ESMTPA
+	id 36/60-05263-6A9DBE74 for <git@vger.kernel.org>; Thu, 27 Mar 2008 13:30:14 -0400
+X-Mailer: Apple Mail (2.919.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78356>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78357>
 
-On Thu, Mar 27, 2008 at 09:24:10AM -0700, Junio C Hamano wrote:
+My company uses Subversion for their SCM.  I'd like to start using git  
+on my dev box to eventually show how useful it is.  We're working on a  
+new deploy process that involves merging changes into an svn branch.   
+I have a feeling this will be accomplished much more easily with Git,  
+however I also know our team will not take kindly to switching SCM  
+products at the moment.  I couldn't find this in the documentation,  
+but is is possible to use git-svn to merge changes from a git  
+repository into a particular Subversion branch?
 
->     similarity index 90%
->     rename from gostak
->     rename to doshes
->     Stage the name change [y/n/a/d/j/J/?]?
-
-I hadn't thought about renames. But I wonder if it really makes sense in
-the context of a single path. If I have content in "doshes", what does
-it matter at this point that it came from "gostak"? IOW, what does
-saying 'y' here really do? What is the workflow around it?
-
-> By the way, why was it done as a new sub called from parse_diff() and not
-> as a part of parse_diff() itself?
-
-Code clarity.
-
-The parsing code seemed less convoluted to me that way. parse_diff is
-about linearly splitting the input into hunks. The first hunk just
-happens to be "everything before the first patch hunk".
-
-But splitting head versus mode requires non-linear parsing. Doing it in
-parse_diff would require adding some state to the loop. It seemed
-more readable to me to compose it from two simple loops rather than one
-more complex loop.
-
-I can do it the other way if you prefer.
-
--Peff
+Thanks all!
+Joe Fiorini
+http://www.faithfulgeek.org // agile web development
