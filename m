@@ -1,101 +1,65 @@
-From: Damien Diederen <dash@foobox.net>
-Subject: [PATCH v2 7/7] cvsserver: Use the user part of the email in log and annotate results
-Date: Thu, 27 Mar 2008 23:18:35 +0100
-Message-ID: <f7869cd4f5ed963cbc298ee64b77a43ebd778b0f.1206654905.git.dash@foobox.net>
-References: <cover.1206393086.git.dash@foobox.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v3] Allow git-cvsserver database table name prefix to be
+ specified.
+Date: Thu, 27 Mar 2008 23:35:26 +0100 (CET)
+Message-ID: <alpine.LSU.1.00.0803272334470.3802@racer.site>
+References: <20080327205727.GN2324@opal.elsasser.org> <12066517343988-git-send-email-josh@elsasser.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Rafael Garcia-Suarez <rgarciasuarez@gmail.com>,
-	Frank Lichtenheld <frank@lichtenheld.de>,
-	Martin Langhoff <martin@catalyst.net.nz>,
-	Damien Diederen <dash@foobox.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 27 23:19:23 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Frank Lichtenheld <frank@lichtenheld.de>,
+	Junio C Hamano <gitster@pobox.com>
+To: Josh Elsasser <josh@elsasser.org>
+X-From: git-owner@vger.kernel.org Thu Mar 27 23:36:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jf0RN-00069n-3b
-	for gcvg-git-2@gmane.org; Thu, 27 Mar 2008 23:19:21 +0100
+	id 1Jf0hj-0003wx-Vc
+	for gcvg-git-2@gmane.org; Thu, 27 Mar 2008 23:36:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761526AbYC0WSk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Mar 2008 18:18:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761322AbYC0WSj
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Mar 2008 18:18:39 -0400
-Received: from mail-in-12.arcor-online.net ([151.189.21.52]:60652 "EHLO
-	mail-in-12.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1760619AbYC0WSi (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 27 Mar 2008 18:18:38 -0400
-Received: from mail-in-05-z2.arcor-online.net (mail-in-05-z2.arcor-online.net [151.189.8.17])
-	by mail-in-12.arcor-online.net (Postfix) with ESMTP id D77554C45E;
-	Thu, 27 Mar 2008 23:18:36 +0100 (CET)
-Received: from mail-in-02.arcor-online.net (mail-in-02.arcor-online.net [151.189.21.42])
-	by mail-in-05-z2.arcor-online.net (Postfix) with ESMTP id C3C732DAAA4;
-	Thu, 27 Mar 2008 23:18:36 +0100 (CET)
-Received: from keem.bcc (dslb-084-057-042-002.pools.arcor-ip.net [84.57.42.2])
-	by mail-in-02.arcor-online.net (Postfix) with ESMTP id EAC1267E09;
-	Thu, 27 Mar 2008 23:18:35 +0100 (CET)
-In-Reply-To: <cover.1206393086.git.dash@foobox.net>
-X-From-Line: f7869cd4f5ed963cbc298ee64b77a43ebd778b0f Mon Sep 17 00:00:00 2001
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/23.0.60 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.92.1/6432/Thu Mar 27 22:18:40 2008 on mail-in-02.arcor-online.net
-X-Virus-Status: Clean
+	id S1753209AbYC0Wfa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Mar 2008 18:35:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753200AbYC0Wfa
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Mar 2008 18:35:30 -0400
+Received: from mail.gmx.net ([213.165.64.20]:33022 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751442AbYC0Wf3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Mar 2008 18:35:29 -0400
+Received: (qmail invoked by alias); 27 Mar 2008 22:35:27 -0000
+Received: from host86-139-218-102.range86-139.btcentralplus.com (EHLO racer.home) [86.139.218.102]
+  by mail.gmx.net (mp033) with SMTP; 27 Mar 2008 23:35:27 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19JpQUwGiJJnaNL8IR05PsAvBJ9lS7ci4vYDo6U9q
+	b6K2E8XyEW1VqN
+X-X-Sender: gene099@racer.site
+In-Reply-To: <12066517343988-git-send-email-josh@elsasser.org>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78376>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78377>
 
-Generate the CVS author names by taking the first eight characters of
-the user part of the email address.  The resulting names are more
-likely to make sense (or at least reduce ambiguities) in "corporate"
-environments.
+Hi,
 
-Signed-off-by: Damien Diederen <dash@foobox.net>
----
- git-cvsserver.perl |   16 ++++++++++++----
- 1 files changed, 12 insertions(+), 4 deletions(-)
+On Thu, 27 Mar 2008, Josh Elsasser wrote:
 
-diff --git a/git-cvsserver.perl b/git-cvsserver.perl
-index 49c0ba2..dcca4e7 100755
---- a/git-cvsserver.perl
-+++ b/git-cvsserver.perl
-@@ -1728,8 +1728,7 @@ sub req_log
-             print "M revision 1.$revision->{revision}\n";
-             # reformat the date for log output
-             $revision->{modified} = sprintf('%04d/%02d/%02d %s', $3, $DATE_LIST->{$2}, $1, $4 ) if ( $revision->{modified} =~ /(\d+)\s+(\w+)\s+(\d+)\s+(\S+)/ and defined($DATE_LIST->{$2}) );
--            $revision->{author} =~ s/\s+.*//;
--            $revision->{author} =~ s/^(.{8}).*/$1/;
-+            $revision->{author} = cvs_author($revision->{author});
-             print "M date: $revision->{modified};  author: $revision->{author};  state: " . ( $revision->{filehash} eq "deleted" ? "dead" : "Exp" ) . ";  lines: +2 -3\n";
-             my $commitmessage = $updater->commitmessage($revision->{commithash});
-             $commitmessage =~ s/^/M /mg;
-@@ -1844,8 +1843,7 @@ sub req_annotate
-                 unless ( defined ( $metadata->{$commithash} ) )
-                 {
-                     $metadata->{$commithash} = $updater->getmeta($filename, $commithash);
--                    $metadata->{$commithash}{author} =~ s/\s+.*//;
--                    $metadata->{$commithash}{author} =~ s/^(.{8}).*/$1/;
-+                    $metadata->{$commithash}{author} = cvs_author($metadata->{$commithash}{author});
-                     $metadata->{$commithash}{modified} = sprintf("%02d-%s-%02d", $1, $2, $3) if ( $metadata->{$commithash}{modified} =~ /^(\d+)\s(\w+)\s\d\d(\d\d)/ );
-                 }
-                 printf("M 1.%-5d      (%-8s %10s): %s\n",
-@@ -2139,6 +2137,16 @@ sub kopts_from_path
-     }
- }
- 
-+# Generate a CVS author name from Git author information, by taking
-+# the first eight characters of the user part of the email address.
-+sub cvs_author
-+{
-+    my $author_line = shift;
-+    (my $author) = $author_line =~ /<([^>@]{1,8})/;
-+
-+    $author;
-+}
-+
- package GITCVS::log;
- 
- ####
--- 
-1.5.5.rc1.19.gfe7681
+> Adds a gitcvs.dbtablenameprefix config variable, the contents of which 
+> are prepended to any database tables names used by git-cvsserver. The 
+> same substutions as gitcvs.dbname and gitcvs.dbuser are supported, and 
+> any non-alphabetic characters are replaced with underscores.
+> 
+> A typo found in contrib/completion/git-completion.bash is also fixed.
+> ---
+> 
+> This version of the patch is a bit cleaner, it calls a function to get 
+> the table names instead of pasting a variable reference everywhere. The 
+> config var name has also been changed from gitcvs.dbprefix to 
+> gitcvs.dbTableNamePrefix
+
+I probably missed something, but I cannot find a reason why you need this.  
+In the commit message, I mean.
+
+Ciao,
+Dscho
