@@ -1,53 +1,97 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: .git/info/attributes not cloned
-Date: Thu, 27 Mar 2008 00:53:42 -0400
-Message-ID: <20080327045342.GC6426@coredump.intra.peff.net>
-References: <47EB0FAE.5000102@rea-group.com> <20080327033341.GB5417@coredump.intra.peff.net> <47EB213F.1020503@rea-group.com> <20080327042925.GA6426@coredump.intra.peff.net> <47EB271F.1050307@rea-group.com>
+Subject: [PATCH] Documentation: clarify use of .git{ignore,attributes}
+	versus .git/info/*
+Date: Thu, 27 Mar 2008 01:31:00 -0400
+Message-ID: <20080327053100.GA7378@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Toby Corkindale <toby.corkindale@rea-group.com>
-X-From: git-owner@vger.kernel.org Thu Mar 27 05:54:26 2008
+Cc: Toby Corkindale <toby.corkindale@rea-group.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 27 06:31:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jek8A-00073E-Ce
-	for gcvg-git-2@gmane.org; Thu, 27 Mar 2008 05:54:26 +0100
+	id 1JekiN-0006ca-KI
+	for gcvg-git-2@gmane.org; Thu, 27 Mar 2008 06:31:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751360AbYC0Exp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Mar 2008 00:53:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751341AbYC0Exo
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Mar 2008 00:53:44 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2746 "EHLO
+	id S1752665AbYC0FbF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Mar 2008 01:31:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752633AbYC0FbF
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Mar 2008 01:31:05 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4183 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751308AbYC0Exo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Mar 2008 00:53:44 -0400
-Received: (qmail 5793 invoked by uid 111); 27 Mar 2008 04:53:43 -0000
+	id S1751878AbYC0FbE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Mar 2008 01:31:04 -0400
+Received: (qmail 8154 invoked by uid 111); 27 Mar 2008 05:31:01 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Thu, 27 Mar 2008 00:53:43 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 27 Mar 2008 00:53:42 -0400
+    by peff.net (qpsmtpd/0.32) with SMTP; Thu, 27 Mar 2008 01:31:01 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 27 Mar 2008 01:31:00 -0400
 Content-Disposition: inline
-In-Reply-To: <47EB271F.1050307@rea-group.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78333>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78334>
 
-On Thu, Mar 27, 2008 at 03:48:31PM +1100, Toby Corkindale wrote:
+gitignore patterns can be read from three different
+files, while gitattributes can come from two files. Let's
+provide some hints to the user about the differences and how
+they are typically used.
 
->> I vaguely recall some discussion of this in the past, so maybe it isn't
->> a good idea. But I would think changing git-archive to respect
->> .gitattributes might be worth doing (presumably the version of
->> .gitattributes from the tree that is being exported).
->
-> Respecting the repo's .gitattributes would feel right. It seems unusual  
-> (to me) that it bypasses $REMOTE/.gitattributes, but DOES check  
-> $REMOTE/info/attributes.
+Suggested by Toby Corkindale, but gratuitously reworded by Jeff King.
 
-I agree that it seems like a bug. You might search the list archives for
-discussion around the export_subst attribute to see if it was discussed
-then or if it is simply an omission.
+Signed-off-by: Toby Corkindale <toby.corkindale@rea-group.com>
+Signed-off-by: Jeff King <peff@peff.net>
+---
+I ended up munging Toby's original wording quite a bit. Please complain
+if you think it can be said better.
 
--Peff
+ Documentation/gitattributes.txt |    7 +++++++
+ Documentation/gitignore.txt     |   12 ++++++++++++
+ 2 files changed, 19 insertions(+), 0 deletions(-)
+
+diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
+index 84ec962..04ca63c 100644
+--- a/Documentation/gitattributes.txt
++++ b/Documentation/gitattributes.txt
+@@ -63,6 +63,13 @@ path in question, and its parent directories (the further the
+ directory that contains `.gitattributes` is from the path in
+ question, the lower its precedence).
+ 
++If you wish to affect only a single repository (i.e., to assign
++attributes to files that are particular to one user's workflow), then
++attributes should be placed in the `$GIT_DIR/info/attributes` file.
++Attributes which should be version-controlled and distributed to other
++repositories (i.e., attributes of interest to all users) should go into
++`.gitattributes` files.
++
+ Sometimes you would need to override an setting of an attribute
+ for a path to `unspecified` state.  This can be done by listing
+ the name of the attribute prefixed with an exclamation point `!`.
+diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.txt
+index e847b3b..613dca0 100644
+--- a/Documentation/gitignore.txt
++++ b/Documentation/gitignore.txt
+@@ -38,6 +38,18 @@ precedence, the last matching pattern decides the outcome):
+  * Patterns read from the file specified by the configuration
+    variable 'core.excludesfile'.
+ 
++Which file to place a pattern in depends on how the pattern is meant to
++be used. Patterns which should be version-controlled and distributed to
++other repositories via clone (i.e., files that all developers will want
++to ignore) should go into a `.gitignore` file. Patterns which are
++specific to a particular repository but which do not need to be shared
++with other related repositories (e.g., auxiliary files that live inside
++the repository but are specific to one user's workflow) should go into
++the `$GIT_DIR/info/exclude` file.  Patterns which a user wants git to
++ignore in all situations (e.g., backup or temporary files generated by
++the user's editor of choice) generally go into a file specified by
++`core.excludesfile` in the user's `~/.gitconfig`.
++
+ The underlying git plumbing tools, such as
+ linkgit:git-ls-files[1] and linkgit:git-read-tree[1], read
+ `gitignore` patterns specified by command-line options, or from
+-- 
+1.5.5.rc1.133.g360d
