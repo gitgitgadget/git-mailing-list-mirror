@@ -1,104 +1,126 @@
-From: =?utf-8?Q?R=C3=A9mi?= Vanicat <vanicat@debian.org>
-Subject: [PATCH/RFC] git.el: Add a git-log command
-Date: Fri, 28 Mar 2008 17:53:26 +0100
-Message-ID: <87bq4ydc3d.dlv@maison.homelinux.org>
+From: Alex Bennee <kernel-hacker@bennee.com>
+Subject: [PATCH] Documentation: Another example for git-filter-branch
+Date: Fri, 28 Mar 2008 18:07:55 +0000
+Message-ID: <1206727676.9819.22.camel@malory>
+References: <1206707716.9819.15.camel@malory>
+	 <32541b130803280550u2ed23b5auc84bf935d5344e84@mail.gmail.com>
+	 <b2cdc9f30803280852y4f160bb2tda1e688ddf7213e7@mail.gmail.com>
+	 <b2cdc9f30803280903w4a6e3a6l9e33fd188af9995a@mail.gmail.com>
+	 <47ED204E.3020602@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Alexandre Julliard <julliard@winehq.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 28 17:54:40 2008
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Avery Pennarun <apenwarr@gmail.com>, git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Fri Mar 28 19:08:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JfHqU-0006T9-PT
-	for gcvg-git-2@gmane.org; Fri, 28 Mar 2008 17:54:27 +0100
+	id 1JfIzh-00078c-30
+	for gcvg-git-2@gmane.org; Fri, 28 Mar 2008 19:08:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753578AbYC1Qxp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Mar 2008 12:53:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753417AbYC1Qxp
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Mar 2008 12:53:45 -0400
-Received: from neuf-infra-smtp-out-sp604003av.neufgp.fr ([84.96.92.124]:41495
-	"EHLO neuf-infra-smtp-out-sp604003av.neufgp.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753344AbYC1Qxo (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 28 Mar 2008 12:53:44 -0400
-Received: from neuf-infra-smtp-out-sp604011av.neufgp.fr ([84.96.92.116])
-	by neuf-infra-smtp-out-sp604003av.neufgp.fr with neuf telecom
-	id 6gtS1Z0022We0qU0300100; Fri, 28 Mar 2008 16:53:40 +0000
-Received: from maison.homelinux.org ([84.101.56.178])
-	by neuf-infra-smtp-out-sp604011av.neufgp.fr with neuf telecom
-	id 6gtU1Z00V3qimmk0B00000; Fri, 28 Mar 2008 17:53:39 +0100
-Received: from moi by maison.homelinux.org with local (Exim 4.69)
-	(envelope-from <vanicat.remi@neuf.fr>)
-	id 1JfHpW-0001gm-78; Fri, 28 Mar 2008 17:53:28 +0100
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: vanicat.remi@neuf.fr
-X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on maison.homelinux.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.3 required=5.0 tests=AWL,BAYES_00,NO_RELAYS
-	autolearn=ham version=3.2.4
-X-SA-Exim-Version: 4.2.1 (built Tue, 21 Aug 2007 23:39:36 +0000)
-X-SA-Exim-Scanned: Yes (on maison.homelinux.org)
+	id S1754878AbYC1SHS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Mar 2008 14:07:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754121AbYC1SHS
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Mar 2008 14:07:18 -0400
+Received: from ug-out-1314.google.com ([66.249.92.172]:5529 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754108AbYC1SHQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Mar 2008 14:07:16 -0400
+Received: by ug-out-1314.google.com with SMTP id z38so810369ugc.16
+        for <git@vger.kernel.org>; Fri, 28 Mar 2008 11:07:14 -0700 (PDT)
+Received: by 10.78.138.14 with SMTP id l14mr10268203hud.63.1206727633269;
+        Fri, 28 Mar 2008 11:07:13 -0700 (PDT)
+Received: from ?192.168.250.3? ( [86.15.108.50])
+        by mx.google.com with ESMTPS id u9sm8777712muf.4.2008.03.28.11.07.10
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 28 Mar 2008 11:07:11 -0700 (PDT)
+In-Reply-To: <47ED204E.3020602@viscovery.net>
+X-Mailer: Evolution 2.12.3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78429>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78430>
 
-The git-log-files command only give log relative to selected files, or
-relative to the file under cursor if there is no selected files, so
-git.el could not give the full log.  This new command do it.
 
-There is no key-binding for now.
+On Fri, 2008-03-28 at 17:43 +0100, Johannes Sixt wrote:
+> Alex Bennee schrieb:
+> > git-checkout dev-branch
+> > git-filter-branch --tree-filter  'rm -rf big_dira big_dirb' HEAD
+> 
+> You really shouldn't do it this way, unless you do it on a ramdisk. Better
+> use an --index-filter. This is modeled after the last example in the man
+> page (and, of course, untested):
+
+I missed the implications of the last example...
+
+> git filter-branch --index-filter \
+>         'git ls-files -s |
+> 	 grep -v "	big_dira" |
+> 	 grep -v "	big_dirb" |
+>                 GIT_INDEX_FILE=$GIT_INDEX_FILE.new \
+>                         git update-index --index-info &&
+>          mv $GIT_INDEX_FILE.new $GIT_INDEX_FILE' HEAD
+> 
+> where the space before big_dir is actually a literal TAB!
+
+Good example. Maybe we should add the following (because plenty of
+examples is always a good thing IMHO)?
+
+>From 341b480bad4ed9f99a54dc66ba20b0cead4594b5 Mon Sep 17 00:00:00 2001
+From: Alex Bennee <Alex.Bennee@cambridgebroadband.com>
+Date: Fri, 28 Mar 2008 18:00:20 +0000
+Subject: [PATCH] Update git filter-branch examples for cleaning directories
+
+I had to do this to a tree I imported from CVS which had a lot of cruft in it
+which was taking ages. Luckily Johannes Sixt submitted this scriplet on the list
+before I finished which makes things clearer.
 ---
-Do I need a key binding for this? No idea where to put it. 
-Another way to do it may be to use a prefix arg to git-log-file
+ Documentation/git-filter-branch.txt |   21 +++++++++++++++++++++
+ 1 files changed, 21 insertions(+), 0 deletions(-)
 
- contrib/emacs/git.el |   16 +++++++++++-----
- 1 files changed, 11 insertions(+), 5 deletions(-)
-
-diff --git a/contrib/emacs/git.el b/contrib/emacs/git.el
-index 4fa853f..6cf55dc 100644
---- a/contrib/emacs/git.el
-+++ b/contrib/emacs/git.el
-@@ -1191,11 +1191,10 @@ Return the list of files that haven't been handled."
-            (buff2 (git-run-command-buffer (concat filename ".~HEAD~") "cat-file" "blob" (concat "HEAD:" filename))))
-       (ediff-buffers buff1 buff2))))
+diff --git a/Documentation/git-filter-branch.txt b/Documentation/git-filter-branch.txt
+index 543a1cf..0e4b581 100644
+--- a/Documentation/git-filter-branch.txt
++++ b/Documentation/git-filter-branch.txt
+@@ -184,6 +184,27 @@ git filter-branch --index-filter 'git update-index --remove filename' HEAD
  
--(defun git-log-file ()
-+(defun git-log-file (files)
-   "Display a log of changes to the marked file(s)."
--  (interactive)
--  (let* ((files (git-marked-files))
--         (coding-system-for-read git-commits-coding-system)
-+  (interactive (list (git-marked-files)))
-+  (let* ((coding-system-for-read git-commits-coding-system)
-          (buffer (apply #'git-run-command-buffer "*git-log*" "rev-list" "--pretty" "HEAD" "--" (git-get-filenames files))))
-     (with-current-buffer buffer
-       ; (git-log-mode)  FIXME: implement log mode
-@@ -1203,6 +1202,11 @@ Return the list of files that haven't been handled."
-       (setq buffer-read-only t))
-     (display-buffer buffer)))
+ Now, you will get the rewritten history saved in HEAD.
  
-+(defun git-log ()
-+  "Display a log of changes."
-+  (interactive)
-+  (git-log-file ()))
++If you need to remove whole directories it is tempting to use "rm -rf"
++in the --tree-filter form, however this will generate a lot of disk IO
++on big trees. Hence it's more preferable to use the index filter. For
++example:
 +
- (defun git-log-edit-files ()
-   "Return a list of marked files for use in the log-edit buffer."
-   (with-current-buffer log-edit-parent-buffer
-@@ -1495,7 +1499,9 @@ amended version of it."
-       ["View File" git-view-file t]
-       ["Diff File" git-diff-file t]
-       ["Interactive Diff File" git-diff-file-idiff t]
--      ["Log" git-log-file t]
-+      ["Log file" git-log-file t]
-+      ["Log" git-log t]
-+      ,@(if (featurep 'grep) (list ["Grep" git-grep t]) ())
-       "--------"
-       ["Mark" git-mark-file t]
-       ["Mark All" git-mark-all t]
++--------------------------------------------------------------------------
++git filter-branch --index-filter \
++       'git ls-files -s |
++        grep -v "      big_dira" |
++	grep -v "      big_dirb" |
++		GIT_INDEX_FILE=$GIT_INDEX_FILE.new \
++                git update-index --index-info &&
++	mv $GIT_INDEX_FILE.new $GIT_INDEX_FILE' HEAD
++--------------------------------------------------------------------------
++
++NB: The grep is matching literal TABs from the output of "git
++ls-files". Try <ctrl-v><tab> if your shell keeps giving you a directory
++listing every time you hit tab.
++
++
++
+ To set a commit (which typically is at the tip of another
+ history) to be the parent of the current initial commit, in
+ order to paste the other history behind the current history:
 -- 
-1.5.5.rc0.19.g4b856
+1.5.5.rc0.6.gdeda.dirty
+
+
+
+
+
+--
+Alex, homepage: http://www.bennee.com/~alex/
+We reject: kings, presidents, and voting. We believe in: rough consensus
+and working code. -- Dave Clark
