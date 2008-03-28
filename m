@@ -1,131 +1,71 @@
-From: Bob Cotton <bob.cotton@rallydev.com>
-Subject: Re: Git and git-svn question.
-Date: Fri, 28 Mar 2008 08:38:25 -0600
-Message-ID: <m24paqsyla.fsf@rallydevelopment.com>
-References: <47ECA3DC.8010901@sezampro.com>
-	<ae63f8b50803280427m55f6b957r12745c8e4178588b@mail.gmail.com>
+From: Jan Holesovsky <kendy@suse.cz>
+Subject: Re: What's outstanding
+Date: Fri, 28 Mar 2008 16:04:43 +0100
+Message-ID: <200803281604.44052.kendy@suse.cz>
+References: <7v4par4bkj.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0803281300180.3802@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: ivanisev@sezampro.com, git@vger.kernel.org
-To: "Jean-Baptiste Quenot" <jbq@caraldi.com>
-X-From: git-owner@vger.kernel.org Fri Mar 28 15:56:48 2008
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Mar 28 16:06:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JfFzv-0008WM-M9
-	for gcvg-git-2@gmane.org; Fri, 28 Mar 2008 15:56:04 +0100
+	id 1JfG94-0003df-ON
+	for gcvg-git-2@gmane.org; Fri, 28 Mar 2008 16:05:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753900AbYC1Oxs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Mar 2008 10:53:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753601AbYC1Oxs
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Mar 2008 10:53:48 -0400
-Received: from smtp.rallydev.com ([67.88.103.130]:32141 "EHLO
-	maldives.f4tech.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753894AbYC1Oxr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Mar 2008 10:53:47 -0400
-X-Greylist: delayed 913 seconds by postgrey-1.27 at vger.kernel.org; Fri, 28 Mar 2008 10:53:46 EDT
-Received: from boblaptop-2.local.rallydevelopment.com ([10.1.0.177]) by maldives.f4tech.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 28 Mar 2008 08:38:32 -0600
-In-Reply-To: <ae63f8b50803280427m55f6b957r12745c8e4178588b@mail.gmail.com>
-	(Jean-Baptiste Quenot's message of "Fri\, 28 Mar 2008 12\:27\:59 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/22.1.50 (darwin)
-X-OriginalArrivalTime: 28 Mar 2008 14:38:32.0546 (UTC) FILETIME=[65873420:01C890E1]
+	id S1754876AbYC1PEq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Mar 2008 11:04:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754506AbYC1PEq
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Mar 2008 11:04:46 -0400
+Received: from styx.suse.cz ([82.119.242.94]:40856 "EHLO mail.suse.cz"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1754363AbYC1PEp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Mar 2008 11:04:45 -0400
+Received: from one.suse.cz (one.suse.cz [10.20.1.79])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.suse.cz (Postfix) with ESMTP id AAA9B62805F;
+	Fri, 28 Mar 2008 16:04:44 +0100 (CET)
+User-Agent: KMail/1.9.6 (enterprise 20070904.708012)
+In-Reply-To: <alpine.LSU.1.00.0803281300180.3802@racer.site>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78417>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78418>
 
-"Jean-Baptiste Quenot" <jbq@caraldi.com> writes:
+Hi Johannes,
 
-> Hi Bosko,
+On Friday 28 of March 2008, Johannes Schindelin wrote:
+
+> > Here is the index of topics that I am aware of; some of them may not be
+> > anywhere in git.git.
 >
-> 2008/3/28, Bosko Ivanisevic <ivanisev@sezampro.com>:
->> My company uses SVN and I have to work on the code from two offices.
->>  Since SVN is far away from git in branching I've decided to set up git
->>  repository as a mirror of company's SVN repo, which I would use as
->>  intermediate repository for my code:
->>
->>  git svn clone -t tags -b branches -T trunk
->>  svn+ssh://company_server/path_to_svn_repo --prefix=company/
+> Heh, I expected the answer "Git!" to the question "What's outstanding?".
 >
-> -t tags -b branches -T trunk == -s
+> But what about the lazy clone?
 >
->>  Since I just started to use git I wonder if anyone can give me any hint
->>  what is the best way to accomplish following tasks with git:
->>
->>  - In office 1 and office 2 I clone git repository that is a mirror of SVN:
->>    git clone ssh://company_server/path_to_git_repo
->
-> You can't do that as SVN information is not cloned.  You have to call
-> git-svn clone on every working copy.
+> http://article.gmane.org/gmane.comp.version-control.git/73117
 
-git-svn clone takes on the order of 6 hours for us. I've had some luck
-with "pre-clone/post-clone" steps that:
+Yes, I still did not do the cleanup I promised, so sorry for that :-(
 
-pre-clone (which is run after 'git svn clone')
+BTW, if you are interested about the decision what is the OpenOffice.org's 
+next SCM going to be:
 
-1. create local branches for all 'remote' (svn) branches. This is so
-   'git clone' will create 'remote branches'. These are just
-   placeholders for the post-clone step:
+http://wiki.services.openoffice.org/wiki/ESC_minutes#SCM_review
 
-   git branch -r | grep -v tags | sed -rne 's, *([^@]+)$,\1,p' | while read branch; do
-     echo "git branch $branch $branch"
-   done | sh
+The short version is that OOo wants to go the DSCM way, but the engineering 
+steering committee did not get other numbers than git and svn ones, so 
+temporarily they decided to migrate to svn, and later to a chosen DSCM (to be 
+chosen from bzr, git, hg).
 
-2. create real git tags from all svn tags (we never branch from tags):
+So - most probably I'll again ask you for help with tuning the git repo 
+again :-)
 
-  git branch -r | sed -rne 's, *tags/([^@]+)$,\1,p' | while read tag; do
-    echo "git tag $tag 'tags/${tag}^'; git branch -r -d tags/$tag"
-  done | sh
-
-3. Now, with this repo, we create a "read-only" bare repo:
-
-   git clone --bare repo /somewhere/public/repo.git
-
-4. cleanup the heads created from #1
-
-   git show-ref --heads | cut -d' ' -f 2 | grep -v master | while read branch; do
-     echo "git branch -D `basename $branch`"; 
-   done  | sh
-
-5. Now everyone git-clones from this repo, and runs 'post-clone' (below):
-
-   git clone git://somewhere/public/repo.git
-
-We run 1-4 in a cron nightly.
-
-After step 5, we 'post-clone':
-
-1. put all 'origin/remote' branches (created in pre-clone #1) back to
-   refs/remote/<branch>
-
-   for i in `git-branch -r | egrep -v 'HEAD|master'`; do
-     echo "git update-ref refs/remotes/`basename $i` $i"
-     echo "git branch -D -r $i"
-   done | sh
-
-2. delete origin/HEAD and origin/master
-
-   git update-ref --no-deref refs/remotes/origin/HEAD origin/master
-   git branch -D -r origin/HEAD
-   git branch -D -r origin/master
-
-3. delete the origin repo from the config:
-
-   git config --remove-section remote.origin
-   git config --remove-section branch.master
-
-4. re-init git-svn
-
-    git svn init -s <your svn repo>
-
-5. rebase
- 
-    git svn rebase
-
-Now everyone has is working from the same git repo, and they have all
-been reconfigured so that svn is the 'origin'.
-
-- Bob
+Regards,
+Jan
