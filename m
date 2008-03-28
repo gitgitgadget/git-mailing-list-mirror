@@ -1,74 +1,76 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: git clone out of memory. alternatives?
-Date: Thu, 27 Mar 2008 20:04:18 -0700 (PDT)
-Message-ID: <alpine.LFD.1.00.0803272001120.14670@woody.linux-foundation.org>
-References: <beb5fde90803271929u40a98915ifd05234476ab92f9@mail.gmail.com>
+From: Toby Corkindale <toby.corkindale@rea-group.com>
+Subject: [BUG?] git-archive ignores remote .gitattributes (was: .git/info/attributes
+ not cloned)
+Date: Fri, 28 Mar 2008 16:10:41 +1100
+Organization: REA Group
+Message-ID: <47EC7DD1.3060102@rea-group.com>
+References: <47EB0FAE.5000102@rea-group.com> <20080327033341.GB5417@coredump.intra.peff.net> <47EB213F.1020503@rea-group.com> <20080327042925.GA6426@coredump.intra.peff.net> <47EB271F.1050307@rea-group.com> <20080327045342.GC6426@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Jeffrey Chang <jeffrey.chang@duke.edu>
-X-From: git-owner@vger.kernel.org Fri Mar 28 04:05:58 2008
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 28 06:03:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jf4tw-0003iC-4Y
-	for gcvg-git-2@gmane.org; Fri, 28 Mar 2008 04:05:35 +0100
+	id 1Jf6kX-0002Ft-TN
+	for gcvg-git-2@gmane.org; Fri, 28 Mar 2008 06:03:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755860AbYC1DE0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Mar 2008 23:04:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755571AbYC1DEZ
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Mar 2008 23:04:25 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:43011 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755456AbYC1DEZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 27 Mar 2008 23:04:25 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m2S34JtT032116
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 27 Mar 2008 20:04:20 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m2S34IrN002938;
-	Thu, 27 Mar 2008 20:04:19 -0700
-In-Reply-To: <beb5fde90803271929u40a98915ifd05234476ab92f9@mail.gmail.com>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
-X-Spam-Status: No, hits=-3.345 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1751053AbYC1FCm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Mar 2008 01:02:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751217AbYC1FCm
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Mar 2008 01:02:42 -0400
+Received: from mel-nat68.realestate.com.au ([210.50.192.68]:1403 "EHLO
+	mel-nat68.realestate.com.au" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751037AbYC1FCl (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 28 Mar 2008 01:02:41 -0400
+Received: from [192.168.53.6] ([192.168.53.6]) by mel-nat68.realestate.com.au with Microsoft SMTPSVC(6.0.3790.1830);
+	 Fri, 28 Mar 2008 16:02:18 +1100
+User-Agent: Thunderbird 2.0.0.12 (X11/20080227)
+In-Reply-To: <20080327045342.GC6426@coredump.intra.peff.net>
+X-OriginalArrivalTime: 28 Mar 2008 05:02:18.0730 (UTC) FILETIME=[E5ED8CA0:01C89090]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78382>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78383>
 
-
-
-On Thu, 27 Mar 2008, Jeffrey Chang wrote:
+Jeff King wrote:
+> On Thu, Mar 27, 2008 at 03:48:31PM +1100, Toby Corkindale wrote:
 > 
-> Is there any way to get around this problem?  For example:
-> - Can I run git clone in a way that uses less memory, such as cloning
-> a piece of the repository at a time?
+>>> I vaguely recall some discussion of this in the past, so maybe it isn't
+>>> a good idea. But I would think changing git-archive to respect
+>>> .gitattributes might be worth doing (presumably the version of
+>>> .gitattributes from the tree that is being exported).
+>> Respecting the repo's .gitattributes would feel right. It seems unusual  
+>> (to me) that it bypasses $REMOTE/.gitattributes, but DOES check  
+>> $REMOTE/info/attributes.
+> 
+> I agree that it seems like a bug. You might search the list archives for
+> discussion around the export_subst attribute to see if it was discussed
+> then or if it is simply an omission.
 
-Cloning really is pretty memory-intensive, because it involves going 
-through every single object.
+My searches haven't turned anything up that seems relevant.
+I submit that this is a bug, or at least undesirable behaviour:
 
-What you *can* do is to limit cloning to the rsync protocol, which is 
-strictly quite horrible (none of the inherent sanity-checks of the native 
-protocol), but it avoids the server-side costs.
+"git-archive --remote=/some/repo" will ignore /some/repo/.gitattributes, 
+but check /some/repo/info/attributes.
 
-However, you'll eventually hit other problems, like the fact that you also 
-won't be able to do a full repack on the server side (because a full 
-repack does the same thing).
+I think the problem is in the loop that looks for .gitattributes, which 
+seems to do so by taking the current path and iterating down through it?
+In the case of remote archives, shouldn't that start by taking the path 
+of the repo, not current dir?
 
-> - Can I export the entire repository as a file that can be loaded on
-> my target machine, like "svnadmin dump" for subversion?
+Or should it go one step further, and check the .gitattributes for every 
+file it extracts? That is the behaviour you get if you run git-archive 
+from within a repo, rather than remotely - and don't we want that to be 
+consistent with using --remote?
 
-That's essentially what a repack does. See above about the problem.
+ie. I'm thinking of structures like:
+/myModule/testfile.pm
+/myModule/subdir/testfile.pm
+/myModule/subdir/.gitattributes
 
-> - Can I just rsync the repository from another computer that already has a copy?
-
-Yes. You can. And you can also repack on another host and then rsync the 
-results back to the server. It's not pretty, but it should work.
-
-		Linus
+if I do "cd /myModule; git-archive HEAD" then shouldn't I get the same 
+output as if I did "cd /tmp; git-archive --remote=/myModule HEAD" ?
