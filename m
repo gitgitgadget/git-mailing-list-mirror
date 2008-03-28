@@ -1,59 +1,75 @@
-From: Wincent Colaiuta <win@wincent.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [PATCH] Silence cpio's "N blocks" output when cloning locally
-Date: Fri, 28 Mar 2008 17:12:27 +0100
-Message-ID: <2145F4A8-7C6E-4AE9-A531-026DC65417BE@wincent.com>
-References: <> <1206685186-10352-1-git-send-email-bdonlan@fushizen.net> <alpine.LSU.1.00.0803281400330.18259@racer.site>
-Mime-Version: 1.0 (Apple Message framework v919.2)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Date: Fri, 28 Mar 2008 17:29:36 +0100 (CET)
+Message-ID: <alpine.LSU.1.00.0803281728530.18259@racer.site>
+References: <> <1206685186-10352-1-git-send-email-bdonlan@fushizen.net> <alpine.LSU.1.00.0803281400330.18259@racer.site> <2145F4A8-7C6E-4AE9-A531-026DC65417BE@wincent.com>
+Mime-Version: 1.0
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323584-1454050381-1206721777=:18259"
 Cc: Bryan Donlan <bdonlan@fushizen.net>, git@vger.kernel.org,
 	gitster@pobox.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Mar 28 17:21:57 2008
+To: Wincent Colaiuta <win@wincent.com>
+X-From: git-owner@vger.kernel.org Fri Mar 28 17:30:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JfHK8-0000SD-6X
-	for gcvg-git-2@gmane.org; Fri, 28 Mar 2008 17:21:00 +0100
+	id 1JfHTC-0004jD-5A
+	for gcvg-git-2@gmane.org; Fri, 28 Mar 2008 17:30:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754223AbYC1QUN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 28 Mar 2008 12:20:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754196AbYC1QUN
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Mar 2008 12:20:13 -0400
-Received: from wincent1.inetu.net ([209.235.192.161]:35948 "EHLO
-	wincent1.inetu.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754223AbYC1QUM convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 28 Mar 2008 12:20:12 -0400
-X-Greylist: delayed 438 seconds by postgrey-1.27 at vger.kernel.org; Fri, 28 Mar 2008 12:20:11 EDT
-Received: from cuzco.lan (99.pool85-53-31.dynamic.orange.es [85.53.31.99])
-	(authenticated bits=0)
-	by wincent1.inetu.net (8.13.8/8.13.8) with ESMTP id m2SGCSqP016183;
-	Fri, 28 Mar 2008 12:12:28 -0400
-In-Reply-To: <alpine.LSU.1.00.0803281400330.18259@racer.site>
-X-Mailer: Apple Mail (2.919.2)
+	id S1752867AbYC1Q3j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Mar 2008 12:29:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752818AbYC1Q3i
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Mar 2008 12:29:38 -0400
+Received: from mail.gmx.net ([213.165.64.20]:42095 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752497AbYC1Q3i (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Mar 2008 12:29:38 -0400
+Received: (qmail invoked by alias); 28 Mar 2008 16:29:36 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp010) with SMTP; 28 Mar 2008 17:29:36 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18ZlG0Gj90ZxF9nnBTGX9pLdh6nfa3CuNHx3lBZCp
+	uC8W+l6eL03OSl
+X-X-Sender: gene099@racer.site
+In-Reply-To: <2145F4A8-7C6E-4AE9-A531-026DC65417BE@wincent.com>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78425>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78426>
 
-El 28/3/2008, a las 14:01, Johannes Schindelin escribi=F3:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> On Fri, 28 Mar 2008, Bryan Donlan wrote:
->
->> Pass --quiet to cpio in git-clone to hide the (confusing) "0 blocks"
->> message. For compatibility with operating systems which might not
->> support GNUisms, the presence of --quiet is probed for by grepping
->> cpio's --help output.
->
-> We have a builtin clone which is almost ready for 'next', and I =20
-> think that
-> this issue would be resolved there anyway.
+--8323584-1454050381-1206721777=:18259
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Content-Transfer-Encoding: 8BIT
 
-In any case, I'd rather see the cpio check at configure-time rather =20
-than run-time.
+Hi,
 
-Cheers,
-Wincent
+On Fri, 28 Mar 2008, Wincent Colaiuta wrote:
+
+> El 28/3/2008, a las 14:01, Johannes Schindelin escribió:
+> 
+> >On Fri, 28 Mar 2008, Bryan Donlan wrote:
+> >
+> > >Pass --quiet to cpio in git-clone to hide the (confusing) "0 blocks" 
+> > >message. For compatibility with operating systems which might not 
+> > >support GNUisms, the presence of --quiet is probed for by grepping 
+> > >cpio's --help output.
+> >
+> >We have a builtin clone which is almost ready for 'next', and I think 
+> >that this issue would be resolved there anyway.
+> 
+> In any case, I'd rather see the cpio check at configure-time rather than 
+> run-time.
+
+That would have to be done via ./configure, missing out those people who 
+do not run ./configure, but just make.
+
+Ciao,
+Dscho
+
+--8323584-1454050381-1206721777=:18259--
