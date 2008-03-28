@@ -1,72 +1,82 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: About SOC 2008 GitTorrent
-Date: Fri, 28 Mar 2008 18:20:33 +1300
-Message-ID: <47EC8021.60004@vilain.net>
-References: <47EBAD97.20804@gmail.com> <alpine.LSU.1.00.0803271539110.3802@racer.site>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH/RFC] Allow "git remote --mirror" to mirror stashes
+Date: Thu, 27 Mar 2008 23:16:58 -0700
+Message-ID: <7vbq4z4bl1.fsf@gitster.siamese.dyndns.org>
+References: <1205499956.7589.4.camel@gentoo-jocke.transmode.se>
+ <1205604534.7589.20.camel@gentoo-jocke.transmode.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: "tsgatesv@gmail.com" <tsgatesv@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 28 06:21:29 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: joakim.tjernlund@transmode.se,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 28 07:18:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jf71o-0006PN-Co
-	for gcvg-git-2@gmane.org; Fri, 28 Mar 2008 06:21:24 +0100
+	id 1Jf7ue-0007Pn-Nj
+	for gcvg-git-2@gmane.org; Fri, 28 Mar 2008 07:18:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751404AbYC1FUm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Mar 2008 01:20:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751371AbYC1FUm
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Mar 2008 01:20:42 -0400
-Received: from watts.utsl.gen.nz ([202.78.240.73]:44257 "EHLO mail.utsl.gen.nz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751370AbYC1FUm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Mar 2008 01:20:42 -0400
-Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
-	id AA827C7E3B; Fri, 28 Mar 2008 18:20:39 +1300 (NZDT)
-X-Spam-Checker-Version: SpamAssassin 3.1.7-deb (2006-10-05) on 
-	mail.musashi.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00,
-	INFO_TLD autolearn=ham version=3.1.7-deb
-Received: from [192.168.2.22] (leibniz.catalyst.net.nz [202.78.240.7])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.utsl.gen.nz (Postfix) with ESMTP id 7A452C7E39;
-	Fri, 28 Mar 2008 18:20:33 +1300 (NZDT)
-User-Agent: Icedove 1.5.0.12 (X11/20070606)
-In-Reply-To: <alpine.LSU.1.00.0803271539110.3802@racer.site>
-X-Enigmail-Version: 0.94.2.0
+	id S1751894AbYC1GRN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Mar 2008 02:17:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752002AbYC1GRM
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Mar 2008 02:17:12 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:34480 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751442AbYC1GRM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Mar 2008 02:17:12 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 423E52DCB;
+	Fri, 28 Mar 2008 02:17:07 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 0D0D22DCA; Fri, 28 Mar 2008 02:17:00 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78384>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78385>
 
-Johannes Schindelin wrote:
-> Hi,
-> 
-> On Thu, 27 Mar 2008, tsgatesv@gmail.com wrote:
-> 
->> However, when reading the mail archives, unfortunately, I saw little 
->> ambiguous mails about GitTorrent.
->>
->> http://marc.info/?l=git&m=120433135821695&w=2
->> http://marc.info/?l=git&m=120433354324220&w=2
->>
->> It is about the fact that the student and mentor in GitTorrent are already
->> chosen.
-> 
-> Not so.  If you read my words in the 2nd mail you quoted carefully, I said 
-> "if this works out".
-> 
-> In the end, we want to have the best students (and the best mentors) for 
-> the best projects.  That means that if you show the highest promise, you 
-> will be the student.
+When you have "remote.$there.fetch = refs/*:refs/*" and the remote has a
+ref directly under refs/ (e.g. "stash"), "git fetch" still errored out
+even with fixes in -rc1.
 
-Indeed.  I think with the level of interest expressed so far in this
-project that it would be better if I didn't apply as a student :)
+This should hopefully fix it.
 
-Sam.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+
+ * Rather than failing, it would be better to allow "git fetch" to succeed
+   by doing this, but on the other hand, stash is purely a local matter,
+   so it might make more sense to avoid exposing it from the uploader.
+
+ builtin-fetch-pack.c |   13 ++++++++++---
+ 1 files changed, 10 insertions(+), 3 deletions(-)
+
+diff --git a/builtin-fetch-pack.c b/builtin-fetch-pack.c
+index 65350ca..472bad5 100644
+--- a/builtin-fetch-pack.c
++++ b/builtin-fetch-pack.c
+@@ -363,10 +363,17 @@ static void filter_refs(struct ref **refs, int nr_match, char **match)
+ 		return_refs = NULL;
+ 
+ 	for (ref = *refs; ref; ref = next) {
++		int trash = 0;
++
+ 		next = ref->next;
+-		if (!memcmp(ref->name, "refs/", 5) &&
+-		    check_ref_format(ref->name + 5))
+-			; /* trash */
++		if (!memcmp(ref->name, "refs/", 5)) {
++			trash = check_ref_format(ref->name + 5);
++			if (trash == CHECK_REF_FORMAT_ONELEVEL)
++				trash = 0;
++		}
++
++		if (trash)
++			; /* this is trash */
+ 		else if (args.fetch_all &&
+ 			 (!args.depth || prefixcmp(ref->name, "refs/tags/") )) {
+ 			*newtail = ref;
