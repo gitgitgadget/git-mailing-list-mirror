@@ -1,70 +1,72 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: PVCS (or RCS) importer for Git?
-Date: Fri, 28 Mar 2008 17:33:59 +0100 (CET)
-Message-ID: <alpine.LSU.1.00.0803281730060.18259@racer.site>
-References: <Pine.LNX.4.64.0803281713230.24460@ds9.cixit.se>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: Truncating and cleaning a imported git repositary to make it
+ more usable
+Date: Fri, 28 Mar 2008 17:43:58 +0100
+Message-ID: <47ED204E.3020602@viscovery.net>
+References: <1206707716.9819.15.camel@malory>	 <32541b130803280550u2ed23b5auc84bf935d5344e84@mail.gmail.com>	 <b2cdc9f30803280852y4f160bb2tda1e688ddf7213e7@mail.gmail.com> <b2cdc9f30803280903w4a6e3a6l9e33fd188af9995a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Peter Karlsson <peter@softwolves.pp.se>
-X-From: git-owner@vger.kernel.org Fri Mar 28 17:34:45 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Avery Pennarun <apenwarr@gmail.com>, git@vger.kernel.org
+To: Alex Bennee <kernel-hacker@bennee.com>
+X-From: git-owner@vger.kernel.org Fri Mar 28 17:45:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JfHXO-0006ZQ-Gd
-	for gcvg-git-2@gmane.org; Fri, 28 Mar 2008 17:34:42 +0100
+	id 1JfHhn-0002cQ-Q7
+	for gcvg-git-2@gmane.org; Fri, 28 Mar 2008 17:45:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750815AbYC1QeA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Mar 2008 12:34:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750809AbYC1QeA
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Mar 2008 12:34:00 -0400
-Received: from mail.gmx.net ([213.165.64.20]:38101 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750793AbYC1Qd7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Mar 2008 12:33:59 -0400
-Received: (qmail invoked by alias); 28 Mar 2008 16:33:57 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp007) with SMTP; 28 Mar 2008 17:33:57 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19LsEx5GEJLxGhJzEsg3bAj71rICm10xeosIlN/Eb
-	dXda0xjx+/VRrU
-X-X-Sender: gene099@racer.site
-In-Reply-To: <Pine.LNX.4.64.0803281713230.24460@ds9.cixit.se>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1755486AbYC1QoH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Mar 2008 12:44:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755419AbYC1QoG
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Mar 2008 12:44:06 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:38655 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754007AbYC1QoF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Mar 2008 12:44:05 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1JfHfV-0002qW-Fp; Fri, 28 Mar 2008 17:43:05 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id AC902546; Fri, 28 Mar 2008 17:43:58 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <b2cdc9f30803280903w4a6e3a6l9e33fd188af9995a@mail.gmail.com>
+X-Spam-Score: 1.2 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_95=3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78427>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78428>
 
-Hi,
+Alex Bennee schrieb:
+> On Fri, Mar 28, 2008 at 3:52 PM, Alex Bennee <kernel-hacker@bennee.com> wrote:
+> 
+>>  ajb@pitcairn:/export/git/fresh.git$ git-filter-branch --tree-filter
+>>  'rm -rf big_dira big_dirb' dev-branch
+>>  warning: refname 'dev-branch' is ambiguous.
+>>  Which ref do you want to rewrite?
+> 
+> Ignore me. Not sure why but:
+> 
+> git-checkout dev-branch
+> git-filter-branch --tree-filter  'rm -rf big_dira big_dirb' HEAD
 
-On Fri, 28 Mar 2008, Peter Karlsson wrote:
+You really shouldn't do it this way, unless you do it on a ramdisk. Better
+use an --index-filter. This is modeled after the last example in the man
+page (and, of course, untested):
 
-> Has anyone written an importer to import sources stored in PVCS into
-> Git?
+git filter-branch --index-filter \
+        'git ls-files -s |
+	 grep -v "	big_dira" |
+	 grep -v "	big_dirb" |
+                GIT_INDEX_FILE=$GIT_INDEX_FILE.new \
+                        git update-index --index-info &&
+         mv $GIT_INDEX_FILE.new $GIT_INDEX_FILE' HEAD
 
-I once tried, but apparently, there are different repository formats for 
-PVCS.  For example, pvcs2cvs did not work for me.  IIRC I used a simple 
-shell script to convert pvcs (using the mega-slow command line tools) to 
-,v files.  Then I converted that to Git.
+where the space before big_dir is actually a literal TAB!
 
-But it was pretty bad, the incremental update was broken more often than 
-not.
-
-And after a few days, it became apparent that I do not need a full import, 
-but that a simple commit-to-git-after-a-pvcs-update would be sufficient.
-
-> I have had some limited success by running a the pvcs2rcs.pl script from 
-> CVS's sources and converting that to Git using cvs2svn, but I believe 
-> the result could be better if I converted directly.
-
-Judging from the problems of importing CVS to Git (which mostly stem from 
-the file-versioning paradigm), I suggest not trying to be too clever, but 
-convert it to cvs and use a good cvs importer, such as cvs2svn (which 
-despite its name also imports into Git) or parsecvs.
-
-Ciao,
-Dscho
+-- Hannes
