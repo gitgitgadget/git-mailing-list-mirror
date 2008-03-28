@@ -1,142 +1,70 @@
-From: Bernd Ahlers <bernd@ba-net.org>
-Subject: [PATCH] Use 'grep -a' to fix some errors with non-GNU grep(1).
-Date: Fri, 28 Mar 2008 23:40:11 +0100
-Message-ID: <20080328224011.GB5486@dengar.tuneafish.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+From: thadh@google.com
+Subject: [PATCH] Allow git config files to use keys containing the hyphen character '-'
+Date: Fri, 28 Mar 2008 16:15:33 -0700
+Message-ID: <1206746133-25974-1-git-send-email-thadh@google.com>
+Cc: thadh@google.com, Thad Hughes <thadh@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 29 00:01:48 2008
+X-From: git-owner@vger.kernel.org Sat Mar 29 00:16:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JfNZu-0007FB-Ly
-	for gcvg-git-2@gmane.org; Sat, 29 Mar 2008 00:01:43 +0100
+	id 1JfNo6-0003T8-DL
+	for gcvg-git-2@gmane.org; Sat, 29 Mar 2008 00:16:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755209AbYC1XBA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Mar 2008 19:01:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756003AbYC1XA7
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Mar 2008 19:00:59 -0400
-Received: from mail1.bytemine.net ([193.41.144.77]:2923 "EHLO
-	mail1.bytemine.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754924AbYC1XA7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Mar 2008 19:00:59 -0400
-X-Greylist: delayed 1235 seconds by postgrey-1.27 at vger.kernel.org; Fri, 28 Mar 2008 19:00:59 EDT
-Received: from [134.106.146.206] (port=58232 helo=dengar.tuneafish.de)
-	by mail1.bytemine.net with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.69)
-	(envelope-from <bernd@ba-net.org>)
-	id 1JfNFC-0007QX-EM
-	for git@vger.kernel.org; Fri, 28 Mar 2008 23:40:21 +0100
-Received: (qmail 26215 invoked by uid 1000); 28 Mar 2008 22:40:11 -0000
-Content-Disposition: inline
+	id S1753074AbYC1XPk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Mar 2008 19:15:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753342AbYC1XPk
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Mar 2008 19:15:40 -0400
+Received: from smtp-out.google.com ([216.239.33.17]:46877 "EHLO
+	smtp-out.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753013AbYC1XPj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Mar 2008 19:15:39 -0400
+Received: from zps18.corp.google.com (zps18.corp.google.com [172.25.146.18])
+	by smtp-out.google.com with ESMTP id m2SNFZfE012702
+	for <git@vger.kernel.org>; Fri, 28 Mar 2008 23:15:35 GMT
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=google.com; s=beta;
+	t=1206746136; bh=6qeQL1LsvHPX2el5/0QCbxt/qHk=;
+	h=DomainKey-Signature:From:To:Cc:Subject:Date:Message-Id:X-Mailer;
+	b=q81Iw3yT3AMkjmmBNpVUY/gN75AN/od2TBWfglMVIOX33EVx5/yIuukLUDZ11YCkn
+	JwOo+ZxLW1rY2lfzpo7Bg==
+DomainKey-Signature: a=rsa-sha1; s=beta; d=google.com; c=nofws; q=dns;
+	h=received:from:to:cc:subject:date:message-id:x-mailer;
+	b=WULWPN4F0lgVFgwqvZc9/+GPPq+NgA2JRfZDn9ixd09wRx5Rak5EBROj//hZxI+rs
+	4zn+MZRz9kOz/FrHshlTw==
+Received: from localhost (thad.corp.google.com [172.18.101.2])
+	by zps18.corp.google.com with ESMTP id m2SNFXe9029873;
+	Fri, 28 Mar 2008 16:15:33 -0700
+Received: by localhost (Postfix, from userid 56997)
+	id 2CA7E3970A6; Fri, 28 Mar 2008 16:15:33 -0700 (PDT)
+X-Mailer: git-send-email 1.5.4.2.156.ge3c5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78443>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78444>
 
-This fixes test errors on OpenBSD.
+From: Thad Hughes <thadh@thad.corp.google.com>
 
-Signed-off-by: Bernd Ahlers <bernd@ba-net.org>
 ---
- t/t4019-diff-wserror.sh        |   28 ++++++++++++++--------------
- t/t9200-git-cvsexportcommit.sh |    2 +-
- 2 files changed, 15 insertions(+), 15 deletions(-)
+ .../src/org/spearce/jgit/lib/RepositoryConfig.java |    5 ++++-
+ 1 files changed, 4 insertions(+), 1 deletions(-)
 
-diff --git a/t/t4019-diff-wserror.sh b/t/t4019-diff-wserror.sh
-index 0d9cbb6..275b41a 100755
---- a/t/t4019-diff-wserror.sh
-+++ b/t/t4019-diff-wserror.sh
-@@ -22,8 +22,8 @@ blue_grep='7;34m' ;# ESC [ 7 ; 3 4 m
- test_expect_success default '
- 
- 	git diff --color >output
--	grep "$blue_grep" output >error
--	grep -v "$blue_grep" output >normal
-+	grep -a "$blue_grep" output >error
-+	grep -a -v "$blue_grep" output >normal
- 
- 	grep Eight normal >/dev/null &&
- 	grep HT error >/dev/null &&
-@@ -37,8 +37,8 @@ test_expect_success 'without -trail' '
- 
- 	git config core.whitespace -trail
- 	git diff --color >output
--	grep "$blue_grep" output >error
--	grep -v "$blue_grep" output >normal
-+	grep -a "$blue_grep" output >error
-+	grep -a -v "$blue_grep" output >normal
- 
- 	grep Eight normal >/dev/null &&
- 	grep HT error >/dev/null &&
-@@ -53,8 +53,8 @@ test_expect_success 'without -trail (attribute)' '
- 	git config --unset core.whitespace
- 	echo "F whitespace=-trail" >.gitattributes
- 	git diff --color >output
--	grep "$blue_grep" output >error
--	grep -v "$blue_grep" output >normal
-+	grep -a "$blue_grep" output >error
-+	grep -a -v "$blue_grep" output >normal
- 
- 	grep Eight normal >/dev/null &&
- 	grep HT error >/dev/null &&
-@@ -69,8 +69,8 @@ test_expect_success 'without -space' '
- 	rm -f .gitattributes
- 	git config core.whitespace -space
- 	git diff --color >output
--	grep "$blue_grep" output >error
--	grep -v "$blue_grep" output >normal
-+	grep -a "$blue_grep" output >error
-+	grep -a -v "$blue_grep" output >normal
- 
- 	grep Eight normal >/dev/null &&
- 	grep HT normal >/dev/null &&
-@@ -85,8 +85,8 @@ test_expect_success 'without -space (attribute)' '
- 	git config --unset core.whitespace
- 	echo "F whitespace=-space" >.gitattributes
- 	git diff --color >output
--	grep "$blue_grep" output >error
--	grep -v "$blue_grep" output >normal
-+	grep -a "$blue_grep" output >error
-+	grep -a -v "$blue_grep" output >normal
- 
- 	grep Eight normal >/dev/null &&
- 	grep HT normal >/dev/null &&
-@@ -101,8 +101,8 @@ test_expect_success 'with indent-non-tab only' '
- 	rm -f .gitattributes
- 	git config core.whitespace indent,-trailing,-space
- 	git diff --color >output
--	grep "$blue_grep" output >error
--	grep -v "$blue_grep" output >normal
-+	grep -a "$blue_grep" output >error
-+	grep -a -v "$blue_grep" output >normal
- 
- 	grep Eight error >/dev/null &&
- 	grep HT normal >/dev/null &&
-@@ -117,8 +117,8 @@ test_expect_success 'with indent-non-tab only (attribute)' '
- 	git config --unset core.whitespace
- 	echo "F whitespace=indent,-trailing,-space" >.gitattributes
- 	git diff --color >output
--	grep "$blue_grep" output >error
--	grep -v "$blue_grep" output >normal
-+	grep -a "$blue_grep" output >error
-+	grep -a -v "$blue_grep" output >normal
- 
- 	grep Eight error >/dev/null &&
- 	grep HT normal >/dev/null &&
-diff --git a/t/t9200-git-cvsexportcommit.sh b/t/t9200-git-cvsexportcommit.sh
-index 42b144b..d3bd48c 100755
---- a/t/t9200-git-cvsexportcommit.sh
-+++ b/t/t9200-git-cvsexportcommit.sh
-@@ -30,7 +30,7 @@ exit 1
- 
- check_entries () {
- 	# $1 == directory, $2 == expected
--	grep '^/' "$1/CVS/Entries" | sort | cut -d/ -f2,3,5 >actual
-+	grep -a '^/' "$1/CVS/Entries" | sort | cut -d/ -f2,3,5 >actual
- 	if test -z "$2"
- 	then
- 		>expected
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/RepositoryConfig.java b/org.spearce.jgit/src/org/spearce/jgit/lib/RepositoryConfig.java
+index 78ceba7..42b2c5d 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/lib/RepositoryConfig.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/lib/RepositoryConfig.java
+@@ -496,7 +496,10 @@ public class RepositoryConfig {
+ 					}
+ 				}
+ 				break;
+-			} else if (Character.isLetterOrDigit((char) c)) {
++			} else if (Character.isLetterOrDigit((char) c) || c == '-') {
++				// From the git-config man page: 
++				//     The variable names are case-insensitive and only 
++				//     alphanumeric characters and - are allowed.
+ 				name.append((char) c);
+ 			} else if ('\n' == c) {
+ 				r.reset();
 -- 
-1.5.4.5
+1.5.4.2.156.ge3c5
