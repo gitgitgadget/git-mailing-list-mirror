@@ -1,59 +1,68 @@
-From: "Alex Bennee" <kernel-hacker@bennee.com>
-Subject: Re: Truncating and cleaning a imported git repositary to make it more usable
-Date: Fri, 28 Mar 2008 16:03:18 +0000
-Message-ID: <b2cdc9f30803280903w4a6e3a6l9e33fd188af9995a@mail.gmail.com>
-References: <1206707716.9819.15.camel@malory>
-	 <32541b130803280550u2ed23b5auc84bf935d5344e84@mail.gmail.com>
-	 <b2cdc9f30803280852y4f160bb2tda1e688ddf7213e7@mail.gmail.com>
+From: Peter Karlsson <peter@softwolves.pp.se>
+Subject: PVCS (or RCS) importer for Git?
+Date: Fri, 28 Mar 2008 17:17:39 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <Pine.LNX.4.64.0803281713230.24460@ds9.cixit.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Avery Pennarun" <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 28 17:04:12 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 28 17:19:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JfH3l-0001qh-Q8
-	for gcvg-git-2@gmane.org; Fri, 28 Mar 2008 17:04:06 +0100
+	id 1JfHHg-0007d0-5F
+	for gcvg-git-2@gmane.org; Fri, 28 Mar 2008 17:18:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752742AbYC1QDV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Mar 2008 12:03:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753774AbYC1QDV
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Mar 2008 12:03:21 -0400
-Received: from wr-out-0506.google.com ([64.233.184.233]:45619 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750771AbYC1QDU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Mar 2008 12:03:20 -0400
-Received: by wr-out-0506.google.com with SMTP id c48so248601wra.1
-        for <git@vger.kernel.org>; Fri, 28 Mar 2008 09:03:19 -0700 (PDT)
-Received: by 10.140.203.15 with SMTP id a15mr1506576rvg.212.1206720198791;
-        Fri, 28 Mar 2008 09:03:18 -0700 (PDT)
-Received: by 10.140.161.13 with HTTP; Fri, 28 Mar 2008 09:03:18 -0700 (PDT)
-In-Reply-To: <b2cdc9f30803280852y4f160bb2tda1e688ddf7213e7@mail.gmail.com>
-Content-Disposition: inline
-X-Google-Sender-Auth: 656ac372d651483d
+	id S1753849AbYC1QRr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Mar 2008 12:17:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753285AbYC1QRr
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Mar 2008 12:17:47 -0400
+Received: from ds9.cixit.se ([193.15.169.228]:38202 "EHLO ds9.cixit.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753342AbYC1QRq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Mar 2008 12:17:46 -0400
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id m2SGHewE001729
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 28 Mar 2008 17:17:40 +0100
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id m2SGHdWR001724;
+	Fri, 28 Mar 2008 17:17:40 +0100
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (ds9.cixit.se [127.0.0.1]); Fri, 28 Mar 2008 17:17:40 +0100 (CET)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78423>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78424>
 
-On Fri, Mar 28, 2008 at 3:52 PM, Alex Bennee <kernel-hacker@bennee.com> wrote:
+Hi!
 
->  ajb@pitcairn:/export/git/fresh.git$ git-filter-branch --tree-filter
->  'rm -rf big_dira big_dirb' dev-branch
->  warning: refname 'dev-branch' is ambiguous.
->  Which ref do you want to rewrite?
+Has anyone written an importer to import sources stored in PVCS into
+Git? Or perhaps an RCS importer that actually uses the RCS binaries
+(ci, co, rlog) instead of parsing the ,v files directly?
 
-Ignore me. Not sure why but:
+I am looking at exporting some PVCS sources into Git, but my attempts
+so far hasn't got very far, and I was thinking that maybe someone else
+had done something similar?
 
-git-checkout dev-branch
-git-filter-branch --tree-filter  'rm -rf big_dira big_dirb' HEAD
+One problem with PVCS is that it, like RCS, has file-local revision
+numbering, and that it does not have named branches, the branches are
+on the same file-local revisions, so there is no way of telling what a
+branch is supposed to point to, except by looking at tags set to what
+the branch created.
 
-works
+RCS is quite similar (PVCS seems to be designed to be a RCS clone), so
+perhaps the problem has already been solved?
 
+
+I have had some limited success by running a the pvcs2rcs.pl script
+from CVS's sources and converting that to Git using cvs2svn, but I
+believe the result could be better if I converted directly.
 
 -- 
-Alex, homepage: http://www.bennee.com/~alex/
+\\// Peter - http://www.softwolves.pp.se/
