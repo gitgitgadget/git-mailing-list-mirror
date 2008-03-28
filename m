@@ -1,77 +1,57 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: Truncating and cleaning a imported git repositary to make it
-	more usable
-Date: Fri, 28 Mar 2008 21:44:52 +0100
-Organization: glandium.org
-Message-ID: <20080328204452.GA15737@glandium.org>
-References: <1206707716.9819.15.camel@malory> <32541b130803280550u2ed23b5auc84bf935d5344e84@mail.gmail.com> <b2cdc9f30803280852y4f160bb2tda1e688ddf7213e7@mail.gmail.com> <b2cdc9f30803280903w4a6e3a6l9e33fd188af9995a@mail.gmail.com> <47ED204E.3020602@viscovery.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [ANNOUNCE] GIT 1.5.5-rc2
+Date: Fri, 28 Mar 2008 14:05:09 -0700
+Message-ID: <7vtziq1rwa.fsf@gitster.siamese.dyndns.org>
+References: <7viqz72we4.fsf@gitster.siamese.dyndns.org>
+ <20080328181345.GB8299@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Alex Bennee <kernel-hacker@bennee.com>,
-	Avery Pennarun <apenwarr@gmail.com>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Fri Mar 28 21:46:00 2008
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Mar 28 22:06:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JfLSW-0006F6-6T
-	for gcvg-git-2@gmane.org; Fri, 28 Mar 2008 21:45:56 +0100
+	id 1JfLm0-0005cm-U2
+	for gcvg-git-2@gmane.org; Fri, 28 Mar 2008 22:06:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754904AbYC1UpN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Mar 2008 16:45:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754998AbYC1UpN
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Mar 2008 16:45:13 -0400
-Received: from vuizook.err.no ([194.24.252.247]:38359 "EHLO vuizook.err.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754904AbYC1UpM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Mar 2008 16:45:12 -0400
-Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
-	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.67)
-	(envelope-from <mh@glandium.org>)
-	id 1JfLRa-0001jT-1q; Fri, 28 Mar 2008 21:45:04 +0100
-Received: from mh by jigen with local (Exim 4.69)
-	(envelope-from <mh@jigen>)
-	id 1JfLRU-0004dg-JI; Fri, 28 Mar 2008 21:44:52 +0100
-Content-Disposition: inline
-In-Reply-To: <47ED204E.3020602@viscovery.net>
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.3
+	id S1754926AbYC1VFW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Mar 2008 17:05:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754738AbYC1VFW
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Mar 2008 17:05:22 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:59333 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754478AbYC1VFV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Mar 2008 17:05:21 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 591421312;
+	Fri, 28 Mar 2008 17:05:20 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id BC454130C; Fri, 28 Mar 2008 17:05:16 -0400 (EDT)
+In-Reply-To: <20080328181345.GB8299@coredump.intra.peff.net> (Jeff King's
+ message of "Fri, 28 Mar 2008 14:13:45 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78436>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78437>
 
-On Fri, Mar 28, 2008 at 05:43:58PM +0100, Johannes Sixt wrote:
-> Alex Bennee schrieb:
-> > On Fri, Mar 28, 2008 at 3:52 PM, Alex Bennee <kernel-hacker@bennee.com> wrote:
-> > 
-> >>  ajb@pitcairn:/export/git/fresh.git$ git-filter-branch --tree-filter
-> >>  'rm -rf big_dira big_dirb' dev-branch
-> >>  warning: refname 'dev-branch' is ambiguous.
-> >>  Which ref do you want to rewrite?
-> > 
-> > Ignore me. Not sure why but:
-> > 
-> > git-checkout dev-branch
-> > git-filter-branch --tree-filter  'rm -rf big_dira big_dirb' HEAD
-> 
-> You really shouldn't do it this way, unless you do it on a ramdisk. Better
-> use an --index-filter. This is modeled after the last example in the man
-> page (and, of course, untested):
-> 
-> git filter-branch --index-filter \
->         'git ls-files -s |
-> 	 grep -v "	big_dira" |
-> 	 grep -v "	big_dirb" |
->                 GIT_INDEX_FILE=$GIT_INDEX_FILE.new \
->                         git update-index --index-info &&
->          mv $GIT_INDEX_FILE.new $GIT_INDEX_FILE' HEAD
+Jeff King <peff@peff.net> writes:
 
-git filter-branch --index-filter 'git rm -r --cached big_dira big_dirb'
-should be working nowadays.
+> On Thu, Mar 27, 2008 at 11:30:27PM -0700, Junio C Hamano wrote:
+>
+>> GIT 1.5.5-rc2 was tagged tonight, and it is available from the usual
+>> places.
+>
+> I never got a response to my patches to fix encoding issues in
+> "send-email --compose". It _is_ a bugfix, but I don't know if it is
+> 1.5.5-worthy.  Forgotten (and I should resubmit now), or should I wait
+> until after the release?
 
-Mike
+I was getting the impression that it was still in "ah, but this is
+better", "you are right, but how about doing this", stage and was hoping
+that "ok, based on the discussion here is the final one" will come soon.
