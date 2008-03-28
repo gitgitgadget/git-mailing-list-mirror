@@ -1,73 +1,70 @@
-From: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
-Subject: [PATCH 1/1] Fix recipient santitization
-Date: Fri, 28 Mar 2008 11:09:04 -0300
-Message-ID: <1206713344-11244-1-git-send-email-vonbrand@inf.utfsm.cl>
-Cc: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 28 16:31:17 2008
+From: <mtmcpherson1@email.com>
+Subject: I've visited your website http://www.kernel.org/pub/software/scm/git/docs/
+Date: Fri, 28 Mar 2008 10:47:12 -0500
+Message-ID: <016a01c890ea$fd01cdc0$6401a8c0@desktop>
+Mime-Version: 1.0
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: 7bit
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Mar 28 16:47:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JfGXr-0005EO-U5
-	for gcvg-git-2@gmane.org; Fri, 28 Mar 2008 16:31:08 +0100
+	id 1JfGmo-0003D6-Tx
+	for gcvg-git-2@gmane.org; Fri, 28 Mar 2008 16:46:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753493AbYC1PaH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Mar 2008 11:30:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753231AbYC1PaH
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Mar 2008 11:30:07 -0400
-Received: from inti.inf.utfsm.cl ([200.1.21.155]:45455 "EHLO inti.inf.utfsm.cl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750839AbYC1PaF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Mar 2008 11:30:05 -0400
-X-Greylist: delayed 2004 seconds by postgrey-1.27 at vger.kernel.org; Fri, 28 Mar 2008 11:30:05 EDT
-Received: from quelen.inf.utfsm.cl (quelen.inf.utfsm.cl [200.1.19.194])
-	by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id m2SEuYRs032700
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 28 Mar 2008 11:56:34 -0300
-Received: from laptop13.inf.utfsm.cl (wlan.inf.utfsm.cl [200.1.19.90])
-	by quelen.inf.utfsm.cl (8.14.2/8.14.2) with ESMTP id m2SEuX0r009375
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 28 Mar 2008 11:56:34 -0300
-Received: from laptop13.inf.utfsm.cl (laptop13.inf.utfsm.cl [127.0.0.1])
-	by laptop13.inf.utfsm.cl (8.14.2/8.14.2) with ESMTP id m2SE979O011277
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 28 Mar 2008 11:09:07 -0300
-Received: (from vonbrand@localhost)
-	by laptop13.inf.utfsm.cl (8.14.2/8.14.2/Submit) id m2SE94xw011270;
-	Fri, 28 Mar 2008 11:09:04 -0300
-X-Mailer: git-send-email 1.5.5.rc2
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0rc6 (inti.inf.utfsm.cl [0.0.0.0]); Fri, 28 Mar 2008 11:56:34 -0300 (CLST)
-X-Virus-Scanned: ClamAV 0.92.1/6438/Fri Mar 28 08:40:31 2008 on inti.inf.utfsm.cl
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-102.6 required=5.0 tests=AWL,BAYES_00,
-	UNPARSEABLE_RELAY,USER_IN_WHITELIST autolearn=ham version=3.1.9
-X-Spam-Checker-Version: SpamAssassin 3.1.9 (2007-02-13) on inti.inf.utfsm.cl
+	id S1754278AbYC1Ppw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Mar 2008 11:45:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754115AbYC1Ppv
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Mar 2008 11:45:51 -0400
+Received: from qmta09.emeryville.ca.mail.comcast.net ([76.96.30.96]:55395 "EHLO
+	QMTA09.emeryville.ca.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753926AbYC1Ppv (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 28 Mar 2008 11:45:51 -0400
+Received: from OMTA09.emeryville.ca.mail.comcast.net ([76.96.30.20])
+	by QMTA09.emeryville.ca.mail.comcast.net with comcast
+	id 6dTL1Z00W0S2fkCA90B300; Fri, 28 Mar 2008 15:44:42 +0000
+Received: from desktop ([71.194.181.20])
+	by OMTA09.emeryville.ca.mail.comcast.net with comcast
+	id 6fll1Z0010SobaX8V00000; Fri, 28 Mar 2008 15:45:46 +0000
+X-Authority-Analysis: v=1.0 c=1 a=VwQbUJbxAAAA:8 a=6znXAZ26AAAA:8
+ a=7_6lOkZqnViKIQRxwgEA:9 a=bgnbkQ1zwxOW2mC3gfgtylR5f9kA:4 a=50e4U0PicR4A:10
+thread-index: AciQ6v0B+nAUNb3xQw+qBsAkYPhaPA==
+Thread-Topic: I've visited your website http://www.kernel.org/pub/software/scm/git/docs/
+X-Mailer: Microsoft CDO for Windows 2000
+Content-Class: urn:content-classes:message
+Importance: normal
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3198
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78419>
+X-Spam-Report: 6.2 points;
+ *  0.2 NO_REAL_NAME From: does not include a real name
+ *  2.0 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
+ *      [URIs: contactthem.ws]
+ *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
+ *      [URIs: contactthem.ws]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78420>
 
-Need to quote all special characters, not just the first one
+Hi,
 
-Signed-off-by: Horst H. von Brand <vonbrand@inf.utfsm.cl>
----
- git-send-email.perl |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+We've seen your website at http://www.kernel.org/pub/software/scm/git/docs/ 
+and we love it!
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index f62f119..3bdd225 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -635,7 +635,7 @@ sub sanitize_address
- 
- 	# double quotes are needed if specials or CTLs are included
- 	elsif ($recipient_name =~ /[][()<>@,;:\\".\000-\037\177]/) {
--		$recipient_name =~ s/(["\\\r])/\\$1/;
-+		$recipient_name =~ s/(["\\\r])/\\$1/g;
- 		$recipient_name = "\"$recipient_name\"";
- 	}
- 
--- 
-1.5.5.rc2
+We see that your traffic rank is 31376 
+and your link popularity is 5698. 
+Also, you have been online since 3/7/1997. 
+
+With that kind of traffic, we will pay you up to $4,800/month 
+to advertise our links on your website.
+
+If you're interested, read our terms from this page:
+http://www.contactthem.ws/hit.php?s=10&p=2&w=106914
+
+Sincerely,
+
+mark mcpherson
+The ContactThem Network
