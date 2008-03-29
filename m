@@ -1,53 +1,68 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Use 'grep -a' to fix some errors with non-GNU grep(1).
-Date: Fri, 28 Mar 2008 20:49:08 -0400
-Message-ID: <20080329004908.GA9878@coredump.intra.peff.net>
-References: <20080328224011.GB5486@dengar.tuneafish.de>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] git-gui: Add shortcut keys for Show More/Less Context
+Date: Sat, 29 Mar 2008 01:44:40 -0400
+Message-ID: <20080329054440.GP4759@spearce.org>
+References: <57518fd10803280622v3a5f6ae8lcfd35270ab9ede1e@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Bernd Ahlers <bernd@ba-net.org>
-X-From: git-owner@vger.kernel.org Sat Mar 29 01:49:59 2008
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jonathan del Strother <maillist@steelskies.com>
+X-From: git-owner@vger.kernel.org Sat Mar 29 06:45:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JfPGf-00055A-5n
-	for gcvg-git-2@gmane.org; Sat, 29 Mar 2008 01:49:57 +0100
+	id 1JfTsr-0004EC-JE
+	for gcvg-git-2@gmane.org; Sat, 29 Mar 2008 06:45:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754778AbYC2AtN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Mar 2008 20:49:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754671AbYC2AtM
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Mar 2008 20:49:12 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4354 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754437AbYC2AtM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Mar 2008 20:49:12 -0400
-Received: (qmail 21360 invoked by uid 111); 29 Mar 2008 00:49:09 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Fri, 28 Mar 2008 20:49:09 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 28 Mar 2008 20:49:08 -0400
+	id S1751264AbYC2Foq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 29 Mar 2008 01:44:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751254AbYC2Foq
+	(ORCPT <rfc822;git-outgoing>); Sat, 29 Mar 2008 01:44:46 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:44699 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751199AbYC2Fop (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 29 Mar 2008 01:44:45 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1JfTru-0003hb-B7; Sat, 29 Mar 2008 01:44:42 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id EC46820FBAE; Sat, 29 Mar 2008 01:44:40 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <20080328224011.GB5486@dengar.tuneafish.de>
+In-Reply-To: <57518fd10803280622v3a5f6ae8lcfd35270ab9ede1e@mail.gmail.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78445>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78446>
 
-On Fri, Mar 28, 2008 at 11:40:11PM +0100, Bernd Ahlers wrote:
+Jonathan del Strother <maillist@steelskies.com> wrote:
+> Bound to Ctrl/Cmd (depending on your platform) + left & right square brackets.
+> ---
+> 
+> I'm not at all familiar with Tcl, so I apologise in advance for any
+> wrongness.  I frequently find myself repeatedly right-clicking->Show
+> Less Context in order to stage a specific hunk, seems like a shortcut
+> for this would be useful.  Thoughts?
 
-> This fixes test errors on OpenBSD.
+Looks good to me.  FWIW your patch was sent with a content-type of
+format=flawed, so I had to manually unwrap the diff hunk headers
+to get it to apply.
 
-Nak. "grep -a" isn't portable. If you have binary goo to check, I think
-the safest thing is to either generate it using printf (if it's short
-and easy) or include the expected output in a test file (this is what I
-did for t4020; see 53a5b443).
+I think we should also put these into the menu bar too, like say
+the commit menu, so users can see what the keyboard action is to
+invoke the increase/decrease.
 
-You could also potentially use git-grep for this, but I haven't looked
-into how it handles "-a" (and in general, I think we try to avoid using
-git tools as test infrastructure to avoid false positives; e.g., we
-prefer using a system tool to compare expected output rather than
-git-diff).
-
--Peff
+Also, missing a Signed-off-by line.  If you can contribute
+this change according to the statement outlined in
+Documentation/SubmittingPatches please send me one.
+ 
+-- 
+Shawn.
