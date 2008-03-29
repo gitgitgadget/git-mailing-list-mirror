@@ -1,63 +1,99 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: [PATCH 2/2] send-email: rfc2047-quote subject lines with non-ascii characters
-Date: Sat, 29 Mar 2008 09:44:55 +0100
-Message-ID: <200803290944.55273.robin.rosenberg.lists@dewire.com>
-References: <20080328212700.GA9529@coredump.intra.peff.net> <200803290819.07280.robin.rosenberg.lists@dewire.com> <20080329072203.GA17625@coredump.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: Auto detaching head options (update) (Re: Working copy
+	revision and push pain)
+Date: Sat, 29 Mar 2008 04:47:43 -0400
+Message-ID: <20080329084743.GA19200@coredump.intra.peff.net>
+References: <51419b2c0803230706w5ff88fc7oc7e8e34ab8afa1fd@mail.gmail.com> <alpine.LSU.1.00.0803231519380.4353@racer.site> <47E66DAA.4080807@jwatt.org> <alpine.LSU.1.00.0803231555380.4353@racer.site> <47E6765D.2020103@jwatt.org> <alpine.LSU.1.00.0803231658460.4353@racer.site> <20080325192552.GC4857@efreet.light.src> <20080325232424.GB5273@coredump.intra.peff.net> <7v3aqde2wn.fsf@gitster.siamese.dyndns.org> <20080329082757.GA4920@efreet.light.src>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Mar 29 09:46:31 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jonathan Watt <jwatt@jwatt.org>,
+	Elijah Newren <newren@gmail.com>, git@vger.kernel.org
+To: Jan Hudec <bulb@ucw.cz>
+X-From: git-owner@vger.kernel.org Sat Mar 29 09:48:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JfWhp-0004S6-2e
-	for gcvg-git-2@gmane.org; Sat, 29 Mar 2008 09:46:29 +0100
+	id 1JfWjk-0004uc-TC
+	for gcvg-git-2@gmane.org; Sat, 29 Mar 2008 09:48:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753694AbYC2Ipr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 29 Mar 2008 04:45:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753726AbYC2Ipr
-	(ORCPT <rfc822;git-outgoing>); Sat, 29 Mar 2008 04:45:47 -0400
-Received: from [83.140.172.130] ([83.140.172.130]:27368 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1753691AbYC2Ipq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 29 Mar 2008 04:45:46 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 924398026E9;
-	Sat, 29 Mar 2008 09:45:45 +0100 (CET)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 3eaaOr1JvSDi; Sat, 29 Mar 2008 09:45:45 +0100 (CET)
-Received: from [10.9.0.3] (unknown [10.9.0.3])
-	by dewire.com (Postfix) with ESMTP id 279BA800782;
-	Sat, 29 Mar 2008 09:45:45 +0100 (CET)
-User-Agent: KMail/1.9.9
-In-Reply-To: <20080329072203.GA17625@coredump.intra.peff.net>
+	id S1753748AbYC2Irr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 29 Mar 2008 04:47:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753787AbYC2Irr
+	(ORCPT <rfc822;git-outgoing>); Sat, 29 Mar 2008 04:47:47 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2466 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753748AbYC2Irq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 29 Mar 2008 04:47:46 -0400
+Received: (qmail 19539 invoked by uid 111); 29 Mar 2008 08:47:45 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Sat, 29 Mar 2008 04:47:45 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 29 Mar 2008 04:47:44 -0400
 Content-Disposition: inline
+In-Reply-To: <20080329082757.GA4920@efreet.light.src>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78454>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78455>
 
-Den Saturday 29 March 2008 08.22.03 skrev Jeff King:
-> On Sat, Mar 29, 2008 at 08:19:07AM +0100, Robin Rosenberg wrote:
-> > Den Friday 28 March 2008 22.29.01 skrev Jeff King:
-> > > We always use 'utf-8' as the encoding, since we currently
-> > > have no way of getting the information from the user.
-> >
-> > Don't set encoding to UTF-8 unless it actually looks like UTF-8.
->
-> OK. Do you have an example function that guesses with high probability
-> whether a string is utf-8? If there are non-ascii characters but we
-> _don't_ guess utf-8, what should we do?
+On Sat, Mar 29, 2008 at 09:27:57AM +0100, Jan Hudec wrote:
 
-I guess the best bet is to assume the locale. Btw, is the encoding header
-from the commit (when present) completely lost? (not that it can be trusted
-anyway).
+> Excluding push to non-bare repository and extra work trees, the local
+> branches are only ever updated through the HEAD. And as long as they are
+> updated with update-ref, it writes the value to the reflog, so HEAD^{0}
+> should always equal HEAD.
 
--- robin
+I assume by HEAD^{0} you mean HEAD@{0}? The first is for peeling tags,
+while the latter is "the latest reflog entry."
+
+There are a few other ways I can think of to manipulate branches besides
+through HEAD:
+
+  - git branch -f existing new_ref (though I'm not sure if this works if
+    the branch is HEAD)
+
+  - git update-ref refs/heads/branch_that_is_HEAD_but_we_call_it_by_name
+
+However, in both cases the HEAD ref is being munged behind the user's
+back to some degree, and it can result in a situation where the index
+doesn't match HEAD anymore. So in both cases, I think the safety check
+you propose would actually be a benefit.
+
+But I'm not sure if there aren't some "innocent" uses of the second form
+in people's scripts. For example, a script that operates on HEAD but
+resolves it internally to "refs/heads/master" and begins using that (and
+takes care itself to keep the index in sync with the new value written
+into the ref).
+
+> There are actually two use-cases for this. One is this pushing to non-bare
+> repo, which is indeed just shooting oneself in the foot out of lack of
+> [...]
+> But the other usecase is using additional work trees
+
+I like the fact that it deals with both these cases, and I think it can
+cover even more. It is a general safety valve for "somebody changed this
+ref while you weren't looking."
+
+> Besides whith the update above, I no longer propose to keep any new
+> information -- just to add a safety-check.
+
+And I like that, too. But I am a little worried that the information
+will not be sufficient. You are asking for a consistency guarantee of
+HEAD and HEAD@{0} that comes from using current porcelain. But there are
+many uses of plumbing that would violate that consistency guarantee. And
+some of those are exactly what you're trying to catch and warn about.
+But I suspect there are some false positives (either in people's
+plumbing-oriented workflows, in other scripts outside of core git, or
+even in core git itself (I didn't carefully audit how each script
+works)). And maybe it is OK to warn and force a "-f" there, or cause
+those scripts to be updated.
+
+By all of these "maybes" what I am saying is "I think this is a
+promising approach but I am not entirely convinced it won't run into
+implementation problems." And of course producing a patch is a good
+first step in figuring it out. :)
+
+-Peff
