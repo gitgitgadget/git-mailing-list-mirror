@@ -1,90 +1,101 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] send-email: rfc2047-quote subject lines with
-	non-ascii characters
-Date: Sat, 29 Mar 2008 17:18:49 -0400
-Message-ID: <20080329211849.GA30851@coredump.intra.peff.net>
-References: <20080328212700.GA9529@coredump.intra.peff.net> <200803291038.48847.robin.rosenberg.lists@dewire.com> <20080329095238.GB21814@coredump.intra.peff.net> <200803291354.10368.robin.rosenberg.lists@dewire.com>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [PATCH 2/2] send-email: rfc2047-quote subject lines with non-ascii characters
+Date: Sat, 29 Mar 2008 22:43:40 +0100
+Message-ID: <200803292243.40733.robin.rosenberg.lists@dewire.com>
+References: <20080328212700.GA9529@coredump.intra.peff.net> <200803291354.10368.robin.rosenberg.lists@dewire.com> <20080329211849.GA30851@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Sat Mar 29 22:19:35 2008
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Mar 29 22:45:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JfiSc-0001QK-GE
-	for gcvg-git-2@gmane.org; Sat, 29 Mar 2008 22:19:34 +0100
+	id 1Jfirg-0008Hx-NF
+	for gcvg-git-2@gmane.org; Sat, 29 Mar 2008 22:45:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754738AbYC2VSw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 29 Mar 2008 17:18:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754649AbYC2VSw
-	(ORCPT <rfc822;git-outgoing>); Sat, 29 Mar 2008 17:18:52 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2361 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754598AbYC2VSw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 29 Mar 2008 17:18:52 -0400
-Received: (qmail 5861 invoked by uid 111); 29 Mar 2008 21:18:50 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Sat, 29 Mar 2008 17:18:50 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 29 Mar 2008 17:18:49 -0400
+	id S1752327AbYC2Voi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 29 Mar 2008 17:44:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752534AbYC2Voi
+	(ORCPT <rfc822;git-outgoing>); Sat, 29 Mar 2008 17:44:38 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:29423 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1752274AbYC2Voh convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 29 Mar 2008 17:44:37 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 23C0E8026E9;
+	Sat, 29 Mar 2008 22:44:35 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 025IRHa1eLRL; Sat, 29 Mar 2008 22:44:34 +0100 (CET)
+Received: from [10.9.0.2] (unknown [10.9.0.2])
+	by dewire.com (Postfix) with ESMTP id 7AA3A800782;
+	Sat, 29 Mar 2008 22:44:34 +0100 (CET)
+User-Agent: KMail/1.9.9
+In-Reply-To: <20080329211849.GA30851@coredump.intra.peff.net>
 Content-Disposition: inline
-In-Reply-To: <200803291354.10368.robin.rosenberg.lists@dewire.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78483>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78484>
 
-On Sat, Mar 29, 2008 at 01:54:10PM +0100, Robin Rosenberg wrote:
-
-> I think you really should try the UTF-8 guess, since a file may well =
-be UTF-8=20
-> even if the user locale is something else. Especially for XML files, =
-UTF-8
-> is common, but there are many more cases. Look into git-gui/po for mo=
-re=20
-> examples. The probability of a UTF-8 test being wrong is just so unim=
-aginable=20
-> low.
-
-Thinking about this more, I think it is only half the solution. If
-something is not valid utf-8, then we know it must be something else.
-But if something is valid utf-8, is it necessarily utf-8? I think we ar=
-e
-going to have a much higher probability of guessing wrong there.
-
-=46or example, consider the bytes { 0xc3, 0xb6 }. In utf-8, they are '=C3=
+Den Saturday 29 March 2008 22.18.49 skrev Jeff King:
+> On Sat, Mar 29, 2008 at 01:54:10PM +0100, Robin Rosenberg wrote:
+> > I think you really should try the UTF-8 guess, since a file may wel=
+l be
+> > UTF-8 even if the user locale is something else. Especially for XML
+> > files, UTF-8 is common, but there are many more cases. Look into
+> > git-gui/po for more examples. The probability of a UTF-8 test being=
+ wrong
+> > is just so unimaginable low.
+>
+> Thinking about this more, I think it is only half the solution. If
+> something is not valid utf-8, then we know it must be something else.
+> But if something is valid utf-8, is it necessarily utf-8? I think we =
+are
+> going to have a much higher probability of guessing wrong there.
+>
+> For example, consider the bytes { 0xc3, 0xb6 }. In utf-8, they are '=C3=
 =B6'.
-But in iso8859-1, they also have meaning (paragraph symbol followed by
-=C3=83). Now that is an unlikely combination to come up. And maybe for
-Latin-1, having two non-ascii characters next to each other is unlikely=
-=2E
-But over all commonly used encodings, what is the probability in an
-average text of that encoding that it contains valid UTF-8?
-=46or example, I have no idea what patterns can be found in EUCJP.
+> But in iso8859-1, they also have meaning (paragraph symbol followed b=
+y
+> =C3=83). Now that is an unlikely combination to come up. And maybe fo=
+r
+> Latin-1, having two non-ascii characters next to each other is unlike=
+ly.
+=46irst that is even by random an unlikely sequence. For any "real" is =
+string
+it simply won't happen, even in this context. Try scanning everything y=
+ou
+can think of and see if you find such a sequence that is not actually U=
+TF-8.
 
-> > PS Your 'require' is more simply written as 'use I18N::Langinfo
-> > qw(langinfo CODESET)', or perhaps even simpler:
->=20
-> See the man page, from which I stole it. It suggests you wrap it all =
-inside=20
-> eval {}, just in case your perl does not have langinfo.
+> But over all commonly used encodings, what is the probability in an
+> average text of that encoding that it contains valid UTF-8?
+> For example, I have no idea what patterns can be found in EUCJP.
 
-Yes, that does make sense for a script (I just couldn't see it because
-the entire toy example would be inside the eval).
+See here http://www.ifi.unizh.ch/mml/mduerst/papers/PDF/IUC11-UTF-8.pdf
 
-> As for the is_utf8() i'm not sure what it does, but I can't make it w=
-ork.
+Note that a random string is a randomly generated string. Not a random =
+string
+from the set of actually existing strings.
 
-There is some magic with how Perl marks strings as "binary" versus
-"utf-8" that I don't quite understand. And I think is_utf8 is really
-about asking "is the utf-8 flag set".
+> There is some magic with how Perl marks strings as "binary" versus
+> "utf-8" that I don't quite understand. And I think is_utf8 is really
+> about asking "is the utf-8 flag set".
+>
+> I think this discussion would benefit greatly from somebody who has m=
+ore
+> of a clue how perl i18n stuff works. Why don't you work up a patch th=
+at
+> makes sense for you, and then hopefully that will get some attention?
 
-I think this discussion would benefit greatly from somebody who has mor=
-e
-of a clue how perl i18n stuff works. Why don't you work up a patch that
-makes sense for you, and then hopefully that will get some attention?
+The only real question as I see it is whether perl has a builtin metod =
+that=20
+works better than the decode/encode. Anyone?
 
--Peff
+-- robin
