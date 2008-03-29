@@ -1,51 +1,67 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] send-email: rfc2047-quote subject lines with
-	non-ascii characters
-Date: Sat, 29 Mar 2008 03:22:03 -0400
-Message-ID: <20080329072203.GA17625@coredump.intra.peff.net>
-References: <20080328212700.GA9529@coredump.intra.peff.net> <20080328212900.GB9656@coredump.intra.peff.net> <200803290819.07280.robin.rosenberg.lists@dewire.com>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: Possible d/f conflict bug or regression
+Date: Sat, 29 Mar 2008 09:01:19 +0100
+Message-ID: <200803290901.19154.chriscool@tuxfamily.org>
+References: <200803290813.08419.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Sat Mar 29 08:22:52 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio Hamano <junkio@cox.net>, krh@redhat.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 29 08:56:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JfVOt-0004y0-AA
-	for gcvg-git-2@gmane.org; Sat, 29 Mar 2008 08:22:51 +0100
+	id 1JfVvQ-0002lW-MK
+	for gcvg-git-2@gmane.org; Sat, 29 Mar 2008 08:56:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751929AbYC2HWJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 29 Mar 2008 03:22:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752064AbYC2HWI
-	(ORCPT <rfc822;git-outgoing>); Sat, 29 Mar 2008 03:22:08 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1742 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751929AbYC2HWH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 29 Mar 2008 03:22:07 -0400
-Received: (qmail 14100 invoked by uid 111); 29 Mar 2008 07:22:04 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Sat, 29 Mar 2008 03:22:04 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 29 Mar 2008 03:22:03 -0400
+	id S1752483AbYC2Hzn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 29 Mar 2008 03:55:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752453AbYC2Hzn
+	(ORCPT <rfc822;git-outgoing>); Sat, 29 Mar 2008 03:55:43 -0400
+Received: from smtp1-g19.free.fr ([212.27.42.27]:38518 "EHLO smtp1-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752408AbYC2Hzm convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 29 Mar 2008 03:55:42 -0400
+Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 21BD01AB2C9;
+	Sat, 29 Mar 2008 08:55:41 +0100 (CET)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 035FC1AB2CF;
+	Sat, 29 Mar 2008 08:55:40 +0100 (CET)
+User-Agent: KMail/1.9.7
+In-Reply-To: <200803290813.08419.chriscool@tuxfamily.org>
 Content-Disposition: inline
-In-Reply-To: <200803290819.07280.robin.rosenberg.lists@dewire.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78450>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78451>
 
-On Sat, Mar 29, 2008 at 08:19:07AM +0100, Robin Rosenberg wrote:
+Le samedi 29 mars 2008, Christian Couder a =E9crit :
+>
+> mkdir testdir &&
+>         cd testdir &&
+>         touch foo &&
+>         git init &&
+>         git add . &&
+>         git commit -m 'Initial commit.' &&
+>         rm foo &&
+>         mkdir foo &&
+>         git commit -a -m 'Test.'
 
-> Den Friday 28 March 2008 22.29.01 skrev Jeff King:
-> > We always use 'utf-8' as the encoding, since we currently
-> > have no way of getting the information from the user.
-> 
-> Don't set encoding to UTF-8 unless it actually looks like UTF-8.
+I don't know if this helps but with "git rm foo" instead of "rm foo" it=
+=20
+works like this:
 
-OK. Do you have an example function that guesses with high probability
-whether a string is utf-8? If there are non-ascii characters but we
-_don't_ guess utf-8, what should we do?
+Initialized empty Git repository in .git/
+Created initial commit e784a71: Initial commit.
+ 0 files changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 foo
+rm 'foo'
+Created commit 232e3ae: Test.
+ 0 files changed, 0 insertions(+), 0 deletions(-)
+ delete mode 100644 foo
 
--Peff
+Christian.
