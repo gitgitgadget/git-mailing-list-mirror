@@ -1,74 +1,77 @@
-From: "Whit Armstrong" <armstrong.whit@gmail.com>
-Subject: Re: git-archive and submodules
-Date: Sat, 29 Mar 2008 10:13:34 -0400
-Message-ID: <8ec76080803290713k71b7cb19xee2361035a71878d@mail.gmail.com>
-References: <8ec76080803290647h25e86f18k7a86bc4cb2cc3d38@mail.gmail.com>
-	 <20080329135202.GR4759@spearce.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Truncating and cleaning a imported git repositary to make it more usable
+Date: Sat, 29 Mar 2008 15:30:08 +0100
+Organization: At home
+Message-ID: <fsljpe$i9o$1@ger.gmane.org>
+References: <1206707716.9819.15.camel@malory> <32541b130803280550u2ed23b5auc84bf935d5344e84@mail.gmail.com> <b2cdc9f30803280852y4f160bb2tda1e688ddf7213e7@mail.gmail.com> <b2cdc9f30803280903w4a6e3a6l9e33fd188af9995a@mail.gmail.com> <47ED204E.3020602@viscovery.net> <b2cdc9f30803290647n31bd6db5r4f346360989c2dcd@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sat Mar 29 15:14:30 2008
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 29 15:31:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JfbpF-00031L-Jd
-	for gcvg-git-2@gmane.org; Sat, 29 Mar 2008 15:14:30 +0100
+	id 1Jfc5S-0007dY-Cg
+	for gcvg-git-2@gmane.org; Sat, 29 Mar 2008 15:31:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751689AbYC2ONf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 29 Mar 2008 10:13:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751775AbYC2ONf
-	(ORCPT <rfc822;git-outgoing>); Sat, 29 Mar 2008 10:13:35 -0400
-Received: from wf-out-1314.google.com ([209.85.200.170]:28685 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751654AbYC2ONe (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 29 Mar 2008 10:13:34 -0400
-Received: by wf-out-1314.google.com with SMTP id 28so653443wff.4
-        for <git@vger.kernel.org>; Sat, 29 Mar 2008 07:13:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=hxnTFDYQEmpS9g715B7702XSNODHXqpu/IJJ+c4FE5w=;
-        b=Oj7lmIDzEKqBvcs73GRaYwm47Mu/SlA6Q2sguhtq8H63Q/ElCx8TqYGFSgM4y2ISmEq3N25JhIQ0ygJ7BssnBBzzRv26hSMu3N7dd7QAwp7KhB41I+aGS+LVMTq6juTsSBtzRql/caUxWn5obFBhSVVkyUCoyfrrmaZWbuQP6lE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=P/Wghu67RSssh5UQWLUlFyqjOTuo1C7fvZfrXs7FxftztzvnR2TaCP+Dwj9GMzxutm2JN/H9Ajw1IjMrWf8YawriSi1HTjyljA80+Rj28mM7mdkIDCb+gF6vdr7+pRFKl/jhXCsi+UL3KHpG40uT+7jTddPCf6Yuf+wmCCKpzII=
-Received: by 10.142.178.13 with SMTP id a13mr2649810wff.129.1206800014250;
-        Sat, 29 Mar 2008 07:13:34 -0700 (PDT)
-Received: by 10.142.187.13 with HTTP; Sat, 29 Mar 2008 07:13:34 -0700 (PDT)
-In-Reply-To: <20080329135202.GR4759@spearce.org>
-Content-Disposition: inline
+	id S1751661AbYC2OaS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 29 Mar 2008 10:30:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751682AbYC2OaS
+	(ORCPT <rfc822;git-outgoing>); Sat, 29 Mar 2008 10:30:18 -0400
+Received: from main.gmane.org ([80.91.229.2]:40314 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751654AbYC2OaR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 29 Mar 2008 10:30:17 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Jfc4T-0003pD-Jz
+	for git@vger.kernel.org; Sat, 29 Mar 2008 14:30:13 +0000
+Received: from abvq246.neoplus.adsl.tpnet.pl ([83.8.214.246])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 29 Mar 2008 14:30:13 +0000
+Received: from jnareb by abvq246.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 29 Mar 2008 14:30:13 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: abvq246.neoplus.adsl.tpnet.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78469>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78470>
 
-as a first patch that might be a bit ambitious for me, but I will give it a try.
+Alex Bennee wrote:
 
-anyway, it's good to know that there is additional support for this behavior.
+> On Fri, Mar 28, 2008 at 4:43 PM, Johannes Sixt <j.sixt@viscovery.net> wrote:
+>> Alex Bennee schrieb:
+>>
+>>  You really shouldn't do it this way, unless you do it on a ramdisk. Better
+>>  use an --index-filter. This is modeled after the last example in the man
+>>  page (and, of course, untested):
+>>
+>>  git filter-branch --index-filter \
+>>         'git ls-files -s |
+>>          grep -v "      big_dira" |
+>>          grep -v "      big_dirb" |
+>>                 GIT_INDEX_FILE=$GIT_INDEX_FILE.new \
+>>                         git update-index --index-info &&
+>>          mv $GIT_INDEX_FILE.new $GIT_INDEX_FILE' HEAD
+>>
+>>  where the space before big_dir is actually a literal TAB!
+> 
+> Hmm thats odd. Despite having successfully run the filter my repo is
+> still the same size. git-fsck --full shows loads of dangling commits
+> but I'm guessing because the repo is packed they don't get dropped. Is
+> it possible to repack the whole repo or do you have to manually unpack
+> the packs and re-pack?
 
--Whit
-
-
-On Sat, Mar 29, 2008 at 9:52 AM, Shawn O. Pearce <spearce@spearce.org> wrote:
-> Whit Armstrong <armstrong.whit@gmail.com> wrote:
->  > Is there a way to ask git-archive to archive the submodules of the
->  > project as well?
->  >
->  > I have a project that needs it's submoduels distributed with it.
->
->  No.
->
->  Patches welcome.  :-)
->
->  We've talked about supporting it, and wouldn't mind having the
->  tool do it for exactly the reason you mention, but thus far a
->  patch has not been written to implement that.
->
->  --
->  Shawn.
->
+Did you pruned the repo ("git gc --prune" or "git prune")?
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
