@@ -1,60 +1,57 @@
-From: Jan Hudec <bulb@ucw.cz>
-Subject: Re: Apply patch on server w/o git
-Date: Sat, 29 Mar 2008 19:46:06 +0100
-Message-ID: <20080329184606.GB4920@efreet.light.src>
-References: <CA08AA77-A9EA-4490-B1BE-25E8B7402290@faithfulgeek.org> <200803252057.38326.robin.rosenberg.lists@dewire.com> <323B72DF-3387-40ED-8235-213A9FAD6CDD@faithfulgeek.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: why multiple password prompts?
+Date: Sat, 29 Mar 2008 14:49:37 -0400 (EDT)
+Message-ID: <alpine.LNX.1.00.0803291439450.19665@iabervon.org>
+References: <alpine.WNT.1.10.0803291141550.11992@znlsyl>  <alpine.LNX.1.00.0803291241020.19665@iabervon.org> <46a038f90803291137l20244abcke54941dc92c2c8b4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	git@vger.kernel.org
-To: Joe Fiorini <joe@faithfulgeek.org>
-X-From: git-owner@vger.kernel.org Sat Mar 29 19:47:12 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Paul <lists@pote.com>, git@vger.kernel.org
+To: Martin Langhoff <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 29 19:50:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jfg4y-00040B-Ti
-	for gcvg-git-2@gmane.org; Sat, 29 Mar 2008 19:47:01 +0100
+	id 1Jfg8F-00058m-4I
+	for gcvg-git-2@gmane.org; Sat, 29 Mar 2008 19:50:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753908AbYC2SqR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 29 Mar 2008 14:46:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753927AbYC2SqR
-	(ORCPT <rfc822;git-outgoing>); Sat, 29 Mar 2008 14:46:17 -0400
-Received: from ns1.bluetone.cz ([212.158.128.13]:58164 "EHLO ns1.bluetone.cz"
+	id S1753960AbYC2Stk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 29 Mar 2008 14:49:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753921AbYC2Stk
+	(ORCPT <rfc822;git-outgoing>); Sat, 29 Mar 2008 14:49:40 -0400
+Received: from iabervon.org ([66.92.72.58]:40232 "EHLO iabervon.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753765AbYC2SqR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 29 Mar 2008 14:46:17 -0400
-Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
-	by ns1.bluetone.cz (Postfix) with ESMTP id 03D4E574F1;
-	Sat, 29 Mar 2008 19:46:16 +0100 (CET)
-Received: from ns1.bluetone.cz ([192.168.13.1])
-	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
-	with ESMTP id hGqlUcfQjRPX; Sat, 29 Mar 2008 19:46:13 +0100 (CET)
-Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
-	by ns1.bluetone.cz (Postfix) with ESMTP id D9677574E6;
-	Sat, 29 Mar 2008 19:46:12 +0100 (CET)
-Received: from bulb by efreet.light.src with local (Exim 4.69)
-	(envelope-from <bulb@ucw.cz>)
-	id 1Jfg46-000558-3j; Sat, 29 Mar 2008 19:46:06 +0100
-Content-Disposition: inline
-In-Reply-To: <323B72DF-3387-40ED-8235-213A9FAD6CDD@faithfulgeek.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1753875AbYC2Stj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 29 Mar 2008 14:49:39 -0400
+Received: (qmail 9925 invoked by uid 1000); 29 Mar 2008 18:49:37 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 29 Mar 2008 18:49:37 -0000
+In-Reply-To: <46a038f90803291137l20244abcke54941dc92c2c8b4@mail.gmail.com>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78477>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78478>
 
-On Tue, Mar 25, 2008 at 23:03:58 -0400, Joe Fiorini wrote:
-> Thanks for all your replies.  Unfortunately, I cannot use git apply  
-> because I will not have access to git on the server where I'm doing the 
-> patch.  I will try Jan's suggestion of ignoring whitespace.
+On Sat, 29 Mar 2008, Martin Langhoff wrote:
 
-By the way, why *can't* you use git there? There is win32 build of git
-(http://code.google.com/p/msysgit/) and if you can't get the repository over
-(but if you can get anything there, you should be able to get bundles there
-too), you can still use git-apply, since it can work without a repository as
-a pure patch replacement.
+> On Sat, Mar 29, 2008 at 12:48 PM, Daniel Barkalow <barkalow@iabervon.org> wrote:
+> >  One of the changes in the upcoming release is to reduce this to one,
+> >  except for an occasional second one.
+> 
+> That's cool - didn't know a rework of the ssh interactions had
+> happened.
 
--- 
-						 Jan 'Bulb' Hudec <bulb@ucw.cz>
+It's not actually anything to do with ssh; it's that the git native 
+protocol code tries to do as much as possible in each of its connections.
+
+> It would be really good if we could detect if there's an
+> existing "master" connection and piggyback over that (see options -M
+> and -O). Reading man ssh_config it looks like we may be able to say
+> something along the lines of " -o ControlMaster=auto ".
+
+People who want that will presumably set it in their ssh configuration.
+
+	-Daniel
+*This .sig left intentionally blank*
