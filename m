@@ -1,61 +1,70 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] send-email: rfc2047-quote subject lines with
-	non-ascii characters
-Date: Sat, 29 Mar 2008 05:11:45 -0400
-Message-ID: <20080329091145.GA19501@coredump.intra.peff.net>
-References: <20080328212700.GA9529@coredump.intra.peff.net> <200803290941.54091.robin.rosenberg.lists@dewire.com> <20080329084947.GB19200@coredump.intra.peff.net> <200803291002.43768.robin.rosenberg.lists@dewire.com>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [PATCH 2/2] send-email: rfc2047-quote subject lines with non-ascii characters
+Date: Sat, 29 Mar 2008 10:38:48 +0100
+Message-ID: <200803291038.48847.robin.rosenberg.lists@dewire.com>
+References: <20080328212700.GA9529@coredump.intra.peff.net> <200803290944.55273.robin.rosenberg.lists@dewire.com> <20080329085304.GC19200@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Sat Mar 29 10:12:31 2008
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Mar 29 10:40:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JfX6z-0002U1-9h
-	for gcvg-git-2@gmane.org; Sat, 29 Mar 2008 10:12:29 +0100
+	id 1JfXY0-0000e0-4Q
+	for gcvg-git-2@gmane.org; Sat, 29 Mar 2008 10:40:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752349AbYC2JLr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 29 Mar 2008 05:11:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752172AbYC2JLr
-	(ORCPT <rfc822;git-outgoing>); Sat, 29 Mar 2008 05:11:47 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1757 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751199AbYC2JLr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 29 Mar 2008 05:11:47 -0400
-Received: (qmail 21088 invoked by uid 111); 29 Mar 2008 09:11:46 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Sat, 29 Mar 2008 05:11:46 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 29 Mar 2008 05:11:45 -0400
+	id S1751515AbYC2Jjl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 29 Mar 2008 05:39:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751303AbYC2Jjl
+	(ORCPT <rfc822;git-outgoing>); Sat, 29 Mar 2008 05:39:41 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:27506 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1751419AbYC2Jjk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 29 Mar 2008 05:39:40 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id AB8218026E9;
+	Sat, 29 Mar 2008 10:39:39 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 9Sg2N1geaG-d; Sat, 29 Mar 2008 10:39:39 +0100 (CET)
+Received: from [10.9.0.3] (unknown [10.9.0.3])
+	by dewire.com (Postfix) with ESMTP id 292C4802679;
+	Sat, 29 Mar 2008 10:39:38 +0100 (CET)
+User-Agent: KMail/1.9.9
+In-Reply-To: <20080329085304.GC19200@coredump.intra.peff.net>
 Content-Disposition: inline
-In-Reply-To: <200803291002.43768.robin.rosenberg.lists@dewire.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78459>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78460>
 
-On Sat, Mar 29, 2008 at 10:02:43AM +0100, Robin Rosenberg wrote:
+Den Saturday 29 March 2008 09.53.04 skrev Jeff King:
+> On Sat, Mar 29, 2008 at 09:44:55AM +0100, Robin Rosenberg wrote:
+> > > OK. Do you have an example function that guesses with high probability
+> > > whether a string is utf-8? If there are non-ascii characters but we
+> > > _don't_ guess utf-8, what should we do?
+> >
+> > I guess the best bet is to assume the locale. Btw, is the encoding header
+> > from the commit (when present) completely lost? (not that it can be
+> > trusted anyway).
+>
+> What do you mean by "assume the locale"?  Is there a portable way to say
+> "this is the encoding of the locale the user has chosen?" On my system I
+> set LANG=en_US, and behind-the-scenes magic chooses utf-8 versus
+> iso8859-1.
 
-> My proof is entirely empirical. What happens is that attempting to decode a 
-> non-UTF-8 string will put a unicode surrogate pair into the (now Unicode) 
-> string and encoding will just encode the surrogate pair into UTF-8 and not 
-> the original. As a result, the encode(decode($x)) eq $x *only* if $x is a
-> valid UTF-8 octet sequence. Why would you not get the original back if
-> you start with valid UTF-8?
+The environment variables are only part of the story. There is a langinfo API 
+for this. See I18N::Langinfo(3pm) that knows about those and something else.
 
-Because some UTF-8 sequences have multiple representations, and that
-information may be lost by whatever intermediate form is the result of
-decode($x). In practice, I don't know if this happens or not.
+# perl -e 'require I18N::Langinfo; I18N::Langinfo->import(qw(langinfo 
+CODESET)); $codeset = langinfo(CODESET()); print "My codeset=".
+$codeset."\n";'
+My codeset=ISO-8859-15
 
-Though it looks like there is an Encode::is_utf8 function (which is also
-utf8::is_utf8, but only in perl >= 5.8.1). So we could use that, but it
-needs the utf-8 flag turned on for the string. Maybe utf8::valid is
-actually what we want.
-
-But there is still a larger question. You have some binary bytes that
-will go in a subject header. There are non-ascii bytes. There are
-non-utf8 sequences. What do you do?
-
--Peff
+-- robin
