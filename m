@@ -1,64 +1,70 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: Truncating and cleaning a imported git repositary to make it
- more	usable
-Date: Sat, 29 Mar 2008 18:51:56 +0100
-Message-ID: <47EE81BC.4020700@alum.mit.edu>
-References: <1206707716.9819.15.camel@malory>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: why multiple password prompts?
+Date: Sat, 29 Mar 2008 14:37:00 -0400
+Message-ID: <46a038f90803291137l20244abcke54941dc92c2c8b4@mail.gmail.com>
+References: <alpine.WNT.1.10.0803291141550.11992@znlsyl>
+	 <alpine.LNX.1.00.0803291241020.19665@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Alex Bennee <kernel-hacker@bennee.com>
-X-From: git-owner@vger.kernel.org Sat Mar 29 18:53:54 2008
+Cc: Paul <lists@pote.com>, git@vger.kernel.org
+To: "Daniel Barkalow" <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Sat Mar 29 19:38:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JffFV-0001CF-6O
-	for gcvg-git-2@gmane.org; Sat, 29 Mar 2008 18:53:49 +0100
+	id 1JffwB-0000lb-Ih
+	for gcvg-git-2@gmane.org; Sat, 29 Mar 2008 19:37:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753257AbYC2Rwp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 29 Mar 2008 13:52:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755438AbYC2Rwp
-	(ORCPT <rfc822;git-outgoing>); Sat, 29 Mar 2008 13:52:45 -0400
-Received: from einhorn.in-berlin.de ([192.109.42.8]:50602 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755351AbYC2Rwj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 29 Mar 2008 13:52:39 -0400
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from [192.168.69.135] (kaiserty.in-dsl.de [217.197.85.174])
-	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id m2THqZb1030567
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sat, 29 Mar 2008 18:52:36 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.12) Gecko/20080227 Thunderbird/2.0.0.12 Mnenhy/0.7.5.666
-In-Reply-To: <1206707716.9819.15.camel@malory>
-X-Enigmail-Version: 0.95.0
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1753552AbYC2ShG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 29 Mar 2008 14:37:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753558AbYC2ShF
+	(ORCPT <rfc822;git-outgoing>); Sat, 29 Mar 2008 14:37:05 -0400
+Received: from ug-out-1314.google.com ([66.249.92.168]:12846 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753550AbYC2ShE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 29 Mar 2008 14:37:04 -0400
+Received: by ug-out-1314.google.com with SMTP id z38so146622ugc.16
+        for <git@vger.kernel.org>; Sat, 29 Mar 2008 11:37:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=x/YqDQd9+S2k97xJIebmc+UHgH3w1LbDstxCz2bsBxU=;
+        b=dB6BnvBy9zT2q70K8B7L0uqJeWbD0ol4B/DGU5V3G56GPE6UgNB8SZdxI4dsrddp2ZDVQKOeK2Yjm56pQPN5rvxM/IyVnujvjok3hoDUTFIn1BuZJ7eGuH1IQx9UuTM/XijM0y5x9xamHBsPwnHw/McWjPpfGq3YOJtXAGZ7EwI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=BxMxCratK61p1LMgn6gVqauWzJ9GmYM6RlaAdMswjlP50LdSTRE5zL4jTo6a5bMSjQLMrxSfA1cC56+9nzNRAFWpWsES+NvuUlEIo7Y4Cdjcpup+igxHX4ocbdcJRbMrN3Y1JKNJQ9rBG2uN8pKA+V35By25zJiGi8uysZxWQiQ=
+Received: by 10.66.251.3 with SMTP id y3mr764736ugh.88.1206815820579;
+        Sat, 29 Mar 2008 11:37:00 -0700 (PDT)
+Received: by 10.66.252.6 with HTTP; Sat, 29 Mar 2008 11:37:00 -0700 (PDT)
+In-Reply-To: <alpine.LNX.1.00.0803291241020.19665@iabervon.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78475>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78476>
 
-Alex Bennee wrote:
-> I've succeeded in porting our whole CVS repository into git (with plenty
-> of swap, cvsps is very memory hungry). [...]
+On Sat, Mar 29, 2008 at 12:48 PM, Daniel Barkalow <barkalow@iabervon.org> wrote:
+>  One of the changes in the upcoming release is to reduce this to one,
+>  except for an occasional second one.
 
-It sounds like you are doing a one-time conversion.  If so, please
-consider using cvs2svn [1], which can also convert to git [2].
-cvsps-based tools are known to have problems with most nontrivial CVS
-repositories (the contents of the output repository simply don't agree
-with those of the CVS original).  IMO, the only reason to use a
-cvsps-based tool is if you really need incremental conversions *and* are
-willing to live with data loss.
+That's cool - didn't know a rework of the ssh interactions had
+happened. It would be really good if we could detect if there's an
+existing "master" connection and piggyback over that (see options -M
+and -O). Reading man ssh_config it looks like we may be able to say
+something along the lines of " -o ControlMaster=auto ".
 
-Before you trust your new repository, please make some checks.  As a
-minimum, make sure that the contents of each tag and branch tip revision
-is the same as the contents that you get if you check out of CVS.  (I
-bet they don't!)
+cheers,
 
-Michael
 
-[1] http://cvs2svn.tigris.org
-[2] http://cvs2svn.tigris.org/cvs2git.html
+
+martin
+-- 
+ martin.langhoff@gmail.com
+ martin@laptop.org -- School Server Architect
+ - ask interesting questions
+ - don't get distracted with shiny stuff - working code first
+ - http://wiki.laptop.org/go/User:Martinlanghoff
