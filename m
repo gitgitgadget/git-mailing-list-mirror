@@ -1,56 +1,107 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: [PATCH 2/2] send-email: rfc2047-quote subject lines with	non-ascii
- characters
-Date: Sun, 30 Mar 2008 15:12:46 +1300
-Message-ID: <47EEF71E.7060805@vilain.net>
-References: <20080328212700.GA9529@coredump.intra.peff.net> <200803290944.55273.robin.rosenberg.lists@dewire.com> <20080329085304.GC19200@coredump.intra.peff.net> <200803291038.48847.robin.rosenberg.lists@dewire.com> <20080329095238.GB21814@coredump.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Mar 30 04:10:58 2008
+From: Michal Sojka <sojkam1@fel.cvut.cz>
+Subject: [PATCH/RFC] git-cvsimport: When fetching a file and an error occurs, disconnect and retry
+Date: Sun, 30 Mar 2008 03:50:07 +0200
+Message-ID: <1206841808-24605-1-git-send-email-sojkam1@fel.cvut.cz>
+Cc: Michal Sojka <sojkam1@fel.cvut.cz>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 30 04:30:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jfn0W-00078H-GF
-	for gcvg-git-2@gmane.org; Sun, 30 Mar 2008 04:10:52 +0200
+	id 1JfnJ4-000213-Ty
+	for gcvg-git-2@gmane.org; Sun, 30 Mar 2008 04:30:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751095AbYC3CJw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 29 Mar 2008 22:09:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751091AbYC3CJw
-	(ORCPT <rfc822;git-outgoing>); Sat, 29 Mar 2008 22:09:52 -0400
-Received: from watts.utsl.gen.nz ([202.78.240.73]:60331 "EHLO mail.utsl.gen.nz"
+	id S1751154AbYC3C3I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 29 Mar 2008 22:29:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751151AbYC3C3H
+	(ORCPT <rfc822;git-outgoing>); Sat, 29 Mar 2008 22:29:07 -0400
+Received: from smtp.nextra.cz ([195.70.130.2]:3764 "EHLO smtp.nextra.cz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751080AbYC3CJv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 29 Mar 2008 22:09:51 -0400
-Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
-	id E6EA221C96F; Sun, 30 Mar 2008 15:09:49 +1300 (NZDT)
-X-Spam-Checker-Version: SpamAssassin 3.1.7-deb (2006-10-05) on 
-	mail.musashi.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00 
-	autolearn=ham version=3.1.7-deb
-Received: from [192.168.69.233] (203-97-235-49.cable.telstraclear.net [203.97.235.49])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.utsl.gen.nz (Postfix) with ESMTP id 5E95521C967;
-	Sun, 30 Mar 2008 15:09:45 +1300 (NZDT)
-User-Agent: Thunderbird 2.0.0.6 (X11/20071022)
-In-Reply-To: <20080329095238.GB21814@coredump.intra.peff.net>
-X-Enigmail-Version: 0.95.0
+	id S1751119AbYC3C3G (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 29 Mar 2008 22:29:06 -0400
+X-Greylist: delayed 2328 seconds by postgrey-1.27 at vger.kernel.org; Sat, 29 Mar 2008 22:29:06 EDT
+Received: from resox (unknown [213.29.198.144])
+	by smtp.nextra.cz (Postfix) with ESMTP id 59F3E5DA1;
+	Sun, 30 Mar 2008 03:50:08 +0200 (CEST)
+Received: from wsh by resox with local (Exim 4.69)
+	(envelope-from <wsh@resox.local>)
+	id 1JfmgS-0006PC-13; Sun, 30 Mar 2008 03:50:08 +0200
+X-Mailer: git-send-email 1.5.4.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78495>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78496>
 
-Jeff King wrote:
-> Any idea what version of perl started shipping I18N::Langinfo? I
-> couldn't see anything useful from grepping the Changes files.
+I imported my repositories from CVSNT server 1.11.1.3 and on some of
+them import died with error like this:
 
-Module::CoreList knows.  See the man page for that.
+Fetching libvideo\libvideo/libvideo.dsp   v 1.1.1.1
+Unknown: error
 
-Sam.
+After some searching I have found that the reason is probably wrong
+naming of my directories (i.e. directories with the same name at
+different locations). I'm not CVS guru but guess that CVS server tracks
+what we are downloading and assumes that we are downloading all
+subdirectories (at all levels) to one common directory. If more
+subdirectories have the same name, it refuses to send the latter ones to
+avoid overwriting the first one.
+
+The dump of TCP communication was like this:
+
+C: Argument -N
+C: Argument -P
+C: Argument -r
+C: Argument 1.1
+C: Argument --
+C: Argument video/libvideo\libvideo/libvideo.dsp
+C: Directory .
+C: /d//cvs
+C: co
+S: E cvs server: existing repository d:/cvs/video/libvideo does not match d:/cvs/video/libvideo\libvideo
+S: E cvs server: ignoring module video/libvideo\libvideo/libvideo.dsp
+S: error
+
+This patch solved the problem for me. When the error is received,
+instead of dying immediately, the connection is closed, then opened again
+and the second fetch attempt is executed.
+---
+ git-cvsimport.perl |   11 +++++++----
+ 1 files changed, 7 insertions(+), 4 deletions(-)
+
+diff --git a/git-cvsimport.perl b/git-cvsimport.perl
+index 95c5eec..b33ed53 100755
+--- a/git-cvsimport.perl
++++ b/git-cvsimport.perl
+@@ -438,7 +438,10 @@ sub _line {
+ 				die "Unknown: $line" if $line ne "ok";
+ 				return -1;
+ 			} else {
+-				die "Unknown: $line\n";
++				STDOUT->flush(); # To see which file cannot be fetched
++				print STDERR "Unexpected response: $line\nDisconnecting and retrying...\n";
++				$self->{"socketo"}->close();
++				return -2;
+ 			}
+ 		}
+ 	}
+@@ -453,13 +456,13 @@ sub file {
+ 
+ 	$self->_file($fn,$rev) and $res = $self->_line($fh);
+ 
+-	if (!defined $res) {
+-	    print STDERR "Server has gone away while fetching $fn $rev, retrying...\n";
++	if (!defined $res || $res == -2) {
++	    print STDERR "Server has gone away while fetching $fn $rev, retrying...\n" if !defined $res;
+ 	    truncate $fh, 0;
+ 	    $self->conn();
+ 	    $self->_file($fn,$rev) or die "No file command send";
+ 	    $res = $self->_line($fh);
+-	    die "Retry failed" unless defined $res;
++	    die "Retry failed" unless (defined $res && $res != -2);
+ 	}
+ 	close ($fh);
+ 
+-- 
+1.5.4.5
