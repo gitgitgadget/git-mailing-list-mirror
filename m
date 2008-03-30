@@ -1,67 +1,79 @@
-From: Eyvind Bernhardsen <eyvind-git@orakel.ntnu.no>
-Subject: Re: git-submodule getting submodules from the parent repository
-Date: Sun, 30 Mar 2008 15:32:21 +0200
-Message-ID: <D0F821FA-AF53-4F1F-B9CC-58346828FA15@orakel.ntnu.no>
-References: <32541b130803291535m317e84e6p321ebccd5dedaab3@mail.gmail.com> <47EECF1F.60908@vilain.net>
-Mime-Version: 1.0 (Apple Message framework v919.2)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: Avery Pennarun <apenwarr@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Sam Vilain <sam@vilain.net>
-X-From: git-owner@vger.kernel.org Sun Mar 30 15:33:11 2008
+From: "Roger C. Soares" <rogersoares@intelinet.com.br>
+Subject: [EGIT PATCH 1/4] Change history page table to SWT.VIRTUAL.
+Date: Sun, 30 Mar 2008 11:18:34 -0400
+Message-ID: <1206890314-3712-1-git-send-email-rogersoares@intelinet.com.br>
+Cc: robin.rosenberg@dewire.com, spearce@spearce.org,
+	"Roger C. Soares" <rogersoares@intelinet.com.br>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 30 16:20:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jfxen-0002YL-Uz
-	for gcvg-git-2@gmane.org; Sun, 30 Mar 2008 15:33:10 +0200
+	id 1JfyOx-00070m-Q4
+	for gcvg-git-2@gmane.org; Sun, 30 Mar 2008 16:20:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750991AbYC3NcZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 30 Mar 2008 09:32:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750978AbYC3NcZ
-	(ORCPT <rfc822;git-outgoing>); Sun, 30 Mar 2008 09:32:25 -0400
-Received: from 97.84-49-228.nextgentel.com ([84.49.228.97]:65436 "EHLO
-	eyvind.bernhardsens.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750939AbYC3NcY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Mar 2008 09:32:24 -0400
-Received: from vredefort.d.eyvind.bernhardsens.net (vredefort.d.eyvind.bernhardsens.net [172.16.3.223])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by eyvind.bernhardsens.net (Postfix) with ESMTP id E0F88159328;
-	Sun, 30 Mar 2008 15:32:22 +0200 (CEST)
-In-Reply-To: <47EECF1F.60908@vilain.net>
-X-Mailer: Apple Mail (2.919.2)
+	id S1752281AbYC3OUJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 30 Mar 2008 10:20:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752315AbYC3OUI
+	(ORCPT <rfc822;git-outgoing>); Sun, 30 Mar 2008 10:20:08 -0400
+Received: from cvxbsd.convex.com.br ([200.152.177.10]:1919 "HELO
+	cvxbsd.convex.com.br" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1752257AbYC3OUH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Mar 2008 10:20:07 -0400
+Received: (qmail 37155 invoked by uid 0); 30 Mar 2008 11:22:03 -0300
+Received: from rogersoares@intelinet.com.br by cvxbsd.convex.com.br by uid 82 with qmail-scanner-1.20rc3 
+ (uvscan: v4.3.20/v4817.  Clear:RC:1:. 
+ Processed in 0.789239 secs); 30 Mar 2008 14:22:03 -0000
+Received: from unknown (HELO localhost.localdomain) (189.79.211.226)
+  by cvxbsd.convex.com.br with SMTP; 30 Mar 2008 14:22:02 -0000
+X-Mailer: git-send-email 1.5.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78502>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78503>
 
-On 30. mars. 2008, at 00.22, Sam Vilain <sam@vilain.net> wrote:
+It makes the history page show about the same speed as gitk on my
+eclipse.
 
-> Avery Pennarun wrote:
->
->> 2. You still check into C, then B, then A, but it doesn't actually
->> matter if you put B and C on a branch first or not, because 'git  
->> push'
->> will work properly, because it auto-pushes B and C revisions based on
->> the fact that A refers to them (ie. implicit branches via the
->> submodule mechanism).
->
-> This push failure thing is regrettable; however it's not clear which
-> branch name the submodules should get.  A given commit might exist on
-> several branches, which one do you choose to name it?
+>From the eclipse API:
 
-I solved that by adding a "submodule push" that pushes the detached  
-head of each submodule to its own ref ("refs/submodule-update/commit- 
-$sha1", imaginatively).  I also made "submodule update" try to fetch  
-that ref when looking for a sha1.
+"Style VIRTUAL is used to create a Table whose TableItems are to be
+populated by the client on an on-demand basis instead of up-front.
+This can provide significant performance improvements for tables
+that are very large or for which TableItem population is expensive
+(for example, retrieving values from an external source)."
 
-I ran into trouble trying to avoid pushing every submodule for each  
-"submodule push", and then more or less decided not to use submodules,  
-so it's not quite fit for public consumption.  I still think it's a  
-sound idea in principle, so I'll clean it up and send it to the list  
-if there's any interest.
+Signed-off-by: Roger C. Soares <rogersoares@intelinet.com.br>
+---
+Hi Shawn, Robin,
+
+This patch series is currently on top of 2392caa5a495f72ab25dee10709d98bb21a45ab9
+from Shawn's repo.
+
+I didn't apply the find in references patch because it depends on branch
+information that is not available yet.
+
+[]s,
+Roger.
+
+
+ .../egit/ui/internal/history/CommitGraphTable.java |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/history/CommitGraphTable.java b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/history/CommitGraphTable.java
+index fffe7e0..6559d64 100644
+--- a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/history/CommitGraphTable.java
++++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/history/CommitGraphTable.java
+@@ -88,7 +88,7 @@ class CommitGraphTable {
+ 		hFont = highlightFont();
+ 
+ 		final Table rawTable = new Table(parent, SWT.MULTI | SWT.H_SCROLL
+-				| SWT.V_SCROLL | SWT.BORDER | SWT.FULL_SELECTION);
++				| SWT.V_SCROLL | SWT.BORDER | SWT.FULL_SELECTION | SWT.VIRTUAL);
+ 		rawTable.setHeaderVisible(true);
+ 		rawTable.setLinesVisible(false);
+ 		rawTable.setFont(nFont);
 -- 
-Eyvind Bernhardsen
+1.5.4.1
