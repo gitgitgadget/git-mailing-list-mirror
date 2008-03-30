@@ -1,68 +1,103 @@
-From: Sam Vilain <sam@vilain.net>
+From: Eyvind Bernhardsen <eyvind-git@orakel.ntnu.no>
 Subject: Re: git-submodule getting submodules from the parent repository
-Date: Mon, 31 Mar 2008 06:48:03 +1300
-Message-ID: <47EFD253.6020105@vilain.net>
-References: <32541b130803291535m317e84e6p321ebccd5dedaab3@mail.gmail.com> <47EECF1F.60908@vilain.net> <D0F821FA-AF53-4F1F-B9CC-58346828FA15@orakel.ntnu.no>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Date: Sun, 30 Mar 2008 21:50:24 +0200
+Message-ID: <C38585A9-F09C-4A5B-8E72-6F3127DB2BB9@orakel.ntnu.no>
+References: <32541b130803291535m317e84e6p321ebccd5dedaab3@mail.gmail.com> <47EECF1F.60908@vilain.net> <D0F821FA-AF53-4F1F-B9CC-58346828FA15@orakel.ntnu.no> <47EFD253.6020105@vilain.net>
+Mime-Version: 1.0 (Apple Message framework v919.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
 Cc: Avery Pennarun <apenwarr@gmail.com>,
 	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Eyvind Bernhardsen <eyvind-git@orakel.ntnu.no>
-X-From: git-owner@vger.kernel.org Sun Mar 30 19:46:13 2008
+To: Sam Vilain <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Sun Mar 30 21:51:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jg1be-0003kV-4k
-	for gcvg-git-2@gmane.org; Sun, 30 Mar 2008 19:46:10 +0200
+	id 1Jg3Yo-0000GC-4I
+	for gcvg-git-2@gmane.org; Sun, 30 Mar 2008 21:51:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751753AbYC3Rp2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 30 Mar 2008 13:45:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751857AbYC3Rp1
-	(ORCPT <rfc822;git-outgoing>); Sun, 30 Mar 2008 13:45:27 -0400
-Received: from watts.utsl.gen.nz ([202.78.240.73]:38099 "EHLO mail.utsl.gen.nz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751723AbYC3Rp1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Mar 2008 13:45:27 -0400
-Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
-	id F1F9A21C97F; Mon, 31 Mar 2008 06:45:23 +1300 (NZDT)
-X-Spam-Checker-Version: SpamAssassin 3.1.7-deb (2006-10-05) on 
-	mail.musashi.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00 
-	autolearn=ham version=3.1.7-deb
-Received: from [192.168.69.233] (203-97-235-49.cable.telstraclear.net [203.97.235.49])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	id S1752799AbYC3Tu2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 30 Mar 2008 15:50:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752793AbYC3Tu2
+	(ORCPT <rfc822;git-outgoing>); Sun, 30 Mar 2008 15:50:28 -0400
+Received: from 97.84-49-228.nextgentel.com ([84.49.228.97]:49317 "EHLO
+	eyvind.bernhardsens.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752515AbYC3Tu1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Mar 2008 15:50:27 -0400
+Received: from vredefort.d.eyvind.bernhardsens.net (vredefort.d.eyvind.bernhardsens.net [172.16.3.223])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by mail.utsl.gen.nz (Postfix) with ESMTP id A51A121C978;
-	Mon, 31 Mar 2008 06:45:05 +1300 (NZDT)
-User-Agent: Thunderbird 2.0.0.6 (X11/20071022)
-In-Reply-To: <D0F821FA-AF53-4F1F-B9CC-58346828FA15@orakel.ntnu.no>
-X-Enigmail-Version: 0.95.0
+	by eyvind.bernhardsens.net (Postfix) with ESMTP id F103A1598B1;
+	Sun, 30 Mar 2008 21:50:25 +0200 (CEST)
+In-Reply-To: <47EFD253.6020105@vilain.net>
+X-Mailer: Apple Mail (2.919.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78508>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78509>
 
-Eyvind Bernhardsen wrote:
-> I solved that by adding a "submodule push" that pushes the detached head
-> of each submodule to its own ref ("refs/submodule-update/commit-$sha1",
-> imaginatively).  I also made "submodule update" try to fetch that ref
-> when looking for a sha1.
+On 30. mars. 2008, at 19.48, Sam Vilain wrote:
+> Eyvind Bernhardsen wrote:
+>> I solved that by adding a "submodule push" that pushes the detached  
+>> head
+>> of each submodule to its own ref ("refs/submodule-update/commit- 
+>> $sha1",
+>> imaginatively).  I also made "submodule update" try to fetch that ref
+>> when looking for a sha1.
+>
+> Hmm, a reasonable decision, but I think it would be better to force  
+> the
+> user to choose which branch they want to push to.  Leaving breadcrumbs
+> in the refs/ space like that is best avoided.
 
-Hmm, a reasonable decision, but I think it would be better to force the
-user to choose which branch they want to push to.  Leaving breadcrumbs
-in the refs/ space like that is best avoided.
+Well, the point of "submodule push" was to avoid having to push in  
+each submodule manually; not enforcing the requirement that commits in  
+submodules must be publicly available before pushing from the main  
+module is a recipe for disaster, or at least annoyance.  And nobody  
+likes an annoying git.
 
-> I ran into trouble trying to avoid pushing every submodule for each
-> "submodule push", and then more or less decided not to use submodules,
-> so it's not quite fit for public consumption.  I still think it's a
-> sound idea in principle, so I'll clean it up and send it to the list if
-> there's any interest.
+Pushing to a branch works except that I couldn't figure out what to do  
+if the push doesn't succeed, ie, the branch has advanced on the remote  
+end.  That's a problem if more than one module references the  
+submodule or there are multiple branches in the main module.
 
-Indeed - it can only become "fit for public consumption" if people
-submit their usability enhancements!
+One solution that occurred to me was to have a branch in each  
+submodule for every main module and branch.  A branch name would be  
+provided for each submodule in .gitmodules, used by "submodule push"  
+but not "submodule update".  In this case, if the push to the branch  
+fails, the main module branch is probably behind too.
 
-Sam.
+This seemed like a good idea, but it's racy.  If two simultaneous  
+"submodule push"es try to push to the same branch on a submodule, one  
+of them will be rejected, but it might already have updated branches  
+on other submodules.  Ick.
+
+I briefly toyed with creating tags named after the main module and its  
+branch, with the submodule sha1 included for good measure, but that  
+leaves a _real_ mess in refs/tags.  Figuring out that I could use refs/ 
+submodule-push instead seemed like an epiphany at the time.
+
+
+As an aside, my mental model of what the submodule needs is a  
+fetchable reflog for every main module and branch that uses it,  
+containing the history of commits used by that module/branch.
+
+It's a reflog, not a branch, because a submodule can be changed to a  
+different branch, rewound, etc between commits in the main module;  
+there's no requirement that the old commit is in the new commit's  
+history.  You actually don't want to fetch the whole thing, but you  
+have to be able to fetch every sha1 contained in it, by sha1.
+
+...so that's what refs/submodule-push is supposed to look like.  You  
+might need to squint a bit.
+
+> Indeed - it can only become "fit for public consumption" if people
+> submit their usability enhancements!
+
+True :)  I still have no idea how to figure out which submodules are  
+dirty, though.  Solving that will enable a safe "submodule update",  
+which I think is more important than "submodule push".
+-- 
+Eyvind Bernhardsen
