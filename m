@@ -1,105 +1,76 @@
-From: David Soria Parra <sn_@gmx.net>
-Subject: [ANNOUNCE] gc-utils 0.1.0
-Date: Mon, 31 Mar 2008 02:00:11 +0200
-Message-ID: <fsp9i8$flq$1@ger.gmane.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Auto detaching head options (update) (Re: Working copy revision
+ and push pain)
+Date: Sun, 30 Mar 2008 18:53:56 -0700
+Message-ID: <7vy77zslor.fsf@gitster.siamese.dyndns.org>
+References: <51419b2c0803230706w5ff88fc7oc7e8e34ab8afa1fd@mail.gmail.com>
+ <alpine.LSU.1.00.0803231519380.4353@racer.site> <47E66DAA.4080807@jwatt.org>
+ <alpine.LSU.1.00.0803231555380.4353@racer.site> <47E6765D.2020103@jwatt.org>
+ <alpine.LSU.1.00.0803231658460.4353@racer.site>
+ <20080325192552.GC4857@efreet.light.src>
+ <20080325232424.GB5273@coredump.intra.peff.net>
+ <7v3aqde2wn.fsf@gitster.siamese.dyndns.org>
+ <20080329082757.GA4920@efreet.light.src>
+ <20080329084743.GA19200@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 31 03:05:50 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Jan Hudec <bulb@ucw.cz>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jonathan Watt <jwatt@jwatt.org>,
+	Elijah Newren <newren@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Mar 31 03:55:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jg8T6-0005EE-B8
-	for gcvg-git-2@gmane.org; Mon, 31 Mar 2008 03:05:49 +0200
+	id 1Jg9En-0006TE-Bl
+	for gcvg-git-2@gmane.org; Mon, 31 Mar 2008 03:55:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751666AbYCaBFF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 30 Mar 2008 21:05:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751680AbYCaBFF
-	(ORCPT <rfc822;git-outgoing>); Sun, 30 Mar 2008 21:05:05 -0400
-Received: from main.gmane.org ([80.91.229.2]:44395 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751019AbYCaBFD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Mar 2008 21:05:03 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Jg7Rh-00011u-FO
-	for git@vger.kernel.org; Mon, 31 Mar 2008 00:00:17 +0000
-Received: from p57aed30e.dip.t-dialin.net ([87.174.211.14])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 31 Mar 2008 00:00:17 +0000
-Received: from sn_ by p57aed30e.dip.t-dialin.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 31 Mar 2008 00:00:17 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: p57aed30e.dip.t-dialin.net
-User-Agent: Thunderbird 2.0.0.12 (X11/20080227)
+	id S1752510AbYCaByL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 30 Mar 2008 21:54:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751992AbYCaByK
+	(ORCPT <rfc822;git-outgoing>); Sun, 30 Mar 2008 21:54:10 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:50013 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751680AbYCaByJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Mar 2008 21:54:09 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 962161514;
+	Sun, 30 Mar 2008 21:54:07 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id BFBD41513; Sun, 30 Mar 2008 21:53:58 -0400 (EDT)
+In-Reply-To: <20080329084743.GA19200@coredump.intra.peff.net> (Jeff King's
+ message of "Sat, 29 Mar 2008 04:47:43 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78540>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78541>
 
-Hello,
+Jeff King <peff@peff.net> writes:
 
-I would like to announce a porcelain on git-cvsimport and
-git-cvsexportcommit which I'm working on for a few month now.
-It tries to provide a simple import, update, commit commandset
-to synchronize your GIT repository with CVS. It runs on most shells
-like bash, zsh, ash (not csh and tcsh).
+> On Sat, Mar 29, 2008 at 09:27:57AM +0100, Jan Hudec wrote:
+>
+> I like the fact that it deals with both these cases, and I think it can
+> cover even more. It is a general safety valve for "somebody changed this
+> ref while you weren't looking."
+>
+>> Besides whith the update above, I no longer propose to keep any new
+>> information -- just to add a safety-check.
+>
+> And I like that, too. But I am a little worried that the information
+> will not be sufficient. You are asking for a consistency guarantee of
+> HEAD and HEAD@{0} that comes from using current porcelain.
 
-gc-utils 0.1.0 is available from http://gcutils.sourceforge.net
+While I too find the proposal attractive as a concept, I am sorry to say
+that it would not work even with the current set of Porcelain (fwiw, when
+the index-base extension was done, the approach based on HEAD reflog would
+not have worked either).  This is because 605fac8 (update HEAD reflog when
+branch pointed to by HEAD is directly modified, 2007-03-21) made gremlin
+updates to the current branch tip to also update the reflog of HEAD.
 
-Description:
- gc-utils is a set of bash scripts (git-cvs* porcelain) wrapping git-cvsimport
- and git-cvsexportcommit to make importing from CVS and commiting back easier.
-
-Tarballs can be found here:
-  http://downloads.experimentalworks.net/gcutils-v0.1.0.tar.gz
-
-GIT tree can be found here:
-  http://git.experimentalworks.net/?p=gcutils.git
-
-This release tries to focus on improving the test suite and to fix smaller
-bugs as well as doing some code clean up.
-
-Feedback and patches are welcome.
-
-            David
-
-------------------------------------------------------
-The changes since 0.0.4:
-
-David Soria Parra (25):
-      Add a "Update..." message to gc-update.sh
-      Check if the a .cvs directory is present.
-      Fix the check for the .cvs directory.
-      Aggregate duplicated code into on library file.
-      Add license header
-      Test to invoke gc-utils from subdirectories
-      Testcase for gc-commit
-      Import branches into refs/remotes/cvs/* by default
-      When running cvsclean, gc-commit didn't return to the working directory
-      Check if the directory to import already exists.
-      Change required git version from 1.5.0 to 1.5.4
-      Tests: Test merge strategy option in gc-update
-      Tests: Display filename when a test fails
-      Tests: Silence cleanup script
-      gc-utils version 0.0.5beta1
-      Add UPDATE-NOTES containing informations about compatiblity breaks
-      Silence git-stash when gc-update is not in verbose mode
-      Pop stashed status always, not only when we rebase
-      Fix the check for the .git and .cvs directory
-      Cleanup manpages
-      Use die shortcut instead of echo >&2 && exit 127
-      Show a message that we run cvs update
-      Silence errors due to non integer inputs in our select
-      Simplify code
-      gc-utils version 0.1.0
-
-Eduardo Cardoso (2):
-      Uses --no-pager to retrieve log messages.
-      Added flags to `cvs update' to allow creation of directories and
-      pruning of empty directories.
+If we revert that commit, we may be able to.
