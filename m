@@ -1,62 +1,70 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: git-submodule getting submodules from the parent repository
-Date: Mon, 31 Mar 2008 08:22:59 +0200
-Message-ID: <47F08343.20209@viscovery.net>
-References: <32541b130803291535m317e84e6p321ebccd5dedaab3@mail.gmail.com>
+From: Peter Karlsson <peter@softwolves.pp.se>
+Subject: Re: Hand-rolling migration to Git
+Date: Mon, 31 Mar 2008 07:23:27 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <Pine.LNX.4.64.0803310720520.26808@ds9.cixit.se>
+References: <Pine.LNX.4.64.0803251056570.8472@ds9.cixit.se>
+ <200803251114.55673.johan@herland.net>
+ <alpine.LSU.1.00.0803251137580.10660@wbgn129.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 31 08:23:46 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johan Herland <johan@herland.net>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Mar 31 08:24:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JgDQn-000603-S2
-	for gcvg-git-2@gmane.org; Mon, 31 Mar 2008 08:23:46 +0200
+	id 1JgDRO-00067J-Jr
+	for gcvg-git-2@gmane.org; Mon, 31 Mar 2008 08:24:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752409AbYCaGXD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Mar 2008 02:23:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752285AbYCaGXD
-	(ORCPT <rfc822;git-outgoing>); Mon, 31 Mar 2008 02:23:03 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:34449 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751914AbYCaGXC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Mar 2008 02:23:02 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1JgDP8-0000jU-Pd; Mon, 31 Mar 2008 08:22:03 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id DCC716B7; Mon, 31 Mar 2008 08:22:59 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <32541b130803291535m317e84e6p321ebccd5dedaab3@mail.gmail.com>
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1752357AbYCaGXk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Mar 2008 02:23:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752448AbYCaGXk
+	(ORCPT <rfc822;git-outgoing>); Mon, 31 Mar 2008 02:23:40 -0400
+Received: from ds9.cixit.se ([193.15.169.228]:48925 "EHLO ds9.cixit.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752285AbYCaGXk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Mar 2008 02:23:40 -0400
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id m2V6NawE027252
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 31 Mar 2008 08:23:36 +0200
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id m2V6NRkD027242;
+	Mon, 31 Mar 2008 08:23:27 +0200
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+In-Reply-To: <alpine.LSU.1.00.0803251137580.10660@wbgn129.biozentrum.uni-wuerzburg.de>
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (ds9.cixit.se [127.0.0.1]); Mon, 31 Mar 2008 08:23:36 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78560>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78561>
 
-Avery Pennarun schrieb:
-> It's a  pain to check out / mirror / check in / push.  git-submodule
-> doesn't even init automatically when you check out A, so you have to
-> run it yourself.  The relative paths of A, B, and C on your mirror
-> have to be the same as upstream.  You can't make a local mirror of A
-> without mirroring B and C.  B and C start out with a disconnected
-> HEAD, so if you check in, it goes nowhere, and then when you push,
-> nothing happens, and if you're unlucky enough to pull someone else's
-> update to A and then "git-submodule update", it forgets your changes
-> entirely.  When you check in to C, you then have to check in to B, and
-> then to A, all by hand; and when you git-pull, you'd better to C, then
-> B, then A, or risk having A try to check out a revision from B that
-> you haven't pulled, etc.
+Johannes Schindelin:
 
-Would a "recurse" sub-command help your workflow?
+>> Take a look at git-fast-import. It should be relatively easy to write a 
+>> small script that converts from either (1) or (2) to a stream of 
+>> git-fast-import commands.
 
-http://thread.gmane.org/gmane.comp.version-control.git/69834
+> Yeah.  To get inspiration how the scripts should look like, read 
+> contrib/fast-import/import-tars.perl, or look at 
+> http://repo.or.cz/w/fast-export.git
 
--- Hannes
+I've played a bit with git-fast-import, but I sort of failed to get
+something working for PVCS export (see other thread).
+
+The import-tars.perl script, however, was a very good idea. The
+simplest solutions for the multiple-directories source I had was just
+to tar it up and feed through import-tars.perl. After importing it into
+Git and repacking it with a suitably large --window argument, I had a
+Git repository of 64 megabytes, down from the four or so gigabytes of
+uncompressed directories. That did include removing some object files,
+though (but keeping some .exe's).
+
+-- 
+\\// Peter - http://www.softwolves.pp.se/
