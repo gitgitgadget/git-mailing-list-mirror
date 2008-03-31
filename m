@@ -1,79 +1,63 @@
-From: Joey Hess <joey@kitenet.net>
+From: Brandon Casey <casey@nrlssc.navy.mil>
 Subject: Re: [PATCH] git gc --auto: defer on battery
-Date: Mon, 31 Mar 2008 14:08:31 -0400
-Message-ID: <20080331180831.GA14916@kodama.kitenet.net>
-References: <20080330231408.GR11666@genesis> <20080330232612.GA23063@atjola.homenet> <alpine.LFD.1.00.0803301645020.14670@woody.linux-foundation.org>
+Date: Mon, 31 Mar 2008 13:31:54 -0500
+Message-ID: <47F12E1A.1020602@nrlssc.navy.mil>
+References: <20080330231408.GR11666@genesis> <47F11036.1000809@nrlssc.navy.mil> <20080331173801.GD10018@genesis.frugalware.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="OXfL5xGRrasGEqWY"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 31 20:09:23 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Mon Mar 31 20:33:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JgORe-000286-25
-	for gcvg-git-2@gmane.org; Mon, 31 Mar 2008 20:09:22 +0200
+	id 1JgOou-0002RL-JO
+	for gcvg-git-2@gmane.org; Mon, 31 Mar 2008 20:33:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754111AbYCaSIh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Mar 2008 14:08:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753968AbYCaSIh
-	(ORCPT <rfc822;git-outgoing>); Mon, 31 Mar 2008 14:08:37 -0400
-Received: from wren.kitenet.net ([80.68.85.49]:55577 "EHLO kitenet.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753413AbYCaSIg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Mar 2008 14:08:36 -0400
-Received: from kodama.kitenet.net (66-168-92-132.dhcp.kgpt.tn.charter.com [66.168.92.132])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "Joey Hess", Issuer "Joey Hess" (verified OK))
-	by kitenet.net (Postfix) with ESMTPS id 7040B314344
-	for <git@vger.kernel.org>; Mon, 31 Mar 2008 14:08:33 -0400 (EDT)
-Received: by kodama.kitenet.net (Postfix, from userid 1000)
-	id E34F0114112; Mon, 31 Mar 2008 14:08:31 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.1.00.0803301645020.14670@woody.linux-foundation.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-X-Virus-Scanned: ClamAV 0.92.1/6505/Mon Mar 31 13:27:16 2008 on wren.kitenet.net
-X-Virus-Status: Clean
+	id S1754568AbYCaScp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Mar 2008 14:32:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754416AbYCaSco
+	(ORCPT <rfc822;git-outgoing>); Mon, 31 Mar 2008 14:32:44 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:55397 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754551AbYCaSco (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Mar 2008 14:32:44 -0400
+Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
+	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id m2VIVtRM017834;
+	Mon, 31 Mar 2008 13:31:55 -0500
+Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 31 Mar 2008 13:31:55 -0500
+User-Agent: Thunderbird 2.0.0.9 (X11/20071031)
+In-Reply-To: <20080331173801.GD10018@genesis.frugalware.org>
+X-OriginalArrivalTime: 31 Mar 2008 18:31:55.0143 (UTC) FILETIME=[7EF73170:01C8935D]
+X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-5.0.0.1023-15820001
+X-TM-AS-Result: : Yes--11.503000-0-31-1
+X-TM-AS-Category-Info: : 31:0.000000
+X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNTY3LTE1MDY3My03MDAw?=
+	=?us-ascii?B?NzUtMTM5MDEwLTcwMDE2MC03MDM3ODgtNzAwNzU2LTcwNDQyNS03?=
+	=?us-ascii?B?MDc3ODgtNzAwMTk0LTcwNTEwMi03MDkxODUtNzAxMjk4LTE0ODAz?=
+	=?us-ascii?B?OS0xNDgwNTEtMjAwNDI=?=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78595>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78596>
 
+Miklos Vajna wrote:
+> On Mon, Mar 31, 2008 at 11:24:22AM -0500, Brandon Casey <casey@nrlssc.navy.mil> wrote:
+>> Miklos Vajna wrote:
+>>> This patch modifies git gc --auto so that it will not always repack when
+>>> a user is on battery.
+>>>
+>>> It introduces the new gc.deferonbattery configuration variable,
+>> Shouldn't the config option have 'auto' in the name? Or in some way convey
+>> that this is _only_ about deferring automatic gc'ing?
+> 
+> That makes sense. Though this patch isn't OK, see my other patch series
+> in this thread (the pre-auto-gc hook has no config name).
 
---OXfL5xGRrasGEqWY
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Ah, yes I didn't look closely at the revised series.
 
-Linus Torvalds wrote:
-> I would *seriously* suggest making this soem kind of generic callback and=
-=20
-> not Linux-specific.=20
->=20
-> How about making it more akin to a pre-auto-gc "hook" - run a script=20
-> instead of hardcoding something like this!
-
-FWIW, Debian (and I assume Ubuntu also) systems have a on_ac_power
-script that exits 0 or 1 accordingly. It would be a good thing to point
-the hook at, or even a good reference when writing your own version of
-the hook since it also supports /proc/pmu and apm.
-
---=20
-see shy jo
-
---OXfL5xGRrasGEqWY
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFH8Sifd8HHehbQuO8RAnwCAKDHhSB+1jtJpmZLh8DjuQc+Bom+mACeJZeQ
-K/RroTtvsgEUm03tNCq+3fs=
-=pd70
------END PGP SIGNATURE-----
-
---OXfL5xGRrasGEqWY--
+-brandon
