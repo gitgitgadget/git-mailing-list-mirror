@@ -1,142 +1,102 @@
-From: Adam Simpkins <adam@adamsimpkins.net>
-Subject: Re: [PATCH] Add new git-graph command
-Date: Mon, 31 Mar 2008 00:09:05 -0700
-Message-ID: <20080331070904.GA19242@adamsimpkins.net>
-References: <20080330195840.GA8695@adamsimpkins.net> <7vprtbwz5v.fsf@gitster.siamese.dyndns.org>
-Reply-To: Adam Simpkins <adam@adamsimpkins.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 31 09:10:08 2008
+From: Johannes Sixt <johannes.sixt@telecom.at>
+Subject: [PATCH] filter-branch: Test renaming directories in a tree-filter
+Date: Mon, 31 Mar 2008 09:14:14 +0200
+Message-ID: <1206947655-20272-1-git-send-email-johannes.sixt@telecom.at>
+References: <C46D6D0D-44E1-4976-8956-1D84B6351535@yahoo.ca>
+Cc: Junio C Hamano <gitster@pobox.com>, Git <git@vger.kernel.org>,
+	Johannes Sixt <johannes.sixt@telecom.at>
+To: =?utf-8?q?Jean-Fran=C3=A7ois=20Veillette?= 
+	<jean_francois_veillette@yahoo.ca>
+X-From: git-owner@vger.kernel.org Mon Mar 31 09:40:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JgE9g-0006Rj-Bd
-	for gcvg-git-2@gmane.org; Mon, 31 Mar 2008 09:10:08 +0200
+	id 1JgEcw-0003tH-03
+	for gcvg-git-2@gmane.org; Mon, 31 Mar 2008 09:40:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752783AbYCaHJL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Mar 2008 03:09:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752556AbYCaHJJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 31 Mar 2008 03:09:09 -0400
-Received: from smtp192.iad.emailsrvr.com ([207.97.245.192]:38246 "EHLO
-	smtp192.iad.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751480AbYCaHJJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Mar 2008 03:09:09 -0400
-Received: from relay9.relay.iad.mlsrvr.com (localhost [127.0.0.1])
-	by relay9.relay.iad.mlsrvr.com (SMTP Server) with ESMTP id 39F831B4058;
-	Mon, 31 Mar 2008 03:09:07 -0400 (EDT)
-Received: by relay9.relay.iad.mlsrvr.com (Authenticated sender: simpkins-AT-adamsimpkins.net) with ESMTP id EBC531B404A;
-	Mon, 31 Mar 2008 03:09:06 -0400 (EDT)
-Received: by sleipnir.adamsimpkins.net (Postfix, from userid 1000)
-	id 884B514100B8; Mon, 31 Mar 2008 00:09:05 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7vprtbwz5v.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1753476AbYCaHj2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Mar 2008 03:39:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753310AbYCaHj2
+	(ORCPT <rfc822;git-outgoing>); Mon, 31 Mar 2008 03:39:28 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:7328 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752832AbYCaHj2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Mar 2008 03:39:28 -0400
+X-Greylist: delayed 1508 seconds by postgrey-1.27 at vger.kernel.org; Mon, 31 Mar 2008 03:39:27 EDT
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@eudaptics.com>)
+	id 1JgECl-0007D4-0x; Mon, 31 Mar 2008 09:13:20 +0200
+Received: from srv.linz.viscovery (srv.linz.viscovery [192.168.1.4])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 153E16B7; Mon, 31 Mar 2008 09:14:16 +0200 (CEST)
+Received: by srv.linz.viscovery (Postfix, from userid 1000)
+	id D1FAAFA46; Mon, 31 Mar 2008 09:14:15 +0200 (CEST)
+X-Mailer: git-send-email 1.5.4.4
+In-Reply-To: <C46D6D0D-44E1-4976-8956-1D84B6351535@yahoo.ca>
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78564>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78565>
 
-On Sun, Mar 30, 2008 at 04:49:16PM -0700, Junio C Hamano wrote:
-> What's wrong with "tig -g", I have to wonder...
+This test currently fails.
 
-As I mentioned in my initial email, I tried using the graph in tig,
-but I found it very hard to read.  However, going back and taking a
-closer look at tig, I think its graph is just plain wrong in some
-cases.
+If b is a directory then 'mv a b' is not a plain "rename", but really a
+"move", so we must also test that the directory does not exist with the
+old name in the directory with the new name.
 
-For example, here's a comparison of the first several lines of output
-of "git-graph --date-order --all" and "tig -- --all" in my repository
-for one of the projects I am working on.  I've replaced the commit
-subjects with just the abbreviated hashes.  (Hopefully your mail
-reader displays this with a monospace font.)
+There's also some cleanup in the corresponding "rename file" test to avoid
+spurious shell syntax errors and "ambigous ref" error from 'git show' (but
+these should show up only if the test would fail anyway). Plus we also
+test for the non-existence of the old file.
 
-git-graph:
+Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
+---
+ t/t7003-filter-branch.sh |   20 ++++++++++++++++++--
+ 1 files changed, 18 insertions(+), 2 deletions(-)
 
-*   8076867
-*   2613e2b
-M    542f526
-|\  
-* |   642b381
-| | *   e73dfa2
-| \ \ 
-|  \ \ 
-M-. \ \   64e1d85
-|\ \ \ \ 
-| | * | |   836521f
-| | | | | *   ce43181
-| | | | | *   eaeeb08
-| | | | | M    79d3db3
-| | | | | |\  
-| | | | | | *   da5bc9e
-| * | | | | |   b947aab
-| | | | | M  \   9ade1bc
-| | | | | |\  | 
-| | | | * | | |   8f3727b
-| | | | * | | |   2d102cd
-* | | | | | | |   bf5c6e3
-| |/ / / / / / 
-|/| / / / / / 
-* | | | | | |   a570370
-|/ / / / / / 
-* | | | | |   dde9a00
-| | | | | *   09048ce
-| | | | |/ 
-| | | | *   4ee2351
-
-
-
-tig (version 0.10.git):
-
-+ 8076867
-* 2613e2b
-M 542f526
-* | 642b381
-| | + e73dfa2
-M |  \ \ 64e1d85
-|`.`* | | 836521f
-| | | | | + ce43181
-| | | | | * eaeeb08
-| | | | | M 79d3db3
-| | | | | |`* da5bc9e
-| * | | | | | b947aab
-| | | | | M  \ 9ade1bc
-| | | | * |`.`. 8f3727b
-| | | | * | | | 2d102cd
-* | | | | | | | bf5c6e3
-*' / / / / / / a570370
-*' / / / / / dde9a00
-| | | | | * 09048ce
-| | | | *' 4ee2351
-
-
-Looking at the tig output, it seems like tig is definitely screwing up
-around the 3-way merge at 64e1d85.  The way I read the output, it
-looks like it is telling me that commit 836521f is a parent of
-542f526, which is incorrect.
-
-It also doesn't seem to display things correctly when branch lines
-need to cross.  For example, 836521f is a child of a570370, and
-b947aab is a child of dde9a00.  However, the way I read tig's graph,
-it looks like it is telling me exactly the opposite--that 836521f is a
-child of dde9a00 and b947aab is a child of a570370.
-
-I think part of the problem is that tig displays exactly 1 commit per
-line.  It's hard to represent octopus merges and crossing branches if
-it all has to fit in 1 line.  This is why git-graph sometimes takes
-extra lines in between commits to display where the branch lines are
-going.
-
-The git-forest command that Matthieu Moy pointed out also seems to do
-a good job of representing the graph, while being a bit more compact
-than git-graph when displaying crossing branches.  (I just joined the
-list in the last couple of days, so I wasn't aware of git-forest.  I
-did try googling for similar tools before I started, but only came up
-with tig.)
-
+diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
+index 6827249..53b5ce6 100755
+--- a/t/t7003-filter-branch.sh
++++ b/t/t7003-filter-branch.sh
+@@ -17,6 +17,8 @@ test_expect_success 'setup' '
+ 	make_commit B
+ 	git checkout -b branch B
+ 	make_commit D
++	mkdir dir
++	make_commit dir/D
+ 	make_commit E
+ 	git checkout master
+ 	make_commit C
+@@ -41,9 +43,23 @@ test_expect_success 'rewrite, renaming a specific file' '
+ '
+ 
+ test_expect_success 'test that the file was renamed' '
+-	test d = $(git show HEAD:doh) &&
++	test d = "$(git show HEAD:doh --)" &&
++	! test -f d &&
+ 	test -f doh &&
+-	test d = $(cat doh)
++	test d = "$(cat doh)"
++'
++
++test_expect_success 'rewrite, renaming a specific directory' '
++	git-filter-branch -f --tree-filter "mv dir diroh || :" HEAD
++'
++
++test_expect_failure 'test that the directory was renamed' '
++	test dir/d = "$(git show HEAD:diroh/d --)" &&
++	! test -d dir &&
++	test -d diroh &&
++	! test -d diroh/dir &&
++	test -f diroh/d &&
++	test dir/d = "$(cat diroh/d)"
+ '
+ 
+ git tag oldD HEAD~4
 -- 
-Adam Simpkins
-adam@adamsimpkins.net
+1.5.4.4
