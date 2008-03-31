@@ -1,56 +1,49 @@
-From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: Re: [PATCH 4/4] templates: add an example pre-auto-gc hook
-Date: Mon, 31 Mar 2008 14:30:35 -0400
-Message-ID: <E75A6ACE-8EF2-4B12-B591-35C9092FCD9A@silverinsanity.com>
-References: <283c63fb960d36a322b45fac97804af18a9e5abe.1206929014.git.vmiklos@frugalware.org>
-Mime-Version: 1.0 (Apple Message framework v919.2)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Bj?rn Steinbrink <B.Steinbrink@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Mon Mar 31 20:55:26 2008
+From: Asheesh Laroia <asheesh@asheesh.org>
+Subject: git submodule remove?
+Date: Mon, 31 Mar 2008 11:58:19 -0700 (PDT)
+Message-ID: <alpine.DEB.1.10.0803311145250.5920@sf.creativecommons.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 31 20:59:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JgPAD-0002E2-AH
-	for gcvg-git-2@gmane.org; Mon, 31 Mar 2008 20:55:25 +0200
+	id 1JgPDn-0003eU-95
+	for gcvg-git-2@gmane.org; Mon, 31 Mar 2008 20:59:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753735AbYCaSym (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Mar 2008 14:54:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753515AbYCaSym
-	(ORCPT <rfc822;git-outgoing>); Mon, 31 Mar 2008 14:54:42 -0400
-Received: from vs072.rosehosting.com ([216.114.78.72]:54358 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751258AbYCaSyl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Mar 2008 14:54:41 -0400
-X-Greylist: delayed 1439 seconds by postgrey-1.27 at vger.kernel.org; Mon, 31 Mar 2008 14:54:41 EDT
-Received: from [192.168.1.2] (cpe-69-205-115-17.rochester.res.rr.com [69.205.115.17])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTP id 442791FFC01E;
-	Mon, 31 Mar 2008 18:30:41 +0000 (UTC)
-In-Reply-To: <283c63fb960d36a322b45fac97804af18a9e5abe.1206929014.git.vmiklos@frugalware.org>
-X-Mailer: Apple Mail (2.919.2)
+	id S1754699AbYCaS6Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Mar 2008 14:58:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754359AbYCaS6Y
+	(ORCPT <rfc822;git-outgoing>); Mon, 31 Mar 2008 14:58:24 -0400
+Received: from wide-rose.makesad.us ([203.178.130.147]:57712 "EHLO
+	rose.makesad.us" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754126AbYCaS6Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Mar 2008 14:58:24 -0400
+Received: from sf.creativecommons.org (localhost [127.0.0.1])
+	by rose.makesad.us (Postfix) with ESMTP id 9657CA0096
+	for <git@vger.kernel.org>; Mon, 31 Mar 2008 14:58:22 -0400 (EDT)
+Received: from localhost (localhost [127.0.0.1])
+	by sf.creativecommons.org (Postfix) with ESMTPS id 11454144C435
+	for <git@vger.kernel.org>; Mon, 31 Mar 2008 11:58:20 -0700 (PDT)
+X-X-Sender: paulproteus@sf.creativecommons.org
+User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78598>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78599>
 
+I notice that in git-submodule, there is an "add", a "status", an 
+"init", and an "update" command, but no "remove" command.
 
-On Mar 31, 2008, at 5:37 AM, Miklos Vajna wrote:
+I have "git version 1.5.4.4", and man git-submodule provides no mention of 
+the right way to remove a submodule.  I imagine that removing it from 
+.gitmodules and rm -rf'ing the tree that git-submodule cloned should do 
+the trick. Is this documented somewhere?
 
-> +# An example hook script to verify if you are on battery.  Called by
-> +# git-gc --auto with no arguments.  The hook should exit with non- 
-> zero
-> +# status after issuing an appropriate message if it wants to stop the
-> +# auto repacking.
-> +#
-> +# To enable this hook, make this file executable.
+-- Asheesh.
 
-You probably want to mention that this example hook is Linux-specific.
-
-~~ Brian G.
+-- 
+Editing is a rewording activity.
