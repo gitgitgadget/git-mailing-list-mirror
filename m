@@ -1,63 +1,99 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: [PATCH] git gc --auto: defer on battery
-Date: Mon, 31 Mar 2008 13:31:54 -0500
-Message-ID: <47F12E1A.1020602@nrlssc.navy.mil>
-References: <20080330231408.GR11666@genesis> <47F11036.1000809@nrlssc.navy.mil> <20080331173801.GD10018@genesis.frugalware.org>
+From: Adam Simpkins <adam@adamsimpkins.net>
+Subject: Re: [PATCH] Add new git-graph command
+Date: Mon, 31 Mar 2008 11:47:38 -0700
+Message-ID: <20080331184737.GA28412@adamsimpkins.net>
+References: <20080330195840.GA8695@adamsimpkins.net> <200803312017.28354.tlikonen@iki.fi>
+Reply-To: Adam Simpkins <adam@adamsimpkins.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Mon Mar 31 20:33:25 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Teemu Likonen <tlikonen@iki.fi>
+X-From: git-owner@vger.kernel.org Mon Mar 31 20:48:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JgOou-0002RL-JO
-	for gcvg-git-2@gmane.org; Mon, 31 Mar 2008 20:33:25 +0200
+	id 1JgP3f-0007qu-7R
+	for gcvg-git-2@gmane.org; Mon, 31 Mar 2008 20:48:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754568AbYCaScp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Mar 2008 14:32:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754416AbYCaSco
-	(ORCPT <rfc822;git-outgoing>); Mon, 31 Mar 2008 14:32:44 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:55397 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754551AbYCaSco (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Mar 2008 14:32:44 -0400
-Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
-	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id m2VIVtRM017834;
-	Mon, 31 Mar 2008 13:31:55 -0500
-Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 31 Mar 2008 13:31:55 -0500
-User-Agent: Thunderbird 2.0.0.9 (X11/20071031)
-In-Reply-To: <20080331173801.GD10018@genesis.frugalware.org>
-X-OriginalArrivalTime: 31 Mar 2008 18:31:55.0143 (UTC) FILETIME=[7EF73170:01C8935D]
-X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-5.0.0.1023-15820001
-X-TM-AS-Result: : Yes--11.503000-0-31-1
-X-TM-AS-Category-Info: : 31:0.000000
-X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNTY3LTE1MDY3My03MDAw?=
-	=?us-ascii?B?NzUtMTM5MDEwLTcwMDE2MC03MDM3ODgtNzAwNzU2LTcwNDQyNS03?=
-	=?us-ascii?B?MDc3ODgtNzAwMTk0LTcwNTEwMi03MDkxODUtNzAxMjk4LTE0ODAz?=
-	=?us-ascii?B?OS0xNDgwNTEtMjAwNDI=?=
+	id S1757502AbYCaSrx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Mar 2008 14:47:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757463AbYCaSrw
+	(ORCPT <rfc822;git-outgoing>); Mon, 31 Mar 2008 14:47:52 -0400
+Received: from smtp182.iad.emailsrvr.com ([207.97.245.182]:35449 "EHLO
+	smtp182.iad.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757305AbYCaSrv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Mar 2008 14:47:51 -0400
+Received: from relay8.relay.iad.mlsrvr.com (localhost [127.0.0.1])
+	by relay8.relay.iad.mlsrvr.com (SMTP Server) with ESMTP id 2BC641B5A5C;
+	Mon, 31 Mar 2008 14:47:45 -0400 (EDT)
+Received: by relay8.relay.iad.mlsrvr.com (Authenticated sender: simpkins-AT-adamsimpkins.net) with ESMTP id C64711B5A4E;
+	Mon, 31 Mar 2008 14:47:44 -0400 (EDT)
+Received: by sleipnir.adamsimpkins.net (Postfix, from userid 1000)
+	id 560DC14100B8; Mon, 31 Mar 2008 11:47:38 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <200803312017.28354.tlikonen@iki.fi>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78596>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78597>
 
-Miklos Vajna wrote:
-> On Mon, Mar 31, 2008 at 11:24:22AM -0500, Brandon Casey <casey@nrlssc.navy.mil> wrote:
->> Miklos Vajna wrote:
->>> This patch modifies git gc --auto so that it will not always repack when
->>> a user is on battery.
->>>
->>> It introduces the new gc.deferonbattery configuration variable,
->> Shouldn't the config option have 'auto' in the name? Or in some way convey
->> that this is _only_ about deferring automatic gc'ing?
+On Mon, Mar 31, 2008 at 08:17:28PM +0300, Teemu Likonen wrote:
+> Adam Simpkins kirjoitti:
 > 
-> That makes sense. Though this patch isn't OK, see my other patch series
-> in this thread (the pre-auto-gc hook has no config name).
+> > Ultimately, it would probably be better to integrate this
+> > functionality into git-log, instead of having it as a standalone
+> > command.  For example, a new --graph option could be added to cause
+> > the graph to be displayed alongside the existing git log output.
+> > However, this would require tighter integration between the graphing
+> > code and the log_tree.c and pretty.c code, which I'm not all that
+> > familiar with.
+> 
+> I just want to say that I really like your 'git graph'. I would like to 
+> see it integrated to 'git log', perhaps as 'git log --pretty=graph' 
+> or 'git log --graph'.
 
-Ah, yes I didn't look closely at the revised series.
+Thanks!
 
--brandon
+I was thinking more about how to add it to 'git log', and it might not
+be all that difficult.  Instead of providing the graphing
+functionality as a standalone command, it could be wrapped up in the
+following API:
+
+  struct graph;
+  void graph_update(struct graph *graph, struct commit *commit);
+  void graph_next_line(struct graph *graph, struct strbuf *sb);
+  bool graph_is_commit_finished(struct graph *graph);
+
+While walking through the commit list, graph_update() should be called
+once for each commit.  After graph_update() has been called,
+graph_next_line() can then be called to format the next line of the
+graph into the strbuf.  It should be called multiple times, until
+graph_is_commit_finished() returns true.  Then graph_update() can be
+called with the next commit.
+
+If graph_next_line() is called when graph_is_commit_finished()
+returns, it would simply format straight lines for each column.  For
+example, if there were currently 3 columns, it would format "| | |".
+This allows graph_next_line() to be used to vertically pad the graph.
+
+This API would allow the 'git log' code to format each line of the
+graph into a strbuf, and print it out in front of each line of normal
+log output.  This way, it could work even with something like
+"git log --graph --pretty=full".  The graph would be prefixed to the
+normal output, and padded vertically for as long as necessary.
+
+I'm just not sure how difficult it will be to change the log-tree.c
+code to invoke graph_next_line() before each individual line of
+output.  It certainly shouldn't be that difficult just to implement
+'git log --pretty=graph', but it may be more complicated if we want to
+make the graphing be a boolean option that can be enabled with any
+--pretty format.
+
+I might try coding it up next weekend.
+
+-- 
+Adam Simpkins
+adam@adamsimpkins.net
