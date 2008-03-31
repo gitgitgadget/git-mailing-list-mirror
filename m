@@ -1,84 +1,60 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [EGIT PATCH 1/4] Change history page table to SWT.VIRTUAL.
-Date: Mon, 31 Mar 2008 01:34:30 -0400
-Message-ID: <20080331053430.GJ10274@spearce.org>
-References: <1206890314-3712-1-git-send-email-rogersoares@intelinet.com.br>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: Truncating and cleaning a imported git repositary to make it
+ more usable
+Date: Mon, 31 Mar 2008 08:17:38 +0200
+Message-ID: <47F08202.9030206@viscovery.net>
+References: <1206707716.9819.15.camel@malory>	 <32541b130803280550u2ed23b5auc84bf935d5344e84@mail.gmail.com>	 <b2cdc9f30803280852y4f160bb2tda1e688ddf7213e7@mail.gmail.com>	 <b2cdc9f30803280903w4a6e3a6l9e33fd188af9995a@mail.gmail.com>	 <47ED204E.3020602@viscovery.net> <b2cdc9f30803290647n31bd6db5r4f346360989c2dcd@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, robin.rosenberg@dewire.com
-To: "Roger C. Soares" <rogersoares@intelinet.com.br>
-X-From: git-owner@vger.kernel.org Mon Mar 31 07:35:32 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Avery Pennarun <apenwarr@gmail.com>, git@vger.kernel.org
+To: Alex Bennee <kernel-hacker@bennee.com>
+X-From: git-owner@vger.kernel.org Mon Mar 31 08:18:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JgCg6-0005QS-Ev
-	for gcvg-git-2@gmane.org; Mon, 31 Mar 2008 07:35:30 +0200
+	id 1JgDLd-00053w-Fd
+	for gcvg-git-2@gmane.org; Mon, 31 Mar 2008 08:18:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751998AbYCaFeg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Mar 2008 01:34:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751934AbYCaFeg
-	(ORCPT <rfc822;git-outgoing>); Mon, 31 Mar 2008 01:34:36 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:56600 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751756AbYCaFeg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Mar 2008 01:34:36 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1JgCf9-00059L-Uq; Mon, 31 Mar 2008 01:34:32 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 644C620FBAE; Mon, 31 Mar 2008 01:34:30 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <1206890314-3712-1-git-send-email-rogersoares@intelinet.com.br>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1752174AbYCaGRm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Mar 2008 02:17:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752131AbYCaGRm
+	(ORCPT <rfc822;git-outgoing>); Mon, 31 Mar 2008 02:17:42 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:33922 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752049AbYCaGRl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Mar 2008 02:17:41 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1JgDJx-0000X5-B1; Mon, 31 Mar 2008 08:16:41 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 55FB66B7; Mon, 31 Mar 2008 08:17:38 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <b2cdc9f30803290647n31bd6db5r4f346360989c2dcd@mail.gmail.com>
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78557>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78558>
 
-"Roger C. Soares" <rogersoares@intelinet.com.br> wrote:
-> It makes the history page show about the same speed as gitk on my
-> eclipse.
-> 
-> From the eclipse API:
-> 
-> "Style VIRTUAL is used to create a Table whose TableItems are to be
-> populated by the client on an on-demand basis instead of up-front.
-> This can provide significant performance improvements for tables
-> that are very large or for which TableItem population is expensive
-> (for example, retrieving values from an external source)."
+Alex Bennee schrieb:
+> Hmm thats odd. Despite having successfully run the filter my repo is
+> still the same size. git-fsck --full shows loads of dangling commits
+> but I'm guessing because the repo is packed they don't get dropped. Is
+> it possible to repack the whole repo or do you have to manually unpack
+> the packs and re-pack?
 
-Yea, I originally wrote my series around the VIRTUAL flag but on
-Win32 it caused ArrayIndexOutOfBoundsExceptions to be thrown from
-deep down within the Win32 implementation of the SWT Table widget.
+Yes. Run git repack -a -d -f or create a local clone using the file protocol:
 
-Appears to be something of a known bug, based on the Eclipse issue
-tracker, but not much work happening to fix it.
+   git clone file://$(pwd)/this that
 
-I'll retest this tomorrow on Win32, but I'm pretty certain its
-a bad idea on that platform.  What are you running on, Linux?
-Maybe we can set this flag everywhere except on Win32.
- 
-> diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/history/CommitGraphTable.java b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/history/CommitGraphTable.java
-> index fffe7e0..6559d64 100644
-> --- a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/history/CommitGraphTable.java
-> +++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/history/CommitGraphTable.java
-> @@ -88,7 +88,7 @@ class CommitGraphTable {
->  		hFont = highlightFont();
->  
->  		final Table rawTable = new Table(parent, SWT.MULTI | SWT.H_SCROLL
-> -				| SWT.V_SCROLL | SWT.BORDER | SWT.FULL_SELECTION);
-> +				| SWT.V_SCROLL | SWT.BORDER | SWT.FULL_SELECTION | SWT.VIRTUAL);
->  		rawTable.setHeaderVisible(true);
->  		rawTable.setLinesVisible(false);
->  		rawTable.setFont(nFont);
+(If you don't use the file protocol, git clone just hard-links the
+repository, and you again don't get the reduced size.)
 
--- 
-Shawn.
+-- Hannes
