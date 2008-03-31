@@ -1,61 +1,89 @@
-From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
-Subject: [BUG] aliases not working outside of a working copy
-Date: Mon, 31 Mar 2008 17:19:10 +0200
-Message-ID: <8aa486160803310819r3a905bbeg5f993a55aaf6efbf@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [BUG] aliases not working outside of a working copy
+Date: Mon, 31 Mar 2008 17:46:04 +0200 (CEST)
+Message-ID: <alpine.LSU.1.00.0803311745170.18259@racer.site>
+References: <8aa486160803310819r3a905bbeg5f993a55aaf6efbf@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Mar 31 17:20:29 2008
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323584-1489964442-1206978365=:18259"
+Cc: Git Mailing List <git@vger.kernel.org>
+To: =?ISO-8859-15?Q?Santi_B=E9jar?= <sbejar@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 31 17:47:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JgLo7-0005nm-7p
-	for gcvg-git-2@gmane.org; Mon, 31 Mar 2008 17:20:23 +0200
+	id 1JgMDh-0007EC-Ed
+	for gcvg-git-2@gmane.org; Mon, 31 Mar 2008 17:46:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752018AbYCaPTQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Mar 2008 11:19:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752884AbYCaPTQ
-	(ORCPT <rfc822;git-outgoing>); Mon, 31 Mar 2008 11:19:16 -0400
-Received: from gv-out-0910.google.com ([216.239.58.188]:39996 "EHLO
-	gv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751670AbYCaPTP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Mar 2008 11:19:15 -0400
-Received: by gv-out-0910.google.com with SMTP id s4so142091gve.37
-        for <git@vger.kernel.org>; Mon, 31 Mar 2008 08:19:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=0Z4XnTYtQ8VgkAdPefmkPiCZUnrwRV80po7CH4WFNUg=;
-        b=aGas4PiqSjJ4S0IR7LQSVlRH9mG4QOOjf5X6Gc7DrP2LqcyC4ON2NQMQEVOcU5OtjCvpmNfACPzcGtApIAeNJPFZgLAHey7I6wZX1fteyJm/zikD8Srh05wUVfX/KXMD5ZSIUwwU/G5sTrdsnIFkQZB4eMrzHpoeft5BTzJRVfI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=SuL0Xupsi2EBu19gRlGaUf6TE0pU/SZIbCuUg5gZZfFnKRKQXG8NbsoJyGt/tiM1mHgq3z0gWyz2gcQ14n2TroLvB60dlWAkp1FStBV1Jz2C31RtFFWmq6tMehuRDCaid19xPdR8VdHeoD0+2bf1nklSp7hxa8/dyH1fyWkJ9k8=
-Received: by 10.150.150.3 with SMTP id x3mr3417644ybd.93.1206976751007;
-        Mon, 31 Mar 2008 08:19:11 -0700 (PDT)
-Received: by 10.151.14.14 with HTTP; Mon, 31 Mar 2008 08:19:10 -0700 (PDT)
-Content-Disposition: inline
+	id S1753175AbYCaPqH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Mar 2008 11:46:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753082AbYCaPqG
+	(ORCPT <rfc822;git-outgoing>); Mon, 31 Mar 2008 11:46:06 -0400
+Received: from mail.gmx.net ([213.165.64.20]:46449 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752743AbYCaPqF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Mar 2008 11:46:05 -0400
+Received: (qmail invoked by alias); 31 Mar 2008 15:46:03 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp028) with SMTP; 31 Mar 2008 17:46:03 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+MnWVHlpiMjWBxRdEgNoO0SSm1g+21miZtf9WUNV
+	o9FJLIEHu1yAtB
+X-X-Sender: gene099@racer.site
+In-Reply-To: <8aa486160803310819r3a905bbeg5f993a55aaf6efbf@mail.gmail.com>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78586>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78587>
 
-Hi *,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-  I use the following alias:
+--8323584-1489964442-1206978365=:18259
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Content-Transfer-Encoding: 8BIT
 
-[alias]
-        wdiff = diff --color-words
+Hi,
 
-and it no longer works outside of a working copy since:
+On Mon, 31 Mar 2008, Santi Béjar wrote:
 
-af05d67 (Always set *nongit_ok in setup_git_directory_gently())
+> af05d67 (Always set *nongit_ok in setup_git_directory_gently())
+> 
+> The problem is with the alias system that detects if you are in a
+> working copy, not with the command, as the
+> command just works fine.
 
-The problem is with the alias system that detects if you are in a
-working copy, not with the command, as the
-command just works fine.
+Ah, right.  I think that this hunk:
 
-Santi
+diff --git a/git.c b/git.c
+index 13de801..b7729d7 100644
+--- a/git.c
++++ b/git.c
+@@ -142,14 +142,14 @@ static int split_cmdline(char *cmdline, const char ***arg
+
+ static int handle_alias(int *argcp, const char ***argv)
+ {
+-       int nongit = 0, envchanged = 0, ret = 0, saved_errno = errno;
++       int envchanged = 0, ret = 0, saved_errno = errno;
+        const char *subdir;
+        int count, option_count;
+        const char** new_argv;
+        const char *alias_command;
+        char *alias_string;
+
+-       subdir = setup_git_directory_gently(&nongit);
++       subdir = setup_git_directory_gently(NULL);
+
+        alias_command = (*argv)[0];
+        alias_string = alias_lookup(alias_command);
+
+
+of the commit you mentioned is utterly wrong.
+
+Ciao,
+Dscho
+
+--8323584-1489964442-1206978365=:18259--
