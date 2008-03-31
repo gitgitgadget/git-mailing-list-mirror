@@ -1,93 +1,70 @@
-From: Rogan Dawes <lists@dawes.za.net>
-Subject: Re: git-archive loses path info when opened with Winzip?
-Date: Mon, 31 Mar 2008 22:09:13 +0200
-Message-ID: <47F144E9.2040709@dawes.za.net>
-References: <47F0D215.1060700@dawes.za.net> <47F13FCE.1010502@lsrfire.ath.cx>
+From: Sven Marnach <sven.marnach@ipvs.uni-stuttgart.de>
+Subject: [PATCH] gitk: pretty print tag objects
+Date: Mon, 31 Mar 2008 22:29:29 +0200
+Message-ID: <20080331202929.GA4094@pantoffel-wg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Mon Mar 31 22:12:00 2008
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 31 22:30:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JgQM1-0004ab-Ix
-	for gcvg-git-2@gmane.org; Mon, 31 Mar 2008 22:11:42 +0200
+	id 1JgQeW-0003LK-EG
+	for gcvg-git-2@gmane.org; Mon, 31 Mar 2008 22:30:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751787AbYCaUK6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 31 Mar 2008 16:10:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752346AbYCaUK6
-	(ORCPT <rfc822;git-outgoing>); Mon, 31 Mar 2008 16:10:58 -0400
-Received: from sd-green-bigip-145.dreamhost.com ([208.97.132.145]:60398 "EHLO
-	spunkymail-a20.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1751682AbYCaUK5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 31 Mar 2008 16:10:57 -0400
-Received: from [192.168.201.100] (dsl-243-66-181.telkomadsl.co.za [41.243.66.181])
-	by spunkymail-a20.g.dreamhost.com (Postfix) with ESMTP id 46A85E251F;
-	Mon, 31 Mar 2008 13:10:52 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.12 (Windows/20080213)
-In-Reply-To: <47F13FCE.1010502@lsrfire.ath.cx>
+	id S1757893AbYCaU3h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Mar 2008 16:29:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755256AbYCaU3g
+	(ORCPT <rfc822;git-outgoing>); Mon, 31 Mar 2008 16:29:36 -0400
+Received: from relay.uni-heidelberg.de ([129.206.100.212]:37183 "EHLO
+	relay.uni-heidelberg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756871AbYCaU3f (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Mar 2008 16:29:35 -0400
+Received: from ix.urz.uni-heidelberg.de (cyrus1.urz.uni-heidelberg.de [129.206.119.235])
+	by relay.uni-heidelberg.de (8.14.1/8.14.1) with ESMTP id m2VKTUHP015844
+	for <git@vger.kernel.org>; Mon, 31 Mar 2008 22:29:30 +0200
+Received: from extmail.urz.uni-heidelberg.de (extmail.urz.uni-heidelberg.de [129.206.100.140])
+	by ix.urz.uni-heidelberg.de (8.8.8/8.8.8) with ESMTP id WAA21758068
+	for <git@vger.kernel.org>; Mon, 31 Mar 2008 22:29:31 +0200
+Received: from bagheera.suspekt (dslb-084-056-235-054.pools.arcor-ip.net [84.56.235.54])
+	(authenticated bits=0)
+	by extmail.urz.uni-heidelberg.de (8.13.4/8.13.1) with ESMTP id m2VKTH3b025212
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO)
+	for <git@vger.kernel.org>; Mon, 31 Mar 2008 22:29:19 +0200
+Received: from sven by bagheera.suspekt with local (Exim 4.69)
+	(envelope-from <sven@pantoffel-wg.de>)
+	id 1JgQdF-00028x-EW
+	for git@vger.kernel.org; Mon, 31 Mar 2008 22:29:29 +0200
+Content-Disposition: inline
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78601>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78602>
 
-Ren=E9 Scharfe wrote:
-> Rogan Dawes schrieb:
->> Hi folks,
->>
->> I have noticed something strange with "git-archive"-created tarballs=
-=2E It
->> seems that Winzip has trouble parsing the paths for certain files
->> correctly.
->>
->> The symptom is that Winzip shows some files as having been created a=
-t
->> the "top level" of the zip, without any path at all, while the rest =
-of
->> the files are within their correct directory structure.
->>
->> I have attached a screenshot of a gitweb-created snapshot opened in
->> Winzip 9.0 SR1 (build 6224), but it apparently happens in other (mor=
-e
->> recent) versions of Winzip as well.
->=20
-> Oh, well.
->=20
-> Each file in a tar archive has at least a 512-byte header.  This head=
-er
-> contains a name field, 100 bytes long.  When it became clear that it
-> would be nice to support file names longer than 100 characters, anoth=
-er
-> 155 bytes in the header was designated as a prefix field (see tar.h).
+Currently, tag objects are shown as the raw tag object contents.  By
+pretty printing them, the time stamp is shown in a more readable
+format (and this is actually the only difference to the raw format).
 
-[snip]
-> In any case, there are better options:
->=20
->   - Don't use long file names (just kidding :).
->   - Use a tar extractor that understands the prefix field, e.g. 7-Zip=
-=2E
->   - Use zip (but beware of its 65535 bytes name length limit! ;).
->   - File a bug report with WinZip.
->=20
-> Ren=E9
->=20
+Signed-off-by: Sven Marnach <sven.marnach@ipvs.uni-stuttgart.de>
+---
+ gitk-git/gitk |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-Hi Ren=E9,
-
-Thanks for the detailed explanation. I guess I should file a bug report=
-=20
-with WinZip, although that won't solve the problem for most of the=20
-population.
-
-My best bet seems to be to provide the option to create Zip files rathe=
-r=20
-than tarballs (i.e. upgrade my gitweb.cgi to something more recent).
-
-Regards,
-
-Rogan
+diff --git a/gitk-git/gitk b/gitk-git/gitk
+index 84ab02e..4581893 100644
+--- a/gitk-git/gitk
++++ b/gitk-git/gitk
+@@ -7843,7 +7843,7 @@ proc showtag {tag isnew} {
+     set linknum 0
+     if {![info exists tagcontents($tag)]} {
+ 	catch {
+-	    set tagcontents($tag) [exec git cat-file tag $tagobjid($tag)]
++	    set tagcontents($tag) [exec git cat-file -p $tagobjid($tag)]
+ 	}
+     }
+     if {[info exists tagcontents($tag)]} {
+-- 
+debian.1.5.5_rc2.1
