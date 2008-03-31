@@ -1,88 +1,86 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: [PATCH 4/4] templates: add an example pre-auto-gc hook
-Date: Mon, 31 Mar 2008 11:37:22 +0200
-Message-ID: <283c63fb960d36a322b45fac97804af18a9e5abe.1206929014.git.vmiklos@frugalware.org>
-References: <alpine.LFD.1.00.0803301645020.14670@woody.linux-foundation.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Bj?rn Steinbrink <B.Steinbrink@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Mon Mar 31 11:38:15 2008
+From: Eyvind Bernhardsen <eyvind-git@orakel.ntnu.no>
+Subject: Re: git-submodule getting submodules from the parent repository
+Date: Mon, 31 Mar 2008 12:05:20 +0200
+Message-ID: <62D616ED-83C8-4AB7-9113-98688732DE09@orakel.ntnu.no>
+References: <32541b130803291535m317e84e6p321ebccd5dedaab3@mail.gmail.com> <47EECF1F.60908@vilain.net> <D0F821FA-AF53-4F1F-B9CC-58346828FA15@orakel.ntnu.no> <47EFD253.6020105@vilain.net> <C38585A9-F09C-4A5B-8E72-6F3127DB2BB9@orakel.ntnu.no> <47EFF5BE.7030502@vilain.net>
+Mime-Version: 1.0 (Apple Message framework v919.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: Avery Pennarun <apenwarr@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Sam Vilain <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Mon Mar 31 12:06:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JgGSw-00039g-GL
-	for gcvg-git-2@gmane.org; Mon, 31 Mar 2008 11:38:10 +0200
+	id 1JgGu5-0002yP-2s
+	for gcvg-git-2@gmane.org; Mon, 31 Mar 2008 12:06:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754829AbYCaJhZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Mar 2008 05:37:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755089AbYCaJhZ
-	(ORCPT <rfc822;git-outgoing>); Mon, 31 Mar 2008 05:37:25 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:11278 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754437AbYCaJhZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Mar 2008 05:37:25 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 400B61B2586;
-	Mon, 31 Mar 2008 11:37:23 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id A433E44698;
-	Mon, 31 Mar 2008 11:34:14 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id B86661190547; Mon, 31 Mar 2008 11:37:22 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.1.00.0803301645020.14670@woody.linux-foundation.org>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1754089AbYCaKFa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Mar 2008 06:05:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753721AbYCaKFa
+	(ORCPT <rfc822;git-outgoing>); Mon, 31 Mar 2008 06:05:30 -0400
+Received: from 97.84-49-228.nextgentel.com ([84.49.228.97]:49815 "EHLO
+	eyvind.bernhardsens.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753375AbYCaKFa (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Mar 2008 06:05:30 -0400
+Received: from ivilhamac.dhcp.ad.fast.no (pat-gw.osl.fast.no [217.144.235.5])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by eyvind.bernhardsens.net (Postfix) with ESMTP id AE38215A0BC;
+	Mon, 31 Mar 2008 12:05:28 +0200 (CEST)
+In-Reply-To: <47EFF5BE.7030502@vilain.net>
+X-Mailer: Apple Mail (2.919.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78578>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78579>
 
-It disabled git-gc --auto when you are on battery.
+On 30. mars. 2008, at 22.19, Sam Vilain wrote:
 
-Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
----
- templates/hooks--pre-auto-gc |   29 +++++++++++++++++++++++++++++
- 1 files changed, 29 insertions(+), 0 deletions(-)
- create mode 100644 templates/hooks--pre-auto-gc
+> Eyvind Bernhardsen wrote:
+>> Well, the point of "submodule push" was to avoid having to push in
+>> each submodule manually; not enforcing the requirement that commits  
+>> in
+>> submodules must be publicly available before pushing from the main
+>> module is a recipe for disaster, or at least annoyance.  And nobody
+>> likes an annoying git.
+>
+> ok.  so, refuse to push without forcing, don't do something dumb.
 
-diff --git a/templates/hooks--pre-auto-gc b/templates/hooks--pre-auto-gc
-new file mode 100644
-index 0000000..40c4759
---- /dev/null
-+++ b/templates/hooks--pre-auto-gc
-@@ -0,0 +1,29 @@
-+#!/bin/sh
-+#
-+# An example hook script to verify if you are on battery.  Called by
-+# git-gc --auto with no arguments.  The hook should exit with non-zero
-+# status after issuing an appropriate message if it wants to stop the
-+# auto repacking.
-+#
-+# To enable this hook, make this file executable.
-+
-+defer=0
-+
-+if [ -e /sys/class/power_supply/AC/online ]; then
-+	if [ "`cat /sys/class/power_supply/AC/online`" = 0 ]; then
-+		defer=1
-+	fi
-+elif [ -e /proc/acpi/ac_adapter/AC/state ]; then
-+	if grep -q 'off-line' /proc/acpi/ac_adapter/AC/state; then
-+		defer=1
-+	fi
-+elif [ -e /proc/apm ]; then
-+	if grep -q '0$' /proc/apm; then
-+		defer=1
-+	fi
-+fi
-+
-+if [ "$defer" = 1 ]; then
-+	echo "Auto packing deferred; on battery"
-+	exit 1
-+fi
+I think you misunderstood: what I'm saying is that submodules'  
+_current_ behaviour is annoying, since you're guaranteed to forget to  
+push a submodule before pushing the main module at least once.  My  
+attempt to solve that became too complicated, so I dropped it, and  
+since the current behaviour is annoying, I gave up on submodules  
+entirely.
+
+>> Pushing to a branch works except that I couldn't figure out what to  
+>> do
+>> if the push doesn't succeed, ie, the branch has advanced on the  
+>> remote
+>> end.
+>
+> It's simple.  You just fail and tell the user what happened, and let
+> them decide what to do.
+
+Sure, that solves the annoyance problem, but I wanted something more  
+automatic.
+
+>> It's a reflog, not a branch, because a submodule can be changed to a
+>> different branch, rewound, etc between commits in the main module;
+>> there's no requirement that the old commit is in the new commit's
+>> history.
+>
+> If it is a rewind there is no issue, because you don't even need to  
+> push.
+>
+> But again it comes back to - let the user sort it out, don't try to be
+> too clever.
+
+Yep, my problem was wanting to be cleverer than my limited git skills  
+will allow.
 -- 
-1.5.5.rc2.4.g283c6
+Eyvind Bernhardsen
