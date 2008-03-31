@@ -1,73 +1,55 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: fetchmail (Re: [PATCH] git gc --auto: defer on battery)
-Date: Mon, 31 Mar 2008 10:00:30 -0700 (PDT)
-Message-ID: <alpine.LFD.1.00.0803310953030.14670@woody.linux-foundation.org>
-References: <20080330231408.GR11666@genesis> <20080330232612.GA23063@atjola.homenet> <alpine.LFD.1.00.0803301645020.14670@woody.linux-foundation.org> <7vr6drsl47.fsf@gitster.siamese.dyndns.org> <alpine.LFD.1.00.0803310757550.14670@woody.linux-foundation.org>
- <20080331164328.GA31518@atjola.homenet>
+From: Teemu Likonen <tlikonen@iki.fi>
+Subject: Re: [PATCH] Add new git-graph command
+Date: Mon, 31 Mar 2008 20:17:28 +0300
+Message-ID: <200803312017.28354.tlikonen@iki.fi>
+References: <20080330195840.GA8695@adamsimpkins.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Miklos Vajna <vmiklos@frugalware.org>, git@vger.kernel.org
-To: Bj?rn Steinbrink <B.Steinbrink@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Mar 31 19:02:41 2008
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org, Adam Simpkins <adam@adamsimpkins.net>
+X-From: git-owner@vger.kernel.org Mon Mar 31 19:18:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JgNOj-0002Ty-BY
-	for gcvg-git-2@gmane.org; Mon, 31 Mar 2008 19:02:17 +0200
+	id 1JgNeA-0008Tn-5V
+	for gcvg-git-2@gmane.org; Mon, 31 Mar 2008 19:18:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753330AbYCaRBf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Mar 2008 13:01:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753014AbYCaRBe
-	(ORCPT <rfc822;git-outgoing>); Mon, 31 Mar 2008 13:01:34 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:45870 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751334AbYCaRBe (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 31 Mar 2008 13:01:34 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m2VH0WLG019992
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 31 Mar 2008 10:00:33 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m2VH0VSI016581;
-	Mon, 31 Mar 2008 10:00:31 -0700
-In-Reply-To: <20080331164328.GA31518@atjola.homenet>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
-X-Spam-Status: No, hits=-4.851 required=5 tests=AWL,BAYES_00,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1752674AbYCaRRb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Mar 2008 13:17:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751941AbYCaRRb
+	(ORCPT <rfc822;git-outgoing>); Mon, 31 Mar 2008 13:17:31 -0400
+Received: from pne-smtpout3-sn2.hy.skanova.net ([81.228.8.111]:56109 "EHLO
+	pne-smtpout3-sn2.hy.skanova.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751258AbYCaRRa (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 31 Mar 2008 13:17:30 -0400
+Received: from [192.168.0.2] (80.220.180.181) by pne-smtpout3-sn2.hy.skanova.net (7.3.129)
+        id 478BDB9600430B6E; Mon, 31 Mar 2008 19:17:29 +0200
+User-Agent: KMail/1.9.5
+In-Reply-To: <20080330195840.GA8695@adamsimpkins.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78592>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78593>
 
+Adam Simpkins kirjoitti:
 
+> I added this since I really like gitk, but don't always have easy
+> access to an X display on some of the systems I use.  I tried using
+> tig, but I found its graph output very hard to read.  The graph
+> produced by git-graph is less compact, but much more readable.
+>
+> Ultimately, it would probably be better to integrate this
+> functionality into git-log, instead of having it as a standalone
+> command.  For example, a new --graph option could be added to cause
+> the graph to be displayed alongside the existing git log output.
+> However, this would require tighter integration between the graphing
+> code and the log_tree.c and pretty.c code, which I'm not all that
+> familiar with.
 
-On Mon, 31 Mar 2008, Bj?rn Steinbrink wrote:
-> 
-> Hm, that's weird. My header shows my name as iso-8859-1, same as the
-> body. I checked the copy that I got from the list to eliminate any weird
-> local-copy effects.
-> 
-> From:	=?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-> 
-> So maybe your MUA is iso-8859-1 challenged instead? I'll send this one
-> out as UTF-8.
-
-Ahhah! That's it. Not my MUA, but I'm using fetchmail, and I have copied 
-my .fetchmailrc file around for years. As a result, it has 'mimedecode' 
-set, because pine used to be really bad at this and obviously all my 
-original BK (and later git) email scripts didn't do mime decoding either.
-
-So what is probably happening is that my fetchmail setup dropped the 
-charset information for the header (this is documented by fetchmail, so 
-it's not a bug, it's just part of the rules) and just turned it into the 
-raw byte sequence.
-
-I've turned off mimedecode, can you send another email to me (in private) 
-to see if not doing that just fixes things?
-
-			Linus
+I just want to say that I really like your 'git graph'. I would like to 
+see it integrated to 'git log', perhaps as 'git log --pretty=graph' 
+or 'git log --graph'.
