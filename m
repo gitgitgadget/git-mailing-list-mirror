@@ -1,79 +1,81 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] filter-branch: Fix renaming a directory in the   tree-filter
-Date: Mon, 31 Mar 2008 10:47:31 +0200
-Message-ID: <47F0A523.80906@viscovery.net>
-References: <C46D6D0D-44E1-4976-8956-1D84B6351535@yahoo.ca> <1206947655-20272-1-git-send-email-johannes.sixt@telecom.at> <1206947655-20272-2-git-send-email-johannes.sixt@telecom.at> <7v3aq7mgly.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+From: Eyvind Bernhardsen <eyvind-git@orakel.ntnu.no>
+Subject: Re: git-submodule getting submodules from the parent repository
+Date: Mon, 31 Mar 2008 11:29:56 +0200
+Message-ID: <834174D1-82F4-4438-9854-762F416BB5EF@orakel.ntnu.no>
+References: <32541b130803291535m317e84e6p321ebccd5dedaab3@mail.gmail.com> <47EECF1F.60908@vilain.net> <D0F821FA-AF53-4F1F-B9CC-58346828FA15@orakel.ntnu.no> <47EFD253.6020105@vilain.net> <C38585A9-F09C-4A5B-8E72-6F3127DB2BB9@orakel.ntnu.no> <32541b130803301603u65d1b6b6ladac0f6200433e5f@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v919.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
-Cc: =?ISO-8859-1?Q?Jean-Fran=E7ois_Veillette?= 
-	<jean_francois_veillette@yahoo.ca>, Git <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 31 10:48:21 2008
+Cc: "Sam Vilain" <sam@vilain.net>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 31 11:30:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JgFgj-0004We-6h
-	for gcvg-git-2@gmane.org; Mon, 31 Mar 2008 10:48:21 +0200
+	id 1JgGLq-0001Lm-EY
+	for gcvg-git-2@gmane.org; Mon, 31 Mar 2008 11:30:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753776AbYCaIrh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Mar 2008 04:47:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753589AbYCaIrh
-	(ORCPT <rfc822;git-outgoing>); Mon, 31 Mar 2008 04:47:37 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:13967 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753217AbYCaIrg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Mar 2008 04:47:36 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1JgFf0-0002Ih-Lr; Mon, 31 Mar 2008 10:46:35 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id DC18C6B7; Mon, 31 Mar 2008 10:47:31 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <7v3aq7mgly.fsf@gitster.siamese.dyndns.org>
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1753638AbYCaJaH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Mar 2008 05:30:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754693AbYCaJaH
+	(ORCPT <rfc822;git-outgoing>); Mon, 31 Mar 2008 05:30:07 -0400
+Received: from 97.84-49-228.nextgentel.com ([84.49.228.97]:49801 "EHLO
+	eyvind.bernhardsens.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753589AbYCaJaG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Mar 2008 05:30:06 -0400
+Received: from ivilhamac.dhcp.ad.fast.no (pat-gw.osl.fast.no [217.144.235.5])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by eyvind.bernhardsens.net (Postfix) with ESMTP id F30A6159FDC;
+	Mon, 31 Mar 2008 11:30:02 +0200 (CEST)
+In-Reply-To: <32541b130803301603u65d1b6b6ladac0f6200433e5f@mail.gmail.com>
+X-Mailer: Apple Mail (2.919.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78572>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78573>
 
-Junio C Hamano schrieb:
-> For example, if you make it the invariant that $T contains the tree that
-> matches the contents of the "$tempdir/t" work tree left in the previous
-> round of filter-tree (and obviously you would want to do this only
-> filter_tree is in effect), the "checkout-index + clean" would become a
-> proper "branch switching".
-> 
-> This is obviously untested, and you would need to prime $T with an empty
-> tree before entering the loop (but you could cheat by initializing T with
-> an empty string), but it might make the code a bit more readable than the
-> current mess.  I dunno.
-> 
-> 	if [ "$filter_tree" ]; then
-> -		git checkout-index -f -u -a ||
-> -			die "Could not checkout the index"
-> -		# files that $commit removed are now still in the working tree;
-> -		# remove them, else they would be added again
-> -		git clean -d -q -f -x
-> +		git read-tree -m -u $T $commit
-> 		eval "$filter_tree" < /dev/null ||
-> 			die "tree filter failed: $filter_tree"
-> 
-> -		(
-> -			git diff-index -r --name-only $commit
-> -			git ls-files --others
-> -		) |
-> -		git update-index --add --replace --remove --stdin
-> +		git add -u && git add . && T=$(git write-tree)
-> 	fi
+On 31. mars. 2008, at 01.03, Avery Pennarun wrote:
 
-Yes. But, ... uhm ..., I'm not that deep into these plumbings; I leave it
-to Dscho to comment on this.
+> On Sun, Mar 30, 2008 at 3:50 PM, Eyvind Bernhardsen
+> <eyvind-git@orakel.ntnu.no> wrote:
+>> Pushing to a branch works except that I couldn't figure out what to  
+>> do
+>> if the push doesn't succeed, ie, the branch has advanced on the  
+>> remote
+>> end.  That's a problem if more than one module references the
+>> submodule or there are multiple branches in the main module.
+>
+> That's easy: just error out in that case.  If the current system would
+> just error out when I screwed up, I'd at least be able to deal with
+> it.  Right now I silently create un-check-outable parent repositories
+> because I failed silently to upload my latest checkins to the child
+> repository.
 
--- Hannes
+As I tried to explain, all the automatic push solutions I could come  
+up with were flawed, so I decided not to use submodules at all and  
+just have the build tool check out every module (that's what we  
+currently do with CVS, so it's the easy way out anyway).
+
+If I understand you correctly, you want to be forced to create a  
+branch and push to that?  I don't think that works well with many  
+developers pushing to a shared repository (my situation), and is in  
+any case not the "automagical push" solution that I want.  I agree  
+that it would be an improvement, but it doesn't scratch my itch :)
+
+>> True :)  I still have no idea how to figure out which submodules are
+>> dirty, though.  Solving that will enable a safe "submodule update",
+>> which I think is more important than "submodule push".
+>
+> What is unsafe about "submodule update"?
+
+If you have local changes committed in a submodule that is updated by  
+a pull in the main module, "submodule update" will silently overwrite  
+them.  I was wrong, though, because you can fix that just by making  
+"submodule update" error out when a submodule doesn't have its HEAD  
+where the main module thinks it should be.
+-- 
+Eyvind Bernhardsen
