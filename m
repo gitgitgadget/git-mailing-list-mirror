@@ -1,96 +1,93 @@
-From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+From: Rogan Dawes <lists@dawes.za.net>
 Subject: Re: git-archive loses path info when opened with Winzip?
-Date: Mon, 31 Mar 2008 21:47:26 +0200
-Message-ID: <47F13FCE.1010502@lsrfire.ath.cx>
-References: <47F0D215.1060700@dawes.za.net>
+Date: Mon, 31 Mar 2008 22:09:13 +0200
+Message-ID: <47F144E9.2040709@dawes.za.net>
+References: <47F0D215.1060700@dawes.za.net> <47F13FCE.1010502@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Git Mailing List <git@vger.kernel.org>
-To: Rogan Dawes <lists@dawes.za.net>
-X-From: git-owner@vger.kernel.org Mon Mar 31 21:57:51 2008
+To: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Mon Mar 31 22:12:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JgQ7v-0004Mg-6b
-	for gcvg-git-2@gmane.org; Mon, 31 Mar 2008 21:57:07 +0200
+	id 1JgQM1-0004ab-Ix
+	for gcvg-git-2@gmane.org; Mon, 31 Mar 2008 22:11:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752111AbYCaT4I convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 31 Mar 2008 15:56:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752346AbYCaT4I
-	(ORCPT <rfc822;git-outgoing>); Mon, 31 Mar 2008 15:56:08 -0400
-Received: from india601.server4you.de ([85.25.151.105]:54396 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750968AbYCaT4G (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Mar 2008 15:56:06 -0400
-X-Greylist: delayed 515 seconds by postgrey-1.27 at vger.kernel.org; Mon, 31 Mar 2008 15:56:06 EDT
-Received: from [10.0.1.101] (p57B7CE24.dip.t-dialin.net [87.183.206.36])
-	by india601.server4you.de (Postfix) with ESMTPSA id 2C9E92F8002;
-	Mon, 31 Mar 2008 21:47:29 +0200 (CEST)
+	id S1751787AbYCaUK6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 31 Mar 2008 16:10:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752346AbYCaUK6
+	(ORCPT <rfc822;git-outgoing>); Mon, 31 Mar 2008 16:10:58 -0400
+Received: from sd-green-bigip-145.dreamhost.com ([208.97.132.145]:60398 "EHLO
+	spunkymail-a20.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751682AbYCaUK5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 31 Mar 2008 16:10:57 -0400
+Received: from [192.168.201.100] (dsl-243-66-181.telkomadsl.co.za [41.243.66.181])
+	by spunkymail-a20.g.dreamhost.com (Postfix) with ESMTP id 46A85E251F;
+	Mon, 31 Mar 2008 13:10:52 -0700 (PDT)
 User-Agent: Thunderbird 2.0.0.12 (Windows/20080213)
-In-Reply-To: <47F0D215.1060700@dawes.za.net>
+In-Reply-To: <47F13FCE.1010502@lsrfire.ath.cx>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78600>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78601>
 
-Rogan Dawes schrieb:
-> Hi folks,
+Ren=E9 Scharfe wrote:
+> Rogan Dawes schrieb:
+>> Hi folks,
+>>
+>> I have noticed something strange with "git-archive"-created tarballs=
+=2E It
+>> seems that Winzip has trouble parsing the paths for certain files
+>> correctly.
+>>
+>> The symptom is that Winzip shows some files as having been created a=
+t
+>> the "top level" of the zip, without any path at all, while the rest =
+of
+>> the files are within their correct directory structure.
+>>
+>> I have attached a screenshot of a gitweb-created snapshot opened in
+>> Winzip 9.0 SR1 (build 6224), but it apparently happens in other (mor=
+e
+>> recent) versions of Winzip as well.
 >=20
-> I have noticed something strange with "git-archive"-created tarballs.=
- It
-> seems that Winzip has trouble parsing the paths for certain files
-> correctly.
+> Oh, well.
 >=20
-> The symptom is that Winzip shows some files as having been created at
-> the "top level" of the zip, without any path at all, while the rest o=
-f
-> the files are within their correct directory structure.
+> Each file in a tar archive has at least a 512-byte header.  This head=
+er
+> contains a name field, 100 bytes long.  When it became clear that it
+> would be nice to support file names longer than 100 characters, anoth=
+er
+> 155 bytes in the header was designated as a prefix field (see tar.h).
+
+[snip]
+> In any case, there are better options:
 >=20
-> I have attached a screenshot of a gitweb-created snapshot opened in
-> Winzip 9.0 SR1 (build 6224), but it apparently happens in other (more
-> recent) versions of Winzip as well.
+>   - Don't use long file names (just kidding :).
+>   - Use a tar extractor that understands the prefix field, e.g. 7-Zip=
+=2E
+>   - Use zip (but beware of its 65535 bytes name length limit! ;).
+>   - File a bug report with WinZip.
+>=20
+> Ren=E9
+>=20
 
-Oh, well.
+Hi Ren=E9,
 
-Each file in a tar archive has at least a 512-byte header.  This header
-contains a name field, 100 bytes long.  When it became clear that it
-would be nice to support file names longer than 100 characters, another
-155 bytes in the header was designated as a prefix field (see tar.h).
+Thanks for the detailed explanation. I guess I should file a bug report=
+=20
+with WinZip, although that won't solve the problem for most of the=20
+population.
 
-The full file name is constructed by concatenating the prefix, a path
-separator (/) and the name field -- if a prefix exists.  That's how
-POSIX defines it, anyway.  Apparently WinZip ignores the prefix field.
+My best bet seems to be to provide the option to create Zip files rathe=
+r=20
+than tarballs (i.e. upgrade my gitweb.cgi to something more recent).
 
-7-Zip honours the prefix field, by the way.  But it doesn't understand
-POSIX extended headers; I suspect that WinZip doesn't, too.
+Regards,
 
-That probably makes the easiest way to fix this problem at git's end a
-non-starter.  Git-archive tries to:
-
-   1. fit the path in the name field (up to 100 bytes),
-   2. in the prefix and name fields (up to 255 bytes),
-   3. or if even that isn't enough it stores it in an extended header.
-
-Now we could simply make git-archive forget the second option -- but
-since support for POSIX extended headers is even more scarce, this
-probably won't help.
-
-The second option is to stop encoding long paths using the POSIX method
-and start doing it e.g. the GNU way -- or some other tar dialect that i=
-s
-supported more widely than the official one.  NOTE: I haven't checked i=
-f
-WinZip understands the GNU extensions; it's possible that this problem
-can't be solved on git's side at all!
-
-In any case, there are better options:
-
-  - Don't use long file names (just kidding :).
-  - Use a tar extractor that understands the prefix field, e.g. 7-Zip.
-  - Use zip (but beware of its 65535 bytes name length limit! ;).
-  - File a bug report with WinZip.
-
-Ren=E9
+Rogan
