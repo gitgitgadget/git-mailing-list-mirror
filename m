@@ -1,66 +1,174 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: "make test" fails if /path/to/git.git contains spaces
-Date: Tue, 01 Apr 2008 08:29:58 +0200
-Message-ID: <47F1D666.9060402@viscovery.net>
-References: <47F15CDB.60109@apple.com> <3e8340490803311604v52ab9e03nd101ccadd4973760@mail.gmail.com>
+From: "Whit Armstrong" <armstrong.whit@gmail.com>
+Subject: Re: git failure on Solaris t3701-add-interactive.sh -- git version 5cc8f372509298d13632d8784bc851a587937550
+Date: Tue, 1 Apr 2008 03:02:15 -0400
+Message-ID: <8ec76080804010002x79aa003ala9a1f66147157b85@mail.gmail.com>
+References: <8ec76080803250529i5765cc9ar2d6fc3356800cb14@mail.gmail.com>
+	 <8ec76080803250534x5373b0c6p6165a7dc17971e4a@mail.gmail.com>
+	 <20080325234033.GA18348@coredump.intra.peff.net>
+	 <8ec76080803260519s6088b773qc3a9cf982993f53@mail.gmail.com>
+	 <20080326183453.GA4471@coredump.intra.peff.net>
+	 <8ec76080803261357n1a07e4b7p5103901fdeef4458@mail.gmail.com>
+	 <20080331072713.GA11490@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Adam Roben <aroben@apple.com>, git@vger.kernel.org
-To: Bryan Donlan <bdonlan@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 01 08:30:50 2008
+To: "Jeff King" <peff@peff.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 01 09:03:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jga1B-0000hX-74
-	for gcvg-git-2@gmane.org; Tue, 01 Apr 2008 08:30:49 +0200
+	id 1JgaWK-00010J-16
+	for gcvg-git-2@gmane.org; Tue, 01 Apr 2008 09:03:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755292AbYDAGaF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Apr 2008 02:30:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755229AbYDAGaF
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Apr 2008 02:30:05 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:52998 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754587AbYDAGaE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Apr 2008 02:30:04 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1JgZzQ-0001i8-P1; Tue, 01 Apr 2008 08:29:00 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 8FCFD4E4; Tue,  1 Apr 2008 08:29:58 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <3e8340490803311604v52ab9e03nd101ccadd4973760@mail.gmail.com>
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1752018AbYDAHCR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Apr 2008 03:02:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751963AbYDAHCR
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Apr 2008 03:02:17 -0400
+Received: from wf-out-1314.google.com ([209.85.200.168]:41507 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751886AbYDAHCQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Apr 2008 03:02:16 -0400
+Received: by wf-out-1314.google.com with SMTP id 28so1970826wff.4
+        for <git@vger.kernel.org>; Tue, 01 Apr 2008 00:02:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=wdvLjJGpEdr1W4wdlI+mLYpAij98kevyQ+sBoYkPR0w=;
+        b=DIZhUPXg+PnZEVmxrDQaYuO/WJ5Yijnb2qruLn+uC47qnRy9KbHfwsJPWmxOmE+CXEcfv2sVIa2qnPH24wKn6Px0quW7pgfu4sldJ2AYCo13szHJuQe4OGH1MKjH6VLKuB+Xjnv4ly8HGmA+0QZUdb8IO5JqsrJfLGiu01lGaoM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=PoTi5fo9pm3HJMmjNw8pgmpT/FkZQ9f4WmKVTkr+WODSjToD2ORYfMQN/ejk1k2L+e8Uo+LkYf+nlmkIvZAo+XTq0brZpvnzRZWBQvE/YLzmi2E073AroUbHjs+eZaCsWHNmXFHL4NC0IvZpknfYTRaUPI1fLCYikKRxL/OJpVE=
+Received: by 10.142.127.10 with SMTP id z10mr4468907wfc.122.1207033335709;
+        Tue, 01 Apr 2008 00:02:15 -0700 (PDT)
+Received: by 10.142.187.13 with HTTP; Tue, 1 Apr 2008 00:02:15 -0700 (PDT)
+In-Reply-To: <20080331072713.GA11490@coredump.intra.peff.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78635>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78636>
 
-Bryan Donlan schrieb:
-> On Mon, Mar 31, 2008 at 5:51 PM, Adam Roben <aroben@apple.com> wrote:
->>  Do we want to support having spaces in your path? It doesn't seem hard
->>  to fix, but it does seem like the kind of problem that will come up over
->>  and over again if only a very small set of people have this configuration.
-> 
-> Turns out that while trying to fix the tests, I've found that
-> git-rebase doesn't like a $VISUAL having spaces, so perhaps this
-> should be tested more often :) Or should we just require $VISUAL have
-> no spaces?
-> 
-> I'll send a patch once I've got everything passing.
+Peff,
 
-There was an attempt in the past to make this working. Please look at this
-(rather lengthy) thread, in particular, my critique on the patches that
-were submitted:
+Thanks for looking.  I'm sure you have been busy preparing for the next release.
 
-http://thread.gmane.org/gmane.comp.version-control.git/60544
+Sorry for the list omission on the last email, it was an oversight.
 
-I really would not like to see the same issues that I took the time to
-comment on to show up again.
+I just did the test suite on origin/next, so this test run was done
+with git b0a67ea72573692994090d92e300cddaf20ac69d.
 
--- Hannes
+and here is the list of tests that are failing:
+
+#       deleted:    t/t3701-add-interactive.sh
+#       deleted:    t/t3900-i18n-commit.sh
+#       deleted:    t/t3901-i18n-patch.sh
+#       deleted:    t/t4116-apply-reverse.sh
+#       deleted:    t/t4200-rerere.sh
+#       deleted:    t/t5000-tar-tree.sh
+#       deleted:    t/t7400-submodule-basic.sh
+#       deleted:    t/t7401-submodule-summary.sh
+#       deleted:    t/t7501-commit.sh
+#       deleted:    t/t9001-send-email.sh
+
+I'll send -v -i details on the ones that fail for me but not for you.
+
+-Whit
+
+
+
+On Mon, Mar 31, 2008 at 3:27 AM, Jeff King <peff@peff.net> wrote:
+> On Wed, Mar 26, 2008 at 04:57:38PM -0400, Whit Armstrong wrote:
+>
+> > Peff,
+>
+> [I think the list might benefit from our discussion; did you mean to
+> respond off-list?]
+>
+> Sorry for the slow response...I haven't had much time to look at this
+> stuff lately. This is an "off the top of my head" response; a lot of my
+> points will need followup patches and testing.
+>
+>
+> > I have failures with the following tests on our Solaris setup.
+> > However, I did use a more recent version of perl (5.10 installed in my
+> > home dir) with these tests.
+> >
+> > #       deleted:    t/t3900-i18n-commit.sh
+> > #       deleted:    t/t3901-i18n-patch.sh
+>
+> I think something is lacking in the Japanese charset support on Solaris.
+> Maybe there is some extra package that needs to be installed. I haven't
+> looked much further.
+>
+>
+> > #       deleted:    t/t4116-apply-reverse.sh
+>
+> This is due to a warning from Solaris tar, which doesn't like the pax
+> field in our generated tarfile. I think it's just being used to make a
+> copy of the tree, so we can probably get around it by using
+> git-checkout-index directly. More portable, and should be faster.
+>
+>
+> > #       deleted:    t/t4118-apply-empty-context.sh
+>
+> I don't have this in my list of broken tests. Might just be an
+> oversight on my part, though.
+>
+>
+> > #       deleted:    t/t4200-rerere.sh
+>
+> This definitely passed for me, since I submitted fixes. But there was
+> much discussion afterwards, so one of the followups might have re-broken
+> it.
+>
+>
+> > #       deleted:    t/t8001-annotate.sh
+>
+> I'm pretty sure this passed for me.
+>
+>
+> > #       deleted:    t/t9001-send-email.sh
+>
+> I couldn't even try this because of the perl version issues.
+>
+>
+> > this is using origin/pu -- commit 9606c1c61e3a5b5acbb3f3dcccea37e00bcca145
+>
+> Yikes. I would stick with 'next' at the most. Junio makes sure all tests
+> work (on Linux) on 'master', and I think 'next'. But 'pu' is a no-man's
+> land of quality.
+>
+>
+> > Let me know if you want test.sh -v -i output for these.
+>
+> For the ones that I marked as "passed", sure. For the other ones, either
+> we have the same failure, in which case I can generate it myself, or we
+> don't, in which case I need to fix my bug before your bug will make any
+> sense to me. :)
+>
+>
+> > Also, is there a way to ask "make test" to continue the test suite
+> > from a certain point?  I kept deleting the test that was failing, and
+> > then restarting the whole "make test," which I'm sure you know is
+> > quite long to run from start to finish.
+>
+> No, there isn't. During my test-fixing spree, I just did something like:
+>
+>  make test
+>  # oops, we failed in 3900; continue after
+>  make test t390[123]*.sh t4*.sh t5*.sh ...
+>
+> and so forth, shrinking my commandline each time. Hack-ish, but what
+> we're doing is probably not worth implementing the 'resume at last
+> failure' feature (especially because most of the time you are fixing
+> _git_, not the test scripts, so it is a good idea to run the whole
+> suite).
+>
+> What I'd really like is the ability to run the test scripts in parallel;
+> test-lib.sh would need to put each in its own directory.
+>
+> -Peff
+>
