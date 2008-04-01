@@ -1,149 +1,90 @@
-From: Kevin Green <Kevin.T.Green@morganstanley.com>
-Subject: [PATCH] git-p4: Fix race between p4_edit and p4_change
-Date: Tue, 1 Apr 2008 18:28:56 -0400
-Message-ID: <20080401222856.GA22542@morganstanley.com>
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: git-submodule getting submodules from the parent repository
+Date: Wed, 02 Apr 2008 12:05:49 +1300
+Message-ID: <47F2BFCD.5070202@vilain.net>
+References: <32541b130803291535m317e84e6p321ebccd5dedaab3@mail.gmail.com>	 <47EECF1F.60908@vilain.net>	 <D0F821FA-AF53-4F1F-B9CC-58346828FA15@orakel.ntnu.no>	 <47EFD253.6020105@vilain.net>	 <C38585A9-F09C-4A5B-8E72-6F3127DB2BB9@orakel.ntnu.no>	 <32541b130803301603u65d1b6b6ladac0f6200433e5f@mail.gmail.com>	 <834174D1-82F4-4438-9854-762F416BB5EF@orakel.ntnu.no> <32541b130803311436t7b5041a4pabface15aad8ce63@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: Simon Hausmann <simon@lst.de>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 02 00:39:43 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Eyvind Bernhardsen <eyvind-git@orakel.ntnu.no>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 02 01:06:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jgp8l-0007La-PA
-	for gcvg-git-2@gmane.org; Wed, 02 Apr 2008 00:39:40 +0200
+	id 1JgpYv-0007ms-VP
+	for gcvg-git-2@gmane.org; Wed, 02 Apr 2008 01:06:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756856AbYDAWiv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Apr 2008 18:38:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758916AbYDAWiv
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Apr 2008 18:38:51 -0400
-Received: from pimtabh4.ms.com ([199.89.64.104]:58957 "EHLO pimtabh4.ms.com"
+	id S1753865AbYDAXF5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Apr 2008 19:05:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754582AbYDAXF5
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Apr 2008 19:05:57 -0400
+Received: from watts.utsl.gen.nz ([202.78.240.73]:36440 "EHLO mail.utsl.gen.nz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756856AbYDAWit (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Apr 2008 18:38:49 -0400
-X-Greylist: delayed 591 seconds by postgrey-1.27 at vger.kernel.org; Tue, 01 Apr 2008 18:38:49 EDT
-Received: from pimtabh4 (localhost.ms.com [127.0.0.1])
-	by pimtabh4.ms.com (output Postfix) with ESMTP id AE57248366;
-	Tue,  1 Apr 2008 18:28:57 -0400 (EDT)
-Received: from ny0030as01 (unknown [144.203.194.92])
-	by pimtabh4.ms.com (internal Postfix) with ESMTP id 1BDE44A801B;
-	Tue,  1 Apr 2008 18:28:57 -0400 (EDT)
-Received: from hn315c1n6 (localhost [127.0.0.1])
-	by ny0030as01 (msa-out Postfix) with ESMTP id 09F91AE4164;
-	Tue,  1 Apr 2008 18:28:57 -0400 (EDT)
-Received: from menevado.ms.com (unknown [144.203.222.190])
-	by ny0030as01 (msa-in Postfix) with ESMTP id DCEE88A002E;
-	Tue,  1 Apr 2008 18:28:56 -0400 (EDT)
-Received: (kgreen@localhost) by menevado.ms.com (8.12.11.20060308/sendmail.cf.client v1.05) id m31MSuL1022622; Tue, 1 Apr 2008 18:28:56 -0400
-X-Authentication-Warning: menevado.ms.com: kgreen set sender to Kevin.T.Green@morganstanley.com using -f
-Mail-Followup-To: Simon Hausmann <simon@lst.de>, git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.6i
-X-Anti-Virus: Kaspersky Anti-Virus for MailServers 5.5.15/RELEASE, bases: 01042008 #607456, status: clean
+	id S1753724AbYDAXF4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Apr 2008 19:05:56 -0400
+Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
+	id 57EFF21C995; Wed,  2 Apr 2008 12:05:54 +1300 (NZDT)
+X-Spam-Checker-Version: SpamAssassin 3.1.7-deb (2006-10-05) on 
+	mail.musashi.utsl.gen.nz
+X-Spam-Level: 
+X-Spam-Status: No, score=-3.7 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00 
+	autolearn=ham version=3.1.7-deb
+Received: from [192.168.2.22] (leibniz.catalyst.net.nz [202.78.240.7])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.utsl.gen.nz (Postfix) with ESMTP id DAC4821C98F;
+	Wed,  2 Apr 2008 12:05:49 +1300 (NZDT)
+User-Agent: Icedove 1.5.0.12 (X11/20070606)
+In-Reply-To: <32541b130803311436t7b5041a4pabface15aad8ce63@mail.gmail.com>
+X-Enigmail-Version: 0.94.2.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78666>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78667>
 
+Avery Pennarun wrote:
+> I even *use* git-submodule and had to modify my build scripts because
+> "git submodule init" and "git submodule update" don't seem to kick in
+> automatically for some reason.
 
-Hi,
+The reason is that not everyone wants that by default.  Perhaps it is a
+good idea for it to be default behaviour; but all in good time.  It can
+be a user-selected option to clone first.
 
-Ran into a nasty race today with git-p4.  The changelist Files: section was
-showing up empty and it turned out to be a race between the p4_edit and
-p4_change -o, e.g.
+> The ideal situation would be to have
+> git just manage the version control without having to babysit it, of
+> course.
 
-$ p4 edit $file && p4 change -o
+I can understand the motivation to write such disparaging remarks;
+however it may be more productive to come up with good ideas about how
+it can be made to work better for you, without getting in the way of
+other users.  patches are even better!
 
-will show no files in the Files: section.
+>>  If I understand you correctly, you want to be forced to create a
+>>  branch and push to that?  I don't think that works well with many
+>>  developers pushing to a shared repository (my situation),
+> 
+> Hmm, this is curious.  If you're *not* using submodules, then I don't
+> think you can push successfully without being on a branch, can you?
 
-I attach a patch after my .sig as a suggested fix.  It simply loops over the
-p4_changes -o as long as we're not finding any files (and we always should
-since we just did a p4_edit!); sleeping for 3 secs in between to allow
-Perforce to catch up with itself.
+Sure, you could;
 
-Thanks
+  git push origin HEAD:branchname
 
---Kevin
+However I think the right solution to this is to name the branch
+appropriately somehow, so that the default push operation works.
 
+> If you 'git checkout -b branchname' inside a submodule, then 'git
+> push' will do the right thing, so I'm not sure what you'd want to be
+> more automagical than that.
 
->From 9b3b151f46dc30b9087010bb06defad9d06dfc72 Mon Sep 17 00:00:00 2001
-From: Kevin Green <Kevin.Green@morganstanley.com>
-Date: Tue, 1 Apr 2008 18:11:32 -0400
-Subject: [PATCH] git-p4: Fix race between p4_edit and p4_change
+Well, where did you get the branch name from?  That's the part that
+requires user intervention.  You could make an educated guess, such as
+with git name-rev, but it would not necessarily be the right guess - so
+user confirmation of the choice would be desirable.
 
-While generating the changelist from 'p4 change -o' it's possible
-that perforce hasn't caught up from the preceding 'p4 edit $file'.
-This leaves us with a Files: section that is completely empty and
-subsequently the p4_submit fails.
-
-This fix loops over a flag for finding something in the Files: section.
-We just did a p4_edit so there must be something there.  If nothing's
-found, then sleep for a short time (3 secs) and try all over again.
-
-Signed-off-by: Kevin Green <Kevin.Green@morganstanley.com>
----
- contrib/fast-import/git-p4 |   46 +++++++++++++++++++++++++------------------
- 1 files changed, 27 insertions(+), 19 deletions(-)
-
-diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
-index d8de9f6..5ae71ad 100755
---- a/contrib/fast-import/git-p4
-+++ b/contrib/fast-import/git-p4
-@@ -510,27 +510,35 @@ class P4Submit(Command):
- 
-     def prepareSubmitTemplate(self):
-         # remove lines in the Files section that show changes to files outside the depot path we're committing into
--        template = ""
--        inFilesSection = False
--        for line in read_pipe_lines("p4 change -o"):
--            if line.endswith("\r\n"):
--                line = line[:-2] + "\n"
--            if inFilesSection:
--                if line.startswith("\t"):
--                    # path starts and ends with a tab
--                    path = line[1:]
--                    lastTab = path.rfind("\t")
--                    if lastTab != -1:
--                        path = path[:lastTab]
--                        if not path.startswith(self.depotPath):
--                            continue
-+        notdone = True
-+        while notdone:
-+            template = ""
-+            inFilesSection = False
-+            for line in read_pipe_lines("p4 change -o"):
-+                if line.endswith("\r\n"):
-+                    line = line[:-2] + "\n"
-+                if inFilesSection:
-+                    if line.startswith("\t"):
-+                        # path starts and ends with a tab
-+                        path = line[1:]
-+                        lastTab = path.rfind("\t")
-+                        if lastTab != -1:
-+                            path = path[:lastTab]
-+                            if not path.startswith(self.depotPath):
-+                                continue
-+                            else:
-+                                notdone = False
-+                    else:
-+                        inFilesSection = False
-                 else:
--                    inFilesSection = False
--            else:
--                if line.startswith("Files:"):
--                    inFilesSection = True
-+                    if line.startswith("Files:"):
-+                        inFilesSection = True
-+
-+                template += line
- 
--            template += line
-+            # Perforce hasn't caught up with itself yet, so wait a bit and try again
-+            print "Waiting for Perforce to catch up"
-+            time.sleep(3)
- 
-         return template
- 
--- 
-1.5.4.2
+Sam.
