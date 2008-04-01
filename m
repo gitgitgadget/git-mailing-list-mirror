@@ -1,100 +1,94 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [BUG] aliases not working outside of a working copy
-Date: Mon, 31 Mar 2008 21:39:48 -0700
-Message-ID: <7v1w5qkx2j.fsf@gitster.siamese.dyndns.org>
-References: <8aa486160803310819r3a905bbeg5f993a55aaf6efbf@mail.gmail.com>
+Subject: Re: [PATCH 1/4] git-gc --auto: add pre-auto-gc hook
+Date: Mon, 31 Mar 2008 21:51:12 -0700
+Message-ID: <7vsky6jhz3.fsf@gitster.siamese.dyndns.org>
+References: <7637ee64f43964d2e514c1598b2e7783d71b8608.1206929014.git.vmiklos
+ @frugalware.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: =?utf-8?Q?Santi_B=C3=A9jar?= <sbejar@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 01 06:41:10 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Bj?rn Steinbrink <B.Steinbrink@gmx.de>, git@vger.kernel.org
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Tue Apr 01 06:52:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JgYJ4-0002PS-DJ
-	for gcvg-git-2@gmane.org; Tue, 01 Apr 2008 06:41:10 +0200
+	id 1JgYTj-0004cZ-0K
+	for gcvg-git-2@gmane.org; Tue, 01 Apr 2008 06:52:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751056AbYDAEkI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Apr 2008 00:40:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751229AbYDAEkI
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Apr 2008 00:40:08 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:33042 "EHLO
+	id S1751272AbYDAEv1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Apr 2008 00:51:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750927AbYDAEv1
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Apr 2008 00:51:27 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:34195 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750914AbYDAEkG convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 Apr 2008 00:40:06 -0400
+	with ESMTP id S1750807AbYDAEv1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Apr 2008 00:51:27 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 75062206F;
-	Tue,  1 Apr 2008 00:40:02 -0400 (EDT)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 678922383;
+	Tue,  1 Apr 2008 00:51:24 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
  certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 577E7206D; Tue,  1 Apr 2008 00:39:57 -0400 (EDT)
+ ESMTP id 2B85E235F; Tue,  1 Apr 2008 00:51:15 -0400 (EDT)
+In-Reply-To: <7637ee64f43964d2e514c1598b2e7783d71b8608.1206929014.git.vmiklos
+ @frugalware.org> (Miklos Vajna's message of "Mon, 31 Mar 2008 11:35:46
+ +0200")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78626>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78627>
 
-"Santi B=C3=A9jar" <sbejar@gmail.com> writes:
+Miklos Vajna <vmiklos@frugalware.org> writes:
 
->   I use the following alias:
+> If such a hook is available and exits with a non-zero status, then
+> git-gc --auto won't run.
 >
-> [alias]
->         wdiff =3D diff --color-words
+> Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+> ---
+>  builtin-gc.c |   22 ++++++++++++++++++++++
+>  1 files changed, 22 insertions(+), 0 deletions(-)
 >
-> and it no longer works outside of a working copy since:
->
-> af05d67 (Always set *nongit_ok in setup_git_directory_gently())
->
-> The problem is with the alias system that detects if you are in a
-> working copy, not with the command, as the
-> command just works fine.
+> diff --git a/builtin-gc.c b/builtin-gc.c
+> index 8cef36f..acd63be 100644
+> --- a/builtin-gc.c
+> +++ b/builtin-gc.c
+> @@ -157,6 +157,25 @@ static int too_many_packs(void)
+>  	return gc_auto_pack_limit <= cnt;
+>  }
+>  
+> +static int run_hook()
+> +{
+> +	const char *argv[2];
+> +	struct child_process hook;
+> +
+> +	argv[0] = git_path("hooks/pre-auto-gc");
+> +	argv[1] = NULL;
 
-I was wondering if anybody was using git alias outside git repository, =
-as
-I thought such a use would be somewhat unorthodox.  The easter egg took=
- 6
-days to get discovered.
+Hmm.  I wonder if the hook wants any parameters, even though I do not
+think of any offhand.
 
-I'll commit this on 'master'.  Thanks for satisfying my curiosity ;-)
+> +	if (access(argv[0], X_OK) < 0)
+> +		return 0;
+> +
+> +	memset(&hook, 0, sizeof(hook));
+> +	hook.argv = argv;
+> +	hook.no_stdin = 1;
+> +	hook.stdout_to_stderr = 1;
 
--- >8 --
-[PATCH] Accept git aliases outside a git repository
+I understand no_stdin, but is there a reason to do stdout_to_stderr?
 
-af05d67 (Always set *nongit_ok in setup_git_directory_gently(),
-2008-03-25) had a change from the patch originally submitted that resul=
-ted
-in disabling aliases outside a git repository.
+> +	return run_command(&hook);
+> +}
 
-It turns out that some people used "alias.fubar =3D diff --color-words"=
- in
-$HOME/.gitconfig to use non-git command outside git repositories, and t=
-his
-change broke such a usage, so this resurrects the support.
+Don't we want to distinguish between the case where start_command()
+failed, wait_or_whine() failed on waitpid(), the command was killed with
+signal, or the command actually ran correctly and decided that you should
+not run "git gc --auto" by exiting non-zero?
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- git.c |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
-
-diff --git a/git.c b/git.c
-index b7729d7..c4e4644 100644
---- a/git.c
-+++ b/git.c
-@@ -148,8 +148,9 @@ static int handle_alias(int *argcp, const char ***a=
-rgv)
- 	const char** new_argv;
- 	const char *alias_command;
- 	char *alias_string;
-+	int unused_nongit;
-=20
--	subdir =3D setup_git_directory_gently(NULL);
-+	subdir =3D setup_git_directory_gently(&unused_nongit);
-=20
- 	alias_command =3D (*argv)[0];
- 	alias_string =3D alias_lookup(alias_command);
---=20
-1.5.5.rc2.155.gb0a67
+I think it is prudent to refrain from running "git gc --auto" in any of
+the failure cases I listed above, but shouldn't the cases other than the
+last one at least issue a warning?
