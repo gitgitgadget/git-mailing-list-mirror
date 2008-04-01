@@ -1,108 +1,88 @@
-From: Michael Olson <mwolson@gnu.org>
-Subject: Re: Yet another "emacs-git" mode on emacs
-Date: Tue, 01 Apr 2008 12:28:38 -0700
-Message-ID: <87fxu5z861.fsf@grepfind.mwolson.org>
-References: <1206363318.8927.28.camel@prosummer>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: BUG: "git add --interactive" does not work with UTF-8 filenames
+Date: Tue, 01 Apr 2008 13:08:07 -0700 (PDT)
+Message-ID: <m3y77xtk32.fsf@localhost.localdomain>
+References: <200804012232.03559.tlikonen@iki.fi>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-	micalg=pgp-sha1; protocol="application/pgp-signature"
-To: git@vger.kernel.org, tsgatesv <tsgatesv@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 01 21:55:01 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Teemu Likonen <tlikonen@iki.fi>
+X-From: git-owner@vger.kernel.org Tue Apr 01 22:08:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JgmZ5-0004tM-6e
-	for gcvg-git-2@gmane.org; Tue, 01 Apr 2008 21:54:39 +0200
+	id 1Jgmmt-0002ht-C4
+	for gcvg-git-2@gmane.org; Tue, 01 Apr 2008 22:08:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756799AbYDATx4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Apr 2008 15:53:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756551AbYDATx4
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Apr 2008 15:53:56 -0400
-Received: from deleuze.hcoop.net ([69.90.123.67]:34179 "EHLO deleuze.hcoop.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755844AbYDATxz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Apr 2008 15:53:55 -0400
-X-Greylist: delayed 1499 seconds by postgrey-1.27 at vger.kernel.org; Tue, 01 Apr 2008 15:53:54 EDT
-Received: from [76.173.7.121] (helo=grepfind.mwolson.org)
-	by deleuze.hcoop.net with esmtpsa (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <mwolson@grepfind.mwolson.org>)
-	id 1JgmAA-0005ij-0w; Tue, 01 Apr 2008 15:28:54 -0400
-Received: from mwolson by grepfind.mwolson.org with local (Exim 4.69)
-	(envelope-from <mwolson@grepfind.mwolson.org>)
-	id 1Jgm9x-00036h-Hr; Tue, 01 Apr 2008 12:28:41 -0700
-X-Hashcash: 1:20:080401:git@vger.kernel.org::sPmY4ikY4PLYMml9:0000000000000000000000000000000000000000003f+G
-X-Hashcash: 1:20:080401:tsgatesv@gmail.com::dLzeBJHw71Luz37+:000000000000000000000000000000000000000000023b3
-Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAGFBMVEU1QytIVTlZY0dqc1N6
- hGGJl3qZpZCtuKXsjxzFAAACW0lEQVR42l2UXXrqIBCGk67Aoe29Ac4CTPDcGwZ73wLdQDOuQLP9
- 8wHG9hT1Mc6bb/5jp7Xed92TVrqeCYfKRVc+XdfDbqbJ8TixG1UDu2a3xkf2H+z+A6Qn7Xk71AA8
- kdJmZg4xpcTshgr2JQSurAswhwDFYQN9r4yxx1BIQqBTBbvqahw9hxRSLOBdFVA89TTOvgSoMaLf
- ABTWOg5Z8lLRNyD7x4WSVHU1DZurThn2HI9Oa561JhTSDUWxq64YqRlmrcdhA73y3rmJY1okotDT
- NzDO2XNGZPnS7A4b6NQ8foQFN2eJmEBR7Du1Q/DRh7R4O50BrGmu0F8i49Iya+ScvtDNqkADB8zD
- pwU9wTu9c8msdNYOO0JvYYyREd9xBOh7zSNc2WMZUYzIDHOpU0Kxe5o9o0eccsr5mNLcwHhC8DoM
- SQkJ5wbUxAdlbDELEpDbclc8sT2gV2HJIrj/si7hDgzPpY4sqxTV+pWkgt7EGesDIFWUnGuK7pkn
- erZoieCVZPGcG3jCJimLwS7IVZY4R3mvoNfzoCfOF0mIG1nna+TadAxzgF5u0b3JTaxcmZtCF1dn
- WSOv63oNl4U3BQCLXOQKWZIHUBWcUci6iuTL7eMOelVAKfp+NkA0kOElN3BbV26AiGZsXEqfa0EQ
- NtATvTAKCeHh7AEEi4knM6S3HwB2eo1zeZQ5fDbgNkCpbEwh8HUTqYDqwUhIG2NQ/k2WH+CVB9LK
- aINy0EeAvgF6KRK0wIaPiX8CioRNpQF7X/8EOnoAPpUvrX8DED7t8B/Bv8ErfnpSfxv4B9rx7BDd
- lxXRAAAAAElFTkSuQmCC
-Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAGFBMVEU2MSswMT5cXXJlX1CC
- hJObl4TMw7br49UydvpeAAACIUlEQVR42oXTTXObMBAG4FWJ7xKpczaYSa84fJw9doKvJLKUq6fA
- 8gtAf7+7CPwxnU537IsevYtWxmD+UfB/qAEEwN9Qg+KS8hFqkEqokEmIO6hBSHWrG0xtQhWG/FVy
- vUAtpo1RFHNFU2QCXg9jX8l7slVrD5/UKVLxIY4PySFOOOOBAlEYJ7R4oNUkiXdyAe4zA22hxIrh
- K4y4TfLOD474FLGHmvbQIgWug4g1w552HvhAtwklMKQJJ6K7yZWYYJPQER/WlZpAJA9tbokwmbfT
- LdG1y40QSjDA0icUAgQVoWS4NvixA7kD2JHAPchQQIDVB+7p13kAgI/eja3BDTwkxJPpnRuzoNqL
- O5CibNE5N+SNvYC4Szw3kFPC2aG/yNUVpCyDrOBWBM0EXx5+6ny0FHDd2/eFpzOfHl7ey7FiQDND
- 6uE0VGPufHmg+Rm+3bkzMzQTvPH1KHFyXcWHcv2SOJNIBad5t8MlYfQWpIyvYPs5Qa9JSvddLQF6
- kJ7hnFLk1wwjPakO5nc320JQLkCf/Sqb/wbFRr66aw1p0HjQZg9PfrGz/fgbVjPkRstsGmKgi0Sd
- 5lgwZJk9gj/WaNC1Ji3wyFBoazIo7HJerF89lNq2KRQGJ2gLrEsseXLKdEf50hlLNGiLumoqBtsV
- qKFEnI6uES9lawkK2+XYyQJZMmtKbKoWGRA1tukzchXYldhhQ0A98UwPDCbQqKkn5vgHawMQkYJi
- arwAAAAASUVORK5CYII=
-In-Reply-To: <1206363318.8927.28.camel@prosummer> (tsgatesv@gmail.com's
-	message of "Mon, 24 Mar 2008 21:55:18 +0900")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.60 (gnu/linux)
+	id S1756287AbYDAUIM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Apr 2008 16:08:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755754AbYDAUIM
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Apr 2008 16:08:12 -0400
+Received: from nf-out-0910.google.com ([64.233.182.184]:2784 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755537AbYDAUIL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Apr 2008 16:08:11 -0400
+Received: by nf-out-0910.google.com with SMTP id g13so960385nfb.21
+        for <git@vger.kernel.org>; Tue, 01 Apr 2008 13:08:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
+        bh=WfUFjyEgTYid1uWGy8qq/dVdmDbRP5ICiLS9NxwYtio=;
+        b=jgpqXPKxdS5DnRnqcOSI8m/CV7p7R/A2IxgcfYNIRPm3YTHIQWyYreCvSyvLNN5emHhWJBKNOkZT5PEBKNQCWQaHymrT7D4Cg115VDFMioKl91QTwfHTBQBK3o3OxbxiHs1A8Nt7jWtB3ZD/emDllFXr5W/psdswmh5BmYQbaj4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
+        b=XGtrqHMljfwVkLfSJz1yKnSsLTUMjEFAd/0jsEVkVsO4qVEjAYVPcNRhtboggE5YHIjzpMhxMrGdN+If/bjZrPLDT/IZP7vnRVwxWWvrahFgKuSmq5VAVj9zQdUwwdq3CdBrK+JiR6BYJRnjZYdhByuT4i9NCyzncFmHlSH+WxY=
+Received: by 10.78.81.2 with SMTP id e2mr24788106hub.13.1207080488916;
+        Tue, 01 Apr 2008 13:08:08 -0700 (PDT)
+Received: from localhost.localdomain ( [83.8.226.198])
+        by mx.google.com with ESMTPS id t10sm647310muh.13.2008.04.01.13.08.06
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 01 Apr 2008 13:08:07 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m31K83d2028998;
+	Tue, 1 Apr 2008 22:08:05 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m31K7krO028991;
+	Tue, 1 Apr 2008 22:07:46 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <200804012232.03559.tlikonen@iki.fi>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78661>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78662>
 
---=-=-=
-Content-Transfer-Encoding: quoted-printable
+Teemu Likonen <tlikonen@iki.fi> writes:
 
-tsgatesv <tsgatesv@gmail.com> writes:
+> As a side note/rant: Git tends to show non-Ascii characters in filenames 
+> as \xxx escape sequences. It's not a big problem but surely it's not 
+> very nice to read if (say) half of the word's letters are escaped like 
+> this. I believe Git is mostly used for tracking source codes where 
+> Ascii-only filenames are a common practice. I'm using Git to develop 
+> Finnish spell-checking system (called Voikko) and we have some 
+> non-Ascii filenames in the repo.
 
-> Make git mode for Emacs full featured git GUI, and not only commit
-> tool, following ideas of PCL-CVS... and its limitation. Existing is
-> today git.el, which is very limited in features, and DVC
-> (http://download.gna.org/dvc), which still doesn't take full advantage
-> of Git's capabilities. Merging git.el and DVC would probably be a good
-> start. Other git GUIs, like git-gui, gitk, qgit, tig could also be
-> inspiration for features.
->
-> Goal: Allow creating and switching branches, examining history,
-> merging, fetching etc. from withing Emacs. Should include modes for
-> git config file format and format-patch patches.
+git-config(1):
 
-This sounds interesting -- I'll check it out.  I'd definitely like to
-make it easy to merge branches from DVC, perhaps by improving the
-DVC-Bookmarks mode.
+  core.quotepath::
+	The commands that output paths (e.g. `ls-files`,
+	`diff`), when not given the `-z` option, will quote
+	"unusual" characters in the pathname by enclosing the
+	pathname in a double-quote pair and with backslashes the
+	same way strings in C source code are quoted.  If this
+	variable is set to false, the bytes higher than 0x80 are
+	not quoted but output as verbatim.  Note that double
+	quote, backslash and control characters are always
+	quoted without `-z` regardless of the setting of this
+	variable.
 
-=2D-=20
-|       Michael Olson  |  FSF Associate Member #652     |
-| http://mwolson.org/  |  Hobbies: Lisp, HCoop          |
-| Projects: Emacs, Muse, ERC, EMMS, ErBot, DVC, Planner |
-`-------------------------------------------------------'
+Since 1.5.2.2 (I think), or at least 1.5.3, so you have new enough
+version of git (git is now at 1.5.5-rc2).
 
---=-=-=
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFH8ozp+1Ho2POo0xkRAlOIAJ9os6AxptJWnbNl9ipoYnAKfthOnQCeLA7w
-a0u//Uw/kNpjxcJwwvaq0CQ=
-=z5EW
------END PGP SIGNATURE-----
---=-=-=--
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
