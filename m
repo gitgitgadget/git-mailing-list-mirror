@@ -1,74 +1,74 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: how do i re-add a file?
-Date: Tue, 1 Apr 2008 13:41:47 +0200
-Message-ID: <20080401114147.GH3264@genesis.frugalware.org>
-References: <47F21814.6000705@tikalk.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Announcement: Git Ltd
+Date: Tue, 1 Apr 2008 13:43:48 +0200 (CEST)
+Message-ID: <alpine.LSU.1.00.0804011332280.4008@racer.site>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="kvUQC+jR9YzypDnK"
-Cc: git@vger.kernel.org
-To: Ittay Dror <ittayd@tikalk.com>
-X-From: git-owner@vger.kernel.org Tue Apr 01 13:42:46 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 01 14:44:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jget1-0002qJ-3S
-	for gcvg-git-2@gmane.org; Tue, 01 Apr 2008 13:42:43 +0200
+	id 1Jgfqy-0006F1-OA
+	for gcvg-git-2@gmane.org; Tue, 01 Apr 2008 14:44:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757754AbYDALlt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Apr 2008 07:41:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756399AbYDALlt
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Apr 2008 07:41:49 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:18431 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757362AbYDALlt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Apr 2008 07:41:49 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 133F41B24F0;
-	Tue,  1 Apr 2008 13:41:48 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id AA5F344659;
-	Tue,  1 Apr 2008 13:38:38 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id C2CA61190A3B; Tue,  1 Apr 2008 13:41:47 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <47F21814.6000705@tikalk.com>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1756530AbYDAMnk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Apr 2008 08:43:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754438AbYDAMnj
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Apr 2008 08:43:39 -0400
+Received: from mail.gmx.net ([213.165.64.20]:37804 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753869AbYDAMnj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Apr 2008 08:43:39 -0400
+Received: (qmail invoked by alias); 01 Apr 2008 12:43:37 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp021) with SMTP; 01 Apr 2008 14:43:37 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+WqV077ISWUdErMSqFSrjiZou9JXxQ4oaCnoS1UG
+	4hHhdxJdDpqBW1
+X-X-Sender: gene099@racer.site
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78652>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78653>
 
+Dear Git list,
 
---kvUQC+jR9YzypDnK
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+after having talked for so long about a company selling and supporting 
+Git, I finally broke down, sat down with the lawyers, and set up the 
+company Git Ltd, based in UK.
 
-On Tue, Apr 01, 2008 at 02:10:12PM +0300, Ittay Dror <ittayd@tikalk.com> wr=
-ote:
-> I did git-rm on a file and committed. Made some changes to my sources and=
-=20
-> committed. Now I want the file back. How can I do that? Related to that,=
-=20
-> how do I revert my files to some past commit state so that the commits in=
-=20
-> between are kept in the history?
+The purpose is to market, sell and support Git for as many customers as we 
+can get.  As a first step, we will sell Git in shrink-wrap boxes starting 
+tomorrow.
 
-git checkout HEAD^ -- path/to/file
+Of course, this means that all of Git's source code will be closed, 
+because we have to sustain our business model _somehow_.  Sorry to all of 
+you guys who do not agree with that.
 
---kvUQC+jR9YzypDnK
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+Just to make sure that the Open Source community is okay with this, I 
+contacted Richard Stallman, and this is what he told me:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.8 (GNU/Linux)
+	If you really have a company marketing Git, that is cool, and I 
+	fully understand that the only option to keep this a viable 
+	business is to go closed source.  It would also be best to move 
+	the headquarters to Pyongyang.
 
-iEYEARECAAYFAkfyH3sACgkQe81tAgORUJY5KgCfcg42LQ1ZNx8fBRwCYxZ2iikl
-MwIAoJuuTr6IzjFgzjCn3JlDkeLvkJm7
-=aGCK
------END PGP SIGNATURE-----
+Graced by those words, Sir Howard Stringer has kindly agreed to take the 
+position of the chair of the board, and Courtenay Valenti will be our CEO.
 
---kvUQC+jR9YzypDnK--
+As a consequence, there will be slight changes to Git: for one, the 
+database format will change so that we can protect our valuable 
+Intellectual Property, and all the exporters will stop to work.
+
+This is a great day for source code management, and I hope you all will 
+enjoy it.
+
+Johannes "Dscho" Schindelin
+Chief Fool Officer
+Git Ltd
+UK
