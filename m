@@ -1,94 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/4] git-gc --auto: add pre-auto-gc hook
-Date: Mon, 31 Mar 2008 21:51:12 -0700
-Message-ID: <7vsky6jhz3.fsf@gitster.siamese.dyndns.org>
-References: <7637ee64f43964d2e514c1598b2e7783d71b8608.1206929014.git.vmiklos
- @frugalware.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Add new git-graph command
+Date: Tue, 1 Apr 2008 01:02:29 -0400
+Message-ID: <20080401050229.GA23876@coredump.intra.peff.net>
+References: <20080330195840.GA8695@adamsimpkins.net> <200803312017.28354.tlikonen@iki.fi> <9b3e2dc20803312105i1f890784v29928321e3e51374@mail.gmail.com> <200804010729.51202.tlikonen@iki.fi>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Bj?rn Steinbrink <B.Steinbrink@gmx.de>, git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Tue Apr 01 06:52:14 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Stephen Sinclair <radarsat1@gmail.com>, git@vger.kernel.org,
+	Adam Simpkins <adam@adamsimpkins.net>
+To: Teemu Likonen <tlikonen@iki.fi>
+X-From: git-owner@vger.kernel.org Tue Apr 01 07:03:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JgYTj-0004cZ-0K
-	for gcvg-git-2@gmane.org; Tue, 01 Apr 2008 06:52:11 +0200
+	id 1JgYeT-0007fx-2f
+	for gcvg-git-2@gmane.org; Tue, 01 Apr 2008 07:03:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751272AbYDAEv1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Apr 2008 00:51:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750927AbYDAEv1
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Apr 2008 00:51:27 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:34195 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750807AbYDAEv1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Apr 2008 00:51:27 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 678922383;
-	Tue,  1 Apr 2008 00:51:24 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 2B85E235F; Tue,  1 Apr 2008 00:51:15 -0400 (EDT)
-In-Reply-To: <7637ee64f43964d2e514c1598b2e7783d71b8608.1206929014.git.vmiklos
- @frugalware.org> (Miklos Vajna's message of "Mon, 31 Mar 2008 11:35:46
- +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751059AbYDAFCd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Apr 2008 01:02:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750868AbYDAFCd
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Apr 2008 01:02:33 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4007 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750748AbYDAFCd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Apr 2008 01:02:33 -0400
+Received: (qmail 29887 invoked by uid 111); 1 Apr 2008 05:02:30 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Tue, 01 Apr 2008 01:02:30 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 01 Apr 2008 01:02:29 -0400
+Content-Disposition: inline
+In-Reply-To: <200804010729.51202.tlikonen@iki.fi>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78627>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78628>
 
-Miklos Vajna <vmiklos@frugalware.org> writes:
+On Tue, Apr 01, 2008 at 07:29:51AM +0300, Teemu Likonen wrote:
 
-> If such a hook is available and exits with a non-zero status, then
-> git-gc --auto won't run.
->
-> Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
-> ---
->  builtin-gc.c |   22 ++++++++++++++++++++++
->  1 files changed, 22 insertions(+), 0 deletions(-)
->
-> diff --git a/builtin-gc.c b/builtin-gc.c
-> index 8cef36f..acd63be 100644
-> --- a/builtin-gc.c
-> +++ b/builtin-gc.c
-> @@ -157,6 +157,25 @@ static int too_many_packs(void)
->  	return gc_auto_pack_limit <= cnt;
->  }
->  
-> +static int run_hook()
-> +{
-> +	const char *argv[2];
-> +	struct child_process hook;
-> +
-> +	argv[0] = git_path("hooks/pre-auto-gc");
-> +	argv[1] = NULL;
+> Adam's 'git graph' is a way of viewing log (in terminal environment), it 
+> looks very similar to 'git log --pretty=oneline' and it accepts very 
+> much the same command line options. That's why I see 'git log' being 
+> logical place for such functionality.
 
-Hmm.  I wonder if the hook wants any parameters, even though I do not
-think of any offhand.
+Adam suggested that it may be possible to abstract the graphing API so
+that it can be called progressively. I would love to see:
 
-> +	if (access(argv[0], X_OK) < 0)
-> +		return 0;
-> +
-> +	memset(&hook, 0, sizeof(hook));
-> +	hook.argv = argv;
-> +	hook.no_stdin = 1;
-> +	hook.stdout_to_stderr = 1;
+  git log --pretty=format:'%g %h %s'
 
-I understand no_stdin, but is there a reason to do stdout_to_stderr?
+where %g would be "the graph lines for this commit." But maybe that is
+not workable since the graph may take multiple lines to show.
 
-> +	return run_command(&hook);
-> +}
+> Actually, to me it would be more logical if 'git whatchanged' was 'git 
+> log --changed' or '--verbose / -v' something.
 
-Don't we want to distinguish between the case where start_command()
-failed, wait_or_whine() failed on waitpid(), the command was killed with
-signal, or the command actually ran correctly and decided that you should
-not run "git gc --auto" by exiting non-zero?
+How about:
 
-I think it is prudent to refrain from running "git gc --auto" in any of
-the failure cases I listed above, but shouldn't the cases other than the
-last one at least issue a warning?
+  git log --raw --full-history --always
+
+which is identical. Though in most cases, one would be happy with "git
+log --raw". I think whatchanged really only exists separately because it
+predates the merging of many of the revision-walking commands.
+
+-Peff
