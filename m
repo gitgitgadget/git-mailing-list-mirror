@@ -1,104 +1,63 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [EGIT PATCH 2/4] FindToolbar port to the new history page.
-Date: Tue, 1 Apr 2008 00:02:41 -0400
-Message-ID: <20080401040241.GQ10274@spearce.org>
-References: <1206890325-3732-1-git-send-email-rogersoares@intelinet.com.br> <20080331061914.GK10274@spearce.org> <47F1AF86.3030503@intelinet.com.br>
+From: "Stephen Sinclair" <radarsat1@gmail.com>
+Subject: Re: [PATCH] Add new git-graph command
+Date: Tue, 1 Apr 2008 00:05:17 -0400
+Message-ID: <9b3e2dc20803312105i1f890784v29928321e3e51374@mail.gmail.com>
+References: <20080330195840.GA8695@adamsimpkins.net>
+	 <200803312017.28354.tlikonen@iki.fi>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, robin.rosenberg@dewire.com
-To: "Roger C. Soares" <rogersoares@intelinet.com.br>
-X-From: git-owner@vger.kernel.org Tue Apr 01 06:03:38 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Adam Simpkins" <adam@adamsimpkins.net>
+To: "Teemu Likonen" <tlikonen@iki.fi>
+X-From: git-owner@vger.kernel.org Tue Apr 01 06:06:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JgXij-0003Jp-HK
-	for gcvg-git-2@gmane.org; Tue, 01 Apr 2008 06:03:37 +0200
+	id 1JgXl3-0003pD-V0
+	for gcvg-git-2@gmane.org; Tue, 01 Apr 2008 06:06:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750792AbYDAECr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Apr 2008 00:02:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750783AbYDAECr
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Apr 2008 00:02:47 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:35204 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750748AbYDAECr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Apr 2008 00:02:47 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1JgXhf-0004lH-32; Tue, 01 Apr 2008 00:02:31 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id D3AB920FBAE; Tue,  1 Apr 2008 00:02:41 -0400 (EDT)
+	id S1750889AbYDAEFT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Apr 2008 00:05:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750814AbYDAEFT
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Apr 2008 00:05:19 -0400
+Received: from rv-out-0910.google.com ([209.85.198.187]:51535 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750807AbYDAEFS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Apr 2008 00:05:18 -0400
+Received: by rv-out-0910.google.com with SMTP id k20so1107855rvb.1
+        for <git@vger.kernel.org>; Mon, 31 Mar 2008 21:05:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=E4ngnkLzwXh5mUbhAUBjHUKO1Yzmeo1Tp42vq0INkPY=;
+        b=OQj56yRjClvTWVGVDjf0gEvHOUMlmhdvUOc8APsCY6Ujj0d5iNgZrdiDPO2Zr1JHsz3sxFJouK1/egbvVSfDGqlW28KdYturWmvX8QtuvU6JCbK0MZ+/51+t8v49JIZrT8WrFTm5s9p4OqtwOmlXPE5jK4WMr9O5CWqVJ6o3Oeg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=WgJWV73nbGWPuogbIWNFjtGL6xGlD2QANVCkeZZngvWiYScU2ClBK9fQJEesmZFl/e22OI7CzDZtxrX5BhmQMf32x5IBUSIVNi0o5ciduSjA7muaux+FENugEE/ygfx495yRAXEU/MjLG+tq7Ljt2vN8jwjLgdfebTt2a055Drs=
+Received: by 10.141.177.2 with SMTP id e2mr3942075rvp.268.1207022717860;
+        Mon, 31 Mar 2008 21:05:17 -0700 (PDT)
+Received: by 10.141.66.3 with HTTP; Mon, 31 Mar 2008 21:05:17 -0700 (PDT)
+In-Reply-To: <200803312017.28354.tlikonen@iki.fi>
 Content-Disposition: inline
-In-Reply-To: <47F1AF86.3030503@intelinet.com.br>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78623>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78624>
 
-"Roger C. Soares" <rogersoares@intelinet.com.br> wrote:
-> Shawn O. Pearce escreveu:
-> >Hmm.  So what functionality did the highlight flag + RevFilter
-> >not get you?  It supports both regex as well as non-regex matches,
-> >is quick, and can be joined together with other filters.  A lot of
-> >the code in the FindToolbarThread should drop out.
-> 
-> Ok, so, my motivation first. I don't have too much time to work on egit 
-> but I'm interested in using your work in my build. So, I'm pushing the 
-> features I need. This patch was intended as a simple port of the 
-> existing FindToolbar to the new history page so I can use it.
+On Mon, Mar 31, 2008 at 1:17 PM, Teemu Likonen <tlikonen@iki.fi> wrote:
+>  I just want to say that I really like your 'git graph'. I would like to
+>  see it integrated to 'git log', perhaps as 'git log --pretty=graph'
+>  or 'git log --graph'.
 
-OK, that makes sense.  Under that basis I'm willing to take your port
-in, especially if the other items I mentioned that you said "Ok" to
-were cleaned up.
+Any reason?
 
-> I tried the applyFlags you described but it doesn't have a monitor 
-> approach to give feedback to the toolbar so it knows when to refresh the 
-> table and to select the first match, or to go red when nothing was 
-> found. I also couldn't find from the highlight flag + RevFilter solution 
-> how to get the total rows encountered and the index of a match so the 
-> toolbar can show that the selected match is number 2 from 10.
+I don't see why it's necessary to bundle all useful commands into one
+big super-command.  I like the idea of typing "git-graph".
+Then again, I happen to like the git-command syntax which seems to
+have fallen out of favour, so don't pay attention to me.
 
-OK.  Major gaps in the jgit API.  I now understand better what you
-were needing here.  I'll probably go another around on that API
-soon and see if I can't update your port once I have these things
-down at the jgit level.
- 
-> So, this patch was intented as a port. I'm not sure everything related 
-> to search should go inside jgit, but I agree that RevFilters should be 
-> reused. I was thinking about it as an improvement after the port, it's 
-> not my priority right now but someone else can do it? ;)
 
-Right.  :)
-
-> >So this is doing basically the same thing as the highlight RevFlag
-> >(give a boolean about match status for a given RevCommit) but needs
-> >to consult a HashMap by creating a temporary boxed Integer, and this
-> >is deep down inside of the painting code for the table.  Urrgh.
-> 
-> The map is used to give the x from total information. When using a 
-> VIRTUAL table it doesn't have a noticable performance impact because 
-> only a small set is required at a time.
-
-Hmm.  Not really.  We're still beating on that paint listener every
-time the screen needs to draw.  I don't think SWT is double buffering
-the table either, so every redraw event is coming through this code.
-Be nice if we didn't have to suffer through a HashMap hit every time.
-
-> >Would it make sense to abstract out and reuse the BooleanPrefAction
-> >class I added to GitHistoryPage in ea3f1e7a7684b8?  
-> >  
-> Probably, I'll get a look on it.
-
-This is maybe something to clean up later, after the port is
-initially in my tree.
-
--- 
-Shawn.
+Steve
