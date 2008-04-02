@@ -1,73 +1,61 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: "stg reset --status" doesn't just reset status
-Date: Tue, 01 Apr 2008 22:21:24 -0400
-Message-ID: <20080401222124.1b4niqtm0ogw40sk@webmail.spamcop.net>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH] help: Add a missing OPT_END().
+Date: Wed, 2 Apr 2008 05:47:41 +0200
+Message-ID: <20080402054741.24d95299.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
-	DelSp=Yes	format=flowed
-Content-Transfer-Encoding: 7BIT
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 02 04:22:11 2008
+To: Junio Hamano <junkio@cox.net>, Jeff King <peff@peff.net>,
+	Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Wed Apr 02 05:43:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jgsc6-0005CN-2k
-	for gcvg-git-2@gmane.org; Wed, 02 Apr 2008 04:22:10 +0200
+	id 1JgtsG-0005XM-KP
+	for gcvg-git-2@gmane.org; Wed, 02 Apr 2008 05:42:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752693AbYDBCV0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Apr 2008 22:21:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754947AbYDBCV0
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Apr 2008 22:21:26 -0400
-Received: from c60.cesmail.net ([216.154.195.49]:10361 "EHLO c60.cesmail.net"
+	id S1755353AbYDBDmN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Apr 2008 23:42:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755017AbYDBDmN
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Apr 2008 23:42:13 -0400
+Received: from smtp1-g19.free.fr ([212.27.42.27]:49664 "EHLO smtp1-g19.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752292AbYDBCVZ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 Apr 2008 22:21:25 -0400
-Received: from unknown (HELO delta2) ([192.168.1.50])
-  by c60.cesmail.net with ESMTP; 01 Apr 2008 22:21:24 -0400
-Received: from pool-96-227-100-231.phlapa.east.verizon.net
-	(pool-96-227-100-231.phlapa.east.verizon.net [96.227.100.231]) by
-	webmail.spamcop.net (Horde MIME library) with HTTP; Tue, 01 Apr 2008
-	22:21:24 -0400
-Content-Disposition: inline
-User-Agent: Internet Messaging Program (IMP) H3 (4.1.4)
+	id S1752869AbYDBDmN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Apr 2008 23:42:13 -0400
+Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 30EDC1AB2BC;
+	Wed,  2 Apr 2008 05:42:11 +0200 (CEST)
+Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with SMTP id 9A2C51AB2BD;
+	Wed,  2 Apr 2008 05:42:10 +0200 (CEST)
+X-Mailer: Sylpheed 2.5.0beta1 (GTK+ 2.12.9; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78676>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78677>
 
-Hello!
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ help.c |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
-I used to see messages like this:
+	Some comments in "parse-options.h" say it is needed,
+	though I did not see a crash without it.
 
-$ stg pull
-Checking for changes in the working directory ... done
-stg pull: local changes in the tree. Use "refresh" or "status --reset"
-
-This time I decided to see what "stg reset --status" actually does,  
-and I was unpleasantly surprised that it would do much more that its  
-name implies.
-
-It doesn't just reset the status (no idea what it would be, but it  
-doesn't sound scary).  It removes all local changes.  It's essentially  
-"git reset --hard".  I can easily imagine that some beginner would  
-lose valuable changes by following that advice while trying to update  
-from the upstream repository.
-
-I would hate to suggest another stg command, as there are too many of  
-them already.  On the other hand, if "applied" and "unapplied" are  
-downgraded to switches for "stg series", we probably could justify  
-adding one more command, "stg reset".  By the way, the default could  
-be to save the changes to a hidden "stash" patch, and the "--hard"  
-switch would do a real reset.
-
-Another (not alternative) approach would be to have an option to "stg  
-pull" to save the changes as a temporary patch that would be applied  
-and deleted if it applied cleanly.  That shouldn't be a default for  
-"stg pull", as it's likely that the user just forgot "stg refresh".
-
+diff --git a/help.c b/help.c
+index ecaca77..10298fb 100644
+--- a/help.c
++++ b/help.c
+@@ -30,6 +30,7 @@ static struct option builtin_help_options[] = {
+ 			HELP_FORMAT_WEB),
+ 	OPT_SET_INT('i', "info", &help_format, "show info page",
+ 			HELP_FORMAT_INFO),
++	OPT_END(),
+ };
+ 
+ static const char * const builtin_help_usage[] = {
 -- 
-Regards,
-Pavel Roskin
+1.5.5.rc2.6.gf58d
