@@ -1,73 +1,66 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: "stg reset --status" doesn't just reset status
-Date: Wed, 2 Apr 2008 14:00:26 +0200
-Message-ID: <20080402120026.GA17241@diana.vm.bytemark.co.uk>
-References: <20080401222124.1b4niqtm0ogw40sk@webmail.spamcop.net>
+From: Peter Eriksen <s022018@student.dtu.dk>
+Subject: Re: Hard link problem during build
+Date: 02 Apr 2008 14:12:11 +0200
+Message-ID: <yqsr1w5oa21w.fsf@rifpc20.inf.ethz.ch>
+References: <606CC410B038E34CB97646A32D0EC0BF09E1A4@venusbis.synchrotron-soleil.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
-To: Pavel Roskin <proski@gnu.org>
-X-From: git-owner@vger.kernel.org Wed Apr 02 14:02:22 2008
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 02 14:13:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jh1ez-0006O2-PI
-	for gcvg-git-2@gmane.org; Wed, 02 Apr 2008 14:01:46 +0200
+	id 1Jh1qF-00024D-In
+	for gcvg-git-2@gmane.org; Wed, 02 Apr 2008 14:13:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753234AbYDBMBA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Apr 2008 08:01:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753073AbYDBMBA
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Apr 2008 08:01:00 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1050 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752846AbYDBMBA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Apr 2008 08:01:00 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1Jh1dj-0004gU-00; Wed, 02 Apr 2008 13:00:27 +0100
-Content-Disposition: inline
-In-Reply-To: <20080401222124.1b4niqtm0ogw40sk@webmail.spamcop.net>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1755464AbYDBMMe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Apr 2008 08:12:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754303AbYDBMMd
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Apr 2008 08:12:33 -0400
+Received: from main.gmane.org ([80.91.229.2]:55392 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755291AbYDBMMd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Apr 2008 08:12:33 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Jh1pH-00082Z-DR
+	for git@vger.kernel.org; Wed, 02 Apr 2008 12:12:23 +0000
+Received: from rifpc20.inf.ethz.ch ([129.132.45.20])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 02 Apr 2008 12:12:23 +0000
+Received: from s022018 by rifpc20.inf.ethz.ch with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 02 Apr 2008 12:12:23 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: rifpc20.inf.ethz.ch
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78691>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78692>
 
-On 2008-04-01 22:21:24 -0400, Pavel Roskin wrote:
+...
+> I am working with a filesystem mounted via nfs.
+...
 
-> This time I decided to see what "stg reset --status" actually does,
-> and I was unpleasantly surprised that it would do much more that its
-> name implies.
->
-> It doesn't just reset the status (no idea what it would be, but it
-> doesn't sound scary). It removes all local changes. It's essentially
-> "git reset --hard". I can easily imagine that some beginner would
-> lose valuable changes by following that advice while trying to
-> update from the upstream repository.
->
-> I would hate to suggest another stg command, as there are too many
-> of them already. On the other hand, if "applied" and "unapplied" are
-> downgraded to switches for "stg series", we probably could justify
-> adding one more command, "stg reset". By the way, the default could
-> be to save the changes to a hidden "stash" patch, and the "--hard"
-> switch would do a real reset.
+> It seems that it do not allow hard linkage. Nevertheless soft linkage
+> is allow.
 
-(I assume "stg reset --status" is just a typo for "stg status
---reset"?)
+Beware that git depends on that stat() gives the correct (Posix) size of
+symlinks. This can give problems, if a Windows filesystem is mounted
+over NFS.
 
-I'd be fine with removing status --reset, but since there is currently
-no other way to do this in StGit, I expect Catalin would object. (As I
-recall, that's precisely what happened when I did try to remove it
-some time ago.)
+> So the build process failed during the link of built-in commands.
+> git-merge-subtree$X: target and
+> $(BUILT_INS): target.
+> 
+> Is it necessary to do hard link instead of soft link ?
 
-I'm currently (slowly) working on an "stg reset" command that'll be
-able to reset the stack to any prior state. It could be made to reset
-to the most recent recorded state if no extra argument is given, which
-I think would make it do what you want.
+You can change the Makefile (look for calls to 'ln') to copy the build-in
+commands instead of linking them, and that should work (but waste some
+space).
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+Peter
