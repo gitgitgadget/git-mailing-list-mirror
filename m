@@ -1,69 +1,64 @@
-From: Kalle Olavi Niemitalo <kon@iki.fi>
-Subject: undocumented git pack-objects --unpacked=file
-Date: Wed, 02 Apr 2008 09:35:38 +0300
-Message-ID: <873aq4sr0l.fsf@Astalo.kon.iki.fi>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: how do i revert to a previous version, keeping the history
+Date: Wed, 02 Apr 2008 00:12:52 -0700
+Message-ID: <7vfxu4afwr.fsf@gitster.siamese.dyndns.org>
+References: <47F32CBE.2040305@tikalk.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-	micalg=pgp-sha1; protocol="application/pgp-signature"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 02 09:09:36 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Ittay Dror <ittayd@tikalk.com>
+X-From: git-owner@vger.kernel.org Wed Apr 02 09:13:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jgx6F-0001f2-4W
-	for gcvg-git-2@gmane.org; Wed, 02 Apr 2008 09:09:35 +0200
+	id 1JgxAM-0002pC-QE
+	for gcvg-git-2@gmane.org; Wed, 02 Apr 2008 09:13:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756986AbYDBHIw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Apr 2008 03:08:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756700AbYDBHIw
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Apr 2008 03:08:52 -0400
-Received: from 85-23-34-109-Rajakyla-TR1.suomi.net ([85.23.34.109]:58762 "EHLO
-	Astalo.kon.iki.fi" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752888AbYDBHIv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Apr 2008 03:08:51 -0400
-X-Greylist: delayed 1977 seconds by postgrey-1.27 at vger.kernel.org; Wed, 02 Apr 2008 03:08:51 EDT
-Received: from Kalle by Astalo.kon.iki.fi with local (Exim 4.52)
-	id 1JgwZc-0005QD-Fp; Wed, 02 Apr 2008 09:35:52 +0300
-User-Agent: Gnus/5.110007 (No Gnus v0.7) Emacs/22.0.51 (gnu/linux)
-X-Accept-Language: fi;q=1.0, en;q=0.9, sv;q=0.5, de;q=0.1
+	id S1758134AbYDBHNH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Apr 2008 03:13:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751724AbYDBHNH
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Apr 2008 03:13:07 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:49882 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756094AbYDBHNG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Apr 2008 03:13:06 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id E12A04792;
+	Wed,  2 Apr 2008 03:13:01 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 8F3D74790; Wed,  2 Apr 2008 03:12:55 -0400 (EDT)
+In-Reply-To: <47F32CBE.2040305@tikalk.com> (Ittay Dror's message of "Wed, 02
+ Apr 2008 09:50:38 +0300")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78686>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78687>
 
---=-=-=
+Ittay Dror <ittayd@tikalk.com> writes:
 
-A child process of "git repack -a -d -f" was doing:
+> I have this revision history: A-B
+> I want to go back to the code in A, but keep B in the history: A-B-A
+>
+> How do I do that?
 
-  PID TTY      STAT   TIME COMMAND
-20178 pts/3    R+   491:31 git pack-objects --non-empty --all --reflog --unpacked=pack-41dbbd4c9b63110b8122f9d78a15668aa6b2b273.pack
+Straight answer (iow, what you asked, which may not match what you wanted
+to really do):
 
-The git-pack-objects(1) manual page describes:
+	$ git read-tree -m -u A
+        $ git commit -m 'Revert to A'
 
-| git-pack-objects [-q] [--no-reuse-delta] [--delta-base-offset] [--non-empty]
-|         [--local] [--incremental] [--window=N] [--depth=N] [--all-progress]
-|         [--revs [--unpacked | --all]*] [--stdout | base-name] < object-list
-...
-| --unpacked
-|         This implies --revs. When processing the list of revision
-|         arguments read from the standard input, limit the objects
-|         packed to those that are not already packed.
+Probably a more useful answer, guessing what you really wanted to do:
 
-However, it does not say what
---unpacked=pack-41dbbd4c9b63110b8122f9d78a15668aa6b2b273.pack
-might mean.  grep unpacked= Documentation/* did not find anything
-either.  Could you please document the meaning of this option?
+You have a botched commit F that was in the sequence of longer commits,
+A--B--C--D--E--F--G--H, and you want to recover from the mistake F made
+(iow, the change between E and F is bad):
 
---=-=-=
-Content-Type: application/pgp-signature
+	$ git revert F
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFH8ylIHm9IGt60eMgRAsc3AKCleMc0cJg/6a0Lx03zZcmOesdp0gCcCmUo
-5n/3jmI2fXeiZVg/BUjnBjU=
-=nsxO
------END PGP SIGNATURE-----
---=-=-=--
+This will make your history A--B--C--D--E--F--G--H--F' where the
+difference between H and F' counteracts what F did relative to E.
