@@ -1,73 +1,62 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] cvsps/cvsimport: fix branch point calculation and broken
- branch imports
-Date: Wed, 02 Apr 2008 12:29:17 -0700
-Message-ID: <7vprt8838y.fsf@gitster.siamese.dyndns.org>
-References: <1207100091.10532.64.camel@gandalf.cobite.com>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [PATCH 0/3] add pre-auto-gc hook for git-gc --auto (try3)
+Date: Wed, 2 Apr 2008 21:34:21 +0200
+Message-ID: <cover.1207164676.git.vmiklos@frugalware.org>
+References: <cover.1207049697.git.vmiklos@frugalware.org> <7vhceldv12.fsf@gitster.siamese.dyndns.org> <20080402011447.GO3264@genesis.frugalware.org> <7vwsngaoqg.fsf@gitster.siamese.dyndns.org> <20080402190240.GV3264@genesis.frugalware.org> <7vtzik848t.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: David Mansfield <david@cobite.com>
-X-From: git-owner@vger.kernel.org Wed Apr 02 21:30:27 2008
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Bj?rn Steinbrink <B.Steinbrink@gmx.de>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 02 21:35:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jh8f5-00077l-OK
-	for gcvg-git-2@gmane.org; Wed, 02 Apr 2008 21:30:20 +0200
+	id 1Jh8ji-0000aI-Cx
+	for gcvg-git-2@gmane.org; Wed, 02 Apr 2008 21:35:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757023AbYDBT3g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Apr 2008 15:29:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757179AbYDBT3g
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Apr 2008 15:29:36 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:59605 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757023AbYDBT3f (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Apr 2008 15:29:35 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id F092240EF;
-	Wed,  2 Apr 2008 15:29:30 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 4BCBB40ED; Wed,  2 Apr 2008 15:29:24 -0400 (EDT)
-In-Reply-To: <1207100091.10532.64.camel@gandalf.cobite.com> (David
- Mansfield's message of "Tue, 01 Apr 2008 21:34:51 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1757899AbYDBTeX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Apr 2008 15:34:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755251AbYDBTeX
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Apr 2008 15:34:23 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:24890 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757882AbYDBTeX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Apr 2008 15:34:23 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id E94791B25AC;
+	Wed,  2 Apr 2008 21:34:21 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id A84C8446A7;
+	Wed,  2 Apr 2008 21:31:10 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 580B31190A16; Wed,  2 Apr 2008 21:34:21 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <7vtzik848t.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78704>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78705>
 
-David Mansfield <david@cobite.com> writes:
+On Wed, Apr 02, 2008 at 12:07:46PM -0700, Junio C Hamano <gitster@pobox.com> wrote:
+> > What is your opinion here?
+> >
+> > 1) Just don't add such an empty template for pre-auto-gc.
 
-> In case you're wondering, I'm actually the original author of cvsps,
-> which is behind the scenes for cvsimport.  I don't call myself
-> maintainer because I've hardly been that over the last few years.
->
-> Anyway, the fix to cvsps is attached (1st 2 patches) as well as the
-> patch to git-cvsimport.perl (2nd 2 patches) against the master branch as
-> of today's git repo.
->
-> The cvsps patches apply with fuzz against the 2.1 version which is out
-> there.
+Ok, here it is. Ah and I forgot to mention in my previous mail that yes,
+checking for '1' in /sys/class/power_supply/AC/online is right, just
+checked.
 
-When output from an unfixed cvsps is fed to the updated cvsimport, does it
-gracefully do the wrong thing (iow, create the same broken history not too
-much worse than the original)?
+Miklos Vajna (3):
+  git-gc --auto: add pre-auto-gc hook
+  Documentation/hooks: add pre-auto-gc hook
+  contrib/hooks: add an example pre-auto-gc hook
 
-> @@ -826,12 +824,9 @@ while (<CVS>) {
->  		$branch = $_;
->  		$state = 5;
->  	} elsif ($state == 5 and s/^Ancestor branch:\s+//) {
-> -		s/\s+$//;
-> -		$ancestor = $_;
-> -		$ancestor = $opt_o if $ancestor eq "HEAD";
-> +		# now ignored.  see 'Branches' below
->  		$state = 6;
->  	} elsif ($state == 5) {
-> -		$ancestor = undef;
->  		$state = 6;
->  		redo;
->  	} elsif ($state == 6 and s/^Tag:\s+//) {
+ Documentation/hooks.txt           |    7 ++++++
+ builtin-gc.c                      |   31 +++++++++++++++++++++++++++++
+ contrib/hooks/pre-auto-gc-battery |   39 +++++++++++++++++++++++++++++++++++++
+ 3 files changed, 77 insertions(+), 0 deletions(-)
+ create mode 100644 contrib/hooks/pre-auto-gc-battery
