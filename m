@@ -1,64 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: how do i revert to a previous version, keeping the history
-Date: Wed, 02 Apr 2008 00:12:52 -0700
-Message-ID: <7vfxu4afwr.fsf@gitster.siamese.dyndns.org>
-References: <47F32CBE.2040305@tikalk.com>
+From: =?iso-8859-1?Q?PICCA_Fr=E9d=E9ric-Emmanuel?= 
+	<frederic-emmanuel.picca@synchrotron-soleil.fr>
+Subject: Hard link problem during build
+Date: Wed, 2 Apr 2008 09:52:01 +0200
+Message-ID: <606CC410B038E34CB97646A32D0EC0BF09E1A4@venusbis.synchrotron-soleil.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Ittay Dror <ittayd@tikalk.com>
-X-From: git-owner@vger.kernel.org Wed Apr 02 09:13:51 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Apr 02 10:13:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JgxAM-0002pC-QE
-	for gcvg-git-2@gmane.org; Wed, 02 Apr 2008 09:13:51 +0200
+	id 1Jgy5s-0003Ng-8k
+	for gcvg-git-2@gmane.org; Wed, 02 Apr 2008 10:13:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758134AbYDBHNH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Apr 2008 03:13:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751724AbYDBHNH
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Apr 2008 03:13:07 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:49882 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756094AbYDBHNG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Apr 2008 03:13:06 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id E12A04792;
-	Wed,  2 Apr 2008 03:13:01 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 8F3D74790; Wed,  2 Apr 2008 03:12:55 -0400 (EDT)
-In-Reply-To: <47F32CBE.2040305@tikalk.com> (Ittay Dror's message of "Wed, 02
- Apr 2008 09:50:38 +0300")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1755063AbYDBIMc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Apr 2008 04:12:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754899AbYDBIMc
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Apr 2008 04:12:32 -0400
+Received: from raclette.synchrotron-soleil.fr ([195.221.0.6]:38572 "EHLO
+	raclette.synchrotron-soleil.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753879AbYDBIMa convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 2 Apr 2008 04:12:30 -0400
+X-Greylist: delayed 1218 seconds by postgrey-1.27 at vger.kernel.org; Wed, 02 Apr 2008 04:12:30 EDT
+Received: from localhost (unknown [127.0.0.1])
+	by raclette.synchrotron-soleil.fr (Postfix) with ESMTP id 399B2300D2
+	for <git@vger.kernel.org>; Wed,  2 Apr 2008 07:43:04 +0000 (UTC)
+X-Virus-Scanned: amavisd-new at synchrotron-soleil.fr
+Received: from raclette.synchrotron-soleil.fr ([127.0.0.1])
+	by localhost (raclette.synchrotron-soleil.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id SFX+I+3hMgwq for <git@vger.kernel.org>;
+	Wed,  2 Apr 2008 09:42:55 +0200 (CEST)
+Received: from venusbis.synchrotron-soleil.fr (venusbis.synchrotron-soleil.fr [195.221.0.152])
+	by raclette.synchrotron-soleil.fr (Postfix) with ESMTP id 32711300C4
+	for <git@vger.kernel.org>; Wed,  2 Apr 2008 09:42:55 +0200 (CEST)
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: Hard link problem during build
+Thread-Index: AciUlm+J0YGlFLlaQEm6CzbFe2V12Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78687>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78688>
 
-Ittay Dror <ittayd@tikalk.com> writes:
+Hello
 
-> I have this revision history: A-B
-> I want to go back to the code in A, but keep B in the history: A-B-A
->
-> How do I do that?
+I am working with a filesystem mounted via nfs.
+this system is
+http://www.active-circle.com/contenu-29-gb.htm
 
-Straight answer (iow, what you asked, which may not match what you wanted
-to really do):
+It seems that it do not allow hard linkage. Nevertheless soft linkage i=
+s allow.
 
-	$ git read-tree -m -u A
-        $ git commit -m 'Revert to A'
+So the build process failed during the link of built-in commands.
+git-merge-subtree$X: target and
+$(BUILT_INS): target.
 
-Probably a more useful answer, guessing what you really wanted to do:
+Is it necessary to do hard link instead of soft link ?
 
-You have a botched commit F that was in the sequence of longer commits,
-A--B--C--D--E--F--G--H, and you want to recover from the mistake F made
-(iow, the change between E and F is bad):
+Thanks
 
-	$ git revert F
-
-This will make your history A--B--C--D--E--F--G--H--F' where the
-difference between H and F' counteracts what F did relative to E.
+=46r=E9d=E9ric
