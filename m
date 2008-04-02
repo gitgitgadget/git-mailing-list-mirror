@@ -1,68 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: BUG: "git add --interactive" does not work with UTF-8 filenames
-Date: Tue, 01 Apr 2008 17:41:00 -0700
-Message-ID: <7v63v1ccmb.fsf@gitster.siamese.dyndns.org>
-References: <200804012232.03559.tlikonen@iki.fi>
- <m3y77xtk32.fsf@localhost.localdomain>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: [PATCH 0/4] add pre-auto-gc hook for git-gc --auto (try2)
+Date: Wed, 2 Apr 2008 03:14:47 +0200
+Message-ID: <20080402011447.GO3264@genesis.frugalware.org>
+References: <cover.1207049697.git.vmiklos@frugalware.org> <7vhceldv12.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Teemu Likonen <tlikonen@iki.fi>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 02 02:42:03 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="jQIvE3yXcK9X9HBh"
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Bj?rn Steinbrink <B.Steinbrink@gmx.de>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 02 03:15:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jgr35-00074M-3J
-	for gcvg-git-2@gmane.org; Wed, 02 Apr 2008 02:41:55 +0200
+	id 1JgrZn-0006sL-Q1
+	for gcvg-git-2@gmane.org; Wed, 02 Apr 2008 03:15:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753885AbYDBAlM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Apr 2008 20:41:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753516AbYDBAlM
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Apr 2008 20:41:12 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:33135 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752033AbYDBAlL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Apr 2008 20:41:11 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id B12421F8F;
-	Tue,  1 Apr 2008 20:41:06 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id D6D831F8C; Tue,  1 Apr 2008 20:41:02 -0400 (EDT)
-In-Reply-To: <m3y77xtk32.fsf@localhost.localdomain> (Jakub Narebski's message
- of "Tue, 01 Apr 2008 13:08:07 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751923AbYDBBOu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Apr 2008 21:14:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752292AbYDBBOu
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Apr 2008 21:14:50 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:21702 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751703AbYDBBOu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Apr 2008 21:14:50 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 8B77E1B2503;
+	Wed,  2 Apr 2008 03:14:48 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id B871A446A3;
+	Wed,  2 Apr 2008 03:11:37 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 866801190A16; Wed,  2 Apr 2008 03:14:47 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <7vhceldv12.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78672>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78673>
 
-Jakub Narebski <jnareb@gmail.com> writes:
 
-> git-config(1):
->
->   core.quotepath::
-> 	The commands that output paths (e.g. `ls-files`,
-> 	`diff`), when not given the `-z` option, will quote
-> 	"unusual" characters in the pathname by enclosing the
-> 	pathname in a double-quote pair and with backslashes the
-> 	same way strings in C source code are quoted.  If this
-> 	variable is set to false, the bytes higher than 0x80 are
-> 	not quoted but output as verbatim.  Note that double
-> 	quote, backslash and control characters are always
-> 	quoted without `-z` regardless of the setting of this
-> 	variable.
->
-> Since 1.5.2.2 (I think), or at least 1.5.3, so you have new enough
-> version of git (git is now at 1.5.5-rc2).
+--jQIvE3yXcK9X9HBh
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Yes, but I do not think "add -i" unwraps the path quoting.  I think it
-should, but I do not think I bothered to.  Because it is trivial to do by
-any aspiring git hacker wannabes, I left it as an exercise to readers when
-I did the "interactive" as a quick-and-dirty hack (aka "demonstration").
+On Tue, Apr 01, 2008 at 04:18:01PM -0700, Junio C Hamano <gitster@pobox.com=
+> wrote:
+> > - removed unnecessary stdout_to_stderr from builtin-gc.c::run_hook()
+>=20
+> Wait, a, minute, please.  Not so fast.  I did not say "I think this is
+> wrong, please fix it".
+>=20
+> I only asked why it is so.
+>=20
+> Care to explain why it was thought to be necessary, and why you now think
+> it is unnecessary?
 
-Somehow nobody found an itch to improve it until now, but it seems that we
-found a volunteer with the itch ;-)
+Ok, let me explain. I think it would be logical to put it to stderr, as
+the other gc --auto messages are there, as well. See the fprintf() in
+cmd_gc().
+
+Though, I don't think it's that important, so I thought if you think
+it's unnecessary, I would not argue for it.
+
+So may I put it back? :)
+
+Also, is the other parts of the series looks correct?
+
+Thanks
+
+--jQIvE3yXcK9X9HBh
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.8 (GNU/Linux)
+
+iEYEARECAAYFAkfy3gcACgkQe81tAgORUJYgXQCfbkwidduBZrY9lmnw5z1ki7ib
+igQAoKYsqLBdQf+zI44cvIpEUcDAj50t
+=Tsmx
+-----END PGP SIGNATURE-----
+
+--jQIvE3yXcK9X9HBh--
