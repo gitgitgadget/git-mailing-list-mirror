@@ -1,52 +1,69 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: how do i revert to a previous version, keeping the history
-Date: Wed, 02 Apr 2008 08:57:42 +0200
-Message-ID: <47F32E66.1010705@viscovery.net>
-References: <47F32CBE.2040305@tikalk.com>
+From: Kalle Olavi Niemitalo <kon@iki.fi>
+Subject: undocumented git pack-objects --unpacked=file
+Date: Wed, 02 Apr 2008 09:35:38 +0300
+Message-ID: <873aq4sr0l.fsf@Astalo.kon.iki.fi>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Ittay Dror <ittayd@tikalk.com>
-X-From: git-owner@vger.kernel.org Wed Apr 02 08:58:32 2008
+Content-Type: multipart/signed; boundary="=-=-=";
+	micalg=pgp-sha1; protocol="application/pgp-signature"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 02 09:09:36 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JgwvU-0007Cv-Jl
-	for gcvg-git-2@gmane.org; Wed, 02 Apr 2008 08:58:29 +0200
+	id 1Jgx6F-0001f2-4W
+	for gcvg-git-2@gmane.org; Wed, 02 Apr 2008 09:09:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753813AbYDBG5q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Apr 2008 02:57:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752155AbYDBG5q
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Apr 2008 02:57:46 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:22315 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752053AbYDBG5q (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Apr 2008 02:57:46 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1Jgwto-0003pN-B8; Wed, 02 Apr 2008 08:56:44 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id E4F8BAFCC; Wed,  2 Apr 2008 08:57:42 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <47F32CBE.2040305@tikalk.com>
-X-Spam-Score: 0.2 (/)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_80=2
+	id S1756986AbYDBHIw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Apr 2008 03:08:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756700AbYDBHIw
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Apr 2008 03:08:52 -0400
+Received: from 85-23-34-109-Rajakyla-TR1.suomi.net ([85.23.34.109]:58762 "EHLO
+	Astalo.kon.iki.fi" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752888AbYDBHIv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Apr 2008 03:08:51 -0400
+X-Greylist: delayed 1977 seconds by postgrey-1.27 at vger.kernel.org; Wed, 02 Apr 2008 03:08:51 EDT
+Received: from Kalle by Astalo.kon.iki.fi with local (Exim 4.52)
+	id 1JgwZc-0005QD-Fp; Wed, 02 Apr 2008 09:35:52 +0300
+User-Agent: Gnus/5.110007 (No Gnus v0.7) Emacs/22.0.51 (gnu/linux)
+X-Accept-Language: fi;q=1.0, en;q=0.9, sv;q=0.5, de;q=0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78685>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78686>
 
-Ittay Dror schrieb:
-> I have this revision history: A-B
-> I want to go back to the code in A, but keep B in the history: A-B-A
-> 
-> How do I do that?
+--=-=-=
 
-git revert HEAD
+A child process of "git repack -a -d -f" was doing:
 
--- Hannes
+  PID TTY      STAT   TIME COMMAND
+20178 pts/3    R+   491:31 git pack-objects --non-empty --all --reflog --unpacked=pack-41dbbd4c9b63110b8122f9d78a15668aa6b2b273.pack
+
+The git-pack-objects(1) manual page describes:
+
+| git-pack-objects [-q] [--no-reuse-delta] [--delta-base-offset] [--non-empty]
+|         [--local] [--incremental] [--window=N] [--depth=N] [--all-progress]
+|         [--revs [--unpacked | --all]*] [--stdout | base-name] < object-list
+...
+| --unpacked
+|         This implies --revs. When processing the list of revision
+|         arguments read from the standard input, limit the objects
+|         packed to those that are not already packed.
+
+However, it does not say what
+--unpacked=pack-41dbbd4c9b63110b8122f9d78a15668aa6b2b273.pack
+might mean.  grep unpacked= Documentation/* did not find anything
+either.  Could you please document the meaning of this option?
+
+--=-=-=
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFH8ylIHm9IGt60eMgRAsc3AKCleMc0cJg/6a0Lx03zZcmOesdp0gCcCmUo
+5n/3jmI2fXeiZVg/BUjnBjU=
+=nsxO
+-----END PGP SIGNATURE-----
+--=-=-=--
