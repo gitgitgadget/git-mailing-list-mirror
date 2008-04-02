@@ -1,82 +1,55 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: Can I switch a git-svn clone from a file => http url?
-Date: Wed, 2 Apr 2008 17:17:21 +0200
-Message-ID: <20080402151721.GA31738@atjola.homenet>
-References: <p06240804c41942f6276e@[192.168.1.114]>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: BUG: "git add --interactive" does not work with UTF-8 filenames
+Date: Wed, 02 Apr 2008 08:50:07 -0700
+Message-ID: <7v3aq49ryo.fsf@gitster.siamese.dyndns.org>
+References: <200804012232.03559.tlikonen@iki.fi>
+ <m3y77xtk32.fsf@localhost.localdomain>
+ <7v63v1ccmb.fsf@gitster.siamese.dyndns.org>
+ <200804021317.16007.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Stephen Bannasch <stephen.bannasch@deanbrook.org>
-X-From: git-owner@vger.kernel.org Wed Apr 02 17:18:22 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Teemu Likonen <tlikonen@iki.fi>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 02 17:51:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jh4j3-0006jo-GV
-	for gcvg-git-2@gmane.org; Wed, 02 Apr 2008 17:18:09 +0200
+	id 1Jh5F3-0004Qx-8W
+	for gcvg-git-2@gmane.org; Wed, 02 Apr 2008 17:51:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755170AbYDBPRZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Apr 2008 11:17:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755099AbYDBPRY
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Apr 2008 11:17:24 -0400
-Received: from mail.gmx.net ([213.165.64.20]:47675 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755087AbYDBPRY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Apr 2008 11:17:24 -0400
-Received: (qmail invoked by alias); 02 Apr 2008 15:17:22 -0000
-Received: from i577AF785.versanet.de (EHLO atjola.local) [87.122.247.133]
-  by mail.gmx.net (mp044) with SMTP; 02 Apr 2008 17:17:22 +0200
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX1/UqK1xyTrUSOJKFxr7hfR2NwZ98mkLD3G3rh/lHV
-	eqe2rHUigS4Z5Y
-Content-Disposition: inline
-In-Reply-To: <p06240804c41942f6276e@[192.168.1.114]>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-X-Y-GMX-Trusted: 0
+	id S1756281AbYDBPuV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Apr 2008 11:50:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755939AbYDBPuU
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Apr 2008 11:50:20 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:57002 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753827AbYDBPuU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Apr 2008 11:50:20 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 0ED4E5314;
+	Wed,  2 Apr 2008 11:50:16 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id B69AF530E; Wed,  2 Apr 2008 11:50:09 -0400 (EDT)
+In-Reply-To: <200804021317.16007.jnareb@gmail.com> (Jakub Narebski's message
+ of "Wed, 2 Apr 2008 12:17:14 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78696>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78697>
 
-On 2008.04.02 10:38:34 -0400, Stephen Bannasch wrote:
-> I've just created a git-svn clone from a svn repo accessed locally wi=
-th a=20
-> file:/// path.
->
-> Unfortunately the local svn repo is just a copy of the main svn repo =
-=20
-> normally accessed with http or https (served through Apache). I was =20
-> having problems cloning the main svn repository (more details below) =
-so I=20
-> archived the remote svn repository and copied it to my local hard dri=
-ve.
+Jakub Narebski <jnareb@gmail.com> writes:
 
-I guess you should have used the --rewrite-root option when you did the
-clone. Then the metadata in the log entries would already point to the
-right URL and you could just adjust the URL in .git/config and drop the
-rewriteRoot entry there.
+> By the way, the code to unwrap the path quoting can be found in gitweb
+> as unescape() subroutine... or git-add--interactive can use '-z' switch.
 
-> Is there an operation I can now do to switch the base url from:
->
->   file:///Path/to/svn/repository/projects
->
-> to
->
->   https://svn.concord.org/svn/projects
+Yes, but if you use '-z' to read from plumbing, you would need your own
+wrapping on the UI side to protect your output from control characters
+(most notably LF) embedded in pathnames.
 
-Basically, this should work:
-
-Change the URL to the repo in your .git/config.
-Use filter-branch to change all git-svn-id lines in the log entries.
-Delete the .rev_map.* files in .git/svn/*
-Run git svn fetch (rebuilds the .rev_map.* files).
-
-The filter-branch call should use the --msg-filter option to change the
-log entries and should apply to all the svn branches/tags/trunk (or jus=
-t
-use " -- --all", if there's nothing that may not be filtered).
-
-HTH
-Bj=F6rn
+Also I had an impression that the compatibility implementation of
+run_cmd_pipe() had some issues with NUL terminated list.
