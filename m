@@ -1,51 +1,73 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/4] add pre-auto-gc hook for git-gc --auto (try2)
-Date: Wed, 02 Apr 2008 12:07:46 -0700
-Message-ID: <7vtzik848t.fsf@gitster.siamese.dyndns.org>
-References: <cover.1207049697.git.vmiklos@frugalware.org>
- <7vhceldv12.fsf@gitster.siamese.dyndns.org>
- <20080402011447.GO3264@genesis.frugalware.org>
- <7vwsngaoqg.fsf@gitster.siamese.dyndns.org>
- <20080402190240.GV3264@genesis.frugalware.org>
+Subject: Re: [PATCH] cvsps/cvsimport: fix branch point calculation and broken
+ branch imports
+Date: Wed, 02 Apr 2008 12:29:17 -0700
+Message-ID: <7vprt8838y.fsf@gitster.siamese.dyndns.org>
+References: <1207100091.10532.64.camel@gandalf.cobite.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Bj?rn Steinbrink <B.Steinbrink@gmx.de>, git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Wed Apr 02 21:09:14 2008
+Cc: git@vger.kernel.org
+To: David Mansfield <david@cobite.com>
+X-From: git-owner@vger.kernel.org Wed Apr 02 21:30:27 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jh8Kc-0006Vx-Tk
-	for gcvg-git-2@gmane.org; Wed, 02 Apr 2008 21:09:11 +0200
+	id 1Jh8f5-00077l-OK
+	for gcvg-git-2@gmane.org; Wed, 02 Apr 2008 21:30:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755737AbYDBTIH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Apr 2008 15:08:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756787AbYDBTIF
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Apr 2008 15:08:05 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:56398 "EHLO
+	id S1757023AbYDBT3g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Apr 2008 15:29:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757179AbYDBT3g
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Apr 2008 15:29:36 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:59605 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755737AbYDBTIE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Apr 2008 15:08:04 -0400
+	with ESMTP id S1757023AbYDBT3f (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Apr 2008 15:29:35 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id C05212CAD;
-	Wed,  2 Apr 2008 15:07:59 -0400 (EDT)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id F092240EF;
+	Wed,  2 Apr 2008 15:29:30 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
  certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id E24422CA6; Wed,  2 Apr 2008 15:07:48 -0400 (EDT)
-In-Reply-To: <20080402190240.GV3264@genesis.frugalware.org> (Miklos Vajna's
- message of "Wed, 2 Apr 2008 21:02:40 +0200")
+ ESMTP id 4BCBB40ED; Wed,  2 Apr 2008 15:29:24 -0400 (EDT)
+In-Reply-To: <1207100091.10532.64.camel@gandalf.cobite.com> (David
+ Mansfield's message of "Tue, 01 Apr 2008 21:34:51 -0400")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78703>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78704>
 
-Miklos Vajna <vmiklos@frugalware.org> writes:
+David Mansfield <david@cobite.com> writes:
 
-> What is your opinion here?
+> In case you're wondering, I'm actually the original author of cvsps,
+> which is behind the scenes for cvsimport.  I don't call myself
+> maintainer because I've hardly been that over the last few years.
 >
-> 1) Just don't add such an empty template for pre-auto-gc.
+> Anyway, the fix to cvsps is attached (1st 2 patches) as well as the
+> patch to git-cvsimport.perl (2nd 2 patches) against the master branch as
+> of today's git repo.
+>
+> The cvsps patches apply with fuzz against the 2.1 version which is out
+> there.
+
+When output from an unfixed cvsps is fed to the updated cvsimport, does it
+gracefully do the wrong thing (iow, create the same broken history not too
+much worse than the original)?
+
+> @@ -826,12 +824,9 @@ while (<CVS>) {
+>  		$branch = $_;
+>  		$state = 5;
+>  	} elsif ($state == 5 and s/^Ancestor branch:\s+//) {
+> -		s/\s+$//;
+> -		$ancestor = $_;
+> -		$ancestor = $opt_o if $ancestor eq "HEAD";
+> +		# now ignored.  see 'Branches' below
+>  		$state = 6;
+>  	} elsif ($state == 5) {
+> -		$ancestor = undef;
+>  		$state = 6;
+>  		redo;
+>  	} elsif ($state == 6 and s/^Tag:\s+//) {
