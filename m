@@ -1,71 +1,68 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH v2] git-gui: Add shortcut keys for Show More/Less Context
-Date: Wed, 2 Apr 2008 01:34:23 -0400
-Message-ID: <20080402053423.GW10274@spearce.org>
-References: <1207047243-27738-1-git-send-email-maillist@steelskies.com> <57518fd10804010659t42569632u906f994519d527c6@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: [PATCH] verify-tag: Clean up the temporary file if gpg cannot be
+ started.
+Date: Wed, 02 Apr 2008 08:49:59 +0200
+Message-ID: <47F32C97.6050007@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Jonathan del Strother <maillist@steelskies.com>
-X-From: git-owner@vger.kernel.org Wed Apr 02 07:35:13 2008
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 02 08:50:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jgvct-0003se-Hd
-	for gcvg-git-2@gmane.org; Wed, 02 Apr 2008 07:35:11 +0200
+	id 1Jgwo4-0005Cu-Lu
+	for gcvg-git-2@gmane.org; Wed, 02 Apr 2008 08:50:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751044AbYDBFe2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Apr 2008 01:34:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751074AbYDBFe1
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Apr 2008 01:34:27 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:41252 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750956AbYDBFe1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Apr 2008 01:34:27 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1Jgvc8-0006pS-PB; Wed, 02 Apr 2008 01:34:24 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 18CFB20FBAE; Wed,  2 Apr 2008 01:34:24 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <57518fd10804010659t42569632u906f994519d527c6@mail.gmail.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1753364AbYDBGuF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Apr 2008 02:50:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752155AbYDBGuE
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Apr 2008 02:50:04 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:61268 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752053AbYDBGuD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Apr 2008 02:50:03 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1JgwmL-00075h-78; Wed, 02 Apr 2008 08:49:01 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id A7ABCAFCC; Wed,  2 Apr 2008 08:49:59 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: 1.2 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_95=3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78681>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78682>
 
-Jonathan del Strother <maillist@steelskies.com> wrote:
-> On Tue, Apr 1, 2008 at 11:54 AM, Jonathan del Strother
-> <maillist@steelskies.com> wrote:
-> > Bound to Ctrl/Cmd + left & right square brackets, depending on your platform.
+From: Johannes Sixt <johannes.sixt@telecom.at>
 
-Thanks.
- 
-> ... I've just noticed that the shortcut keys don't apply while the
-> diff view has keyboard focus.  Shall I replace "bind $ui_comm ... "
-> with "bind all ..."  ?
+Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
+---
+ builtin-verify-tag.c |    4 +++-
+ 1 files changed, 3 insertions(+), 1 deletions(-)
 
-No, "bind .".  I squashed this into your patch:
+diff --git a/builtin-verify-tag.c b/builtin-verify-tag.c
+index f3ef11f..db81496 100644
+--- a/builtin-verify-tag.c
++++ b/builtin-verify-tag.c
+@@ -46,8 +46,10 @@ static int run_gpg_verify(const char *buf, unsigned long size, int verbose)
+ 	gpg.argv = args_gpg;
+ 	gpg.in = -1;
+ 	args_gpg[2] = path;
+-	if (start_command(&gpg))
++	if (start_command(&gpg)) {
++		unlink(path);
+ 		return error("could not run gpg.");
++	}
 
-@@ -2758,6 +2760,8 @@ bind .   <$M1B-Key-t> do_add_selection
- bind .   <$M1B-Key-T> do_add_selection
- bind .   <$M1B-Key-i> do_add_all
- bind .   <$M1B-Key-I> do_add_all
-+bind .   <$M1B-Key-\[> {show_less_context;break}
-+bind .   <$M1B-Key-\]> {show_more_context;break}
- bind .   <$M1B-Key-Return> do_commit
- foreach i [list $ui_index $ui_workdir] {
-        bind $i <Button-1>       "toggle_or_diff         $i %x %y; break"
-
-
+ 	write_in_full(gpg.in, buf, len);
+ 	close(gpg.in);
 -- 
-Shawn.
+1.5.5.rc2.861.g18c5b.dirty
