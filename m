@@ -1,61 +1,47 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH] help: Add a missing OPT_END().
-Date: Wed, 2 Apr 2008 05:47:41 +0200
-Message-ID: <20080402054741.24d95299.chriscool@tuxfamily.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] help: Add a missing OPT_END().
+Date: Tue, 1 Apr 2008 23:44:31 -0400
+Message-ID: <20080402034430.GA10360@coredump.intra.peff.net>
+References: <20080402054741.24d95299.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio Hamano <junkio@cox.net>, Jeff King <peff@peff.net>,
-	Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Wed Apr 02 05:43:01 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Junio Hamano <junkio@cox.net>,
+	Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Wed Apr 02 05:45:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JgtsG-0005XM-KP
-	for gcvg-git-2@gmane.org; Wed, 02 Apr 2008 05:42:57 +0200
+	id 1JgtuW-0006Ds-7Y
+	for gcvg-git-2@gmane.org; Wed, 02 Apr 2008 05:45:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755353AbYDBDmN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Apr 2008 23:42:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755017AbYDBDmN
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Apr 2008 23:42:13 -0400
-Received: from smtp1-g19.free.fr ([212.27.42.27]:49664 "EHLO smtp1-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752869AbYDBDmN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Apr 2008 23:42:13 -0400
-Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 30EDC1AB2BC;
-	Wed,  2 Apr 2008 05:42:11 +0200 (CEST)
-Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp1-g19.free.fr (Postfix) with SMTP id 9A2C51AB2BD;
-	Wed,  2 Apr 2008 05:42:10 +0200 (CEST)
-X-Mailer: Sylpheed 2.5.0beta1 (GTK+ 2.12.9; i486-pc-linux-gnu)
+	id S1755743AbYDBDoe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Apr 2008 23:44:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755689AbYDBDoe
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Apr 2008 23:44:34 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3630 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755017AbYDBDod (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Apr 2008 23:44:33 -0400
+Received: (qmail 21084 invoked by uid 111); 2 Apr 2008 03:44:32 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Tue, 01 Apr 2008 23:44:32 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 01 Apr 2008 23:44:31 -0400
+Content-Disposition: inline
+In-Reply-To: <20080402054741.24d95299.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78677>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78678>
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- help.c |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+On Wed, Apr 02, 2008 at 05:47:41AM +0200, Christian Couder wrote:
 
-	Some comments in "parse-options.h" say it is needed,
-	though I did not see a crash without it.
+> 	Some comments in "parse-options.h" say it is needed,
+> 	though I did not see a crash without it.
 
-diff --git a/help.c b/help.c
-index ecaca77..10298fb 100644
---- a/help.c
-+++ b/help.c
-@@ -30,6 +30,7 @@ static struct option builtin_help_options[] = {
- 			HELP_FORMAT_WEB),
- 	OPT_SET_INT('i', "info", &help_format, "show info page",
- 			HELP_FORMAT_INFO),
-+	OPT_END(),
- };
- 
- static const char * const builtin_help_usage[] = {
--- 
-1.5.5.rc2.6.gf58d
+There was no particular reason I didn't put it in; I just didn't know
+about it. So ack from me, assuming it is supposed to be there.
+
+-Peff
