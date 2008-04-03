@@ -1,75 +1,74 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: [PATCH] cvsps/cvsimport: fix branch point calculation and broken branch imports
-Date: Thu, 3 Apr 2008 07:47:54 +0200
-Message-ID: <0C7AA499-56AD-4D20-AED0-9E7DDD0C77DF@zib.de>
-References: <1207100091.10532.64.camel@gandalf.cobite.com>
-Mime-Version: 1.0 (Apple Message framework v753)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+From: Teemu Likonen <tlikonen@iki.fi>
+Subject: Re: Can I switch a git-svn clone from a file => http url?
+Date: Thu, 3 Apr 2008 09:05:46 +0300
+Message-ID: <200804030905.46425.tlikonen@iki.fi>
+References: <p06240804c41942f6276e@[192.168.1.114]>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: David Mansfield <david@cobite.com>
-X-From: git-owner@vger.kernel.org Thu Apr 03 07:55:30 2008
+Cc: Stephen Bannasch <stephen.bannasch@deanbrook.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 03 08:06:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JhIQ3-0003mx-Dt
-	for gcvg-git-2@gmane.org; Thu, 03 Apr 2008 07:55:27 +0200
+	id 1JhIan-00062Q-4F
+	for gcvg-git-2@gmane.org; Thu, 03 Apr 2008 08:06:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760821AbYDCFyn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Apr 2008 01:54:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760777AbYDCFyn
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Apr 2008 01:54:43 -0400
-Received: from mailer.zib.de ([130.73.108.11]:49382 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760331AbYDCFym (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Apr 2008 01:54:42 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.14.2/8.14.2) with ESMTP id m335l5Rj021525;
-	Thu, 3 Apr 2008 07:47:06 +0200 (CEST)
-Received: from [192.168.178.21] (brln-4db92029.pool.einsundeins.de [77.185.32.41])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m335l34m002674
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Thu, 3 Apr 2008 07:47:04 +0200 (MEST)
-In-Reply-To: <1207100091.10532.64.camel@gandalf.cobite.com>
-X-Mailer: Apple Mail (2.753)
+	id S1755041AbYDCGFt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Apr 2008 02:05:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754545AbYDCGFt
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Apr 2008 02:05:49 -0400
+Received: from pne-smtpout4-sn1.fre.skanova.net ([81.228.11.168]:49513 "EHLO
+	pne-smtpout4-sn1.fre.skanova.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754798AbYDCGFs (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 3 Apr 2008 02:05:48 -0400
+Received: from [192.168.0.2] (80.220.180.181) by pne-smtpout4-sn1.fre.skanova.net (7.3.129)
+        id 47A7970A0034105F; Thu, 3 Apr 2008 08:05:47 +0200
+User-Agent: KMail/1.9.5
+In-Reply-To: <p06240804c41942f6276e@[192.168.1.114]>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78726>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78727>
 
+Stephen Bannasch kirjoitti:
 
-On Apr 2, 2008, at 3:34 AM, David Mansfield wrote:
-
-> P.S Also, as many people may have imported broken branches already,  
-> can
-> anyone thing of a way to fix the branch, (maybe with git-rebase or
-> something)?  The breakage affects, I believe, files not ever  
-> modified on
-> the branch until any given point in time on the branch...
+> I've just created a git-svn clone from a svn repo accessed locally
+> with a file:/// path.
 >
+> Unfortunately the local svn repo is just a copy of the main svn repo
+> normally accessed with http or https (served through Apache). I was
+> having problems cloning the main svn repository (more details below)
+> so I archived the remote svn repository and copied it to my local
+> hard drive.
 
-The breakage you describe might be the same breakage that I recognized
-in June 2007:
+I know two options:
 
-   http://article.gmane.org/gmane.comp.version-control.git/50736
+1. Keep your current Git repo but set the url and rewriteroot options 
+in .git/config:
 
-At that time, I wrote a script (git-transplant) that fixed a broken
-import from CVS for me:
+[svn-remote "svn"]
+	url = http://...
+	rewriteroot = file:///...
 
-   http://article.gmane.org/gmane.comp.version-control.git/50746
+Your commit messages will still have git-svn-id pointing at file:///... 
+url but it should work fine.
 
-The discussion in
 
-   http://article.gmane.org/gmane.comp.version-control.git/50789
+2. Convert your repo again:
 
-explains the reason for the script a bit more detailed.
+$ mkdir repo ; cd repo
+$ git svn init --rewrite-root=http://... file:///...
+$ git svn fetch
 
-But note that I never finished git-transplant and I also failed to
-convince anyone that the idea behind the script is of any general value.
-Instead, I decided that git-cvsimport is not the right tools for me; and
-since then I use parsecvs to convert my repositories.
+This way you'll create new Git repo from file:///... url but commit 
+messages will have git-svn-id's url pointing at http://... . After that 
+set the correct remote url to .git/config:
 
-         Steffen
+[svn-remote "svn"]
+	url = http://...
