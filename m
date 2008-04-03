@@ -1,102 +1,58 @@
-From: "Jonathan del Strother" <maillist@steelskies.com>
-Subject: Re: [REGRESSION] git-gui
-Date: Fri, 4 Apr 2008 00:15:39 +0100
-Message-ID: <57518fd10804031615m5c299df6hf31de3c689e16521@mail.gmail.com>
-References: <007901c89590$a827f7c0$93a7c10a@LGE.NET>
-	 <57518fd10804030700r6de977f5p6f0418e6eaea2583@mail.gmail.com>
-	 <200804032304.17054.barra_cuda@katamail.com>
+From: "James Kingston" <james.kingston@gmail.com>
+Subject: Re: newbie with broken workflow
+Date: Thu, 3 Apr 2008 18:41:33 -0500
+Message-ID: <9d27c6320804031641s2a1578fcmd7271a06842803fe@mail.gmail.com>
+References: <9d27c6320804031445p3fc80115n59218673dd587795@mail.gmail.com>
+	 <8aa486160804031503j1ff3adbcu83f41eef14347370@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	"=?ISO-8859-1?Q?Andr=E9_Goddard_Rosa?=" <andre_rosa@lge.com>
-To: "Michele Ballabio" <barra_cuda@katamail.com>, spearce@spearce.org
-X-From: git-owner@vger.kernel.org Fri Apr 04 01:16:26 2008
+Cc: git@vger.kernel.org
+To: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 04 01:42:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JhYfS-0005w3-F5
-	for gcvg-git-2@gmane.org; Fri, 04 Apr 2008 01:16:26 +0200
+	id 1JhZ4V-0004Nj-IP
+	for gcvg-git-2@gmane.org; Fri, 04 Apr 2008 01:42:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753441AbYDCXPk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 3 Apr 2008 19:15:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753228AbYDCXPk
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Apr 2008 19:15:40 -0400
-Received: from rv-out-0910.google.com ([209.85.198.190]:21327 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752657AbYDCXPj convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 3 Apr 2008 19:15:39 -0400
-Received: by rv-out-0910.google.com with SMTP id k20so1864060rvb.1
-        for <git@vger.kernel.org>; Thu, 03 Apr 2008 16:15:39 -0700 (PDT)
+	id S1751730AbYDCXlh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 3 Apr 2008 19:41:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751595AbYDCXlh
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Apr 2008 19:41:37 -0400
+Received: from wa-out-1112.google.com ([209.85.146.178]:47080 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751044AbYDCXlg convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 3 Apr 2008 19:41:36 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so3829626wah.23
+        for <git@vger.kernel.org>; Thu, 03 Apr 2008 16:41:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        bh=8oavSYI4L+JMWghObqto42pijbW5cjhHcKjRsa8W7NE=;
-        b=m984Es6wyyhN41HsdweKBmHc7wSLVi+jJ9kILj9pwjdTXjX9jwAhkOOZWGdV75AnPrS4fXaPaZQWW0mcGYl2S+sybzEAgVod4lQpRqotmDejhallH4kY91cZm8+W2qik5qiLuPhUwbJSM8bsEmueiiF8WRc81NoF+Np0cZjDuKM=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=ldRX/6vfM81prH+dwpFLSTxsX81d8x7wpI+JOUbpWiw=;
+        b=JvhHdqZtlj52sG+qEI7fTXST3N+eDcf9emMH7DMeZeKT7vbzoYRGoxdODSdsEcvR1REnIZvkh/GX20NQBIGbcQhr9oA7+5SkDk5ZrVq3n6wLEmp1OiXz1qM8tXeZi1gfzW98hXI0zdhT/zM6fyh9KzhXqoQMC+rv3jeDo3NuOjs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=OBB7igiEoGKL967eeGqb3y/4l1dkWy2kBdeADSAFPQGVZ8sznR1/5UtikCH6PoNziflHpLJGpNee3Rei4StQlaWLx1nXCljVTufIxvcbj2NO/zjWMm4Eq1AThr71cCf39oQJ7u3bOa+O7S+poufcclShlGAVKmXiAEvU88dbENI=
-Received: by 10.140.139.3 with SMTP id m3mr296416rvd.38.1207264539161;
-        Thu, 03 Apr 2008 16:15:39 -0700 (PDT)
-Received: by 10.141.86.15 with HTTP; Thu, 3 Apr 2008 16:15:39 -0700 (PDT)
-In-Reply-To: <200804032304.17054.barra_cuda@katamail.com>
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=n30DyYPLnoy9cWRBYsrcvso3R5gNP9MO6n4giHDQKEfUqjKNKUpaDpuHD2wQqQDUElcrCp1ErN3DDWPmY+QpjXOTQ5ikiqOtrMFKfzYfZ2GHN9zW0Acn42P4Dz8hgadjCDwpQZdjliUh5ZV9m9Q3aV29Bu1RGZ5alWGpo0K+3mM=
+Received: by 10.114.106.1 with SMTP id e1mr846599wac.71.1207266093995;
+        Thu, 03 Apr 2008 16:41:33 -0700 (PDT)
+Received: by 10.114.57.6 with HTTP; Thu, 3 Apr 2008 16:41:33 -0700 (PDT)
+In-Reply-To: <8aa486160804031503j1ff3adbcu83f41eef14347370@mail.gmail.com>
 Content-Disposition: inline
-X-Google-Sender-Auth: f8e78c0a3115dcc0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78786>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78787>
 
-On Thu, Apr 3, 2008 at 10:04 PM, Michele Ballabio
-<barra_cuda@katamail.com> wrote:
+On Thu, Apr 3, 2008 at 5:03 PM, Santi B=E9jar <sbejar@gmail.com> wrote:
+>  git push updates the branches, not the working copy, so:
 >
-> On Thursday 03 April 2008, Jonathan del Strother wrote:
->  > On Thu, Apr 3, 2008 at 2:43 PM, Andr=E9 Goddard Rosa <andre_rosa@l=
-ge.com> wrote:
->  > > Hi, all!
->  > >
->  > >     After updating to git version 1.5.5.rc3 I always get the err=
-or below
->  > >  when starting "git gui".
->  > >     Linux distributions used are opensuse 10 and opensuse Factor=
-y.
->  > >
->  > >  # git gui
->  > >  Error in startup script: bad event type or keysym "["
->  > >     while executing
->  > >  "bind $ui_comm <$M1B-Key-\[> {show_less_context;break}"
->  > >     file "/usr/bin/git-gui" linux 2718)
->  > >
->  > >     I think it's related to git-gui 0.10 recently added into the=
- tree.
->  >
->  > Doh, I broke git :(
->  >
->  > The problem is in c91ee2bd61 (Add shortcut keys for Show More/Less=
- Context).
->  > Works fine on my OS X 10.5 installation with tcl 8.4.7 - can anyon=
-e
->  > suggest an alternative way of binding the left/right brackets?  I'=
-m
->  > not familiar with Tcl, and didn't manage to find a list of key nam=
-es.
->
->  These changes should help (haven't tried):
->         \[ -> bracketleft
->         \] -> bracketright
->  but some European keyboards do not have easy access to brackets, so
->  other keys would be preferable (comma and period, for example, or 1 =
-and 2).
->
->  See
->         man keysyms
->  for a list of key names.
+>  cd /c/cc
+>  git pull /c/wd/cc HEAD
+>  Santi
 >
 
-Anyone else got any opinions on an appropriate shortcut?  How about
-'=3D' and '-' (+ and - without the shift), or are those not necessarily
-together either?  (Are there really layouts where '[' and ']' aren't
-next to each other?)
+Thank you.  I also found the FAQ in the wiki, so the reasons are clear.
