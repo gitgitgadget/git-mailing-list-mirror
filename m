@@ -1,63 +1,66 @@
-From: "Aneesh Kumar" <aneesh.kumar@gmail.com>
-Subject: http git clone fails while ssh git clone works
-Date: Thu, 3 Apr 2008 17:10:07 +0530
-Message-ID: <cc723f590804030440t14a8e4fdw77c4449dc2a4dbb8@mail.gmail.com>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: http git clone fails while ssh git clone works
+Date: Thu, 3 Apr 2008 14:51:17 +0200
+Message-ID: <20080403125117.GG3264@genesis.frugalware.org>
+References: <cc723f590804030440t14a8e4fdw77c4449dc2a4dbb8@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Apr 03 13:41:03 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="dIV3CY5swYZsO92m"
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Aneesh Kumar <aneesh.kumar@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 03 14:52:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JhNoO-0003eU-0c
-	for gcvg-git-2@gmane.org; Thu, 03 Apr 2008 13:40:56 +0200
+	id 1JhOvD-0003HL-RS
+	for gcvg-git-2@gmane.org; Thu, 03 Apr 2008 14:52:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754326AbYDCLkK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Apr 2008 07:40:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754363AbYDCLkK
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Apr 2008 07:40:10 -0400
-Received: from wr-out-0506.google.com ([64.233.184.232]:35125 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754326AbYDCLkI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Apr 2008 07:40:08 -0400
-Received: by wr-out-0506.google.com with SMTP id c48so2254204wra.1
-        for <git@vger.kernel.org>; Thu, 03 Apr 2008 04:40:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=vU3noTDH+dC820tGDg+5FNKY2wardZ2sSC3Jdosm5LU=;
-        b=dHazAd2Z38IlY/vEpJ8Om0St1VHvOza5c3MBiN88e4o8qIf6YTRQh4gdNqDy7N4sjmByNgOhFZu5qlmnnccVXMoF4RtWh1NJcefry5n+w45J40NrpJR21CqjO06BzLoVFrb3FmKpIwtcsMNqxii5FTghYiEDW10eZudDTDsaIaM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=pTak4qwWWoABsJ6j3dMu+7uB8sWzNr7mr4rp9YcaJpTav9GZpp1LzIX8+Flu9uegjwzz0/AsC1b3nnD315lUOrD3EDu3fVA7VoxmJYHkEe6PHza0go+GYCQ3mN9NVP3BS4o+/ZjVZYOaJWr98y9FXEOT+dolKrasoAJyrOHhARs=
-Received: by 10.114.190.6 with SMTP id n6mr17110061waf.131.1207222807186;
-        Thu, 03 Apr 2008 04:40:07 -0700 (PDT)
-Received: by 10.115.48.17 with HTTP; Thu, 3 Apr 2008 04:40:07 -0700 (PDT)
+	id S1752812AbYDCMvU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Apr 2008 08:51:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752664AbYDCMvU
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Apr 2008 08:51:20 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:28453 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751861AbYDCMvU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Apr 2008 08:51:20 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 1EB8F1B2517;
+	Thu,  3 Apr 2008 14:51:18 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 1D081446A9;
+	Thu,  3 Apr 2008 14:48:06 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 98F4C1190543; Thu,  3 Apr 2008 14:51:17 +0200 (CEST)
 Content-Disposition: inline
+In-Reply-To: <cc723f590804030440t14a8e4fdw77c4449dc2a4dbb8@mail.gmail.com>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78747>
-
-git clone http://myhost...
-
-ot 0bc8afe5e1f16a6c56bc677a6c85148455a474b3
-got ee425b0b7fccd9cdea38ef781b76f034e0228391
-error: Unable to find 31053805b6981918e1f39e7149f62d2a0068732a under
-http://myhost.....
-Cannot obtain needed commit 31053805b6981918e1f39e7149f62d2a0068732a
-while processing commit 56933610fa9a36ea3fc053e02bd7442b55db85dd.
-
-while git clone ssh://myhost... works fine.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78748>
 
 
-The repo actually have the commit
+--dIV3CY5swYZsO92m
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-git --git-dir=a.git show 31053805b6981918e1f39e7149f62d2a0068732a
-shows the commit.
+On Thu, Apr 03, 2008 at 05:10:07PM +0530, Aneesh Kumar <aneesh.kumar@gmail.com> wrote:
+> while git clone ssh://myhost... works fine.
 
--aneesh
+did you run git update-server-info?
+
+--dIV3CY5swYZsO92m
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.8 (GNU/Linux)
+
+iEYEARECAAYFAkf00sUACgkQe81tAgORUJbZWwCgqDxjjd1J5okCf6uCcB96uqLV
+Cv4AoJuD6TwpW5pPq9gy7+sD/dzkbjfI
+=06Xn
+-----END PGP SIGNATURE-----
+
+--dIV3CY5swYZsO92m--
