@@ -1,74 +1,109 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] git-clone.txt: Adjust note to --shared for new pruning
- behavior of git-gc
-Date: Thu, 3 Apr 2008 21:14:39 +0200 (CEST)
-Message-ID: <alpine.LSU.1.00.0804032113280.4008@racer.site>
-References: <47F52145.306@nrlssc.navy.mil>
+From: Roman Shaposhnik <rvs@Sun.COM>
+Subject: Achieving efficient storage of weirdly structured repos
+Date: Thu, 03 Apr 2008 12:42:39 -0700
+Message-ID: <7BE3E865-C30D-49B8-A1D9-898109514990@sun.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Thu Apr 03 22:15:25 2008
+Content-Type: text/plain; format=flowed; delsp=yes; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 03 22:17:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JhVqC-0000h4-Ql
-	for gcvg-git-2@gmane.org; Thu, 03 Apr 2008 22:15:21 +0200
+	id 1JhVrp-0001TA-1u
+	for gcvg-git-2@gmane.org; Thu, 03 Apr 2008 22:17:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757216AbYDCUOc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Apr 2008 16:14:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760082AbYDCUOb
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Apr 2008 16:14:31 -0400
-Received: from mail.gmx.net ([213.165.64.20]:54003 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755617AbYDCUOa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Apr 2008 16:14:30 -0400
-Received: (qmail invoked by alias); 03 Apr 2008 20:14:28 -0000
-Received: from host86-165-92-90.range86-165.btcentralplus.com (EHLO [192.168.1.70]) [86.165.92.90]
-  by mail.gmx.net (mp045) with SMTP; 03 Apr 2008 22:14:28 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+L/AEi0w2LQNI9pgLvfEp0un/bEMz/uKrERWV2OG
-	J0FbdoBt3Pzfja
-X-X-Sender: gene099@racer.site
-In-Reply-To: <47F52145.306@nrlssc.navy.mil>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1751970AbYDCUQQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Apr 2008 16:16:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754910AbYDCUQP
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Apr 2008 16:16:15 -0400
+Received: from brmea-mail-2.Sun.COM ([192.18.98.43]:61693 "EHLO
+	brmea-mail-2.sun.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751690AbYDCUQP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Apr 2008 16:16:15 -0400
+X-Greylist: delayed 1978 seconds by postgrey-1.27 at vger.kernel.org; Thu, 03 Apr 2008 16:16:15 EDT
+Received: from fe-amer-10.sun.com ([192.18.109.80])
+	by brmea-mail-2.sun.com (8.13.6+Sun/8.12.9) with ESMTP id m33JhGUa009102
+	for <git@vger.kernel.org>; Thu, 3 Apr 2008 19:43:16 GMT
+Received: from conversion-daemon.mail-amer.sun.com by mail-amer.sun.com
+ (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
+ id <0JYR00L01HX73X00@mail-amer.sun.com> (original mail from rvs@sun.com)
+ for git@vger.kernel.org; Thu, 03 Apr 2008 13:43:16 -0600 (MDT)
+Received: from [192.168.0.100] ([129.150.66.3])
+ by mail-amer.sun.com (Sun Java System Messaging Server 6.2-8.04 (built Feb 28
+ 2007)) with ESMTPSA id <0JYR00KEPLF4DSE0@mail-amer.sun.com> for
+ git@vger.kernel.org; Thu, 03 Apr 2008 13:42:42 -0600 (MDT)
+X-Mailer: Apple Mail (2.753)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78773>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78774>
 
-Hi,
+Hi Guys!
 
-On Thu, 3 Apr 2008, Brandon Casey wrote:
+First of all, I must admit that I got seriously hooked up on Git when  
+I started to
+use it internally for FFmpeg development and my life as far as non  
+company
+related projects are concerned hasn't been the same ever since. The way
+Git addresses issues like branches (both local and remote), merges and
+content tracking are, in my opinion, quite superior to the  
+alternative SCMs
+such as Mercurial. In fact, that's why when I saw my coworkers  
+struggling
+with exactly the same issues around NetBeans Mercurial repository my
+natural instinct was to introduce them to Git and show them that life  
+doesn't
+have to be that complicated or troublesome.
 
-> diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-> index 9758243..d3ab00b 100644
-> --- a/Documentation/git-clone.txt
-> +++ b/Documentation/git-clone.txt
-> @@ -65,10 +65,12 @@ OPTIONS
->  +
->  *NOTE*: this is a possibly dangerous operation; do *not* use
->  it unless you understand what it does. If you clone your
-> -repository using this option, then delete branches in the
-> -source repository and then run linkgit:git-gc[1] using the
-> -'--prune' option in the source repository, it may remove
-> -objects which are referenced by the cloned repository.
-> +repository using this option and then delete branches in the
-> +source repository, some objects may become unreferenced (or dangling).
-> +These objects may be removed by normal git operations (such as git-commit[1])
-> +which automatically call git-gc[1]. If these objects are removed and
-> +were referenced by the cloned repository, then the cloned repository
-> +will become corrupt.
+But before I can do that, there's a little issue that I either need  
+to address or
+at least understand better. It seems that the storage requirements  
+for the
+repository that a friend of mine and I created from: http:// 
+hg.netbeans.org/main/
+got doubled under Git:
+     $  du -sh Mercurial- nb-main
+     491M   Mercurial- nb-main
+     $ du -sh Git-nb-main
+     1.1G     Git-nb-main
 
-Please note that if you delete a branch _after_ running git-gc, the next 
-git-gc would remove those objects anyway, since the first git-gc packed 
-the objects, and they were therefore no longer dangling.
+The repository was created using hg2git (the one based on git-fast- 
+import)
+and it was GC'ed and REPACK'ed just in case. I spent some time trying
+to understand the issue and here's some statistics on the kind of  
+objects
+that this repository consists of:
+     75053 commit
+   334572 blob
+   750003 tree
 
-So it was an issue before the new git-gc behaviour anyway.
+The last item (trees) also seem to take the most space and the most  
+reasonable
+explanation that I can offer is that NetBeans repository has a really  
+weird
+structure where they have approximately 700 (yes, seven hundred!) top- 
+level
+subdirectories there. They are clearly Submodules-shy, but that's  
+another
+issue that I will need to address with them.
 
-Ciao,
-Dscho
+So based on my preliminary analysis the biggest culprit seems to be
+that for every commit at least one pretty hefty tree object needs to  
+be created
+(remember 700 top level subdirectories). These objects are all in 18-20K
+range but they are almost identical to each other except for one or two
+trees that they refer to.
+
+So here's my question: is there anything in Git that I can use to  
+accommodate
+a repository like http://hg.netbeans.org/main in an efficient manner?  
+Any
+kind of ideas (like particular command line options for repack, etc.)  
+would be
+greatly appreciated!
+
+Thanks,
+Roman.
