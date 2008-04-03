@@ -1,100 +1,147 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: [PATCH] git-clone.txt: Adjust note to --shared for new pruning
- behavior of git-gc
-Date: Thu, 03 Apr 2008 15:51:14 -0500
-Message-ID: <47F54342.1040901@nrlssc.navy.mil>
-References: <47F52145.306@nrlssc.navy.mil> <alpine.LSU.1.00.0804032113280.4008@racer.site>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: [PATCH] Update setup-git-server-over-http.txt based on my experience.
+Date: Thu, 03 Apr 2008 22:56:38 +0200
+Message-ID: <vpqtziimzcp.fsf@bauges.imag.fr>
+References: <1207241902-4667-1-git-send-email-Matthieu.Moy@imag.fr>
+	<alpine.LSU.1.00.0804031905410.4008@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, gitster@pobox.com
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Apr 03 22:52:47 2008
+X-From: git-owner@vger.kernel.org Thu Apr 03 22:58:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JhWQR-0007eX-3B
-	for gcvg-git-2@gmane.org; Thu, 03 Apr 2008 22:52:47 +0200
+	id 1JhWVU-0001C3-7J
+	for gcvg-git-2@gmane.org; Thu, 03 Apr 2008 22:58:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755466AbYDCUwD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Apr 2008 16:52:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755404AbYDCUwD
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Apr 2008 16:52:03 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:52586 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751872AbYDCUwC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Apr 2008 16:52:02 -0400
-Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
-	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id m33KpEfJ031181;
-	Thu, 3 Apr 2008 15:51:15 -0500
-Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
-	 Thu, 3 Apr 2008 15:51:14 -0500
-User-Agent: Thunderbird 2.0.0.9 (X11/20071031)
-In-Reply-To: <alpine.LSU.1.00.0804032113280.4008@racer.site>
-X-OriginalArrivalTime: 03 Apr 2008 20:51:14.0941 (UTC) FILETIME=[750862D0:01C895CC]
-X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-5.0.0.1023-15820001
-X-TM-AS-Result: : Yes--14.024000-0-31-1
-X-TM-AS-Category-Info: : 31:0.000000
-X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNTY3LTE1MDY2OC03MDAw?=
-	=?us-ascii?B?NzUtMTM5MDEwLTcwNDQxMC03MDcxMTktMTg4MDE5LTE4ODE5OC03?=
-	=?us-ascii?B?MDA4NDktNzAyMzU4LTcwMTQ1NS03MTE0MzItNzAyMDIwLTcxMTk1?=
-	=?us-ascii?B?My03MDUxMDItNzA0NDk2LTcwNjI0OS0xMDY0MjAtNzA0OTI3LTcw?=
-	=?us-ascii?B?NjE1MC03MDgzMjgtNzAwNjkzLTcwNzMyNS0xMDYyMzAtNzAwOTQy?=
-	=?us-ascii?B?LTcwODU1OC03MDQxNzEtNzAzNzg4LTcwNDQyNS03MDA3ODItNzA1?=
-	=?us-ascii?B?ODYxLTcwMTE2My03MDE3MTktNzAwNzMzLTcwNTkwMS0xNDgwMzkt?=
-	=?us-ascii?B?MTQ4MDUxLTIwMDQz?=
+	id S1755664AbYDCU5P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Apr 2008 16:57:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755720AbYDCU5P
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Apr 2008 16:57:15 -0400
+Received: from harmonie.imag.fr ([147.171.130.40]:58749 "EHLO harmonie.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755664AbYDCU5O (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Apr 2008 16:57:14 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by harmonie.imag.fr (8.13.8/8.13.8) with ESMTP id m33KudC4024285;
+	Thu, 3 Apr 2008 22:56:39 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1JhWUB-0005IO-1x; Thu, 03 Apr 2008 22:56:39 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1JhWUA-0001hm-Va; Thu, 03 Apr 2008 22:56:38 +0200
+In-Reply-To: <alpine.LSU.1.00.0804031905410.4008@racer.site> (Johannes Schindelin's message of "Thu\, 3 Apr 2008 19\:12\:46 +0200 \(CEST\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (harmonie.imag.fr [147.171.130.40]); Thu, 03 Apr 2008 22:56:39 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78775>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78776>
 
-Johannes Schindelin wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+
 > Hi,
-> 
-> On Thu, 3 Apr 2008, Brandon Casey wrote:
-> 
->> diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
->> index 9758243..d3ab00b 100644
->> --- a/Documentation/git-clone.txt
->> +++ b/Documentation/git-clone.txt
->> @@ -65,10 +65,12 @@ OPTIONS
->>  +
->>  *NOTE*: this is a possibly dangerous operation; do *not* use
->>  it unless you understand what it does. If you clone your
->> -repository using this option, then delete branches in the
->> -source repository and then run linkgit:git-gc[1] using the
->> -'--prune' option in the source repository, it may remove
->> -objects which are referenced by the cloned repository.
->> +repository using this option and then delete branches in the
->> +source repository, some objects may become unreferenced (or dangling).
->> +These objects may be removed by normal git operations (such as git-commit[1])
->> +which automatically call git-gc[1]. If these objects are removed and
->> +were referenced by the cloned repository, then the cloned repository
->> +will become corrupt.
-> 
-> Please note that if you delete a branch _after_ running git-gc, the next 
-> git-gc would remove those objects anyway, since the first git-gc packed 
-> the objects, and they were therefore no longer dangling.
+>
+> I don't like the commit subject.  At all.
 
-I thought they would be retained unless --prune was used. git-gc uses the
--A option to repack when --prune is not used and -a when --prune is used.
+Well, I can't think of a better one. The patch introduces several
+minor changes, and I don't think it deserves a real patch serie for
+each unrelated change.
 
-I think even with the new prune behavior they would still be retained as
-long as they were packed since the prune only affects loose objects.
+Suggestions welcome.
 
-> So it was an issue before the new git-gc behaviour anyway.
+> On Thu, 3 Apr 2008, Matthieu Moy wrote:
+>
+>> -- have git installed at the server _and_ client
+>> +- have git installed on the client, and preferably on the server
+>
+> How do you want to initialise the repository on the server, then?  (IOW 
+> you should mention here that you need a WebDAV client on the client if you 
+> do not have Git on the server, and that it is way more fiddly.)
 
-Well, I thought that git-gc had become "safe" with respect to --shared
-repositories ever since the call to repack started using -A when --prune
-was not used.
+What part of
 
-Now it is unsafe again. But what I was really trying to point out in the
-documentation changes was that now _other_ commands such as git-commit are
-also unsafe since they call 'git-gc --auto' and could cause loose
-unreferenced objects to be deleted. So it is not enough to just avoid calling
-git-gc when dealing with a --shared repository.
+ Another
+ option is to generate an empty repository at the client and copy it to
+ the server with a WebDAV client (which is the only option if Git is
+ not installed on the server).
 
--brandon
+is unclear ?
+
+>> -In effect, this probably means you're going to be root.
+>> +In effect, this probably means you're going to be root, or that you're
+>> +using a preconfigured WebDAV server.
+>
+> Either you strike "probably" or you skip what you added.
+
+Why?
+
+>> @@ -169,7 +170,8 @@ On Debian:
+>>  
+>>     Most tests should pass.
+>>  
+>> -A command line tool to test WebDAV is cadaver.
+>> +A command line tool to test WebDAV is cadaver. If you prefer GUIs,
+>> +konqueror can open WebDAV URLs as "webdav://..." or "webdavs://...".
+>
+> What do you do if you have MacOSX, or Windows?
+
+You read messages instead of truncating them if you're on windows.
+
+I have no idea about MacOSX, but that's not the point of my patch.
+
+>> -Make sure that you have HTTP support, i.e. your git was built with curl.
+>> -The easiest way to check is to look for the executable 'git-http-push'.
+>> +Make sure that you have HTTP support, i.e. your git was built with
+>> +curl (and a recent enough version).
+>
+> Say what version.  Otherwise this comment will soon be very, very stale.
+>
+>> +The easiest way to check is to +look for the executable 
+>> 'git-http-push'. The command "git http-push" +with no argument should 
+>> display a usage message.
+>
+> My search revealed that http-push was in Git since tags/v0.99.9e^2~9^2~4.  
+> Which is not recent at all.
+
+Before my patch, the explanation says that you just need to check
+whether you have git-http-push, which is insufficient. With my patch,
+it gives an accurate check. I believe this is an improvement.
+
+>> +Also note that the URL should point to the git repository itself, that
+>> +is, to the '.git/' directory and not the working tree in case the
+>> +repository is non-bare.
+>
+> It makes no sense to describe the case of a non-bare repository.
+
+Actually, it makes no real sense to have a non-bare repository. But
+I've been bitten by this (I just typed "git init" without --bare, and
+uploaded it). Since git-http-push gives _very_ bad error messages,
+it's good to point the user to potential mistakes to help
+troubleshooting.
+
+>> +Using a proxy:
+>> +--------------
+>> +
+>> +If you have to access the WebDAV server from behind an HTTP(S) proxy,
+>> +set the variable 'all_proxy' to 'http://proxy-host.com:port', or
+>> +'http://login-on-proxy:passwd-on-proxy@proxy-host.com:port'. See 'man
+>> +curl' for details.
+>
+> You only need http_proxy.
+
+What makes you think that?
+
+(hint: I've been bitten by this too).
+
+-- 
+Matthieu
