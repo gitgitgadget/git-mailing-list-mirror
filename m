@@ -1,78 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/1] Import git-forest
-Date: Wed, 02 Apr 2008 14:49:00 -0700
-Message-ID: <7vve3053n7.fsf@gitster.siamese.dyndns.org>
-References: <1207169895-25949-1-git-send-email-jengelh@computergmbh.de>
- <9aca54e6e106be3f26ae289606b9a47a91806d54.1207169779.git.jengelh@computergmbh.de>
+From: David Mansfield <david@cobite.com>
+Subject: Re: [PATCH] cvsps/cvsimport: fix branch point calculation and
+	broken branch imports
+Date: Wed, 02 Apr 2008 21:44:50 -0400
+Organization: Cobite
+Message-ID: <1207187090.17329.15.camel@gandalf.cobite.com>
+References: <1207100091.10532.64.camel@gandalf.cobite.com>
+	 <7vprt8838y.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, jnareb@gmail.com, kzak@redhat.com
-To: Jan Engelhardt <jengelh@computergmbh.de>
-X-From: git-owner@vger.kernel.org Thu Apr 03 00:01:02 2008
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 03 03:45:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JhB0o-0006pq-Rk
-	for gcvg-git-2@gmane.org; Thu, 03 Apr 2008 00:00:55 +0200
+	id 1JhEWN-0006mQ-FR
+	for gcvg-git-2@gmane.org; Thu, 03 Apr 2008 03:45:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761213AbYDBWAN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Apr 2008 18:00:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758938AbYDBWAM
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Apr 2008 18:00:12 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:52272 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759032AbYDBWAJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Apr 2008 18:00:09 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 2A40D4F6F;
-	Wed,  2 Apr 2008 17:58:30 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 94FE04EBD; Wed,  2 Apr 2008 17:49:09 -0400 (EDT)
-In-Reply-To: <9aca54e6e106be3f26ae289606b9a47a91806d54.1207169779.git.jengelh@computergmbh.de> (Jan Engelhardt's message of "Wed, 2 Apr 2008 22:58:15 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1757438AbYDCBpA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Apr 2008 21:45:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757783AbYDCBo7
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Apr 2008 21:44:59 -0400
+Received: from 208.36.103.2.ptr.us.xo.net ([208.36.103.2]:51989 "EHLO
+	iris.cobite.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754928AbYDCBo7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Apr 2008 21:44:59 -0400
+Received: from localhost (iris.cobite.com [127.0.0.1])
+	by iris.cobite.com (Postfix) with ESMTP id C32E1E19F6;
+	Wed,  2 Apr 2008 21:44:57 -0400 (EDT)
+X-Virus-Scanned: amavisd-new at cobite.com
+Received: from iris.cobite.com ([127.0.0.1])
+	by localhost (iris.cobite.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id CBELpAPDeFZD; Wed,  2 Apr 2008 21:44:51 -0400 (EDT)
+Received: from [208.222.80.105] (208.36.103.2.ptr.us.xo.net [208.36.103.2])
+	by iris.cobite.com (Postfix) with ESMTP id 3C8FBE196C;
+	Wed,  2 Apr 2008 21:44:51 -0400 (EDT)
+In-Reply-To: <7vprt8838y.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Evolution 2.12.3 (2.12.3-3.fc8) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78719>
-
-Jan Engelhardt <jengelh@computergmbh.de> writes:
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78720>
 
 
-    Content-Type: TEXT/PLAIN; charset=ISO-8859-1
 
-> +#	git-??????
+On Wed, 2008-04-02 at 12:29 -0700, Junio C Hamano wrote:
+> David Mansfield <david@cobite.com> writes:
+> 
+> > In case you're wondering, I'm actually the original author of cvsps,
+> > which is behind the scenes for cvsimport.  I don't call myself
+> > maintainer because I've hardly been that over the last few years.
+> >
+> > Anyway, the fix to cvsps is attached (1st 2 patches) as well as the
+> > patch to git-cvsimport.perl (2nd 2 patches) against the master branch as
+> > of today's git repo.
+> >
+> > The cvsps patches apply with fuzz against the 2.1 version which is out
+> > there.
+> 
+> When output from an unfixed cvsps is fed to the updated cvsimport, does it
+> gracefully do the wrong thing (iow, create the same broken history not too
+> much worse than the original)?
+> 
+> > @@ -826,12 +824,9 @@ while (<CVS>) {
+> >  		$branch = $_;
+> >  		$state = 5;
+> >  	} elsif ($state == 5 and s/^Ancestor branch:\s+//) {
+> > -		s/\s+$//;
+> > -		$ancestor = $_;
+> > -		$ancestor = $opt_o if $ancestor eq "HEAD";
+> > +		# now ignored.  see 'Branches' below
+> >  		$state = 6;
+> >  	} elsif ($state == 5) {
+> > -		$ancestor = undef;
+> >  		$state = 6;
+> >  		redo;
+> >  	} elsif ($state == 6 and s/^Tag:\s+//) {
+> 
 
-Hmmmm...
+Not currently.  I'm just searching for failure modes for the feature at
+the moment (I've already found one myself). 
 
-> +&main();
-> +
-> +sub main ()
-> +{
-> +	&Getopt::Long::Configure(qw(bundling pass_through));
-> +
-> +	&GetOptions(
-> +		"all"      => \$Show_all,
-> +		"no-color" => sub { %Color = (); },
-> +		"no-rebase" => sub { $Show_rebase = 0; },
-> +		"style=i"  => \$Style,
-> +		"sha"      => \$With_sha,
-> +	);
-> +	if ($Show_all) {
-> +		unshift(@ARGV, "--all", "HEAD");
-> +	}
-> +	&process();
-> +}
+You're right to point this out though.  Maybe someone can help me write
+some tests for this?
 
-This is a Perl script with a curious style.  Your subroutines force the
-"funny" parameter semantics to their callers by using prototypes, but
-avoid the potential surprises and inconveniences prototypes may cause by
-using the &name(...) form when they themselves make subroutine calls,
-i.e. not eating their own dog food.
+Also, how does the git packaging (non-rpm version) specify and/or
+guarantee dependencies are at a certain version anyway?
 
-Is it fashionable to make text based tree render these days?  How does
-this compare with the git-graph in the nearby thread?  Can they borrow
-from each other?
+David
