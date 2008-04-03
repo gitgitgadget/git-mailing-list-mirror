@@ -1,74 +1,118 @@
-From: Teemu Likonen <tlikonen@iki.fi>
-Subject: Re: Can I switch a git-svn clone from a file => http url?
-Date: Thu, 3 Apr 2008 09:05:46 +0300
-Message-ID: <200804030905.46425.tlikonen@iki.fi>
-References: <p06240804c41942f6276e@[192.168.1.114]>
+From: Simon Hausmann <simon@lst.de>
+Subject: Re: [PATCH] git-p4: Wrong sync config filename
+Date: Thu, 3 Apr 2008 09:09:10 +0200
+Message-ID: <200804030909.11067.simon@lst.de>
+References: <e66701d40804020123qb66f52fo13c32e939a7d6f75@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: multipart/signed;
+  boundary="nextPart1970727.TCl1EsETGi";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
 Content-Transfer-Encoding: 7bit
-Cc: Stephen Bannasch <stephen.bannasch@deanbrook.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 03 08:06:33 2008
+Cc: git@vger.kernel.org
+To: "Kevin Leung" <kevinlsk@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 03 09:10:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JhIan-00062Q-4F
-	for gcvg-git-2@gmane.org; Thu, 03 Apr 2008 08:06:33 +0200
+	id 1JhJaG-0002bH-G7
+	for gcvg-git-2@gmane.org; Thu, 03 Apr 2008 09:10:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755041AbYDCGFt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Apr 2008 02:05:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754545AbYDCGFt
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Apr 2008 02:05:49 -0400
-Received: from pne-smtpout4-sn1.fre.skanova.net ([81.228.11.168]:49513 "EHLO
-	pne-smtpout4-sn1.fre.skanova.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754798AbYDCGFs (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 3 Apr 2008 02:05:48 -0400
-Received: from [192.168.0.2] (80.220.180.181) by pne-smtpout4-sn1.fre.skanova.net (7.3.129)
-        id 47A7970A0034105F; Thu, 3 Apr 2008 08:05:47 +0200
-User-Agent: KMail/1.9.5
-In-Reply-To: <p06240804c41942f6276e@[192.168.1.114]>
-Content-Disposition: inline
+	id S1758440AbYDCHJU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Apr 2008 03:09:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758504AbYDCHJU
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Apr 2008 03:09:20 -0400
+Received: from verein.lst.de ([213.95.11.210]:33756 "EHLO verein.lst.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757114AbYDCHJT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Apr 2008 03:09:19 -0400
+Received: from rhea.troll.no (nat0.troll.no [62.70.27.100])
+	(authenticated bits=0)
+	by verein.lst.de (8.12.3/8.12.3/Debian-7.1) with ESMTP id m3379BF3028624
+	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=NO);
+	Thu, 3 Apr 2008 09:09:12 +0200
+User-Agent: KMail/1.9.9
+In-Reply-To: <e66701d40804020123qb66f52fo13c32e939a7d6f75@mail.gmail.com>
+X-Spam-Score: 0 () 
+X-Scanned-By: MIMEDefang 2.39
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78727>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78728>
 
-Stephen Bannasch kirjoitti:
+--nextPart1970727.TCl1EsETGi
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-> I've just created a git-svn clone from a svn repo accessed locally
-> with a file:/// path.
+On Wednesday 02 April 2008 10:23:00 Kevin Leung wrote:
+> The filename should be p4-git-sync.cfg.db instead of p4-git-sync.cfg.
 >
-> Unfortunately the local svn repo is just a copy of the main svn repo
-> normally accessed with http or https (served through Apache). I was
-> having problems cloning the main svn repository (more details below)
-> so I archived the remote svn repository and copied it to my local
-> hard drive.
+> Signed-off-by: Kevin Leung <kevinlsk@gmail.com>
+> ---
+> I encounter this problem after submitting the changelist to Perforce.
+>
+> I was using Mac OS X 10.5 with Python 2.5.1. I am not sure if this patch
+> will help others.
 
-I know two options:
-
-1. Keep your current Git repo but set the url and rewriteroot options 
-in .git/config:
-
-[svn-remote "svn"]
-	url = http://...
-	rewriteroot = file:///...
-
-Your commit messages will still have git-svn-id pointing at file:///... 
-url but it should work fine.
+Thanks for the patch! Fortunately this config file is not needed anymore an=
+d I=20
+removed its use alltogether a while ago, also as a result of running into=20
+this problem on Mac OS X myself :). So the latest git has this resolved :)
 
 
-2. Convert your repo again:
+Simon
 
-$ mkdir repo ; cd repo
-$ git svn init --rewrite-root=http://... file:///...
-$ git svn fetch
+> Change 29323 submitted.
+> All changes applied!
+> Performing incremental import into refs/remotes/p4/master git branch
+> Depot paths: //depot/POPCAT/
+> Import destination: refs/remotes/p4/master
+> Importing revision 29323 (100%)
+> Do you want to rebase current HEAD from Perforce now using git-p4
+> rebase? [y]es/[n]o n
+> Traceback (most recent call last):
+>   File "/Users/kevin/bin/git-p4", line 1828, in <module>
+>     main()
+>   File "/Users/kevin/bin/git-p4", line 1823, in main
+>     if not cmd.run(args):
+>   File "/Users/kevin/bin/git-p4", line 835, in run
+>     os.remove(self.configFile)
+> OSError: [Errno 2] No such file or directory:
+> '/Users/kevin/cdc.git/popcat/.git/p4-git-sync.cfg'
+>
+>  contrib/fast-import/git-p4 |    2 +-
+>  1 files changed, 1 insertions(+), 1 deletions(-)
+>
+> diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
+> index c80a6da..623757a 100755
+> --- a/contrib/fast-import/git-p4
+> +++ b/contrib/fast-import/git-p4
+> @@ -796,7 +796,7 @@ class P4Submit(Command):
+>                  self.logSubstitutions[tokens[0]] =3D tokens[1]
+>
+>          self.check()
+> -        self.configFile =3D self.gitdir + "/p4-git-sync.cfg"
+> +        self.configFile =3D self.gitdir + "/p4-git-sync.cfg.db"
+>          self.config =3D shelve.open(self.configFile, writeback=3DTrue)
+>
+>          if self.firstTime:
 
-This way you'll create new Git repo from file:///... url but commit 
-messages will have git-svn-id's url pointing at http://... . After that 
-set the correct remote url to .git/config:
 
-[svn-remote "svn"]
-	url = http://...
+
+--nextPart1970727.TCl1EsETGi
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBH9IKWWXvMThJCpvIRAm9SAKDi56gM1AlJzqxuXopPnurpqCxbXgCg3Bi8
+5KPMfdiBytaKRSM9W/31/Vs=
+=ihXm
+-----END PGP SIGNATURE-----
+
+--nextPart1970727.TCl1EsETGi--
