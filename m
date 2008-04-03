@@ -1,78 +1,58 @@
-From: SZEDER =?iso-8859-2?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: Re: [PATCH 0/2] merge --summary vs. merge.summary
-Date: Thu, 3 Apr 2008 13:03:59 +0200
-Message-ID: <20080403110359.GE32119@neumann>
-References: <1207213396-17370-1-git-send-email-szeder@ira.uka.de> <20080403103056.GD6673@coredump.intra.peff.net>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH 0/4] Blame in reverse
+Date: Thu, 03 Apr 2008 13:25:12 +0200
+Message-ID: <47F4BE98.8060209@viscovery.net>
+References: <7v4paj486a.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Apr 03 13:04:50 2008
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 03 13:26:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JhNFQ-0000QV-Il
-	for gcvg-git-2@gmane.org; Thu, 03 Apr 2008 13:04:49 +0200
+	id 1JhNZy-00075B-8x
+	for gcvg-git-2@gmane.org; Thu, 03 Apr 2008 13:26:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753927AbYDCLEE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 3 Apr 2008 07:04:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752720AbYDCLED
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Apr 2008 07:04:03 -0400
-Received: from francis.fzi.de ([141.21.7.5]:14849 "EHLO exchange.fzi.de"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1753893AbYDCLEC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Apr 2008 07:04:02 -0400
-Received: from fzi.de ([141.21.4.196]) by exchange.fzi.de with Microsoft SMTPSVC(6.0.3790.3959);
-	 Thu, 3 Apr 2008 13:03:59 +0200
-Content-Disposition: inline
-In-Reply-To: <20080403103056.GD6673@coredump.intra.peff.net>
-User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
-X-OriginalArrivalTime: 03 Apr 2008 11:03:59.0006 (UTC) FILETIME=[6AC763E0:01C8957A]
+	id S1754172AbYDCLZS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Apr 2008 07:25:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753563AbYDCLZS
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Apr 2008 07:25:18 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:45324 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752069AbYDCLZR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Apr 2008 07:25:17 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1JhNYD-0001Jf-AT; Thu, 03 Apr 2008 13:24:13 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id BB1BA546; Thu,  3 Apr 2008 13:25:12 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <7v4paj486a.fsf@gitster.siamese.dyndns.org>
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78745>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78746>
 
-Hi Jeff,
+Junio C Hamano schrieb:
+> Usual "git blame" starts from the latest revision and finds where each
+> line came from (i.e. who came up with that brilliant idea, or more often
+> who introduced that bug).  This new mode starts from an old revision, and
+> annotates in reverse --- up to which point each line survived, before it
+> got replaced with something else. 
 
-On Thu, Apr 03, 2008 at 06:30:56AM -0400, Jeff King wrote:
-> On Thu, Apr 03, 2008 at 11:03:14AM +0200, SZEDER G=E1bor wrote:
->=20
-> > So the '--summary' option controls the printing of diffstat, while =
-the
-> > 'merge.summary' config variable controls the behaviour of 'fmt-merg=
-e-msg',
->=20
-> Think that --diffstat is probably a better name. But your series
-> actually _changes_ the meaning of --summary, which is probably a bad
-> idea for people who have scripted around these.
->=20
-> The problem is that you have two concepts with the same name; giving =
-one
-> of the concepts the name means that the other concept breaks.
-Well, I agree with you, and I had the same concerns you expressed
-here.
+Nice!! Is the result somehow different from
 
->   2. merge.summary becomes merge.something_else, along with
->      --something-else support. merge.summary remains as a compatibili=
-ty
->      option for merge.something_else.
->
-> Though I can't think of a good "something_else".
-Me neither.
+	$ git rev-list --reverse HEAD > /tmp/blame.revs
+	$ git blame -S /tmp/blame.revs foo.c
 
-> Given that there isn't
-> even a command-line equivalent to merge.summary now, maybe just leave=
- it
-> as merge.summary
-I think that the name of the command-line option and the config
-variable should be in sync, so having merge.sync and --something-else
-is probably not a good idea.  Furthermore, I think it should also be
-sync with the options of fmt-merge-msg.
+?
 
-
-Regards,
-G=E1bor
+-- Hannes
