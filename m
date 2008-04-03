@@ -1,175 +1,89 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Update setup-git-server-over-http.txt based on my
- experience.
-Date: Thu, 3 Apr 2008 22:28:29 +0200 (CEST)
-Message-ID: <alpine.LSU.1.00.0804032218550.4008@racer.site>
-References: <1207241902-4667-1-git-send-email-Matthieu.Moy@imag.fr> <alpine.LSU.1.00.0804031905410.4008@racer.site> <vpqtziimzcp.fsf@bauges.imag.fr>
+From: "James Kingston" <james.kingston@gmail.com>
+Subject: newbie with broken workflow
+Date: Thu, 3 Apr 2008 16:45:42 -0500
+Message-ID: <9d27c6320804031445p3fc80115n59218673dd587795@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Thu Apr 03 23:29:35 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 03 23:46:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JhWzt-0004Q3-22
-	for gcvg-git-2@gmane.org; Thu, 03 Apr 2008 23:29:25 +0200
+	id 1JhXGP-0002KD-3U
+	for gcvg-git-2@gmane.org; Thu, 03 Apr 2008 23:46:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757826AbYDCV21 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Apr 2008 17:28:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757397AbYDCV21
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Apr 2008 17:28:27 -0400
-Received: from mail.gmx.net ([213.165.64.20]:54714 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755546AbYDCV2Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Apr 2008 17:28:24 -0400
-Received: (qmail invoked by alias); 03 Apr 2008 21:28:22 -0000
-Received: from host86-165-92-90.range86-165.btcentralplus.com (EHLO racer.home) [86.165.92.90]
-  by mail.gmx.net (mp016) with SMTP; 03 Apr 2008 23:28:22 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19ZWqNtzYRZwiJ8lCK5MLmUKHev93d1UNy1ak9Rkz
-	QerjY+OgcYAKvu
-X-X-Sender: gene099@racer.site
-In-Reply-To: <vpqtziimzcp.fsf@bauges.imag.fr>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1755440AbYDCVpp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Apr 2008 17:45:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755146AbYDCVpp
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Apr 2008 17:45:45 -0400
+Received: from el-out-1112.google.com ([209.85.162.177]:25993 "EHLO
+	el-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755440AbYDCVpo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Apr 2008 17:45:44 -0400
+Received: by el-out-1112.google.com with SMTP id v27so1845189ele.17
+        for <git@vger.kernel.org>; Thu, 03 Apr 2008 14:45:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=POOwih4pZ1vlQXWWXT9x/OpDofSrxGAtLMLjX0oaeos=;
+        b=T9Obd89VSpg7CSUDWMIZhuZs0xQeE22kwu0m6c5Zqo7Eaaq3L2u+QNIiA+xVXZdiYoQLqEt4NJhN5+5Epo0Bxs6zoArlkYw/X+qnzEZZoj43tpGhYjJGZDs++Bnrrg8YvQERvzAxbhpBcmH9I9TDQo3lD8+c4v/HkALbkldwvxQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=sXFZ21DLjfUDyI4tk18qpJ81QwcHyu1Y4qIlmtgHNFiNVXs5+PNtELaxqKXog3tP+IVfBHRZTXj25fjDaObLYl2snqoB9MiOZH3nrijDHQT8BPmqA/p9ThELp/WPFxSsADz9w+POg5CQJLc45VMH8ns/CbhZh3hz1GXrWNflvhg=
+Received: by 10.114.149.2 with SMTP id w2mr720150wad.29.1207259143030;
+        Thu, 03 Apr 2008 14:45:43 -0700 (PDT)
+Received: by 10.114.57.6 with HTTP; Thu, 3 Apr 2008 14:45:42 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78783>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78784>
 
-Hi,
+I am a few days into git and have settled into a workflow that is
+apparently very broken, and I'd appreciate it if someone with a more
+experienced eye can point out where I went wrong.
 
-On Thu, 3 Apr 2008, Matthieu Moy wrote:
+The official SCM tool at my work is ClearCase Remote Client, and it's
+vile... pessimistic locking, huge bureaucracy just to create a branch
+(I love experimental branches), no licenses for the native client.  My
+plan was to use git (Git-1.5.4-preview20080202.exe) to track my
+clearcase view directory, and push changes into that repo when
+convenient from my working directory repo (clearcase makes
+non-checkedout files read only, which makes working directly in the
+view directory Ugly).
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > I don't like the commit subject.  At all.
-> 
-> Well, I can't think of a better one. The patch introduces several minor 
-> changes, and I don't think it deserves a real patch serie for each 
-> unrelated change.
-> 
-> Suggestions welcome.
+Here is a timeline of how I tried to do this:
 
-Since your changes are mostly about using WebDAV to copy an empty git 
-repository to the server, you could allude to that.
+/c>	cd /c/cc
+/c/cc> 	git init
+/c/cc> 	git add *
+/c/cc> 	git commit
+/c/cc> 	mkdir /c/wd
+/c/cc> 	cd /c/wd
+/c/wd>	git clone /c/cc
+/c/wd>	cd cc/
+/c/wd/cc>  ls
+/c/wd/cc>  vi config.ini
+/c/wd/cc>  git checkout -b config_changes
+/c/wd/cc>  git diff
+/c/wd/cc>  git add config.ini
+/c/wd/cc>  git commit
+/c/wd/cc>  git checkout master
+/c/wd/cc>  git merge config_changes
+/c/wd/cc>  vi config.ini
+/c/wd/cc>  git push /c/cc
+/c/wd/cc>  cd /c/cc
+/c/cc> 	vi config.ini # doesn't show the change made in experimental
+branch, though gitk shows the patch
+/c/cc> 	git status # says that config.ini has been modified
+/c/cc> 	git add config.ini # grasping as straws
+/c/cc> 	git commit # changes nothing, as far as I can tell
+/c/cc> 	git reset --hard #still changes nothing.  My diffs are there
+in the log, just out of reach
 
-> > On Thu, 3 Apr 2008, Matthieu Moy wrote:
-> >
-> >> -- have git installed at the server _and_ client
-> >> +- have git installed on the client, and preferably on the server
-> >
-> > How do you want to initialise the repository on the server, then?  
-> > (IOW you should mention here that you need a WebDAV client on the 
-> > client if you do not have Git on the server, and that it is way more 
-> > fiddly.)
-> 
-> What part of
-> 
->  Another
->  option is to generate an empty repository at the client and copy it to
->  the server with a WebDAV client (which is the only option if Git is
->  not installed on the server).
-> 
-> is unclear ?
-
-It is too long.
-
--- have git installed on the client
-
--- have git installed on the server (or if you cannot, get a WebDAV 
-   client such as Konqueror, Internet Exploder, etc.)
-
-> >> -In effect, this probably means you're going to be root.
-> >> +In effect, this probably means you're going to be root, or that you're
-> >> +using a preconfigured WebDAV server.
-> >
-> > Either you strike "probably" or you skip what you added.
-> 
-> Why?
-
-Because you do not need to be "root" if WebDAV is preconfigured?
-
-> >> @@ -169,7 +170,8 @@ On Debian:
-> >>  
-> >>     Most tests should pass.
-> >>  
-> >> -A command line tool to test WebDAV is cadaver.
-> >> +A command line tool to test WebDAV is cadaver. If you prefer GUIs,
-> >> +konqueror can open WebDAV URLs as "webdav://..." or "webdavs://...".
-> >
-> > What do you do if you have MacOSX, or Windows?
-> 
-> You read messages instead of truncating them if you're on windows.
-> 
-> I have no idea about MacOSX, but that's not the point of my patch.
-
-Right, but the text you modify is not supposed to be Linux-specific.
-
-> >> -Make sure that you have HTTP support, i.e. your git was built with curl.
-> >> -The easiest way to check is to look for the executable 'git-http-push'.
-> >> +Make sure that you have HTTP support, i.e. your git was built with
-> >> +curl (and a recent enough version).
-> >
-> > Say what version.  Otherwise this comment will soon be very, very stale.
-> >
-> >> +The easiest way to check is to +look for the executable 
-> >> 'git-http-push'. The command "git http-push" +with no argument should 
-> >> display a usage message.
-> >
-> > My search revealed that http-push was in Git since tags/v0.99.9e^2~9^2~4.  
-> > Which is not recent at all.
-> 
-> Before my patch, the explanation says that you just need to check
-> whether you have git-http-push, which is insufficient. With my patch,
-> it gives an accurate check. I believe this is an improvement.
-
-Oh?  So a usage message qualifies for "recent enough"?  In that case, 
-v0.99.9f is "recent enough".  I find that hardly helpful.
-
-> >> +Also note that the URL should point to the git repository itself, that
-> >> +is, to the '.git/' directory and not the working tree in case the
-> >> +repository is non-bare.
-> >
-> > It makes no sense to describe the case of a non-bare repository.
-> 
-> Actually, it makes no real sense to have a non-bare repository. But I've 
-> been bitten by this (I just typed "git init" without --bare, and 
-> uploaded it). Since git-http-push gives _very_ bad error messages, it's 
-> good to point the user to potential mistakes to help troubleshooting.
-
-If it makes no real sense to have a non-bare repository, why do you even 
-_suggest_ what to do in that case?  You should rather say that it makes no 
-sense to have a non-bare repository.  And probably add "because a 
-http-push will not update the working directory anyway".
-
-> > >> +Using a proxy:
-> >> +--------------
-> >> +
-> >> +If you have to access the WebDAV server from behind an HTTP(S) proxy,
-> >> +set the variable 'all_proxy' to 'http://proxy-host.com:port', or
-> >> +'http://login-on-proxy:passwd-on-proxy@proxy-host.com:port'. See 'man
-> >> +curl' for details.
-> >
-> > You only need http_proxy.
-> 
-> What makes you think that?
-
-I use it in msysgit.
-
-(Okay, not for pushing, but for fetching, which technically uses the 
-same protocol.)
-
-> (hint: I've been bitten by this too).
-
-The only way I see this could bite you is if curl does not heed http_proxy 
-for https:// protocol.
-
-There's another thing.  My curl manpage insists that ALL_PROXY is all 
-capital.  Can you clarify?
-
-Ciao,
-Dscho
+I have much to learn, but in the short term I just need to get those
+changes into clearcase so QA can pull them
