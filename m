@@ -1,58 +1,63 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH 0/4] Blame in reverse
-Date: Thu, 03 Apr 2008 13:25:12 +0200
-Message-ID: <47F4BE98.8060209@viscovery.net>
-References: <7v4paj486a.fsf@gitster.siamese.dyndns.org>
+From: "Aneesh Kumar" <aneesh.kumar@gmail.com>
+Subject: http git clone fails while ssh git clone works
+Date: Thu, 3 Apr 2008 17:10:07 +0530
+Message-ID: <cc723f590804030440t14a8e4fdw77c4449dc2a4dbb8@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 03 13:26:03 2008
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Apr 03 13:41:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JhNZy-00075B-8x
-	for gcvg-git-2@gmane.org; Thu, 03 Apr 2008 13:26:02 +0200
+	id 1JhNoO-0003eU-0c
+	for gcvg-git-2@gmane.org; Thu, 03 Apr 2008 13:40:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754172AbYDCLZS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Apr 2008 07:25:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753563AbYDCLZS
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Apr 2008 07:25:18 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:45324 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752069AbYDCLZR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Apr 2008 07:25:17 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1JhNYD-0001Jf-AT; Thu, 03 Apr 2008 13:24:13 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id BB1BA546; Thu,  3 Apr 2008 13:25:12 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <7v4paj486a.fsf@gitster.siamese.dyndns.org>
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1754326AbYDCLkK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Apr 2008 07:40:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754363AbYDCLkK
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Apr 2008 07:40:10 -0400
+Received: from wr-out-0506.google.com ([64.233.184.232]:35125 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754326AbYDCLkI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Apr 2008 07:40:08 -0400
+Received: by wr-out-0506.google.com with SMTP id c48so2254204wra.1
+        for <git@vger.kernel.org>; Thu, 03 Apr 2008 04:40:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=vU3noTDH+dC820tGDg+5FNKY2wardZ2sSC3Jdosm5LU=;
+        b=dHazAd2Z38IlY/vEpJ8Om0St1VHvOza5c3MBiN88e4o8qIf6YTRQh4gdNqDy7N4sjmByNgOhFZu5qlmnnccVXMoF4RtWh1NJcefry5n+w45J40NrpJR21CqjO06BzLoVFrb3FmKpIwtcsMNqxii5FTghYiEDW10eZudDTDsaIaM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=pTak4qwWWoABsJ6j3dMu+7uB8sWzNr7mr4rp9YcaJpTav9GZpp1LzIX8+Flu9uegjwzz0/AsC1b3nnD315lUOrD3EDu3fVA7VoxmJYHkEe6PHza0go+GYCQ3mN9NVP3BS4o+/ZjVZYOaJWr98y9FXEOT+dolKrasoAJyrOHhARs=
+Received: by 10.114.190.6 with SMTP id n6mr17110061waf.131.1207222807186;
+        Thu, 03 Apr 2008 04:40:07 -0700 (PDT)
+Received: by 10.115.48.17 with HTTP; Thu, 3 Apr 2008 04:40:07 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78746>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78747>
 
-Junio C Hamano schrieb:
-> Usual "git blame" starts from the latest revision and finds where each
-> line came from (i.e. who came up with that brilliant idea, or more often
-> who introduced that bug).  This new mode starts from an old revision, and
-> annotates in reverse --- up to which point each line survived, before it
-> got replaced with something else. 
+git clone http://myhost...
 
-Nice!! Is the result somehow different from
+ot 0bc8afe5e1f16a6c56bc677a6c85148455a474b3
+got ee425b0b7fccd9cdea38ef781b76f034e0228391
+error: Unable to find 31053805b6981918e1f39e7149f62d2a0068732a under
+http://myhost.....
+Cannot obtain needed commit 31053805b6981918e1f39e7149f62d2a0068732a
+while processing commit 56933610fa9a36ea3fc053e02bd7442b55db85dd.
 
-	$ git rev-list --reverse HEAD > /tmp/blame.revs
-	$ git blame -S /tmp/blame.revs foo.c
+while git clone ssh://myhost... works fine.
 
-?
 
--- Hannes
+The repo actually have the commit
+
+git --git-dir=a.git show 31053805b6981918e1f39e7149f62d2a0068732a
+shows the commit.
+
+-aneesh
