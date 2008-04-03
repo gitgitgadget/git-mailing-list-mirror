@@ -1,94 +1,94 @@
-From: Jordan Miller <jmil@rice.edu>
-Subject: using git for file management while writing a thesis...
-Date: Thu, 3 Apr 2008 15:58:21 -0500
-Message-ID: <56810483-5257-49CD-AA0E-303DB6C4CEFB@rice.edu>
-Mime-Version: 1.0 (Apple Message framework v919.2)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 03 23:27:06 2008
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: tests for pre-auto-gc hook (WAS: Re: [PATCH 3/3] contrib/hooks:
+	add an example pre-auto-gc hook)
+Date: Thu, 3 Apr 2008 23:26:56 +0200
+Message-ID: <20080403212656.GJ11574@genesis.frugalware.org>
+References: <cover.1207049697.git.vmiklos@frugalware.org> <7vhceldv12.fsf@gitster.siamese.dyndns.org> <20080402011447.GO3264@genesis.frugalware.org> <7vwsngaoqg.fsf@gitster.siamese.dyndns.org> <20080402190240.GV3264@genesis.frugalware.org> <7vtzik848t.fsf@gitster.siamese.dyndns.org> <cover.1207164676.git.vmiklos@frugalware.org> <96017502f7bca67a14f9a09d19c8ea42bde78949.1207167342.git.vmiklos@frugalware.org> <7vfxu4808c.fsf@gitster.siamese.dyndns.org> <20080402204524.GZ3264@genesis.frugalware.org>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="cf0hFtnykp6aONGL"
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Bj?rn Steinbrink <B.Steinbrink@gmx.de>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 03 23:27:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JhWxX-0003c4-EP
-	for gcvg-git-2@gmane.org; Thu, 03 Apr 2008 23:26:59 +0200
+	id 1JhWyH-0003uH-Lr
+	for gcvg-git-2@gmane.org; Thu, 03 Apr 2008 23:27:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756113AbYDCV0O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Apr 2008 17:26:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756129AbYDCV0O
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Apr 2008 17:26:14 -0400
-Received: from smtp2.mail.rice.edu ([128.42.206.129]:21441 "EHLO
-	mh2.mail.rice.edu" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755795AbYDCV0N (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Apr 2008 17:26:13 -0400
-X-Greylist: delayed 1667 seconds by postgrey-1.27 at vger.kernel.org; Thu, 03 Apr 2008 17:26:13 EDT
-Received: from mh2.mail.rice.edu (localhost.localdomain [127.0.0.1])
-	by mh2.mail.rice.edu (Postfix) with ESMTP id 4454A36D535
-	for <git@vger.kernel.org>; Thu,  3 Apr 2008 15:58:24 -0500 (CDT)
-X-Virus-Scanned: by amavis-2.4.4 at mh2.mail.rice.edu
-Received: from mh2.mail.rice.edu ([127.0.0.1])
-	by mh2.mail.rice.edu (mh2.mail.rice.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 0sINz9lZLFyD for <git@vger.kernel.org>;
-	Thu,  3 Apr 2008 15:58:24 -0500 (CDT)
-Received: from [192.168.2.10] (c-98-195-201-177.hsd1.tx.comcast.net [98.195.201.177])
-	(using TLSv1 with cipher RC4-MD5 (128/128 bits))
-	(No client certificate requested)
-	by mh2.mail.rice.edu (Postfix) with ESMTP id C268136D51D
-	for <git@vger.kernel.org>; Thu,  3 Apr 2008 15:58:23 -0500 (CDT)
-X-Mailer: Apple Mail (2.919.2)
+	id S1756647AbYDCV1B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Apr 2008 17:27:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756323AbYDCV1B
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Apr 2008 17:27:01 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:30471 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756235AbYDCV1A (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Apr 2008 17:27:00 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 786FC1B2518;
+	Thu,  3 Apr 2008 23:26:57 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 7B60D446AC;
+	Thu,  3 Apr 2008 23:23:44 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 6ECF81190543; Thu,  3 Apr 2008 23:26:56 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20080402204524.GZ3264@genesis.frugalware.org>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78781>
-
-Hello,
-
-Thank you to the developers for Git!
-
-I am using git 1.5.3.1 on OS X 10.5.2 for file versioning for LaTeX  
-files while writing my thesis. I have looked at other possible ways to  
-manage text files while writing a thesis, but I think git is the best  
-one available.
-
-I am a bit confused on how best to create backups of my commits on  
-external hard drives and USB keys.
-
-After I had created my git repository on my local hard drive, I  
-connected an external hard drive and a USB key and peformed a "git  
-clone" from local to external. Everything was very quick.
-
-Now, every day I stage files and perform a commit on my local drive to  
-my local repository. Then, I connect my external hard drives and  
-perform a "git pull" from each of their repositories on the repository  
-on my local drive to update these external hard drive repositories and  
-also checkout the latest files to these external repositories.
-
-The problem I am having is as follows:
-Everything works beautifully and incredibly speedily on my external  
-3.5" hard drive connected via Firewire.
-On my USB keys, a huge number of changes are seen and git takes a very  
-long time assessing ("deltifying") what are the changes needed (more  
-than 10 times the number of files are deltified!). Shouldn't git just  
-realize that it only needs to make the changes that were made in the  
-last commit, or am I using the "pull" command incorrectly?
-
-Why would it take so long for a "pull" command to happen on the USB2  
-key while it is extremely fast on an external drive? I have also tried  
-wiping the USB key and issuing a new "git clone" command, and that  
-happens extremely fast. But, shouldn't it be even faster to pull only  
-the latest commit onto the USB key?
-
-Finally, I have also tried changing the disk formatting of the USB key  
-to try to diagnose the problem. However, the problem is the same  
-whether the format of the USB key is HFS+ Journaled or MS-DOS FAT32.
-
-So, my question is what am I doing wrong with "git pull" and is there  
-a better way to use git for the task at hand? Unfortunately, I have  
-not yet been able to find a solution anywhere on the  
-interwebnetblagosphere.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78782>
 
 
-thanks in advance,
-Jordan
+--cf0hFtnykp6aONGL
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+Hi,
+
+I wanted to create a test like t7503-pre-commit-hook.sh for pre-auto-gc
+but actually I'm not sure how to trigger git gc --auto to do something.
+
+Here is what I managed to do so far:
+
+----
+git init
+git config gc.auto 1
+for i in `seq 1 500`; do echo $i >file; git add file; done
+git commit -m init
+----
+
+After this, 'git gc --auto' seem to print the 'Auto packing your
+repository for optimum performance.' message, but the return code is
+still 0, just like if it did not do anything.
+
+So all what I found is that the .git/objects/pack/ directory is empty in
+a new repo, and if git gc --auto did something, it won't be empty but:
+
+1) this isn't the proper way I'm sure.
+
+2) if I want to do it from a test, then I would need to create the repo
+=66rom scratch again and again, which is quite dirty.
+
+Does anyone have better ideas?
+
+Thanks
+
+--cf0hFtnykp6aONGL
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.8 (GNU/Linux)
+
+iEYEARECAAYFAkf1S6AACgkQe81tAgORUJaAmgCgg5s58M7JqU/I67woccPzuJvN
+GKoAn1UbBV9yY70zAqqlRSCVw0T1wMwt
+=zLco
+-----END PGP SIGNATURE-----
+
+--cf0hFtnykp6aONGL--
