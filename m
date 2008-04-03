@@ -1,80 +1,89 @@
-From: Michele Ballabio <barra_cuda@katamail.com>
-Subject: Re: [REGRESSION] git-gui
-Date: Thu, 3 Apr 2008 23:04:16 +0200
-Message-ID: <200804032304.17054.barra_cuda@katamail.com>
-References: <007901c89590$a827f7c0$93a7c10a@LGE.NET> <57518fd10804030700r6de977f5p6f0418e6eaea2583@mail.gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Achieving efficient storage of weirdly structured repos
+Date: Thu, 3 Apr 2008 14:11:04 -0700 (PDT)
+Message-ID: <alpine.LFD.1.00.0804031402530.14670@woody.linux-foundation.org>
+References: <7BE3E865-C30D-49B8-A1D9-898109514990@sun.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Jonathan del Strother" <maillist@steelskies.com>,
-	"=?iso-8859-1?q?Andr=E9_Goddard?= Rosa" <andre_rosa@lge.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 03 23:04:08 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Roman Shaposhnik <rvs@Sun.COM>
+X-From: git-owner@vger.kernel.org Thu Apr 03 23:12:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JhWbH-0003Yu-AF
-	for gcvg-git-2@gmane.org; Thu, 03 Apr 2008 23:03:59 +0200
+	id 1JhWj5-0006mU-Q4
+	for gcvg-git-2@gmane.org; Thu, 03 Apr 2008 23:12:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756189AbYDCVDQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 3 Apr 2008 17:03:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756129AbYDCVDQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Apr 2008 17:03:16 -0400
-Received: from smtp.katamail.com ([62.149.157.154]:46110 "HELO
-	smtp1.pc.aruba.it" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with SMTP id S1756079AbYDCVDP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 3 Apr 2008 17:03:15 -0400
-Received: (qmail 12683 invoked by uid 89); 3 Apr 2008 21:02:59 -0000
-X-Spam-Checker-Version: SpamAssassin 3.2.3 (2007-08-08) on smtp1-pc
-X-Spam-Level: 
-X-Spam-Status: No, score=0.1 required=5.0 tests=BAYES_50,RDNS_NONE
-	autolearn=no version=3.2.3
-Received: from unknown (HELO host93-57-static.104-80-b.business.telecomitalia.it) (barra?cuda@katamail.com@80.104.57.93)
-  by smtp1-pc with SMTP; 3 Apr 2008 21:02:57 -0000
-User-Agent: KMail/1.9.7
-In-Reply-To: <57518fd10804030700r6de977f5p6f0418e6eaea2583@mail.gmail.com>
-Content-Disposition: inline
+	id S1757428AbYDCVLU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Apr 2008 17:11:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757408AbYDCVLU
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Apr 2008 17:11:20 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:34546 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757344AbYDCVLT (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 3 Apr 2008 17:11:19 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m33LBHrL009763
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 3 Apr 2008 14:11:18 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m33LB4WS022684;
+	Thu, 3 Apr 2008 14:11:11 -0700
+In-Reply-To: <7BE3E865-C30D-49B8-A1D9-898109514990@sun.com>
+User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+X-Spam-Status: No, hits=-3.386 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78779>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78780>
 
-On Thursday 03 April 2008, Jonathan del Strother wrote:
-> On Thu, Apr 3, 2008 at 2:43 PM, Andr=E9 Goddard Rosa <andre_rosa@lge.=
-com> wrote:
-> > Hi, all!
-> >
-> >     After updating to git version 1.5.5.rc3 I always get the error =
-below
-> >  when starting "git gui".
-> >     Linux distributions used are opensuse 10 and opensuse Factory.
-> >
-> >  # git gui
-> >  Error in startup script: bad event type or keysym "["
-> >     while executing
-> >  "bind $ui_comm <$M1B-Key-\[> {show_less_context;break}"
-> >     file "/usr/bin/git-gui" linux 2718)
-> >
-> >     I think it's related to git-gui 0.10 recently added into the tr=
-ee.
->=20
-> Doh, I broke git :(
->=20
-> The problem is in c91ee2bd61 (Add shortcut keys for Show More/Less Co=
-ntext).
-> Works fine on my OS X 10.5 installation with tcl 8.4.7 - can anyone
-> suggest an alternative way of binding the left/right brackets?  I'm
-> not familiar with Tcl, and didn't manage to find a list of key names.
 
-These changes should help (haven't tried):
-	\[ -> bracketleft
-	\] -> bracketright
-but some European keyboards do not have easy access to brackets, so
-other keys would be preferable (comma and period, for example, or 1 and=
- 2).
 
-See
-	man keysyms
-for a list of key names.
+On Thu, 3 Apr 2008, Roman Shaposhnik wrote:
+> 
+> The repository was created using hg2git (the one based on git-fast-import)
+> and it was GC'ed and REPACK'ed just in case.
+
+Before going any further - exactly _how_ was it repacked?
+
+In particular, when using importers that do partial packing on their own 
+(and any "git-fastimport" user is that by definition - and I think 
+hg2git does that), at the end of it all you have to make sure to repack in 
+a way where the repacking will totally discard the import-time packfiles.
+
+IOW, that's one of the very few times you should use "-f" to git repack.
+
+It's usually also a good place to make sure that since you ignore the old 
+packing information, it's best to also make sure that the new packing info 
+is good by using a bigger window (and perhaps a bigger depth). That makes 
+the packing much slower, of course, but this is meant to be a one-time 
+event.
+
+So try something like
+
+	git repack -a -d -f --depth=100 --window=100
+
+if you have a good CPU and plenty of memory.
+
+> The last item (trees) also seem to take the most space and the most 
+> reasonable explanation that I can offer is that NetBeans repository has 
+> a really weird structure where they have approximately 700 (yes, seven 
+> hundred!) top-level subdirectories there. They are clearly 
+> Submodules-shy, but that's another issue that I will need to address 
+> with them.
+
+Trees taking the biggest amount of space is not unheard of, and it may 
+also be that the name heuristics (for finding good packing partners) could 
+be failign, which would result in a much bigger pack than necessary. 
+
+So if you already did an aggressive repack like the above, I'd happily 
+take a look at whether maybe it's bad heuristics for finding tree objects 
+to pair up for delta-compression. Do you have a place where you can put 
+that repo for people to clone and look at? 
+
+			Linus
