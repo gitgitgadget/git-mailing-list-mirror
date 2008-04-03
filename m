@@ -1,66 +1,90 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/4] "log" and friends: --children option
-Date: Thu, 3 Apr 2008 21:58:58 +0200 (CEST)
-Message-ID: <alpine.LSU.1.00.0804032158040.4008@racer.site>
-References: <7v4paj486a.fsf@gitster.siamese.dyndns.org> <7vlk3v2tg9.fsf@gitster.siamese.dyndns.org>
+Subject: Re: [PATCH] git-clone.txt: Adjust note to --shared for new pruning
+ behavior of git-gc
+Date: Thu, 3 Apr 2008 22:01:48 +0200 (CEST)
+Message-ID: <alpine.LSU.1.00.0804032200310.4008@racer.site>
+References: <47F52145.306@nrlssc.navy.mil> <alpine.LSU.1.00.0804032113280.4008@racer.site> <47F54342.1040901@nrlssc.navy.mil>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 03 22:59:47 2008
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Brandon Casey <casey@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Thu Apr 03 23:02:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JhWX7-0001px-0B
-	for gcvg-git-2@gmane.org; Thu, 03 Apr 2008 22:59:41 +0200
+	id 1JhWZh-0002tL-LR
+	for gcvg-git-2@gmane.org; Thu, 03 Apr 2008 23:02:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758417AbYDCU6t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Apr 2008 16:58:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758303AbYDCU6t
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Apr 2008 16:58:49 -0400
-Received: from mail.gmx.net ([213.165.64.20]:54451 "HELO mail.gmx.net"
+	id S1755958AbYDCVBj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Apr 2008 17:01:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755559AbYDCVBj
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Apr 2008 17:01:39 -0400
+Received: from mail.gmx.net ([213.165.64.20]:52409 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756131AbYDCU6s (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Apr 2008 16:58:48 -0400
-Received: (qmail invoked by alias); 03 Apr 2008 20:58:46 -0000
+	id S1755258AbYDCVBi (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Apr 2008 17:01:38 -0400
+Received: (qmail invoked by alias); 03 Apr 2008 21:01:36 -0000
 Received: from host86-165-92-90.range86-165.btcentralplus.com (EHLO racer.home) [86.165.92.90]
-  by mail.gmx.net (mp021) with SMTP; 03 Apr 2008 22:58:46 +0200
+  by mail.gmx.net (mp008) with SMTP; 03 Apr 2008 23:01:36 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18MHqNxHV0MWij2jjbTGdDjiNxSqf56OTND4l/ibc
-	u9G6LZpMvzBFyJ
+X-Provags-ID: V01U2FsdGVkX1+LBaNMT62LrUzR+tcHB/CtWHNS+GItRUI0ql0PWZ
+	K3we4a0KpCHHAQ
 X-X-Sender: gene099@racer.site
-In-Reply-To: <7vlk3v2tg9.fsf@gitster.siamese.dyndns.org>
+In-Reply-To: <47F54342.1040901@nrlssc.navy.mil>
 User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78777>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78778>
 
 Hi,
 
-On Thu, 3 Apr 2008, Junio C Hamano wrote:
+On Thu, 3 Apr 2008, Brandon Casey wrote:
 
-> @@ -1398,6 +1404,26 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, const ch
->  	return left;
->  }
->  
-> +static void add_child(struct rev_info *revs, struct commit *parent, struct commit *child)
-> +{
-> +	struct commit_list *l = xcalloc(1, sizeof(*l));
-> +
-> +	l->item = child;
-> +	l->next = add_decoration(&revs->children, &parent->object, l);
-> +}
-> +
-> +static void set_children(struct rev_info *revs)
+> Johannes Schindelin wrote:
+> 
+> > On Thu, 3 Apr 2008, Brandon Casey wrote:
+> > 
+> >> diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+> >> index 9758243..d3ab00b 100644
+> >> --- a/Documentation/git-clone.txt
+> >> +++ b/Documentation/git-clone.txt
+> >> @@ -65,10 +65,12 @@ OPTIONS
+> >>  +
+> >>  *NOTE*: this is a possibly dangerous operation; do *not* use
+> >>  it unless you understand what it does. If you clone your
+> >> -repository using this option, then delete branches in the
+> >> -source repository and then run linkgit:git-gc[1] using the
+> >> -'--prune' option in the source repository, it may remove
+> >> -objects which are referenced by the cloned repository.
+> >> +repository using this option and then delete branches in the
+> >> +source repository, some objects may become unreferenced (or dangling).
+> >> +These objects may be removed by normal git operations (such as git-commit[1])
+> >> +which automatically call git-gc[1]. If these objects are removed and
+> >> +were referenced by the cloned repository, then the cloned repository
+> >> +will become corrupt.
+> > 
+> > Please note that if you delete a branch _after_ running git-gc, the next 
+> > git-gc would remove those objects anyway, since the first git-gc packed 
+> > the objects, and they were therefore no longer dangling.
+> 
+> I thought they would be retained unless --prune was used. git-gc uses the
+> -A option to repack when --prune is not used and -a when --prune is used.
 
-I'd call this add_children().
+Oh, you're right.  I forgot.
 
-Other than that, nicely done!  I did not think it was possible with as few 
-changes.
+> But what I was really trying to point out in the documentation changes 
+> was that now _other_ commands such as git-commit are also unsafe since 
+> they call 'git-gc --auto' and could cause loose unreferenced objects to 
+> be deleted. So it is not enough to just avoid calling git-gc when 
+> dealing with a --shared repository.
 
-Ciao,
+Right.  Hmm.  I missed that completely when I thought about prune 
+--expire.
+
+Sorry,
 Dscho
