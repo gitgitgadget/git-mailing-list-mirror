@@ -1,58 +1,109 @@
-From: "James Kingston" <james.kingston@gmail.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
 Subject: Re: newbie with broken workflow
-Date: Thu, 3 Apr 2008 18:41:33 -0500
-Message-ID: <9d27c6320804031641s2a1578fcmd7271a06842803fe@mail.gmail.com>
+Date: Thu, 3 Apr 2008 20:05:57 -0400 (EDT)
+Message-ID: <alpine.LNX.1.00.0804031957010.19665@iabervon.org>
 References: <9d27c6320804031445p3fc80115n59218673dd587795@mail.gmail.com>
-	 <8aa486160804031503j1ff3adbcu83f41eef14347370@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 04 01:42:26 2008
+To: James Kingston <james.kingston@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 04 02:06:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JhZ4V-0004Nj-IP
-	for gcvg-git-2@gmane.org; Fri, 04 Apr 2008 01:42:19 +0200
+	id 1JhZS8-0002L0-U0
+	for gcvg-git-2@gmane.org; Fri, 04 Apr 2008 02:06:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751730AbYDCXlh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 3 Apr 2008 19:41:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751595AbYDCXlh
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Apr 2008 19:41:37 -0400
-Received: from wa-out-1112.google.com ([209.85.146.178]:47080 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751044AbYDCXlg convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 3 Apr 2008 19:41:36 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so3829626wah.23
-        for <git@vger.kernel.org>; Thu, 03 Apr 2008 16:41:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=ldRX/6vfM81prH+dwpFLSTxsX81d8x7wpI+JOUbpWiw=;
-        b=JvhHdqZtlj52sG+qEI7fTXST3N+eDcf9emMH7DMeZeKT7vbzoYRGoxdODSdsEcvR1REnIZvkh/GX20NQBIGbcQhr9oA7+5SkDk5ZrVq3n6wLEmp1OiXz1qM8tXeZi1gfzW98hXI0zdhT/zM6fyh9KzhXqoQMC+rv3jeDo3NuOjs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=n30DyYPLnoy9cWRBYsrcvso3R5gNP9MO6n4giHDQKEfUqjKNKUpaDpuHD2wQqQDUElcrCp1ErN3DDWPmY+QpjXOTQ5ikiqOtrMFKfzYfZ2GHN9zW0Acn42P4Dz8hgadjCDwpQZdjliUh5ZV9m9Q3aV29Bu1RGZ5alWGpo0K+3mM=
-Received: by 10.114.106.1 with SMTP id e1mr846599wac.71.1207266093995;
-        Thu, 03 Apr 2008 16:41:33 -0700 (PDT)
-Received: by 10.114.57.6 with HTTP; Thu, 3 Apr 2008 16:41:33 -0700 (PDT)
-In-Reply-To: <8aa486160804031503j1ff3adbcu83f41eef14347370@mail.gmail.com>
-Content-Disposition: inline
+	id S1754477AbYDDAGA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Apr 2008 20:06:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754784AbYDDAF7
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Apr 2008 20:05:59 -0400
+Received: from iabervon.org ([66.92.72.58]:39017 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754443AbYDDAF7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Apr 2008 20:05:59 -0400
+Received: (qmail 9748 invoked by uid 1000); 4 Apr 2008 00:05:57 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 4 Apr 2008 00:05:57 -0000
+In-Reply-To: <9d27c6320804031445p3fc80115n59218673dd587795@mail.gmail.com>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78787>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78788>
 
-On Thu, Apr 3, 2008 at 5:03 PM, Santi B=E9jar <sbejar@gmail.com> wrote:
->  git push updates the branches, not the working copy, so:
->
->  cd /c/cc
->  git pull /c/wd/cc HEAD
->  Santi
->
+On Thu, 3 Apr 2008, James Kingston wrote:
 
-Thank you.  I also found the FAQ in the wiki, so the reasons are clear.
+> I am a few days into git and have settled into a workflow that is
+> apparently very broken, and I'd appreciate it if someone with a more
+> experienced eye can point out where I went wrong.
+> 
+> The official SCM tool at my work is ClearCase Remote Client, and it's
+> vile... pessimistic locking, huge bureaucracy just to create a branch
+> (I love experimental branches), no licenses for the native client.  My
+> plan was to use git (Git-1.5.4-preview20080202.exe) to track my
+> clearcase view directory, and push changes into that repo when
+> convenient from my working directory repo (clearcase makes
+> non-checkedout files read only, which makes working directly in the
+> view directory Ugly).
+> 
+> Here is a timeline of how I tried to do this:
+> 
+> /c>	cd /c/cc
+> /c/cc> 	git init
+> /c/cc> 	git add *
+> /c/cc> 	git commit
+> /c/cc> 	mkdir /c/wd
+> /c/cc> 	cd /c/wd
+> /c/wd>	git clone /c/cc
+> /c/wd>	cd cc/
+> /c/wd/cc>  ls
+> /c/wd/cc>  vi config.ini
+> /c/wd/cc>  git checkout -b config_changes
+> /c/wd/cc>  git diff
+> /c/wd/cc>  git add config.ini
+> /c/wd/cc>  git commit
+> /c/wd/cc>  git checkout master
+> /c/wd/cc>  git merge config_changes
+> /c/wd/cc>  vi config.ini
+> /c/wd/cc>  git push /c/cc
+> /c/wd/cc>  cd /c/cc
+> /c/cc> 	vi config.ini # doesn't show the change made in experimental
+> branch, though gitk shows the patch
+> /c/cc> 	git status # says that config.ini has been modified
+> /c/cc> 	git add config.ini # grasping as straws
+> /c/cc> 	git commit # changes nothing, as far as I can tell
+> /c/cc> 	git reset --hard #still changes nothing.  My diffs are there
+> in the log, just out of reach
+> 
+> I have much to learn, but in the short term I just need to get those
+> changes into clearcase so QA can pull them
+
+So you should actually do:
+
+/c/wd/cc> cd /c/cc
+/c/cc> git pull ../wd/cc
+
+But wouldn't that fail, because the files are read-only?
+
+I think you'd do:
+
+/c/cc> git fetch ../wd/cc
+/c/cc> git diff --name-only HEAD FETCH_HEAD
+
+Tell ClearCase you want to edit those files
+
+/c/cc> git merge FETCH_HEAD
+
+Commit your ClearCase stuff
+
+Also, IIRC, the sort of normal workflow for dealing with foreign SCMs that 
+need local working directories is actually to put them in 
+.git/info/something, and use git diff to get the changes in each of your 
+git commits and git apply (using it like "patch", but smarter) to modify 
+the working directory.
+
+	-Daniel
+*This .sig left intentionally blank*
