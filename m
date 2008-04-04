@@ -1,73 +1,60 @@
-From: Christoph Duelli <duelli@melosgmbh.de>
-Subject: Re: File info from SHA ID
-Date: Fri, 04 Apr 2008 15:55:05 +0200
-Message-ID: <47F63339.3070903@melosgmbh.de>
-References: <47F50CC5.20502@melosgmbh.de> <alpine.LFD.1.00.0804031009280.14670@woody.linux-foundation.org>
+From: "James Kingston" <james.kingston@gmail.com>
+Subject: Re: newbie with broken workflow
+Date: Fri, 4 Apr 2008 09:08:26 -0500
+Message-ID: <9d27c6320804040708l6eace184q9677ca75729b4eef@mail.gmail.com>
+References: <9d27c6320804031445p3fc80115n59218673dd587795@mail.gmail.com>
+	 <alpine.LNX.1.00.0804031957010.19665@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri Apr 04 15:57:52 2008
+To: "Daniel Barkalow" <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Fri Apr 04 16:09:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JhmQH-0005Yr-SF
-	for gcvg-git-2@gmane.org; Fri, 04 Apr 2008 15:57:42 +0200
+	id 1JhmbP-0001aS-6U
+	for gcvg-git-2@gmane.org; Fri, 04 Apr 2008 16:09:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752667AbYDDN4s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Apr 2008 09:56:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751391AbYDDN4s
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Apr 2008 09:56:48 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.189]:63379 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751116AbYDDN4r (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Apr 2008 09:56:47 -0400
-X-RZG-CLASS-ID: mo07
-X-RZG-AUTH: hvKqOO6Ph79JHUJJIwMxXgzUdNi97hMDGc5n+ojdbo9B56/YXBytmKws+HDM9bkjM02t
-Received: from mail.melosgmbh.de
-	(p5B07AAFE.dip0.t-ipconnect.de [91.7.170.254])
-	by post.webmailer.de (fruni mo51) (RZmta 16.19)
-	with ESMTP id a05637k34BiGHX ; Fri, 4 Apr 2008 15:56:45 +0200 (MEST)
-	(envelope-from: <duelli@melosgmbh.de>)
-X-Spam-Status: No, hits=0.0 required=4.0
-	tests=AWL: 0.036,BAYES_00: -1.665,TOTAL_SCORE: -1.629
-X-Spam-Level: 
-Received: from [172.27.1.229] ([172.27.1.229])
-	(authenticated user duelli@melosgmbh.de)
-	by mail.melosgmbh.de (Kerio MailServer 6.4.1 patch 1);
-	Fri, 4 Apr 2008 15:56:44 +0200
-User-Agent: Thunderbird 2.0.0.12 (X11/20080213)
-In-Reply-To: <alpine.LFD.1.00.0804031009280.14670@woody.linux-foundation.org>
+	id S1750960AbYDDOI2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Apr 2008 10:08:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753290AbYDDOI2
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Apr 2008 10:08:28 -0400
+Received: from wa-out-1112.google.com ([209.85.146.183]:34086 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750888AbYDDOI1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Apr 2008 10:08:27 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so49040wah.23
+        for <git@vger.kernel.org>; Fri, 04 Apr 2008 07:08:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=lKZd1fjSKbA/55uNNPeUzyuH2wAlspahM1FMAn5XRaE=;
+        b=TqF5go24i2vjUh5Aaxcs9ViDL92jvSz97/aOK5h0LKSmiaIpr/RZoyu9lqUKjataIr2ZDOxiikLHEqlmnutpliDHGabaLB6HPZpwL6lFrzBh15XDhzAhXqcPLEyedfpwe7kiFaYPRHSqYcpc5vlhM1KvubloOloCE9gJahdYze4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=VnUsUqQWDyArQ3Q9P8z1czB8ZctW4mSuEvoIM+ZXrP7AfJ/PsauqjGRUhhjz1zks3+O0C3j/CYmVWDj6t4kwRHESrw0juP9E+zVqi8cXZqBBefuDIUDNfdCqTZf7ZlnrY6Hn2EXarzRVV2kWi+fLQnrKa6h6bj7iLMrtSDt0+Zw=
+Received: by 10.115.32.8 with SMTP id k8mr1988838waj.89.1207318106334;
+        Fri, 04 Apr 2008 07:08:26 -0700 (PDT)
+Received: by 10.114.57.6 with HTTP; Fri, 4 Apr 2008 07:08:26 -0700 (PDT)
+In-Reply-To: <alpine.LNX.1.00.0804031957010.19665@iabervon.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78803>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78804>
 
-Linus Torvalds schrieb:
-> 
-> On Thu, 3 Apr 2008, Christoph Duelli wrote:
->> Given (only) a SHA ID (say from a file's $ID$ expansion), is it possible to
->> determine the file's name, date of commit etc?
-> 
-> Not directly, no.
-> 
-> But you can get it indirectly with a number of variations on
-> 
-> 	git whatchanged --raw --no-abbrev
-> 
-> and then just searching for that SHA1 ID in the result. That will also 
-> show you where in the history that SHA1 came to be or went away.
-> 
-> The SHA1 itself is _purely_ about the actual contents of the file, so it 
-> has no bearing on where that file actually exists, and two identical files 
-> in different places will have the same SHA1. So no SHA1 -> filename 
-> mapping can exist, but you can figure out where in the tree or history it 
-> existed if you just have the full repository.
-Ok, thank you. I was able to use the output of "git whatchanged --raw 
---no-abbrev" to achieve what I wanted to do.
+On Thu, Apr 3, 2008 at 7:05 PM, Daniel Barkalow <barkalow@iabervon.org> wrote:
+>  /c/wd/cc> cd /c/cc
+>  /c/cc> git pull ../wd/cc
+>
+>  But wouldn't that fail, because the files are read-only?
 
--- 
-Christoph Duelli
+Actually, I just tried and it worked beautifully.  The directory is
+writable, so git replaces rather than modifies the files.  Then I can
+use CCRC to search for hijacked files, check them out in one swoop
+with the option to keep my modifications, then check them all in as a
+group.
