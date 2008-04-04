@@ -1,109 +1,76 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: newbie with broken workflow
-Date: Thu, 3 Apr 2008 20:05:57 -0400 (EDT)
-Message-ID: <alpine.LNX.1.00.0804031957010.19665@iabervon.org>
-References: <9d27c6320804031445p3fc80115n59218673dd587795@mail.gmail.com>
+From: Stephen Bannasch <stephen.bannasch@deanbrook.org>
+Subject: Re: Can I switch a git-svn clone from a file => http url?
+Date: Thu, 3 Apr 2008 20:49:54 -0400
+Message-ID: <p06240804c41b28150d6a@[63.138.152.125]>
+References: <p06240804c41942f6276e@[192.168.1.114]>
+ <200804030905.46425.tlikonen@iki.fi>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: James Kingston <james.kingston@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 04 02:06:56 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: Teemu Likonen <tlikonen@iki.fi>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 04 02:51:18 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JhZS8-0002L0-U0
-	for gcvg-git-2@gmane.org; Fri, 04 Apr 2008 02:06:45 +0200
+	id 1Jha9F-00042Z-DQ
+	for gcvg-git-2@gmane.org; Fri, 04 Apr 2008 02:51:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754477AbYDDAGA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Apr 2008 20:06:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754784AbYDDAF7
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Apr 2008 20:05:59 -0400
-Received: from iabervon.org ([66.92.72.58]:39017 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754443AbYDDAF7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Apr 2008 20:05:59 -0400
-Received: (qmail 9748 invoked by uid 1000); 4 Apr 2008 00:05:57 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 4 Apr 2008 00:05:57 -0000
-In-Reply-To: <9d27c6320804031445p3fc80115n59218673dd587795@mail.gmail.com>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1755464AbYDDAud convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 3 Apr 2008 20:50:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755355AbYDDAud
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Apr 2008 20:50:33 -0400
+Received: from deanbrook.org ([66.160.189.173]:56597 "HELO deanbrook.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755227AbYDDAuc convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 3 Apr 2008 20:50:32 -0400
+Received: from 72.173.30.166 ([72.173.30.166]) by deanbrook.org for <git@vger.kernel.org>; Thu, 3 Apr 2008 17:50:25 -0700
+In-Reply-To: <200804030905.46425.tlikonen@iki.fi>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78788>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78789>
 
-On Thu, 3 Apr 2008, James Kingston wrote:
+At 9:05 AM +0300 4/3/08, Teemu Likonen wrote:
+>Stephen Bannasch kirjoitti:
+>
+>> I've just created a git-svn clone from a svn repo accessed locally
+>> with a file:/// path.
+>>
+>> Unfortunately the local svn repo is just a copy of the main svn repo
+>> normally accessed with http or https (served through Apache). I was
+>> having problems cloning the main svn repository (more details below)
+>> so I archived the remote svn repository and copied it to my local
+> > hard drive.
+>
+>2. Convert your repo again:
+>
+>$ mkdir repo ; cd repo
+>$ git svn init --rewrite-root=3Dhttp://... file:///...
+>$ git svn fetch
+>
+>This way you'll create new Git repo from file:///... url but commit
+>messages will have git-svn-id's url pointing at http://... . After tha=
+t
+>set the correct remote url to .git/config:
+>
+>[svn-remote "svn"]
+>	url =3D http://...
 
-> I am a few days into git and have settled into a workflow that is
-> apparently very broken, and I'd appreciate it if someone with a more
-> experienced eye can point out where I went wrong.
-> 
-> The official SCM tool at my work is ClearCase Remote Client, and it's
-> vile... pessimistic locking, huge bureaucracy just to create a branch
-> (I love experimental branches), no licenses for the native client.  My
-> plan was to use git (Git-1.5.4-preview20080202.exe) to track my
-> clearcase view directory, and push changes into that repo when
-> convenient from my working directory repo (clearcase makes
-> non-checkedout files read only, which makes working directly in the
-> view directory Ugly).
-> 
-> Here is a timeline of how I tried to do this:
-> 
-> /c>	cd /c/cc
-> /c/cc> 	git init
-> /c/cc> 	git add *
-> /c/cc> 	git commit
-> /c/cc> 	mkdir /c/wd
-> /c/cc> 	cd /c/wd
-> /c/wd>	git clone /c/cc
-> /c/wd>	cd cc/
-> /c/wd/cc>  ls
-> /c/wd/cc>  vi config.ini
-> /c/wd/cc>  git checkout -b config_changes
-> /c/wd/cc>  git diff
-> /c/wd/cc>  git add config.ini
-> /c/wd/cc>  git commit
-> /c/wd/cc>  git checkout master
-> /c/wd/cc>  git merge config_changes
-> /c/wd/cc>  vi config.ini
-> /c/wd/cc>  git push /c/cc
-> /c/wd/cc>  cd /c/cc
-> /c/cc> 	vi config.ini # doesn't show the change made in experimental
-> branch, though gitk shows the patch
-> /c/cc> 	git status # says that config.ini has been modified
-> /c/cc> 	git add config.ini # grasping as straws
-> /c/cc> 	git commit # changes nothing, as far as I can tell
-> /c/cc> 	git reset --hard #still changes nothing.  My diffs are there
-> in the log, just out of reach
-> 
-> I have much to learn, but in the short term I just need to get those
-> changes into clearcase so QA can pull them
+Thanks Teemu,
 
-So you should actually do:
+That took a while but worked.
 
-/c/wd/cc> cd /c/cc
-/c/cc> git pull ../wd/cc
+I also removed the rewriteRoot line from config after editing the url.
 
-But wouldn't that fail, because the files are read-only?
+I think I might have achieved the same effect more quickly with Bj=F6rn=
+'s suggestion to use:
 
-I think you'd do:
+  git-filter-branch --msg-filter
 
-/c/cc> git fetch ../wd/cc
-/c/cc> git diff --name-only HEAD FETCH_HEAD
+to:
 
-Tell ClearCase you want to edit those files
+> >Use filter-branch to change all git-svn-id lines in the log entries.
 
-/c/cc> git merge FETCH_HEAD
-
-Commit your ClearCase stuff
-
-Also, IIRC, the sort of normal workflow for dealing with foreign SCMs that 
-need local working directories is actually to put them in 
-.git/info/something, and use git diff to get the changes in each of your 
-git commits and git apply (using it like "patch", but smarter) to modify 
-the working directory.
-
-	-Daniel
-*This .sig left intentionally blank*
+But it wasn't clear to me how to change the git-svn-id lines.
