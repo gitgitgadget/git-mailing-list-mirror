@@ -1,106 +1,71 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [REGRESSION] git-gui
-Date: Thu, 3 Apr 2008 21:33:56 -0400
-Message-ID: <20080404013356.GM10274@spearce.org>
-References: <007901c89590$a827f7c0$93a7c10a@LGE.NET> <57518fd10804030700r6de977f5p6f0418e6eaea2583@mail.gmail.com> <200804032304.17054.barra_cuda@katamail.com> <57518fd10804031615m5c299df6hf31de3c689e16521@mail.gmail.com> <20080404012723.GL10274@spearce.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Michele Ballabio <barra_cuda@katamail.com>, git@vger.kernel.org,
-	=?utf-8?B?QW5kcsOp?= Goddard Rosa <andre_rosa@lge.com>
-To: Jonathan del Strother <maillist@steelskies.com>
-X-From: git-owner@vger.kernel.org Fri Apr 04 03:34:58 2008
+From: Tim Harper <timcharper@gmail.com>
+Subject: [PATCH] added OS X package downloads
+Date: Thu,  3 Apr 2008 23:55:11 -0600
+Message-ID: <1207288511-19478-1-git-send-email-timcharper@gmail.com>
+Cc: Petr Baudis <pasky@suse.cz>, Tim Harper <timcharper@gmail.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Apr 04 07:56:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JhapW-0006ou-0h
-	for gcvg-git-2@gmane.org; Fri, 04 Apr 2008 03:34:58 +0200
+	id 1JheuZ-0000ej-TV
+	for gcvg-git-2@gmane.org; Fri, 04 Apr 2008 07:56:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754215AbYDDBeG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Apr 2008 21:34:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756481AbYDDBeF
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Apr 2008 21:34:05 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:37337 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754215AbYDDBeD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Apr 2008 21:34:03 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1JhaoN-0007Tv-JX; Thu, 03 Apr 2008 21:33:47 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id D7B8820FBAE; Thu,  3 Apr 2008 21:33:56 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <20080404012723.GL10274@spearce.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1751736AbYDDFzn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Apr 2008 01:55:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751597AbYDDFzn
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Apr 2008 01:55:43 -0400
+Received: from wr-out-0506.google.com ([64.233.184.226]:28737 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750954AbYDDFzm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Apr 2008 01:55:42 -0400
+Received: by wr-out-0506.google.com with SMTP id c48so2718830wra.1
+        for <git@vger.kernel.org>; Thu, 03 Apr 2008 22:55:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:cc:subject:date:message-id:x-mailer;
+        bh=GiurEIfLuh++SAoCZaHb+f78w+OR08sPM/cqQX615cg=;
+        b=OQSFFVxyxyTkzzqMawzcnlCvangT6u4ySsjJU7hPO435SgqDVLZbqxocPjpDppR7AS78X4OBuMhJZC1YWxV2b3wNSI1u0Gw8CkH17+8zduALeDSTMQsp88F5ERo6rWgtvBvt4OoHC9udVJXC+4ySw3HuTj7T7cLSRjfOGR0B1Bg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=dXH1VHLuWdC3sRH00P1ouXlz9y07yIivUerNwe87nbb8wf++CTTr2Rofm4/geSBb1qI1unyVamUz2R53QSyQBOtuy5+2tLfByXAe7xEattB0InmhLlV2Bqukjh0tVqVGca1P1Coxmlwm6ZNzqdfyFNFJK6TyI0XIECr0fwa8zqA=
+Received: by 10.115.111.1 with SMTP id o1mr1204023wam.87.1207288541137;
+        Thu, 03 Apr 2008 22:55:41 -0700 (PDT)
+Received: from localhost ( [208.186.134.104])
+        by mx.google.com with ESMTPS id v32sm8298272wah.42.2008.04.03.22.55.37
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 03 Apr 2008 22:55:39 -0700 (PDT)
+X-Mailer: git-send-email 1.5.4.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78791>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78792>
 
-"Shawn O. Pearce" <spearce@spearce.org> wrote:
-> Jonathan del Strother <maillist@steelskies.com> wrote:
-> > >  > >  # git gui
-> > >  > >  Error in startup script: bad event type or keysym "["
-> > >  > >     while executing
-> > >  > >  "bind $ui_comm <$M1B-Key-\[> {show_less_context;break}"
-> 
-> > >  These changes should help (haven't tried):
-> > >         \[ -> bracketleft
-> > >         \] -> bracketright
-> > >  but some European keyboards do not have easy access to brackets, so
-> > >  other keys would be preferable (comma and period, for example, or 1 and 2).
-> 
-> I wrote up a patch today based on Michele's suggested change.
-
-Hmm, maybe I should offer the patch.  :-)
-
---8>--
-Subject: [PATCH] git-gui: Switch keybindings for [ and ] to bracketleft and bracketright
-
-Thanks to Michele Ballabio for the quick fix.
-This resolves the error introduced by c91ee2bd61.
-
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
- git-gui.sh |    8 ++++----
- 1 files changed, 4 insertions(+), 4 deletions(-)
+ index.html |    8 ++++++++
+ 1 files changed, 8 insertions(+), 0 deletions(-)
 
-diff --git a/git-gui.sh b/git-gui.sh
-index d4e4c17..1a67105 100755
---- a/git-gui.sh
-+++ b/git-gui.sh
-@@ -2739,8 +2739,8 @@ bind $ui_comm <$M1B-Key-v> {tk_textPaste %W; %W see insert; break}
- bind $ui_comm <$M1B-Key-V> {tk_textPaste %W; %W see insert; break}
- bind $ui_comm <$M1B-Key-a> {%W tag add sel 0.0 end;break}
- bind $ui_comm <$M1B-Key-A> {%W tag add sel 0.0 end;break}
--bind $ui_comm <$M1B-Key-\[> {show_less_context;break}
--bind $ui_comm <$M1B-Key-\]> {show_more_context;break}
-+bind $ui_comm <$M1B-Key-bracketleft> {show_less_context;break}
-+bind $ui_comm <$M1B-Key-bracketright> {show_more_context;break}
+diff --git a/index.html b/index.html
+index 5b7e281..afe6e13 100644
+--- a/index.html
++++ b/index.html
+@@ -246,6 +246,14 @@ You can also use one of many <a href="http://www.kernel.org/mirrors/">kernel.org
+ <td><a href="http://code.google.com/p/msysgit/downloads/list">http://code.google.com/p/msysgit/downloads/list</a></td>
+ </tr>
  
- bind $ui_diff <$M1B-Key-x> {tk_textCopy %W;break}
- bind $ui_diff <$M1B-Key-X> {tk_textCopy %W;break}
-@@ -2784,8 +2784,8 @@ bind .   <$M1B-Key-t> do_add_selection
- bind .   <$M1B-Key-T> do_add_selection
- bind .   <$M1B-Key-i> do_add_all
- bind .   <$M1B-Key-I> do_add_all
--bind .   <$M1B-Key-\[> {show_less_context;break}
--bind .   <$M1B-Key-\]> {show_more_context;break}
-+bind .   <$M1B-Key-bracketleft> {show_less_context;break}
-+bind .   <$M1B-Key-bracketright> {show_more_context;break}
- bind .   <$M1B-Key-Return> do_commit
- foreach i [list $ui_index $ui_workdir] {
- 	bind $i <Button-1>       "toggle_or_diff         $i %x %y; break"
++<tr class="odd">
++<td rowspan="3">OS X</td>
++</tr>
++<tr>
++<td>Stable</td>
++<td><a href="http://code.google.com/p/git-osx-installer/downloads/list?can=3&q=&sort=-uploaded&colspec=Filename+Summary+Uploaded+Size+DownloadCount">http://code.google.com/p/git-osx-installer/downloads/list?can=3</a></td>
++</tr>
++
+ </table>
+ 
+ <h3>Development snapshots</h3>
 -- 
-1.5.5.rc3.148.gb77a7
-
-
--- 
-Shawn.
+1.5.4.5
