@@ -1,65 +1,64 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] format-patch: set default stat_width to 72
-Date: Fri, 4 Apr 2008 06:50:56 -0400
-Message-ID: <20080404105056.GB29672@sigill.intra.peff.net>
-References: <20080403102214.GA23121@coredump.intra.peff.net> <7vr6dmywqg.fsf@gitster.siamese.dyndns.org>
+From: Marco Roeland <marco.roeland@xs4all.nl>
+Subject: Re: [REGRESSION] git-gui
+Date: Fri, 4 Apr 2008 13:02:01 +0200
+Message-ID: <20080404110201.GA8298@fiberbit.xs4all.nl>
+References: <007901c89590$a827f7c0$93a7c10a@LGE.NET> <57518fd10804030700r6de977f5p6f0418e6eaea2583@mail.gmail.com> <200804032304.17054.barra_cuda@katamail.com> <57518fd10804031615m5c299df6hf31de3c689e16521@mail.gmail.com> <20080404012723.GL10274@spearce.org> <20080404013356.GM10274@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Jan Engelhardt <jengelh@computergmbh.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 04 12:51:47 2008
+Cc: Jonathan del Strother <maillist@steelskies.com>,
+	Michele Ballabio <barra_cuda@katamail.com>,
+	git@vger.kernel.org,
+	=?utf-8?B?QW5kcsOp?= Goddard Rosa <andre_rosa@lge.com>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Apr 04 13:11:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JhjWK-0004VN-5P
-	for gcvg-git-2@gmane.org; Fri, 04 Apr 2008 12:51:44 +0200
+	id 1Jhjpd-00039f-EM
+	for gcvg-git-2@gmane.org; Fri, 04 Apr 2008 13:11:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754228AbYDDKvA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Apr 2008 06:51:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754562AbYDDKvA
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Apr 2008 06:51:00 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2886 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754228AbYDDKu7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Apr 2008 06:50:59 -0400
-Received: (qmail 9436 invoked by uid 111); 4 Apr 2008 10:50:57 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Fri, 04 Apr 2008 06:50:57 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 04 Apr 2008 06:50:56 -0400
+	id S1753902AbYDDLKv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Apr 2008 07:10:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752707AbYDDLKv
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Apr 2008 07:10:51 -0400
+Received: from smtp-vbr3.xs4all.nl ([194.109.24.23]:2353 "EHLO
+	smtp-vbr3.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752969AbYDDLKu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Apr 2008 07:10:50 -0400
+X-Greylist: delayed 483 seconds by postgrey-1.27 at vger.kernel.org; Fri, 04 Apr 2008 07:10:50 EDT
+Received: from fiberbit.xs4all.nl (fiberbit.xs4all.nl [213.84.224.214])
+	by smtp-vbr3.xs4all.nl (8.13.8/8.13.8) with ESMTP id m34B21l1083690;
+	Fri, 4 Apr 2008 13:02:07 +0200 (CEST)
+	(envelope-from marco.roeland@xs4all.nl)
+Received: from marco by fiberbit.xs4all.nl with local (Exim 4.69)
+	(envelope-from <marco.roeland@xs4all.nl>)
+	id 1JhjgH-0002AN-JF; Fri, 04 Apr 2008 13:02:01 +0200
 Content-Disposition: inline
-In-Reply-To: <7vr6dmywqg.fsf@gitster.siamese.dyndns.org>
+In-Reply-To: <20080404013356.GM10274@spearce.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+X-Virus-Scanned: by XS4ALL Virus Scanner
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78799>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78800>
 
-On Thu, Apr 03, 2008 at 11:12:23PM -0700, Junio C Hamano wrote:
+On Thursday April 3rd 2008 at 21:33 Shawn O. Pearce wrote:
 
-> >> format-patch already defaults to "--stat --summary -p" if you give it
-> >> no format options. The default stat is 80, I believe; for format-patch
-> >> it should probably be bumped to 72 anyway.
-> [...]
-> But it loses information, and I am not sure if it is worth it.  Why do you
-> even worry about "a few layers of quoting"?  Isn't it a much worse offense
-> from responder/commenter's part to quote and NOT trimming diffstat part?
+> Hmm, maybe I should offer the patch.  :-)
+> 
+> --8>--
+> Subject: [PATCH] git-gui: Switch keybindings for [ and ] to bracketleft and bracketright
+> 
+> Thanks to Michele Ballabio for the quick fix.
+> This resolves the error introduced by c91ee2bd61.
+> 
+> Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 
-I don't think a blanket rule to say "it is wrong for a responder to
-quote the diffstat part" makes sense. I have several times seen people
-specifically responding to the diffstat.
-
-At any rate, I don't think the current setting is a big problem; my
-thought was that we are generating an email, and that certain line
-length conventions tend to apply there (though it could just as easily
-be 76, or 78, or whatever convention). Losing a few characters off the
-end of the diffstat doesn't really seem like information loss to me
-(the +++-- part is gets chomped, and it is already being chomped for the
-80-character limit; we just normalize it to a slightly smaller number of
-characters).
-
-But I don't really care that much, so please drop the patch if you are
-concerned about that.
-
--Peff
+This solves the problem on Debian GNU/Linux 'sid', with Tcl/Tk version
+8.5.1. So somehow the Linux implementation seems to be the problem, not
+the Tcl/Tk version as such. Man keysyms here does list "bracketleft" and
+"bracketright" but no direct symbols for '[' or ']'. Thanks!
+-- 
+Marco Roeland
