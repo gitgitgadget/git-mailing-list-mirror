@@ -1,73 +1,77 @@
-From: "Chuck Ritter" <cfr100@psu.edu>
-Subject: git clone error
-Date: Sat, 5 Apr 2008 13:20:25 -0400
-Message-ID: <a00d3c7f0804051020u366e978ei7252c904c48461f6@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH (BUGFIX)] gitweb: Fix "Use of uninitialized value" error in 'history' view
+Date: Sat, 5 Apr 2008 18:38:17 +0100
+Message-ID: <200804051938.17855.jnareb@gmail.com>
+References: <200804041623.44595.jnareb@gmail.com> <20080405164303.30566.qmail@47fa24fd520dbf.315fe32.mid.smarden.org> <200804051916.14568.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 05 19:21:16 2008
+Cc: git@vger.kernel.org
+To: Gerrit Pape <pape@smarden.org>
+X-From: git-owner@vger.kernel.org Sat Apr 05 19:39:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JiC4m-0004tD-Ah
-	for gcvg-git-2@gmane.org; Sat, 05 Apr 2008 19:21:12 +0200
+	id 1JiCMI-0001tq-8L
+	for gcvg-git-2@gmane.org; Sat, 05 Apr 2008 19:39:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752693AbYDERU3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Apr 2008 13:20:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752669AbYDERU3
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 Apr 2008 13:20:29 -0400
-Received: from el-out-1112.google.com ([209.85.162.182]:25381 "EHLO
-	el-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752483AbYDERU2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Apr 2008 13:20:28 -0400
-Received: by el-out-1112.google.com with SMTP id v27so427365ele.17
-        for <git@vger.kernel.org>; Sat, 05 Apr 2008 10:20:25 -0700 (PDT)
+	id S1752657AbYDERiX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Apr 2008 13:38:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752655AbYDERiX
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 Apr 2008 13:38:23 -0400
+Received: from fg-out-1718.google.com ([72.14.220.159]:40489 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752591AbYDERiW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Apr 2008 13:38:22 -0400
+Received: by fg-out-1718.google.com with SMTP id l27so609479fgb.17
+        for <git@vger.kernel.org>; Sat, 05 Apr 2008 10:38:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition:x-google-sender-auth;
-        bh=rc6KK9MwQbLO6UIIDZpriKsjJ4eRzJCHNNE+JsGZ/Ps=;
-        b=T71/QCGt3r5MDsoOgcej23NTx2/CZV4iuXUUFMJOJSrs7e7oDDY3PprItsYW3sB+j3Wuwcu4xfd+BKTVctgJOLzUq2+aROHng0OqoUPlEE3eYx7P75GqXpg3AVkP6d489oQwkVi7FZ8o017tRjixFeGBuDPOg/xDF/92JDDRP0k=
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        bh=p5cx+BkUn9///ERRBOTZySACTUnvyaEbsR/i4SLDuuI=;
+        b=FCe0jHMbQ/uSyRAoT91U2x2S4ZrBXMxNO/72ZjTVVKL6QWnH4/ZSbxOj3gT6VxQ0Y2b8C32mzh/XfpvjEvBrjb/uGPy9OazCduhq/2319MzxToYuBKeT3QNUNwjPsEjuL5tQz43KgbEvghe5I49gNRXdP+J0mm8PW45ec7M16V0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition:x-google-sender-auth;
-        b=Etr9s2hbxCiffETumAW4AtAACMnjisAQXR91JmOdQ87ex8FkHMYdQFkCMMyhjp5WgVMR9qPXkDq+LXRmY529o6Sz9uvnm+J/gq1Rdb1WFFJ5prUFFYDIcUnAb8QRwoSWQae1BJ8/GQF6m0BPwxC5fv8Rl6GIuWwUERnAcneHLPM=
-Received: by 10.114.195.19 with SMTP id s19mr3952457waf.58.1207416025504;
-        Sat, 05 Apr 2008 10:20:25 -0700 (PDT)
-Received: by 10.114.192.13 with HTTP; Sat, 5 Apr 2008 10:20:25 -0700 (PDT)
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=huDdyq9dS0zVa99kBi9MMbo4+IMR+g8OEFSzhyEXSgNoRxVZTgZelMmEnWwaiU29IAU5rKLEckx4h+MN4fDLdsbMG9FVgTvRL9cd7i2JtYl9NmfMNNHRRmSc3MZBXqiJAe9uaUUsu4jENuyYhbBQfYr9uqapSJRuYycFlzG6wI8=
+Received: by 10.82.152.9 with SMTP id z9mr1123356bud.51.1207417100893;
+        Sat, 05 Apr 2008 10:38:20 -0700 (PDT)
+Received: from ?192.168.1.11? ( [83.8.198.110])
+        by mx.google.com with ESMTPS id p10sm9469359gvf.8.2008.04.05.10.38.17
+        (version=SSLv3 cipher=OTHER);
+        Sat, 05 Apr 2008 10:38:18 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <200804051916.14568.jnareb@gmail.com>
 Content-Disposition: inline
-X-Google-Sender-Auth: 08b2b53ad950a5c2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78854>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78855>
 
-Hello,
+Jakub Narebski wrote:
+> On Sat, 5 Apr 2008, Gerrit Pape wrote:
+>> On Fri, Apr 04, 2008 at 03:23:42PM +0100, Jakub Narebski wrote:
+>>
+>> Do you know whether this fixes http://bugs.debian.org/469083 too?  I
+>> took a short look back then to fix it, but didn't manage it in a
+>> reasonable amount of time.
+> 
+> No it does not.
+> 
+> 
+> I have found what causes this bug. [...]
+> I'd send in a bit patch fixing this bug (making is_deleted() more
+> robust).
 
-I'm getting an error when I try to clone a git repo:
+It should be enough to revert commit 6aa6f92 (gitweb: Add 'status_str'
+to parse_difftree_raw_line output); it should fix this bug.
 
-$ git clone ~dab143/src/OVER-REL/SOURCE-GIT-TEST OVER-REL
-Initialized empty Git repository in /home/cfr100/OVER-REL/.git/
-cpio: objects/pack/pack-80a0460fc07be5e0628b02549fdaa186b792d3f3.keep:
-Permission denied
-888 blocks
-
-# cat pack-80a0460fc07be5e0628b02549fdaa186b792d3f3.keep
-fetch-pack 31620 on githost.arl.psu.edu
-
-Permission on the keep file are 600. Of course this looks like a stale
-lock of some sort.
-
-We are using git version 1.5.4.1. The owner of the repository had
-pushed changes to it from msysgit under Windows. I am not sure of the
-version. It worked fine before that.
-
-Is this an issue I should take up with the msysgit developers?
-
-Once in this state what is the best way to resolve it and verify the
-integrity of the repository?
-
-Thanks
-Chuck
+P.S. Mentioned commit was done for micro-optimization: "<str> =~ /D/"
+is a bit faster than "<str> eq ('0' x 40)" in the case when it doesn't
+match.
+-- 
+Jakub Narebski
+Poland
