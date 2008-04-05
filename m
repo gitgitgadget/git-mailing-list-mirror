@@ -1,86 +1,81 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH (BUGFIX)] gitweb: Fix "Use of uninitialized value" error in 'history' view
-Date: Sat, 5 Apr 2008 09:09:11 +0100
-Message-ID: <200804051009.13332.jnareb@gmail.com>
-References: <200804041623.44595.jnareb@gmail.com> <7v63uwyc14.fsf@gitster.siamese.dyndns.org>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: sunos nay install nay ginstall nay
+Date: Sat, 5 Apr 2008 13:53:03 +0200
+Message-ID: <20080405115303.GV11574@genesis.frugalware.org>
+References: <alpine.LNX.1.10.0804050653570.14919@fbirervta.pbzchgretzou.qr>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="B9BE8dkJ1pIKavwa"
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Apr 05 10:10:12 2008
+To: Jan Engelhardt <jengelh@computergmbh.de>
+X-From: git-owner@vger.kernel.org Sat Apr 05 13:53:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ji3TV-0002kD-Ty
-	for gcvg-git-2@gmane.org; Sat, 05 Apr 2008 10:10:10 +0200
+	id 1Ji6y0-0001gk-Ig
+	for gcvg-git-2@gmane.org; Sat, 05 Apr 2008 13:53:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751300AbYDEIJX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Apr 2008 04:09:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751241AbYDEIJX
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 Apr 2008 04:09:23 -0400
-Received: from fg-out-1718.google.com ([72.14.220.159]:9057 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751239AbYDEIJV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Apr 2008 04:09:21 -0400
-Received: by fg-out-1718.google.com with SMTP id l27so424338fgb.17
-        for <git@vger.kernel.org>; Sat, 05 Apr 2008 01:09:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=6StVZbbzQYtMx2HBWMk+iJhumXo5vREseTZhhnKWgH0=;
-        b=GYvLmXJRjk13iFPevMF5AsG61anwpShElIZgnLL2ueT/uPRvxkBZ/ZUj9s09+hHJKGtX8o3rLMwlXpqtGueSMTnx6WUE7HVDBaJk6Cu0xSDaDJQZP+BcBtHz81Hwp6p+6aRkAS0kLAnDUZh7TeIBGyT4iOo5Ik4euwujB3u1Y0Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=HiRLh9EjiNZlLu4HBaTGk7knpz/rs8ftMj33yYWvFkuyds8gy3OMxpZ8NgNnZW765muMAup8l1mPArxM1N5CkRRsrP7jNO7sm18whPtO2o1zXsCUOlnTHjURDL6u1HV76MyC8OPlaNNIXXze8XwfujJNAPHHeSl0m0FcBRhl81U=
-Received: by 10.82.180.10 with SMTP id c10mr4979898buf.9.1207382959648;
-        Sat, 05 Apr 2008 01:09:19 -0700 (PDT)
-Received: from ?192.168.1.11? ( [83.8.237.132])
-        by mx.google.com with ESMTPS id t12sm8582909gvd.2.2008.04.05.01.09.17
-        (version=SSLv3 cipher=OTHER);
-        Sat, 05 Apr 2008 01:09:18 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <7v63uwyc14.fsf@gitster.siamese.dyndns.org>
+	id S1751523AbYDELxH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Apr 2008 07:53:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751515AbYDELxG
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 Apr 2008 07:53:06 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:37444 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751519AbYDELxF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Apr 2008 07:53:05 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id BD33B1B2533;
+	Sat,  5 Apr 2008 13:53:03 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 82FE044699;
+	Sat,  5 Apr 2008 13:49:49 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 259851190543; Sat,  5 Apr 2008 13:53:03 +0200 (CEST)
 Content-Disposition: inline
+In-Reply-To: <alpine.LNX.1.10.0804050653570.14919@fbirervta.pbzchgretzou.qr>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78842>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78843>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
-> 
-> > When asked for history of a file with no $hash ('h') parameter set,
-> > and which file is not present in current branch ("HEAD" or given by
-> > $hash_hase ('hb') parameter), but is present deeper in the full
-> > history of a branch, gitweb would spew multiple of "Use of
-> > uninitialized value" warnings, and some links would be missing.
-> > This commit fixes this bug.
-> 
-> Thanks, does gitweb itself generate such a link?
-> 
-> I can _artificially_ reproduce this, and I can also see that the patch
-> would solve it, so I do not mind applying it, but I am curious how this
-> was originally triggered.
 
-Actually I came across this error when testing the "context-sensitive
-feed links" patch, and was hand-crafting (munging) gitweb URLs.
+--B9BE8dkJ1pIKavwa
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-But after thinking about this bug a bit I have realized that this
-situation _can_ happen with link generated by gitweb, only in very rare
-cases.  It is enough if you use 'history' view link without $hash ('h')
-parameter, and with transient $hash_base ('hb') parameter, i.e. either
-name of branch, or "HEAD", or not set (implies "HEAD"), and happen into
-situation where file was _deleted_ *between* gitweb link creation and
-following (accessing) this link.  For example 'history' links in 'tree'
-and 'commitdiff' views doesn't have 'h' parameter.  Also the 'history'
-link in navigation bar wouldn't have 'h' parameter if 'blob' or 'tree'
-view where it is in doesn't have it.
+On Sat, Apr 05, 2008 at 07:07:53AM +0200, Jan Engelhardt <jengelh@computerg=
+mbh.de> wrote:
+> I found myself in a position to compile Git on Nexenta, and ran into the=
+=20
+> incredibly smart Makefile logic to pick "ginstall" when `uname -s` equals=
+=20
+> SunOS. Except that on GNU/*, it's install, not ginstall.
 
--- 
-Jakub Narebski
-Poland
+afaik, GNU/* has ginstall as well.
+
+at least this is what i have here:
+
+$ ls -l `which ginstall`
+lrwxrwxrwx 1 root root 7 Mar  9 23:10 /usr/bin/ginstall -> install*
+
+> Would not it be time to completely use automake?
+
+or maybe time to fix your system :)
+
+--B9BE8dkJ1pIKavwa
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.8 (GNU/Linux)
+
+iEYEARECAAYFAkf3aB8ACgkQe81tAgORUJZdPwCfV6vNgSdMG4ZEmu+xgGRos+7K
+xdsAoIZdpk70QutjngQlVYP8aPn7QvSb
+=VGQa
+-----END PGP SIGNATURE-----
+
+--B9BE8dkJ1pIKavwa--
