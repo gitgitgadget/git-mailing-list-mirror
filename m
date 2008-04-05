@@ -1,100 +1,146 @@
-From: Stephan Beyer <s-beyer@gmx.net>
-Subject: Re: [PATCH] alias.c: use git_config_string() to get alias_val
-Date: Sat, 5 Apr 2008 19:39:56 +0200
-Message-ID: <20080405173956.GD14565@leksak.fem-net>
-References: <20080405121834.GB14565@leksak.fem-net> <200804051819.46904.chriscool@tuxfamily.org>
+From: "Peter Eriksen" <s022018@student.dtu.dk>
+Subject: [PATCH] Update, and clear up the pack format documentation a bit
+Date: Sat, 5 Apr 2008 20:07:59 +0200
+Message-ID: <20080405180759.GA29710@bohr.gbar.dtu.dk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Sat Apr 05 19:40:59 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 05 20:08:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JiCNr-0002JR-Ay
-	for gcvg-git-2@gmane.org; Sat, 05 Apr 2008 19:40:55 +0200
+	id 1JiCor-0001yZ-Vo
+	for gcvg-git-2@gmane.org; Sat, 05 Apr 2008 20:08:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752710AbYDERkM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Apr 2008 13:40:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752679AbYDERkM
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 Apr 2008 13:40:12 -0400
-Received: from mail.gmx.net ([213.165.64.20]:58232 "HELO mail.gmx.net"
+	id S1752817AbYDESIF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Apr 2008 14:08:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752756AbYDESIE
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 Apr 2008 14:08:04 -0400
+Received: from bohr.gbar.dtu.dk ([192.38.95.24]:44788 "HELO bohr.gbar.dtu.dk"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752675AbYDERkL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Apr 2008 13:40:11 -0400
-Received: (qmail invoked by alias); 05 Apr 2008 17:40:09 -0000
-Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
-  by mail.gmx.net (mp021) with SMTP; 05 Apr 2008 19:40:09 +0200
-X-Authenticated: #1499303
-X-Provags-ID: V01U2FsdGVkX190bTo5bCZ0hVeQL+88SIQM2Jrurti4x7cRuU6jwG
-	J/65SSeQMvpxOf
-Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
-	(envelope-from <s-beyer@gmx.net>)
-	id 1JiCMu-0007hN-Rk; Sat, 05 Apr 2008 19:39:56 +0200
-Mail-Followup-To: Christian Couder <chriscool@tuxfamily.org>,
-	git@vger.kernel.org
+	id S1752655AbYDESID (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Apr 2008 14:08:03 -0400
+Received: (qmail 29760 invoked by uid 5842); 5 Apr 2008 20:07:59 +0200
 Content-Disposition: inline
-In-Reply-To: <200804051819.46904.chriscool@tuxfamily.org>
-X-Y-GMX-Trusted: 0
+User-Agent: Mutt/1.5.7i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78856>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78857>
 
-Hi,
+The current documentation does not mention the ofs_delta pack
+object type. This patch is also supposed to make the text a bit
+more readable, since it moves the object entry header
+description earlier.
 
-> Did you see:
-> 
-> "(And no, casting the "char **" into a "const char **" is not a good 
-> solution either.)"
-> 
-> in the above page ?
+I fixes one error in these lines:
 
-Yes.
+        If it is DELTA, then
+          20-byte base object name SHA1 (the size above is the
+                size of the delta data that follows).
 
-> > +	if (!prefixcmp(k, "alias.") && !strcmp(k+6, alias_key))
-> > +		return git_config_string((const char**)&alias_val, k, v);
-> 
-> Are you sure this ugly cast to "const char**" is needed ?
-> Isn't there a better way to do it ?
+The size given in the object header is actually the inflated size
+of the delta data that follows, since the call chain goes like
+this:
 
-Well, because alias_val is not a constant[1], changing
-	static char *alias_val;
-to
-	static const char *alias_val;
-is not an option.
+For delta objects:
 
-The only other way I see[2] atm is a brain-damaged:
---
-static int alias_lookup_cb(const char *k, const char *v)
-{
-	if (!prefixcmp(k, "alias.") && !strcmp(k+6, alias_key)) {
-		const char *tmp;
-		int ret = git_config_string(&tmp, k, v);
-		alias_val = xstrdup(tmp);
-		/* actually, tmp should be free()'d. */
-		return ret;
-	}
-	return 0;
-}
---
-But instead of doing that, the original should be kept, because it is
-better in code beauty, performance and memory usage. ;-)
+unpack_entry()
+    unpack_object_header()
+    unpack_delta_entry()
+        unpack_compressed_entry()
 
-So I thought the casting is ugly, but it does no harm. I hope ;)
-(Yes, a cast from const char ** to char ** is, indeed, dangerous.)
+For non-delta objects:
 
-But if I miss an obvious point, please tell me :)
+unpack_entry()
+    unpack_object_header()
+    unpack_compressed_entry()
 
-Regards,
- Stephan
+unpack_compressed_entry() allocates a buffer of the size
+given in its last argument, and inflates the data into
+this buffer.
 
-Footnotes:
- [1] It is no constant because it is returned by alias_lookup(),
-     and thus could be changed by further instructions.
- [2] ...between the many ways that result in compiler warnings ;-)
+So all objects have in fact their inflated size given
+in the packed object header.
 
+Signed-off-by: Peter Eriksen <s022018@student.dtu.dk>
+---
+ Documentation/technical/pack-format.txt |   43
+++++++++++++++++--------------
+ 1 files changed, 23 insertions(+), 20 deletions(-)
+
+Did I understand this right especially the part
+with what the length field in the packed objects
+headers mean?
+
+diff --git a/Documentation/technical/pack-format.txt
+b/Documentation/technical/pack-format.txt
+index aa87756..35ee01d 100644
+--- a/Documentation/technical/pack-format.txt
++++ b/Documentation/technical/pack-format.txt
+@@ -19,15 +19,34 @@ GIT pack format
+ 
+    - The header is followed by number of object entries, each of
+      which looks like this:
++     
++     An n-byte header encoding the
++         type of the object
++         length of the object before compression
++          
++     The format of the header:
++	1-byte size extension bit (MSB)
++	       type (next 3 bit)
++	       size0 (lower 4-bit)
++        n-byte sizeN (as long as MSB is set, each 7-bit)
++		size0..sizeN form 4+7+7+..+7 bit integer, size0
++		is the least significant part, and sizeN is the
++		most significant part.
++
+ 
+-     (undeltified representation)
+-     n-byte type and length (3-bit type, (n-1)*7+4-bit length)
++     The header is followed by:
++
++     (for object types: commit, tree, blob, and tag)
+      compressed data
+ 
+-     (deltified representation)
+-     n-byte type and length (3-bit type, (n-1)*7+4-bit length)
++     (for object type ref_delta)
+      20-byte base object name
+      compressed delta data
++ 
++     (for object type ofs_delta)
++     n-byte offset (n*7-bit as above, but with size0 being 7 bit)     
++     compressed delta data
++
+ 
+      Observation: length of each object is encoded in a variable
+      length format and is not constrained to 32-bit or anything.
+@@ -92,22 +111,6 @@ trailer	  | | packfile checksum              |
+                   |
+ Pack file entry: <+
+ 
+-     packed object header:
+-	1-byte size extension bit (MSB)
+-	       type (next 3 bit)
+-	       size0 (lower 4-bit)
+-        n-byte sizeN (as long as MSB is set, each 7-bit)
+-		size0..sizeN form 4+7+7+..+7 bit integer, size0
+-		is the least significant part, and sizeN is the
+-		most significant part.
+-     packed object data:
+-        If it is not DELTA, then deflated bytes (the size above
+-		is the size before compression).
+-	If it is DELTA, then
+-	  20-byte base object name SHA1 (the size above is the
+-		size of the delta data that follows).
+-          delta data, deflated.
+-
+ 
+ = Version 2 pack-*.idx files support packs larger than 4 GiB, and
+   have some other reorganizations.  They have the format:
 -- 
-Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
+1.5.5-rc3.GIT
