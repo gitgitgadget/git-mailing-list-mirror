@@ -1,76 +1,76 @@
-From: Kevin Ballard <kevin@sb.org>
-Subject: Re: [PATCH] git-fetch: Don't trigger a bus error when given the refspec "tag"
-Date: Sat, 5 Apr 2008 14:46:44 -0400
-Message-ID: <9FD2C650-C9DD-41E1-AE27-684A82E1D700@sb.org>
-References: <1207420133-23631-1-git-send-email-kevin@sb.org> <alpine.DEB.1.00.0804051931480.12583@eeepc-johanness>
-Mime-Version: 1.0 (Apple Message framework v919.2)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Apr 05 20:47:32 2008
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] merge, pull: introduce '--diffstat' option
+Date: Sat, 05 Apr 2008 11:51:51 -0700
+Message-ID: <7vtzigw2wo.fsf@gitster.siamese.dyndns.org>
+References: <20080403103056.GD6673@coredump.intra.peff.net>
+ <1207406935-22144-1-git-send-email-szeder@ira.uka.de>
+ <200804051835.54097.tlikonen@iki.fi>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>,
+	Jeff King <peff@peff.net>
+To: Teemu Likonen <tlikonen@iki.fi>
+X-From: git-owner@vger.kernel.org Sat Apr 05 20:52:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JiDQI-0005S0-Vx
-	for gcvg-git-2@gmane.org; Sat, 05 Apr 2008 20:47:31 +0200
+	id 1JiDVT-00070l-71
+	for gcvg-git-2@gmane.org; Sat, 05 Apr 2008 20:52:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753113AbYDESqr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Apr 2008 14:46:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753132AbYDESqr
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 Apr 2008 14:46:47 -0400
-Received: from sd-green-bigip-202.dreamhost.com ([208.97.132.202]:49503 "EHLO
-	randymail-a3.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1752975AbYDESqr (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 5 Apr 2008 14:46:47 -0400
-Received: from kballard.res.wpi.net (kballard.res.wpi.net [130.215.239.91])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by randymail-a3.g.dreamhost.com (Postfix) with ESMTP id 42EEE185D13;
-	Sat,  5 Apr 2008 11:46:46 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.0804051931480.12583@eeepc-johanness>
-X-Mailer: Apple Mail (2.919.2)
+	id S1753153AbYDESwH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Apr 2008 14:52:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753154AbYDESwG
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 Apr 2008 14:52:06 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:46291 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752330AbYDESwF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Apr 2008 14:52:05 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 8728673C2;
+	Sat,  5 Apr 2008 14:51:59 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id D29E373C1; Sat,  5 Apr 2008 14:51:54 -0400 (EDT)
+In-Reply-To: <200804051835.54097.tlikonen@iki.fi> (Teemu Likonen's message of
+ "Sat, 5 Apr 2008 18:35:53 +0300")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78859>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78860>
 
-On Apr 5, 2008, at 2:33 PM, Johannes Schindelin wrote:
-> Hi,
->
-> On Sat, 5 Apr 2008, Kevin Ballard wrote:
->
->> diff --git a/builtin-fetch.c b/builtin-fetch.c
->> index a11548c..5841b3e 100644
->> --- a/builtin-fetch.c
->> +++ b/builtin-fetch.c
->> @@ -637,6 +637,8 @@ int cmd_fetch(int argc, const char **argv,  
->> const char *prefix)
->> 			if (!strcmp(argv[i], "tag")) {
->> 				char *ref;
->> 				i++;
->> +				if (i >= argc)
->> +					die("You need to specify a tag name.");
->
-> Would it not be better to check in the if() above?  IOW
->
-> 			if (i + 1 < argc && !strcmp(argv[i], "tag")) {
->
-> Hmm?
+Teemu Likonen <tlikonen@iki.fi> writes:
 
-So that `git fetch origin tag` will try and fetch the branch named  
-tag? Given that we treat "tag foo" as shorthand for refs/tags/foo:refs/ 
-tags/foo it seems like it would be unexpected to treat "tag" as just a  
-plain ref. I much prefer to die in this situation, let the user fix  
-the refspec to mean exactly what they want (either by adding a tag  
-name, or by using tag: if they really want a branch named tag).
+> How about this: Officially and explicitly deprecate --(no-)summary and 
+> advertise --(no-)diffstat as replacement. Also advertise that in some 
+> future release --(no-)summary will have different meaning (i.e. 
+> equivalent to merge.summary). There would be a reasonable (?) period 
+> before changing the meaning of --(no-)summary.
+>
+> This is a bit hassle...
 
--Kevin
+I'd favor, in the longer run:
 
--- 
-Kevin Ballard
-http://kevin.sb.org
-kevin@sb.org
-http://www.tildesoft.com
+ * --stat option to mean "show the diffstat between ORIG_HEAD and merge
+   result" (i.e. current --summary);
+
+ * perhaps a new configuration merge.stat to control the default for the
+   above;
+
+ * merge.log configuration to mean "add list of one-line log to the merge
+   commit message" (i.e. current merge.summary);
+
+ * perhaps a --log option to override the config default for each
+   invocation.
+
+ * deprecate --summary and merge.summary and remove them long after people
+   are used to the above new set.
+
+Transition needs to happen over time and across a major release bump.
+
+We can do the first four in 1.5.6, and immediately declare deprecation,
+and removal of --summary/merge.summary perhaps in 1.6.0.  
