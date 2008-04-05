@@ -1,73 +1,62 @@
-From: "Avery Pennarun" <apenwarr@gmail.com>
-Subject: Re: Updating submodules
-Date: Sat, 5 Apr 2008 19:11:02 -0400
-Message-ID: <32541b130804051611q396fcffch79f7ad1e391af73c@mail.gmail.com>
-References: <810a540e0804051546o250bd3e7mf7a20d8f1cc6dcfc@mail.gmail.com>
-	 <32541b130804051601w4f7976cawde47a70e04790511@mail.gmail.com>
-	 <810a540e0804051608s6b6580a3vd4bf9ae04c22f3d4@mail.gmail.com>
+From: "Pat Maddox" <pergesu@gmail.com>
+Subject: How do I set the committer with cherry-pick? (or is there a better way to get changes from someone?)
+Date: Sat, 5 Apr 2008 16:42:55 -0700
+Message-ID: <810a540e0804051642r79dc10a7h2a231561062b13ea@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Pat Maddox" <pergesu@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 06 01:11:52 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 06 01:43:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JiHY6-0006Zg-TT
-	for gcvg-git-2@gmane.org; Sun, 06 Apr 2008 01:11:51 +0200
+	id 1JiI39-0004VB-Tw
+	for gcvg-git-2@gmane.org; Sun, 06 Apr 2008 01:43:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753932AbYDEXLH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Apr 2008 19:11:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753929AbYDEXLG
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 Apr 2008 19:11:06 -0400
-Received: from fg-out-1718.google.com ([72.14.220.158]:12651 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753810AbYDEXLF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Apr 2008 19:11:05 -0400
-Received: by fg-out-1718.google.com with SMTP id l27so712063fgb.17
-        for <git@vger.kernel.org>; Sat, 05 Apr 2008 16:11:03 -0700 (PDT)
+	id S1751306AbYDEXm4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Apr 2008 19:42:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751242AbYDEXm4
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 Apr 2008 19:42:56 -0400
+Received: from wa-out-1112.google.com ([209.85.146.177]:5020 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751141AbYDEXm4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Apr 2008 19:42:56 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so641974wah.23
+        for <git@vger.kernel.org>; Sat, 05 Apr 2008 16:42:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=ZIQ6cZigeT6GKjosK12kGQW/vOYbMTDmtpzxpGEVkao=;
-        b=OIyYhxsstNF1P5jZQfgFP5H3pP059c9e3XClJsgLE8FHiY1LjVJv9siumO8nEtJsis8BFx86TmzV34DEzM9XHA3lC1dhuXb11joSxo96tstQyz95S1CpTdX949eMSfxESDsPWww7zaGdpIfnBB5xnnINWfFQ4GvJDp1MA8wQg3A=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=xyfTb+o1QDmu5IqDCwmnDLzTCLZYIw9fuWZc1jW29nI=;
+        b=xIcNBpg52xeLRG6Ygar7FBD8R6cufC2zD4oFaZ9yKBZ5r88eyEOswTtV4NdPQb9Jo9nyCOKONvLCOpYWNxUwcp3Y3RCviL8r/YgSQ0nEfDBV1B9KeAH7JAPqyngEyjzhrqxRpKZx1QOxr98fO7W8mPAOFxQ0oAL24fNhwkJ/04E=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=XC62q2os1I8ha8LD8aRMhY32o9zT8tus1H4hYOGgDheX7Xgxez4Uz0twBJYmqdP6JIzlsIUBt7Ksz/w+Iao+L9J7pp5/BwjdnGhkm5fmNRzoc8GebH7XmMNMV1DX+2UtuFEwqexSwkcdN+3sf9srr8UhBMt/pNQkiLnZbbR+r+I=
-Received: by 10.82.167.9 with SMTP id p9mr1457942bue.41.1207437063101;
-        Sat, 05 Apr 2008 16:11:03 -0700 (PDT)
-Received: by 10.82.100.5 with HTTP; Sat, 5 Apr 2008 16:11:02 -0700 (PDT)
-In-Reply-To: <810a540e0804051608s6b6580a3vd4bf9ae04c22f3d4@mail.gmail.com>
+        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=WfcqUGT+2TB7ksoTYfjZtTxu7sOBb/yjxX8xRqwDfYRArx0VEhS675Ci2yHd6YOtw0z+ko0qY+UOKGerP4s4lc+3dQi1MOKsCKK9A8Nll/hLCd6nFJLn0Thujo3buRzO8bIThmHmMDsJZCcLSgRaOyqc4D/oxvKba/lz0tRb91w=
+Received: by 10.114.56.1 with SMTP id e1mr4289339waa.52.1207438975690;
+        Sat, 05 Apr 2008 16:42:55 -0700 (PDT)
+Received: by 10.114.146.5 with HTTP; Sat, 5 Apr 2008 16:42:55 -0700 (PDT)
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78867>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78868>
 
-On 4/5/08, Pat Maddox <pergesu@gmail.com> wrote:
-> On Sat, Apr 5, 2008 at 4:01 PM, Avery Pennarun <apenwarr@gmail.com> wrote:
->  >
->  > On 4/5/08, Pat Maddox <pergesu@gmail.com> wrote:
->  >  > Do I need to cd into each submodule dir and fetch/rebase?  git
->  >  >  submodule update doesn't seem to do anything, though I would assume
->  >  >  it's used to update the submodules...
->  >
->  >  "git submodule update" updates each submodule to the version that was
->  >  checked into the supermodule.  It doesn't do anything like fetch,
->  >  rebase, or pull.
->
-> Okay.  So I've got a parent repo with three submodules.  I've been
->  working in one submodule and have been committing changes.  Now I
->  wanted to get the latest changes upstream...I have to rebase that repo
->  individually, right?
+I'm helping to maintain a project, so people send me requests to pull
+from their repos.  So I create a branch and then pull their stuff in,
+taking a look at the various different commits.  I write the commit
+numbers that I want to cherry pick to a file (also is there a better
+way of handling this?  it's a bit tedious.  it'd be nice to mark
+certain commits for cherry picking and then suck them all in later).
+Then when I've gone through all the new commits and chosen the ones I
+want, I check out the master branch and cherry-pick those commits in.
 
-Yes.  Be careful of which branch your submodule is on; if "git
-submodule update" has done anything in the past, you might not be on a
-branch at all, in which case you have to create a local branch with
-your changes before you can safely rebase or push.
+At this point the commits are in the repo, but they only have author
+information.  I'd like to specify that I'm the one who committed this
+change now.  How can I do that?
 
-Avery
+And finally, is this a good way to incorporate changes from other
+devs?  Is there a better way?
+
+Pat
