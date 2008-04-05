@@ -1,65 +1,81 @@
 From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: git repository size vs. subversion repository size
-Date: Sat, 5 Apr 2008 02:18:09 +0200
-Message-ID: <20080405001809.GA3101@atjola.homenet>
-References: <1086fb5f0804041502s7ab12202y3b0ec3640425eff@mail.gmail.com> <20080404221728.GA30728@atjola.homenet> <p06240810c41c6e0993c1@[63.138.152.125]> <20080405000141.GA23633@dervierte>
+Subject: Re: Can I switch a git-svn clone from a file => http url?
+Date: Sat, 5 Apr 2008 02:23:10 +0200
+Message-ID: <20080405002310.GB3101@atjola.homenet>
+References: <p06240804c41942f6276e@[192.168.1.114]> <20080402151721.GA31738@atjola.homenet> <p06240802c419e22d78a7@[63.138.152.125]>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Stephen Bannasch <stephen.bannasch@deanbrook.org>,
-	git@vger.kernel.org
-To: Steven Walter <stevenrwalter@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Apr 05 02:19:11 2008
+Cc: git@vger.kernel.org
+To: Stephen Bannasch <stephen.bannasch@deanbrook.org>
+X-From: git-owner@vger.kernel.org Sat Apr 05 02:24:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jhw7h-0007wR-SF
-	for gcvg-git-2@gmane.org; Sat, 05 Apr 2008 02:19:10 +0200
+	id 1JhwCL-0000dn-J5
+	for gcvg-git-2@gmane.org; Sat, 05 Apr 2008 02:23:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751007AbYDEASN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 4 Apr 2008 20:18:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751106AbYDEASN
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Apr 2008 20:18:13 -0400
-Received: from mail.gmx.net ([213.165.64.20]:55823 "HELO mail.gmx.net"
+	id S1751407AbYDEAXN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 4 Apr 2008 20:23:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751068AbYDEAXN
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Apr 2008 20:23:13 -0400
+Received: from mail.gmx.net ([213.165.64.20]:36097 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750832AbYDEASM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Apr 2008 20:18:12 -0400
-Received: (qmail invoked by alias); 05 Apr 2008 00:18:10 -0000
+	id S1751391AbYDEAXM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Apr 2008 20:23:12 -0400
+Received: (qmail invoked by alias); 05 Apr 2008 00:23:10 -0000
 Received: from i577BB809.versanet.de (EHLO atjola.local) [87.123.184.9]
-  by mail.gmx.net (mp014) with SMTP; 05 Apr 2008 02:18:10 +0200
+  by mail.gmx.net (mp006) with SMTP; 05 Apr 2008 02:23:10 +0200
 X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX1+UAopziReUEjS06LDqOqA2bljCewDjVLGJsnwpLO
-	9r2aAmCyRrl3x9
+X-Provags-ID: V01U2FsdGVkX1/tNcQ5pTvtpe1JInOdlt+3os28R5F+PtmmmQd4AL
+	iQwWBjhJo3qSoF
 Content-Disposition: inline
-In-Reply-To: <20080405000141.GA23633@dervierte>
+In-Reply-To: <p06240802c419e22d78a7@[63.138.152.125]>
 User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78828>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78829>
 
-[Stephan, please stop dropping me from Cc:, thanks]
+[missed the message because you dropped me from Cc:...]
 
-On 2008.04.04 20:01:41 -0400, Steven Walter wrote:
-> On Fri, Apr 04, 2008 at 07:49:24PM -0400, Stephen Bannasch wrote:
-> > I'm just fooling around with git so far but I found a huge space sa=
-vings=20
-> > after running git gc. Here are the rough numbers:
-> >
-> > svn repo on server:        1GB
-> > svn repo checked out:      2GB
-> > git svn clone after gc:  384MB
-> >
-> > That's saving the full history in git -- about 13000 revisions.
+On 2008.04.02 22:06:48 -0400, Stephen Bannasch wrote:
+> Thanks Bj=F6rn,
 >=20
-> git-gc is such an important step in importing a repository from svn.
-> Why doesn't git-svn take this vital step automatically?
+> At 5:17 PM +0200 4/2/08, Bj=F6rn Steinbrink wrote:
+> >On 2008.04.02 10:38:34 -0400, Stephen Bannasch wrote:
+> > > Is there an operation I can now do to switch the base url from:
+> >>
+> >>   file:///Path/to/svn/repository/projects
+> >>
+> >> to
+> >>
+> >>   https://svn.concord.org/svn/projects
+> >
+> >Basically, this should work:
+> >
+> >Change the URL to the repo in your .git/config.
+>=20
+> Done
+>=20
+> >Use filter-branch to change all git-svn-id lines in the log entries.
+>=20
+> I've just started using git so please forgive the beginner questions.
+>=20
+> What should I change the log entries to?
+>=20
+> Here's what the log entries look like now:
+>=20
+> $ git-filter-branch --msg-filter 'echo $GIT_COMMIT'
+> ^MRewrite 89817efa5b290d375786a5af9a0dcc338df8a68c (1/13099)^MRewrite=
+ b090d1d40cba2c66a494d52e370317487d103484 (2/13099)^M
 
-Starting from 1.5.4 (IIRC) git-svn will repack every 1000 revisions (by
-default). That won't give you a reeeeally tiny pack but OTOH it won't
-take ages to do the repacks either.
+Ouch, that replaced your commit messages with the sha1 hashes... Should
+have been something like:
+git filter-branch --msg-filter 'sed "s,file:///....,http:///,"' -- --al=
+l
 
 Bj=F6rn
