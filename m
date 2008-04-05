@@ -1,56 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH (BUGFIX)] gitweb: Fix "Use of uninitialized value" error
- in 'history' view
-Date: Sat, 05 Apr 2008 00:51:51 -0700
-Message-ID: <7v63uwyc14.fsf@gitster.siamese.dyndns.org>
-References: <200804041623.44595.jnareb@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH (BUGFIX)] gitweb: Fix "Use of uninitialized value" error in 'history' view
+Date: Sat, 5 Apr 2008 09:09:11 +0100
+Message-ID: <200804051009.13332.jnareb@gmail.com>
+References: <200804041623.44595.jnareb@gmail.com> <7v63uwyc14.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Apr 05 09:52:55 2008
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Apr 05 10:10:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ji3Cn-00063x-UO
-	for gcvg-git-2@gmane.org; Sat, 05 Apr 2008 09:52:54 +0200
+	id 1Ji3TV-0002kD-Ty
+	for gcvg-git-2@gmane.org; Sat, 05 Apr 2008 10:10:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751167AbYDEHwE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Apr 2008 03:52:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751306AbYDEHwD
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 Apr 2008 03:52:03 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:44480 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751286AbYDEHwB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Apr 2008 03:52:01 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 5F3E330FC;
-	Sat,  5 Apr 2008 03:51:59 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id C28B130FB; Sat,  5 Apr 2008 03:51:55 -0400 (EDT)
-In-Reply-To: <200804041623.44595.jnareb@gmail.com> (Jakub Narebski's message
- of "Fri, 4 Apr 2008 15:23:42 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751300AbYDEIJX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Apr 2008 04:09:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751241AbYDEIJX
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 Apr 2008 04:09:23 -0400
+Received: from fg-out-1718.google.com ([72.14.220.159]:9057 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751239AbYDEIJV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Apr 2008 04:09:21 -0400
+Received: by fg-out-1718.google.com with SMTP id l27so424338fgb.17
+        for <git@vger.kernel.org>; Sat, 05 Apr 2008 01:09:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        bh=6StVZbbzQYtMx2HBWMk+iJhumXo5vREseTZhhnKWgH0=;
+        b=GYvLmXJRjk13iFPevMF5AsG61anwpShElIZgnLL2ueT/uPRvxkBZ/ZUj9s09+hHJKGtX8o3rLMwlXpqtGueSMTnx6WUE7HVDBaJk6Cu0xSDaDJQZP+BcBtHz81Hwp6p+6aRkAS0kLAnDUZh7TeIBGyT4iOo5Ik4euwujB3u1Y0Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=HiRLh9EjiNZlLu4HBaTGk7knpz/rs8ftMj33yYWvFkuyds8gy3OMxpZ8NgNnZW765muMAup8l1mPArxM1N5CkRRsrP7jNO7sm18whPtO2o1zXsCUOlnTHjURDL6u1HV76MyC8OPlaNNIXXze8XwfujJNAPHHeSl0m0FcBRhl81U=
+Received: by 10.82.180.10 with SMTP id c10mr4979898buf.9.1207382959648;
+        Sat, 05 Apr 2008 01:09:19 -0700 (PDT)
+Received: from ?192.168.1.11? ( [83.8.237.132])
+        by mx.google.com with ESMTPS id t12sm8582909gvd.2.2008.04.05.01.09.17
+        (version=SSLv3 cipher=OTHER);
+        Sat, 05 Apr 2008 01:09:18 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7v63uwyc14.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78841>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78842>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
+> 
+> > When asked for history of a file with no $hash ('h') parameter set,
+> > and which file is not present in current branch ("HEAD" or given by
+> > $hash_hase ('hb') parameter), but is present deeper in the full
+> > history of a branch, gitweb would spew multiple of "Use of
+> > uninitialized value" warnings, and some links would be missing.
+> > This commit fixes this bug.
+> 
+> Thanks, does gitweb itself generate such a link?
+> 
+> I can _artificially_ reproduce this, and I can also see that the patch
+> would solve it, so I do not mind applying it, but I am curious how this
+> was originally triggered.
 
-> When asked for history of a file with no $hash ('h') parameter set,
-> and which file is not present in current branch ("HEAD" or given by
-> $hash_hase ('hb') parameter), but is present deeper in the full
-> history of a branch, gitweb would spew multiple of "Use of
-> uninitialized value" warnings, and some links would be missing.
-> This commit fixes this bug.
+Actually I came across this error when testing the "context-sensitive
+feed links" patch, and was hand-crafting (munging) gitweb URLs.
 
-Thanks, does gitweb itself generate such a link?
+But after thinking about this bug a bit I have realized that this
+situation _can_ happen with link generated by gitweb, only in very rare
+cases.  It is enough if you use 'history' view link without $hash ('h')
+parameter, and with transient $hash_base ('hb') parameter, i.e. either
+name of branch, or "HEAD", or not set (implies "HEAD"), and happen into
+situation where file was _deleted_ *between* gitweb link creation and
+following (accessing) this link.  For example 'history' links in 'tree'
+and 'commitdiff' views doesn't have 'h' parameter.  Also the 'history'
+link in navigation bar wouldn't have 'h' parameter if 'blob' or 'tree'
+view where it is in doesn't have it.
 
-I can _artificially_ reproduce this, and I can also see that the patch
-would solve it, so I do not mind applying it, but I am curious how this
-was originally triggered.
+-- 
+Jakub Narebski
+Poland
