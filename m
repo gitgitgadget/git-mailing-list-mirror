@@ -1,64 +1,53 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Update, and clear up the pack format documentation a bit
-Date: Sat, 05 Apr 2008 23:16:35 -0700
-Message-ID: <7vve2vse2k.fsf@gitster.siamese.dyndns.org>
-References: <20080405180759.GA29710@bohr.gbar.dtu.dk>
- <20080406045132.GA10274@spearce.org>
+From: Gerrit Pape <pape@smarden.org>
+Subject: Re: [PATCH (BUGFIX)] gitweb: Fix "Use of uninitialized value"
+	error in 'history' view
+Date: Sun, 6 Apr 2008 10:22:59 +0000
+Message-ID: <20080406102300.1915.qmail@0406979e53f500.315fe32.mid.smarden.org>
+References: <200804041623.44595.jnareb@gmail.com> <20080405164303.30566.qmail@47fa24fd520dbf.315fe32.mid.smarden.org> <200804051916.14568.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Peter Eriksen <s022018@student.dtu.dk>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sun Apr 06 08:17:45 2008
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 06 12:23:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JiOCF-0004lW-DK
-	for gcvg-git-2@gmane.org; Sun, 06 Apr 2008 08:17:43 +0200
+	id 1JiS21-0002h7-Cv
+	for gcvg-git-2@gmane.org; Sun, 06 Apr 2008 12:23:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751896AbYDFGQq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Apr 2008 02:16:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751909AbYDFGQq
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 Apr 2008 02:16:46 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:38097 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751591AbYDFGQp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Apr 2008 02:16:45 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 1FED4720F;
-	Sun,  6 Apr 2008 02:16:42 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 60BCA720E; Sun,  6 Apr 2008 02:16:37 -0400 (EDT)
-In-Reply-To: <20080406045132.GA10274@spearce.org> (Shawn O. Pearce's message
- of "Sun, 6 Apr 2008 00:51:32 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752515AbYDFKWl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Apr 2008 06:22:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752330AbYDFKWk
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 Apr 2008 06:22:40 -0400
+Received: from a.ns.smarden.org ([212.42.242.37]:54384 "HELO a.mx.smarden.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751775AbYDFKWj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Apr 2008 06:22:39 -0400
+Received: (qmail 1923 invoked by uid 1000); 6 Apr 2008 10:23:00 -0000
+Content-Disposition: inline
+In-Reply-To: <200804051916.14568.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78887>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78888>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
+On Sat, Apr 05, 2008 at 06:16:11PM +0100, Jakub Narebski wrote:
+> This code does not, and cannot, fill 'status_str' ('status' is faked).
+> I'd send in a bit patch fixing this bug (making is_deleted() more
+> robust).
+> 
+> Footnotes:
+> ==========
+> [1] Note that example URL in http://bugs.debian.org/469083 does not
+>     have 'hpb' ($hash_parent_base) parameter set... and that is what
+>     causes this bug.
 
-> Peter Eriksen <s022018@student.dtu.dk> wrote:
-> ...
->> +     (for object type ofs_delta)
->> +     n-byte offset (n*7-bit as above, but with size0 being 7 bit)     
->> +     compressed delta data
->> +
->
-> That is not correct.  The ofs_delta is encoded as an n-byte offset
-> that is subtracted from the current object's first byte (the byte
-> holding the type/representation field and first 4 bits of length).
+Thanks a lot.
 
-Right.  Saying just "n-byte offset" can be mistaken as the offset from the
-beginning of the file, and making it clear that it is relative is good.
+> P.S. Gerrit, are you maintainer of git-core debian package?
 
-> The n-byte encoding for an ofs_delta is different then the one
-> used for the length.  We add 1 for each byte where the MSB is 1.
-> We also store the data in big-endian form (the most significant
-> byte is first and the least significant byte is last).
+Yes, I take responsibility for the git Debian packages.
 
-Ah, I forgot about that one.
+Regards, Gerrit.
