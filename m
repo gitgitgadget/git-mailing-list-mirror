@@ -1,70 +1,62 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/4] Add history graph API
-Date: Sun, 6 Apr 2008 22:06:24 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0804062204580.12583@eeepc-johanness>
-References: <1207507332-1866-1-git-send-email-adam@adamsimpkins.net>
+From: Teemu Likonen <tlikonen@iki.fi>
+Subject: Re: [PATCH 3/4] git log and git rev-list: Add --graph option
+Date: Mon, 7 Apr 2008 00:15:32 +0300
+Message-ID: <200804070015.32783.tlikonen@iki.fi>
+References: <1207507332-1866-1-git-send-email-adam@adamsimpkins.net> <1207507332-1866-2-git-send-email-adam@adamsimpkins.net> <1207507332-1866-3-git-send-email-adam@adamsimpkins.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Adam Simpkins <adam@adamsimpkins.net>
-X-From: git-owner@vger.kernel.org Sun Apr 06 23:07:12 2008
+Content-Type: text/plain;
+  charset="windows-1252"
+Content-Transfer-Encoding: 7bit
+Cc: Adam Simpkins <adam@adamsimpkins.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 06 23:16:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jic51-0004Uw-Sj
-	for gcvg-git-2@gmane.org; Sun, 06 Apr 2008 23:07:12 +0200
+	id 1JicDq-0007G3-Be
+	for gcvg-git-2@gmane.org; Sun, 06 Apr 2008 23:16:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752934AbYDFVG2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Apr 2008 17:06:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753455AbYDFVG2
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 Apr 2008 17:06:28 -0400
-Received: from mail.gmx.net ([213.165.64.20]:40953 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752934AbYDFVG2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Apr 2008 17:06:28 -0400
-Received: (qmail invoked by alias); 06 Apr 2008 21:06:26 -0000
-Received: from host86-165-92-90.range86-165.btcentralplus.com (EHLO eeepc-johanness.home) [86.165.92.90]
-  by mail.gmx.net (mp022) with SMTP; 06 Apr 2008 23:06:26 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/VoNIJ2VDViA+Fa8kAStRLrs+ZcE4+GOuys94071
-	j2Td6wyZ3J8cST
-X-X-Sender: user@eeepc-johanness
-In-Reply-To: <1207507332-1866-1-git-send-email-adam@adamsimpkins.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1753818AbYDFVPf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Apr 2008 17:15:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753766AbYDFVPf
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 Apr 2008 17:15:35 -0400
+Received: from pne-smtpout3-sn2.hy.skanova.net ([81.228.8.111]:64099 "EHLO
+	pne-smtpout3-sn2.hy.skanova.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753478AbYDFVPe (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 6 Apr 2008 17:15:34 -0400
+Received: from [192.168.0.2] (80.220.180.181) by pne-smtpout3-sn2.hy.skanova.net (7.3.129)
+        id 478BDB960049237A; Sun, 6 Apr 2008 23:15:33 +0200
+User-Agent: KMail/1.9.5
+In-Reply-To: <1207507332-1866-3-git-send-email-adam@adamsimpkins.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78929>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78930>
 
-Hi,
+Adam Simpkins kirjoitti:
 
-On Sun, 6 Apr 2008, Adam Simpkins wrote:
+> The --graph option causes a text-based representation of the history
+> graph to be printed on the left-hand side of the output.
 
-> diff --git a/graph.h b/graph.h
-> new file mode 100644
-> index 0000000..fc23bf2
-> --- /dev/null
-> +++ b/graph.h
-> @@ -0,0 +1,57 @@
-> +#ifndef GRAPH_H
-> +#define GRAPH_H
-> +
-> +/* A graph is a pointer to this opaque structure */
-> +struct git_graph;
-> +
-> +/* Defined in commit.h */
-> +struct commit;
-> +/* Defined in strbuf.h */
-> +struct strbuf;
+The '--graph' seems to work nicely with every '--pretty=' option 
+except 'email'.
 
-You do not need those.
+$ git log --graph --pretty=email
 
-Apart from that, it looks very, very clean to me.  (Except maybe the 
-prefix ++ that could have been a postfix ++ in the line before, but that 
-is just me.)
 
-Ciao,
-Dscho
+|
+M     From 77ad7a49d3cc946487ca759e5361effbcfb03be5 [...]
+From: Junio C Hamano <gitster@pobox.com>
+|\    Date: Fri, 4 Apr 2008 22:38:32 -0700
+| |   Subject: [PATCH] Merge git://repo.or.cz/git-gui
+| |   
+| |   * git://repo.or.cz/git-gui:
+| |     git-gui: use +/- instead of ]/[ to show [...]
+| |     git-gui: Update french translation
+| |     git-gui: Switch keybindings for [ and ] to [...]
+
+
+The 'From:' field is always at the column 1.
