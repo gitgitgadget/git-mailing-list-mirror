@@ -1,64 +1,128 @@
-From: "Elijah Newren" <newren@gmail.com>
-Subject: Re: [PATCH] Add interactive option in rebase command completion list.
-Date: Sun, 6 Apr 2008 12:33:29 -0600
-Message-ID: <51419b2c0804061133t20f7606y2ebe8f921b6c3781@mail.gmail.com>
-References: <1207503144-3008-1-git-send-email-pascal@obry.net>
-	 <7vprt2sv60.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Pascal Obry" <pascal.obry@gmail.com>, git@vger.kernel.org,
-	"Pascal Obry" <pascal@obry.net>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Apr 06 20:34:28 2008
+From: Adam Simpkins <adam@adamsimpkins.net>
+Subject: [PATCH 4/4] git log: Updated --graph to work even when the commit list is pruned
+Date: Sun,  6 Apr 2008 11:42:11 -0700
+Message-ID: <1207507332-1866-4-git-send-email-adam@adamsimpkins.net>
+References: <1207507332-1866-1-git-send-email-adam@adamsimpkins.net>
+ <1207507332-1866-2-git-send-email-adam@adamsimpkins.net>
+ <1207507332-1866-3-git-send-email-adam@adamsimpkins.net>
+Cc: Adam Simpkins <adam@adamsimpkins.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 06 20:43:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JiZhD-0001qv-3G
-	for gcvg-git-2@gmane.org; Sun, 06 Apr 2008 20:34:27 +0200
+	id 1JiZpY-0004Dg-Tb
+	for gcvg-git-2@gmane.org; Sun, 06 Apr 2008 20:43:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752156AbYDFSdd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Apr 2008 14:33:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752144AbYDFSdd
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 Apr 2008 14:33:33 -0400
-Received: from rn-out-0910.google.com ([64.233.170.189]:21689 "EHLO
-	rn-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752136AbYDFSdc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Apr 2008 14:33:32 -0400
-Received: by rn-out-0910.google.com with SMTP id e24so866630rng.1
-        for <git@vger.kernel.org>; Sun, 06 Apr 2008 11:33:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=i54E3fz8EmB2JBdnOGBX2SEWBARuux2UM5UmDYavrn8=;
-        b=ZsrTt/X7P+3kiOV1Bl0rKs7D7vb+XTx//5eeqMxqBy95fE5gxUpXMyLwSMDbhaWVm/V3rwcjwZxML8QPsPAmzoAPa09WjrQZiMIs/HOWvzpgGHPZFQKPkgb3zib44/V+FKr5lQDcQ9gOZGlr+F0ieFRJiQQSy0iJp3DpcUSXS6U=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=v5/oyyR9Lw/7HHtKLDMYDqsrIXV5eW3AHCMfOL3CsgyEXT1UrCO9HG48Xkzy7zMKVeMJiU5Xt35KEWXXudABusA6oFgREvRz2B1xN3Z8rYBVXo/kqaVPsrJ/gxZKVuuZVe0UnQ+12Y69AF1djBG1OgSORb+0NJ/SMrONgZmNwQY=
-Received: by 10.114.80.4 with SMTP id d4mr5027215wab.44.1207506809254;
-        Sun, 06 Apr 2008 11:33:29 -0700 (PDT)
-Received: by 10.114.46.15 with HTTP; Sun, 6 Apr 2008 11:33:29 -0700 (PDT)
-In-Reply-To: <7vprt2sv60.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1752263AbYDFSmQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Apr 2008 14:42:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752162AbYDFSmP
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 Apr 2008 14:42:15 -0400
+Received: from smtp192.iad.emailsrvr.com ([207.97.245.192]:56652 "EHLO
+	smtp192.iad.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752115AbYDFSmO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Apr 2008 14:42:14 -0400
+Received: from relay9.relay.iad.mlsrvr.com (localhost [127.0.0.1])
+	by relay9.relay.iad.mlsrvr.com (SMTP Server) with ESMTP id 90FB11B417B;
+	Sun,  6 Apr 2008 14:42:13 -0400 (EDT)
+Received: by relay9.relay.iad.mlsrvr.com (Authenticated sender: simpkins-AT-adamsimpkins.net) with ESMTP id 3C5401B4177;
+	Sun,  6 Apr 2008 14:42:13 -0400 (EDT)
+Received: by sleipnir.adamsimpkins.net (Postfix, from userid 1000)
+	id 2AFB214100BE; Sun,  6 Apr 2008 11:42:12 -0700 (PDT)
+X-Mailer: git-send-email 1.5.3.6
+In-Reply-To: <1207507332-1866-3-git-send-email-adam@adamsimpkins.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78908>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78909>
 
-On Sun, Apr 6, 2008 at 12:19 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Pascal Obry <pascal.obry@gmail.com> writes:
->
->  > -             __gitcomp "--onto --merge --strategy"
->  > +             __gitcomp "--onto --merge --strategy --interactive"
->
->  I personally do not think this is worth it where a single "-i" is enough.
+Signed-off-by: Adam Simpkins <adam@adamsimpkins.net>
+---
+ graph.c    |   22 +++++++++++++++-------
+ revision.c |    3 ---
+ 2 files changed, 15 insertions(+), 10 deletions(-)
 
-One advantage of bash completion, in my opinion, is being able to be
-reminded of option names by tabbing twice to get a list of possible
-completions.  For exactly such a case, I'd be in favor of this patch.
-
-Just my $0.02,
-Elijah
+diff --git a/graph.c b/graph.c
+index e6d1d3a..be4000f 100644
+--- a/graph.c
++++ b/graph.c
+@@ -1,6 +1,8 @@
+ #include "cache.h"
+ #include "commit.h"
+ #include "graph.h"
++#include "diff.h"
++#include "revision.h"
+ 
+ /*
+  * TODO:
+@@ -174,17 +176,24 @@ static void graph_ensure_capacity(struct git_graph *graph, int num_columns)
+ 
+ static void graph_insert_into_new_columns(struct git_graph *graph,
+ 					  struct commit *commit,
+-					  int mapping_index)
++					  int *mapping_index)
+ {
+ 	int i;
+ 
+ 	/*
++	 * Ignore uinteresting and pruned commits
++	 */
++	if (commit->object.flags & (UNINTERESTING | TREESAME))
++		return;
++
++	/*
+ 	 * If the commit is already in the new_columns list, we don't need to
+ 	 * add it.  Just update the mapping correctly.
+ 	 */
+ 	for (i = 0; i < graph->num_new_columns; ++i) {
+ 		if (graph->new_columns[i].commit == commit) {
+-			graph->mapping[mapping_index] = i;
++			graph->mapping[*mapping_index] = i;
++			*mapping_index += 2;
+ 			return;
+ 		}
+ 	}
+@@ -193,7 +202,8 @@ static void graph_insert_into_new_columns(struct git_graph *graph,
+ 	 * This commit isn't already in new_columns.  Add it.
+ 	 */
+ 	graph->new_columns[graph->num_new_columns].commit = commit;
+-	graph->mapping[mapping_index] = graph->num_new_columns;
++	graph->mapping[*mapping_index] = graph->num_new_columns;
++	*mapping_index += 2;
+ 	++graph->num_new_columns;
+ }
+ 
+@@ -266,13 +276,11 @@ static void graph_update_columns(struct git_graph *graph)
+ 			     parent = parent->next) {
+ 				graph_insert_into_new_columns(graph,
+ 							      parent->item,
+-							      mapping_idx);
+-				mapping_idx += 2;
++							      &mapping_idx);
+ 			}
+ 		} else {
+ 			graph_insert_into_new_columns(graph, col_commit,
+-						      mapping_idx);
+-			mapping_idx += 2;
++						      &mapping_idx);
+ 		}
+ 	}
+ 
+diff --git a/revision.c b/revision.c
+index 6c9622c..6a1f513 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1410,9 +1410,6 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, const ch
+ 	if (revs->reflog_info && revs->graph)
+ 		die("cannot combine --walk-reflogs with --graph");
+ 
+-	if (revs->graph && revs->prune_data)
+-		die("cannot use --graph when pruning commit list");
+-
+ 	return left;
+ }
+ 
+-- 
+1.5.3.6
