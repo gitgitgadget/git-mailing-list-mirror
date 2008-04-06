@@ -1,60 +1,88 @@
 From: Adam Simpkins <adam@adamsimpkins.net>
-Subject: Re: [PATCH 3/4] git log and git rev-list: Add --graph option
-Date: Sun, 6 Apr 2008 15:51:32 -0700
-Message-ID: <20080406225131.GD5822@adamsimpkins.net>
-References: <1207507332-1866-1-git-send-email-adam@adamsimpkins.net> <1207507332-1866-2-git-send-email-adam@adamsimpkins.net> <1207507332-1866-3-git-send-email-adam@adamsimpkins.net> <200804070015.32783.tlikonen@iki.fi>
+Subject: Re: [PATCH 1/4] Add history graph API
+Date: Sun, 6 Apr 2008 15:58:20 -0700
+Message-ID: <20080406225819.GE5822@adamsimpkins.net>
+References: <1207507332-1866-1-git-send-email-adam@adamsimpkins.net> <alpine.DEB.1.00.0804062204580.12583@eeepc-johanness> <20080406220447.GB5822@adamsimpkins.net> <alpine.DEB.1.00.0804062315090.12583@eeepc-johanness>
 Reply-To: Adam Simpkins <adam@adamsimpkins.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Teemu Likonen <tlikonen@iki.fi>
-X-From: git-owner@vger.kernel.org Mon Apr 07 00:52:18 2008
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Apr 07 00:59:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jidij-00069f-Gp
-	for gcvg-git-2@gmane.org; Mon, 07 Apr 2008 00:52:17 +0200
+	id 1JidpL-0007y1-Qy
+	for gcvg-git-2@gmane.org; Mon, 07 Apr 2008 00:59:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753670AbYDFWve (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Apr 2008 18:51:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752655AbYDFWve
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 Apr 2008 18:51:34 -0400
-Received: from smtp162.iad.emailsrvr.com ([207.97.245.162]:56238 "EHLO
+	id S1755683AbYDFW6Y convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 6 Apr 2008 18:58:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755578AbYDFW6X
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 Apr 2008 18:58:23 -0400
+Received: from smtp162.iad.emailsrvr.com ([207.97.245.162]:56799 "EHLO
 	smtp162.iad.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752037AbYDFWve (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Apr 2008 18:51:34 -0400
+	with ESMTP id S1755523AbYDFW6X (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Apr 2008 18:58:23 -0400
 Received: from relay6.relay.iad.emailsrvr.com (localhost [127.0.0.1])
-	by relay6.relay.iad.emailsrvr.com (SMTP Server) with ESMTP id 8968072D308;
-	Sun,  6 Apr 2008 18:51:33 -0400 (EDT)
-Received: by relay6.relay.iad.emailsrvr.com (Authenticated sender: simpkins-AT-adamsimpkins.net) with ESMTP id 6688572BBF9;
-	Sun,  6 Apr 2008 18:51:33 -0400 (EDT)
+	by relay6.relay.iad.emailsrvr.com (SMTP Server) with ESMTP id 890F672BBF9;
+	Sun,  6 Apr 2008 18:58:21 -0400 (EDT)
+Received: by relay6.relay.iad.emailsrvr.com (Authenticated sender: simpkins-AT-adamsimpkins.net) with ESMTP id 46D8172D3FE;
+	Sun,  6 Apr 2008 18:58:21 -0400 (EDT)
 Received: by sleipnir.adamsimpkins.net (Postfix, from userid 1000)
-	id 7B9AB14100BB; Sun,  6 Apr 2008 15:51:32 -0700 (PDT)
+	id 589DF14100BB; Sun,  6 Apr 2008 15:58:20 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <200804070015.32783.tlikonen@iki.fi>
+In-Reply-To: <alpine.DEB.1.00.0804062315090.12583@eeepc-johanness>
 User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78939>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78940>
 
-On Mon, Apr 07, 2008 at 12:15:32AM +0300, Teemu Likonen wrote:
-> Adam Simpkins kirjoitti:
-> 
-> > The --graph option causes a text-based representation of the history
-> > graph to be printed on the left-hand side of the output.
-> 
-> The '--graph' seems to work nicely with every '--pretty=' option 
-> except 'email'.
-> 
-> $ git log --graph --pretty=email
+On Sun, Apr 06, 2008 at 11:15:58PM +0100, Johannes Schindelin wrote:
+> On Sun, 6 Apr 2008, Adam Simpkins wrote:
+> > On Sun, Apr 06, 2008 at 10:06:24PM +0100, Johannes Schindelin wrote=
+:
+> > > On Sun, 6 Apr 2008, Adam Simpkins wrote:
+> > >=20
+> > > > +/* Defined in commit.h */
+> > > > +struct commit;
+> > > > +/* Defined in strbuf.h */
+> > > > +struct strbuf;
+> > >=20
+> > > You do not need those.
+> >=20
+> > I added them so that graph.h can be included without including any =
+other=20
+> > header files first.  They can be taken out if we assume that all us=
+ers=20
+> > of graph.h will include commit.h and strbuf.h first.
+>=20
+> AFAICT you do not even need them then.  Using "struct strbuf *" witho=
+ut=20
+> ever declaring struct strbuf before that is perfectly valid.
 
-Yep, I forgot to test that one.  Thanks for pointing it out.
-It looks like it shouldn't be too hard to fix.  I'll try to fix it and
-submit a patch later this evening.
+Trying to compile the following test code with gcc 4.1.2 results in a
+warning.
 
--- 
+test.c:
+	#include <stdio.h>
+=09
+	void test(struct strbuf *sb);
+	int main(int argc, char **argv)
+	{
+		test(NULL);
+		return 0;
+	}
+
+$ gcc -c test.c
+test.c:3: warning: =E2=80=98struct strbuf=E2=80=99 declared inside para=
+meter list
+test.c:3: warning: its scope is only this definition or declaration, wh=
+ich is probably not what you want
+
+--=20
 Adam Simpkins
 adam@adamsimpkins.net
