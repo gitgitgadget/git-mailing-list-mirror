@@ -1,72 +1,161 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: How do I set the committer with cherry-pick? (or is there a
- better way to get changes from someone?)
-Date: Sat, 05 Apr 2008 18:18:45 -0700
-Message-ID: <7vwsnbu6fe.fsf@gitster.siamese.dyndns.org>
-References: <810a540e0804051642r79dc10a7h2a231561062b13ea@mail.gmail.com>
- <7vhcefvoeg.fsf@gitster.siamese.dyndns.org>
- <810a540e0804051758j5daea9a8vfe36396ecbb36a08@mail.gmail.com>
+From: =?utf-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+Subject: [PATCH 1/6] doc: moved merge.* config variables into separate
+	merge-config.txt
+Date: Sun,  6 Apr 2008 03:23:42 +0200
+Message-ID: <1207445027-3152-2-git-send-email-szeder@ira.uka.de>
+References: <7vtzigw2wo.fsf@gitster.siamese.dyndns.org>
+	<1207445027-3152-1-git-send-email-szeder@ira.uka.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Pat Maddox" <pergesu@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 06 03:20:07 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Teemu Likonen <tlikonen@iki.fi>,
+	=?utf-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Apr 06 03:24:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JiJYB-000463-9V
-	for gcvg-git-2@gmane.org; Sun, 06 Apr 2008 03:20:03 +0200
+	id 1JiJch-0004gD-FV
+	for gcvg-git-2@gmane.org; Sun, 06 Apr 2008 03:24:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751466AbYDFBTD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Apr 2008 21:19:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751439AbYDFBTB
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 Apr 2008 21:19:01 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:42347 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751356AbYDFBTA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Apr 2008 21:19:00 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 85D406387;
-	Sat,  5 Apr 2008 21:18:57 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id DA5A46385; Sat,  5 Apr 2008 21:18:52 -0400 (EDT)
-In-Reply-To: <810a540e0804051758j5daea9a8vfe36396ecbb36a08@mail.gmail.com>
- (Pat Maddox's message of "Sat, 5 Apr 2008 17:58:33 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751492AbYDFBYA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 5 Apr 2008 21:24:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751487AbYDFBYA
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 Apr 2008 21:24:00 -0400
+Received: from moutng.kundenserver.de ([212.227.126.177]:62531 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751474AbYDFBX7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Apr 2008 21:23:59 -0400
+Received: from [127.0.1.1] (p5B132413.dip0.t-ipconnect.de [91.19.36.19])
+	by mrelayeu.kundenserver.de (node=mrelayeu2) with ESMTP (Nemesis)
+	id 0MKwtQ-1JiJbr09Jm-0002QX; Sun, 06 Apr 2008 03:23:52 +0200
+X-Mailer: git-send-email 1.5.5.rc3.9.gba703
+In-Reply-To: <1207445027-3152-1-git-send-email-szeder@ira.uka.de>
+X-Provags-ID: V01U2FsdGVkX1/gDqxUN5I04zToC+sHJrlIJLNF8kTVNFgIUTv
+ VgPDzk3HuDLXtrXfGbD3Sy59lkOkXX1w6PZ7b7541AZg0hqncz
+ Y1mthnpmuvuw55uIdi/0A==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78874>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78875>
 
-"Pat Maddox" <pergesu@gmail.com> writes:
+Include the new file from config.txt and git-merge.txt.
 
-> And finally, when I experimented with doing a pull instead of
-> cherry-pick, it listed the original author as the committer instead of
-> myself.  I think you're absolutely right that the burden should be on
-> them, so I can tell them to create a clean commit branch and just pull
-> from it, but I still need to be listed as the committer.
+Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
+---
+ Documentation/config.txt       |   32 +-------------------------------
+ Documentation/git-merge.txt    |   13 +------------
+ Documentation/merge-config.txt |   31 +++++++++++++++++++++++++++++++
+ 3 files changed, 33 insertions(+), 43 deletions(-)
+ create mode 100644 Documentation/merge-config.txt
 
-Well, at that point, you are not the committer for their changes on their
-clean history, and you shouldn't expect to be recorded as such.  Your
-contribution to the project might still be recorded as the committer of
-the merge commit that pulled their contributions in, though.
-
-Any history is just as valid as your integration branch's history.  There
-may be hundreds of potential histories in the universe --- each and every
-contributor, anybody who clones and plays with the project may create his
-own history.  Each contributor in their repository will be commiting their
-changes and building their histories.  If one of these alternative
-histories is so agreeable for you that makes you happy to pull from it,
-that means the creator of that history did extra work to keep it clean (or
-rebuilt it to look like clean).  Give the contributor the credit for his
-own segment of the history when you merge from him.
-
-Among these many alternate histories, yours may happen to be the one many
-people consider more authoritative than others', but other than that, you
-are not any more special than them.
-
-That's what distributed means.
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 04c01c5..f009740 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -768,37 +768,7 @@ man.viewer::
+ 	Specify the programs that may be used to display help in the
+ 	'man' format. See linkgit:git-help[1].
+=20
+-merge.summary::
+-	Whether to include summaries of merged commits in newly created
+-	merge commit messages. False by default.
+-
+-merge.tool::
+-	Controls which merge resolution program is used by
+-	linkgit:git-mergetool[1].  Valid built-in values are: "kdiff3",
+-	"tkdiff", "meld", "xxdiff", "emerge", "vimdiff", "gvimdiff", and
+-	"opendiff".  Any other value is treated is custom merge tool
+-	and there must be a corresponing mergetool.<tool>.cmd option.
+-
+-merge.verbosity::
+-	Controls the amount of output shown by the recursive merge
+-	strategy.  Level 0 outputs nothing except a final error
+-	message if conflicts were detected. Level 1 outputs only
+-	conflicts, 2 outputs conflicts and file changes.  Level 5 and
+-	above outputs debugging information.  The default is level 2.
+-	Can be overridden by 'GIT_MERGE_VERBOSITY' environment variable.
+-
+-merge.<driver>.name::
+-	Defines a human readable name for a custom low-level
+-	merge driver.  See linkgit:gitattributes[5] for details.
+-
+-merge.<driver>.driver::
+-	Defines the command that implements a custom low-level
+-	merge driver.  See linkgit:gitattributes[5] for details.
+-
+-merge.<driver>.recursive::
+-	Names a low-level merge driver to be used when
+-	performing an internal merge between common ancestors.
+-	See linkgit:gitattributes[5] for details.
++include::merge-config.txt[]
+=20
+ mergetool.<tool>.path::
+ 	Override the path for the given tool.  This is useful in case
+diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
+index c136b10..821e21b 100644
+--- a/Documentation/git-merge.txt
++++ b/Documentation/git-merge.txt
+@@ -46,18 +46,7 @@ linkgit:git-reset[1].
+=20
+ CONFIGURATION
+ -------------
+-
+-merge.summary::
+-	Whether to include summaries of merged commits in newly
+-	created merge commit. False by default.
+-
+-merge.verbosity::
+-	Controls the amount of output shown by the recursive merge
+-	strategy.  Level 0 outputs nothing except a final error
+-	message if conflicts were detected. Level 1 outputs only
+-	conflicts, 2 outputs conflicts and file changes.  Level 5 and
+-	above outputs debugging information.  The default is level 2.
+-	Can be overridden by 'GIT_MERGE_VERBOSITY' environment variable.
++include::merge-config.txt[]
+=20
+ branch.<name>.mergeoptions::
+ 	Sets default options for merging into branch <name>. The syntax and
+diff --git a/Documentation/merge-config.txt b/Documentation/merge-confi=
+g.txt
+new file mode 100644
+index 0000000..cc815cc
+--- /dev/null
++++ b/Documentation/merge-config.txt
+@@ -0,0 +1,31 @@
++merge.summary::
++	Whether to include summaries of merged commits in newly created
++	merge commit messages. False by default.
++
++merge.tool::
++	Controls which merge resolution program is used by
++	linkgit:git-mergetool[1].  Valid built-in values are: "kdiff3",
++	"tkdiff", "meld", "xxdiff", "emerge", "vimdiff", "gvimdiff", and
++	"opendiff".  Any other value is treated is custom merge tool
++	and there must be a corresponing mergetool.<tool>.cmd option.
++
++merge.verbosity::
++	Controls the amount of output shown by the recursive merge
++	strategy.  Level 0 outputs nothing except a final error
++	message if conflicts were detected. Level 1 outputs only
++	conflicts, 2 outputs conflicts and file changes.  Level 5 and
++	above outputs debugging information.  The default is level 2.
++	Can be overridden by 'GIT_MERGE_VERBOSITY' environment variable.
++
++merge.<driver>.name::
++	Defines a human readable name for a custom low-level
++	merge driver.  See linkgit:gitattributes[5] for details.
++
++merge.<driver>.driver::
++	Defines the command that implements a custom low-level
++	merge driver.  See linkgit:gitattributes[5] for details.
++
++merge.<driver>.recursive::
++	Names a low-level merge driver to be used when
++	performing an internal merge between common ancestors.
++	See linkgit:gitattributes[5] for details.
+--=20
+1.5.5.rc3.9.gba703
