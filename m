@@ -1,252 +1,373 @@
 From: Adam Simpkins <adam@adamsimpkins.net>
-Subject: [PATCH 1/4] graph API: Fixed coding style problems
-Date: Mon,  7 Apr 2008 01:01:18 -0700
-Message-ID: <1207555281-9362-1-git-send-email-adam@adamsimpkins.net>
+Subject: [PATCH 2/4] log and rev-list: Fixed newline termination issues with --graph
+Date: Mon,  7 Apr 2008 01:01:19 -0700
+Message-ID: <1207555281-9362-2-git-send-email-adam@adamsimpkins.net>
 References: <1207518444-5955-1-git-send-email-adam@adamsimpkins.net>
+ <1207555281-9362-1-git-send-email-adam@adamsimpkins.net>
 Cc: Adam Simpkins <adam@adamsimpkins.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 07 10:02:13 2008
+X-From: git-owner@vger.kernel.org Mon Apr 07 10:02:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JimIu-0007zd-Nf
-	for gcvg-git-2@gmane.org; Mon, 07 Apr 2008 10:02:13 +0200
+	id 1JimIv-0007zd-F8
+	for gcvg-git-2@gmane.org; Mon, 07 Apr 2008 10:02:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753760AbYDGIBb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Apr 2008 04:01:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753510AbYDGIBa
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Apr 2008 04:01:30 -0400
-Received: from smtp192.iad.emailsrvr.com ([207.97.245.192]:55238 "EHLO
+	id S1753764AbYDGIBc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Apr 2008 04:01:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753616AbYDGIBb
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Apr 2008 04:01:31 -0400
+Received: from smtp192.iad.emailsrvr.com ([207.97.245.192]:55237 "EHLO
 	smtp192.iad.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753442AbYDGIB1 (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1753404AbYDGIB1 (ORCPT <rfc822;git@vger.kernel.org>);
 	Mon, 7 Apr 2008 04:01:27 -0400
 Received: from relay9.relay.iad.mlsrvr.com (localhost [127.0.0.1])
-	by relay9.relay.iad.mlsrvr.com (SMTP Server) with ESMTP id AF6EF1B4068;
+	by relay9.relay.iad.mlsrvr.com (SMTP Server) with ESMTP id CEBAD1B4052;
 	Mon,  7 Apr 2008 04:01:23 -0400 (EDT)
-Received: by relay9.relay.iad.mlsrvr.com (Authenticated sender: simpkins-AT-adamsimpkins.net) with ESMTP id 3639A1B4052;
+Received: by relay9.relay.iad.mlsrvr.com (Authenticated sender: simpkins-AT-adamsimpkins.net) with ESMTP id 4166B1B40A2;
 	Mon,  7 Apr 2008 04:01:23 -0400 (EDT)
 Received: by sleipnir.adamsimpkins.net (Postfix, from userid 1000)
-	id 9558014100BE; Mon,  7 Apr 2008 01:01:21 -0700 (PDT)
+	id D927E14100BC; Mon,  7 Apr 2008 01:01:21 -0700 (PDT)
 X-Mailer: git-send-email 1.5.3.6
-In-Reply-To: <1207518444-5955-1-git-send-email-adam@adamsimpkins.net>
+In-Reply-To: <1207555281-9362-1-git-send-email-adam@adamsimpkins.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78958>
 
-- Removed pre-declarations of structs from graph.h; all users are
-  expected to include the necessary header files first.
-- Replaced prefix increment and decrement operators with postfix
-  operators
+Previously, the --graph option had problems when used together with
+--pretty=format.  The output was missing a newline at the end of each
+entry, before the next graph line.
+
+This change updates the code to treat CMIT_FMT_USERFORMAT just like
+CMIT_FMT_ONELINE, even when --graph is not in use.  Like
+CMIT_FMT_ONELINE, the pretty_print_commit() output for
+CMIT_FMT_USERFORMAT lacks a terminating newline.  Similarly, there
+should be no blank line between entries for CMIT_FMT_USERFORMAT.
+
+The old code took care of these cases for CMIT_FMT_ONELINE, but not for
+CMIT_FMT_USERFORMAT.  For CMIT_FMT_USERFORMAT, show_log() left each
+entry without a terminating newline.  The next call to show_log() would
+then try to print an extra blank line between entries.  However, since
+the previous entry lacked a newline, the "blank line" simply added a
+newline at the end of the previous entry.  For the most part, this made
+the output look correct.  The very last entry in the output was always
+missing a terminating newline, but piping the output through less would
+hide this fact.  (Running with --no-pager would clearly show the missing
+newline at the end of the output.)
+
+I believe the old behavior was accidental, rather than intentional.  The
+new code always prints a newline at the end of the last entry.
 
 Signed-off-by: Adam Simpkins <adam@adamsimpkins.net>
 ---
- graph.c |   42 +++++++++++++++++++++---------------------
- graph.h |    5 -----
- 2 files changed, 21 insertions(+), 26 deletions(-)
+ builtin-rev-list.c |   52 ++++++++++++++---------------
+ graph.c            |   93 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ graph.h            |   20 ++++++++++-
+ log-tree.c         |   61 ++++++++++++++-------------------
+ 4 files changed, 163 insertions(+), 63 deletions(-)
 
+diff --git a/builtin-rev-list.c b/builtin-rev-list.c
+index 4427caa..ac6a6f9 100644
+--- a/builtin-rev-list.c
++++ b/builtin-rev-list.c
+@@ -53,7 +53,6 @@ static struct rev_info revs;
+ 
+ static int bisect_list;
+ static int show_timestamp;
+-static int hdr_termination;
+ static const char *header_prefix;
+ 
+ static void finish_commit(struct commit *commit);
+@@ -103,34 +102,34 @@ static void show_commit(struct commit *commit)
+ 		pretty_print_commit(revs.commit_format, commit,
+ 				    &buf, revs.abbrev, NULL, NULL,
+ 				    revs.date_mode, 0);
+-		if (buf.len) {
+-			if (revs.graph) {
+-				graph_show_strbuf(revs.graph, &buf);
+-				 if (revs.commit_format == CMIT_FMT_ONELINE) {
+-					 /*
+-					  * For CMIT_FMT_ONELINE, the buffer
+-					  * doesn't end in a newline, so add one
+-					  * first if graph_show_remainder()
+-					  * needs to print more lines.
+-					  */
+-					if (!graph_is_commit_finished(revs.graph)) {
+-						putchar('\n');
+-						graph_show_remainder(revs.graph);
+-					}
+-				} else {
+-					/*
+-					 * For other formats, we want at least
+-					 * one line separating commits.  If
+-					 * graph_show_remainder() doesn't print
+-					 * anything, add a padding line.
+-					 */
+-					if (!graph_show_remainder(revs.graph))
+-						graph_show_padding(revs.graph);
+-				}
++		if (revs.graph) {
++			/*
++			 * If revs.graph is non-NULL, we always need to print
++			 * an extra newline, even if msgbuf is empty.
++			 */
++			graph_show_commit_msg(revs.graph, &buf,
++					      revs.commit_format);
++
++			/*
++			 * For CMIT_FMT_ONELINE and CMIT_FMT_USERFORMAT,
++			 * we need to add a terminating newline to the
++			 * output.
++			 *
++			 * For other formats, we want an extra padding line
++			 * after the output.
++			 */
++			if (revs.commit_format == CMIT_FMT_ONELINE ||
++			    revs.commit_format == CMIT_FMT_USERFORMAT) {
++				putchar('\n');
+ 			} else {
++				graph_show_padding(revs.graph);
++				putchar('\n');
++			}
++		} else {
++			if (buf.len) {
+ 				fwrite(buf.buf, sizeof(char), buf.len, stdout);
++				putchar('\n');
+ 			}
+-			putchar(hdr_termination);
+ 		}
+ 		strbuf_release(&buf);
+ 	} else {
+@@ -630,7 +629,6 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
+ 	}
+ 	if (revs.commit_format != CMIT_FMT_UNSPECIFIED) {
+ 		/* The command line has a --pretty  */
+-		hdr_termination = '\n';
+ 		if (revs.commit_format == CMIT_FMT_ONELINE)
+ 			header_prefix = "";
+ 		else
 diff --git a/graph.c b/graph.c
-index be4000f..6f99063 100644
+index 6f99063..3ecc378 100644
 --- a/graph.c
 +++ b/graph.c
-@@ -190,7 +190,7 @@ static void graph_insert_into_new_columns(struct git_graph *graph,
- 	 * If the commit is already in the new_columns list, we don't need to
- 	 * add it.  Just update the mapping correctly.
- 	 */
--	for (i = 0; i < graph->num_new_columns; ++i) {
-+	for (i = 0; i < graph->num_new_columns; i++) {
- 		if (graph->new_columns[i].commit == commit) {
- 			graph->mapping[*mapping_index] = i;
- 			*mapping_index += 2;
-@@ -204,7 +204,7 @@ static void graph_insert_into_new_columns(struct git_graph *graph,
- 	graph->new_columns[graph->num_new_columns].commit = commit;
- 	graph->mapping[*mapping_index] = graph->num_new_columns;
- 	*mapping_index += 2;
--	++graph->num_new_columns;
-+	graph->num_new_columns++;
- }
- 
- static void graph_update_columns(struct git_graph *graph)
-@@ -245,7 +245,7 @@ static void graph_update_columns(struct git_graph *graph)
- 	 * Clear out graph->mapping
- 	 */
- 	graph->mapping_size = 2 * max_new_columns;
--	for (i = 0; i < graph->mapping_size; ++i)
-+	for (i = 0; i < graph->mapping_size; i++)
- 		graph->mapping[i] = -1;
- 
- 	/*
-@@ -259,7 +259,7 @@ static void graph_update_columns(struct git_graph *graph)
- 	 */
- 	seen_this = 0;
- 	mapping_idx = 0;
--	for (i = 0; i <= graph->num_columns; ++i) {
-+	for (i = 0; i <= graph->num_columns; i++) {
- 		struct commit *col_commit;
- 		if (i == graph->num_columns) {
- 			if (seen_this)
-@@ -289,7 +289,7 @@ static void graph_update_columns(struct git_graph *graph)
- 	 */
- 	while (graph->mapping_size > 1 &&
- 	       graph->mapping[graph->mapping_size - 1] < 0)
--		--graph->mapping_size;
-+		graph->mapping_size--;
- }
- 
- void graph_update(struct git_graph *graph, struct commit *commit)
-@@ -306,7 +306,7 @@ void graph_update(struct git_graph *graph, struct commit *commit)
- 	 */
- 	graph->num_parents = 0;
- 	for (parent = commit->parents; parent; parent = parent->next)
--		++(graph->num_parents);
-+		graph->num_parents++;
- 
- 	/*
- 	 * Call graph_update_columns() to update
-@@ -348,7 +348,7 @@ static int graph_is_mapping_correct(struct git_graph *graph)
- 	 * (If it is 1 greater than the target, '/' will be printed, so it
- 	 * will look correct on the next row.)
- 	 */
--	for (i = 0; i < graph->mapping_size; ++i) {
-+	for (i = 0; i < graph->mapping_size; i++) {
- 		int target = graph->mapping[i];
- 		if (target < 0)
- 			continue;
-@@ -377,7 +377,7 @@ static void graph_pad_horizontally(struct git_graph *graph, struct strbuf *sb)
- 	size_t extra;
- 	size_t final_width = graph->num_columns + graph->num_parents;
- 	if (graph->num_parents < 1)
--		++final_width;
-+		final_width++;
- 	final_width *= 2;
- 
- 	if (sb->len >= final_width)
-@@ -405,7 +405,7 @@ static void graph_output_padding_line(struct git_graph *graph,
- 	/*
- 	 * Output a padding row, that leaves all branch lines unchanged
- 	 */
--	for (i = 0; i < graph->num_new_columns; ++i) {
-+	for (i = 0; i < graph->num_new_columns; i++) {
- 		strbuf_addstr(sb, "| ");
+@@ -857,3 +857,96 @@ void graph_show_strbuf(struct git_graph *graph, struct strbuf const *sb)
+ 		p = next_p;
  	}
- 
-@@ -454,7 +454,7 @@ static void graph_output_pre_commit_line(struct git_graph *graph,
- 	 * Output the row
- 	 */
- 	seen_this = 0;
--	for (i = 0; i < graph->num_columns; ++i) {
-+	for (i = 0; i < graph->num_columns; i++) {
- 		struct column *col = &graph->columns[i];
- 		if (col->commit == graph->commit) {
- 			seen_this = 1;
-@@ -472,7 +472,7 @@ static void graph_output_pre_commit_line(struct git_graph *graph,
- 	 * Increment graph->expansion_row,
- 	 * and move to state GRAPH_COMMIT if necessary
- 	 */
--	++graph->expansion_row;
-+	graph->expansion_row++;
- 	if (graph->expansion_row >= num_expansion_rows)
- 		graph->state = GRAPH_COMMIT;
  }
-@@ -490,7 +490,7 @@ void graph_output_commit_line(struct git_graph *graph, struct strbuf *sb)
- 	 * children that we have already processed.)
- 	 */
- 	seen_this = 0;
--	for (i = 0; i <= graph->num_columns; ++i) {
-+	for (i = 0; i <= graph->num_columns; i++) {
- 		struct commit *col_commit;
- 		if (i == graph->num_columns) {
- 			if (seen_this)
-@@ -514,7 +514,7 @@ void graph_output_commit_line(struct git_graph *graph, struct strbuf *sb)
- 			else {
- 				int num_dashes =
- 					((graph->num_parents - 2) * 2) - 1;
--				for (j = 0; j < num_dashes; ++j)
-+				for (j = 0; j < num_dashes; j++)
- 					strbuf_addch(sb, '-');
- 				strbuf_addstr(sb, ". ");
- 			}
-@@ -546,7 +546,7 @@ void graph_output_post_merge_line(struct git_graph *graph, struct strbuf *sb)
- 	/*
- 	 * Output the post-merge row
- 	 */
--	for (i = 0; i <= graph->num_columns; ++i) {
-+	for (i = 0; i <= graph->num_columns; i++) {
- 		struct commit *col_commit;
- 		if (i == graph->num_columns) {
- 			if (seen_this)
-@@ -559,7 +559,7 @@ void graph_output_post_merge_line(struct git_graph *graph, struct strbuf *sb)
- 		if (col_commit == graph->commit) {
- 			seen_this = 1;
- 			strbuf_addch(sb, '|');
--			for (j = 0; j < graph->num_parents - 1; ++j)
-+			for (j = 0; j < graph->num_parents - 1; j++)
- 				strbuf_addstr(sb, "\\ ");
- 			if (graph->num_parents == 2)
- 				strbuf_addch(sb, ' ');
-@@ -589,10 +589,10 @@ void graph_output_collapsing_line(struct git_graph *graph, struct strbuf *sb)
- 	/*
- 	 * Clear out the new_mapping array
- 	 */
--	for (i = 0; i < graph->mapping_size; ++i)
-+	for (i = 0; i < graph->mapping_size; i++)
- 		graph->new_mapping[i] = -1;
- 
--	for (i = 0; i < graph->mapping_size; ++i) {
-+	for (i = 0; i < graph->mapping_size; i++) {
- 		int target = graph->mapping[i];
- 		if (target < 0)
- 			continue;
-@@ -653,12 +653,12 @@ void graph_output_collapsing_line(struct git_graph *graph, struct strbuf *sb)
- 	 * The new mapping may be 1 smaller than the old mapping
- 	 */
- 	if (graph->new_mapping[graph->mapping_size - 1] < 0)
--		--graph->mapping_size;
-+		graph->mapping_size--;
- 
- 	/*
- 	 * Output out a line based on the new mapping info
- 	 */
--	for (i = 0; i < graph->mapping_size; ++i) {
-+	for (i = 0; i < graph->mapping_size; i++) {
- 		int target = graph->new_mapping[i];
- 		if (target < 0)
- 			strbuf_addch(sb, ' ');
-@@ -729,7 +729,7 @@ void graph_padding_line(struct git_graph *graph, struct strbuf *sb)
- 	 * columns.  (This happens when the current commit doesn't have any
- 	 * children that we have already processed.)
- 	 */
--	for (i = 0; i < graph->num_columns; ++i) {
-+	for (i = 0; i < graph->num_columns; i++) {
- 		struct commit *col_commit = graph->columns[i].commit;
- 		if (col_commit == graph->commit) {
- 			strbuf_addch(sb, '|');
-@@ -738,7 +738,7 @@ void graph_padding_line(struct git_graph *graph, struct strbuf *sb)
- 				strbuf_addch(sb, ' ');
- 			else {
- 				int num_spaces = ((graph->num_parents - 2) * 2);
--				for (j = 0; j < num_spaces; ++j)
-+				for (j = 0; j < num_spaces; j++)
- 					strbuf_addch(sb, ' ');
- 			}
- 		} else {
++
++void graph_show_commit_msg(struct git_graph *graph,
++			   struct strbuf const *sb,
++			   enum cmit_fmt commit_format)
++{
++	if (!graph) {
++		/*
++		 * If there's no graph, just print the message buffer.
++		 *
++		 * The message buffer for CMIT_FMT_ONELINE and
++		 * CMIT_FMT_USERFORMAT are already missing a terminating
++		 * newline.  All of the other formats should have it.
++		 */
++		fwrite(sb->buf, sizeof(char), sb->len, stdout);
++		return;
++	}
++
++	/*
++	 * If the message buffer is empty, just print the graph output.
++	 * For example, this can happen with CMIT_FMT_USERFORMAT if the
++	 * format is the empty string.
++	 *
++	 * We need a newline first before the next graph line.
++	 */
++	if (!sb->len) {
++		if (!graph_is_commit_finished(graph)) {
++			putchar('\n');
++			graph_show_remainder(graph);
++		}
++		if (commit_format != CMIT_FMT_ONELINE &&
++		    commit_format != CMIT_FMT_USERFORMAT)
++			putchar('\n');
++		return;
++	}
++
++	/*
++	 * Show the commit message
++	 */
++	graph_show_strbuf(graph, sb);
++
++	/*
++	 * Show the remainder of the graph output,
++	 * and make sure we terminate the output properly.
++	 */
++	if (commit_format == CMIT_FMT_ONELINE ||
++	    commit_format == CMIT_FMT_USERFORMAT) {
++		/*
++		 * For CMIT_FMT_ONELINE and CMIT_FMT_USERFORMAT, we need to
++		 * make sure that the printed output still needs a
++		 * terminating newline.
++		 */
++		if (sb->buf[sb->len - 1] == '\n') {
++			/*
++			 * If the buf already ends in a newline (which can
++			 * happen with CMIT_FMT_USERFORMAT if the format
++			 * ends in "%n"), we need to print the graph output
++			 * for the start of the new line after the newline.
++			 *
++			 * Call graph_show_remainder() to let it do this.
++			 * If it doesn't print anything, call
++			 * graph_show_oneline() to force an extra line to
++			 * be printed.
++			 */
++			if (!graph_show_remainder(graph))
++				graph_show_oneline(graph);
++		} else {
++			/*
++			 * The buffer output didn't end in a newline.
++			 *
++			 * If there is more output to print, add a newline
++			 * before calling graph_show_remainder().
++			 * Otherwise, we're done.
++			 */
++			if (!graph_is_commit_finished(graph)) {
++				putchar('\n');
++				graph_show_remainder(graph);
++			}
++		}
++	} else {
++		/*
++		 * For other formats, the output we print needs to end in a
++		 * newline.  The message buffer should already end in a
++		 * newline.
++		 *
++		 * Call graph_show_remainder() to print the rest of the
++		 * graph.  If it prints anything out, we need to add a
++		 * terminating newline at the end of its output.
++		 */
++		assert(sb->buf[sb->len - 1] == '\n');
++		if (graph_show_remainder(graph))
++			putchar('\n');
++	}
++}
 diff --git a/graph.h b/graph.h
-index 817862e..c1f6892 100644
+index c1f6892..aa02fca 100644
 --- a/graph.h
 +++ b/graph.h
-@@ -4,11 +4,6 @@
- /* A graph is a pointer to this opaque structure */
- struct git_graph;
+@@ -93,11 +93,29 @@ int graph_show_remainder(struct git_graph *graph);
+  * Print a strbuf to stdout.  If the graph is non-NULL, all lines but the
+  * first will be prefixed with the graph output.
+  *
+- * Since the firat line will not include the graph ouput, the caller is
++ * If the strbuf ends with a newline, the output will end after this
++ * newline.  A new graph line will not be printed after the final newline.
++ *
++ * Since the first line will not include the graph ouput, the caller is
+  * responsible for printing this line's graph (perhaps via
+  * graph_show_commit() or graph_show_oneline()) before calling
+  * graph_show_strbuf().
+  */
+ void graph_show_strbuf(struct git_graph *graph, struct strbuf const *sb);
  
--/* Defined in commit.h */
--struct commit;
--/* Defined in strbuf.h */
--struct strbuf;
--
- /*
-  * Create a new struct git_graph.
-  * The graph should be freed with graph_release() when no longer needed.
++/*
++ * Print a commit message strbuf and the remainder of the graph to stdout.
++ *
++ * This is similar to graph_show_strbuf(), but it always prints the
++ * remainder of the graph, and it has additional logic necessary for use by
++ * the "log" and "rev-list" commands.
++ *
++ * If cmt_format is CMIT_FMT_ONELINE or CMIT_FMT_USERFORMAT, the resulting
++ * output will still need a terminating newline.  The caller is responsible
++ * for adding this.  Otherwise, no terminating newline is needed.
++ */
++void graph_show_commit_msg(struct git_graph *graph,
++			   struct strbuf const *sb,
++			   enum cmit_fmt commit_format);
++
+ #endif /* GRAPH_H */
+diff --git a/log-tree.c b/log-tree.c
+index 5b78d1b..0d7e521 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -247,18 +247,24 @@ void show_log(struct rev_info *opt, const char *sep)
+ 	}
+ 
+ 	/*
+-	 * The "oneline" format has several special cases:
+-	 *  - The pretty-printed commit lacks a newline at the end
+-	 *    of the buffer, but we do want to make sure that we
+-	 *    have a newline there. If the separator isn't already
+-	 *    a newline, add an extra one.
+-	 *  - unlike other log messages, the one-line format does
+-	 *    not have an empty line between entries.
++	 * The "oneline" and "userformat" formats have several special
++	 * cases:
++	 *  - The pretty-printed commit needs an additional a newline at
++	 *    the end of the buffer.  (The "oneline" output never ends in a
++	 *    newline.  The "userformat" output may, but only if the user's
++	 *    format explicitly ends in "%n".)  If the separator isn't
++	 *    already a newline, add an extra one.
++	 *  - unlike other log messages, the one-line and userformat
++	 *    formats do not have an empty line between entries.
+ 	 */
+ 	extra = "";
+-	if (*sep != '\n' && opt->commit_format == CMIT_FMT_ONELINE)
++	if (*sep != '\n' &&
++	    (opt->commit_format == CMIT_FMT_ONELINE ||
++	     opt->commit_format == CMIT_FMT_USERFORMAT))
+ 		extra = "\n";
+-	if (opt->shown_one && opt->commit_format != CMIT_FMT_ONELINE) {
++	if (opt->shown_one &&
++	    (opt->commit_format != CMIT_FMT_ONELINE &&
++	     opt->commit_format != CMIT_FMT_USERFORMAT)) {
+ 		graph_show_padding(opt->graph);
+ 		putchar(opt->diffopt.line_termination);
+ 	}
+@@ -345,34 +351,19 @@ void show_log(struct rev_info *opt, const char *sep)
+ 		graph_show_oneline(opt->graph);
+ 	}
+ 
+-	if (msgbuf.len) {
+-		if (opt->graph) {
+-			graph_show_strbuf(opt->graph, &msgbuf);
+-			if (opt->commit_format == CMIT_FMT_ONELINE) {
+-				/*
+-				 * For CMIT_FMT_ONELINE, the buffer doesn't
+-				 * end in a newline, so add one first if
+-				 * graph_show_remainder() needs to print
+-				 * more lines.
+-				 */
+-				if (!graph_is_commit_finished(opt->graph)) {
+-					putchar('\n');
+-					graph_show_remainder(opt->graph);
+-				}
+-			} else {
+-				/*
+-				 * For other formats, we want at least one
+-				 * line separating commits.  If
+-				 * graph_show_remainder() doesn't print
+-				 * anything, add a padding line.
+-				 */
+-				if (graph_show_remainder(opt->graph))
+-					putchar('\n');
+-			}
+-		} else {
++	if (opt->graph) {
++		/*
++		 * If opt->graph is non-NULL, we always need to print
++		 * extra and sep, even if msgbuf is empty.
++		 */
++		graph_show_commit_msg(opt->graph, &msgbuf,
++				      opt->commit_format);
++		printf("%s%s", extra, sep);
++	} else {
++		if (msgbuf.len) {
+ 			fwrite(msgbuf.buf, sizeof(char), msgbuf.len, stdout);
++			printf("%s%s", extra, sep);
+ 		}
+-		printf("%s%s", extra, sep);
+ 	}
+ 	strbuf_release(&msgbuf);
+ }
 -- 
 1.5.3.6
