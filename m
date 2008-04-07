@@ -1,66 +1,115 @@
-From: Teemu Likonen <tlikonen@iki.fi>
-Subject: Re: [REGRESSION] git-gui
-Date: Mon, 7 Apr 2008 11:10:52 +0300
-Message-ID: <20080407081052.GA5413@mithlond.arda.local>
-References: <007901c89590$a827f7c0$93a7c10a@LGE.NET> <57518fd10804030700r6de977f5p6f0418e6eaea2583@mail.gmail.com> <200804032304.17054.barra_cuda@katamail.com> <57518fd10804031615m5c299df6hf31de3c689e16521@mail.gmail.com> <871w5it8r7.fsf@lysator.liu.se>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: git-svn: regression with funny chars in svn repo url
+Date: Mon, 7 Apr 2008 01:11:08 -0700
+Message-ID: <20080407081108.GA28853@soma>
+References: <d06901f0804011111o1da8a197ob6a9aaccb3e1e9a0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, maillist@steelskies.com
-To: David =?iso-8859-1?Q?K=E5gedal?= <davidk@lysator.liu.se>
-X-From: git-owner@vger.kernel.org Mon Apr 07 10:11:42 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Panagiotis Vossos <pavossos@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 07 10:12:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JimS5-0001tY-RB
-	for gcvg-git-2@gmane.org; Mon, 07 Apr 2008 10:11:42 +0200
+	id 1JimSP-0001yC-Eh
+	for gcvg-git-2@gmane.org; Mon, 07 Apr 2008 10:12:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753475AbYDGIKz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Apr 2008 04:10:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752776AbYDGIKz
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Apr 2008 04:10:55 -0400
-Received: from pne-smtpout4-sn1.fre.skanova.net ([81.228.11.168]:43886 "EHLO
-	pne-smtpout4-sn1.fre.skanova.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753396AbYDGIKy (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 7 Apr 2008 04:10:54 -0400
-Received: from mithlond.arda.local (80.220.180.181) by pne-smtpout4-sn1.fre.skanova.net (7.3.129)
-        id 47A7970A00379835; Mon, 7 Apr 2008 10:10:53 +0200
-Received: from dtw by mithlond.arda.local with local (Exim 4.63)
-	(envelope-from <tlikonen@iki.fi>)
-	id 1JimRI-0001Po-CZ; Mon, 07 Apr 2008 11:10:52 +0300
-Mail-Followup-To: David =?iso-8859-1?Q?K=E5gedal?= <davidk@lysator.liu.se>,
-	git@vger.kernel.org, maillist@steelskies.com
+	id S1753851AbYDGILR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Apr 2008 04:11:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752891AbYDGILQ
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Apr 2008 04:11:16 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:44607 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752776AbYDGILQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Apr 2008 04:11:16 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with ESMTP id C18CB7F41D7;
+	Mon,  7 Apr 2008 01:11:11 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <871w5it8r7.fsf@lysator.liu.se>
+In-Reply-To: <d06901f0804011111o1da8a197ob6a9aaccb3e1e9a0@mail.gmail.com>
 User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78960>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78961>
 
-David K=E5gedal kirjoitti (7.4.2008 klo 9.38):
+Panagiotis Vossos <pavossos@gmail.com> wrote:
+> I keep a copy of the gtk+ svn repository on my machine and I have
+> noticed the following bug with git-svn:
+> 
+> ~/gitproj/gtk+$ which git-svn
+> /usr/local/bin/git-svn
+> 
+> ~/gitproj/gtk+$ ls -l /usr/local/bin/git-svn
+> lrwxrwxrwx 1 root staff 39 2008-03-30 07:45 /usr/local/bin/git-svn ->
+> ../encap/git-1.5.4_20080328/bin/git-svn
+> 
+> ~/gitproj/gtk+$ git-svn --version
+> git-svn version 1.5.4.5 (svn 1.4.6)
+> 
+> ~/gitproj/gtk+$ git-svn rebase
+> Apache got a malformed URI: REPORT request failed on
+> '/svn/gtk+/!svn/vcc/default': Unusable URI: it does not refer to this
+> repository at /usr/local/bin/git-svn line 3821
 
-> "Jonathan del Strother" <maillist@steelskies.com> writes:
->=20
-> > Anyone else got any opinions on an appropriate shortcut?  How about
-> > '=3D' and '-' (+ and - without the shift), or are those not
-> > necessarily together either?  (Are there really layouts where '['
-> > and ']' aren't next to each other?)
->=20
-> A Swedish keyboard has [] on alt-gr (Modeshift) 8 and 9.  Plus and
-> minus are unshifted and =3D is on shift-0.
->=20
-> So with a Swedish layout, it is annoying when zoom in is on =3D rathe=
-r
-> than +, just because someone assumed that it would be harder to press
-> the more logical plus key.
+I've known of this bug for a while but didn't track it down until
+now.  Please let me know if this fixes things for you and if
+there are any regressions; thanks.
 
-The above also applies to Finnish and Norwegian keyboards, probably to
-many more. The key pair '=3D' and '-' would be a poor UI decision. In
-principle one should never assume that a key is in certain place in the
-keyboard; it's much better idea to be logical with _characters_. So if
-a key pair much be defined for different aspects of the same
-functionality, let's choose logical pairs from common characters: +- []
-{} () <> zZ aA bB ... (To me all these are OK.)
+>From a9ebe54adf7ae2620fba1f638dee9566f8ccca82 Mon Sep 17 00:00:00 2001
+From: Eric Wong <normalperson@yhbt.net>
+Date: Mon, 7 Apr 2008 00:41:44 -0700
+Subject: [PATCH] git-svn: fix cloning of HTTP URLs with '+' in their path
+
+With this, git svn clone -s http://svn.gnome.org/svn/gtk+
+is successful.
+
+Also modified the funky rename test for this, which _does_
+include escaped '+' signs for HTTP URLs.  SVN seems to accept
+either "+" or "%2B" in filenames and directories (just not the
+main URL), so I'll leave it alone for now.
+
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
+---
+ git-svn.perl                             |    2 +-
+ t/t9115-git-svn-dcommit-funky-renames.sh |   10 ++++++++++
+ 2 files changed, 11 insertions(+), 1 deletions(-)
+
+diff --git a/git-svn.perl b/git-svn.perl
+index 81afb5c..d91ef7a 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -3666,7 +3666,7 @@ sub escape_uri_only {
+ 	my ($uri) = @_;
+ 	my @tmp;
+ 	foreach (split m{/}, $uri) {
+-		s/([^\w.%-]|%(?![a-fA-F0-9]{2}))/sprintf("%%%02X",ord($1))/eg;
++		s/([^\w.%+-]|%(?![a-fA-F0-9]{2}))/sprintf("%%%02X",ord($1))/eg;
+ 		push @tmp, $_;
+ 	}
+ 	join('/', @tmp);
+diff --git a/t/t9115-git-svn-dcommit-funky-renames.sh b/t/t9115-git-svn-dcommit-funky-renames.sh
+index 182299c..835b1dc 100755
+--- a/t/t9115-git-svn-dcommit-funky-renames.sh
++++ b/t/t9115-git-svn-dcommit-funky-renames.sh
+@@ -49,6 +49,16 @@ test_expect_success 'rename pretty file into ugly one' '
+ 	git svn dcommit
+ 	'
+ 
++test_expect_success 'add a file with plus signs' '
++	echo .. > +_+ &&
++	git update-index --add +_+ &&
++	git commit -m plus &&
++	mkdir gtk+ &&
++	git mv +_+ gtk+/_+_ &&
++	git commit -m plus_dir &&
++	git svn dcommit
++	'
++
+ stop_httpd
+ 
+ test_done
+-- 
+Eric Wong
