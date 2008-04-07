@@ -1,63 +1,60 @@
-From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
-Subject: Re: [REGRESSION] git-gui
-Date: Mon, 07 Apr 2008 09:38:20 +0200
-Message-ID: <871w5it8r7.fsf@lysator.liu.se>
-References: <007901c89590$a827f7c0$93a7c10a@LGE.NET> <57518fd10804030700r6de977f5p6f0418e6eaea2583@mail.gmail.com> <200804032304.17054.barra_cuda@katamail.com> <57518fd10804031615m5c299df6hf31de3c689e16521@mail.gmail.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: git-svn stomps on user properties
+Date: Mon, 7 Apr 2008 00:40:44 -0700
+Message-ID: <20080407074044.GA12394@muzzle>
+References: <20080320170108.GA27194@dervierte>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 07 09:39:16 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Steven Walter <stevenrwalter@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 07 09:41:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jilwg-0002Hi-Rk
-	for gcvg-git-2@gmane.org; Mon, 07 Apr 2008 09:39:15 +0200
+	id 1Jilyr-0002sh-DE
+	for gcvg-git-2@gmane.org; Mon, 07 Apr 2008 09:41:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752709AbYDGHib convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Apr 2008 03:38:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752707AbYDGHib
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Apr 2008 03:38:31 -0400
-Received: from main.gmane.org ([80.91.229.2]:40697 "EHLO ciao.gmane.org"
+	id S1752713AbYDGHkr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Apr 2008 03:40:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752711AbYDGHkq
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Apr 2008 03:40:46 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:44591 "EHLO hand.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752704AbYDGHia (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Apr 2008 03:38:30 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Jilvt-0006Wl-0i
-	for git@vger.kernel.org; Mon, 07 Apr 2008 07:38:25 +0000
-Received: from 87.96.142.66 ([87.96.142.66])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 07 Apr 2008 07:38:25 +0000
-Received: from davidk by 87.96.142.66 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 07 Apr 2008 07:38:25 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 87.96.142.66
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-Cancel-Lock: sha1:1RRnmYLgEyRIA3v3y165tv8u6Bs=
+	id S1752547AbYDGHkq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Apr 2008 03:40:46 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with ESMTP id EFEED7F41D5;
+	Mon,  7 Apr 2008 00:40:44 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20080320170108.GA27194@dervierte>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78953>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78954>
 
-"Jonathan del Strother" <maillist@steelskies.com> writes:
+Steven Walter <stevenrwalter@gmail.com> wrote:
+> I'm using git-svn to track an upstream subversion repository.  This
+> upstream repository has several "user" SVN properties (i.e., not in the
+> svn: namespace).  A recent git-svn dcommit resulted in one of these
+> properties being reverted.
+> 
+> Here's what happened.  I started a git-svn dcommit of 3 very large
+> commits.  In between commits 2 and 3, a commit was made by another
+> person that changed one of our user properties.  When git-svn sent the
+> third commit, it also reverted the property to its value before the
+> other's user's change.
+> 
+> Why did that happen?  Surely it isn't expected behavior.  Glancing
+> through git-svn, I don't see anywhere that it deals with properties
+> directly, outside of svm/svnsync properties.
+> 
+> Thanks for any help or insight you can provide
 
-> Anyone else got any opinions on an appropriate shortcut?  How about
-> '=3D' and '-' (+ and - without the shift), or are those not necessari=
-ly
-> together either?  (Are there really layouts where '[' and ']' aren't
-> next to each other?)
+Sorry, I'm not ignoring you, I just haven't had time to look into this
+yet.
 
-A Swedish keyboard has [] on alt-gr (Modeshift) 8 and 9.  Plus and
-minus are unshifted and =3D is on shift-0.
-
-So with a Swedish layout, it is annoying when zoom in is on =3D rather
-than +, just because someone assumed that it would be harder to press
-the more logical plus key.
-
---=20
-David K=C3=A5gedal
+-- 
+Eric Wong
