@@ -1,115 +1,78 @@
 From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: git-svn: regression with funny chars in svn repo url
-Date: Mon, 7 Apr 2008 01:11:08 -0700
-Message-ID: <20080407081108.GA28853@soma>
-References: <d06901f0804011111o1da8a197ob6a9aaccb3e1e9a0@mail.gmail.com>
+Subject: Re: git-svn breaks on gtk+ import
+Date: Mon, 7 Apr 2008 01:20:07 -0700
+Message-ID: <20080407082007.GB28853@soma>
+References: <alpine.DEB.1.00.0803071844510.27175@master.birnet.private> <20080308074737.GC1583@hand.yhbt.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Panagiotis Vossos <pavossos@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 07 10:12:03 2008
+Cc: git@vger.kernel.org
+To: Tim Janik <timj@imendio.com>
+X-From: git-owner@vger.kernel.org Mon Apr 07 10:20:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JimSP-0001yC-Eh
-	for gcvg-git-2@gmane.org; Mon, 07 Apr 2008 10:12:01 +0200
+	id 1Jimb1-0004bd-GG
+	for gcvg-git-2@gmane.org; Mon, 07 Apr 2008 10:20:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753851AbYDGILR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Apr 2008 04:11:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752891AbYDGILQ
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Apr 2008 04:11:16 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:44607 "EHLO hand.yhbt.net"
+	id S1754587AbYDGIUM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Apr 2008 04:20:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754420AbYDGIUM
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Apr 2008 04:20:12 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:44620 "EHLO hand.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752776AbYDGILQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Apr 2008 04:11:16 -0400
+	id S1752702AbYDGIUL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Apr 2008 04:20:11 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id C18CB7F41D7;
-	Mon,  7 Apr 2008 01:11:11 -0700 (PDT)
+	by hand.yhbt.net (Postfix) with ESMTP id 106C47F41D5;
+	Mon,  7 Apr 2008 01:20:07 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <d06901f0804011111o1da8a197ob6a9aaccb3e1e9a0@mail.gmail.com>
+In-Reply-To: <20080308074737.GC1583@hand.yhbt.net>
 User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78961>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78962>
 
-Panagiotis Vossos <pavossos@gmail.com> wrote:
-> I keep a copy of the gtk+ svn repository on my machine and I have
-> noticed the following bug with git-svn:
+Eric Wong <normalperson@yhbt.net> wrote:
+> Tim Janik <timj@imendio.com> wrote:
+> > hi Eric.
+> > 
+> > with git-svn from git 1.5.4.3, imports of the Gtk+ repository fail:
+> > 
+> >   git-svn clone -T trunk -b branches -t tags -r 19001 
+> >   http://svn.gnome.org/svn/gtk+
+> >   Using existing [svn-remote "svn"]
+> >   Using higher level of URL: http://svn.gnome.org/svn/gtk+ => 
+> >   http://svn.gnome.org/svn/gtk%2B/http:
+> >   No such file or directory: PROPFIND request failed on 
+> >   '/svn/gtk%252B/http%3A': Could not open the requested SVN filesystem at 
+> >   /usr/bin/git-svn line 1352
+> > 
+> > trying the same for glib works fine:
+> > 
+> >   git-svn clone -T trunk -b branches -t tags -r 6601 
+> >   http://svn.gnome.org/svn/glib
+> >   [...]
+> >   r6601 = 987f6388b211281d08fce0e63936d9e612ed4d4f (trunk)
+> >   Checked out HEAD:
+> >     http://svn.gnome.org/svn/glib/trunk r6601
+> > 
+> > looks like the '+' in the the http://svn.gnome.org/svn/gtk+ repository
+> > name isn't handled correctly.
 > 
-> ~/gitproj/gtk+$ which git-svn
-> /usr/local/bin/git-svn
+> It's a known bug which I haven't had time to track down and fix.
 > 
-> ~/gitproj/gtk+$ ls -l /usr/local/bin/git-svn
-> lrwxrwxrwx 1 root staff 39 2008-03-30 07:45 /usr/local/bin/git-svn ->
-> ../encap/git-1.5.4_20080328/bin/git-svn
+> git-svn handles files and directories with '+' within the base URL
+> you're tracking correctly, but somewhere along the way the base URL
+> you're tracking doesn't work correctly for HTTP.
 > 
-> ~/gitproj/gtk+$ git-svn --version
-> git-svn version 1.5.4.5 (svn 1.4.6)
-> 
-> ~/gitproj/gtk+$ git-svn rebase
-> Apache got a malformed URI: REPORT request failed on
-> '/svn/gtk+/!svn/vcc/default': Unusable URI: it does not refer to this
-> repository at /usr/local/bin/git-svn line 3821
+> As Harvey suggested, use the svn:// repository for now.
 
-I've known of this bug for a while but didn't track it down until
-now.  Please let me know if this fixes things for you and if
-there are any regressions; thanks.
+Hi Tim, the HTTP repository should be fixed with the patch in
 
->From a9ebe54adf7ae2620fba1f638dee9566f8ccca82 Mon Sep 17 00:00:00 2001
-From: Eric Wong <normalperson@yhbt.net>
-Date: Mon, 7 Apr 2008 00:41:44 -0700
-Subject: [PATCH] git-svn: fix cloning of HTTP URLs with '+' in their path
+  http://article.gmane.org/gmane.comp.version-control.git/78961
 
-With this, git svn clone -s http://svn.gnome.org/svn/gtk+
-is successful.
-
-Also modified the funky rename test for this, which _does_
-include escaped '+' signs for HTTP URLs.  SVN seems to accept
-either "+" or "%2B" in filenames and directories (just not the
-main URL), so I'll leave it alone for now.
-
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
----
- git-svn.perl                             |    2 +-
- t/t9115-git-svn-dcommit-funky-renames.sh |   10 ++++++++++
- 2 files changed, 11 insertions(+), 1 deletions(-)
-
-diff --git a/git-svn.perl b/git-svn.perl
-index 81afb5c..d91ef7a 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -3666,7 +3666,7 @@ sub escape_uri_only {
- 	my ($uri) = @_;
- 	my @tmp;
- 	foreach (split m{/}, $uri) {
--		s/([^\w.%-]|%(?![a-fA-F0-9]{2}))/sprintf("%%%02X",ord($1))/eg;
-+		s/([^\w.%+-]|%(?![a-fA-F0-9]{2}))/sprintf("%%%02X",ord($1))/eg;
- 		push @tmp, $_;
- 	}
- 	join('/', @tmp);
-diff --git a/t/t9115-git-svn-dcommit-funky-renames.sh b/t/t9115-git-svn-dcommit-funky-renames.sh
-index 182299c..835b1dc 100755
---- a/t/t9115-git-svn-dcommit-funky-renames.sh
-+++ b/t/t9115-git-svn-dcommit-funky-renames.sh
-@@ -49,6 +49,16 @@ test_expect_success 'rename pretty file into ugly one' '
- 	git svn dcommit
- 	'
- 
-+test_expect_success 'add a file with plus signs' '
-+	echo .. > +_+ &&
-+	git update-index --add +_+ &&
-+	git commit -m plus &&
-+	mkdir gtk+ &&
-+	git mv +_+ gtk+/_+_ &&
-+	git commit -m plus_dir &&
-+	git svn dcommit
-+	'
-+
- stop_httpd
- 
- test_done
 -- 
 Eric Wong
