@@ -1,89 +1,106 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 2/2] pretty=format: Add %d to show decoration
-Date: Mon, 7 Apr 2008 14:41:12 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0804071441040.430@eeepc-johanness>
-References: <alpine.DEB.1.00.0804071439480.430@eeepc-johanness>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH 1/4] Add history graph API
+Date: Mon, 7 Apr 2008 09:15:27 -0700 (PDT)
+Message-ID: <alpine.LFD.1.00.0804070905410.11277@woody.linux-foundation.org>
+References: <1207507332-1866-1-git-send-email-adam@adamsimpkins.net> <alpine.DEB.1.00.0804062204580.12583@eeepc-johanness> <20080406220447.GB5822@adamsimpkins.net> <alpine.DEB.1.00.0804062315090.12583@eeepc-johanness>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Apr 07 15:42:40 2008
+Content-Type: TEXT/PLAIN; charset=ISO-8859-7
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Adam Simpkins <adam@adamsimpkins.net>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Apr 07 18:16:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jirc6-0005Pu-5Y
-	for gcvg-git-2@gmane.org; Mon, 07 Apr 2008 15:42:22 +0200
+	id 1Jiu1D-0004sX-4G
+	for gcvg-git-2@gmane.org; Mon, 07 Apr 2008 18:16:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757581AbYDGNlj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Apr 2008 09:41:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757539AbYDGNlj
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Apr 2008 09:41:39 -0400
-Received: from mail.gmx.net ([213.165.64.20]:45108 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757558AbYDGNli (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Apr 2008 09:41:38 -0400
-Received: (qmail invoked by alias); 07 Apr 2008 13:41:36 -0000
-Received: from unknown (EHLO eeepc-johanness.st-andrews.ac.uk) [138.251.11.75]
-  by mail.gmx.net (mp024) with SMTP; 07 Apr 2008 15:41:36 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18JTFpAr8EJGMg6DJN3lxvZAscoqNWe3g0zjeZyBd
-	Axa8Xl1uXTOJ92
-X-X-Sender: user@eeepc-johanness
-In-Reply-To: <alpine.DEB.1.00.0804071439480.430@eeepc-johanness>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1751405AbYDGQPm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Apr 2008 12:15:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751872AbYDGQPi
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Apr 2008 12:15:38 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:40362 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751405AbYDGQPg (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 7 Apr 2008 12:15:36 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m37GFS9S022857
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 7 Apr 2008 09:15:29 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m37GFRdH014798;
+	Mon, 7 Apr 2008 09:15:27 -0700
+In-Reply-To: <alpine.DEB.1.00.0804062315090.12583@eeepc-johanness>
+User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+X-Spam-Status: No, hits=-3.873 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78976>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78977>
 
 
-With this patch, "git log --decorate --pretty=format:%d", shows the
-name decoration (i.e. whenever a commit matches a ref, that ref's name
-is shown).
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
+On Sun, 6 Apr 2008, Johannes Schindelin wrote:
+>=20
+> AFAICT you do not even need them then.  Using "struct strbuf *" witho=
+ut=20
+> ever declaring struct strbuf before that is perfectly valid.
 
-	Maybe %d should expand to " (<name decoration>)" instead of
-	"<name decoration>"?
+In traditional C, and inside structure declarations etc, yes.
 
- Documentation/pretty-formats.txt |    1 +
- pretty.c                         |    9 +++++++++
- 2 files changed, 10 insertions(+), 0 deletions(-)
+In modern C, in other contexts, no.
 
-diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
-index e8bea3e..9d8a8d4 100644
---- a/Documentation/pretty-formats.txt
-+++ b/Documentation/pretty-formats.txt
-@@ -117,6 +117,7 @@ The placeholders are:
- - '%e': encoding
- - '%s': subject
- - '%b': body
-+- '%d': decoration (needs --decorate)
- - '%Cred': switch color to red
- - '%Cgreen': switch color to green
- - '%Cblue': switch color to blue
-diff --git a/pretty.c b/pretty.c
-index 6c04176..37f7c3e 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -489,6 +489,15 @@ static size_t format_commit_item(struct strbuf *sb, const char *placeholder,
- 			return 3;
- 		} else
- 			return 0;
-+	case 'd':
-+		{
-+			struct name_decoration *decoration =
-+				lookup_decoration(&name_decoration,
-+				&commit->object);
-+			if (decoration)
-+				strbuf_addstr(sb, decoration->name);
-+			return 1;
-+		}
- 	}
- 
- 	/* these depend on the commit */
--- 
-1.5.5.rc0.208.g1d50
+Modern C considers a function declaration to be its own scope (it's the=
+=20
+scope of the function definition, which in a declaration is obviously=20
+just the declaration). So if you use a "struct xyzzy *" in a function=20
+declaration, it will be a *different* "struct xyzzy *" from one declare=
+d=20
+later.
+
+Try to compile something like this:
+
+	int fn(struct xyzzy *);
+	int fn(struct xyzzy *);
+
+with a modern C compiler, and it will actually say something along the=20
+lines of "conflicting types for =A1fn=A2", because while the two declar=
+ations=20
+look identical, they actually have two different (private) declarations=
+ of=20
+"struct xyzzy" going on.
+
+But to make it even more interesting, you don't actually need a full=20
+declaration of "struct xyzzy" to make the compiler happy, you only need=
+ an=20
+implicit one ahead of time. You can do that with the incomplete=20
+declaration, of course (like the --graph patch did), ie just a simple
+
+	struct xyzzy;
+
+before those declarations is sufficient, but so is the implicit=20
+declaration of just using the pointer to it in some non-private scope, =
+ie=20
+it's equally valid to do
+
+	struct foobar {
+		struct xyzzy *ptr;
+	};
+
+and this will already be enough to declare "struct xyzzy" in scope for =
+the=20
+function declarations afterwards.
+
+Is this illogical? Somewhat. Why is it a private scope in a function=20
+declaration but not in a struct declaration? Why isn't the function sco=
+pe=20
+limited to the stuff *inside* the function? Somebody probably knows, bu=
+t=20
+for the rest of us the answer is just "that's how it is, deal with it".
+
+			Linus
