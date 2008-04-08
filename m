@@ -1,73 +1,56 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: ANNOUNCE: Git Forum
-Date: Tue, 8 Apr 2008 19:51:22 -0300
-Message-ID: <46a038f90804081551u44d7b4cald5a00e74ee479dc1@mail.gmail.com>
-References: <60646ee10804081451i4e6aa23ek44280e5d367d8814@mail.gmail.com>
-	 <20080408222501.GV11574@genesis.frugalware.org>
-	 <46a038f90804081536h7a19803apb401ed60593d9802@mail.gmail.com>
-	 <60646ee10804081545k6031578dxbae4c644fb7d2833@mail.gmail.com>
+From: carbonated beverage <ramune@net-ronin.org>
+Subject: Test suite failures due to Error.pm issues.
+Date: Tue, 8 Apr 2008 15:18:53 -0700
+Message-ID: <20080408221853.GA3819@net-ronin.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Dill <sarpulhu@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 09 00:52:15 2008
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 09 00:53:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JjMfg-0001tD-Ka
-	for gcvg-git-2@gmane.org; Wed, 09 Apr 2008 00:52:09 +0200
+	id 1JjMgi-0002AK-74
+	for gcvg-git-2@gmane.org; Wed, 09 Apr 2008 00:53:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753021AbYDHWvZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Apr 2008 18:51:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752783AbYDHWvZ
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Apr 2008 18:51:25 -0400
-Received: from ug-out-1314.google.com ([66.249.92.173]:29875 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752607AbYDHWvY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Apr 2008 18:51:24 -0400
-Received: by ug-out-1314.google.com with SMTP id z38so904610ugc.16
-        for <git@vger.kernel.org>; Tue, 08 Apr 2008 15:51:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=bLpbnkHEBu79+QFK2bXDneyKJI3Lh6izr02IgA8UMoQ=;
-        b=mZnNxu6iB1gRki1BqmzXuZ6Gtzth+AUvuf3CfVP5vRo4fdAAwAV0dPeK+eUgVCPSJgkeaCmDkreDWqs9J29w0R/ZPZJdJrhcpq99x2+UnaKDL2Z1/sPtwy3Pl4kwarMo1rHO6FKmOXd3p8omWQpdWVU2YS2DxxULX8nDB2bIkTc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=xUXH52VP0Uio/zISuRii7qokgGMT8SI6LvWZA+gCndqo3dREG55HS4eCr9LKHy8uwfCbU+ICTFPm4ZEdEHRtW3ITOXJpcba82xNuGrF9RDxJ60V4WvU+7cV1LX9UqDymdWdK9+7AlvlziVrw9KyIfoeKES2BxOjdhMW1SGYDYxw=
-Received: by 10.66.248.5 with SMTP id v5mr3677472ugh.17.1207695082876;
-        Tue, 08 Apr 2008 15:51:22 -0700 (PDT)
-Received: by 10.66.252.2 with HTTP; Tue, 8 Apr 2008 15:51:22 -0700 (PDT)
-In-Reply-To: <60646ee10804081545k6031578dxbae4c644fb7d2833@mail.gmail.com>
+	id S1753283AbYDHWw2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Apr 2008 18:52:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753276AbYDHWw2
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Apr 2008 18:52:28 -0400
+Received: from brak.cowlabs.com ([208.96.51.45]:59450 "EHLO brak.cowlabs.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753234AbYDHWw1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Apr 2008 18:52:27 -0400
+X-Greylist: delayed 2010 seconds by postgrey-1.27 at vger.kernel.org; Tue, 08 Apr 2008 18:52:27 EDT
+Received: from prophet.net-ronin.org (S0106000ea6c7835e.no.shawcable.net [70.67.106.241])
+	by brak.cowlabs.com (8.14.1/8.14.1) with ESMTP id m38MIrQK458783
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO)
+	for <git@vger.kernel.org>; Tue, 8 Apr 2008 22:18:56 GMT
+Received: from ramune by prophet.net-ronin.org with local (Exim 4.63)
+	(envelope-from <ramune@net-ronin.org>)
+	id 1JjM9V-000107-Ig
+	for git@vger.kernel.org; Tue, 08 Apr 2008 15:18:53 -0700
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79044>
 
-On Tue, Apr 8, 2008 at 7:45 PM, Dill <sarpulhu@gmail.com> wrote:
->  I have but as git grows more popular so will the users who wish to
->  create communities that can help each other. IMHO this list will
->  probably tend to be about development and bugs etc while other sites
->  will sprout up geared more towards users. Could be wrong though.
+Hi all,
 
-Do read the older discussions. Separating users from developers does
-not work well. Successful communities have mixed lists -- perhaps
-split by topic (linux-usb for example) but not by "participant type".
-Users should be guided towards this list --
+I was trying to track down the cause of massive test failures in make
+test, and running the failing entries via -v showed the following popping
+up over and over again:
 
-cheers,
+Can't locate Error.pm in @INC (@INC contains: /home/ramune/src/git/git/t/../perl/blib/lib /home/ramune/src/git/git/t/../perl/blib/arch/auto/Git /etc/perl /usr/local/lib/perl/5.8.8 /usr/local/share/perl/5.8.8
+ /usr/lib/perl5 /usr/share/perl5 /usr/lib/perl/5.8 /usr/share/perl/5.8 /usr/local/lib/site_perl .) at /home/ramune/src/git/git/t/../perl/blib/lib/Git.pm line 93.^
+BEGIN failed--compilation aborted at /home/ramune/src/git/git/t/../perl/blib/lib/Git.pm line 93.^
+Compilation failed in require at /home/ramune/src/git/git/t/../git-add--interactive line 5.^
+BEGIN failed--compilation aborted at /home/ramune/src/git/git/t/../git-add--interactive line 5.^
 
+Since git has private-Error.pm file, shouldn't that be picked up by the
+make test invocation?
 
-
-m
--- 
- martin.langhoff@gmail.com
- martin@laptop.org -- School Server Architect
- - ask interesting questions
- - don't get distracted with shiny stuff - working code first
- - http://wiki.laptop.org/go/User:Martinlanghoff
+-- DN
+Daniel
