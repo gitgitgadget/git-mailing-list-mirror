@@ -1,66 +1,73 @@
-From: "D. Stuart Freeman" <stuart.freeman@et.gatech.edu>
-Subject: Re: Migrating svn to git with heavy use of externals
-Date: Tue, 08 Apr 2008 18:47:19 -0400
-Message-ID: <47FBF5F7.1060105@et.gatech.edu>
-References: <47F15094.5050808@et.gatech.edu> <47FBB448.3060900@et.gatech.edu>	 <32541b130804081306q6e06af20u794357eba9d434e@mail.gmail.com>	 <47FBDA77.2050402@et.gatech.edu> <32541b130804081401n743f39c9o3f016da9dee2eb92@mail.gmail.com>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: ANNOUNCE: Git Forum
+Date: Tue, 8 Apr 2008 19:51:22 -0300
+Message-ID: <46a038f90804081551u44d7b4cald5a00e74ee479dc1@mail.gmail.com>
+References: <60646ee10804081451i4e6aa23ek44280e5d367d8814@mail.gmail.com>
+	 <20080408222501.GV11574@genesis.frugalware.org>
+	 <46a038f90804081536h7a19803apb401ed60593d9802@mail.gmail.com>
+	 <60646ee10804081545k6031578dxbae4c644fb7d2833@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 09 00:48:10 2008
+To: Dill <sarpulhu@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 09 00:52:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JjMbo-0000aq-HM
-	for gcvg-git-2@gmane.org; Wed, 09 Apr 2008 00:48:08 +0200
+	id 1JjMfg-0001tD-Ka
+	for gcvg-git-2@gmane.org; Wed, 09 Apr 2008 00:52:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752400AbYDHWrZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Apr 2008 18:47:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752522AbYDHWrZ
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Apr 2008 18:47:25 -0400
-Received: from qmta10.emeryville.ca.mail.comcast.net ([76.96.30.17]:47959 "EHLO
-	QMTA10.emeryville.ca.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752345AbYDHWrY (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 8 Apr 2008 18:47:24 -0400
-Received: from OMTA01.emeryville.ca.mail.comcast.net ([76.96.30.11])
-	by QMTA10.emeryville.ca.mail.comcast.net with comcast
-	id B3rN1Z0030EPchoAA0TD00; Tue, 08 Apr 2008 22:46:50 +0000
-Received: from [192.168.1.98] ([66.56.40.49])
-	by OMTA01.emeryville.ca.mail.comcast.net with comcast
-	id BAmx1Z00B13e8jm8M00000; Tue, 08 Apr 2008 22:47:00 +0000
-X-Authority-Analysis: v=1.0 c=1 a=mLU-mYli3v0A:10 a=vmUirt_5B3MA:10
- a=I1CAwwv7f9KOW3yf-v0A:9 a=7mY3Kt_H2TsHcHwlK9sA:7
- a=qhJFu17zh0tgj_10gvWxCq8Fw6YA:4 a=mFGnfPYPwAgA:10
-User-Agent: Mozilla-Thunderbird 2.0.0.9 (X11/20080110)
-In-Reply-To: <32541b130804081401n743f39c9o3f016da9dee2eb92@mail.gmail.com>
+	id S1753021AbYDHWvZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Apr 2008 18:51:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752783AbYDHWvZ
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Apr 2008 18:51:25 -0400
+Received: from ug-out-1314.google.com ([66.249.92.173]:29875 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752607AbYDHWvY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Apr 2008 18:51:24 -0400
+Received: by ug-out-1314.google.com with SMTP id z38so904610ugc.16
+        for <git@vger.kernel.org>; Tue, 08 Apr 2008 15:51:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=bLpbnkHEBu79+QFK2bXDneyKJI3Lh6izr02IgA8UMoQ=;
+        b=mZnNxu6iB1gRki1BqmzXuZ6Gtzth+AUvuf3CfVP5vRo4fdAAwAV0dPeK+eUgVCPSJgkeaCmDkreDWqs9J29w0R/ZPZJdJrhcpq99x2+UnaKDL2Z1/sPtwy3Pl4kwarMo1rHO6FKmOXd3p8omWQpdWVU2YS2DxxULX8nDB2bIkTc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=xUXH52VP0Uio/zISuRii7qokgGMT8SI6LvWZA+gCndqo3dREG55HS4eCr9LKHy8uwfCbU+ICTFPm4ZEdEHRtW3ITOXJpcba82xNuGrF9RDxJ60V4WvU+7cV1LX9UqDymdWdK9+7AlvlziVrw9KyIfoeKES2BxOjdhMW1SGYDYxw=
+Received: by 10.66.248.5 with SMTP id v5mr3677472ugh.17.1207695082876;
+        Tue, 08 Apr 2008 15:51:22 -0700 (PDT)
+Received: by 10.66.252.2 with HTTP; Tue, 8 Apr 2008 15:51:22 -0700 (PDT)
+In-Reply-To: <60646ee10804081545k6031578dxbae4c644fb7d2833@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79042>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79043>
 
-Avery Pennarun wrote:
-> Anyway, in this case, what you need to know is that .git/config
-> already contains your submodule information.  Sadly, .gitmodules is
-> probably sitting somewhere on your original branch, so it probably
-> doesn't exist.  You could remove the entry from .git/config by hand
-> and use git-submodule-add again (thus putting it in both places), or
-> copy the .gitmodules file from the original branch, or git-cherry-pick
-> the commit where you added it.
-> 
-> You should *also* cd into the access subdir and checkout the right
-> revision there; at that time, the next commit to the sakai repository
-> will make sure the submodule reference is to the right place.
-> 
-> Phew, I hope that made things more clear instead of less clear. :)
-> 
-> Have fun,
-> 
-> Avery
+On Tue, Apr 8, 2008 at 7:45 PM, Dill <sarpulhu@gmail.com> wrote:
+>  I have but as git grows more popular so will the users who wish to
+>  create communities that can help each other. IMHO this list will
+>  probably tend to be about development and bugs etc while other sites
+>  will sprout up geared more towards users. Could be wrong though.
 
-OK, this makes a lot more sense now.  Thanks.
+Do read the older discussions. Separating users from developers does
+not work well. Successful communities have mixed lists -- perhaps
+split by topic (linux-usb for example) but not by "participant type".
+Users should be guided towards this list --
 
+cheers,
+
+
+
+m
 -- 
-Stuart
+ martin.langhoff@gmail.com
+ martin@laptop.org -- School Server Architect
+ - ask interesting questions
+ - don't get distracted with shiny stuff - working code first
+ - http://wiki.laptop.org/go/User:Martinlanghoff
