@@ -1,56 +1,53 @@
-From: Joachim B Haga <jobh@broadpark.no>
-Subject: Re: git clean removes directories when not asked to
-Date: Tue, 08 Apr 2008 20:38:43 +0200
-Message-ID: <85k5j8jioc.fsf@lupus.strangled.net>
-References: <85prt0jjen.fsf@lupus.strangled.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Integration branching
+Date: Tue, 08 Apr 2008 11:49:33 -0700
+Message-ID: <7vmyo4mbb6.fsf@gitster.siamese.dyndns.org>
+References: <b24851260804070602o11b93923m7ce7d79d5f59547b@mail.gmail.com>
+ <7vod8lpnpb.fsf@gitster.siamese.dyndns.org>
+ <b24851260804071118h4eaadef8i8313c5a4cb26495d@mail.gmail.com>
+ <32541b130804071132q24acff6an853730af4fc7273e@mail.gmail.com>
+ <b24851260804080656u4c42c31cv3984fa2943d83b8a@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 08 20:39:41 2008
+Cc: "Avery Pennarun" <apenwarr@gmail.com>, git@vger.kernel.org
+To: "Kai Hendry" <hendry@aplixcorp.com>
+X-From: git-owner@vger.kernel.org Tue Apr 08 20:50:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JjIjL-0002vE-7P
-	for gcvg-git-2@gmane.org; Tue, 08 Apr 2008 20:39:39 +0200
+	id 1JjIu0-0006u1-Dq
+	for gcvg-git-2@gmane.org; Tue, 08 Apr 2008 20:50:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753263AbYDHSiz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Apr 2008 14:38:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753052AbYDHSiz
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Apr 2008 14:38:55 -0400
-Received: from main.gmane.org ([80.91.229.2]:53384 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752867AbYDHSiz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Apr 2008 14:38:55 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1JjIiX-0005Qb-Le
-	for git@vger.kernel.org; Tue, 08 Apr 2008 18:38:49 +0000
-Received: from 22.80-203-45.nextgentel.com ([80.203.45.22])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 08 Apr 2008 18:38:49 +0000
-Received: from jobh by 22.80-203-45.nextgentel.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 08 Apr 2008 18:38:49 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 22.80-203-45.nextgentel.com
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-Cancel-Lock: sha1:ViSZWzB0s0poUzlbXG8CorhVoI4=
+	id S1753084AbYDHSty (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Apr 2008 14:49:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753134AbYDHSty
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Apr 2008 14:49:54 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:45449 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753026AbYDHSty (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Apr 2008 14:49:54 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 327B210BA3;
+	Tue,  8 Apr 2008 14:49:48 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 327C510A0C; Tue,  8 Apr 2008 14:49:43 -0400 (EDT)
+In-Reply-To: <b24851260804080656u4c42c31cv3984fa2943d83b8a@mail.gmail.com>
+ (Kai Hendry's message of "Tue, 8 Apr 2008 14:56:53 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79013>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79014>
 
-Joachim B Haga <jobh@broadpark.no> writes:
+"Kai Hendry" <hendry@aplixcorp.com> writes:
 
-> This is with debian packaged 1.5.4.4.
->
-> When invoked from a subdirectory, git clean removes more than it
-> should. According to the documentation, it should not remove
-> directories unless "-d" is given. However:
+> I need http:// to work as some of the engineers I work with are behind
+> a "corporate firewall" that doesn't allow ssh://. Crazy, I know.
 
-I see the same behaviour with 1.5.5, just pulled.
-
--j.
+It is not "crazy", but simply is "unfortunate".  I am not involved in
+http-push at all myself, but I recall there was somebody working on
+improving it recently?
