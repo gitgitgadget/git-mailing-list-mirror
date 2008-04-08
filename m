@@ -1,109 +1,112 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: auto insert history info into source files, at commit?
-Date: Tue, 08 Apr 2008 10:04:43 -0700 (PDT)
-Message-ID: <m38wzoth0l.fsf@localhost.localdomain>
-References: <16562665.post@talk.nabble.com>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: Fwd: [Bug 163341] Re: git-svn gets wrong parent revision for
+	tags
+Date: Tue, 8 Apr 2008 19:15:02 +0200
+Message-ID: <20080408171502.GA6163@atjola.homenet>
+References: <20071117143713.8355.50653.malonedeb@potassium.ubuntu.com> <20080407195610.13681.39351.malone@potassium.ubuntu.com> <cd53a0140804080848r54bb1e6dq54b5cce62339d6d1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: oxcrete <oxcrete@yahoo.com>
-X-From: git-owner@vger.kernel.org Tue Apr 08 19:06:46 2008
+To: Thomas Leonard <talex5@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 08 19:15:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JjHGG-0006RT-Ku
-	for gcvg-git-2@gmane.org; Tue, 08 Apr 2008 19:05:46 +0200
+	id 1JjHQH-0002A5-Mv
+	for gcvg-git-2@gmane.org; Tue, 08 Apr 2008 19:15:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754086AbYDHREr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Apr 2008 13:04:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752594AbYDHREr
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Apr 2008 13:04:47 -0400
-Received: from fk-out-0910.google.com ([209.85.128.187]:16033 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754086AbYDHREq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Apr 2008 13:04:46 -0400
-Received: by fk-out-0910.google.com with SMTP id 19so2772975fkr.5
-        for <git@vger.kernel.org>; Tue, 08 Apr 2008 10:04:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
-        bh=FzN4ziN2V2zjCQDVm5TRlBJ7KK7LowOZgTDcVqf2Mzs=;
-        b=Ezbj/sejQhsd1h1v9hOBkrueDyna8PFwQR/YD0SwQ0nh20bi9on+5pRnyqX+9mf/LOnkJJ4X1Psm7HYq47Y99ZYhpwBB+pAjMnLECTnVTWif1rOepE1RVNFxUaWk3JPvGSomUMaUItY1yNM/OHr4lTLVO/pv0vt4XqLpuqz0yTY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
-        b=YTwJGQ/ei3lqsoCSD+FbyDAwjEl3O8HKYkzZ5aGjFmaN1hyf/0Dt4fZW35VSdSvwKyKrlBL6MZ7e5tooCmryhmVjB60BwakjBmhXUe7GRl15CLZxFg+TOX+0v43rjbJ+w9iIvm362LjS5HMsSwm/mAhC13eqmxcszyy0Xu6Q2Ns=
-Received: by 10.82.120.15 with SMTP id s15mr361126buc.80.1207674284218;
-        Tue, 08 Apr 2008 10:04:44 -0700 (PDT)
-Received: from localhost.localdomain ( [83.8.252.83])
-        by mx.google.com with ESMTPS id n10sm13287396mue.18.2008.04.08.10.04.42
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 08 Apr 2008 10:04:43 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m38H4hkw015678;
-	Tue, 8 Apr 2008 19:04:44 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m38H4Rhn015672;
-	Tue, 8 Apr 2008 19:04:27 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <16562665.post@talk.nabble.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1753214AbYDHRPI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Apr 2008 13:15:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752709AbYDHRPI
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Apr 2008 13:15:08 -0400
+Received: from mail.gmx.net ([213.165.64.20]:38392 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752527AbYDHRPH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Apr 2008 13:15:07 -0400
+Received: (qmail invoked by alias); 08 Apr 2008 17:15:03 -0000
+Received: from i577BB179.versanet.de (EHLO atjola.local) [87.123.177.121]
+  by mail.gmx.net (mp055) with SMTP; 08 Apr 2008 19:15:03 +0200
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX1+d/nZCIuSd7tGcUdGTg6QB9VR77txYT6g70Y6jhH
+	opO9+WsLVvwdrM
+Content-Disposition: inline
+In-Reply-To: <cd53a0140804080848r54bb1e6dq54b5cce62339d6d1@mail.gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79009>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79010>
 
-oxcrete <oxcrete@yahoo.com> writes:
+On 2008.04.08 16:48:03 +0100, Thomas Leonard wrote:
+> Hi.
+>=20
+> The git-svn Ubuntu packager asked me to forward this here.
+>=20
+> Summary:
+>=20
+> When converting a subversion repository to GIT using git-svn, the tag=
+s
+> do not have the right parent. Each tag should be identical to a trunk
+> revision (which it was copied from), but because git-svn uses an
+> earlier revision as the parent it appears that the same work was
+> duplicated on two branches.
+>=20
+> Example:
+>=20
+> git-svn clone https://zero-install.svn.sourceforge.net/svnroot/zero-i=
+nstall
+> -T trunk/0publish -r1890:2072 -b releases/0publish
+>=20
+> The git branch comes from r1894, yet the svn log shows that in
+> includes files from r2070:
+>=20
+> $ svn log https://zero-install.svn.sourceforge.net/svnroot/zero-insta=
+ll
+> -r2071 -v
+> r2071 | tal197 | 2007-11-10 19:40:45 +0000 (Sat, 10 Nov 2007) | 1 lin=
+e
+> Changed paths:
+>    A /releases/0publish/0publish-0.12 (from /trunk/0publish:1968)
+>    R /releases/0publish/0publish-0.12/0publish (from
+> /trunk/0publish/0publish:2070)
+>    R /releases/0publish/0publish-0.12/0publish.xml (from
+> /trunk/0publish/0publish.xml:2070)
+>    R /releases/0publish/0publish-0.12/release.py (from
+> /trunk/0publish/release.py:2069)
 
-> How do you do this with Git? I couldn't find it in the documentation.  the
-> standard $Log, $Revision... didn't seem to work. I'll take an RTFM answer if
-> you can point me to the right section in the manual. Appologies, if this was
-> posted before - couldn't find a good regex to search this topic.
+Well, SVN recorded useless, broken metadata.
 
-http://git.or.cz/gitwiki/GitFaq#head-4a0afe71a2bb7734777a8b0b345e0308aefdbd40
-"Does git have keyword expansion?" (and also next section, "Does git
-allow arbitrary conversion of contents?")
+SVN itself believes that the branch was created from revision 1968. As
+that revision didn't introduce any changes to trunk/0publish, there's n=
+o
+commit for that revision in the git branch, so git-svn took the most
+recent one instead (1894).
 
-Simply said keywords do not work well together with nonlinear history,
-and especially with the way git is engineered, being content-adressed.
-If you have the following history:
+=46or the other three files, SVN reports that the files were replaced b=
+y
+versions from another branch. There's no immediate way to tell whether
+those replacements make the branch equal to the more recent version of
+trunk. So git-svn does it the safe way and reproduces what SVN told it
+to reproduce: A commit that creates a branch and changes some files.
 
-  A---B---C---D---E
-           \
-            \-F---G---H
+I guess sth. like this happened on the svn end:
+svn cp trunk/0publish releases/0publish (at rev. 1968)
+svn cp trunk/0publish/release.py releases/0publish (at rev. 2069)
+=2E..
+svn commit (whenever)
 
-and the file 'foo' has the same contents in both branches, in both E
-and H commits (revisions), it would be noticed by git and it wouldn't
-touch this file when switching branches.  It is one of the keys to git
-performance.  This is important not only for switching branches, but
-also for merging.
+So the branch was "incrementally" created locally and SVN decided to
+record the "Uh, I copied this from here to there" metacrap^H^H^H^Hdata,
+of which git-svn made use. Hooray for rename/copy tracking.
 
-But if they have $Revision$, or $Author$ keywords, and those would be
-different, it couldn't be done this way.
+You could maybe ask for an enhancement so that git-svn tries to figure
+out if the provided metadata is broken and looks up a matching revision
+in such a case. But I guess it's not worth the trouble and could lead t=
+o
+other breakage along the way...
 
-
-Therefore git supports "keyword expansion" in three ways, beginning
-from simplest.
-
-1. The `ident` attribute, which allows to expand $Id$ to 
-$Id: <sha-1>$, where <sha-1> is blob (file contents) identifier.
-
-2. The `export-subst` attribute, and/or various tricks in Makefile,
-which allow embedding information about current revision (like result
-of "git describe") in files when using "git archive" (atribute), or
-"make" / "make dist".  This is I think the preferred way; both git and
-Linux use Makefile tricks to embed version info in result of
-compilation.
-
-3. Use `filter` attribute to expand keywords when checking out file,
-and removing keywords when commiting changes (but watch for binary
-files!).  This would affect performance.  I also don't think that
-there is any example doing keyword expansion with `filter`
-gitattribute; you can be first! ;-)
-
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Bj=F6rn
