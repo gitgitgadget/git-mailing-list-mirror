@@ -1,76 +1,53 @@
-From: Stephan Beyer <s-beyer@gmx.net>
-Subject: [PATCH] builtin-apply.c: use git_config_string() to get
-	apply_default_whitespace
-Date: Tue, 8 Apr 2008 10:42:33 +0200
-Message-ID: <20080408084233.GA7785@leksak.fem-net>
+From: "A B" <gentosaker@gmail.com>
+Subject: git bisect on multiple cores
+Date: Tue, 8 Apr 2008 12:58:47 +0200
+Message-ID: <dbbf25900804080358o6b1ada20pfb94f68f06a23f83@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 08 10:43:40 2008
+X-From: git-owner@vger.kernel.org Tue Apr 08 12:59:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jj9QZ-0006if-Lk
-	for gcvg-git-2@gmane.org; Tue, 08 Apr 2008 10:43:40 +0200
+	id 1JjBY4-00048j-T9
+	for gcvg-git-2@gmane.org; Tue, 08 Apr 2008 12:59:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752837AbYDHImz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Apr 2008 04:42:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751691AbYDHImz
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Apr 2008 04:42:55 -0400
-Received: from mail.gmx.net ([213.165.64.20]:53432 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751290AbYDHImy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Apr 2008 04:42:54 -0400
-Received: (qmail invoked by alias); 08 Apr 2008 08:42:52 -0000
-Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
-  by mail.gmx.net (mp033) with SMTP; 08 Apr 2008 10:42:52 +0200
-X-Authenticated: #1499303
-X-Provags-ID: V01U2FsdGVkX1/BiPE9W/DBeAgDusy/53Iqgd2Jy8HwtEVPzO93nU
-	kFi9s3gXqaL92t
-Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
-	(envelope-from <s-beyer@gmx.net>)
-	id 1Jj9PV-0005XN-U1
-	for git@vger.kernel.org; Tue, 08 Apr 2008 10:42:33 +0200
-Mail-Followup-To: git@vger.kernel.org
+	id S1751836AbYDHK6t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Apr 2008 06:58:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751683AbYDHK6t
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Apr 2008 06:58:49 -0400
+Received: from wa-out-1112.google.com ([209.85.146.181]:33576 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751181AbYDHK6s (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Apr 2008 06:58:48 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so1717918wah.23
+        for <git@vger.kernel.org>; Tue, 08 Apr 2008 03:58:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=LGK8tDF//fDRpPryxAIdenaqGXdSEeOzGKpGSqigwGc=;
+        b=Hze21KFpgo57EGRXfiqDWm+FQMwz3MYefFySR9InnziQugeIv0+nByx287uNFpn5NeyJqTkAPGwxwRQGPB4FiXSB6gqZH2WRVx0v89Ll0Ylby/vFHN/BBKWZEvVjBnF2EQrtig0q6P9NYnx+ushEgW0//DfwGdKzTKcLEw2b2jc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=k/ZEufUDpwA3h7eiUce11kbRAFHSFIXQfPw4/NFgZYbBnd7txVmHIuL/gDR/GIcLqCahtL/lKisR9fjdwvz1IB6ZKZCTZifAjTytS8Pc3o4hvJygYBNs2ave5AVZsHCNCNAz77TftvUKNy6J9y5l892+Jq/BGCCWxLbsRP/Oxco=
+Received: by 10.115.50.5 with SMTP id c5mr1160483wak.190.1207652327711;
+        Tue, 08 Apr 2008 03:58:47 -0700 (PDT)
+Received: by 10.114.125.17 with HTTP; Tue, 8 Apr 2008 03:58:47 -0700 (PDT)
 Content-Disposition: inline
-X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78994>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/78995>
 
-Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
----
-Hi,
+git bisect is really cool. I use it for the first time.
+Just a thought, if you have a multiple core computer, can't you make
+git build new versions in the background while testing the previuos
+version? Alright, if you build 2 versions, one of them will never be
+tested, but you will perhaps save some time by letting it build in the
+background?
 
-a simple `Janitor patch'.
-
-Regards,
- Stephan.
-
- builtin-apply.c |    8 ++------
- 1 files changed, 2 insertions(+), 6 deletions(-)
-
-diff --git a/builtin-apply.c b/builtin-apply.c
-index b5f78ac..ce0a0c3 100644
---- a/builtin-apply.c
-+++ b/builtin-apply.c
-@@ -2978,12 +2978,8 @@ static int apply_patch(int fd, const char *filename, int inaccurate_eof)
- 
- static int git_apply_config(const char *var, const char *value)
- {
--	if (!strcmp(var, "apply.whitespace")) {
--		if (!value)
--			return config_error_nonbool(var);
--		apply_default_whitespace = xstrdup(value);
--		return 0;
--	}
-+	if (!strcmp(var, "apply.whitespace"))
-+		return git_config_string(&apply_default_whitespace, var, value);
- 	return git_default_config(var, value);
- }
- 
--- 
-1.5.5.rc3.8.g78d1a
+Just a thought...
