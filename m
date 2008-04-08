@@ -1,112 +1,104 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: Fwd: [Bug 163341] Re: git-svn gets wrong parent revision for
-	tags
-Date: Tue, 8 Apr 2008 19:15:02 +0200
-Message-ID: <20080408171502.GA6163@atjola.homenet>
-References: <20071117143713.8355.50653.malonedeb@potassium.ubuntu.com> <20080407195610.13681.39351.malone@potassium.ubuntu.com> <cd53a0140804080848r54bb1e6dq54b5cce62339d6d1@mail.gmail.com>
+From: "D. Stuart Freeman" <stuart.freeman@et.gatech.edu>
+Subject: Re: Migrating svn to git with heavy use of externals
+Date: Tue, 08 Apr 2008 14:07:04 -0400
+Message-ID: <47FBB448.3060900@et.gatech.edu>
+References: <47F15094.5050808@et.gatech.edu>
+Reply-To: stuart.freeman@et.gatech.edu
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: multipart/mixed;
+ boundary="------------050206030203090809050403"
 Cc: git@vger.kernel.org
-To: Thomas Leonard <talex5@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 08 19:15:57 2008
+To: stuart.freeman@et.gatech.edu
+X-From: git-owner@vger.kernel.org Tue Apr 08 20:08:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JjHQH-0002A5-Mv
-	for gcvg-git-2@gmane.org; Tue, 08 Apr 2008 19:15:54 +0200
+	id 1JjIEb-0006Dw-SA
+	for gcvg-git-2@gmane.org; Tue, 08 Apr 2008 20:07:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753214AbYDHRPI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Apr 2008 13:15:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752709AbYDHRPI
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Apr 2008 13:15:08 -0400
-Received: from mail.gmx.net ([213.165.64.20]:38392 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752527AbYDHRPH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Apr 2008 13:15:07 -0400
-Received: (qmail invoked by alias); 08 Apr 2008 17:15:03 -0000
-Received: from i577BB179.versanet.de (EHLO atjola.local) [87.123.177.121]
-  by mail.gmx.net (mp055) with SMTP; 08 Apr 2008 19:15:03 +0200
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX1+d/nZCIuSd7tGcUdGTg6QB9VR77txYT6g70Y6jhH
-	opO9+WsLVvwdrM
-Content-Disposition: inline
-In-Reply-To: <cd53a0140804080848r54bb1e6dq54b5cce62339d6d1@mail.gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-X-Y-GMX-Trusted: 0
+	id S1753403AbYDHSHH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Apr 2008 14:07:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753384AbYDHSHH
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Apr 2008 14:07:07 -0400
+Received: from deliverator4.ecc.gatech.edu ([130.207.185.174]:55295 "EHLO
+	deliverator4.ecc.gatech.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752096AbYDHSHF (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 8 Apr 2008 14:07:05 -0400
+Received: from deliverator4.ecc.gatech.edu (localhost [127.0.0.1])
+	by localhost (Postfix) with SMTP id CC2CD5E4127
+	for <git@vger.kernel.org>; Tue,  8 Apr 2008 14:07:03 -0400 (EDT)
+Received: from mailprx1.gatech.edu (mailprx1.prism.gatech.edu [130.207.171.15])
+	(using TLSv1 with cipher EDH-RSA-DES-CBC3-SHA (168/168 bits))
+	(Client CN "smtp.mail.gatech.edu", Issuer "Equifax" (verified OK))
+	by deliverator4.ecc.gatech.edu (Postfix) with ESMTP id 801B95E412C;
+	Tue,  8 Apr 2008 14:07:02 -0400 (EDT)
+Received: from [130.207.46.56] (cetel-004-xx6.admin.gatech.edu [130.207.46.56])
+	(using TLSv1 with cipher RC4-MD5 (128/128 bits))
+	(No client certificate requested)
+	(sasl: method=PLAIN, username=dfreeman31@mailprx1.gatech.edu, sender=n/a)
+	by mailprx1.gatech.edu (Postfix) with ESMTP
+	id 6F3A01EF8; Tue,  8 Apr 2008 14:07:01 -0400 (EDT)
+	(envelope-from stuart.freeman@et.gatech.edu)
+User-Agent: Mozilla-Thunderbird 2.0.0.9 (X11/20080110)
+In-Reply-To: <47F15094.5050808@et.gatech.edu>
+X-Enigmail-Version: 0.95.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79010>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79011>
 
-On 2008.04.08 16:48:03 +0100, Thomas Leonard wrote:
-> Hi.
->=20
-> The git-svn Ubuntu packager asked me to forward this here.
->=20
-> Summary:
->=20
-> When converting a subversion repository to GIT using git-svn, the tag=
-s
-> do not have the right parent. Each tag should be identical to a trunk
-> revision (which it was copied from), but because git-svn uses an
-> earlier revision as the parent it appears that the same work was
-> duplicated on two branches.
->=20
-> Example:
->=20
-> git-svn clone https://zero-install.svn.sourceforge.net/svnroot/zero-i=
-nstall
-> -T trunk/0publish -r1890:2072 -b releases/0publish
->=20
-> The git branch comes from r1894, yet the svn log shows that in
-> includes files from r2070:
->=20
-> $ svn log https://zero-install.svn.sourceforge.net/svnroot/zero-insta=
-ll
-> -r2071 -v
-> r2071 | tal197 | 2007-11-10 19:40:45 +0000 (Sat, 10 Nov 2007) | 1 lin=
-e
-> Changed paths:
->    A /releases/0publish/0publish-0.12 (from /trunk/0publish:1968)
->    R /releases/0publish/0publish-0.12/0publish (from
-> /trunk/0publish/0publish:2070)
->    R /releases/0publish/0publish-0.12/0publish.xml (from
-> /trunk/0publish/0publish.xml:2070)
->    R /releases/0publish/0publish-0.12/release.py (from
-> /trunk/0publish/release.py:2069)
+This is a multi-part message in MIME format.
+--------------050206030203090809050403
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 
-Well, SVN recorded useless, broken metadata.
+Maybe I should clarify.
+I've imported an svn managed project into a git repository
+with 71 submodules, what I don't understand though is if I
+have a branch called 2-5-x and another called 2-4-x in each of
+the submodules and the superproject, is there a way to
+associate those?
 
-SVN itself believes that the branch was created from revision 1968. As
-that revision didn't introduce any changes to trunk/0publish, there's n=
-o
-commit for that revision in the git branch, so git-svn took the most
-recent one instead (1894).
+D. Stuart Freeman wrote:
+> I'm a developer on the Sakai project.  I think Sakai could benefit
+> greatly from use of git because we have a huge need to track local
+> changes while contributing back to a central codebase.  I've started
+> looking at git-svn and have managed to get a copy of our repository into
+> git, and looked at the stuff to do with submodules as a replacement for
+> externals.  The problem is we rely very heavily on externals, for
+> instance when we make a tag for release we tag all the modules at the
+> same time and use an externals file to build the release from those
+> tags.  I realize that's probably not a best practice, but it's what we
+> do.  Our latest release is here:
+> https://source.sakaiproject.org/svn/sakai/tags/sakai_2-5-0/ if you want
+> to get an idea of the scope of the problem.  How would you convert this
+> to a git repository?  I'm currently looking at
+> http://blog.alieniloquent.com/2008/03/08/git-svn-with-svnexternals/ but
+> that doesn't look like it would leave all the old release tags intact.
+> 
 
-=46or the other three files, SVN reports that the files were replaced b=
-y
-versions from another branch. There's no immediate way to tell whether
-those replacements make the branch equal to the more recent version of
-trunk. So git-svn does it the safe way and reproduces what SVN told it
-to reproduce: A commit that creates a branch and changes some files.
 
-I guess sth. like this happened on the svn end:
-svn cp trunk/0publish releases/0publish (at rev. 1968)
-svn cp trunk/0publish/release.py releases/0publish (at rev. 2069)
-=2E..
-svn commit (whenever)
+-- 
+D. Stuart Freeman
+Georgia Institute of Technology
 
-So the branch was "incrementally" created locally and SVN decided to
-record the "Uh, I copied this from here to there" metacrap^H^H^H^Hdata,
-of which git-svn made use. Hooray for rename/copy tracking.
+--------------050206030203090809050403
+Content-Type: text/x-vcard; charset=utf-8;
+ name="stuart_freeman.vcf"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+ filename="stuart_freeman.vcf"
 
-You could maybe ask for an enhancement so that git-svn tries to figure
-out if the provided metadata is broken and looks up a matching revision
-in such a case. But I guess it's not worth the trouble and could lead t=
-o
-other breakage along the way...
+begin:vcard
+fn:D. Stuart Freeman
+n:Freeman;Douglas
+email;internet:stuart.freeman@et.gatech.edu
+tel;work:(404)385-1473
+x-mozilla-html:FALSE
+version:2.1
+end:vcard
 
-Bj=F6rn
+
+--------------050206030203090809050403--
