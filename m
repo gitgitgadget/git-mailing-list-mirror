@@ -1,55 +1,71 @@
-From: Dill <sarpulhu@gmail.com>
+From: "Sverre Rabbelier" <alturin@gmail.com>
 Subject: Re: ANNOUNCE: Git Forum
-Date: Tue, 8 Apr 2008 17:15:46 -0600
-Message-ID: <60646ee10804081615y6817f707ufbb4a544d166059@mail.gmail.com>
+Date: Wed, 9 Apr 2008 01:18:05 +0200
+Message-ID: <bd6139dc0804081618n4374c7c8scf4b3014f426c3fd@mail.gmail.com>
+References: <60646ee10804081332n3f0d9668o514bd2b6f99b7ae@mail.gmail.com>
+	 <ftgngb$l9m$1@ger.gmane.org>
+	 <6b6419750804081601k3f3b3853pce22c6b14d765327@mail.gmail.com>
+	 <46a038f90804081607v64df6b5q345249a967dd854f@mail.gmail.com>
+Reply-To: sverre@rabbelier.nl
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 09 01:16:57 2008
+Cc: "Patrick Aljord" <patcito@gmail.com>,
+	"git list" <git@vger.kernel.org>
+To: "Martin Langhoff" <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 09 01:18:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JjN3T-00017l-37
-	for gcvg-git-2@gmane.org; Wed, 09 Apr 2008 01:16:43 +0200
+	id 1JjN5Z-0001pp-W9
+	for gcvg-git-2@gmane.org; Wed, 09 Apr 2008 01:18:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752065AbYDHXPr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Apr 2008 19:15:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752388AbYDHXPr
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Apr 2008 19:15:47 -0400
-Received: from wa-out-1112.google.com ([209.85.146.182]:65213 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751536AbYDHXPq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Apr 2008 19:15:46 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so1936362wah.23
-        for <git@vger.kernel.org>; Tue, 08 Apr 2008 16:15:46 -0700 (PDT)
+	id S1752541AbYDHXSK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Apr 2008 19:18:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751845AbYDHXSJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Apr 2008 19:18:09 -0400
+Received: from yw-out-2324.google.com ([74.125.46.28]:27481 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752400AbYDHXSI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Apr 2008 19:18:08 -0400
+Received: by yw-out-2324.google.com with SMTP id 5so437448ywb.1
+        for <git@vger.kernel.org>; Tue, 08 Apr 2008 16:18:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=iFY70LCG8NE9kuQ5kTtJNfZkBKcjgsURSEKNZcwRKIQ=;
-        b=oZbYYshImPwrGJNjVFyrfbYCiHtrLpAhGOd0yp/ofS1j88b94NWWjH77QdDuKO68HEUFLBPEWZx95Rwj6BNTwjblaRx3DE7neT26kl7lKGySaVxP9OaKUohk81ZpWxzkPdszZCvK7I70w/Xrsii5/1i0MxLKe99sKKhnaKpOH0A=
+        h=domainkey-signature:received:received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=hr3IzksoC70OGCLW5LMeq0LjtvUDS7rMmLIt8DAvfbw=;
+        b=OyvPVtWGispicS9idpFgyq+L+5G2bnNpBpkVpf6bku0Ixk+3ojrBKTz1uiyAnOr46nMwgvQXaM5EFeTUN0HkbfPWVC3ymZgmOuIfNVH12UlgTrIFxrFIJ/lUrEGspJgUDL07NDNXnS6VZ/eZhVkykbLjHIVBPWKvYmhKmdLx04c=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=gnUVTcjXx15CqU5xNEnUlZtWjoe7cuJ+RUQ+2qBKP03Zr80vTFFOytZPp41i3dortpCLVLftnwN5EGY1PkI1G0OxIgnzlW0OEkqGqO7OgNWt4BPYSg1iJDzv/iwW1j4Sk8MiyuSWSNE0X9aCkw23qh0fGLOYlKVA9cLojh8+3xk=
-Received: by 10.114.197.1 with SMTP id u1mr8283755waf.61.1207696546197;
-        Tue, 08 Apr 2008 16:15:46 -0700 (PDT)
-Received: by 10.114.73.13 with HTTP; Tue, 8 Apr 2008 16:15:46 -0700 (PDT)
+        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=mbUHgfOruysWnq+1fUE9KIfO24xvYvMzn2OPCQvuFMn92dqWQBkjcLBMseSFBFPelwpaOVbelZO7QfQyrDz7WInM2h+Mpc+DtsMm1LrGIgsqPbaZLFqpA1bVP/ctBOaPlhYmqoFk/n7HGfQeSDL2Siai3E4qFyGS5t1llwx1Le0=
+Received: by 10.150.192.7 with SMTP id p7mr4373901ybf.21.1207696685541;
+        Tue, 08 Apr 2008 16:18:05 -0700 (PDT)
+Received: by 10.150.192.1 with HTTP; Tue, 8 Apr 2008 16:18:05 -0700 (PDT)
+In-Reply-To: <46a038f90804081607v64df6b5q345249a967dd854f@mail.gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79051>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79052>
 
->Is it clear to everyone here that splitting a community does not make
->it stronger?
-I'm sorry it wasn't my intent to split the group but make it more
-diverse. There has been some good points made though. I was thinking
-more along the lines that the forum would kind of be an offshoot of
-what's happening in the blogosphere as a lot of Git discussion happens
-and occurs separate of this list and I was thinking of some place they
-could group together and chat. Of course here is a good spot but most
-seem to know about this list but choose to talk outside of it. I was
-just hoping that the forum would help those people. Dylan.
+On Wed, Apr 9, 2008 at 1:07 AM, Martin Langhoff
+<martin.langhoff@gmail.com> wrote:
+> On Tue, Apr 8, 2008 at 8:01 PM, Patrick Aljord <patcito@gmail.com> wrote:
+>  >  here it is: http://groups.google.com/group/git-users
+>
+>  Is it clear to everyone here that splitting a community does not make
+>  it stronger?
+
+I agree that splitting it might not make it stronger but it might
+increase the signal/noise ratio and make it less daunting for users to
+ask a question. Even so, the "how to ask smart questions guide" [1]
+advises users to try the 'user' list first if there is one available.
+Then again, as mentioned earlier in the thread there are arguments to
+be said in favor of just one list.
+
+[1] http://catb.org/~esr/faqs/smart-questions.html
+
+Sverre Rabbelier
