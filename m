@@ -1,66 +1,154 @@
-From: Dill <sarpulhu@gmail.com>
-Subject: ANNOUNCE: Git Forum
-Date: Tue, 8 Apr 2008 14:32:59 -0600
-Message-ID: <60646ee10804081332n3f0d9668o514bd2b6f99b7ae@mail.gmail.com>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [PATCH] Add --only-merges flag to display only merge commits.
+Date: Tue, 8 Apr 2008 22:36:48 +0200
+Message-ID: <20080408203648.GS11574@genesis.frugalware.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 08 22:33:55 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 08 22:37:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JjKVs-0006cR-Ix
-	for gcvg-git-2@gmane.org; Tue, 08 Apr 2008 22:33:53 +0200
+	id 1JjKZT-00089K-Sb
+	for gcvg-git-2@gmane.org; Tue, 08 Apr 2008 22:37:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752065AbYDHUdI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Apr 2008 16:33:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751912AbYDHUdH
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Apr 2008 16:33:07 -0400
-Received: from yw-out-2324.google.com ([74.125.46.31]:36634 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752070AbYDHUdF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Apr 2008 16:33:05 -0400
-Received: by yw-out-2324.google.com with SMTP id 5so415079ywb.1
-        for <git@vger.kernel.org>; Tue, 08 Apr 2008 13:33:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=8s13OkU0E9s0/grLUWKgRCPARRHnjaRjbhzxJOdDHGE=;
-        b=J3LQn1iP5YGczd/QEAA/6xVrgcSP4DJpcCJIVC7FCOcXrukAw6xOjT9ehyaK5hgW8r4kaPltYp16gQeLCBctFlt+VR9mLabpXC3Xxh3fwdcEU/wWnRGERbg+aPhf6zrJiGBFz1aeZvoOHATFLFmbXjc2At+Qj89QgGFqJx6Jrlk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=Jt09Tu6D8HhxIkC3E58EFTSKq7PmPEj+P6AeTHjVl9ssRSyLOwD3cMDer3oB3Fsv9tUEfzo5Y58CWw0CmrDLJWEEcFfC+Xm0LUccL1HWopBHtEKK/e9P7bHKIugokcpzRU0KOJ/WzMQ05yHhrUXofrIBYiyHaQ/WWocdA7ulA0Q=
-Received: by 10.114.26.18 with SMTP id 18mr2011033waz.211.1207686779363;
-        Tue, 08 Apr 2008 13:32:59 -0700 (PDT)
-Received: by 10.114.73.13 with HTTP; Tue, 8 Apr 2008 13:32:59 -0700 (PDT)
+	id S1752253AbYDHUgw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Apr 2008 16:36:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752139AbYDHUgw
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Apr 2008 16:36:52 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:48498 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752039AbYDHUgv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Apr 2008 16:36:51 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 5BAD21B2506;
+	Tue,  8 Apr 2008 22:36:49 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 75D7644659;
+	Tue,  8 Apr 2008 22:33:31 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id A07CA1190A4E; Tue,  8 Apr 2008 22:36:48 +0200 (CEST)
 Content-Disposition: inline
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79026>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79027>
 
-Hello, I'm trying to set up a Git forum at:
+This is the opposite of git-rev-list --no-merges: It will hide commits
+with single or no parent.
 
-http://gitforum.freeforums.org/
-(will purchase a git specific domain once I get the required
-donations...I'm too poor to buy one myself)
+It is useful if a maintainer has a lot of commits between tags and
+usually each feature is developed in its own topic branch.
 
-The forum might also help move some newbies off this mailing list and
-provide a place for the Git community to discuss stuff.
-It is hoped that this forum will be the main site Git users will visit
-when they want help and want to discuss Git topics with other Git
-users. This forum will allow the Git community discuss with each other
-and by doing so create an excellent online reference on the web for
-others to read and get help. A place for Git users to help other Git
-users. Donations are set up so the site can afford to buy a git
-specific domain and pay for improvements to the site. Once I get
-enough money I'll purchase gitforum.com or something. Any donations
-will go to the improvement of the site. Thank you and I hope you enjoy
-the forum.
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+---
 
-I am also looking for moderators if anyones interested. Just PM me in the forum.
-Dylan.
+I just wanted to see the list of merges since the last tag in a repo
+where we have 1000+ commits and about 20 merges and found that there is
+no easy way to do so.
+
+As a side effect, git rev-list --no-merges --only-merges will list
+nothing, but that's logical IMHO.
+
+ Documentation/git-rev-list.txt     |    1 +
+ Documentation/rev-list-options.txt |    4 ++++
+ builtin-rev-list.c                 |    1 +
+ builtin-rev-parse.c                |    1 +
+ revision.c                         |    7 +++++++
+ revision.h                         |    1 +
+ 6 files changed, 15 insertions(+), 0 deletions(-)
+
+diff --git a/Documentation/git-rev-list.txt b/Documentation/git-rev-list.txt
+index d80cdf5..17c26bc 100644
+--- a/Documentation/git-rev-list.txt
++++ b/Documentation/git-rev-list.txt
+@@ -15,6 +15,7 @@ SYNOPSIS
+ 	     [ \--min-age=timestamp ]
+ 	     [ \--sparse ]
+ 	     [ \--no-merges ]
++	     [ \--only-merges ]
+ 	     [ \--first-parent ]
+ 	     [ \--remove-empty ]
+ 	     [ \--full-history ]
+diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+index 2648a55..fc1cf0f 100644
+--- a/Documentation/rev-list-options.txt
++++ b/Documentation/rev-list-options.txt
+@@ -176,6 +176,10 @@ endif::git-rev-list[]
+ 
+ 	Do not print commits with more than one parent.
+ 
++--only-merges::
++
++	Do not print commits with less than two parents.
++
+ --first-parent::
+ 	Follow only the first parent commit upon seeing a merge
+ 	commit.  This option can give a better overview when
+diff --git a/builtin-rev-list.c b/builtin-rev-list.c
+index edc0bd3..35c9422 100644
+--- a/builtin-rev-list.c
++++ b/builtin-rev-list.c
+@@ -23,6 +23,7 @@ static const char rev_list_usage[] =
+ "    --min-age=epoch\n"
+ "    --sparse\n"
+ "    --no-merges\n"
++"    --only-merges\n"
+ "    --remove-empty\n"
+ "    --all\n"
+ "    --branches\n"
+diff --git a/builtin-rev-parse.c b/builtin-rev-parse.c
+index 0351d54..66a6b62 100644
+--- a/builtin-rev-parse.c
++++ b/builtin-rev-parse.c
+@@ -47,6 +47,7 @@ static int is_rev_argument(const char *arg)
+ 		"--max-count=",
+ 		"--min-age=",
+ 		"--no-merges",
++		"--only-merges",
+ 		"--objects",
+ 		"--objects-edge",
+ 		"--parents",
+diff --git a/revision.c b/revision.c
+index 196fedc..1f92a1a 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1127,6 +1127,10 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, const ch
+ 				revs->no_merges = 1;
+ 				continue;
+ 			}
++			if (!strcmp(arg, "--only-merges")) {
++				revs->only_merges = 1;
++				continue;
++			}
+ 			if (!strcmp(arg, "--boundary")) {
+ 				revs->boundary = 1;
+ 				continue;
+@@ -1517,6 +1521,9 @@ enum commit_action simplify_commit(struct rev_info *revs, struct commit *commit)
+ 		return commit_ignore;
+ 	if (revs->no_merges && commit->parents && commit->parents->next)
+ 		return commit_ignore;
++	if (revs->only_merges && ((commit->parents && !commit->parents->next) ||
++			!commit->parents))
++		return commit_ignore;
+ 	if (!commit_match(commit, revs))
+ 		return commit_ignore;
+ 	if (revs->prune && revs->dense) {
+diff --git a/revision.h b/revision.h
+index c8b3b94..c40cf33 100644
+--- a/revision.h
++++ b/revision.h
+@@ -32,6 +32,7 @@ struct rev_info {
+ 	unsigned int	dense:1,
+ 			prune:1,
+ 			no_merges:1,
++			only_merges:1,
+ 			no_walk:1,
+ 			show_all:1,
+ 			remove_empty_trees:1,
+-- 
+1.5.4.5
