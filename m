@@ -1,62 +1,58 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git cloning fails
-Date: Tue, 08 Apr 2008 11:51:05 -0700
-Message-ID: <7vbq4kmb8m.fsf@gitster.siamese.dyndns.org>
-References: <cb8016980804080600se489c8bv5b79186be284163f@mail.gmail.com>
- <20080408131347.GB22623@sigill.intra.peff.net>
+From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
+Subject: Re: auto insert history info into source files, at commit?
+Date: Tue, 8 Apr 2008 21:00:49 +0200
+Message-ID: <8aa486160804081200s163a40bcmf3f2282e0ba00dd6@mail.gmail.com>
+References: <16562665.post@talk.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Abraham Arce <abraham.arce.moreno@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Apr 08 20:52:22 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: oxcrete <oxcrete@yahoo.com>
+X-From: git-owner@vger.kernel.org Tue Apr 08 21:01:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JjIvV-0007Uv-9a
-	for gcvg-git-2@gmane.org; Tue, 08 Apr 2008 20:52:13 +0200
+	id 1JjJ4b-00036T-R1
+	for gcvg-git-2@gmane.org; Tue, 08 Apr 2008 21:01:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754965AbYDHSvV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Apr 2008 14:51:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756024AbYDHSvV
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Apr 2008 14:51:21 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:45727 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754965AbYDHSvU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Apr 2008 14:51:20 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 82DD710EEB;
-	Tue,  8 Apr 2008 14:51:18 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id B05DA10EE7; Tue,  8 Apr 2008 14:51:14 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1756972AbYDHTAx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Apr 2008 15:00:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757177AbYDHTAx
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Apr 2008 15:00:53 -0400
+Received: from ti-out-0910.google.com ([209.85.142.186]:28003 "EHLO
+	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754360AbYDHTAw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Apr 2008 15:00:52 -0400
+Received: by ti-out-0910.google.com with SMTP id 28so873825tif.23
+        for <git@vger.kernel.org>; Tue, 08 Apr 2008 12:00:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=WoSbq286OP+TESaQzdVPRPQVEHAP6Ku7im5GKtDdi7A=;
+        b=K53xlBkZsTXcN04mYPpEmZiYyYGbwtl5uTtdZF4t3ucYsAVw+BHWfI3DJJMI2RIFQs6Yu1dE6kDvz14yfbXhZpme7vHVQBz8eYfXdfMOTZXxI5Y5vTHoNRabmBUQmGNORKo+6xNMoWSsqhVj2WXtxPeWArL+ATg+xpWHahuMn1I=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=ZcB6/r5oTw5ehtKsrQI7YU2QruiSB1xiwcIARQ1CzYjci8334T6c6bt9YbDLhWAL7fc3jhiy50EW8BO/f57ecKRLEzGnp+TLRK7bnPpbdVlTrpU2J/ZSzvuO8q6b7XlrarMD+H2bZXuY6bRx+tS4U9mydcf9XFFRIusa21V/pNk=
+Received: by 10.150.230.15 with SMTP id c15mr1052929ybh.218.1207681249065;
+        Tue, 08 Apr 2008 12:00:49 -0700 (PDT)
+Received: by 10.151.14.14 with HTTP; Tue, 8 Apr 2008 12:00:49 -0700 (PDT)
+In-Reply-To: <16562665.post@talk.nabble.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79016>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79017>
 
-Jeff King <peff@peff.net> writes:
-
-> On Tue, Apr 08, 2008 at 08:00:20AM -0500, Abraham Arce wrote:
+On Tue, Apr 8, 2008 at 6:03 PM, oxcrete <oxcrete@yahoo.com> wrote:
 >
->> While cloning git repository
->> 
->> git clone http://www.kernel.org/pub/scm/git/git.git
->> 
->> I've received the following message:
->> 
->> got 33682a5e98adfd8ba4ce0e21363c443bd273eb77
->> error: Couldn't get
->> http://www.kernel.org/pub/scm/git/git.git/refs/tags/gitgui-0.6.0 for
->> tags/gitgui-0.6.0
->> The requested URL returned error: 404
->> error: Could not interpret tags/gitgui-0.6.0 as something to pull
->
-> This works just fine for me. Which git version are you using? Does the
-> problem still exist if you try again? If that URL did in fact return a
-> 404, it sounds more like a kernel.org problem.
+>  How do you do this with Git? I couldn't find it in the documentation.  the
+>  standard $Log, $revision... didn't seem to work. I'll take an RTFM answer if
+>  you can point me to the right section in the manual. Appologies, if this was
+>  posted before - couldn't find a good regex to search this topic.
 
-Mirroring lag among www servers, methinks.
+http://git.or.cz/gitwiki/GitFaq#head-4a0afe71a2bb7734777a8b0b345e0308aefdbd40
+
+Santi
