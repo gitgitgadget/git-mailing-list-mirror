@@ -1,55 +1,75 @@
-From: Ittay Dror <ittayd@tikalk.com>
-Subject: question about git and remote repositories
-Date: Tue, 08 Apr 2008 22:08:57 +0300
-Message-ID: <47FBC2C9.6060702@tikalk.com>
+From: "Abraham Arce" <abraham.arce.moreno@gmail.com>
+Subject: Re: git cloning fails
+Date: Tue, 8 Apr 2008 14:40:14 -0500
+Message-ID: <cb8016980804081240l4c7f42eeyd51a4a33248dabd2@mail.gmail.com>
+References: <cb8016980804080600se489c8bv5b79186be284163f@mail.gmail.com>
+	 <20080408131347.GB22623@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 08 21:16:41 2008
+Cc: git@vger.kernel.org
+To: "Jeff King" <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Apr 08 21:41:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JjJJ4-0008GD-29
-	for gcvg-git-2@gmane.org; Tue, 08 Apr 2008 21:16:34 +0200
+	id 1JjJgk-0001bi-CN
+	for gcvg-git-2@gmane.org; Tue, 08 Apr 2008 21:41:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752648AbYDHTPs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Apr 2008 15:15:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752295AbYDHTPs
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Apr 2008 15:15:48 -0400
-Received: from smtp100.biz.mail.re2.yahoo.com ([206.190.52.46]:22200 "HELO
-	smtp100.biz.mail.re2.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1751968AbYDHTPs (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 8 Apr 2008 15:15:48 -0400
-X-Greylist: delayed 397 seconds by postgrey-1.27 at vger.kernel.org; Tue, 08 Apr 2008 15:15:47 EDT
-Received: (qmail 32400 invoked from network); 8 Apr 2008 19:09:07 -0000
-Received: from unknown (HELO ?192.168.1.9?) (ittayd@tikalk.com@84.108.89.36 with plain)
-  by smtp100.biz.mail.re2.yahoo.com with SMTP; 8 Apr 2008 19:09:06 -0000
-X-YMail-OSG: yMR2IG4VM1nxte5ZOnd9LwUfTTUr4iO_nDafxUg4ZLbhzeJ1vHkvKi5MJTkqqpcO5C0LRC0RuY8YAgRJ_TDDi0R4F.x91VmGlnBqX5oVPiFJB.q3OEY-
-X-Yahoo-Newman-Property: ymail-3
-User-Agent: Thunderbird 2.0.0.12 (X11/20080213)
+	id S1756286AbYDHTkR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Apr 2008 15:40:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755215AbYDHTkR
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Apr 2008 15:40:17 -0400
+Received: from hs-out-0708.google.com ([64.233.178.249]:53622 "EHLO
+	hs-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756259AbYDHTkP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Apr 2008 15:40:15 -0400
+Received: by hs-out-0708.google.com with SMTP id 4so1576531hsl.5
+        for <git@vger.kernel.org>; Tue, 08 Apr 2008 12:40:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=GNtE/axMeHv99UXZ0yQHkX3z42HHiOr2a+8nqjSe8Eg=;
+        b=liceLtCal9RewtTZizfJyfT7ZMDJWiTYW9awMtzlIF5vYAtAJn5X60WMQAmLhSKrMieCGF07UHPbK13aLJBG1PMT7VqELp7kUG+F6ZbhVKi7WdOkf+YjflcIBRk6c2KfDa+AfmmTAdYBP9bfjK+ebqPtjHRl6LEjhAsCxMUhv/g=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=c6C84C0uMZNK6m6fEW2UrnQ213rk1aBilLPuEasEfrlF7FSafgWTTakGmI8kEKylMBUYP4pzc5/PMGkYzno4WmsxJp2bbFXVK7LiSPEaYPCkDAHeDiexLRrLAxxIrqhI/GVYLdUKNYMkd3grDGak7dKggO7vLt9h8kqri0MIx1M=
+Received: by 10.100.13.5 with SMTP id 5mr551818anm.139.1207683614835;
+        Tue, 08 Apr 2008 12:40:14 -0700 (PDT)
+Received: by 10.100.12.8 with HTTP; Tue, 8 Apr 2008 12:40:14 -0700 (PDT)
+In-Reply-To: <20080408131347.GB22623@sigill.intra.peff.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79019>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79020>
 
-Hi,
+On 4/8/08, Jeff King <peff@peff.net> wrote:
+> On Tue, Apr 08, 2008 at 08:00:20AM -0500, Abraham Arce wrote:
+>
+> > While cloning git repository
+> >
+> > git clone http://www.kernel.org/pub/scm/git/git.git
+> >
+> > I've received the following message:
+> >
+> > got 33682a5e98adfd8ba4ce0e21363c443bd273eb77
+> > error: Couldn't get
+> > http://www.kernel.org/pub/scm/git/git.git/refs/tags/gitgui-0.6.0 for
+> > tags/gitgui-0.6.0
+> > The requested URL returned error: 404
+> > error: Could not interpret tags/gitgui-0.6.0 as something to pull
+>
+> This works just fine for me. Which git version are you using? Does the
+> problem still exist if you try again? If that URL did in fact return a
+> 404, it sounds more like a kernel.org problem.
 
-If I want to start working on a project that uses git (and I want to use 
-git also), I first need to clone the project's repo. That is very slow 
-(using the git:// protocol). Are there alternatives? For example, as far 
-as I understand, if all I want is to get the latest commit in HEAD, 
-branch from it and start working, then all git really needs to have is 
-all objects referenced from that commit (commit, trees, blobs) and 
-that's it, right? (as long as I don't expect to see full log of past 
-operations)
+Thanks!
+I've tried 3 times, the git version I am using is 1.5.0.6.
 
-Thanks,
-Ittay
-
--- 
-Ittay Dror <ittayd@tikalk.com>
-Tikal <http://www.tikalk.com>
-Tikal Project <http://tikal.sourceforge.net>
+>
+> -Peff
+>
