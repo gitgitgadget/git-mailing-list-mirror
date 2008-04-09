@@ -1,58 +1,97 @@
-From: Bryan Donlan <bdonlan@fushizen.net>
-Subject: Re: [PATCH 1/8] git-rebase.sh: Fix --merge --abort failures when
-	path contains whitespace
-Date: Wed, 9 Apr 2008 11:02:46 -0400
-Message-ID: <20080409150246.GE24402@shion.is.fushizen.net>
-References: <cover.1207702130.git.bdonlan@fushizen.net> <1207704604-30393-1-git-send-email-bdonlan@fushizen.net> <47FC6863.8070704@viscovery.net> <20080409143702.GD24402@shion.is.fushizen.net> <47FCD7E8.40004@viscovery.net>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] git-remote: show all remotes with "git remote show"
+Date: Wed, 9 Apr 2008 11:15:51 -0400
+Message-ID: <20080409151551.GA30439@sigill.intra.peff.net>
+References: <20080409101428.GA2637@elte.hu> <20080409145758.GB20874@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Adam Roben <aroben@apple.com>,
-	gitster@pobox.com
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed Apr 09 17:03:56 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Ingo Molnar <mingo@elte.hu>
+X-From: git-owner@vger.kernel.org Wed Apr 09 17:16:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jjbpq-0001zc-8q
-	for gcvg-git-2@gmane.org; Wed, 09 Apr 2008 17:03:38 +0200
+	id 1Jjc2R-0007a0-LP
+	for gcvg-git-2@gmane.org; Wed, 09 Apr 2008 17:16:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754012AbYDIPCr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Apr 2008 11:02:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753956AbYDIPCr
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Apr 2008 11:02:47 -0400
-Received: from satoko.is.fushizen.net ([64.71.152.231]:40193 "EHLO
-	satoko.is.fushizen.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753959AbYDIPCr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Apr 2008 11:02:47 -0400
-Received: from hillmannl2.umeres.maine.edu ([130.111.243.252] helo=shion)
-	by satoko.is.fushizen.net with esmtpa (Exim 4.69)
-	(envelope-from <bdonlan@fushizen.net>)
-	id 1Jjbp0-0001Mj-CD; Wed, 09 Apr 2008 15:02:46 +0000
-Received: from bd by shion with local (Exim 4.69)
-	(envelope-from <bdonlan@fushizen.net>)
-	id 1Jjbp0-0007sI-Oz; Wed, 09 Apr 2008 11:02:46 -0400
+	id S1753657AbYDIPPz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Apr 2008 11:15:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752584AbYDIPPz
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Apr 2008 11:15:55 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3592 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752500AbYDIPPy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Apr 2008 11:15:54 -0400
+Received: (qmail 4322 invoked by uid 111); 9 Apr 2008 15:15:51 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Wed, 09 Apr 2008 11:15:51 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 09 Apr 2008 11:15:51 -0400
 Content-Disposition: inline
-In-Reply-To: <47FCD7E8.40004@viscovery.net>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+In-Reply-To: <20080409145758.GB20874@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79115>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79116>
 
-On Wed, Apr 09, 2008 at 04:51:20PM +0200, Johannes Sixt wrote:
-> Bryan Donlan schrieb:
+Many other commands use the "no arguments" form to show a
+list (e.g., git-branch, git-tag). While we did show all
+remotes for just "git remote", we displayed a usage error
+for "git remote show" with no arguments. This is
+counterintuitive, since by giving it _more_ information, we
+get _less_ result.
+
+The usage model can now be thought of as:
+
+  - "git remote show <remote>": show a remote
+  - "git remote show": show all remotes
+  - "git remote": assume "show"; i.e., shorthand for "git remote show"
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+On Wed, Apr 09, 2008 at 10:57:58AM -0400, Jeff King wrote:
+
+> > then i tried git-remote show -a (to list all repositories, etc.) - what 
+> > i didnt figure out was to show all repositories is to do a simple 
+> > "git-remote". I think "git-remote show" should output all repositories, 
+> > or at least indicate it in its help line what to do to get such a list. 
+> > (for us poor sobs forgetting commandline details ;)
 > 
-> > If you like I can add a change to the trash directory to the next rev of
-> > the patchset.
-> 
-> Yes, why not?
+> Yes, just showing the remotes would be consistent with what other
+> commands do (e.g., git-branch, git-tag). I'll post a patch in a minute.
 
-How exotic ought it be? I'm not entirely sure which characters are
-allowed on windows or any other non-unixes that git supports (are there
-any?)
+And here it is.
 
-Thanks,
+ builtin-remote.c |    7 ++++++-
+ 1 files changed, 6 insertions(+), 1 deletions(-)
 
-Bryan
+diff --git a/builtin-remote.c b/builtin-remote.c
+index d77f10a..06d33e5 100644
+--- a/builtin-remote.c
++++ b/builtin-remote.c
+@@ -19,6 +19,8 @@ static const char * const builtin_remote_usage[] = {
+ 
+ static int verbose;
+ 
++static int show_all(void);
++
+ static inline int postfixcmp(const char *string, const char *postfix)
+ {
+ 	int len1 = strlen(string), len2 = strlen(postfix);
+@@ -380,8 +382,11 @@ static int show_or_prune(int argc, const char **argv, int prune)
+ 
+ 	argc = parse_options(argc, argv, options, builtin_remote_usage, 0);
+ 
+-	if (argc < 1)
++	if (argc < 1) {
++		if (!prune)
++			return show_all();
+ 		usage_with_options(builtin_remote_usage, options);
++	}
+ 
+ 	memset(&states, 0, sizeof(states));
+ 	for (; argc; argc--, argv++) {
+-- 
+1.5.5.1.g272c
