@@ -1,66 +1,55 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH 7/8] Use test_set_editor in t9001-send-email.sh
-Date: Wed, 09 Apr 2008 09:01:31 +0200
-Message-ID: <47FC69CB.1080400@viscovery.net>
-References: <> <cover.1207702130.git.bdonlan@fushizen.net> <1207704604-30393-1-git-send-email-bdonlan@fushizen.net> <1207704604-30393-2-git-send-email-bdonlan@fushizen.net> <1207704604-30393-3-git-send-email-bdonlan@fushizen.net> <1207704604-30393-4-git-send-email-bdonlan@fushizen.net> <1207704604-30393-5-git-send-email-bdonlan@fushizen.net> <1207704604-30393-6-git-send-email-bdonlan@fushizen.net> <1207704604-30393-7-git-send-email-bdonlan@fushizen.net>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: git bisect on multiple cores
+Date: Wed, 9 Apr 2008 09:17:50 +0200
+Message-ID: <20080409071750.GA23211@diana.vm.bytemark.co.uk>
+References: <dbbf25900804080358o6b1ada20pfb94f68f06a23f83@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Adam Roben <aroben@apple.com>,
-	gitster@pobox.com
-To: Bryan Donlan <bdonlan@fushizen.net>
-X-From: git-owner@vger.kernel.org Wed Apr 09 09:02:18 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: A B <gentosaker@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 09 09:19:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JjUK1-00056w-S2
-	for gcvg-git-2@gmane.org; Wed, 09 Apr 2008 09:02:18 +0200
+	id 1JjUaC-0001aY-4C
+	for gcvg-git-2@gmane.org; Wed, 09 Apr 2008 09:19:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752630AbYDIHBe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Apr 2008 03:01:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750996AbYDIHBe
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Apr 2008 03:01:34 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:8784 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751178AbYDIHBd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Apr 2008 03:01:33 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1JjUJH-0005qi-UV; Wed, 09 Apr 2008 09:01:32 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id BFC4F546; Wed,  9 Apr 2008 09:01:31 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <1207704604-30393-7-git-send-email-bdonlan@fushizen.net>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: 1.2 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_95=3
+	id S1753133AbYDIHSF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Apr 2008 03:18:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753252AbYDIHSE
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Apr 2008 03:18:04 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4900 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753699AbYDIHSD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Apr 2008 03:18:03 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1JjUZ4-00065K-00; Wed, 09 Apr 2008 08:17:50 +0100
+Content-Disposition: inline
+In-Reply-To: <dbbf25900804080358o6b1ada20pfb94f68f06a23f83@mail.gmail.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79083>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79084>
 
-Bryan Donlan schrieb:
-> diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-> index 030f66c..0a65785 100755
-> --- a/t/t9001-send-email.sh
-> +++ b/t/t9001-send-email.sh
-> @@ -144,10 +144,7 @@ test_expect_success 'setup fake editor' '
->  	chmod +x fake-editor
->  '
->  
-> -FAKE_EDITOR="$(pwd)/fake-editor"
-> -export FAKE_EDITOR
-> -GIT_EDITOR='"$FAKE_EDITOR"'
-> -export GIT_EDITOR
-> +test_set_editor "$(pwd)/fake-editor"
->  
->  test_expect_success '--compose works' '
->  	clean_fake_sendmail &&
+On 2008-04-08 12:58:47 +0200, A B wrote:
 
-I'd squash this into 5/8 or 8/8. Dunno.
+> git bisect is really cool. I use it for the first time. Just a
+> thought, if you have a multiple core computer, can't you make git
+> build new versions in the background while testing the previuos
+> version? Alright, if you build 2 versions, one of them will never be
+> tested, but you will perhaps save some time by letting it build in
+> the background?
 
--- Hannes
+Adding parallelism to a binary search scales very badly -- I'd say
+about logarithmically, but I haven't thought hard about it. If it's
+possible to use the extra cores to speed up the build+test cycle,
+that's vastly preferable.
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
