@@ -1,99 +1,145 @@
-From: Julian Phillips <julian@quantumfyre.co.uk>
-Subject: Re: Is my repository broken?
-Date: Wed, 9 Apr 2008 11:01:28 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0804091046170.14797@reaper.quantumfyre.co.uk>
-References: <Pine.LNX.4.64.0804082246160.8753@kaos.quantumfyre.co.uk>
- <20080408225522.GD10274@spearce.org> <Pine.LNX.4.64.0804090003480.10813@kaos.quantumfyre.co.uk>
- <7vbq4jcyj7.fsf@gitster.siamese.dyndns.org>
+From: Ingo Molnar <mingo@elte.hu>
+Subject: git annoyances
+Date: Wed, 9 Apr 2008 12:14:28 +0200
+Message-ID: <20080409101428.GA2637@elte.hu>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 09 12:03:24 2008
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 09 12:15:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JjX98-0000fX-VN
-	for gcvg-git-2@gmane.org; Wed, 09 Apr 2008 12:03:15 +0200
+	id 1JjXKy-0004hf-JG
+	for gcvg-git-2@gmane.org; Wed, 09 Apr 2008 12:15:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752377AbYDIKCb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Apr 2008 06:02:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752432AbYDIKCb
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Apr 2008 06:02:31 -0400
-Received: from electron.quantumfyre.co.uk ([87.106.55.16]:48762 "EHLO
-	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752377AbYDIKCb (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 9 Apr 2008 06:02:31 -0400
-Received: from neutron.quantumfyre.co.uk (neutron.datavampyre.co.uk [212.159.54.235])
-	by electron.quantumfyre.co.uk (Postfix) with ESMTP id 6863D144BF6
-	for <git@vger.kernel.org>; Wed,  9 Apr 2008 11:02:29 +0100 (BST)
-Received: (qmail 5950 invoked by uid 103); 9 Apr 2008 11:02:42 +0100
-Received: from 212.159.54.234 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
- (spamassassin: 3.2.1. perlscan: 1.25st.  
- Clear:RC:1(212.159.54.234):. 
- Processed in 0.030382 secs); 09 Apr 2008 10:02:42 -0000
-Received: from darkphoton.datavampyre.co.uk (212.159.54.234)
-  by neutron.datavampyre.co.uk with SMTP; 9 Apr 2008 11:02:42 +0100
-X-X-Sender: jp3@reaper.quantumfyre.co.uk
-In-Reply-To: <7vbq4jcyj7.fsf@gitster.siamese.dyndns.org>
+	id S1752864AbYDIKOl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Apr 2008 06:14:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752404AbYDIKOl
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Apr 2008 06:14:41 -0400
+Received: from mx3.mail.elte.hu ([157.181.1.138]:53262 "EHLO mx3.mail.elte.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752630AbYDIKOl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Apr 2008 06:14:41 -0400
+Received: from elvis.elte.hu ([157.181.1.14])
+	by mx3.mail.elte.hu with esmtp (Exim)
+	id 1JjXK3-0006AW-64
+	from <mingo@elte.hu>
+	for <git@vger.kernel.org>; Wed, 09 Apr 2008 12:14:39 +0200
+Received: by elvis.elte.hu (Postfix, from userid 1004)
+	id F27BF3E21D8; Wed,  9 Apr 2008 12:14:27 +0200 (CEST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.17 (2007-11-01)
+Received-SPF: neutral (mx3: 157.181.1.14 is neither permitted nor denied by domain of elte.hu) client-ip=157.181.1.14; envelope-from=mingo@elte.hu; helo=elvis.elte.hu;
+X-ELTE-VirusStatus: clean
+X-ELTE-SpamScore: -1.5
+X-ELTE-SpamLevel: 
+X-ELTE-SpamCheck: no
+X-ELTE-SpamVersion: ELTE 2.0 
+X-ELTE-SpamCheck-Details: score=-1.5 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.2.3
+	-1.5 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
+	[score: 0.0000]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79094>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79095>
 
-On Tue, 8 Apr 2008, Junio C Hamano wrote:
 
-> Julian Phillips <julian@quantumfyre.co.uk> writes:
->
->> On Tue, 8 Apr 2008, Shawn O. Pearce wrote:
->>
->>> The same holds true for the empty ident.
->>
->> Ok - but I can't even find a note in the manpage for this one ...
->
-> That's not a fair complaint.
+i just had a rather annoying session with git - here's the dump and 
+commentary, in case anyone is interested in usability fineprint.
 
-I didn't mean it as a complaint, but rather was hoping for a response of 
-the form "no, it's not there" or "it's in the ... section" - sorry for not 
-being clear.  It caught me out, if that was my own fault then fair enough 
-- but if this was because the documentation doesn't make it clear then I 
-can submit a documentation patch to try and help others avoid the same 
-problem.
+it was with git-core-1.5.4.3-2.fc8 - so if it's all fixed/improved in 
+1.5.5, or if this is blatant user error for which i deserve to be 
+punished then my apologies!
 
-I think that the fast-import tool is extremely useful, and generally very 
-well documented.  That doesn't mean that the documentation can't be 
-improved though.
+usually i just have a single git repo that tracks everything 
+interesting, but this time i did something i rarely do: i tried to merge 
+one local tree of mine into another local tree of mine. So i had no 
+commands (or even concepts) cached in my short-term memory that would 
+achieve this goal, i just tried the commands that i thought to be 
+'obvious', without applying much (or any) IQ to those commands:
 
-> It is often very hard to document that "we do not do X", because the line
-> to stop at becomes fuzzier as you try to do more thorough job.  We do not
-> warn on empty ident, we do not warn on typos in commit log messages, we do
-> not warn on empty blob, we do not warn on ...  You get the idea.
+ $ cd linux-2.6-sched-devel.git
 
-Git doesn't die when trying to commit typos though ...  I think "creating 
-a commit that you could not create using git-commit" is a pretty hard 
-line.
+ $ git-remote add ~/linux-2.6-x86.git
 
-I don't think that it is entirely unreasonable to expect that when an 
-existing repository is run through a tool like filter-branch that all your 
-existing commits are preserved - and that you don't lose large chunks 
-because it turns out that they are actually invalid by the rules of 
-git-commit.
+ $ git-remote show x86
+  * remote x86
+    URL: /home/mingo/linux-2.6-x86.git
+  New remote branches (next fetch will store in remotes/x86)
+  base for-akpm for-linus latest master testing
 
-I accept that you may want fast-import to create things that are 
-technically illegal, but at the very least it ought to be possible to find 
-out what restrictions are not being enforced.  Otherwise it might be that 
-you manage to destroy a previously functioning repository by accident long 
-after you thought you had successfully converted your respository.  After 
-all, I would have thought that the majority of people using fast-import 
-(either directly, or indirectly by using a fast-import based importer) 
-would actually intend to use the repository created with the normal git 
-tools from then on.
+ $ git-merge x86/latest
+ x86/latest - not something we can merge
 
--- 
-Julian
+ #
+ # ho hum. Not something 'we' can merge. Do i care? :-) There's no 
+ # actionable reference given to the user about how to resolve this 
+ # problem. So i kept on trying:
+ #
 
-  ---
-I have often regretted my speech, never my silence.
- 		-- Publilius Syrus
+ $ git-fetch x86/latest
+ fatal: 'x86/latest': unable to chdir or not a git archive
+ fatal: The remote end hung up unexpectedly
+
+ $ git-pull x86/latest
+ fatal: 'x86/latest': unable to chdir or not a git archive
+ fatal: The remote end hung up unexpectedly
+
+ #
+ # hm. two fatal messages, suggesting that there's something really 
+ # wrong while there's nothing wrong.
+ #
+
+what got me going after experimenting around some more was this exact 
+command:
+
+ $ git-pull x86 latest
+
+(that fetch+merge went problem-free.)
+
+but it was a PITA and all of git's messages about the problem were not 
+only unhelpful, they confused me into looking for problems where there 
+were none IMO. I was starting to wonder whether i have to have some git 
+daemon running on that box for example. But in retrospect IMO it was 
+rather clear from the outset what i wanted git to do (merge the tip of 
+my other tree into the tip of this tree, on the local box, no frills), i 
+just didnt figure out the exact command to do it.
+
+another (minor) usability annoyance: one of the first things i tried was 
+to verify the remote setup, via:
+
+$ git-remote show
+
+which gave me this answer:
+
+ Usage: git remote show <remote>
+
+then i tried git-remote show -a (to list all repositories, etc.) - what 
+i didnt figure out was to show all repositories is to do a simple 
+"git-remote". I think "git-remote show" should output all repositories, 
+or at least indicate it in its help line what to do to get such a list. 
+(for us poor sobs forgetting commandline details ;)
+
+also, the first natural thing i did was to just type:
+
+ $ git-merge ~/linux-2.6-x86.git/
+
+which i naively assumed would sort things out for me and provide some 
+reasonable default behavior - but instead it just gave an annoyingly 
+unhelpful error message:
+
+ /home/mingo/linux-2.6-x86.git/ - not something we can merge
+
+there should really be a consciously established "route of failure 
+resolution" - directing people towards relevant sources of information 
+or commands when the git command-line utilities return some error due to 
+user incompetence. Otherwise users just guess around and get frustrated.
+
+also, i think this session also probably matches the newbie's experience 
+about git, and making certain git operations so hard to achieve is 
+certainly not a reassuring experience for them either. [ Or shall they 
+all be filtered out as fundamentally incompetent people? ;-) ]
+
+	Ingo
