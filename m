@@ -1,99 +1,99 @@
-From: Jim Meyering <jim@meyering.net>
-Subject: [PATCH] (parsecvs) avoid "git mktag" failure with newer git
-Date: Wed, 09 Apr 2008 12:01:34 +0200
-Message-ID: <871w5fz6rl.fsf@rho.meyering.net>
+From: Julian Phillips <julian@quantumfyre.co.uk>
+Subject: Re: Is my repository broken?
+Date: Wed, 9 Apr 2008 11:01:28 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0804091046170.14797@reaper.quantumfyre.co.uk>
+References: <Pine.LNX.4.64.0804082246160.8753@kaos.quantumfyre.co.uk>
+ <20080408225522.GD10274@spearce.org> <Pine.LNX.4.64.0804090003480.10813@kaos.quantumfyre.co.uk>
+ <7vbq4jcyj7.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: keithp@keithp.com
-To: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Apr 09 12:02:27 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 09 12:03:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JjX8I-0000O1-37
-	for gcvg-git-2@gmane.org; Wed, 09 Apr 2008 12:02:22 +0200
+	id 1JjX98-0000fX-VN
+	for gcvg-git-2@gmane.org; Wed, 09 Apr 2008 12:03:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752235AbYDIKBh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Apr 2008 06:01:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751776AbYDIKBh
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Apr 2008 06:01:37 -0400
-Received: from smtp3-g19.free.fr ([212.27.42.29]:46914 "EHLO smtp3-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751290AbYDIKBg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Apr 2008 06:01:36 -0400
-Received: from smtp3-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id 35A8A17B5BA
-	for <git@vger.kernel.org>; Wed,  9 Apr 2008 12:01:35 +0200 (CEST)
-Received: from mx.meyering.net (mx.meyering.net [82.230.74.64])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id E38BE17B559
-	for <git@vger.kernel.org>; Wed,  9 Apr 2008 12:01:34 +0200 (CEST)
-Received: from rho.meyering.net (localhost.localdomain [127.0.0.1])
-	by rho.meyering.net (Acme Bit-Twister) with ESMTP id A1EF59064;
-	Wed,  9 Apr 2008 12:01:34 +0200 (CEST)
+	id S1752377AbYDIKCb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Apr 2008 06:02:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752432AbYDIKCb
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Apr 2008 06:02:31 -0400
+Received: from electron.quantumfyre.co.uk ([87.106.55.16]:48762 "EHLO
+	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752377AbYDIKCb (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 9 Apr 2008 06:02:31 -0400
+Received: from neutron.quantumfyre.co.uk (neutron.datavampyre.co.uk [212.159.54.235])
+	by electron.quantumfyre.co.uk (Postfix) with ESMTP id 6863D144BF6
+	for <git@vger.kernel.org>; Wed,  9 Apr 2008 11:02:29 +0100 (BST)
+Received: (qmail 5950 invoked by uid 103); 9 Apr 2008 11:02:42 +0100
+Received: from 212.159.54.234 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
+ (spamassassin: 3.2.1. perlscan: 1.25st.  
+ Clear:RC:1(212.159.54.234):. 
+ Processed in 0.030382 secs); 09 Apr 2008 10:02:42 -0000
+Received: from darkphoton.datavampyre.co.uk (212.159.54.234)
+  by neutron.datavampyre.co.uk with SMTP; 9 Apr 2008 11:02:42 +0100
+X-X-Sender: jp3@reaper.quantumfyre.co.uk
+In-Reply-To: <7vbq4jcyj7.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79093>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79094>
 
-With recent git, parsecvs now always fails like this:
+On Tue, 8 Apr 2008, Junio C Hamano wrote:
 
-  ...
-  Save:                              master *....................     1 of   269
-  Save:                              master *....................     2 of   269
-  error: char77: malformed tagger field
-  fatal: invalid tag signature file
-  git-mktag < '.git-cvs/tag-0': No such file or directory
+> Julian Phillips <julian@quantumfyre.co.uk> writes:
+>
+>> On Tue, 8 Apr 2008, Shawn O. Pearce wrote:
+>>
+>>> The same holds true for the empty ident.
+>>
+>> Ok - but I can't even find a note in the manpage for this one ...
+>
+> That's not a fair complaint.
 
-This is due to the change that makes git's mktag perform
-stricter input validation.  parsecvs patch below.
+I didn't mean it as a complaint, but rather was hoping for a response of 
+the form "no, it's not there" or "it's in the ... section" - sorry for not 
+being clear.  It caught me out, if that was my own fault then fair enough 
+- but if this was because the documentation doesn't make it clear then I 
+can submit a documentation patch to try and help others avoid the same 
+problem.
 
-[BTW, Keith, or anyone with write access to the parsecvs repo,
- I have a few other patches, but a few I sent have gone un-applied
- and with no response for months, I'm hoping there's a maintained
- repository somewhere else.
+I think that the fast-import tool is extremely useful, and generally very 
+well documented.  That doesn't mean that the documentation can't be 
+improved though.
 
- I've been using this: git://people.freedesktop.org/~keithp/parsecvs
+> It is often very hard to document that "we do not do X", because the line
+> to stop at becomes fuzzier as you try to do more thorough job.  We do not
+> warn on empty ident, we do not warn on typos in commit log messages, we do
+> not warn on empty blob, we do not warn on ...  You get the idea.
 
- Today's failure nearly pushed me to cvs2git (aka cvs2svn
- http://cvs2svn.tigris.org/cvs2git.html), which I hear is good,
- although still pretty new.  Since this fix was easy, I'm sticking
- with parsecvs for now. ]
+Git doesn't die when trying to commit typos though ...  I think "creating 
+a commit that you could not create using git-commit" is a pretty hard 
+line.
 
->From 9c6ca141e82fae93ff173b87a27c118c5e87547c Mon Sep 17 00:00:00 2001
-From: Jim Meyering <meyering@redhat.com>
-Date: Wed, 9 Apr 2008 11:53:29 +0200
-Subject: [PATCH] avoid "git mktag" failure with newer git
+I don't think that it is entirely unreasonable to expect that when an 
+existing repository is run through a tool like filter-branch that all your 
+existing commits are preserved - and that you don't lose large chunks 
+because it turns out that they are actually invalid by the rules of 
+git-commit.
 
-* git.c (git_mktag): Emit full tagger information, now that
-git's mktag (since git's 5fbd0a44cfee7be96fe29b9252f34b8f1bce9ac5
-on 2008-04-02) is more strict about it.
+I accept that you may want fast-import to create things that are 
+technically illegal, but at the very least it ought to be possible to find 
+out what restrictions are not being enforced.  Otherwise it might be that 
+you manage to destroy a previously functioning repository by accident long 
+after you thought you had successfully converted your respository.  After 
+all, I would have thought that the majority of people using fast-import 
+(either directly, or indirectly by using a fast-import based importer) 
+would actually intend to use the repository created with the normal git 
+tools from then on.
 
-Signed-off-by: Jim Meyering <meyering@redhat.com>
----
- git.c |    6 ++++--
- 1 files changed, 4 insertions(+), 2 deletions(-)
+-- 
+Julian
 
-diff --git a/git.c b/git.c
-index 614069d..a1828ef 100644
---- a/git.c
-+++ b/git.c
-@@ -371,11 +371,13 @@ git_mktag (rev_commit *commit, char *name)
- 		"object %s\n"
- 		"type commit\n"
- 		"tag %s\n"
--		"tagger %s\n"
-+		"tagger %s <%s> %lu +0000\n"
- 		"\n",
- 		commit->sha1,
- 		name,
--		author ? author->full : commit->author);
-+		author ? author->full : commit->author,
-+		author ? author->email : commit->author,
-+		commit->date);
-     if (rv < 1) {
- 	fprintf (stderr, "%s: %s\n", filename, strerror (errno));
- 	fclose (f);
---
-1.5.5.rc3.14.g78bf3
+  ---
+I have often regretted my speech, never my silence.
+ 		-- Publilius Syrus
