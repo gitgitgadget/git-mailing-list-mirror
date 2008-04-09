@@ -1,138 +1,118 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: git annoyances
-Date: Wed, 9 Apr 2008 12:41:25 +0200
-Message-ID: <20080409104125.GA16607@atjola.homenet>
-References: <20080409101428.GA2637@elte.hu>
+From: =?iso-8859-1?Q?J=F6rg?= Sommer <joerg@alea.gnuu.de>
+Subject: Re: git-merge adds test to a message -- bug?
+Date: Wed, 9 Apr 2008 12:40:48 +0200
+Message-ID: <20080409104048.GA1782@alea.gnuu.de>
+References: <slrnfudp0q.19k.joerg@alea.gnuu.de> <7vabko3dm2.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0803241208400.4353@racer.site> <7viqzcvznm.fsf@gitster.siamese.dyndns.org> <20080325001247.GB26905@alea.gnuu.de> <alpine.LSU.1.00.0803252102140.10660@wbgn129.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Ingo Molnar <mingo@elte.hu>
-X-From: git-owner@vger.kernel.org Wed Apr 09 12:42:14 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="GvXjxJ+pjyke8COw"
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Apr 09 12:46:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JjXkr-00045s-Dd
-	for gcvg-git-2@gmane.org; Wed, 09 Apr 2008 12:42:13 +0200
+	id 1JjXoT-0005AG-W6
+	for gcvg-git-2@gmane.org; Wed, 09 Apr 2008 12:45:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753022AbYDIKl3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Apr 2008 06:41:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753021AbYDIKl3
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Apr 2008 06:41:29 -0400
-Received: from mail.gmx.net ([213.165.64.20]:41505 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752898AbYDIKl3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Apr 2008 06:41:29 -0400
-Received: (qmail invoked by alias); 09 Apr 2008 10:41:26 -0000
-Received: from i577BA362.versanet.de (EHLO atjola.local) [87.123.163.98]
-  by mail.gmx.net (mp012) with SMTP; 09 Apr 2008 12:41:26 +0200
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX18oKzZQrY0o45GDA/kEBfkpi6VJyk6KQ6zBU/5bgs
-	fqk2LRR9jsGdA4
+	id S1753109AbYDIKpM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Apr 2008 06:45:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753148AbYDIKpM
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Apr 2008 06:45:12 -0400
+Received: from banki.eumelnet.de ([83.246.114.63]:2070 "EHLO uucp.gnuu.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753077AbYDIKpL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Apr 2008 06:45:11 -0400
+Received: by uucp.gnuu.de (Postfix, from userid 10)
+	id CB0F0488033; Wed,  9 Apr 2008 12:45:08 +0200 (CEST)
+Received: from ibook.localnet ([192.168.0.5] helo=alea.gnuu.de)
+	by alea.gnuu.de with esmtp (Exim 4.63)
+	(envelope-from <joerg@alea.gnuu.de>)
+	id 1JjXjU-0003WM-GH; Wed, 09 Apr 2008 12:40:48 +0200
+Received: from joerg by alea.gnuu.de with local (Exim 4.69)
+	(envelope-from <joerg@alea.gnuu.de>)
+	id 1JjXjU-0000T0-4L; Wed, 09 Apr 2008 12:40:48 +0200
 Content-Disposition: inline
-In-Reply-To: <20080409101428.GA2637@elte.hu>
+In-Reply-To: <alpine.LSU.1.00.0803252102140.10660@wbgn129.biozentrum.uni-wuerzburg.de>
 User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79100>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79101>
 
-On 2008.04.09 12:14:28 +0200, Ingo Molnar wrote:
->=20
-> i just had a rather annoying session with git - here's the dump and=20
-> commentary, in case anyone is interested in usability fineprint.
->=20
-> it was with git-core-1.5.4.3-2.fc8 - so if it's all fixed/improved in=
+
+--GvXjxJ+pjyke8COw
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+Hallo Johannes,
+
+Johannes Schindelin schrieb am Tue 25. Mar, 21:04 (+0100):
+> On Tue, 25 Mar 2008, J=F6rg Sommer wrote:
+> > Junio C Hamano schrieb am Mon 24. Mar, 09:45 (-0700):
+> > > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> > > > On Sun, 23 Mar 2008, Junio C Hamano wrote:
+> > > >
+> > > >> I unfortunately do not recall why _prepend_, and not _replace_, ha=
+d=20
+> > > >> to be the right behaviour.
+> > > >
+> > > > http://article.gmane.org/gmane.comp.version-control.git/31896/match=
+=3Dgit+merge+make+usable
+> > >=20
+> > > So it was "my suspicion that people who would want to pass -m would=
 =20
-> 1.5.5, or if this is blatant user error for which i deserve to be=20
-> punished then my apologies!
->=20
-> usually i just have a single git repo that tracks everything=20
-> interesting, but this time i did something i rarely do: i tried to me=
-rge=20
-> one local tree of mine into another local tree of mine. So i had no=20
-> commands (or even concepts) cached in my short-term memory that would=
+> > > want it to behave this way".
+> > >=20
+> > > I do not care deeply either way myself, as I never have found use for=
 =20
-> achieve this goal, i just tried the commands that i thought to be=20
-> 'obvious', without applying much (or any) IQ to those commands:
->=20
->  $ cd linux-2.6-sched-devel.git
->=20
->  $ git-remote add ~/linux-2.6-x86.git
->=20
->  $ git-remote show x86
->   * remote x86
->     URL: /home/mingo/linux-2.6-x86.git
->   New remote branches (next fetch will store in remotes/x86)
-                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-I gues that's key here. The remote was added, but you don't actually
-have fetched the branches yet. Thus the merge fails, but the pull with
-the correct syntax succeeded, because it does a fetch first.
-
->   base for-akpm for-linus latest master testing
->=20
->  $ git-merge x86/latest
->  x86/latest - not something we can merge
->=20
->  #
->  # ho hum. Not something 'we' can merge. Do i care? :-) There's no=20
->  # actionable reference given to the user about how to resolve this=20
->  # problem. So i kept on trying:
->  #
-
-No branch, no merge ;-)
-
->  $ git-fetch x86/latest
->  fatal: 'x86/latest': unable to chdir or not a git archive
->  fatal: The remote end hung up unexpectedly
->=20
->  $ git-pull x86/latest
->  fatal: 'x86/latest': unable to chdir or not a git archive
->  fatal: The remote end hung up unexpectedly
->=20
->  #
->  # hm. two fatal messages, suggesting that there's something really=20
->  # wrong while there's nothing wrong.
->  #
-
-The syntax is "git pull <repository> <refspec>"
-
-So you're trying to fetch/pull from a repository in "x86/latest", that
-path doesn't exist and that is pretty fatal as you cannot fetch/pull
-from a repository that doesn't exist.
-
-> what got me going after experimenting around some more was this exact=
+> > > -m to the merge command, but I think it could have been argued either=
 =20
-> command:
->=20
->  $ git-pull x86 latest
->=20
-> (that fetch+merge went problem-free.)
-
-Yeah, correct syntax and pull does the fetch for you.
-
-> also, the first natural thing i did was to just type:
->=20
->  $ git-merge ~/linux-2.6-x86.git/
->=20
-> which i naively assumed would sort things out for me and provide some=
+> > > way.
+> >=20
+> > I would like to argue for the replace way. :) Take git rebase -p as an=
 =20
-> reasonable default behavior - but instead it just gave an annoyingly=20
-> unhelpful error message:
+> > example. If a merge is included in the rebase, it's redone with git=20
+> > merge -m. Because git rebase works with detached heads you get merge=20
+> > messages like this: [...]
 >=20
->  /home/mingo/linux-2.6-x86.git/ - not something we can merge
+> That only means that the original author of rebase -p was a lazy bastard=
+=20
+> and did not use the proper way to call git-merge, namely
+>=20
+> 	git <msg> HEAD <the-other-branch>
 
-AFAIK merge cannot handle stuff that's outside your repo. To merge stuf=
-f
-from another repo without adding a remote, you have to use pull (or
-manually do the fetch+merge dance), ie.:
+It this really a proper way to call git merge? The manpage says:
 
-git pull ~/linux-2.6-x86.git latest
+    The second syntax (<msg> HEAD <remote>) is supported for historical
+    reasons. Do not use it from the command line or in new scripts. It is
+    the same as git merge -m <msg> <remote>.
 
-should do.
+And how would you pass the option for the strategy to this form? Git
+rebase calls git merge with -s.
 
-Bj=F6rn
+Bye, J=F6rg.
+--=20
+But in the case of "git revert", it should be an ancestor (or the user
+is just insane, in which case it doesn't matter - insane people can do
+insane things)
+Linus Torvalds <alpine.LFD.1.00.0801041031590.2811@woody.linux-foundation.o=
+rg>
+
+--GvXjxJ+pjyke8COw
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature http://en.wikipedia.org/wiki/OpenPGP
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFH/J0wwe0mZwH1VIARAlSoAJ94eBrVB7AMxeSqhLgoI1QD3Q5gqACfVJG4
+uOtXAZwvqhj7O4E3pSG/Fq8=
+=dxrr
+-----END PGP SIGNATURE-----
+
+--GvXjxJ+pjyke8COw--
