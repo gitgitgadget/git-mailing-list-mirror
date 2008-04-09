@@ -1,67 +1,68 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: git bisect on multiple cores
-Date: Wed, 9 Apr 2008 10:27:00 +0200
-Message-ID: <20080409082700.GA24195@diana.vm.bytemark.co.uk>
-References: <dbbf25900804080358o6b1ada20pfb94f68f06a23f83@mail.gmail.com> <20080409071750.GA23211@diana.vm.bytemark.co.uk> <vpq63ure9j6.fsf@bauges.imag.fr>
+From: "Rafael Garcia-Suarez" <rgarciasuarez@gmail.com>
+Subject: Re: Test suite failures due to Error.pm issues.
+Date: Wed, 9 Apr 2008 10:34:30 +0200
+Message-ID: <b77c1dce0804090134j514811d7mbffdc73dee5a90b7@mail.gmail.com>
+References: <20080408221853.GA3819@net-ronin.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: A B <gentosaker@gmail.com>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Wed Apr 09 10:34:27 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "carbonated beverage" <ramune@net-ronin.org>
+X-From: git-owner@vger.kernel.org Wed Apr 09 10:35:18 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JjVl9-0001tt-Rd
-	for gcvg-git-2@gmane.org; Wed, 09 Apr 2008 10:34:24 +0200
+	id 1JjVm1-00029a-Vq
+	for gcvg-git-2@gmane.org; Wed, 09 Apr 2008 10:35:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752296AbYDIIdk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Apr 2008 04:33:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752141AbYDIIdk
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Apr 2008 04:33:40 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2318 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752296AbYDIIdj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Apr 2008 04:33:39 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1JjVe0-0006JZ-00; Wed, 09 Apr 2008 09:27:00 +0100
+	id S1752494AbYDIIec (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Apr 2008 04:34:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752462AbYDIIec
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Apr 2008 04:34:32 -0400
+Received: from wf-out-1314.google.com ([209.85.200.168]:39323 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752420AbYDIIeb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Apr 2008 04:34:31 -0400
+Received: by wf-out-1314.google.com with SMTP id 28so2427781wff.4
+        for <git@vger.kernel.org>; Wed, 09 Apr 2008 01:34:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=VaELn4k/XmyqgzxCgWGPOsHyFVZD4VpLfFqunz4kbH8=;
+        b=ju0luVmyXgQYA9g/olDGrbwRnh78F+6xj7Ovuz8t5X+echda+uettIa1qvz4T1xhj/CZWtjaKvXEtkQt6Wnd2GKpfBbOwVji2V7nyURoB/PA1iq31nVwSPXWbB0Mh3e1MQ19zkKtBPcCrm+pfmQMANsARTltTv3PxLREO7r0pmU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=vQsGA5ghONnk4TaCz/VbJU+j2sGm91r4gGGmfXPdC5spljixBEhCQlDSApHKj/zcUThBZg26aRIzNifnsCQew7Mzg8hxQc1bQG0RCw6NkNdmrqZS0QzoM1b0zlATYS8COuOlTE70qgvOQbH5xoOLgb1Hr1ZlWJCVn7alcko8T2I=
+Received: by 10.142.47.6 with SMTP id u6mr3463008wfu.29.1207730070823;
+        Wed, 09 Apr 2008 01:34:30 -0700 (PDT)
+Received: by 10.142.156.10 with HTTP; Wed, 9 Apr 2008 01:34:30 -0700 (PDT)
+In-Reply-To: <20080408221853.GA3819@net-ronin.org>
 Content-Disposition: inline
-In-Reply-To: <vpq63ure9j6.fsf@bauges.imag.fr>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79087>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79088>
 
-On 2008-04-09 10:07:25 +0200, Matthieu Moy wrote:
-
-> Karl Hasselstr=F6m <kha@treskal.com> writes:
+On 09/04/2008, carbonated beverage <ramune@net-ronin.org> wrote:
+> Hi all,
 >
-> > Adding parallelism to a binary search scales very badly -- I'd say
-> > about logarithmically, but I haven't thought hard about it. If
-> > it's possible to use the extra cores to speed up the build+test
-> > cycle, that's vastly preferable.
+>  I was trying to track down the cause of massive test failures in make
+>  test, and running the failing entries via -v showed the following popping
+>  up over and over again:
 >
-> Probably logarithmically with the number of cores. But for
-> reasonable machines, this number is relatively low, so the log is
-> not so costly. For a binary search, using just 2 cores, you can try
-> the next in the list in case of a "git bisect good" for example, and
-> if the hypothesis is true, you've just gained a factor 2 (assuming
-> it happens 50% of times, that should be a 50% speedup). Similarly,
-> you should get a factor 2 with 3 cores.
+>  Can't locate Error.pm in @INC (@INC contains: /home/ramune/src/git/git/t/../perl/blib/lib /home/ramune/src/git/git/t/../perl/blib/arch/auto/Git /etc/perl /usr/local/lib/perl/5.8.8 /usr/local/share/perl/5.8.8
+>   /usr/lib/perl5 /usr/share/perl5 /usr/lib/perl/5.8 /usr/share/perl/5.8 /usr/local/lib/site_perl .) at /home/ramune/src/git/git/t/../perl/blib/lib/Git.pm line 93.^
+>  BEGIN failed--compilation aborted at /home/ramune/src/git/git/t/../perl/blib/lib/Git.pm line 93.^
+>  Compilation failed in require at /home/ramune/src/git/git/t/../git-add--interactive line 5.^
+>  BEGIN failed--compilation aborted at /home/ramune/src/git/git/t/../git-add--interactive line 5.^
+>
+>  Since git has private-Error.pm file, shouldn't that be picked up by the
+>  make test invocation?
 
-Yeah. But to get a factor 3, you need 7 cores; and for 4, you need 15.
-It goes downhill from there. If your build+test cycle is
-parallelizable at all, I don't think you'll find those numbers hard to
-beat.
-
-(There's also the fact that testing several revisions at once assumes
-that the whole build+test cycle is automated, or at least most of it.
-Otherwise you need more people as well as more cores.)
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+The private Error file is not installed if perl/Makefile.PL detects
+than an Error.pm recent enough on your system. Do you actually have
+perl/blib/lib/Error.pm ? Try to run (cd perl; make clean; cd ..; make)
+and try the tests again.
