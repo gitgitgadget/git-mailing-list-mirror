@@ -1,149 +1,198 @@
-From: Ingo Molnar <mingo@elte.hu>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: git annoyances
-Date: Wed, 9 Apr 2008 22:41:49 +0200
-Message-ID: <20080409204149.GC18968@elte.hu>
-References: <20080409101428.GA2637@elte.hu> <alpine.LNX.1.00.0804091442190.19665@iabervon.org>
+Date: Wed, 09 Apr 2008 14:04:33 -0700
+Message-ID: <7vfxtu3fku.fsf@gitster.siamese.dyndns.org>
+References: <20080409101428.GA2637@elte.hu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Wed Apr 09 22:42:52 2008
+To: Ingo Molnar <mingo@elte.hu>
+X-From: git-owner@vger.kernel.org Wed Apr 09 23:07:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jjh86-0004Xv-TO
-	for gcvg-git-2@gmane.org; Wed, 09 Apr 2008 22:42:51 +0200
+	id 1JjhVV-0005ol-4i
+	for gcvg-git-2@gmane.org; Wed, 09 Apr 2008 23:07:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755134AbYDIUmG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Apr 2008 16:42:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754328AbYDIUmF
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Apr 2008 16:42:05 -0400
-Received: from mx3.mail.elte.hu ([157.181.1.138]:40189 "EHLO mx3.mail.elte.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753021AbYDIUmE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Apr 2008 16:42:04 -0400
-Received: from elvis.elte.hu ([157.181.1.14])
-	by mx3.mail.elte.hu with esmtp (Exim)
-	id 1Jjh79-0006ll-LH
-	from <mingo@elte.hu>; Wed, 09 Apr 2008 22:42:01 +0200
-Received: by elvis.elte.hu (Postfix, from userid 1004)
-	id 1F5FE3E21D8; Wed,  9 Apr 2008 22:41:50 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <alpine.LNX.1.00.0804091442190.19665@iabervon.org>
-User-Agent: Mutt/1.5.17 (2007-11-01)
-Received-SPF: neutral (mx3: 157.181.1.14 is neither permitted nor denied by domain of elte.hu) client-ip=157.181.1.14; envelope-from=mingo@elte.hu; helo=elvis.elte.hu;
-X-ELTE-VirusStatus: clean
-X-ELTE-SpamScore: -1.5
-X-ELTE-SpamLevel: 
-X-ELTE-SpamCheck: no
-X-ELTE-SpamVersion: ELTE 2.0 
-X-ELTE-SpamCheck-Details: score=-1.5 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.2.3
-	-1.5 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
-	[score: 0.0000]
+	id S1755351AbYDIVFw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Apr 2008 17:05:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755006AbYDIVFw
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Apr 2008 17:05:52 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:44188 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754513AbYDIVFv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Apr 2008 17:05:51 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id DDCCE1D1DC;
+	Wed,  9 Apr 2008 17:04:47 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id AAF051D1A2; Wed,  9 Apr 2008 17:04:41 -0400 (EDT)
+In-Reply-To: <20080409101428.GA2637@elte.hu> (Ingo Molnar's message of "Wed,
+ 9 Apr 2008 12:14:28 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79135>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79136>
 
+Ingo Molnar <mingo@elte.hu> writes:
 
-* Daniel Barkalow <barkalow@iabervon.org> wrote:
+> i just had a rather annoying session with git - here's the dump and 
+> commentary, in case anyone is interested in usability fineprint.
 
-> > also, the first natural thing i did was to just type:
-> > 
-> >  $ git-merge ~/linux-2.6-x86.git/
-> > 
-> > which i naively assumed would sort things out for me and provide 
-> > some reasonable default behavior - but instead it just gave an 
-> > annoyingly unhelpful error message:
-> > 
-> >  /home/mingo/linux-2.6-x86.git/ - not something we can merge
-> > 
-> > there should really be a consciously established "route of failure 
-> > resolution" - directing people towards relevant sources of 
-> > information or commands when the git command-line utilities return 
-> > some error due to user incompetence. Otherwise users just guess 
-> > around and get frustrated.
-> 
-> I'm not sure we can figure out what the user actually meant in this 
-> case; there's just too much overlap in namespaces to determine 
-> reliably that you were giving it a remote repository on the local 
-> filesystem rather than anything else.
+Thanks.  It is always enlightening to see this kind of walkthru session to
+learn where the UI warts are.  The ones with concrete suggestions for
+improvements are even more appreciated.
 
-well, current git got to /home/mingo/linux-2.6-x86.git/ which is a local 
-path. (it is printing it in the error message above) So i think it was 
-rather unambiguous what i meant and Git knew about it, right?
+> usually i just have a single git repo that tracks everything 
+> interesting, but this time i did something i rarely do: i tried to merge 
+> one local tree of mine into another local tree of mine. So i had no 
+> commands (or even concepts) cached in my short-term memory that would 
+> achieve this goal, i just tried the commands that i thought to be 
+> 'obvious', without applying much (or any) IQ to those commands:
+>
+>  $ cd linux-2.6-sched-devel.git
+>
+>  $ git-remote add ~/linux-2.6-x86.git
 
-but even if it _was_ ambiguous, i think tools should generally default 
-to a minimal amount of hassle for new users and should try to pick 
-reasonable "action" versus any "inaction". (as long as the behavior is 
-still deterministic and reasonable even to the long-time user)
+You told git that "I'll interact with this other repository from now on,
+so please help me with some extra settings to do so.  Namely I do not want
+to keep typing it in full URL all the time so I want an abbreviated way to
+tell you I am talking about this remote repository, and also I want to
+have set of remote tracking branches for this one".
 
-but more importantly, i think this whole problem area has to be handled 
-with a slightly different kind of mindset than other, more technical 
-aspects of Git.
+Maybe "remote add" is not quite the right name to convey the above
+concept.
 
-Humans, and in particular males, when they see or learn new things, are 
-very emotion-driven. The first 1-2 minutes (often just the first few 
-seconds) have a very strong influence on whether that person 'likes' a 
-new topic, tool or gizmo he is checking out - or not. Males often think 
-of themselves as being objective when shopping new items - while in 
-reality more than 90% of their purchasing decisions are emotion-driven 
-and it's all set and done in the first 10 seconds of visual contact. 
-(this ration is far higher than for females)
+>  $ git-remote show x86
+>   * remote x86
+>     URL: /home/mingo/linux-2.6-x86.git
+>   New remote branches (next fetch will store in remotes/x86)
+>   base for-akpm for-linus latest master testing
 
-Command-line tools like Git are at heavy natural disadvantage compared 
-to say GUI tools because the "first impression" is so minimalistic and 
-relatively unremarkable. A GUI can get people hooked by making the first 
-10% look easy just via old-fashioned, dishonest visual deception.
+So the command did as you told it to.
 
-so basically for 90% of the new users, we've got 2-3 shots or we lose 
-their "sympathy". Starting with an error message is bad. Being 
-uninformative about what happened is bad. Making the user wait without 
-signalling why he is waiting is bad. Etc. etc. I think this experience 
-of mine was a reasonable simulation of a first-time user reaction (by 
-virtue of me having forgotten certain Git details).
+>  $ git-merge x86/latest
+>  x86/latest - not something we can merge
 
-And the moment a negative first-time impression has settled in it's very 
-hard to overcome that emotional mindset and barrier. People might still 
-think "Git is quirky" even if we do all things perfectly from that point 
-on. The same holds for the other direction: a positive first-time 
-impression is harder to destroy, even if it turns out to be not that 
-simple later on.
+You told git "I want to merge a commit into the current branch, and that
+commit is called x86/latest".  Alas, no such commit exists in your
+repository (yet).  Should we be saying "no such commit exists, you need to
+fetch it from elsewhere first"?
 
-A tool's reaction back to first-time users is like a decision tree: 
-every negative reaction, every error message, every unreasonable wait, 
-every uninformative output is a way for the user to exit our ecosystem 
-and to never discover the true strengths of Git.
+>  $ git-fetch x86/latest
+>  fatal: 'x86/latest': unable to chdir or not a git archive
+>  fatal: The remote end hung up unexpectedly
 
-So i really think that maintaining this aspect of Git and in essence 
-Huffman-optimizing the interface and the learning curve for first-time 
-Git users is perhaps the most important thing. Especially since some 
-users like me will often re-learn Git details that they use rarely.
+"Not a git archive" should be clear enough.  You already said "remote show
+x86" correctly above, and it makes me wonder why you are now saying
+"x86/latest", not "x86" without "latest".
 
-Getting these details right is _extremely hard_, because the people who 
-are capable of fixing these details have long forgotten the first-time 
-annoyances they had! (if they had any - often developers are 
-statistically lucky and never hit any pitfalls.)
+In other words, "git fetch x86".
 
-It's doubly hard because Git developers work on Git exactly because they 
-_like_ it, so one's own positive experience has to be contrasted to the 
-prospect of negative first-time experience.
+With that, you would tell git "Hey, I've already told you what I want you
+to do with this short-hand name "x86". It is the name for the long URL
+I've previously given you and I want you to fetch from that repository,
+and I want its branches to be stored in remote tracking branches in my
+repository".
 
-It's triple hard because it might also mean changing some things that 
-have been done in Git since the start of the project. A negative 
-experience that isnt some technical problem in the strict sense - it's 
-an emotional thing that is much harder to define and much harder to 
-agree on and improve.
+But you didn't.  You are not taking advantage of your previous "git remote
+add".
 
-So i think it's really hard mentally - and i'm positively surprised by 
-the many constructive and positive reactions that my mail generated.
+I am suspecting that a cause of this confusion is partly because earlier
+in 1.3.0 days we tried to make things easy for CVS migrants where they
+always interact with a single "upstream" repository and with _the_ single
+branch, and we were _too_ successful in doing so.
 
-Improving this area is perhaps even harder than adding new functionality 
-- but i think it's a key and extremely strategic aspect of Git, because 
-it affects the very heart of the Git project: it maximizes the influx of 
-new users (who also include future Git developers btw.) and minimizes 
-outflux of existing users.
+That made us allowing the users to type "git pull" and "git fetch" without
+parameters.  This is generally a good thing: shorter to type for doing
+common things is always good, as long as the user knows what he is doing.
 
-	Ingo
+But at the same time, this allowed docs and cheat-sheets that mention only
+the form without parameters and not the normative "repository refspec"
+form.  This dumbed down the users not understand that in that context
+fetch (and pull, which is a fetch followed by a merge) is always happening
+against a single branch of single remote repository, the way to name
+remote repository and its branch(es) is to give them as separate
+parameters, and their not typing the pair explicitly is a mere convenience
+feature.  This particular aspect of the shorthand is actually very bad.
+It makes the mental model fuzzy, and hiding important rules of how the
+world works from new people would lead them to unnecessary confusion.  In
+short, we made it harder for the new people to "get" it.
+
+The introductory documents may need to be updated to teach explicit "git
+pull $repo $branch" form first, and if they are short documents, end in
+introductory phase and leave the remainder to "further reading", they
+should probably be fixed not talk about the shorthand form "git pull
+$nick" and "git pull" without parameters at all.  That may help fixing
+this mental-model breakdown.
+
+>  $ git-pull x86 latest
+>
+> (that fetch+merge went problem-free.)
+
+Yes.
+
+Because git is distributed, a branch in the global scope is named with a
+pair "remote" and "branch" as two separate parameters, and we consistently
+do so.  Always.  Just like you are supposed to say in your "Linus, please
+pull" requests (e.g. http://article.gmane.org/gmane.linux.kernel/321590).
+
+> but it was a PITA and all of git's messages about the problem were not 
+> only unhelpful, they confused me into looking for problems where there 
+> were none IMO.
+
+Yes, we need to teach "git" to do more mind-reading (I am not being
+sarcastic).  There should be a pattern in common user errors that share
+their roots to the same user misperception, and if we can identify that,
+maybe we can make git guess what the user was really trying to do and give
+better error messages than it currently does.
+
+> also, the first natural thing i did was to just type:
+>
+>  $ git-merge ~/linux-2.6-x86.git/
+>
+> which i naively assumed would sort things out for me and provide some 
+> reasonable default behavior - but instead it just gave an annoyingly 
+> unhelpful error message:
+>
+>  /home/mingo/linux-2.6-x86.git/ - not something we can merge
+
+I'd agree that it is fair to get frustrated with this.
+
+We actually did not have "git merge" as the first level UI citizen for
+quite some time, and the way to merge in _anything_ was done with "git
+pull", even within the local repository.  If you did not know "git merge"
+existed, the above would have been either one of
+
+	$ git pull ~/linux-2.6-x86.git/
+	$ git pull ~/linux-2.6-x86.git/ master
+
+and would have been nicer.  But people wanted "git merge" which is a
+purely local operation, which made (and still does makes) sense.  But now
+people need to know two different commands, one that works globally and
+the other that works locally.
+
+C.f.
+
+ http://thread.gmane.org/gmane.comp.version-control.git/10778/focus=10900
+ http://thread.gmane.org/gmane.comp.version-control.git/31351/focus=31528
+ http://thread.gmane.org/gmane.comp.version-control.git/31351/focus=31490
+
+> there should really be a consciously established "route of failure 
+> resolution" - directing people towards relevant sources of information 
+> or commands when the git command-line utilities return some error due to 
+> user incompetence. Otherwise users just guess around and get frustrated.
+
+Yes, I called it mind-reading above, but we are wishing for the same
+thing.
+
+by the way, because you already paid for your Shift keys, you might want
+to use it consistently to enhance readability. i find it somewhat
+irritating not to be able to tell where each sentence begins with enough
+visual cues (i.e. full-stop, two spaces and initial capital letter) and
+first person subject not spelled with capital letter i.
