@@ -1,62 +1,71 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH 2/8] config.c: Escape backslashes in section names	properly
-Date: Wed, 09 Apr 2008 16:25:25 +0200
-Message-ID: <47FCD1D5.4020007@viscovery.net>
-References: <cover.1207702130.git.bdonlan@fushizen.net> <1207704604-30393-1-git-send-email-bdonlan@fushizen.net> <1207704604-30393-2-git-send-email-bdonlan@fushizen.net> <47FC62B0.3060802@viscovery.net> <20080409141334.GA24402@shion.is.fushizen.net>
+From: Bryan Donlan <bdonlan@fushizen.net>
+Subject: Re: [PATCH 3/8] git-send-email.perl: Handle shell metacharacters
+	in $EDITOR properly
+Date: Wed, 9 Apr 2008 10:28:08 -0400
+Message-ID: <20080409142808.GC24402@shion.is.fushizen.net>
+References: <cover.1207702130.git.bdonlan@fushizen.net> <1207704604-30393-1-git-send-email-bdonlan@fushizen.net> <1207704604-30393-2-git-send-email-bdonlan@fushizen.net> <1207704604-30393-3-git-send-email-bdonlan@fushizen.net> <47FC62B6.9020304@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, Adam Roben <aroben@apple.com>,
 	gitster@pobox.com
-To: Bryan Donlan <bdonlan@fushizen.net>
-X-From: git-owner@vger.kernel.org Wed Apr 09 16:26:28 2008
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Wed Apr 09 16:28:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JjbFi-0003Qz-33
-	for gcvg-git-2@gmane.org; Wed, 09 Apr 2008 16:26:18 +0200
+	id 1JjbIF-0004Yp-8Q
+	for gcvg-git-2@gmane.org; Wed, 09 Apr 2008 16:28:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752454AbYDIOZe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Apr 2008 10:25:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752278AbYDIOZe
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Apr 2008 10:25:34 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:8031 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752269AbYDIOZd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Apr 2008 10:25:33 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1JjbEs-0001Ex-7m; Wed, 09 Apr 2008 16:25:26 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id E31CB546; Wed,  9 Apr 2008 16:25:25 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <20080409141334.GA24402@shion.is.fushizen.net>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: 1.2 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_95=3
+	id S1752474AbYDIO2L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Apr 2008 10:28:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752350AbYDIO2L
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Apr 2008 10:28:11 -0400
+Received: from satoko.is.fushizen.net ([64.71.152.231]:60093 "EHLO
+	satoko.is.fushizen.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752119AbYDIO2K (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Apr 2008 10:28:10 -0400
+X-Greylist: delayed 873 seconds by postgrey-1.27 at vger.kernel.org; Wed, 09 Apr 2008 10:28:10 EDT
+Received: from hillmannl2.umeres.maine.edu ([130.111.243.252] helo=shion)
+	by satoko.is.fushizen.net with esmtpa (Exim 4.69)
+	(envelope-from <bdonlan@fushizen.net>)
+	id 1JjbHU-0001Fl-UB; Wed, 09 Apr 2008 14:28:09 +0000
+Received: from bd by shion with local (Exim 4.69)
+	(envelope-from <bdonlan@fushizen.net>)
+	id 1JjbHU-00071o-Sg; Wed, 09 Apr 2008 10:28:08 -0400
+Content-Disposition: inline
+In-Reply-To: <47FC62B6.9020304@viscovery.net>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79106>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79107>
 
-Bryan Donlan schrieb:
-> On Wed, Apr 09, 2008 at 08:31:12AM +0200, Johannes Sixt wrote:
->> Bryan Donlan schrieb:
->>> Signed-off-by: Bryan Donlan <bdonlan@fushizen.net>
->> What is your definition of "properly"? Please give an example of what went
->> wrong.
+On Wed, Apr 09, 2008 at 08:31:18AM +0200, Johannes Sixt wrote:
+> Bryan Donlan schrieb:
+> > Also, update t/t9001-send-email.sh to test for this bug.
+> > 
+> > Signed-off-by: Bryan Donlan <bdonlan@fushizen.net>
 > 
-> The included patch to the test suite is an example - specifically if an
-> element of the configuration key name other than the first or last
-> contains a backslash, it would not be escaped on output, but would be
-> treated as an escape sequence on input. Thus the backslash would be
-> lost.
+> Your defintion of "properly"? I didn't immediately see what is wrong with
+> the status quo and, hence, why your fix would solve a problem.
 
-Could you then please add this to the commit message, most importantly,
-the last sentence?
+This fixes the git-send-perl semantics for launching an editor when
+$GIT_EDITOR (or friends) contains shell metacharacters to match
+launch_editor() in builtin-tag.c. If we use the current approach
+(sh -c '$0 $@' "$EDITOR" files ...), we see it fails when $EDITOR has
+shell metacharacters:
 
--- Hannes
+$ sh -x -c '$0 $@' "$VISUAL" "foo"
++ "$FAKE_EDITOR" foo
+"$FAKE_EDITOR": 1: "$FAKE_EDITOR": not found
+
+Whereas builtin-tag.c will invoke sh -c "$EDITOR \"$@\"".
+
+Note that with the method git-send-perl uses currently, it's difficult
+(impossible?) to deal with a editor path that contains arbitrary shell
+metacharacters. It's certainly impossible when the various git tools use
+different semantics :)
+
+I'll amend the commit message along with the other suggested changes.
