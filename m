@@ -1,87 +1,79 @@
-From: Bryan Donlan <bdonlan@fushizen.net>
-Subject: Re: [PATCH 1/8] git-rebase.sh: Fix --merge --abort failures when
-	path contains whitespace
-Date: Wed, 9 Apr 2008 10:37:02 -0400
-Message-ID: <20080409143702.GD24402@shion.is.fushizen.net>
-References: <cover.1207702130.git.bdonlan@fushizen.net> <1207704604-30393-1-git-send-email-bdonlan@fushizen.net> <47FC6863.8070704@viscovery.net>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: [PATCH] Add --only-merges flag to display only merge commits.
+Date: Wed, 9 Apr 2008 16:51:08 +0200
+Message-ID: <20080409145108.GY11574@genesis.frugalware.org>
+References: <20080408203648.GS11574@genesis.frugalware.org> <alpine.LSU.1.00.0804091605460.10660@wbgn129.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Adam Roben <aroben@apple.com>,
-	gitster@pobox.com
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed Apr 09 16:37:55 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="wQkw7DhpL9hyPo7K"
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Apr 09 16:52:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JjbQt-0008Dq-9u
-	for gcvg-git-2@gmane.org; Wed, 09 Apr 2008 16:37:51 +0200
+	id 1JjbeX-0005Pz-0u
+	for gcvg-git-2@gmane.org; Wed, 09 Apr 2008 16:51:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752960AbYDIOhH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Apr 2008 10:37:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752819AbYDIOhG
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Apr 2008 10:37:06 -0400
-Received: from satoko.is.fushizen.net ([64.71.152.231]:40526 "EHLO
-	satoko.is.fushizen.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752535AbYDIOhF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Apr 2008 10:37:05 -0400
-Received: from hillmannl2.umeres.maine.edu ([130.111.243.252] helo=shion)
-	by satoko.is.fushizen.net with esmtpa (Exim 4.69)
-	(envelope-from <bdonlan@fushizen.net>)
-	id 1JjbQ6-0001HY-6F; Wed, 09 Apr 2008 14:37:02 +0000
-Received: from bd by shion with local (Exim 4.69)
-	(envelope-from <bdonlan@fushizen.net>)
-	id 1JjbQ6-00077S-ES; Wed, 09 Apr 2008 10:37:02 -0400
+	id S1751996AbYDIOvN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Apr 2008 10:51:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751973AbYDIOvN
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Apr 2008 10:51:13 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:50972 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751890AbYDIOvM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Apr 2008 10:51:12 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id DF0891B250A;
+	Wed,  9 Apr 2008 16:51:10 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id CB44144659;
+	Wed,  9 Apr 2008 16:47:49 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 1E9A81190A4E; Wed,  9 Apr 2008 16:51:08 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <47FC6863.8070704@viscovery.net>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+In-Reply-To: <alpine.LSU.1.00.0804091605460.10660@wbgn129.biozentrum.uni-wuerzburg.de>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79110>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79111>
 
-On Wed, Apr 09, 2008 at 08:55:31AM +0200, Johannes Sixt wrote:
-> Bryan Donlan schrieb:
-> > -dotest=$GIT_DIR/.dotest-merge
-> > +dotest="$GIT_DIR/.dotest-merge"
-> 
-> This is not strictly necessary: The RHS expression of an assignment does
-> not undergo IFS splitting; but better safe than sorry. (But note that
-> 'export foo=$bar', which is not POSIX, is *not* an assignment, and
-> different shells that support this construct treat it differently.)
 
-Since Junio asked(?) that it be removed, I'll drop it from the next rev
-of the patchset.
+--wQkw7DhpL9hyPo7K
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> > +### Test that we handle strange characters properly
-> > +work_dir="$(pwd)/test \" ' \$ \\ dir"
-> 
-> In effect, you modify only this test to stress-test strange characters,
-> but other tests in the test suite still run in a "sane" environment. IOW,
-> I don't think you should go to this extreme for this one test only. The
-> better approach would be to rename 'trash' in test-lib.sh to this strange
-> name so that all tests suffer from a challenging environment.
+On Wed, Apr 09, 2008 at 04:06:57PM +0200, Johannes Schindelin <Johannes.Sch=
+indelin@gmx.de> wrote:
+> > I just wanted to see the list of merges since the last tag in a repo
+> > where we have 1000+ commits and about 20 merges and found that there is
+> > no easy way to do so.
+>=20
+> I usually did something like this:
+>=20
+> git log -1 $(git rev-list --parents | sed -n "s/ .* .*//p")
 
-I can do that, but it'd have to come as the last patch in the patchset,
-or it would obviously cause test failures. My goal here was to ensure
-that the bug I fixed in the patch would be tested in an isolated manner.
+If you mean:
 
-If you like I can add a change to the trash directory to the next rev of
-the patchset.
+git log -1 $(git rev-list --parents HEAD | sed -n "s/ .* .*//p")
 
-> 
-> > -		git reset --hard pre-rebase
-> > -		test_must_fail git rebase'"$type"' master &&
-> > -		test -d '$dotest' &&
-> > +		git reset --hard pre-rebase &&
-> > +		test_must_fail git rebase$type master &&
-> > +		test -d \"\$dotest\" &&
-> 
-> I could imagine that the missing && after the git reset is deliberate. Mike?
+then it'll show only the first merge, --only-merges shows each merge.
+(While of course you can still use -1 or tag.. or so.)
 
-I assumed that if git reset failed here we'd probably want to know :)
+--wQkw7DhpL9hyPo7K
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-Thanks,
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.8 (GNU/Linux)
 
-Bryan
+iEYEARECAAYFAkf819wACgkQe81tAgORUJY7PwCZASdxg5Bz6Z8O5wzXPGE7A0pd
+5WIAnjPiciXqv5ts77ZHiVAXthkIEZcT
+=jIwR
+-----END PGP SIGNATURE-----
+
+--wQkw7DhpL9hyPo7K--
