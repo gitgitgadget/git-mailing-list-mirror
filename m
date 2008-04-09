@@ -1,66 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Friendly refspecs
-Date: Wed, 09 Apr 2008 14:21:16 -0700
-Message-ID: <7vabk23esz.fsf@gitster.siamese.dyndns.org>
-References: <20080409101428.GA2637@elte.hu>
- <20080409145758.GB20874@sigill.intra.peff.net>
- <20080409200836.GA19248@mithlond>
+From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH 2/2] pretty=format: Add %d to show decoration
+Date: Wed, 09 Apr 2008 23:40:38 +0200
+Message-ID: <47FD37D6.2030506@lsrfire.ath.cx>
+References: <alpine.DEB.1.00.0804071439480.430@eeepc-johanness> <alpine.DEB.1.00.0804071441040.430@eeepc-johanness>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Ingo Molnar <mingo@elte.hu>,
-	git@vger.kernel.org
-To: Teemu Likonen <tlikonen@iki.fi>
-X-From: git-owner@vger.kernel.org Wed Apr 09 23:22:36 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Apr 09 23:41:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JjhkZ-00042E-Qz
-	for gcvg-git-2@gmane.org; Wed, 09 Apr 2008 23:22:36 +0200
+	id 1Jji2p-00033F-UD
+	for gcvg-git-2@gmane.org; Wed, 09 Apr 2008 23:41:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756000AbYDIVVk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Apr 2008 17:21:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755997AbYDIVVj
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Apr 2008 17:21:39 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:56702 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753455AbYDIVVj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Apr 2008 17:21:39 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 0A68D5998;
-	Wed,  9 Apr 2008 17:21:35 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 33CA23365; Wed,  9 Apr 2008 17:21:23 -0400 (EDT)
-In-Reply-To: <20080409200836.GA19248@mithlond> (Teemu Likonen's message of
- "Wed, 9 Apr 2008 23:08:36 +0300")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752819AbYDIVkn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Apr 2008 17:40:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753264AbYDIVkn
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Apr 2008 17:40:43 -0400
+Received: from india601.server4you.de ([85.25.151.105]:55775 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752268AbYDIVkm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Apr 2008 17:40:42 -0400
+Received: from [10.0.1.101] (p57B7E69B.dip.t-dialin.net [87.183.230.155])
+	by india601.server4you.de (Postfix) with ESMTPSA id 237A92F8028;
+	Wed,  9 Apr 2008 23:40:41 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.12 (Windows/20080213)
+In-Reply-To: <alpine.DEB.1.00.0804071441040.430@eeepc-johanness>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79138>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79139>
 
-Teemu Likonen <tlikonen@iki.fi> writes:
+Johannes Schindelin schrieb:
+> With this patch, "git log --decorate --pretty=3Dformat:%d", shows the=
+=20
+> name decoration (i.e. whenever a commit matches a ref, that ref's=20
+> name is shown).
 
-[By the way, please never redirect the response to your messages away from
-you with:
+Cute idea. :)
 
-    Mail-Followup-To: Jeff King <peff@peff.net>, Ingo Molnar <mingo@elte.hu>,
-            git@vger.kernel.org
+What about objects with multiple decoration?  How about producing a
+comma-separated list like git-log does?
 
-You wasted 30 seconds of my (and anybody who potentially wanted to give
-advice to you) time by forcing me fix the To: header while composing this
-response.  I know Jeff understands what I am going to mention, and I do
-not want to waste his time by putting him on To: header.]
+How about making %d imply --decorate?  You could load the decorations
+lazily when it's first encountered.
 
-> Currently "git fetch <URL>" does not seem to do anything useful for
-> non-git-hackers. It seems to fetch objects but not create any branches
-> referring to them.
+> Maybe %d should expand to " (<name decoration>)" instead of "<name=20
+> decoration>"?
 
-I'd suggest you to study:
+foobar2000 (http://foobar2000.org/) has a kind of music tagging
+language, and one of its features might be interesting for us here: you
+can group a placeholder and other stuff inside brackets.  The construct
+resolves to an empty string if the placeholder is NULL, i.e. in your
+example "[ (%d)]" would resolve to either " (the decoration)" or "",
+depending on the object having a decoration or not.  (It might be a
+better fit for --pretty=3Dformat: to use %[ and %].)
 
-  http://thread.gmane.org/gmane.comp.version-control.git/31351/focus=31634
+By the way, your patch reminds me that I wanted to add a placeholder fo=
+r
+git-describe's output.  I doubt I'll find time for that in the near
+future, though..
 
-Not everybody wants remote tracking.
+Ren=E9
