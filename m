@@ -1,108 +1,80 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Friendly refspecs (Was: Re: git annoyances)
-Date: Wed, 9 Apr 2008 18:51:12 -0400
-Message-ID: <20080409225112.GB12103@sigill.intra.peff.net>
-References: <20080409101428.GA2637@elte.hu> <20080409145758.GB20874@sigill.intra.peff.net> <20080409200836.GA19248@mithlond> <20080409203453.GA10370@sigill.intra.peff.net> <20080409222500.GB19248@mithlond>
+From: "Ulrik Sverdrup" <ulrik.sverdrup@gmail.com>
+Subject: Re: [PATCH] git-archive: ignore prefix when checking file attribute
+Date: Thu, 10 Apr 2008 00:58:26 +0200
+Message-ID: <a1b6cb1b0804091558r42b365cbjf216b3a5167588cf@mail.gmail.com>
+References: <a1b6cb1b0804081435w24074d1aq177e8c1a5e1af0f8@mail.gmail.com>
+	 <47FD31C3.8070001@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 10 00:52:00 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, "Junio C Hamano" <gitster@pobox.com>
+To: "=?ISO-8859-1?Q?Ren=E9_Scharfe?=" <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Thu Apr 10 00:59:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jjj95-0000VR-9c
-	for gcvg-git-2@gmane.org; Thu, 10 Apr 2008 00:51:59 +0200
+	id 1JjjG4-0002OS-73
+	for gcvg-git-2@gmane.org; Thu, 10 Apr 2008 00:59:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753888AbYDIWvP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Apr 2008 18:51:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753155AbYDIWvP
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Apr 2008 18:51:15 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3272 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752439AbYDIWvO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Apr 2008 18:51:14 -0400
-Received: (qmail 19022 invoked by uid 111); 9 Apr 2008 22:51:12 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Wed, 09 Apr 2008 18:51:12 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 09 Apr 2008 18:51:12 -0400
+	id S1753441AbYDIW62 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Apr 2008 18:58:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753301AbYDIW62
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Apr 2008 18:58:28 -0400
+Received: from fg-out-1718.google.com ([72.14.220.155]:40861 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753155AbYDIW62 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 9 Apr 2008 18:58:28 -0400
+Received: by fg-out-1718.google.com with SMTP id l27so2509785fgb.17
+        for <git@vger.kernel.org>; Wed, 09 Apr 2008 15:58:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=+GisrFtDAzbmq4zeUCS0m3a86IpNXHa4YK6YdtIggoY=;
+        b=NmaKVGcXmdjcPtW4vg1yP0rN7ZnnMd/mpyV0APUL9jDxIGLLHQU1WuOdUHPYz1Rc8WT4iG1c22mx+alSURch911ZqmiY3d50QS3ds9kdyk+QnmBf1O4y9r/mZ+tGg6Xk0/zoxyYSf18GJReF53DYI21BRHTHeRnn4ANYj4JHveI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=qEswwEIT3l2C0d3Pj1x9yyAiqySgX1nzJ8DzOD0RhuwYmIEpinUwuMw9TfR8tFw1hhFN+X8vs2HFl1xemlX5iAOuJnOSV/sE908Xutp08CpLloVfnSGIISR4KI8jhws3GXKY41xibTXlzxLs6cNvoe2nCPupjuZ05FSNubLxhoM=
+Received: by 10.82.154.5 with SMTP id b5mr1179530bue.10.1207781906175;
+        Wed, 09 Apr 2008 15:58:26 -0700 (PDT)
+Received: by 10.82.116.11 with HTTP; Wed, 9 Apr 2008 15:58:26 -0700 (PDT)
+In-Reply-To: <47FD31C3.8070001@lsrfire.ath.cx>
 Content-Disposition: inline
-In-Reply-To: <20080409222500.GB19248@mithlond>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79145>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79146>
 
-On Thu, Apr 10, 2008 at 01:25:00AM +0300, Teemu Likonen wrote:
+2008/4/9, Ren=E9 Scharfe <rene.scharfe@lsrfire.ath.cx>:
+> Ulrik Sverdrup noticed that git-archive doesn't correctly apply the a=
+ttribute
+>  export-subst when the option --prefix is given, too.
+>
+>  When it checked if a file has the attribute turned on, git-archive w=
+ould try
+>  to look up the full path -- including the prefix -- in .gitattribute=
+s.  That's
+>  wrong, as the prefix doesn't need to have any relation to any existi=
+ng
+>  directories, tracked or not.
+>
+>  This patch makes git-archive ignore the prefix when looking up if va=
+lue of the
+>  attribute export-subst for a file.
+>
+>  Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+>  ---
+>  Ulrik, does this patch fix the problem for you?  It applies to v1.5.=
+4.4 and
+>  v1.5.5 equally.
 
-> Hmm, maybe. I recently wanted to join two purely local repos together.
-> Both of them had just one branch. Totally different histories so no
-> actual mergin would happen; just two branches in the same repo. I don't
-> know why but "git fetch /the/other/repo/" just happened to be the one
-> I tried first. I saw it fetched something but as no new branch appeared
-> and I had never heard of this FETCH_HEAD thing it was a "didn't work,
-> what should I try next?" thing. I think your idea of showing
 
-Ah, OK. In that case, I think the right thing to do would not be to set
-up a remote, but to fetch explicitly into a local branch. I assume when
-you say "joining" you mean "so I can get rid of the individual ones".
-So something like:
+Thanks for the patch Ren=E9!
 
-  cd repo1
-  git fetch ../repo2 master:repo2-topic
+=46irst I reproduced my problem on vanilla git v1.5.5, and it is still
+there as in v.1.5.4.4.
+I applied this patch and that fixed my issue, testing both tar and zip.
 
-which creates refs/heads/repo2 in repo1, and you can safely delete
-repo2.
-
-If you _did_ want to keep repo2 around indefinitely, and you are
-"joining" so that you can do diffs, then you probably do want a remote
-with tracking branches.
-
-  cd repo1
-  git remote add repo2 ../repo2
-  git fetch repo2
-  git diff repo2/master...master
-
-> >   From git://host/path/to/repo
-> >    * [new branch]      foo -> FETCH_HEAD
-> 
-> would be really good. At least to me this would have been enough
-> information. As I'm starting to see the "point of doing fetch <URL>"
-> I take back what I proposed. Just a bit more information would be nice.
-
-I wonder if people like Linus who do a lot of one-off pulls would find
-that too cluttery. I guess we can post a patch and see. ;)
-
-> I have to agree with Ingo Molnar that sometimes Git is a bit un- or even
-> disinformative about what happened. One example is this "git fetch
-> <URL>". Maybe it's not a "sane thing to do" but users are like this. We
-> just try something and learn from it. To me "git fetch <URL>" was
-> a broken command (UI-wise) until I read your message (thanks again!). If
-> Git had told me that it created FETCH_HEAD I had learned fetch's habits
-> myself and likely wouldn't have come up with this "broken command"
-> conclusion.
-
-Sure. In my other message I talked about workflows not to imply "how
-dare you explore the commands!" but rather to see where you were coming
-from. I agree that a lot of git messages could be improved. So I think
-the take-away lesson is not that there needs to be some huge change in
-behavior or what input is accepted, but that git-fetch without tracking
-branches should probably give a clue that it did _something_.
-
-> Another thing I spoke of was this refs/ stuff. I know my way around with
-> them now, so maybe they are not actually confusing to me anymore. It's
-> just that I have noticed a pattern: I always use refs/heads/... in
-> certain places and refs/remotes/ in certain places. If such a pattern is
-> very common (well, I don't know if it is) one starts to think that maybe
-> the pattern can/should be hidden and made part of the tool. Just
-> thoughts.
-
-I almost never use refs/remotes/ or refs/heads/. Some effort has been
-put into doing the right thing with partial refnames (which you can of
-course override by being more specific). Do you have specific examples
-of where you use the full refname? I suspect it is either not required
-(and documentation may be out of date), or it is a bug we could fix. :)
-
--Peff
+Ulrik Sverdrup
