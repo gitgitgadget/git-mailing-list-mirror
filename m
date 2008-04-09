@@ -1,282 +1,282 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: What's cooking in git.git (topics)
-Date: Wed, 09 Apr 2008 02:43:38 -0700
-Message-ID: <7vbq4j748l.fsf@gitster.siamese.dyndns.org>
-References: <7vlk4snpj3.fsf@gitster.siamese.dyndns.org>
- <7vwso85qkf.fsf@gitster.siamese.dyndns.org>
- <7vwso5r87q.fsf@gitster.siamese.dyndns.org>
- <7v8x0992hy.fsf@gitster.siamese.dyndns.org>
- <7vd4pf7h9y.fsf@gitster.siamese.dyndns.org>
- <7vwsnjl21c.fsf@gitster.siamese.dyndns.org>
- <7vhcehzdeg.fsf@gitster.siamese.dyndns.org>
+Subject: A note from the maintainer
+Date: Wed, 09 Apr 2008 02:44:08 -0700
+Message-ID: <7v4pab747r.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 09 11:48:58 2008
+X-From: git-owner@vger.kernel.org Wed Apr 09 11:49:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JjWvJ-0004Qy-Uk
-	for gcvg-git-2@gmane.org; Wed, 09 Apr 2008 11:48:58 +0200
+	id 1JjWvW-0004Ts-8r
+	for gcvg-git-2@gmane.org; Wed, 09 Apr 2008 11:49:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752488AbYDIJsO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Apr 2008 05:48:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752230AbYDIJsO
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Apr 2008 05:48:14 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:33221 "EHLO
+	id S1752400AbYDIJsa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Apr 2008 05:48:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752300AbYDIJs3
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Apr 2008 05:48:29 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:33944 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751290AbYDIJsM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Apr 2008 05:48:12 -0400
+	with ESMTP id S1750989AbYDIJs2 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 9 Apr 2008 05:48:28 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 161F315BB2;
-	Wed,  9 Apr 2008 05:44:02 -0400 (EDT)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 7058E15BB7;
+	Wed,  9 Apr 2008 05:44:20 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
  certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id AE7B215BB1; Wed,  9 Apr 2008 05:43:59 -0400 (EDT)
+ ESMTP id 2BCD615BB6; Wed,  9 Apr 2008 05:44:17 -0400 (EDT)
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79090>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79091>
 
-Here are the topics that have been cooking.  Commits prefixed
-with '-' are only in 'pu' while commits prefixed with '+' are
-in 'next'.
+Welcome to git community.
 
-The topics list the commits in reverse chronological order.
+This message talks about how git.git is managed, and how you can work
+with it.
 
-Caution. "next" has been rebuilt with the remaining topics on top of
-"master".  "maint" is still for 1.5.4.X maintenance track for tonight.
+* IRC and Mailing list
 
-A rough timeline from now on.
+Many active members of development community hang around on #git
+IRC channel on Freenode.  Its log is available at:
 
- * Brown paper back fixes, if any, for 1.5.5.1 (2008-04-16).
+        http://colabti.org/irclogger/irclogger_log/git
 
- * Discussion and review on new feature and enhancement patch series
-   begins.  Please resubmit things that you were cooking in your head
-   during 1.5.5-rc period after cleaning up and retesting.
+The development however is primarily done on the git mailing list
+(git@vger.kernel.org).  If you have patches, please send them to the
+list, following Documentation/SubmittingPatches.
 
- * 1.5.6 merge window closes (2008-05-14).
+I usually try to read all patches posted to the list, and follow
+almost all the discussions on the list, unless the topic is about an
+obscure corner that I do not personally use.  But I am obviously not
+perfect.  If you sent a patch that you did not hear from anybody for
+three days, that is a very good indication that it was dropped on the
+floor --- please do not hesitate to remind me.
 
- * Fixes of 'master' continues; 1.5.6-rc0 gets tagged (2008-05-21).
+The list archive is available at a few public sites as well:
 
- * 1.5.6 Final (2008-06-08).
+        http://news.gmane.org/gmane.comp.version-control.git/
+        http://marc.theaimsgroup.com/?l=3Dgit
+        http://www.spinics.net/lists/git/
 
-----------------------------------------------------------------
-[New Topics]
+and some people seem to prefer to read it over NNTP:
 
-* sg/merge-options (Sun Apr 6 03:23:47 2008 +0200) 6 commits
- - merge: remove deprecated summary and diffstat options and config
-   variables
- - merge, pull: add '--(no-)log' command line option
- - fmt-merge-msg: add '--(no-)log' options and 'merge.log' config
-   variable
- - add 'merge.stat' config variable
- - merge, pull: introduce '--(no-)stat' option
- - doc: moved merge.* config variables into separate merge-config.txt
+        nntp://news.gmane.org/gmane.comp.version-control.git
 
-I tried to fix its too-eager deprecation.  The last one needs re-review;
-it should remove "these are still supported but will be removed" comments
-that earlier ones add, and must be held back until 1.6.0 or later.
+When you point at a message in a mailing list archive, using
+gmane is often the easiest to follow by readers, like this:
 
-* jc/blame (Wed Apr 2 22:17:53 2008 -0700) 5 commits
- - git-blame --reverse
- - builtin-blame.c: allow more than 16 parents
- - builtin-blame.c: move prepare_final() into a separate function.
- - rev-list --children
- - revision traversal: --children option
+        http://thread.gmane.org/gmane.comp.version-control.git/27/focus=
+=3D217
 
-The reverse blame I talked about earlier.
+as it also allows people who subscribe to the mailing list as
+gmane newsgroup to "jump to" the article.
 
-* jc/lstat (Sun Mar 30 12:39:25 2008 -0700) 3 commits
- - diff-files: mark an index entry we know is up-to-date as such
- - write_index(): optimize ce_smudge_racily_clean_entry() calls with
-   CE_UPTODATE
- - lstat: introduce a wrapper xlstat
+* Repositories, branches and documentation.
 
-Further reduce redundant lstat(2) calls during "git status" and other
-common operations.
+My public git.git repository is at:
 
-----------------------------------------------------------------
-[Graduated to "master"]
+        git://git.kernel.org/pub/scm/git/git.git/
 
-* jc/rebase (Sat Mar 15 13:17:42 2008 -0700) 1 commit
- + rebase [--onto O] A B: omit needless checkout
+Immediately after I publish to the primary repository at kernel.org, I
+also push into an alternate here:
 
-We used to "git checkout B && git rebase A" internally to implement this,
-which meant the work tree was smudged one time too many.
+        git://repo.or.cz/alt-git.git/
 
-* gs/pretty-hexval (Fri Mar 21 10:05:06 2008 -0500) 1 commit
- + pretty.c: add %x00 format specifier.
+Impatient people might have better luck with the latter one.
 
-Adds a generic "insert any byte value" to --pretty=format:<> specifier.
+Their gitweb interfaces are found at:
 
-* jk/add-i-mode (Thu Mar 27 03:32:25 2008 -0400) 2 commits
- + add--interactive: allow user to choose mode update
- + add--interactive: ignore mode change in 'p'atch command
+        http://git.kernel.org/?p=3Dgit/git.git
+        http://repo.or.cz/w/alt-git.git
 
-Allows mode change "pseudo hunk" to be staged separately.
+There are three branches in git.git repository that are not
+about the source tree of git: "todo", "html" and "man".  The
+first one was meant to contain TODO list for me, but I am not
+good at maintaining such a list and it is not as often updated as
+it could/should be.  It also contains some helper scripts I use
+to maintain git.
 
-NOTE NOTE NOTE!  It might be interesting to extend the idea of this patch
-to treat "new file" as a pseudo hunk to record the much talked about
-"intent to add".  That is, add a new command (or a new submode to patch
-subcommand) that lets you add a file that is so far untracked, but only
-with its mode and e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 which is the
-blob object name for an _empty_ blob.  After such an operation is done,
-"git diff" will show the new contents of the file you build in your work
-tree that you _could_ commit with "git commit -a".
+The "html" and "man" are autogenerated documentation from the
+tip of the "master" branch; the tip of "html" is extracted to be
+visible at kernel.org at:
 
-* fl/send-email-outside (Fri Mar 14 18:29:30 2008 +0100) 4 commits
- + send-email: Don't require to be called in a repository
- + Git.pm: Don't require repository instance for ident
- + Git.pm: Don't require a repository instance for config
- + var: Don't require to be in a git repository.
+        http://www.kernel.org/pub/software/scm/git/docs/
 
-People couldn't invoke "git send-email" from outside their repositories,
-but this series allows them to.
+The above URL is the top-level documentation page, and it has
+links to documentation of older releases.
 
-* mk/unpack-careful (Fri Mar 7 08:39:53 2008 +0100) 5 commits
- + t5300: add test for "index-pack --strict"
- + receive-pack: allow using --strict mode for unpacking objects
- + unpack-objects: fix --strict handling
- + t5300: add test for "unpack-objects --strict"
- + unpack-objects: prevent writing of inconsistent objects
+The script to maintain these two documentation branches are
+found in "todo" branch as dodoc.sh, if you are interested.  It
+is a good demonstration of how to use an update hook to automate
+a task.
 
-This would re-instate the "unpack-objects --strict".
+There are four branches in git.git repository that track the
+source tree of git: "master", "maint", "next", and "pu".  I may
+add more maintenance branches (e.g. "maint-1.5.4") if we have
+hugely backward incompatible feature updates in the future to keep
+an older release alive; I may not, but the distributed nature of
+git means any volunteer can run a stable-tree like that herself.
 
-* gp/gitweb (Sat Apr 5 16:37:18 2008 +0000) 2 commits
- + gitweb: fallback to system-wide config file (fixup)
- + gitweb: fallback to system-wide config file if default config does
-   not exist
+The "master" branch is meant to contain what are very well
+tested and ready to be used in a production setting.  There
+could occasionally be minor breakages or brown paper bag bugs
+but they are not expected to be anything major, and more
+importantly quickly and trivially fixable.  Every now and
+then, a "feature release" is cut from the tip of this branch and
+they typically are named with three dotted decimal digits.  The
+last such release was 1.5.5 done on Apr 7th this year.  You
+can expect that the tip of the "master" branch is always more
+stable than any of the released versions.
 
-* jc/rename (Fri Mar 7 14:03:19 2008 -0800) 1 commit
- + Optimize rename detection for a huge diff
+Whenever a feature release is made, "maint" branch is forked off
+from "master" at that point.  Obvious, safe and urgent fixes
+after a feature release are applied to this branch and
+maintenance releases are cut from it.  The maintenance releases
+are named with four dotted decimal, named after the feature
+release they are updates to; the last such release was 1.5.4.5.
+New features never go to this branch.  This branch is also
+merged into "master" to propagate the fixes forward.
 
-This makes memory consumption of the rename detection operation for a huge
-diff (that is, a change that touches many many files).  I've been running
-with this for quite a while in my day-job repository without adverse
-effects.
+A trivial and safe enhancement goes directly on top of "master".
+A new development, either initiated by myself or more often by
+somebody who found his or her own itch to scratch, does not
+usually happen on "master", however.  Instead, a separate topic
+branch is forked from the tip of "master", and it first is
+tested in isolation; I may make minimum fixups at this point.
+Usually there are a handful such topic branches that are running
+ahead of "master" in git.git repository.  I do not publish the
+tip of these branches in my public repository, however, partly
+to keep the number of branches that downstream developers need
+to worry about low, and primarily because I am lazy.
 
-----------------------------------------------------------------
-[Actively Cooking]
+The quality of topic branches are judged primarily by the mailing list
+discussions.  Some of them start out as "good idea but obviously is
+broken in some areas (e.g. breaks the existing testsuite)" and then
+with some more work (either by the original contributor's effort or
+help from other people on the list) becomes "more or less done and can
+now be tested by wider audience".  Luckily, most of them start out in
+the latter, better shape.
 
-* mv/defer-gc (Wed Apr 2 21:35:11 2008 +0200) 3 commits
- + contrib/hooks: add an example pre-auto-gc hook
- + Documentation/hooks: add pre-auto-gc hook
- + git-gc --auto: add pre-auto-gc hook
+The "next" branch is to merge and test topic branches in the
+latter category.  In general, the branch always contains the tip
+of "master".  It might not be quite rock-solid production ready,
+but is expected to work more or less without major breakage.  I
+usually use "next" version of git for my own work, so it cannot
+be _that_ broken to prevent me from pushing the changes out.
+The "next" branch is where new and exciting things take place.
 
-A new hook to stop "git gc --auto" from running.
+The two branches "master" and "maint" are never rewound, and
+"next" usually will not be either (this automatically means the
+topics that have been merged into "next" are usually not
+rebased, and you can find the tip of topic branches you are
+interested in from the output of "git log next"). You should be
+able to safely track them.
 
-* jc/send-pack-tell-me-more (Thu Mar 20 00:44:11 2008 -0700) 1 commit
- + "git push": tellme-more protocol extension
+After a feature release is made from "master", however, "next"
+will be rebuilt from the tip of "master" using the surviving
+topics.  The commit that replaces the tip of the "next" will
+have the identical tree, but it will have different ancestry
+from the tip of "master".  An announcement will be made to warn
+people about such a rebasing.
 
-Allows common ancestor negotiation for git-push to help people with shared
-repository workflow in certain minority situations.  The lack of protocol
-support has been bugging me for quite some time, and that was the reason I
-did this.  There recently was a problem report that had a scent of this
-issue which turned out to be a false alarm (it was about http-push which
-does not do the native pack protocol optimization and the reporter was
-pushing into an empty repository which needs full transfer anyway).
+The "pu" (proposed updates) branch bundles all the remainder of
+topic branches.  The "pu" branch, and topic branches that are
+only in "pu", are subject to rebasing in general.  By the above
+definition of how "next" works, you can tell that this branch
+will contain quite experimental and obviously broken stuff.
 
-* jc/dirstat (Tue Feb 12 17:06:58 2008 -0800) 1 commit
- + diff: make --dirstat binary-file safe
+When a topic that was in "pu" proves to be in testable shape, it
+graduates to "next".  I do this with:
 
-The current "dirstat" does totally wrong thing when the set of files
-changed includes a binary one.  This uses the same similarity evaluation
-code as rename heuristics uses to treat text and binary the same way.
+        git checkout next
+        git merge that-topic-branch
 
-* lt/case-insensitive (Sat Mar 22 14:22:44 2008 -0700) 9 commits
- + Make git-add behave more sensibly in a case-insensitive
-   environment
- + When adding files to the index, add support for case-independent
-   matches
- + Make unpack-tree update removed files before any updated files
- + Make branch merging aware of underlying case-insensitive
-   filsystems
- + Add 'core.ignorecase' option
- + Make hash_name_lookup able to do case-independent lookups
- + Make "index_name_exists()" return the cache_entry it found
- + Move name hashing functions into a file of its own
- + Make unpack_trees_options bit flags actual bitfields
+Sometimes, an idea that looked promising turns out to be not so
+good and the topic can be dropped from "pu" in such a case.
 
-The beginning of case insensitive filesystem support, currently
-ASCII-only.
+A topic that is in "next" is expected to be tweaked and fixed to
+perfection before it is merged to "master" (that's why "master"
+can be expected to stay very stable).  Similarly to the above, I
+do it with this:
 
-* lh/git-file (Wed Feb 20 23:13:16 2008 +0100) 4 commits
- + Teach GIT-VERSION-GEN about the .git file
- + Teach git-submodule.sh about the .git file
- + Teach resolve_gitlink_ref() about the .git file
- + Add platform-independent .git "symlink"
+        git checkout master
+        git merge that-topic-branch
+        git branch -d that-topic-branch
 
-The idea and the implementation seem Ok, but this leaves
-distinct feeling that it is a solution still waiting for a user
-(e.g. "git submodule" enhancements to take advantage of this
-facility to preserve the subrepository while switching between a
-revision with a submodule and another before the submodule was
-bound to the superproject).
+Note that being in "next" is not a guarantee to appear in the
+next release (being in "master" is such a guarantee, unless it
+is later found seriously broken and reverted), or even in any
+future release.  There even were cases that topics needed
+reverting a few commits in them before graduating to "master",
+or a topic that already was in "next" were entirely reverted
+from "next" because fatal flaws were found in them later.
 
-* jc/sha1-lookup (Sun Dec 30 03:13:27 2007 -0800) 2 commits
- + sha1-lookup: make selection of 'middle' less aggressive
- + sha1-lookup: more memory efficient search in sorted list of SHA-1
+Starting from v1.5.0, "master" and "maint" have release notes
+for the next release in Documentation/RelNotes-* files, so that
+I do not have to run around summarizing what happened just
+before the release.
 
-Micro-optimization whose real world benefit is not proven, so let's prove
-it or revert it by giving it a bit more exposure.
 
-----------------------------------------------------------------
-[On Hold]
+* Other people's trees, trusted lieutenants and credits.
 
-Some of these will start moving to "next", some I may have to ask for
-clean-up and resubmission for further discussion.  Also the topics raised
-during the 1.5.5-rc freeze period should be rebased, cleaned-up and
-resubmit for discussion and review for inclusion in 1.5.6.
+Documentation/SubmittingPatches outlines who your changes should
+be sent to.  As described in contrib/README, I would delegate
+fixes and enhancements in contrib/ area to primary contributors
+of them.
 
-* bc/filter-branch (Wed Mar 26 10:47:09 2008 -0500) 1 commit
- - filter-branch.sh: support nearly proper tag name filtering
+Although the following are included in git.git repository, they
+have their own authoritative repository and maintainers:
 
-Instead of discarding signed tags, this demotes them to simply annotated,
-which is technically not that different from signed tags.
+ - git-gui/ comes from Shawn Pearce's git-gui project:
 
-* jc/test (Thu Feb 21 21:17:54 2008 -0800) 2 commits
- - tests: convert "cmp" and "cmp -s" to test_cmp
- - tests: test_cmp helper function
+        git://repo.or.cz/git-gui.git
 
-This one may be more elaborate, but Jeff's patch is much simpler.
+ - gitk-git/ comes from Paul Mackerras's gitk project:
 
-* jc/rename-file-table (Fri Mar 7 14:03:19 2008 -0800) 1 commit
- - diffcore-rename: make file_table available outside exact rename
-   detection
+        git://git.kernel.org/pub/scm/gitk/gitk.git
 
-* nd/dashless (Wed Nov 28 23:21:57 2007 +0700) 1 commit
- - Move all dashed-form commands to libexecdir
+I would like to thank everybody who helped to raise git into the
+current shape.  Especially I would like to thank the git list
+regulars whose help I have relied on and expect to continue
+relying on heavily:
 
-Scheduled for 1.6.0.
+ - Linus on general design issues.
 
-* jc/dashless (Sat Dec 1 22:09:22 2007 -0800) 2 commits
- - Prepare execv_git_cmd() for removal of builtins from the
-   filesystem
- - git-shell: accept "git foo" form
+ - Linus, Shawn Pearce, Johannes Schindelin, Nicolas Pitre,
+   Ren=C3=A9 Scharfe and Jeff King on general implementation issues.
 
-We do not plan to remove git-foo form completely from the filesystem at
-this point, but git-shell may need to be updated.
+ - Shawn and Nicolas Pitre on pack issues.
 
-* jc/cherry-pick (Wed Feb 20 23:17:06 2008 -0800) 3 commits
- - WIP: rethink replay merge
- - Start using replay-tree merge in cherry-pick
- - revert/cherry-pick: start refactoring call to merge_recursive
+ - Martin Langhoff and Frank Lichtenheld on cvsserver and cvsimport.
 
-This is meant to improve cherry-pick's behaviour by not using
-merge-recursive, but unfortunately has stalled for some time now.
+ - Paul Mackerras on gitk.
 
-* jc/stripspace (Sun Mar 9 00:30:35 2008 -0800) 6 commits
- - git-am --forge: add Signed-off-by: line for the author
- - git-am: clean-up Signed-off-by: lines
- - stripspace: add --log-clean option to clean up signed-off-by:
-   lines
- - stripspace: use parse_options()
- - Add "git am -s" test
- - git-am: refactor code to add signed-off-by line for the committer
+ - Eric Wong on git-svn.
 
-Just my toy at this moment.
+ - Simon Hausmann on git-p4.
+
+ - Jakub Narebski, Petr Baudis, and Luben Tuikov on gitweb.
+
+ - J. Bruce Fields on documentaton issues.
+
+ - Johannes Schindelin, Johannes Sixt and others for their effort
+   to move things forward on the Windows front.  Although my
+   repository does not have much from the effort of MinGW team,
+   I expect a merge into mainline will happen so that everybody
+   can work from the same codebase.
+
+ - People on non-Linux platforms for keeping their eyes on
+   portability; especially, Randal Schwartz, Theodore Ts'o,
+   Jason Riedy, Thomas Glanzmann, but countless others as well.
+
+* This document
+
+The latest copy of this document is found in git.git repository,
+on 'todo' branch, as MaintNotes.
