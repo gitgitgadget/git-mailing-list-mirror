@@ -1,95 +1,131 @@
-From: Robert Haines <rhaines@manchester.ac.uk>
-Subject: Re: ANNOUNCE: Git Forum
-Date: Wed, 9 Apr 2008 17:57:59 +0100
-Message-ID: <721CA911-6880-4A52-8228-005EA1FF8E11@manchester.ac.uk>
-References: <60646ee10804081332n3f0d9668o514bd2b6f99b7ae@mail.gmail.com> <ftgngb$l9m$1@ger.gmane.org> <6b6419750804081601k3f3b3853pce22c6b14d765327@mail.gmail.com> <46a038f90804081607v64df6b5q345249a967dd854f@mail.gmail.com> <32541b130804081618rfaca3barb8ffbb78241ee8b5@mail.gmail.com> <87d4ozsvh5.fsf@bottom.com>
-Mime-Version: 1.0 (Apple Message framework v753)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: lizhenqing.fudan@gmail.com
-X-From: git-owner@vger.kernel.org Wed Apr 09 18:58:08 2008
+From: Joachim B Haga <jobh@broadpark.no>
+Subject: [PATCH] Re: git clean removes directories when not asked to
+Date: Wed, 09 Apr 2008 19:04:15 +0200
+Message-ID: <85fxtvj6y8.fsf_-_@lupus.strangled.net>
+References: <85prt0jjen.fsf@lupus.strangled.net> <85k5j8jioc.fsf@lupus.strangled.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 09 19:06:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JjdcX-0001IN-Vz
-	for gcvg-git-2@gmane.org; Wed, 09 Apr 2008 18:58:02 +0200
+	id 1JjdjX-0003xP-48
+	for gcvg-git-2@gmane.org; Wed, 09 Apr 2008 19:05:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753021AbYDIQ5R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Apr 2008 12:57:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753584AbYDIQ5R
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Apr 2008 12:57:17 -0400
-Received: from clarity.mcc.ac.uk ([130.88.200.144]:57278 "EHLO
-	clarity.mcc.ac.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753021AbYDIQ5R (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Apr 2008 12:57:17 -0400
-Received: from gerhayn.mcc.ac.uk ([10.2.18.1])
-	by clarity.mcc.ac.uk with esmtps (TLSv1:AES256-SHA:256)
-	(Exim 4.69 (FreeBSD))
-	(envelope-from <rhaines@manchester.ac.uk>)
-	id 1Jjdbn-000Ndo-On; Wed, 09 Apr 2008 17:57:15 +0100
-Received: from leela.rcs.manchester.ac.uk ([130.88.1.66]:50927)
-	by gerhayn.mcc.ac.uk with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.69 (FreeBSD))
-	(envelope-from <rhaines@manchester.ac.uk>)
-	id 1Jjdbn-000JAT-Ly; Wed, 09 Apr 2008 17:57:15 +0100
-In-Reply-To: <87d4ozsvh5.fsf@bottom.com>
-X-Mailer: Apple Mail (2.753)
-X-Authenticated-Sender: Robert Haines from leela.rcs.manchester.ac.uk [130.88.1.66]:50927
-X-Authenticated-From: Robert.Haines@manchester.ac.uk
-X-UoM: Scanned by the University Mail System. See http://www.itservices.manchester.ac.uk/email/filtering/information/ for details.
+	id S1752896AbYDIRE3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Apr 2008 13:04:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752733AbYDIRE3
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Apr 2008 13:04:29 -0400
+Received: from main.gmane.org ([80.91.229.2]:56895 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752597AbYDIRE2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Apr 2008 13:04:28 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Jjdik-0003GB-Jn
+	for git@vger.kernel.org; Wed, 09 Apr 2008 17:04:26 +0000
+Received: from 22.80-203-45.nextgentel.com ([80.203.45.22])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 09 Apr 2008 17:04:26 +0000
+Received: from jobh by 22.80-203-45.nextgentel.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 09 Apr 2008 17:04:26 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 22.80-203-45.nextgentel.com
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+Cancel-Lock: sha1:Ht7prgpJsmT5VmuTMmV5PFqPc80=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79118>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79119>
 
+Joachim B Haga <jobh@broadpark.no> writes:
 
-On 9 Apr 2008, at 01:49, DigitalPig wrote:
-> "Avery Pennarun" <apenwarr@gmail.com> writes:
+> Joachim B Haga <jobh@broadpark.no> writes:
 >
->> On Tue, Apr 8, 2008 at 7:07 PM, Martin Langhoff
->> <martin.langhoff@gmail.com> wrote:
->>> On Tue, Apr 8, 2008 at 8:01 PM, Patrick Aljord  
->>> <patcito@gmail.com> wrote:
->>>>  here it is: http://groups.google.com/group/git-users
->>>
->>>  Is it clear to everyone here that splitting a community does not  
->>> make
->>>  it stronger?
->>
->> One interesting point is that the current list might have *too much*
->> discussion.  I hesitated to join for quite a while in case I couldn't
->> keep up with the traffic (and yes, it's hard to keep up with the
->> traffic :))
->>
->> From that point of view, perhaps "making the community stronger" is
->> not the goal at all.  Perhaps a valid goal is to fracture the
->> community so that more people can participate in a community in the
->> first place.
->>
->> Have fun,
->>
->> Avery
-> I agree with that. For me, each day this group shows 200+ topics  
-> when I
-> opened Gnus. I think this could be divided into two groups, one for
-> git-user and the other for git-devel.
+>> When invoked from a subdirectory, git clean removes more than it
+>> should. According to the documentation, it should not remove
+>> directories unless "-d" is given. However:
 
-This is missing the point slightly. If you ask a question on this  
-list now it will be read by a lot of people who know git intimately  
-and will help in very short order. These are the people who come to  
-the list for other things (development discussions, patches, etc). If  
-you split the group these people will not see your questions so they  
-won't get answered. How does that help the community or make it  
-stronger? It might well fracture the community into two groups: One  
-that is now free to get even more development done, and one that  
-never gets any of its questions answered!
+I have tried to fix this, but I don't know the code. The previous logic was
+obviously (?) broken, as it had this (paraphrased):
 
-That said, this list is very high traffic. If you want to reduce that  
-why not filter out all mails with things like "[PATCH", "[BUG]", etc  
-in the title and you'll just about have your git-users list!
+if (remove_directories || matches)
+	remove_dir_recursively(...);
 
-Cheers,
-Rob
+which should have been &&. But with only this change, top-level directories
+were not removed even if "-d" was given. Looking at the (!ISDIR) branch, I
+guessed that it should instead trigger if pathspec is NULL; i.e, generally
+treat (!pathspec) as a match. It looks like the behaviour is correct now, but
+somebody who knows this code should check my guesses.
+
+-j.
+
+
+
+
+>From 73647e7bb73b6037b9d14535ec027da8ee7d6091 Mon Sep 17 00:00:00 2001
+From: Joachim B Haga <jobh@broadpark.no>
+Date: Wed, 9 Apr 2008 18:49:34 +0200
+Subject: [PATCH] Stop builtin-clean from removing directories unless "-d" is given.
+
+---
+ builtin-clean.c |   29 ++++++++++++++++-------------
+ 1 files changed, 16 insertions(+), 13 deletions(-)
+
+diff --git a/builtin-clean.c b/builtin-clean.c
+index fefec30..15201d5 100644
+--- a/builtin-clean.c
++++ b/builtin-clean.c
+@@ -130,29 +130,32 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
+                        matches = match_pathspec(pathspec, ent->name, ent->len,
+                                                 baselen, seen);
+                } else {
+-                       matches = 0;
++                       matches = 1;
+                }
+ 
+                if (S_ISDIR(st.st_mode)) {
+                        strbuf_addstr(&directory, ent->name);
+                        qname = quote_path_relative(directory.buf, directory.len, &buf, prefix);
+-                       if (show_only && (remove_directories || matches)) {
+-                               printf("Would remove %s\n", qname);
+-                       } else if (remove_directories || matches) {
+-                               if (!quiet)
+-                                       printf("Removing %s\n", qname);
+-                               if (remove_dir_recursively(&directory, 0) != 0) {
+-                                       warning("failed to remove '%s'", qname);
+-                                       errors++;
++                       if (remove_directories && matches) {
++                               if (show_only)
++                                       printf("Would remove %s\n", qname);
++                               else {
++                                       if (!quiet)
++                                               printf("Removing %s\n", qname);
++                                       if (remove_dir_recursively(&directory, 0) != 0) {
++                                               warning("failed to remove '%s'", qname);
++                                               errors++;
++                                       }
+                                }
+-                       } else if (show_only) {
+-                               printf("Would not remove %s\n", qname);
+                        } else {
+-                               printf("Not removing %s\n", qname);
++                               if (show_only)
++                                       printf("Would not remove %s\n", qname);
++                               else
++                                       printf("Not removing %s\n", qname);
+                        }
+                        strbuf_reset(&directory);
+                } else {
+-                       if (pathspec && !matches)
++                       if (!matches)
+                                continue;
+                        qname = quote_path_relative(ent->name, -1, &buf, prefix);
+                        if (show_only) {
+-- 
+1.5.4.4
