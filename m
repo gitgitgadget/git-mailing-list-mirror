@@ -1,71 +1,70 @@
 From: Bryan Donlan <bdonlan@fushizen.net>
-Subject: Re: [PATCH 3/8] git-send-email.perl: Handle shell metacharacters
-	in $EDITOR properly
-Date: Wed, 9 Apr 2008 10:28:08 -0400
-Message-ID: <20080409142808.GC24402@shion.is.fushizen.net>
-References: <cover.1207702130.git.bdonlan@fushizen.net> <1207704604-30393-1-git-send-email-bdonlan@fushizen.net> <1207704604-30393-2-git-send-email-bdonlan@fushizen.net> <1207704604-30393-3-git-send-email-bdonlan@fushizen.net> <47FC62B6.9020304@viscovery.net>
+Subject: Re: [PATCH 7/8] Use test_set_editor in t9001-send-email.sh
+Date: Wed, 9 Apr 2008 10:16:16 -0400
+Message-ID: <20080409141616.GB24402@shion.is.fushizen.net>
+References: <cover.1207702130.git.bdonlan@fushizen.net> <1207704604-30393-1-git-send-email-bdonlan@fushizen.net> <1207704604-30393-2-git-send-email-bdonlan@fushizen.net> <1207704604-30393-3-git-send-email-bdonlan@fushizen.net> <1207704604-30393-4-git-send-email-bdonlan@fushizen.net> <1207704604-30393-5-git-send-email-bdonlan@fushizen.net> <1207704604-30393-6-git-send-email-bdonlan@fushizen.net> <1207704604-30393-7-git-send-email-bdonlan@fushizen.net> <47FC69CB.1080400@viscovery.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, Adam Roben <aroben@apple.com>,
 	gitster@pobox.com
 To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed Apr 09 16:28:58 2008
+X-From: git-owner@vger.kernel.org Wed Apr 09 16:33:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JjbIF-0004Yp-8Q
-	for gcvg-git-2@gmane.org; Wed, 09 Apr 2008 16:28:55 +0200
+	id 1JjbN1-0006YM-L4
+	for gcvg-git-2@gmane.org; Wed, 09 Apr 2008 16:33:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752474AbYDIO2L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Apr 2008 10:28:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752350AbYDIO2L
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Apr 2008 10:28:11 -0400
-Received: from satoko.is.fushizen.net ([64.71.152.231]:60093 "EHLO
+	id S1755563AbYDIOcZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Apr 2008 10:32:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754186AbYDIOcZ
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Apr 2008 10:32:25 -0400
+Received: from satoko.is.fushizen.net ([64.71.152.231]:40506 "EHLO
 	satoko.is.fushizen.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752119AbYDIO2K (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Apr 2008 10:28:10 -0400
-X-Greylist: delayed 873 seconds by postgrey-1.27 at vger.kernel.org; Wed, 09 Apr 2008 10:28:10 EDT
+	with ESMTP id S1752076AbYDIOcY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Apr 2008 10:32:24 -0400
 Received: from hillmannl2.umeres.maine.edu ([130.111.243.252] helo=shion)
 	by satoko.is.fushizen.net with esmtpa (Exim 4.69)
 	(envelope-from <bdonlan@fushizen.net>)
-	id 1JjbHU-0001Fl-UB; Wed, 09 Apr 2008 14:28:09 +0000
+	id 1Jjb60-0001EN-5u; Wed, 09 Apr 2008 14:16:16 +0000
 Received: from bd by shion with local (Exim 4.69)
 	(envelope-from <bdonlan@fushizen.net>)
-	id 1JjbHU-00071o-Sg; Wed, 09 Apr 2008 10:28:08 -0400
+	id 1Jjb60-0006PT-Eg; Wed, 09 Apr 2008 10:16:16 -0400
 Content-Disposition: inline
-In-Reply-To: <47FC62B6.9020304@viscovery.net>
+In-Reply-To: <47FC69CB.1080400@viscovery.net>
 User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79107>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79108>
 
-On Wed, Apr 09, 2008 at 08:31:18AM +0200, Johannes Sixt wrote:
+On Wed, Apr 09, 2008 at 09:01:31AM +0200, Johannes Sixt wrote:
 > Bryan Donlan schrieb:
-> > Also, update t/t9001-send-email.sh to test for this bug.
-> > 
-> > Signed-off-by: Bryan Donlan <bdonlan@fushizen.net>
+> > diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+> > index 030f66c..0a65785 100755
+> > --- a/t/t9001-send-email.sh
+> > +++ b/t/t9001-send-email.sh
+> > @@ -144,10 +144,7 @@ test_expect_success 'setup fake editor' '
+> >  	chmod +x fake-editor
+> >  '
+> >  
+> > -FAKE_EDITOR="$(pwd)/fake-editor"
+> > -export FAKE_EDITOR
+> > -GIT_EDITOR='"$FAKE_EDITOR"'
+> > -export GIT_EDITOR
+> > +test_set_editor "$(pwd)/fake-editor"
+> >  
+> >  test_expect_success '--compose works' '
+> >  	clean_fake_sendmail &&
 > 
-> Your defintion of "properly"? I didn't immediately see what is wrong with
-> the status quo and, hence, why your fix would solve a problem.
+> I'd squash this into 5/8 or 8/8. Dunno.
 
-This fixes the git-send-perl semantics for launching an editor when
-$GIT_EDITOR (or friends) contains shell metacharacters to match
-launch_editor() in builtin-tag.c. If we use the current approach
-(sh -c '$0 $@' "$EDITOR" files ...), we see it fails when $EDITOR has
-shell metacharacters:
+I split it out as it's not really related to the goals of 5/8 or 8/8,
+but is rather pure elimination of code duplication. However if it's
+considered better to squash it into 5/8 I'd be happy to do so.
 
-$ sh -x -c '$0 $@' "$VISUAL" "foo"
-+ "$FAKE_EDITOR" foo
-"$FAKE_EDITOR": 1: "$FAKE_EDITOR": not found
+Thanks,
 
-Whereas builtin-tag.c will invoke sh -c "$EDITOR \"$@\"".
-
-Note that with the method git-send-perl uses currently, it's difficult
-(impossible?) to deal with a editor path that contains arbitrary shell
-metacharacters. It's certainly impossible when the various git tools use
-different semantics :)
-
-I'll amend the commit message along with the other suggested changes.
+Bryan
