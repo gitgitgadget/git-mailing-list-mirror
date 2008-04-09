@@ -1,112 +1,90 @@
-From: "Avery Pennarun" <apenwarr@gmail.com>
-Subject: Re: Migrating svn to git with heavy use of externals
-Date: Tue, 8 Apr 2008 23:33:49 -0400
-Message-ID: <32541b130804082033q55c795b5ieaa4e120956ff030@mail.gmail.com>
-References: <47F15094.5050808@et.gatech.edu> <47FBB448.3060900@et.gatech.edu>
-	 <32541b130804081306q6e06af20u794357eba9d434e@mail.gmail.com>
-	 <47FBDA77.2050402@et.gatech.edu>
-	 <32541b130804081401n743f39c9o3f016da9dee2eb92@mail.gmail.com>
-	 <8FE3B7A7-4C2D-4202-A5FC-EBC4F4670273@sun.com>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: git bisect on multiple cores
+Date: Wed, 9 Apr 2008 06:29:28 +0200
+Message-ID: <200804090629.29122.chriscool@tuxfamily.org>
+References: <dbbf25900804080358o6b1ada20pfb94f68f06a23f83@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: stuart.freeman@et.gatech.edu, git@vger.kernel.org
-To: "Roman Shaposhnik" <rvs@sun.com>
-X-From: git-owner@vger.kernel.org Wed Apr 09 05:34:56 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: "A B" <gentosaker@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 09 06:24:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JjR5K-0008Gi-4n
-	for gcvg-git-2@gmane.org; Wed, 09 Apr 2008 05:34:54 +0200
+	id 1JjRrl-0001Me-Dc
+	for gcvg-git-2@gmane.org; Wed, 09 Apr 2008 06:24:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752141AbYDIDdy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Apr 2008 23:33:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752140AbYDIDdy
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Apr 2008 23:33:54 -0400
-Received: from mu-out-0910.google.com ([209.85.134.186]:51866 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752085AbYDIDdx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Apr 2008 23:33:53 -0400
-Received: by mu-out-0910.google.com with SMTP id i10so3265902mue.5
-        for <git@vger.kernel.org>; Tue, 08 Apr 2008 20:33:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=RCTU5XgqM+T0QNnSvVhIorr0bV640iohl9YH1XrNFx8=;
-        b=OzcdgYobRannFn+XcTirZwttGPG7KRZym3E9ElTtulGt5aUHD4SSfbe1rIW5wxEtbNhnbGGOLW1KhJJyODJsfv7XLPi2rFDxuYYXVznQJoieNuhXijfDa6sXMVoJOHDZwhpRc5qHyO2FtBPYVXIkuBQHWJy8Yn0H2pE96EX/c8c=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=HJktzsltawnk6Cjgovn4eY90zBI4UnqZKiZbO9znjURU6IwQLlL6TlX5C2bmPk84ZxykhSirHx/YhZ0C8curqUVRxlz2xhyGxkwjVxkBq9UaRbNqIuRILtCjYQpPnskxfpDfCPnAypimK6rnvilhqXuyxDvBkRsrlPCGYBPR4ic=
-Received: by 10.82.165.5 with SMTP id n5mr2404826bue.39.1207712029405;
-        Tue, 08 Apr 2008 20:33:49 -0700 (PDT)
-Received: by 10.82.100.5 with HTTP; Tue, 8 Apr 2008 20:33:49 -0700 (PDT)
-In-Reply-To: <8FE3B7A7-4C2D-4202-A5FC-EBC4F4670273@sun.com>
+	id S1750882AbYDIEYL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Apr 2008 00:24:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750926AbYDIEYK
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Apr 2008 00:24:10 -0400
+Received: from smtp1-g19.free.fr ([212.27.42.27]:52249 "EHLO smtp1-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750877AbYDIEYK convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 9 Apr 2008 00:24:10 -0400
+Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id B56021AB2B1;
+	Wed,  9 Apr 2008 06:24:07 +0200 (CEST)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 9591F1AB2BF;
+	Wed,  9 Apr 2008 06:24:07 +0200 (CEST)
+User-Agent: KMail/1.9.7
+In-Reply-To: <dbbf25900804080358o6b1ada20pfb94f68f06a23f83@mail.gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79068>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79069>
 
-On Tue, Apr 8, 2008 at 11:03 PM, Roman Shaposhnik <rvs@sun.com> wrote:
-> On Apr 8, 2008, at 2:01 PM, Avery Pennarun wrote:
-> > The way to understand git-submodule's operation is in terms of what it
-> > actually does.  Roughly speaking, git-submodule-add puts things into
-> > .gitmodules and .git/config;
->
->  I could be mistaken, but I don't think "git submodule add" does anything
->  to the .git/config. In fact, how settings migrate between .gitmodules
->  and .git/config has been a long standing source of slight confusion
->  for me.
->
->  Please correct me if I'm wrong, but it seems that the only reason
->  for the file .gitmodules to be there at all is because it can be
->  revved through commits, just as any file under Git's control.
->  .git/config doesn't have such a property. Other than that, it is not
->  really needed, right?
+Le mardi 8 avril 2008, A B a =E9crit :
+> git bisect is really cool. I use it for the first time.
+> Just a thought, if you have a multiple core computer, can't you make
+> git build new versions in the background while testing the previuos
+> version? Alright, if you build 2 versions, one of them will never be
+> tested, but you will perhaps save some time by letting it build in th=
+e
+> background?
 
-You have the last paragraph right, but I think the first paragraph wrong :)
+Yes, you can do that.
 
-.gitmodules doesn't do anything unless git-submodule reads it, which
-it does in git-submodule-init and git-submodule-add.  (You know
-git-submodule-add is screwing with .git/config because you don't need
-to call git-submodule-init when you use it.)  git-submodule-update,
-AFAICT, just reads .git/config.
+If you have cloned your repository twice (or more), then you can bisect=
+=20
+compile and test at the same time in your 3 repositories (or more if yo=
+u=20
+really want).
 
->  Speaking of complications, it took me awhile to realize that 90%
->  of the Submodule magic seems to be based on the secret ability of
->  tree objects to hold references not only to blobs and trees but
->  also to *commits*:
+=46or example if bisecting in one repo asks you to test revision X, the=
+n you=20
+can bisect and then build (and even maybe start testing) in another rep=
+o=20
+assuming revision X is good, and in yet in another one assuming revisio=
+n X=20
+is bad.
 
-Indeed, this is the majority of the coolness right there.  The rest of
-the screwiness with .gitmodules and so on is really just to support
-fetching the objects for the submodules from repos than the primary
-supermodule one.
+(In the repo where you assume X is good you use:
 
-Also, git-checkout seems to explicitly *not* checkout refs to commits
-by itself; you have to call git-submodule-update for that.  This is
-probably because git-checkout wouldn't know what to do if the
-submodule were dirty (ie. the sub-checkout couldn't complete because
-files had been changed but not checked in).  This is useful in a
-not-destroying-my-data way, but the behaviour isn't too obvious or
-coherent.
+"git bisect start CURRENT-BAD X"
 
->  That's exactly what makes me doubtful about .gitmodules being the
->  best place for storing the url, but then again, I don't have any
->  better ideas. :-( Yet ;-)
+and in the third one, where you assume X is bad, you use:
 
-There's definitely no better place; .git/config isn't versioned, and
-URLs don't belong in the tree objects themselves, which are otherwise
-location-neutral and transport-neutral.
+"git bisect start X CURRENT-GOOD")
 
-In my own use case, I think having all the objects from the
-supermodule *and* submodules all be in the same repo is what I want.
-This kind of obviates the need for .gitmodules entirely, if
-git-checkout and friends will do the right thing.  I think I'll submit
-some patches eventually once I have this figured out properly.
+When you know that X was good then you can kill the build or test proce=
+sses=20
+and "git bisect reset" in the repository where you assumed wrongly X wa=
+s=20
+bad. You can then assume something else with "git bisect start B G" and=
+=20
+build and test in this repo again.
 
-Have fun,
+In the repo that told you X was good, then you need only to use "git bi=
+sect=20
+good" or "git bisect bad" without building and testing to assume someth=
+ing=20
+about the revision that should be built and tested.
 
-Avery
+Regards,
+Christian.
