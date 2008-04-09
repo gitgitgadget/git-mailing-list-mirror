@@ -1,57 +1,74 @@
-From: "Prasanna Mumbai" <mumbai.prasanna@gmail.com>
-Subject: Newbie please help.
-Date: Wed, 9 Apr 2008 15:03:20 -0700
-Message-ID: <8c6189ae0804091503l6ef7ba98o7dd1bd36d464e568@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+From: Vincent Kergonna <vincent.k@orange.fr>
+Subject: Re: Newbie please help.
+Date: Thu, 10 Apr 2008 00:19:58 +0200
+Message-ID: <935BB5C9-76AD-4357-B161-65CB9645E3DE@orange.fr>
+References: <8c6189ae0804091503l6ef7ba98o7dd1bd36d464e568@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v919.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 10 00:04:16 2008
+X-From: git-owner@vger.kernel.org Thu Apr 10 00:20:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JjiOq-0001wQ-Kj
-	for gcvg-git-2@gmane.org; Thu, 10 Apr 2008 00:04:13 +0200
+	id 1Jjif1-00073G-HA
+	for gcvg-git-2@gmane.org; Thu, 10 Apr 2008 00:20:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753460AbYDIWDW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Apr 2008 18:03:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752864AbYDIWDW
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Apr 2008 18:03:22 -0400
-Received: from fg-out-1718.google.com ([72.14.220.152]:46549 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752597AbYDIWDW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Apr 2008 18:03:22 -0400
-Received: by fg-out-1718.google.com with SMTP id l27so2492229fgb.17
-        for <git@vger.kernel.org>; Wed, 09 Apr 2008 15:03:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=D8gnzQqi88Q5Dmx6+KZ8Y2AK4UEPovHUH1j66VdPvwc=;
-        b=iJVEaGX6qwEBr2nrICe+OloDdNvcyEK2SLiOLFuOK6FEzfCH5836gMVBo9ankXmKYZjILpV8P5UjJ9RDK07LhirWXtr/i5yLv8Uxszb2+ZmCwqyosKYjBD2bsl+2rCzSO4/AWqYaorBWDOYX4wOBSeWaP99hCpskVDXr4L4cU9w=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=Ibee3KzDeFNb8dN1gWGk+nUModlufaSVE7EvbCOUcthn4eTZNnCMJ8CFwswFhHt2Phk+SSim9pAEreFxOIbgX8EzdaQN4gNZ7CMtPvRBM7GZzqpAMMHiaqDc0WlwMbLh1Slqz2xR9+MFdszedk6Aft9nuOHT+KSX1/eyEc6OtaE=
-Received: by 10.86.53.8 with SMTP id b8mr1363433fga.64.1207778600354;
-        Wed, 09 Apr 2008 15:03:20 -0700 (PDT)
-Received: by 10.86.71.9 with HTTP; Wed, 9 Apr 2008 15:03:20 -0700 (PDT)
-Content-Disposition: inline
+	id S1754274AbYDIWUE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Apr 2008 18:20:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754446AbYDIWUE
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Apr 2008 18:20:04 -0400
+Received: from smtp19.orange.fr ([80.12.242.17]:53050 "EHLO smtp19.orange.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754274AbYDIWUB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Apr 2008 18:20:01 -0400
+Received: from me-wanadoo.net (localhost [127.0.0.1])
+	by mwinf1912.orange.fr (SMTP Server) with ESMTP id 9136E1C0008A
+	for <git@vger.kernel.org>; Thu, 10 Apr 2008 00:19:59 +0200 (CEST)
+Received: from phoebe.kergonna.fr (ASt-Lambert-152-1-43-147.w82-124.abo.wanadoo.fr [82.124.169.147])
+	by mwinf1912.orange.fr (SMTP Server) with ESMTP id 690E51C00086
+	for <git@vger.kernel.org>; Thu, 10 Apr 2008 00:19:59 +0200 (CEST)
+X-ME-UUID: 20080409221959430.690E51C00086@mwinf1912.orange.fr
+In-Reply-To: <8c6189ae0804091503l6ef7ba98o7dd1bd36d464e568@mail.gmail.com>
+X-Mailer: Apple Mail (2.919.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79142>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79143>
 
-Hi all,
-I am a newbie to git.
-Do we have any documentation for the usage of git.  Basically i have
-downloaded open-fcoe project into my machine,  i want to roll back to
-the earlier version.  I  want some documents which gives a list of
-command to be used to see the different versions and download the
-somewhat older/stable version.
 
-Thanks in Advance.
+On Apr 10, 2008, at 24:03 , Prasanna Mumbai wrote:
+> Hi all,
 
-~Cheers
-Prasanna
+Hi,
+
+>
+> I am a newbie to git.
+> Do we have any documentation for the usage of git.  Basically i have
+> downloaded open-fcoe project into my machine,  i want to roll back to
+> the earlier version.  I  want some documents which gives a list of
+> command to be used to see the different versions and download the
+> somewhat older/stable version.
+
+There is the git user's manual: http://www.kernel.org/pub/software/scm/git/docs/user-manual.html
+
+http://git.or.cz/gitwiki/GitDocumentation contains links to more  
+documentation / tutorials.
+
+>
+>
+> Thanks in Advance.
+>
+> ~Cheers
+> Prasanna
+
+-- 
+Vincent
+
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
