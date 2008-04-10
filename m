@@ -1,98 +1,102 @@
-From: Adam Golebiowski <adamg@pld-linux.org>
-Subject: [PATCH] Kill bashizm in t/t3200-branch.sh and t/t7201-co.sh.
-Date: Thu, 10 Apr 2008 09:25:00 +0200
-Message-ID: <20080410072500.GA10188@mysza.eu.org>
+From: "Sverre Rabbelier" <alturin@gmail.com>
+Subject: Re: Friendly refspecs (Was: Re: git annoyances)
+Date: Thu, 10 Apr 2008 09:58:56 +0200
+Message-ID: <bd6139dc0804100058r44488432ke19c27432b561561@mail.gmail.com>
+References: <20080409101428.GA2637@elte.hu>
+	 <20080409145758.GB20874@sigill.intra.peff.net>
+	 <20080409200836.GA19248@mithlond>
+	 <20080409203453.GA10370@sigill.intra.peff.net>
+	 <20080409222500.GB19248@mithlond>
+	 <20080409225112.GB12103@sigill.intra.peff.net>
+	 <bd6139dc0804091616k53f4e0c1sf75aa9585c5a54c5@mail.gmail.com>
+	 <20080410003352.GA14057@sigill.intra.peff.net>
+Reply-To: sverre@rabbelier.nl
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Apr 10 09:54:49 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Jeff King" <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Apr 10 09:59:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JjrcG-0007Hj-Cc
-	for gcvg-git-2@gmane.org; Thu, 10 Apr 2008 09:54:40 +0200
+	id 1Jjrh9-0000W9-QS
+	for gcvg-git-2@gmane.org; Thu, 10 Apr 2008 09:59:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754229AbYDJHxz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Apr 2008 03:53:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753871AbYDJHxz
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Apr 2008 03:53:55 -0400
-Received: from [212.244.191.134] ([212.244.191.134]:3952 "EHLO
-	mx.biomerieux.pl" rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org
-	with ESMTP id S1752789AbYDJHxy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Apr 2008 03:53:54 -0400
-X-Greylist: delayed 1718 seconds by postgrey-1.27 at vger.kernel.org; Thu, 10 Apr 2008 03:53:53 EDT
-Received: from chello084010124137.chello.pl ([84.10.124.137]:30711 helo=biomerieux.pl)
-	by mx.biomerieux.pl with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.69)
-	(envelope-from <adamg@biomerieux.pl>)
-	id 1JjrC3-0006Xs-CG; Thu, 10 Apr 2008 09:27:38 +0200
-Received: from adamg by biomerieux.pl with local (Exim 4.69)
-	(envelope-from <adamg@biomerieux.pl>)
-	id 1Jjr9Y-0002eV-Hx; Thu, 10 Apr 2008 09:25:00 +0200
+	id S1754524AbYDJH65 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Apr 2008 03:58:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754328AbYDJH65
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Apr 2008 03:58:57 -0400
+Received: from wf-out-1314.google.com ([209.85.200.175]:26992 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753931AbYDJH64 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Apr 2008 03:58:56 -0400
+Received: by wf-out-1314.google.com with SMTP id 28so2935446wff.4
+        for <git@vger.kernel.org>; Thu, 10 Apr 2008 00:58:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=cIVUkFKj41adWRm4hewGXlFD9bti6BbK5tIHCZ8tLYQ=;
+        b=EplNJFXfvhTKmB3nLIs6M3soa6015XFLToeK0SJZcd/1ao0577d9cKwSM7p+BDaE2m0auPEooI1NZ3cj53kM+nbb1UP0Yi6rynnY0EUbBiEHyd2LWtPyKG6117rZu8Zl92Xcwbcy29NRIcRedvk8DYExsLVn2GgEawcC86htw6w=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=QdYjWmR++bcEiNkIRwlFVhe/wBqbYvYqpttLjnFdXPwiY6pn7iZ+uCXOhmk+vXFtfXzw0Aah8z5dl/i+WOt0h8KUfKVFzXfG+8bQcYRYNXJ28WJi+of7XZhZq6aXKnYiPGOxnBSUK4jKzyvHjQ+1KrkP/HCKKRqGGOnVjU63PLI=
+Received: by 10.143.3.4 with SMTP id f4mr340593wfi.343.1207814336216;
+        Thu, 10 Apr 2008 00:58:56 -0700 (PDT)
+Received: by 10.143.33.6 with HTTP; Thu, 10 Apr 2008 00:58:56 -0700 (PDT)
+In-Reply-To: <20080410003352.GA14057@sigill.intra.peff.net>
 Content-Disposition: inline
-X-Operating-System: Linux ook 2.6.22.18_desktop-1
-X-Location: Zielonka/Poland 52.3000N, 21.1670E
-User-Agent: Mutt/1.5.16 (2007-06-09)
-X-Spam-Score: -1.4 (-)
-X-Spam-Report: Spam detection software, running on the system "mx", has
-	identified this incoming email as possible spam.  The original message
-	has been attached to this so you can view it (if it isn't spam) or label
-	similar future email.  If you have any questions, see
-	postmaster@localhost for details.
-	Content preview:  On systems with /bin/sh being different than /bin/bash, make
-	test fails due to some bash-specific constructs. This patch makes it possible
-	to run the test-suite systems with on /bin/sh pointing to /bin/ksh. [...]
-	Content analysis details:   (-1.4 points, 5.1 required)
-	pts rule name              description
-	---- ---------------------- --------------------------------------------------
-	-1.4 ALL_TRUSTED            Passed through trusted hosts only via SMTP
-X-Scan-Signature: fba11a8b052d99e40baa9361b2c3d74d
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79190>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79191>
 
-On systems with /bin/sh being different than /bin/bash, make test fails due
-to some bash-specific constructs. This patch makes it possible to run the
-test-suite systems with on /bin/sh pointing to /bin/ksh.
+On Thu, Apr 10, 2008 at 2:33 AM, Jeff King <peff@peff.net> wrote:
+> [Your message didn't go to the list, but I think it was supposed to, so
+>  I am re-adding the list].
 
-Signed-off-by: Adam Golebiowski <adamg@pld-linux.org>
----
- t/t3200-branch.sh |    2 +-
- t/t7201-co.sh     |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+Yes, it was supposed to go to the list, my bad for hitting 'reply'
+instead of 'reply to all'.
 
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index cb5f7a4..e8ff82f 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -200,7 +200,7 @@ test_expect_success \
- 
- test_expect_success \
-     'branch from non-branch HEAD w/--track causes failure' \
--    '!(git branch --track my10 HEAD^)'
-+    '! git branch --track my10 HEAD^'
- 
- # Keep this test last, as it changes the current branch
- cat >expect <<EOF
-diff --git a/t/t7201-co.sh b/t/t7201-co.sh
-index 3111baa..51a9928 100755
---- a/t/t7201-co.sh
-+++ b/t/t7201-co.sh
-@@ -335,6 +335,6 @@ test_expect_success \
-     git checkout -b delete-me master &&
-     rm .git/refs/heads/delete-me &&
-     test refs/heads/delete-me = "$(git symbolic-ref HEAD)" &&
--    !(git checkout --track -b track)'
-+    ! git checkout --track -b track'
- 
- test_done
--- 
-1.5.4.5
+>  On Thu, Apr 10, 2008 at 01:16:57AM +0200, Sverre Rabbelier wrote:
+>  > >  I wonder if people like Linus who do a lot of one-off pulls would find
+>  > >  that too cluttery. I guess we can post a patch and see. ;)
+>  >
+>  > Maybe a 'newbie' configuration option could be added?
+>  > We can then, if that option is set, provide this kind of information
+>  > to the user.
+>  > Then, later on, when the user is more confident, they can unset the option.
+>  > I reckon it should be set to default-off but that we should provide an
+>  > easy way to turn it on.
+>  > (That is, 'git config newbie on', is easy enough, as long as it is
+>  > mentioned in a/the newbie guide)
+>
+>  This has been discussed before, and I think the general consensus was
+>  that it's a bad idea to separate the "newbie" and "expert" experience
+>  too much. It makes it harder to provide advice and documentation that
+>  works for everyone.
 
+I would agree here, not only will it make it hard to provide
+consequent advice and documentation, it will also make it more
+difficult to switch to "expert" mode if the "newbie" mode is a lot
+different.
 
--- 
- http://www.mysza.eu.org/ | Everybody needs someone sure, someone true,
-   PLD Linux developer    | Everybody needs some solid rock, I know I do.
+>  Now that argument generally applies to _behavior_ changes, not verbosity
+>  of messages. But in this case, I think it is easy enough to find a
+>  "right" behavior for everyone: show the message on fetch, which would
+>  otherwise be a very confusing command, but suppress it on "pull", where
+>  the fetching is mostly a side effect.
+
+This makes sense, but I think that if it is made default behavior it
+would be nice to add a way to make it quiet. Perhaps 'quiet' can be
+used (I recall seeing used it elsewhere), either through a config
+option or a command line argument. Then again, if everybody agrees
+that this added verbosity is good, there'd be no reason to go through
+that trouble.
+
+Cheers,
+
+Sverre Rabbelier
