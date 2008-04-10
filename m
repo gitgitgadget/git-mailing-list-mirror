@@ -1,86 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Corporate firewall braindamage
-Date: Thu, 10 Apr 2008 16:14:54 -0700
-Message-ID: <7v7if5wbdd.fsf@gitster.siamese.dyndns.org>
-References: <47FE8277.8070503@zytor.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	ftpadmin <ftpadmin@kernel.org>
-To: "H. Peter Anvin" <hpa@zytor.com>
-X-From: git-owner@vger.kernel.org Fri Apr 11 01:16:33 2008
+From: Gabriel <g2p.code@gmail.com>
+Subject: [PATCH] When a remote is added but not fetched, tell the user.
+Date: Fri, 11 Apr 2008 01:25:46 +0200
+Message-ID: <1207869946-17013-1-git-send-email-g2p.code@gmail.com>
+References: <20080409101428.GA2637@elte.hu>
+Cc: Gabriel <g2p.code@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 11 01:26:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jk60I-0004WB-8n
-	for gcvg-git-2@gmane.org; Fri, 11 Apr 2008 01:16:26 +0200
+	id 1Jk6AE-0008Vl-FH
+	for gcvg-git-2@gmane.org; Fri, 11 Apr 2008 01:26:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756029AbYDJXPM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Apr 2008 19:15:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758706AbYDJXPM
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Apr 2008 19:15:12 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:46185 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752910AbYDJXPL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Apr 2008 19:15:11 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 7F1441FE1;
-	Thu, 10 Apr 2008 19:15:08 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 908071FDF; Thu, 10 Apr 2008 19:15:02 -0400 (EDT)
-In-Reply-To: <47FE8277.8070503@zytor.com> (H. Peter Anvin's message of "Thu,
- 10 Apr 2008 14:11:19 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1758414AbYDJXZu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Apr 2008 19:25:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758413AbYDJXZu
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Apr 2008 19:25:50 -0400
+Received: from smtp1-g19.free.fr ([212.27.42.27]:55232 "EHLO smtp1-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753061AbYDJXZt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Apr 2008 19:25:49 -0400
+Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 9BD251AB2B2;
+	Fri, 11 Apr 2008 01:25:46 +0200 (CEST)
+Received: from localhost (pro75-5-88-162-203-35.fbx.proxad.net [88.162.203.35])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 824CE1AB2B1;
+	Fri, 11 Apr 2008 01:25:46 +0200 (CEST)
+Received: from g2p by localhost with local (Exim 4.67)
+	(envelope-from <g2p@vapeur.no-ip.org>)
+	id 1Jk69K-0004Qk-QQ; Fri, 11 Apr 2008 01:25:46 +0200
+X-Mailer: git-send-email 1.5.5.24.geb27
+In-Reply-To: <20080409101428.GA2637@elte.hu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79254>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79255>
 
-"H. Peter Anvin" <hpa@zytor.com> writes:
+A helpful message tells the user when a remote was added
+without being fetched, and how to fetch it.
 
-> 1. git protocol via CONNECT http proxy
->
->    Connect to http proxy, and use a CONNECT method to establish a link
->    to the git server, using the normal git protocol.
->
->    Minor change to TCP connection setup, but no other changes needed.
->    No changes on the server side.
+Our default of not fetching is breaking the users' workflow
+in the common "let me access this repo" use case.
+This message alleviates the problem.
 
-Many firewalls will detect that CONNECT will not going to 443 and block
-you, and even if you run git:// daemon on 443, they will detect that you
-are not talking SSL initial exchange and shut you off.
+Signed-off-by: Gabriel <g2p.code@gmail.com>
+---
+ builtin-remote.c |   12 ++++++++++--
+ 1 files changed, 10 insertions(+), 2 deletions(-)
 
-> 2. git protocol over SSL via CONNECT http proxy
->
->    Same as #1, but encapsulate the data stream in an SSL connection.
->    If the git server is run on port 443, then the fact that the data
->    on the SSL connection isn't actually HTTP should be invisible to the
->    proxy, and thus this *should* work anywhere which allows https://
->    traffic.
->
->    Requires the git server to speak SSL.
-
-Yes, perhaps putting it behind an independent ssl relay would give you a
-solution without any code change.
-
-> 3. git protocol encapsulated in HTTP POST transaction
->
->    git protocol is already fundamentally a RPC protocol, where the
->    client sends a query and the server responds.  Furthermore, it
->    tries to minimize the number of round trips (RPC calls), which is
->    of course desirable.
->
->    Each such RPC transaction could be formulated as an HTTP POST
->    transaction.
->
->    This requires modifications to both the client and the server;
->    furthermore, the server can no longer rely on the invariant "one TCP
->    connection == one session"; a proxy might break a single session
->    into arbitrarily many TCP connections.
-
-It would probably be a one-CS/EE-student-half-a-summer sized project to
-create such a server-side support with a specialized client.
+diff --git a/builtin-remote.c b/builtin-remote.c
+index d77f10a..044215a 100644
+--- a/builtin-remote.c
++++ b/builtin-remote.c
+@@ -111,8 +111,16 @@ static int add(int argc, const char **argv)
+ 			return 1;
+ 	}
+ 
+-	if (fetch && fetch_remote(name))
+-		return 1;
++	if (fetch) {
++		if (fetch_remote(name))
++			return 1;
++	}
++	else {
++		printf ("Added remote repository `%s' without fetching it.\n"
++			"Before accessing the branches of this "
++			"remote, run `git fetch %s' "
++			"or `git remote update'.\n", name, name);
++	}
+ 
+ 	if (master) {
+ 		strbuf_reset(&buf);
+-- 
+1.5.5.24.geb27
