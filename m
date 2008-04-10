@@ -1,141 +1,105 @@
 From: Ping Yin <pkufranky@gmail.com>
-Subject: [PATCH/RFC 2/7] git-submodule: Extract absolute_url & move absolute url logic to module_clone
-Date: Thu, 10 Apr 2008 23:50:19 +0800
-Message-ID: <1207842625-9210-5-git-send-email-pkufranky@gmail.com>
+Subject: [PATCH/RFC 7/7] git-submodule: "update --force" to enforce cloning non-submodule
+Date: Thu, 10 Apr 2008 23:50:25 +0800
+Message-ID: <1207842625-9210-11-git-send-email-pkufranky@gmail.com>
 References: <1207842625-9210-1-git-send-email-pkufranky@gmail.com>
  <1207842625-9210-2-git-send-email-pkufranky@gmail.com>
  <1207842625-9210-3-git-send-email-pkufranky@gmail.com>
  <1207842625-9210-4-git-send-email-pkufranky@gmail.com>
+ <1207842625-9210-5-git-send-email-pkufranky@gmail.com>
+ <1207842625-9210-6-git-send-email-pkufranky@gmail.com>
+ <1207842625-9210-7-git-send-email-pkufranky@gmail.com>
+ <1207842625-9210-8-git-send-email-pkufranky@gmail.com>
+ <1207842625-9210-9-git-send-email-pkufranky@gmail.com>
+ <1207842625-9210-10-git-send-email-pkufranky@gmail.com>
 Cc: gitster@pobox.com, Ping Yin <pkufranky@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 10 17:52:49 2008
+X-From: git-owner@vger.kernel.org Thu Apr 10 17:53:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jjz4W-0005Y2-Je
-	for gcvg-git-2@gmane.org; Thu, 10 Apr 2008 17:52:21 +0200
+	id 1Jjz4b-0005Y2-Qg
+	for gcvg-git-2@gmane.org; Thu, 10 Apr 2008 17:52:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756910AbYDJPue (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Apr 2008 11:50:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757648AbYDJPuc
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Apr 2008 11:50:32 -0400
-Received: from mail.qikoo.org ([60.28.205.235]:37778 "EHLO mail.qikoo.org"
+	id S1757973AbYDJPur (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Apr 2008 11:50:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757942AbYDJPuq
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Apr 2008 11:50:46 -0400
+Received: from mail.qikoo.org ([60.28.205.235]:37789 "EHLO mail.qikoo.org"
 	rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1757176AbYDJPu3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Apr 2008 11:50:29 -0400
+	id S1757606AbYDJPub (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Apr 2008 11:50:31 -0400
 Received: by mail.qikoo.org (Postfix, from userid 1029)
-	id C6369470B5; Thu, 10 Apr 2008 23:50:25 +0800 (CST)
+	id 0A804470BA; Thu, 10 Apr 2008 23:50:25 +0800 (CST)
 X-Mailer: git-send-email 1.5.5.23.g2a5f
-In-Reply-To: <1207842625-9210-4-git-send-email-pkufranky@gmail.com>
+In-Reply-To: <1207842625-9210-10-git-send-email-pkufranky@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79225>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79226>
 
-Extract function absolute_url to remove code redundance and inconsistence in
-cmd_init and cmd_add when resolving relative url/path to absolute one.
+If the update subcommand combines with --force, non-submodules
+(i.e. modules existing in .gitmodules or $GIT_DIR/config but not added
+to the super module) will be cloned and the master branch will be
+checked out.
 
-Also move resolving absolute url logic from cmd_add to module_clone which
-results in a litte behaviour change: cmd_update originally doesn't
-resolve absolute url but now it will.
-
-This behaviour change breaks t7400 which uses relative url './.subrepo'.
-However, this test originally doesn't mean to test relative url, so fix
-the url as '.subrepo'.
+However, if a non-submodule has already been cloned before, the update
+will be rejected since we don't know what the update means.
 
 Signed-off-by: Ping Yin <pkufranky@gmail.com>
 ---
- git-submodule.sh           |   41 ++++++++++++++++++-----------------------
- t/t7400-submodule-basic.sh |    2 +-
- 2 files changed, 19 insertions(+), 24 deletions(-)
+ git-submodule.sh |   14 +++++++++++++-
+ 1 files changed, 13 insertions(+), 1 deletions(-)
 
 diff --git a/git-submodule.sh b/git-submodule.sh
-index a5002e1..4d56135 100755
+index b4db676..153b61e 100755
 --- a/git-submodule.sh
 +++ b/git-submodule.sh
-@@ -65,6 +65,21 @@ resolve_relative_url ()
- 	echo "$remoteurl/$url"
- }
- 
-+# Resolve relative url/path to absolute one
-+absolute_url () {
-+	case "$1" in
-+	./*|../*)
-+		# dereference source url relative to parent's url
-+		url="$(resolve_relative_url $1)" ;;
-+	*)
-+		# Turn the source into an absolute path if it is local
-+		url=$(get_repo_base "$1") ||
-+		url=$1
-+		;;
-+	esac
-+	echo "$url"
-+}
-+
- #
- # Map submodule path to submodule name
- #
-@@ -112,7 +127,7 @@ module_info() {
- module_clone()
- {
- 	path=$1
--	url=$2
-+	url=$(absolute_url "$2")
- 
- 	# If there already is a directory at the submodule path,
- 	# expect it to be empty (since that is the default checkout
-@@ -195,21 +210,7 @@ cmd_add()
- 			die "'$path' already exists and is not a valid git repo"
+@@ -384,6 +384,9 @@ cmd_update()
+ 		-q|--quiet)
+ 			quiet=1
+ 			;;
++		-f | --force)
++			force="$1"
++			;;
+ 		--)
+ 			shift
+ 			break
+@@ -406,7 +409,8 @@ cmd_update()
+ 		test -z "$name" && exit_status=1 && continue
+ 		if test $sha1 = 0000000000000000000000000000000000000000
+ 		then
+-			say "Not a submodule: $name @ $path"
++			test -z "$force" &&
++			say "Not a submodule: $name @ $path" &&
+ 			continue
+ 		elif test -z "$url"
+ 		then
+@@ -420,8 +424,15 @@ cmd_update()
+ 		if ! test -d "$path"/.git
+ 		then
+ 			! module_clone "$path" "$url" && exit_status=1 && continue
++			test "$sha1" = 0000000000000000000000000000000000000000 &&
++			(unset GIT_DIR; cd "$path" && git checkout -q master) &&
++			say "non-submodule cloned and master checked out: $name @ $path" &&
++			continue
+ 			subsha1=
+ 		else
++			test "$sha1" = 0000000000000000000000000000000000000000 &&
++			say "non-submodule already cloned: $name @ $path" &&
++			continue
+ 			subsha1=$(unset GIT_DIR; cd "$path" &&
+ 				git rev-parse --verify HEAD) ||
+ 			{
+@@ -431,6 +442,7 @@ cmd_update()
+ 			}
  		fi
- 	else
--		case "$repo" in
--		./*|../*)
--			# dereference source url relative to parent's url
--			realrepo="$(resolve_relative_url $repo)" ;;
--		*)
--			# Turn the source into an absolute path if
--			# it is local
--			if base=$(get_repo_base "$repo"); then
--				repo="$base"
--			fi
--			realrepo=$repo
--			;;
--		esac
--
--		module_clone "$path" "$realrepo" || exit
-+		module_clone "$path" "$repo" || exit
- 		(unset GIT_DIR; cd "$path" && git checkout -q ${branch:+-b "$branch" "origin/$branch"}) ||
- 		die "Unable to checkout submodule '$path'"
- 	fi
-@@ -262,13 +263,7 @@ cmd_init()
- 		test -z "$url" &&
- 		die "No url found for submodule path '$path' in .gitmodules"
  
--		# Possibly a url relative to parent
--		case "$url" in
--		./*|../*)
--			url="$(resolve_relative_url "$url")"
--			;;
--		esac
--
-+		url=$(absolute_url "$url")
- 		git config submodule."$name".url "$url" ||
- 		die "Failed to register url for submodule path '$path'"
- 
-diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-index 2ef85a8..e5d59b8 100755
---- a/t/t7400-submodule-basic.sh
-+++ b/t/t7400-submodule-basic.sh
-@@ -75,7 +75,7 @@ test_expect_success 'init should register submodule url in .git/config' '
- 	then
- 		echo "[OOPS] init succeeded but submodule url is wrong"
- 		false
--	elif ! git config submodule.example.url ./.subrepo
-+	elif ! git config submodule.example.url .subrepo
- 	then
- 		echo "[OOPS] init succeeded but update of url failed"
- 		false
++
+ 		if test "$subsha1" != "$sha1"
+ 		then
+ 			(unset GIT_DIR; cd "$path" && git-fetch &&
 -- 
 1.5.5.23.g2a5f
