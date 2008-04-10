@@ -1,67 +1,60 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Friendly refspecs (Was: Re: git annoyances)
-Date: Wed, 9 Apr 2008 20:33:52 -0400
-Message-ID: <20080410003352.GA14057@sigill.intra.peff.net>
-References: <20080409101428.GA2637@elte.hu> <20080409145758.GB20874@sigill.intra.peff.net> <20080409200836.GA19248@mithlond> <20080409203453.GA10370@sigill.intra.peff.net> <20080409222500.GB19248@mithlond> <20080409225112.GB12103@sigill.intra.peff.net> <bd6139dc0804091616k53f4e0c1sf75aa9585c5a54c5@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/8] git-send-email.perl: Handle shell metacharacters in
+ $EDITOR properly
+Date: Wed, 09 Apr 2008 20:39:08 -0700
+Message-ID: <7vve2q1iqr.fsf@gitster.siamese.dyndns.org>
+References: <cover.1207702130.git.bdonlan@fushizen.net>
+ <1207704604-30393-1-git-send-email-bdonlan@fushizen.net>
+ <1207704604-30393-2-git-send-email-bdonlan@fushizen.net>
+ <1207704604-30393-3-git-send-email-bdonlan@fushizen.net>
+ <47FC62B6.9020304@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: sverre@rabbelier.nl
-X-From: git-owner@vger.kernel.org Thu Apr 10 02:34:40 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Bryan Donlan <bdonlan@fushizen.net>, git@vger.kernel.org,
+	Adam Roben <aroben@apple.com>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Thu Apr 10 05:40:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JjkkQ-0004d7-QU
-	for gcvg-git-2@gmane.org; Thu, 10 Apr 2008 02:34:39 +0200
+	id 1Jjndp-0000HE-Ix
+	for gcvg-git-2@gmane.org; Thu, 10 Apr 2008 05:40:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753955AbYDJAdy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Apr 2008 20:33:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753306AbYDJAdy
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Apr 2008 20:33:54 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1427 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753244AbYDJAdx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Apr 2008 20:33:53 -0400
-Received: (qmail 25599 invoked by uid 111); 10 Apr 2008 00:33:52 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Wed, 09 Apr 2008 20:33:52 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 09 Apr 2008 20:33:52 -0400
-Content-Disposition: inline
-In-Reply-To: <bd6139dc0804091616k53f4e0c1sf75aa9585c5a54c5@mail.gmail.com>
+	id S1754713AbYDJDjS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Apr 2008 23:39:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755031AbYDJDjS
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Apr 2008 23:39:18 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:40837 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755981AbYDJDjR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Apr 2008 23:39:17 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 9B4B73CD3;
+	Wed,  9 Apr 2008 23:39:15 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id E5CBA3CD2; Wed,  9 Apr 2008 23:39:10 -0400 (EDT)
+In-Reply-To: <47FC62B6.9020304@viscovery.net> (Johannes Sixt's message of
+ "Wed, 09 Apr 2008 08:31:18 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79162>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79163>
 
-[Your message didn't go to the list, but I think it was supposed to, so
-I am re-adding the list].
+Johannes Sixt <j.sixt@viscovery.net> writes:
 
-On Thu, Apr 10, 2008 at 01:16:57AM +0200, Sverre Rabbelier wrote:
+> Bryan Donlan schrieb:
+>> Also, update t/t9001-send-email.sh to test for this bug.
+>> 
+>> Signed-off-by: Bryan Donlan <bdonlan@fushizen.net>
+>
+> Your defintion of "properly"? I didn't immediately see what is wrong with
+> the status quo and, hence, why your fix would solve a problem.
 
-> >  I wonder if people like Linus who do a lot of one-off pulls would find
-> >  that too cluttery. I guess we can post a patch and see. ;)
-> 
-> Maybe a 'newbie' configuration option could be added?
-> We can then, if that option is set, provide this kind of information
-> to the user.
-> Then, later on, when the user is more confident, they can unset the option.
-> I reckon it should be set to default-off but that we should provide an
-> easy way to turn it on.
-> (That is, 'git config newbie on', is easy enough, as long as it is
-> mentioned in a/the newbie guide)
-
-This has been discussed before, and I think the general consensus was
-that it's a bad idea to separate the "newbie" and "expert" experience
-too much. It makes it harder to provide advice and documentation that
-works for everyone.
-
-Now that argument generally applies to _behavior_ changes, not verbosity
-of messages. But in this case, I think it is easy enough to find a
-"right" behavior for everyone: show the message on fetch, which would
-otherwise be a very confusing command, but suppress it on "pull", where
-the fetching is mostly a side effect.
-
--Peff
+I agree the description of this series is a bit too sketchy.  I suspect
+even Bryan would not remember what the broken behaviour was and what's the
+new accepted behaviour is three months from now.
