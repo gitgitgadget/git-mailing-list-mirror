@@ -1,77 +1,63 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: diff-tree -r and new directories
-Date: Wed, 09 Apr 2008 23:52:54 -0700
-Message-ID: <7v1w5eyzeh.fsf@gitster.siamese.dyndns.org>
-References: <47FDB3DB.8020705@viscovery.net>
+From: Bryan Donlan <bdonlan@fushizen.net>
+Subject: Re: [PATCH 8/8] Fix tests breaking when checkout path contains
+	shell metacharacters
+Date: Thu, 10 Apr 2008 03:02:46 -0400
+Message-ID: <20080410070246.GA27790@shion.is.fushizen.net>
+References: <1207704604-30393-2-git-send-email-bdonlan@fushizen.net> <1207704604-30393-3-git-send-email-bdonlan@fushizen.net> <1207704604-30393-4-git-send-email-bdonlan@fushizen.net> <1207704604-30393-5-git-send-email-bdonlan@fushizen.net> <1207704604-30393-6-git-send-email-bdonlan@fushizen.net> <1207704604-30393-7-git-send-email-bdonlan@fushizen.net> <1207704604-30393-8-git-send-email-bdonlan@fushizen.net> <47FC69B8.40809@viscovery.net> <20080410063028.GA12562@shion.is.fushizen.net> <47FDB85F.9070503@viscovery.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Adam Roben <aroben@apple.com>,
+	Junio C Hamano <gitster@pobox.com>
 To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu Apr 10 08:55:09 2008
+X-From: git-owner@vger.kernel.org Thu Apr 10 09:03:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JjqgG-0003ve-9O
-	for gcvg-git-2@gmane.org; Thu, 10 Apr 2008 08:54:44 +0200
+	id 1Jjqot-0006oy-0n
+	for gcvg-git-2@gmane.org; Thu, 10 Apr 2008 09:03:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756206AbYDJGxP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Apr 2008 02:53:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753687AbYDJGxN
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Apr 2008 02:53:13 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:40085 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755527AbYDJGxL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Apr 2008 02:53:11 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 5F079268A;
-	Thu, 10 Apr 2008 02:53:09 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id AAD792689; Thu, 10 Apr 2008 02:53:03 -0400 (EDT)
-In-Reply-To: <47FDB3DB.8020705@viscovery.net> (Johannes Sixt's message of
- "Thu, 10 Apr 2008 08:29:47 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753920AbYDJHCz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Apr 2008 03:02:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753918AbYDJHCz
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Apr 2008 03:02:55 -0400
+Received: from satoko.is.fushizen.net ([64.71.152.231]:44462 "EHLO
+	satoko.is.fushizen.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753858AbYDJHCy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Apr 2008 03:02:54 -0400
+Received: from [130.111.236.232] (helo=shion)
+	by satoko.is.fushizen.net with esmtpa (Exim 4.69)
+	(envelope-from <bdonlan@fushizen.net>)
+	id 1Jjqo5-00042L-DQ; Thu, 10 Apr 2008 07:02:49 +0000
+Received: from bd by shion with local (Exim 4.69)
+	(envelope-from <bdonlan@fushizen.net>)
+	id 1Jjqo2-0007Nw-KL; Thu, 10 Apr 2008 03:02:46 -0400
+Content-Disposition: inline
+In-Reply-To: <47FDB85F.9070503@viscovery.net>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79183>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79184>
 
-Johannes Sixt <j.sixt@viscovery.net> writes:
+On Thu, Apr 10, 2008 at 08:49:03AM +0200, Johannes Sixt wrote:
+> Bryan Donlan schrieb:
+> > To be honest, I fixed all the git-svn tests with a suitably clever vim s///
+> > expression, so at the time this way was actually easier :)
+> 
+> Fair enough. If you still have the statement in you vim history, it's
+> worth quoting in the commit message. It's another piece of information
+> that helps reviewing.
 
-> In one of my scriptlets I have this:
->
->    git diff-tree -r --name-only --diff-filter=AM -z "$rev" HEAD --
->
-> and I had assumed that only files would ever be listed because of the -r
-> switch. But this is not true: If there is a new directory, it lists only
-> the directory's name instead of the files. Is this the intent? Is it worth
-> changing?
+It's fallen off by now, but as I recall it was something along the lines
+of:
+:%s/\$\({a number of questionable variable names}\)/\\"\\$\1\\"/gc
 
-Hmm. you would need a better reproduction recipe than that.
+After which point I stepped through the matches to confirm that it was
+actually within the test eval strings at the time.
 
-    $ git init
-    Initialized empty Git repository in .git/
-    $ >file
-    $ git add file
-    $ git commit -a -m initial
-    Created initial commit 2f9da65: initial
-     0 files changed, 0 insertions(+), 0 deletions(-)
-     create mode 100644 file
-    $ mkdir new
-    $ >new/file
-    $ git add new/file
-    $ git commit -a -m second
-    Created commit a1fa8fb: second
-     0 files changed, 0 insertions(+), 0 deletions(-)
-     create mode 100644 new/file
-    $ git diff-tree -r --name-only --diff-filter=AM -z HEAD^ HEAD |
-      tr '\0' '\n'
-    new/file
-    $ git diff-tree --name-only --diff-filter=AM -z HEAD^ HEAD |
-      tr '\0' '\n'
-    new
+Thanks,
 
-Perhaps you somehow did not have "-r" even though you thought you had?
+Bryan
