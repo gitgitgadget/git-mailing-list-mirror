@@ -1,68 +1,154 @@
-From: Teemu Likonen <tlikonen@iki.fi>
-Subject: Re: Friendly refspecs
-Date: Thu, 10 Apr 2008 10:38:50 +0300
-Message-ID: <20080410073850.GC3160@mithlond>
-References: <20080409101428.GA2637@elte.hu> <20080409145758.GB20874@sigill.intra.peff.net> <20080409200836.GA19248@mithlond> <7vabk23esz.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 01/10] git-rebase.sh: Fix --merge --abort failures
+ when path contains whitespace
+Date: Thu, 10 Apr 2008 00:45:51 -0700
+Message-ID: <7vr6dexids.fsf@gitster.siamese.dyndns.org>
+References: <cover.1207702130.git.bdonlan@fushizen.net>
+ <1207810216-27871-1-git-send-email-bdonlan@fushizen.net>
+ <1207810216-27871-2-git-send-email-bdonlan@fushizen.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 10 09:39:49 2008
+Cc: git@vger.kernel.org, Johannes Sixt <j.sixt@viscovery.net>,
+	Adam Roben <aroben@apple.com>, gitster@pobox.com
+To: Bryan Donlan <bdonlan@fushizen.net>
+X-From: git-owner@vger.kernel.org Thu Apr 10 09:46:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JjrNj-0002Ua-In
-	for gcvg-git-2@gmane.org; Thu, 10 Apr 2008 09:39:40 +0200
+	id 1JjrUk-0004jG-Fk
+	for gcvg-git-2@gmane.org; Thu, 10 Apr 2008 09:46:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754433AbYDJHiz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Apr 2008 03:38:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754364AbYDJHiz
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Apr 2008 03:38:55 -0400
-Received: from pne-smtpout3-sn2.hy.skanova.net ([81.228.8.111]:35216 "EHLO
-	pne-smtpout3-sn2.hy.skanova.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753032AbYDJHiy (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 10 Apr 2008 03:38:54 -0400
-Received: from mithlond (80.220.180.181) by pne-smtpout3-sn2.hy.skanova.net (7.3.129)
-        id 478BDB96004D2320; Thu, 10 Apr 2008 09:38:51 +0200
-Received: from dtw by mithlond with local (Exim 4.63)
-	(envelope-from <tlikonen@iki.fi>)
-	id 1JjrMw-00011g-2z; Thu, 10 Apr 2008 10:38:50 +0300
-Content-Disposition: inline
-In-Reply-To: <7vabk23esz.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1754696AbYDJHqK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Apr 2008 03:46:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754229AbYDJHqJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Apr 2008 03:46:09 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:48144 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754143AbYDJHqI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Apr 2008 03:46:08 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id BAC73287F;
+	Thu, 10 Apr 2008 03:46:06 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id B44D6287E; Thu, 10 Apr 2008 03:46:00 -0400 (EDT)
+In-Reply-To: <1207810216-27871-2-git-send-email-bdonlan@fushizen.net> (Bryan
+ Donlan's message of "Thu, 10 Apr 2008 02:50:07 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79187>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79188>
 
-Junio C Hamano wrote (2008-04-09 14:21 -0700):
+Bryan Donlan <bdonlan@fushizen.net> writes:
 
-> [By the way, please never redirect the response to your messages away from
-> you with:
-> 
->     Mail-Followup-To: Jeff King <peff@peff.net>, Ingo Molnar <mingo@elte.hu>,
->             git@vger.kernel.org
+> +### Test that we handle strange characters properly
 
-Sorry, didn't even know such header existed. After consulting Mutt's
-manual and some googling I think I understand it now. I'm a subscriber
-to git list (and my Mutt knows that) and Mail-Followup-To told
-everyone's MUAs to not include me in recipient list since I get
-everything through the list. But this is configurable and generating
-Mail-Followup-To should be now turned off.
+Thanks for the fix and updated tests.
 
-> > Currently "git fetch <URL>" does not seem to do anything useful for
-> > non-git-hackers. It seems to fetch objects but not create any
-> > branches referring to them.
-> 
-> I'd suggest you to study:
-> 
->   http://thread.gmane.org/gmane.comp.version-control.git/31351/focus=31634
-> 
-> Not everybody wants remote tracking.
+> +work_dir="$(pwd)/test \" ' \$ \\ dir"
+> +
+>  test_expect_success setup '
+> +	mkdir -p "$work_dir" &&
+> +	cd "$work_dir" &&
+> +	git init &&
 
-Thanks, and I agree. Me neither always want remote tracking. Git's
-current behaviour to only create/update FETCH_HEAD seems actually better
-- now that I know what it does. I think it's a good idea to show "[new
-branch] foo -> FETCH_HEAD" after fetching.
+As you know that $work_dir and shell variables in general are available
+inside test_expect_* framework without anything special, like the above
+code,...
+
+> @@ -27,42 +33,45 @@ testrebase() {
+>  	type=$1
+>  	dotest=$2
+>  
+> +	test_expect_success "rebase$type --abort" "
+> +		cd \"\$work_dir\" &&
+>  		# Clean up the state from the previous one
+> +		git reset --hard pre-rebase &&
+> +		test_must_fail git rebase$type master &&
+> +		test -d \"\$dotest\" &&
+> ...
+
+this part would become a lot easier to read if you just stayed inside the
+original single quoted test script without introducing excessive
+backslashes.
+
+I am very inclined to replace t3407 with the following.
+
+diff --git a/t/t3407-rebase-abort.sh b/t/t3407-rebase-abort.sh
+index 37944c3..cadfb23 100755
+--- a/t/t3407-rebase-abort.sh
++++ b/t/t3407-rebase-abort.sh
+@@ -4,7 +4,13 @@ test_description='git rebase --abort tests'
+ 
+ . ./test-lib.sh
+ 
++### Test that we handle strange characters properly
++work_dir="$(pwd)/test \" ' \$ \\ dir"
++
+ test_expect_success setup '
++	mkdir -p "$work_dir" &&
++	cd "$work_dir" &&
++	git init &&
+ 	echo a > a &&
+ 	git add a &&
+ 	git commit -m a &&
+@@ -28,32 +34,35 @@ testrebase() {
+ 	dotest=$2
+ 
+ 	test_expect_success "rebase$type --abort" '
++		cd "$work_dir" &&
+ 		# Clean up the state from the previous one
+-		git reset --hard pre-rebase
+-		test_must_fail git rebase'"$type"' master &&
+-		test -d '$dotest' &&
++		git reset --hard pre-rebase &&
++		test_must_fail git rebase$type master &&
++		test -d "$dotest" &&
+ 		git rebase --abort &&
+ 		test $(git rev-parse to-rebase) = $(git rev-parse pre-rebase) &&
+-		test ! -d '$dotest'
++		test ! -d "$dotest"
+ 	'
+ 
+ 	test_expect_success "rebase$type --abort after --skip" '
++		cd "$work_dir" &&
+ 		# Clean up the state from the previous one
+-		git reset --hard pre-rebase
+-		test_must_fail git rebase'"$type"' master &&
+-		test -d '$dotest' &&
++		git reset --hard pre-rebase &&
++		test_must_fail git rebase$type master &&
++		test -d "$dotest" &&
+ 		test_must_fail git rebase --skip &&
+ 		test $(git rev-parse HEAD) = $(git rev-parse master) &&
+ 		git-rebase --abort &&
+ 		test $(git rev-parse to-rebase) = $(git rev-parse pre-rebase) &&
+-		test ! -d '$dotest'
++		test ! -d "$dotest"
+ 	'
+ 
+ 	test_expect_success "rebase$type --abort after --continue" '
++		cd "$work_dir" &&
+ 		# Clean up the state from the previous one
+-		git reset --hard pre-rebase
+-		test_must_fail git rebase'"$type"' master &&
+-		test -d '$dotest' &&
++		git reset --hard pre-rebase &&
++		test_must_fail git rebase$type master &&
++		test -d "$dotest" &&
+ 		echo c > a &&
+ 		echo d >> a &&
+ 		git add a &&
+@@ -61,7 +70,7 @@ testrebase() {
+ 		test $(git rev-parse HEAD) != $(git rev-parse master) &&
+ 		git rebase --abort &&
+ 		test $(git rev-parse to-rebase) = $(git rev-parse pre-rebase) &&
+-		test ! -d '$dotest'
++		test ! -d "$dotest"
+ 	'
+ }
+ 
