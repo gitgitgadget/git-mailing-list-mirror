@@ -1,96 +1,78 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Corporate firewall braindamage
-Date: Thu, 10 Apr 2008 14:11:19 -0700
-Message-ID: <47FE8277.8070503@zytor.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Mark Dodwell <web@mkdynamic.co.uk>
+Subject: Git (SHA1) problem on Mac
+Date: Thu, 10 Apr 2008 22:12:36 +0100
+Message-ID: <FAA4D842-DCB2-45B4-AB40-6F7D1F0A0320@mkdynamic.co.uk>
+Mime-Version: 1.0 (Apple Message framework v753)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: ftpadmin <ftpadmin@kernel.org>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Apr 10 23:12:52 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 10 23:13:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jk447-0006vh-AH
-	for gcvg-git-2@gmane.org; Thu, 10 Apr 2008 23:12:15 +0200
+	id 1Jk44y-0007PV-La
+	for gcvg-git-2@gmane.org; Thu, 10 Apr 2008 23:13:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757575AbYDJVLa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Apr 2008 17:11:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757568AbYDJVLa
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Apr 2008 17:11:30 -0400
-Received: from terminus.zytor.com ([198.137.202.10]:56819 "EHLO
-	terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756559AbYDJVL3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Apr 2008 17:11:29 -0400
-Received: from mail.hos.anvin.org (c-98-210-181-100.hsd1.ca.comcast.net [98.210.181.100])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.14.2/8.14.1) with ESMTP id m3ALBJdF021645
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 10 Apr 2008 14:11:20 -0700
-Received: from tazenda.hos.anvin.org (tazenda.hos.anvin.org [172.27.0.16])
-	by mail.hos.anvin.org (8.14.2/8.13.8) with ESMTP id m3ALBJwL013923;
-	Thu, 10 Apr 2008 14:11:19 -0700
-Received: from tazenda.hos.anvin.org (localhost.localdomain [127.0.0.1])
-	by tazenda.hos.anvin.org (8.14.2/8.13.6) with ESMTP id m3ALBJ56013801;
-	Thu, 10 Apr 2008 14:11:19 -0700
-User-Agent: Thunderbird 2.0.0.12 (X11/20080226)
-X-Virus-Scanned: ClamAV 0.92.1/6005/Tue Feb 26 14:01:21 2008 on terminus.zytor.com
-X-Virus-Status: Clean
+	id S1756267AbYDJVMZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Apr 2008 17:12:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756100AbYDJVMZ
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Apr 2008 17:12:25 -0400
+Received: from moutng.kundenserver.de ([212.227.126.174]:54583 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755971AbYDJVMY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Apr 2008 17:12:24 -0400
+Received: from [192.168.1.66] (host86-158-113-105.range86-158.btcentralplus.com [86.158.113.105])
+	by mrelayeu.kundenserver.de (node=mrelayeu1) with ESMTP (Nemesis)
+	id 0MKwpI-1Jk44F1JaH-0001iX; Thu, 10 Apr 2008 23:12:23 +0200
+X-Mailer: Apple Mail (2.753)
+X-Provags-ID: V01U2FsdGVkX1/c6HtP+UzfmgnZLXCVM6HKWWjGQgpfN2Wrc7e
+ SynmfKmWqztPVORmf4DOn6afs3amMywxrE1P1mEup5I3w9zup6
+ wup3Cf5QROZPujOH47p3WQL0KWzAmnm
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79249>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79250>
 
-The apparent commonality of corporate firewall braindamage, and the 
-resulting "need" of people to pull over dumb (http) transport, is an 
-ongoing problem on kernel.org.
+Hi,
 
-I have thought some about what can be done to improve the situation, and 
-I have come up with the following list of possibilities, pretty much 
-listed in order from easiest and least generic to hardest and most generic.
+I've got a problem with Git on my Mac, and I've exhausted Google and  
+#git (irc), perhaps somebody can help?
 
-It would be very interesting if people who have familiarity with this 
-particular class of braindamaged firewalls could comment on how many 
-users would be helped by which ones of these solutions.
+I'm using git version X installed from source, I'm on Mac OS X 10.4.11.
 
+Here's the problem I'm seeing:
 
-1. git protocol via CONNECT http proxy
+[imac:~]$   mkdir git-test
+[imac:~]$   cd git-test
+[imac:~/git-test]$   git init
+Initialized empty Git repository in .git/
+[imac:~/git-test]$   touch README
+[imac:~/git-test]$   git add README
+[imac:~/git-test]$   git commit -m 'first commit'
+Created initial commit b6e6cb6: first commit
+  0 files changed, 0 insertions(+), 0 deletions(-)
+  create mode 100644 README
+[imac:~/git-test]$   git remote add origin git@github.com:mkdynamic/ 
+git-test.git
+[imac:~/git-test]$   git push origin master
+Counting objects: 3, done.
+Writing objects: 100% (3/3), 215 bytes, done.
+Total 3 (delta 0), reused 0 (delta 0)
+fatal: final sha1 did not match
+error: unpack failed: unpacker exited with error code
+To git@github.com:mkdynamic/git-test.git
+  ! [remote rejected] master -> master (n/a (unpacker error))
+error: failed to push some refs to 'git@github.com:mkdynamic/git- 
+test.git'
 
-    Connect to http proxy, and use a CONNECT method to establish a link
-    to the git server, using the normal git protocol.
+I can confirm that it is not an issue with the remote repo, as I  
+similar 'final sha1 did not match' errors when i try to do local  
+fetches.
 
-    Minor change to TCP connection setup, but no other changes needed.
-    No changes on the server side.
+Any clues/advice on what to do next?
 
+Many thanks,
 
-2. git protocol over SSL via CONNECT http proxy
-
-    Same as #1, but encapsulate the data stream in an SSL connection.
-    If the git server is run on port 443, then the fact that the data
-    on the SSL connection isn't actually HTTP should be invisible to the
-    proxy, and thus this *should* work anywhere which allows https://
-    traffic.
-
-    Requires the git server to speak SSL.
-
-
-3. git protocol encapsulated in HTTP POST transaction
-
-    git protocol is already fundamentally a RPC protocol, where the
-    client sends a query and the server responds.  Furthermore, it
-    tries to minimize the number of round trips (RPC calls), which is
-    of course desirable.
-
-    Each such RPC transaction could be formulated as an HTTP POST
-    transaction.
-
-    This requires modifications to both the client and the server;
-    furthermore, the server can no longer rely on the invariant "one TCP
-    connection == one session"; a proxy might break a single session
-    into arbitrarily many TCP connections.
-
-Thoughts?
-
-	-hpa
+~ Mark
