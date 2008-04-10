@@ -1,77 +1,78 @@
-From: Gabriel <g2p.code@gmail.com>
-Subject: [PATCH] When a remote is added but not fetched, tell the user.
-Date: Fri, 11 Apr 2008 01:25:46 +0200
-Message-ID: <1207869946-17013-1-git-send-email-g2p.code@gmail.com>
-References: <20080409101428.GA2637@elte.hu>
-Cc: Gabriel <g2p.code@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 11 01:26:53 2008
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: Corporate firewall braindamage
+Date: Thu, 10 Apr 2008 19:33:28 -0400
+Message-ID: <20080410233328.GQ10274@spearce.org>
+References: <47FE8277.8070503@zytor.com> <7v7if5wbdd.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: "H. Peter Anvin" <hpa@zytor.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	ftpadmin <ftpadmin@kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 11 01:34:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jk6AE-0008Vl-FH
-	for gcvg-git-2@gmane.org; Fri, 11 Apr 2008 01:26:42 +0200
+	id 1Jk6Hb-0002wu-6m
+	for gcvg-git-2@gmane.org; Fri, 11 Apr 2008 01:34:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758414AbYDJXZu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Apr 2008 19:25:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758413AbYDJXZu
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Apr 2008 19:25:50 -0400
-Received: from smtp1-g19.free.fr ([212.27.42.27]:55232 "EHLO smtp1-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753061AbYDJXZt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Apr 2008 19:25:49 -0400
-Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 9BD251AB2B2;
-	Fri, 11 Apr 2008 01:25:46 +0200 (CEST)
-Received: from localhost (pro75-5-88-162-203-35.fbx.proxad.net [88.162.203.35])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 824CE1AB2B1;
-	Fri, 11 Apr 2008 01:25:46 +0200 (CEST)
-Received: from g2p by localhost with local (Exim 4.67)
-	(envelope-from <g2p@vapeur.no-ip.org>)
-	id 1Jk69K-0004Qk-QQ; Fri, 11 Apr 2008 01:25:46 +0200
-X-Mailer: git-send-email 1.5.5.24.geb27
-In-Reply-To: <20080409101428.GA2637@elte.hu>
+	id S1753740AbYDJXdf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Apr 2008 19:33:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755846AbYDJXdf
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Apr 2008 19:33:35 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:43213 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751036AbYDJXde (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Apr 2008 19:33:34 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1Jk6Ge-00076r-1c; Thu, 10 Apr 2008 19:33:20 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 78E6A20FBAE; Thu, 10 Apr 2008 19:33:28 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <7v7if5wbdd.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79255>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79256>
 
-A helpful message tells the user when a remote was added
-without being fetched, and how to fetch it.
+Junio C Hamano <gitster@pobox.com> wrote:
+> "H. Peter Anvin" <hpa@zytor.com> writes:
+> > 3. git protocol encapsulated in HTTP POST transaction
+> >
+> >    git protocol is already fundamentally a RPC protocol, where the
+> >    client sends a query and the server responds.  Furthermore, it
+> >    tries to minimize the number of round trips (RPC calls), which is
+> >    of course desirable.
+> >
+> >    Each such RPC transaction could be formulated as an HTTP POST
+> >    transaction.
+> >
+> >    This requires modifications to both the client and the server;
+> >    furthermore, the server can no longer rely on the invariant "one TCP
+> >    connection == one session"; a proxy might break a single session
+> >    into arbitrarily many TCP connections.
+> 
+> It would probably be a one-CS/EE-student-half-a-summer sized project to
+> create such a server-side support with a specialized client.
 
-Our default of not fetching is breaking the users' workflow
-in the common "let me access this repo" use case.
-This message alleviates the problem.
+Funny you say that.  This was a GSoC 2008 project idea.  We even
+received an application from a student for it.
 
-Signed-off-by: Gabriel <g2p.code@gmail.com>
----
- builtin-remote.c |   12 ++++++++++--
- 1 files changed, 10 insertions(+), 2 deletions(-)
+The hard part is either making the server side stateful, so it can
+remember what the last RCP call had said it wants/haves, or doing a
+stateless protocol where the client uses an exponential expansion
+(or some such behavior) of its have list until the server replies
+with the pack data.
 
-diff --git a/builtin-remote.c b/builtin-remote.c
-index d77f10a..044215a 100644
---- a/builtin-remote.c
-+++ b/builtin-remote.c
-@@ -111,8 +111,16 @@ static int add(int argc, const char **argv)
- 			return 1;
- 	}
- 
--	if (fetch && fetch_remote(name))
--		return 1;
-+	if (fetch) {
-+		if (fetch_remote(name))
-+			return 1;
-+	}
-+	else {
-+		printf ("Added remote repository `%s' without fetching it.\n"
-+			"Before accessing the branches of this "
-+			"remote, run `git fetch %s' "
-+			"or `git remote update'.\n", name, name);
-+	}
- 
- 	if (master) {
- 		strbuf_reset(&buf);
 -- 
-1.5.5.24.geb27
+Shawn.
