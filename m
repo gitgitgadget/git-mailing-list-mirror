@@ -1,100 +1,116 @@
-From: "Avery Pennarun" <apenwarr@gmail.com>
-Subject: Re: git annoyances
-Date: Thu, 10 Apr 2008 11:05:07 -0400
-Message-ID: <32541b130804100805o4ad1e9a6x38e9b1fcf17c5d1d@mail.gmail.com>
-References: <20080409101428.GA2637@elte.hu>
-	 <20080409145758.GB20874@sigill.intra.peff.net>
-	 <32541b130804091008h1a757552o14dd8e937ed19058@mail.gmail.com>
-	 <20080410084119.GA8979@diana.vm.bytemark.co.uk>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Jeff King" <peff@peff.net>, "Ingo Molnar" <mingo@elte.hu>,
-	git@vger.kernel.org
-To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Thu Apr 10 17:14:36 2008
+From: Ping Yin <pkufranky@gmail.com>
+Subject: [PATCH v2 1/3] git-submodule summary: --for-status option
+Date: Thu, 10 Apr 2008 23:35:25 +0800
+Message-ID: <1207841727-7840-2-git-send-email-pkufranky@gmail.com>
+References: <1207841727-7840-1-git-send-email-pkufranky@gmail.com>
+Cc: git@vger.kernel.org, Ping Yin <pkufranky@gmail.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Apr 10 17:37:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JjyLw-00071Y-9z
-	for gcvg-git-2@gmane.org; Thu, 10 Apr 2008 17:06:16 +0200
+	id 1Jjyp3-0005sp-C2
+	for gcvg-git-2@gmane.org; Thu, 10 Apr 2008 17:36:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756721AbYDJPFP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Apr 2008 11:05:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756083AbYDJPFP
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Apr 2008 11:05:15 -0400
-Received: from nf-out-0910.google.com ([64.233.182.184]:12811 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756224AbYDJPFO convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 10 Apr 2008 11:05:14 -0400
-Received: by nf-out-0910.google.com with SMTP id g13so21600nfb.21
-        for <git@vger.kernel.org>; Thu, 10 Apr 2008 08:05:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=uY1fvD7IsEMDCxFPHbwJACA0MzKmRPJxWOqC4fvt/DU=;
-        b=oMGATwYurEsSsenjYzFVNGD4TJxLTLkrkjQP6LTfq+b4rW5k3LASinuIr+bUSHL7STb22PlxlTtaj3oTAot0YB8OGuJUcvy8ErpeLM5MEHU4C03nmzOuv5F0YaPLTvZoS/VEkp/FCwcCOe6awy0qwJJ72kpzj3LQslYH/cJ7TGM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=doVUYL5KtpB/M/cI6Wk1ZCKC7qA7jSEZa8TbHgAiSSLjweavj6VzHimjozGMwS5Y/93FWbu9CIigRqhftM7EwCrI7OZQkB8+wfXEDKtZbLRppdE5jxB5c/mqC7o1hXub4evhltTyP2vbBDMqe0fEUcq+grCTwcvMcwN7QHLgU8w=
-Received: by 10.82.166.9 with SMTP id o9mr2412422bue.32.1207839907674;
-        Thu, 10 Apr 2008 08:05:07 -0700 (PDT)
-Received: by 10.82.100.5 with HTTP; Thu, 10 Apr 2008 08:05:07 -0700 (PDT)
-In-Reply-To: <20080410084119.GA8979@diana.vm.bytemark.co.uk>
-Content-Disposition: inline
+	id S1757345AbYDJPfj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Apr 2008 11:35:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757224AbYDJPfi
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Apr 2008 11:35:38 -0400
+Received: from mail.qikoo.org ([60.28.205.235]:42976 "EHLO mail.qikoo.org"
+	rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1757145AbYDJPfe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Apr 2008 11:35:34 -0400
+Received: by mail.qikoo.org (Postfix, from userid 1029)
+	id C263D470AB; Thu, 10 Apr 2008 23:35:27 +0800 (CST)
+X-Mailer: git-send-email 1.5.5.23.g2a5f
+In-Reply-To: <1207841727-7840-1-git-send-email-pkufranky@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79216>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79217>
 
-On Thu, Apr 10, 2008 at 4:41 AM, Karl Hasselstr=F6m <kha@treskal.com> w=
-rote:
-> On 2008-04-09 13:08:39 -0400, Avery Pennarun wrote:
->
->  > For example, in svn you can talk about
->  > svn+ssh://reposerver/path/to/repo/branches/foo@1234; it's a single
->  > "word" that refers to a particular revision on a particular branch
->  > of a particular server.
->
->  Heh, not really. Subversion actually makes this even more confusing
->  than git does.
->
->  The @rev is called a "peg revision", and is different from the
->  "operative revision" specified with the -r flag. The peg revision is
->  used in conjunction with a path to specify the file (or directory) y=
-ou
->  want, and the operative revision is used to specify which revision o=
-f
->  that file you mean.
+The --for-status option is mainly used by builtin-status/commit.
+It adds 'Modified submodules:' line at top and  '# ' prefix to all
+following lines.
 
-Yes, but I believe you get the one from @rev if you don't specify -r.
+Signed-off-by: Ping Yin <pkufranky@gmail.com>
+---
+ git-submodule.sh             |   17 ++++++++++++++++-
+ t/t7401-submodule-summary.sh |   13 +++++++++++++
+ 2 files changed, 29 insertions(+), 1 deletions(-)
 
-=46or example, I can ask for an "svn diff svn://blahblah@56
-svn://blahblah@59" and it'll feed it to me as expected.
-
-This is nearly the same as "svn diff -r56:59 svn://blahblah", except
-that it might look for blahblah in different places, as you say.  I
-tend to prefer the @notation for exactly at that reason.
-
-> (This complexity is needed because subversion has
->  a concept of file identity.)
-
-=46ile renames make diffing and merging complicated no matter whether
-you track them or not.
-
-svn's tracking of file identity is additional, but doesn't increase
-the (UI) complexity in the common case.  At least with svn, a newbie
-can even get real work done without even knowing about -r *or*
-@notation.
-
-Compare that to arbitrary differences in behaviour between "git-fetch"
-vs "git-fetch a" vs "git-fetch a b", or the difference between HEAD^
-and HEAD~1 and HEAD@1.  git is very powerful, but also definitely more
-complex for beginners.
-
-Have fun,
-
-Avery
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 56ec353..d7937a5 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -342,6 +342,7 @@ set_name_rev () {
+ #
+ cmd_summary() {
+ 	summary_limit=-1
++	for_status=
+ 
+ 	# parse $args after "submodule ... summary".
+ 	while test $# -ne 0
+@@ -350,6 +351,9 @@ cmd_summary() {
+ 		--cached)
+ 			cached="$1"
+ 			;;
++		--for-status)
++			for_status="$1"
++			;;
+ 		-n|--summary-limit)
+ 			if summary_limit=$(($2 + 0)) 2>/dev/null && test "$summary_limit" = "$2"
+ 			then
+@@ -398,6 +402,12 @@ cmd_summary() {
+ 	)
+ 
+ 	test -n "$modules" &&
++	if test -n "$for_status"; then
++		echo "# Modified submodules:"
++		echo "#"
++	else
++		true
++	fi &&
+ 	git diff-index $cached --raw $head -- $modules |
+ 	grep -e '^:160000' -e '^:[0-7]* 160000' |
+ 	cut -c2- |
+@@ -499,7 +509,12 @@ cmd_summary() {
+ 			echo
+ 		fi
+ 		echo
+-	done
++	done |
++	if test -n "$for_status"; then
++		sed -e "s|^|# |" -e 's|^# $|#|'
++	else
++		cat
++	fi
+ }
+ #
+ # List all submodules, prefixed with:
+diff --git a/t/t7401-submodule-summary.sh b/t/t7401-submodule-summary.sh
+index 0f3c42a..1dbb39d 100755
+--- a/t/t7401-submodule-summary.sh
++++ b/t/t7401-submodule-summary.sh
+@@ -192,4 +192,17 @@ test_expect_success 'given commit' "
+ EOF
+ "
+ 
++test_expect_success '--for-status' "
++    git submodule summary --for-status HEAD^ >actual &&
++    diff actual - <<-EOF
++# Modified submodules:
++#
++# * sm1 $head6...0000000:
++#
++# * sm2 0000000...$head7 (2):
++#   > Add foo9
++#
++EOF
++"
++
+ test_done
+-- 
+1.5.5.23.g2a5f
