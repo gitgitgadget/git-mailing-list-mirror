@@ -1,70 +1,79 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+From: Sean Estabrooks <seanlkml@sympatico.ca>
 Subject: Re: Creating a patch set with git-format-patch
-Date: Thu, 10 Apr 2008 12:56:10 +0200
-Message-ID: <20080410105610.GB29742@atjola.homenet>
+Date: Thu, 10 Apr 2008 06:56:38 -0400
+Message-ID: <BAYC1-PASMTP020D4804B5CBAC8A5BEBD5AEEC0@CEZ.ICE>
 References: <d0383f90804100151s6ffde16al6035116c27c9cb3a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Ian Brown <ianbrn@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 10 12:57:30 2008
+To: "Ian Brown" <ianbrn@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 10 12:57:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JjuSg-0002Zs-6Q
-	for gcvg-git-2@gmane.org; Thu, 10 Apr 2008 12:56:58 +0200
+	id 1JjuTL-0002y7-Vf
+	for gcvg-git-2@gmane.org; Thu, 10 Apr 2008 12:57:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754662AbYDJK4O convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Apr 2008 06:56:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754625AbYDJK4O
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Apr 2008 06:56:14 -0400
-Received: from mail.gmx.net ([213.165.64.20]:46068 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751605AbYDJK4N (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Apr 2008 06:56:13 -0400
-Received: (qmail invoked by alias); 10 Apr 2008 10:56:11 -0000
-Received: from i577B94B7.versanet.de (EHLO atjola.local) [87.123.148.183]
-  by mail.gmx.net (mp032) with SMTP; 10 Apr 2008 12:56:11 +0200
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX18e7lB/5ooe2r4nurAXeW5oJwYbumskXTpa3OiItP
-	l4TaPkdBrjKg6M
-Content-Disposition: inline
+	id S1755028AbYDJK44 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Apr 2008 06:56:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755035AbYDJK44
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Apr 2008 06:56:56 -0400
+Received: from bay0-omc2-s15.bay0.hotmail.com ([65.54.246.151]:38294 "EHLO
+	bay0-omc2-s15.bay0.hotmail.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755019AbYDJK4z (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 10 Apr 2008 06:56:55 -0400
+Received: from BAYC1-PASMTP02 ([65.54.191.162]) by bay0-omc2-s15.bay0.hotmail.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Thu, 10 Apr 2008 03:56:53 -0700
+X-Originating-IP: [70.54.4.86]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Received: from linux1.attic.local ([70.54.4.86]) by BAYC1-PASMTP02.CEZ.ICE over TLS secured channel with Microsoft SMTPSVC(6.0.3790.2668);
+	 Thu, 10 Apr 2008 03:56:53 -0700
+Received: from bud.attic.local ([10.10.10.20])
+	by linux1.attic.local with esmtp (Exim 4.43)
+	id 1JjvOP-00040I-KE; Thu, 10 Apr 2008 07:56:37 -0400
 In-Reply-To: <d0383f90804100151s6ffde16al6035116c27c9cb3a@mail.gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-X-Y-GMX-Trusted: 0
+X-Mailer: Sylpheed 2.4.5 (GTK+ 2.12.8; x86_64-pc-linux-gnu)
+X-OriginalArrivalTime: 10 Apr 2008 10:56:53.0290 (UTC) FILETIME=[95EC88A0:01C89AF9]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79205>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79206>
 
-On 2008.04.10 11:51:59 +0300, Ian Brown wrote:
-> Hello,
->   I have a question regarding creating a patch set with git-format-pa=
-tch:
-> I had downloaded a git repository of the Linux kernel.
->=20
+On Thu, 10 Apr 2008 11:51:59 +0300
+"Ian Brown" <ianbrn@gmail.com> wrote:
+
+Hi Ian,
+
 > I intend to  make a change in two files: net/ipv4/route.c and
-> include/net/dst.h and send a
-> patch set of two patches for review.
+> include/net/dst.h and send a patch set of two patches for review.
 > Now I want to create this  patch set of two pathces correctly;
 > First patch for net/ipv4/route.c and second for include/net/dst.h.
->=20
+> 
 > what should I do ?
 
-Just create a branch for you work, then start working and creating
-commits. In the end, you'll get one patch for each commit, so group you=
-r
-work in the commits just as you want it to appear in the patches.
+The first step is to edit route.c and commit your change to Git with a complete
+description[1].  Then edit the dst.h file and commit that to Git as a separate
+change.  Afterward you can use git format-patch to prepare these commits to
+be emailed:
 
-Then, create the patches with:
-git format-patch <options> master
+$  git format-patch HEAD^^
 
-That will create patches for all commits that are in your branch, but
-not in master. Finally, you can use either git send-email or your
-favourite mbox-capable MUA to send the patches.
+This tells Git to create a	 text file in the current directory for each commit made
+since the reference you pass.   You can then configure git send-email[2] to send
+these text files out, or send them manually with your regular email client.  If you
+do send them manually, make sure to include the text file inline in your email,
+don't send it as an attachment.  You will find a subject line inside the file you can
+cut-and-paste into place, and  a few other headers that you'll need to delete.
 
-HTH
-Bj=F6rn
+HTH,
+Sean
+
+[1]  Remember that each commit log entry should be made as a one-line overview,
+followed by a blank line, followed by as much prose as it takes to fully explain the
+change.
+
+[2]  There is a small section about configuring git-send-email for use with gmail
+using msmtp here:  http://git.or.cz/gitwiki/GitTips
