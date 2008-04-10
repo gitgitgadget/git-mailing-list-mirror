@@ -1,76 +1,73 @@
-From: Robert Haines <rhaines@manchester.ac.uk>
-Subject: Re: permissions and packed-refs?
-Date: Thu, 10 Apr 2008 17:21:36 +0100
-Message-ID: <10723DA2-555B-40DB-8428-BDF07CA2510E@manchester.ac.uk>
-References: <320075ff0804100530s2af22cc9r43208101e46a8154@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v753)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+From: "Nigel Magnay" <nigel.magnay@gmail.com>
+Subject: upps.. problem when rebasing (and subsequent nasties)
+Date: Thu, 10 Apr 2008 17:57:20 +0100
+Message-ID: <320075ff0804100957t1901f78dhf528eef52140f5a5@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-To: Nigel Magnay <nigel.magnay@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 10 18:22:59 2008
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Apr 10 18:59:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JjzXC-0002aB-6a
-	for gcvg-git-2@gmane.org; Thu, 10 Apr 2008 18:21:58 +0200
+	id 1Jk06S-0003gz-0M
+	for gcvg-git-2@gmane.org; Thu, 10 Apr 2008 18:58:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757601AbYDJQUy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Apr 2008 12:20:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757561AbYDJQUx
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Apr 2008 12:20:53 -0400
-Received: from probity.mcc.ac.uk ([130.88.200.94]:64015 "EHLO
-	probity.mcc.ac.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755867AbYDJQUx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Apr 2008 12:20:53 -0400
-Received: from gerhayn.mcc.ac.uk ([10.2.18.1])
-	by probity.mcc.ac.uk with esmtps (TLSv1:AES256-SHA:256)
-	(Exim 4.69 (FreeBSD))
-	(envelope-from <rhaines@manchester.ac.uk>)
-	id 1JjzW7-000MOm-Jw; Thu, 10 Apr 2008 17:20:51 +0100
-Received: from client090.roaming.manchester.ac.uk ([130.88.208.90]:52280)
-	by gerhayn.mcc.ac.uk with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.69 (FreeBSD))
-	(envelope-from <rhaines@manchester.ac.uk>)
-	id 1JjzW7-000CXY-GG; Thu, 10 Apr 2008 17:20:51 +0100
-In-Reply-To: <320075ff0804100530s2af22cc9r43208101e46a8154@mail.gmail.com>
-X-Mailer: Apple Mail (2.753)
-X-Authenticated-Sender: Robert Haines from client090.roaming.manchester.ac.uk [130.88.208.90]:52280
-X-Authenticated-From: Robert.Haines@manchester.ac.uk
-X-UoM: Scanned by the University Mail System. See http://www.itservices.manchester.ac.uk/email/filtering/information/ for details.
+	id S1755757AbYDJQ5Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Apr 2008 12:57:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756895AbYDJQ5Y
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Apr 2008 12:57:24 -0400
+Received: from nf-out-0910.google.com ([64.233.182.184]:45719 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755596AbYDJQ5X (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Apr 2008 12:57:23 -0400
+Received: by nf-out-0910.google.com with SMTP id g13so54899nfb.21
+        for <git@vger.kernel.org>; Thu, 10 Apr 2008 09:57:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=lgRHWiccnhdmNXHoqd+gcnTn/HWceF0jhiV63gLWoGk=;
+        b=Aa3jz/59c5LBKu1cXpyI49rQRlI4KXmTSBkmn1Qh2wcPBnYDBFIQJm40FWuhCKE+v0SmOfu1vC17bjg+JUm7J+0S0LTxd7d0XiuXC94ZrDHigR18A9/jPEJ5oQk2Y8Wbggr++idOIyBhTbJF9WH59c/Q59pWUkcfEHSWsYpFuDw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=cruRWpv+MHmUQEmAPKwvWuR9m1plny7N1NJMgvvzOhI+vasotB9arixey6u3oaNTrNwFuN5q9f4nvRWUBvoYU6hVlAoKJwi0ZDyuLJoocs9/cGfCEq3UiLYIPZbWTdn/YPeuNnL4Wn26lvtTiOA1Hu7XCex3WHuW6V4OHvCbF7s=
+Received: by 10.82.163.13 with SMTP id l13mr1552008bue.46.1207846640957;
+        Thu, 10 Apr 2008 09:57:20 -0700 (PDT)
+Received: by 10.82.169.1 with HTTP; Thu, 10 Apr 2008 09:57:20 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79237>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79238>
 
+I'm still n00bing around with git, but I've got it into a state which
+has me confused..
 
-On 10 Apr 2008, at 13:30, Nigel Magnay wrote:
-> This is likely a really stupid question... a repo that was working,
-> has now stopped accepting a push with
->
-> Counting objects: 43, done.
-> Compressing objects: 100% (18/18)   Compressing objects: 100% (18/18),
-> done.
-> Writing objects: 100% (23/23)   Writing objects: 100% (23/23), 4.65  
-> KiB,
-> done.
-> Total 23 (delta 10), reused 0 (delta 0)
-> error: Unable to append to logs/refs/heads/realtime: Permission denied
-> Pushing to ssh://10.1.3.153/pub/scm/git/git-svn/realtime.git
-> To ssh://10.1.3.153/pub/scm/git/git-svn/realtime.git
->  ! [remote rejected] realtime -> realtime (failed to write)
-> error: failed to push some refs to
-> 'ssh://10.1.3.153/pub/scm/git/git-svn/realtime.git'
->
-> I think git gc was run on the server at some point, as the head in
-> question has been shifted into packed-refs.
+In doing a git-rebase, I got a number of errors like
 
-I've seen this after git gc too. Has the owner of the affected files  
-changed? If so you need to make sure that git gc is run by the  
-correct user. If you run it as root for example, everything it  
-touches will end up owned by root!
+error: modules/realtime-app-ui/src/main/webapp/WEB-INF/faces-config.xml:
+does not match index
+...
+Using index info to reconstruct a base tree...
 
-Cheers,
-Rob
+What does this mean? I made matters significantly worse, but managed
+to save my bacon with git-fsck --lost-found, but now my working copy
+seems really unhappy. If I want to get back to my branch I try
+
+git checkout thing
+
+fatal: Entry 'modules/realtime-app-ui/src/main/webapp/WEB-INF/faces-config-core.xml'
+not uptodate. Cannot merge.
+
+I just want to get back to the start, so I
+git reset --hard
+git checkout foo
+fatal: Entry 'modules/realtime-app-ui/src/main/webapp/WEB-INF/faces-config-core.xml'
+not uptodate. Cannot merge.
+
+I can probably recover it by blatting everything and starting over,
+but I'd like to know what the mess is that I've managed to get into so
+I can avoid it in the future!
