@@ -1,79 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 8/8] Fix tests breaking when checkout path contains	shell
- metacharacters
-Date: Thu, 10 Apr 2008 00:24:29 -0700
-Message-ID: <7vwsn6xjde.fsf@gitster.siamese.dyndns.org>
-References: <cover.1207702130.git.bdonlan@fushizen.net>
- <1207704604-30393-1-git-send-email-bdonlan@fushizen.net>
- <1207704604-30393-2-git-send-email-bdonlan@fushizen.net>
- <1207704604-30393-3-git-send-email-bdonlan@fushizen.net>
- <1207704604-30393-4-git-send-email-bdonlan@fushizen.net>
- <1207704604-30393-5-git-send-email-bdonlan@fushizen.net>
- <1207704604-30393-6-git-send-email-bdonlan@fushizen.net>
- <1207704604-30393-7-git-send-email-bdonlan@fushizen.net>
- <1207704604-30393-8-git-send-email-bdonlan@fushizen.net>
- <47FC69B8.40809@viscovery.net> <20080410063028.GA12562@shion.is.fushizen.net>
- <47FDB85F.9070503@viscovery.net>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: diff-tree -r and new directories
+Date: Thu, 10 Apr 2008 09:24:59 +0200
+Message-ID: <47FDC0CB.7050203@viscovery.net>
+References: <47FDB3DB.8020705@viscovery.net> <7v1w5eyzeh.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Bryan Donlan <bdonlan@fushizen.net>,
-	Git Mailing List <git@vger.kernel.org>,
-	Adam Roben <aroben@apple.com>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu Apr 10 09:25:38 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 10 09:25:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JjrA3-0004hz-VP
-	for gcvg-git-2@gmane.org; Thu, 10 Apr 2008 09:25:32 +0200
+	id 1JjrAK-0004ny-V1
+	for gcvg-git-2@gmane.org; Thu, 10 Apr 2008 09:25:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754008AbYDJHYq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Apr 2008 03:24:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753871AbYDJHYq
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Apr 2008 03:24:46 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:44980 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753868AbYDJHYq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Apr 2008 03:24:46 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 7158E2319;
-	Thu, 10 Apr 2008 03:24:44 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 8980C2318; Thu, 10 Apr 2008 03:24:37 -0400 (EDT)
-In-Reply-To: <47FDB85F.9070503@viscovery.net> (Johannes Sixt's message of
- "Thu, 10 Apr 2008 08:49:03 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754076AbYDJHZE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Apr 2008 03:25:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754055AbYDJHZE
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Apr 2008 03:25:04 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:12509 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753871AbYDJHZD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Apr 2008 03:25:03 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1Jjr9X-0001D1-BU; Thu, 10 Apr 2008 09:24:59 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 2388C6C4; Thu, 10 Apr 2008 09:24:59 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <7v1w5eyzeh.fsf@gitster.siamese.dyndns.org>
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79185>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79186>
 
-Johannes Sixt <j.sixt@viscovery.net> writes:
+Junio C Hamano schrieb:
+> Johannes Sixt <j.sixt@viscovery.net> writes:
+> 
+>> In one of my scriptlets I have this:
+>>
+>>    git diff-tree -r --name-only --diff-filter=AM -z "$rev" HEAD --
+>>
+>> and I had assumed that only files would ever be listed because of the -r
+>> switch. But this is not true: If there is a new directory, it lists only
+>> the directory's name instead of the files. Is this the intent? Is it worth
+>> changing?
+> 
+> Hmm. you would need a better reproduction recipe than that.
 
->>>>  test_expect_success  ".rev_db auto-converted to .rev_map.UUID" "
->>>>  	git-svn fetch -i trunk &&
->>>> +	test -z \"\$(ls \"\$GIT_DIR\"/svn/trunk/.rev_db.* 2>/dev/null)\" &&
->>>> +	expect=\"\$(ls \"\$GIT_DIR\"/svn/trunk/.rev_map.*)\" &&
->>>>  	test -n \"\$expect\" &&
->>>> +	rev_db=\"\$(echo \$expect | sed -e 's,_map,_db,')\" &&
->>>> +	convert_to_rev_db \"\$expect\" \"\$rev_db\" &&
->>>> +	rm -f \"\$expect\" &&
->>>> +	test -f \"\$rev_db\" &&
->>>>  	git-svn fetch -i trunk &&
->>>> +	test -z \"\$(ls \"\$GIT_DIR\"/svn/trunk/.rev_db.* 2>/dev/null)\" &&
->>>> +	test ! -e \"\$GIT_DIR\"/svn/trunk/.rev_db &&
->>>> +	test -f \"\$expect\"
->>>>  	"
->>> While looking at this test: Wouldn't it be easier to just place the whole
->>> thing (and probably similar cases, too) in single-quotes?
->> 
->> To be honest, I fixed all the git-svn tests with a suitably clever vim s///
->> expression, so at the time this way was actually easier :)
+Heh. It turns out that the questionable directory is actually versioned by
+git. My scriptlets have added it as a submodule while I looked in the
+other direction:
 
-Yeah, last night I ran out of energy reviewing things.  The above is
-simply too ugly to be acceptable, with or without automated s///
-expression.
+  $ git diff --summary $rev.. -- . | cat
+  create mode 160000 D/Project/foo
+
+:-) Problem solved. Thank you.
+
+-- Hannes
