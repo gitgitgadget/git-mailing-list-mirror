@@ -1,101 +1,79 @@
-From: "Govind Salinas" <govind@sophiasuchtig.com>
-Subject: Re: git annoyances
-Date: Thu, 10 Apr 2008 14:45:36 -0500
-Message-ID: <5d46db230804101245yf4a0c22qaee99f2c01256938@mail.gmail.com>
-References: <20080409101428.GA2637@elte.hu>
-	 <7vfxtu3fku.fsf@gitster.siamese.dyndns.org>
-	 <b8bf37780804091656s2f24ebe5h758884e63cea4845@mail.gmail.com>
+From: Ingo Molnar <mingo@elte.hu>
+Subject: Re: [PATCH] git-remote: show all remotes with "git remote show"
+Date: Thu, 10 Apr 2008 21:59:10 +0200
+Message-ID: <20080410195910.GB26779@elte.hu>
+References: <20080409101428.GA2637@elte.hu> <20080409145758.GB20874@sigill.intra.peff.net> <20080409151551.GA30439@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Ingo Molnar" <mingo@elte.hu>, git@vger.kernel.org
-To: "=?ISO-8859-1?Q?Andr=E9_Goddard_Rosa?=" <andre.goddard@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 10 21:50:08 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Apr 10 22:03:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jk2jT-000863-J9
-	for gcvg-git-2@gmane.org; Thu, 10 Apr 2008 21:46:52 +0200
+	id 1Jk2wl-00007F-KN
+	for gcvg-git-2@gmane.org; Thu, 10 Apr 2008 22:00:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758466AbYDJTpm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Apr 2008 15:45:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757792AbYDJTpm
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Apr 2008 15:45:42 -0400
-Received: from ti-out-0910.google.com ([209.85.142.185]:58302 "EHLO
-	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755332AbYDJTpl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 10 Apr 2008 15:45:41 -0400
-Received: by ti-out-0910.google.com with SMTP id 28so159416tif.23
-        for <git@vger.kernel.org>; Thu, 10 Apr 2008 12:45:39 -0700 (PDT)
-Received: by 10.151.39.2 with SMTP id r2mr2201994ybj.243.1207856736153;
-        Thu, 10 Apr 2008 12:45:36 -0700 (PDT)
-Received: by 10.150.156.18 with HTTP; Thu, 10 Apr 2008 12:45:36 -0700 (PDT)
-In-Reply-To: <b8bf37780804091656s2f24ebe5h758884e63cea4845@mail.gmail.com>
+	id S1756198AbYDJT7f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Apr 2008 15:59:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758633AbYDJT7f
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Apr 2008 15:59:35 -0400
+Received: from mx3.mail.elte.hu ([157.181.1.138]:56675 "EHLO mx3.mail.elte.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756721AbYDJT7e (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Apr 2008 15:59:34 -0400
+Received: from elvis.elte.hu ([157.181.1.14])
+	by mx3.mail.elte.hu with esmtp (Exim)
+	id 1Jk2vU-0003o0-02
+	from <mingo@elte.hu>; Thu, 10 Apr 2008 21:59:22 +0200
+Received: by elvis.elte.hu (Postfix, from userid 1004)
+	id 4ECB63E21D8; Thu, 10 Apr 2008 21:59:06 +0200 (CEST)
 Content-Disposition: inline
+In-Reply-To: <20080409151551.GA30439@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.17 (2007-11-01)
+Received-SPF: neutral (mx3: 157.181.1.14 is neither permitted nor denied by domain of elte.hu) client-ip=157.181.1.14; envelope-from=mingo@elte.hu; helo=elvis.elte.hu;
+X-ELTE-VirusStatus: clean
+X-ELTE-SpamScore: -1.5
+X-ELTE-SpamLevel: 
+X-ELTE-SpamCheck: no
+X-ELTE-SpamVersion: ELTE 2.0 
+X-ELTE-SpamCheck-Details: score=-1.5 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.2.3
+	-1.5 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
+	[score: 0.0000]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79244>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79245>
 
-On Wed, Apr 9, 2008 at 6:56 PM, Andr=E9 Goddard Rosa
-<andre.goddard@gmail.com> wrote:
-> >  > but it was a PITA and all of git's messages about the problem we=
-re not
->  >  > only unhelpful, they confused me into looking for problems wher=
-e there
->  >  > were none IMO.
->  >
->  >  Yes, we need to teach "git" to do more mind-reading (I am not bei=
-ng
->  >  sarcastic).  There should be a pattern in common user errors that=
- share
->  >  their roots to the same user misperception, and if we can identif=
-y that,
->  >  maybe we can make git guess what the user was really trying to do=
- and give
->  >  better error messages than it currently does.
->
->  Something along the lines of:
->
->  Error description
->  Why it happened
->  How to solve/Sugestion
->
 
-Hi,
+* Jeff King <peff@peff.net> wrote:
 
-This actually touches on one of my main purposes  behind Pyrite.  I int=
-end to
-do the following things to help the situation and I was wondering what =
-the
-git community's reaction is.
+> Many other commands use the "no arguments" form to show a
+> list (e.g., git-branch, git-tag). While we did show all
+> remotes for just "git remote", we displayed a usage error
+> for "git remote show" with no arguments. This is
+> counterintuitive, since by giving it _more_ information, we
+> get _less_ result.
+> 
+> The usage model can now be thought of as:
+> 
+>   - "git remote show <remote>": show a remote
+>   - "git remote show": show all remotes
+>   - "git remote": assume "show"; i.e., shorthand for "git remote show"
 
-1) Since it will be designed for end users I intend to remove the optio=
-ns not
-designed for end users.  This will also shorten up the help so that the=
- entire
-help can be shown to the user when they encounter an error.
+btw., another suggestion: because i use 'git-remote show' rather 
+frequently, i recently typoed "git-bisect show" and then realized that 
+it was "git-bisect visualize". Shouldnt there be a "git-bisect show" 
+alias?
 
-2) No unnamed options.  I think this would have helped the above case
-although it would have required a *bit* more typing.  The command would
-have looked like "pyt pull/fetch -r x86 -b latest"  Combined with the a=
-bove
-the command would have spit out the help and a message stating what was
-missing.
+I think using 'show' for all such 'display state' things would be rather 
+intuitive, if it was applied consistently all across the board. 
+('visualize' could still remain indefinitely, for compatibility - and 
+'git-bisect log' would still do the log of the bisection decisions that 
+were entered.)
 
-3) No syntax.  Git has a lot of syntax.  It has refspecs, revision rang=
-es,
-symbolic names (although i do like these) that a user has to learn.  I
-think this
-is one of the most error prone parts of the git for new users.
-Hopefully, I will
-be able to find simple and straightforward ways for the user to supply
-this info.
+Or is there some purpose behind this deviation that i missed?
 
-Any comments/suggestions will be appreciated.
-
-Thanks,
-Govind.
+	Ingo
