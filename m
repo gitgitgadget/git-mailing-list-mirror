@@ -1,32 +1,185 @@
 From: Ping Yin <pkufranky@gmail.com>
-Subject: [PATCH v2] builtin-status: submodule summary support
-Date: Thu, 10 Apr 2008 23:35:24 +0800
-Message-ID: <1207841727-7840-1-git-send-email-pkufranky@gmail.com>
-Cc: git@vger.kernel.org
+Subject: [PATCH v2 3/3] buitin-status: Add tests for submodule summary
+Date: Thu, 10 Apr 2008 23:35:27 +0800
+Message-ID: <1207841727-7840-4-git-send-email-pkufranky@gmail.com>
+References: <1207841727-7840-1-git-send-email-pkufranky@gmail.com>
+ <1207841727-7840-2-git-send-email-pkufranky@gmail.com>
+ <1207841727-7840-3-git-send-email-pkufranky@gmail.com>
+Cc: git@vger.kernel.org, Ping Yin <pkufranky@gmail.com>
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Apr 10 17:39:23 2008
+X-From: git-owner@vger.kernel.org Thu Apr 10 17:39:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jjyp1-0005sp-7d
-	for gcvg-git-2@gmane.org; Thu, 10 Apr 2008 17:36:19 +0200
+	id 1Jjyp1-0005sp-VQ
+	for gcvg-git-2@gmane.org; Thu, 10 Apr 2008 17:36:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757115AbYDJPfd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Apr 2008 11:35:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757008AbYDJPfd
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Apr 2008 11:35:33 -0400
-Received: from mail.qikoo.org ([60.28.205.235]:42962 "EHLO mail.qikoo.org"
+	id S1757350AbYDJPff (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Apr 2008 11:35:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757345AbYDJPff
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Apr 2008 11:35:35 -0400
+Received: from mail.qikoo.org ([60.28.205.235]:42966 "EHLO mail.qikoo.org"
 	rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1756826AbYDJPfc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Apr 2008 11:35:32 -0400
+	id S1756900AbYDJPfd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Apr 2008 11:35:33 -0400
 Received: by mail.qikoo.org (Postfix, from userid 1029)
-	id BD171470AE; Thu, 10 Apr 2008 23:35:27 +0800 (CST)
+	id EBC2D470B0; Thu, 10 Apr 2008 23:35:27 +0800 (CST)
 X-Mailer: git-send-email 1.5.5.23.g2a5f
+In-Reply-To: <1207841727-7840-3-git-send-email-pkufranky@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79219>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79220>
 
-This is a resend after v1.5.5.
+Signed-off-by: Ping Yin <pkufranky@gmail.com>
+---
+ t/t7502-status.sh |  134 +++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 134 insertions(+), 0 deletions(-)
+
+diff --git a/t/t7502-status.sh b/t/t7502-status.sh
+index cd08516..33882c9 100755
+--- a/t/t7502-status.sh
++++ b/t/t7502-status.sh
+@@ -149,4 +149,138 @@ test_expect_success 'status of partial commit excluding new file in index' '
+ 	test_cmp expect output
+ '
+ 
++test_expect_success "setup status submodule summary" '
++	test_create_repo sm &&
++	cd sm &&
++	: >foo &&
++	git add foo &&
++	git commit -m "Add foo" &&
++	cd .. &&
++	git add sm
++'
++
++cat > expect <<EOF
++# On branch master
++# Changes to be committed:
++#   (use "git reset HEAD <file>..." to unstage)
++#
++#	new file:   dir2/added
++#	new file:   sm
++#
++# Changed but not updated:
++#   (use "git add <file>..." to update what will be committed)
++#
++#	modified:   dir1/modified
++#
++# Untracked files:
++#   (use "git add <file>..." to include in what will be committed)
++#
++#	dir1/untracked
++#	dir2/modified
++#	dir2/untracked
++#	expect
++#	output
++#	untracked
++EOF
++test_expect_success "status submodule summary is disabled by default" '
++	git status > output &&
++	git diff expect output
++'
++
++head=$(cd sm && git rev-parse --short=7 --verify HEAD)
++
++cat > expect <<EOF
++# On branch master
++# Changes to be committed:
++#   (use "git reset HEAD <file>..." to unstage)
++#
++#	new file:   dir2/added
++#	new file:   sm
++#
++# Changed but not updated:
++#   (use "git add <file>..." to update what will be committed)
++#
++#	modified:   dir1/modified
++#
++# Modified submodules:
++#
++# * sm 0000000...$head (1):
++#   > Add foo
++#
++# Untracked files:
++#   (use "git add <file>..." to include in what will be committed)
++#
++#	dir1/untracked
++#	dir2/modified
++#	dir2/untracked
++#	expect
++#	output
++#	untracked
++EOF
++test_expect_success "status submodule summary" '
++	git config status.submodulesummary 10 &&
++	git status > output &&
++	git diff expect output
++'
++
++
++cat > expect <<EOF
++# On branch master
++# Changed but not updated:
++#   (use "git add <file>..." to update what will be committed)
++#
++#	modified:   dir1/modified
++#
++# Untracked files:
++#   (use "git add <file>..." to include in what will be committed)
++#
++#	dir1/untracked
++#	dir2/modified
++#	dir2/untracked
++#	expect
++#	output
++#	untracked
++no changes added to commit (use "git add" and/or "git commit -a")
++EOF
++test_expect_success "status submodule summary (clean submodule)" '
++	git commit -m "commit submodule" &&
++	git config status.submodulesummary 10 &&
++	! git status > output &&
++	git diff expect output
++'
++
++cat > expect <<EOF
++# On branch master
++# Changes to be committed:
++#   (use "git reset HEAD^1 <file>..." to unstage)
++#
++#	new file:   dir2/added
++#	new file:   sm
++#
++# Changed but not updated:
++#   (use "git add <file>..." to update what will be committed)
++#
++#	modified:   dir1/modified
++#
++# Modified submodules:
++#
++# * sm 0000000...$head (1):
++#   > Add foo
++#
++# Untracked files:
++#   (use "git add <file>..." to include in what will be committed)
++#
++#	dir1/untracked
++#	dir2/modified
++#	dir2/untracked
++#	expect
++#	output
++#	untracked
++EOF
++test_expect_success "status submodule summary (--amend)" '
++	git config status.submodulesummary 10 &&
++	git status --amend > output &&
++	git diff expect output
++'
++
+ test_done
+-- 
+1.5.5.23.g2a5f
