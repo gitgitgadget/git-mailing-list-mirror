@@ -1,157 +1,103 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [ANNOUNCE] tig-0.11
-Date: Thu, 10 Apr 2008 00:02:13 -0400
-Message-ID: <20080410040213.GA29618@sigill.intra.peff.net>
-References: <20080406200533.GA20537@diku.dk>
+From: Toby Corkindale <toby.corkindale@rea-group.com>
+Subject: Re: [BUG?] git-archive ignores remote .gitattributes
+Date: Thu, 10 Apr 2008 14:14:14 +1000
+Organization: REA Group
+Message-ID: <47FD9416.1020403@rea-group.com>
+References: <47EB0FAE.5000102@rea-group.com> <20080327033341.GB5417@coredump.intra.peff.net> <47EB213F.1020503@rea-group.com> <20080327042925.GA6426@coredump.intra.peff.net> <47EB271F.1050307@rea-group.com> <20080327045342.GC6426@coredump.intra.peff.net> <47EC7DD1.3060102@rea-group.com> <alpine.LSU.1.00.0803281321260.18259@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jonas Fonseca <fonseca@diku.dk>
-X-From: git-owner@vger.kernel.org Thu Apr 10 06:03:14 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 10 06:06:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jjo0G-000516-D1
-	for gcvg-git-2@gmane.org; Thu, 10 Apr 2008 06:03:12 +0200
+	id 1Jjo3q-0005ue-Ef
+	for gcvg-git-2@gmane.org; Thu, 10 Apr 2008 06:06:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750751AbYDJECQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Apr 2008 00:02:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750728AbYDJECQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Apr 2008 00:02:16 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4297 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750695AbYDJECP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Apr 2008 00:02:15 -0400
-Received: (qmail 7039 invoked by uid 111); 10 Apr 2008 04:02:12 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Thu, 10 Apr 2008 00:02:12 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 10 Apr 2008 00:02:13 -0400
-Content-Disposition: inline
-In-Reply-To: <20080406200533.GA20537@diku.dk>
+	id S1750794AbYDJEGL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Apr 2008 00:06:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750789AbYDJEGK
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Apr 2008 00:06:10 -0400
+Received: from mel-nat68.realestate.com.au ([210.50.192.68]:54682 "EHLO
+	mel-nat68.realestate.com.au" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750785AbYDJEGJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 10 Apr 2008 00:06:09 -0400
+Received: from [192.168.53.6] ([192.168.53.6]) by mel-nat68.realestate.com.au with Microsoft SMTPSVC(6.0.3790.1830);
+	 Thu, 10 Apr 2008 14:05:43 +1000
+User-Agent: Thunderbird 2.0.0.12 (X11/20080227)
+In-Reply-To: <alpine.LSU.1.00.0803281321260.18259@racer.site>
+X-OriginalArrivalTime: 10 Apr 2008 04:05:43.0576 (UTC) FILETIME=[25A0E980:01C89AC0]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79165>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79166>
 
-On Sun, Apr 06, 2008 at 10:05:33PM +0200, Jonas Fonseca wrote:
+Johannes Schindelin wrote:
+> Hi,
+> 
+> On Fri, 28 Mar 2008, Toby Corkindale wrote:
+> 
+>> I submit that this is a bug, or at least undesirable behaviour:
+>>
+>> "git-archive --remote=/some/repo" will ignore /some/repo/.gitattributes, 
+>> but check /some/repo/info/attributes.
+>>
+>> I think the problem is in the loop that looks for .gitattributes, which 
+>> seems to do so by taking the current path and iterating down through it?
+> 
+> The problem is that "git archive --remote" operates on the remote 
+> repository as if it were bare.  Which in many cases is true.
+> 
+> So I'd submit that this is not the usage .gitattributes is meant for, and 
+> that you should clone the thing if you want to generate archives heeding 
+> the .gitattributes.
 
-> stay up to date. Finally, add a blame view accessible from the comman=
-d
-> line (tig blame [rev] file), status view as well as the tree view (by
-> pressing 'B').
+If it is not what .gitattributes is for, then what is?
+The attributes docs even include specific options for archive mode 
+(export-subst), which implies it is exactly meant for archive.
 
-Hi Jonas,
+How about $GIT/info/attributes instead? Sadly, that isn't copied during 
+clone.
 
-Thanks for all your hard work.  I have really been enjoying the new
-blame view; blame was the only reason I ever used git-gui, and now I ca=
-n
-stay in the terminal all the time.
+I'd rather not have to clone a potentially large repository just in 
+order to make an archive of one specific version. If I was going to have 
+to clone it, then I could pass appropriate options to rsync or tar to 
+archive instead of calling git-archive.
 
-One feature that I have often wanted when using the blame view is to
-restart the blame from the parent commit of a blamed commit. That is,
-given a line like:
+ie. One could create this:
 
-  2007-08-22 19:36 Jonas Fonseca       776bf2a   15=E2=94=82 #include "=
-config.h"
+#!/bin/bash
+# Usage: git-archive2  <repo> <treeish>
+# note - not actually a real script, don't run this.
+REPO=$1
+VERSION=$2
+git clone $REPO
+cd `basename $REPO`
+git checkout $VERSION
+tar cf - --exclude=.git
+cd ..
+rm -rf `basename $REPO`
 
-I look at 776bf2a, and realize that there was some other interesting
-form of the line _before_ that commit. So I want to start reblaming at
-776bf2a^.
 
-Below is an initial attempt at a patch, but it has some problems:
+That's silly and shouldn't be required, because git-archive --remote 
+exists to perform that work. But it doesn't look at the attributes.
 
-  - the interface is a bit klunky. Since commits may have multiple
-    parents, it seemed wrong to always just choose the first parent.
-    I chose '1' to reblame from the first parent and '2' from the secon=
-d
-    (and obviously 3-9 could do the same).
+Is there a better way?
 
-    My thought was that the same functionality could be applied to the
-    commit viewer to jump to the parent. But maybe grabbing a string an=
-d
-    appending it to the commit id would make the most sense.
+thanks,
+Toby
 
-  - it reloads the blame view with new parameters, which will put the
-    cursor back at line 1. It would be nice to stay at approximately th=
-e
-    same line (approximate because the line numbers will change; just
-    staying at the same line number makes sense to me).
+-- 
+Toby Corkindale
+Software developer
+w: www.rea-group.com
+REA Group refers to realestate.com.au Ltd (ASX:REA)
 
-    I tried a few things, but it looks like we throw out the line
-    numbers when we do a reload. I tried saving the line number and
-    trying to scroll to it afterwards, but there is some trickery
-    required because we have to wait until the view is loaded again. Is
-    there any sane way to do this within the current framework?
-
-  - opening a blame view, blaming a parent, and then opening the diff
-    viewer can cause a segfault. I assume I'm violating some assumption
-    through my open_view() call. Since the patch is only about 15 lines=
-,
-    I'm hoping there's something obvious you can comment on.
-
--Peff
-
----
-diff --git a/tig.c b/tig.c
-index a3d2232..7a5497a 100644
---- a/tig.c
-+++ b/tig.c
-@@ -371,6 +371,8 @@ sq_quote(char buf[SIZEOF_STR], size_t bufsize, cons=
-t char *src)
- 	REQ_(STATUS_MERGE,	"Merge file using external tool"), \
- 	REQ_(TREE_PARENT,	"Switch to parent directory in tree view"), \
- 	REQ_(EDIT,		"Open in editor"), \
-+	REQ_(PARENT_ONE,	"Go to first parent"), \
-+	REQ_(PARENT_TWO,	"Go to second parent"), \
- 	REQ_(NONE,		"Do nothing")
-=20
-=20
-@@ -771,6 +773,8 @@ static struct keybinding default_keybindings[] =3D =
-{
- 	{ 'M',		REQ_STATUS_MERGE },
- 	{ ',',		REQ_TREE_PARENT },
- 	{ 'e',		REQ_EDIT },
-+	{ '1',		REQ_PARENT_ONE },
-+	{ '2',		REQ_PARENT_TWO },
-=20
- 	/* Using the ncurses SIGWINCH handler. */
- 	{ KEY_RESIZE,	REQ_SCREEN_RESIZE },
-@@ -3678,6 +3682,32 @@ blame_request(struct view *view, enum request re=
-quest, struct line *line)
- 		open_view(view, REQ_VIEW_DIFF, flags);
- 		break;
-=20
-+	case REQ_PARENT_ONE:
-+	case REQ_PARENT_TWO:
-+		if (!blame->commit) {
-+			report("No commit loaded yet");
-+			break;
-+		}
-+
-+		if (!strcmp(blame->commit->id, "000000000000000000000000000000000000=
-0000")) {
-+			report("No commit selected");
-+			break;
-+		}
-+
-+		string_ncopy(opt_ref, blame->commit->id, 40);
-+		switch (request) {
-+		case REQ_PARENT_ONE:
-+			string_add(opt_ref, 40, "^1");
-+			break;
-+		case REQ_PARENT_TWO:
-+			string_add(opt_ref, 40, "^2");
-+			break;
-+		default:
-+			break;
-+		}
-+		open_view(view, REQ_VIEW_BLAME, flags|OPEN_RELOAD);
-+		break;
-+
- 	default:
- 		return request;
- 	}
+Warning - This e-mail transmission may contain confidential information.
+If you have received this transmission in error, please notify us
+immediately on (61 3) 9897 1121 or by reply email to the sender. You
+must destroy the e-mail immediately and not use, copy, distribute or
+disclose the contents.
