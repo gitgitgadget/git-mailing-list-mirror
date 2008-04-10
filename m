@@ -1,67 +1,42 @@
-From: Johannes Sixt <johannes.sixt@telecom.at>
-Subject: [PATCH] builtin-commit.c: Remove a redundant assignment.
-Date: Thu, 10 Apr 2008 13:33:08 +0200
-Message-ID: <1207827189-7509-1-git-send-email-johannes.sixt@telecom.at>
-Cc: git@vger.kernel.org, Johannes Sixt <johannes.sixt@telecom.at>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 10 13:34:49 2008
+From: Jan Engelhardt <jengelh@computergmbh.de>
+Subject: rev-list date-order not overridable
+Date: Thu, 10 Apr 2008 13:43:06 +0200 (CEST)
+Message-ID: <alpine.LNX.1.10.0804101342090.8765@fbirervta.pbzchgretzou.qr>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 10 13:44:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jjv2a-000151-UO
-	for gcvg-git-2@gmane.org; Thu, 10 Apr 2008 13:34:05 +0200
+	id 1JjvCo-0005TD-94
+	for gcvg-git-2@gmane.org; Thu, 10 Apr 2008 13:44:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754987AbYDJLdQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Apr 2008 07:33:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754497AbYDJLdQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Apr 2008 07:33:16 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:43262 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753723AbYDJLdP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Apr 2008 07:33:15 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@eudaptics.com>)
-	id 1Jjv1h-0003ML-UZ; Thu, 10 Apr 2008 13:33:10 +0200
-Received: from srv.linz.viscovery (srv.linz.viscovery [192.168.1.4])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 965B56C4; Thu, 10 Apr 2008 13:33:09 +0200 (CEST)
-Received: by srv.linz.viscovery (Postfix, from userid 1000)
-	id 2E031FA48; Thu, 10 Apr 2008 13:33:09 +0200 (CEST)
-X-Mailer: git-send-email 1.5.5.33.g376d1
-X-Spam-Score: -0.8 (/)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_60=1
+	id S1755026AbYDJLnR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Apr 2008 07:43:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756142AbYDJLnM
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Apr 2008 07:43:12 -0400
+Received: from sovereign.computergmbh.de ([85.214.69.204]:44519 "EHLO
+	sovereign.computergmbh.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755643AbYDJLnH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Apr 2008 07:43:07 -0400
+Received: by sovereign.computergmbh.de (Postfix, from userid 25121)
+	id 98A4A180A6EA1; Thu, 10 Apr 2008 13:43:06 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by sovereign.computergmbh.de (Postfix) with ESMTP id 923981CF5013D
+	for <git@vger.kernel.org>; Thu, 10 Apr 2008 13:43:06 +0200 (CEST)
+User-Agent: Alpine 1.10 (LNX 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79209>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79210>
 
-Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
----
-	I noticed this while looking how --only is implemented.
+Hi,
 
-	-- Hannes
 
- builtin-commit.c |    4 +---
- 1 files changed, 1 insertions(+), 3 deletions(-)
-
-diff --git a/builtin-commit.c b/builtin-commit.c
-index 660a345..e3adfdf 100644
---- a/builtin-commit.c
-+++ b/builtin-commit.c
-@@ -745,10 +745,8 @@ static int parse_and_validate_options(int argc, const char *argv[],
- 		die("No paths with --include/--only does not make sense.");
- 	if (argc == 0 && only && amend)
- 		only_include_assumed = "Clever... amending the last one with dirty index.";
--	if (argc > 0 && !also && !only) {
-+	if (argc > 0 && !also && !only)
- 		only_include_assumed = "Explicit paths specified without -i nor -o; assuming --only paths...";
--		also = 0;
--	}
- 	if (!cleanup_arg || !strcmp(cleanup_arg, "default"))
- 		cleanup_mode = use_editor ? CLEANUP_ALL : CLEANUP_SPACE;
- 	else if (!strcmp(cleanup_arg, "verbatim"))
--- 
-1.5.5.33.g376d1
+git-rev-list --topo-order (the default) can be overriden by specifying 
+--date-order, but --date-order cannot be overriden by passing in 
+--topo-order again. Having it work would be really nice because it 
+allows extra programs to default to --date-order in some way.
