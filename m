@@ -1,86 +1,101 @@
-From: "Nigel Magnay" <nigel.magnay@gmail.com>
-Subject: Re: permissions and packed-refs?
-Date: Thu, 10 Apr 2008 20:21:38 +0100
-Message-ID: <320075ff0804101221n376e0c8mf9114f25dea6b2af@mail.gmail.com>
-References: <320075ff0804100530s2af22cc9r43208101e46a8154@mail.gmail.com>
-	 <10723DA2-555B-40DB-8428-BDF07CA2510E@manchester.ac.uk>
-	 <135BAC69-9549-4E61-BD6F-A99364C27CCC@sent.com>
+From: "Govind Salinas" <govind@sophiasuchtig.com>
+Subject: Re: git annoyances
+Date: Thu, 10 Apr 2008 14:45:36 -0500
+Message-ID: <5d46db230804101245yf4a0c22qaee99f2c01256938@mail.gmail.com>
+References: <20080409101428.GA2637@elte.hu>
+	 <7vfxtu3fku.fsf@gitster.siamese.dyndns.org>
+	 <b8bf37780804091656s2f24ebe5h758884e63cea4845@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Robert Haines" <rhaines@manchester.ac.uk>,
-	git <git@vger.kernel.org>
-To: "Logan Kennelly" <logank@sent.com>
-X-From: git-owner@vger.kernel.org Thu Apr 10 21:29:37 2008
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Junio C Hamano" <gitster@pobox.com>,
+	"Ingo Molnar" <mingo@elte.hu>, git@vger.kernel.org
+To: "=?ISO-8859-1?Q?Andr=E9_Goddard_Rosa?=" <andre.goddard@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 10 21:50:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jk2Lt-00031B-Qc
-	for gcvg-git-2@gmane.org; Thu, 10 Apr 2008 21:22:30 +0200
+	id 1Jk2jT-000863-J9
+	for gcvg-git-2@gmane.org; Thu, 10 Apr 2008 21:46:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752910AbYDJTVq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Apr 2008 15:21:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752896AbYDJTVp
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Apr 2008 15:21:45 -0400
-Received: from fk-out-0910.google.com ([209.85.128.185]:24151 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752862AbYDJTVo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Apr 2008 15:21:44 -0400
-Received: by fk-out-0910.google.com with SMTP id 19so147569fkr.5
-        for <git@vger.kernel.org>; Thu, 10 Apr 2008 12:21:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=MSg2AxUrKbpEaSUcv0IM0UuK34jHEAANF52XYjhI7yU=;
-        b=VCJMoFBCOU4cIGsdkKTqXf+6hIwMZe+vkmQ2eKR6pCfTmXTu6ZNTseB7IdohoSurdo87vwf14tZE/fxFGD40qCq8gWCYyaBLcoBVidKJbShjoFxH0g8hv78Bk8rHXZXql/ibjQAvbkGfl50eDM6RRUy0gIW4F4BUCSyLiGxKbk0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=hHPQrJNe1UYDJpnZdmNl8A8O5vOu0e+nx4BKRdxWMj21lcjkI9gNZzJY5Tc2t5CDLCDkOyuvKGdi7bYsMlzbdQMIEEOVJ3uxj9Wby7lScC4cn9g8Ao2VSVRy1y5LJmrLERap6SubXoPh6y2R7NvJivAdsxNvcoFHgAbN5UISYCU=
-Received: by 10.82.146.10 with SMTP id t10mr2893937bud.6.1207855298404;
-        Thu, 10 Apr 2008 12:21:38 -0700 (PDT)
-Received: by 10.82.169.1 with HTTP; Thu, 10 Apr 2008 12:21:38 -0700 (PDT)
-In-Reply-To: <135BAC69-9549-4E61-BD6F-A99364C27CCC@sent.com>
+	id S1758466AbYDJTpm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Apr 2008 15:45:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757792AbYDJTpm
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Apr 2008 15:45:42 -0400
+Received: from ti-out-0910.google.com ([209.85.142.185]:58302 "EHLO
+	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755332AbYDJTpl convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 10 Apr 2008 15:45:41 -0400
+Received: by ti-out-0910.google.com with SMTP id 28so159416tif.23
+        for <git@vger.kernel.org>; Thu, 10 Apr 2008 12:45:39 -0700 (PDT)
+Received: by 10.151.39.2 with SMTP id r2mr2201994ybj.243.1207856736153;
+        Thu, 10 Apr 2008 12:45:36 -0700 (PDT)
+Received: by 10.150.156.18 with HTTP; Thu, 10 Apr 2008 12:45:36 -0700 (PDT)
+In-Reply-To: <b8bf37780804091656s2f24ebe5h758884e63cea4845@mail.gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79243>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79244>
 
-Yeah, I think that's probably what's happening. TBH it's a bit of an
-ache to have to make sure umasks and things are set correctly, and
-it's probably partially that the repo was set up just from a direct
-copy of someone's machine.
+On Wed, Apr 9, 2008 at 6:56 PM, Andr=E9 Goddard Rosa
+<andre.goddard@gmail.com> wrote:
+> >  > but it was a PITA and all of git's messages about the problem we=
+re not
+>  >  > only unhelpful, they confused me into looking for problems wher=
+e there
+>  >  > were none IMO.
+>  >
+>  >  Yes, we need to teach "git" to do more mind-reading (I am not bei=
+ng
+>  >  sarcastic).  There should be a pattern in common user errors that=
+ share
+>  >  their roots to the same user misperception, and if we can identif=
+y that,
+>  >  maybe we can make git guess what the user was really trying to do=
+ and give
+>  >  better error messages than it currently does.
+>
+>  Something along the lines of:
+>
+>  Error description
+>  Why it happened
+>  How to solve/Sugestion
+>
 
-We've reverted to using a common account user for now.
+Hi,
 
-On Thu, Apr 10, 2008 at 7:19 PM, Logan Kennelly <logank@sent.com> wrote:
-> On Apr 10, 2008, at 9:21 AM, Robert Haines wrote:
->
->
-> > I've seen this after git gc too. Has the owner of the affected files
-> changed? If so you need to make sure that git gc is run by the correct user.
-> If you run it as root for example, everything it touches will end up owned
-> by root!
-> >
->
->  Not only that, but you must make sure that you have the appropriate umask
-> set. I'm not sure if this affects the pack file, but the reflog is certainly
-> rewritten in a way that prevents other users from pushing.
->
->  I've been meaning to submit a patch to make git better honor
-> "core.sharedrepository" (it's probably as simple as adding a couple calls to
-> adjust_shared_perm), but the workaround was so easy that I had forgotten
-> about the issue.
->
->  --
->                                                         Logan Kennelly
->       ,,,
->      (. .)
->  --ooO-(_)-Ooo--
->
->
->
->
+This actually touches on one of my main purposes  behind Pyrite.  I int=
+end to
+do the following things to help the situation and I was wondering what =
+the
+git community's reaction is.
+
+1) Since it will be designed for end users I intend to remove the optio=
+ns not
+designed for end users.  This will also shorten up the help so that the=
+ entire
+help can be shown to the user when they encounter an error.
+
+2) No unnamed options.  I think this would have helped the above case
+although it would have required a *bit* more typing.  The command would
+have looked like "pyt pull/fetch -r x86 -b latest"  Combined with the a=
+bove
+the command would have spit out the help and a message stating what was
+missing.
+
+3) No syntax.  Git has a lot of syntax.  It has refspecs, revision rang=
+es,
+symbolic names (although i do like these) that a user has to learn.  I
+think this
+is one of the most error prone parts of the git for new users.
+Hopefully, I will
+be able to find simple and straightforward ways for the user to supply
+this info.
+
+Any comments/suggestions will be appreciated.
+
+Thanks,
+Govind.
