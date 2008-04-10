@@ -1,52 +1,81 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: diff-tree -r and new directories
-Date: Thu, 10 Apr 2008 08:29:47 +0200
-Message-ID: <47FDB3DB.8020705@viscovery.net>
+From: Jean-Christian de Rivaz <jc@eclis.ch>
+Subject: Re: git annoyances
+Date: Thu, 10 Apr 2008 08:08:47 +0200
+Message-ID: <47FDAEEF.3090004@eclis.ch>
+References: <20080409101428.GA2637@elte.hu> <7vfxtu3fku.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Apr 10 08:30:38 2008
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Ingo Molnar <mingo@elte.hu>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 10 08:43:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JjqIt-0005Ak-HY
-	for gcvg-git-2@gmane.org; Thu, 10 Apr 2008 08:30:35 +0200
+	id 1JjqVT-0000ZU-Hf
+	for gcvg-git-2@gmane.org; Thu, 10 Apr 2008 08:43:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752265AbYDJG3u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Apr 2008 02:29:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752350AbYDJG3u
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Apr 2008 02:29:50 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:6155 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752256AbYDJG3t (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Apr 2008 02:29:49 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1JjqI7-0007K4-O2
-	for git@vger.kernel.org; Thu, 10 Apr 2008 08:29:47 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP id 83F2A6C4
-	for <git@vger.kernel.org>; Thu, 10 Apr 2008 08:29:47 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1752948AbYDJGmu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Apr 2008 02:42:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752826AbYDJGmu
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Apr 2008 02:42:50 -0400
+Received: from static-217-162-2-166.swisslink.ch ([217.162.2.166]:48060 "EHLO
+	mail.eclis.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752864AbYDJGmu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Apr 2008 02:42:50 -0400
+X-Greylist: delayed 2035 seconds by postgrey-1.27 at vger.kernel.org; Thu, 10 Apr 2008 02:42:49 EDT
+Received: from [10.192.57.55] (pub1.heig-vd.ch [193.134.216.2])
+	by mail.eclis.ch (Postfix) with ESMTP id BFE3458186;
+	Thu, 10 Apr 2008 08:07:16 +0200 (CEST)
+User-Agent: IceDove 1.5.0.14pre (X11/20080304)
+In-Reply-To: <7vfxtu3fku.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79169>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79170>
 
-In one of my scriptlets I have this:
+Junio C Hamano a =E9crit :
+> That made us allowing the users to type "git pull" and "git fetch" wi=
+thout
+> parameters.  This is generally a good thing: shorter to type for doin=
+g
+> common things is always good, as long as the user knows what he is do=
+ing.
+>=20
+> But at the same time, this allowed docs and cheat-sheets that mention=
+ only
+> the form without parameters and not the normative "repository refspec=
+"
+> form.  This dumbed down the users not understand that in that context
+> fetch (and pull, which is a fetch followed by a merge) is always happ=
+ening
+> against a single branch of single remote repository, the way to name
+> remote repository and its branch(es) is to give them as separate
+> parameters, and their not typing the pair explicitly is a mere conven=
+ience
+> feature.  This particular aspect of the shorthand is actually very ba=
+d.
+> It makes the mental model fuzzy, and hiding important rules of how th=
+e
+> world works from new people would lead them to unnecessary confusion.=
+  In
+> short, we made it harder for the new people to "get" it.
 
-   git diff-tree -r --name-only --diff-filter=AM -z "$rev" HEAD --
+A possible way it to, by default, make git print the full form of the=20
+command when a short form is used. So the user see the concept without=20
+having to read the documentation and learn it gradually. I personally=20
+like tools that act this way. It permit to make a basic and easy=20
+tutorial with short commands that let know the general concept and show=
+=20
+the full potential of the tool.
 
-and I had assumed that only files would ever be listed because of the -r
-switch. But this is not true: If there is a new directory, it lists only
-the directory's name instead of the files. Is this the intent? Is it worth
-changing?
+A "short form" flag in a user (not repository) configuration file shoul=
+d=20
+allow to suppress the long form printout for the comfort of the users=20
+that don't want it.
 
--- Hannes
+--
+Jean-Christian de Rivaz
