@@ -1,73 +1,70 @@
-From: "Sverre Rabbelier" <alturin@gmail.com>
-Subject: Re: [PATCH] When a remote is added but not fetched, tell the user.
-Date: Sat, 12 Apr 2008 00:35:39 +0200
-Message-ID: <bd6139dc0804111535y8073d22w79845341394c2067@mail.gmail.com>
-References: <20080409101428.GA2637@elte.hu>
-	 <1207869946-17013-1-git-send-email-g2p.code@gmail.com>
-	 <alpine.DEB.1.00.0804111621080.31025@eeepc-johanness>
-	 <20080411203501.7095b866@localhost> <20080411190816.GA17277@mithlond>
-	 <7v4pa8rs00.fsf@gitster.siamese.dyndns.org>
-Reply-To: sverre@rabbelier.nl
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 01/10] git-rebase.sh: Fix --merge --abort failures
+ when path contains whitespace
+Date: Fri, 11 Apr 2008 15:37:22 -0700
+Message-ID: <7vfxtsow65.fsf@gitster.siamese.dyndns.org>
+References: <cover.1207702130.git.bdonlan@fushizen.net>
+ <1207810216-27871-1-git-send-email-bdonlan@fushizen.net>
+ <1207810216-27871-2-git-send-email-bdonlan@fushizen.net>
+ <7vr6dexids.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Teemu Likonen" <tlikonen@iki.fi>, Gabriel <g2p.code@gmail.com>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Apr 12 00:36:26 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Johannes Sixt <j.sixt@viscovery.net>,
+	Adam Roben <aroben@apple.com>, gitster@pobox.com
+To: Bryan Donlan <bdonlan@fushizen.net>
+X-From: git-owner@vger.kernel.org Sat Apr 12 00:38:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JkRr5-00052t-Ut
-	for gcvg-git-2@gmane.org; Sat, 12 Apr 2008 00:36:24 +0200
+	id 1JkRt0-0005na-2M
+	for gcvg-git-2@gmane.org; Sat, 12 Apr 2008 00:38:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757142AbYDKWfk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Apr 2008 18:35:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757143AbYDKWfk
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Apr 2008 18:35:40 -0400
-Received: from wf-out-1314.google.com ([209.85.200.172]:40939 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757141AbYDKWfj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Apr 2008 18:35:39 -0400
-Received: by wf-out-1314.google.com with SMTP id 28so677236wff.4
-        for <git@vger.kernel.org>; Fri, 11 Apr 2008 15:35:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=U5VSI0fffPbOvatUu9RFcILEZla+zueSYaTLvXUOAjg=;
-        b=AGko9bRgREZrNRPGqdo8SL0IAj2kYv3YxYL29s4tKgT1t1zOXcm6mLff2W2YbpUMiGeW5eZ05IpnUA8tR8Ro9I25SmgS/X5j7VOz4gC4a20VgCMUaAvo9mMD+DZUnFmFi/oe7umz7SGrEwjDtHsXx89mvPza8nCwfwUSNYWAB94=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=S/vV2YIWKOdIv9reubMX9W33hdnzwXUpOqB8kCsj8u/ZpPtDS5VKZ6lut7FoJBuINNC3kGXDwPODCrWuKUGANRNINd1Jrh6RxPjSZl1GVuYFv/vQuSnW8Ue80JMVwlv8Ibbj/sNgFXjfFlCC75gfn7qnP+eTaNOkY4Iey9+4WvA=
-Received: by 10.143.17.13 with SMTP id u13mr967686wfi.69.1207953339199;
-        Fri, 11 Apr 2008 15:35:39 -0700 (PDT)
-Received: by 10.143.33.6 with HTTP; Fri, 11 Apr 2008 15:35:39 -0700 (PDT)
-In-Reply-To: <7v4pa8rs00.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1757241AbYDKWhh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Apr 2008 18:37:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756905AbYDKWhh
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Apr 2008 18:37:37 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:64255 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756554AbYDKWhh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Apr 2008 18:37:37 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 0A81B1FDE;
+	Fri, 11 Apr 2008 18:37:36 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 402831FDB; Fri, 11 Apr 2008 18:37:30 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79304>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79305>
 
-On Fri, Apr 11, 2008 at 11:39 PM, Junio C Hamano <gitster@pobox.com> wrote:
->  If the user tells you not to fetch, the command should not bother the user
->  with excess messages, unless the user explicitly asks to, either.
+Junio C Hamano <gitster@pobox.com> writes:
 
-I fully agree here, but is there a way for the user to do so?
-Especially the beginning user? Perhaps in the form of a -v(erbose)
-switch, but for that to be useful it would have to be present across
-most/all commands and have the same (type of) result. That is, it
-should provide the user with additional information on what they did
-wrong/what they likely want to do from here.
-In this case though I agree that, as Teemu pointed out, 'git remote
-add' is a config tool. 'man git remote add' points this out more than
-clearly enough for regular use. Maybe keep it in mind for the to-be
-"git mind reading" functionality.
+> I am very inclined to replace t3407 with the following.
+>
+> diff --git a/t/t3407-rebase-abort.sh b/t/t3407-rebase-abort.sh
+> index 37944c3..cadfb23 100755
+> --- a/t/t3407-rebase-abort.sh
+> +++ b/t/t3407-rebase-abort.sh
+> @@ -4,7 +4,13 @@ test_description='git rebase --abort tests'
+>  
+>  . ./test-lib.sh
+>  
+> +### Test that we handle strange characters properly
+> +work_dir="$(pwd)/test \" ' \$ \\ dir"
+> +
 
-Cheers,
+Eh, I am sorry, but a slight change of plans.  We would probably want to
+exclude backslash from the above, so that we do not get inconsistent test
+between DOSsy systems and others.
 
-Sverre Rabbelier
+I think your "trash directory" is a reasonable way to test a very common
+issue.  SP is not all that unusual character to use in a pathname,
+especially created from within a GUI-ish environment.  So probably we
+can do something similar here, like:
+
+	work_dir="$(pwd)/test dir"
