@@ -1,81 +1,64 @@
-From: Eric Blake <ebb9@byu.net>
-Subject: url.<base>.insteadOf bugs
-Date: Fri, 11 Apr 2008 13:59:04 +0000 (UTC)
-Message-ID: <loom.20080411T134849-798@post.gmane.org>
+From: Teemu Likonen <tlikonen@iki.fi>
+Subject: Re: [PATCH] When a remote is added but not fetched, tell the user.
+Date: Fri, 11 Apr 2008 22:08:16 +0300
+Message-ID: <20080411190816.GA17277@mithlond>
+References: <20080409101428.GA2637@elte.hu> <1207869946-17013-1-git-send-email-g2p.code@gmail.com> <alpine.DEB.1.00.0804111621080.31025@eeepc-johanness> <20080411203501.7095b866@localhost>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 11 21:06:28 2008
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Gabriel <g2p.code@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 11 21:09:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JkOZM-0002dP-6E
-	for gcvg-git-2@gmane.org; Fri, 11 Apr 2008 21:05:53 +0200
+	id 1JkOcS-0004Hl-Lv
+	for gcvg-git-2@gmane.org; Fri, 11 Apr 2008 21:09:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760122AbYDKTFI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Apr 2008 15:05:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760157AbYDKTFI
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Apr 2008 15:05:08 -0400
-Received: from main.gmane.org ([80.91.229.2]:40711 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759030AbYDKTFH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Apr 2008 15:05:07 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1JkOYY-0000pG-QJ
-	for git@vger.kernel.org; Fri, 11 Apr 2008 19:05:02 +0000
-Received: from eblake.csw.l-3com.com ([128.170.36.124])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 11 Apr 2008 19:05:02 +0000
-Received: from ebb9 by eblake.csw.l-3com.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 11 Apr 2008 19:05:02 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 128.170.36.124 (Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.1.4322; .NET CLR 2.0.50727; InfoPath.1; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648))
+	id S1760636AbYDKTIU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Apr 2008 15:08:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760603AbYDKTIU
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Apr 2008 15:08:20 -0400
+Received: from pne-smtpout4-sn1.fre.skanova.net ([81.228.11.168]:37289 "EHLO
+	pne-smtpout4-sn1.fre.skanova.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1760235AbYDKTIT (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 11 Apr 2008 15:08:19 -0400
+Received: from mithlond (80.220.180.181) by pne-smtpout4-sn1.fre.skanova.net (7.3.129)
+        id 47A7970A003D1826; Fri, 11 Apr 2008 21:08:16 +0200
+Received: from dtw by mithlond with local (Exim 4.63)
+	(envelope-from <tlikonen@iki.fi>)
+	id 1JkObg-0005Mo-5t; Fri, 11 Apr 2008 22:08:16 +0300
+Content-Disposition: inline
+In-Reply-To: <20080411203501.7095b866@localhost>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79286>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79287>
 
-I just upgraded to git 1.5.5, and decided to try out the new 
-url.<base>.insteadOf config option, to save me typing when pulling from 
-git.sv.gnu.org (and so that I can type the same url whether I'm at home and can 
-use git://, or when I'm at work and behind a stupid firewall where I must use 
-http://).  It has a couple of bugs:
+Gabriel wrote (2008-04-11 20:35 +0200):
 
-First, it appears to have an off-by-one bug.
+> I think the transcript that started the thread makes it clear that
+> having "git remote add" not fetching is not the right default. The
+> user wants to use a remote repository, and has learned these are
+> called "remotes". So he does not have too much trouble
+> finding/remembering the command "git remote add <name> <url>". Now
+> with the user's goal in mind, it makes no sense to add a remote and
+> then not fetch it, because the user definitely wants to do something
+> with the remote. By not fetching it, we are surprising the user 
 
-$ git --version
-git version 1.5.5
-$ mkdir bison
-$ cd bison
-$ git init
-Initialized empty Git repository in .git/
-$ git config url.http://git.sv.gnu.org/r/.insteadOf gnu:
-$ git fetch gnu:bison.git master
-fatal: I don't handle protocol 'ttp'
-$ git config --unset url.http://git.sv.gnu.org/r/.insteadOf     
-$ git config --global 'url. http://git.sv.gnu.org/r/.insteadOf' gnu:
-$ git fetch gnu:bison.git master
-Getting alternates list for http://git.sv.gnu.org/r/bison.git
-...
+Hmm, I'm quite newbie but I have never expected "git remote add" to
+fetch anything. I wouldn't want it to do it automatically. From the
+beginning I saw "git remote" as a _configuration_ tool. No doubt it's
+common to fetch after configuring a remote but in my mind they are two
+logically different steps (configure, fetch/pull) which I think should
+be kept separate. Once I have configured something I may want to check
+that I did the right thing, then configure some more remotes and maybe
+fetch tomorrow. Maybe I don't want to fetch at all but only pull from
+that remote. So let's not build ready workflows for users, only
+convenient, logical tools.
 
-Second, 'git clone --help' documents that it uses this config option, but it 
-doesn't:
-
-$ cd ..
-$ rm -Rf bison
-$ git clone gnu:bison.git
-Initialized empty Git repository in /home/eblake/bison/.git/
-ssh: Could not resolve hostname gnu: no address associated with name
-fatal: The remote end hung up unexpectedly
-fetch-pack from 'gnu:bison.git' failed.
-
--- 
-Eric Blake
+That said, I don't mind short messages like "use 'git fetch' to obtain
+branches" but I don't think that is necessary.
