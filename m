@@ -1,96 +1,202 @@
-From: John Goerzen <jgoerzen@complete.org>
-Subject: Re: ANNOUNCE: Git Forum
-Date: Fri, 11 Apr 2008 08:42:06 -0500
-Message-ID: <slrnfvuqle.dqv.jgoerzen@katherina.lan.complete.org>
-References: <60646ee10804081451i4e6aa23ek44280e5d367d8814@mail.gmail.com> <20080408222501.GV11574@genesis.frugalware.org> <46a038f90804081536h7a19803apb401ed60593d9802@mail.gmail.com> <60646ee10804081545k6031578dxbae4c644fb7d2833@mail.gmail.com> <46a038f90804081551u44d7b4cald5a00e74ee479dc1@mail.gmail.com>
+From: Heikki Orsila <heikki.orsila@iki.fi>
+Subject: [PATCH] Add two core.sharedRepository options: group-readable and world-readable
+Date: Fri, 11 Apr 2008 17:09:16 +0300
+Message-ID: <20080411140916.GA30667@zakalwe.fi>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 11 16:10:00 2008
+X-From: git-owner@vger.kernel.org Fri Apr 11 16:32:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JkJwO-00020v-Fo
-	for gcvg-git-2@gmane.org; Fri, 11 Apr 2008 16:09:20 +0200
+	id 1JkKIS-0003vY-J1
+	for gcvg-git-2@gmane.org; Fri, 11 Apr 2008 16:32:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759346AbYDKOI3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Apr 2008 10:08:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758759AbYDKOI2
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Apr 2008 10:08:28 -0400
-Received: from main.gmane.org ([80.91.229.2]:37597 "EHLO ciao.gmane.org"
+	id S1760212AbYDKOaz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Apr 2008 10:30:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760204AbYDKOaz
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Apr 2008 10:30:55 -0400
+Received: from zakalwe.fi ([80.83.5.154]:38187 "EHLO zakalwe.fi"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758041AbYDKOI2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Apr 2008 10:08:28 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1JkJvU-0002DO-I4
-	for git@vger.kernel.org; Fri, 11 Apr 2008 14:08:25 +0000
-Received: from 63-245-179-205.kitusa.com ([63.245.179.205])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 11 Apr 2008 14:08:24 +0000
-Received: from jgoerzen by 63-245-179-205.kitusa.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 11 Apr 2008 14:08:24 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 63-245-179-205.kitusa.com
-User-Agent: slrn/0.9.8.1pl1 (Debian)
+	id S1760173AbYDKOay (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Apr 2008 10:30:54 -0400
+Received: by zakalwe.fi (Postfix, from userid 1023)
+	id E88752C333; Fri, 11 Apr 2008 17:09:16 +0300 (EEST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79273>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79274>
 
-On 2008-04-08, Martin Langhoff <martin.langhoff@gmail.com> wrote:
-> On Tue, Apr 8, 2008 at 7:45 PM, Dill <sarpulhu@gmail.com> wrote:
->>  I have but as git grows more popular so will the users who wish to
->>  create communities that can help each other. IMHO this list will
->>  probably tend to be about development and bugs etc while other sites
->>  will sprout up geared more towards users. Could be wrong though.
->
-> Do read the older discussions. Separating users from developers does
-> not work well. Successful communities have mixed lists -- perhaps
-> split by topic (linux-usb for example) but not by "participant type".
-> Users should be guided towards this list --
+* 'group-readable': Make the repository group-readable (and g+sx for
+  directories), even if the user's umask forbids it.
 
-I don't think this is right.
+* 'world-readable': Make the repository readable for anyone, including
+  the group (implies group-readable), even if the user's umask forbids
+  it.
 
-Debian has debian-user, debian-devel, and a host of other lists.  Some
-are mixed (debian-kde), some aren't (debian-devel).  
+* Add a warning to cache.h that "enum sharedrepo" item order should
+  not be changed because it would break backwards compatibility.
 
-debian-user is extremely high volume.  In fact, its volume normally
-dwarfs that of debian-devel.  As a developer, it would be virtually
-impossible to participate in development discussions without having to
-spend an inordinate amount of time each day filtering out all the
-discussions about KDE icons or whatnot.  
+Signed-off-by: Heikki Orsila <heikki.orsila@iki.fi>
+---
+ Documentation/config.txt   |   13 ++++++++---
+ Documentation/git-init.txt |    8 ++++++-
+ cache.h                    |    6 ++++-
+ path.c                     |   48 +++++++++++++++++++++++++++++--------------
+ setup.c                    |    4 +++
+ 5 files changed, 57 insertions(+), 22 deletions(-)
 
-Not that these are *bad* discussions, or that developers never
-subscribe to -user, but there are some developers (such as myself)
-with limited time to devote to the project, and I feel my time is
-better spent on development than on filtering through 1000 messages
-each day that I'm not really interested in.
-
-Moreover, as a *user* of some projects, I appreciate the distinction
-as well.  I do not want to be a pest to the developers that are
-donating their time to improve the project I benefit from when my
-question could be perfectly well addressed by other users more
-experienced than I.
-
-As an example, I subscribe to the MythTV user list but not the
-development list.  There are all sorts of discussions there --
-everything from what TVs are best in different situations to
-discussions over cable company encryption and setup of the MythTV web
-interface.  I don't read most of them, but find some interesting.  At
-the same time, I am not really interested in the latest SVN commits
-for MythTV.  I upgrade my box maybe once a year and don't really care
-about development internals, so as a user, this separation benefits me
-too.
-
-I don't see a -user list as a bad thing for a community the size of
-Git.
-
-Think about it this way: once the Windows stuff for Git gets mature
-(to the TortoiseGit level), there are going to be a lot of people
-using Git that really *can't* operate a mail client because the only
-"mail client" at their disposal is Outlook.
-
--- John
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index fe43b12..ee13b2b 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -258,10 +258,15 @@ core.repositoryFormatVersion::
+ core.sharedRepository::
+ 	When 'group' (or 'true'), the repository is made shareable between
+ 	several users in a group (making sure all the files and objects are
+-	group-writable). When 'all' (or 'world' or 'everybody'), the
+-	repository will be readable by all users, additionally to being
+-	group-shareable. When 'umask' (or 'false'), git will use permissions
+-	reported by umask(2). See linkgit:git-init[1]. False by default.
++	group-writable). When 'group-readable', the repository will be
++	readable, but not writable, for users in the same group, even if the
++	user's umask forbids it. When 'all' (or 'world' or 'everybody'),
++	the repository will be readable by all users, additionally to being
++	group-shareable. When 'world-readable', the repository will be
++	readable for anyone, even if the user's umask forbids it. This option
++	implies 'group-readable'. When 'umask' (or 'false'), git will use
++	permissions reported by umask(2). See linkgit:git-init[1].
++	False by default.
+ 
+ core.warnAmbiguousRefs::
+ 	If true, git will warn you if the ref name you passed it is ambiguous
+diff --git a/Documentation/git-init.txt b/Documentation/git-init.txt
+index 62914da..6bbc09c 100644
+--- a/Documentation/git-init.txt
++++ b/Documentation/git-init.txt
+@@ -31,7 +31,7 @@ structure, some suggested "exclude patterns", and copies of non-executing
+ "hook" files.  The suggested patterns and hook files are all modifiable and
+ extensible.
+ 
+---shared[={false|true|umask|group|all|world|everybody}]::
++--shared[={false|true|umask|group|group-readable|all|world|world-readable|everybody}]::
+ 
+ Specify that the git repository is to be shared amongst several users.  This
+ allows users belonging to the same group to push into that
+@@ -49,6 +49,12 @@ is given:
+  - 'group' (or 'true'): Make the repository group-writable, (and g+sx, since
+    the git group may be not the primary group of all users).
+ 
++ - 'group-readable': Make the repository group-readable (and g+sx for
++   directories), even if the user's umask forbids it.
++
++ - 'world-readable': Make the repository readable for anyone, including
++   the group (implies group-readable), even if the user's umask forbids it.
++
+  - 'all' (or 'world' or 'everybody'): Same as 'group', but make the repository
+    readable by all users.
+ 
+diff --git a/cache.h b/cache.h
+index 2a1e7ec..4af6d62 100644
+--- a/cache.h
++++ b/cache.h
+@@ -474,10 +474,14 @@ static inline void hashclr(unsigned char *hash)
+ 
+ int git_mkstemp(char *path, size_t n, const char *template);
+ 
++/* Warning: enum sharedrepo item order should not be changed since it will
++ * break backwards compatibility. */
+ enum sharedrepo {
+ 	PERM_UMASK = 0,
+ 	PERM_GROUP,
+-	PERM_EVERYBODY
++	PERM_EVERYBODY,
++	PERM_GROUP_READABLE,
++	PERM_WORLD_READABLE,
+ };
+ int git_config_perm(const char *var, const char *value);
+ int adjust_shared_perm(const char *path);
+diff --git a/path.c b/path.c
+index f4ed979..b900f62 100644
+--- a/path.c
++++ b/path.c
+@@ -266,22 +266,38 @@ int adjust_shared_perm(const char *path)
+ 	if (lstat(path, &st) < 0)
+ 		return -1;
+ 	mode = st.st_mode;
+-	if (mode & S_IRUSR)
+-		mode |= (shared_repository == PERM_GROUP
+-			 ? S_IRGRP
+-			 : (shared_repository == PERM_EVERYBODY
+-			    ? (S_IRGRP|S_IROTH)
+-			    : 0));
+-
+-	if (mode & S_IWUSR)
+-		mode |= S_IWGRP;
+-
+-	if (mode & S_IXUSR)
+-		mode |= (shared_repository == PERM_GROUP
+-			 ? S_IXGRP
+-			 : (shared_repository == PERM_EVERYBODY
+-			    ? (S_IXGRP|S_IXOTH)
+-			    : 0));
++
++	/* PERM_GROUP_READABLE:   g+r
++	 * PERM_GROUP:            g+rw
++	 * PERM_WORLD_READABLE:   g+r,  o+r
++	 * PERM_EVERYBODY:        g+rw, o+r
++	 */
++	if (mode & S_IRUSR) {
++		if (shared_repository == PERM_GROUP ||
++		    shared_repository == PERM_GROUP_READABLE) {
++			mode |= S_IRGRP;
++		} else if (shared_repository == PERM_EVERYBODY ||
++			   shared_repository == PERM_WORLD_READABLE) {
++			mode |= S_IRGRP | S_IROTH;
++		}
++	}
++
++	if (mode & S_IWUSR) {
++		if (shared_repository != PERM_GROUP_READABLE &&
++		    shared_repository != PERM_WORLD_READABLE)
++			mode |= S_IWGRP;
++	}
++
++	if (mode & S_IXUSR) {
++		if (shared_repository == PERM_GROUP ||
++		    shared_repository == PERM_GROUP_READABLE) {
++			mode |= S_IXGRP;
++		} else if (shared_repository == PERM_EVERYBODY ||
++			   shared_repository == PERM_WORLD_READABLE) {
++			mode |= S_IXGRP | S_IXOTH;
++		}
++	}
++
+ 	if (S_ISDIR(mode))
+ 		mode |= FORCE_DIR_SET_GID;
+ 	if ((mode & st.st_mode) != mode && chmod(path, mode) < 0)
+diff --git a/setup.c b/setup.c
+index 3d2d958..a33ae9d 100644
+--- a/setup.c
++++ b/setup.c
+@@ -434,10 +434,14 @@ int git_config_perm(const char *var, const char *value)
+ 			return PERM_UMASK;
+ 		if (!strcmp(value, "group"))
+ 			return PERM_GROUP;
++		if (!strcmp(value, "group-readable"))
++			return PERM_GROUP_READABLE;
+ 		if (!strcmp(value, "all") ||
+ 		    !strcmp(value, "world") ||
+ 		    !strcmp(value, "everybody"))
+ 			return PERM_EVERYBODY;
++		if (!strcmp(value, "world-readable"))
++			return PERM_WORLD_READABLE;
+ 		i = atoi(value);
+ 		if (i > 1)
+ 			return i;
+-- 
+1.5.4.4
