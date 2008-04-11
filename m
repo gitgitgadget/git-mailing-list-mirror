@@ -1,164 +1,485 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Intricacies of submodules
-Date: Thu, 10 Apr 2008 22:20:00 -0700
-Message-ID: <7vd4oxufwf.fsf@gitster.siamese.dyndns.org>
-References: <47F15094.5050808@et.gatech.edu> <47FBB448.3060900@et.gatech.edu>
- <32541b130804081306q6e06af20u794357eba9d434e@mail.gmail.com>
- <47FBDA77.2050402@et.gatech.edu>
- <32541b130804081401n743f39c9o3f016da9dee2eb92@mail.gmail.com>
- <8FE3B7A7-4C2D-4202-A5FC-EBC4F4670273@sun.com>
- <32541b130804082033q55c795b5ieaa4e120956ff030@mail.gmail.com>
- <49E9DCEC-8A9E-4AD7-BA58-5A40F475F2EA@sun.com>
- <32541b130804082334s604b62b0j82b510c331f48213@mail.gmail.com>
- <7vhcebcyty.fsf@gitster.siamese.dyndns.org>
- <6CFA8EC2-FEE0-4746-A4F6-45082734FEEC@sun.com>
- <7v63uqz265.fsf@gitster.siamese.dyndns.org>
- <1207859579.13123.306.camel@work.sfbay.sun.com>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: git-bisect annoyances
+Date: Fri, 11 Apr 2008 07:41:40 +0200
+Message-ID: <200804110741.40732.chriscool@tuxfamily.org>
+References: <20080409101428.GA2637@elte.hu> <20080410114739.GA15229@elte.hu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Avery Pennarun <apenwarr@gmail.com>, stuart.freeman@et.gatech.edu,
-	git@vger.kernel.org
-To: Roman Shaposhnik <rvs@sun.com>
-X-From: git-owner@vger.kernel.org Fri Apr 11 07:21:07 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Carl Worth <cworth@cworth.org>
+To: Ingo Molnar <mingo@elte.hu>
+X-From: git-owner@vger.kernel.org Fri Apr 11 07:37:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JkBhA-0003Mo-7t
-	for gcvg-git-2@gmane.org; Fri, 11 Apr 2008 07:21:05 +0200
+	id 1JkBwg-00070X-SQ
+	for gcvg-git-2@gmane.org; Fri, 11 Apr 2008 07:37:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752687AbYDKFUT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Apr 2008 01:20:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752094AbYDKFUS
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Apr 2008 01:20:18 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:33449 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751915AbYDKFUR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Apr 2008 01:20:17 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 37B6A263F;
-	Fri, 11 Apr 2008 01:20:15 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id DB9ED263D; Fri, 11 Apr 2008 01:20:06 -0400 (EDT)
-In-Reply-To: <1207859579.13123.306.camel@work.sfbay.sun.com> (Roman
- Shaposhnik's message of "Thu, 10 Apr 2008 13:32:58 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1750896AbYDKFgW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 11 Apr 2008 01:36:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752179AbYDKFgW
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Apr 2008 01:36:22 -0400
+Received: from smtp1-g19.free.fr ([212.27.42.27]:54054 "EHLO smtp1-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750853AbYDKFgU convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 11 Apr 2008 01:36:20 -0400
+Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 842121AB2CD;
+	Fri, 11 Apr 2008 07:36:18 +0200 (CEST)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 15F641AB2C3;
+	Fri, 11 Apr 2008 07:36:18 +0200 (CEST)
+User-Agent: KMail/1.9.7
+In-Reply-To: <20080410114739.GA15229@elte.hu>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79263>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79264>
 
-Roman Shaposhnik <rvs@sun.com> writes:
+Le jeudi 10 avril 2008, Ingo Molnar a =E9crit :
+> Ok, just in case i dont bore people with "stupid user" experiences an=
+d
+> logs of sessions of confusion, here's another session i just had with
+> Git.
 
-> ... I'm very interested in getting this functionality
-> right with git-submodule. And I can be either your guinea pig or
-> a frenetic hamster. After all, you don't mind complete newcomers
-> to the development process sending you code, do you? ;-)
+Thanks, this is very much appreciated.
 
-Everybody starts out as a total stranger.  Linus has never worked with me
-when I started, and many people who are the core members of git community
-have never worked with me before either.
-
->> However, the way others will obtain a copy of the submodule repository
->> will be quite different from the way you access it (you already have it,
->> so you do not need to clone it from elsewhere to initialize it).  It may
->> not make much sense to record the URL that you tell others to use in your
->> own .git/config in the repository of the originator of such a superproject
->> vs submodule combination.  So in that sense, I am not sure if not mucking
->> with .git/config is even a bad thing.
+> This time it's with our good friend git-bisect - which i thought to
+> master pretty well and which i already used successfully to bisect
+> kernel bugs up to a hundred times already (at least).
 >
-> It is all about consistency as far as I see it. One huge advantage of
-> Git is that it is a DSCM. It makes things totally symmetric. The
-> paragraph that I quoted above hints at a possibility of treating the
-> initial repo somewhat differently from its copies. That would break
-> a nice symmetry. And it would do that unnecessarily.
-
-I do not think being distributed is about such symmetry.
-
-Being distributed is more about each repository being able to serve its
-own purpose, being able to get configured suitably and individually,
-without disturbing others, and allowing a workflow around it that
-_potentially_ treats everybody as equals.
-
-Not having the kind of symmetry you talk about is not anything new about
-submodules, nor is it necessarily a bad thing.  You create a history here,
-you push it into there.  Somebody else clones your history from there and
-starts hacking.
-
-The way that somebody's clone interacts with the intermediary and the way
-your original repository interacts with the intermediary _are_ different,
-and they ought to stay different if that intermediary is _your_ owned
-publishing repository.  You can push into it, but that somebody else
-should not be able to.  There should be no symmetry about that repository.
-
-That somebody else may have his own publishing repository where he pushes
-the result of his work into and you fetch from.  Taken together, each of
-you and that somebody else having his own repository to allow others to
-fetch from, makes you two the equals in the global picture.
-
-You would only need the symmetry of your kind if there is a single
-intermediary that is _the central location_, a shared repository where
-everybody meets.  Only in that case, you _may_, after priming the process
-by initially creating the superproject - submodule combination in the
-originating repository and pushing it to the shared repository, want to
-clone it back to a new work tree you will use as your usual working place
-(and nuke the originating one, which is not needed anymore as the process
-has been primed now).  At that point, your usual working place and
-everybody else's working place would look symmetrical, as everybody
-including you cloned from a single shared location.
-
-I am not saying that is necessarily a bad thing to wish for.  I am only
-saying that the kind of symmetry you talk about does not have much to do
-with being distributed.  If anything, that symmetry is more closely tied
-to using a centralized work flow, not distributed.
-
->> After working with the project for a while (i.e. you pull and perhaps push
->> back or send patches upstream), .gitmodules file changes and it now says
->> the repository resides at host B.xz because the project relocated.  You
->> would want the next "git submodule update" to notice that your .git/config
->> records a URL you derived from git://A.xz/project.git/, and that you have
->> not seen this new URL git://B.xz/project.git/, and give you a chance to
->> make adjustments if needed.
+> The 'v' repository is a vanilla clone of Linus's upstream linux-2.6.g=
+it
+> kernel tree with no other modifications done to it.
 >
-> I guess something like that could be implemented via Git hooks, right?
-
-I do not see a reason to bring in hooks here.  To answer "Yes" to your
-"right?" question, "git submodule update" ought to call out to a hook in
-such a situation, which it doesn't right now.  So the answer for the
-current implementation would be "no".  To make it "Yes", the command needs
-to be modified to call out a hook, but should it be implemented as a hook,
-when it is already so clearly specified what needs to happen?
-
->> Considered, yes, implemented, no.  Not because nobody bothered to, but
->> because it is unclear if it is a good thing to do in general to begin
->> with.  What's recorded in .git/config is pretty much personal (e.g. "who
->> you are known as to this project?", "what's the SMTP host, user and
->> password when sending out patches from here?", "do you want to use color
->> in diff?"), dependent on local needs (e.g. "what protocol a particular
->> remote repository should be reached via"), or what the repository (as
->> opposed to "project") is about (e.g. "is this a bare, shared distribution
->> point, or is this a developer repository with a work tree?").
+>  dione:~> git-clone v linux-tmp4
+>  Initialized empty Git repository in /home/mingo/linux-tmp4/.git/
+>  0 blocks
+>  Checking out files: 100% (23809/23809), done.
+>  dione:~> cd linux-tmp4/
+>  dione:~/linux-tmp4> ls
+>  COPYING        MAINTAINERS     arch     fs       kernel  samples   u=
+sr
+>  CREDITS        Makefile        block    include  lib     scripts   v=
+irt
+>  Documentation  README          crypto   init     mm      security
+>  Kbuild         REPORTING-BUGS  drivers  ipc      net     sound
 >
-> Some of it is personal, yes. But sometimes those personal preferences
-> need to be enforced on a project level (of course, giving everybody
-> a way to override the setting if they really want to). For a big
-> software organization with a mix of senior and junior engineers I need
-> a way to set up *my* workspace in such a way that everybody who
-> clones/pulls from it get not only the source code, but also "Git best
-> practices". That would simplify things a great deal for me, because
-> I can always say: "just pull my latest .gitconfig, make sure you
-> don't have any extra stuff in your .git/confing and everything 
-> in Git will work for you".
+>  #
+>  # ok, so far so good. done this a thousand times before.
+>  #
+>  # Now lets check out v2.6.24 and check whether the bug i'm intereste=
+d
+>  # in triggers on v2.6.24. I dont create an extra branch for it, beca=
+use
+>  # this is pure temporary work, i use a plain git-checkout as a
+>  # throwaway temporary branch:
+>  #
+>
+>  dione:~/linux-tmp4> git-checkout v2.6.24
+>  Note: moving to "v2.6.24" which isn't a local branch
+>  If you want to create a new branch from this checkout, you may do so
+>  (now or later) by using -b with the checkout command again. Example:
+>    git checkout -b <new_branch_name>
+>  HEAD is now at 4991408... Linux 2.6.24
+>
+>  #
+>  # i build that kernel and boot it - the bug doesnt trigger - good.
+>  # We've got all prerequisites for a bisection session - a 'good' ker=
+nel
+>  # [v2.6.24] and a 'bad' kernel [HEAD].
+>  #
+>  #
+>
+>  dione:~/linux-tmp4> git-bisect start
+>  fatal: ref HEAD is not a symbolic ref
+>  won't bisect on seeked tree
 
-I think the way you stated the above speaks for itself.  The issue you are
-solving is mostly human (social), and solution is majorly instruction with
-slight help from mechanism.  The instruction "Use this latest thing, do
-not have anything in .git/config" can be substituted with "Use this latest
-update-git-config.sh which mucks with your .git/config to conform to our
-project standard", without losing simplicity and with much enhanced
-robustness, as you can now enforce that the users do not have anything
-that would interfere with and countermand your policy you would want to
-implement.
+Yeah, it seems that this is a left over from cogito.=20
+There has been some work on it lately but it seems not enough. See:
+
+http://git.kernel.org/?p=3Dgit/git.git;a=3Dcommitdiff;h=3D0f497e75f05cd=
+f0c0c1278eaba898cda6f118d71
+
+>  #
+>  # Hm. It's not a symbolic ref, and git-bisect just wont do it. Ok bu=
+t
+>  # then what, and what can the user do to progress? It should be rath=
+er
+>  # clear to Git what i'm intending to do here. I'm not interested in
+>  # HEAD at all, i want to start bisection and i'll feed the good/bad
+>  # points to git-bisect - once it lets me do that.
+>  #
+>  # Ok, lets see where we are:
+>  #
+>
+>  dione:~/linux-tmp4> git-branch -a
+>  * (no branch)
+>    master
+>    origin/HEAD
+>    origin/master
+>    origin/new_branch
+>
+>  #
+>  # So perhaps this new, unnamed branch is what is causing the trouble=
+?
+>  # Lets try a specific branch then:
+>  #
+>
+>  dione:~/linux-tmp4> git-checkout master
+>  Previous HEAD position was 4991408... Linux 2.6.24
+>  Switched to branch "master"
+>
+>  dione:~/linux-tmp4> git-bisect start
+>  won't bisect on seeked tree
+
+This seems to work for me with git 1.5.5 on the git tree:
+
+$ git checkout master
+Switched to branch "master"
+Your branch is ahead of the tracked remote branch 'origin/master' by 4=20
+commits.
+$ git bisect start
+$             =20
+
+What git version do you have ?
+
+>  #
+>  # Hm, still no go. Lets see what git-bisect has to offer:
+>  #
+>
+>  dione:~/linux-tmp4> git-bisect
+>  Usage: /usr/bin/git-bisect
+>  [start|bad|good|skip|next|reset|visualize|replay|log|run]
+>
+>  #
+>  # Ah, it has a reset thing, lets try it:
+>  #
+>
+>  dione:~/linux-tmp4> git-bisect reset
+>  Note: moving to "49914084e797530d9baaf51df9eda77babc98fa8" which isn=
+'t a
+>  local branch
+>  If you want to create a new branch from this checkout, you may do so
+>  (now or later) by using -b with the checkout command again. Example:
+>    git checkout -b <new_branch_name>
+>  HEAD is now at 4991408... Linux 2.6.24
+>
+>  dione:~/linux-tmp4> git-bisect start
+>  fatal: ref HEAD is not a symbolic ref
+
+This probably come from previous failures.
+
+>  #
+>  # hm, still no go. I'm not interested in a new branch at all, but i
+>  # want to bisect, so lets try what was suggested then and name the
+>  # branch:
+>  #
+>
+>  dione:~/linux-tmp4> git-checkout -b tmp
+>  Switched to a new branch "tmp"
+>
+>  #
+>  # Looks good so far - can i bisect?
+>  #
+>
+>  dione:~/linux-tmp4> git-bisect start
+>  won't bisect on seeked tree
+
+This too.
+
+>  #
+>  # Hm, still no go. Ok, lets forget this whole temporary branch thing
+>  # that looked good and try a more pristine state:
+>  #
+>
+>  dione:~/linux-tmp4> git-checkout -b tmp2 master
+>  Previous HEAD position was 4991408... Linux 2.6.24
+>  Switched to a new branch "tmp2"
+>
+>  dione:~/linux-tmp4> git-bisect start
+>
+>  #
+>  # Halleluya! While i have typed much more than i wanted, and ended u=
+p
+>  # with two extra branches that i have to throw away, it seems to be
+>  # working! Although the command printing nothing is not really
+>  # reassuring - did it really do something?
+>  #
+>  # Ok, lets get the bisection going now:
+>  #
+>
+>  dione:~/linux-tmp4> git-bisect good v2.6.24 bad HEAD
+>  dione:~/linux-tmp4>
+
+This is really bad, because, as you can see from the man page or "git=20
+bisect -h" (see also the patch I just sent), "git bisect good" can take=
+=20
+many known good revisions:=20
+
+git bisect good [<rev>...]
+        mark <rev>... known-good revisions.
+
+So you marked also "bad" and HEAD as "good".
+
+This is really strange, because here I get for example:
+
+$ git-bisect good bad HEAD
+Bad rev input: bad HEAD
+
+So you must have something tagged as "bad" or have a "bad" branch, and=20
+that's why the command works for you but does the wrong thing.
+
+If you wanted to do it all in one command you could have done:
+
+$ git bisect start HEAD v2.6.24
+
+That would have marked HEAD as "bad" and v2.6.24 as "good":
+
+git bisect start [<bad> [<good>...]] [--] [<pathspec>...]
+        reset bisect state and start bisection.
+
+>  #
+>  # Hm, no indication about what happened, and no "middle" bisection
+>  # point offered. No way to figure out what's wrong.
+
+Right, we probably need to have at look at this more closely, maybe war=
+n if=20
+a "bad" or a "good" tag or branch exists or something like that.
+
+>  # Ok, backtrack one more step - something's wrong here. Lets start
+>  # again with a completely new tree:
+>  #
+>
+>  dione:~> git-clone v linux-tmp5
+>  Initialized empty Git repository in /home/mingo/linux-tmp5/.git/
+>  0 blocks
+>  Checking out files: 100% (23809/23809), done.
+>  dione:~> cd linux-tmp5/
+>  dione:~/linux-tmp5> git-checkout -b tmp master
+>  Switched to a new branch "tmp"
+>  dione:~/linux-tmp5> git-bisect start good v2.6.24
+
+This marked "good" as "bad" and "v2.6.24" as "good".
+
+Again this should "work" only if you have a "good" tag or branch in you=
+r=20
+repo.
+
+>  dione:~/linux-tmp5> cd
+>  dione:~> cd linux-tmp5/
+>  dione:~/linux-tmp5> git-bisect start good v2.6.24 bad master
+
+This marked "good" as "bad", and "v2.6.24", "bad" and "master" as "good=
+".
+
+>  dione:~/linux-tmp5>
+>
+>  #
+>  # Hm, nothing. Ho hum. Do i suck this much? One more tree than i wan=
+ted
+>  # and three more branches that i wanted and still no bisection?
+>  #
+>  # Ah, i must have switched the arguments?
+>  #
+>
+>  dione:~/linux-tmp5> git-bisect start v2.6.24 good master bad
+>  won't bisect on seeked tree
+
+This marked "v2.6.24" as "bad", and "good", "master" and "bad" as "good=
+".
+So it's wrong too.
+
+>  #
+>  # Nope.
+>  #
+>
+>  dione:~/linux-tmp5> git-bisect visualize
+>  You need to give me at least one good and one bad revisions.
+>  (You can use "git bisect bad" and "git bisect good" for that.)
+>  dione:~/linux-tmp5> git bisect bad HEAD
+>  dione:~/linux-tmp5> git bisect good v2.6.24
+>  Bisecting: -1 revisions left to test after this
+>  [eb36f4fc019835cecf0788907f6cab774508087b] fix oops on rmmod capidrv
+
+That's much better but you didn't "reset" or "start" again before givin=
+g it=20
+correctly the good and bad revs, so there are still some wrong left ove=
+r=20
+from your previous start above.
+
+>  #
+>  # -1 revisions left to test? Ouch ...
+>  #
+>  # But why did "git bisect" make a difference to "git-bisect" ?
+
+It should not have made any difference.
+
+>  # Lets see whether it's all from the same package:
+>  #
+>
+>  dione:~> type git
+>  git is hashed (/usr/bin/git)
+>  dione:~> type git-bisect
+>  git-bisect is hashed (/usr/bin/git-bisect)
+>  dione:~> rpm -qf /usr/bin/git-bisect
+>  git-core-1.5.4.3-2.fc8
+>  dione:~> rpm -qf /usr/bin/git
+>  git-core-1.5.4.3-2.fc8
+>
+>  #
+>  # Yup, it is. 20 minutes spent on this already and no bisection.
+>  # I really suck today :-)
+>  #
+>
+>  #
+>  # So i started suspecting my kernel and my hardware. Are timestamps
+>  # maybe messed up and confusing Git? Since the commands dont return
+>  # success nor failure i was unsure what Git thought about my attempt=
+s.
+>  #
+>  # So i rebooted the box and created a new tree. No go.
+>  #
+>
+>  #
+>  # Just to be sure i also waited through a full git-fsck, only 10
+>  # minutes runtime:
+>  #
+>
+>  dione:~/linux-tmp4> git-fsck --full --strict
+>  dangling commit f4be31ec9690cfe6e94fcbed6ae60a6a38b3c3ed
+>  dione:~/linux-tmp4>
+>
+>  #
+>  # [ Sidenote #1: git-fsck is such a heavy operation that it should
+>  #   really return some indication by default that it's all appears O=
+K.
+>  #   A user typically only runs git-fsck if in deep doubt about some
+>  #   git detail - so while silence is often good for a comment, it's
+>  #   counter-intuitive here. Especially since the "breakage" of
+>  #   git-bisect is "silence" too, so the user is unable to trust thes=
+e
+>  #   different modal forms of silence and gets frustrated ... ]
+>  #
+
+I cannot comment on "git fsck" but I think it has nothing to do with=20
+bisect "breakages".
+
+>  #
+>  # [ Sidenote #2: git-fsck --full --strict is slow and we always knew
+>  #   this - it's a last-ditch thing for the truly hopeless. But this =
+is
+>  #   a 3.2 GHz quad box that is only 25% utilized during git-fsck but
+>  #   takes 10 minutes to finish. Presumably git-fsck could run multip=
+le
+>  #   threads/tasks to be sped up? Making the slowest possible operati=
+on
+>  #   of a tool significantly faster is a good way to reduce user
+>  #   frustration IMO. A user is already frustrated enough when he tri=
+es
+>  #   --full --strict. And i _bet_ a parallel version of git-fsck woul=
+d
+>  #   also be an fantastic bad-RAM checker ;-) ]
+>  #
+>
+>  #
+>  # Then, many other silly attempts later and at linux-tmp8, by chance=
+ -
+>  # 30 minutes down the line - i got it going:
+>  #
+>  # I updated my Linus tree on the (rather pathetic) theory that maybe=
+ a
+>  # specific layout of the repo breaks bisection - and that seems to h=
+ave
+>  # made a difference:
+>  #
+>
+>  dione:~/linux-tmp8> git-checkout -b tmp2 master
+>  Switched to a new branch "tmp2"
+>  dione:~/linux-tmp8> git-bisect start
+>  won't bisect on seeked tree
+>  dione:~/linux-tmp8> git-bisect reset
+>  Switched to branch "master"
+>  dione:~/linux-tmp8> git-bisect bad master
+>  You need to start by "git bisect start"
+>  Do you want me to do it for you [Y/n]? Y
+>  dione:~/linux-tmp8> git-bisect good v2.6.24
+>  Bisecting: 6270 revisions left to test after this
+>  [4814bdbd590e835ecec2d5e505165ec1c19796b2] [NETNS]: Lookup in FIB
+>  semantic hashes taking into account the namespace.
+>
+>  #
+>  # But i dont understand why.
+
+I hope you understand better now.
+
+>  #=A0Before updating Linus's tree i saved away=20
+>  # the commit ID that showed the breakage, just in case it matters:
+>  #
+>
+>  commit 7180c4c9e09888db0a188f729c96c6d7bd61fa83
+>  Merge: 4c3b01f... 869ab51...
+>  Author: Linus Torvalds <torvalds@linux-foundation.org>
+>  Date:   Mon Apr 7 19:15:35 2008 -0700
+>
+>  #
+>  # .. but couldnt reproduce this weirdness with specifically checking
+>  # out 7180c4c9e09888db0a188f729c96c6d7bd61fa83. But i still have the
+>  # linux-tmp4 repository that shows this behavior reliably. It's all
+>  # quite weird. Either this repo is corrupted in some special way, or=
+ my
+>  # hardware has some really strange runtime failure, or i'm missing
+>  # something very obvious ;-)
+>  #
+>
+>  #
+>  # One more minor sidenote. Git-bisect creates its own branch:
+>  #
+>
+>  dione:~/linux-tmp12> git-branch -a
+>  * bisect
+>    master
+>    tmp
+>    tmp2
+>    origin/HEAD
+>    origin/master
+>    origin/new_branch
+>
+>  #
+>  # So i assumed that i could get rid of that 'bisect' branch by doing
+>  # the obvious: "git-bisect stop", but no go:
+>  #
+>
+>   dione:~/linux-tmp12> git-bisect stop
+>   Usage: /usr/bin/git-bisect
+> [start|bad|good|skip|next|reset|visualize|replay|log|run]
+>
+>  #
+>  # After some experimentation "git-bisect reset" did the trick - but
+>  # it's a bit counter-intuitive IMO, because the logical extension of
+>  # 'start' is 'stop', and i often use 'git-bisect reset' to just rest=
+art
+>  # bisection anew. (it chimes in on 'restart')
+>  #
+
+"git bisect start" also does a "restart" if a bisect is already started=
+=2E
+But yes, we could add "stop" as a synonym for "reset" and "restart" as =
+a=20
+synonym for "start".
+
+Thanks,
+Christian.
+
+>  #
+>  # Ok, that's all for today. :-)
+>  #
+>
+> 	Ingo
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
