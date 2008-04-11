@@ -1,64 +1,57 @@
-From: Teemu Likonen <tlikonen@iki.fi>
-Subject: Re: [PATCH] When a remote is added but not fetched, tell the user.
-Date: Fri, 11 Apr 2008 22:08:16 +0300
-Message-ID: <20080411190816.GA17277@mithlond>
-References: <20080409101428.GA2637@elte.hu> <1207869946-17013-1-git-send-email-g2p.code@gmail.com> <alpine.DEB.1.00.0804111621080.31025@eeepc-johanness> <20080411203501.7095b866@localhost>
+From: "Stephen Sinclair" <radarsat1@gmail.com>
+Subject: Re: [PATCH] Default to fetching a remote after adding it.
+Date: Fri, 11 Apr 2008 15:17:50 -0400
+Message-ID: <9b3e2dc20804111217n1b45f78fh27363b76283219d8@mail.gmail.com>
+References: <20080411203501.7095b866@localhost>
+	 <1207939163-24787-1-git-send-email-g2p.code@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>
 To: Gabriel <g2p.code@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 11 21:09:19 2008
+X-From: git-owner@vger.kernel.org Fri Apr 11 21:18:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JkOcS-0004Hl-Lv
-	for gcvg-git-2@gmane.org; Fri, 11 Apr 2008 21:09:05 +0200
+	id 1JkOli-0000HU-Bt
+	for gcvg-git-2@gmane.org; Fri, 11 Apr 2008 21:18:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760636AbYDKTIU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Apr 2008 15:08:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760603AbYDKTIU
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Apr 2008 15:08:20 -0400
-Received: from pne-smtpout4-sn1.fre.skanova.net ([81.228.11.168]:37289 "EHLO
-	pne-smtpout4-sn1.fre.skanova.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1760235AbYDKTIT (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 11 Apr 2008 15:08:19 -0400
-Received: from mithlond (80.220.180.181) by pne-smtpout4-sn1.fre.skanova.net (7.3.129)
-        id 47A7970A003D1826; Fri, 11 Apr 2008 21:08:16 +0200
-Received: from dtw by mithlond with local (Exim 4.63)
-	(envelope-from <tlikonen@iki.fi>)
-	id 1JkObg-0005Mo-5t; Fri, 11 Apr 2008 22:08:16 +0300
+	id S1760349AbYDKTRx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Apr 2008 15:17:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758817AbYDKTRx
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Apr 2008 15:17:53 -0400
+Received: from el-out-1112.google.com ([209.85.162.179]:1618 "EHLO
+	el-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755372AbYDKTRx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Apr 2008 15:17:53 -0400
+Received: by el-out-1112.google.com with SMTP id v27so502019ele.17
+        for <git@vger.kernel.org>; Fri, 11 Apr 2008 12:17:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=30sEwjQC56N6tw6EITw2Fw29HtVAnrlJISvQHY/oRJM=;
+        b=XOdAx1OvJEN3Ibnfvn1kud/ouDbzUETZr+yYYSPJLWNA1QlL0yP0AZvCVqgxLmmIddIG6Ck72jWw6kbxALeM3wquIuMWEODJTJoFkDT+/3XOLKALtSYpaUPLEr1AZz/r/UfchHqQJfX0ino+VQmnGXI6sT9VOZeJe07pgOV7Grg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=CZh1yu44hPItOx9Lgqlm+cQvPUZPpXXD2kZJs3EpA/tSXrNb9kPNWFqXSb1U1gQaRSSfnitXleY11pwwH9rqCYBYiHh3ScTSrBU301eU+obfIkRUjFIQMzecZsbwPvjYsXZchIdlqt6xTJbtCJ50qL8gxiZK3bLImW0b4naSJQU=
+Received: by 10.140.125.1 with SMTP id x1mr1726028rvc.217.1207941470058;
+        Fri, 11 Apr 2008 12:17:50 -0700 (PDT)
+Received: by 10.141.66.3 with HTTP; Fri, 11 Apr 2008 12:17:50 -0700 (PDT)
+In-Reply-To: <1207939163-24787-1-git-send-email-g2p.code@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <20080411203501.7095b866@localhost>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79287>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79288>
 
-Gabriel wrote (2008-04-11 20:35 +0200):
+On Fri, Apr 11, 2008 at 2:39 PM, Gabriel <g2p.code@gmail.com> wrote:
+> This is what the user wants in 99% of cases.
 
-> I think the transcript that started the thread makes it clear that
-> having "git remote add" not fetching is not the right default. The
-> user wants to use a remote repository, and has learned these are
-> called "remotes". So he does not have too much trouble
-> finding/remembering the command "git remote add <name> <url>". Now
-> with the user's goal in mind, it makes no sense to add a remote and
-> then not fetch it, because the user definitely wants to do something
-> with the remote. By not fetching it, we are surprising the user 
+Where did you get these magical statistics?
+I, for one, have never expected this behaviour.
 
-Hmm, I'm quite newbie but I have never expected "git remote add" to
-fetch anything. I wouldn't want it to do it automatically. From the
-beginning I saw "git remote" as a _configuration_ tool. No doubt it's
-common to fetch after configuring a remote but in my mind they are two
-logically different steps (configure, fetch/pull) which I think should
-be kept separate. Once I have configured something I may want to check
-that I did the right thing, then configure some more remotes and maybe
-fetch tomorrow. Maybe I don't want to fetch at all but only pull from
-that remote. So let's not build ready workflows for users, only
-convenient, logical tools.
-
-That said, I don't mind short messages like "use 'git fetch' to obtain
-branches" but I don't think that is necessary.
+Steve
