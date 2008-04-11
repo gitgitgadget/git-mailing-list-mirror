@@ -1,77 +1,116 @@
-From: tarmigan+git@gmail.com
-Subject: possible regression (or me abusing git) in v1.5.5
-Date: Fri, 11 Apr 2008 12:21:41 -0700
-Message-ID: <905315640804111221k53dd7063sae5710ed690114f0@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: "Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 11 21:22:42 2008
+From: Gabriel <g2p.code@gmail.com>
+Subject: [PATCH] Default to fetching a remote after adding it.
+Date: Fri, 11 Apr 2008 21:29:29 +0200
+Message-ID: <1207942169-2644-1-git-send-email-g2p.code@gmail.com>
+References: <20080411203501.7095b866@localhost>
+Cc: Gabriel <g2p.code@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 11 21:30:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JkOpd-0001zM-7V
-	for gcvg-git-2@gmane.org; Fri, 11 Apr 2008 21:22:41 +0200
+	id 1JkOx0-0005ab-4v
+	for gcvg-git-2@gmane.org; Fri, 11 Apr 2008 21:30:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758366AbYDKTVo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Apr 2008 15:21:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758217AbYDKTVo
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Apr 2008 15:21:44 -0400
-Received: from nf-out-0910.google.com ([64.233.182.187]:9852 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757903AbYDKTVn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Apr 2008 15:21:43 -0400
-Received: by nf-out-0910.google.com with SMTP id g13so266005nfb.21
-        for <git@vger.kernel.org>; Fri, 11 Apr 2008 12:21:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition:x-google-sender-auth;
-        bh=4IUrhGoVIX7D1OOCvJX3VN+35d1I+A70R93XqNr5Hkg=;
-        b=pnEDeqY1VFJE5Kt5sMGVYe3A7DQ3mAp1FDhZZJMg5qcpeV3GmSIGEtYb+zw+0CTdiIihnqdffzn3ulrJCyz0CFinkdR5Lz7QV9HNrqn7zTnlj9kv1oTEYJapels+ycM8ZqpFJmcV2cNL01rCZMPHfgg6xNHyFlchkqR33BBn3Q4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition:x-google-sender-auth;
-        b=Zzg7qnhMxODVWjwUHfm4lIMvid0ejLNUUY0k22GYk0OjIzhL3bfUNJe+jbk40Jh5FQeUJBqsmmkAeZc/3nFi/2bgfF5IYh7dOElA9eaEy9uOwfgvgeXeQYf9DVdvR+wSOsXvLEG/YeVABShT48GOGAOZ3W1CuRlcvfWfP4EQ3sQ=
-Received: by 10.82.155.10 with SMTP id c10mr974808bue.50.1207941701902;
-        Fri, 11 Apr 2008 12:21:41 -0700 (PDT)
-Received: by 10.82.175.8 with HTTP; Fri, 11 Apr 2008 12:21:41 -0700 (PDT)
-Content-Disposition: inline
-X-Google-Sender-Auth: ec967e499096e1de
+	id S1758500AbYDKT3b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Apr 2008 15:29:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758305AbYDKT3b
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Apr 2008 15:29:31 -0400
+Received: from smtp1-g19.free.fr ([212.27.42.27]:57338 "EHLO smtp1-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758040AbYDKT3a (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Apr 2008 15:29:30 -0400
+Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 88A2E1AB307;
+	Fri, 11 Apr 2008 21:29:29 +0200 (CEST)
+Received: from localhost (pro75-5-88-162-203-35.fbx.proxad.net [88.162.203.35])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 61A0A1AB2C0;
+	Fri, 11 Apr 2008 21:29:29 +0200 (CEST)
+Received: from g2p by localhost with local (Exim 4.67)
+	(envelope-from <g2p@vapeur.no-ip.org>)
+	id 1JkOwD-0000gz-Iw; Fri, 11 Apr 2008 21:29:29 +0200
+X-Mailer: git-send-email 1.5.5.25.g9415
+In-Reply-To: <20080411203501.7095b866@localhost>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79289>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79290>
 
-Hello,
+This is what the user wants in 99% of cases.
 
-After upgrading to v1.5.5, I noticed a change in the way that git
-treats symbolic links.
+Signed-off-by: Gabriel <g2p.code@gmail.com>
+---
 
-Git will follow symbolic links to directories when they were added as follows
+Also update some tests; disregard the previous patch.
 
-$ git init
-$ mkdir foo
-$ touch foo/bar
-$ ln -s foo foo1
-$ git add foo1/
-#               Note the trailing slash above.
+ Documentation/git-remote.txt |    4 ++--
+ builtin-remote.c             |    2 +-
+ t/t5503-tagfollow.sh         |    2 +-
+ t/t5512-ls-remote.sh         |    2 +-
+ 4 files changed, 5 insertions(+), 5 deletions(-)
 
-In v1.5.5 (but not v1.5.4.5 and earlier),
-$ git add -u
-will remove foo1/bar from the index.
-
-I have bisected this down to f58dbf (diff-files: careful when
-inspecting work tree items).
-
-The ability for git to follow links (instead of recording them) was a
-useful feature for me, but I may have been abusing this "feature".  If
-that is the consensus, it might make sense to have
-$ git add foo1
-and
-$ git add foo1/
- behave the same way?
-
-Thanks,
-Tarmigan
+diff --git a/Documentation/git-remote.txt b/Documentation/git-remote.txt
+index 2cbd1f7..04de972 100644
+--- a/Documentation/git-remote.txt
++++ b/Documentation/git-remote.txt
+@@ -10,7 +10,7 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git-remote'
+-'git-remote' add [-t <branch>] [-m <master>] [-f] [--mirror] <name> <url>
++'git-remote' add [-t <branch>] [-m <master>] [--no-fetch] [--mirror] <name> <url>
+ 'git-remote' rm <name>
+ 'git-remote' show <name>
+ 'git-remote' prune <name>
+@@ -34,7 +34,7 @@ Adds a remote named <name> for the repository at
+ <url>.  The command `git fetch <name>` can then be used to create and
+ update remote-tracking branches <name>/<branch>.
+ +
+-With `-f` option, `git fetch <name>` is run immediately after
++Without the `--no-fetch` option, `git fetch <name>` is run immediately after
+ the remote information is set up.
+ +
+ With `-t <branch>` option, instead of the default glob
+diff --git a/builtin-remote.c b/builtin-remote.c
+index 044215a..c0d7d96 100644
+--- a/builtin-remote.c
++++ b/builtin-remote.c
+@@ -54,7 +54,7 @@ static int fetch_remote(const char *name)
+ 
+ static int add(int argc, const char **argv)
+ {
+-	int fetch = 0, mirror = 0;
++	int fetch = 1, mirror = 0;
+ 	struct path_list track = { NULL, 0, 0 };
+ 	const char *master = NULL;
+ 	struct remote *remote;
+diff --git a/t/t5503-tagfollow.sh b/t/t5503-tagfollow.sh
+index 86e5b9b..fd075d9 100755
+--- a/t/t5503-tagfollow.sh
++++ b/t/t5503-tagfollow.sh
+@@ -134,7 +134,7 @@ test_expect_success 'new clone fetch master and tags' '
+ 		mkdir clone2 &&
+ 		cd clone2 &&
+ 		git init &&
+-		git remote add origin .. &&
++		git remote add origin .. --no-fetch &&
+ 		GIT_DEBUG_SEND_PACK=3 git fetch 3>../$U &&
+ 		test $B = $(git rev-parse --verify origin/master) &&
+ 		test $S = $(git rev-parse --verify tag2) &&
+diff --git a/t/t5512-ls-remote.sh b/t/t5512-ls-remote.sh
+index c0dc949..08855ed 100755
+--- a/t/t5512-ls-remote.sh
++++ b/t/t5512-ls-remote.sh
+@@ -17,7 +17,7 @@ test_expect_success setup '
+ 		git show-ref -d	| sed -e "s/ /	/"
+ 	) >expected.all &&
+ 
+-	git remote add self $(pwd)/.git
++	git remote add self $(pwd)/.git --no-fetch
+ 
+ '
+ 
+-- 
+1.5.5.25.g9415
