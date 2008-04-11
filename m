@@ -1,129 +1,96 @@
-From: Ingo Molnar <mingo@elte.hu>
-Subject: Re: git-bisect annoyances
-Date: Fri, 11 Apr 2008 13:41:04 +0200
-Message-ID: <20080411114104.GE9205@elte.hu>
-References: <20080409101428.GA2637@elte.hu> <20080410114739.GA15229@elte.hu> <200804110741.40732.chriscool@tuxfamily.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Carl Worth <cworth@cworth.org>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Fri Apr 11 13:43:52 2008
+From: John Goerzen <jgoerzen@complete.org>
+Subject: Re: ANNOUNCE: Git Forum
+Date: Fri, 11 Apr 2008 08:42:06 -0500
+Message-ID: <slrnfvuqle.dqv.jgoerzen@katherina.lan.complete.org>
+References: <60646ee10804081451i4e6aa23ek44280e5d367d8814@mail.gmail.com> <20080408222501.GV11574@genesis.frugalware.org> <46a038f90804081536h7a19803apb401ed60593d9802@mail.gmail.com> <60646ee10804081545k6031578dxbae4c644fb7d2833@mail.gmail.com> <46a038f90804081551u44d7b4cald5a00e74ee479dc1@mail.gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 11 16:10:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JkHdq-0007dJ-9H
-	for gcvg-git-2@gmane.org; Fri, 11 Apr 2008 13:42:02 +0200
+	id 1JkJwO-00020v-Fo
+	for gcvg-git-2@gmane.org; Fri, 11 Apr 2008 16:09:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759718AbYDKLlS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Apr 2008 07:41:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759677AbYDKLlS
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Apr 2008 07:41:18 -0400
-Received: from mx2.mail.elte.hu ([157.181.151.9]:40080 "EHLO mx2.mail.elte.hu"
+	id S1759346AbYDKOI3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Apr 2008 10:08:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758759AbYDKOI2
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Apr 2008 10:08:28 -0400
+Received: from main.gmane.org ([80.91.229.2]:37597 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759343AbYDKLlR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Apr 2008 07:41:17 -0400
-Received: from elvis.elte.hu ([157.181.1.14])
-	by mx2.mail.elte.hu with esmtp (Exim)
-	id 1JkHcx-0002RW-9l
-	from <mingo@elte.hu>; Fri, 11 Apr 2008 13:41:15 +0200
-Received: by elvis.elte.hu (Postfix, from userid 1004)
-	id 1BAFA3E21D8; Fri, 11 Apr 2008 13:41:06 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <200804110741.40732.chriscool@tuxfamily.org>
-User-Agent: Mutt/1.5.17 (2007-11-01)
-Received-SPF: neutral (mx2: 157.181.1.14 is neither permitted nor denied by domain of elte.hu) client-ip=157.181.1.14; envelope-from=mingo@elte.hu; helo=elvis.elte.hu;
-X-ELTE-VirusStatus: clean
-X-ELTE-SpamScore: -1.5
-X-ELTE-SpamLevel: 
-X-ELTE-SpamCheck: no
-X-ELTE-SpamVersion: ELTE 2.0 
-X-ELTE-SpamCheck-Details: score=-1.5 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.2.3
-	-1.5 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
-	[score: 0.0000]
+	id S1758041AbYDKOI2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Apr 2008 10:08:28 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1JkJvU-0002DO-I4
+	for git@vger.kernel.org; Fri, 11 Apr 2008 14:08:25 +0000
+Received: from 63-245-179-205.kitusa.com ([63.245.179.205])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 11 Apr 2008 14:08:24 +0000
+Received: from jgoerzen by 63-245-179-205.kitusa.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 11 Apr 2008 14:08:24 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 63-245-179-205.kitusa.com
+User-Agent: slrn/0.9.8.1pl1 (Debian)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79272>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79273>
 
+On 2008-04-08, Martin Langhoff <martin.langhoff@gmail.com> wrote:
+> On Tue, Apr 8, 2008 at 7:45 PM, Dill <sarpulhu@gmail.com> wrote:
+>>  I have but as git grows more popular so will the users who wish to
+>>  create communities that can help each other. IMHO this list will
+>>  probably tend to be about development and bugs etc while other sites
+>>  will sprout up geared more towards users. Could be wrong though.
+>
+> Do read the older discussions. Separating users from developers does
+> not work well. Successful communities have mixed lists -- perhaps
+> split by topic (linux-usb for example) but not by "participant type".
+> Users should be guided towards this list --
 
-* Christian Couder <chriscool@tuxfamily.org> wrote:
+I don't think this is right.
 
-> >  #
-> >  # So perhaps this new, unnamed branch is what is causing the trouble?
-> >  # Lets try a specific branch then:
-> >  #
-> >
-> >  dione:~/linux-tmp4> git-checkout master
-> >  Previous HEAD position was 4991408... Linux 2.6.24
-> >  Switched to branch "master"
-> >
-> >  dione:~/linux-tmp4> git-bisect start
-> >  won't bisect on seeked tree
-> 
-> This seems to work for me with git 1.5.5 on the git tree:
+Debian has debian-user, debian-devel, and a host of other lists.  Some
+are mixed (debian-kde), some aren't (debian-devel).  
 
-> What git version do you have ?
+debian-user is extremely high volume.  In fact, its volume normally
+dwarfs that of debian-devel.  As a developer, it would be virtually
+impossible to participate in development discussions without having to
+spend an inordinate amount of time each day filtering out all the
+discussions about KDE icons or whatnot.  
 
-git-core-1.5.4.3-2.fc8, like for the previous report.
+Not that these are *bad* discussions, or that developers never
+subscribe to -user, but there are some developers (such as myself)
+with limited time to devote to the project, and I feel my time is
+better spent on development than on filtering through 1000 messages
+each day that I'm not really interested in.
 
-and it worked for me too in a later tree - so the condition seems 
-transient.
+Moreover, as a *user* of some projects, I appreciate the distinction
+as well.  I do not want to be a pest to the developers that are
+donating their time to improve the project I benefit from when my
+question could be perfectly well addressed by other users more
+experienced than I.
 
-> >  dione:~/linux-tmp4> git-bisect good v2.6.24 bad HEAD
-> >  dione:~/linux-tmp4>
-> 
-> This is really bad, because, as you can see from the man page or "git 
-> bisect -h" (see also the patch I just sent), "git bisect good" can 
-> take many known good revisions:
-> 
-> git bisect good [<rev>...]
->         mark <rev>... known-good revisions.
-> 
-> So you marked also "bad" and HEAD as "good".
-> 
-> This is really strange, because here I get for example:
-> 
-> $ git-bisect good bad HEAD
-> Bad rev input: bad HEAD
-> 
-> So you must have something tagged as "bad" or have a "bad" branch, and 
-> that's why the command works for you but does the wrong thing.
+As an example, I subscribe to the MythTV user list but not the
+development list.  There are all sorts of discussions there --
+everything from what TVs are best in different situations to
+discussions over cable company encryption and setup of the MythTV web
+interface.  I don't read most of them, but find some interesting.  At
+the same time, I am not really interested in the latest SVN commits
+for MythTV.  I upgrade my box maybe once a year and don't really care
+about development internals, so as a user, this separation benefits me
+too.
 
-no, there are no 'bad' braches or revisions.
+I don't see a -user list as a bad thing for a community the size of
+Git.
 
-and ... if "git-bisect good X bad Y" is invalid syntax it should be 
-detected by the tool ... I did not think up that syntax myself, i think 
-i saw it somewhere else mentioned by someone and found it logical. 
-Weird. Generally i do use the separate commands though.
+Think about it this way: once the Windows stuff for Git gets mature
+(to the TortoiseGit level), there are going to be a lot of people
+using Git that really *can't* operate a mail client because the only
+"mail client" at their disposal is Outlook.
 
-> >  dione:~/linux-tmp5> git-bisect visualize
-> >  You need to give me at least one good and one bad revisions.
-> >  (You can use "git bisect bad" and "git bisect good" for that.)
-> >  dione:~/linux-tmp5> git bisect bad HEAD
-> >  dione:~/linux-tmp5> git bisect good v2.6.24
-> >  Bisecting: -1 revisions left to test after this
-> >  [eb36f4fc019835cecf0788907f6cab774508087b] fix oops on rmmod capidrv
-> 
-> That's much better but you didn't "reset" or "start" again before 
-> giving it correctly the good and bad revs, so there are still some 
-> wrong left over from your previous start above.
-> 
-> >  #
-> >  # -1 revisions left to test? Ouch ...
-> >  #
-> >  # But why did "git bisect" make a difference to "git-bisect" ?
-> 
-> It should not have made any difference.
-
-it probably didnt - i was just grasping at straws because there was no 
-reassuring feedback about what happened so my confidence about my 
-_assumptions_ what was happening in the background gradually eroded so i 
-went in larger and larger circles around the problem dropping more and 
-more assumptions and re-checking them.
-
-But i pasted this directly from that session so the "-1" is definitely 
-not imaginery and it is anomalous.
-
-	Ingo
+-- John
