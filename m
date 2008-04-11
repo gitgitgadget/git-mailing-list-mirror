@@ -1,96 +1,96 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: git annoyances
-Date: Fri, 11 Apr 2008 09:00:16 +0200
-Message-ID: <20080411070016.GA25970@diana.vm.bytemark.co.uk>
-References: <20080409101428.GA2637@elte.hu> <20080409145758.GB20874@sigill.intra.peff.net> <32541b130804091008h1a757552o14dd8e937ed19058@mail.gmail.com> <20080410084119.GA8979@diana.vm.bytemark.co.uk> <32541b130804100805o4ad1e9a6x38e9b1fcf17c5d1d@mail.gmail.com>
+From: david@lang.hm
+Subject: Re: Corporate firewall braindamage
+Date: Fri, 11 Apr 2008 01:25:08 -0700 (PDT)
+Message-ID: <alpine.DEB.1.10.0804110123030.4615@asgard>
+References: <47FE8277.8070503@zytor.com> <7v7if5wbdd.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, Ingo Molnar <mingo@elte.hu>,
-	git@vger.kernel.org
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 11 09:02:09 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: "H. Peter Anvin" <hpa@zytor.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	ftpadmin <ftpadmin@kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 11 10:21:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JkDGx-0004qX-OG
-	for gcvg-git-2@gmane.org; Fri, 11 Apr 2008 09:02:08 +0200
+	id 1JkEVd-0007cE-JP
+	for gcvg-git-2@gmane.org; Fri, 11 Apr 2008 10:21:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753853AbYDKHBH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 11 Apr 2008 03:01:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753463AbYDKHBG
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Apr 2008 03:01:06 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2598 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752695AbYDKHBF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Apr 2008 03:01:05 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1JkDFA-0006oZ-00; Fri, 11 Apr 2008 08:00:16 +0100
-Content-Disposition: inline
-In-Reply-To: <32541b130804100805o4ad1e9a6x38e9b1fcf17c5d1d@mail.gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1751190AbYDKIUe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Apr 2008 04:20:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751301AbYDKIUd
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Apr 2008 04:20:33 -0400
+Received: from mail.lang.hm ([64.81.33.126]:36677 "EHLO bifrost.lang.hm"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751042AbYDKIUb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Apr 2008 04:20:31 -0400
+Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
+	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id m3B8KE8j021391;
+	Fri, 11 Apr 2008 01:20:14 -0700
+X-X-Sender: dlang@asgard
+In-Reply-To: <7v7if5wbdd.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79267>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79268>
 
-On 2008-04-10 11:05:07 -0400, Avery Pennarun wrote:
+On Thu, 10 Apr 2008, Junio C Hamano wrote:
 
-> On Thu, Apr 10, 2008 at 4:41 AM, Karl Hasselstr=F6m <kha@treskal.com>=
- wrote:
+> "H. Peter Anvin" <hpa@zytor.com> writes:
 >
-> > The @rev is called a "peg revision", and is different from the
-> > "operative revision" specified with the -r flag. The peg revision
-> > is used in conjunction with a path to specify the file (or
-> > directory) you want, and the operative revision is used to specify
-> > which revision of that file you mean.
+>> 1. git protocol via CONNECT http proxy
+>>
+>>    Connect to http proxy, and use a CONNECT method to establish a link
+>>    to the git server, using the normal git protocol.
+>>
+>>    Minor change to TCP connection setup, but no other changes needed.
+>>    No changes on the server side.
 >
-> Yes, but I believe you get the one from @rev if you don't specify
-> -r.
+> Many firewalls will detect that CONNECT will not going to 443 and block
+> you, and even if you run git:// daemon on 443, they will detect that you
+> are not talking SSL initial exchange and shut you off.
 >
-> For example, I can ask for an "svn diff svn://blahblah@56
-> svn://blahblah@59" and it'll feed it to me as expected.
-
-Ah, I didn't know that. But the URL I threw at you agrees:
-
-> Note that even when you don't explicitly supply a peg revision or
-> operative revision, they are still present. For your convenience,
-> the default peg revision is BASE for working copy items and HEAD for
-> repository URLs. And when no operative revision is provided, it
-> defaults to being the same revision as the peg revision.
-
-Clearly, I need to use Subversion more, and not fool around with git
-all the time. :-)
-
-> > (This complexity is needed because subversion has a concept of
-> > file identity.)
+>> 2. git protocol over SSL via CONNECT http proxy
+>>
+>>    Same as #1, but encapsulate the data stream in an SSL connection.
+>>    If the git server is run on port 443, then the fact that the data
+>>    on the SSL connection isn't actually HTTP should be invisible to the
+>>    proxy, and thus this *should* work anywhere which allows https://
+>>    traffic.
+>>
+>>    Requires the git server to speak SSL.
 >
-> File renames make diffing and merging complicated no matter whether
-> you track them or not.
+> Yes, perhaps putting it behind an independent ssl relay would give you a
+> solution without any code change.
+
+in more pananoid locations they are putting client certs on desktops and 
+giving those to the IDS systems so that they can decrypt the SSL traffic, 
+so if it doesn't look like HTTP inside the SSL they will block it.
+
+this isn't very common now, but the firewalls that are blocking #1 weren't 
+very common a year or so ago either.
+
+>> 3. git protocol encapsulated in HTTP POST transaction
+>>
+>>    git protocol is already fundamentally a RPC protocol, where the
+>>    client sends a query and the server responds.  Furthermore, it
+>>    tries to minimize the number of round trips (RPC calls), which is
+>>    of course desirable.
+>>
+>>    Each such RPC transaction could be formulated as an HTTP POST
+>>    transaction.
+>>
+>>    This requires modifications to both the client and the server;
+>>    furthermore, the server can no longer rely on the invariant "one TCP
+>>    connection == one session"; a proxy might break a single session
+>>    into arbitrarily many TCP connections.
 >
-> svn's tracking of file identity is additional, but doesn't increase
-> the (UI) complexity in the common case. At least with svn, a newbie
-> can even get real work done without even knowing about -r *or*
-> @notation.
+> It would probably be a one-CS/EE-student-half-a-summer sized project to
+> create such a server-side support with a specialized client.
 
-I don't quite agree with you here. Subversion stores extra state, and
-that state needs to be considered (in the general case) when
-predicting what Subversion will do. There are a large number of simple
-cases where the user doesn't have to care, as you say, but every so
-often there's a case that's not so simple, and in those cases I
-_really_ prefer git's data model to Subversion's.
+this is probably the best long-term option.
 
-> Compare that to arbitrary differences in behaviour between
-> "git-fetch" vs "git-fetch a" vs "git-fetch a b", or the difference
-> between HEAD^ and HEAD~1 and HEAD@1. git is very powerful, but also
-> definitely more complex for beginners.
-
-Oh, I'm not arguing on that point. I like git because it's beutiful on
-the _inside_.
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+David Lang
