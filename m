@@ -1,88 +1,77 @@
-From: "Ping Yin" <pkufranky@gmail.com>
-Subject: Re: Intricacies of submodules
-Date: Sat, 12 Apr 2008 00:04:13 +0800
-Message-ID: <46dff0320804110904w531035f4w79c1889bc90c09ee@mail.gmail.com>
-References: <47F15094.5050808@et.gatech.edu>
-	 <8FE3B7A7-4C2D-4202-A5FC-EBC4F4670273@sun.com>
-	 <32541b130804082033q55c795b5ieaa4e120956ff030@mail.gmail.com>
-	 <49E9DCEC-8A9E-4AD7-BA58-5A40F475F2EA@sun.com>
-	 <32541b130804082334s604b62b0j82b510c331f48213@mail.gmail.com>
-	 <7vhcebcyty.fsf@gitster.siamese.dyndns.org>
-	 <6CFA8EC2-FEE0-4746-A4F6-45082734FEEC@sun.com>
-	 <7v63uqz265.fsf@gitster.siamese.dyndns.org>
-	 <1207859579.13123.306.camel@work.sfbay.sun.com>
-	 <7vd4oxufwf.fsf@gitster.siamese.dyndns.org>
+From: Kevin Green <Kevin.T.Green@morganstanley.com>
+Subject: Re: [PATCH] git-p4: Work around race between p4_edit and p4_change
+Date: Fri, 11 Apr 2008 12:27:59 -0400
+Message-ID: <20080411162759.GO22542@morganstanley.com>
+References: <20080401222856.GA22542@morganstanley.com> <200804032032.39860.simon@lst.de> <20080403184537.GH22542@morganstanley.com> <20080403195135.GI22542@morganstanley.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Roman Shaposhnik" <rvs@sun.com>,
-	"Avery Pennarun" <apenwarr@gmail.com>,
-	stuart.freeman@et.gatech.edu, git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 11 18:05:09 2008
+Content-Type: text/plain; charset=us-ascii
+To: Simon Hausmann <simon@lst.de>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 11 18:29:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JkLkK-0003PV-1A
-	for gcvg-git-2@gmane.org; Fri, 11 Apr 2008 18:05:00 +0200
+	id 1JkM7p-0004bN-VY
+	for gcvg-git-2@gmane.org; Fri, 11 Apr 2008 18:29:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760113AbYDKQEP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Apr 2008 12:04:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760105AbYDKQEP
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Apr 2008 12:04:15 -0400
-Received: from an-out-0708.google.com ([209.85.132.251]:53974 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760102AbYDKQEO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Apr 2008 12:04:14 -0400
-Received: by an-out-0708.google.com with SMTP id d31so127357and.103
-        for <git@vger.kernel.org>; Fri, 11 Apr 2008 09:04:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=Lo5nSl9oBSbqqH7U+d3LwhCgaco4rCDh8jC1Nr0EQzo=;
-        b=s0tjFce3r2AeGfDM3IjYL9lgzaFPp4UpLwqVIZ5owEw1zZWLfwKf9BhV7l46ZDYz/8myR/4CJzfSIdRtjIfjzJxeVccLFqRs4+QjBJ0s9JqaIGZrvi5K2Kq7Gh8zdtc6+2AFxZ9vA9nW+FEG54T3DPGdoPphEutgeSUYoYWmTTY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=kE1j1pWhTfF1hKv0KMiXbPT4L3Jj5Z3pFlqOJn1LOv53a/us6A6LMD5A6dvvmV1abqd26ZIhvvU8Ch21ivd7GOTN+GUhnjwB64KR5IR41qkqCcDEVsm4X3biQumi0bdGG/JUWSEYNdyHA0TPmrQqaPKCim9kzsmhbvz39P2wCqs=
-Received: by 10.100.139.20 with SMTP id m20mr5696814and.47.1207929853359;
-        Fri, 11 Apr 2008 09:04:13 -0700 (PDT)
-Received: by 10.100.32.10 with HTTP; Fri, 11 Apr 2008 09:04:13 -0700 (PDT)
-In-Reply-To: <7vd4oxufwf.fsf@gitster.siamese.dyndns.org>
+	id S1761481AbYDKQ2F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Apr 2008 12:28:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761292AbYDKQ2F
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Apr 2008 12:28:05 -0400
+Received: from pimtabh1.ms.com ([199.89.64.101]:50424 "EHLO pimtabh1.ms.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1761481AbYDKQ2E (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Apr 2008 12:28:04 -0400
+Received: from pimtabh1 (localhost.ms.com [127.0.0.1])
+	by pimtabh1.ms.com (output Postfix) with ESMTP id B7A2948C6E;
+	Fri, 11 Apr 2008 12:27:59 -0400 (EDT)
+Received: from ny0019as01 (unknown [144.203.194.205])
+	by pimtabh1.ms.com (internal Postfix) with ESMTP id 9E9EDA94019;
+	Fri, 11 Apr 2008 12:27:59 -0400 (EDT)
+Received: from hn314c1n12 (localhost [127.0.0.1])
+	by ny0019as01 (msa-out Postfix) with ESMTP id 907F4104448F;
+	Fri, 11 Apr 2008 12:27:59 -0400 (EDT)
+Received: from menevado.ms.com (unknown [144.203.222.190])
+	by ny0019as01 (msa-in Postfix) with ESMTP id 71F6A88066;
+	Fri, 11 Apr 2008 12:27:59 -0400 (EDT)
+Received: (kgreen@localhost) by menevado.ms.com (8.12.11.20060308/sendmail.cf.client v1.05) id m3BGRxKV024580; Fri, 11 Apr 2008 12:27:59 -0400
+X-Authentication-Warning: menevado.ms.com: kgreen set sender to Kevin.T.Green@morganstanley.com using -f
+Mail-Followup-To: Simon Hausmann <simon@lst.de>, git@vger.kernel.org
 Content-Disposition: inline
+In-Reply-To: <20080403195135.GI22542@morganstanley.com>
+User-Agent: Mutt/1.5.6i
+X-Anti-Virus: Kaspersky Anti-Virus for MailServers 5.5.15/RELEASE, bases: 11042008 #626342, status: clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79278>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79279>
 
-On Fri, Apr 11, 2008 at 1:20 PM, Junio C Hamano <gitster@pobox.com> wrote:
->  > Some of it is personal, yes. But sometimes those personal preferences
->  > need to be enforced on a project level (of course, giving everybody
->  > a way to override the setting if they really want to). For a big
->  > software organization with a mix of senior and junior engineers I need
->  > a way to set up *my* workspace in such a way that everybody who
->  > clones/pulls from it get not only the source code, but also "Git best
->  > practices". That would simplify things a great deal for me, because
->  > I can always say: "just pull my latest .gitconfig, make sure you
->  > don't have any extra stuff in your .git/confing and everything
->  > in Git will work for you".
->
->  I think the way you stated the above speaks for itself.  The issue you are
->  solving is mostly human (social), and solution is majorly instruction with
->  slight help from mechanism.  The instruction "Use this latest thing, do
->  not have anything in .git/config" can be substituted with "Use this latest
->  update-git-config.sh which mucks with your .git/config to conform to our
->  project standard", without losing simplicity and with much enhanced
->  robustness, as you can now enforce that the users do not have anything
->  that would interfere with and countermand your policy you would want to
->  implement.
->
-But, how  to handle the case that  there are more than one policies
-for different projects?
+On 04/03/08 15:51:35, Kevin Green wrote:
+> On 04/03/08 14:45:38, Kevin Green wrote:
+> > On 04/03/08 14:32:32, Simon Hausmann wrote:
+> > > 
+> > > Last but not least we could of course also generate the entire Files: section 
+> > > ourselves, using 'p4 change -o' just to get the rest of the template right.
+> > > 
+> > > I almost prefer the last approach, since we know the base depot path and the 
+> > > relative paths of all edited/added files.
+> > > 
+> > > What do you think?
+> > > 
+> > 
+> > Thank you...  That's the right approach.  Stop as soon as we get to the Files:
+> > section and then just add in the depot + filepath string for each change...
+> > 
+> 
+> And here's the patch that does what we just described...
+> 
 
+Haven't heard comment back on this patch.  Am wondering if it will be applied
+to git, or if I need to start thinking about maintaining it myself on my end,
+or if it's not appropriate and I should re-submit something else.
 
 
--- 
-Ping Yin
+Thanks
+
+--Kevin
