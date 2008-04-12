@@ -1,103 +1,60 @@
-From: "Ping Yin" <pkufranky@gmail.com>
-Subject: Re: [PATCH/RFC 3/7] git-submodule: Fall back on .gitmodules if info not found in $GIT_DIR/config
-Date: Sat, 12 Apr 2008 12:26:07 +0800
-Message-ID: <46dff0320804112126l6ac3bcf4q8b7cc7b09e596479@mail.gmail.com>
-References: <1207842625-9210-1-git-send-email-pkufranky@gmail.com>
-	 <1207842625-9210-2-git-send-email-pkufranky@gmail.com>
-	 <1207842625-9210-3-git-send-email-pkufranky@gmail.com>
-	 <1207842625-9210-4-git-send-email-pkufranky@gmail.com>
-	 <1207842625-9210-5-git-send-email-pkufranky@gmail.com>
-	 <1207842625-9210-6-git-send-email-pkufranky@gmail.com>
-	 <1207842625-9210-7-git-send-email-pkufranky@gmail.com>
-	 <7v1w5cotz2.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Add two core.sharedRepository options: group-readable
+ and world-readable
+Date: Fri, 11 Apr 2008 21:48:36 -0700
+Message-ID: <7vzlrzlluj.fsf@gitster.siamese.dyndns.org>
+References: <20080411140916.GA30667@zakalwe.fi>
+ <7vfxtrnban.fsf@gitster.siamese.dyndns.org>
+ <20080412030021.GB31039@zakalwe.fi>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: "Junio C Hamano" <junio@pobox.com>,
-	"Roman Shaposhnik" <rvs@sun.com>
-X-From: git-owner@vger.kernel.org Sat Apr 12 06:26:57 2008
+To: Heikki Orsila <shdl@zakalwe.fi>
+X-From: git-owner@vger.kernel.org Sat Apr 12 06:49:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JkXKJ-0004yY-6G
-	for gcvg-git-2@gmane.org; Sat, 12 Apr 2008 06:26:55 +0200
+	id 1JkXgE-0001lE-NT
+	for gcvg-git-2@gmane.org; Sat, 12 Apr 2008 06:49:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751717AbYDLE0K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Apr 2008 00:26:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751905AbYDLE0J
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Apr 2008 00:26:09 -0400
-Received: from an-out-0708.google.com ([209.85.132.248]:33517 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751561AbYDLE0I (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Apr 2008 00:26:08 -0400
-Received: by an-out-0708.google.com with SMTP id d31so181770and.103
-        for <git@vger.kernel.org>; Fri, 11 Apr 2008 21:26:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=oFSV/2VDIC+X2n6fV53Bbj9YdX4iUJPzNVE1XWpsL/M=;
-        b=MgGZVVHgvTCcoMfLHH6K0e7NmMn4ah6ly5pJNPGzFYZyw1RV1gktMAOMw0BWBmgoW+5yxlFuUnXMFvDn7WA6uwKbqmKnL7k8FbZiGF8BALHDvovsETOkD4cNRlR7D6p+shMlVBpgWJIlvZTteGOHdvbI92TkwNic4E1Em9wYlqE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=L781D52SsnTiNilsirea7Qz4ianuisG8tQ28Me2EbiwyKr/Mcj/jwo4rI1UZrIRmViX0237tk+BtZ5szD1Q3QGUGLKarcXC/bRRq60hrUGV0fcwzptx63Br018u8TP8PUKdasERiQZ4jptj+JdiGP8BMnjxWGvkBS57dtzS0S1E=
-Received: by 10.100.10.11 with SMTP id 11mr6853649anj.109.1207974367113;
-        Fri, 11 Apr 2008 21:26:07 -0700 (PDT)
-Received: by 10.100.32.10 with HTTP; Fri, 11 Apr 2008 21:26:07 -0700 (PDT)
-In-Reply-To: <7v1w5cotz2.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1751026AbYDLEsu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Apr 2008 00:48:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751039AbYDLEsu
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Apr 2008 00:48:50 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:45110 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751022AbYDLEst (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Apr 2008 00:48:49 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 0B9BE2D41;
+	Sat, 12 Apr 2008 00:48:47 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 343D92D40; Sat, 12 Apr 2008 00:48:41 -0400 (EDT)
+In-Reply-To: <20080412030021.GB31039@zakalwe.fi> (Heikki Orsila's message of
+ "Sat, 12 Apr 2008 06:00:21 +0300")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79328>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79329>
 
-On Sat, Apr 12, 2008 at 7:24 AM, Junio C Hamano <junio@pobox.com> wrote:
-> Ping Yin <pkufranky@gmail.com> writes:
+Heikki Orsila <shdl@zakalwe.fi> writes:
+
+> On Fri, Apr 11, 2008 at 05:53:36PM -0700, Junio C Hamano wrote:
+> ...
+>> For example, you may want to enforce "ug+rw,o=" in a repository.  How
+>> would you do that?
 >
->  > Originally, the submodule workflow enforces 'git init' in the beginning
->  > which copies submodule config info from .gitmodules to $GIT_DIR/config.
->  > Then all subcommands except 'init' and 'add' fetch submodule info from
->  > $GIT_DIR/config and .gitmodules can be discarded.
->  >
->  > However, there may be inconsistence between .git/config and .gitmodules
->  > when always using 'git init' at first. If upstream .gitmodules changes,
->  > it is not easy to sync the changes to $GIT_DIR/config.
->
->
-> Maybe you missed an earlier thread with Roman Shaposhnik where this issue
->  was discussed and a solution more in line with the original intent of the
->  design of the submodule system was mentioned (actually I should not take
->  credit for that suggestion as it was not mine but somebody else mentioned
->  it back when git-submodule command was initially being designed.  I only
->  recalled there was that one issue in the old discussion but there might
->  have been others)?
+> Isn't that PERM_GROUP? The user always keeps u+rw for oneself.
 
-You mean use "hooks" to update $GIT_DIR/config with user interaction
-when .gitmodules changes? Or give user hints when "git submodule
-update" fails?
+My question was about the "o=" part.  I did not see you dropping bits for
+others in your patch.
 
-What you said in that thread is that the url in $GIT_DIR/config is
-different from the one in .gitmodules (with protocol change perhaps)
-originally, and then the url in .gitmodules changes. So when "git
-submodule update" fails, it notices this change and tell the user.
-
-What i mean here is another case. The url in $GIT_DIR/config is the
-same as the one in .gitmodules, and then the url in .gitmodules
-change. So this change can be synced automatically to $GIT_DIR/config.
-
-However, when both cases happen in the same time, there is no way to
-differentiate these two cases. So the command  can't do something
-automatically and has to leave all choice to the user.
-
-In an environment with central repositories, all submodule urls will
-be the same between $GIT_DIR/config and .gitmodules. It is a little
-annoying to give so many users this kind of uneccessary choice if the
-submodule url changes in .gitmodules.
-
-
-
--- 
-Ping Yin
+And if your answer is "the user should have xx7 umask", that defeats the
+whole point of your patch, as you are trying to dissociate the umask used
+by the user for his usual task and enforce particular permission policy
+for the repository.
