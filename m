@@ -1,154 +1,78 @@
-From: Ping Yin <pkufranky@gmail.com>
-Subject: [PATCH v3 3/4] builtin-status: submodule summary support
-Date: Sat, 12 Apr 2008 23:05:32 +0800
-Message-ID: <1208012733-18211-4-git-send-email-pkufranky@gmail.com>
-References: <1208012733-18211-1-git-send-email-pkufranky@gmail.com>
- <1208012733-18211-2-git-send-email-pkufranky@gmail.com>
- <1208012733-18211-3-git-send-email-pkufranky@gmail.com>
-Cc: git@vger.kernel.org, Ping Yin <pkufranky@gmail.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sat Apr 12 17:06:50 2008
+From: Gabriel <g2p.code@gmail.com>
+Subject: Re: [PATCH] Default to fetching a remote after adding it.
+Date: Sat, 12 Apr 2008 17:13:32 +0200
+Message-ID: <20080412171332.5abb2705@localhost>
+References: <20080411203501.7095b866@localhost>
+	<1207939163-24787-1-git-send-email-g2p.code@gmail.com>
+	<alpine.DEB.1.00.0804121532550.16366@eeepc-johanness>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Apr 12 17:14:28 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JkhJP-0003cF-N8
-	for gcvg-git-2@gmane.org; Sat, 12 Apr 2008 17:06:40 +0200
+	id 1JkhQx-00069l-Og
+	for gcvg-git-2@gmane.org; Sat, 12 Apr 2008 17:14:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752602AbYDLPF6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Apr 2008 11:05:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752690AbYDLPF4
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Apr 2008 11:05:56 -0400
-Received: from mail.qikoo.org ([60.28.205.235]:45350 "EHLO mail.qikoo.org"
-	rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752602AbYDLPFh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Apr 2008 11:05:37 -0400
-Received: by mail.qikoo.org (Postfix, from userid 1029)
-	id 98815470B0; Sat, 12 Apr 2008 23:05:33 +0800 (CST)
-X-Mailer: git-send-email 1.5.5.23.g2a5f
-In-Reply-To: <1208012733-18211-3-git-send-email-pkufranky@gmail.com>
+	id S1752822AbYDLPNq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Apr 2008 11:13:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752814AbYDLPNq
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Apr 2008 11:13:46 -0400
+Received: from fg-out-1718.google.com ([72.14.220.152]:6426 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752788AbYDLPNp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Apr 2008 11:13:45 -0400
+Received: by fg-out-1718.google.com with SMTP id l27so793145fgb.17
+        for <git@vger.kernel.org>; Sat, 12 Apr 2008 08:13:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer:mime-version:content-type:content-transfer-encoding:sender;
+        bh=FIRn9zxtryD3dc2hl11FYyTS0M4JYwD9Gl940u+Ihkg=;
+        b=BP/qQ6ieK6kkx72pId1NOCFB75uYWTQLgw8n3L66VAxBRrHFgDEoIh7KpXejLBknBp4GFPHcVW+yulE8sX5/onT+y16pUEigw8p65UKeRK5O0Mt3nfjVO3n8+TUGolxl+CtEopp5/SgiEKtRBBH9M/m//PN6aMguRQ2sIqULDmc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer:mime-version:content-type:content-transfer-encoding:sender;
+        b=m2xgg615xE/sH8GrKscOBuKAsmGRabas1P9oaZGoIeT6qp5GpxJtNaCPi+zWWXzM2LZkVrwzs10Wv1IaCzBdke4Tn67EnAZ/RtdCvMmIDay+y/nfQM0hhDoN4Z+OstGNJXe5xEP3oR1iN60oXGbE8PO4EFv+DpPpKz5B1a6cyfY=
+Received: by 10.86.72.15 with SMTP id u15mr8526952fga.21.1208013223939;
+        Sat, 12 Apr 2008 08:13:43 -0700 (PDT)
+Received: from localhost ( [88.162.203.35])
+        by mx.google.com with ESMTPS id 4sm3224530fge.3.2008.04.12.08.13.41
+        (version=SSLv3 cipher=OTHER);
+        Sat, 12 Apr 2008 08:13:43 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0804121532550.16366@eeepc-johanness>
+X-Mailer: Claws Mail 2.10.0 (GTK+ 2.12.0; x86_64-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79360>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79361>
 
-This commit teaches 'git commit/status' show 'Modified submodules'
-section given by
+On Sat, 12 Apr 2008 15:33:30 +0100 (BST),
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
 
-git submodule summary --cached --for-status --summary-limit <limit>
+> Hi,
+> 
+> On Fri, 11 Apr 2008, Gabriel wrote:
+> 
+> > This is what the user wants in 99% of cases.
+> 
+> This is wrong, at least in my experience.  Do not make up statistics
+> if you want to be taken seriously.
 
-just before 'Untracked files' section.
+This is obviously not a real statistic, and poor wording on my part. It
+was meant to summarise the justification that I gave in the parent
+mail; that justification was certainly up to discussion, and it turns
+out I was wrong.
 
-The <limit> is given by the config variable status.submodulesummary
-to limit the submodule summary size. status.submodulesummary is a
-bool/int variable with value
+Which leaves us with the other suggestion of the previous patch, that
+others have discussed. Now that we have the maintainer's opinion, this
+is also settled.
 
-  - false or 0 by default to disable the summary or
-  - positive number to limit the summary size or
-  - true or negative number to unlimit the summary size
-
-Also mention status.submodulesummary in the documentation.
-
-Signed-off-by: Ping Yin <pkufranky@gmail.com>
----
- Documentation/git-status.txt |    5 +++++
- wt-status.c                  |   42 ++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 47 insertions(+), 0 deletions(-)
-
-diff --git a/Documentation/git-status.txt b/Documentation/git-status.txt
-index 3ea269a..ea4376a 100644
---- a/Documentation/git-status.txt
-+++ b/Documentation/git-status.txt
-@@ -52,6 +52,11 @@ If the config variable `status.relativePaths` is set to false, then all
- paths shown are relative to the repository root, not to the current
- directory.
- 
-+If `status.submodulesummary` is set to a non zero number or true (identical
-+to -1 or an unlimited number), the submodule summary will be enabled and a
-+summary of commits for modified submodules will be shown (see --summary-limit
-+option of linkgit:git-submodule[1]).
-+
- See Also
- --------
- linkgit:gitignore[5]
-diff --git a/wt-status.c b/wt-status.c
-index b3fd57b..3baa128 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -8,9 +8,11 @@
- #include "revision.h"
- #include "diffcore.h"
- #include "quote.h"
-+#include "run-command.h"
- 
- int wt_status_relative_paths = 1;
- int wt_status_use_color = -1;
-+int wt_status_submodule_summary;
- static char wt_status_colors[][COLOR_MAXLEN] = {
- 	"",         /* WT_STATUS_HEADER: normal */
- 	"\033[32m", /* WT_STATUS_UPDATED: green */
-@@ -219,6 +221,38 @@ static void wt_status_print_changed(struct wt_status *s)
- 	rev.diffopt.format_callback_data = s;
- 	run_diff_files(&rev, 0);
- }
-+static void wt_status_print_submodule_summary(struct wt_status *s)
-+{
-+	struct child_process sm_summary;
-+	char summary_limit[64];
-+	char index[PATH_MAX];
-+	const char *env[] = { index, NULL };
-+	const char *argv[] = {
-+		"submodule",
-+		"summary",
-+		"--cached",
-+		"--for-status",
-+		"--summary-limit",
-+		summary_limit,
-+		s->amend ? "HEAD^" : "HEAD",
-+		NULL
-+	};
-+
-+	if (!wt_status_submodule_summary)
-+		return;
-+
-+	sprintf(summary_limit, "%d", wt_status_submodule_summary);
-+	snprintf(index, sizeof(index), "GIT_INDEX_FILE=%s", s->index_file);
-+
-+	memset(&sm_summary, 0, sizeof(sm_summary));
-+	sm_summary.argv = argv;
-+	sm_summary.env = env;
-+	sm_summary.git_cmd = 1;
-+	sm_summary.no_stdin = 1;
-+	fflush(s->fp);
-+	sm_summary.out = dup(fileno(s->fp));    /* run_command closes it */
-+	run_command(&sm_summary);
-+}
- 
- static void wt_status_print_untracked(struct wt_status *s)
- {
-@@ -308,6 +342,7 @@ void wt_status_print(struct wt_status *s)
- 	}
- 
- 	wt_status_print_changed(s);
-+	wt_status_print_submodule_summary(s);
- 	wt_status_print_untracked(s);
- 
- 	if (s->verbose && !s->is_initial)
-@@ -330,6 +365,13 @@ void wt_status_print(struct wt_status *s)
- 
- int git_status_config(const char *k, const char *v)
- {
-+	if (!strcmp(k, "status.submodulesummary")) {
-+		int is_bool;
-+		wt_status_submodule_summary = git_config_bool_or_int(k, v, &is_bool);
-+		if (is_bool && wt_status_submodule_summary)
-+			wt_status_submodule_summary = -1;
-+		return 0;
-+	}
- 	if (!strcmp(k, "status.color") || !strcmp(k, "color.status")) {
- 		wt_status_use_color = git_config_colorbool(k, v, -1);
- 		return 0;
--- 
-1.5.5.23.g2a5f
+Anyway, it's easy to get into subjective arguments on usability, and
+I'll be more careful about this. Which shouldn't prevent us from
+improving git usability.
