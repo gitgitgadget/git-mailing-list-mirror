@@ -1,113 +1,102 @@
 From: "Ping Yin" <pkufranky@gmail.com>
-Subject: Re: Intricacies of submodules
-Date: Sat, 12 Apr 2008 12:02:25 +0800
-Message-ID: <46dff0320804112102t52a60072rc97c772a1e74f597@mail.gmail.com>
-References: <47F15094.5050808@et.gatech.edu> <47FBDA77.2050402@et.gatech.edu>
-	 <32541b130804081401n743f39c9o3f016da9dee2eb92@mail.gmail.com>
-	 <8FE3B7A7-4C2D-4202-A5FC-EBC4F4670273@sun.com>
-	 <32541b130804082033q55c795b5ieaa4e120956ff030@mail.gmail.com>
-	 <49E9DCEC-8A9E-4AD7-BA58-5A40F475F2EA@sun.com>
-	 <32541b130804082334s604b62b0j82b510c331f48213@mail.gmail.com>
-	 <7vhcebcyty.fsf@gitster.siamese.dyndns.org>
-	 <6CFA8EC2-FEE0-4746-A4F6-45082734FEEC@sun.com>
-	 <7v63uqz265.fsf@gitster.siamese.dyndns.org>
+Subject: Re: [PATCH/RFC 3/7] git-submodule: Fall back on .gitmodules if info not found in $GIT_DIR/config
+Date: Sat, 12 Apr 2008 12:26:07 +0800
+Message-ID: <46dff0320804112126l6ac3bcf4q8b7cc7b09e596479@mail.gmail.com>
+References: <1207842625-9210-1-git-send-email-pkufranky@gmail.com>
+	 <1207842625-9210-2-git-send-email-pkufranky@gmail.com>
+	 <1207842625-9210-3-git-send-email-pkufranky@gmail.com>
+	 <1207842625-9210-4-git-send-email-pkufranky@gmail.com>
+	 <1207842625-9210-5-git-send-email-pkufranky@gmail.com>
+	 <1207842625-9210-6-git-send-email-pkufranky@gmail.com>
+	 <1207842625-9210-7-git-send-email-pkufranky@gmail.com>
+	 <7v1w5cotz2.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: "Roman Shaposhnik" <rvs@sun.com>,
-	"Avery Pennarun" <apenwarr@gmail.com>,
-	stuart.freeman@et.gatech.edu, git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Apr 12 06:03:13 2008
+Cc: git@vger.kernel.org
+To: "Junio C Hamano" <junio@pobox.com>,
+	"Roman Shaposhnik" <rvs@sun.com>
+X-From: git-owner@vger.kernel.org Sat Apr 12 06:26:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JkWxM-0000mm-DQ
-	for gcvg-git-2@gmane.org; Sat, 12 Apr 2008 06:03:12 +0200
+	id 1JkXKJ-0004yY-6G
+	for gcvg-git-2@gmane.org; Sat, 12 Apr 2008 06:26:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750829AbYDLEC1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Apr 2008 00:02:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750813AbYDLEC1
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Apr 2008 00:02:27 -0400
-Received: from an-out-0708.google.com ([209.85.132.249]:59228 "EHLO
+	id S1751717AbYDLE0K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Apr 2008 00:26:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751905AbYDLE0J
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Apr 2008 00:26:09 -0400
+Received: from an-out-0708.google.com ([209.85.132.248]:33517 "EHLO
 	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750733AbYDLEC1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Apr 2008 00:02:27 -0400
-Received: by an-out-0708.google.com with SMTP id d31so180509and.103
-        for <git@vger.kernel.org>; Fri, 11 Apr 2008 21:02:26 -0700 (PDT)
+	with ESMTP id S1751561AbYDLE0I (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Apr 2008 00:26:08 -0400
+Received: by an-out-0708.google.com with SMTP id d31so181770and.103
+        for <git@vger.kernel.org>; Fri, 11 Apr 2008 21:26:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=a6SZCN3TdlXoFKx36/mZm3Qkq2f8LcUQ82JRU/VafZk=;
-        b=oUw5q+ezs/FdMviujO22Yeuum51K3JFWzBTuhFJ+CEiIcUsmkI/9hQXUI3P4rwT76XGABcDiCY/eyAnrv5EUHuBeiATjqEalKlpfKI6tdKSO+gSQ2ldcESS4jM0IqNC0vNMLJGJ1EA2CezufOJMwCo1Qw+erSABKWT8Drf15jOI=
+        bh=oFSV/2VDIC+X2n6fV53Bbj9YdX4iUJPzNVE1XWpsL/M=;
+        b=MgGZVVHgvTCcoMfLHH6K0e7NmMn4ah6ly5pJNPGzFYZyw1RV1gktMAOMw0BWBmgoW+5yxlFuUnXMFvDn7WA6uwKbqmKnL7k8FbZiGF8BALHDvovsETOkD4cNRlR7D6p+shMlVBpgWJIlvZTteGOHdvbI92TkwNic4E1Em9wYlqE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Cyrk79xBay2QnhhJbM8DYFR9o6lDW+IO0PvkxXXQxMUR7SINQiJri5n8ep2cAb6SUQMxwI8llzEjfGh1kyx/Ba1SZ4hGnm+qInXxKSQUBRd3sA1ITpFLhKoyl3kVnWZj3l+K9Zvyif/8Rx/hqM/+P5g2Bh57Cj9sf08HbmodWlw=
-Received: by 10.100.46.10 with SMTP id t10mr257867ant.156.1207972945529;
-        Fri, 11 Apr 2008 21:02:25 -0700 (PDT)
-Received: by 10.100.32.10 with HTTP; Fri, 11 Apr 2008 21:02:25 -0700 (PDT)
-In-Reply-To: <7v63uqz265.fsf@gitster.siamese.dyndns.org>
+        b=L781D52SsnTiNilsirea7Qz4ianuisG8tQ28Me2EbiwyKr/Mcj/jwo4rI1UZrIRmViX0237tk+BtZ5szD1Q3QGUGLKarcXC/bRRq60hrUGV0fcwzptx63Br018u8TP8PUKdasERiQZ4jptj+JdiGP8BMnjxWGvkBS57dtzS0S1E=
+Received: by 10.100.10.11 with SMTP id 11mr6853649anj.109.1207974367113;
+        Fri, 11 Apr 2008 21:26:07 -0700 (PDT)
+Received: by 10.100.32.10 with HTTP; Fri, 11 Apr 2008 21:26:07 -0700 (PDT)
+In-Reply-To: <7v1w5cotz2.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79327>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79328>
 
-On Thu, Apr 10, 2008 at 1:53 PM, Junio C Hamano <gitster@pobox.com> wrote:
->  The original discussion that led to the current implementation dates back
->  in May-June timeframe of 2007.  I would not be surprised if not all of the
->  good ideas were incorporated in the current implementation.  For example,
->  one thing that we may want to do is to record what contents we've seen in
->  the .gitmodules file in order to prime each entry in .git/config, so that
->  we can give users a chance to adjust what is in .git/config when we notice
->  the entry in .gitmodules has changed.
+On Sat, Apr 12, 2008 at 7:24 AM, Junio C Hamano <junio@pobox.com> wrote:
+> Ping Yin <pkufranky@gmail.com> writes:
 >
->  For example, consider that .gitmodules said the submodule should be taken
->  from repository URL git://A.xz/project.git when you cloned.  You may have
->  used the given URL as-is to prime your .git/config, or you may have chosen
->  to use http://A.xz/project.git/ for networking reasons.
+>  > Originally, the submodule workflow enforces 'git init' in the beginning
+>  > which copies submodule config info from .gitmodules to $GIT_DIR/config.
+>  > Then all subcommands except 'init' and 'add' fetch submodule info from
+>  > $GIT_DIR/config and .gitmodules can be discarded.
+>  >
+>  > However, there may be inconsistence between .git/config and .gitmodules
+>  > when always using 'git init' at first. If upstream .gitmodules changes,
+>  > it is not easy to sync the changes to $GIT_DIR/config.
 >
->  After working with the project for a while (i.e. you pull and perhaps push
->  back or send patches upstream), .gitmodules file changes and it now says
->  the repository resides at host B.xz because the project relocated.  You
->  would want the next "git submodule update" to notice that your .git/config
->  records a URL you derived from git://A.xz/project.git/, and that you have
->  not seen this new URL git://B.xz/project.git/, and give you a chance to
->  make adjustments if needed.
-
-I think this should be done if "git submodule update" fails. The
-reason it fails may be different, such as newest commits not pushed
-out and the subproject relocated etc. So it can only given some hints
-with "maybe".
-
-However, how to detect the url has changed in .gitmodules? Compare the
-latest two version of .gitmodules?
-
-And if only the protocol or domain changes of the submodule between
-$GIT_CONFIG/config and .gitmodules, i think the
-"url.<usethis>.insteadof = <otherurl>" form introduced in v1.5.5 is
-more helpful.
-
 >
->  After that happens, if you seeked to an old version (perhaps you wanted to
->  work on an old bug), .gitmodules file that is checked out of that old
->  version may say the "upstream" is at A.xz, but the entry in .git/config
->  may already be based on B.xz.  But because you have already seen this old
->  URL in .gitmodules, you may not want to get asked about adjusting the
->  entry in .git/config merely because you checked out an old version.  What
->  this means is that it is not enough to just record "What the current URL
->  you chose to use is" in .git/config (which is obvious), and it is also not
->  enough to record "what URL .gitmodules had when you made that choice", but
->  you would also need to record "What URLs you have _seen_ when making that
->  choice".
->
+> Maybe you missed an earlier thread with Roman Shaposhnik where this issue
+>  was discussed and a solution more in line with the original intent of the
+>  design of the submodule system was mentioned (actually I should not take
+>  credit for that suggestion as it was not mine but somebody else mentioned
+>  it back when git-submodule command was initially being designed.  I only
+>  recalled there was that one issue in the old discussion but there might
+>  have been others)?
 
-When bug happens, i only care the commit in the index of submodule and
-wheter i can check out the old submodule commit. However, does it
-really matter that what the url of the submodule is?
+You mean use "hooks" to update $GIT_DIR/config with user interaction
+when .gitmodules changes? Or give user hints when "git submodule
+update" fails?
+
+What you said in that thread is that the url in $GIT_DIR/config is
+different from the one in .gitmodules (with protocol change perhaps)
+originally, and then the url in .gitmodules changes. So when "git
+submodule update" fails, it notices this change and tell the user.
+
+What i mean here is another case. The url in $GIT_DIR/config is the
+same as the one in .gitmodules, and then the url in .gitmodules
+change. So this change can be synced automatically to $GIT_DIR/config.
+
+However, when both cases happen in the same time, there is no way to
+differentiate these two cases. So the command  can't do something
+automatically and has to leave all choice to the user.
+
+In an environment with central repositories, all submodule urls will
+be the same between $GIT_DIR/config and .gitmodules. It is a little
+annoying to give so many users this kind of uneccessary choice if the
+submodule url changes in .gitmodules.
+
 
 
 -- 
