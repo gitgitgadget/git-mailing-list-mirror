@@ -1,69 +1,93 @@
-From: Santiago Gala <sgala@apache.org>
-Subject: Re: git annoyances
-Date: Sat, 12 Apr 2008 18:59:45 +0000 (UTC)
-Message-ID: <loom.20080412T184726-395@post.gmane.org>
-References: <20080409101428.GA2637@elte.hu> <20080409145758.GB20874@sigill.intra.peff.net>
+From: Samuel Tardieu <sam@rfc1149.net>
+Subject: Re: [PATCH] Make core.sharedRepository more generic
+Date: Sat, 12 Apr 2008 21:15:03 +0200
+Organization: RFC 1149 (see http://www.rfc1149.net/)
+Message-ID: <2008-04-12-21-15-04+trackit+sam@rfc1149.net>
+References: <20080412185105.GA14331@zakalwe.fi>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 12 21:00:41 2008
+Content-Transfer-Encoding: 8bit
+Cc: git@vger.kernel.org
+To: Heikki Orsila <heikki.orsila@iki.fi>
+X-From: git-owner@vger.kernel.org Sat Apr 12 21:16:03 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jkkxs-0005ZN-0A
-	for gcvg-git-2@gmane.org; Sat, 12 Apr 2008 21:00:40 +0200
+	id 1JklCj-0001t0-QV
+	for gcvg-git-2@gmane.org; Sat, 12 Apr 2008 21:16:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753895AbYDLS74 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Apr 2008 14:59:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753836AbYDLS74
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Apr 2008 14:59:56 -0400
-Received: from main.gmane.org ([80.91.229.2]:33168 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753459AbYDLS7z (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Apr 2008 14:59:55 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Jkkx7-0001UR-RK
-	for git@vger.kernel.org; Sat, 12 Apr 2008 18:59:53 +0000
-Received: from 233.Red-81-33-31.staticIP.rima-tde.net ([81.33.31.233])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 12 Apr 2008 18:59:53 +0000
-Received: from sgala by 233.Red-81-33-31.staticIP.rima-tde.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 12 Apr 2008 18:59:53 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 81.33.31.233 (Mozilla/5.0 (X11; U; Linux x86_64; es-ES; rv:1.8.1.13) Gecko/20080327 Firefox/2.0.0.13)
+	id S1753043AbYDLTPQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Apr 2008 15:15:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753356AbYDLTPP
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Apr 2008 15:15:15 -0400
+Received: from zaphod.rfc1149.net ([88.191.14.223]:59111 "EHLO
+	mail.rfc1149.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753088AbYDLTPO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Apr 2008 15:15:14 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mail.rfc1149.net (Postfix) with ESMTP id 3FA3EE2986;
+	Sat, 12 Apr 2008 21:15:11 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at rfc1149.net
+Received: from mail.rfc1149.net ([127.0.0.1])
+	by localhost (zaphod.rfc1149.net [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id zh5IzgpQ-5-F; Sat, 12 Apr 2008 21:15:05 +0200 (CEST)
+Received: from mail2.rfc1149.net (unknown [IPv6:2a01:5d8:5138:2f95::3])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "mail2.rfc1149.net", Issuer "rfc1149.net" (verified OK))
+	by mail.rfc1149.net (Postfix) with ESMTPS id 8340DE17E4;
+	Sat, 12 Apr 2008 21:15:05 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mail2.rfc1149.net (Postfix) with ESMTP id 969F8C408D;
+	Sat, 12 Apr 2008 21:15:04 +0200 (CEST)
+Received: from mail2.rfc1149.net ([127.0.0.1])
+	by localhost (localhost [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id k103WWX51vY9; Sat, 12 Apr 2008 21:15:04 +0200 (CEST)
+Received: by mail2.rfc1149.net (Postfix, from userid 1000)
+	id 6440EC40B9; Sat, 12 Apr 2008 21:15:04 +0200 (CEST)
+In-Reply-To: <20080412185105.GA14331@zakalwe.fi> (Heikki Orsila's message of "Sat\, 12 Apr 2008 21\:51\:05 +0300")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+X-WWW: http://www.rfc1149.net/sam
+X-Jabber: <sam@rfc1149.net> (see http://www.jabber.org/)
+X-OpenPGP-Fingerprint: 79C0 AE3C CEA8 F17B 0EF1  45A5 F133 2241 1B80 ADE6 (see http://www.gnupg.org/)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79376>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79377>
 
-Jeff King <peff <at> peff.net> writes:
+The use of named constants vs. literals seem inconsistent in your
+patch, compare
 
-(...)
-> Unless you are planning on merging this remote a lot, the common usage
-> is probably to just forget the remote stuff and do:
-> 
->   git pull ~/linux-2.6-x86.git latest
-> 
+| +               mode = (mode & ~0777) | shared_repository;
 
-Well, he wants to *merge*, not really to *pull*. A problem I'm encountering a
-lot with git is this kind of mismatch between the naming of the command and the
-actions. Most of the time the things make sense when they are explained, but
-they are not intuitive and I forget them once and again.
+to
 
-I have special problems with "pull" and "fetch". I mean, for me "pull" is about
-"pulling code" from other repo, but not really to the working copy, or at least
-not always to the working copy.
+| +               mode |= (shared_repository & 0600) ? S_IXUSR : 0;
+| +               mode |= (shared_repository & 0060) ? S_IXGRP : 0;
+| +               mode |= (shared_repository & 0006) ? S_IXOTH : 0;
 
-In fact, the first line of git-pull --help is "Fetch from and merge with another
-repository or a local" (pulling together the other two words, fetch and merge,
-if you allow the pun). For my very limited git intuition, and I guess for a lot
-of people too, pull is just "fetch".
+I first thought that you were using literals with "shared_repository"
+and named constants with mode but the first line I quoted shows that
+this is not the case.
+
+Btw, aren't those last three lines better replaced by
+
+  /* Copy read bits to execute bits */
+  mode |= (shared_repository & 0444) >> 2;
+
+I don't see where you deal with executable files.
+
+Also, wouldn't it be more consistent to use a negative value to
+--shared, that is a umask-compatible one, rather than a positive value
+which needs to be tweaked for directories and executable files? You
+would only have to "&" 0666 or 0777 with "~perms" to get the right
+permissions.
+
+--shared=0007 would be equivalent to PERM_GROUP, --shared=0027 to
+group-readable-but-not-writable, and --shared=0002 to PERM_EVERYBODY.
+
+  Sam
+-- 
+Samuel Tardieu -- sam@rfc1149.net -- http://www.rfc1149.net/
