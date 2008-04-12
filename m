@@ -1,69 +1,64 @@
-From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
-Subject: [StGit PATCH 2/2] Log environment and cwd as well as the actual
-	command
-Date: Sat, 12 Apr 2008 17:47:27 +0200
-Message-ID: <20080412154727.19690.60228.stgit@yoghurt>
-References: <20080412154427.19690.71877.stgit@yoghurt>
+From: Johannes Sixt <johannes.sixt@telecom.at>
+Subject: Re: [PATCH v2 2/3] builtin-status: submodule summary support
+Date: Sat, 12 Apr 2008 18:13:19 +0200
+Message-ID: <200804121813.20050.johannes.sixt@telecom.at>
+References: <1207841727-7840-1-git-send-email-pkufranky@gmail.com> <1207841727-7840-3-git-send-email-pkufranky@gmail.com> <7vtzi8owf9.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Erik Sandberg <mandolaerik@gmail.com>
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Apr 12 17:48:27 2008
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junio@pobox.com>, Ping Yin <pkufranky@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 12 18:14:32 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jkhxr-0008V1-4T
-	for gcvg-git-2@gmane.org; Sat, 12 Apr 2008 17:48:27 +0200
+	id 1JkiN5-0007qz-GN
+	for gcvg-git-2@gmane.org; Sat, 12 Apr 2008 18:14:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755601AbYDLPrc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 12 Apr 2008 11:47:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755531AbYDLPrc
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Apr 2008 11:47:32 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1473 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755334AbYDLPrb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Apr 2008 11:47:31 -0400
-Received: from localhost ([127.0.0.1] helo=[127.0.1.1])
-	by diana.vm.bytemark.co.uk with esmtp (Exim 3.36 #1 (Debian))
-	id 1Jkhws-0004Co-00; Sat, 12 Apr 2008 16:47:26 +0100
-In-Reply-To: <20080412154427.19690.71877.stgit@yoghurt>
-User-Agent: StGIT/0.14.1
+	id S1753256AbYDLQNq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Apr 2008 12:13:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751997AbYDLQNo
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Apr 2008 12:13:44 -0400
+Received: from smtp5.srv.eunet.at ([193.154.160.227]:44775 "EHLO
+	smtp5.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753256AbYDLQNW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Apr 2008 12:13:22 -0400
+Received: from dx.sixt.local (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
+	by smtp5.srv.eunet.at (Postfix) with ESMTP id 7FCBD13A33D;
+	Sat, 12 Apr 2008 18:13:20 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by dx.sixt.local (Postfix) with ESMTP id 4A79362455;
+	Sat, 12 Apr 2008 18:13:20 +0200 (CEST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vtzi8owf9.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79369>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79370>
 
-When debugging subprocess calls (with STGIT_SUBPROCESS_LOG=3Ddebug),
-it's important to know the environment and working directory we pass
-to the subprocess, not just the command-line parameters.
+On Saturday 12 April 2008 00:31, Junio C Hamano wrote:
+> Ping Yin <pkufranky@gmail.com> writes:
+> > +static void wt_status_print_submodule_summary(struct wt_status *s)
+> > +{
+> > ...
+> > +	memset(&sm_summary, 0, sizeof(sm_summary));
+> > +	sm_summary.argv = argv;
+> > +	sm_summary.env = env;
+> > +	sm_summary.git_cmd = 1;
+> > +	sm_summary.no_stdin = 1;
+> > +	fflush(s->fp);
+> > +	sm_summary.out = dup(fileno(s->fp));    /* run_command closes it */
+> > +	run_command(&sm_summary);
+>
+> I recall we had some clean-up on how file descriptors are inherited and
+> duped around when run_command() runs a subprocess.  Hannes, is this dup()
+> consistent with how the things ought to be these days?
 
-Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
+Yes, this dup() is required and correct.
 
----
-
- stgit/run.py |    6 ++++++
- 1 files changed, 6 insertions(+), 0 deletions(-)
-
-
-diff --git a/stgit/run.py b/stgit/run.py
-index 77f2e65..0b79729 100644
---- a/stgit/run.py
-+++ b/stgit/run.py
-@@ -48,6 +48,12 @@ class Run:
-     def __log_start(self):
-         if _log_mode =3D=3D 'debug':
-             out.start('Running subprocess %s' % self.__cmd)
-+            if self.__cwd !=3D None:
-+                out.info('cwd: %s' % self.__cwd)
-+            if self.__env !=3D None:
-+                for k in sorted(self.__env.iterkeys()):
-+                    if k not in os.environ or os.environ[k] !=3D self.=
-__env[k]:
-+                        out.info('%s: %s' % (k, self.__env[k]))
-         elif _log_mode =3D=3D 'profile':
-             out.start('Running subprocess %s' % self.__cmd[0])
-             self.__starttime =3D datetime.datetime.now()
+-- Hannes
