@@ -1,50 +1,69 @@
-From: Heikki Orsila <heikki.orsila@iki.fi>
-Subject: Re: [PATCH] Make core.sharedRepository more generic
-Date: Sat, 12 Apr 2008 21:56:20 +0300
-Message-ID: <20080412185620.GF31039@zakalwe.fi>
-References: <20080412185105.GA14331@zakalwe.fi>
+From: Santiago Gala <sgala@apache.org>
+Subject: Re: git annoyances
+Date: Sat, 12 Apr 2008 18:59:45 +0000 (UTC)
+Message-ID: <loom.20080412T184726-395@post.gmane.org>
+References: <20080409101428.GA2637@elte.hu> <20080409145758.GB20874@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 12 20:57:08 2008
+X-From: git-owner@vger.kernel.org Sat Apr 12 21:00:41 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JkkuQ-0004e1-Tg
-	for gcvg-git-2@gmane.org; Sat, 12 Apr 2008 20:57:07 +0200
+	id 1Jkkxs-0005ZN-0A
+	for gcvg-git-2@gmane.org; Sat, 12 Apr 2008 21:00:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755621AbYDLS4W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Apr 2008 14:56:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753376AbYDLS4W
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Apr 2008 14:56:22 -0400
-Received: from zakalwe.fi ([80.83.5.154]:41853 "EHLO zakalwe.fi"
+	id S1753895AbYDLS74 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Apr 2008 14:59:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753836AbYDLS74
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Apr 2008 14:59:56 -0400
+Received: from main.gmane.org ([80.91.229.2]:33168 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754523AbYDLS4V (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Apr 2008 14:56:21 -0400
-Received: by zakalwe.fi (Postfix, from userid 1023)
-	id 1F6532C331; Sat, 12 Apr 2008 21:56:20 +0300 (EEST)
-Content-Disposition: inline
-In-Reply-To: <20080412185105.GA14331@zakalwe.fi>
-User-Agent: Mutt/1.5.11
+	id S1753459AbYDLS7z (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Apr 2008 14:59:55 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Jkkx7-0001UR-RK
+	for git@vger.kernel.org; Sat, 12 Apr 2008 18:59:53 +0000
+Received: from 233.Red-81-33-31.staticIP.rima-tde.net ([81.33.31.233])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 12 Apr 2008 18:59:53 +0000
+Received: from sgala by 233.Red-81-33-31.staticIP.rima-tde.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 12 Apr 2008 18:59:53 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 81.33.31.233 (Mozilla/5.0 (X11; U; Linux x86_64; es-ES; rv:1.8.1.13) Gecko/20080327 Firefox/2.0.0.13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79375>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79376>
 
-On Sat, Apr 12, 2008 at 09:51:05PM +0300, Heikki Orsila wrote:
-> git init --shared=0xxx, where '0xxx' is an octal number, will create
-> a repository with file modes set to '0xxx'. User's with a safe umask
-> value (0077) can use this option to force file modes. For example,
-> '0640' is a group-readable but not group-writable regardless of
-> user's umask value.
+Jeff King <peff <at> peff.net> writes:
+
+(...)
+> Unless you are planning on merging this remote a lot, the common usage
+> is probably to just forget the remote stuff and do:
 > 
-> "git config core.sharedRepository 0xxx" is also handled.
+>   git pull ~/linux-2.6-x86.git latest
+> 
 
-Oops, forgot to sign this one.
+Well, he wants to *merge*, not really to *pull*. A problem I'm encountering a
+lot with git is this kind of mismatch between the naming of the command and the
+actions. Most of the time the things make sense when they are explained, but
+they are not intuitive and I forget them once and again.
 
-Signed-off-by: Heikki Orsila <heikki.orsila@iki.fi>
+I have special problems with "pull" and "fetch". I mean, for me "pull" is about
+"pulling code" from other repo, but not really to the working copy, or at least
+not always to the working copy.
 
-Heikki
+In fact, the first line of git-pull --help is "Fetch from and merge with another
+repository or a local" (pulling together the other two words, fetch and merge,
+if you allow the pun). For my very limited git intuition, and I guess for a lot
+of people too, pull is just "fetch".
