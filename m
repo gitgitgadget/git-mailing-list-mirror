@@ -1,69 +1,91 @@
-From: =?UTF-8?Q?J=C3=B6rg?= Sommer <joerg@alea.gnuu.de>
-Subject: How to fetch missing pack
-Date: Sat, 12 Apr 2008 12:07:12 +0000 (UTC)
-Message-ID: <slrng019fg.nd8.joerg@alea.gnuu.de>
+From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
+Subject: [StGit PATCH] Remove broken branch creation subtest
+Date: Sat, 12 Apr 2008 14:44:15 +0200
+Message-ID: <20080412124212.27748.21332.stgit@yoghurt>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 12 14:12:21 2008
+Cc: git@vger.kernel.org
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 12 14:45:17 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jkeaf-0004xh-8h
-	for gcvg-git-2@gmane.org; Sat, 12 Apr 2008 14:12:17 +0200
+	id 1Jkf6Y-0006rM-6p
+	for gcvg-git-2@gmane.org; Sat, 12 Apr 2008 14:45:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759409AbYDLMLc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 12 Apr 2008 08:11:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759069AbYDLMLc
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Apr 2008 08:11:32 -0400
-Received: from banki.eumelnet.de ([83.246.114.63]:2728 "EHLO uucp.gnuu.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757574AbYDLMLc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Apr 2008 08:11:32 -0400
-Received: by uucp.gnuu.de (Postfix, from userid 10)
-	id 940C9488053; Sat, 12 Apr 2008 14:11:30 +0200 (CEST)
-Received: from news by alea.gnuu.de with local (Exim 4.63)
-	(envelope-from <news@alea.gnuu.de>)
-	id 1JkeVk-00017r-PT
-	for git@vger.kernel.org; Sat, 12 Apr 2008 14:07:13 +0200
-Path: not-for-mail
-Newsgroups: local.mailinglist.git
-X-Trace: alea.gnuu.de 1208002032 4329 192.168.0.5 (12 Apr 2008 12:07:12 GMT)
-X-Complaints-To: usenet@alea.gnuu.de
-User-Agent: slrn/pre0.9.9-102 (Debian)
+	id S1757964AbYDLMo2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 12 Apr 2008 08:44:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759132AbYDLMo2
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Apr 2008 08:44:28 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1624 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757786AbYDLMo1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Apr 2008 08:44:27 -0400
+Received: from localhost ([127.0.0.1] helo=[127.0.1.1])
+	by diana.vm.bytemark.co.uk with esmtp (Exim 3.36 #1 (Debian))
+	id 1Jkf5c-0003h7-00; Sat, 12 Apr 2008 13:44:16 +0100
+User-Agent: StGIT/0.14.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79350>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79351>
 
-Hi,
+This subtest has started to cause subsequent subtests to fail with
+recent versions of git. And I don't think we can blame this one on
+git. What the subtest does is:
 
-I'm missing a pack. My history of the git repository is broken:
-% git show --pretty=3Draw e0fda6ab|head -7
-commit e0fda6abd11c567b72f29ec0ee06c541404a9cb7
-tree 77a7e4a849bbec646d88ae863f80ea3f519e26bd
-parent 1ab58e8d6f728cdde0057f7ee88daab3a1c2d06f
-author Wincent Colaiuta <win@wincent.com> 1196066088 +0100
-committer Junio C Hamano <gitster@pobox.com> 1196109124 -0800
+  1. Remove all files or directories called "foo" under .git/. This is
+     supposed to delete the "foo" branch and associated StGit files,
+     but what about packed refs? This isn't actually malfunctioning
+     yet as far as I can tell, but it's a ticking bomb.
 
-    Fix typo in draft 1.5.4 release notes
-% git log --pretty=3Doneline e0fda6ab | wc -l
-1
-% git show e0fda6ab~1|cat
-fatal: ambiguous argument 'e0fda6ab~1': unknown revision or path not in=
- the working tree.
-Use '--' to separate paths from revisions
+  2. Create an empty file .git/refs/heads/foo. This is supposed to be
+     a "broken branch", and indeed it is -- for example, git show-ref
+     barfs on such a repository even if asked to only show a branch
+     other than foo!
 
-Can I somehow tell git fetch to check the whole history for holes and
-fetch missing packs?
+  3. Makes sure that stg branch won't successfully create a "foo"
+     branch. I'm pretty sure this fails because git thinks the repo is
+     broken, not because stg handles it gracefully. This is what the
+     test is supposed to be testing, but if we wanted that, we'd need
+     a more detailed test.
 
-Bye, J=C3=B6rg.
---=20
-Der kommt den G=C3=B6ttern am n=C3=A4chsten, der auch dann schweigen ka=
-nn,
-wenn er im Recht ist.                         (Cato; 234=E2=80=93149 v.=
- Chr.)
+  4. Doesn't clean up the broken ref, which causes some subsequent
+     subtests to fail.
+
+What probably happened is that git got ever so slightly fussier about
+broken refs, so that (4) became a problem.
+
+Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
+
+---
+
+This should go to the stable branch. (master is affected too, but a
+merge will fix that.)
+
+ t/t1000-branch-create.sh |    7 -------
+ 1 files changed, 0 insertions(+), 7 deletions(-)
+
+
+diff --git a/t/t1000-branch-create.sh b/t/t1000-branch-create.sh
+index d6cf34a..298eb1a 100755
+--- a/t/t1000-branch-create.sh
++++ b/t/t1000-branch-create.sh
+@@ -54,13 +54,6 @@ test_expect_success \
+ '
+=20
+ test_expect_success \
+-    'Create an invalid refs/heads/ entry' '
+-    find .git -name foo | xargs rm -rf &&
+-    touch .git/refs/heads/foo &&
+-    ! stg branch -c foo
+-'
+-
+-test_expect_success \
+     'Setup two commits including removal of generated files' '
+     git init &&
+     touch a.c a.o &&
