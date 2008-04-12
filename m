@@ -1,152 +1,118 @@
-From: "Ping Yin" <pkufranky@gmail.com>
-Subject: Re: [PATCH v2 2/3] builtin-status: submodule summary support
-Date: Sat, 12 Apr 2008 13:28:22 +0800
-Message-ID: <46dff0320804112228i557652b2kcad8fe524a9638ff@mail.gmail.com>
-References: <1207841727-7840-1-git-send-email-pkufranky@gmail.com>
-	 <1207841727-7840-2-git-send-email-pkufranky@gmail.com>
-	 <1207841727-7840-3-git-send-email-pkufranky@gmail.com>
-	 <7vtzi8owf9.fsf@gitster.siamese.dyndns.org>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH] bisect: fix bad rev checking in "git bisect good"
+Date: Sat, 12 Apr 2008 07:53:59 +0200
+Message-ID: <20080412075359.4e5d5a4e.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Johannes Sixt" <johannes.sixt@telecom.at>
-To: "Junio C Hamano" <junio@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Apr 12 07:29:16 2008
+Cc: git@vger.kernel.org
+To: Junio Hamano <junkio@cox.net>, Ingo Molnar <mingo@elte.hu>
+X-From: git-owner@vger.kernel.org Sat Apr 12 07:49:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JkYIV-0008U1-Oc
-	for gcvg-git-2@gmane.org; Sat, 12 Apr 2008 07:29:08 +0200
+	id 1JkYcL-0003sm-2u
+	for gcvg-git-2@gmane.org; Sat, 12 Apr 2008 07:49:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753353AbYDLF2Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Apr 2008 01:28:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752958AbYDLF2X
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Apr 2008 01:28:23 -0400
-Received: from an-out-0708.google.com ([209.85.132.245]:5907 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752499AbYDLF2X (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Apr 2008 01:28:23 -0400
-Received: by an-out-0708.google.com with SMTP id d31so185444and.103
-        for <git@vger.kernel.org>; Fri, 11 Apr 2008 22:28:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=3pmGH6aaEQgHJUtcTero7L4r+6CKkVdpT4LRIDlMSAY=;
-        b=TTny+blM3afpCGVljxcQgUUlbmCv+WpaDcwZJ6on9vYHmk6+Ndokqu8QjTSbrhqmpjGrzj55TIQQnl5jab36bC7OYhtG3ABxgsJqrRJcpY4DeGGFntz+kcYe4DgTTXrSuquk+6URCqmEXIW0iWQwCSmd/RGVMF2mSFOIxbVW75o=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=ZcCr8ZZY7RyG7bgppKXqxSOKXfYylOoUumU/g0ZMKWsxSv1V+Vk8g9xLqkcwJYZA5ZuxsMhHYFNpGVxeL6Lbrwlynfne8Y8/ADbpdgfwIltmgzYoIrebcjHQXFNJo7Cr7Tr7XPuvJw2YIo1uO07CSwdWRut40reVkClG8EG7H74=
-Received: by 10.101.67.15 with SMTP id u15mr6981067ank.19.1207978102306;
-        Fri, 11 Apr 2008 22:28:22 -0700 (PDT)
-Received: by 10.100.32.10 with HTTP; Fri, 11 Apr 2008 22:28:22 -0700 (PDT)
-In-Reply-To: <7vtzi8owf9.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1753138AbYDLFsk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Apr 2008 01:48:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752959AbYDLFsk
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Apr 2008 01:48:40 -0400
+Received: from smtp1-g19.free.fr ([212.27.42.27]:36408 "EHLO smtp1-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752275AbYDLFsj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Apr 2008 01:48:39 -0400
+Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 694A51AB2CA;
+	Sat, 12 Apr 2008 07:48:37 +0200 (CEST)
+Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with SMTP id 09EE11AB2C7;
+	Sat, 12 Apr 2008 07:48:37 +0200 (CEST)
+X-Mailer: Sylpheed 2.5.0beta1 (GTK+ 2.12.9; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79333>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79334>
 
-On Sat, Apr 12, 2008 at 6:31 AM, Junio C Hamano <junio@pobox.com> wrote:
+It seems that "git bisect good" and "git bisect skip" have never
+properly checked arguments that have been passed to them. As soon
+as one of them can be parsed as a SHA1, no error or warning would
+be given.
 
->  int git_config_bool_or_int(const char *name, const char *value, int *is_bool)
->  {
->         *is_bool = 1;
->         if (!value)
->                 return 1;
->         if (!*value)
->                 return 0;
->         if (!strcasecmp(value, "true") || !strcasecmp(value, "yes"))
->                 return 1;
->         if (!strcasecmp(value, "false") || !strcasecmp(value, "no"))
->                 return 0;
->         *is_bool = 0;
->         return git_config_int(name, value) != 0;
->  }
->
->  With that, your configuration parser can do something like:
->
->
->         if (!strcmp(k, "status.submodulesummary")) {
->                 int is_bool, val;
->                 val = git_config_bool_or_int(k, v, &b);
->                 if (is_bool || val <= 0) {
->                         wt_status_submodule_summary_enabled = val;
->                 } else {
->                         wt_status_submodule_summary = val;
->                         wt_status_submodule_summary_enabled = 1;
->                 }
->         }
->
->  and skip the call to wt_status_print_submodule_summary() when not
->  enabled.
->
->
->  >  int wt_status_relative_paths = 1;
->  >  int wt_status_use_color = -1;
->  > +int wt_status_submodule_summary = -1; /* unspecified */
->   +int wt_status_submodule_summary_enabled;
->
->  The call site in wt_status_print() would look like:
->
->         ...
->
->         wt_status_print_changed(s);
->         if (wt_status_submodule_summary_enabled > 0)
->
->                 wt_status_print_submodule_summary(s);
->         wt_status_print_untracked(s);
->         ...
->
+This is because 'git rev-parse --revs-only --no-flags "$@"' always
+"exit 0" and outputs all the SHA1 it can found from parsing "$@".
 
-How about the following?
+This patch fix this by using, for each "bisect good" argument, the
+same logic as for the "bisect bad" argument.
 
-diff --git a/config.c b/config.c
-index 0624494..e614456 100644
---- a/config.c
-+++ b/config.c
-@@ -316,6 +316,21 @@ int git_config_bool(const char *name, const char *value)
- 	return git_config_int(name, value) != 0;
- }
+While at it, this patch teaches "bisect bad" to give a meaningfull
+error message when it is passed more than one argument.
 
-+int git_config_bool_or_int(const char *name, const char *value, int *is_bool)
-+{
-+	*is_bool = 1;
-+	if (!value)
-+		return 1;
-+	if (!*value)
-+		return 0;
-+	if (!strcasecmp(value, "true") || !strcasecmp(value, "yes"))
-+		return 1;
-+	if (!strcasecmp(value, "false") || !strcasecmp(value, "no"))
-+		return 0;
-+	*is_bool = 0;
-+	return git_config_int(name, value);
-+}
+Note that if "git bisect good" or "git bisect skip" is given some
+proper revs and then something that is not a proper rev, then the
+first proper revs will still have been marked as "good" or "skip".
+
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ git-bisect.sh               |   14 +++++---------
+ t/t6030-bisect-porcelain.sh |   13 +++++++++++++
+ 2 files changed, 18 insertions(+), 9 deletions(-)
+
+diff --git a/git-bisect.sh b/git-bisect.sh
+index a1343f6..ff904e6 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -155,20 +155,16 @@ bisect_state() {
+ 		rev=$(git rev-parse --verify HEAD) ||
+ 			die "Bad rev input: HEAD"
+ 		bisect_write "$state" "$rev" ;;
+-	2,bad)
+-		rev=$(git rev-parse --verify "$2^{commit}") ||
+-			die "Bad rev input: $2"
+-		bisect_write "$state" "$rev" ;;
+-	*,good|*,skip)
++	2,bad|*,good|*,skip)
+ 		shift
+-		revs=$(git rev-parse --revs-only --no-flags "$@") &&
+-			test '' != "$revs" || die "Bad rev input: $@"
+-		for rev in $revs
++		for rev in "$@"
+ 		do
+ 			rev=$(git rev-parse --verify "$rev^{commit}") ||
+-				die "Bad rev commit: $rev^{commit}"
++				die "Bad rev input: $rev"
+ 			bisect_write "$state" "$rev"
+ 		done ;;
++	*,bad)
++		die "'git bisect bad' can take only one argument." ;;
+ 	*)
+ 		usage ;;
+ 	esac
+diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
+index f471c15..32d6118 100755
+--- a/t/t6030-bisect-porcelain.sh
++++ b/t/t6030-bisect-porcelain.sh
+@@ -71,6 +71,19 @@ test_expect_success 'bisect start with one bad and good' '
+ 	git bisect next
+ '
+ 
++test_expect_success 'bisect good and bad fails if not given only revs' '
++	git bisect reset &&
++	git bisect start &&
++	test_must_fail git bisect good foo $HASH1 &&
++	test_must_fail git bisect good $HASH1 bar &&
++	test_must_fail git bisect bad frotz &&
++	test_must_fail git bisect bad $HASH3 $HASH4 &&
++	test_must_fail git bisect skip bar $HASH3 &&
++	test_must_fail git bisect skip $HASH1 foo &&
++	git bisect good $HASH1 &&
++	git bisect bad $HASH4
++'
 +
- int git_config_string(const char **dest, const char *var, const char *value)
- {
- 	if (!value)
-diff --git a/wt-status.c b/wt-status.c
-index 22385f5..3baa128 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -366,7 +366,10 @@ void wt_status_print(struct wt_status *s)
- int git_status_config(const char *k, const char *v)
- {
- 	if (!strcmp(k, "status.submodulesummary")) {
--		wt_status_submodule_summary = atoi(v);
-+		int is_bool;
-+		wt_status_submodule_summary = git_config_bool_or_int(k, v, &is_bool);
-+		if (is_bool && wt_status_submodule_summary)
-+			wt_status_submodule_summary = -1;
- 		return 0;
- 	}
- 	if (!strcmp(k, "status.color") || !strcmp(k, "color.status")) {
-
-
-
+ test_expect_success 'bisect reset: back in the master branch' '
+ 	git bisect reset &&
+ 	echo "* master" > branch.expect &&
 -- 
-Ping Yin
+1.5.5.46.g5edc3c.dirty
