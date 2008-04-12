@@ -1,75 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re* [PATCH v2] bisect: fix bad rev checking in "git bisect good"
-Date: Sat, 12 Apr 2008 02:17:36 -0700
-Message-ID: <7vd4ovjutr.fsf@gitster.siamese.dyndns.org>
-References: <20080412090335.e92d3da3.chriscool@tuxfamily.org>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: [PATCH] Add two core.sharedRepository options: group-readable
+	and world-readable
+Date: Sat, 12 Apr 2008 11:17:23 +0200
+Message-ID: <20080412091723.GB20443@atjola.homenet>
+References: <20080411140916.GA30667@zakalwe.fi> <7vfxtrnban.fsf@gitster.siamese.dyndns.org> <20080412030021.GB31039@zakalwe.fi> <7vzlrzlluj.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ingo Molnar <mingo@elte.hu>, git@vger.kernel.org
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Sat Apr 12 11:18:35 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Heikki Orsila <shdl@zakalwe.fi>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Apr 12 11:18:57 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JkbsY-0001No-Fy
-	for gcvg-git-2@gmane.org; Sat, 12 Apr 2008 11:18:34 +0200
+	id 1Jkbsu-0001TA-C8
+	for gcvg-git-2@gmane.org; Sat, 12 Apr 2008 11:18:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756225AbYDLJRu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Apr 2008 05:17:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754018AbYDLJRu
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Apr 2008 05:17:50 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:43252 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753389AbYDLJRt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Apr 2008 05:17:49 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 9675E2FC0;
-	Sat, 12 Apr 2008 05:17:47 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id D9DD42E1F; Sat, 12 Apr 2008 05:17:43 -0400 (EDT)
-In-Reply-To: <20080412090335.e92d3da3.chriscool@tuxfamily.org> (Christian
- Couder's message of "Sat, 12 Apr 2008 09:03:35 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1756430AbYDLJSM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 12 Apr 2008 05:18:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756287AbYDLJSL
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Apr 2008 05:18:11 -0400
+Received: from mail.gmx.net ([213.165.64.20]:50896 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756266AbYDLJSK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Apr 2008 05:18:10 -0400
+Received: (qmail invoked by alias); 12 Apr 2008 09:18:07 -0000
+Received: from i577B8E52.versanet.de (EHLO atjola.local) [87.123.142.82]
+  by mail.gmx.net (mp030) with SMTP; 12 Apr 2008 11:18:07 +0200
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX1+yJMBsunmyGAoEqYxKsDU5lPamwTZKSWRmJ0zWVS
+	r4xmonYNXCzGhh
+Content-Disposition: inline
+In-Reply-To: <7vzlrzlluj.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79338>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79339>
 
-I've applied your earlier one to maint and propagated it all the way up,
-and pushed the results out for tonight.  I'll apply the following as a
-follow-up patch later on top of what I've already pushed out, which is the
-difference between the one applied and your v2.
+On 2008.04.11 21:48:36 -0700, Junio C Hamano wrote:
+> Heikki Orsila <shdl@zakalwe.fi> writes:
+>=20
+> > On Fri, Apr 11, 2008 at 05:53:36PM -0700, Junio C Hamano wrote:
+> > ...
+> >> For example, you may want to enforce "ug+rw,o=3D" in a repository.=
+  How
+> >> would you do that?
+> >
+> > Isn't that PERM_GROUP? The user always keeps u+rw for oneself.
+>=20
+> My question was about the "o=3D" part.  I did not see you dropping bi=
+ts for
+> others in your patch.
+>=20
+> And if your answer is "the user should have xx7 umask", that defeats =
+the
+> whole point of your patch, as you are trying to dissociate the umask =
+used
+> by the user for his usual task and enforce particular permission poli=
+cy
+> for the repository.
 
--- >8 --
-bisect: report bad rev better
+I don't think it defeats the purpose of the patch. Currently, I guess
+that for most users (umask like 0022 or 0077), both shared and all mean
+that the umask is overriden in a way that grants more permissions on th=
+e
+repository. As it is, we only support that in a way that grants write
+permissions to the group, while others may get read-only access (via
+"all"). From that point of view, I think that the patch is a natural
+enhancement, allowing to override the umask in a way that only grants
+additional read permissions for either the group, or the group and
+others. And that's exactly what Heikki was after.
 
-The previous one overwrote the variable used to report the bad input
-when the input is actually bad, and we did not give a useful enough
-information.  This corrects it.
+Of course, having a "ignore the umask, use those permissions" setting
+might be nice, but short of that, the patch makes sense to me.
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- git-bisect.sh |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/git-bisect.sh b/git-bisect.sh
-index c8be9f7..c99ffee 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -155,9 +155,9 @@ bisect_state() {
- 		shift
- 		for rev in "$@"
- 		do
--			rev=$(git rev-parse --verify "$rev^{commit}") ||
-+			sha=$(git rev-parse --verify "$rev^{commit}") ||
- 				die "Bad rev input: $rev"
--			bisect_write "$state" "$rev"
-+			bisect_write "$state" "$sha"
- 		done ;;
- 	*,bad)
- 		die "'git bisect bad' can take only one argument." ;;
+Bj=F6rn
