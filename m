@@ -1,109 +1,74 @@
-From: =?iso-8859-1?Q?J=F6rg?= Sommer <joerg@alea.gnuu.de>
-Subject: Re: [PATCH/RFC 02/10] Teach rebase interactive the reset command
-Date: Sat, 12 Apr 2008 11:37:44 +0200
-Message-ID: <20080412093744.GC31356@alea.gnuu.de>
-References: <7vabkoufzq.fsf@gitster.siamese.dyndns.org> <1207785521-27742-1-git-send-email-joerg@alea.gnuu.de> <1207785521-27742-2-git-send-email-joerg@alea.gnuu.de> <1207785521-27742-3-git-send-email-joerg@alea.gnuu.de> <7viqyondyn.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="8X7/QrJGcKSMr1RN"
-Cc: git@vger.kernel.org, gitster@pobox.com, Johannes.Schindelin@gmx.de
-To: Junio C Hamano <junio@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Apr 12 12:21:22 2008
+From: sgala@hisitech.com
+Subject: [PATCH] make --color-words separate word on ispunct
+Date: Sat, 12 Apr 2008 12:33:41 +0200
+Message-ID: <1207996421-29651-1-git-send-email-sgala@apache.org>
+Cc: Santiago Gala <sgala@apache.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 12 13:31:59 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JkcrG-0003Fp-FZ
-	for gcvg-git-2@gmane.org; Sat, 12 Apr 2008 12:21:18 +0200
+	id 1Jkdxd-0000kw-JF
+	for gcvg-git-2@gmane.org; Sat, 12 Apr 2008 13:31:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756960AbYDLKUd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Apr 2008 06:20:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757390AbYDLKUP
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Apr 2008 06:20:15 -0400
-Received: from banki.eumelnet.de ([83.246.114.63]:4685 "EHLO uucp.gnuu.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756457AbYDLKUN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Apr 2008 06:20:13 -0400
-Received: by uucp.gnuu.de (Postfix, from userid 10)
-	id B7CD7488054; Sat, 12 Apr 2008 12:20:10 +0200 (CEST)
-Received: from ibook.localnet ([192.168.0.5] helo=alea.gnuu.de)
-	by alea.gnuu.de with esmtp (Exim 4.63)
-	(envelope-from <joerg@alea.gnuu.de>)
-	id 1JkcB7-0000n2-2a; Sat, 12 Apr 2008 11:37:45 +0200
-Received: from joerg by alea.gnuu.de with local (Exim 4.69)
-	(envelope-from <joerg@alea.gnuu.de>)
-	id 1JkcB6-0008J4-Qv; Sat, 12 Apr 2008 11:37:44 +0200
-Content-Disposition: inline
-In-Reply-To: <7viqyondyn.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1757460AbYDLLbN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Apr 2008 07:31:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757410AbYDLLbN
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Apr 2008 07:31:13 -0400
+Received: from 233.Red-81-33-31.staticIP.rima-tde.net ([81.33.31.233]:1719
+	"EHLO mail.hisitech.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1756899AbYDLLbM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Apr 2008 07:31:12 -0400
+Received: by mail.hisitech.com (Postfix, from userid 65534)
+	id 323F415CD87; Sat, 12 Apr 2008 13:02:11 +0200 (CEST)
+X-Spam-Checker-Version: SpamAssassin 3.1.9 (2007-02-13) on
+	webserver2.intranet.hisitech.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.1 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_20,
+	NO_REAL_NAME autolearn=ham version=3.1.9
+Received: from hisitech.com (unknown [172.27.70.188])
+	by mail.hisitech.com (Postfix) with SMTP id A602715CE0C;
+	Sat, 12 Apr 2008 12:33:42 +0200 (CEST)
+Received: by hisitech.com (sSMTP sendmail emulation); Sat, 12 Apr 2008 12:33:41 +0200
+X-Mailer: git-send-email 1.5.5.44.gdfa65.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79346>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79347>
 
+Note that this may actually be harmful when trying to spot punctuation
+changes, but for this use case I don't think color-words is helping
+now either.
 
---8X7/QrJGcKSMr1RN
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Santiago Gala <sgala@apache.org>
+---
+ diff.c |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-Hi Junio,
-
-Junio C Hamano schrieb am Fri 11. Apr, 16:56 (-0700):
-> J=F6rg Sommer <joerg@alea.gnuu.de> writes:
->=20
-> > ---
-> >  git-rebase--interactive.sh    |   20 ++++++++++++++++++++
-> >  t/t3404-rebase-interactive.sh |   10 ++++++++++
-> >  2 files changed, 30 insertions(+), 0 deletions(-)
-> >
-> > diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-> > index b001ddf..7dac51b 100755
-> > --- a/git-rebase--interactive.sh
-> > +++ b/git-rebase--interactive.sh
-
-> > +			die "Invalid parent '$sha1' in $command $sha1 $rest"
-> > +		output git reset --hard $tmp
->=20
-> Could this step fail, and if it does what should happen?
-
-I don't expect it. tmp is a valid sha1 and reset may fail if the working
-directory is dirty, but then the previous command should have failed,
-too. Do you think different?
-
-> > @@ -569,6 +588,7 @@ do
-> >  #  edit =3D use commit, but stop for amending
-> >  #  squash =3D use commit, but meld into previous commit
-> >  #  mark #NUM =3D mark the current HEAD for later reference
-> > +#  reset #NUM|commit =3D reset HEAD to a previous set mark or a commit
->=20
-> "to a previously set mark".  But I would say upfront "in the todo insn
-> whenever you need to refer to a commit, in addition to
-> the usual commit object name, you can use '#num' syntax to refer to a
-> commit previously marked with the 'mark' insn."
-
-Does this mean pick, edit and squash should understand marks, too? But
-how useful is this? You can only set a mark if you've picked a commit and
-using this commit again, e.g. pick it twice, doesn't sound useful.
-
---=20
-$ cat /dev/random
-#!/usr/bin/perl -WT
-print "hello world\n";
-
---8X7/QrJGcKSMr1RN
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature http://en.wikipedia.org/wiki/OpenPGP
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFIAILowe0mZwH1VIARAjCRAJ4gm97DIL+IRjXTxax6WoGefsMTVgCgtLor
-JC1KSHH4sCQbycKsJFzYwhw=
-=CXGW
------END PGP SIGNATURE-----
-
---8X7/QrJGcKSMr1RN--
+diff --git a/diff.c b/diff.c
+index 8022e67..d301fcc 100644
+--- a/diff.c
++++ b/diff.c
+@@ -448,7 +448,7 @@ static void diff_words_show(struct diff_words_data *diff_words)
+ 	minus.ptr = xmalloc(minus.size);
+ 	memcpy(minus.ptr, diff_words->minus.text.ptr, minus.size);
+ 	for (i = 0; i < minus.size; i++)
+-		if (isspace(minus.ptr[i]))
++		if (isspace(minus.ptr[i]) || ispunct(minus.ptr[i]))
+ 			minus.ptr[i] = '\n';
+ 	diff_words->minus.current = 0;
+ 
+@@ -456,7 +456,7 @@ static void diff_words_show(struct diff_words_data *diff_words)
+ 	plus.ptr = xmalloc(plus.size);
+ 	memcpy(plus.ptr, diff_words->plus.text.ptr, plus.size);
+ 	for (i = 0; i < plus.size; i++)
+-		if (isspace(plus.ptr[i]))
++		if (isspace(plus.ptr[i]) || ispunct(plus.ptr[i]))
+ 			plus.ptr[i] = '\n';
+ 	diff_words->plus.current = 0;
+ 
+-- 
+1.5.5.44.gdfa65.dirty
