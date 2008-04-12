@@ -1,110 +1,116 @@
-From: "Ping Yin" <pkufranky@gmail.com>
-Subject: Re: Intricacies of submodules
-Date: Sat, 12 Apr 2008 14:26:31 +0800
-Message-ID: <46dff0320804112326v7beccd1dp3dc9fdb5c81bb25d@mail.gmail.com>
-References: <47F15094.5050808@et.gatech.edu>
-	 <8FE3B7A7-4C2D-4202-A5FC-EBC4F4670273@sun.com>
-	 <32541b130804082033q55c795b5ieaa4e120956ff030@mail.gmail.com>
-	 <49E9DCEC-8A9E-4AD7-BA58-5A40F475F2EA@sun.com>
-	 <32541b130804082334s604b62b0j82b510c331f48213@mail.gmail.com>
-	 <7vhcebcyty.fsf@gitster.siamese.dyndns.org>
-	 <6CFA8EC2-FEE0-4746-A4F6-45082734FEEC@sun.com>
-	 <7v63uqz265.fsf@gitster.siamese.dyndns.org>
-	 <46dff0320804112102t52a60072rc97c772a1e74f597@mail.gmail.com>
-	 <7vej9blk4j.fsf@gitster.siamese.dyndns.org>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: git-bisect annoyances
+Date: Sat, 12 Apr 2008 08:56:59 +0200
+Message-ID: <200804120856.59290.chriscool@tuxfamily.org>
+References: <20080409101428.GA2637@elte.hu> <200804110741.40732.chriscool@tuxfamily.org> <20080411114104.GE9205@elte.hu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Roman Shaposhnik" <rvs@sun.com>,
-	"Avery Pennarun" <apenwarr@gmail.com>,
-	stuart.freeman@et.gatech.edu, git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Apr 12 08:27:31 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Carl Worth <cworth@cworth.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Ingo Molnar <mingo@elte.hu>
+X-From: git-owner@vger.kernel.org Sat Apr 12 08:52:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JkZD0-0005IY-PN
-	for gcvg-git-2@gmane.org; Sat, 12 Apr 2008 08:27:31 +0200
+	id 1JkZbD-000399-La
+	for gcvg-git-2@gmane.org; Sat, 12 Apr 2008 08:52:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753267AbYDLG0d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Apr 2008 02:26:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752959AbYDLG0c
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Apr 2008 02:26:32 -0400
-Received: from an-out-0708.google.com ([209.85.132.247]:35944 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752780AbYDLG0c (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Apr 2008 02:26:32 -0400
-Received: by an-out-0708.google.com with SMTP id d31so188467and.103
-        for <git@vger.kernel.org>; Fri, 11 Apr 2008 23:26:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=4AgX9J6Dp6FgT4msiXRkArgrx4YGxWw7v0kpF+8Y1UI=;
-        b=J5PGIiIE7VQyTp7W2jQqCG3/vl07ieLhL6vvQ0xcUId8ZuGuvkEwVQLKOS6QM8fH2PQUbXKbY2nY3qu2rbEX8EvgWhL/8MqH1OiCa2RDMc3Cu1U3Kd3knFJiREi/9P6fWr8+Gcz7CwlJFR1KC/eQk/7Pnrq11EaKP6q09E4dmGk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=fQYeKAS35jS9iDwR0p/usUeI5xv0zkMxlHp08ncAyt/v/lGqfAGrLxT3ZJuj+K+Nimdr2hLobzbIiUN1Gr50wqTydTt5NN1dXeWZpPcvtBsT+N5Vl4hvcAOlzyhBPHTn0+io7ZlXz+R+guNYZlbIBG0rSgD7SZRfv3xLkF9vGQw=
-Received: by 10.100.171.10 with SMTP id t10mr7029790ane.72.1207981591054;
-        Fri, 11 Apr 2008 23:26:31 -0700 (PDT)
-Received: by 10.100.32.10 with HTTP; Fri, 11 Apr 2008 23:26:31 -0700 (PDT)
-In-Reply-To: <7vej9blk4j.fsf@gitster.siamese.dyndns.org>
+	id S1753622AbYDLGvk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 12 Apr 2008 02:51:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753534AbYDLGvk
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Apr 2008 02:51:40 -0400
+Received: from smtp1-g19.free.fr ([212.27.42.27]:37620 "EHLO smtp1-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753514AbYDLGvj convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 12 Apr 2008 02:51:39 -0400
+Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 161611AB2BC;
+	Sat, 12 Apr 2008 08:51:38 +0200 (CEST)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id ABF071AB2E8;
+	Sat, 12 Apr 2008 08:51:37 +0200 (CEST)
+User-Agent: KMail/1.9.7
+In-Reply-To: <20080411114104.GE9205@elte.hu>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79335>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79336>
 
-On Sat, Apr 12, 2008 at 1:25 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> "Ping Yin" <pkufranky@gmail.com> writes:
+Le vendredi 11 avril 2008, Ingo Molnar a =E9crit :
+> * Christian Couder <chriscool@tuxfamily.org> wrote:
+> > >  #
+> > >  # So perhaps this new, unnamed branch is what is causing the
+> > > trouble? # Lets try a specific branch then:
+> > >  #
+> > >
+> > >  dione:~/linux-tmp4> git-checkout master
+> > >  Previous HEAD position was 4991408... Linux 2.6.24
+> > >  Switched to branch "master"
+> > >
+> > >  dione:~/linux-tmp4> git-bisect start
+> > >  won't bisect on seeked tree
+> >
+> > This seems to work for me with git 1.5.5 on the git tree:
+> >
+> > What git version do you have ?
 >
+> git-core-1.5.4.3-2.fc8, like for the previous report.
 >
-> >>  After working with the project for a while (i.e. you pull and perhaps push
->  >>  back or send patches upstream), .gitmodules file changes and it now says
->  >>  the repository resides at host B.xz because the project relocated.  You
->  >>  would want the next "git submodule update" to notice that your .git/config
->  >>  records a URL you derived from git://A.xz/project.git/, and that you have
->  >>  not seen this new URL git://B.xz/project.git/, and give you a chance to
->  >>  make adjustments if needed.
->  >
->  > I think this should be done if "git submodule update" fails. The
->  > reason it fails may be different, such as newest commits not pushed
->  > out and the subproject relocated etc. So it can only given some hints
->  > with "maybe".
->  >
->  > However, how to detect the url has changed in .gitmodules? Compare the
->  > latest two version of .gitmodules?
+> and it worked for me too in a later tree - so the condition seems
+> transient.
+
+Yes, it probably depends on what you have done before.
+I didn't look at it yet, but I will have a look soon.
+Anyway as Junio said, there have been some improvements in 1.5.5 so it =
+might=20
+be a good idea to upgrade.
+
+> > >  dione:~/linux-tmp4> git-bisect good v2.6.24 bad HEAD
+> > >  dione:~/linux-tmp4>
+> >
+> > This is really bad, because, as you can see from the man page or "g=
+it
+> > bisect -h" (see also the patch I just sent), "git bisect good" can
+> > take many known good revisions:
+> >
+> > git bisect good [<rev>...]
+> >         mark <rev>... known-good revisions.
+> >
+> > So you marked also "bad" and HEAD as "good".
+> >
+> > This is really strange, because here I get for example:
+> >
+> > $ git-bisect good bad HEAD
+> > Bad rev input: bad HEAD
+> >
+> > So you must have something tagged as "bad" or have a "bad" branch, =
+and
+> > that's why the command works for you but does the wrong thing.
 >
->  That's why I suggested (and Roman seems to have got it, so I do not think
->  what I wrote was too confusing to be understood) you should record the set
->  of _all_ URLs you have _seen_ in .git/config.  If the URL in .gitmodules
->  checked out is included in that set, you do not do anything.  Otherwise
->  you ask.
+> no, there are no 'bad' braches or revisions.
 
-I don't think it deserves such a change (say recoding history urls to
-$GIT_DIR/config) to just ask just the user whether to change url in
-$GIT_CONFIG/config when the url in .gitmodules changes to a new one.
+You are right, we have got some bugs here I think.
 
-Actually, i think this is an ugly solution :-)
+In my case bad and HEAD were neither proper revs, that's why I got an e=
+rror.
+But I realized that as long as there is one proper rev in what you give=
+=20
+to "git bisect good" it will ignore bad revs and mark as good the prope=
+r=20
+rev you gave it.
 
->
->  I think "git submodule update" is a good place to do that check, but I'd
->  prefer it be done _before_ it actually goes to the network to start
->  accessing potentially stale URL.  The old URL may not be defunct but the
->  project decided not to advertise it to be used for some non-technical
->  reason (e.g. the site owner asked them not to point at it and instead use
->  some other mirrors).
+I just sent a patch to fix this, but I am not sure it's the right fix.
+More work is probably needed. Ooops I just spotted one bug in my patch.
+Please wait, I will send another one.
 
-If only the protocol (such as http://->git://) is different between
-urls in $GIT_DIR/config and .gitmodules, i think use
-"url.base.insteadOf = newbase" is simpler.
+> and ... if "git-bisect good X bad Y" is invalid syntax it should be
+> detected by the tool ...=20
 
-If the urls are totally different, when url in .gitmodules changes,
-there is little chance that the url in $GIT_DIR/config will also
-change.
+Yes.
 
-
--- 
-Ping Yin
+Thanks again,
+Christian.
