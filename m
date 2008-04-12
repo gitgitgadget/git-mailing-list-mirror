@@ -1,117 +1,186 @@
 From: Ping Yin <pkufranky@gmail.com>
-Subject: [PATCH v3 2/4] git-submodule summary: --for-status option
-Date: Sat, 12 Apr 2008 23:05:31 +0800
-Message-ID: <1208012733-18211-3-git-send-email-pkufranky@gmail.com>
+Subject: [PATCH v3 4/4] buitin-status: Add tests for submodule summary
+Date: Sat, 12 Apr 2008 23:05:33 +0800
+Message-ID: <1208012733-18211-5-git-send-email-pkufranky@gmail.com>
 References: <1208012733-18211-1-git-send-email-pkufranky@gmail.com>
  <1208012733-18211-2-git-send-email-pkufranky@gmail.com>
+ <1208012733-18211-3-git-send-email-pkufranky@gmail.com>
+ <1208012733-18211-4-git-send-email-pkufranky@gmail.com>
 Cc: git@vger.kernel.org, Ping Yin <pkufranky@gmail.com>
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sat Apr 12 17:06:45 2008
+X-From: git-owner@vger.kernel.org Sat Apr 12 17:06:48 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JkhJO-0003cF-5D
-	for gcvg-git-2@gmane.org; Sat, 12 Apr 2008 17:06:38 +0200
+	id 1JkhJO-0003cF-Ry
+	for gcvg-git-2@gmane.org; Sat, 12 Apr 2008 17:06:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752673AbYDLPFy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Apr 2008 11:05:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752624AbYDLPFk
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Apr 2008 11:05:40 -0400
-Received: from mail.qikoo.org ([60.28.205.235]:45354 "EHLO mail.qikoo.org"
+	id S1752704AbYDLPF4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Apr 2008 11:05:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752624AbYDLPFz
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Apr 2008 11:05:55 -0400
+Received: from mail.qikoo.org ([60.28.205.235]:45352 "EHLO mail.qikoo.org"
 	rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752628AbYDLPFh (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1752556AbYDLPFh (ORCPT <rfc822;git@vger.kernel.org>);
 	Sat, 12 Apr 2008 11:05:37 -0400
 Received: by mail.qikoo.org (Postfix, from userid 1029)
-	id 7AA62470AF; Sat, 12 Apr 2008 23:05:33 +0800 (CST)
+	id BCEA0470B1; Sat, 12 Apr 2008 23:05:33 +0800 (CST)
 X-Mailer: git-send-email 1.5.5.23.g2a5f
-In-Reply-To: <1208012733-18211-2-git-send-email-pkufranky@gmail.com>
+In-Reply-To: <1208012733-18211-4-git-send-email-pkufranky@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79358>
-
-The --for-status option is mainly used by builtin-status/commit.
-It adds 'Modified submodules:' line at top and  '# ' prefix to all
-following lines.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79359>
 
 Signed-off-by: Ping Yin <pkufranky@gmail.com>
 ---
- git-submodule.sh             |   17 ++++++++++++++++-
- t/t7401-submodule-summary.sh |   13 +++++++++++++
- 2 files changed, 29 insertions(+), 1 deletions(-)
+ t/t7502-status.sh |  134 +++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 134 insertions(+), 0 deletions(-)
 
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 56ec353..d7937a5 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -342,6 +342,7 @@ set_name_rev () {
- #
- cmd_summary() {
- 	summary_limit=-1
-+	for_status=
+diff --git a/t/t7502-status.sh b/t/t7502-status.sh
+index cd08516..33882c9 100755
+--- a/t/t7502-status.sh
++++ b/t/t7502-status.sh
+@@ -149,4 +149,138 @@ test_expect_success 'status of partial commit excluding new file in index' '
+ 	test_cmp expect output
+ '
  
- 	# parse $args after "submodule ... summary".
- 	while test $# -ne 0
-@@ -350,6 +351,9 @@ cmd_summary() {
- 		--cached)
- 			cached="$1"
- 			;;
-+		--for-status)
-+			for_status="$1"
-+			;;
- 		-n|--summary-limit)
- 			if summary_limit=$(($2 + 0)) 2>/dev/null && test "$summary_limit" = "$2"
- 			then
-@@ -398,6 +402,12 @@ cmd_summary() {
- 	)
- 
- 	test -n "$modules" &&
-+	if test -n "$for_status"; then
-+		echo "# Modified submodules:"
-+		echo "#"
-+	else
-+		true
-+	fi &&
- 	git diff-index $cached --raw $head -- $modules |
- 	grep -e '^:160000' -e '^:[0-7]* 160000' |
- 	cut -c2- |
-@@ -499,7 +509,12 @@ cmd_summary() {
- 			echo
- 		fi
- 		echo
--	done
-+	done |
-+	if test -n "$for_status"; then
-+		sed -e "s|^|# |" -e 's|^# $|#|'
-+	else
-+		cat
-+	fi
- }
- #
- # List all submodules, prefixed with:
-diff --git a/t/t7401-submodule-summary.sh b/t/t7401-submodule-summary.sh
-index 0f3c42a..1dbb39d 100755
---- a/t/t7401-submodule-summary.sh
-+++ b/t/t7401-submodule-summary.sh
-@@ -192,4 +192,17 @@ test_expect_success 'given commit' "
- EOF
- "
- 
-+test_expect_success '--for-status' "
-+    git submodule summary --for-status HEAD^ >actual &&
-+    diff actual - <<-EOF
++test_expect_success "setup status submodule summary" '
++	test_create_repo sm &&
++	cd sm &&
++	: >foo &&
++	git add foo &&
++	git commit -m "Add foo" &&
++	cd .. &&
++	git add sm
++'
++
++cat > expect <<EOF
++# On branch master
++# Changes to be committed:
++#   (use "git reset HEAD <file>..." to unstage)
++#
++#	new file:   dir2/added
++#	new file:   sm
++#
++# Changed but not updated:
++#   (use "git add <file>..." to update what will be committed)
++#
++#	modified:   dir1/modified
++#
++# Untracked files:
++#   (use "git add <file>..." to include in what will be committed)
++#
++#	dir1/untracked
++#	dir2/modified
++#	dir2/untracked
++#	expect
++#	output
++#	untracked
++EOF
++test_expect_success "status submodule summary is disabled by default" '
++	git status > output &&
++	git diff expect output
++'
++
++head=$(cd sm && git rev-parse --short=7 --verify HEAD)
++
++cat > expect <<EOF
++# On branch master
++# Changes to be committed:
++#   (use "git reset HEAD <file>..." to unstage)
++#
++#	new file:   dir2/added
++#	new file:   sm
++#
++# Changed but not updated:
++#   (use "git add <file>..." to update what will be committed)
++#
++#	modified:   dir1/modified
++#
 +# Modified submodules:
 +#
-+# * sm1 $head6...0000000:
++# * sm 0000000...$head (1):
++#   > Add foo
 +#
-+# * sm2 0000000...$head7 (2):
-+#   > Add foo9
++# Untracked files:
++#   (use "git add <file>..." to include in what will be committed)
 +#
++#	dir1/untracked
++#	dir2/modified
++#	dir2/untracked
++#	expect
++#	output
++#	untracked
 +EOF
-+"
++test_expect_success "status submodule summary" '
++	git config status.submodulesummary 10 &&
++	git status > output &&
++	git diff expect output
++'
++
++
++cat > expect <<EOF
++# On branch master
++# Changed but not updated:
++#   (use "git add <file>..." to update what will be committed)
++#
++#	modified:   dir1/modified
++#
++# Untracked files:
++#   (use "git add <file>..." to include in what will be committed)
++#
++#	dir1/untracked
++#	dir2/modified
++#	dir2/untracked
++#	expect
++#	output
++#	untracked
++no changes added to commit (use "git add" and/or "git commit -a")
++EOF
++test_expect_success "status submodule summary (clean submodule)" '
++	git commit -m "commit submodule" &&
++	git config status.submodulesummary 10 &&
++	! git status > output &&
++	git diff expect output
++'
++
++cat > expect <<EOF
++# On branch master
++# Changes to be committed:
++#   (use "git reset HEAD^1 <file>..." to unstage)
++#
++#	new file:   dir2/added
++#	new file:   sm
++#
++# Changed but not updated:
++#   (use "git add <file>..." to update what will be committed)
++#
++#	modified:   dir1/modified
++#
++# Modified submodules:
++#
++# * sm 0000000...$head (1):
++#   > Add foo
++#
++# Untracked files:
++#   (use "git add <file>..." to include in what will be committed)
++#
++#	dir1/untracked
++#	dir2/modified
++#	dir2/untracked
++#	expect
++#	output
++#	untracked
++EOF
++test_expect_success "status submodule summary (--amend)" '
++	git config status.submodulesummary 10 &&
++	git status --amend > output &&
++	git diff expect output
++'
 +
  test_done
 -- 
