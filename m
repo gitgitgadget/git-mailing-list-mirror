@@ -1,93 +1,89 @@
-From: Samuel Tardieu <sam@rfc1149.net>
-Subject: Re: [PATCH] Make core.sharedRepository more generic
-Date: Sat, 12 Apr 2008 21:15:03 +0200
-Organization: RFC 1149 (see http://www.rfc1149.net/)
-Message-ID: <2008-04-12-21-15-04+trackit+sam@rfc1149.net>
-References: <20080412185105.GA14331@zakalwe.fi>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: [PATCH] Fix config key miscount in url.*.insteadOf
+Date: Sat, 12 Apr 2008 15:32:00 -0400 (EDT)
+Message-ID: <alpine.LNX.1.00.0804121530000.19665@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8bit
-Cc: git@vger.kernel.org
-To: Heikki Orsila <heikki.orsila@iki.fi>
-X-From: git-owner@vger.kernel.org Sat Apr 12 21:16:03 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Eric Blake <ebb9@byu.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Apr 12 21:32:54 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JklCj-0001t0-QV
-	for gcvg-git-2@gmane.org; Sat, 12 Apr 2008 21:16:02 +0200
+	id 1JklT0-0007ON-4K
+	for gcvg-git-2@gmane.org; Sat, 12 Apr 2008 21:32:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753043AbYDLTPQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Apr 2008 15:15:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753356AbYDLTPP
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Apr 2008 15:15:15 -0400
-Received: from zaphod.rfc1149.net ([88.191.14.223]:59111 "EHLO
-	mail.rfc1149.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753088AbYDLTPO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Apr 2008 15:15:14 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mail.rfc1149.net (Postfix) with ESMTP id 3FA3EE2986;
-	Sat, 12 Apr 2008 21:15:11 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at rfc1149.net
-Received: from mail.rfc1149.net ([127.0.0.1])
-	by localhost (zaphod.rfc1149.net [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id zh5IzgpQ-5-F; Sat, 12 Apr 2008 21:15:05 +0200 (CEST)
-Received: from mail2.rfc1149.net (unknown [IPv6:2a01:5d8:5138:2f95::3])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "mail2.rfc1149.net", Issuer "rfc1149.net" (verified OK))
-	by mail.rfc1149.net (Postfix) with ESMTPS id 8340DE17E4;
-	Sat, 12 Apr 2008 21:15:05 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by mail2.rfc1149.net (Postfix) with ESMTP id 969F8C408D;
-	Sat, 12 Apr 2008 21:15:04 +0200 (CEST)
-Received: from mail2.rfc1149.net ([127.0.0.1])
-	by localhost (localhost [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id k103WWX51vY9; Sat, 12 Apr 2008 21:15:04 +0200 (CEST)
-Received: by mail2.rfc1149.net (Postfix, from userid 1000)
-	id 6440EC40B9; Sat, 12 Apr 2008 21:15:04 +0200 (CEST)
-In-Reply-To: <20080412185105.GA14331@zakalwe.fi> (Heikki Orsila's message of "Sat\, 12 Apr 2008 21\:51\:05 +0300")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-WWW: http://www.rfc1149.net/sam
-X-Jabber: <sam@rfc1149.net> (see http://www.jabber.org/)
-X-OpenPGP-Fingerprint: 79C0 AE3C CEA8 F17B 0EF1  45A5 F133 2241 1B80 ADE6 (see http://www.gnupg.org/)
+	id S1755661AbYDLTcF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Apr 2008 15:32:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754235AbYDLTcE
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Apr 2008 15:32:04 -0400
+Received: from iabervon.org ([66.92.72.58]:53062 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753944AbYDLTcD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Apr 2008 15:32:03 -0400
+Received: (qmail 22274 invoked by uid 1000); 12 Apr 2008 19:32:00 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 12 Apr 2008 19:32:00 -0000
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79377>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79378>
 
-The use of named constants vs. literals seem inconsistent in your
-patch, compare
+Also tighten test to require it to be correct.
 
-| +               mode = (mode & ~0777) | shared_repository;
+Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
+---
+After all of the changing the name of the config option, I left the wrong 
+count for the key length, causing it to eat the first character of the 
+URL.
 
-to
+ remote.c              |    2 +-
+ t/t5516-fetch-push.sh |    8 ++++----
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-| +               mode |= (shared_repository & 0600) ? S_IXUSR : 0;
-| +               mode |= (shared_repository & 0060) ? S_IXGRP : 0;
-| +               mode |= (shared_repository & 0006) ? S_IXOTH : 0;
-
-I first thought that you were using literals with "shared_repository"
-and named constants with mode but the first line I quoted shows that
-this is not the case.
-
-Btw, aren't those last three lines better replaced by
-
-  /* Copy read bits to execute bits */
-  mode |= (shared_repository & 0444) >> 2;
-
-I don't see where you deal with executable files.
-
-Also, wouldn't it be more consistent to use a negative value to
---shared, that is a umask-compatible one, rather than a positive value
-which needs to be tweaked for directories and executable files? You
-would only have to "&" 0666 or 0777 with "~perms" to get the right
-permissions.
-
---shared=0007 would be equivalent to PERM_GROUP, --shared=0027 to
-group-readable-but-not-writable, and --shared=0002 to PERM_EVERYBODY.
-
-  Sam
+diff --git a/remote.c b/remote.c
+index 08af7f9..369dc33 100644
+--- a/remote.c
++++ b/remote.c
+@@ -315,7 +315,7 @@ static int handle_config(const char *key, const char *value)
+ 	}
+ 	if (!prefixcmp(key, "url.")) {
+ 		struct rewrite *rewrite;
+-		name = key + 5;
++		name = key + 4;
+ 		subkey = strrchr(name, '.');
+ 		if (!subkey)
+ 			return 0;
+diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+index 793ffc6..6d7e738 100755
+--- a/t/t5516-fetch-push.sh
++++ b/t/t5516-fetch-push.sh
+@@ -103,9 +103,9 @@ test_expect_success 'fetch with wildcard' '
+ test_expect_success 'fetch with insteadOf' '
+ 	mk_empty &&
+ 	(
+-		TRASH=$(pwd) &&
++		TRASH=$(pwd)/ &&
+ 		cd testrepo &&
+-		git config url./$TRASH/.insteadOf trash/
++		git config url.$TRASH.insteadOf trash/
+ 		git config remote.up.url trash/. &&
+ 		git config remote.up.fetch "refs/heads/*:refs/remotes/origin/*" &&
+ 		git fetch up &&
+@@ -145,8 +145,8 @@ test_expect_success 'push with wildcard' '
+ 
+ test_expect_success 'push with insteadOf' '
+ 	mk_empty &&
+-	TRASH=$(pwd) &&
+-	git config url./$TRASH/.insteadOf trash/ &&
++	TRASH=$(pwd)/ &&
++	git config url.$TRASH.insteadOf trash/ &&
+ 	git push trash/testrepo refs/heads/master:refs/remotes/origin/master &&
+ 	(
+ 		cd testrepo &&
 -- 
-Samuel Tardieu -- sam@rfc1149.net -- http://www.rfc1149.net/
+1.5.4.3.610.gea6cd
