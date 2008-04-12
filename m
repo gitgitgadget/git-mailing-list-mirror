@@ -1,82 +1,79 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: [PATCH] Add two core.sharedRepository options: group-readable
-	and world-readable
-Date: Sat, 12 Apr 2008 11:17:23 +0200
-Message-ID: <20080412091723.GB20443@atjola.homenet>
-References: <20080411140916.GA30667@zakalwe.fi> <7vfxtrnban.fsf@gitster.siamese.dyndns.org> <20080412030021.GB31039@zakalwe.fi> <7vzlrzlluj.fsf@gitster.siamese.dyndns.org>
+From: "Clifford Caoile" <piyo@users.sourceforge.net>
+Subject: [PATCH] Docs gitk: Explicitly mention -d, --date-order option
+Date: Sat, 12 Apr 2008 18:49:13 +0900
+Message-ID: <1f748ec60804120249u8d790e0t814f2c675fc4a464@mail.gmail.com>
+Reply-To: piyo@users.sourceforge.net
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Heikki Orsila <shdl@zakalwe.fi>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Apr 12 11:18:57 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Apr 12 11:50:00 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jkbsu-0001TA-C8
-	for gcvg-git-2@gmane.org; Sat, 12 Apr 2008 11:18:56 +0200
+	id 1JkcMx-0002lO-Cm
+	for gcvg-git-2@gmane.org; Sat, 12 Apr 2008 11:49:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756430AbYDLJSM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 12 Apr 2008 05:18:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756287AbYDLJSL
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Apr 2008 05:18:11 -0400
-Received: from mail.gmx.net ([213.165.64.20]:50896 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756266AbYDLJSK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Apr 2008 05:18:10 -0400
-Received: (qmail invoked by alias); 12 Apr 2008 09:18:07 -0000
-Received: from i577B8E52.versanet.de (EHLO atjola.local) [87.123.142.82]
-  by mail.gmx.net (mp030) with SMTP; 12 Apr 2008 11:18:07 +0200
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX1+yJMBsunmyGAoEqYxKsDU5lPamwTZKSWRmJ0zWVS
-	r4xmonYNXCzGhh
+	id S1757521AbYDLJtP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Apr 2008 05:49:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757051AbYDLJtP
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Apr 2008 05:49:15 -0400
+Received: from an-out-0708.google.com ([209.85.132.241]:50685 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756918AbYDLJtO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Apr 2008 05:49:14 -0400
+Received: by an-out-0708.google.com with SMTP id d31so200626and.103
+        for <git@vger.kernel.org>; Sat, 12 Apr 2008 02:49:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:reply-to:sender:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition:x-google-sender-auth;
+        bh=JopSCGOlMdQobcTPvimQ99fFfKyb8Ylb0cFHV8hytLo=;
+        b=g2GhN9q9/+fVi68iDMZhbY8mPFmykiFeq0U2EXNTN34ASMFAJUAcLyQCdlwFAdFboTIOLrK/p5gOJCZrLGdS9lm9z8qMqkE9x8ORDLTUkYFv157j/TzGt+t8SizWLZTrh3xb7vOTX8dtX210/tWZutIokPip2a3YGO+WMt9FEFg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:reply-to:sender:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition:x-google-sender-auth;
+        b=OeP1MCpS5bwggy+d7j7n87edZ75vQCBN7aqiyYq7WpPhepc3EEvhc2EtS0YpLUgP3755TMELLbEu3mMS3kg6MA1JmYGzkH5wpwaqn1u/tuyj3nR9xwRHFrrvcvDUJ64OxWm6Wi+NcBtO2dulvpio8Ir1hMoZ0HK81szU5okD9qk=
+Received: by 10.100.249.9 with SMTP id w9mr7381644anh.63.1207993753668;
+        Sat, 12 Apr 2008 02:49:13 -0700 (PDT)
+Received: by 10.101.1.16 with HTTP; Sat, 12 Apr 2008 02:49:13 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <7vzlrzlluj.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-X-Y-GMX-Trusted: 0
+X-Google-Sender-Auth: edc3d97bab4f1a59
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79340>
 
-On 2008.04.11 21:48:36 -0700, Junio C Hamano wrote:
-> Heikki Orsila <shdl@zakalwe.fi> writes:
->=20
-> > On Fri, Apr 11, 2008 at 05:53:36PM -0700, Junio C Hamano wrote:
-> > ...
-> >> For example, you may want to enforce "ug+rw,o=3D" in a repository.=
-  How
-> >> would you do that?
-> >
-> > Isn't that PERM_GROUP? The user always keeps u+rw for oneself.
->=20
-> My question was about the "o=3D" part.  I did not see you dropping bi=
-ts for
-> others in your patch.
->=20
-> And if your answer is "the user should have xx7 umask", that defeats =
-the
-> whole point of your patch, as you are trying to dissociate the umask =
-used
-> by the user for his usual task and enforce particular permission poli=
-cy
-> for the repository.
+gitk can show the commits in --date-order which is commits sorted by
+Committer Date. -d is a gitk feature, which in turn converts to
+--date-order, which is a git-log feature. It is useful to mention.
 
-I don't think it defeats the purpose of the patch. Currently, I guess
-that for most users (umask like 0022 or 0077), both shared and all mean
-that the umask is overriden in a way that grants more permissions on th=
-e
-repository. As it is, we only support that in a way that grants write
-permissions to the group, while others may get read-only access (via
-"all"). From that point of view, I think that the patch is a natural
-enhancement, allowing to override the umask in a way that only grants
-additional read permissions for either the group, or the group and
-others. And that's exactly what Heikki was after.
+git-branch, a Javascript based git repo viewer, displays in
+--date-order.
 
-Of course, having a "ignore the umask, use those permissions" setting
-might be nice, but short of that, the patch makes sense to me.
+Signed-off-by: Clifford Caoile <piyo@users.sourceforge.net>
+---
+ Documentation/gitk.txt |    6 ++++++
+ 1 files changed, 6 insertions(+), 0 deletions(-)
 
-Bj=F6rn
+diff --git a/Documentation/gitk.txt b/Documentation/gitk.txt
+index 29edafc..d247d63 100644
+--- a/Documentation/gitk.txt
++++ b/Documentation/gitk.txt
+@@ -41,6 +41,12 @@ frequently used options.
+
+ 	Show all branches.
+
++-d, --date-order::
++
++	Shows commits by Committer Date order. Note that the date column is
++	Author Date, so it may appear to be out of order. If this option is
++	not set, gitk displays in --topo-order. See linkgit:git-log[1].
++
+ <revs>::
+
+ 	Limit the revisions to show. This can be either a single revision
+-- 
+1.5.4.2.1161.g1a6f0
