@@ -1,116 +1,119 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: git-bisect annoyances
-Date: Sat, 12 Apr 2008 08:56:59 +0200
-Message-ID: <200804120856.59290.chriscool@tuxfamily.org>
-References: <20080409101428.GA2637@elte.hu> <200804110741.40732.chriscool@tuxfamily.org> <20080411114104.GE9205@elte.hu>
+Subject: [PATCH v2] bisect: fix bad rev checking in "git bisect good"
+Date: Sat, 12 Apr 2008 09:03:35 +0200
+Message-ID: <20080412090335.e92d3da3.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Carl Worth <cworth@cworth.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Ingo Molnar <mingo@elte.hu>
-X-From: git-owner@vger.kernel.org Sat Apr 12 08:52:34 2008
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio Hamano <junkio@cox.net>, Ingo Molnar <mingo@elte.hu>
+X-From: git-owner@vger.kernel.org Sat Apr 12 08:59:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JkZbD-000399-La
-	for gcvg-git-2@gmane.org; Sat, 12 Apr 2008 08:52:32 +0200
+	id 1JkZhT-0004be-4A
+	for gcvg-git-2@gmane.org; Sat, 12 Apr 2008 08:58:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753622AbYDLGvk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 12 Apr 2008 02:51:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753534AbYDLGvk
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Apr 2008 02:51:40 -0400
-Received: from smtp1-g19.free.fr ([212.27.42.27]:37620 "EHLO smtp1-g19.free.fr"
+	id S1753972AbYDLG6P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Apr 2008 02:58:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754016AbYDLG6P
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Apr 2008 02:58:15 -0400
+Received: from smtp1-g19.free.fr ([212.27.42.27]:50572 "EHLO smtp1-g19.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753514AbYDLGvj convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 12 Apr 2008 02:51:39 -0400
+	id S1753651AbYDLG6O (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Apr 2008 02:58:14 -0400
 Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 161611AB2BC;
-	Sat, 12 Apr 2008 08:51:38 +0200 (CEST)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id ABF071AB2E8;
-	Sat, 12 Apr 2008 08:51:37 +0200 (CEST)
-User-Agent: KMail/1.9.7
-In-Reply-To: <20080411114104.GE9205@elte.hu>
-Content-Disposition: inline
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 7E3E01AB302;
+	Sat, 12 Apr 2008 08:58:13 +0200 (CEST)
+Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with SMTP id 27F9D1AB301;
+	Sat, 12 Apr 2008 08:58:13 +0200 (CEST)
+X-Mailer: Sylpheed 2.5.0beta1 (GTK+ 2.12.9; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79336>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79337>
 
-Le vendredi 11 avril 2008, Ingo Molnar a =E9crit :
-> * Christian Couder <chriscool@tuxfamily.org> wrote:
-> > >  #
-> > >  # So perhaps this new, unnamed branch is what is causing the
-> > > trouble? # Lets try a specific branch then:
-> > >  #
-> > >
-> > >  dione:~/linux-tmp4> git-checkout master
-> > >  Previous HEAD position was 4991408... Linux 2.6.24
-> > >  Switched to branch "master"
-> > >
-> > >  dione:~/linux-tmp4> git-bisect start
-> > >  won't bisect on seeked tree
-> >
-> > This seems to work for me with git 1.5.5 on the git tree:
-> >
-> > What git version do you have ?
->
-> git-core-1.5.4.3-2.fc8, like for the previous report.
->
-> and it worked for me too in a later tree - so the condition seems
-> transient.
+It seems that "git bisect good" and "git bisect skip" have never
+properly checked arguments that have been passed to them. As soon
+as one of them can be parsed as a SHA1, no error or warning would
+be given.
 
-Yes, it probably depends on what you have done before.
-I didn't look at it yet, but I will have a look soon.
-Anyway as Junio said, there have been some improvements in 1.5.5 so it =
-might=20
-be a good idea to upgrade.
+This is because 'git rev-parse --revs-only --no-flags "$@"' always
+"exit 0" and outputs all the SHA1 it can found from parsing "$@".
 
-> > >  dione:~/linux-tmp4> git-bisect good v2.6.24 bad HEAD
-> > >  dione:~/linux-tmp4>
-> >
-> > This is really bad, because, as you can see from the man page or "g=
-it
-> > bisect -h" (see also the patch I just sent), "git bisect good" can
-> > take many known good revisions:
-> >
-> > git bisect good [<rev>...]
-> >         mark <rev>... known-good revisions.
-> >
-> > So you marked also "bad" and HEAD as "good".
-> >
-> > This is really strange, because here I get for example:
-> >
-> > $ git-bisect good bad HEAD
-> > Bad rev input: bad HEAD
-> >
-> > So you must have something tagged as "bad" or have a "bad" branch, =
-and
-> > that's why the command works for you but does the wrong thing.
->
-> no, there are no 'bad' braches or revisions.
+This patch fix this by using, for each "bisect good" argument, the
+same logic as for the "bisect bad" argument.
 
-You are right, we have got some bugs here I think.
+While at it, this patch teaches "bisect bad" to give a meaningfull
+error message when it is passed more than one argument.
 
-In my case bad and HEAD were neither proper revs, that's why I got an e=
-rror.
-But I realized that as long as there is one proper rev in what you give=
-=20
-to "git bisect good" it will ignore bad revs and mark as good the prope=
-r=20
-rev you gave it.
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ git-bisect.sh               |   18 +++++++-----------
+ t/t6030-bisect-porcelain.sh |   13 +++++++++++++
+ 2 files changed, 20 insertions(+), 11 deletions(-)
 
-I just sent a patch to fix this, but I am not sure it's the right fix.
-More work is probably needed. Ooops I just spotted one bug in my patch.
-Please wait, I will send another one.
+	This new version should give a better error message
+	than the previous one.
 
-> and ... if "git-bisect good X bad Y" is invalid syntax it should be
-> detected by the tool ...=20
-
-Yes.
-
-Thanks again,
-Christian.
+diff --git a/git-bisect.sh b/git-bisect.sh
+index a1343f6..408775a 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -155,20 +155,16 @@ bisect_state() {
+ 		rev=$(git rev-parse --verify HEAD) ||
+ 			die "Bad rev input: HEAD"
+ 		bisect_write "$state" "$rev" ;;
+-	2,bad)
+-		rev=$(git rev-parse --verify "$2^{commit}") ||
+-			die "Bad rev input: $2"
+-		bisect_write "$state" "$rev" ;;
+-	*,good|*,skip)
++	2,bad|*,good|*,skip)
+ 		shift
+-		revs=$(git rev-parse --revs-only --no-flags "$@") &&
+-			test '' != "$revs" || die "Bad rev input: $@"
+-		for rev in $revs
++		for rev in "$@"
+ 		do
+-			rev=$(git rev-parse --verify "$rev^{commit}") ||
+-				die "Bad rev commit: $rev^{commit}"
+-			bisect_write "$state" "$rev"
++			sha=$(git rev-parse --verify "$rev^{commit}") ||
++				die "Bad rev input: $rev"
++			bisect_write "$state" "$sha"
+ 		done ;;
++	*,bad)
++		die "'git bisect bad' can take only one argument." ;;
+ 	*)
+ 		usage ;;
+ 	esac
+diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
+index f471c15..32d6118 100755
+--- a/t/t6030-bisect-porcelain.sh
++++ b/t/t6030-bisect-porcelain.sh
+@@ -71,6 +71,19 @@ test_expect_success 'bisect start with one bad and good' '
+ 	git bisect next
+ '
+ 
++test_expect_success 'bisect good and bad fails if not given only revs' '
++	git bisect reset &&
++	git bisect start &&
++	test_must_fail git bisect good foo $HASH1 &&
++	test_must_fail git bisect good $HASH1 bar &&
++	test_must_fail git bisect bad frotz &&
++	test_must_fail git bisect bad $HASH3 $HASH4 &&
++	test_must_fail git bisect skip bar $HASH3 &&
++	test_must_fail git bisect skip $HASH1 foo &&
++	git bisect good $HASH1 &&
++	git bisect bad $HASH4
++'
++
+ test_expect_success 'bisect reset: back in the master branch' '
+ 	git bisect reset &&
+ 	echo "* master" > branch.expect &&
+-- 
+1.5.5.46.gb6f72.dirty
