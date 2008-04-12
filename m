@@ -1,118 +1,110 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH] bisect: fix bad rev checking in "git bisect good"
-Date: Sat, 12 Apr 2008 07:53:59 +0200
-Message-ID: <20080412075359.4e5d5a4e.chriscool@tuxfamily.org>
+From: "Ping Yin" <pkufranky@gmail.com>
+Subject: Re: Intricacies of submodules
+Date: Sat, 12 Apr 2008 14:26:31 +0800
+Message-ID: <46dff0320804112326v7beccd1dp3dc9fdb5c81bb25d@mail.gmail.com>
+References: <47F15094.5050808@et.gatech.edu>
+	 <8FE3B7A7-4C2D-4202-A5FC-EBC4F4670273@sun.com>
+	 <32541b130804082033q55c795b5ieaa4e120956ff030@mail.gmail.com>
+	 <49E9DCEC-8A9E-4AD7-BA58-5A40F475F2EA@sun.com>
+	 <32541b130804082334s604b62b0j82b510c331f48213@mail.gmail.com>
+	 <7vhcebcyty.fsf@gitster.siamese.dyndns.org>
+	 <6CFA8EC2-FEE0-4746-A4F6-45082734FEEC@sun.com>
+	 <7v63uqz265.fsf@gitster.siamese.dyndns.org>
+	 <46dff0320804112102t52a60072rc97c772a1e74f597@mail.gmail.com>
+	 <7vej9blk4j.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio Hamano <junkio@cox.net>, Ingo Molnar <mingo@elte.hu>
-X-From: git-owner@vger.kernel.org Sat Apr 12 07:49:38 2008
+Cc: "Roman Shaposhnik" <rvs@sun.com>,
+	"Avery Pennarun" <apenwarr@gmail.com>,
+	stuart.freeman@et.gatech.edu, git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Apr 12 08:27:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JkYcL-0003sm-2u
-	for gcvg-git-2@gmane.org; Sat, 12 Apr 2008 07:49:37 +0200
+	id 1JkZD0-0005IY-PN
+	for gcvg-git-2@gmane.org; Sat, 12 Apr 2008 08:27:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753138AbYDLFsk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Apr 2008 01:48:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752959AbYDLFsk
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Apr 2008 01:48:40 -0400
-Received: from smtp1-g19.free.fr ([212.27.42.27]:36408 "EHLO smtp1-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752275AbYDLFsj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Apr 2008 01:48:39 -0400
-Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 694A51AB2CA;
-	Sat, 12 Apr 2008 07:48:37 +0200 (CEST)
-Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp1-g19.free.fr (Postfix) with SMTP id 09EE11AB2C7;
-	Sat, 12 Apr 2008 07:48:37 +0200 (CEST)
-X-Mailer: Sylpheed 2.5.0beta1 (GTK+ 2.12.9; i486-pc-linux-gnu)
+	id S1753267AbYDLG0d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Apr 2008 02:26:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752959AbYDLG0c
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Apr 2008 02:26:32 -0400
+Received: from an-out-0708.google.com ([209.85.132.247]:35944 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752780AbYDLG0c (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Apr 2008 02:26:32 -0400
+Received: by an-out-0708.google.com with SMTP id d31so188467and.103
+        for <git@vger.kernel.org>; Fri, 11 Apr 2008 23:26:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=4AgX9J6Dp6FgT4msiXRkArgrx4YGxWw7v0kpF+8Y1UI=;
+        b=J5PGIiIE7VQyTp7W2jQqCG3/vl07ieLhL6vvQ0xcUId8ZuGuvkEwVQLKOS6QM8fH2PQUbXKbY2nY3qu2rbEX8EvgWhL/8MqH1OiCa2RDMc3Cu1U3Kd3knFJiREi/9P6fWr8+Gcz7CwlJFR1KC/eQk/7Pnrq11EaKP6q09E4dmGk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=fQYeKAS35jS9iDwR0p/usUeI5xv0zkMxlHp08ncAyt/v/lGqfAGrLxT3ZJuj+K+Nimdr2hLobzbIiUN1Gr50wqTydTt5NN1dXeWZpPcvtBsT+N5Vl4hvcAOlzyhBPHTn0+io7ZlXz+R+guNYZlbIBG0rSgD7SZRfv3xLkF9vGQw=
+Received: by 10.100.171.10 with SMTP id t10mr7029790ane.72.1207981591054;
+        Fri, 11 Apr 2008 23:26:31 -0700 (PDT)
+Received: by 10.100.32.10 with HTTP; Fri, 11 Apr 2008 23:26:31 -0700 (PDT)
+In-Reply-To: <7vej9blk4j.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79334>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79335>
 
-It seems that "git bisect good" and "git bisect skip" have never
-properly checked arguments that have been passed to them. As soon
-as one of them can be parsed as a SHA1, no error or warning would
-be given.
+On Sat, Apr 12, 2008 at 1:25 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> "Ping Yin" <pkufranky@gmail.com> writes:
+>
+>
+> >>  After working with the project for a while (i.e. you pull and perhaps push
+>  >>  back or send patches upstream), .gitmodules file changes and it now says
+>  >>  the repository resides at host B.xz because the project relocated.  You
+>  >>  would want the next "git submodule update" to notice that your .git/config
+>  >>  records a URL you derived from git://A.xz/project.git/, and that you have
+>  >>  not seen this new URL git://B.xz/project.git/, and give you a chance to
+>  >>  make adjustments if needed.
+>  >
+>  > I think this should be done if "git submodule update" fails. The
+>  > reason it fails may be different, such as newest commits not pushed
+>  > out and the subproject relocated etc. So it can only given some hints
+>  > with "maybe".
+>  >
+>  > However, how to detect the url has changed in .gitmodules? Compare the
+>  > latest two version of .gitmodules?
+>
+>  That's why I suggested (and Roman seems to have got it, so I do not think
+>  what I wrote was too confusing to be understood) you should record the set
+>  of _all_ URLs you have _seen_ in .git/config.  If the URL in .gitmodules
+>  checked out is included in that set, you do not do anything.  Otherwise
+>  you ask.
 
-This is because 'git rev-parse --revs-only --no-flags "$@"' always
-"exit 0" and outputs all the SHA1 it can found from parsing "$@".
+I don't think it deserves such a change (say recoding history urls to
+$GIT_DIR/config) to just ask just the user whether to change url in
+$GIT_CONFIG/config when the url in .gitmodules changes to a new one.
 
-This patch fix this by using, for each "bisect good" argument, the
-same logic as for the "bisect bad" argument.
+Actually, i think this is an ugly solution :-)
 
-While at it, this patch teaches "bisect bad" to give a meaningfull
-error message when it is passed more than one argument.
+>
+>  I think "git submodule update" is a good place to do that check, but I'd
+>  prefer it be done _before_ it actually goes to the network to start
+>  accessing potentially stale URL.  The old URL may not be defunct but the
+>  project decided not to advertise it to be used for some non-technical
+>  reason (e.g. the site owner asked them not to point at it and instead use
+>  some other mirrors).
 
-Note that if "git bisect good" or "git bisect skip" is given some
-proper revs and then something that is not a proper rev, then the
-first proper revs will still have been marked as "good" or "skip".
+If only the protocol (such as http://->git://) is different between
+urls in $GIT_DIR/config and .gitmodules, i think use
+"url.base.insteadOf = newbase" is simpler.
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- git-bisect.sh               |   14 +++++---------
- t/t6030-bisect-porcelain.sh |   13 +++++++++++++
- 2 files changed, 18 insertions(+), 9 deletions(-)
+If the urls are totally different, when url in .gitmodules changes,
+there is little chance that the url in $GIT_DIR/config will also
+change.
 
-diff --git a/git-bisect.sh b/git-bisect.sh
-index a1343f6..ff904e6 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -155,20 +155,16 @@ bisect_state() {
- 		rev=$(git rev-parse --verify HEAD) ||
- 			die "Bad rev input: HEAD"
- 		bisect_write "$state" "$rev" ;;
--	2,bad)
--		rev=$(git rev-parse --verify "$2^{commit}") ||
--			die "Bad rev input: $2"
--		bisect_write "$state" "$rev" ;;
--	*,good|*,skip)
-+	2,bad|*,good|*,skip)
- 		shift
--		revs=$(git rev-parse --revs-only --no-flags "$@") &&
--			test '' != "$revs" || die "Bad rev input: $@"
--		for rev in $revs
-+		for rev in "$@"
- 		do
- 			rev=$(git rev-parse --verify "$rev^{commit}") ||
--				die "Bad rev commit: $rev^{commit}"
-+				die "Bad rev input: $rev"
- 			bisect_write "$state" "$rev"
- 		done ;;
-+	*,bad)
-+		die "'git bisect bad' can take only one argument." ;;
- 	*)
- 		usage ;;
- 	esac
-diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
-index f471c15..32d6118 100755
---- a/t/t6030-bisect-porcelain.sh
-+++ b/t/t6030-bisect-porcelain.sh
-@@ -71,6 +71,19 @@ test_expect_success 'bisect start with one bad and good' '
- 	git bisect next
- '
- 
-+test_expect_success 'bisect good and bad fails if not given only revs' '
-+	git bisect reset &&
-+	git bisect start &&
-+	test_must_fail git bisect good foo $HASH1 &&
-+	test_must_fail git bisect good $HASH1 bar &&
-+	test_must_fail git bisect bad frotz &&
-+	test_must_fail git bisect bad $HASH3 $HASH4 &&
-+	test_must_fail git bisect skip bar $HASH3 &&
-+	test_must_fail git bisect skip $HASH1 foo &&
-+	git bisect good $HASH1 &&
-+	git bisect bad $HASH4
-+'
-+
- test_expect_success 'bisect reset: back in the master branch' '
- 	git bisect reset &&
- 	echo "* master" > branch.expect &&
+
 -- 
-1.5.5.46.g5edc3c.dirty
+Ping Yin
