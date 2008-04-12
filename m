@@ -1,99 +1,152 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Intricacies of submodules
-Date: Fri, 11 Apr 2008 22:25:48 -0700
-Message-ID: <7vej9blk4j.fsf@gitster.siamese.dyndns.org>
-References: <47F15094.5050808@et.gatech.edu> <47FBDA77.2050402@et.gatech.edu>
- <32541b130804081401n743f39c9o3f016da9dee2eb92@mail.gmail.com>
- <8FE3B7A7-4C2D-4202-A5FC-EBC4F4670273@sun.com>
- <32541b130804082033q55c795b5ieaa4e120956ff030@mail.gmail.com>
- <49E9DCEC-8A9E-4AD7-BA58-5A40F475F2EA@sun.com>
- <32541b130804082334s604b62b0j82b510c331f48213@mail.gmail.com>
- <7vhcebcyty.fsf@gitster.siamese.dyndns.org>
- <6CFA8EC2-FEE0-4746-A4F6-45082734FEEC@sun.com>
- <7v63uqz265.fsf@gitster.siamese.dyndns.org>
- <46dff0320804112102t52a60072rc97c772a1e74f597@mail.gmail.com>
+From: "Ping Yin" <pkufranky@gmail.com>
+Subject: Re: [PATCH v2 2/3] builtin-status: submodule summary support
+Date: Sat, 12 Apr 2008 13:28:22 +0800
+Message-ID: <46dff0320804112228i557652b2kcad8fe524a9638ff@mail.gmail.com>
+References: <1207841727-7840-1-git-send-email-pkufranky@gmail.com>
+	 <1207841727-7840-2-git-send-email-pkufranky@gmail.com>
+	 <1207841727-7840-3-git-send-email-pkufranky@gmail.com>
+	 <7vtzi8owf9.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Roman Shaposhnik" <rvs@sun.com>,
-	"Avery Pennarun" <apenwarr@gmail.com>,
-	stuart.freeman@et.gatech.edu, git@vger.kernel.org
-To: "Ping Yin" <pkufranky@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Apr 12 07:26:51 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Johannes Sixt" <johannes.sixt@telecom.at>
+To: "Junio C Hamano" <junio@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Apr 12 07:29:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JkYGI-00086a-En
-	for gcvg-git-2@gmane.org; Sat, 12 Apr 2008 07:26:50 +0200
+	id 1JkYIV-0008U1-Oc
+	for gcvg-git-2@gmane.org; Sat, 12 Apr 2008 07:29:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753318AbYDLF0G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Apr 2008 01:26:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752275AbYDLF0F
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Apr 2008 01:26:05 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:49481 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751440AbYDLF0D (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Apr 2008 01:26:03 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 8A6C725C2;
-	Sat, 12 Apr 2008 01:26:01 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 5DBD325C1; Sat, 12 Apr 2008 01:25:52 -0400 (EDT)
-In-Reply-To: <46dff0320804112102t52a60072rc97c772a1e74f597@mail.gmail.com>
- (Ping Yin's message of "Sat, 12 Apr 2008 12:02:25 +0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753353AbYDLF2Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Apr 2008 01:28:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752958AbYDLF2X
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Apr 2008 01:28:23 -0400
+Received: from an-out-0708.google.com ([209.85.132.245]:5907 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752499AbYDLF2X (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Apr 2008 01:28:23 -0400
+Received: by an-out-0708.google.com with SMTP id d31so185444and.103
+        for <git@vger.kernel.org>; Fri, 11 Apr 2008 22:28:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=3pmGH6aaEQgHJUtcTero7L4r+6CKkVdpT4LRIDlMSAY=;
+        b=TTny+blM3afpCGVljxcQgUUlbmCv+WpaDcwZJ6on9vYHmk6+Ndokqu8QjTSbrhqmpjGrzj55TIQQnl5jab36bC7OYhtG3ABxgsJqrRJcpY4DeGGFntz+kcYe4DgTTXrSuquk+6URCqmEXIW0iWQwCSmd/RGVMF2mSFOIxbVW75o=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=ZcCr8ZZY7RyG7bgppKXqxSOKXfYylOoUumU/g0ZMKWsxSv1V+Vk8g9xLqkcwJYZA5ZuxsMhHYFNpGVxeL6Lbrwlynfne8Y8/ADbpdgfwIltmgzYoIrebcjHQXFNJo7Cr7Tr7XPuvJw2YIo1uO07CSwdWRut40reVkClG8EG7H74=
+Received: by 10.101.67.15 with SMTP id u15mr6981067ank.19.1207978102306;
+        Fri, 11 Apr 2008 22:28:22 -0700 (PDT)
+Received: by 10.100.32.10 with HTTP; Fri, 11 Apr 2008 22:28:22 -0700 (PDT)
+In-Reply-To: <7vtzi8owf9.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79332>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79333>
 
-"Ping Yin" <pkufranky@gmail.com> writes:
+On Sat, Apr 12, 2008 at 6:31 AM, Junio C Hamano <junio@pobox.com> wrote:
 
->>  After working with the project for a while (i.e. you pull and perhaps push
->>  back or send patches upstream), .gitmodules file changes and it now says
->>  the repository resides at host B.xz because the project relocated.  You
->>  would want the next "git submodule update" to notice that your .git/config
->>  records a URL you derived from git://A.xz/project.git/, and that you have
->>  not seen this new URL git://B.xz/project.git/, and give you a chance to
->>  make adjustments if needed.
+>  int git_config_bool_or_int(const char *name, const char *value, int *is_bool)
+>  {
+>         *is_bool = 1;
+>         if (!value)
+>                 return 1;
+>         if (!*value)
+>                 return 0;
+>         if (!strcasecmp(value, "true") || !strcasecmp(value, "yes"))
+>                 return 1;
+>         if (!strcasecmp(value, "false") || !strcasecmp(value, "no"))
+>                 return 0;
+>         *is_bool = 0;
+>         return git_config_int(name, value) != 0;
+>  }
 >
-> I think this should be done if "git submodule update" fails. The
-> reason it fails may be different, such as newest commits not pushed
-> out and the subproject relocated etc. So it can only given some hints
-> with "maybe".
+>  With that, your configuration parser can do something like:
 >
-> However, how to detect the url has changed in .gitmodules? Compare the
-> latest two version of .gitmodules?
+>
+>         if (!strcmp(k, "status.submodulesummary")) {
+>                 int is_bool, val;
+>                 val = git_config_bool_or_int(k, v, &b);
+>                 if (is_bool || val <= 0) {
+>                         wt_status_submodule_summary_enabled = val;
+>                 } else {
+>                         wt_status_submodule_summary = val;
+>                         wt_status_submodule_summary_enabled = 1;
+>                 }
+>         }
+>
+>  and skip the call to wt_status_print_submodule_summary() when not
+>  enabled.
+>
+>
+>  >  int wt_status_relative_paths = 1;
+>  >  int wt_status_use_color = -1;
+>  > +int wt_status_submodule_summary = -1; /* unspecified */
+>   +int wt_status_submodule_summary_enabled;
+>
+>  The call site in wt_status_print() would look like:
+>
+>         ...
+>
+>         wt_status_print_changed(s);
+>         if (wt_status_submodule_summary_enabled > 0)
+>
+>                 wt_status_print_submodule_summary(s);
+>         wt_status_print_untracked(s);
+>         ...
+>
 
-That's why I suggested (and Roman seems to have got it, so I do not think
-what I wrote was too confusing to be understood) you should record the set
-of _all_ URLs you have _seen_ in .git/config.  If the URL in .gitmodules
-checked out is included in that set, you do not do anything.  Otherwise
-you ask.
+How about the following?
 
-I think "git submodule update" is a good place to do that check, but I'd
-prefer it be done _before_ it actually goes to the network to start
-accessing potentially stale URL.  The old URL may not be defunct but the
-project decided not to advertise it to be used for some non-technical
-reason (e.g. the site owner asked them not to point at it and instead use
-some other mirrors).
+diff --git a/config.c b/config.c
+index 0624494..e614456 100644
+--- a/config.c
++++ b/config.c
+@@ -316,6 +316,21 @@ int git_config_bool(const char *name, const char *value)
+ 	return git_config_int(name, value) != 0;
+ }
 
-> When bug happens, i only care the commit in the index of submodule and
-> wheter i can check out the old submodule commit. However, does it
-> really matter that what the url of the submodule is?
++int git_config_bool_or_int(const char *name, const char *value, int *is_bool)
++{
++	*is_bool = 1;
++	if (!value)
++		return 1;
++	if (!*value)
++		return 0;
++	if (!strcasecmp(value, "true") || !strcasecmp(value, "yes"))
++		return 1;
++	if (!strcasecmp(value, "false") || !strcasecmp(value, "no"))
++		return 0;
++	*is_bool = 0;
++	return git_config_int(name, value);
++}
++
+ int git_config_string(const char **dest, const char *var, const char *value)
+ {
+ 	if (!value)
+diff --git a/wt-status.c b/wt-status.c
+index 22385f5..3baa128 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -366,7 +366,10 @@ void wt_status_print(struct wt_status *s)
+ int git_status_config(const char *k, const char *v)
+ {
+ 	if (!strcmp(k, "status.submodulesummary")) {
+-		wt_status_submodule_summary = atoi(v);
++		int is_bool;
++		wt_status_submodule_summary = git_config_bool_or_int(k, v, &is_bool);
++		if (is_bool && wt_status_submodule_summary)
++			wt_status_submodule_summary = -1;
+ 		return 0;
+ 	}
+ 	if (!strcmp(k, "status.color") || !strcmp(k, "color.status")) {
 
-No.  The discussion was what should _not_ happen when you run "git
-submodule update" from that state.  Usually in a steadily advancing
-history, you _want_ "git submodule update" to notice that the suggested
-remote URL has changed in .gitmodules and give the user a chance to adjust
-the URL _before_ it hits the network, but you obviously do not want it to
-happen only because you happened to be at a seeked back commit when you
-initiated "git submodule update".  In other words, you are agreeing with
-me without really reading what I wrote ;-)  It does not matter, and
-recording the URLs you have _seen_ (not "the last one you saw", or "the
-one you initialized .git/config with") is a way to make sure that the
-fixed "git submodule update" agrees with us on that point.
+
+
+-- 
+Ping Yin
