@@ -1,77 +1,84 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: Fredrik Noring <noring@nocrew.org>
 Subject: Re: [PATCH] Calculate lines changed for cvs log command
-Date: Sun, 13 Apr 2008 09:59:29 -0700 (PDT)
-Message-ID: <m3zlrxsnbt.fsf@localhost.localdomain>
-References: <3F0821AA-C11D-4C42-A415-D346A7CD89F8@nocrew.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Date: Sun, 13 Apr 2008 20:44:29 +0200
+Message-ID: <20AD7252-19A2-443F-88CF-F871AE7A392E@nocrew.org>
+References: <3F0821AA-C11D-4C42-A415-D346A7CD89F8@nocrew.org> <m3zlrxsnbt.fsf@localhost.localdomain>
+Mime-Version: 1.0 (Apple Message framework v919.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Fredrik Noring <noring@nocrew.org>
-X-From: git-owner@vger.kernel.org Sun Apr 13 19:00:20 2008
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 13 20:45:30 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jl5Yv-00056l-0o
-	for gcvg-git-2@gmane.org; Sun, 13 Apr 2008 19:00:17 +0200
+	id 1Jl7Ce-0008G2-6e
+	for gcvg-git-2@gmane.org; Sun, 13 Apr 2008 20:45:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754461AbYDMQ7c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Apr 2008 12:59:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754309AbYDMQ7c
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 Apr 2008 12:59:32 -0400
-Received: from fg-out-1718.google.com ([72.14.220.155]:43425 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753415AbYDMQ7b (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Apr 2008 12:59:31 -0400
-Received: by fg-out-1718.google.com with SMTP id l27so1221333fgb.17
-        for <git@vger.kernel.org>; Sun, 13 Apr 2008 09:59:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
-        bh=zpMCnsYhcMNSuzwfuAfD5eO7omvnijNjcN6vOUSC4m4=;
-        b=O47eg3OzOAhnuJCrUxBqENDPxUDq+sV1aPwcLLqMhiNZyW9suD3/vD03hLUXFdFZ3NZ62qhoRPpH5RQtVpSC74t30opB2lVRCanxpnmiBDS2F80uOSijJfeqA1v2LeEve0CKa9I4qFLqRLjGgXwJb5E2RtGbqW0Xw8zCsZwsSls=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
-        b=u+tzCzR8c5SNa9SxjWEF98lPotbB3hoxP5lV1dRWnjQb1K/TWmhEgVpyE4Sah6nvFxLA36GmcuZupC5c0Bw5baOXJ2b8lvQh/5zd3EZnaagkaMutCU3qYpvYG1EjknQCysAGOPYyxvsNSecPPM6rcTco0Afz9CCb+P3G8Dworhg=
-Received: by 10.86.68.20 with SMTP id q20mr11233195fga.59.1208105970166;
-        Sun, 13 Apr 2008 09:59:30 -0700 (PDT)
-Received: from localhost.localdomain ( [83.8.231.63])
-        by mx.google.com with ESMTPS id c22sm7989705ika.3.2008.04.13.09.59.28
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 13 Apr 2008 09:59:29 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m3DGxQcs005591;
-	Sun, 13 Apr 2008 18:59:26 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m3DGxJpY005582;
-	Sun, 13 Apr 2008 18:59:19 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <3F0821AA-C11D-4C42-A415-D346A7CD89F8@nocrew.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1752147AbYDMSoi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Apr 2008 14:44:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752130AbYDMSoi
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 Apr 2008 14:44:38 -0400
+Received: from smtpserver.stunet.se ([85.194.0.110]:57647 "EHLO mail.visit.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752037AbYDMSoh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Apr 2008 14:44:37 -0400
+Received: by mail.visit.se (Postfix, from userid 503)
+	id 04ED436E02C8; Sun, 13 Apr 2008 20:44:58 +0200 (CEST)
+Received: from [10.0.1.2] (cust.dsl-fiber-lan.snet.lk.85.194.37.51.visit.se [85.194.37.51])
+	by mail.visit.se (Postfix) with ESMTP id 50CBE36E0214;
+	Sun, 13 Apr 2008 20:44:53 +0200 (CEST)
+In-Reply-To: <m3zlrxsnbt.fsf@localhost.localdomain>
+X-Mailer: Apple Mail (2.919.2)
+X-Spam-Checker-Version: SpamAssassin 3.0.6 (2005-12-07) on mail.visit.se
+X-Spam-Level: 
+X-Spam-Status: No, score=-5.9 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00 
+	autolearn=ham version=3.0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79412>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79413>
 
-Fredrik Noring <noring@nocrew.org> writes:
+Hi Jakub,
 
-> (My mailer destroys inline patches, so I'm attaching it. Sorry about
-> that.)
+OK, I'll look deeper into the mailer issues. Any comments on the  
+actual code in the patch, and the question regarding git-log vs git- 
+cat-file?
 
-Could you please attach it as 1.) attachement=inline if possible, to
-have them displayed along the email; 2.) use text/plain mimetype, not
-application/octet-stream (you might need to change patch extension
-from *.patch to *.txt; you can change default extension of files
-generated by git-format-patch via format.suffix configuration
-variable), and what is tied with it 3.) use Transfer-Encoding: 8bit
-(or something like that), not base64, and preferably not
-quoted-printable?
+Speaking of which -- is there any particular reason for not running  
+git-log once, instead of forking it (or git-cat-file) for every commit  
+in the log? There seems to be a special case for merges, but it'd  
+appear to be more efficient to query the SQLite DB for the commits  
+provided by git-log rather than the other way around, no?
 
-Or change your mailer (or configure it), or use git-send-email.
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Any thoughts?
+
+(git-send-email appears to fail for me without providing an error.)
+
+Many thanks,
+Fredrik
+
+13 apr 2008 kl. 18.59 skrev Jakub Narebski:
+> Fredrik Noring <noring@nocrew.org> writes:
+>
+>> (My mailer destroys inline patches, so I'm attaching it. Sorry about
+>> that.)
+>
+> Could you please attach it as 1.) attachement=inline if possible, to
+> have them displayed along the email; 2.) use text/plain mimetype, not
+> application/octet-stream (you might need to change patch extension
+> from *.patch to *.txt; you can change default extension of files
+> generated by git-format-patch via format.suffix configuration
+> variable), and what is tied with it 3.) use Transfer-Encoding: 8bit
+> (or something like that), not base64, and preferably not
+> quoted-printable?
+>
+> Or change your mailer (or configure it), or use git-send-email.
+> -- 
+> Jakub Narebski
+> Poland
+> ShadeHawk on #git
+>
