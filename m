@@ -1,106 +1,75 @@
-From: Teemu Likonen <tlikonen@iki.fi>
-Subject: [PATCH] Add examples section to 'git fetch' manual
-Date: Sun, 13 Apr 2008 12:34:24 +0300
-Message-ID: <20080413093424.GA12861@mithlond.arda.local>
-References: <20080413093102.GC12107@mithlond.arda.local>
+From: Peter Baumann <waste.manager@gmx.de>
+Subject: Re: How to fetch missing pack
+Date: Sun, 13 Apr 2008 11:41:31 +0200
+Message-ID: <20080413094131.GA9437@xp.machine.xx>
+References: <slrng019fg.nd8.joerg@alea.gnuu.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 13 11:35:13 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?iso-8859-1?Q?J=F6rg?= Sommer <joerg@alea.gnuu.de>
+X-From: git-owner@vger.kernel.org Sun Apr 13 11:42:22 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JkycC-0007X7-T2
-	for gcvg-git-2@gmane.org; Sun, 13 Apr 2008 11:35:13 +0200
+	id 1Jkyj6-0000tH-Iu
+	for gcvg-git-2@gmane.org; Sun, 13 Apr 2008 11:42:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754659AbYDMJe3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Apr 2008 05:34:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754543AbYDMJe2
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 Apr 2008 05:34:28 -0400
-Received: from pne-smtpout4-sn1.fre.skanova.net ([81.228.11.168]:40229 "EHLO
-	pne-smtpout4-sn1.fre.skanova.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752478AbYDMJe2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 13 Apr 2008 05:34:28 -0400
-Received: from mithlond.arda.local (80.220.180.181) by pne-smtpout4-sn1.fre.skanova.net (7.3.129)
-        id 47A7970A003DF64D; Sun, 13 Apr 2008 11:34:26 +0200
-Received: from dtw by mithlond.arda.local with local (Exim 4.63)
-	(envelope-from <tlikonen@iki.fi>)
-	id 1JkybQ-0003Lf-Ae; Sun, 13 Apr 2008 12:34:24 +0300
+	id S1755046AbYDMJlf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 13 Apr 2008 05:41:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754952AbYDMJlf
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 Apr 2008 05:41:35 -0400
+Received: from mail.gmx.net ([213.165.64.20]:55509 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754814AbYDMJle (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Apr 2008 05:41:34 -0400
+Received: (qmail invoked by alias); 13 Apr 2008 09:41:32 -0000
+Received: from g227036251.adsl.alicedsl.de (EHLO localhost) [92.227.36.251]
+  by mail.gmx.net (mp008) with SMTP; 13 Apr 2008 11:41:32 +0200
+X-Authenticated: #1252284
+X-Provags-ID: V01U2FsdGVkX18PE9RIm8YPD2Xjtc4J/0PH7q9rkygEwtU5wfXoPY
+	akHnR8f14xPTAR
 Content-Disposition: inline
-In-Reply-To: <20080413093102.GC12107@mithlond.arda.local>
+In-Reply-To: <slrng019fg.nd8.joerg@alea.gnuu.de>
 User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79400>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79401>
 
-This commit adds examples which intend to cover the various ways of
-using 'git fetch'.
+On Sat, Apr 12, 2008 at 12:07:12PM +0000, J=F6rg Sommer wrote:
+> Hi,
+>=20
+> I'm missing a pack. My history of the git repository is broken:
+> % git show --pretty=3Draw e0fda6ab|head -7
+> commit e0fda6abd11c567b72f29ec0ee06c541404a9cb7
+> tree 77a7e4a849bbec646d88ae863f80ea3f519e26bd
+> parent 1ab58e8d6f728cdde0057f7ee88daab3a1c2d06f
+> author Wincent Colaiuta <win@wincent.com> 1196066088 +0100
+> committer Junio C Hamano <gitster@pobox.com> 1196109124 -0800
+>=20
+>     Fix typo in draft 1.5.4 release notes
+> % git log --pretty=3Doneline e0fda6ab | wc -l
+> 1
+> % git show e0fda6ab~1|cat
+> fatal: ambiguous argument 'e0fda6ab~1': unknown revision or path not =
+in the working tree.
+> Use '--' to separate paths from revisions
+>=20
+> Can I somehow tell git fetch to check the whole history for holes and
+> fetch missing packs?
+>=20
+> Bye, J=F6rg.
 
-Signed-off-by: Teemu Likonen <tlikonen@iki.fi>
----
- Documentation/git-fetch.txt |   43 ++++++++++++++++++++++++++++++++++++++++++-
- 1 files changed, 42 insertions(+), 1 deletions(-)
+Try using git fsck --full to check you repo. If you are missing some
+objects, you could just grab them from another valid repo which still h=
+as
+them. (e.g. copy all packs/objects from the other repo into yours and t=
+hen
+do a git-repack -a -d -f)
 
-diff --git a/Documentation/git-fetch.txt b/Documentation/git-fetch.txt
-index d982f96..d5b1c9f 100644
---- a/Documentation/git-fetch.txt
-+++ b/Documentation/git-fetch.txt
-@@ -37,9 +37,50 @@ include::pull-fetch-param.txt[]
- 
- include::urls-remotes.txt[]
- 
-+EXAMPLES
-+--------
-+
-+git fetch git://host.xz/repo.git/ master:pu::
-+	Fetch branch `master` from given repository URL and store it locally
-+	as `pu`.
-+
-+git fetch git://host.xz/repo.git/ master:remotes/pu::
-+	Fetch branch `master` from given repository URL and store it locally as
-+	remote tracking branch `pu`.
-+
-+git fetch git://host.xz/repo.git/ master::
-+	Fetch branch `master` from given repository URL but do not create the
-+	branch locally. Only the temporary pointer FETCH_HEAD is set to refer
-+	to the fetched branch.
-+
-+git fetch /home/bob/tmp/repo.git::
-+	Fetch the currently active branch from given local repository and set
-+	the temporary pointer FETCH_HEAD for the fetched branch.
-+
-+git fetch alice master:remotes/alice/pu::
-+	Fetch branch `master` from remote named `alice` and store it locally as
-+	remote tracking branch `alice/pu`. See linkgit:git-remote[1] for more
-+	information on configuring remotes.
-+
-+git fetch alice +master:remotes/alice/pu::
-+	The same as above but the remote tracking branch `alice/pu` is updated
-+	even if it does not result in a fast forward update.
-+
-+git fetch alice +master:pu maint:tmp::
-+	Fetch branches `master` and `maint` from remote named `alice` and store
-+	them locally as `pu` and `tmp` respectively. The branch `pu` is updated
-+	even if it does not result in a fast forward update.
-+
-+git fetch origin::
-+	From the remote named `origin` fetch and store all branches as
-+	configured in `remote.origin.fetch`. Usually this means fetching all
-+	branches and storing them locally as remote tracking branches
-+	`origin/*`. See linkgit:git-remote[1] for more information.
-+
-+
- SEE ALSO
- --------
--linkgit:git-pull[1]
-+linkgit:git-pull[1], linkgit:git-remote[1]
- 
- 
- Author
--- 
-1.5.5.32.g5279
+-Peter
