@@ -1,130 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Add examples section to 'git fetch' manual
-Date: Sun, 13 Apr 2008 11:56:21 -0700
-Message-ID: <7v63uld1nu.fsf@gitster.siamese.dyndns.org>
-References: <20080413093102.GC12107@mithlond.arda.local>
- <20080413093424.GA12861@mithlond.arda.local>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Teemu Likonen <tlikonen@iki.fi>
-X-From: git-owner@vger.kernel.org Sun Apr 13 20:57:21 2008
+From: Alberto Bertogli <albertito@gmail.com>
+Subject: [PATCH] builtin-apply: Show a more descriptive error on failure when opening a patch
+Date: Sun, 13 Apr 2008 15:56:31 -0300
+Message-ID: <1208112991-21598-1-git-send-email-albertito@gmail.com>
+Cc: Alberto Bertogli <albertito@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 13 20:58:05 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jl7OC-00035V-CV
-	for gcvg-git-2@gmane.org; Sun, 13 Apr 2008 20:57:20 +0200
+	id 1Jl7Os-0003F1-GY
+	for gcvg-git-2@gmane.org; Sun, 13 Apr 2008 20:58:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752453AbYDMS4e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Apr 2008 14:56:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752506AbYDMS4e
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 Apr 2008 14:56:34 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:44665 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752289AbYDMS4d (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Apr 2008 14:56:33 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id AC12025C2;
-	Sun, 13 Apr 2008 14:56:31 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id B3A1825C1; Sun, 13 Apr 2008 14:56:28 -0400 (EDT)
-In-Reply-To: <20080413093424.GA12861@mithlond.arda.local> (Teemu Likonen's
- message of "Sun, 13 Apr 2008 12:34:24 +0300")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752669AbYDMS5V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Apr 2008 14:57:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752521AbYDMS5V
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 Apr 2008 14:57:21 -0400
+Received: from an-out-0708.google.com ([209.85.132.251]:27191 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752565AbYDMS5U (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Apr 2008 14:57:20 -0400
+Received: by an-out-0708.google.com with SMTP id d31so329400and.103
+        for <git@vger.kernel.org>; Sun, 13 Apr 2008 11:57:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date:message-id:x-mailer;
+        bh=y5lFG9K3NUNlXtqsZx3DWXSiUe1o0LyEzV3GB8SZDDE=;
+        b=anlfa0BWdzopMnsnvrTum51bfPEE6rAs/49AJ+TlfiYD+M7mA9i+8THnrYZuMCah/996NBPgag5UO9M7/XHDujVzyuuNpYGoJVFtdER7c1PmxjIpX64XvqHLAv7oyfakbg/5L7Jx5e/w9rqRy7V/j/b2XPxEzz8PCeDxQp4W0Xo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=fIBLHvxaePNHHov8HlmxUIwTYdF42kE9o1b5/qvCRmpOQsYAdF0j/aQ61cnNiEAkLXictwdtBcUxBNLMK3MmL6MzhIxeOqVnAbVB6TJedYIFPeasxT4KWurxHLUMEFWNwd0RRgBTUdGlcyveNxo246NklBM/URE8VO18hrfakkk=
+Received: by 10.100.239.11 with SMTP id m11mr3860153anh.158.1208113036706;
+        Sun, 13 Apr 2008 11:57:16 -0700 (PDT)
+Received: from gmail.com ( [201.253.179.18])
+        by mx.google.com with ESMTPS id s30sm9523884elf.16.2008.04.13.11.57.13
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 13 Apr 2008 11:57:15 -0700 (PDT)
+X-Mailer: git-send-email 1.5.5.104.ge4331
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79414>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79415>
 
-Teemu Likonen <tlikonen@iki.fi> writes:
+When a patch can't be opened (it doesn't exist, there are permission
+problems, etc.) we get the usage text, which is not a proper indication of
+failure.
 
-> +EXAMPLES
-> +--------
-> +
-> +git fetch git://host.xz/repo.git/ master:pu::
-> +	Fetch branch `master` from given repository URL and store it locally
-> +	as `pu`.
+This patch fixes that by simply doing a perror() instead.
 
-While this may technically be correct (and I'll say upfront that all of
-your "examples" may technically be correct), I would suggest strongly
-against putting this into EXAMPLES section.  People look at examples
-section to look up something they need to do often; the section should
-describe the best practices we can suggest them in real life.
+Signed-off-by: Alberto Bertogli <albertito@gmail.com>
+---
+ builtin-apply.c |    7 +++++--
+ 1 files changed, 5 insertions(+), 2 deletions(-)
 
-The above command line is a _great_ way to explain what happens under the
-hood when you have the matching configuration in .git/config for the
-remote, so that people would know how to update .git/config entries from
-what git-clone and "git-remote add" give them by default to suit their
-needs (e.g. instead of storing all branches in remotes/origin/*, you can
-configure to only fetch and store a few selected branches).  But, fetching
-from somewhere and storing it explicitly _from the command line_ like your
-example command line is something you would _never_ do in real life if you
-know git.
-
-> +git fetch git://host.xz/repo.git/ master:remotes/pu::
-> +	Fetch branch `master` from given repository URL and store it locally as
-> +	remote tracking branch `pu`.
-
-And this example is even worse, as the common example is to have remote
-name between "remotes" and "pu".
-
-> +git fetch git://host.xz/repo.git/ master::
-> +	Fetch branch `master` from given repository URL but do not create the
-> +	branch locally. Only the temporary pointer FETCH_HEAD is set to refer
-> +	to the fetched branch.
-
-This one is a fine example of a one-shot command to look at what they
-have without actually affecting your own history.  Use of this form in
-real life is very sane.
-
-> +git fetch alice master:remotes/alice/pu::
-> +	Fetch branch `master` from remote named `alice` and store it locally as
-> +	remote tracking branch `alice/pu`. See linkgit:git-remote[1] for more
-> +	information on configuring remotes.
-
-This is a wrong example on multiple counts (this is one of the worst one
-in your change, so I'll explain in more detail than for others).
-
-First of all, think about the reason _why_ the convention is to use a
-separate namespace under remotes/ per remote.  It is to allow us to use
-the names that correspond to what the remote repository uses without
-having to worry about name collisions, and the reason we took pains to
-implement the mechanism to allow you to use such corresponding names is to
-avoid having to remember "what she calls master is what I call pu".
-
-"I want to make sure I can tell my master and her master apart without
-confusing myself, so I'd call mine master and call hers alice/master" is
-the recommended use pattern which "git clone" and "git remote add" give
-the user.  An EXAMPLE that deviates from it without explaining why/when it
-is a good thing to do is BAD.  Remember, many people blindly copy and
-paste the examples section without thinking, assuming that they suggest
-the best practice.
-
-If you have nickname "alice" defined, you are by definition interacting
-with her regularly.  If you are doing a one-off with such a repository,
-running "git fetch alice master" and operating on the resulting FETCH_HEAD
-(and you typically use tag or local branch if you want to mark that
-commit, with "git tag" or "git branch"), would be much less error prone,
-less confusing, and more straightforward recommended approach.  Typically,
-you would have the usual refs/heads/*:refs/remotes/alice/* fetch refspec,
-so you would not even say "master" and instead run "git fetch alice" and
-look at "remotes/alice/master".
-
-Your above command line again may be a great way to explain what you could
-do and what the mechanism is equipped to allow you to, but I do not think
-there is any reason to use it in the real life.  It should not be in the
-EXAMPLE section.
-
-> +git fetch origin::
-> +	From the remote named `origin` fetch and store all branches as
-> +	configured in `remote.origin.fetch`. Usually this means fetching all
-> +	branches and storing them locally as remote tracking branches
-> +	`origin/*`. See linkgit:git-remote[1] for more information.
-
-This is a valid thing to add to the examples section, although I suspect
-people would already know it when they encouter this page.
+diff --git a/builtin-apply.c b/builtin-apply.c
+index abe73a0..d80b231 100644
+--- a/builtin-apply.c
++++ b/builtin-apply.c
+@@ -3120,8 +3120,11 @@ int cmd_apply(int argc, const char **argv, const char *unused_prefix)
+ 			arg = prefix_filename(prefix, prefix_length, arg);
+ 
+ 		fd = open(arg, O_RDONLY);
+-		if (fd < 0)
+-			usage(apply_usage);
++		if (fd < 0) {
++			perror("Error opening patch");
++			return 1;
++		}
++
+ 		read_stdin = 0;
+ 		set_default_whitespace_mode(whitespace_option);
+ 		errs |= apply_patch(fd, arg, inaccurate_eof);
+-- 
+1.5.5.104.ge4331
