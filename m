@@ -1,82 +1,137 @@
-From: Shawn Bohrer <shawn.bohrer@gmail.com>
-Subject: [PATCH] git clean: Add test to verify directories aren't removed with a prefix
-Date: Sun, 13 Apr 2008 18:49:38 -0500
-Message-ID: <1208130578-24748-2-git-send-email-shawn.bohrer@gmail.com>
-References: <85fxtvj6y8.fsf_-_@lupus.strangled.net>
- <1208130578-24748-1-git-send-email-shawn.bohrer@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com,
-	Shawn Bohrer <shawn.bohrer@gmail.com>
-To: jobh@broadpark.no
-X-From: git-owner@vger.kernel.org Mon Apr 14 01:50:35 2008
+From: david@lang.hm
+Subject: Re: Reporting bugs and bisection
+Date: Sun, 13 Apr 2008 16:51:34 -0700 (PDT)
+Message-ID: <alpine.DEB.1.10.0804131546370.9318@asgard>
+References: <47FEADCB.7070104@rtr.ca> <20080413121831.d89dd424.akpm@linux-foundation.org> <20080413202118.GA29658@2ka.mipt.ru> <200804132233.50491.rjw@sisk.pl> <20080413205406.GA9190@2ka.mipt.ru> <48028830.6020703@earthlink.net>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
+Cc: Evgeniy Polyakov <johnpol@2ka.mipt.ru>,
+	"Rafael J. Wysocki" <rjw@sisk.pl>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Willy Tarreau <w@1wt.eu>, Tilman Schmidt <tilman@imap.cc>,
+	Valdis.Kletnieks@vt.edu, Mark Lord <lkml@rtr.ca>,
+	David Miller <davem@davemloft.net>, jesper.juhl@gmail.com,
+	yoshfuji@linux-ipv6.org, jeff@garzik.org,
+	linux-kernel <linux-kernel@vger.kernel.org>, git@vger.kernel.org,
+	netdev@vger.kernel.org
+To: Stephen Clark <sclark46@earthlink.net>
+X-From: netdev-owner@vger.kernel.org Mon Apr 14 01:57:03 2008
 connect(): Connection refused
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
+Return-path: <netdev-owner@vger.kernel.org>
+Envelope-to: linux-netdev-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JlBxy-0001KL-R1
-	for gcvg-git-2@gmane.org; Mon, 14 Apr 2008 01:50:35 +0200
+	id 1JlC4E-0002Ol-3l
+	for linux-netdev-2@gmane.org; Mon, 14 Apr 2008 01:57:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753196AbYDMXtr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Apr 2008 19:49:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753192AbYDMXtr
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 Apr 2008 19:49:47 -0400
-Received: from an-out-0708.google.com ([209.85.132.243]:52288 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753072AbYDMXtq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Apr 2008 19:49:46 -0400
-Received: by an-out-0708.google.com with SMTP id d31so353311and.103
-        for <git@vger.kernel.org>; Sun, 13 Apr 2008 16:49:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=43MCTexas1145jKMdbh3vhxYxHb2NoSHtGzC/l9wCeY=;
-        b=FbLWQClY2+lIEK5Uq9IEdP+tWdtTv7mWagvFmUH+Aot0kISx83ofrI+LecfZmTWmkrcV9nkj5LtubyDA3UxskvBd2RLJ0fLpxKIapAM3lf4YwsbOJxpjH2nkxhMlzPKtlRwq/CQ3jCyqHPiJ4m0iWYLK/f51xmgsUw6W6z3LyRI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=g13O5cT6QhozomB4nUSPcQnkgkXEURASRManJNlNEIwnPKAKAoyXtLWy/zgd39YoeXs9e/kr2DAlYvxfoCcjpN7Qtf5Nl6Izu9Vo+snnTATl7oxdXWPvP02kNCOuBgOoi7WiCy7GCUCmFEhSs+l7RiTa+tY4KL3p2u6Xzc2gVmA=
-Received: by 10.100.152.11 with SMTP id z11mr10967057and.18.1208130586041;
-        Sun, 13 Apr 2008 16:49:46 -0700 (PDT)
-Received: from lintop ( [70.112.149.232])
-        by mx.google.com with ESMTPS id i8sm2056165rng.3.2008.04.13.16.49.42
-        (version=SSLv3 cipher=OTHER);
-        Sun, 13 Apr 2008 16:49:44 -0700 (PDT)
-Received: by lintop (sSMTP sendmail emulation); Sun, 13 Apr 2008 18:49:43 -0500
-X-Mailer: git-send-email 1.5.5.106.g42c8b
-In-Reply-To: <1208130578-24748-1-git-send-email-shawn.bohrer@gmail.com>
-Sender: git-owner@vger.kernel.org
+	id S1754615AbYDMX4S (ORCPT <rfc822;linux-netdev-2@m.gmane.org>);
+	Sun, 13 Apr 2008 19:56:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757309AbYDMX4S
+	(ORCPT <rfc822;netdev-outgoing>); Sun, 13 Apr 2008 19:56:18 -0400
+Received: from mail.lang.hm ([64.81.33.126]:55919 "EHLO bifrost.lang.hm"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754615AbYDMX4Q (ORCPT <rfc822;netdev@vger.kernel.org>);
+	Sun, 13 Apr 2008 19:56:16 -0400
+Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
+	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id m3DNk4xT005974;
+	Sun, 13 Apr 2008 16:46:04 -0700
+X-X-Sender: dlang@asgard
+In-Reply-To: <48028830.6020703@earthlink.net>
+User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
+Sender: netdev-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79427>
+List-ID: <netdev.vger.kernel.org>
+X-Mailing-List: netdev@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79428>
 
-Signed-off-by: Shawn Bohrer <shawn.bohrer@gmail.com>
----
- t/t7300-clean.sh |    5 +++--
- 1 files changed, 3 insertions(+), 2 deletions(-)
+cross-posted to git for the suggestion at the bottom
 
-diff --git a/t/t7300-clean.sh b/t/t7300-clean.sh
-index afccfc9..a50492f 100755
---- a/t/t7300-clean.sh
-+++ b/t/t7300-clean.sh
-@@ -75,8 +75,8 @@ test_expect_success 'git-clean src/ src/' '
- 
- test_expect_success 'git-clean with prefix' '
- 
--	mkdir -p build docs &&
--	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
-+	mkdir -p build docs src/test &&
-+	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so src/test/1.c &&
- 	(cd src/ && git-clean) &&
- 	test -f Makefile &&
- 	test -f README &&
-@@ -84,6 +84,7 @@ test_expect_success 'git-clean with prefix' '
- 	test -f src/part2.c &&
- 	test -f a.out &&
- 	test ! -f src/part3.c &&
-+	test -f src/test/1.c &&
- 	test -f docs/manual.txt &&
- 	test -f obj.o &&
- 	test -f build/lib.so
--- 
-1.5.5.106.g42c8b
+On Sun, 13 Apr 2008, Stephen Clark wrote:
+
+> Evgeniy Polyakov wrote:
+>> On Sun, Apr 13, 2008 at 10:33:49PM +0200, Rafael J. Wysocki (rjw@sisk.pl) 
+>> wrote:
+>>> Things like this are very disappointing and have a very negative impact on 
+>>> bug
+>>> reporters.  We should do our best to avoid them.
+>> 
+>> Shit happens. This is a matter of either bug report or those who were in
+>> the copy list. There are different people and different situations, in
+>> which they do not reply.
+>> 
+> Well less shit would happen if developers would take the time to at least 
+> test their patches before they were submitted. It like we will just have the 
+> poor user do our testing for us. What kind of testing do developers do. I 
+> been a linux user and have followed the LKML for a number of years and have 
+> yet to see
+> any test plans for any submitted patches.
+
+I've been reading LKML for 11 years now, I've tested kernels and reported 
+a few bugs along the way.
+
+the expectation is that the submitter should have tested the patches 
+before submitting them (where hardware allows). but that "where hardware 
+allows" is a big problem. so many issues are dependant on hardwre that 
+it's not possible to test everything.
+
+there are people who download, compile and test the tree nightly (with 
+farms of machines to test different configs), but they can't catch 
+everything.
+
+expecting the patches to be tested to the point where there are no bugs is 
+unreasonable.
+
+bisecting is a very powerful tool, but I do think that sometimes 
+developers lean on it a bit much. taking the attitude (as some have) that 
+'if the reporter can't be bothered to do a bisection I can't be bothered 
+to deal with the bug' is going way too far.
+
+if a bug can be reproduced reliably on a test system then bisecting it may 
+reveal the patch that introduced or unmasked the bug (assuming that there 
+aren't other problems along the way), but if the bug takes a long time to 
+show up after a boot, or only happens under production loads, bisecting it 
+may not be possible. that doesn't mean that the bug isn't real, it just 
+means that the user is going to have to stick with an old version until 
+there is a solution or work-around.
+
+even in the hard-to-test situations, the reporter is usually able to test 
+a few fixes, but there's a big difference between going to management and 
+saying "the kernel guru's think that this will help, can we test it this 
+weekend" 2-3 times and doing a bisection that will take 10-15 cycles to 
+find the problem.
+
+it's very reasonable to ask the reporter if they can bisect the problem, 
+but if they say that they can't, declaring that they are out of luck is 
+not reasonable, it just means that it's going to take more thinking to 
+find the problem instead of being able to let the mechanical bisect 
+process narrow things down for you. it may mean that the developer will 
+need to make a patch to instrament an old (working) kernel that has 
+minimal impact on that kernel so that the reporter can run this to gather 
+information about what the load is so that the developer can try to 
+simulate it on a new (non-working) kernel
+
+in theory everyone has a test environment that lets them simulate 
+everything in their production envrionment. in practice this is only true 
+at the very low end (where it's easy to do) and the very high end (where 
+it's so critical that it's done no matter how much it costs). Everyone 
+else has a test environment that can test most things, but not everything. 
+As such when they run into a problem they may not be able to do lots of 
+essentially random testing.
+
+elsewhere in this thread someone said that the pre-git way was to do a 
+manual bisect where the developer would send patches backing out specific 
+changes to find the problem. one big difference between tat and bisecting 
+the problem is that the manual process was focused on the changes in the 
+area that is suspected of causing the problem, while the git bisect 
+process goes after all changes. this makes it much more likely that the 
+tester will run into unrelated problems along the way.
+
+I wonder if it would be possible to make a variation of git bisect that 
+only looked at a subset of the tree when picking bisect points (if you are 
+looking for a e1000 bug, testing bisect points that haven't changed that 
+driver won't help you for example). If this can be done it would speed up 
+the reporters efforts, but will require more assistance from the 
+developers (who would need to tell the reporters what subtrees to test) so 
+it's a tradeoff of efficiancy vs simplicity.
+
+David Lang
