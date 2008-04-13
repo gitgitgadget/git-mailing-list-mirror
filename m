@@ -1,117 +1,103 @@
-From: Thomas Koch <thomas@koch.ro>
-Subject: Forking a CVS project
-Date: Sun, 13 Apr 2008 10:19:43 +0200
-Organization: Young Media Concepts
-Message-ID: <200804131019.43201.thomas@koch.ro>
+From: Teemu Likonen <tlikonen@iki.fi>
+Subject: Re: Friendly refspecs
+Date: Sun, 13 Apr 2008 12:31:02 +0300
+Message-ID: <20080413093102.GC12107@mithlond.arda.local>
+References: <20080409101428.GA2637@elte.hu> <20080409145758.GB20874@sigill.intra.peff.net> <20080409200836.GA19248@mithlond> <20080409203453.GA10370@sigill.intra.peff.net> <20080409222500.GB19248@mithlond> <20080409225112.GB12103@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 13 11:05:52 2008
+X-From: git-owner@vger.kernel.org Sun Apr 13 11:32:08 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jky9k-00007w-Nm
-	for gcvg-git-2@gmane.org; Sun, 13 Apr 2008 11:05:50 +0200
+	id 1JkyZD-0006s8-Vu
+	for gcvg-git-2@gmane.org; Sun, 13 Apr 2008 11:32:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754412AbYDMJFE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Apr 2008 05:05:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753986AbYDMJFE
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 Apr 2008 05:05:04 -0400
-Received: from koch.ro ([195.34.83.107]:52203 "EHLO
-	ve825703057.providerbox.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1754297AbYDMJFB (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 13 Apr 2008 05:05:01 -0400
-X-Greylist: delayed 2705 seconds by postgrey-1.27 at vger.kernel.org; Sun, 13 Apr 2008 05:05:01 EDT
-Received: from 231-56.62-81.cust.bluewin.ch ([81.62.56.231] helo=jona.local)
-	by ve825703057.providerbox.net with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <thomas@koch.ro>)
-	id 1JkxRA-00023A-HB
-	for git@vger.kernel.org; Sun, 13 Apr 2008 10:19:48 +0200
-User-Agent: KMail/1.9.9
+	id S1754767AbYDMJbI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Apr 2008 05:31:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754380AbYDMJbI
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 Apr 2008 05:31:08 -0400
+Received: from pne-smtpout3-sn1.fre.skanova.net ([81.228.11.120]:42336 "EHLO
+	pne-smtpout3-sn1.fre.skanova.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752478AbYDMJbH (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 13 Apr 2008 05:31:07 -0400
+Received: from mithlond.arda.local (80.220.180.181) by pne-smtpout3-sn1.fre.skanova.net (7.3.129)
+        id 47A78857003DECCC for git@vger.kernel.org; Sun, 13 Apr 2008 11:31:04 +0200
+Received: from dtw by mithlond.arda.local with local (Exim 4.63)
+	(envelope-from <tlikonen@iki.fi>)
+	id 1JkyYA-0003KC-P0
+	for git@vger.kernel.org; Sun, 13 Apr 2008 12:31:02 +0300
 Content-Disposition: inline
-X-Spam_score: -1.6
-X-Spam_score_int: -15
-X-Spam_bar: -
-X-Spam_report: Spam detection software, running on the system "ve825703057.providerbox.net", has
-	identified this incoming email as possible spam.  The original message
-	has been attached to this so you can view it (if it isn't spam) or label
-	similar future email.  If you have any questions, see
-	the administrator of that system for details.
-	Content preview:  Good day everybody, I'm a new disciple of GIT and eager to
-	learn. My current problem is, that I'd like to track an old CVS project and
-	make my own fork via GIT. The CVS project in question is horde[1]. My first
-	attempt looked like: [...] 
-	Content analysis details:   (-1.6 points, 5.0 required)
-	pts rule name              description
-	---- ---------------------- --------------------------------------------------
-	-1.8 ALL_TRUSTED            Passed through trusted hosts only via SMTP
-	1.9 TVD_RCVD_IP            TVD_RCVD_IP
-	-2.6 
+In-Reply-To: <20080409225112.GB12103@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79398>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79399>
 
-Good day everybody,
+Jeff King wrote (2008-04-09 18:51 -0400):
 
-I'm a new disciple of GIT and eager to learn.
+> On Thu, Apr 10, 2008 at 01:25:00AM +0300, Teemu Likonen wrote:
+> 
+> > Another thing I spoke of was this refs/ stuff. I know my way around
+> > with them now, so maybe they are not actually confusing to me
+> > anymore. It's just that I have noticed a pattern: I always use
+> > refs/heads/... in certain places and refs/remotes/ in certain
+> > places. If such a pattern is very common (well, I don't know if it
+> > is) one starts to think that maybe the pattern can/should be hidden
+> > and made part of the tool. Just thoughts.
+> 
+> I almost never use refs/remotes/ or refs/heads/. Some effort has been
+> put into doing the right thing with partial refnames (which you can of
+> course override by being more specific). Do you have specific examples
+> of where you use the full refname? I suspect it is either not required
+> (and documentation may be out of date), or it is a bug we could fix.
+> :)
 
-My current problem is, that I'd like to track an old CVS project and make my 
-own fork via GIT. The CVS project in question is horde[1]. My first attempt 
-looked like:
+In real work I have used refs/heads/...:refs/remotes/... only once or
+maybe twice (I just quite recently started using Git). But when
+I studied Git and the workflows it supports I tried all kinds of
+fetching, pulling and pushing, back and forth, between test repos. There
+I used refs/ paths a lot, almost all the time actually. At first it was
+very much just trying to see how they work and this is where I found
+this common pattern: local refs start with refs/heads/ and remote
+tracking ones with refs/remotes/ . Thoughts like "why not simplify them,
+like L: for local and R: for remote" (or something) started to develop.
 
-mkdir horde
-cd horde
-export CVSROOT=":pserver:cvsread@anoncvs.horde.org:/repository"
-git-cvsimport -v -C. .
+Now it seems that I have been too much attached to the full refspec
+form. My guide have been the config remote.<name>.fetch as "git remote
+add" adds those long refspecs. Now I learnt that almost all refspecs can
+be written as "branch:another" or "branch:remotes/another" for example.
+So the "friendly refspecs" are pretty much already there! Well, I've
+been stupid. :)
 
-But this did not work. I only got millions of lines like
+(I understand that in real work when constantly dealing with same remote
+repos one just adds a remote config and can forget about URLs and
+probably most of the refspecs too.)
 
-WARNING: file /repository/horde/templates/index/frames_index.inc doesn't match 
-strip_path /repository/CVSROOT/cfg.p. ignoring
+Ok, this was partly an RTFM error but even after reading man pages of
+fetch, pull and push it isn't quite clear how to use these short and
+nice and friendly refspecs. I thought about it and decided to add some
+more examples to fetch manual (see my patch in the next message). My
+English may not be manual-writing quality but I wanted to do something
+useful anyway. Somebody needs to proof read my text though. Of course
+there may be some inaccuracies too. Anyway, I think that concrete
+examples in manuals help people to understand Git better.
 
-So I imported each module separately:
+There is still one thing (at least) that I don't quite understand. It's
+about "git push". When I do
 
-MODULES="agora
-ansel
-chora
-..."
+  $ git push <remote> <branch>
 
-for MODULE in $MODULES
-do
-    git-cvsimport -v -C$MODULE $MODULE
-done
+the refs/heads/<branch> is updated or created on the remote side. But if
+I do
 
-This took like 2 or 3 days and now I have one git repository for each module. 
-But I'd rather have one big git repository containing all modules.
+  $ git push <remote> <branch1>:<branch2>
 
-Could somebody give me a hint on how this could be achieved, please?
-
-I also don't know CVS at all, because I started already with SVN. And I really 
-don't want to learn CVS!
-
-How do I keep track of the CVS repository after the import and merge the 
-changes into my fork? Is there a way to not import the whole history, but to 
-start my GIT repo with the current snapshot? Would that speed up the import?
-
-[1] http://www.horde.org/source/using.php
-
-Best regards,
--- 
-Thomas Koch, Software Developer
-
-Young Media Concepts GmbH
-Sonnenstr. 4
-CH-8280 Kreuzlingen
-Switzerland
-
-Tel    +41 (0)71 / 508 24 86
-Fax    +41 (0)71 / 560 53 89
-Mobile +49 (0)170 / 753 89 16
-Web    www.ymc.ch
+the refs/heads/<branch2> is not automatically created. Why there is need
+to say "<branch1>:refs/heads/<branch2>" to make it work if <branch2>
+does not exist? The 'git push' manual says something vague about branch
+not matching (?). What does it mean?
