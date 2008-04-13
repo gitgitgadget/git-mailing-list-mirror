@@ -1,66 +1,77 @@
-From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
-Subject: [StGit PATCH] emacs mode: handle "stg status" output with #
-Date: Sun, 13 Apr 2008 18:48:31 +0200
-Message-ID: <20080413164818.8926.15902.stgit@yoghurt>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] Calculate lines changed for cvs log command
+Date: Sun, 13 Apr 2008 09:59:29 -0700 (PDT)
+Message-ID: <m3zlrxsnbt.fsf@localhost.localdomain>
+References: <3F0821AA-C11D-4C42-A415-D346A7CD89F8@nocrew.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	David =?utf-8?q?K=C3=A5gedal?= <davidk@lysator.liu.se>
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 13 18:49:35 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Fredrik Noring <noring@nocrew.org>
+X-From: git-owner@vger.kernel.org Sun Apr 13 19:00:20 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jl5OW-0001on-C1
-	for gcvg-git-2@gmane.org; Sun, 13 Apr 2008 18:49:32 +0200
+	id 1Jl5Yv-00056l-0o
+	for gcvg-git-2@gmane.org; Sun, 13 Apr 2008 19:00:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758611AbYDMQsi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 13 Apr 2008 12:48:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758409AbYDMQsi
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 Apr 2008 12:48:38 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2397 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758504AbYDMQsh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Apr 2008 12:48:37 -0400
-Received: from localhost ([127.0.0.1] helo=[127.0.1.1])
-	by diana.vm.bytemark.co.uk with esmtp (Exim 3.36 #1 (Debian))
-	id 1Jl5NX-00008G-00; Sun, 13 Apr 2008 17:48:31 +0100
-User-Agent: StGIT/0.14.2
+	id S1754461AbYDMQ7c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Apr 2008 12:59:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754309AbYDMQ7c
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 Apr 2008 12:59:32 -0400
+Received: from fg-out-1718.google.com ([72.14.220.155]:43425 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753415AbYDMQ7b (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Apr 2008 12:59:31 -0400
+Received: by fg-out-1718.google.com with SMTP id l27so1221333fgb.17
+        for <git@vger.kernel.org>; Sun, 13 Apr 2008 09:59:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
+        bh=zpMCnsYhcMNSuzwfuAfD5eO7omvnijNjcN6vOUSC4m4=;
+        b=O47eg3OzOAhnuJCrUxBqENDPxUDq+sV1aPwcLLqMhiNZyW9suD3/vD03hLUXFdFZ3NZ62qhoRPpH5RQtVpSC74t30opB2lVRCanxpnmiBDS2F80uOSijJfeqA1v2LeEve0CKa9I4qFLqRLjGgXwJb5E2RtGbqW0Xw8zCsZwsSls=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
+        b=u+tzCzR8c5SNa9SxjWEF98lPotbB3hoxP5lV1dRWnjQb1K/TWmhEgVpyE4Sah6nvFxLA36GmcuZupC5c0Bw5baOXJ2b8lvQh/5zd3EZnaagkaMutCU3qYpvYG1EjknQCysAGOPYyxvsNSecPPM6rcTco0Afz9CCb+P3G8Dworhg=
+Received: by 10.86.68.20 with SMTP id q20mr11233195fga.59.1208105970166;
+        Sun, 13 Apr 2008 09:59:30 -0700 (PDT)
+Received: from localhost.localdomain ( [83.8.231.63])
+        by mx.google.com with ESMTPS id c22sm7989705ika.3.2008.04.13.09.59.28
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 13 Apr 2008 09:59:29 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m3DGxQcs005591;
+	Sun, 13 Apr 2008 18:59:26 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m3DGxJpY005582;
+	Sun, 13 Apr 2008 18:59:19 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <3F0821AA-C11D-4C42-A415-D346A7CD89F8@nocrew.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79411>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79412>
 
-Recently, "stg status" started separating patch names and descriptions
-with # rather than |. This broke some parts of the emacs mode, such as
-coloring and patch selection.
+Fredrik Noring <noring@nocrew.org> writes:
 
-This patch makes the emacs mode accept either delimiter.
+> (My mailer destroys inline patches, so I'm attaching it. Sorry about
+> that.)
 
-Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
+Could you please attach it as 1.) attachement=inline if possible, to
+have them displayed along the email; 2.) use text/plain mimetype, not
+application/octet-stream (you might need to change patch extension
+from *.patch to *.txt; you can change default extension of files
+generated by git-format-patch via format.suffix configuration
+variable), and what is tied with it 3.) use Transfer-Encoding: 8bit
+(or something like that), not base64, and preferably not
+quoted-printable?
 
----
-
- contrib/stgit.el |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-
-diff --git a/contrib/stgit.el b/contrib/stgit.el
-index ba6df6a..339ef13 100644
---- a/contrib/stgit.el
-+++ b/contrib/stgit.el
-@@ -107,7 +107,7 @@ Argument DIR is the repository path."
-         (cond ((looking-at "Branch: \\(.*\\)")
-                (put-text-property (match-beginning 1) (match-end 1)
-                                   'face 'bold))
--              ((looking-at "\\([>+-]\\)\\( \\)\\([^ ]+\\) *| \\(.*\\)"=
-)
-+              ((looking-at "\\([>+-]\\)\\( \\)\\([^ ]+\\) *[|#] \\(.*\=
-\)")
-                (let ((state (match-string 1))
-                      (patchsym (intern (match-string 3))))
-                  (put-text-property
+Or change your mailer (or configure it), or use git-send-email.
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
