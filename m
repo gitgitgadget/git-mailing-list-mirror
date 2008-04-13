@@ -1,102 +1,95 @@
 From: =?iso-8859-1?Q?J=F6rg?= Sommer <joerg@alea.gnuu.de>
-Subject: Re: [PATCH/RFC 01/10] Teach rebase interactive the mark command
-Date: Sun, 13 Apr 2008 18:50:11 +0200
-Message-ID: <20080413165011.GB3179@alea.gnuu.de>
-References: <7vabkoufzq.fsf@gitster.siamese.dyndns.org> <1207785521-27742-1-git-send-email-joerg@alea.gnuu.de> <1207785521-27742-2-git-send-email-joerg@alea.gnuu.de> <7vskxsneau.fsf@gitster.siamese.dyndns.org> <20080412101110.GD31356@alea.gnuu.de> <20080413035648.GY10274@spearce.org>
+Subject: Re: [PATCH/RFC 06/10] Unify the lenght of $SHORT* and the commits
+	in the TODO list
+Date: Sun, 13 Apr 2008 18:39:50 +0200
+Message-ID: <20080413163950.GA3179@alea.gnuu.de>
+References: <1207785521-27742-1-git-send-email-joerg@alea.gnuu.de> <1207785521-27742-2-git-send-email-joerg@alea.gnuu.de> <1207785521-27742-3-git-send-email-joerg@alea.gnuu.de> <1207785521-27742-4-git-send-email-joerg@alea.gnuu.de> <1207785521-27742-5-git-send-email-joerg@alea.gnuu.de> <1207785521-27742-6-git-send-email-joerg@alea.gnuu.de> <1207785521-27742-7-git-send-email-joerg@alea.gnuu.de> <7vej9cndqp.fsf@gitster.siamese.dyndns.org> <20080412091345.GA31356@alea.gnuu.de> <7v63umff7r.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="eAbsdosE1cNLO4uF"
-Cc: Junio C Hamano <junio@pobox.com>, git@vger.kernel.org,
-	Johannes.Schindelin@gmx.de
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Apr 14 02:06:02 2008
+	protocol="application/pgp-signature"; boundary="J/dobhs11T7y2rNN"
+Cc: git@vger.kernel.org, Johannes.Schindelin@gmx.de
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Apr 14 02:05:59 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JlCCL-0003fZ-Lu
-	for gcvg-git-2@gmane.org; Mon, 14 Apr 2008 02:05:49 +0200
+	id 1JlCCk-0003fZ-2W
+	for gcvg-git-2@gmane.org; Mon, 14 Apr 2008 02:05:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753321AbYDNAE2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Apr 2008 20:04:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753317AbYDNAE2
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 Apr 2008 20:04:28 -0400
-Received: from banki.eumelnet.de ([83.246.114.63]:1405 "EHLO uucp.gnuu.de"
+	id S1753338AbYDNAEb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Apr 2008 20:04:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753304AbYDNAE3
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 Apr 2008 20:04:29 -0400
+Received: from banki.eumelnet.de ([83.246.114.63]:1406 "EHLO uucp.gnuu.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753084AbYDNAE1 (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1753251AbYDNAE1 (ORCPT <rfc822;git@vger.kernel.org>);
 	Sun, 13 Apr 2008 20:04:27 -0400
 Received: by uucp.gnuu.de (Postfix, from userid 10)
-	id E133248809D; Mon, 14 Apr 2008 02:04:24 +0200 (CEST)
+	id 74AB248809E; Mon, 14 Apr 2008 02:04:24 +0200 (CEST)
 Received: from ibook.localnet ([192.168.0.5] helo=alea.gnuu.de)
 	by alea.gnuu.de with esmtp (Exim 4.63)
 	(envelope-from <joerg@alea.gnuu.de>)
-	id 1JlCA1-0005nn-A4; Mon, 14 Apr 2008 02:03:05 +0200
+	id 1JlCA5-0005nn-Un; Mon, 14 Apr 2008 02:03:06 +0200
 Received: from joerg by alea.gnuu.de with local (Exim 4.69)
 	(envelope-from <joerg@alea.gnuu.de>)
-	id 1Jl5P9-0001Mb-7F; Sun, 13 Apr 2008 18:50:11 +0200
+	id 1Jl5F8-0001MA-1H; Sun, 13 Apr 2008 18:39:50 +0200
 Content-Disposition: inline
-In-Reply-To: <20080413035648.GY10274@spearce.org>
+In-Reply-To: <7v63umff7r.fsf@gitster.siamese.dyndns.org>
 User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79429>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79430>
 
 
---eAbsdosE1cNLO4uF
+--J/dobhs11T7y2rNN
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hi Shawn,
+Hallo,
 
-Shawn O. Pearce schrieb am Sat 12. Apr, 23:56 (-0400):
-> Jrg Sommer <joerg@alea.gnuu.de> wrote:
-> > > Wouldn't
-> > >=20
-> > > 	pick 5cc8f37 (init: show "Reinit" message even in ...)
-> > > 	mark 1
-> > > 	pick 18d077c (quiltimport: fix misquoting of parse...)
-> > > 	mark 2
-> > > 	reset 1
-> >=20
-> > =E2=80=9Creset 18d077c~2=E2=80=9D or =E2=80=9Creset some-tag=E2=80=9D o=
-r =E2=80=9Creset my-branch~12=E2=80=9D
-> >=20
-> > >         merge #2
-> > >=20
-> > > be easier for people?
-> >=20
-> > I don't know. Using the special sign everywhere a mark is used looks mo=
-re
-> > consistent to me. The only case where it might be omitted is the mark
-> > command, because it only uses marks.
+Junio C Hamano schrieb am Sat 12. Apr, 23:20 (-0700):
+> J=C3=B6rg Sommer <joerg@alea.gnuu.de> writes:
 >=20
-> Why not use the mark syntax that fast-import uses?
+> > =E2=80=9CThis makes it easier to test for equality of a commit in the T=
+ODO list
+> > and one of SHORTUPSTREAM, SHORTHEAD or SHORTONTO.=E2=80=9D
+>=20
+> "Equality testing?" --- that makes me worried.  short=3D7 does not chomp
+> them at 7 but only tells rev-parse to use at least 7.  You may get 8 or
+> more if there are other objects that share the same prefix when you get
+> them.
+>=20
+> Perhaps by forcing "at least 7" everywhere you are getting consistent
+> result that makes them easier to compare.
 
-I didn't know it.
+That's what I want.
 
-> In fast-import we use ":n" anytime we need to refer to a mark, e.g.
-> ":1" or ":5".
+> But considering that this is a candidate for a general mechanism to
+> eventual grow into the git-sequencer, and that we expect to have richer,
+> smarter, and/or more complex set of tools that feeds you the TODO list,
+> I'd feel safer if the internal comparison used to determine which one
+> commit the user meant in his TODO file is robust and does not rely on
+> where the abbreviated object name was chomped at.
 
-Currently, I don't restrict the mark to be a number. It can anything that
-is a valid ref. Should I restrict it?
+I use it one time while building the TODO list given to the editor. I've
+to replace $UPSTREAM with $ONTO everywhere $UPSTREAM occures.
 
-And how do you handle the :/ syntax? =E2=80=9Creset :/Bla=E2=80=9D is than =
-not valid.
-Mmm, I'll add an exception for :/.
+Do you still have a bad feeling? I can replace all tests by
 
-Except of this, I prefer to use the colon to be much closer to the syntax
-of fast-import.
+  test "$(git rev-parse $a)" =3D "$(git rev-parse $b)"
 
 Bye, J=C3=B6rg.
 --=20
-Der Wunsch, klug zu erscheinen, verhindert oft, es zu werden.
-    	    	    			      (Francois de la Rochefoucauld)
+Was man m=C3=BChelos erreichen kann, ist gew=C3=B6hnlich nicht der M=C3=BCh=
+e wert,
+erreicht zu werden.
 
---eAbsdosE1cNLO4uF
+--J/dobhs11T7y2rNN
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: Digital signature http://en.wikipedia.org/wiki/OpenPGP
 Content-Disposition: inline
@@ -104,9 +97,9 @@ Content-Disposition: inline
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.6 (GNU/Linux)
 
-iD8DBQFIAjnDwe0mZwH1VIARAv+yAJsG3RBePUSYSuCyX+J5QrH6spRyvQCePQ09
-CYyTzCwIefbMPp56sGQLuHA=
-=dPWu
+iD8DBQFIAjdVwe0mZwH1VIARAjvQAJkBdYocfvWqxOlkdpVXF15evo832wCggZ9D
+NkclP2ela3PWxtGE17E4kjQ=
+=l/uy
 -----END PGP SIGNATURE-----
 
---eAbsdosE1cNLO4uF--
+--J/dobhs11T7y2rNN--
