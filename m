@@ -1,91 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] Document -w option to shortlog
-Date: Sat, 12 Apr 2008 15:37:57 -0700
-Message-ID: <7v1w5ahf7e.fsf@gitster.siamese.dyndns.org>
-References: <E874634E-9746-4916-81F3-433C2A71BDC7@nocrew.org>
+From: carbonated beverage <ramune@net-ronin.org>
+Subject: Re: Test suite failures due to Error.pm issues.
+Date: Sat, 12 Apr 2008 20:04:57 -0700
+Message-ID: <20080413030457.GA12747@net-ronin.org>
+References: <20080408221853.GA3819@net-ronin.org> <b77c1dce0804090134j514811d7mbffdc73dee5a90b7@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Fredrik Noring <noring@nocrew.org>
-X-From: git-owner@vger.kernel.org Sun Apr 13 00:39:13 2008
+To: Rafael Garcia-Suarez <rgarciasuarez@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 13 05:06:17 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JkoNM-0006DW-7u
-	for gcvg-git-2@gmane.org; Sun, 13 Apr 2008 00:39:12 +0200
+	id 1JksXo-0002RQ-KP
+	for gcvg-git-2@gmane.org; Sun, 13 Apr 2008 05:06:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756751AbYDLWiG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Apr 2008 18:38:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756715AbYDLWiF
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Apr 2008 18:38:05 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:37878 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753448AbYDLWiE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Apr 2008 18:38:04 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id C7BBD229C;
-	Sat, 12 Apr 2008 18:38:01 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 24037229B; Sat, 12 Apr 2008 18:37:59 -0400 (EDT)
-In-Reply-To: <E874634E-9746-4916-81F3-433C2A71BDC7@nocrew.org> (Fredrik
- Noring's message of "Sat, 12 Apr 2008 15:05:25 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753459AbYDMDFN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Apr 2008 23:05:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753403AbYDMDFN
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Apr 2008 23:05:13 -0400
+Received: from brak.cowlabs.com ([208.96.51.45]:48023 "EHLO brak.cowlabs.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753356AbYDMDFM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Apr 2008 23:05:12 -0400
+Received: from prophet.net-ronin.org (S0106000ea6c7835e.no.shawcable.net [70.67.106.241])
+	by brak.cowlabs.com (8.14.1/8.14.1) with ESMTP id m3D34xU1488657
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Sun, 13 Apr 2008 03:05:00 GMT
+Received: from ramune by prophet.net-ronin.org with local (Exim 4.63)
+	(envelope-from <ramune@net-ronin.org>)
+	id 1JksWX-0003MF-Uf; Sat, 12 Apr 2008 20:04:57 -0700
+Content-Disposition: inline
+In-Reply-To: <b77c1dce0804090134j514811d7mbffdc73dee5a90b7@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79386>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79387>
 
-Noticed by Fredrik Noring.
+(Was on the road for work, so couldn't reply till now)
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/git-shortlog.txt |   10 ++++++++--
- builtin-shortlog.c             |    2 +-
- 2 files changed, 9 insertions(+), 3 deletions(-)
+> The private Error file is not installed if perl/Makefile.PL detects
+> than an Error.pm recent enough on your system. Do you actually have
+> perl/blib/lib/Error.pm ? Try to run (cd perl; make clean; cd ..; make)
+> and try the tests again.
 
-diff --git a/Documentation/git-shortlog.txt b/Documentation/git-shortlog.txt
-index c775257..d7cb4c0 100644
---- a/Documentation/git-shortlog.txt
-+++ b/Documentation/git-shortlog.txt
-@@ -8,8 +8,8 @@ git-shortlog - Summarize 'git log' output
- SYNOPSIS
- --------
- [verse]
--git-log --pretty=short | 'git-shortlog' [-h] [-n] [-s] [-e]
--git-shortlog [-n|--numbered] [-s|--summary] [-e|--email] [<committish>...]
-+git-log --pretty=short | 'git-shortlog' [-h] [-n] [-s] [-e] [-w]
-+git-shortlog [-n|--numbered] [-s|--summary] [-e|--email] [-w[<width>[,<indent1>[,<indent2>]]]] [<committish>...]
- 
- DESCRIPTION
- -----------
-@@ -35,6 +35,12 @@ OPTIONS
- -e, \--email::
- 	Show the email address of each author.
- 
-+-w[<width>[,<indent1>[,<indent2>]]]::
-+	Linewrap the output by wrapping each line at `width`.  The first
-+	line of each entry is indented by `indent1` spaces, and the second
-+	and subsequent lines are indented by `indent2` spaces. `width`,
-+	`indent1`, and `indent2` default to 76, 6 and 9 respectively.
-+
- FILES
- -----
- 
-diff --git a/builtin-shortlog.c b/builtin-shortlog.c
-index f08095b..01cfd7b 100644
---- a/builtin-shortlog.c
-+++ b/builtin-shortlog.c
-@@ -8,7 +8,7 @@
- #include "mailmap.h"
- 
- static const char shortlog_usage[] =
--"git-shortlog [-n] [-s] [-e] [<commit-id>... ]";
-+"git-shortlog [-n] [-s] [-e] [-w] [<commit-id>... ]";
- 
- static char *common_repo_prefix;
- static int email;
+ramune/lycaeum:git: locate Error.pm
+/usr/local/stow/git-1.5.4.5/share/perl/5.8.8/Error.pm
+/usr/share/perl5/Debconf/Element/Dialog/Error.pm
+/usr/share/perl5/Debconf/Element/Editor/Error.pm
+/usr/share/perl5/Debconf/Element/Gnome/Error.pm
+/usr/share/perl5/Debconf/Element/Kde/Error.pm
+/usr/share/perl5/Debconf/Element/Noninteractive/Error.pm
+/usr/share/perl5/Debconf/Element/Teletype/Error.pm
+/usr/share/perl5/Debconf/Element/Web/Error.pm
+ramune/lycaeum:git: 
+
+So... there's Error.pm files around, but I remember now having to copy it
+over for previous versions of git.  Reporting it slipped my mind until now
+(sorry).
+
+After the:
+ cd perl
+ make clean
+ cd ..
+ make -j4
+ make test
+
+when git 1.5.4.5 is still in /usr/local/stow/git-1.5.4.5 and stow'd to
+/usr/local, it passes.  So it looks like it was picking up the previous
+Error.pm installed in the git directory from the previous installation.
+
+So when it was stow -D'd, and the new git installed and stow'd, the Error.pm
+went away (also, when the old git was stow -D'd before running the test).
+
+Not sure what the right way to handle this is.  I may just make a note to
+always copy over Error.pm, if it won't change in the git source.
+
+-- DN
+Daniel
