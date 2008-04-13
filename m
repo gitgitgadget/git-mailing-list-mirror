@@ -1,98 +1,152 @@
-From: Fredrik Noring <noring@nocrew.org>
-Subject: [PATCH] cvsserver: Removing leading and trailing newlines for "cvs log"
-Date: Sun, 13 Apr 2008 12:54:54 +0200
-Message-ID: <CC1E4EF8-9A0A-4463-8704-18849457DC69@nocrew.org>
-Mime-Version: 1.0 (Apple Message framework v919.2)
-Content-Type: multipart/mixed; boundary=Apple-Mail-48--3855942
-Cc: gitster@pobox.com
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH (resend)] gitweb: Fix 'history' view for deleted files with
+	history
+Date: Sun, 13 Apr 2008 14:12:15 +0200
+Message-ID: <20080413121018.3951.45328.stgit@localhost.localdomain>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 13 12:56:16 2008
+X-From: git-owner@vger.kernel.org Sun Apr 13 14:19:44 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JkzsZ-0003p5-TJ
-	for gcvg-git-2@gmane.org; Sun, 13 Apr 2008 12:56:12 +0200
+	id 1Jl1BL-0000Hk-OW
+	for gcvg-git-2@gmane.org; Sun, 13 Apr 2008 14:19:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755126AbYDMKzA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Apr 2008 06:55:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755173AbYDMKzA
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 Apr 2008 06:55:00 -0400
-Received: from mail.visit.se ([85.194.0.110]:42332 "EHLO mail.visit.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755100AbYDMKy7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Apr 2008 06:54:59 -0400
-Received: by mail.visit.se (Postfix, from userid 503)
-	id 5F22936E01AF; Sun, 13 Apr 2008 12:55:10 +0200 (CEST)
-Received: from [10.0.1.2] (cust.dsl-fiber-lan.snet.lk.85.194.37.51.visit.se [85.194.37.51])
-	by mail.visit.se (Postfix) with ESMTP id 8A7CB36E01AE;
-	Sun, 13 Apr 2008 12:55:06 +0200 (CEST)
-X-Mailer: Apple Mail (2.919.2)
-X-Spam-Checker-Version: SpamAssassin 3.0.6 (2005-12-07) on mail.visit.se
-X-Spam-Level: 
-X-Spam-Status: No, score=-5.9 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00 
-	autolearn=ham version=3.0.6
+	id S1754442AbYDMMSn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Apr 2008 08:18:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755477AbYDMMSn
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 Apr 2008 08:18:43 -0400
+Received: from fg-out-1718.google.com ([72.14.220.159]:48860 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754406AbYDMMSm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Apr 2008 08:18:42 -0400
+Received: by fg-out-1718.google.com with SMTP id l27so1142309fgb.17
+        for <git@vger.kernel.org>; Sun, 13 Apr 2008 05:18:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:from:subject:to:date:message-id:user-agent:mime-version:content-type:content-transfer-encoding;
+        bh=HOjKcMGgN6Q1Rlym901yCUS6jBVu3DFBbFVNSgEvmEg=;
+        b=nhmGbUjqXAddAO4bz0jJb2z1sS1d0HnKa1GC1yFJ81w5ik68L0dnjcVrwd5YmBblX/s9kdCAksEq3IkhzF6DuZscGhG6kAa0vXFgznFdRF+7lJfcSrmD5lrYI8pG+gI7tlVixBcq/BZXPnDi4Nvn6nPa6EMJnce4ubBKRYLfiuY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:subject:to:date:message-id:user-agent:mime-version:content-type:content-transfer-encoding;
+        b=CPmBKW4V5pVqvUB3so5x5D38BsxDAeLrwqLpKRtyVBywKXuj7XB8O+djfAXVxIeXrGClsBBEoioLG2moNixBllsOkV0GUBhqlS6UWo5+1QI7lgPP4PrHYzvVud68Xb50/LmKANhL/CdTajQCOHkdJdWoyTFBl6NmYWALMdY0blM=
+Received: by 10.86.89.4 with SMTP id m4mr10741506fgb.45.1208088742985;
+        Sun, 13 Apr 2008 05:12:22 -0700 (PDT)
+Received: from localhost.localdomain ( [83.8.231.63])
+        by mx.google.com with ESMTPS id c22sm7670983ika.3.2008.04.13.05.12.19
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 13 Apr 2008 05:12:21 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m3DCCFNE003990
+	for <git@vger.kernel.org>; Sun, 13 Apr 2008 14:12:17 +0200
+User-Agent: StGIT/0.14.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79404>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79405>
+
+When asked for history of a file which is not present in given branch
+("HEAD", i.e. current branch, or given by transient $hash_hase ('hb')
+parameter), but is present deeper in the history (meaning that "git
+rev-list --full-history $hash_base -- $file_name" is not empty), and
+there is no $hash ('h') parameter set for a file, gitweb would spew
+multiple of "Use of uninitialized value" warnings, and some links
+would be missing.  This commit fixes this bug.
+
+This bug occurs in the rare cases when "git log -- <path>" is empty
+and "git log --full-history -- <path>" is not, or to be more exact in
+the cases when full-history starts later than given branch.  It can
+happen if you are using handcrafted gitwb URL, or if you follow
+generic 'history' link or bookmark for a file which got deleted.
+
+Gitweb tried to get file type ('tree', or 'blob', or even 'commit')
+from the commit we start searching from (where the file was not
+present), and not among found commits.  This was the cause of "Use of
+uninitialized value" warnings.
+
+This commit also add tests for such situation to t9500 test.
 
 
---Apple-Mail-48--3855942
-Content-Type: text/plain;
-	charset=US-ASCII;
-	format=flowed;
-	delsp=yes
-Content-Transfer-Encoding: 7bit
+While we are it, return HTTP error if there is _no_ history; it means
+that file or directory was not found (for given branch).  Also error
+out if type of item could not be found: it should not happen now, but
+better be sure.
 
-Hi all,
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+Resend after 1.5.5 release, this time with the test added (which fails
+before this patch, and succeds after it).
 
-Attached patch removes the leading and trailing newlines that the  
-cvsserver command adds to commit messages for "cvs log".
+Commit message was slightly reworded, and improved.
 
-  git-cvsserver.perl |    4 +++-
-  1 file changed, 3 insertions(+), 1 deletion(-)
+ gitweb/gitweb.perl                     |   18 +++++++++++++++---
+ t/t9500-gitweb-standalone-no-errors.sh |   16 ++++++++++++++++
+ 2 files changed, 31 insertions(+), 3 deletions(-)
 
-Another note: For every commit, cvsserver claims lines changed are "+2  
--3" as hard-coded values no matter what, but that's a fix for another  
-day. ;)
-
-Thanks,
-Fredrik
-
-
---Apple-Mail-48--3855942
-Content-Disposition: attachment;
-	filename=cvsserver-tighter-log.patch
-Content-Type: application/octet-stream;
-	x-unix-mode=0664;
-	name="cvsserver-tighter-log.patch"
-Content-Transfer-Encoding: 7bit
-
-diff --git a/git-cvsserver.perl b/git-cvsserver.perl
-index 59a1609..1927c1c 100755
---- a/git-cvsserver.perl
-+++ b/git-cvsserver.perl
-@@ -3049,7 +3049,9 @@ sub commitmessage
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index e69d7fd..a48bebb 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -5176,14 +5176,26 @@ sub git_history {
+ 	my $refs = git_get_references();
+ 	my $limit = sprintf("--max-count=%i", (100 * ($page+1)));
  
-     my @lines = safe_pipe_capture("git-cat-file", "commit", $commithash);
-     shift @lines while ( $lines[0] =~ /\S/ );
--    $message = join("",@lines);
-+    shift @lines;
-+    map(s/\n$//s, @lines);
-+    $message = join("\n", @lines);
-     $message .= " " if ( $message =~ /\n$/ );
-     return $message;
- }
-
---Apple-Mail-48--3855942
-Content-Type: text/plain;
-	charset=US-ASCII;
-	format=flowed
-Content-Transfer-Encoding: 7bit
-
-
-
---Apple-Mail-48--3855942--
++	my @commitlist = parse_commits($hash_base, 101, (100 * $page),
++	                               $file_name, "--full-history");
++	if (!@commitlist) {
++		die_error('404 Not Found', "No such file or directory on given branch");
++	}
++
+ 	if (!defined $hash && defined $file_name) {
+-		$hash = git_get_hash_by_path($hash_base, $file_name);
++		# some commits could have deleted file in question,
++		# and not have it in tree, but one of them has to have it
++		for (my $i = 0; $i <= @commitlist; $i++) {
++			$hash = git_get_hash_by_path($commitlist[$i]{'id'}, $file_name);
++			last if defined $hash;
++		}
+ 	}
+ 	if (defined $hash) {
+ 		$ftype = git_get_type($hash);
+ 	}
+-
+-	my @commitlist = parse_commits($hash_base, 101, (100 * $page), $file_name, "--full-history");
++	if (!defined $ftype) {
++		die_error(undef, "Unknown type of object");
++	}
+ 
+ 	my $paging_nav = '';
+ 	if ($page > 0) {
+diff --git a/t/t9500-gitweb-standalone-no-errors.sh b/t/t9500-gitweb-standalone-no-errors.sh
+index 796cd7d..061a259 100755
+--- a/t/t9500-gitweb-standalone-no-errors.sh
++++ b/t/t9500-gitweb-standalone-no-errors.sh
+@@ -483,6 +483,22 @@ test_expect_success \
+ 	'gitweb_run "p=.git;a=history;f=file"'
+ test_debug 'cat gitweb.log'
+ 
++test_expect_success \
++	'logs: history (implicit HEAD, non-existent file)' \
++	'gitweb_run "p=.git;a=history;f=non-existent"'
++test_debug 'cat gitweb.log'
++
++test_expect_success \
++	'logs: history (implicit HEAD, deleted file)' \
++	'git checkout master &&
++	 echo "to be deleted" > deleted_file &&
++	 git add deleted_file &&
++	 git commit -m "Add file to be deleted" &&
++	 git rm deleted_file &&
++	 git commit -m "Delete file" &&
++	 gitweb_run "p=.git;a=history;f=deleted_file"'
++test_debug 'cat gitweb.log'
++
+ # ----------------------------------------------------------------------
+ # feed generation
+ 
