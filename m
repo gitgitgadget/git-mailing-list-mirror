@@ -1,137 +1,84 @@
-From: Jon Loeliger <jdl@jdl.com>
-Subject: git-rm fu
-Date: Sun, 13 Apr 2008 15:44:45 -0500
-Message-ID: <E1Jl949-0000yh-M1@jdl.com>
+From: "Paul Fredrickson" <paul.fredrickson@gmail.com>
+Subject: Re: [PATCH/RFC 01/10] Teach rebase interactive the mark command
+Date: Sun, 13 Apr 2008 13:51:50 -0700
+Message-ID: <69a88a530804131351n7d9f8188vf2bbb0174ade3ca0@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: joerg@alea.gnuu.de, junio@pobox.com, Johannes.Schindelin@gmx.de
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 13 22:45:42 2008
+X-From: git-owner@vger.kernel.org Sun Apr 13 22:52:38 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jl951-0005i0-3y
-	for gcvg-git-2@gmane.org; Sun, 13 Apr 2008 22:45:39 +0200
+	id 1Jl9Bk-0007kp-NV
+	for gcvg-git-2@gmane.org; Sun, 13 Apr 2008 22:52:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753010AbYDMUoz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Apr 2008 16:44:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753150AbYDMUoy
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 Apr 2008 16:44:54 -0400
-Received: from jdl.com ([208.123.74.7]:51098 "EHLO jdl.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753010AbYDMUoy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Apr 2008 16:44:54 -0400
-Received: from jdl (helo=jdl.com)
-	by jdl.com with local-esmtp (Exim 4.63)
-	(envelope-from <jdl@jdl.com>)
-	id 1Jl949-0000yh-M1
-	for git@vger.kernel.org; Sun, 13 Apr 2008 15:44:53 -0500
-X-Spam-Score: -102.6
+	id S1752147AbYDMUvw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Apr 2008 16:51:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751717AbYDMUvw
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 Apr 2008 16:51:52 -0400
+Received: from an-out-0708.google.com ([209.85.132.243]:19786 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751359AbYDMUvv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Apr 2008 16:51:51 -0400
+Received: by an-out-0708.google.com with SMTP id d31so339587and.103
+        for <git@vger.kernel.org>; Sun, 13 Apr 2008 13:51:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=EiJLOtMDe0GA8LWkzmNuPvRfvI+xkigUjeG15CAfUUc=;
+        b=bU3P0gM3If8PcYpNkzJf8NJ/+78MhKuaz/LLa/8D3blCvAzLCwrMzBWW3+TNDdIHca2nmWvq7RjSm03X6Lo/zcDYP3FrWRKVQ+YQCx/kzseWZdm9+pcjW0+ujhdx9qMJFUN5ODuiKxRm6BACSQYOE9C+/gzPjtUdbLvQNS0mbpo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=VP6N+eHyWZnUtJQPctJ6F+cr6aAQyZzztzK2rzb1CpO7cZr354TmPpKfgHjJRkNCnAMOE7N2YwCllCafm+AG1GCGkll8GJF5Af//dmUR0jOWY99cdvHUPEnCbmD1ozi4PYv/6Ut5o62BO2Gncat+ktrNaI7RN+fygGcEaTrAQeM=
+Received: by 10.100.41.4 with SMTP id o4mr4068942ano.136.1208119910686;
+        Sun, 13 Apr 2008 13:51:50 -0700 (PDT)
+Received: by 10.100.210.5 with HTTP; Sun, 13 Apr 2008 13:51:50 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79423>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79424>
 
+> Jrg Sommer <joerg@alea.gnuu.de> wrote:
+> > > Wouldn't
+> > >
+> > > pick 5cc8f37 (init: show "Reinit" message even in ...)
+> > > mark 1
+> > > pick 18d077c (quiltimport: fix misquoting of parse...)
+> > > mark 2
+> > > reset 1
+> >
+> > "reset 18d077c~2" or "reset some-tag" or "reset my-branch~12"
+> >
+> >         merge #2
+> > >
+> > > be easier for people?
+> >
+> > I don't know. Using the special sign everywhere a mark is used looks more
+> > consistent to me. The only case where it might be omitted is the mark
+> > command, because it only uses marks.
+>
+> Why not use the mark syntax that fast-import uses?  In fast-import
+> we use ":n" anytime we need to refer to a mark, e.g. ":1" or ":5".
+> Its the same idea.  We already have a language for it.  Heck, the
+> commands above are bordering on a language not too far from the
+> one that fast-import accepts.  :-)
 
-Given:
+I like the idea of adding marks to an interactive rebase in general, but instead
+of adding a separate command, what if rebase *automatically* marked all the
+commits in the session:
 
-$ git init
-Initialized empty Git repository in .git/
-$ echo one >> git-foo.sh
-$ mkdir subdir
-$ echo two >> subdir/git-foo.sh
-$ mkdir subdir/snizzle
-$ echo three >> subdir/snizzle/git-foo.sh
-$ git add .
-$ git commit -m"All quiet on the western front."
-Created initial commit 15fe70d: All quiet on the western front.
- 3 files changed, 3 insertions(+), 0 deletions(-)
- create mode 100644 git-foo.sh
- create mode 100644 subdir/git-foo.sh
- create mode 100644 subdir/snizzle/git-foo.sh
+    1: pick 5cc8f37 (init: show "Reinit" message even in ...)
+    2: pick 18d007c (quiltimport: fix misquoting of parse ...)
+    reset 1
+    merge 2
 
-The "git rm" manual's second example says:
+or "reset :1" and "merge :2".  Neither notation bothers me for marks.
 
-    git-rm -f git-*.sh
-
-        Remove all git-*.sh scripts that are in the index. Because this
-        example lets the shell expand the asterisk (i.e. you are listing
-        the files explicitly), it does not remove subdir/git-foo.sh.
-
-It is not true that this command will remove all git-*.sh scripts
-that are in the index.  Here are three:
-
-    $ git ls-files
-    git-foo.sh
-    subdir/git-foo.sh
-    subdir/snizzle/git-foo.sh
-
-Using -f on this command is a red herring.  Using -f or -n
-doesn't matter, and since we want to do more than one command
-here, I'm just going to show it all using -n:
-
-The effect of the command is to match just one file at the top level:
-
-    $ git rm -n git-*.sh
-    rm 'git-foo.sh'
-
-Furthermore, there is an implication in the wording of the
-second example that suggests that if you had let git expand the
-file glob, the subdir/git-foo.sh file would have been removed.
-
-Also not true:
-
-    $ git rm -n git-\*.sh
-    rm 'git-foo.sh'
-
-To actually get the behavior of "removing all git-*.sh scripts
-from the index", you have to prefix a file glob at the front
-of the paths to match directories too:
-
-    $ git rm -n \*git-\*.sh
-    rm 'git-foo.sh'
-    rm 'subdir/git-foo.sh'
-    rm 'subdir/snizzle/git-foo.sh'
-
-But then, using any of:
-
-        \*git-\*.sh
-        \*git-*.sh
-        *git-\*.sh
-
-all effectively *will* match subdir/git-foo.sh:
-
-    $ git rm -n \*git-*.sh
-    rm 'git-foo.sh'
-    rm 'subdir/git-foo.sh'
-    rm 'subdir/snizzle/git-foo.sh'
-
-    $ git rm -n *git-\*.sh
-    rm 'git-foo.sh'
-    rm 'subdir/git-foo.sh'
-    rm 'subdir/snizzle/git-foo.sh'
-
-So it seems that the two parts discussed in the second example
-are really unrelated.
-
-It seems like "git rm d2/*" should remove all of d2's files
-without trying to recursively remove any subdirectories,
-but it won't:
-
-    $ git rm -n d2/*
-    fatal: not removing 'd2/two' recursively without -r
-
-But then using -r force d2/two/ to be removed as well:
-
-    $ git rm -n d2/\*
-    rm 'd2/two/xyzzy'
-    rm 'd2/x'
-    rm 'd2/y'
-    rm 'd2/z'
-
-There's no real way to say "just the files in d2/".
-
-(Yeah, sure, I could have said "git rm d2/\?", but that wouldn't
-work if d2/xyzzy existed too. :-))
-
-jdl
+--Paul
