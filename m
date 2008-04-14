@@ -1,84 +1,83 @@
-From: Sean Estabrooks <seanlkml@sympatico.ca>
-Subject: Re: Git Wiki improvements
-Date: Mon, 14 Apr 2008 11:48:46 -0400
-Message-ID: <BAYC1-PASMTP10A8BA28CC2999519EA0B2AEE80@CEZ.ICE>
-References: <60CC37BF5A3B73428D0BB9B6A26B9669019D95DA@yvrmail1.corp.navcan.ca>
-	<200804140303.22624.jnareb@gmail.com>
-	<8aa486160804140106m570d3fb9va0081d8a0d42870@mail.gmail.com>
-	<alpine.DEB.1.00.0804141555350.28504@racer>
+From: James Morris <jmorris@namei.org>
+Subject: Re: Reporting bugs and bisection
+Date: Tue, 15 Apr 2008 01:54:00 +1000 (EST)
+Message-ID: <Xine.LNX.4.64.0804150131300.4160@us.intercode.com.au>
+References: <47FEADCB.7070104@rtr.ca> <20080413121831.d89dd424.akpm@linux-foundation.org>
+ <20080413202118.GA29658@2ka.mipt.ru> <200804132233.50491.rjw@sisk.pl>
+ <20080413205406.GA9190@2ka.mipt.ru> <48028830.6020703@earthlink.net>
+ <alpine.DEB.1.10.0804131546370.9318@asgard> <20080414043939.GA6862@1wt.eu>
+ <20080414053943.GU9785@ZenIV.linux.org.uk> <20080413232441.e216a02c.akpm@linux-foundation.org>
+ <20080414072328.GW9785@ZenIV.linux.org.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Santi =?ISO-8859-1?B?QulqYXI=?= <sbejar@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>,
-	"Pack, Dylan" <PackD@navcanada.ca>,
-	"Pack, Dylan" <sarpulhu@gmail.com>, git@vger.kernel.org,
-	Petr Baudis <pasky@suse.cz>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Apr 14 18:06:54 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+	Willy Tarreau <w@1wt.eu>, david@lang.hm,
+	Stephen Clark <sclark46@earthlink.net>,
+	Evgeniy Polyakov <johnpol@2ka.mipt.ru>,
+	"Rafael J. Wysocki" <rjw@sisk.pl>, Tilman Schmidt <tilman@imap.cc>,
+	Valdis.Kletnieks@vt.edu, Mark Lord <lkml@rtr.ca>,
+	David Miller <davem@davemloft.net>, jesper.juhl@gmail.com,
+	yoshfuji@linux-ipv6.org, jeff@garzik.org,
+	linux-kernel <linux-kernel@vger.kernel.org>, git@vger.kernel.org,
+	netdev@vger.kernel.org
+To: Al Viro <viro@ZenIV.linux.org.uk>
+X-From: netdev-owner@vger.kernel.org Mon Apr 14 18:12:48 2008
 connect(): Connection refused
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
+Return-path: <netdev-owner@vger.kernel.org>
+Envelope-to: linux-netdev-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JlQwJ-0007XB-DH
-	for gcvg-git-2@gmane.org; Mon, 14 Apr 2008 17:49:51 +0200
+	id 1JlR2o-0000rt-Ch
+	for linux-netdev-2@gmane.org; Mon, 14 Apr 2008 17:56:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760833AbYDNPtJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Apr 2008 11:49:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754404AbYDNPtJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Apr 2008 11:49:09 -0400
-Received: from bay0-omc2-s10.bay0.hotmail.com ([65.54.246.146]:47071 "EHLO
-	bay0-omc2-s10.bay0.hotmail.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754659AbYDNPtI (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 14 Apr 2008 11:49:08 -0400
-Received: from BAYC1-PASMTP10 ([65.54.191.183]) by bay0-omc2-s10.bay0.hotmail.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 14 Apr 2008 08:49:03 -0700
-X-Originating-IP: [70.54.4.86]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([70.54.4.86]) by BAYC1-PASMTP10.CEZ.ICE over TLS secured channel with Microsoft SMTPSVC(6.0.3790.2668);
-	 Mon, 14 Apr 2008 08:49:02 -0700
-Received: from bud.attic.local ([10.10.10.20])
-	by linux1.attic.local with esmtp (Exim 4.43)
-	id 1JlRrK-0005Tl-Up; Mon, 14 Apr 2008 12:48:47 -0400
-In-Reply-To: <alpine.DEB.1.00.0804141555350.28504@racer>
-X-Mailer: Sylpheed 2.4.5 (GTK+ 2.12.8; x86_64-pc-linux-gnu)
-X-OriginalArrivalTime: 14 Apr 2008 15:49:02.0802 (UTC) FILETIME=[0FFACB20:01C89E47]
-Sender: git-owner@vger.kernel.org
+	id S1753838AbYDNPzu (ORCPT <rfc822;linux-netdev-2@m.gmane.org>);
+	Mon, 14 Apr 2008 11:55:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752948AbYDNPzt
+	(ORCPT <rfc822;netdev-outgoing>); Mon, 14 Apr 2008 11:55:49 -0400
+Received: from namei.org ([69.55.235.186]:52383 "EHLO us.intercode.com.au"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1752532AbYDNPzr (ORCPT <rfc822;netdev@vger.kernel.org>);
+	Mon, 14 Apr 2008 11:55:47 -0400
+Received: from us.intercode.com.au (us.intercode.com.au [69.55.235.187])
+	by us.intercode.com.au (8.12.11.20060308/8.12.11) with ESMTP id m3EFs047009080;
+	Mon, 14 Apr 2008 08:54:06 -0700
+X-X-Sender: jmorris@us.intercode.com.au
+In-Reply-To: <20080414072328.GW9785@ZenIV.linux.org.uk>
+Sender: netdev-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79512>
+List-ID: <netdev.vger.kernel.org>
+X-Mailing-List: netdev@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79513>
 
-On Mon, 14 Apr 2008 15:58:29 +0100 (BST)
-Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+On Mon, 14 Apr 2008, Al Viro wrote:
 
-Hi Johannes,
+> Real review of code in tree and patches getting into the tree.
 
-> While this would seem a good idea from the viewpoint of using as much of 
-> your own dog food as possible, I think that the Wiki is fine as-is.  
-> Especially since I like to spend more time hacking on Git than on the 
-> Wiki, and I expect most people to feel the same.
+There is currently little incentive for developers to perform review.  
 
-It's not just about eating dog food but improving the chances that people
-use and update the wiki with useful stuff.  Adding the ability for people to
-clone a  copy of the wiki onto their own systems and use it offline can only
-help.  If people are permitted to push changes back to the wiki it has the
-potential to change the rules of the game in a positive way[1].
+It's difficult work, and is generally not rewarded or recognized, except 
+in often quite negative ways.  There is a small handful of people who do a 
+lot of review, but they are exceptional in various ways.
 
-A change in infrastructure like this might increase the number of contributors
-of tutorial and faq answers.   It might even give developers a little more time
-with the source rather than documentation and user support.  Then again it
-might not, but we'll never know unless it's tried.
+OTOH, writing code is relatively simple, and is much more highly rewarded:
 
-> IOW I think a change of system is just not worth the effort.
+- People tend to get paid to write kernel code, but not so much to review 
+  it.
 
-There seems little reason to discourage someone from taking a stab at it if
-they're so inclined.
+- Things like "who made the kernel" statistics and related articles ignore 
+  code review.
 
-Cheers,
-Sean
+- Creating new features is perceived as the highest form of contribution 
+  for general developers, and likely important as career currency 
+  (similar to the publish or perish model in the academic world).
 
-[1]  Ikiwiki uses the Markdown format which has fewer features than say
-Asciidoc but is very Emacs/Vim friendly so it's not hard to imagine people
-cloning the wiki and using it this way.
+I don't know how to solve this, but suspect that encouraging the use of 
+reviewed-by and also including it in things like analysis of who is 
+contributing, selection for kernel summit invitations etc. would be a 
+start.  At least, better than nothing.
+
+
+- James 
+-- 
+James Morris
+<jmorris@namei.org>
