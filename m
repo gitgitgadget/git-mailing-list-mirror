@@ -1,75 +1,78 @@
-From: Anand Kumria <wildfire@progsoc.org>
-Subject: Re: RFC: Website redesign
-Date: Mon, 14 Apr 2008 20:39:00 +0000 (UTC)
-Message-ID: <pan.2008.04.14.20.39.10@progsoc.org>
-References: <3175605f-ff32-4fd6-bed3-7ae596ecbcde@q1g2000prf.googlegroups.com>
-	<2c6b72b30804140656g14c24d8cwae016d62fe12f4a7@mail.gmail.com>
-	<56e37551-4b8f-4164-a71d-79dba8635b7d@l28g2000prd.googlegroups.com>
-	<96F7571C-1D9D-4F0A-99F1-A2307DAB0374@wincent.com>
-	<bd6139dc0804141129h25c829e2i320f227594763d71@mail.gmail.com>
+From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
+Subject: [StGit PATCH] If a patch is not changed when pushing,
+	reuse the same commit object
+Date: Mon, 14 Apr 2008 23:21:50 +0200
+Message-ID: <20080414212150.7334.92647.stgit@yoghurt>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 14 22:40:17 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 14 23:22:49 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JlVTB-0002Lu-9e
-	for gcvg-git-2@gmane.org; Mon, 14 Apr 2008 22:40:05 +0200
+	id 1JlW8Q-0006GV-2P
+	for gcvg-git-2@gmane.org; Mon, 14 Apr 2008 23:22:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758467AbYDNUjR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Apr 2008 16:39:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758263AbYDNUjR
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Apr 2008 16:39:17 -0400
-Received: from main.gmane.org ([80.91.229.2]:54292 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758057AbYDNUjQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Apr 2008 16:39:16 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1JlVSK-00036U-Db
-	for git@vger.kernel.org; Mon, 14 Apr 2008 20:39:12 +0000
-Received: from 62-31-42-82.cable.ubr03.dals.blueyonder.co.uk ([62.31.42.82])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 14 Apr 2008 20:39:12 +0000
-Received: from wildfire by 62-31-42-82.cable.ubr03.dals.blueyonder.co.uk with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 14 Apr 2008 20:39:12 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 62-31-42-82.cable.ubr03.dals.blueyonder.co.uk
-User-Agent: Pan/0.132 (Waxed in Black)
+	id S1757583AbYDNVV4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Apr 2008 17:21:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757497AbYDNVV4
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Apr 2008 17:21:56 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1655 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757330AbYDNVV4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Apr 2008 17:21:56 -0400
+Received: from localhost ([127.0.0.1] helo=[127.0.1.1])
+	by diana.vm.bytemark.co.uk with esmtp (Exim 3.36 #1 (Debian))
+	id 1JlW7b-0005l0-00; Mon, 14 Apr 2008 22:21:51 +0100
+User-Agent: StGIT/0.14.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79533>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79534>
 
-On Mon, 14 Apr 2008 20:29:00 +0200, Sverre Rabbelier wrote:
+It should be marginally faster since we don't have to create a new
+commit object, but mostly it's a cleanliness issue: rewriting history
+when we don't have to is bad.
 
-> On Mon, Apr 14, 2008 at 7:03 PM, Wincent Colaiuta <win@wincent.com>
-> wrote:
->>  With all due respect, all of the designs you've posted look like
->>  _weblog_
->> templates, and that doesn't seem appropriate to me for a software
->> website. One of the things I most dislike about the weblog format is
->> the fixed-width centre column and the large tracks of wasted space down
->> the sides;
+Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
 
-That is basically the current "Web 2.0 style".
+---
 
-<http://www.webdesignfromscratch.com/current-style.cfm>
+ stgit/lib/transaction.py |   10 +++++++---
+ 1 files changed, 7 insertions(+), 3 deletions(-)
 
-One of the "hotties" is a software project, and Free Software at that.
 
-I think the designs are a good first starting point. 
-
-You have a range of colour schemes there, I think you need to pick one or 
-two visuals -- and some appropriate icons (3D pandas? bender the robot? 
-herring?) as well.
-
-Cheers,
-Anand
+diff --git a/stgit/lib/transaction.py b/stgit/lib/transaction.py
+index 2946a67..9a23c01 100644
+--- a/stgit/lib/transaction.py
++++ b/stgit/lib/transaction.py
+@@ -175,8 +175,8 @@ class StackTransaction(object):
+         """Attempt to push the named patch. If this results in conflic=
+ts,
+         halts the transaction. If index+worktree are given, spill any
+         conflicts to them."""
+-        cd =3D self.patches[pn].data
+-        cd =3D cd.set_committer(None)
++        orig_cd =3D self.patches[pn].data
++        cd =3D orig_cd.set_committer(None)
+         s =3D ['', ' (empty)'][cd.is_nochange()]
+         oldparent =3D cd.parent
+         cd =3D cd.set_parent(self.__head)
+@@ -204,7 +204,11 @@ class StackTransaction(object):
+             except git.MergeException, e:
+                 self.__halt(str(e))
+         cd =3D cd.set_tree(tree)
+-        self.patches[pn] =3D self.__stack.repository.commit(cd)
++        if any(getattr(cd, a) !=3D getattr(orig_cd, a) for a in
++               ['parent', 'tree', 'author', 'message']):
++            self.patches[pn] =3D self.__stack.repository.commit(cd)
++        else:
++            s =3D ' (unmodified)'
+         del self.unapplied[self.unapplied.index(pn)]
+         self.applied.append(pn)
+         out.info('Pushed %s%s' % (pn, s))
