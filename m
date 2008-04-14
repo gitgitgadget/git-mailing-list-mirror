@@ -1,34 +1,34 @@
 From: Dill <sarpulhu@gmail.com>
 Subject: Re: Git Wiki improvements
-Date: Sun, 13 Apr 2008 18:11:53 -0700 (PDT)
-Message-ID: <5779238b-eaf9-4669-bf11-62c657ce7c77@m73g2000hsh.googlegroups.com>
+Date: Sun, 13 Apr 2008 18:20:35 -0700 (PDT)
+Message-ID: <16595972-e2bc-4a16-8163-fb60ae796aa6@s50g2000hsb.googlegroups.com>
 References: <60CC37BF5A3B73428D0BB9B6A26B9669019D95DA@yvrmail1.corp.navcan.ca> 
 	<200804140303.22624.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 14 03:12:51 2008
+X-From: git-owner@vger.kernel.org Mon Apr 14 03:21:26 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JlDFV-0007uE-RI
-	for gcvg-git-2@gmane.org; Mon, 14 Apr 2008 03:12:46 +0200
+	id 1JlDNt-00010H-0z
+	for gcvg-git-2@gmane.org; Mon, 14 Apr 2008 03:21:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754334AbYDNBMB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 13 Apr 2008 21:12:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753444AbYDNBMB
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 Apr 2008 21:12:01 -0400
-Received: from yw-out-2122.google.com ([74.125.46.24]:52047 "EHLO
-	yw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753407AbYDNBMA convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 13 Apr 2008 21:12:00 -0400
-Received: by yw-out-2122.google.com with SMTP id 1so938827ywp.61
-        for <git@vger.kernel.org>; Sun, 13 Apr 2008 18:11:53 -0700 (PDT)
-Received: by 10.100.94.14 with SMTP id r14mr380830anb.28.1208135513265; Sun, 
-	13 Apr 2008 18:11:53 -0700 (PDT)
+	id S1753251AbYDNBUh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 13 Apr 2008 21:20:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753001AbYDNBUh
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 Apr 2008 21:20:37 -0400
+Received: from py-out-1314.google.com ([64.233.166.168]:9425 "EHLO
+	py-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752447AbYDNBUh convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 13 Apr 2008 21:20:37 -0400
+Received: by py-out-1314.google.com with SMTP id p69so3444691pyb.4
+        for <git@vger.kernel.org>; Sun, 13 Apr 2008 18:20:36 -0700 (PDT)
+Received: by 10.100.34.16 with SMTP id h16mr382490anh.20.1208136035955; Sun, 
+	13 Apr 2008 18:20:35 -0700 (PDT)
 In-Reply-To: <200804140303.22624.jnareb@gmail.com>
 X-IP: 216.208.32.197
 User-Agent: G2/1.0
@@ -38,12 +38,10 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79448>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79449>
 
-True but how much control do we need? Wikidot pretty much lets you do
-anything you would need and it's very well designed. It would reduce
-Petr's workload and Wikidot seems to be very reliable. I don't think
-it would hurt IF the wiki was somewhere else. IMHO.
+Oh ya and wikidot allows custom domains so maybe it's possible to set
+it up using the git domain that is currently in use.
 
 On Apr 13, 7:03=A0pm, Jakub Narebski <jna...@gmail.com> wrote:
 > [Cc: g...@vger.kernel.org, Petr Baudis <pa...@suse.cz>]
