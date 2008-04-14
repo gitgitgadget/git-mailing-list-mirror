@@ -1,73 +1,101 @@
-From: Gabriel <g2p.code@gmail.com>
-Subject: Re: Canonical method of merging two projects
-Date: Mon, 14 Apr 2008 06:56:25 +0000 (UTC)
-Message-ID: <ftuv6o$vch$1@ger.gmane.org>
-References: <Pine.LNX.4.64.0804140733500.7014@ds9.cixit.se>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: What's in git.git (stable)
+Date: Mon, 14 Apr 2008 00:00:26 -0700
+Message-ID: <7vy77gapkl.fsf@gitster.siamese.dyndns.org>
+References: <7vtzibbjxn.fsf@gitster.siamese.dyndns.org>
+ <7vwsn75pmv.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 14 08:57:30 2008
+X-From: git-owner@vger.kernel.org Mon Apr 14 09:01:30 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JlId6-000639-AY
-	for gcvg-git-2@gmane.org; Mon, 14 Apr 2008 08:57:28 +0200
+	id 1JlIgy-0006uo-HX
+	for gcvg-git-2@gmane.org; Mon, 14 Apr 2008 09:01:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754839AbYDNG4o convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Apr 2008 02:56:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755400AbYDNG4o
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Apr 2008 02:56:44 -0400
-Received: from main.gmane.org ([80.91.229.2]:43929 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752421AbYDNG4n (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Apr 2008 02:56:43 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1JlIcL-0002sp-1k
-	for git@vger.kernel.org; Mon, 14 Apr 2008 06:56:41 +0000
-Received: from pro75-5-88-162-203-35.fbx.proxad.net ([88.162.203.35])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 14 Apr 2008 06:56:41 +0000
-Received: from g2p.code by pro75-5-88-162-203-35.fbx.proxad.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 14 Apr 2008 06:56:41 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: pro75-5-88-162-203-35.fbx.proxad.net
-User-Agent: Pan/0.132 (Waxed in Black)
+	id S1753999AbYDNHAm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Apr 2008 03:00:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754685AbYDNHAm
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Apr 2008 03:00:42 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:36953 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753256AbYDNHAl convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 14 Apr 2008 03:00:41 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 96D9F37C9;
+	Mon, 14 Apr 2008 03:00:39 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id EA05537C7; Mon, 14 Apr 2008 03:00:37 -0400 (EDT)
+X-maint-at: 02604e293a3b7d48b0ce4e34149de8dc89c674e5
+X-master-at: f43e2fd43b50d5a82a34bb3e4f848cb38bf93b7f
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79469>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79470>
+
+* The 'maint' branch has these fixes since v1.5.5; perhaps v1.5.5.1 mid
+  next week.
+
+Bj=C3=B6rn Steinbrink (1):
+  Fix section about backdating tags in the git-tag docs
+
+Carlos Rica (2):
+  Fix documentation syntax of optional arguments in short options.
+  core-tutorial.txt: Fix showing the current behaviour.
+
+Christian Couder (2):
+  bisect: fix bad rev checking in "git bisect good"
+  bisect: report bad rev better
+
+Clifford Caoile (1):
+  Docs gitk: Explicitly mention the files that gitk uses (~/.gitk)
+
+Daniel Barkalow (1):
+  Fix config key miscount in url.*.insteadOf
+
+Dirk Suesserott (1):
+  Documentation/git-request-pull: Fixed a typo ("send" -> "end")
+
+Jeff King (1):
+  git-fetch: fix status output when not storing tracking ref
+
+Johannes Sixt (1):
+  Document option --only of git commit
+
+Junio C Hamano (3):
+  Document -w option to shortlog
+  Documentation/git-submodule: typofix
+  t7401: squelch garbage output
+
+Michele Ballabio (1):
+  revision.c: make --date-order overriddable
+
+Pedro Melo (1):
+  Force the medium pretty format on calls to git log
+
+Ping Yin (1):
+  git-submodule: Avoid 'fatal: cannot describe' message
+
+Ren=C3=A9 Scharfe (1):
+  git-archive: ignore prefix when checking file attribute
 
 
-Hello,
+* The 'master' branch has these since the last announcement
+  in addition to the above.
 
-On Mon, 14 Apr 2008 07:37:17 +0100, Peter Karlsson wrote:
+Christian Couder (1):
+  bisect: add "git bisect help" subcommand to get a long usage string
 
-> What is the canonical way of merging an unrelated project into anothe=
-r
-> so that all of the merged project's files appear in a sub-directory o=
-f
-> the first?
->=20
-> I have two projects, A with files "a.txt" and "b.txt", and B with fil=
-es
-> "a.txt" and "c.txt", each in a separate Git repoistory. I want to mer=
-ge
-> those two projects, throwing away the B repository, and achieve a fil=
-e
-> layout that has "a.txt" and "b.txt" from A, and "B/a.txt" and "B/c.tx=
-t"
-> from B. I.e, the two files with the same name are unrelated, and all =
-of
-> B's file should end up in a sub-directory.
+Johannes Sixt (1):
+  builtin-commit.c: Remove a redundant assignment.
 
-This is exactly what the subtree =E2=80=9Cmerge strategy=E2=80=9D does;
-there is a HOWTO here:
-http://www.kernel.org/pub/software/scm/git/docs/howto/using-merge-subtr=
-ee.html
+Junio C Hamano (1):
+  git_config_bool_or_int()
