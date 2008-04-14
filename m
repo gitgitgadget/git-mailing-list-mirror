@@ -1,68 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC 01/10] Teach rebase interactive the mark command
-Date: Sun, 13 Apr 2008 23:54:41 -0700
-Message-ID: <7v63ulapu6.fsf@gitster.siamese.dyndns.org>
-References: <7vabkoufzq.fsf@gitster.siamese.dyndns.org>
- <1207785521-27742-1-git-send-email-joerg@alea.gnuu.de>
- <1207785521-27742-2-git-send-email-joerg@alea.gnuu.de>
- <7vskxsneau.fsf@gitster.siamese.dyndns.org>
- <20080412101110.GD31356@alea.gnuu.de> <20080413035648.GY10274@spearce.org>
- <20080413165011.GB3179@alea.gnuu.de> <20080414062425.GB20979@spearce.org>
+From: Gabriel <g2p.code@gmail.com>
+Subject: Re: Canonical method of merging two projects
+Date: Mon, 14 Apr 2008 06:56:25 +0000 (UTC)
+Message-ID: <ftuv6o$vch$1@ger.gmane.org>
+References: <Pine.LNX.4.64.0804140733500.7014@ds9.cixit.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: =?utf-8?Q?J=C3=B6rg?= Sommer <joerg@alea.gnuu.de>,
-	git@vger.kernel.org, Johannes.Schindelin@gmx.de
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Apr 14 08:55:48 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 14 08:57:30 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JlIbQ-0005d5-D4
-	for gcvg-git-2@gmane.org; Mon, 14 Apr 2008 08:55:44 +0200
+	id 1JlId6-000639-AY
+	for gcvg-git-2@gmane.org; Mon, 14 Apr 2008 08:57:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755332AbYDNGyy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Apr 2008 02:54:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754608AbYDNGyy
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Apr 2008 02:54:54 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:36460 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755163AbYDNGyx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Apr 2008 02:54:53 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 6BA793732;
-	Mon, 14 Apr 2008 02:54:51 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id B0A25372F; Mon, 14 Apr 2008 02:54:45 -0400 (EDT)
-In-Reply-To: <20080414062425.GB20979@spearce.org> (Shawn O. Pearce's message
- of "Mon, 14 Apr 2008 02:24:25 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754839AbYDNG4o convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Apr 2008 02:56:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755400AbYDNG4o
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Apr 2008 02:56:44 -0400
+Received: from main.gmane.org ([80.91.229.2]:43929 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752421AbYDNG4n (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Apr 2008 02:56:43 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1JlIcL-0002sp-1k
+	for git@vger.kernel.org; Mon, 14 Apr 2008 06:56:41 +0000
+Received: from pro75-5-88-162-203-35.fbx.proxad.net ([88.162.203.35])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 14 Apr 2008 06:56:41 +0000
+Received: from g2p.code by pro75-5-88-162-203-35.fbx.proxad.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 14 Apr 2008 06:56:41 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: pro75-5-88-162-203-35.fbx.proxad.net
+User-Agent: Pan/0.132 (Waxed in Black)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79468>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79469>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
 
->> Except of this, I prefer to use the colon to be much closer to the syntax
->> of fast-import.
->
-> Me too, but it looks like in a human edited "TODO" script we may want
-> to be more friendly and allow named marks.  Though I'm not sure that is
-> really all that useful.  If you are merging something because it used to
-> be merged before the rebase I doubt we'd generate a meaningful mark name
-> when the TODO script is initially formatted.
+Hello,
 
-I'd say a small integer is the only thing we would need.  The TODO insn
-sequence would be machine generated then manually tweaked, not the other
-way around.
+On Mon, 14 Apr 2008 07:37:17 +0100, Peter Karlsson wrote:
 
-Regarding colon vs pound, I would say that the 'mark' insn can just say
-"2" to set the second mark, and then store it in refs/marks/2; the
-commands that refer to the commit later can use the usual "refs/marks/2"
-or "marks/2" syntax without colon nor pound nor any other special syntax
-that way.
+> What is the canonical way of merging an unrelated project into anothe=
+r
+> so that all of the merged project's files appear in a sub-directory o=
+f
+> the first?
+>=20
+> I have two projects, A with files "a.txt" and "b.txt", and B with fil=
+es
+> "a.txt" and "c.txt", each in a separate Git repoistory. I want to mer=
+ge
+> those two projects, throwing away the B repository, and achieve a fil=
+e
+> layout that has "a.txt" and "b.txt" from A, and "B/a.txt" and "B/c.tx=
+t"
+> from B. I.e, the two files with the same name are unrelated, and all =
+of
+> B's file should end up in a sub-directory.
+
+This is exactly what the subtree =E2=80=9Cmerge strategy=E2=80=9D does;
+there is a HOWTO here:
+http://www.kernel.org/pub/software/scm/git/docs/howto/using-merge-subtr=
+ee.html
