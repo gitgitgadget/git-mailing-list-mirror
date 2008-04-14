@@ -1,82 +1,81 @@
-From: Joachim Berdal Haga <cjbhaga@broadpark.no>
-Subject: Re: [PATCH] git clean: Don't automatically remove directories when run
- within subdirectory
-Date: Mon, 14 Apr 2008 20:18:13 +0200
-Message-ID: <48039FE5.5060309@broadpark.no>
-References: <85fxtvj6y8.fsf_-_@lupus.strangled.net>
- <1208130578-24748-1-git-send-email-shawn.bohrer@gmail.com>
- <7v8wzgaoqy.fsf@gitster.siamese.dyndns.org>
- <20080414170643.GA10548@mediacenter>
+From: "Sverre Rabbelier" <alturin@gmail.com>
+Subject: Re: RFC: Website redesign
+Date: Mon, 14 Apr 2008 20:29:00 +0200
+Message-ID: <bd6139dc0804141129h25c829e2i320f227594763d71@mail.gmail.com>
+References: <3175605f-ff32-4fd6-bed3-7ae596ecbcde@q1g2000prf.googlegroups.com>
+	 <2c6b72b30804140656g14c24d8cwae016d62fe12f4a7@mail.gmail.com>
+	 <56e37551-4b8f-4164-a71d-79dba8635b7d@l28g2000prd.googlegroups.com>
+	 <96F7571C-1D9D-4F0A-99F1-A2307DAB0374@wincent.com>
+Reply-To: sverre@rabbelier.nl
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Shawn Bohrer <shawn.bohrer@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 14 20:27:34 2008
+Content-Transfer-Encoding: 7bit
+Cc: Dill <sarpulhu@gmail.com>, "Git Mailing List" <git@vger.kernel.org>
+To: "Wincent Colaiuta" <win@wincent.com>
+X-From: git-owner@vger.kernel.org Mon Apr 14 20:35:28 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JlTJP-00025o-75
-	for gcvg-git-2@gmane.org; Mon, 14 Apr 2008 20:21:51 +0200
+	id 1JlTRG-0004n0-M3
+	for gcvg-git-2@gmane.org; Mon, 14 Apr 2008 20:29:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932533AbYDNSSX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Apr 2008 14:18:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932530AbYDNSSW
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Apr 2008 14:18:22 -0400
-Received: from osl1smout1.broadpark.no ([80.202.4.58]:60918 "EHLO
-	osl1smout1.broadpark.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932523AbYDNSSV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Apr 2008 14:18:21 -0400
-Received: from osl1sminn1.broadpark.no ([80.202.4.59])
- by osl1smout1.broadpark.no
- (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
- with ESMTP id <0JZB0054FUUJN390@osl1smout1.broadpark.no> for
- git@vger.kernel.org; Mon, 14 Apr 2008 20:18:19 +0200 (CEST)
-Received: from pep ([80.203.45.22]) by osl1sminn1.broadpark.no
- (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
- with ESMTP id <0JZB00MPJUUEL6H0@osl1sminn1.broadpark.no> for
- git@vger.kernel.org; Mon, 14 Apr 2008 20:18:19 +0200 (CEST)
-Received: from localhost ([127.0.0.1])	by pep with esmtp (Exim 4.69)
-	(envelope-from <cjbhaga@broadpark.no>)	id 1JlTFu-0005Fb-90; Mon,
- 14 Apr 2008 20:18:14 +0200
-User-Agent: Mozilla-Thunderbird 2.0.0.9 (X11/20080110)
-In-reply-to: <20080414170643.GA10548@mediacenter>
-X-SA-Exim-Connect-IP: 127.0.0.1
-X-SA-Exim-Mail-From: cjbhaga@broadpark.no
-X-SA-Exim-Scanned: No (on pep); SAEximRunCond expanded to false
+	id S1762363AbYDNS3F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Apr 2008 14:29:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761040AbYDNS3D
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Apr 2008 14:29:03 -0400
+Received: from wf-out-1314.google.com ([209.85.200.174]:43340 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760136AbYDNS3B (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Apr 2008 14:29:01 -0400
+Received: by wf-out-1314.google.com with SMTP id 28so1623708wff.4
+        for <git@vger.kernel.org>; Mon, 14 Apr 2008 11:29:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=Ir1fHzITx1I5S2NDAqgiQt49Nb3IyF3H8e7UXqf4FDw=;
+        b=tvMI6wWWSkFcUukSk6F5eQJWPe6JfCwuzMNcUFNF7v7MdpV5BI6QROkVja/Kc6rJwzkNuZeHvCcbrCssxSaRrVceiDGNQYNqP/6718gcnd3VFNpkIp60ey3Ldo/YF4We/K+F9zrrP/iAYtF2AGtyWLrUvK/+YmbNZqiya6yQxn0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=o4fGv8XNETN4qvvh5y+HqM4qoEQAMl7NjqBay8jCPzLT9pHuOsc8ILuLNMFG3d13GpDavUyDQdiE94qL+vHoZhs+QzFKsBAotHuQvgFB6qordpVCq4O1s5SSi86ltcc8iQkKt2KG3b3F+rVB02OdleHWFgev23tq1bpepEeBXIQ=
+Received: by 10.142.87.7 with SMTP id k7mr1920647wfb.167.1208197740603;
+        Mon, 14 Apr 2008 11:29:00 -0700 (PDT)
+Received: by 10.143.33.6 with HTTP; Mon, 14 Apr 2008 11:29:00 -0700 (PDT)
+In-Reply-To: <96F7571C-1D9D-4F0A-99F1-A2307DAB0374@wincent.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79522>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79523>
 
-Shawn Bohrer wrote:
-> Agreed I'll send an updated patch later tonight.  One additional thought
-> though.  2 is MATCHED_FNMATCH which worries me a little because I think
-> this would mean 'git clean -f *' will also remove directories (I haven't
-> tried though).  Perhaps this should really be 3 MATCHED_EXACTLY just to
-> be safe.  Does anyone have opinions either way?
+On Mon, Apr 14, 2008 at 7:03 PM, Wincent Colaiuta <win@wincent.com> wrote:
+>  With all due respect, all of the designs you've posted look like _weblog_
+> templates, and that doesn't seem appropriate to me for a software website.
+> One of the things I most dislike about the weblog format is the fixed-width
+> centre column and the large tracks of wasted space down the sides; although
+> the official site is certainly "bare bones" (some would say "ugly") at the
+> moment, at least the information density is high and there isn't any wasted
+> space.
 
-I don't have strong opinions on this since I don't use this form of the
-command, but still:
+That is most probably due to that the templates googlepages offer are
+mostly aimed at such weblogs. I think the suggestions are not just for
+layout but also for color (which is very important, to me at least,
+when deciding whether a webpage is 'damn ugly' or 'quite nice').
 
-I think that the best option would be to never remove a directory, even if
-given explicitly, unless -d is given. Because my gut feeling is that when a
-directory name is specified, it is most often meant as "clean inside the
-given directory", ie. as a path delimiter. Indeed, if the directory has
-tracked files inside of it,
-  git clean dir
-and
-  git clean dir/
-have the same effect. If there are no tracked files inside, the current
-patch gives the path-delimiting effect on this form
-  git clean dir/
-but removes the whole directory irrespective of "-d" for this form
-  git clean dir
-I think that a "honor (lack of) -d even if pathspec matches" would reduce
-the consequences of this particular kind of user error (by deleting too
-little instead of too much).
+Also I think that the main page should not contain more information
+than fits in one 'screen'. That is, there should be no scrollbar on
+'sensible' (say, above 1024*768) resolutions. To me a site feels
+'overfull' if it's mainpage has a scrolbarr. Instead, I think the
+mainpage should be a portal to other parts of the website, instead
+of... well... everything-crammed-on-one-page-so that.... so that what?
+What purpose does it serve to put all information, ungrouped, not easy
+to find, and as such chaotic, on one page?
 
--j.
+Anyway... </rant>
+
+Cheers,
+
+Sverre Rabbelier
