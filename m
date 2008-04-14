@@ -1,69 +1,115 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: StGit: kha/{stable,safe,experimental} updated
-Date: Mon, 14 Apr 2008 10:11:39 +0200
-Message-ID: <20080414081139.GB9135@diana.vm.bytemark.co.uk>
-References: <20080413191140.GA1912@diana.vm.bytemark.co.uk> <2008-04-14-08-44-30+trackit+sam@rfc1149.net> <20080414070348.GA9135@diana.vm.bytemark.co.uk>
+From: Sergio Callegari <sergio.callegari@gmail.com>
+Subject: Re: Interaction between clean/smudge and git status
+Date: Mon, 14 Apr 2008 08:18:32 +0000 (UTC)
+Message-ID: <loom.20080414T074356-925@post.gmane.org>
+References: <loom.20080413T231611-113@post.gmane.org> <4802FE3C.4090306@viscovery.net> <7vej98apdo.fsf@gitster.siamese.dyndns.org> <loom.20080414T072615-85@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
-To: Samuel Tardieu <sam@rfc1149.net>
-X-From: git-owner@vger.kernel.org Mon Apr 14 10:12:52 2008
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 14 10:19:39 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JlJnz-0001Oh-Ad
-	for gcvg-git-2@gmane.org; Mon, 14 Apr 2008 10:12:47 +0200
+	id 1JlJua-0003IM-Jm
+	for gcvg-git-2@gmane.org; Mon, 14 Apr 2008 10:19:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760101AbYDNIMA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Apr 2008 04:12:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760032AbYDNIL7
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Apr 2008 04:11:59 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4972 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757208AbYDNIL4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Apr 2008 04:11:56 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1JlJmt-0002n7-00; Mon, 14 Apr 2008 09:11:39 +0100
-Content-Disposition: inline
-In-Reply-To: <20080414070348.GA9135@diana.vm.bytemark.co.uk>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1754225AbYDNISo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Apr 2008 04:18:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754815AbYDNISo
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Apr 2008 04:18:44 -0400
+Received: from main.gmane.org ([80.91.229.2]:47022 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754225AbYDNISn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Apr 2008 04:18:43 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1JlJte-0006h9-Ej
+	for git@vger.kernel.org; Mon, 14 Apr 2008 08:18:38 +0000
+Received: from host40-61-dynamic.6-87-r.retail.telecomitalia.it ([87.6.61.40])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 14 Apr 2008 08:18:38 +0000
+Received: from sergio.callegari by host40-61-dynamic.6-87-r.retail.telecomitalia.it with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 14 Apr 2008 08:18:38 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 87.6.61.40 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.13) Gecko/20080325 Ubuntu/7.10 (gutsy) Firefox/2.0.0.13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79489>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79490>
 
-On 2008-04-14 09:03:48 +0200, Karl Hasselstr=F6m wrote:
+Sergio Callegari <scallegari <at> arces.unibo.it> writes:
 
-> Though I was under the impression that I'd tested it with a fully
-> applied stack ... I guess the test suite needs an addition or two.
+> 
+> Junio C Hamano <gitster <at> pobox.com> writes:
+> 
+> 
+> > Are you recreating the .zip file in the filter in such a way that a file
+> > with the same contents results in byte-to-byte identical .zip file?
+> > Otherwise as far as git is concerned you have changed the file in the work
+> > tree.
+> 
+> And here you are right!!!
+> I thought that re-zip script was repeatable in behaviour, but it is not
+> (probably because things like file dates change when files are unpacked in the
+> temporary dir and dates get stored).
+> 
+> I absolutely overlooked that.
+> 
 
-The real proble turned out to be a certain developer who remembers
-running the test suite before pushing out his branches, even though no
-such thing occurred. Ahem.
+OK, here is a testcase too...
 
-This fixes the bug for me; I'll be squashing it into one of the other
-patches tonight. Sorry for the breakage.
+mkdir TEST
+git init
+# create zip file x.zip
+git add x.zip
+git commit
 
-diff --git a/stgit/lib/log.py b/stgit/lib/log.py
-index 083a546..1830cbd 100644
---- a/stgit/lib/log.py
-+++ b/stgit/lib/log.py
-@@ -84,7 +84,7 @@ class Log(object):
-         def pl(name):
-             patches =3D [x.split() for x in
-                        self.commit.data.tree.data.entries[name][1]
--                       .data.str.strip().split('\n')]
-+                       .data.str.strip().split('\n') if x]
-             # TODO: handle case where we don't have the commit object.
-             return ([pn for sha1, pn in patches],
-                     dict((pn, repo.get_commit(sha1)) for sha1, pn in p=
-atches))
+In this git commit the clean filter runs.
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+rm x.zip
+
+git checkout x.zip
+
+or 
+
+git reset --hard
+
+In this checkout the smudge filter runs
+
+git status
+
+It says that x.zip is changed
+
+And yes, in some sense it is changed, because it is a different file than the
+one I had before the check in. But no, in some other sense it is not changed,
+because it is the file that I have just checked out (it has not been touched
+after the checkout).
+
+Not that if I had only the clean filter and not the smudge one, then the same
+would have happened. 
+
+
+So I think that I see your point: if the clean/smudge filters always provide the
+same output independently from when they are run, then I get the message about
+the changed file at most once, when I check in for the first time the "cleaned"
+file.  
+
+And this behaviour makes sense: to say that nothing has changed, git wants
+things to be identical.  However it is a bit counterintuitive, because one would
+think that something that has just been freshly checked out should not be
+considered as changed anyway.
+
+I wonder if this comes from the fact that when git status is run, git compares
+the workdir file with the index and the index contains information on the file
+as it was before the last checkin.  When filters exist, wouldn't it make sense
+to have the index hold information on the files as they are after the checkout?
+
+Sergio 
