@@ -1,122 +1,419 @@
-From: Al Viro <viro@ZenIV.linux.org.uk>
-Subject: Re: Reporting bugs and bisection
-Date: Mon, 14 Apr 2008 08:23:28 +0100
-Message-ID: <20080414072328.GW9785@ZenIV.linux.org.uk>
-References: <47FEADCB.7070104@rtr.ca> <20080413121831.d89dd424.akpm@linux-foundation.org> <20080413202118.GA29658@2ka.mipt.ru> <200804132233.50491.rjw@sisk.pl> <20080413205406.GA9190@2ka.mipt.ru> <48028830.6020703@earthlink.net> <alpine.DEB.1.10.0804131546370.9318@asgard> <20080414043939.GA6862@1wt.eu> <20080414053943.GU9785@ZenIV.linux.org.uk> <20080413232441.e216a02c.akpm@linux-foundation.org>
+From: =?utf-8?q?J=C3=B6rg=20Sommer?= <joerg@alea.gnuu.de>
+Subject: [PATCH v2 10/13] Do rebase with preserve merges with advanced TODO list
+Date: Mon, 14 Apr 2008 02:21:06 +0200
+Message-ID: <1208132469-26471-10-git-send-email-joerg@alea.gnuu.de>
+References: <7vabkoufzq.fsf@gitster.siamese.dyndns.org>
+ <1208132469-26471-1-git-send-email-joerg@alea.gnuu.de>
+ <1208132469-26471-2-git-send-email-joerg@alea.gnuu.de>
+ <1208132469-26471-3-git-send-email-joerg@alea.gnuu.de>
+ <1208132469-26471-4-git-send-email-joerg@alea.gnuu.de>
+ <1208132469-26471-5-git-send-email-joerg@alea.gnuu.de>
+ <1208132469-26471-6-git-send-email-joerg@alea.gnuu.de>
+ <1208132469-26471-7-git-send-email-joerg@alea.gnuu.de>
+ <1208132469-26471-8-git-send-email-joerg@alea.gnuu.de>
+ <1208132469-26471-9-git-send-email-joerg@alea.gnuu.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Willy Tarreau <w@1wt.eu>, david@lang.hm,
-	Stephen Clark <sclark46@earthlink.net>,
-	Evgeniy Polyakov <johnpol@2ka.mipt.ru>,
-	"Rafael J. Wysocki" <rjw@sisk.pl>, Tilman Schmidt <tilman@imap.cc>,
-	Valdis.Kletnieks@vt.edu, Mark Lord <lkml@rtr.ca>,
-	David Miller <davem@davemloft.net>, jesper.juhl@gmail.com,
-	yoshfuji@linux-ipv6.org, jeff@garzik.org,
-	linux-kernel <linux-kernel@vger.kernel.org>, git@vger.kernel.org,
-	netdev@vger.kernel.org
-To: Andrew Morton <akpm@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Mon Apr 14 09:25:09 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: gitster@pobox.com, Johannes.Schindelin@gmx.de,
+	=?utf-8?q?J=C3=B6rg=20Sommer?= <joerg@alea.gnuu.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 14 09:39:17 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JlJ3d-0005pG-Dg
-	for gcvg-git-2@gmane.org; Mon, 14 Apr 2008 09:24:53 +0200
+	id 1JlJHY-0000vb-7B
+	for gcvg-git-2@gmane.org; Mon, 14 Apr 2008 09:39:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758508AbYDNHYG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Apr 2008 03:24:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758193AbYDNHYG
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Apr 2008 03:24:06 -0400
-Received: from zeniv.linux.org.uk ([195.92.253.2]:38712 "EHLO
-	ZenIV.linux.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757485AbYDNHYD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Apr 2008 03:24:03 -0400
-Received: from viro by ZenIV.linux.org.uk with local (Exim 4.63 #1 (Red Hat Linux))
-	id 1JlJ2G-0005Ub-5O; Mon, 14 Apr 2008 08:23:28 +0100
-Content-Disposition: inline
-In-Reply-To: <20080413232441.e216a02c.akpm@linux-foundation.org>
-User-Agent: Mutt/1.4.2.3i
+	id S1755835AbYDNHia convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Apr 2008 03:38:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755896AbYDNHia
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Apr 2008 03:38:30 -0400
+Received: from banki.eumelnet.de ([83.246.114.63]:4087 "EHLO uucp.gnuu.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755637AbYDNHi3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Apr 2008 03:38:29 -0400
+Received: by uucp.gnuu.de (Postfix, from userid 10)
+	id 9BFE1488042; Mon, 14 Apr 2008 09:38:26 +0200 (CEST)
+Received: from ibook.localnet ([192.168.0.5] helo=alea.gnuu.de)
+	by alea.gnuu.de with esmtp (Exim 4.63)
+	(envelope-from <joerg@alea.gnuu.de>)
+	id 1JlJFL-0000mP-Ao; Mon, 14 Apr 2008 09:36:59 +0200
+Received: from joerg by alea.gnuu.de with local (Exim 4.69)
+	(envelope-from <joerg@alea.gnuu.de>)
+	id 1JlCRa-0006uF-9L; Mon, 14 Apr 2008 02:21:10 +0200
+X-Mailer: git-send-email 1.5.5
+In-Reply-To: <1208132469-26471-9-git-send-email-joerg@alea.gnuu.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79478>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79479>
 
-On Sun, Apr 13, 2008 at 11:24:41PM -0700, Andrew Morton wrote:
+The current algorithmus used to rebase a branch with merges on top of
+another has some drawbacks: it's not possible to squash commits, it's n=
+ot
+possible to change the order of commits, particularly the tip of the
+branch can't change.
 
-> No.  The problem we're discussing here is the apparently-large number of
-> bugs which are in the kernel, the apparently-large number of new bugs which
-> we're adding to the kernel, and our apparent tardiness in addressing them.
-> 
-> Do you agree with these impressions, or not?
-> 
-> If you do agree, what would you propose we do about it?
+This new algorithmus uses the idea from Junio to create a TODO list wit=
+h
+the commands mark, merge and reset to represent the nonlinear structure
+of merges.
 
-In addition to obvious "we need testing and something better than bugzilla
-to keep track of bugs"?  Real review of code in tree and patches getting into
-the tree.
+Signed-off-by: J=C3=B6rg Sommer <joerg@alea.gnuu.de>
+---
+ git-rebase--interactive.sh    |  239 ++++++++++++++++++++++++---------=
+--------
+ t/t3404-rebase-interactive.sh |   37 +++++++
+ 2 files changed, 175 insertions(+), 101 deletions(-)
 
-And the latter part _must_ be done on each entry point.  Any git tree
-that acts as injection point really needs a working mechanism of some
-sort that would do that; afterwards it's too late, since review of
-the stuff getting into mainline on a massive merge is sadly impractical.
-
-I don't know any formal mechanism that could take care of that; no more
-than making sure that no backdoors are injected into the tree.  It really
-has to be a matter of trust for tree maintainers and community around
-the subsystem.
-
-Git is damn good at killing the merge bottleneck.  Too good, since it
-hides the review bottleneck.  And we get equivalents of self-selected
-communities that had been problem for "here's our CVS, here's monthly
-dump from it, apply" kind of setups.  It _is_ better, since one can
-get to commit history (modulo interesting issues with merge nodes and
-conflict resolution).  But in practice it's not good enough - the patches
-going in during a merge (especially for a tree that collects from
-secondaries) are not visible enough.  And it's too late at that point,
-since one has to do something monumentally ugly to get Linus revert
-a large merge.  On the scale of Great IDE Mess in 2.5...
-
-linux-next might help with the last part, but I don't think it really
-deals with the first one.  It certainly helps to some extent, but...
-
-We need higher S/N on l-k.  We need people looking into the subsystem
-trees as those grow and causing a stench when bad things are found,
-with design issues getting brought to l-k if nothing else helps.  We
-need tree maintainers understanding that review, including out-of-community
-one, is needed (the need of testing is generally better understood - I
-_hope_).
-
-We need more people reading the fscking source.  Subsystem by subsystem.
-Without assumption that code is not broken.  With mechanism collating
-the questions asked and answers given.  Ideally we need growing documentation
-of core subsystems and data structures, with explicit goal of helping
-reviewers new to an area to find their way around it.  And yes, I'm
-guilty of procrastinating on that - several half-finished pieces on
-VFS-related stuff are sitting locally ;-/
-
-We need gregkh to get real and stop assuming that two Signed-off-by are
-equivalent to "reviewed at least twice", while we are at it ;-)
-
-We need people to realize that warnings are useful as triage tools -
-not as "Ug see warning.  Warning bad.  Ug fix that line.  Warning go away.
-Ug changeset count grow.  Ug happy.", but as machine-assisted part of
-finding confused areas of code.  With human combining signals from
-different warnings to get statistically useful triage strategies (note
-that aforementioned making gcc/sparse/whatnot to STFU by local change
-has a lovely potential of distorting those signals and actually _hiding_
-crap code).
-
-Maybe we need a list a-la linux-arch for tree maintainers to coordinate
-stuff - obviously open not only for those.
-
-We really need to get around to doing triage of remaining stuff in -mm,
-BTW - again, guilty for not getting through such on VFS-related stuff
-in there.  Hopefully linux-next trees will eventually vacuum most of the
-pile in...
-
-As for the bug that got this thread started...  I'd say that asking to
-bisect was reasonable in this particular case.  The following DSW mixed
-into the thread very soon went the way of all DSW (OK, it hadn't godwinated
-yet, at least in the parts I've seen, so there's still way to go, but...)
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index d0a7e5c..d3327a8 100755
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -22,11 +22,9 @@ TODO=3D"$DOTEST"/git-rebase-todo
+ DONE=3D"$DOTEST"/done
+ MSG=3D"$DOTEST"/message
+ SQUASH_MSG=3D"$DOTEST"/message-squash
+-REWRITTEN=3D"$DOTEST"/rewritten
+ PRESERVE_MERGES=3D
+ STRATEGY=3D
+ VERBOSE=3D
+-test -d "$REWRITTEN" && PRESERVE_MERGES=3Dt
+ test -f "$DOTEST"/strategy && STRATEGY=3D"$(cat "$DOTEST"/strategy)"
+ test -f "$DOTEST"/verbose && VERBOSE=3Dt
+=20
+@@ -148,8 +146,6 @@ pick_one () {
+ 	no_ff=3D
+ 	case "$1" in -n) sha1=3D$2; no_ff=3Dt ;; *) sha1=3D$1 ;; esac
+ 	output git rev-parse --verify $sha1 || die "Invalid commit name: $sha=
+1"
+-	test -d "$REWRITTEN" &&
+-		pick_one_preserving_merges "$@" && return
+ 	parent_sha1=3D$(git rev-parse --verify $sha1^) ||
+ 		die "Could not get the parent of $sha1"
+ 	current_sha1=3D$(git rev-parse --verify HEAD)
+@@ -163,66 +159,6 @@ pick_one () {
+ 	fi
+ }
+=20
+-pick_one_preserving_merges () {
+-	case "$1" in -n) sha1=3D$2 ;; *) sha1=3D$1 ;; esac
+-	sha1=3D$(git rev-parse $sha1)
+-
+-	if test -f "$DOTEST"/current-commit
+-	then
+-		current_commit=3D$(cat "$DOTEST"/current-commit) &&
+-		git rev-parse HEAD > "$REWRITTEN"/$current_commit &&
+-		rm "$DOTEST"/current-commit ||
+-		die "Cannot write current commit's replacement sha1"
+-	fi
+-
+-	# rewrite parents; if none were rewritten, we can fast-forward.
+-	fast_forward=3Dt
+-	preserve=3Dt
+-	new_parents=3D
+-	for p in $(git rev-list --parents -1 $sha1 | cut -d' ' -f2-)
+-	do
+-		if test -f "$REWRITTEN"/$p
+-		then
+-			preserve=3Df
+-			new_p=3D$(cat "$REWRITTEN"/$p)
+-			test $p !=3D $new_p && fast_forward=3Df
+-			case "$new_parents" in
+-			*$new_p*)
+-				;; # do nothing; that parent is already there
+-			*)
+-				new_parents=3D"$new_parents $new_p"
+-				;;
+-			esac
+-		fi
+-	done
+-	case $fast_forward in
+-	t)
+-		output warn "Fast forward to $sha1"
+-		test $preserve =3D f || echo $sha1 > "$REWRITTEN"/$sha1
+-		;;
+-	f)
+-		test "a$1" =3D a-n && die "Refusing to squash a merge: $sha1"
+-
+-		first_parent=3D$(expr "$new_parents" : ' \([^ ]*\)')
+-		# detach HEAD to current parent
+-		output git checkout $first_parent 2> /dev/null ||
+-			die "Cannot move HEAD to $first_parent"
+-
+-		echo $sha1 > "$DOTEST"/current-commit
+-		case "$new_parents" in
+-		' '*' '*)
+-			# No point in merging the first parent, that's HEAD
+-			redo_merge $sha1 ${new_parents# $first_parent}
+-			;;
+-		*)
+-			output git cherry-pick "$@" ||
+-				die_with_patch $sha1 "Could not pick $sha1"
+-			;;
+-		esac
+-		;;
+-	esac
+-}
+-
+ nth_string () {
+ 	case "$1" in
+ 	*1[0-9]|*[04-9]) echo "$1"th;;
+@@ -398,20 +334,7 @@ do_next () {
+ 	HEADNAME=3D$(cat "$DOTEST"/head-name) &&
+ 	OLDHEAD=3D$(cat "$DOTEST"/head) &&
+ 	SHORTONTO=3D$(git rev-parse --short $(cat "$DOTEST"/onto)) &&
+-	if test -d "$REWRITTEN"
+-	then
+-		test -f "$DOTEST"/current-commit &&
+-			current_commit=3D$(cat "$DOTEST"/current-commit) &&
+-			git rev-parse HEAD > "$REWRITTEN"/$current_commit
+-		if test -f "$REWRITTEN"/$OLDHEAD
+-		then
+-			NEWHEAD=3D$(cat "$REWRITTEN"/$OLDHEAD)
+-		else
+-			NEWHEAD=3D$OLDHEAD
+-		fi
+-	else
+-		NEWHEAD=3D$(git rev-parse HEAD)
+-	fi &&
++	NEWHEAD=3D$(git rev-parse HEAD) &&
+ 	case $HEADNAME in
+ 	refs/*)
+ 		message=3D"$GIT_REFLOG_ACTION: $HEADNAME onto $SHORTONTO)" &&
+@@ -436,6 +359,130 @@ do_rest () {
+ 	done
+ }
+=20
++get_value_from_list () {
++	# args: "key" " key1#value1 key2#value2"
++	case "$2" in
++	*" $1#"*)
++		stm_tmp=3D"${2#* $1#}"
++		echo "${stm_tmp%% *}"
++		unset stm_tmp
++		;;
++	*)
++		return 1
++		;;
++	esac
++}
++
++insert_value_at_key_into_list () {
++	# args: "value" "key" " key1#value1 key2#value2"
++	case "$3 " in
++	*" $2#$1 "*)
++		echo "$3"
++		;;
++	*" $2#"*)
++		echo "$3"
++		return 1
++		;;
++	*)
++		echo "$3 $2#$1"
++		;;
++	esac
++}
++
++create_extended_todo_list () {
++	(
++	while IFS=3D_ read commit parents subject
++	do
++		if test "${last_parent:-$commit}" !=3D "$commit"
++		then
++			if test t =3D "${delayed_mark:-f}"
++			then
++				marked_commits=3D$(insert_value_at_key_into_list \
++					dummy $last_parent "${marked_commits:-}")
++				delayed_mark=3Df
++			fi
++			test "$last_parent" =3D $SHORTUPSTREAM && \
++				last_parent=3D$SHORTONTO
++			echo "reset $last_parent"
++		fi
++		last_parent=3D"${parents%% *}"
++
++		get_value_from_list $commit "${marked_commits:-}" \
++			>/dev/null && echo mark
++
++		case "$parents" in
++		*' '*)
++			delayed_mark=3Dt
++			new_parents=3D
++			for p in ${parents#* }
++			do
++				marked_commits=3D$(insert_value_at_key_into_list \
++					dummy "$p" "${marked_commits:-}")
++				if test "$p" =3D $SHORTUPSTREAM
++				then
++					new_parents=3D"$new_parents $SHORTONTO"
++				else
++					new_parents=3D"$new_parents $p"
++				fi
++			done
++			unset p
++			echo merge $commit $new_parents
++			unset new_parents
++			;;
++		*)
++			echo "pick $commit $subject"
++			;;
++		esac
++	done
++	test -n "${last_parent:-}" -a "${last_parent:-}" !=3D $SHORTUPSTREAM =
+&& \
++		echo reset $last_parent
++	) | \
++	tac | \
++	while read cmd args
++	do
++		: ${commit_mark_list:=3D} ${last_commit:=3D000}
++		case "$cmd" in
++		pick)
++			last_commit=3D"${args%% *}"
++			;;
++		mark)
++			: ${next_mark:=3D0}
++			if commit_mark_list=3D$(insert_value_at_key_into_list \
++				$next_mark $last_commit "$commit_mark_list")
++			then
++				args=3D":$next_mark"
++				next_mark=3D$(($next_mark + 1))
++			else
++				die "Internal error: two marks for" \
++					"the same commit"
++			fi
++			;;
++		reset)
++			if tmp=3D$(get_value_from_list $args "$commit_mark_list")
++			then
++				args=3D":$tmp"
++			fi
++			;;
++		merge)
++			new_args=3D
++			for i in ${args#* }
++			do
++				if tmp=3D$(get_value_from_list $i \
++					"$commit_mark_list")
++				then
++					new_args=3D"$new_args :$tmp"
++				else
++					new_args=3D"$new_args $i"
++				fi
++			done
++			last_commit=3D"${args%% *}"
++			args=3D"$last_commit ${new_args# }"
++			;;
++		esac
++		echo "$cmd $args"
++	done
++}
++
+ while test $# !=3D 0
+ do
+ 	case "$1" in
+@@ -568,33 +615,23 @@ do
+ 		echo $ONTO > "$DOTEST"/onto
+ 		test -z "$STRATEGY" || echo "$STRATEGY" > "$DOTEST"/strategy
+ 		test t =3D "$VERBOSE" && : > "$DOTEST"/verbose
+-		if test t =3D "$PRESERVE_MERGES"
+-		then
+-			# $REWRITTEN contains files for each commit that is
+-			# reachable by at least one merge base of $HEAD and
+-			# $UPSTREAM. They are not necessarily rewritten, but
+-			# their children might be.
+-			# This ensures that commits on merged, but otherwise
+-			# unrelated side branches are left alone. (Think "X"
+-			# in the man page's example.)
+-			mkdir "$REWRITTEN" &&
+-			for c in $(git merge-base --all $HEAD $UPSTREAM)
+-			do
+-				echo $ONTO > "$REWRITTEN"/$c ||
+-					die "Could not init rewritten commits"
+-			done
+-			MERGES_OPTION=3D
+-		else
+-			MERGES_OPTION=3D--no-merges
+-		fi
+=20
+ 		SHORTUPSTREAM=3D$(git rev-parse --short=3D7 $UPSTREAM)
+ 		SHORTHEAD=3D$(git rev-parse --short=3D7 $HEAD)
+ 		SHORTONTO=3D$(git rev-parse --short=3D7 $ONTO)
+-		git rev-list $MERGES_OPTION --pretty=3Doneline --abbrev-commit \
+-			--abbrev=3D7 --reverse --left-right --cherry-pick \
+-			$UPSTREAM...$HEAD | \
+-			sed -n "s/^>/pick /p" > "$TODO"
++		common_rev_list_opts=3D"--abbrev-commit --abbrev=3D7
++			--left-right --cherry-pick $UPSTREAM...$HEAD"
++		if test t =3D "$PRESERVE_MERGES"
++		then
++			git rev-list --pretty=3D'format:%h_%p_%s' --topo-order \
++				$common_rev_list_opts | \
++				grep -v ^commit | \
++				create_extended_todo_list
++		else
++			git rev-list --no-merges --reverse --pretty=3Doneline \
++				 $common_rev_list_opts | sed -n "s/^>/pick /p"
++		fi > "$TODO"
++
+ 		cat >> "$TODO" << EOF
+=20
+ # Rebase $SHORTUPSTREAM..$SHORTHEAD onto $SHORTONTO
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive=
+=2Esh
+index 0a8d065..f919aaf 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -258,7 +258,44 @@ test_expect_success 'preserve merges with -p' '
+ 	test $(git show HEAD~2:file1) =3D B
+ '
+=20
++test_expect_success 'rebase with preserve merge forth and back is a no=
+op' '
++	git checkout -b big-branch-1 master &&
++	test_tick &&
++	: > bb1a &&
++	git add bb1a &&
++	git commit -m "big branch commit 1" &&
++	: > bb1b &&
++	git add bb1b &&
++	git commit -m "big branch commit 2" &&
++	: > bb1c &&
++	git add bb1c &&
++	git commit -m "big branch commit 3" &&
++	git checkout -b big-branch-2 master &&
++	: > bb2a &&
++	git add bb2a &&
++	git commit -m "big branch commit 4" &&
++	: > bb2b &&
++	git add bb2b &&
++	git commit -m "big branch commit 5" &&
++	git merge big-branch-1~1 &&
++	git merge to-be-preserved &&
++	tbp_merge=3D$(git rev-parse HEAD) &&
++	: > bb2c &&
++	git add bb2c &&
++	git commit -m "big branch commit 6" &&
++	git merge big-branch-1 &&
++	head=3D$(git rev-parse HEAD) &&
++	FAKE_LINES=3D"16 6 19 20 4 1 2 5 22" \
++		git rebase -i -p --onto dead-end master &&
++	test "$head" !=3D "$(git rev-parse HEAD)" &&
++	FAKE_LINES=3D"3 7 mark:10 8 9 5 1 2 merge$tbp_merge~1/:10 \
++		merge$tbp_merge/to-be-preserved 6 11" \
++		git rebase -i -p --onto master dead-end &&
++	test "$head" =3D "$(git rev-parse HEAD)"
++'
++
+ test_expect_success '--continue tries to commit' '
++	git checkout to-be-rebased &&
+ 	test_tick &&
+ 	! git rebase -i --onto new-branch1 HEAD^ &&
+ 	echo resolved > file1 &&
+--=20
+1.5.5
