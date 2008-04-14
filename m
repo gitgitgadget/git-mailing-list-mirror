@@ -1,61 +1,69 @@
-From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
-Subject: Re: Git Wiki improvements
-Date: Mon, 14 Apr 2008 10:06:41 +0200
-Message-ID: <8aa486160804140106m570d3fb9va0081d8a0d42870@mail.gmail.com>
-References: <60CC37BF5A3B73428D0BB9B6A26B9669019D95DA@yvrmail1.corp.navcan.ca>
-	 <200804140303.22624.jnareb@gmail.com>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: StGit: kha/{stable,safe,experimental} updated
+Date: Mon, 14 Apr 2008 10:11:39 +0200
+Message-ID: <20080414081139.GB9135@diana.vm.bytemark.co.uk>
+References: <20080413191140.GA1912@diana.vm.bytemark.co.uk> <2008-04-14-08-44-30+trackit+sam@rfc1149.net> <20080414070348.GA9135@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Pack, Dylan" <PackD@navcanada.ca>,
-	"Pack, Dylan" <sarpulhu@gmail.com>, git@vger.kernel.org,
-	"Petr Baudis" <pasky@suse.cz>
-To: "Jakub Narebski" <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 14 10:08:04 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
+To: Samuel Tardieu <sam@rfc1149.net>
+X-From: git-owner@vger.kernel.org Mon Apr 14 10:12:52 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JlJiq-0008AY-3Y
-	for gcvg-git-2@gmane.org; Mon, 14 Apr 2008 10:07:28 +0200
+	id 1JlJnz-0001Oh-Ad
+	for gcvg-git-2@gmane.org; Mon, 14 Apr 2008 10:12:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757601AbYDNIGo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Apr 2008 04:06:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755709AbYDNIGn
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Apr 2008 04:06:43 -0400
-Received: from yw-out-2324.google.com ([74.125.46.29]:16545 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756823AbYDNIGl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Apr 2008 04:06:41 -0400
-Received: by yw-out-2324.google.com with SMTP id 5so607517ywb.1
-        for <git@vger.kernel.org>; Mon, 14 Apr 2008 01:06:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=RB5x3CBzGUmpDuO8mUwer/f/cU0980kpzJQs/nzgq2U=;
-        b=SNjZedRUoWjHxZRv0wSzcSluPjjvWgn3zpTT5JbkDnghLrjdk0b9blH/ef4aV51zb+T05WFJ5DjI7kRmWZeRA1/vCQ2dpIHZpWaCEKVhFckymheBVUPBQIhFSryPzvkFvmZcV/mmwvk8e2Hn+LA4l6P6z8HotvXClAnzVM/Eyhs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=CGmMGD3zCdT26MkIkdAxKc4dolX8nQ4gfOCboqnctUXhKMboCDhmC/63+SGB/hjQywHEbbdzsc42HHPuceoYeE3/cb+ZJWBzlPE/q4cMhR+WN5AYsxWru9Q5p+TYNX53Cj9ZLWELlfWHgrbOjf4knn42/j9H/w8RxwfqVTbrHEw=
-Received: by 10.150.133.18 with SMTP id g18mr5754110ybd.74.1208160401078;
-        Mon, 14 Apr 2008 01:06:41 -0700 (PDT)
-Received: by 10.151.14.14 with HTTP; Mon, 14 Apr 2008 01:06:41 -0700 (PDT)
-In-Reply-To: <200804140303.22624.jnareb@gmail.com>
+	id S1760101AbYDNIMA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Apr 2008 04:12:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760032AbYDNIL7
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Apr 2008 04:11:59 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4972 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757208AbYDNIL4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Apr 2008 04:11:56 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1JlJmt-0002n7-00; Mon, 14 Apr 2008 09:11:39 +0100
 Content-Disposition: inline
+In-Reply-To: <20080414070348.GA9135@diana.vm.bytemark.co.uk>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79488>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79489>
 
-Maybe we could switch to a wiki with git support (it solves the
-problem because there is no GUI, jeje), for example ikiwiki. This way
-you can edit the pages from the web and from git. Some time ago I told
-it to Petr and he answered me "but I'd prefer you to discuss this at
-git@". I didn't because I didn't find an "easy" way to convert
-MoinMoin to Markdown (used by default in ikiwiki, but can can be
-others via plugins), but maybe others know!
+On 2008-04-14 09:03:48 +0200, Karl Hasselstr=F6m wrote:
 
-Santi
+> Though I was under the impression that I'd tested it with a fully
+> applied stack ... I guess the test suite needs an addition or two.
+
+The real proble turned out to be a certain developer who remembers
+running the test suite before pushing out his branches, even though no
+such thing occurred. Ahem.
+
+This fixes the bug for me; I'll be squashing it into one of the other
+patches tonight. Sorry for the breakage.
+
+diff --git a/stgit/lib/log.py b/stgit/lib/log.py
+index 083a546..1830cbd 100644
+--- a/stgit/lib/log.py
++++ b/stgit/lib/log.py
+@@ -84,7 +84,7 @@ class Log(object):
+         def pl(name):
+             patches =3D [x.split() for x in
+                        self.commit.data.tree.data.entries[name][1]
+-                       .data.str.strip().split('\n')]
++                       .data.str.strip().split('\n') if x]
+             # TODO: handle case where we don't have the commit object.
+             return ([pn for sha1, pn in patches],
+                     dict((pn, repo.get_commit(sha1)) for sha1, pn in p=
+atches))
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
