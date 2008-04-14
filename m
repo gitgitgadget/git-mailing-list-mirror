@@ -1,113 +1,152 @@
-From: Dill <sarpulhu@gmail.com>
-Subject: Re: Git Wiki improvements
-Date: Sun, 13 Apr 2008 19:25:41 -0700 (PDT)
-Message-ID: <8c25cb7a-a544-4464-b0ac-c95f99b349a0@2g2000hsn.googlegroups.com>
-References: <60CC37BF5A3B73428D0BB9B6A26B9669019D95DA@yvrmail1.corp.navcan.ca> 
-	<200804140303.22624.jnareb@gmail.com>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH 1/2] bisect: make "start", "good" and "skip" succeed or fail
+ atomically
+Date: Mon, 14 Apr 2008 05:41:45 +0200
+Message-ID: <20080414054145.e2d5e253.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 14 04:26:43 2008
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio Hamano <junkio@cox.net>, Ingo Molnar <mingo@elte.hu>
+X-From: git-owner@vger.kernel.org Mon Apr 14 05:37:31 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JlEP3-00044E-GE
-	for gcvg-git-2@gmane.org; Mon, 14 Apr 2008 04:26:41 +0200
+	id 1JlFVY-000819-0U
+	for gcvg-git-2@gmane.org; Mon, 14 Apr 2008 05:37:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753832AbYDNCZn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 13 Apr 2008 22:25:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753864AbYDNCZn
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 Apr 2008 22:25:43 -0400
-Received: from yw-out-2122.google.com ([74.125.46.25]:59460 "EHLO
-	yw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753671AbYDNCZm convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 13 Apr 2008 22:25:42 -0400
-Received: by yw-out-2122.google.com with SMTP id 1so949731ywp.61
-        for <git@vger.kernel.org>; Sun, 13 Apr 2008 19:25:41 -0700 (PDT)
-Received: by 10.100.154.9 with SMTP id b9mr387907ane.7.1208139941753; Sun, 13 
-	Apr 2008 19:25:41 -0700 (PDT)
-In-Reply-To: <200804140303.22624.jnareb@gmail.com>
-X-IP: 207.236.24.133
-User-Agent: G2/1.0
-X-HTTP-UserAgent: Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; .NET CLR 
-	1.1.4322; InfoPath.1),gzip(gfe),gzip(gfe)
+	id S1754012AbYDNDgc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Apr 2008 23:36:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754007AbYDNDgc
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 Apr 2008 23:36:32 -0400
+Received: from smtp1-g19.free.fr ([212.27.42.27]:53404 "EHLO smtp1-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753868AbYDNDgb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Apr 2008 23:36:31 -0400
+Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id EFF2D1AB2AC;
+	Mon, 14 Apr 2008 05:36:28 +0200 (CEST)
+Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with SMTP id 8C9A11AB2BA;
+	Mon, 14 Apr 2008 05:36:28 +0200 (CEST)
+X-Mailer: Sylpheed 2.5.0beta1 (GTK+ 2.12.9; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79452>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79453>
 
-The more I think of it... maybe it's best to leave the wiki alone.
-It's not broken...it's just not great. Maybe we should just leaves
-things as they are? I'm sure we can work around the problems the
-software sometimes gives us. But on the other hand a move to
-git.kernel.org would be easier to use it's just a lot of work to move
-it over there. Anyone else have complaints about the wiki? Or maybe
-I'm the only one. ;)
+Before this patch, when "git bisect start", "git bisect good" or
+"git bisect skip" were called with many revisions, they could fail
+after having already marked some revisions as "good", "bad" or
+"skip".
 
-On Apr 13, 7:03=A0pm, Jakub Narebski <jna...@gmail.com> wrote:
-> [Cc: g...@vger.kernel.org, Petr Baudis <pa...@suse.cz>]
->
->
->
->
->
-> Pack, Dylan wrote:
-> > Jakub Narebski wrote
-> >> On Mon, 14 April 2008, Pack, Dylan wrote:
->
-> >>> I've noticed to that the wiki gets mixed up if I use the GUI edit=
-or.
-> >>> Looks like I'm going to have the syntax after all of well.
->
-> >> Unfortunately Git Wiki administrator (Petr Baudis, who also mainta=
-ins
-> >> git homepage), doesn't have much time to spend on configuring wiki=
-,
-> >> and doesn't know well MoinMoin. =A0The problem seems to lie in the=
- fact
-> >> that Wikipedia-like (or rather MediaWiki-like) syntax provided by
-> >> (I guess) media4moin plugin doesn't modify GUI editing. =A0This af=
-fect
-> >> mosts macros, which in default MoinMoin syntax are written as
-> >> e.g. [[BR]], while Wikipedia-like syntax uses e.g. {{BR}}.
->
-> > Perhaps a move to wikidot.com would work? They have an awesome set =
-up
-> > for wikis. I've tried them out and they are fast and always improvi=
-ng
-> > the wiki. We could even add google adsense on the wikidot site for
-> > money to be put into various git projects decided on by the
-> > developers. Not sure how much money though a git wiki site would ma=
-ke.
->
-> I'm not sure if it is a good idea. =A0We would loose a bit control, a=
-nd
-> would have git homepage and git wiki in separate domains. =A0On the o=
-ther
-> hand some of admin stuff would be passed to wiki hosting site. =A0
-> Bazaar-NG, Mercurial and Monotone (and also Emacs) have their own sel=
-f
-> hosted wikis.
->
-> Git homepage at git.or.cz (or git-scm.org), Git Wiki at
-> git.or.cz/gitwiki and free git hosting at repo.or.cz are all provided
-> by Petr 'Pasky' Baudis (thanks a lot, again!).
->
-> By the way, Git Wiki initially began as a "staging ground" for conten=
-ts
-> which would get incorporated into Git Homepage...
->
-> --
-> Jakub Narebski
-> Poland
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majord...@vger.kernel.org
-> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html-=
- Hide quoted text -
->
-> - Show quoted text -
+This could be especilally bad for "git bisect start" because as
+the file ".git/BISECT_NAMES" would not have been written, there
+would have been no attempt to clear the marked revisions on a
+"git bisect reset". That's because if there is no
+".git/BISECT_NAMES" file, nothing is done to clean things up, as
+the bisect session is not supposed to have started.
+
+While at it, let's also create the ".git/BISECT_START" file, only
+after ".git/BISECT_NAMES" as been created.
+
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ git-bisect.sh               |   14 ++++++++++----
+ t/t6030-bisect-porcelain.sh |    7 ++++++-
+ 2 files changed, 16 insertions(+), 5 deletions(-)
+
+diff --git a/git-bisect.sh b/git-bisect.sh
+index 408775a..6b43461 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -69,6 +69,7 @@ bisect_start() {
+ 	head=$(GIT_DIR="$GIT_DIR" git symbolic-ref HEAD) ||
+ 	head=$(GIT_DIR="$GIT_DIR" git rev-parse --verify HEAD) ||
+ 	die "Bad HEAD - I need a HEAD"
++	start_head=''
+ 	case "$head" in
+ 	refs/heads/bisect)
+ 		if [ -s "$GIT_DIR/BISECT_START" ]; then
+@@ -82,7 +83,7 @@ bisect_start() {
+ 		# This error message should only be triggered by cogito usage,
+ 		# and cogito users should understand it relates to cg-seek.
+ 		[ -s "$GIT_DIR/head-name" ] && die "won't bisect on seeked tree"
+-		echo "${head#refs/heads/}" >"$GIT_DIR/BISECT_START"
++		start_head="${head#refs/heads/}"
+ 		;;
+ 	*)
+ 		die "Bad HEAD - strange symbolic ref"
+@@ -103,6 +104,7 @@ bisect_start() {
+ 	done
+ 	orig_args=$(sq "$@")
+ 	bad_seen=0
++	eval=''
+ 	while [ $# -gt 0 ]; do
+ 	    arg="$1"
+ 	    case "$arg" in
+@@ -120,13 +122,15 @@ bisect_start() {
+ 		0) state='bad' ; bad_seen=1 ;;
+ 		*) state='good' ;;
+ 		esac
+-		bisect_write "$state" "$rev" 'nolog'
++		eval="$eval bisect_write '$state' '$rev' 'nolog'; "
+ 		shift
+ 		;;
+ 	    esac
+ 	done
+ 
+ 	sq "$@" >"$GIT_DIR/BISECT_NAMES"
++	test -n "$start_head" && echo "$start_head" >"$GIT_DIR/BISECT_START"
++	eval "$eval"
+ 	echo "git-bisect start$orig_args" >>"$GIT_DIR/BISECT_LOG"
+ 	bisect_auto_next
+ }
+@@ -157,12 +161,14 @@ bisect_state() {
+ 		bisect_write "$state" "$rev" ;;
+ 	2,bad|*,good|*,skip)
+ 		shift
++		eval=''
+ 		for rev in "$@"
+ 		do
+ 			sha=$(git rev-parse --verify "$rev^{commit}") ||
+ 				die "Bad rev input: $rev"
+-			bisect_write "$state" "$sha"
+-		done ;;
++			eval="$eval bisect_write '$state' '$sha'; "
++		done
++		eval "$eval" ;;
+ 	*,bad)
+ 		die "'git bisect bad' can take only one argument." ;;
+ 	*)
+diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
+index 32d6118..5e3e544 100755
+--- a/t/t6030-bisect-porcelain.sh
++++ b/t/t6030-bisect-porcelain.sh
+@@ -71,8 +71,12 @@ test_expect_success 'bisect start with one bad and good' '
+ 	git bisect next
+ '
+ 
+-test_expect_success 'bisect good and bad fails if not given only revs' '
++test_expect_success 'bisect fails if given any junk instead of revs' '
+ 	git bisect reset &&
++	test_must_fail git bisect start foo $HASH1 -- &&
++	test_must_fail git bisect start $HASH4 $HASH1 bar -- &&
++	test -z "$(git for-each-ref "refs/bisect/*")" &&
++	test_must_fail ls .git/BISECT_* &&
+ 	git bisect start &&
+ 	test_must_fail git bisect good foo $HASH1 &&
+ 	test_must_fail git bisect good $HASH1 bar &&
+@@ -80,6 +84,7 @@ test_expect_success 'bisect good and bad fails if not given only revs' '
+ 	test_must_fail git bisect bad $HASH3 $HASH4 &&
+ 	test_must_fail git bisect skip bar $HASH3 &&
+ 	test_must_fail git bisect skip $HASH1 foo &&
++	test -z "$(git for-each-ref "refs/bisect/*")" &&
+ 	git bisect good $HASH1 &&
+ 	git bisect bad $HASH4
+ '
+-- 
+1.5.5.50.ge6e82.dirty
