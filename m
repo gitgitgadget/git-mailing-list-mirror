@@ -1,93 +1,107 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH/RFC 01/10] Teach rebase interactive the mark command
-Date: Mon, 14 Apr 2008 02:24:25 -0400
-Message-ID: <20080414062425.GB20979@spearce.org>
-References: <7vabkoufzq.fsf@gitster.siamese.dyndns.org> <1207785521-27742-1-git-send-email-joerg@alea.gnuu.de> <1207785521-27742-2-git-send-email-joerg@alea.gnuu.de> <7vskxsneau.fsf@gitster.siamese.dyndns.org> <20080412101110.GD31356@alea.gnuu.de> <20080413035648.GY10274@spearce.org> <20080413165011.GB3179@alea.gnuu.de>
+From: Andrew Morton <akpm@linux-foundation.org>
+Subject: Re: Reporting bugs and bisection
+Date: Sun, 13 Apr 2008 23:24:41 -0700
+Message-ID: <20080413232441.e216a02c.akpm@linux-foundation.org>
+References: <47FEADCB.7070104@rtr.ca>
+	<20080413121831.d89dd424.akpm@linux-foundation.org>
+	<20080413202118.GA29658@2ka.mipt.ru>
+	<200804132233.50491.rjw@sisk.pl>
+	<20080413205406.GA9190@2ka.mipt.ru>
+	<48028830.6020703@earthlink.net>
+	<alpine.DEB.1.10.0804131546370.9318@asgard>
+	<20080414043939.GA6862@1wt.eu>
+	<20080414053943.GU9785@ZenIV.linux.org.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <junio@pobox.com>, git@vger.kernel.org,
-	Johannes.Schindelin@gmx.de
-To: =?utf-8?B?SsO2cmc=?= Sommer <joerg@alea.gnuu.de>
-X-From: git-owner@vger.kernel.org Mon Apr 14 08:25:17 2008
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Willy Tarreau <w@1wt.eu>, david@lang.hm,
+	Stephen Clark <sclark46@earthlink.net>,
+	Evgeniy Polyakov <johnpol@2ka.mipt.ru>,
+	"Rafael J. Wysocki" <rjw@sisk.pl>, Tilman Schmidt <tilman@imap.cc>,
+	Valdis.Kletnieks@vt.edu, Mark Lord <lkml@rtr.ca>,
+	David Miller <davem@davemloft.net>, jesper.juhl@gmail.com,
+	yoshfuji@linux-ipv6.org, jeff@garzik.org,
+	linux-kernel <linux-kernel@vger.kernel.org>, git@vger.kernel.org,
+	netdev@vger.kernel.org
+To: Al Viro <viro@ZenIV.linux.org.uk>
+X-From: netdev-owner@vger.kernel.org Mon Apr 14 08:26:24 2008
 connect(): Connection refused
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
+Return-path: <netdev-owner@vger.kernel.org>
+Envelope-to: linux-netdev-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JlI7w-0007Hs-UO
-	for gcvg-git-2@gmane.org; Mon, 14 Apr 2008 08:25:17 +0200
+	id 1JlI91-0007Y5-QK
+	for linux-netdev-2@gmane.org; Mon, 14 Apr 2008 08:26:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754063AbYDNGYc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Apr 2008 02:24:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754030AbYDNGYc
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Apr 2008 02:24:32 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:47431 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753959AbYDNGYb convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 14 Apr 2008 02:24:31 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1JlI77-0008Mn-Ti; Mon, 14 Apr 2008 02:24:26 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id AEF4220FBAE; Mon, 14 Apr 2008 02:24:25 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <20080413165011.GB3179@alea.gnuu.de>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-Sender: git-owner@vger.kernel.org
+	id S1754315AbYDNGZk (ORCPT <rfc822;linux-netdev-2@m.gmane.org>);
+	Mon, 14 Apr 2008 02:25:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754190AbYDNGZk
+	(ORCPT <rfc822;netdev-outgoing>); Mon, 14 Apr 2008 02:25:40 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:39643 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753083AbYDNGZj (ORCPT
+	<rfc822;netdev@vger.kernel.org>); Mon, 14 Apr 2008 02:25:39 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m3E6OhIC006707
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sun, 13 Apr 2008 23:24:46 -0700
+Received: from y.localdomain (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with SMTP id m3E6Ofsx024916;
+	Sun, 13 Apr 2008 23:24:41 -0700
+In-Reply-To: <20080414053943.GU9785@ZenIV.linux.org.uk>
+X-Mailer: Sylpheed 2.4.8 (GTK+ 2.12.5; x86_64-redhat-linux-gnu)
+X-Spam-Status: No, hits=-2.753 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+Sender: netdev-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79461>
+List-ID: <netdev.vger.kernel.org>
+X-Mailing-List: netdev@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79462>
 
-Jrg Sommer <joerg@alea.gnuu.de> wrote:
-> Shawn O. Pearce schrieb am Sat 12. Apr, 23:56 (-0400):
-> >=20
-> > Why not use the mark syntax that fast-import uses?
->=20
-> I didn't know it.
->=20
-> > In fast-import we use ":n" anytime we need to refer to a mark, e.g.
-> > ":1" or ":5".
->=20
-> Currently, I don't restrict the mark to be a number. It can anything =
-that
-> is a valid ref. Should I restrict it?
+On Mon, 14 Apr 2008 06:39:43 +0100 Al Viro <viro@ZenIV.linux.org.uk> wrote:
 
-In fast-import a mark can *only* be a number.  It cannot be a ref
-string or anything complex like that.  This reduces the memory load
-of fast-import, but does cause a burden on the import frontend.
-=20
-> And how do you handle the :/ syntax? =E2=80=9Creset :/Bla=E2=80=9D is=
- than not valid.
-> Mmm, I'll add an exception for :/.
+> On Mon, Apr 14, 2008 at 06:39:39AM +0200, Willy Tarreau wrote:
+> 
+> [snip]
+> 
+> > I'm sure many people would find this useless (or in fact reject the
+> > idea because it would show that most code will be rated 1 or 2),
+> > but I really think it can help subsystem maintainers make the relation
+> > between a reported bug and a possible submitter.
+> 
+> I have a related proposal: let us require all patches to be stamped
+> with Discordian *and* Eternal September dates.  In triplicate.  While
+> we are at it, why don't we introduce new mandatory headers like, say
+> it,
+> 
+> X-checkpatch: {Yes,No}
+> X-checkpatch-why-not: <string>
+> X-pointless: <number from 1 to 69, going from "1: does something useful" all
+> the way to "68: aligns right ends of lines in comments">
+> X-arbitrary-rules-added-to-CodingStyle: <number> (should be present if
+> and only if X-pointless: 69 is present).
+> 
+> Come to think of that, we clearly need a new file in Documentation/*,
+> documenting such headers.  Why don't we organize a subcommittee^Wnew maillist
+> devoted to that?  That would provide another entry route for contributors,
+> lowering the overall entry barriers even further...
+> 
 
-I think the ':/' syntax came along after fast-import had already starte=
-d
-to use ':' as the mark syntax.  I forgot to object to this bastard form
-of looking up a commit when it was introduced by Dscho and now we have
-a SHA-1 expression syntax that fast-import will confuse with a mark.  I
-originally had chosen to start a mark off with ':' because it is not an
-allowed character in a ref, due to its use to split src:dst in a fetch
-or push refspec.
-=20
-> Except of this, I prefer to use the colon to be much closer to the sy=
-ntax
-> of fast-import.
+None of the above was particularly useful.
 
-Me too, but it looks like in a human edited "TODO" script we may want
-to be more friendly and allow named marks.  Though I'm not sure that is
-really all that useful.  If you are merging something because it used t=
-o
-be merged before the rebase I doubt we'd generate a meaningful mark nam=
-e
-when the TODO script is initially formatted.
+> 
+> Seriously, looks like Andi is right - we've got ourselves a developing
+> beaurocracy.  As in "more and more ways of generating activity without
+> doing anything even remotely useful".  Complete with tendency to operate in
+> the ways that make sense only to beaurocracy in question and an ever-growing
+> set of bylaws...
 
---=20
-Shawn.
+No.  The problem we're discussing here is the apparently-large number of
+bugs which are in the kernel, the apparently-large number of new bugs which
+we're adding to the kernel, and our apparent tardiness in addressing them.
+
+Do you agree with these impressions, or not?
+
+If you do agree, what would you propose we do about it?
