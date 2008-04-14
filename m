@@ -1,210 +1,97 @@
-From: =?utf-8?q?J=C3=B6rg=20Sommer?= <joerg@alea.gnuu.de>
-Subject: [PATCH v2.1] Teach rebase interactive the mark command
-Date: Mon, 14 Apr 2008 12:39:44 +0200
-Message-ID: <1208169584-15931-1-git-send-email-joerg@alea.gnuu.de>
-References: <1208132469-26471-3-git-send-email-joerg@alea.gnuu.de>
+From: Adrian Bunk <bunk@kernel.org>
+Subject: Re: Reporting bugs and bisection
+Date: Mon, 14 Apr 2008 15:08:21 +0300
+Message-ID: <20080414120821.GA4625@cs181133002.pp.htv.fi>
+References: <20080413202118.GA29658@2ka.mipt.ru> <200804132233.50491.rjw@sisk.pl> <20080413205406.GA9190@2ka.mipt.ru> <48028830.6020703@earthlink.net> <alpine.DEB.1.10.0804131546370.9318@asgard> <20080414043939.GA6862@1wt.eu> <20080414053943.GU9785@ZenIV.linux.org.uk> <20080413232441.e216a02c.akpm@linux-foundation.org> <20080414072328.GW9785@ZenIV.linux.org.uk> <20080414010412.c42dc560.akpm@linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: gitster@pobox.com, spearce@spearce.org,
-	=?utf-8?q?J=C3=B6rg=20Sommer?= <joerg@alea.gnuu.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 14 12:43:24 2008
+Cc: Al Viro <viro@ZenIV.linux.org.uk>, Willy Tarreau <w@1wt.eu>,
+	david@lang.hm, Stephen Clark <sclark46@earthlink.net>,
+	Evgeniy Polyakov <johnpol@2ka.mipt.ru>,
+	"Rafael J. Wysocki" <rjw@sisk.pl>, Tilman Schmidt <tilman@imap.cc>,
+	Valdis.Kletnieks@vt.edu, Mark Lord <lkml@rtr.ca>,
+	David Miller <davem@davemloft.net>, jesper.juhl@gmail.com,
+	yoshfuji@linux-ipv6.org, jeff@garzik.org,
+	linux-kernel <linux-kernel@vger.kernel.org>, git@vger.kernel.org,
+	netdev@vger.kernel.org
+To: Andrew Morton <akpm@linux-foundation.org>
+X-From: netdev-owner@vger.kernel.org Mon Apr 14 14:10:21 2008
 connect(): Connection refused
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
+Return-path: <netdev-owner@vger.kernel.org>
+Envelope-to: linux-netdev-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JlM9M-0005I8-Ko
-	for gcvg-git-2@gmane.org; Mon, 14 Apr 2008 12:43:01 +0200
+	id 1JlNVj-0005cd-P9
+	for linux-netdev-2@gmane.org; Mon, 14 Apr 2008 14:10:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753211AbYDNKlo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Apr 2008 06:41:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752748AbYDNKln
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Apr 2008 06:41:43 -0400
-Received: from banki.eumelnet.de ([83.246.114.63]:3473 "EHLO uucp.gnuu.de"
+	id S1754038AbYDNMJ1 (ORCPT <rfc822;linux-netdev-2@m.gmane.org>);
+	Mon, 14 Apr 2008 08:09:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754018AbYDNMJ1
+	(ORCPT <rfc822;netdev-outgoing>); Mon, 14 Apr 2008 08:09:27 -0400
+Received: from smtp6.pp.htv.fi ([213.243.153.40]:33727 "EHLO smtp6.pp.htv.fi"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752739AbYDNKll (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Apr 2008 06:41:41 -0400
-Received: by uucp.gnuu.de (Postfix, from userid 10)
-	id C23A9488042; Mon, 14 Apr 2008 12:41:38 +0200 (CEST)
-Received: from ibook.localnet ([192.168.0.5] helo=alea.gnuu.de)
-	by alea.gnuu.de with esmtp (Exim 4.63)
-	(envelope-from <joerg@alea.gnuu.de>)
-	id 1JlM6D-0001DY-IH; Mon, 14 Apr 2008 12:39:45 +0200
-Received: from joerg by alea.gnuu.de with local (Exim 4.69)
-	(envelope-from <joerg@alea.gnuu.de>)
-	id 1JlM6D-00049J-0p; Mon, 14 Apr 2008 12:39:45 +0200
-X-Mailer: git-send-email 1.5.5
-In-Reply-To: <1208132469-26471-3-git-send-email-joerg@alea.gnuu.de>
-Sender: git-owner@vger.kernel.org
+	id S1753823AbYDNMJ0 (ORCPT <rfc822;netdev@vger.kernel.org>);
+	Mon, 14 Apr 2008 08:09:26 -0400
+Received: from cs181133002.pp.htv.fi (cs181133002.pp.htv.fi [82.181.133.2])
+	by smtp6.pp.htv.fi (Postfix) with ESMTP id 966DA5BC03B;
+	Mon, 14 Apr 2008 15:09:24 +0300 (EEST)
+Content-Disposition: inline
+In-Reply-To: <20080414010412.c42dc560.akpm@linux-foundation.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+Sender: netdev-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79499>
+List-ID: <netdev.vger.kernel.org>
+X-Mailing-List: netdev@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79500>
 
-This new command can be used to set symbolic marks for an commit while
-doing a rebase. This symbolic name can later be used for merges or
-resets.
+On Mon, Apr 14, 2008 at 01:04:12AM -0700, Andrew Morton wrote:
+>...
+> (And I don't think developers and maintainers _should_ spend time mucking
+> in bug-tracking systems.  They should have helpers who do all the
+> triaging/tracking/routing/closing work for them, and then provide other
+> developers with the results, letting them know what they should be spending
+> time on.  But there's a manpower problem).
+>...
 
-The decision to use references for the marks and not files like done wi=
-th
-the rewritten commits for preserve merges was made to ensure no commit
-objects get lost if prune is started while (a long term) rebase is
-running. This also unifies the checking of the validity of marks and
-references by using rev-parse for it.
+Speaking as the one who was for a few years going again and again 
+through all open bugs in the kernel Bugzilla:
 
-The format of the marks is as close as possible to the format of the
-marks used by fast-export and fast-import, i.e. :001 =3D=3D :1 and
-=E2=80=9C:12a=E2=80=9D=C2=A0=3D=3D=C2=A0:12. It differs from the format=
- of fast-import in that point
-that it requires a digit after the colon, i.e. =E2=80=9C:abc=E2=80=9D !=
-=3D :0 and =E2=80=9C:-12=E2=80=9D
-and =E2=80=9C:+12=E2=80=9D aren't allowed.
+The manpower problem isn't in handling the bugs in Bugzilla.
 
-Signed-off-by: J=C3=B6rg Sommer <joerg@alea.gnuu.de>
----
- git-rebase--interactive.sh    |   35 +++++++++++++++++++++++++++++++++=
-+-
- t/t3404-rebase-interactive.sh |   17 +++++++++++++++++
- 2 files changed, 51 insertions(+), 1 deletions(-)
+I'd claim that even if all bugs in the kernel would be reported in the 
+kernel Bugzilla I alone would be able to do all the handling of incoming 
+bugs, bug forwarding and doing all the cleanup stuff like asking 
+submitters whether a bug is still present in the latest kernel.
 
-The difference to the v2 patch is the definition of the mark as
-discussed with "Shawn O. Pearce"
+The manpower problem is at the developers and maintainers who could 
+actually debug the problems.
 
->diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
->index 6ac316a..05d04da 100755
->--- a/git-rebase--interactive.sh
->+++ b/git-rebase--interactive.sh
->@@ -254,10 +254,8 @@ peek_next_command () {
->=20
-> mark_to_ref () {
->        case "$1" in
->-       :[!/]*)
->-               # :/SOMETHING is a reference for the last commit whose
->-                # message starts with SOMETHING
->-               echo "$mark_prefix${1#:}"
->+       :[0-9]*)
->+               echo "$mark_prefix$(printf %d ${1#:} 2>/dev/null)"
->                ;;
->        *)
->                echo "$1"
->
+One problem are unmaintained areas.
+Do we have anyone who would debug e.g. APM bugs?
+And if I want to be really nasty, I'll ask whether we have anyone who 
+understands our floppy driver...  ;)
 
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 531ee94..05d04da 100755
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -35,6 +35,8 @@ mark the corrected paths with 'git add <paths>', and
- run 'git rebase --continue'"
- export GIT_CHERRY_PICK_HELP
-=20
-+mark_prefix=3Drefs/rebase-marks/
-+
- warn () {
- 	echo "$*" >&2
- }
-@@ -105,7 +107,13 @@ die_with_patch () {
- }
-=20
- cleanup_before_quit () {
--	rm -rf "$DOTEST"
-+	rm -rf "$DOTEST" &&
-+	for ref in "$GIT_DIR/$mark_prefix"*
-+	do
-+		test "$ref" =3D "$GIT_DIR/$mark_prefix*" && continue
-+		git update-ref -d "${ref#$GIT_DIR/}" "${ref#$GIT_DIR/}" || \
-+			return 1
-+	done
- }
-=20
- die_abort () {
-@@ -244,6 +252,17 @@ peek_next_command () {
- 	sed -n "1s/ .*$//p" < "$TODO"
- }
-=20
-+mark_to_ref () {
-+	case "$1" in
-+	:[0-9]*)
-+		echo "$mark_prefix$(printf %d ${1#:} 2>/dev/null)"
-+		;;
-+	*)
-+		echo "$1"
-+		;;
-+	esac
-+}
-+
- do_next () {
- 	rm -f "$DOTEST"/message "$DOTEST"/author-script \
- 		"$DOTEST"/amend || exit
-@@ -321,6 +340,15 @@ do_next () {
- 			die_with_patch $sha1 ""
- 		fi
- 		;;
-+	mark)
-+		mark_action_done
-+
-+		mark=3D$(mark_to_ref :${sha1#:})
-+		git rev-parse --verify "$mark" > /dev/null 2>&1 && \
-+			warn "mark $sha1 already exist; overwriting it"
-+
-+		git update-ref "$mark" HEAD || die "update-ref failed"
-+		;;
- 	*)
- 		warn "Unknown command: $command $sha1 $rest"
- 		die_with_patch $sha1 "Please fix this in the file $TODO."
-@@ -533,10 +561,15 @@ do
-=20
- # Rebase $SHORTUPSTREAM..$SHORTHEAD onto $SHORTONTO
- #
-+# In the todo insn whenever you need to refer to a commit, in addition
-+# to the usual commit object name, you can use ':mark' syntax to refer
-+# to a commit previously marked with the 'mark' insn.
-+#
- # Commands:
- #  pick =3D use commit
- #  edit =3D use commit, but stop for amending
- #  squash =3D use commit, but meld into previous commit
-+#  mark :mark =3D mark the current HEAD for later reference
- #
- # If you remove a line here THAT COMMIT WILL BE LOST.
- # However, if you remove everything, the rebase will be aborted.
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive=
-=2Esh
-index 8d29878..fa3560e 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -82,6 +82,9 @@ for line in $FAKE_LINES; do
- 	case $line in
- 	squash|edit)
- 		action=3D"$line";;
-+	mark*)
-+		echo "mark ${line#mark}"
-+		echo "mark ${line#mark}" >> "$1";;
- 	*)
- 		echo sed -n "${line}s/^pick/$action/p"
- 		sed -n "${line}p" < "$1".tmp
-@@ -189,6 +192,20 @@ test_expect_success '-p handles "no changes" grace=
-fully' '
- 	test $HEAD =3D $(git rev-parse HEAD)
- '
-=20
-+test_expect_success 'setting marks works' '
-+	git checkout master &&
-+	FAKE_LINES=3D"mark:0 2 1 mark:42 3 edit 4" git rebase -i HEAD~4 &&
-+	marks_dir=3D.git/refs/rebase-marks &&
-+	test -d $marks_dir &&
-+	test $(ls $marks_dir | wc -l) -eq 2 &&
-+	test "$(git rev-parse HEAD~4)" =3D \
-+		"$(git rev-parse refs/rebase-marks/0)" &&
-+	test "$(git rev-parse HEAD~2)" =3D \
-+		"$(git rev-parse refs/rebase-marks/42)" &&
-+	git rebase --abort &&
-+	ls $marks_dir | wc -l | grep -Fx 0
-+'
-+
- test_expect_success 'preserve merges with -p' '
- 	git checkout -b to-be-preserved master^ &&
- 	: > unrelated-file &&
---=20
-1.5.5
+And who would debug problems with old and unmaintained drivers, e.g. 
+some old net or SCSI driver?
+
+Note that I do not blame James or Jeff or whoever else for the latter - 
+they might simply not have the time to spend a day or two for debugging 
+some obscure problem on some obscure hardware.
+
+And it could happen everywhere that maintainers simply don't have 
+the time to cope with all incoming bug reports.
+
+We have many people who write new bugs^Wcode.
+But too few people who review code.
+And too few people willing to maintain the existing code.
+
+cu
+Adrian
+
+-- 
+
+       "Is there not promise of rain?" Ling Tan asked suddenly out
+        of the darkness. There had been need of rain for many days.
+       "Only a promise," Lao Er said.
+                                       Pearl S. Buck - Dragon Seed
+
