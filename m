@@ -1,79 +1,103 @@
-From: Roman Shaposhnik <rvs@sun.com>
-Subject: Re: Intricacies of submodules
-Date: Mon, 14 Apr 2008 12:56:26 -0700
-Message-ID: <1208202986.25663.73.camel@work.sfbay.sun.com>
-References: <47F15094.5050808@et.gatech.edu> <47FBB448.3060900@et.gatech.edu>
- <32541b130804081306q6e06af20u794357eba9d434e@mail.gmail.com>
- <47FBDA77.2050402@et.gatech.edu>
- <32541b130804081401n743f39c9o3f016da9dee2eb92@mail.gmail.com>
- <8FE3B7A7-4C2D-4202-A5FC-EBC4F4670273@sun.com>
- <32541b130804082033q55c795b5ieaa4e120956ff030@mail.gmail.com>
- <49E9DCEC-8A9E-4AD7-BA58-5A40F475F2EA@sun.com>
- <32541b130804082334s604b62b0j82b510c331f48213@mail.gmail.com>
- <7vhcebcyty.fsf@gitster.siamese.dyndns.org>
- <6CFA8EC2-FEE0-4746-A4F6-45082734FEEC@sun.com>
- <7v63uqz265.fsf@gitster.siamese.dyndns.org>
- <1207859579.13123.306.camel@work.sfbay.sun.com>
- <7vd4oxufwf.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7BIT
-Cc: Avery Pennarun <apenwarr@gmail.com>, stuart.freeman@et.gatech.edu,
-	git@vger.kernel.org, rvs@sun.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 14 21:57:40 2008
+From: Fredrik Noring <noring@nocrew.org>
+Subject: Re: [PATCH] Calculate lines changed for cvs log command
+Date: Mon, 14 Apr 2008 21:56:30 +0200
+Message-ID: <FFB8FCA9-AD9C-4F7F-9238-0CB0CA3204AF@nocrew.org>
+References: <3F0821AA-C11D-4C42-A415-D346A7CD89F8@nocrew.org> <m3zlrxsnbt.fsf@localhost.localdomain> <20AD7252-19A2-443F-88CF-F871AE7A392E@nocrew.org> <200804132243.40909.jnareb@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v919.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 14 22:01:33 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JlUkh-0005Fe-Na
-	for gcvg-git-2@gmane.org; Mon, 14 Apr 2008 21:54:08 +0200
+	id 1JlUoK-0006KF-6x
+	for gcvg-git-2@gmane.org; Mon, 14 Apr 2008 21:57:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762222AbYDNTxV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Apr 2008 15:53:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762183AbYDNTxU
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Apr 2008 15:53:20 -0400
-Received: from sca-es-mail-1.Sun.COM ([192.18.43.132]:60259 "EHLO
-	sca-es-mail-1.sun.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762128AbYDNTxT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Apr 2008 15:53:19 -0400
-Received: from fe-sfbay-09.sun.com ([192.18.43.129])
-	by sca-es-mail-1.sun.com (8.13.7+Sun/8.12.9) with ESMTP id m3EJrIpf012242
-	for <git@vger.kernel.org>; Mon, 14 Apr 2008 12:53:18 -0700 (PDT)
-Received: from conversion-daemon.fe-sfbay-09.sun.com by fe-sfbay-09.sun.com
- (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
- id <0JZB00001YZNHQ00@fe-sfbay-09.sun.com> (original mail from rvs@sun.com)
- for git@vger.kernel.org; Mon, 14 Apr 2008 12:53:18 -0700 (PDT)
-Received: from [129.146.84.200] by fe-sfbay-09.sun.com
- (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
- with ESMTPSA id <0JZB0004TZ8U2CB0@fe-sfbay-09.sun.com>; Mon,
- 14 Apr 2008 12:53:18 -0700 (PDT)
-In-reply-to: <7vd4oxufwf.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Evolution 2.8.2
+	id S1756161AbYDNT4k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Apr 2008 15:56:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755951AbYDNT4j
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Apr 2008 15:56:39 -0400
+Received: from smtpserver.stunet.se ([85.194.0.110]:51876 "EHLO mail.visit.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755546AbYDNT4h (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Apr 2008 15:56:37 -0400
+Received: by mail.visit.se (Postfix, from userid 503)
+	id 785EC36E0241; Mon, 14 Apr 2008 21:56:57 +0200 (CEST)
+Received: from [10.0.1.2] (cust.dsl-fiber-lan.snet.lk.85.194.37.51.visit.se [85.194.37.51])
+	by mail.visit.se (Postfix) with ESMTP id A7A9E36E01D3;
+	Mon, 14 Apr 2008 21:56:55 +0200 (CEST)
+In-Reply-To: <200804132243.40909.jnareb@gmail.com>
+X-Mailer: Apple Mail (2.919.2)
+X-Spam-Checker-Version: SpamAssassin 3.0.6 (2005-12-07) on mail.visit.se
+X-Spam-Level: 
+X-Spam-Status: No, score=-5.9 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00 
+	autolearn=ham version=3.0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79529>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79530>
 
-On Thu, 2008-04-10 at 22:20 -0700, Junio C Hamano wrote:
-> Roman Shaposhnik <rvs@sun.com> writes:
-> 
-> > ... I'm very interested in getting this functionality
-> > right with git-submodule. And I can be either your guinea pig or
-> > a frenetic hamster. After all, you don't mind complete newcomers
-> > to the development process sending you code, do you? ;-)
-> 
-> Everybody starts out as a total stranger.  Linus has never worked with me
-> when I started, and many people who are the core members of git community
-> have never worked with me before either.
+Hi Jakub,
 
-Cool! I do have a couple of questions on the development etiquette,
-but I think I'll ask them off-line unless somebody can point me
-to an FAQ on how Git's development is setup. The section 
-"Community and Development" doesn't seem to answer much
-of my questions.
+13 apr 2008 kl. 22.43 skrev Jakub Narebski:
+> First, having patch as attachement, moreover as _binary_ and _encoded_
+> attachement makes it hard to comment on it.  And if you make it hard  
+> to
+> comment on patch, people woundn't do it.
+
+Again, my sincere apologies. I have a feeling my current mailer never  
+will meet the patch submission requirements for this mailing list.  
+However, I will replace it at the next opportunity in order to comply.
+
+The goal with these patches is to make cvsserver commands such as "cvs  
+log" identical to the real thing, so that cvs users would feel at home  
+after a cvs import to git. I'm getting closer with these tweaks/fixes  
+to the cvsserver. So far mainly handling of whitespace and calculating  
+proper "shortstats". Decent performance would be nice as well. I'm  
+playing around with this but I'm in no hurry, so feel free to ignore. :)
+
+> Second, your approach with "--pretty=format:%s%n%b" might be a good
+> idea, but you don't get all the information as you get from
+> git-cat-file: no tree info, no true (recorded) parents info, no
+> committer info, no author info.  I don't know if git-cvsserver makes
+> use of that info or not; from the patch it looks as if it discards
+> all but commit message (message body).
+
+Yeah -- it's all discarded. A small issue is that "--pretty=format:%s%n 
+%b" only outputs the same commit message as git-cat-file in ~95 % of  
+my test cases. I've seen differences regarding newlines after the  
+subject line (git-cat-file seems to output this correctly, but not %s%n 
+%b). Something to investigate further, perhaps.
+
+> BTW. I'm not Perl expert, but if you want to discard two last
+> elements in arrays, wouldn't using splice (or just decreasing
+> $#lines by 2) be simpler solution?
+
+I went for clarity and felt pop() made the job. ;)
+
+> About git-log vs git-cat-file: take a look how gitweb does it, with
+> parse_commits and parse_commit_text, and commit 756bbf548dbef5b738c
+> by Robert Fitzsimons introducing it.  Note that IIRC this commit
+> predates --pretty=format:<fmt> option to git-log / git-rev-list.
+
+Sure, thanks!
+
+> BTW. cannot you turn off "format=flowed" in Apple Mail?
+
+Well, it appears easier to replace it altogether in order to follow  
+the patch submission rules. I like Gnome Evolution and it'll hopefully  
+work nicely in this case.
+
+> Could you please do not toppost?  It is against natural reading order.
+
+>
+
+Heh. Very funny you wrote that as a toppost yourself. ;)
 
 Thanks,
-Roman.
+Fredrik
