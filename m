@@ -1,59 +1,82 @@
-From: Gerrit Pape <pape@smarden.org>
-Subject: [PATCH] gitk: Makefile/install: force permissions when installing
-	files and dirs
-Date: Mon, 14 Apr 2008 08:27:09 +0000
-Message-ID: <20080414082709.14951.qmail@abeaeea100406a.315fe32.mid.smarden.org>
+From: David Miller <davem@davemloft.net>
+Subject: Re: Reporting bugs and bisection
+Date: Mon, 14 Apr 2008 01:30:58 -0700 (PDT)
+Message-ID: <20080414.013058.149905948.davem@davemloft.net>
+References: <20080413232441.e216a02c.akpm@linux-foundation.org>
+	<20080414072328.GW9785@ZenIV.linux.org.uk>
+	<20080414010412.c42dc560.akpm@linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org, Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Mon Apr 14 10:28:01 2008
+Content-Type: Text/Plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: viro@ZenIV.linux.org.uk, w@1wt.eu, david@lang.hm,
+	sclark46@earthlink.net, johnpol@2ka.mipt.ru, rjw@sisk.pl,
+	tilman@imap.cc, Valdis.Kletnieks@vt.edu, lkml@rtr.ca,
+	jesper.juhl@gmail.com, yoshfuji@linux-ipv6.org, jeff@garzik.org,
+	linux-kernel@vger.kernel.org, git@vger.kernel.org,
+	netdev@vger.kernel.org
+To: akpm@linux-foundation.org
+X-From: netdev-owner@vger.kernel.org Mon Apr 14 10:31:53 2008
 connect(): Connection refused
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
+Return-path: <netdev-owner@vger.kernel.org>
+Envelope-to: linux-netdev-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JlK2h-0005lf-6p
-	for gcvg-git-2@gmane.org; Mon, 14 Apr 2008 10:27:59 +0200
+	id 1JlK6R-0006nk-OX
+	for linux-netdev-2@gmane.org; Mon, 14 Apr 2008 10:31:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755642AbYDNI1N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Apr 2008 04:27:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755466AbYDNI1N
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Apr 2008 04:27:13 -0400
-Received: from a.ns.smarden.org ([212.42.242.37]:51210 "HELO a.mx.smarden.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755601AbYDNI1N (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Apr 2008 04:27:13 -0400
-Received: (qmail 14952 invoked by uid 1000); 14 Apr 2008 08:27:09 -0000
-Content-Disposition: inline
-Sender: git-owner@vger.kernel.org
+	id S1756235AbYDNIbF (ORCPT <rfc822;linux-netdev-2@m.gmane.org>);
+	Mon, 14 Apr 2008 04:31:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755794AbYDNIbE
+	(ORCPT <rfc822;netdev-outgoing>); Mon, 14 Apr 2008 04:31:04 -0400
+Received: from 74-93-104-97-Washington.hfc.comcastbusiness.net ([74.93.104.97]:54293
+	"EHLO sunset.davemloft.net" rhost-flags-OK-FAIL-OK-OK)
+	by vger.kernel.org with ESMTP id S1755466AbYDNIbB (ORCPT
+	<rfc822;netdev@vger.kernel.org>); Mon, 14 Apr 2008 04:31:01 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by sunset.davemloft.net (Postfix) with ESMTP id CD4CEC8CA9C;
+	Mon, 14 Apr 2008 01:30:58 -0700 (PDT)
+In-Reply-To: <20080414010412.c42dc560.akpm@linux-foundation.org>
+X-Mailer: Mew version 5.2 on Emacs 22.1 / Mule 5.0 (SAKAKI)
+Sender: netdev-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79491>
+List-ID: <netdev.vger.kernel.org>
+X-Mailing-List: netdev@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79492>
 
-The msg-files msgs/*.msg used to be installed with mode 755 although
-they're not executables.  With this commit, files are forced to be
-installed with mode 644, directories and executables with mode 755.
----
- Makefile |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
+From: Andrew Morton <akpm@linux-foundation.org>
+Date: Mon, 14 Apr 2008 01:04:12 -0700
 
-diff --git a/Makefile b/Makefile
-index f90dfab..e1b6045 100644
---- a/Makefile
-+++ b/Makefile
-@@ -40,9 +40,9 @@ endif
- all:: gitk-wish $(ALL_MSGFILES)
- 
- install:: all
--	$(INSTALL) gitk-wish '$(DESTDIR_SQ)$(bindir_SQ)'/gitk
--	$(INSTALL) -d '$(DESTDIR_SQ)$(msgsdir_SQ)'
--	$(foreach p,$(ALL_MSGFILES), $(INSTALL) $p '$(DESTDIR_SQ)$(msgsdir_SQ)' &&) true
-+	$(INSTALL) -m 755 gitk-wish '$(DESTDIR_SQ)$(bindir_SQ)'/gitk
-+	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(msgsdir_SQ)'
-+	$(foreach p,$(ALL_MSGFILES), $(INSTALL) -m 644 $p '$(DESTDIR_SQ)$(msgsdir_SQ)' &&) true
- 
- uninstall::
- 	$(foreach p,$(ALL_MSGFILES), $(RM) '$(DESTDIR_SQ)$(msgsdir_SQ)'/$(notdir $p) &&) true
--- 
-1.5.5
+> That all sounds good and I expect few would disagree.  But if it is to
+> happen, it clearly won't happen by itself, automatically.  We will need to
+> force it upon ourselves and the means by which we will do that is process
+> changes.  The thing which is being disparaged as "bureaucracy".
+> 
+> The steps to be taken are:
+> 
+> a) agree that we have a problem
+ ...
+> I have thus far failed to get us past step a).
+
+A lot of people, myself included, subconsciously don't want to
+get past step a) because the resulting "bureaucracy" or whatever
+you want to call it is perceived to undercut the very thing
+that makes the Linux kernel fun to work on.
+
+It's still largely free form, loose, and flexible.  And that's
+a notable accomplishment considering how much things have changed.
+That feeling is why I got involved in the first place, and I know
+it's what gets other new people in and addicted too.
+
+Nobody is "forced" to do anything, and I notice you used the
+word "force" in d) :-)
+
+And I realize this relaxed attitude goes hand in hand with reduced
+quality and occaisionally more bugs.  In many ways, I'm happy with
+that tradeoff at least wrt. how that works out for the subsystems
+I'm responsible for.
+
+We can ask more subsystem tree maintainers to run their trees more
+strictly, review patches more closely, etc.  But, be honest, good luck
+getting that from the guys who do subsystem maintainence in their
+spare time on the weekends.  The remaining cases should know better,
+or simply don't care.
