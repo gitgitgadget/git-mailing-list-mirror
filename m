@@ -1,151 +1,111 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: [PATCH] git-gc --prune is deprecated
-Date: Mon, 14 Apr 2008 16:17:31 +0400
-Message-ID: <1208175451-30669-1-git-send-email-dpotapov@gmail.com>
-Cc: Dmitry Potapov <dpotapov@gmail.com>
-To: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 14 14:19:01 2008
+From: "Jonas Fonseca" <jonas.fonseca@gmail.com>
+Subject: Re: RFC: Website redesign
+Date: Mon, 14 Apr 2008 15:56:06 +0200
+Message-ID: <2c6b72b30804140656g14c24d8cwae016d62fe12f4a7@mail.gmail.com>
+References: <3175605f-ff32-4fd6-bed3-7ae596ecbcde@q1g2000prf.googlegroups.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Dill <sarpulhu@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 14 15:57:15 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JlNdo-0008Ej-J0
-	for gcvg-git-2@gmane.org; Mon, 14 Apr 2008 14:18:33 +0200
+	id 1JlPB2-0002kf-Bq
+	for gcvg-git-2@gmane.org; Mon, 14 Apr 2008 15:56:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753285AbYDNMRk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Apr 2008 08:17:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753239AbYDNMRk
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Apr 2008 08:17:40 -0400
-Received: from nf-out-0910.google.com ([64.233.182.189]:52876 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753179AbYDNMRj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Apr 2008 08:17:39 -0400
-Received: by nf-out-0910.google.com with SMTP id g13so332327nfb.21
-        for <git@vger.kernel.org>; Mon, 14 Apr 2008 05:17:37 -0700 (PDT)
+	id S1754405AbYDNN4K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Apr 2008 09:56:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753336AbYDNN4J
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Apr 2008 09:56:09 -0400
+Received: from wx-out-0506.google.com ([66.249.82.237]:8347 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752592AbYDNN4I (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Apr 2008 09:56:08 -0400
+Received: by wx-out-0506.google.com with SMTP id h31so1105814wxd.4
+        for <git@vger.kernel.org>; Mon, 14 Apr 2008 06:56:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date:message-id:x-mailer;
-        bh=qOEgSwQJWZfEjg8K/r76coNiecZguP88xFGoG2gL2Wo=;
-        b=pnnfWw+PshCJK3SgF4OlbHjY7nmm2/g6ksai3TORNkqQpXt6dOVC0AxZnNVhCbNhwoHlbtbV4xFyOLO+kxOSNRZtge1i1WwvqlmqF8XlrCh1Kc3HWHhK+2UqETjtdhutef7HGRs0IR30f4GWnx8O7mKs5vasyqf+B4R7XlzLlFI=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=dgEf1ZzqYwCVe3CxmapuBDPuLip8hqrsjuBg3CDtOEc=;
+        b=BPxGmhg2NsoKfMXKMWRM8E+OrWhnV7WnSIOm61xs2TBYXuW/ixpw+/GEGoKfRcuFItUOQlj3z3XgJJ9kE9oYAzFnAp5cXb/yB5BdSQdTfPIWxeRqVoiaxxa42TCRscgbg0oXAOZIQ8PWQKNJIPbta4PnIdhN6zguy0vfXdretMM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=JphEeLjpitd2HkqOzjIY/yMP1LOaadRJy9xdPAxdwdmBGw10CcCxdk+QymaFx0f0GYwLlf/Gnbi3HBYPit1usTWwdP6VVXn6WPPXAbRU5d9NA/V23Rvy8dLPexx8ZTyZLb6smJhEznNUCWpsI1TrHWOgQ8lLGec/QoxRhG0ON58=
-Received: by 10.78.37.7 with SMTP id k7mr4230087huk.25.1208175457061;
-        Mon, 14 Apr 2008 05:17:37 -0700 (PDT)
-Received: from localhost ( [85.141.236.239])
-        by mx.google.com with ESMTPS id g12sm9184725nfb.27.2008.04.14.05.17.34
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 14 Apr 2008 05:17:35 -0700 (PDT)
-X-Mailer: git-send-email 1.5.5.21.g03e5
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=ed+khp4jxaKx4at6JzZLd2NuscW9vaSRdXhlJAUwh9RFurYITGL/rE6SFuW2zkLEkrSi9iFYLzWtvdCfc5ZwHc7FmszsFJvFEQ32QQ1sg4YGnjTLqyczx4eRaiX/EQYybpzv61Rrt7sWY4Odb3FELT0ygUyYmGJrJQB+AAbGXmE=
+Received: by 10.141.175.5 with SMTP id c5mr3340411rvp.281.1208181366743;
+        Mon, 14 Apr 2008 06:56:06 -0700 (PDT)
+Received: by 10.141.3.15 with HTTP; Mon, 14 Apr 2008 06:56:06 -0700 (PDT)
+In-Reply-To: <3175605f-ff32-4fd6-bed3-7ae596ecbcde@q1g2000prf.googlegroups.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79501>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79502>
 
-25ee9731c137d0a24b0f4879eb0b0cce9b77d5b0 made the '--prune' option
-deprecated and removed its description from the git-gc man page. This
-patch removes all references to this option from the rest of the Git
-documentation.
----
+Hello Dill,
 
-References to a non-existing option in the user manual and especially
-in Every Day Git, which is intended for beginners, is very confusing.
+On Mon, Apr 14, 2008 at 7:37 AM, Dill <sarpulhu@gmail.com> wrote:
+> I was looking at the main git site and thought that maybe it could be
+>  done differently. I tried to make it simple and professional looking
+>  and have all the same information as the old site. I've spend a good
+>  portion of the day hashing it out and wanted to hear what others
+>  thought. Worth changing? Like it or not?
 
-So, I believe it should be treated as a bug fix and included in maint.
+Yes, it is definitely worth changing. In all the user surveys to date people
+has commented on the design of the git homepage mentioning words like
+ugly, not useful, strangely named, etc. After the last survey I registered
+git-scm.org to have a more friendly name.
 
-I'll appreciate if someone with better knowledge of git-gc review my
-correction.
+Question is what kind of "official" home page is suitable for git? As it is now,
+most projects using git provides documentation for what kind of workflow
+they recommend for their specific project, and else the git distribution point
+on kernel.org has the latest manpages, tutorials etc. supplemented by the
+git wiki.
 
-Thanks,
-Dmitry
+Your examples capture this very good in the sense that the homepage should
+basically be a very simple page that send visitors in the "right" direction for
+getting documentation, downloading the latest release, and joining the
+community.
+I like the restlet.org page with its four basic tasks. As your
+examples also suggest
+and as a fourth task, it could be nice to also in time fill the void
+of having a news
+source about git related releases, developer interviews, GSoC info, the Msysgit
+Herald, and other interesting stuff happening in the community for people who do
+not feel they have the time to read the mailing list. This of course
+requires that there
+is a small dedicated team for collecting and preparing these updates. I would be
+willing to help, but have occasional fall-outs where I do not read the
+mailing list.
 
- Documentation/everyday.txt    |    6 ++----
- Documentation/git-clone.txt   |   10 ++++++----
- Documentation/user-manual.txt |   17 +----------------
- 3 files changed, 9 insertions(+), 24 deletions(-)
+Regarding the design/style etc, I am credited for the current one that
+Petr forked from
+the ELinks homepage. It is ugly, and git deserved better! This is just
+to say that I probably
+shouldn't be part of this work. I find your redesign proposal 1, 3 and
+4 a too dark or gray.
+Number 2 (git2) with its bluish has some nice ideas. The text might be
+too small, at least
+from what I am seeing and the list menu has a strange coloring.
 
-diff --git a/Documentation/everyday.txt b/Documentation/everyday.txt
-index fdbd15a..e598cdd 100644
---- a/Documentation/everyday.txt
-+++ b/Documentation/everyday.txt
-@@ -48,14 +48,12 @@ $ git gc <3>
- repository health reasonably well.
- <2> check how many loose objects there are and how much
- disk space is wasted by not repacking.
--<3> repacks the local repository and performs other housekeeping tasks. Running
--without `--prune` is a safe operation even while other ones are in progress.
-+<3> repacks the local repository and performs other housekeeping tasks.
- 
- Repack a small project into single pack.::
- +
- ------------
- $ git gc <1>
--$ git gc --prune
- ------------
- +
- <1> pack all the objects reachable from the refs into one pack,
-@@ -182,7 +180,7 @@ $ git pull <3>
- $ git log -p ORIG_HEAD.. arch/i386 include/asm-i386 <4>
- $ git pull git://git.kernel.org/pub/.../jgarzik/libata-dev.git ALL <5>
- $ git reset --hard ORIG_HEAD <6>
--$ git gc --prune <7>
-+$ git gc <7>
- $ git fetch --tags <8>
- ------------
- +
-diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-index 9758243..c1bf814 100644
---- a/Documentation/git-clone.txt
-+++ b/Documentation/git-clone.txt
-@@ -65,10 +65,12 @@ OPTIONS
- +
- *NOTE*: this is a possibly dangerous operation; do *not* use
- it unless you understand what it does. If you clone your
--repository using this option, then delete branches in the
--source repository and then run linkgit:git-gc[1] using the
--'--prune' option in the source repository, it may remove
--objects which are referenced by the cloned repository.
-+repository using this option and then delete a branch or use
-+any other git command that makes any previous existing commit
-+unreachable, then after some time linkgit:git-gc[1] may remove
-+unreachable objects, and this will break the cloned repository.
-+Because some git commands may run git-gc, it may happen at any
-+time after gc.pruneExpire time since commits became unreachable.
- 
- 
- 
-diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
-index 565aeb9..86b91a5 100644
---- a/Documentation/user-manual.txt
-+++ b/Documentation/user-manual.txt
-@@ -1548,22 +1548,7 @@ dangling tree b24c2473f1fd3d91352a624795be026d64c8841f
- 
- Dangling objects are not a problem.  At worst they may take up a little
- extra disk space.  They can sometimes provide a last-resort method for
--recovering lost work--see <<dangling-objects>> for details.  However, if
--you wish, you can remove them with linkgit:git-prune[1] or the `--prune`
--option to linkgit:git-gc[1]:
--
---------------------------------------------------
--$ git gc --prune
---------------------------------------------------
--
--This may be time-consuming.  Unlike most other git operations (including
--git-gc when run without any options), it is not safe to prune while
--other git operations are in progress in the same repository.
--
--If linkgit:git-fsck[1] complains about sha1 mismatches or missing
--objects, you may have a much more serious problem; your best option is
--probably restoring from backups.  See
--<<recovering-from-repository-corruption>> for a detailed discussion.
-+recovering lost work--see <<dangling-objects>> for details.
- 
- [[recovering-lost-changes]]
- Recovering lost changes
+If the home page should carry news it needs to have infrastructure so
+that we don't need
+to bug Petr each time it should be updated. I have commit access to
+the git-homepage
+repo and maybe Petr could add others as well, but the question is if
+we want some web
+interface for submitting news. I registered git-scm.org after the last
+survey and right now
+it is just set up as an alias for git.or.cz. It comes with some PHP
+capability which could
+serve as a place to develop a redesign, however, I am not hosting it
+myself and I don't
+know what kind of traffic will be required.
+
 -- 
-1.5.5.21.g03e5
+Jonas Fonseca
