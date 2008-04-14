@@ -1,56 +1,66 @@
-From: Junio C Hamano <junio@pobox.com>
-Subject: Re: [PATCH 3/2] bisect: add "stop", "show" and "restart" as synonyms
- for other commands
-Date: Mon, 14 Apr 2008 16:23:36 -0700
-Message-ID: <7vej9881hj.fsf@gitster.siamese.dyndns.org>
-References: <20080414061627.62119f74.chriscool@tuxfamily.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH v2.1] Teach rebase interactive the mark command
+Date: Mon, 14 Apr 2008 19:29:58 -0400
+Message-ID: <20080414232958.GE20979@spearce.org>
+References: <1208132469-26471-3-git-send-email-joerg@alea.gnuu.de> <1208169584-15931-1-git-send-email-joerg@alea.gnuu.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ingo Molnar <mingo@elte.hu>, git@vger.kernel.org
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Tue Apr 15 01:24:30 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: =?utf-8?B?SsO2cmc=?= Sommer <joerg@alea.gnuu.de>
+X-From: git-owner@vger.kernel.org Tue Apr 15 01:30:51 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JlY2H-0008Bi-9b
-	for gcvg-git-2@gmane.org; Tue, 15 Apr 2008 01:24:29 +0200
+	id 1JlY8Q-0001TS-2t
+	for gcvg-git-2@gmane.org; Tue, 15 Apr 2008 01:30:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755814AbYDNXXo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Apr 2008 19:23:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755748AbYDNXXo
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Apr 2008 19:23:44 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:42755 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753778AbYDNXXo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Apr 2008 19:23:44 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 8C23A3936;
-	Mon, 14 Apr 2008 19:23:42 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id E84363935; Mon, 14 Apr 2008 19:23:38 -0400 (EDT)
-In-Reply-To: <20080414061627.62119f74.chriscool@tuxfamily.org> (Christian
- Couder's message of "Mon, 14 Apr 2008 06:16:27 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1755020AbYDNXaF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Apr 2008 19:30:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751618AbYDNXaE
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Apr 2008 19:30:04 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:52655 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752612AbYDNXaD convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 14 Apr 2008 19:30:03 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1JlY7R-0004E0-0P; Mon, 14 Apr 2008 19:29:49 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 1599C20FBAE; Mon, 14 Apr 2008 19:29:58 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <1208169584-15931-1-git-send-email-joerg@alea.gnuu.de>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79539>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79540>
 
-Christian Couder <chriscool@tuxfamily.org> writes:
+Jrg Sommer <joerg@alea.gnuu.de> wrote:
+> The format of the marks is as close as possible to the format of the
+> marks used by fast-export and fast-import,
 
-> This patch adds the following synonyms:
->
-> 	- "show" for "visualize",
-> 	- "stop" for "reset",
-> 	- "restart" for "start",
->
-> as suggested by Ingo Molnar.
+Yay.
 
-Hmmm.  I sympathize with "show", only because there are other places we
-already use "show" and also "visualize" is too long to type, but "stop"
-and "restart"?
+> i.e. :001 =3D=3D :1 and
+> =E2=80=9C:12a=E2=80=9D=C2=A0=3D=3D=C2=A0:12. It differs from the form=
+at of fast-import in that point
+> that it requires a digit after the colon, i.e. =E2=80=9C:abc=E2=80=9D=
+ !=3D :0 and =E2=80=9C:-12=E2=80=9D
+> and =E2=80=9C:+12=E2=80=9D aren't allowed.
+
+Uh, that's a bug in fast-import.  ":4abc" is _not_ a mark if you
+read the language specification.  Only ":4" is a mark.  So we are
+accepting crap and reading it in odd ways.  Not good.
+
+--=20
+Shawn.
