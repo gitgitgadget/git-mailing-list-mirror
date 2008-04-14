@@ -1,68 +1,65 @@
-From: Peter Karlsson <peter@softwolves.pp.se>
-Subject: Canonical method of merging two projects
-Date: Mon, 14 Apr 2008 07:37:17 +0100 (CET)
-Organization: /universe/earth/europe/norway/oslo
-Message-ID: <Pine.LNX.4.64.0804140733500.7014@ds9.cixit.se>
+From: David Miller <davem@davemloft.net>
+Subject: Re: Reporting bugs and bisection
+Date: Sun, 13 Apr 2008 23:39:59 -0700 (PDT)
+Message-ID: <20080413.233959.217341225.davem@davemloft.net>
+References: <20080414043939.GA6862@1wt.eu>
+	<20080414053943.GU9785@ZenIV.linux.org.uk>
+	<20080413232441.e216a02c.akpm@linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Apr 14 08:38:12 2008
+Content-Type: Text/Plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: viro@ZenIV.linux.org.uk, w@1wt.eu, david@lang.hm,
+	sclark46@earthlink.net, johnpol@2ka.mipt.ru, rjw@sisk.pl,
+	tilman@imap.cc, Valdis.Kletnieks@vt.edu, lkml@rtr.ca,
+	jesper.juhl@gmail.com, yoshfuji@linux-ipv6.org, jeff@garzik.org,
+	linux-kernel@vger.kernel.org, git@vger.kernel.org,
+	netdev@vger.kernel.org
+To: akpm@linux-foundation.org
+X-From: netdev-owner@vger.kernel.org Mon Apr 14 08:40:49 2008
 connect(): Connection refused
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
+Return-path: <netdev-owner@vger.kernel.org>
+Envelope-to: linux-netdev-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JlIKP-0001mm-2K
-	for gcvg-git-2@gmane.org; Mon, 14 Apr 2008 08:38:09 +0200
+	id 1JlIMv-0002QX-6q
+	for linux-netdev-2@gmane.org; Mon, 14 Apr 2008 08:40:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753083AbYDNGhX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Apr 2008 02:37:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753196AbYDNGhX
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Apr 2008 02:37:23 -0400
-Received: from ds9.cixit.se ([193.15.169.228]:51557 "EHLO ds9.cixit.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752964AbYDNGhW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Apr 2008 02:37:22 -0400
-Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
-	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id m3E6bIBs010007
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 14 Apr 2008 08:37:18 +0200
-Received: from localhost (peter@localhost)
-	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id m3E6bHeR010002;
-	Mon, 14 Apr 2008 08:37:17 +0200
-X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
-Accept: text/plain
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (ds9.cixit.se [127.0.0.1]); Mon, 14 Apr 2008 08:37:18 +0200 (CEST)
-Sender: git-owner@vger.kernel.org
+	id S1753544AbYDNGkA (ORCPT <rfc822;linux-netdev-2@m.gmane.org>);
+	Mon, 14 Apr 2008 02:40:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753564AbYDNGj7
+	(ORCPT <rfc822;netdev-outgoing>); Mon, 14 Apr 2008 02:39:59 -0400
+Received: from 74-93-104-97-Washington.hfc.comcastbusiness.net ([74.93.104.97]:46546
+	"EHLO sunset.davemloft.net" rhost-flags-OK-FAIL-OK-OK)
+	by vger.kernel.org with ESMTP id S1753480AbYDNGj6 (ORCPT
+	<rfc822;netdev@vger.kernel.org>); Mon, 14 Apr 2008 02:39:58 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by sunset.davemloft.net (Postfix) with ESMTP id CDDEEC8CA9A;
+	Sun, 13 Apr 2008 23:39:59 -0700 (PDT)
+In-Reply-To: <20080413232441.e216a02c.akpm@linux-foundation.org>
+X-Mailer: Mew version 5.2 on Emacs 22.1 / Mule 5.0 (SAKAKI)
+Sender: netdev-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79463>
+List-ID: <netdev.vger.kernel.org>
+X-Mailing-List: netdev@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79464>
 
-Hi!
+From: Andrew Morton <akpm@linux-foundation.org>
+Date: Sun, 13 Apr 2008 23:24:41 -0700
 
-What is the canonical way of merging an unrelated project into another
-so that all of the merged project's files appear in a sub-directory of
-the first?
+> Do you agree with these impressions, or not?
 
-I have two projects, A with files "a.txt" and "b.txt", and B with files
-"a.txt" and "c.txt", each in a separate Git repoistory. I want to merge
-those two projects, throwing away the B repository, and achieve a
-file layout that has "a.txt" and "b.txt" from A, and "B/a.txt" and
-"B/c.txt" from B. I.e, the two files with the same name are unrelated,
-and all of B's file should end up in a sub-directory.
+I think things are improving.
 
-I do not want to use submodules, since I am planning on throwing B
-away.
+I wrote or merged in ~10 bugs in the last hour, for example.
 
+And I also agree with Al's point, which was embedded in his humorous
+and obviously sarcastic suggestions, in that adding beurocracy isn't
+the answer.  We already have too much and it scares developers away.
 
-When I did this, I did a regular "git merge --no-commit", and then
-moved the files manually. Thankfully, I only had one duplicated file
-name, so fixing the conflict was easy enough. I looked through the
-git-merge manual page, but could not find any information about this
-use-case.
+Sure you don't want crap getting into the tree (for too long), but it
+is important to be careful to define crap properly.  For example,
+inundating patch submitters with more requirements, especially ones
+involving automatons like checkpatch, is in the end bad.
 
--- 
-\\// Peter - http://www.softwolves.pp.se/
+We can improve the quality of stuff going in and be flexible at the
+same time.
