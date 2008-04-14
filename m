@@ -1,83 +1,67 @@
-From: James Morris <jmorris@namei.org>
-Subject: Re: Reporting bugs and bisection
-Date: Tue, 15 Apr 2008 01:54:00 +1000 (EST)
-Message-ID: <Xine.LNX.4.64.0804150131300.4160@us.intercode.com.au>
-References: <47FEADCB.7070104@rtr.ca> <20080413121831.d89dd424.akpm@linux-foundation.org>
- <20080413202118.GA29658@2ka.mipt.ru> <200804132233.50491.rjw@sisk.pl>
- <20080413205406.GA9190@2ka.mipt.ru> <48028830.6020703@earthlink.net>
- <alpine.DEB.1.10.0804131546370.9318@asgard> <20080414043939.GA6862@1wt.eu>
- <20080414053943.GU9785@ZenIV.linux.org.uk> <20080413232441.e216a02c.akpm@linux-foundation.org>
- <20080414072328.GW9785@ZenIV.linux.org.uk>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Git Wiki improvements
+Date: Mon, 14 Apr 2008 17:03:02 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0804141701290.28504@racer>
+References: <60CC37BF5A3B73428D0BB9B6A26B9669019D95DA@yvrmail1.corp.navcan.ca> <200804140303.22624.jnareb@gmail.com> <8aa486160804140106m570d3fb9va0081d8a0d42870@mail.gmail.com> <alpine.DEB.1.00.0804141555350.28504@racer>
+ <BAYC1-PASMTP10A8BA28CC2999519EA0B2AEE80@CEZ.ICE>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Andrew Morton <akpm@linux-foundation.org>,
-	Willy Tarreau <w@1wt.eu>, david@lang.hm,
-	Stephen Clark <sclark46@earthlink.net>,
-	Evgeniy Polyakov <johnpol@2ka.mipt.ru>,
-	"Rafael J. Wysocki" <rjw@sisk.pl>, Tilman Schmidt <tilman@imap.cc>,
-	Valdis.Kletnieks@vt.edu, Mark Lord <lkml@rtr.ca>,
-	David Miller <davem@davemloft.net>, jesper.juhl@gmail.com,
-	yoshfuji@linux-ipv6.org, jeff@garzik.org,
-	linux-kernel <linux-kernel@vger.kernel.org>, git@vger.kernel.org,
-	netdev@vger.kernel.org
-To: Al Viro <viro@ZenIV.linux.org.uk>
-X-From: netdev-owner@vger.kernel.org Mon Apr 14 18:12:48 2008
+Cc: =?ISO-8859-15?Q?Santi_B=E9jar?= <sbejar@gmail.com>,
+	Jakub Narebski <jnareb@gmail.com>,
+	"Pack, Dylan" <PackD@navcanada.ca>,
+	"Pack, Dylan" <sarpulhu@gmail.com>, git@vger.kernel.org,
+	Petr Baudis <pasky@suse.cz>
+To: Sean Estabrooks <seanlkml@sympatico.ca>
+X-From: git-owner@vger.kernel.org Mon Apr 14 18:19:43 2008
 connect(): Connection refused
-Return-path: <netdev-owner@vger.kernel.org>
-Envelope-to: linux-netdev-2@gmane.org
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JlR2o-0000rt-Ch
-	for linux-netdev-2@gmane.org; Mon, 14 Apr 2008 17:56:34 +0200
+	id 1JlRAL-0003LS-D3
+	for gcvg-git-2@gmane.org; Mon, 14 Apr 2008 18:04:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753838AbYDNPzu (ORCPT <rfc822;linux-netdev-2@m.gmane.org>);
-	Mon, 14 Apr 2008 11:55:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752948AbYDNPzt
-	(ORCPT <rfc822;netdev-outgoing>); Mon, 14 Apr 2008 11:55:49 -0400
-Received: from namei.org ([69.55.235.186]:52383 "EHLO us.intercode.com.au"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752532AbYDNPzr (ORCPT <rfc822;netdev@vger.kernel.org>);
-	Mon, 14 Apr 2008 11:55:47 -0400
-Received: from us.intercode.com.au (us.intercode.com.au [69.55.235.187])
-	by us.intercode.com.au (8.12.11.20060308/8.12.11) with ESMTP id m3EFs047009080;
-	Mon, 14 Apr 2008 08:54:06 -0700
-X-X-Sender: jmorris@us.intercode.com.au
-In-Reply-To: <20080414072328.GW9785@ZenIV.linux.org.uk>
-Sender: netdev-owner@vger.kernel.org
+	id S1758876AbYDNQDI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Apr 2008 12:03:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758855AbYDNQDH
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Apr 2008 12:03:07 -0400
+Received: from mail.gmx.net ([213.165.64.20]:39087 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1758246AbYDNQDG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Apr 2008 12:03:06 -0400
+Received: (qmail invoked by alias); 14 Apr 2008 16:03:03 -0000
+Received: from unknown (EHLO racer.local) [138.251.11.74]
+  by mail.gmx.net (mp046) with SMTP; 14 Apr 2008 18:03:03 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+B6oRBwjKBPuIkIbJIW2vI6aY5IzWSzKOgbE2tM9
+	kYoP3ABSrEiVY8
+X-X-Sender: gene099@racer
+In-Reply-To: <BAYC1-PASMTP10A8BA28CC2999519EA0B2AEE80@CEZ.ICE>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <netdev.vger.kernel.org>
-X-Mailing-List: netdev@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79513>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79514>
 
-On Mon, 14 Apr 2008, Al Viro wrote:
+Hi,
 
-> Real review of code in tree and patches getting into the tree.
+On Mon, 14 Apr 2008, Sean Estabrooks wrote:
 
-There is currently little incentive for developers to perform review.  
+> On Mon, 14 Apr 2008 15:58:29 +0100 (BST)
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> 
+> > IOW I think a change of system is just not worth the effort.
+> 
+> There seems little reason to discourage someone from taking a stab at it 
+> if they're so inclined.
 
-It's difficult work, and is generally not rewarded or recognized, except 
-in often quite negative ways.  There is a small handful of people who do a 
-lot of review, but they are exceptional in various ways.
+Oh, sorry, I see how what I said could leave that impression.
 
-OTOH, writing code is relatively simple, and is much more highly rewarded:
+What I meant was this: I am quite content with the state as-is.  Having 
+said that, if somebody wants to try, it could turn out to be useful for 
+all the reasons you mentioned.
 
-- People tend to get paid to write kernel code, but not so much to review 
-  it.
-
-- Things like "who made the kernel" statistics and related articles ignore 
-  code review.
-
-- Creating new features is perceived as the highest form of contribution 
-  for general developers, and likely important as career currency 
-  (similar to the publish or perish model in the academic world).
-
-I don't know how to solve this, but suspect that encouraging the use of 
-reviewed-by and also including it in things like analysis of who is 
-contributing, selection for kernel summit invitations etc. would be a 
-start.  At least, better than nothing.
-
-
-- James 
--- 
-James Morris
-<jmorris@namei.org>
+Thanks,
+Dscho
