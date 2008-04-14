@@ -1,81 +1,102 @@
-From: "Sverre Rabbelier" <alturin@gmail.com>
-Subject: Re: RFC: Website redesign
-Date: Mon, 14 Apr 2008 20:29:00 +0200
-Message-ID: <bd6139dc0804141129h25c829e2i320f227594763d71@mail.gmail.com>
-References: <3175605f-ff32-4fd6-bed3-7ae596ecbcde@q1g2000prf.googlegroups.com>
-	 <2c6b72b30804140656g14c24d8cwae016d62fe12f4a7@mail.gmail.com>
-	 <56e37551-4b8f-4164-a71d-79dba8635b7d@l28g2000prd.googlegroups.com>
-	 <96F7571C-1D9D-4F0A-99F1-A2307DAB0374@wincent.com>
-Reply-To: sverre@rabbelier.nl
+From: Arjan van de Ven <arjan@infradead.org>
+Subject: Re: Reporting bugs and bisection
+Date: Mon, 14 Apr 2008 11:24:44 -0700
+Organization: Intel
+Message-ID: <20080414112444.2504b48d@laptopd505.fenrus.org>
+References: <47FEADCB.7070104@rtr.ca>
+	<20080413121831.d89dd424.akpm@linux-foundation.org>
+	<20080413202118.GA29658@2ka.mipt.ru>
+	<200804132233.50491.rjw@sisk.pl>
+	<20080413205406.GA9190@2ka.mipt.ru>
+	<48028830.6020703@earthlink.net>
+	<alpine.DEB.1.10.0804131546370.9318@asgard>
+	<20080414043939.GA6862@1wt.eu>
+	<20080414053943.GU9785@ZenIV.linux.org.uk>
+	<20080413232441.e216a02c.akpm@linux-foundation.org>
+	<20080414072328.GW9785@ZenIV.linux.org.uk>
+	<20080414010412.c42dc560.akpm@linux-foundation.org>
+	<20080414074349.24fa90f8@laptopd505.fenrus.org>
+	<20080414105152.9cc06fab.akpm@linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: Dill <sarpulhu@gmail.com>, "Git Mailing List" <git@vger.kernel.org>
-To: "Wincent Colaiuta" <win@wincent.com>
-X-From: git-owner@vger.kernel.org Mon Apr 14 20:35:28 2008
+Cc: Al Viro <viro@ZenIV.linux.org.uk>, Willy Tarreau <w@1wt.eu>,
+	david@lang.hm, Stephen Clark <sclark46@earthlink.net>,
+	Evgeniy Polyakov <johnpol@2ka.mipt.ru>,
+	"Rafael J. Wysocki" <rjw@sisk.pl>, Tilman Schmidt <tilman@imap.cc>,
+	Valdis.Kletnieks@vt.edu, Mark Lord <lkml@rtr.ca>,
+	David Miller <davem@davemloft.net>, jesper.juhl@gmail.com,
+	yoshfuji@linux-ipv6.org, jeff@garzik.org,
+	linux-kernel <linux-kernel@vger.kernel.org>, git@vger.kernel.org,
+	netdev@vger.kernel.org
+To: Andrew Morton <akpm@linux-foundation.org>
+X-From: netdev-owner@vger.kernel.org Mon Apr 14 20:36:15 2008
 connect(): Connection refused
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
+Return-path: <netdev-owner@vger.kernel.org>
+Envelope-to: linux-netdev-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JlTRG-0004n0-M3
-	for gcvg-git-2@gmane.org; Mon, 14 Apr 2008 20:29:59 +0200
+	id 1JlTTF-0005PQ-Oh
+	for linux-netdev-2@gmane.org; Mon, 14 Apr 2008 20:32:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762363AbYDNS3F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Apr 2008 14:29:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761040AbYDNS3D
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Apr 2008 14:29:03 -0400
-Received: from wf-out-1314.google.com ([209.85.200.174]:43340 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760136AbYDNS3B (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Apr 2008 14:29:01 -0400
-Received: by wf-out-1314.google.com with SMTP id 28so1623708wff.4
-        for <git@vger.kernel.org>; Mon, 14 Apr 2008 11:29:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=Ir1fHzITx1I5S2NDAqgiQt49Nb3IyF3H8e7UXqf4FDw=;
-        b=tvMI6wWWSkFcUukSk6F5eQJWPe6JfCwuzMNcUFNF7v7MdpV5BI6QROkVja/Kc6rJwzkNuZeHvCcbrCssxSaRrVceiDGNQYNqP/6718gcnd3VFNpkIp60ey3Ldo/YF4We/K+F9zrrP/iAYtF2AGtyWLrUvK/+YmbNZqiya6yQxn0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=o4fGv8XNETN4qvvh5y+HqM4qoEQAMl7NjqBay8jCPzLT9pHuOsc8ILuLNMFG3d13GpDavUyDQdiE94qL+vHoZhs+QzFKsBAotHuQvgFB6qordpVCq4O1s5SSi86ltcc8iQkKt2KG3b3F+rVB02OdleHWFgev23tq1bpepEeBXIQ=
-Received: by 10.142.87.7 with SMTP id k7mr1920647wfb.167.1208197740603;
-        Mon, 14 Apr 2008 11:29:00 -0700 (PDT)
-Received: by 10.143.33.6 with HTTP; Mon, 14 Apr 2008 11:29:00 -0700 (PDT)
-In-Reply-To: <96F7571C-1D9D-4F0A-99F1-A2307DAB0374@wincent.com>
-Content-Disposition: inline
-Sender: git-owner@vger.kernel.org
+	id S1755325AbYDNSbN (ORCPT <rfc822;linux-netdev-2@m.gmane.org>);
+	Mon, 14 Apr 2008 14:31:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756310AbYDNSbN
+	(ORCPT <rfc822;netdev-outgoing>); Mon, 14 Apr 2008 14:31:13 -0400
+Received: from pentafluge.infradead.org ([213.146.154.40]:50258 "EHLO
+	pentafluge.infradead.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754005AbYDNSbL (ORCPT
+	<rfc822;netdev@vger.kernel.org>); Mon, 14 Apr 2008 14:31:11 -0400
+Received: from [192.102.209.1] (helo=laptopd505.fenrus.org)
+	by pentafluge.infradead.org with esmtpsa (Exim 4.68 #1 (Red Hat Linux))
+	id 1JlTR0-0006Q2-5r; Mon, 14 Apr 2008 18:29:42 +0000
+In-Reply-To: <20080414105152.9cc06fab.akpm@linux-foundation.org>
+X-Mailer: Claws Mail 3.2.0 (GTK+ 2.12.5; i386-redhat-linux-gnu)
+X-SRS-Rewrite: SMTP reverse-path rewritten from <arjan@infradead.org> by pentafluge.infradead.org
+	See http://www.infradead.org/rpr.html
+Sender: netdev-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79523>
+List-ID: <netdev.vger.kernel.org>
+X-Mailing-List: netdev@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79524>
 
-On Mon, Apr 14, 2008 at 7:03 PM, Wincent Colaiuta <win@wincent.com> wrote:
->  With all due respect, all of the designs you've posted look like _weblog_
-> templates, and that doesn't seem appropriate to me for a software website.
-> One of the things I most dislike about the weblog format is the fixed-width
-> centre column and the large tracks of wasted space down the sides; although
-> the official site is certainly "bare bones" (some would say "ugly") at the
-> moment, at least the information density is high and there isn't any wasted
-> space.
+On Mon, 14 Apr 2008 10:51:52 -0700
+Andrew Morton <akpm@linux-foundation.org> wrote:
 
-That is most probably due to that the templates googlepages offer are
-mostly aimed at such weblogs. I think the suggestions are not just for
-layout but also for color (which is very important, to me at least,
-when deciding whether a webpage is 'damn ugly' or 'quite nice').
 
-Also I think that the main page should not contain more information
-than fits in one 'screen'. That is, there should be no scrollbar on
-'sensible' (say, above 1024*768) resolutions. To me a site feels
-'overfull' if it's mainpage has a scrolbarr. Instead, I think the
-mainpage should be a portal to other parts of the website, instead
-of... well... everything-crammed-on-one-page-so that.... so that what?
-What purpose does it serve to put all information, ungrouped, not easy
-to find, and as such chaotic, on one page?
+> Well OK.  But I don't think we can generalise from oops-causing bugs
 
-Anyway... </rant>
+including all WARN_ON's and various other kernel backtrace-causing bugs.
 
-Cheers,
 
-Sverre Rabbelier
+> all the way to all bugs.  Very few bugs actually cause oopses, and
+> oopses tend to be the thing which developers will zoom in on and pay
+> attention to.
+
+maybe.
+> 
+> If we had metrics on "time goes backwards" or anything containing
+> "ASUS", things might be different.
+
+Sounds really like we need to add more strategic WARN_ON's and other diagnostics in 
+the kernel to track these issues down.
+
+
+Because another thing that I found so far is that what hits LKML is by far not representative
+on what happens for users. The most obvious example was the whole input layer refcounting disaster
+in 2.6.25-rc; this was about 1/3rd of TOTAL reports for a few weeks in a row, but there
+was hardly an LKML posting for it (in fact there was only 1 half one).
+We need diagnostics and stuff the kernel spits out so that automated tools can detect these,
+otherwise we'll very likely not get good information on what is actually wrong with the kernel.
+
+
+In case you want to see the 2.6.25-rc data, the top 100 list is at
+http://www.kerneloops.org/twentyfive.html
+
+(I'm still working on annotating the individual items, but since there's 100
+that does take time)
+
+-- 
+If you want to reach me at my work email, use arjan@linux.intel.com
+For development, discussion and tips for power savings, 
+visit http://www.lesswatts.org
