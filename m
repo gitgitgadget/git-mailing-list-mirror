@@ -1,103 +1,75 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: RFC: Website redesign
-Date: Tue, 15 Apr 2008 00:59:49 -0700 (PDT)
-Message-ID: <m3mynvsg40.fsf@localhost.localdomain>
-References: <3175605f-ff32-4fd6-bed3-7ae596ecbcde@q1g2000prf.googlegroups.com>
-	<2c6b72b30804140656g14c24d8cwae016d62fe12f4a7@mail.gmail.com>
-	<56e37551-4b8f-4164-a71d-79dba8635b7d@l28g2000prd.googlegroups.com>
-	<96F7571C-1D9D-4F0A-99F1-A2307DAB0374@wincent.com>
-	<bd6139dc0804141129h25c829e2i320f227594763d71@mail.gmail.com>
-	<pan.2008.04.14.20.39.10@progsoc.org>
-	<20080414213339.GB10300@dpotapov.dyndns.org>
-	<pan.2008.04.15.03.25.00@progsoc.org>
-	<8607f754-92c8-49ca-9bc9-11e58b66ef40@q1g2000prf.googlegroups.com>
-	<acfbfe5b-f3a1-4c22-a873-ed329552d1bb@b5g2000pri.googlegroups.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: cvs2svn/cvs2git 2.1.1 released
+Followup-To: gmane.comp.version-control.subversion.cvs2svn.user
+Date: Tue, 15 Apr 2008 10:39:43 +0200
+Message-ID: <480469CF.7070701@alum.mit.edu>
+Reply-To: cvs2svn users <users@cvs2svn.tigris.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Dill <sarpulhu@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 15 10:01:28 2008
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+To: announce@cvs2svn.tigris.org, Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Apr 15 10:40:45 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jlg6Z-0007qO-3j
-	for gcvg-git-2@gmane.org; Tue, 15 Apr 2008 10:01:27 +0200
+	id 1JlgiX-0001mv-T7
+	for gcvg-git-2@gmane.org; Tue, 15 Apr 2008 10:40:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752750AbYDOIAS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Apr 2008 04:00:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756798AbYDOH76
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Apr 2008 03:59:58 -0400
-Received: from fg-out-1718.google.com ([72.14.220.158]:44513 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755217AbYDOH7y (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Apr 2008 03:59:54 -0400
-Received: by fg-out-1718.google.com with SMTP id l27so1901061fgb.17
-        for <git@vger.kernel.org>; Tue, 15 Apr 2008 00:59:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
-        bh=DEp3AqRYyG928awACQWzE5ebLtUTDucBME1JNjH5Sv4=;
-        b=JmR1WhRcSOSjgAOQvq61orGSkp/A+asUjBLYGAYyagwklvSrEj985p71y2nYXH9olzDF3vU1cBr4tziUUw1mzxdU1NbED+ABO6uOkgjThBZw1Sp6B+jkSZ6Sg7tktDLP1cQibLWjNI/51Mm0USLFqK8Vr33PpAMTIZ5DVogBUHg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
-        b=mtf8DpzaA1L1xgmxG+AoaLqov0NxCiMNli/94HwFjFm0HF0kSmCfy0eq5LMbzDNLhypCcRp2gvjvooI4fTvE7SGx2traKw1tJJS3jxTEh40MBaIu6sBnjaTiA4/I5pM8ldxWd1BixyY0aCkThhswSJdc4t5doYr0lTKp+Fk+5hY=
-Received: by 10.86.1.1 with SMTP id 1mr15545935fga.2.1208246390311;
-        Tue, 15 Apr 2008 00:59:50 -0700 (PDT)
-Received: from localhost.localdomain ( [83.8.219.135])
-        by mx.google.com with ESMTPS id e11sm5516051fga.5.2008.04.15.00.59.48
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 15 Apr 2008 00:59:49 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m3F7xjcH017755;
-	Tue, 15 Apr 2008 09:59:46 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m3F7xi3S017752;
-	Tue, 15 Apr 2008 09:59:44 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <acfbfe5b-f3a1-4c22-a873-ed329552d1bb@b5g2000pri.googlegroups.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1754149AbYDOIjy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Apr 2008 04:39:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753618AbYDOIjy
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Apr 2008 04:39:54 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:37464 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752020AbYDOIjx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Apr 2008 04:39:53 -0400
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.100.152] ([212.222.128.135])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id m3F8dnUD005512
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 15 Apr 2008 10:39:49 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.12) Gecko/20080227 Thunderbird/2.0.0.12 Mnenhy/0.7.5.666
+X-Enigmail-Version: 0.95.0
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79575>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79576>
 
-Dill <sarpulhu@gmail.com> writes:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> Perhaps we should just make the home page a wiki! It would work really
-> good! If we use a theme like they do at wiki.ubuntu.com or somewhere
-> else we could make it look really nice for a home page. Then once it's
-> set up, no one has to manage the page, worry about commits, who's
-> doing what, etc, and just have the pages edited and worked on by the
-> community at large who register at the site to edit. 
+cvs2svn/cvs2git 2.1.1 has been released.
 
-First, as far as I now all _popular_ wikis offer quite limited markup.
+cvs2svn is a tool for migrating a CVS repository to Subversion or git.
+Its main design goals are robustness and 100% preservation of your data.
 
-Second, current git homepage has information about latest release, and
-latest release date etc. updated *automatically*, by the script IIRC
-examinimg announcement on git mailing list.  This I think would be not
-possible with wiki.
+This release fixes a problem with some versions of GNU sort on Windows.
 
-> (Unlike the wiki in use now something would have to be done to stop
-> the spam, like having those boxes at registration where you have
-> pick the letters out).
+For more information see:
+http://cvs2svn.tigris.org/source/browse/cvs2svn/tags/2.1.1/CHANGES?view=markup
 
-If you have wiki which is popular page you would have spam.  Or you
-wouldn't have contributors (or at least as many contributors) if you
-would bring barriers to entry (e.g. register to edit, validation via
-email, CAPTCHA) against spam.
+You can get it here:
+http://cvs2svn.tigris.org/files/documents/1462/42521/cvs2svn-2.1.1.tar.gz
 
-[cut] 
-Many more projects IMVHO have _both_ homepage and wiki, than only wiki
-(wiki as homepage).
+The MD5 checksum is c1d5d97848658acdc293805b08e12959.
 
-P.S. Please do not toppost.  If your post doesn't refer to the message
-you are replying to, simply post it as clean message, without quoted
-text.
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Please send any bug reports and comments to users@cvs2svn.tigris.org.
+
+Michael
+
+- --
+Michael Haggerty
+The cvs2svn/cvs2git maintainer
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+
+iD8DBQFIBGnPwg9mrRwfmAkRArx6AJwOJd1dsiAWdQCoqqWxutRHMB/PFwCeIBbJ
+kkwLzvlyr9MZp6Yjtvv8FN0=
+=LboZ
+-----END PGP SIGNATURE-----
