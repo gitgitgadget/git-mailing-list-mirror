@@ -1,173 +1,92 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [GIT PULL] sh updates for 2.6.25
-Date: Tue, 15 Apr 2008 12:56:50 -0700 (PDT)
-Message-ID: <alpine.LFD.1.00.0804151222350.2879@woody.linux-foundation.org>
-References: <20080415172333.GA29489@linux-sh.org> <alpine.LFD.1.00.0804151048060.2879@woody.linux-foundation.org> <20080415183023.GA23098@linux-sh.org>
+From: "Rafael J. Wysocki" <rjw@sisk.pl>
+Subject: Re: Reporting bugs and bisection
+Date: Tue, 15 Apr 2008 22:51:49 +0200
+Message-ID: <200804152251.51308.rjw@sisk.pl>
+References: <47FEADCB.7070104@rtr.ca> <517f3f820804150254w491cdf85s28f1d15696db8d96@mail.gmail.com> <4804B5D5.4090404@davidnewall.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: linux-sh@vger.kernel.org, Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Paul Mundt <lethal@linux-sh.org>
-X-From: git-owner@vger.kernel.org Tue Apr 15 21:59:18 2008
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Michael Kerrisk <mtk.manpages@gmail.com>,
+	James Morris <jmorris@namei.org>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Willy Tarreau <w@1wt.eu>, david@lang.hm,
+	Stephen Clark <sclark46@earthlink.net>,
+	Evgeniy Polyakov <johnpol@2ka.mipt.ru>,
+	Tilman Schmidt <tilman@imap.cc>, Valdis.Kletnieks@vt.edu,
+	Mark Lord <lkml@rtr.ca>, David Miller <davem@davemloft.net>,
+	jesper.juhl@gmail.com, yoshfuji@linux-ipv6.org, jeff@garzik.org,
+	linux-kernel <linux-kernel@vger.kernel.org>, git@vger.kernel.org,
+	netdev@vger.kernel.org
+To: David Newall <davidn@davidnewall.com>
+X-From: netdev-owner@vger.kernel.org Tue Apr 15 22:54:18 2008
 connect(): Connection refused
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
+Return-path: <netdev-owner@vger.kernel.org>
+Envelope-to: linux-netdev-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JlrIY-0003PW-2i
-	for gcvg-git-2@gmane.org; Tue, 15 Apr 2008 21:58:34 +0200
+	id 1Jls8c-0001oN-Go
+	for linux-netdev-2@gmane.org; Tue, 15 Apr 2008 22:52:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759400AbYDOT5w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Apr 2008 15:57:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755540AbYDOT5v
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Apr 2008 15:57:51 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:37553 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756664AbYDOT5t (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 15 Apr 2008 15:57:49 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m3FJup28024422
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 15 Apr 2008 12:56:52 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m3FJuoYM012570;
-	Tue, 15 Apr 2008 12:56:50 -0700
-In-Reply-To: <20080415183023.GA23098@linux-sh.org>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
-X-Spam-Status: No, hits=-3.983 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
-Sender: git-owner@vger.kernel.org
+	id S1751816AbYDOUv1 (ORCPT <rfc822;linux-netdev-2@m.gmane.org>);
+	Tue, 15 Apr 2008 16:51:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753929AbYDOUv1
+	(ORCPT <rfc822;netdev-outgoing>); Tue, 15 Apr 2008 16:51:27 -0400
+Received: from ogre.sisk.pl ([217.79.144.158]:52052 "EHLO ogre.sisk.pl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751816AbYDOUvZ (ORCPT <rfc822;netdev@vger.kernel.org>);
+	Tue, 15 Apr 2008 16:51:25 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by ogre.sisk.pl (Postfix) with ESMTP id F012AA5622;
+	Tue, 15 Apr 2008 22:03:12 +0200 (CEST)
+Received: from ogre.sisk.pl ([127.0.0.1])
+ by localhost (ogre.sisk.pl [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 26726-08-2; Tue, 15 Apr 2008 22:03:00 +0200 (CEST)
+Received: from [192.168.100.119] (nat-be3.aster.pl [212.76.37.200])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by ogre.sisk.pl (Postfix) with ESMTP id 5C618A5878;
+	Tue, 15 Apr 2008 22:02:53 +0200 (CEST)
+User-Agent: KMail/1.9.6 (enterprise 20070904.708012)
+In-Reply-To: <4804B5D5.4090404@davidnewall.com>
+Content-Disposition: inline
+X-Virus-Scanned: amavisd-new at ogre.sisk.pl using MkS_Vir for Linux
+Sender: netdev-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79625>
+List-ID: <netdev.vger.kernel.org>
+X-Mailing-List: netdev@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79626>
 
-
-
-On Wed, 16 Apr 2008, Paul Mundt wrote:
+On Tuesday, 15 of April 2008, David Newall wrote:
+> Michael Kerrisk wrote:
+> > On 4/15/08, David Newall <davidn@davidnewall.com> wrote:
+> >   
+> >> James Morris wrote:
+> >>  > I don't know how to solve this, but suspect that encouraging the use of
+> >>  > reviewed-by and also including it in things like analysis of who is
+> >>  > contributing, selection for kernel summit invitations etc. would be a
+> >>  > start.  At least, better than nothing.
+> >>
+> >> Would it be hard to keep count of the number of errors introduced by
+> >>  author and reviewer?
+> >>     
+> >
+> > I've found quite a few errors in kernel-userland APIs, but I'm not
+> > sure that this sort of negative statistic would be helpful -- e.g.,
+> > more productive developers probably also introduce more errors.
 > 
-> It was a combination of mbox munging and git-am, I checked with git log
-> and thought things were ok, but I wasn't aware that it stripped out empty
-> lines. cat-file shows that it was just the 2 patches from Andrew that had
-> this particular problem. I had stripped out the subject and thought the
-> first line would be used for the merge summary, but it looks like git-am
-> simply wrote out an empty line and inserted one after that before the
-> rest of the summary.
+> We can already see which developers are more active.  What we can't see
+> is who is careless, which would be useful to know.  It would also be
+> useful to know who is careless in approving changes, because they share
+> responsibility for those changes.  It would be a good thing if this
+> highlighted that some people are behind frequent buggy changes.
 
-Ahh, looks like a git-am buglet then. It will indeed turn an empty subject 
-line into an empty first line.
+Well, even if someone introduces bugs relatively frequently, but then also
+works with the reporters and fixes the bugs timely, it's about okay IMO.
 
-We should run "git stripspace" on the whole thing, so maybe a patch 
-something like the appended will help.
+The real problem is when patch submitters don't care for their changes any
+more once the patches have been merged.
 
-NOTE! Totally untested! Beware the patch!
-
-> I've pushed out updated patches that have this corrected, so please pull
-> again.
-
-Well, since I pulled your previous one anyway, and since we should fix 
-git for any fallout like this _anyway_, I didn't so much worry about this 
-one-time event, as about avoiding this happening a lot in the future.
-
-We've had other workflows generate empty lines in commits, so we already 
-support stripping them out for other reasons.
-
-			Linus
----
- git-am.sh |   23 +++++++++--------------
- 1 files changed, 9 insertions(+), 14 deletions(-)
-
-diff --git a/git-am.sh b/git-am.sh
-index ac5c388..432d9fe 100755
---- a/git-am.sh
-+++ b/git-am.sh
-@@ -107,7 +107,7 @@ It does not apply to blobs recorded in its index."
-     # patch did not touch, so recursive ends up canceling them,
-     # saying that we reverted all those changes.
- 
--    eval GITHEAD_$his_tree='"$SUBJECT"'
-+    eval GITHEAD_$his_tree='"$FIRSTLINE"'
-     export GITHEAD_$his_tree
-     git-merge-recursive $orig_tree -- HEAD $his_tree || {
- 	    git rerere
-@@ -117,10 +117,6 @@ It does not apply to blobs recorded in its index."
-     unset GITHEAD_$his_tree
- }
- 
--reread_subject () {
--	git stripspace <"$1" | sed -e 1q
--}
--
- prec=4
- dotest=".dotest"
- sign= utf8=t keep= skip= interactive= resolved= binary= rebasing=
-@@ -331,7 +327,11 @@ do
- 			echo "Patch is empty.  Was it split wrong?"
- 			stop_here $this
- 		}
--		git stripspace < "$dotest/msg" > "$dotest/msg-clean"
-+		SUBJECT="$(sed -n '/^Subject/ s/Subject: //p' "$dotest/info")"
-+		case "$keep_subject" in -k)  SUBJECT="[PATCH] $SUBJECT" ;; esac
-+
-+		(echo "$SUBJECT" ; echo ; cat "$dotest/msg") |
-+			git stripspace > "$dotest/msg-clean"
- 		;;
- 	esac
- 
-@@ -347,9 +347,6 @@ do
- 
- 	export GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL GIT_AUTHOR_DATE
- 
--	SUBJECT="$(sed -n '/^Subject/ s/Subject: //p' "$dotest/info")"
--	case "$keep_subject" in -k)  SUBJECT="[PATCH] $SUBJECT" ;; esac
--
- 	case "$resume" in
- 	'')
- 	    if test '' != "$SIGNOFF"
-@@ -368,10 +365,8 @@ do
- 		ADD_SIGNOFF=
- 	    fi
- 	    {
--		printf '%s\n' "$SUBJECT"
- 		if test -s "$dotest/msg-clean"
- 		then
--			echo
- 			cat "$dotest/msg-clean"
- 		fi
- 		if test '' != "$ADD_SIGNOFF"
-@@ -388,6 +383,7 @@ do
- 			;;
- 		esac
- 	esac
-+	FIRSTLINE=$(head -1 "$dotest/final-commit")
- 
- 	resume=
- 	if test "$interactive" = t
-@@ -408,7 +404,6 @@ do
- 		[aA]*) action=yes interactive= ;;
- 		[nN]*) action=skip ;;
- 		[eE]*) git_editor "$dotest/final-commit"
--		       SUBJECT=$(reread_subject "$dotest/final-commit")
- 		       action=again ;;
- 		[vV]*) action=again
- 		       LESS=-S ${PAGER:-less} "$dotest/patch" ;;
-@@ -431,7 +426,7 @@ do
- 		stop_here $this
- 	fi
- 
--	printf 'Applying %s\n' "$SUBJECT"
-+	printf 'Applying %s\n' "$FIRSTLINE"
- 
- 	case "$resolved" in
- 	'')
-@@ -489,7 +484,7 @@ do
- 	tree=$(git write-tree) &&
- 	parent=$(git rev-parse --verify HEAD) &&
- 	commit=$(git commit-tree $tree -p $parent <"$dotest/final-commit") &&
--	git update-ref -m "$GIT_REFLOG_ACTION: $SUBJECT" HEAD $commit $parent ||
-+	git update-ref -m "$GIT_REFLOG_ACTION: $FIRSTLINE" HEAD $commit $parent ||
- 	stop_here $this
- 
- 	if test -x "$GIT_DIR"/hooks/post-applypatch
+Thanks,
+Rafael
