@@ -1,84 +1,100 @@
-From: Bill Fink <billfink@mindspring.com>
-Subject: Re: Reporting bugs and bisection
-Date: Tue, 15 Apr 2008 01:25:33 -0400
-Message-ID: <20080415012533.832db7ed.billfink@mindspring.com>
-References: <20080413232441.e216a02c.akpm@linux-foundation.org>
-	<20080414072328.GW9785@ZenIV.linux.org.uk>
-	<20080414010412.c42dc560.akpm@linux-foundation.org>
-	<20080414.013058.149905948.davem@davemloft.net>
-	<878wzgwyyw.fsf@basil.nowhere.org>
+From: Joachim Berdal Haga <cjbhaga@broadpark.no>
+Subject: Re: [PATCH] git clean: Don't automatically remove directories when run
+ within subdirectory
+Date: Tue, 15 Apr 2008 08:33:23 +0200
+Message-ID: <48044C33.20006@broadpark.no>
+References: <85fxtvj6y8.fsf_-_@lupus.strangled.net>
+ <1208130578-24748-1-git-send-email-shawn.bohrer@gmail.com>
+ <7v8wzgaoqy.fsf@gitster.siamese.dyndns.org>
+ <20080414170643.GA10548@mediacenter> <48039FE5.5060309@broadpark.no>
+ <20080415034417.GA2882@lintop>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: David Miller <davem@davemloft.net>, akpm@linux-foundation.org,
-	viro@ZenIV.linux.org.uk, w@1wt.eu, david@lang.hm,
-	sclark46@earthlink.net, johnpol@2ka.mipt.ru, rjw@sisk.pl,
-	tilman@imap.cc, Valdis.Kletnieks@vt.edu, lkml@rtr.ca,
-	jesper.juhl@gmail.com, yoshfuji@linux-ipv6.org, jeff@garzik.org,
-	linux-kernel@vger.kernel.org, git@vger.kernel.org,
-	netdev@vger.kernel.org
-To: Andi Kleen <andi@firstfloor.org>
-X-From: git-owner@vger.kernel.org Tue Apr 15 07:27:41 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Shawn Bohrer <shawn.bohrer@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 15 08:34:17 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jldhk-0004Ch-Ff
-	for gcvg-git-2@gmane.org; Tue, 15 Apr 2008 07:27:40 +0200
+	id 1Jlek9-0008M9-W3
+	for gcvg-git-2@gmane.org; Tue, 15 Apr 2008 08:34:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753957AbYDOF0f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Apr 2008 01:26:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753680AbYDOF0f
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Apr 2008 01:26:35 -0400
-Received: from elasmtp-mealy.atl.sa.earthlink.net ([209.86.89.69]:50740 "EHLO
-	elasmtp-mealy.atl.sa.earthlink.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753635AbYDOF0e (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 15 Apr 2008 01:26:34 -0400
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=dk20050327; d=mindspring.com;
-  b=f1HHp2Jq1/VMA/hVSIzr74ZPRpW/jvo+hASEq6TvfCF3R0pqd6yWMZq7dGKG1MB9;
-  h=Received:Date:From:To:Cc:Subject:Message-Id:In-Reply-To:References:X-Mailer:Mime-Version:Content-Type:Content-Transfer-Encoding:X-ELNK-Trace:X-Originating-IP;
-Received: from [68.48.212.104] (helo=gwiz.sci.gsfc.nasa.gov)
-	by elasmtp-mealy.atl.sa.earthlink.net with esmtpa (Exim 4.67)
-	(envelope-from <billfink@mindspring.com>)
-	id 1Jldfm-0002Lr-4d; Tue, 15 Apr 2008 01:25:38 -0400
-In-Reply-To: <878wzgwyyw.fsf@basil.nowhere.org>
-X-Mailer: Sylpheed version 2.2.7 (GTK+ 2.8.6; powerpc-yellowdog-linux-gnu)
-X-ELNK-Trace: c598f748b88b6fd49c7f779228e2f6aeda0071232e20db4d3abc4c2fc79d9de2dba9bc6b49639829350badd9bab72f9c350badd9bab72f9c350badd9bab72f9c
-X-Originating-IP: 68.48.212.104
+	id S1752347AbYDOGd2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Apr 2008 02:33:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752244AbYDOGd2
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Apr 2008 02:33:28 -0400
+Received: from osl1smout1.broadpark.no ([80.202.4.58]:50053 "EHLO
+	osl1smout1.broadpark.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751802AbYDOGd1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Apr 2008 02:33:27 -0400
+Received: from osl1sminn1.broadpark.no ([80.202.4.59])
+ by osl1smout1.broadpark.no
+ (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
+ with ESMTP id <0JZC00AXKSVP4H80@osl1smout1.broadpark.no> for
+ git@vger.kernel.org; Tue, 15 Apr 2008 08:33:25 +0200 (CEST)
+Received: from pep ([80.203.45.22]) by osl1sminn1.broadpark.no
+ (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
+ with ESMTP id <0JZC009V4SVOXL31@osl1sminn1.broadpark.no> for
+ git@vger.kernel.org; Tue, 15 Apr 2008 08:33:25 +0200 (CEST)
+Received: from localhost ([127.0.0.1])	by pep with esmtp (Exim 4.69)
+	(envelope-from <cjbhaga@broadpark.no>)	id 1JlejM-0003GL-3P; Tue,
+ 15 Apr 2008 08:33:24 +0200
+User-Agent: Mozilla-Thunderbird 2.0.0.9 (X11/20080110)
+In-reply-to: <20080415034417.GA2882@lintop>
+X-SA-Exim-Connect-IP: 127.0.0.1
+X-SA-Exim-Mail-From: cjbhaga@broadpark.no
+X-SA-Exim-Scanned: No (on pep); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79568>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79569>
 
-On Mon, 14 Apr 2008, Andi Kleen wrote:
-
-> David Miller <davem@davemloft.net> writes:
-> >
-> > It's still largely free form, loose, and flexible. 
+Shawn Bohrer wrote:
+> On Mon, Apr 14, 2008 at 08:18:13PM +0200, Joachim Berdal Haga wrote:
+>> I think that the best option would be to never remove a directory, even if
+>> given explicitly, unless -d is given. Because my gut feeling is that when a
+>> directory name is specified, it is most often meant as "clean inside the
+>> given directory", ie. as a path delimiter.
 > 
-> I think Al's point was that we need far more "free form, loose and
-> flexible" work for reviewing code. As in people going over trees and
-> just checking it for anything suspicious and going over existing code
-> and checking it for anything suspicious and going also over mailing
-> list patch posts. And also maintainers who appreciate such review.
+> If there are no tracked files the only difference between the dir/ and
+> dir case is that the former will leave behind an empty directory.  So
+> the difference between too much and too little is of little importance.
+
+No, check this out; note that only in the very last case dir/subdir/subfile
+would be removed.
+
+$ git init; mkdir -p dir/subdir; touch dir/file dir/subdir/subfile
+Initialized empty Git repository in .git/
+$ touch dir/tracked-file; git add dir/tracked-file
+$ ~/src/git/git-clean -n dir/
+Would remove dir/file
+Would not remove dir/subdir/
+$ ~/src/git/git-clean -n dir
+Would remove dir/file
+Would not remove dir/subdir/
+$ git rm -f dir/tracked-file
+rm 'dir/tracked-file'
+$ ~/src/git/git-clean -n dir/
+Would remove dir/file
+Would not remove dir/subdir/
+$ ~/src/git/git-clean -n dir
+Would remove dir/
+
+> However,
 > 
-> And checking it for anything suspicious does not mean running
-> only checkpatch.pl or even just sparse, but actually reading it
-> and trying to make sense of it.
+> git clean dir
+> Would not remove dir/
+> 
+> is a little strange.
 
-If you really want to get more such review, then it would be very
-useful when someone asks about some obtuse portion of kernel code
-or makes a suggested improvement, that the reviewer then not be
-flamed as being dense for not understanding the code or some kernel
-coding concept.  It would be much better to treat it as an oppurtunity
-to educate rather than belittle, thus eventually enlarging the base
-of people who can assist with various aspects of kernel development.
-For what's supposed to be an open, engaging community, and which
-generally is, there sometimes seems to be some level of dismissal
-of newcomers (not sure it's intended that way but nevertheless it
-can tend to discourage newcomers from getting more involved).
+Yes, although it could be made less strange by adding a short explanation,
+like "Would not remove dir/ (-d not given)". But I also think that the
+difference between "dir" and "dir/" is very (too?) subtle in this case and
+therefore should require explicit approval/action from the user.
 
-						-Bill
+
+-j.
