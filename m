@@ -1,99 +1,120 @@
-From: Mark Levedahl <mlevedahl@gmail.com>
-Subject: [PATCH] git-submodule - possibly use branch name to describe a module
-Date: Mon, 14 Apr 2008 22:48:06 -0400
-Message-ID: <1208227686-696-1-git-send-email-mlevedahl@gmail.com>
-References: <1208225951-1560-1-git-send-email-mlevedahl@gmail.com>
-Cc: git@vger.kernel.org, Mark Levedahl <mlevedahl@gmail.com>
+From: Shawn Bohrer <shawn.bohrer@gmail.com>
+Subject: [PATCH] git clean: Don't automatically remove directories when run within subdirectory
+Date: Mon, 14 Apr 2008 22:14:09 -0500
+Message-ID: <1208229249-32033-1-git-send-email-shawn.bohrer@gmail.com>
+References: <20080414170643.GA10548@mediacenter>
+Cc: git@vger.kernel.org, jobh@broadpark.no,
+	Shawn Bohrer <shawn.bohrer@gmail.com>
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Apr 15 04:49:09 2008
+X-From: git-owner@vger.kernel.org Tue Apr 15 05:15:05 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JlbEJ-0003W4-Pw
-	for gcvg-git-2@gmane.org; Tue, 15 Apr 2008 04:49:08 +0200
+	id 1JlbdN-0002GB-GP
+	for gcvg-git-2@gmane.org; Tue, 15 Apr 2008 05:15:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761556AbYDOCsV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Apr 2008 22:48:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761363AbYDOCsV
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Apr 2008 22:48:21 -0400
-Received: from yw-out-2324.google.com ([74.125.46.30]:7264 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761354AbYDOCsU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Apr 2008 22:48:20 -0400
-Received: by yw-out-2324.google.com with SMTP id 5so864579ywb.1
-        for <git@vger.kernel.org>; Mon, 14 Apr 2008 19:48:11 -0700 (PDT)
+	id S1761808AbYDODON (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Apr 2008 23:14:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761653AbYDODON
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Apr 2008 23:14:13 -0400
+Received: from an-out-0708.google.com ([209.85.132.245]:15195 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761615AbYDODOM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Apr 2008 23:14:12 -0400
+Received: by an-out-0708.google.com with SMTP id d31so488677and.103
+        for <git@vger.kernel.org>; Mon, 14 Apr 2008 20:14:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=3fS3VsOHNYZCncYtSS6Gf1akt3Iu/Ekp7ayAK2zkTTw=;
-        b=el2gyjGEhKFbcId10gNXaOrjbdp2vrLscMo9wlFj/31P3LUxLOkOlhph5ynvjmJI466wm61EGknJEAmJTX9MBrIQhJa3UAGloDHMHd87JXN1yVXf77jvRdeVOiwagoW53wOgN6xpNUsVs41262Ro+qY8Mo4q+mAAXWhG1f3ae6k=
+        h=domainkey-signature:received:received:received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=WQ009Nh1O9eXa5c1KSwt96tfJX701cVKqSkHrNvYf+M=;
+        b=n+DpO2GoDDwEXY6WGfDNximcESYDuu/k+MEauTH1a4qGQkIcp/ZWSCDdX9Ib2fURj0L3n31eQqzdORyELaoHKRipA1gNJcc432FOL7m7q9q2+bkICDzNxBR5zSptwT0jnu6n62G+v5+8MySRybNPaZwdlMXHBkUt0DqtOWmHI58=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=PHXcHzTXSvnfS66cK0jrsL030Oq73tvoeQOIqvLy6RSsSjMOQANq1lA2WvSvBWC2T4UQAyfTPx0KculJkHMOeQJFaDaOwUeHuNBjYRv5QwyDcXF10xmyoB6q7xHCW7VETmRJTas3QqUXM5vFpY1VjSSWS0VA9aTfGDTyufL3vbU=
-Received: by 10.151.112.10 with SMTP id p10mr7097827ybm.143.1208227691827;
-        Mon, 14 Apr 2008 19:48:11 -0700 (PDT)
-Received: from localhost.localdomain ( [71.163.252.223])
-        by mx.google.com with ESMTPS id h34sm27106764wxd.10.2008.04.14.19.48.08
+        b=fZDiXhPmgw+u9VcEFyMADv+yz+aVUAH2OaufA74WuWLS0SiYR386FSmJJ20LE3uNeb7RBysF/DswEO9t4IjvWRdoN4M57mqLxOtTwtwWgo/G753RWG0XmUpjqyonNseuH2f1t+tX0iqUbTlRuRFuEZd4iJQGN9E/XFq3cUQksZo=
+Received: by 10.100.58.2 with SMTP id g2mr13756191ana.108.1208229251187;
+        Mon, 14 Apr 2008 20:14:11 -0700 (PDT)
+Received: from lintop ( [70.112.149.232])
+        by mx.google.com with ESMTPS id a44sm659474rne.2.2008.04.14.20.14.08
         (version=SSLv3 cipher=OTHER);
-        Mon, 14 Apr 2008 19:48:10 -0700 (PDT)
-X-Mailer: git-send-email 1.5.5.65.gf482
-In-Reply-To: <1208225951-1560-1-git-send-email-mlevedahl@gmail.com>
+        Mon, 14 Apr 2008 20:14:10 -0700 (PDT)
+Received: by lintop (sSMTP sendmail emulation); Mon, 14 Apr 2008 22:14:09 -0500
+X-Mailer: git-send-email 1.5.5.106.g62ee2.dirty
+In-Reply-To: <20080414170643.GA10548@mediacenter>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79560>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79561>
 
-This changes the search logic for describing a submodule from:
-- annotated tag
-- any tag
-- tag on a subsequent commit
-- commit id
+When git clean is run from a subdirectory it should follow the normal
+policy and only remove directories if they are passed in as a pathspec,
+or -d is specified.
 
-to
+The fix is to send len which could be shorter than ent->len because we
+have stripped the trailing '/' that read_directory adds. Additionaly
+match_one() was modified to allow a name[] that is not NUL terminated.
+This allows us to check if the name matched the pathspec exactly
+instead of recursively.
 
-- annotated tag
-- any tag
-- tag on a subsequent commit
-- local or remote branch
-- commit id
-
-The change is describing with respect to a branch before falling
-back to the commit id. By itself, git-submodule will maintain submodules
-as headless checkouts without ever making a local branch. In
-general, such heads can always be described relative to the remote branch
-regardless of existence of tags, and so provides a better fallback
-summary than just the commit id.
-
-This requires inserting an extra describe step as --contains is
-incompatible with --all, but the latter can be used with --always
-to fall back to a commit ID. Also, --contains implies --tags, so the
-latter is not needed.
-
-Signed-off-by: Mark Levedahl <mlevedahl@gmail.com>
+Signed-off-by: Shawn Bohrer <shawn.bohrer@gmail.com>
 ---
-One more try - I mistakenly thought bare describe allowed
-local branches, not just tags, so the logic IS different.W Oops.
+ builtin-clean.c |   13 +++++++------
+ dir.c           |    2 +-
+ 2 files changed, 8 insertions(+), 7 deletions(-)
 
- git-submodule.sh |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
-
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 28509ea..af195a7 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -389,7 +389,8 @@ set_name_rev () {
- 		cd "$1" && {
- 			git describe "$2" 2>/dev/null ||
- 			git describe --tags "$2" 2>/dev/null ||
--			git describe --contains --tags --always "$2"
-+			git describe --contains "$2" 2>/dev/null ||
-+			git describe --all --always "$2"
+diff --git a/builtin-clean.c b/builtin-clean.c
+index fefec30..6778a03 100644
+--- a/builtin-clean.c
++++ b/builtin-clean.c
+@@ -95,7 +95,8 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
+ 
+ 	for (i = 0; i < dir.nr; i++) {
+ 		struct dir_entry *ent = dir.entries[i];
+-		int len, pos, matches;
++		int len, pos;
++		int matches = 0;
+ 		struct cache_entry *ce;
+ 		struct stat st;
+ 
+@@ -127,18 +128,18 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
+ 
+ 		if (pathspec) {
+ 			memset(seen, 0, argc > 0 ? argc : 1);
+-			matches = match_pathspec(pathspec, ent->name, ent->len,
++			matches = match_pathspec(pathspec, ent->name, len,
+ 						 baselen, seen);
+-		} else {
+-			matches = 0;
  		}
- 	) )
- 	test -z "$revname" || revname=" ($revname)"
---
-1.5.5.65.gf482
+ 
+ 		if (S_ISDIR(st.st_mode)) {
+ 			strbuf_addstr(&directory, ent->name);
+ 			qname = quote_path_relative(directory.buf, directory.len, &buf, prefix);
+-			if (show_only && (remove_directories || matches)) {
++			if (show_only && (remove_directories ||
++			    (matches == MATCHED_EXACTLY))) {
+ 				printf("Would remove %s\n", qname);
+-			} else if (remove_directories || matches) {
++			} else if (remove_directories ||
++				   (matches == MATCHED_EXACTLY)) {
+ 				if (!quiet)
+ 					printf("Removing %s\n", qname);
+ 				if (remove_dir_recursively(&directory, 0) != 0) {
+diff --git a/dir.c b/dir.c
+index b5bfbca..63715c9 100644
+--- a/dir.c
++++ b/dir.c
+@@ -80,7 +80,7 @@ static int match_one(const char *match, const char *name, int namelen)
+ 	if (strncmp(match, name, matchlen))
+ 		return !fnmatch(match, name, 0) ? MATCHED_FNMATCH : 0;
+ 
+-	if (!name[matchlen])
++	if (namelen == matchlen)
+ 		return MATCHED_EXACTLY;
+ 	if (match[matchlen-1] == '/' || name[matchlen] == '/')
+ 		return MATCHED_RECURSIVELY;
+-- 
+1.5.5.106.g62ee2.dirty
