@@ -1,100 +1,72 @@
-From: Joachim Berdal Haga <cjbhaga@broadpark.no>
-Subject: Re: [PATCH] git clean: Don't automatically remove directories when run
- within subdirectory
-Date: Tue, 15 Apr 2008 08:33:23 +0200
-Message-ID: <48044C33.20006@broadpark.no>
-References: <85fxtvj6y8.fsf_-_@lupus.strangled.net>
- <1208130578-24748-1-git-send-email-shawn.bohrer@gmail.com>
- <7v8wzgaoqy.fsf@gitster.siamese.dyndns.org>
- <20080414170643.GA10548@mediacenter> <48039FE5.5060309@broadpark.no>
- <20080415034417.GA2882@lintop>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: Combining/merging commits
+Date: Tue, 15 Apr 2008 08:37:09 +0200
+Message-ID: <48044D15.6040801@viscovery.net>
+References: <8e0b7b96-aee8-45a4-a160-023e92845434@n1g2000prb.googlegroups.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Shawn Bohrer <shawn.bohrer@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 15 08:34:17 2008
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: xpr1010 <volition1980@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 15 08:38:00 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jlek9-0008M9-W3
-	for gcvg-git-2@gmane.org; Tue, 15 Apr 2008 08:34:14 +0200
+	id 1Jleno-00019Y-8e
+	for gcvg-git-2@gmane.org; Tue, 15 Apr 2008 08:38:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752347AbYDOGd2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Apr 2008 02:33:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752244AbYDOGd2
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Apr 2008 02:33:28 -0400
-Received: from osl1smout1.broadpark.no ([80.202.4.58]:50053 "EHLO
-	osl1smout1.broadpark.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751802AbYDOGd1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Apr 2008 02:33:27 -0400
-Received: from osl1sminn1.broadpark.no ([80.202.4.59])
- by osl1smout1.broadpark.no
- (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
- with ESMTP id <0JZC00AXKSVP4H80@osl1smout1.broadpark.no> for
- git@vger.kernel.org; Tue, 15 Apr 2008 08:33:25 +0200 (CEST)
-Received: from pep ([80.203.45.22]) by osl1sminn1.broadpark.no
- (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
- with ESMTP id <0JZC009V4SVOXL31@osl1sminn1.broadpark.no> for
- git@vger.kernel.org; Tue, 15 Apr 2008 08:33:25 +0200 (CEST)
-Received: from localhost ([127.0.0.1])	by pep with esmtp (Exim 4.69)
-	(envelope-from <cjbhaga@broadpark.no>)	id 1JlejM-0003GL-3P; Tue,
- 15 Apr 2008 08:33:24 +0200
-User-Agent: Mozilla-Thunderbird 2.0.0.9 (X11/20080110)
-In-reply-to: <20080415034417.GA2882@lintop>
-X-SA-Exim-Connect-IP: 127.0.0.1
-X-SA-Exim-Mail-From: cjbhaga@broadpark.no
-X-SA-Exim-Scanned: No (on pep); SAEximRunCond expanded to false
+	id S1752318AbYDOGhP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Apr 2008 02:37:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752204AbYDOGhP
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Apr 2008 02:37:15 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:21824 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752132AbYDOGhN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Apr 2008 02:37:13 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1Jlen1-00010f-68; Tue, 15 Apr 2008 08:37:11 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 2040D546; Tue, 15 Apr 2008 08:37:09 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <8e0b7b96-aee8-45a4-a160-023e92845434@n1g2000prb.googlegroups.com>
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79569>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79570>
 
-Shawn Bohrer wrote:
-> On Mon, Apr 14, 2008 at 08:18:13PM +0200, Joachim Berdal Haga wrote:
->> I think that the best option would be to never remove a directory, even if
->> given explicitly, unless -d is given. Because my gut feeling is that when a
->> directory name is specified, it is most often meant as "clean inside the
->> given directory", ie. as a path delimiter.
-> 
-> If there are no tracked files the only difference between the dir/ and
-> dir case is that the former will leave behind an empty directory.  So
-> the difference between too much and too little is of little importance.
+xpr1010 schrieb:
+> I have made several commits that should really have only been one, but
+> there was a lot of back and forth because of my inherent clumsiness.
+> Is there any way to combine or merge these commits to one?
 
-No, check this out; note that only in the very last case dir/subdir/subfile
-would be removed.
+Say, you have this commit series:
 
-$ git init; mkdir -p dir/subdir; touch dir/file dir/subdir/subfile
-Initialized empty Git repository in .git/
-$ touch dir/tracked-file; git add dir/tracked-file
-$ ~/src/git/git-clean -n dir/
-Would remove dir/file
-Would not remove dir/subdir/
-$ ~/src/git/git-clean -n dir
-Would remove dir/file
-Would not remove dir/subdir/
-$ git rm -f dir/tracked-file
-rm 'dir/tracked-file'
-$ ~/src/git/git-clean -n dir/
-Would remove dir/file
-Would not remove dir/subdir/
-$ ~/src/git/git-clean -n dir
-Would remove dir/
+ ...--A--B--C--D
 
-> However,
-> 
-> git clean dir
-> Would not remove dir/
-> 
-> is a little strange.
+and you want to combine all of them, i.e. the last 4 commits, into a new
+one, then you can do:
 
-Yes, although it could be made less strange by adding a short explanation,
-like "Would not remove dir/ (-d not given)". But I also think that the
-difference between "dir" and "dir/" is very (too?) subtle in this case and
-therefore should require explicit approval/action from the user.
+    # undo commits, but leave working directory unchanged
+    $ git reset HEAD~4
+    # make a new commit
+    $ git commit
 
+But if you want to combine only A,B,C because D should remain a separate
+commit (i.e. what you want to combine are *not* the last commits), then
+use git rebase --interactive, in particular, the 'squash' instruction. You
+would use this todo list:
 
--j.
+    pick A
+    squash B
+    squash C
+    pick D
+
+-- Hannes
