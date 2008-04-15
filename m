@@ -1,67 +1,67 @@
-From: "Vitaly V. Ch" <vitaly.v.ch@gmail.com>
-Subject: Re: Bug in StackedGit
-Date: Tue, 15 Apr 2008 11:21:09 +0000
-Message-ID: <6efe08af0804150421p2d3dfbd2uf327c933b385bc38@mail.gmail.com>
-References: <6efe08af0804150301t9f4a1dbte564902736ebc302@mail.gmail.com>
-	 <b0943d9e0804150413h5268532ey2f2ee33fca1be783@mail.gmail.com>
+From: "Aneesh Kumar" <aneesh.kumar@gmail.com>
+Subject: Finding changes in one branch not in two other branch
+Date: Tue, 15 Apr 2008 16:51:59 +0530
+Message-ID: <cc723f590804150421j689ef4b1o57b97c937e23db99@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Catalin Marinas" <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 15 13:22:07 2008
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Apr 15 13:22:58 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JljEk-0000sV-ET
-	for gcvg-git-2@gmane.org; Tue, 15 Apr 2008 13:22:06 +0200
+	id 1JljFR-00012B-Dc
+	for gcvg-git-2@gmane.org; Tue, 15 Apr 2008 13:22:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757817AbYDOLVV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Apr 2008 07:21:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757807AbYDOLVV
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Apr 2008 07:21:21 -0400
-Received: from yw-out-2324.google.com ([74.125.46.31]:45461 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757752AbYDOLVU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Apr 2008 07:21:20 -0400
-Received: by yw-out-2324.google.com with SMTP id 5so945380ywb.1
-        for <git@vger.kernel.org>; Tue, 15 Apr 2008 04:21:10 -0700 (PDT)
+	id S1757935AbYDOLWE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Apr 2008 07:22:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757916AbYDOLWD
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Apr 2008 07:22:03 -0400
+Received: from wa-out-1112.google.com ([209.85.146.181]:58334 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757903AbYDOLWB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Apr 2008 07:22:01 -0400
+Received: by wa-out-1112.google.com with SMTP id m16so3084931waf.23
+        for <git@vger.kernel.org>; Tue, 15 Apr 2008 04:21:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=+cbd5lID3MfLj3nBylUMLh1xpSx/FnakEqR5fWEU0ww=;
-        b=HmR+C2RQAlrmUMheSsQvpPoOqbqdQOPZY8kxgzdJzj2mmHa2+XUaXVK8puiZOoQtpLb0qVWJObM9QGclAprguWmrcWHorR1Vt4NLMc2jKpeCZ3xFXPpf9I0bJhRKUJzp+/f19rMXCYmnC/QC7jJTQPIQX6ORxE5F3BWe8AkfB28=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=MqL11RllBn5NqK0riV26BJ7fpmDiK/8ITbYTqN8ScSk=;
+        b=CQNBjGtZE/JWPcTib4NcrDnvdHF+f5fV7GraHjzqEdXW/t5ZGGIjzkkNr4Y4U9ZJOyOWio1oIHBjC8NGrZn0MFuUwYov16XRB/YRb00agrLdBrl9KfjylsDBGJAGIWjDzTenMHgA2k8Bp/NTfnlfkLhDVKC62pgSzBcEwsjzmoE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=bevxJeDvBguaTJMNS2L0oB6dHEzHJ2BU8XoXXXP3p9veO6LL4+W4VwMJphKlZe639QAr+i7lkM7/jebAURJdBv984j43uoPGtJlflnahCR0AvQooebOF0CVsatP0KFpeXiiY4bSfZE2CRwfJ8Wby7YMkxZwWrmLH+Ka/Xia9Vuo=
-Received: by 10.151.42.9 with SMTP id u9mr7581522ybj.108.1208258469926;
-        Tue, 15 Apr 2008 04:21:09 -0700 (PDT)
-Received: by 10.150.229.1 with HTTP; Tue, 15 Apr 2008 04:21:09 -0700 (PDT)
-In-Reply-To: <b0943d9e0804150413h5268532ey2f2ee33fca1be783@mail.gmail.com>
+        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=skFGppRpkwh43F5p3x1F5Rs/XqiPO9qoTexbv9CgVyN4HmDLBfpxhSnguRAuMg97N87nc6/6/Vod0cYdUsFIzXppWg0WteWxYoPckF2eLvCKCaX2INuX9GPDuJwfg1v7j4/NZvzGPyG6uyAYpFR5EAWx7AmdF8GJGauRVDTUdK0=
+Received: by 10.115.79.8 with SMTP id g8mr4803750wal.215.1208258519478;
+        Tue, 15 Apr 2008 04:21:59 -0700 (PDT)
+Received: by 10.114.150.8 with HTTP; Tue, 15 Apr 2008 04:21:59 -0700 (PDT)
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79585>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79586>
 
-I want revert some patch to one of previous version like I can do same
-in bzr loom.
+Hi,
 
-\\wbr Vitaly Chernookiy
+I am not sure whether it is available. What i am looking for is
 
-On Tue, Apr 15, 2008 at 11:13 AM, Catalin Marinas
-<catalin.marinas@gmail.com> wrote:
-> On 15/04/2008, Vitaly V. Ch <vitaly.v.ch@gmail.com> wrote:
->  > after stg commit all patch history is loss. It's sucks.
->
->  Why do you need the patch history after "stg commit"? This command is
->  meant to take the patches out of StGIT control and freeze them in the
->  Git repository history.
->
->  --
->  Catalin
->
+git diff <commit1> <commit2> <commit3>
+
+And it should show changes only in in tree represented by <commit1> but not
+in both <commit2> and <commit3>
+
+To show a workflow:
+
+kernel releases 2.6.20 and the project release patchset on top of 2.6.20
+kernel release 2.6.21 and project release patchset on top of 2.6.21
+
+The second release involve some bug fixes for the project.
+
+The intention is to find out  what changed in project with the release
+of 2.6.21 patchset
+. The easiest is look at diff of diff. But if git can do it for me why not ??
+
+-aneesh
