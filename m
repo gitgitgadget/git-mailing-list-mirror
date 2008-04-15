@@ -1,56 +1,84 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: StGit: kha/{stable,safe,experimental} updated
-Date: Tue, 15 Apr 2008 02:26:13 +0200
-Message-ID: <20080415002613.GA24093@diana.vm.bytemark.co.uk>
-References: <20080413191140.GA1912@diana.vm.bytemark.co.uk>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-submodule - possibly use remote branch to describe a
+ module
+Date: Mon, 14 Apr 2008 17:39:44 -0700
+Message-ID: <7viqyk6je7.fsf@gitster.siamese.dyndns.org>
+References: <1208217154-992-1-git-send-email-mlevedahl@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 15 02:27:23 2008
+To: Mark Levedahl <mlevedahl@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 15 02:40:42 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JlZ16-0000Mz-HQ
-	for gcvg-git-2@gmane.org; Tue, 15 Apr 2008 02:27:20 +0200
+	id 1JlZE0-0003sA-UM
+	for gcvg-git-2@gmane.org; Tue, 15 Apr 2008 02:40:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757101AbYDOA0V convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Apr 2008 20:26:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756496AbYDOA0V
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Apr 2008 20:26:21 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3815 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753475AbYDOA0V (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Apr 2008 20:26:21 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1JlZ01-0006IE-00; Tue, 15 Apr 2008 01:26:13 +0100
-Content-Disposition: inline
-In-Reply-To: <20080413191140.GA1912@diana.vm.bytemark.co.uk>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1757572AbYDOAj4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Apr 2008 20:39:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757560AbYDOAj4
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Apr 2008 20:39:56 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:50342 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754107AbYDOAjz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Apr 2008 20:39:55 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id EBEEF315E;
+	Mon, 14 Apr 2008 20:39:53 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 38B1E315C; Mon, 14 Apr 2008 20:39:49 -0400 (EDT)
+In-Reply-To: <1208217154-992-1-git-send-email-mlevedahl@gmail.com> (Mark
+ Levedahl's message of "Mon, 14 Apr 2008 19:52:34 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79546>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79547>
 
-On 2008-04-13 21:11:40 +0200, Karl Hasselstr=F6m wrote:
+Mark Levedahl <mlevedahl@gmail.com> writes:
 
-> I've rebased my branches on top of Catalin's latest master and
-> stable. They include all the patches I've sent to the list recently.
+> Absent user intervention, git-submodule will maintain submodules as
+> headless checkouts of remote branches: such checkouts cannot be described
+> with reference to any local branch. So, allow describing the submodule
+> using remote branches before falling back on just using the commit id.
+>
+> Signed-off-by: Mark Levedahl <mlevedahl@gmail.com>
+> ---
+>  git-submodule.sh |    3 ++-
+>  1 files changed, 2 insertions(+), 1 deletions(-)
+>
+> diff --git a/git-submodule.sh b/git-submodule.sh
+> index 28509ea..af195a7 100755
+> --- a/git-submodule.sh
+> +++ b/git-submodule.sh
+> @@ -389,7 +389,8 @@ set_name_rev () {
+>  		cd "$1" && {
+>  			git describe "$2" 2>/dev/null ||
+>  			git describe --tags "$2" 2>/dev/null ||
+> -			git describe --contains --tags --always "$2"
+> +			git describe --contains "$2" 2>/dev/null ||
+> +			git describe --all --always "$2"
+>  		}
+>  	) )
+>  	test -z "$revname" || revname=" ($revname)"
 
-Updated again with the newest stuff. No shortlog since it's hardly
-changed since last post. Get it here:
+I think the new fallback sequence makes sense, but your explanation made
+sense for me only after reading it two and half times.
 
-  git://repo.or.cz/stgit/kha.git stable
-  git://repo.or.cz/stgit/kha.git safe
-  git://repo.or.cz/stgit/kha.git experimental
+ - The original sequence ended with "--contains --always" which always
+   succeeded but with an abbrevated object name.  You removed --always
+   from it so that you can add a better last-ditch effort that uses remote
+   references.
 
-And this time I made _sure_ to run the test suite.
+   Side note.  Removal of --tags from it is not justified in your log
+   message.  It is sort of obvious if you think about it, though...
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+ - The new one at the end uses --all because the HEAD is likely to be
+   describable with remote references, and without --all remote reference
+   namespace is not searched for a match.
