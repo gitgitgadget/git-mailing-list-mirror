@@ -1,83 +1,146 @@
-From: Shawn Bohrer <shawn.bohrer@gmail.com>
-Subject: Re: [PATCH] git clean: Don't automatically remove directories when
-	run within subdirectory
-Date: Mon, 14 Apr 2008 22:44:17 -0500
-Message-ID: <20080415034417.GA2882@lintop>
-References: <85fxtvj6y8.fsf_-_@lupus.strangled.net> <1208130578-24748-1-git-send-email-shawn.bohrer@gmail.com> <7v8wzgaoqy.fsf@gitster.siamese.dyndns.org> <20080414170643.GA10548@mediacenter> <48039FE5.5060309@broadpark.no>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: Re* [PATCH] builtin-apply.c: use git_config_string() to get apply_default_whitespace
+Date: Tue, 15 Apr 2008 06:19:34 +0200
+Message-ID: <200804150619.34775.chriscool@tuxfamily.org>
+References: <20080408084233.GA7785@leksak.fem-net> <200804130556.45141.chriscool@tuxfamily.org> <7vskxqe0db.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Joachim Berdal Haga <cjbhaga@broadpark.no>
-X-From: git-owner@vger.kernel.org Tue Apr 15 05:45:14 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Stephan Beyer <s-beyer@gmx.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 15 06:15:12 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jlc6Z-0001gZ-Kz
-	for gcvg-git-2@gmane.org; Tue, 15 Apr 2008 05:45:12 +0200
+	id 1JlcZa-0000xM-Nd
+	for gcvg-git-2@gmane.org; Tue, 15 Apr 2008 06:15:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762409AbYDODo1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Apr 2008 23:44:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762337AbYDODo1
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Apr 2008 23:44:27 -0400
-Received: from an-out-0708.google.com ([209.85.132.251]:3704 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762237AbYDODo0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Apr 2008 23:44:26 -0400
-Received: by an-out-0708.google.com with SMTP id d31so490946and.103
-        for <git@vger.kernel.org>; Mon, 14 Apr 2008 20:44:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
-        bh=YvI5XN7nI8GND9Ipu9bqobj3dYTdetn5wAsL93u2/eE=;
-        b=A3UX0l03ZC/PqO8Evuf9/f3cYzj7uCaGUxEGf3PkvXmV0mhzsddruLCILipQ4LfLNb74L8JNpq+LVjCcNVWDnTHUKOnaLdWNGUT7ngMaeK405xBGSMgg1bMNWgbSFtq7Z7VRPWLuX7I4iiT5FTv4hR6iJ1uyxvNCU6kHO7g5U2k=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
-        b=SG9NGRf1QZUzC20PHcwXwPbxSP0PB+Wz2jYzeczLSDJdYHhQQLcUqOUIMcgjoZnTdxUAesGxlkVbOL5jXEdyoSpaATXYjwPseIs/us+zkvKydFK50Dv7dVdg66//KQ7slHE7QpYqrx3N7Htq92VyS8GC3FVaEs0+62XOvvLss0U=
-Received: by 10.100.252.17 with SMTP id z17mr13896301anh.6.1208231065317;
-        Mon, 14 Apr 2008 20:44:25 -0700 (PDT)
-Received: from @ ( [70.112.149.232])
-        by mx.google.com with ESMTPS id a30sm629655rnb.12.2008.04.14.20.44.23
-        (version=SSLv3 cipher=OTHER);
-        Mon, 14 Apr 2008 20:44:24 -0700 (PDT)
+	id S1751021AbYDOEOX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Apr 2008 00:14:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750948AbYDOEOX
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Apr 2008 00:14:23 -0400
+Received: from smtp1-g19.free.fr ([212.27.42.27]:37787 "EHLO smtp1-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750819AbYDOEOW convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 15 Apr 2008 00:14:22 -0400
+Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 84FBE1AB2B5;
+	Tue, 15 Apr 2008 06:14:18 +0200 (CEST)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 61DC61AB2B2;
+	Tue, 15 Apr 2008 06:14:18 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <7vskxqe0db.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
-In-Reply-To: <48039FE5.5060309@broadpark.no>
-User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79564>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79565>
 
-On Mon, Apr 14, 2008 at 08:18:13PM +0200, Joachim Berdal Haga wrote:
-> I think that the best option would be to never remove a directory, even if
-> given explicitly, unless -d is given. Because my gut feeling is that when a
-> directory name is specified, it is most often meant as "clean inside the
-> given directory", ie. as a path delimiter. Indeed, if the directory has
-> tracked files inside of it,
->   git clean dir
-> and
->   git clean dir/
-> have the same effect. If there are no tracked files inside, the current
-> patch gives the path-delimiting effect on this form
->   git clean dir/
-> but removes the whole directory irrespective of "-d" for this form
->   git clean dir
-> I think that a "honor (lack of) -d even if pathspec matches" would reduce
-> the consequences of this particular kind of user error (by deleting too
-> little instead of too much).
+Le dimanche 13 avril 2008, Junio C Hamano a =C3=A9crit :
+> Christian Couder <chriscool@tuxfamily.org> writes:
+> > Le mardi 8 avril 2008, Stephan Beyer a =C3=A9crit :
+> >> Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
+> >> ---
+> >> Hi,
+> >>
+> >> a simple `Janitor patch'.
+> >
+> > Thanks.
+> > ...
+> > Tested-by: Christian Couder <chriscool@tuxfamily.org>
+> >
+> > Junio, please apply.
+>
+> Hmmmm.
+>
+> $ git grep -A1 config_error_nonbool | grep -B1 '^[^ ]*-.* =3D xstrdup=
+'
+>
+> shows these 13:
 
-If there are no tracked files the only difference between the dir/ and
-dir case is that the former will leave behind an empty directory.  So
-the difference between too much and too little is of little
-importance.  However,
+Yes, there are many potential places.
 
-git clean dir
-Would not remove dir/
+> Among these, obviously the one in config.c cannot be replaced (it is =
+the
+> implementation of git_config_string() itself ;-), and the one in remo=
+te.c
+> has a different pattern (it does not return immediately after that, b=
+ut
+> everything else can be mechanically replaced.
 
-is a little strange.
+I think that each case should be looked at closely. But as it's not ver=
+y=20
+difficult either in many cases, I think it's a good thing to let newbie=
+s=20
+try their skills at it. That's why I set up the Janitor page on the wik=
+i:
 
---
-Shawn
+http://git.or.cz/gitwiki/Janitor
+
+describing this task.
+
+>
+> diff --git a/alias.c b/alias.c
+> index 116cac8..1513681 100644
+> --- a/alias.c
+> +++ b/alias.c
+> @@ -4,12 +4,8 @@ static const char *alias_key;
+>  static char *alias_val;
+>  static int alias_lookup_cb(const char *k, const char *v)
+>  {
+> -	if (!prefixcmp(k, "alias.") && !strcmp(k+6, alias_key)) {
+> -		if (!v)
+> -			return config_error_nonbool(k);
+> -		alias_val =3D xstrdup(v);
+> -		return 0;
+> -	}
+> +	if (!prefixcmp(k, "alias.") && !strcmp(k+6, alias_key))
+> +		return git_config_string((const char **)&alias_val, k, v);
+>  	return 0;
+>  }
+
+That's also the patch that Stephan sent to the list before, see:
+
+http://thread.gmane.org/gmane.comp.version-control.git/78845
+
+And I told him that casting to (const char **) was ugly, and it was bet=
+ter=20
+to leave this file as it is.
+
+> diff --git a/builtin-apply.c b/builtin-apply.c
+> index abe73a0..c8ca41b 100644
+> --- a/builtin-apply.c
+> +++ b/builtin-apply.c
+> @@ -2981,12 +2981,8 @@ static int apply_patch(int fd, const char
+> *filename, int inaccurate_eof)
+>
+>  static int git_apply_config(const char *var, const char *value)
+>  {
+> -	if (!strcmp(var, "apply.whitespace")) {
+> -		if (!value)
+> -			return config_error_nonbool(var);
+> -		apply_default_whitespace =3D xstrdup(value);
+> -		return 0;
+> -	}
+> +	if (!strcmp(var, "apply.whitespace"))
+> +		return git_config_string(&apply_default_whitespace, var, value);
+>  	return git_default_config(var, value);
+>  }
+
+That's the next patch Stephan sent, and it is indeed good, so please ap=
+ply=20
+Stephan's. Thanks.
+
+About other files, I don't care much. That's also why I left it to Jani=
+tors.
+
+If I see that you fixed everything I will just remove the Janitor page =
+on=20
+the wiki.
+
+Regards,
+Christian.
