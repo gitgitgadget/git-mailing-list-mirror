@@ -1,81 +1,84 @@
-From: "Stephen Sinclair" <radarsat1@gmail.com>
-Subject: Re: branch description
-Date: Tue, 15 Apr 2008 16:53:47 -0400
-Message-ID: <9b3e2dc20804151353p2622ab19i2a04f5da9a6417ca@mail.gmail.com>
-References: <9b3e2dc20804150951scf8b3c7x26f3a56eab1f9840@mail.gmail.com>
-	 <f9d2a5e10804151031o1d09c1f9od0ad78dcf9b746c5@mail.gmail.com>
-	 <C55CA6EB-D427-4CF5-923E-DE0071D2F870@silverinsanity.com>
-	 <7vej97x78v.fsf@gitster.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [GIT PULL] sh updates for 2.6.25
+Date: Tue, 15 Apr 2008 11:43:24 -0700 (PDT)
+Message-ID: <m3ej97rmc0.fsf@localhost.localdomain>
+References: <20080415172333.GA29489@linux-sh.org>
+	<alpine.LFD.1.00.0804151048060.2879@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Brian Gernhardt" <benji@silverinsanity.com>,
-	"Russ Dill" <russ.dill@gmail.com>, git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 15 22:56:41 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue Apr 15 23:02:28 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JlsAk-0002Uo-9l
-	for gcvg-git-2@gmane.org; Tue, 15 Apr 2008 22:54:34 +0200
+	id 1JlsH2-0004IO-VD
+	for gcvg-git-2@gmane.org; Tue, 15 Apr 2008 23:01:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755168AbYDOUxu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Apr 2008 16:53:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753672AbYDOUxu
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Apr 2008 16:53:50 -0400
-Received: from rv-out-0708.google.com ([209.85.198.249]:17732 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752897AbYDOUxt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Apr 2008 16:53:49 -0400
-Received: by rv-out-0506.google.com with SMTP id k29so964557rvb.1
-        for <git@vger.kernel.org>; Tue, 15 Apr 2008 13:53:47 -0700 (PDT)
+	id S1754214AbYDOVAQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Apr 2008 17:00:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752421AbYDOVAQ
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Apr 2008 17:00:16 -0400
+Received: from nf-out-0910.google.com ([64.233.182.186]:63950 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751297AbYDOVAN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Apr 2008 17:00:13 -0400
+Received: by nf-out-0910.google.com with SMTP id g13so629382nfb.21
+        for <git@vger.kernel.org>; Tue, 15 Apr 2008 14:00:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=1Dp9Iv+ZlIhD5UDDcKBYfshurMdvFSv4c3AWu+WFsMw=;
-        b=dw1QW48awGB+7UtAqSRld+9EiQ/sA6VEXiNB/DQNMshqJUtDGFjvXSx6KFKTd8jdvT0jU2ZlSqxr6pZLyxHXmsIHFNDShoXVtGd7boX3+i+Ww+glfGK4+z77+U/cXhOp16Fv4XqP1rTNOsTNIBbf7KNh1b70urqUzBAU1FbTVVs=
+        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
+        bh=NVdPq7MhAqov0CQBPp87YpXDtktEkFWujYseny7AKBk=;
+        b=Q/+Qj0rJpPNQK1sVA01nQwcNs3yThPFECiT65nTnNlhYcmn+gWTTYKx9EpJNRaQ/BV3g6sXSnVb63RvcDsZ8AUNkR96oDqdcyxFvoa/FNkLv1d4VyJAbJCGjBMk72p8CabaZnnIEe+Bvs3xK8lniV3tjSBK21kboOzfootuwDXc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=whIxDqRIMw3y47/4xfzE+7TrEkBr8Dh2jN0RWdulJFR0XADlssAWqDqZhtqfeg9YfLhoShJFmlumDzNBI8v892kIoyNYmJTPGMjmNYZPzCgyMG9XSSH54bM0ZR+1ohNfse7fMtFYi++yJlu5fM2UeSikJTnSpfuh1ciDqyiyaZ0=
-Received: by 10.140.248.17 with SMTP id v17mr4615234rvh.9.1208292827047;
-        Tue, 15 Apr 2008 13:53:47 -0700 (PDT)
-Received: by 10.141.66.3 with HTTP; Tue, 15 Apr 2008 13:53:47 -0700 (PDT)
-In-Reply-To: <7vej97x78v.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
+        b=t0wwl7Qop0Lc08FZSR4ILudyERVRfhnlAyC5JlcLQBOwezLrc5+OhXp4ber5Iu7jfr80W0yCFhiafwWvsfN5C/J7tBQgbVTlWfAnKDBQa0LBRZf+Hxn5XSqRLJEcLuru6bYJlE8y8E2bKI1JKcNtshCsL3Xs/MtwBOlcQQoVVtM=
+Received: by 10.78.132.2 with SMTP id f2mr59942hud.19.1208285006132;
+        Tue, 15 Apr 2008 11:43:26 -0700 (PDT)
+Received: from localhost.localdomain ( [83.8.244.53])
+        by mx.google.com with ESMTPS id v33sm3057702hub.60.2008.04.15.11.43.23
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 15 Apr 2008 11:43:24 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m3FIhJOJ021484;
+	Tue, 15 Apr 2008 20:43:19 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m3FIgt9f021478;
+	Tue, 15 Apr 2008 20:42:55 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <alpine.LFD.1.00.0804151048060.2879@woody.linux-foundation.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79627>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79628>
 
-On Tue, Apr 15, 2008 at 3:12 PM, Junio C Hamano <gitster@pobox.com> wrote:
->
->  Not complicated at all.  Put that description in-tree in a known location
->  (say, "help-branch") in-tree and your propagation problem is solved.
->
->  And have a scriptlet in $HOME/bin/git-help-branch to grep from that file.
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-Hm, I wasn't sure if an in-tree solution would be appropriate.
-It's possible, but I didn't really want this branch description to be
-something I have to deal with when merging..
-Ideally though this information _should_ be propagated through a
-clone, so something in-tree might make sense.
+> Paul, your git tree is odd. Not quite corrupt, but it doesn't really 
+> follow the rules either.
+> 
+> In particular, it has empty lines at the top of those commits, and I 
+> wonder how you created them. 
 
-When I posted I thought perhaps there was already a way to do this
-that I hadn't encountered.
-Perhaps there could be an in-tree file .gitbranch that is simply a
-name:description pair, "git-branch --info" (or whatever) could be made
-to know how to parse that file if it exists.
+> The reason I noticed is that it screws up the git merge summary, which 
+> will take the first line of each commit it merges (_without_ the "skip 
+> empty lines" logic) to generate the summary of the merge.
+> 
+> I think we should fix that git merge summary code to allow for this bad 
+> behaviour, but I also want to know why such corrupt commits exist in the 
+> first place. What toolchain do you use to create that commit? We should 
+> fix that too!
 
-However I was hoping that the branch description could be made when
-creating the branch, instead of having to associate it with an actual
-commit.
+I seem to remember (but I might be mistaken) that this issue was
+corrected by some patch on git mailing list already...
 
-I don't know, I'll give it some thought and try to come up with a more
-concrete proposal.
-
-
-Steve
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
