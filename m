@@ -1,94 +1,60 @@
-From: "nathan bullock" <nathanbullock@gmail.com>
-Subject: Splitting code between files and then merging
-Date: Mon, 14 Apr 2008 19:22:34 -0600
-Message-ID: <916b88c10804141822m45588ae9x7492867b749cc53c@mail.gmail.com>
+From: Heikki Orsila <shdl@zakalwe.fi>
+Subject: Re: [PATCH] Make core.sharedRepository more generic (version 2)
+Date: Tue, 15 Apr 2008 04:22:49 +0300
+Message-ID: <20080415012249.GJ31039@zakalwe.fi>
+References: <20080412195754.GA15091@zakalwe.fi> <7v3apo7zfg.fsf@gitster.siamese.dyndns.org> <20080415004310.GI31039@zakalwe.fi>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
+Content-Type: text/plain; charset=iso-8859-1
+Cc: Heikki Orsila <heikki.orsila@iki.fi>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
 X-From: git-owner@vger.kernel.org Tue Apr 15 03:24:04 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JlZtv-0005vQ-R0
+	id 1JlZtw-0005vQ-FQ
 	for gcvg-git-2@gmane.org; Tue, 15 Apr 2008 03:24:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755855AbYDOBWr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Apr 2008 21:22:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756043AbYDOBWq
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Apr 2008 21:22:46 -0400
-Received: from yw-out-2324.google.com ([74.125.46.30]:56894 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755763AbYDOBWq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Apr 2008 21:22:46 -0400
-Received: by yw-out-2324.google.com with SMTP id 5so849521ywb.1
-        for <git@vger.kernel.org>; Mon, 14 Apr 2008 18:22:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=QL2Wahd4m9Z70DKGVjhfbaSEQ8J8ID2wHo/MOcA3uos=;
-        b=SvPGHRo2wgFhfjXILI/k8Nbdy9sQgdHrKFtm7ViI9zn6htvHTck1jhILFpmCjIyt49MEMlIqGLlnE8E0FdPiQrmgAuPcuUqgwlYaOW6E2CNoCXDwUqn5YF4VsFsbLgb+hI/7TtApxbUnwm7Lo+qiz0vKsq3TmwJtbfZXBPsq200=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=JVvCgFS/7Zt0joVBq5TJTxrTMreenbf84TohD4ipM2uU9pIJC1C5KgXLjGmr7onfYk3Uw0Rr6cVWUt6vdx7VfZASlgDnhLGlJfHNyIsxWD6euKdHU6yv+HBCW1TKNcaP03HoWrPPyVtGNdwSp8yeNCO/WK9kUZV8+rwrHPhAOdg=
-Received: by 10.150.123.16 with SMTP id v16mr7038911ybc.76.1208222554946;
-        Mon, 14 Apr 2008 18:22:34 -0700 (PDT)
-Received: by 10.150.149.3 with HTTP; Mon, 14 Apr 2008 18:22:34 -0700 (PDT)
+	id S1757159AbYDOBWv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Apr 2008 21:22:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757128AbYDOBWv
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Apr 2008 21:22:51 -0400
+Received: from zakalwe.fi ([80.83.5.154]:45508 "EHLO zakalwe.fi"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756612AbYDOBWv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Apr 2008 21:22:51 -0400
+Received: by zakalwe.fi (Postfix, from userid 1023)
+	id EBEE32C331; Tue, 15 Apr 2008 04:22:49 +0300 (EEST)
 Content-Disposition: inline
+In-Reply-To: <20080415004310.GI31039@zakalwe.fi>
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79553>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79554>
 
-I have been playing around with various merge situations and things
-don't seem to be working quite as I expected.
+On Tue, Apr 15, 2008 at 03:43:10AM +0300, Heikki Orsila wrote:
+> On Mon, Apr 14, 2008 at 05:08:03PM -0700, Junio C Hamano wrote:
+> > > +		 * of git. Note, we use octal numbers.
+> > >  		 */
+> > > -		sprintf(buf, "%d", shared_repository);
+> > > +		sprintf(buf, "0%o", shared_repository);
+> > 
+> > Unconditionally doing this makes the resulting repository unusable by git
+> > 1.5.5 and older, even when the user wanted to use the bog standard "git
+> > init --shared".  You can limit the extent of damage if you continue
+> > writing PERM_GROUP and PERM_EVERYBODY out as 1 and 2, and use the new
+> > octal notation only when the user used the settings allowed only with new
+> > git.
+> 
+> I submitted a new patch that should address all the points.
 
-If I have a repository with a file such as:
+Submitted another version that really fixes the o+w case. Forgot 
+the 0664 mask there. Now it's 0666.
 
-### file abc ###
-void
-foo(){
-  int x;
-  func(x);
-}
-
-void
-moo(){
-  int y;
-  func(y);
-}
-
-And then clone that repo and in my clone I edit things so that I have two files:
-
-### file abc ###
-void
-foo(){
-  int x;
-  func(x);
-}
-
-### file bcd ###
-void
-moo(){
-  int y;
-  func(y);
-}
-
-I commit this.
-
-Then I do a git blame -C -C6 bcd
-(If I make these functions larger I can get away with just a single -C)
-
-It seems to be able to determine that all of the lines in both files
-originated from the file abc.
-
-Now the problem is that if I make a change to the function moo in the
-file abc in the original repo and the try to pull it into the second
-repo I always get merge conflicts. Is this expected? Do any of the
-various merge algorithms in git handle these situations?
-
-Nathan Bullock
+-- 
+Heikki Orsila
+heikki.orsila@iki.fi
+http://www.iki.fi/shd
