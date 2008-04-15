@@ -1,84 +1,103 @@
-From: Paul Mundt <lethal@linux-sh.org>
-Subject: Re: [GIT PULL] sh updates for 2.6.25
-Date: Wed, 16 Apr 2008 03:30:23 +0900
-Message-ID: <20080415183023.GA23098@linux-sh.org>
-References: <20080415172333.GA29489@linux-sh.org> <alpine.LFD.1.00.0804151048060.2879@woody.linux-foundation.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: branch description
+Date: Tue, 15 Apr 2008 11:36:40 -0700 (PDT)
+Message-ID: <m3iqyjrmmk.fsf@localhost.localdomain>
+References: <9b3e2dc20804150951scf8b3c7x26f3a56eab1f9840@mail.gmail.com>
+	<f9d2a5e10804151031o1d09c1f9od0ad78dcf9b746c5@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: linux-sh@vger.kernel.org, Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: linux-sh-owner@vger.kernel.org Tue Apr 15 20:38:53 2008
+Cc: "Stephen Sinclair" <radarsat1@gmail.com>, git@vger.kernel.org
+To: "Russ Dill" <russ.dill@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 15 20:39:38 2008
 connect(): Connection refused
-Return-path: <linux-sh-owner@vger.kernel.org>
-Envelope-to: glps-linuxsh-dev@gmane.org
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JlpwZ-0005E5-8z
-	for glps-linuxsh-dev@gmane.org; Tue, 15 Apr 2008 20:31:47 +0200
+	id 1Jlq2X-0006z5-LR
+	for gcvg-git-2@gmane.org; Tue, 15 Apr 2008 20:37:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751842AbYDOSbG (ORCPT <rfc822;glps-linuxsh-dev@m.gmane.org>);
-	Tue, 15 Apr 2008 14:31:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752658AbYDOSbF
-	(ORCPT <rfc822;linux-sh-outgoing>); Tue, 15 Apr 2008 14:31:05 -0400
-Received: from mta23.gyao.ne.jp ([125.63.38.249]:35434 "EHLO mx.gate01.com"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751842AbYDOSbE (ORCPT <rfc822;linux-sh@vger.kernel.org>);
-	Tue, 15 Apr 2008 14:31:04 -0400
-Received: from [124.34.33.190] (helo=master.linux-sh.org)
-	by smtp31.isp.us-com.jp with esmtp (Mail 4.41)
-	id 1Jlpvj-0001Bn-CV; Wed, 16 Apr 2008 03:30:55 +0900
-Received: from localhost (unknown [127.0.0.1])
-	by master.linux-sh.org (Postfix) with ESMTP id 2626963754;
-	Tue, 15 Apr 2008 18:30:24 +0000 (UTC)
-X-Virus-Scanned: amavisd-new at linux-sh.org
-Received: from master.linux-sh.org ([127.0.0.1])
-	by localhost (master.linux-sh.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id qaIYUg168s2R; Wed, 16 Apr 2008 03:30:23 +0900 (JST)
-Received: by master.linux-sh.org (Postfix, from userid 500)
-	id 9C3B663758; Wed, 16 Apr 2008 03:30:23 +0900 (JST)
-Mail-Followup-To: Paul Mundt <lethal@linux-sh.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	linux-sh@vger.kernel.org, Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.1.00.0804151048060.2879@woody.linux-foundation.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-Sender: linux-sh-owner@vger.kernel.org
+	id S1753361AbYDOSgp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Apr 2008 14:36:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752684AbYDOSgp
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Apr 2008 14:36:45 -0400
+Received: from nf-out-0910.google.com ([64.233.182.190]:29451 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752518AbYDOSgo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Apr 2008 14:36:44 -0400
+Received: by nf-out-0910.google.com with SMTP id g13so596144nfb.21
+        for <git@vger.kernel.org>; Tue, 15 Apr 2008 11:36:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
+        bh=fQF9t7842K3uzd6R3QX/3ZCoK9ueuI2IfUMGmQ3NPEQ=;
+        b=mTSDSmYv9b2ZDrT2bPFb9thIryLcgriKtRtSFlHG1uSc34F5WQO62hsxOe4vVjE+QKDYqM6oHAOIMN9HBJBHNhpIzCyTOCmbfs43a4lkxxC2hU8h6Q3LKcbIvKJt6ra5ZqgQbciMyYfpOu1evNWXoEQUW6en9qnfG4Q7qxDswXE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
+        b=NNief8iSXQ/nY3tetGHP1pveK3/QFSZMzkbPxb+xcjTWIGe8tsnSfqJEmI65haEiJx+kSYAODu2sWK8GP4IrMVMwuGWg6dzNN+8aalZTZ8mrznkJC4QqDn8ed2Uo/GV50G/XpcM7nAMBImlwvax9MLtQ/gocrfNA+Q5mDEui08o=
+Received: by 10.78.142.3 with SMTP id p3mr4801816hud.81.1208284602510;
+        Tue, 15 Apr 2008 11:36:42 -0700 (PDT)
+Received: from localhost.localdomain ( [83.8.244.53])
+        by mx.google.com with ESMTPS id s37sm3047251hub.58.2008.04.15.11.36.39
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 15 Apr 2008 11:36:40 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m3FIacKw021438;
+	Tue, 15 Apr 2008 20:36:38 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m3FIaa4R021435;
+	Tue, 15 Apr 2008 20:36:36 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <f9d2a5e10804151031o1d09c1f9od0ad78dcf9b746c5@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-sh.vger.kernel.org>
-X-Mailing-List: linux-sh@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79617>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79618>
 
-On Tue, Apr 15, 2008 at 11:01:36AM -0700, Linus Torvalds wrote:
-> On Wed, 16 Apr 2008, Paul Mundt wrote:
-> >
-> > Please pull from:
-> > 
-> > 	git://git.kernel.org/pub/scm/linux/kernel/git/lethal/sh-2.6.25.git
-> 
-> Paul, your git tree is odd. Not quite corrupt, but it doesn't really 
-> follow the rules either.
-> 
-> In particular, it has empty lines at the top of those commits, and I 
-> wonder how you created them. 
-> 
-> Doing things like "git log" will ignore the spurious empty lines, but they 
-> can be seen with things like "git cat-file", eg
-> 
-> 	git cat-file commit fd785d6b18b930b76ad5076eed6e9af43195b281 
-> 
-> and I wonder if you used a buggy version of git, or whether you perhaps 
-> have some scripts that import these commits from the outside and uses some 
-> low-level commands that can generate these kinds of subtly bogus commits.
+"Russ Dill" <russ.dill@gmail.com> writes:
 
-It was a combination of mbox munging and git-am, I checked with git log
-and thought things were ok, but I wasn't aware that it stripped out empty
-lines. cat-file shows that it was just the 2 patches from Andrew that had
-this particular problem. I had stripped out the subject and thought the
-first line would be used for the merge summary, but it looks like git-am
-simply wrote out an empty line and inserted one after that before the
-rest of the summary.
+>>  I find it useful to use fairly short names for branches.  However,
+>>  sometimes I would like to have a full sentence to actually describe
+>>  what the branch is for, without having the peruse the actual commits.
+> 
+> Me too.
+> 
+>>  This information could of course be kept on a web page, but it would
+>>  be nice to have it in the repo.
+> 
+> Like, putting your bug number in the branch name.
+> 
+>>  Is there any such branch annotation command?
+>>  Ideally I'd like to see a sentence displayed next to the branch name
+>>  when I use "git-branch".
+>>  Perhaps, git-branch --info or something.
+> 
+> The problem is that a branch is just a floating name for a line of
+> development. Its not really a "thing" in the repository like a tag or
+> a commit. You'd need to make some sort of special tag that describes
+> the branch or somesuch.
 
-I've pushed out updated patches that have this corrected, so please pull
-again.
+Errr... not exactly.  It is true that refs such like branches reside
+outside object database[1], and that names of refs are purely local
+matter (see old master -> origin mapping, and new refs/heads/* ->
+refs/remotes/<remote>/* mapping).  But you can examine list of
+branches in remote repository using e.g. git-ls-remote or its
+equivalent in the git API.
+
+So I think better solution would be to add this info somewhere outside
+object database, for example in repository config (assuming that not
+all branches would have description) as it already stores branch
+related information, _and_ enhance commands to make use of this info,
+not only git-branch, but also git-for-each-ref, git-show-refs and
+git-ls-remote (and its equivalents).
+
+Footnotes:
+==========
+[1] And have to be, Mercurial misdesign nothwithstanding
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
