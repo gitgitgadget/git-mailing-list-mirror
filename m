@@ -1,141 +1,80 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 2/2] bisect: warn if given dubious tag or branch as rev
-Date: Tue, 15 Apr 2008 09:05:14 +0200
-Message-ID: <200804150905.15053.chriscool@tuxfamily.org>
-References: <20080414054151.52e55e7f.chriscool@tuxfamily.org> <7vabjw810v.fsf@gitster.siamese.dyndns.org>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: RFC: Website redesign
+Date: Tue, 15 Apr 2008 11:08:32 +0400
+Message-ID: <20080415070832.GC10300@dpotapov.dyndns.org>
+References: <3175605f-ff32-4fd6-bed3-7ae596ecbcde@q1g2000prf.googlegroups.com> <2c6b72b30804140656g14c24d8cwae016d62fe12f4a7@mail.gmail.com> <56e37551-4b8f-4164-a71d-79dba8635b7d@l28g2000prd.googlegroups.com> <96F7571C-1D9D-4F0A-99F1-A2307DAB0374@wincent.com> <bd6139dc0804141129h25c829e2i320f227594763d71@mail.gmail.com> <pan.2008.04.14.20.39.10@progsoc.org> <20080414213339.GB10300@dpotapov.dyndns.org> <pan.2008.04.15.03.25.00@progsoc.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Ingo Molnar <mingo@elte.hu>, git@vger.kernel.org
-To: Junio C Hamano <junio@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 15 09:00:53 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Anand Kumria <wildfire@progsoc.org>
+X-From: git-owner@vger.kernel.org Tue Apr 15 09:09:37 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jlf9w-0008Ax-D5
-	for gcvg-git-2@gmane.org; Tue, 15 Apr 2008 09:00:52 +0200
+	id 1JlfIG-0002Qa-T4
+	for gcvg-git-2@gmane.org; Tue, 15 Apr 2008 09:09:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752651AbYDOHAD convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Apr 2008 03:00:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752480AbYDOHAD
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Apr 2008 03:00:03 -0400
-Received: from smtp1-g19.free.fr ([212.27.42.27]:59435 "EHLO smtp1-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752150AbYDOHAA convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 15 Apr 2008 03:00:00 -0400
-Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 4D19F1AB2F2;
-	Tue, 15 Apr 2008 08:59:59 +0200 (CEST)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 097731AB2CE;
-	Tue, 15 Apr 2008 08:59:58 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <7vabjw810v.fsf@gitster.siamese.dyndns.org>
+	id S1755763AbYDOHIj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Apr 2008 03:08:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755392AbYDOHIj
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Apr 2008 03:08:39 -0400
+Received: from mu-out-0910.google.com ([209.85.134.187]:58681 "EHLO
+	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754641AbYDOHIi (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Apr 2008 03:08:38 -0400
+Received: by mu-out-0910.google.com with SMTP id w8so1120950mue.1
+        for <git@vger.kernel.org>; Tue, 15 Apr 2008 00:08:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
+        bh=CUJWjeOS/OHAATD2DbcZ/6bPMfttpWEd8YkJWexvtbI=;
+        b=C6zwPF5VlZMEUfasyl1H4CxSEGC2c9NX2fAiqI7JVAsytBgQ//MDDBiUaWbFlfOB4xOAjQuwj34Jh+OaR+MYRzxjjVrU54xzfIK2bskX4wq8OQ1Yu0wJ7Pnj9qp59AuJxOIlvSxR6haXD98xI1Uq1hmWWWXwtbdTsonPApcQmw8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
+        b=LBx+6yLwzVqXEYVqDfFPZOh7trvuq/e8/oaHY30CEjWby2QjbNyqCb2l2Qt+VOe3bvOicju1v1eujURTVdOuvio5uQyv4Ns9LOokYC+o62bS9fWLRvf0tM8RZ0UO7w/rik45AN9CsU3CF2cDdkhH4UTsdv+GICVNer8SWbZpk1Y=
+Received: by 10.78.29.6 with SMTP id c6mr5201792huc.48.1208243316642;
+        Tue, 15 Apr 2008 00:08:36 -0700 (PDT)
+Received: from localhost ( [83.237.185.245])
+        by mx.google.com with ESMTPS id k10sm10841131nfh.17.2008.04.15.00.08.34
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 15 Apr 2008 00:08:35 -0700 (PDT)
 Content-Disposition: inline
+In-Reply-To: <pan.2008.04.15.03.25.00@progsoc.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79572>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79573>
 
-Le mardi 15 avril 2008, Junio C Hamano a =E9crit :
-> Christian Couder <chriscool@tuxfamily.org> writes:
-> > This patch refactors rev parsing code in a new "bisect_parse_rev"
-> > function, and adds warnings in case a rev with a name that is the
-> > same as one of the bisect subcommands is given where a revision
-> > is expected.
-> >
-> > Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-> > ---
-> >  git-bisect.sh               |   47
-> > ++++++++++++++++++++++++++++++------------ t/t6030-bisect-porcelain=
-=2Esh
-> > |   21 +++++++++++++++++++
-> >  2 files changed, 54 insertions(+), 14 deletions(-)
-> >
-> > diff --git a/git-bisect.sh b/git-bisect.sh
-> > index 6b43461..a090b97 100755
-> > --- a/git-bisect.sh
-> > +++ b/git-bisect.sh
-> > @@ -61,6 +61,31 @@ bisect_autostart() {
-> >  	}
-> >  }
-> >
-> > +bisect_parse_rev() {
-> > +	rev=3D"$1"
-> > +	dont_die_on_wrong_rev=3D"$2"
-> > +	name=3D"$rev^{commit}"
-> > +	dubious_rev_name=3D''
-> > +
-> > +	case "$rev" in
-> > +	HEAD)
-> > +		name=3D'HEAD' ;;
-> > +	help|start|bad|good|skip|next|reset|visualize|replay|log|run)
-> > +		dubious_rev_name=3D'yes' ;;
-> > +	esac
->
-> I see you listed all the subcommand names here but I somehow doubt th=
-is
-> is sensible.
->
-> The "bisect good $foo bad $bar" example from Ingo's transcript may
-> suggest that good/bad may incorrectly appear by copying and pasting f=
-rom
-> an incorrect how-to guide,
+On Tue, Apr 15, 2008 at 03:24:50AM +0000, Anand Kumria wrote:
+> On Tue, 15 Apr 2008 01:33:39 +0400, Dmitry Potapov wrote:
+> 
+> > On Mon, Apr 14, 2008 at 08:39:00PM +0000, Anand Kumria wrote:
+> >> 
+> >> That is basically the current "Web 2.0 style".
+> >> 
+> >> <http://www.webdesignfromscratch.com/current-style.cfm>
+> >> 
+> >> One of the "hotties" is a software project, and Free Software at that.
+> >> 
+> >> I think the designs are a good first starting point.
+> > 
+> > And here is what validator.w3.org says about this page:
+> 
+> I'm sure you had some useful information to add, but it hasn't come 
+> across. 
 
-Yes, and there are also some "git bisect start good $foo bad $bar" in h=
-is=20
-transcript. So perhaps we should warn only on "bad" good" and maybe "sk=
-ip".
+I would never call a page with more than 83 problems as a good starting
+point, but I am sure for someone who alleges to make the best web
+design, it should not be too difficult to correct that.
 
-> but on the other hand "bisect bad log" to mark=20
-> the tip of the "log" branch (or "replay or any other common words) to=
- see
-> where in the development trail on that branch things got broken is a
-> perfectly valid and plausible thing to do.  Also when you happen to h=
-ave
-> found something broken while you are working on a more important issu=
-e,
-> you may tentatively do "git tag bad $it", and keep working on that
-> important issue, only to come back later and use that lightweight tag=
- to
-> feed "git bisect" with.  In either use case, "you named your ref the =
-same
-> as bisect subcommand name, bad boy" is an unnecessary noise.
+BTW, "Web 2.0" does not refer to any specific visual design but implies
+semantically valid XHTML and HTML markup among other things.  So, I am
+not quite sure what you meant by saying "Web 2.0 style".
 
-I think Ingo uses git and git bisect very often, and still he made mist=
-akes=20
-that could have resulted in unwanted behavior with nothing to help=20
-understand what happened, if he had tags or branches named "good" or "b=
-ad".
 
-So it's not for "bad boys" or forcing good naming, but really preventin=
-g=20
-mistakes.
-
-In bisect_autostart we also have:
-
-		echo >&2 'You need to start by "git bisect start"'
-		if test -t 0
-		then
-			echo >&2 -n 'Do you want me to do it for you [Y/n]? '
-			read yesno
-			case "$yesno" in
-			[Nn]*)
-				exit ;;
-			esac
-			bisect_start
-		else
-			exit 1
-		fi
-
-to make sure that the users know what happens, and help them do what th=
-ey=20
-want. If you prefer I can add something like the above to make sure tha=
-t=20
-the user knows what he is doing.
-
-Thanks,
-Christian.
+Dmitry
