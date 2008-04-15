@@ -1,70 +1,58 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Make core.sharedRepository more generic (version 4)
-Date: Tue, 15 Apr 2008 12:03:35 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0804151202560.9665@racer>
-References: <20080415012156.GA13594@zakalwe.fi>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: Bug in StackedGit
+Date: Tue, 15 Apr 2008 12:13:27 +0100
+Message-ID: <b0943d9e0804150413h5268532ey2f2ee33fca1be783@mail.gmail.com>
+References: <6efe08af0804150301t9f4a1dbte564902736ebc302@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Heikki Orsila <heikki.orsila@iki.fi>
-X-From: git-owner@vger.kernel.org Tue Apr 15 13:04:55 2008
+To: "Vitaly V. Ch" <vitaly.v.ch@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 15 13:14:18 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jlixe-0003uA-SP
-	for gcvg-git-2@gmane.org; Tue, 15 Apr 2008 13:04:27 +0200
+	id 1Jlj78-00073S-5n
+	for gcvg-git-2@gmane.org; Tue, 15 Apr 2008 13:14:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755575AbYDOLDj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Apr 2008 07:03:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755512AbYDOLDj
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Apr 2008 07:03:39 -0400
-Received: from mail.gmx.net ([213.165.64.20]:38355 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755225AbYDOLDi (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Apr 2008 07:03:38 -0400
-Received: (qmail invoked by alias); 15 Apr 2008 11:03:37 -0000
-Received: from unknown (EHLO racer.local) [138.251.11.74]
-  by mail.gmx.net (mp018) with SMTP; 15 Apr 2008 13:03:37 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+YbpEWvGuYiimb7suFc92QeZUBc46lqSRaZuAvZ9
-	bUUaRnbDwvBZSP
-X-X-Sender: gene099@racer
-In-Reply-To: <20080415012156.GA13594@zakalwe.fi>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1756119AbYDOLN2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Apr 2008 07:13:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756107AbYDOLN2
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Apr 2008 07:13:28 -0400
+Received: from wf-out-1314.google.com ([209.85.200.172]:53672 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755965AbYDOLN1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Apr 2008 07:13:27 -0400
+Received: by wf-out-1314.google.com with SMTP id 28so1919578wff.4
+        for <git@vger.kernel.org>; Tue, 15 Apr 2008 04:13:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=8XvbhiNUVmb8fMRHsbVV3wufazLZDzdF4mXFHJ0bSG0=;
+        b=jixBOeHwwg3smEaZanlAVvLhRmITno5dtLGnsrwi5tSjTABUO0JBHQ3LULKsE/qs9urPLE5F+7fGFoWRAioSit3xqQnR3hkcYzBCOWuFMSU2zHALQMSJlhimBY2q/Sji+bnoq2Fr0qTjiL5xHWNi8JtIjb4l62O9Cws9NjKj/+k=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=d6pvRzPogwbqX9MeJMcyS8/x51nefj+od5wuwiHtWxGXsq7tyEIvYv7t8IWujP5oGyWjq+oeSuJ3aQVJQFUmVUrl59MvkUTERrgTlG/XSFskfaADoho3SDM2dfo7fN9KnBdVNwmfWu64I4BbRO0M2IaZI7ZE0V9oBEDfe67dQ1E=
+Received: by 10.143.9.20 with SMTP id m20mr1327316wfi.252.1208258007494;
+        Tue, 15 Apr 2008 04:13:27 -0700 (PDT)
+Received: by 10.142.125.9 with HTTP; Tue, 15 Apr 2008 04:13:27 -0700 (PDT)
+In-Reply-To: <6efe08af0804150301t9f4a1dbte564902736ebc302@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79583>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79584>
 
-Hi,
+On 15/04/2008, Vitaly V. Ch <vitaly.v.ch@gmail.com> wrote:
+> after stg commit all patch history is loss. It's sucks.
 
-On Tue, 15 Apr 2008, Heikki Orsila wrote:
+Why do you need the patch history after "stg commit"? This command is
+meant to take the patches out of StGIT control and freeze them in the
+Git repository history.
 
-> git init --shared=0xxx, where '0xxx' is an octal number, will create
-> a repository with file modes set to '0xxx'. Users with a safe umask
-> value (0077) can use this option to force file modes. For example,
-> '0640' is a group-readable but not group-writable regardless of
-> user's umask value.
-> 
-> "git config core.sharedRepository 0xxx" is also handled.
-> 
-> Version 2 handles the directory x flags better than version 1.
-> 
-> Version 3 removes a warning for the o+w case, fixes a compatibility
-> problem with older Git's, and corrects some style issues.
-> 
-> Version 4 really fixes the o+w case.
-> 
-> Signed-off-by: Heikki Orsila <heikki.orsila@iki.fi>
-> ---
-
-I still see "Version N" before the ---.  You should describe what this 
-patch does in a manner that makes sense when reading just the commit 
-history.
-
-Ciao,
-Dscho
+-- 
+Catalin
