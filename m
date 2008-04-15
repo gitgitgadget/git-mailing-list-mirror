@@ -1,74 +1,169 @@
-From: "Avery Pennarun" <apenwarr@gmail.com>
-Subject: Re: git-svn dcommit always uses my own name
-Date: Tue, 15 Apr 2008 18:35:32 -0400
-Message-ID: <32541b130804151535g56a8133dk863da833be87fb08@mail.gmail.com>
-References: <32541b130804151425o6cf7646co541fb7cc85115606@mail.gmail.com>
-	 <cac9e4380804151508p688bd7b7o1eb413b4133dad57@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: branch description
+Date: Tue, 15 Apr 2008 18:37:16 -0400
+Message-ID: <20080415223716.GA1891@sigill.intra.peff.net>
+References: <9b3e2dc20804150951scf8b3c7x26f3a56eab1f9840@mail.gmail.com> <f9d2a5e10804151031o1d09c1f9od0ad78dcf9b746c5@mail.gmail.com> <C55CA6EB-D427-4CF5-923E-DE0071D2F870@silverinsanity.com> <7vej97x78v.fsf@gitster.siamese.dyndns.org> <20080415191930.GC31395@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "git list" <git@vger.kernel.org>
-To: "Richard Quirk" <richard.quirk@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 16 00:36:20 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Brian Gernhardt <benji@silverinsanity.com>,
+	Russ Dill <russ.dill@gmail.com>,
+	Stephen Sinclair <radarsat1@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 16 00:38:41 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JltlE-0006Y8-7Z
-	for gcvg-git-2@gmane.org; Wed, 16 Apr 2008 00:36:20 +0200
+	id 1Jltmv-00070s-Df
+	for gcvg-git-2@gmane.org; Wed, 16 Apr 2008 00:38:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755721AbYDOWff (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Apr 2008 18:35:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755556AbYDOWff
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Apr 2008 18:35:35 -0400
-Received: from fk-out-0910.google.com ([209.85.128.191]:13104 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753404AbYDOWfe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Apr 2008 18:35:34 -0400
-Received: by fk-out-0910.google.com with SMTP id 19so2438241fkr.5
-        for <git@vger.kernel.org>; Tue, 15 Apr 2008 15:35:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=sPg2a0PhaOeM8oA6+6yIAd4EI+IZuN4VAS+sdPBQ/Rc=;
-        b=GgFpRxbSq1MNPg+Qlesr14P6uDzpUNS3jt4jWuy8/CYRtzlSsnkf1Aio3bJK4h51wUPNj2rXeMLxBtte0J5yV7dCVa9o1knzQd185P1eUVTTRSupyBjI+T8/GtrWTSZcUCG2zoMzyb8Xddl+cSgQly42k8+PNcrCYeap1fzunkA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=x/qUr2FM4vFSouRQRnENWdI0gtq7PbpsoMtVXF4G9pnIX3ZxYdeXzjvu5zDUJNMo+1vPwUbN/XNZjG3KQTkE8u/jpmPKn1PqPzFZeyVlQy28B48toEBjsqFKm94ShcDxwctVYxc60MxhCM2TvqRs8EqzblJ8OXYFuKQT4fVa8sI=
-Received: by 10.82.135.13 with SMTP id i13mr5676152bud.59.1208298932439;
-        Tue, 15 Apr 2008 15:35:32 -0700 (PDT)
-Received: by 10.82.166.12 with HTTP; Tue, 15 Apr 2008 15:35:32 -0700 (PDT)
-In-Reply-To: <cac9e4380804151508p688bd7b7o1eb413b4133dad57@mail.gmail.com>
+	id S1755761AbYDOWhU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Apr 2008 18:37:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756394AbYDOWhT
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Apr 2008 18:37:19 -0400
+Received: from [208.65.91.99] ([208.65.91.99]:1163 "EHLO peff.net"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1755655AbYDOWhS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Apr 2008 18:37:18 -0400
+Received: (qmail 21505 invoked by uid 111); 15 Apr 2008 22:37:17 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Tue, 15 Apr 2008 18:37:17 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 15 Apr 2008 18:37:16 -0400
 Content-Disposition: inline
+In-Reply-To: <20080415191930.GC31395@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79637>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79638>
 
-On 4/15/08, Richard Quirk <richard.quirk@gmail.com> wrote:
-> Subversion only remembers the user that made the commit; there's no
->  way to tell it that someone else wrote the patch and that you just
->  committed it. However, examining git-svn, there seems to be an
->  undocumented option. You can do this:
->
->  git svn dcommit --use-log-author
->
->  That uses the Signed-off-by: field in the commit message to extract
->  the author information. Of course it won't rescue the author field on
->  old commits, and you have to have Signed-off-by on any new ones to
->  gain any benefit.
+On Tue, Apr 15, 2008 at 03:19:30PM -0400, Jeff King wrote:
 
-Hmm, it looks like --use-log-author really affects git-svn fetch, not
-commit: in other words, it pulls the signed-off-by information from
-the svn repo when importing the commits back into git.
+> > Not complicated at all.  Put that description in-tree in a known location
+> > (say, "help-branch") in-tree and your propagation problem is solved.
+> >
+> > And have a scriptlet in $HOME/bin/git-help-branch to grep from that file.
+> 
+> It is perhaps a little slow if you want to do things like adding the
+> help text to branch name decorations in log output. Maybe instead of a
+> flat file, you could parallel the ref name hierarchy in a tree? I.e.,
 
-This is actually the clue I needed, which I think is: use
-signed-off-by lines in the first place, because that will solve my
-problem of tracking who wrote each patch :)
+It occurred to me that you actually meant "just stick it in a file in
+your actual work tree", not on a separate branch (for some reason,
+reading the name "help-branch" made me think you meant a ref).
 
-Have fun,
+So that is obviously the very simple solution. But for fun, and because
+maybe somebody could learn something, here is a script implementing my
+approach. I dunno if it is worth including in contrib.
 
-Avery
+-- >8 --
+contrib: add git-refinfo
+
+This is a cute hack to show one possible way of storing ref
+descriptions. It might be useful to somebody. It also serves
+as a relatively short and simple example of how to script
+git.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ contrib/examples/git-refinfo.sh |   87 +++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 87 insertions(+), 0 deletions(-)
+ create mode 100755 contrib/examples/git-refinfo.sh
+
+diff --git a/contrib/examples/git-refinfo.sh b/contrib/examples/git-refinfo.sh
+new file mode 100755
+index 0000000..b79a20f
+--- /dev/null
++++ b/contrib/examples/git-refinfo.sh
+@@ -0,0 +1,87 @@
++#!/bin/sh
++#
++# git-refinfo: a ref-description mechanism
++#
++# git-refinfo maintains a mapping of refnames to descriptions;
++# it stores the mapping as a version-controlled tree. Each
++# path in the tree represents a ref name, and the contents of
++# that path are the description.
++#
++# That means you can either use git-refinfo to set or examine
++# ref descriptions, or you can simply "git checkout refinfo"
++# and view and edit the files directly.
++
++REFINFO=refs/heads/refinfo
++SUBDIRECTORY_OK=Yes
++USAGE='
++git-refinfo set [<ref>] <description>
++git-refinfo get [<ref> ...]'
++. git-sh-setup
++
++die_usage() {
++	echo >&2 "usage: $USAGE"
++	exit 1
++}
++
++full_ref() {
++	git show-ref "$1" | sed -e 's/^[^ ]* //' -e '1q'
++}
++
++heads() {
++	git show-ref --heads | sed 's/.*refs\/heads\///'
++}
++
++do_get() {
++	ref=`full_ref "$1"`
++	case "$ref" in
++	'') desc= ;;
++	 *) desc=`git cat-file blob "$REFINFO:$ref" 2>/dev/null` ;;
++	esac
++	printf '%s\t%s\n' "$1" "$desc"
++}
++
++do_set() {
++	ref=`full_ref "$1"`
++	case "$ref" in
++	'')
++		case "$1" in
++		refs/*) ref=$1 ;;
++		heads/*) ref=refs/$1 ;;
++		*) ref=refs/heads/* ;;
++		esac
++		;;
++	esac
++	GIT_INDEX_FILE=$GIT_DIR/refinfo-index; export GIT_INDEX_FILE
++	rm -f $GIT_INDEX
++	old=`git rev-parse --verify $REFINFO 2>/dev/null`
++	case "$old" in
++	'') parents= ;;
++	 *) parents="-p $old"; git read-tree $REFINFO ;;
++	esac
++	blob=`printf '%s\n' "$2" | git hash-object -w --stdin`
++	git update-index --add --cacheinfo 0644 $blob "$ref"
++	tree=`git write-tree`
++	commit=`echo "update $1" | git commit-tree $tree $parents`
++	git update-ref -m refinfo $REFINFO $commit $old
++}
++
++case "$1" in
++set)
++	shift
++	case "$#" in
++	1) do_set "`git symbolic-ref HEAD`" "$1" ;;
++	2) do_set "$1" "$2" ;;
++	*) die_usage ;;
++	esac
++	;;
++get)
++	shift
++	case "$#" in
++	0) for i in `heads`; do do_get "$i"; done ;;
++	*) for i in "$@"; do do_get "$i"; done ;;
++	esac
++	;;
++*)
++	die_usage
++esac
++exit 0
+-- 
+1.5.5.63.g4e41c
