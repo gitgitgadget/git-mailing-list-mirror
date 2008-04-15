@@ -1,90 +1,101 @@
-From: Nico -telmich- Schottelius <nico-git-20080415@schottelius.org>
-Subject: [new tool] git-project-version.sh
-Date: Tue, 15 Apr 2008 13:36:29 +0200
-Message-ID: <20080415113629.GA17459@denkbrett.schottelius.org>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: RFC: Website redesign
+Date: Tue, 15 Apr 2008 13:54:31 +0200
+Message-ID: <20080415115431.GA26302@machine.or.cz>
+References: <3175605f-ff32-4fd6-bed3-7ae596ecbcde@q1g2000prf.googlegroups.com> <2c6b72b30804140656g14c24d8cwae016d62fe12f4a7@mail.gmail.com> <56e37551-4b8f-4164-a71d-79dba8635b7d@l28g2000prd.googlegroups.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="45Z9DzgjV8m4Oswq"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 15 13:36:17 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Dill <sarpulhu@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 15 13:55:38 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JljRz-0004wK-R5
-	for gcvg-git-2@gmane.org; Tue, 15 Apr 2008 13:35:48 +0200
+	id 1Jljkw-0002GZ-V3
+	for gcvg-git-2@gmane.org; Tue, 15 Apr 2008 13:55:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757634AbYDOLet (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Apr 2008 07:34:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757752AbYDOLet
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Apr 2008 07:34:49 -0400
-Received: from [62.65.138.77] ([62.65.138.77]:46183 "EHLO mx2.schottelius.org"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1757602AbYDOLes (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Apr 2008 07:34:48 -0400
-Received: from denkbrett.schottelius.org (natgw.netstream.ch [62.65.128.28])
-	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mx2.schottelius.org (Postfix) with ESMTPSA id 3A68E325BBC
-	for <git@vger.kernel.org>; Tue, 15 Apr 2008 13:34:43 +0200 (CEST)
-Received: by denkbrett.schottelius.org (Postfix, from userid 1000)
-	id D8E0E19002; Tue, 15 Apr 2008 13:36:29 +0200 (CEST)
+	id S1760558AbYDOLyh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Apr 2008 07:54:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758049AbYDOLyh
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Apr 2008 07:54:37 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:58415 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756747AbYDOLyg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Apr 2008 07:54:36 -0400
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id 78EB5393B31E; Tue, 15 Apr 2008 13:54:31 +0200 (CEST)
 Content-Disposition: inline
-User-Agent: echo $message | gpg -e $sender  -s | netcat mailhost 25
-X-Unix-Info: http://unix.schottelius.org/
-X-Netzseite: http://nico.schottelius.org/
-X-System-Info: denkbrett running Linux 2.6.24.3-denkbrett on x86_64
+In-Reply-To: <56e37551-4b8f-4164-a71d-79dba8635b7d@l28g2000prd.googlegroups.com>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79587>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79588>
 
+Please do not top-post, it makes it more difficult to follow the thread
+and reply.
 
---45Z9DzgjV8m4Oswq
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Mon, Apr 14, 2008 at 08:38:25AM -0700, Dill wrote:
+> Jonas Fonseca wrote:
+> > If the home page should carry news it needs to have infrastructure
+> > so that we don't need to bug Petr each time it should be updated. I
+> > have commit access to the git-homepage repo and maybe Petr could add
+> > others as well, but the question is if we want some web interface
+> > for submitting news. I registered git-scm.org after the last survey
+> > and right now it is just set up as an alias for git.or.cz. It comes
+> > with some PHP capability which could serve as a place to develop a
+> > redesign, however, I am not hosting it myself and I don't know what
+> > kind of traffic will be required.
 
-Hello!
+The server currently hosting git.or.cz could run PHP too if it would
+make sense. I'd of course prefer Perl (and it would be easier to set
+up), but I probably wouldn't do much of the coding myself, so it's not
+up to me to decide.
 
-As I want to use the latest commit id in all my projects, so I know
-which commit the version is based on, I wrote an extremly simple script
-that is based on git-show to display only the version named
-git-project-version.sh.
+> Isn't it possible to set up a git repo that has all the web page files
+> and have it set up so the web site updates from that repo. Or just
+> have Petr run a few commands. Or maybe that's what happens already.
 
-You can find it in
-   http://unix.schottelius.org/git/git-tools.git/.git/
-   http://unix.schottelius.org/cgi-bin/gitweb.cgi?p=3Dgit-tools.git/.git;a=
-=3Dsummary
-and more information is available on
-   http://nico.schottelius.org/notizbuch-blog/archive/2008/04/15/git-projec=
-t-version-sh-written-versions-with-git/
+This is exactly the current setup: http://repo.or.cz/w/git-homepage.git
 
-Sincerly
+> Then allow a few people to write to that repo. As far as the news go,
+> the web page I set up is easily edited by hand and updated it's just
+> how do we quickly allow updates without bothering people. Heres some
+> more designs:
+> 
+> http://sarpulhu.googlepages.com/git5
+> http://sarpulhu.googlepages.com/git6  -my personal favorite
+> http://sarpulhu.googlepages.com/git7
 
-Nico
+I appreciate the effort, but frankly, I simply personally like the
+current layout much more - the design certainly has quirks, but I don't
+really find it bad; I also think that the current amount of content does
+not justify splitting to multiple pages. The newly proposed version
+looks to me just as barebone graphically as the old one, with the same
+level of navigability but wasting screen estate and requiring more
+clicks to get where you need.
 
-ps: please cc on reply, I am not subscribed.
+That said, this can (and quite probably does) merely mean that I simply
+have no taste at all and should be kept away from any kind of web
+design! :-) So, I do not want to inhibit progress at all, but before
+considering to adopt the new design, I would prefer to see wider
+feedback from the core members of the community to convince me that I'm
+wrong.
 
---=20
-Think about Free and Open Source Software (FOSS).
-http://nico.schottelius.org/documentations/foss/the-term-foss/
+Something in the style of earlier mentioned restlet.org might not be
+necessarily bad (though I'm slightly wary of too toyish-looking
+graphics), but it appears to me that graphically, that site is simply on
+a completely different level than the current proposals. But if someone
+would do some cute design, I believe the current layout could look quite
+nice too - after all, consider http://bazaar-vcs.org/ (modulo the wiki
+artifacts plague).
 
-PGP: BFE4 C736 ABE5 406F 8F42  F7CF B8BE F92A 9885 188C
+Kind regards,
 
---45Z9DzgjV8m4Oswq
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFIBJM9uL75KpiFGIwRAg9RAJsEhMkNZm0YT8kz2t9MSrZEacxaigCgxv0W
-QC+N8HHUmJiceynye64hzzc=
-=Ew+e
------END PGP SIGNATURE-----
-
---45Z9DzgjV8m4Oswq--
+-- 
+				Petr "Pasky" Baudis
+Whatever you can do, or dream you can, begin it.
+Boldness has genius, power, and magic in it.	-- J. W. von Goethe
