@@ -1,63 +1,70 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: Fwd: Bug in StackedGit
-Date: Tue, 15 Apr 2008 13:55:45 +0200
-Message-ID: <20080415115545.GA32149@diana.vm.bytemark.co.uk>
-References: <6efe08af0804150301t9f4a1dbte564902736ebc302@mail.gmail.com> <6efe08af0804150306x1075970cxd6c9bed3dd0a6394@mail.gmail.com> <20080415103854.GA31188@diana.vm.bytemark.co.uk> <6efe08af0804150346u4e3fc383y90dca9a723818d63@mail.gmail.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: RFC: Website redesign
+Date: Tue, 15 Apr 2008 13:57:41 +0200
+Message-ID: <20080415115741.GB26302@machine.or.cz>
+References: <3175605f-ff32-4fd6-bed3-7ae596ecbcde@q1g2000prf.googlegroups.com> <2c6b72b30804140656g14c24d8cwae016d62fe12f4a7@mail.gmail.com> <56e37551-4b8f-4164-a71d-79dba8635b7d@l28g2000prd.googlegroups.com> <96F7571C-1D9D-4F0A-99F1-A2307DAB0374@wincent.com> <bd6139dc0804141129h25c829e2i320f227594763d71@mail.gmail.com> <pan.2008.04.14.20.39.10@progsoc.org> <20080414213339.GB10300@dpotapov.dyndns.org> <pan.2008.04.15.03.25.00@progsoc.org> <8607f754-92c8-49ca-9bc9-11e58b66ef40@q1g2000prf.googlegroups.com> <acfbfe5b-f3a1-4c22-a873-ed329552d1bb@b5g2000pri.googlegroups.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: "Vitaly V. Ch" <vitaly.v.ch@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 15 13:56:56 2008
+To: Dill <sarpulhu@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 15 13:58:30 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JljmR-0002kL-Jj
-	for gcvg-git-2@gmane.org; Tue, 15 Apr 2008 13:56:56 +0200
+	id 1Jljnw-0003Cw-Hr
+	for gcvg-git-2@gmane.org; Tue, 15 Apr 2008 13:58:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759719AbYDOLzz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Apr 2008 07:55:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753513AbYDOLzz
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Apr 2008 07:55:55 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4506 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759719AbYDOLzz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Apr 2008 07:55:55 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1JljlJ-0008Oq-00; Tue, 15 Apr 2008 12:55:45 +0100
+	id S1754113AbYDOL5o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Apr 2008 07:57:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761549AbYDOL5o
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Apr 2008 07:57:44 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:58463 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751625AbYDOL5n (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Apr 2008 07:57:43 -0400
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id 826653939B47; Tue, 15 Apr 2008 13:57:41 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <6efe08af0804150346u4e3fc383y90dca9a723818d63@mail.gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <acfbfe5b-f3a1-4c22-a873-ed329552d1bb@b5g2000pri.googlegroups.com>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79590>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79591>
 
-On 2008-04-15 10:46:38 +0000, Vitaly V. Ch wrote:
+  Hi,
 
-> On Tue, Apr 15, 2008 at 10:38 AM, Karl Hasselstr=F6m <kha@treskal.com=
->
-> wrote:
->
-> > On 2008-04-15 10:06:43 +0000, Vitaly V. Ch wrote:
-> >
-> > > after stg commit all patch history is loss. It's sucks. there
-> > > are nothing lost in bzr loom .
-> >
-> >  I assume you refer to the patch history shown by "stg log"?
->
-> Yes. There are sometimes sens to revert some patch after commit to
-> previous version.
+On Mon, Apr 14, 2008 at 11:48:21PM -0700, Dill wrote:
+> Perhaps we should just make the home page a wiki! It would work really
+> good! If we use a theme like they do at wiki.ubuntu.com or somewhere
+> else we could make it look really nice for a home page. Then once it's
+> set up, no one has to manage the page, worry about commits, who's
+> doing what, etc, and just have the pages edited and worked on by the
+> community at large who register at the site to edit. (Unlike the wiki
+> in use now something would have to be done to stop the spam, like
+> having those boxes at registration where you have pick the letters
+> out) Once set up it would simplify things. Do I dare say that Hg uses
+> the wiki idea. Works but their theme really looks horrible. Of course
+> git would do it better. ;) Ours would be way more pretty! Anyone else
+> think a wiki would work for home page? If we could get some work done
+> on the theme on moinmoin and get it upgraded and completely set up we
+> could do a mockup of what it could look like and if people like it
+> just get rid of the old and have the wiki page be the start page. It
+> would also solve the news problem as I'm willing and I'm sure others
+> would too edit to make sure it's up to date.
 
-That use case (resetting a single patch to any previous version, even
-if the patch has since been committed or deleted) is handled (albeit
-in a somewhat unpolished form) by the code in my experimental branch
-since about 12 hours ago. Just in time. :-)
+  let's keep two things separate here: design and content. Design-wise,
+it does not matter if it is wiki or not, it is a completely different
+issue. And making the wiki look good would be non-trivial amount of work
+and the benefits seem unclear to me - so far, we aren't exactly drowning
+in patches for the website either (though I admit that some of them
+might have been lost anyway if the contributor was unlucky and not
+persistent enough ;-).
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+-- 
+				Petr "Pasky" Baudis
+Whatever you can do, or dream you can, begin it.
+Boldness has genius, power, and magic in it.	-- J. W. von Goethe
