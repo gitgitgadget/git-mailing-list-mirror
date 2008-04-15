@@ -1,67 +1,90 @@
-From: "Aneesh Kumar" <aneesh.kumar@gmail.com>
-Subject: Finding changes in one branch not in two other branch
-Date: Tue, 15 Apr 2008 16:51:59 +0530
-Message-ID: <cc723f590804150421j689ef4b1o57b97c937e23db99@mail.gmail.com>
+From: Nico -telmich- Schottelius <nico-git-20080415@schottelius.org>
+Subject: [new tool] git-project-version.sh
+Date: Tue, 15 Apr 2008 13:36:29 +0200
+Message-ID: <20080415113629.GA17459@denkbrett.schottelius.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Apr 15 13:22:58 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="45Z9DzgjV8m4Oswq"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 15 13:36:17 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JljFR-00012B-Dc
-	for gcvg-git-2@gmane.org; Tue, 15 Apr 2008 13:22:49 +0200
+	id 1JljRz-0004wK-R5
+	for gcvg-git-2@gmane.org; Tue, 15 Apr 2008 13:35:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757935AbYDOLWE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Apr 2008 07:22:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757916AbYDOLWD
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Apr 2008 07:22:03 -0400
-Received: from wa-out-1112.google.com ([209.85.146.181]:58334 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757903AbYDOLWB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Apr 2008 07:22:01 -0400
-Received: by wa-out-1112.google.com with SMTP id m16so3084931waf.23
-        for <git@vger.kernel.org>; Tue, 15 Apr 2008 04:21:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=MqL11RllBn5NqK0riV26BJ7fpmDiK/8ITbYTqN8ScSk=;
-        b=CQNBjGtZE/JWPcTib4NcrDnvdHF+f5fV7GraHjzqEdXW/t5ZGGIjzkkNr4Y4U9ZJOyOWio1oIHBjC8NGrZn0MFuUwYov16XRB/YRb00agrLdBrl9KfjylsDBGJAGIWjDzTenMHgA2k8Bp/NTfnlfkLhDVKC62pgSzBcEwsjzmoE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=skFGppRpkwh43F5p3x1F5Rs/XqiPO9qoTexbv9CgVyN4HmDLBfpxhSnguRAuMg97N87nc6/6/Vod0cYdUsFIzXppWg0WteWxYoPckF2eLvCKCaX2INuX9GPDuJwfg1v7j4/NZvzGPyG6uyAYpFR5EAWx7AmdF8GJGauRVDTUdK0=
-Received: by 10.115.79.8 with SMTP id g8mr4803750wal.215.1208258519478;
-        Tue, 15 Apr 2008 04:21:59 -0700 (PDT)
-Received: by 10.114.150.8 with HTTP; Tue, 15 Apr 2008 04:21:59 -0700 (PDT)
+	id S1757634AbYDOLet (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Apr 2008 07:34:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757752AbYDOLet
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Apr 2008 07:34:49 -0400
+Received: from [62.65.138.77] ([62.65.138.77]:46183 "EHLO mx2.schottelius.org"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1757602AbYDOLes (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Apr 2008 07:34:48 -0400
+Received: from denkbrett.schottelius.org (natgw.netstream.ch [62.65.128.28])
+	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mx2.schottelius.org (Postfix) with ESMTPSA id 3A68E325BBC
+	for <git@vger.kernel.org>; Tue, 15 Apr 2008 13:34:43 +0200 (CEST)
+Received: by denkbrett.schottelius.org (Postfix, from userid 1000)
+	id D8E0E19002; Tue, 15 Apr 2008 13:36:29 +0200 (CEST)
 Content-Disposition: inline
+User-Agent: echo $message | gpg -e $sender  -s | netcat mailhost 25
+X-Unix-Info: http://unix.schottelius.org/
+X-Netzseite: http://nico.schottelius.org/
+X-System-Info: denkbrett running Linux 2.6.24.3-denkbrett on x86_64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79586>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79587>
 
-Hi,
 
-I am not sure whether it is available. What i am looking for is
+--45Z9DzgjV8m4Oswq
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-git diff <commit1> <commit2> <commit3>
+Hello!
 
-And it should show changes only in in tree represented by <commit1> but not
-in both <commit2> and <commit3>
+As I want to use the latest commit id in all my projects, so I know
+which commit the version is based on, I wrote an extremly simple script
+that is based on git-show to display only the version named
+git-project-version.sh.
 
-To show a workflow:
+You can find it in
+   http://unix.schottelius.org/git/git-tools.git/.git/
+   http://unix.schottelius.org/cgi-bin/gitweb.cgi?p=3Dgit-tools.git/.git;a=
+=3Dsummary
+and more information is available on
+   http://nico.schottelius.org/notizbuch-blog/archive/2008/04/15/git-projec=
+t-version-sh-written-versions-with-git/
 
-kernel releases 2.6.20 and the project release patchset on top of 2.6.20
-kernel release 2.6.21 and project release patchset on top of 2.6.21
+Sincerly
 
-The second release involve some bug fixes for the project.
+Nico
 
-The intention is to find out  what changed in project with the release
-of 2.6.21 patchset
-. The easiest is look at diff of diff. But if git can do it for me why not ??
+ps: please cc on reply, I am not subscribed.
 
--aneesh
+--=20
+Think about Free and Open Source Software (FOSS).
+http://nico.schottelius.org/documentations/foss/the-term-foss/
+
+PGP: BFE4 C736 ABE5 406F 8F42  F7CF B8BE F92A 9885 188C
+
+--45Z9DzgjV8m4Oswq
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFIBJM9uL75KpiFGIwRAg9RAJsEhMkNZm0YT8kz2t9MSrZEacxaigCgxv0W
+QC+N8HHUmJiceynye64hzzc=
+=Ew+e
+-----END PGP SIGNATURE-----
+
+--45Z9DzgjV8m4Oswq--
