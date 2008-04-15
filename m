@@ -1,97 +1,88 @@
-From: Scott Collins <scc@ScottCollins.net>
-Subject: [PATCH] Clarify documentation of git-cvsserver, particularly in relation to git-shell
-Date: Tue, 15 Apr 2008 11:30:02 -0400
-Message-ID: <1208273402-2152-1-git-send-email-scc@ScottCollins.net>
-Cc: Scott Collins <scc@ScottCollins.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 15 18:17:57 2008
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH] git-fast-import: note 1M limit of mark number
+Date: Tue, 15 Apr 2008 17:50:38 +0200
+Message-ID: <4804CECE.2040205@alum.mit.edu>
+References: <20080415125222.C55C121CE8F@mail.utsl.gen.nz>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Sam Vilain <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Tue Apr 15 18:21:30 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JlnmM-0006Is-I3
-	for gcvg-git-2@gmane.org; Tue, 15 Apr 2008 18:13:06 +0200
+	id 1JlnRT-0000B1-8Y
+	for gcvg-git-2@gmane.org; Tue, 15 Apr 2008 17:51:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751442AbYDOQMU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Apr 2008 12:12:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751287AbYDOQMT
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Apr 2008 12:12:19 -0400
-Received: from mx-1.vasoftware.com ([208.48.95.23]:50419 "EHLO
-	mx-1.vasoftware.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751120AbYDOQMS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Apr 2008 12:12:18 -0400
-X-Greylist: delayed 2526 seconds by postgrey-1.27 at vger.kernel.org; Tue, 15 Apr 2008 12:12:18 EDT
-Received: from ip199-194.digitalrealm.net ([216.144.199.194] helo=localhost.localdomain)
-	by mx-1.vasoftware.com with esmtpa 
-	(Exim 4.64)
-	id 1Jln6p-0005AD-1W by VAAuthID scollins with plain; Tue, 15 Apr 2008 08:30:11 -0700
-X-Mailer: git-send-email 1.5.5.49.gf43e2
+	id S1752836AbYDOPup (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Apr 2008 11:50:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752709AbYDOPup
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Apr 2008 11:50:45 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:51810 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752484AbYDOPup (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Apr 2008 11:50:45 -0400
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.100.152] ([212.222.128.135])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id m3FFohTf020496
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 15 Apr 2008 17:50:43 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.12) Gecko/20080227 Thunderbird/2.0.0.12 Mnenhy/0.7.5.666
+In-Reply-To: <20080415125222.C55C121CE8F@mail.utsl.gen.nz>
+X-Enigmail-Version: 0.95.0
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79605>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79606>
 
-Currently, git-cvsserver requires CVS_SERVER to be set to 'cvs' if you are
-restricted to git-shell, so we need to mention that here.  Previous wording
-mentioning GIT_AUTHOR, GIT_COMMITTER variables may not have made clear we
-really meant GIT_AUTHOR_(NAME|COMMITTER), etc.  Add a bit of text to
-differentiate cvs -d (setting CVSROOT) from cvs co -d (setting the name of
-the newly checked out directory).
+Sam Vilain wrote:
+> The insert_mark() function in fast-import.c has this limit; note the
+> limitation in the documentation.
+> 
+> Signed-off-by: Sam Vilain <sam@vilain.net>
+> ---
+>  Documentation/git-fast-import.txt |    3 +++
+>  1 files changed, 3 insertions(+), 0 deletions(-)
+> 
+> diff --git a/Documentation/git-fast-import.txt b/Documentation/git-fast-import.txt
+> index c29a4f8..b5cc3c2 100644
+> --- a/Documentation/git-fast-import.txt
+> +++ b/Documentation/git-fast-import.txt
+> @@ -410,6 +410,9 @@ or `refs/heads/42`), or an abbreviated SHA-1 which happened to
+>  consist only of base-10 digits.
+>  +
+>  Marks must be declared (via `mark`) before they can be used.
+> ++
+> +Note that due to current internal limitations, you may not make marks
+> +with a higher number than 1048575 (2^20-1).
+>  
+>  * A complete 40 byte or abbreviated commit SHA-1 in hex.
+>  
 
-Signed-off-by: Scott Collins <scc@ScottCollins.net>
----
- Documentation/git-cvsserver.txt |   19 +++++++++++++------
- 1 files changed, 13 insertions(+), 6 deletions(-)
+Oh.  Um.  That is an awkwardly small number nowadays.
 
-diff --git a/Documentation/git-cvsserver.txt b/Documentation/git-cvsserver.txt
-index 9cec802..5e67a89 100644
---- a/Documentation/git-cvsserver.txt
-+++ b/Documentation/git-cvsserver.txt
-@@ -106,7 +106,10 @@ Note: Newer CVS versions (>= 1.12.11) also support specifying
- CVS_SERVER directly in CVSROOT like
- 
- ------
--cvs -d ":ext;CVS_SERVER=git-cvsserver:user@server/path/repo.git" co <HEAD_name>
-+cvs -d ":ext;CVS_SERVER=git-cvsserver:user@server/path/repo.git" co <HEAD_name> -d <dir_name>
-+
-+# or for git-shell users:
-+cvs -d ":ext;CVS_SERVER=cvs:user@server/path/repo.git" co <HEAD_name> -d <dir_name>
- ------
- This has the advantage that it will be saved in your 'CVS/Root' files and
- you don't need to worry about always setting the correct environment
-@@ -146,7 +149,8 @@ allowing access over SSH.
-    appropriate git repo. For example:
- +
- --
--For SSH access, CVS_SERVER should be set to git-cvsserver
-+For normal SSH access, CVS_SERVER should be set to git-cvsserver.  For those
-+whose access is restricted to git-shell, CVS_SERVER should be set to cvs.
- 
- Example:
- 
-@@ -155,14 +159,17 @@ Example:
-      export CVS_SERVER=git-cvsserver
- ------
- --
--4. For SSH clients that will make commits, make sure their .bashrc file
--   sets the GIT_AUTHOR and GIT_COMMITTER variables.
-+4. For SSH clients that will make commits, make sure their (server-side) .bashrc
-+   files export GIT_AUTHOR_NAME, GIT_AUTHOR_EMAIL, GIT_COMMITTER_NAME, and
-+   GIT_COMMITTER_EMAIL.
- 
- 5. Clients should now be able to check out the project. Use the CVS 'module'
--   name to indicate what GIT 'head' you want to check out. Example:
-+   name to indicate what GIT 'head' you want to check out.  This also sets the
-+   name of your newly checked-out directory, unless you tell it otherwise with
-+   `-d <dir_name>` Example:
- +
- ------
--     cvs co -d project-master master
-+     cvs co master -d project-master
- ------
- 
- [[dbbackend]]
--- 
-1.5.5.49.gf43e2
+cvs2svn has been used for repositories with O(2^20) distinct file
+revisions (KDE, Mozilla, NetBSD, ...).  So this limit will likely be too
+small for some users.
+
+Moreover, cvs2git needs to generate marks for both file contents and for
+commits.  It generates the latter by adding 1000000000 to the small
+integer IDs that it uses internally.  If git-fast-import only allows
+20-bit integers, this makes me wonder why this hasn't broken
+dramatically in the past.  Pure numerological good fortune, combined
+with weak range checking in git-fast-import?
+
+In any case, this restriction will require changes in cvs2git.
+
+While I'm at it, let me also renew my suggestion that git-fast-import
+use separate namespaces ("markspaces", so to speak) for file content
+marks and for commit marks.  There is no reason for these distinct types
+of marks to be located in a shared space of integers.
+
+Michael
