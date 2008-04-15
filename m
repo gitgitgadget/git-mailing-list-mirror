@@ -1,70 +1,64 @@
-From: "Steve Hoelzer" <shoelzer@gmail.com>
-Subject: Re: Git Homepge Update
-Date: Tue, 15 Apr 2008 12:57:59 -0500
-Message-ID: <588192970804151057pc87b73fvee9eb8a47b1d4e78@mail.gmail.com>
-References: <2c6b72b30804140656g14c24d8cwae016d62fe12f4a7@mail.gmail.com>
-	 <96F7571C-1D9D-4F0A-99F1-A2307DAB0374@wincent.com>
-	 <bd6139dc0804141129h25c829e2i320f227594763d71@mail.gmail.com>
-	 <pan.2008.04.14.20.39.10@progsoc.org>
-	 <20080414213339.GB10300@dpotapov.dyndns.org>
-	 <pan.2008.04.15.03.25.00@progsoc.org>
-	 <8607f754-92c8-49ca-9bc9-11e58b66ef40@q1g2000prf.googlegroups.com>
-	 <acfbfe5b-f3a1-4c22-a873-ed329552d1bb@b5g2000pri.googlegroups.com>
-	 <20080415115741.GB26302@machine.or.cz>
-	 <20080415162008.GD26302@machine.or.cz>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: Re: branch description
+Date: Tue, 15 Apr 2008 14:01:41 -0400
+Message-ID: <C55CA6EB-D427-4CF5-923E-DE0071D2F870@silverinsanity.com>
+References: <9b3e2dc20804150951scf8b3c7x26f3a56eab1f9840@mail.gmail.com> <f9d2a5e10804151031o1d09c1f9od0ad78dcf9b746c5@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v919.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
-To: "Petr Baudis" <pasky@suse.cz>, Dill <sarpulhu@gmail.com>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 15 20:12:29 2008
+Cc: "Stephen Sinclair" <radarsat1@gmail.com>, git@vger.kernel.org
+To: Russ Dill <russ.dill@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 15 20:16:06 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JlpQf-000412-DR
-	for gcvg-git-2@gmane.org; Tue, 15 Apr 2008 19:58:49 +0200
+	id 1JlpUQ-0005JF-Aa
+	for gcvg-git-2@gmane.org; Tue, 15 Apr 2008 20:02:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751726AbYDOR6D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Apr 2008 13:58:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751745AbYDOR6D
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Apr 2008 13:58:03 -0400
-Received: from fg-out-1718.google.com ([72.14.220.155]:7429 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751726AbYDOR6B (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Apr 2008 13:58:01 -0400
-Received: by fg-out-1718.google.com with SMTP id l27so2079803fgb.17
-        for <git@vger.kernel.org>; Tue, 15 Apr 2008 10:57:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=r3H9Qwk97yKNBIsdCDfrhuiPXx7ggGbOz1JqaE/Lnuk=;
-        b=pXXcfOrH1n3PBfEHbUhgJB9gS8OqVxKZ36CUgIkhI2+5IUiWJ/tQ8tLpA1jktLbgY6PI/pgLmDmkROawk1GPN3AwRicYLds7r5xsN4nGkWGDdsXUXrolOpQLes6fS/W6Ojhieqow8S9GVHDj7shOCtMa23X17tPDySt+8eAl4YI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=X/ynhv+yirUgul6taIbYMpGdI4CdxOjVlLyRkGZeuw8jXAMDboFM8QSgh50RHnva3tFCh/aj51asdIMG7DhHyMY7wDvw6s0eVq25J4GuBFGmpQ9M+I97yoeNr8FpgedmMGbgXYdID+C/kWDi+w1EhFPYfKiI+DOYIZOtD5nCo2c=
-Received: by 10.86.59.2 with SMTP id h2mr16516406fga.63.1208282279612;
-        Tue, 15 Apr 2008 10:57:59 -0700 (PDT)
-Received: by 10.86.62.15 with HTTP; Tue, 15 Apr 2008 10:57:59 -0700 (PDT)
-In-Reply-To: <20080415162008.GD26302@machine.or.cz>
-Content-Disposition: inline
+	id S1755265AbYDOSBr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Apr 2008 14:01:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754896AbYDOSBr
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Apr 2008 14:01:47 -0400
+Received: from vs072.rosehosting.com ([216.114.78.72]:35079 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753320AbYDOSBq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Apr 2008 14:01:46 -0400
+Received: from [192.168.1.4] (cpe-69-205-115-17.rochester.res.rr.com [69.205.115.17])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTP id E07AC1FFC257;
+	Tue, 15 Apr 2008 18:01:43 +0000 (UTC)
+In-Reply-To: <f9d2a5e10804151031o1d09c1f9od0ad78dcf9b746c5@mail.gmail.com>
+X-Mailer: Apple Mail (2.919.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79611>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79612>
 
-On Tue, Apr 15, 2008 at 11:20 AM, Petr Baudis <pasky@suse.cz> wrote:
->   I'm wondering whether perhaps the page is still too wide now - one
->  idea would be to move the header, the two link boxes and possibly some
->  of the contact information to a sidebar - the link boxes always looked a
->  bit strange to me. I'm not sure how much would it help, though.
 
-Yes, a bit wide, I think. A sidebar is one option, or just keep the
-page as-is and limit width via CSS.
+On Apr 15, 2008, at 1:31 PM, Russ Dill wrote:
 
-    body { max-width: 50em; margin: 0.4em auto; }
+> The problem is that a branch is just a floating name for a line of
+> development. Its not really a "thing" in the repository like a tag or
+> a commit. You'd need to make some sort of special tag that describes
+> the branch or somesuch.
 
-Steve
+No special tags needed.  A simple file that I'll call .git/info/ 
+ref_names could be a set of lines that have "<ref>\t<description>",  
+like the following:
+
+refs/heads/master	Collection point for all my work
+refs/heads/ref_names	Add descriptions for branches
+refs/heads/segfault	Trying to fix bug #12345
+
+Simple, no tags, new object types or anything.  All you have to do is  
+add the bits to git-branch to add, edit, and remove the description  
+alongside the branch itself.
+
+Now if you want to propagate these descriptions when you push and  
+pull, things get a lot more complicated.
+
+~~ Brian
