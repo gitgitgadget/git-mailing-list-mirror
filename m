@@ -1,88 +1,68 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH] git-fast-import: note 1M limit of mark number
-Date: Tue, 15 Apr 2008 17:50:38 +0200
-Message-ID: <4804CECE.2040205@alum.mit.edu>
-References: <20080415125222.C55C121CE8F@mail.utsl.gen.nz>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Git Homepge Update
+Date: Tue, 15 Apr 2008 18:20:09 +0200
+Message-ID: <20080415162008.GD26302@machine.or.cz>
+References: <2c6b72b30804140656g14c24d8cwae016d62fe12f4a7@mail.gmail.com> <56e37551-4b8f-4164-a71d-79dba8635b7d@l28g2000prd.googlegroups.com> <96F7571C-1D9D-4F0A-99F1-A2307DAB0374@wincent.com> <bd6139dc0804141129h25c829e2i320f227594763d71@mail.gmail.com> <pan.2008.04.14.20.39.10@progsoc.org> <20080414213339.GB10300@dpotapov.dyndns.org> <pan.2008.04.15.03.25.00@progsoc.org> <8607f754-92c8-49ca-9bc9-11e58b66ef40@q1g2000prf.googlegroups.com> <acfbfe5b-f3a1-4c22-a873-ed329552d1bb@b5g2000pri.googlegroups.com> <20080415115741.GB26302@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Sam Vilain <sam@vilain.net>
-X-From: git-owner@vger.kernel.org Tue Apr 15 18:21:30 2008
+To: Dill <sarpulhu@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 15 18:48:15 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JlnRT-0000B1-8Y
-	for gcvg-git-2@gmane.org; Tue, 15 Apr 2008 17:51:31 +0200
+	id 1Jlnu1-0008Vp-3C
+	for gcvg-git-2@gmane.org; Tue, 15 Apr 2008 18:21:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752836AbYDOPup (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Apr 2008 11:50:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752709AbYDOPup
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Apr 2008 11:50:45 -0400
-Received: from einhorn.in-berlin.de ([192.109.42.8]:51810 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752484AbYDOPup (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Apr 2008 11:50:45 -0400
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from [192.168.100.152] ([212.222.128.135])
-	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id m3FFohTf020496
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Tue, 15 Apr 2008 17:50:43 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.12) Gecko/20080227 Thunderbird/2.0.0.12 Mnenhy/0.7.5.666
-In-Reply-To: <20080415125222.C55C121CE8F@mail.utsl.gen.nz>
-X-Enigmail-Version: 0.95.0
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1755028AbYDOQUN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Apr 2008 12:20:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754315AbYDOQUN
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Apr 2008 12:20:13 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:43669 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754128AbYDOQUL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Apr 2008 12:20:11 -0400
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id 099953939B34; Tue, 15 Apr 2008 18:20:09 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20080415115741.GB26302@machine.or.cz>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79606>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79607>
 
-Sam Vilain wrote:
-> The insert_mark() function in fast-import.c has this limit; note the
-> limitation in the documentation.
-> 
-> Signed-off-by: Sam Vilain <sam@vilain.net>
-> ---
->  Documentation/git-fast-import.txt |    3 +++
->  1 files changed, 3 insertions(+), 0 deletions(-)
-> 
-> diff --git a/Documentation/git-fast-import.txt b/Documentation/git-fast-import.txt
-> index c29a4f8..b5cc3c2 100644
-> --- a/Documentation/git-fast-import.txt
-> +++ b/Documentation/git-fast-import.txt
-> @@ -410,6 +410,9 @@ or `refs/heads/42`), or an abbreviated SHA-1 which happened to
->  consist only of base-10 digits.
->  +
->  Marks must be declared (via `mark`) before they can be used.
-> ++
-> +Note that due to current internal limitations, you may not make marks
-> +with a higher number than 1048575 (2^20-1).
->  
->  * A complete 40 byte or abbreviated commit SHA-1 in hex.
->  
+  Hi,
 
-Oh.  Um.  That is an awkwardly small number nowadays.
+On Tue, Apr 15, 2008 at 01:57:41PM +0200, Petr Baudis wrote:
+>   let's keep two things separate here: design and content. Design-wise,
+> it does not matter if it is wiki or not, it is a completely different
+> issue. And making the wiki look good would be non-trivial amount of work
+> and the benefits seem unclear to me - so far, we aren't exactly drowning
+> in patches for the website either (though I admit that some of them
+> might have been lost anyway if the contributor was unlucky and not
+> persistent enough ;-).
 
-cvs2svn has been used for repositories with O(2^20) distinct file
-revisions (KDE, Mozilla, NetBSD, ...).  So this limit will likely be too
-small for some users.
+  by the way, I have read through the homepage again after some time and
+tweaked the text a bit for clarity and perhaps grammar (hope I didn't
+make it worse than it was). I have also reorganized the Related Tools
+section and rewrote the initial paragraph.
 
-Moreover, cvs2git needs to generate marks for both file contents and for
-commits.  It generates the latter by adding 1000000000 to the small
-integer IDs that it uses internally.  If git-fast-import only allows
-20-bit integers, this makes me wonder why this hasn't broken
-dramatically in the past.  Pure numerological good fortune, combined
-with weak range checking in git-fast-import?
+  Design-wise, I have added some extra spacing at many places, turned
+the Related Tools section to a 2x2 grid to take less vertical space and
+redone the main headline.  Also, I tried to tweak the color scheme to
+use brighter and less nauseating colors - please tell me what do you
+think!
 
-In any case, this restriction will require changes in cvs2git.
+  I'm wondering whether perhaps the page is still too wide now - one
+idea would be to move the header, the two link boxes and possibly some
+of the contact information to a sidebar - the link boxes always looked a
+bit strange to me. I'm not sure how much would it help, though.
 
-While I'm at it, let me also renew my suggestion that git-fast-import
-use separate namespaces ("markspaces", so to speak) for file content
-marks and for commit marks.  There is no reason for these distinct types
-of marks to be located in a shared space of integers.
-
-Michael
+-- 
+				Petr "Pasky" Baudis
+Whatever you can do, or dream you can, begin it.
+Boldness has genius, power, and magic in it.	-- J. W. von Goethe
