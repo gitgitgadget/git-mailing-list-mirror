@@ -1,65 +1,69 @@
-From: "Stephen Sinclair" <radarsat1@gmail.com>
-Subject: branch description
-Date: Tue, 15 Apr 2008 12:51:49 -0400
-Message-ID: <9b3e2dc20804150951scf8b3c7x26f3a56eab1f9840@mail.gmail.com>
+From: "Russ Dill" <russ.dill@gmail.com>
+Subject: Re: branch description
+Date: Tue, 15 Apr 2008 10:31:06 -0700
+Message-ID: <f9d2a5e10804151031o1d09c1f9od0ad78dcf9b746c5@mail.gmail.com>
+References: <9b3e2dc20804150951scf8b3c7x26f3a56eab1f9840@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 15 19:18:40 2008
+Cc: git@vger.kernel.org
+To: "Stephen Sinclair" <radarsat1@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 15 19:51:58 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JloOa-0000u7-Po
-	for gcvg-git-2@gmane.org; Tue, 15 Apr 2008 18:52:37 +0200
+	id 1Jlp0c-000401-59
+	for gcvg-git-2@gmane.org; Tue, 15 Apr 2008 19:31:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759626AbYDOQvv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Apr 2008 12:51:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759587AbYDOQvv
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Apr 2008 12:51:51 -0400
-Received: from rv-out-0708.google.com ([209.85.198.248]:23660 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1758835AbYDOQvu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Apr 2008 12:51:50 -0400
-Received: by rv-out-0506.google.com with SMTP id k29so917925rvb.1
-        for <git@vger.kernel.org>; Tue, 15 Apr 2008 09:51:49 -0700 (PDT)
+	id S1753868AbYDORbI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Apr 2008 13:31:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753692AbYDORbI
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Apr 2008 13:31:08 -0400
+Received: from yw-out-2324.google.com ([74.125.46.29]:49514 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752058AbYDORbH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Apr 2008 13:31:07 -0400
+Received: by yw-out-2324.google.com with SMTP id 5so1061106ywb.1
+        for <git@vger.kernel.org>; Tue, 15 Apr 2008 10:31:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=UjcHo7z0L3X+tLNKue2J5dWP1lBw8+Q7jpHjmjQidHQ=;
-        b=Fz7cQgaPguvzN6+K0xj3BpU/rceKyQmcxsd3Hnr5Z/6nZfbdODjyB3Ueu8betpOO/l+nbfvXxoDV57NWvACUxcWOGCZY7wJILMNmN2ttu7yvtODT1/5aE94BGnplXCcepvY010lW7jDciZFLONEcGMaPfbllVpuMUJL6hzR/wm8=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=MiaVdMpaG2ZbjQot2vIA+WCQ83wv4YgjhbyNb3l0GZ0=;
+        b=x9KEqJep2K/H6PlZhQttKgtZmj26aqoPf64f0bpWh6ahWSLu6EJxAanCD+7zCVSEMBHM4fMuqATwigt3DctQOQph1elWb5xiwaP6NVMprPNcomiwGD1lntwYXwOHQWE+JFXInyTL6ROj4/luTJ7xsY9/HoP+nIvePyG6wJMErxE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=IXD/HouV2maOdPw2G+8lSmHNMWomdJ1iwKp6R5matAACOgZN53qu7eh+peRWwvyvh3knlE0jE08GMjmHfSMBEO8pm97SbPfSXsy8tHsAvvUZ5dEWPiCauiK4duiGKIruTZ1UGBoAGUuiWuLwRY1AxbG/E7RhHI2sW+nn6mCsr04=
-Received: by 10.141.129.14 with SMTP id g14mr4428429rvn.274.1208278309820;
-        Tue, 15 Apr 2008 09:51:49 -0700 (PDT)
-Received: by 10.141.66.3 with HTTP; Tue, 15 Apr 2008 09:51:49 -0700 (PDT)
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=DyWKs93TbMH/C4mGsidWE29y88JwjsCL2+UmBB1fZkurrAiroNdduJ2cldiZ1ptkZzDGgcbyY7LxDbjBwvroDGSV10I4+/BRaYJBzeP9iadTj/Q7nXoPxRn0/Qgbb8rxCPUbEaxDjVvyBVBu4s/i3zSEWYfmAF1OZkaiIA2p7EY=
+Received: by 10.150.12.5 with SMTP id 5mr8144681ybl.39.1208280666115;
+        Tue, 15 Apr 2008 10:31:06 -0700 (PDT)
+Received: by 10.150.52.7 with HTTP; Tue, 15 Apr 2008 10:31:06 -0700 (PDT)
+In-Reply-To: <9b3e2dc20804150951scf8b3c7x26f3a56eab1f9840@mail.gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79608>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79609>
 
-Hi,
+>  I find it useful to use fairly short names for branches.  However,
+>  sometimes I would like to have a full sentence to actually describe
+>  what the branch is for, without having the peruse the actual commits.
 
-I find it useful to use fairly short names for branches.  However,
-sometimes I would like to have a full sentence to actually describe
-what the branch is for, without having the peruse the actual commits.
+Me too.
 
-This is both for when I later can't remember why I made a certain
-branch, or for when people clone and look at a list of branches
-wondering what the differences are between them.
+>  This information could of course be kept on a web page, but it would
+>  be nice to have it in the repo.
 
-This information could of course be kept on a web page, but it would
-be nice to have it in the repo.
-Is there any such branch annotation command?
-Ideally I'd like to see a sentence displayed next to the branch name
-when I use "git-branch".
-Perhaps, git-branch --info or something.
+Like, putting your bug number in the branch name.
 
+>  Is there any such branch annotation command?
+>  Ideally I'd like to see a sentence displayed next to the branch name
+>  when I use "git-branch".
+>  Perhaps, git-branch --info or something.
 
-Steve
+The problem is that a branch is just a floating name for a line of
+development. Its not really a "thing" in the repository like a tag or
+a commit. You'd need to make some sort of special tag that describes
+the branch or somesuch.
