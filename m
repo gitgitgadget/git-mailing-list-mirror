@@ -1,131 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Clarify documentation of git-cvsserver, particularly in
- relation to git-shell
-Date: Tue, 15 Apr 2008 11:27:54 -0700
-Message-ID: <7vve2jx9at.fsf@gitster.siamese.dyndns.org>
-References: <1208273402-2152-1-git-send-email-scc@ScottCollins.net>
+From: Paul Mundt <lethal@linux-sh.org>
+Subject: Re: [GIT PULL] sh updates for 2.6.25
+Date: Wed, 16 Apr 2008 03:30:23 +0900
+Message-ID: <20080415183023.GA23098@linux-sh.org>
+References: <20080415172333.GA29489@linux-sh.org> <alpine.LFD.1.00.0804151048060.2879@woody.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Scott Collins <scc@ScottCollins.net>
-X-From: git-owner@vger.kernel.org Tue Apr 15 20:37:42 2008
+Cc: linux-sh@vger.kernel.org, Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: linux-sh-owner@vger.kernel.org Tue Apr 15 20:38:53 2008
 connect(): Connection refused
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
+Return-path: <linux-sh-owner@vger.kernel.org>
+Envelope-to: glps-linuxsh-dev@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jlptj-0004RJ-QZ
-	for gcvg-git-2@gmane.org; Tue, 15 Apr 2008 20:28:52 +0200
+	id 1JlpwZ-0005E5-8z
+	for glps-linuxsh-dev@gmane.org; Tue, 15 Apr 2008 20:31:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752765AbYDOS2H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Apr 2008 14:28:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752673AbYDOS2G
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Apr 2008 14:28:06 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:62928 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751726AbYDOS2D (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Apr 2008 14:28:03 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 5236F2DE7;
-	Tue, 15 Apr 2008 14:28:02 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 47C072DE5; Tue, 15 Apr 2008 14:27:58 -0400 (EDT)
-In-Reply-To: <1208273402-2152-1-git-send-email-scc@ScottCollins.net> (Scott
- Collins's message of "Tue, 15 Apr 2008 11:30:02 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-Sender: git-owner@vger.kernel.org
+	id S1751842AbYDOSbG (ORCPT <rfc822;glps-linuxsh-dev@m.gmane.org>);
+	Tue, 15 Apr 2008 14:31:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752658AbYDOSbF
+	(ORCPT <rfc822;linux-sh-outgoing>); Tue, 15 Apr 2008 14:31:05 -0400
+Received: from mta23.gyao.ne.jp ([125.63.38.249]:35434 "EHLO mx.gate01.com"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751842AbYDOSbE (ORCPT <rfc822;linux-sh@vger.kernel.org>);
+	Tue, 15 Apr 2008 14:31:04 -0400
+Received: from [124.34.33.190] (helo=master.linux-sh.org)
+	by smtp31.isp.us-com.jp with esmtp (Mail 4.41)
+	id 1Jlpvj-0001Bn-CV; Wed, 16 Apr 2008 03:30:55 +0900
+Received: from localhost (unknown [127.0.0.1])
+	by master.linux-sh.org (Postfix) with ESMTP id 2626963754;
+	Tue, 15 Apr 2008 18:30:24 +0000 (UTC)
+X-Virus-Scanned: amavisd-new at linux-sh.org
+Received: from master.linux-sh.org ([127.0.0.1])
+	by localhost (master.linux-sh.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id qaIYUg168s2R; Wed, 16 Apr 2008 03:30:23 +0900 (JST)
+Received: by master.linux-sh.org (Postfix, from userid 500)
+	id 9C3B663758; Wed, 16 Apr 2008 03:30:23 +0900 (JST)
+Mail-Followup-To: Paul Mundt <lethal@linux-sh.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	linux-sh@vger.kernel.org, Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.1.00.0804151048060.2879@woody.linux-foundation.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+Sender: linux-sh-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79616>
+List-ID: <linux-sh.vger.kernel.org>
+X-Mailing-List: linux-sh@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79617>
 
-Scott Collins <scc@ScottCollins.net> writes:
+On Tue, Apr 15, 2008 at 11:01:36AM -0700, Linus Torvalds wrote:
+> On Wed, 16 Apr 2008, Paul Mundt wrote:
+> >
+> > Please pull from:
+> > 
+> > 	git://git.kernel.org/pub/scm/linux/kernel/git/lethal/sh-2.6.25.git
+> 
+> Paul, your git tree is odd. Not quite corrupt, but it doesn't really 
+> follow the rules either.
+> 
+> In particular, it has empty lines at the top of those commits, and I 
+> wonder how you created them. 
+> 
+> Doing things like "git log" will ignore the spurious empty lines, but they 
+> can be seen with things like "git cat-file", eg
+> 
+> 	git cat-file commit fd785d6b18b930b76ad5076eed6e9af43195b281 
+> 
+> and I wonder if you used a buggy version of git, or whether you perhaps 
+> have some scripts that import these commits from the outside and uses some 
+> low-level commands that can generate these kinds of subtly bogus commits.
 
-> Currently, git-cvsserver requires CVS_SERVER to be set to 'cvs' if you are
-> restricted to git-shell, so we need to mention that here.  Previous wording
-> mentioning GIT_AUTHOR, GIT_COMMITTER variables may not have made clear we
-> really meant GIT_AUTHOR_(NAME|COMMITTER), etc.  Add a bit of text to
-> differentiate cvs -d (setting CVSROOT) from cvs co -d (setting the name of
-> the newly checked out directory).
->
-> Signed-off-by: Scott Collins <scc@ScottCollins.net>
-> ---
->  Documentation/git-cvsserver.txt |   19 +++++++++++++------
->  1 files changed, 13 insertions(+), 6 deletions(-)
+It was a combination of mbox munging and git-am, I checked with git log
+and thought things were ok, but I wasn't aware that it stripped out empty
+lines. cat-file shows that it was just the 2 patches from Andrew that had
+this particular problem. I had stripped out the subject and thought the
+first line would be used for the merge summary, but it looks like git-am
+simply wrote out an empty line and inserted one after that before the
+rest of the summary.
 
-Thanks; please make it a habit to give a final round of proofreading
-before you send your messages out.  For example, I do not think we meant
-"GIT_AUTHOR_(NAME|COMMITTER)" ;-)
-
-> diff --git a/Documentation/git-cvsserver.txt b/Documentation/git-cvsserver.txt
-> index 9cec802..5e67a89 100644
-> --- a/Documentation/git-cvsserver.txt
-> +++ b/Documentation/git-cvsserver.txt
-> @@ -106,7 +106,10 @@ Note: Newer CVS versions (>= 1.12.11) also support specifying
->  CVS_SERVER directly in CVSROOT like
->  
->  ------
-> -cvs -d ":ext;CVS_SERVER=git-cvsserver:user@server/path/repo.git" co <HEAD_name>
-> +cvs -d ":ext;CVS_SERVER=git-cvsserver:user@server/path/repo.git" co <HEAD_name> -d <dir_name>
-> +
-> +# or for git-shell users:
-> +cvs -d ":ext;CVS_SERVER=cvs:user@server/path/repo.git" co <HEAD_name> -d <dir_name>
->  ------
->  This has the advantage that it will be saved in your 'CVS/Root' files and
->  you don't need to worry about always setting the correct environment
-> @@ -146,7 +149,8 @@ allowing access over SSH.
->     appropriate git repo. For example:
->  +
->  --
-> -For SSH access, CVS_SERVER should be set to git-cvsserver
-> +For normal SSH access, CVS_SERVER should be set to git-cvsserver.  For those
-> +whose access is restricted to git-shell, CVS_SERVER should be set to cvs.
->  
->  Example:
-
-Hmm.  Can't this be further improved?
-
-My undestanding of the reasoning behind 0c696fe (Support cvs via
-git-shell, 2007-10-09) is by doing this people do not have to say
-CVS_SERVER and do this instead:
-
-	cvs -d :ext:[user@]cvs.example.com:/path/to/repo checkout foo
-
-which would truly hide the fact that the server end is running something
-funky, because the command line exactly matches how you would access the
-real CVS repository over ssh.
-
-Dscho, care to comment?  This commit happened while I was away so I do not
-really _recall_ the discussion that led to it, but I have always thought
-that was the intention.
-
-> @@ -155,14 +159,17 @@ Example:
->       export CVS_SERVER=git-cvsserver
->  ------
->  --
-> -4. For SSH clients that will make commits, make sure their .bashrc file
-> -   sets the GIT_AUTHOR and GIT_COMMITTER variables.
-> +4. For SSH clients that will make commits, make sure their (server-side) .bashrc
-> +   files export GIT_AUTHOR_NAME, GIT_AUTHOR_EMAIL, GIT_COMMITTER_NAME, and
-> +   GIT_COMMITTER_EMAIL.
->  
->  5. Clients should now be able to check out the project. Use the CVS 'module'
-> -   name to indicate what GIT 'head' you want to check out. Example:
-> +   name to indicate what GIT 'head' you want to check out.  This also sets the
-> +   name of your newly checked-out directory, unless you tell it otherwise with
-> +   `-d <dir_name>` Example:
->  +
->  ------
-> -     cvs co -d project-master master
-> +     cvs co master -d project-master
->  ------
-
-Are you sure you wanted to do this?  In any case this is different from
-what I read you changed in your commit log message, where you clarified
-distinction between d1 and d2 in "cvs -d d1 co -d d2 module".  Instead
-what you did here is to change "cvs co -d d module" (which looks more
-natural) to "cvs co module -d d" (which might work if the options are
-reordered across parameters, but is unusual).
+I've pushed out updated patches that have this corrected, so please pull
+again.
