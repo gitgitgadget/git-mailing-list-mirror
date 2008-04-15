@@ -1,92 +1,71 @@
-From: Nico -telmich- Schottelius <nico-git-20080415@schottelius.org>
+From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
 Subject: Re: [new tool] git-project-version.sh
-Date: Tue, 15 Apr 2008 14:02:12 +0200
-Message-ID: <20080415120212.GB17459@denkbrett.schottelius.org>
-References: <20080415113629.GA17459@denkbrett.schottelius.org> <20080415115529.GA3595@atjola.homenet>
+Date: Tue, 15 Apr 2008 14:01:06 +0200
+Message-ID: <8aa486160804150501p2f55a3e9g33df94c1d4274e48@mail.gmail.com>
+References: <20080415113629.GA17459@denkbrett.schottelius.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="uZ3hkaAS1mZxFaxD"
-Cc: Nico -telmich- Schottelius <nico-git-20080415@schottelius.org>,
-	git@vger.kernel.org
-To: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Apr 15 14:01:32 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Nico -telmich- Schottelius" <nico-git-20080415@schottelius.org>
+X-From: git-owner@vger.kernel.org Tue Apr 15 14:02:19 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jljqg-0004FR-3d
-	for gcvg-git-2@gmane.org; Tue, 15 Apr 2008 14:01:18 +0200
+	id 1JljrN-0004SO-Tq
+	for gcvg-git-2@gmane.org; Tue, 15 Apr 2008 14:02:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764777AbYDOMAc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Apr 2008 08:00:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758696AbYDOMAc
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Apr 2008 08:00:32 -0400
-Received: from [62.65.138.77] ([62.65.138.77]:38646 "EHLO mx2.schottelius.org"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1764774AbYDOMAa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Apr 2008 08:00:30 -0400
-Received: from denkbrett.schottelius.org (natgw.netstream.ch [62.65.128.28])
-	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mx2.schottelius.org (Postfix) with ESMTPSA id CCAE534D205;
-	Tue, 15 Apr 2008 14:00:25 +0200 (CEST)
-Received: by denkbrett.schottelius.org (Postfix, from userid 1000)
-	id BC4871D0F1; Tue, 15 Apr 2008 14:02:12 +0200 (CEST)
+	id S1760570AbYDOMBQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Apr 2008 08:01:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758696AbYDOMBQ
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Apr 2008 08:01:16 -0400
+Received: from yw-out-2324.google.com ([74.125.46.31]:62399 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751789AbYDOMBP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Apr 2008 08:01:15 -0400
+Received: by yw-out-2324.google.com with SMTP id 5so962966ywb.1
+        for <git@vger.kernel.org>; Tue, 15 Apr 2008 05:01:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=6t0dJ6rnbX4Y2cnigXQSeWKX1e3DzoOHN3Vo1eaKxcg=;
+        b=j0k8kYGdaUthHPHGxO0R3xRdT0sst0XW3kf6ZwnLInCCg5/YH+y6+C4xbMAMW3oWJUxSeJeApZFndfN6ynmc99NtOx1Ap4CTu70pxDGe3gHGYJ1NrWoXB+eqN0+KjSV7I1daQY8xE0LBxTE9ajUKnYG96fjjWUExbEzhyRPi6Rk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=oQ51nK+dZ8+ssusKWuxDx//hOWun5FymGjzaG4r2apU3hIrW1EVz3Rr6AtdeAbG3Jr73Aj0I+8XyNihV5YQDYu0IyS6XCmPID23rvWz5jrapP7SpzgdUte49xZRSi3nhK3DUUjBjbHQ/jvnsRRdVH9TAkWv9yuaUoqidvWA+r/0=
+Received: by 10.150.53.2 with SMTP id b2mr7636294yba.110.1208260866368;
+        Tue, 15 Apr 2008 05:01:06 -0700 (PDT)
+Received: by 10.151.14.14 with HTTP; Tue, 15 Apr 2008 05:01:06 -0700 (PDT)
+In-Reply-To: <20080415113629.GA17459@denkbrett.schottelius.org>
 Content-Disposition: inline
-In-Reply-To: <20080415115529.GA3595@atjola.homenet>
-User-Agent: echo $message | gpg -e $sender  -s | netcat mailhost 25
-X-Unix-Info: http://unix.schottelius.org/
-X-Netzseite: http://nico.schottelius.org/
-X-System-Info: denkbrett running Linux 2.6.24.3-denkbrett on x86_64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79592>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79593>
 
+On Tue, Apr 15, 2008 at 1:36 PM, Nico -telmich- Schottelius
+<nico-git-20080415@schottelius.org> wrote:
+> Hello!
+>
+>  As I want to use the latest commit id in all my projects, so I know
+>  which commit the version is based on, I wrote an extremly simple script
+>  that is based on git-show to display only the version named
+>  git-project-version.sh.
 
---uZ3hkaAS1mZxFaxD
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+an equivalent simpler version is:
 
-Bj=F6rn Steinbrink [Tue, Apr 15, 2008 at 01:55:29PM +0200]:
-> > [...git-project-version.sh...]
-> >=20
->=20
-> Hm, except for the three trailing dots that you get with
-> --abbrev-commit, you can get the same results with rev-parse
->=20
-> $ git rev-parse  HEAD
-> 8a18e8fe4e0e64222de6b063a976d0fe24955ddb
->=20
-> $ git rev-parse --short HEAD
-> 8a18e8f
+git rev-parse [--short] HEAD
 
-Should have known that before... thank you for the hint!
+Also "git show" is a porcelain command, that means it is for humans,
+not for scripts. The output of "git show" can change while the output
+of "git rev-parse" (and the plumbing) is stable.
 
-So just forget my previous post :-)
+But maybe what you really want is:
 
-Nico
+git describe [--always]
 
---=20
-Think about Free and Open Source Software (FOSS).
-http://nico.schottelius.org/documentations/foss/the-term-foss/
-
-PGP: BFE4 C736 ABE5 406F 8F42  F7CF B8BE F92A 9885 188C
-
---uZ3hkaAS1mZxFaxD
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFIBJlEuL75KpiFGIwRAvpdAKCemm09KNGHSNQuaCsFYupy1UplawCfRNz6
-pEVMk00C2ep4f45yGC6AFM4=
-=0hB+
------END PGP SIGNATURE-----
-
---uZ3hkaAS1mZxFaxD--
+Santi
