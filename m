@@ -1,71 +1,97 @@
-From: Joachim Berdal Haga <jobh@broadpark.no>
-Subject: Re: [PATCH] git clean: Don't automatically remove directories when
- run within subdirectory
-Date: Tue, 15 Apr 2008 16:46:13 +0200
-Message-ID: <4804BFB5.8030605@broadpark.no>
-References: <85fxtvj6y8.fsf_-_@lupus.strangled.net> <1208130578-24748-1-git-send-email-shawn.bohrer@gmail.com> <7v8wzgaoqy.fsf@gitster.siamese.dyndns.org> <20080414170643.GA10548@mediacenter> <48039FE5.5060309@broadpark.no> <20080415034417.GA2882@lintop> <48044C33.20006@broadpark.no> <20080415142601.GB10548@mediacenter>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Joachim Berdal Haga <cjbhaga@broadpark.no>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Shawn Bohrer <shawn.bohrer@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 15 17:48:08 2008
+From: Scott Collins <scc@ScottCollins.net>
+Subject: [PATCH] Clarify documentation of git-cvsserver, particularly in relation to git-shell
+Date: Tue, 15 Apr 2008 11:30:02 -0400
+Message-ID: <1208273402-2152-1-git-send-email-scc@ScottCollins.net>
+Cc: Scott Collins <scc@ScottCollins.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 15 18:17:57 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jlmwx-0008Ev-TG
-	for gcvg-git-2@gmane.org; Tue, 15 Apr 2008 17:20:00 +0200
+	id 1JlnmM-0006Is-I3
+	for gcvg-git-2@gmane.org; Tue, 15 Apr 2008 18:13:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1765295AbYDOPS2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Apr 2008 11:18:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765194AbYDOPS2
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Apr 2008 11:18:28 -0400
-Received: from mail-forward.uio.no ([129.240.10.42]:59981 "EHLO
-	mail-forward.uio.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759950AbYDOPS1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Apr 2008 11:18:27 -0400
-X-Greylist: delayed 1939 seconds by postgrey-1.27 at vger.kernel.org; Tue, 15 Apr 2008 11:18:27 EDT
-Received: from mail-mx4.uio.no ([129.240.10.45])
-	by pat.uio.no with esmtp (Exim 4.67)
-	(envelope-from <jobh@broadpark.no>)
-	id 1JlmQ8-0007uI-IW; Tue, 15 Apr 2008 16:46:04 +0200
-Received: from vizius.simula.no ([129.240.228.35])
-	by mail-mx4.uio.no with esmtp (Exim 4.67)
-	(envelope-from <jobh@broadpark.no>)
-	id 1JlmQ8-0003cl-Be; Tue, 15 Apr 2008 16:46:04 +0200
-User-Agent: Thunderbird 2.0.0.12 (X11/20080227)
-In-Reply-To: <20080415142601.GB10548@mediacenter>
-X-UiO-Spam-info: not spam, SpamAssassin (score=-5.0, required=5.0, autolearn=disabled, UIO_MAIL_IS_INTERNAL=-5)
-X-UiO-Scanned: 3500C181C2AF61A4549DAACFBD67963DDE096F33
-X-UiO-SR-test: 7D23AA9754295B0F5D98D1367EF2D0E51AD446CE
-X-UiO-SPAM-Test: remote_host: 129.240.228.35 spam_score: -49 maxlevel 200 minaction 2 bait 0 mail/h: 1 total 179 max/h 13 blacklist 0 greylist 0 ratelimit 0
+	id S1751442AbYDOQMU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Apr 2008 12:12:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751287AbYDOQMT
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Apr 2008 12:12:19 -0400
+Received: from mx-1.vasoftware.com ([208.48.95.23]:50419 "EHLO
+	mx-1.vasoftware.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751120AbYDOQMS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Apr 2008 12:12:18 -0400
+X-Greylist: delayed 2526 seconds by postgrey-1.27 at vger.kernel.org; Tue, 15 Apr 2008 12:12:18 EDT
+Received: from ip199-194.digitalrealm.net ([216.144.199.194] helo=localhost.localdomain)
+	by mx-1.vasoftware.com with esmtpa 
+	(Exim 4.64)
+	id 1Jln6p-0005AD-1W by VAAuthID scollins with plain; Tue, 15 Apr 2008 08:30:11 -0700
+X-Mailer: git-send-email 1.5.5.49.gf43e2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79604>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79605>
 
-Shawn Bohrer wrote:
-> On Tue, Apr 15, 2008 at 08:33:23AM +0200, Joachim Berdal Haga wrote:
->> like "Would not remove dir/ (-d not given)". But I also think that the
->> difference between "dir" and "dir/" is very (too?) subtle in this case and
->> therefore should require explicit approval/action from the user.
-> 
-> Yeah, I don't know how I feel about this.  I do think that the behavior
-> with my current patch is technically correct, but you may be right that
-> a trailing slash is subtle.  In most cases I use my shell's tab
-> completion witch adds the trailing slash, and only remove it when
-> needed.  Additionally, I could argue that by default we require explicit
-> action to clean files by requiring -n or -f so hopefully users try -n
-> first (I do).
+Currently, git-cvsserver requires CVS_SERVER to be set to 'cvs' if you are
+restricted to git-shell, so we need to mention that here.  Previous wording
+mentioning GIT_AUTHOR, GIT_COMMITTER variables may not have made clear we
+really meant GIT_AUTHOR_(NAME|COMMITTER), etc.  Add a bit of text to
+differentiate cvs -d (setting CVSROOT) from cvs co -d (setting the name of
+the newly checked out directory).
 
-I guess part of the story is that I dislike the -f requirement, because I see it 
-as a case of "training users to use -f without thinking" (it's required for 
-normal operation). But that's another story, and now that I've raised my points 
-I'm quite happy to leave the final decision to you.
+Signed-off-by: Scott Collins <scc@ScottCollins.net>
+---
+ Documentation/git-cvsserver.txt |   19 +++++++++++++------
+ 1 files changed, 13 insertions(+), 6 deletions(-)
 
-Cheers,
--j.
+diff --git a/Documentation/git-cvsserver.txt b/Documentation/git-cvsserver.txt
+index 9cec802..5e67a89 100644
+--- a/Documentation/git-cvsserver.txt
++++ b/Documentation/git-cvsserver.txt
+@@ -106,7 +106,10 @@ Note: Newer CVS versions (>= 1.12.11) also support specifying
+ CVS_SERVER directly in CVSROOT like
+ 
+ ------
+-cvs -d ":ext;CVS_SERVER=git-cvsserver:user@server/path/repo.git" co <HEAD_name>
++cvs -d ":ext;CVS_SERVER=git-cvsserver:user@server/path/repo.git" co <HEAD_name> -d <dir_name>
++
++# or for git-shell users:
++cvs -d ":ext;CVS_SERVER=cvs:user@server/path/repo.git" co <HEAD_name> -d <dir_name>
+ ------
+ This has the advantage that it will be saved in your 'CVS/Root' files and
+ you don't need to worry about always setting the correct environment
+@@ -146,7 +149,8 @@ allowing access over SSH.
+    appropriate git repo. For example:
+ +
+ --
+-For SSH access, CVS_SERVER should be set to git-cvsserver
++For normal SSH access, CVS_SERVER should be set to git-cvsserver.  For those
++whose access is restricted to git-shell, CVS_SERVER should be set to cvs.
+ 
+ Example:
+ 
+@@ -155,14 +159,17 @@ Example:
+      export CVS_SERVER=git-cvsserver
+ ------
+ --
+-4. For SSH clients that will make commits, make sure their .bashrc file
+-   sets the GIT_AUTHOR and GIT_COMMITTER variables.
++4. For SSH clients that will make commits, make sure their (server-side) .bashrc
++   files export GIT_AUTHOR_NAME, GIT_AUTHOR_EMAIL, GIT_COMMITTER_NAME, and
++   GIT_COMMITTER_EMAIL.
+ 
+ 5. Clients should now be able to check out the project. Use the CVS 'module'
+-   name to indicate what GIT 'head' you want to check out. Example:
++   name to indicate what GIT 'head' you want to check out.  This also sets the
++   name of your newly checked-out directory, unless you tell it otherwise with
++   `-d <dir_name>` Example:
+ +
+ ------
+-     cvs co -d project-master master
++     cvs co master -d project-master
+ ------
+ 
+ [[dbbackend]]
+-- 
+1.5.5.49.gf43e2
