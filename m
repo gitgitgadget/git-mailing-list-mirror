@@ -1,134 +1,86 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Make core.sharedRepository more generic (version 2)
-Date: Mon, 14 Apr 2008 17:08:03 -0700
-Message-ID: <7v3apo7zfg.fsf@gitster.siamese.dyndns.org>
-References: <20080412195754.GA15091@zakalwe.fi>
+Subject: Re: [PATCH/RFC 01/10] Teach rebase interactive the mark command
+Date: Mon, 14 Apr 2008 17:11:15 -0700
+Message-ID: <7vve2k6kpo.fsf@gitster.siamese.dyndns.org>
+References: <69a88a530804131351n7d9f8188vf2bbb0174ade3ca0@mail.gmail.com>
+ <alpine.DEB.1.00.0804141506270.28504@racer>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Heikki Orsila <heikki.orsila@iki.fi>
-X-From: git-owner@vger.kernel.org Tue Apr 15 02:09:34 2008
+Cc: Paul Fredrickson <paul.fredrickson@gmail.com>, git@vger.kernel.org,
+	joerg@alea.gnuu.de
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Apr 15 02:12:28 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JlYjW-0003Oo-38
-	for gcvg-git-2@gmane.org; Tue, 15 Apr 2008 02:09:10 +0200
+	id 1JlYmU-0004Yl-B0
+	for gcvg-git-2@gmane.org; Tue, 15 Apr 2008 02:12:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760013AbYDOAIP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Apr 2008 20:08:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757212AbYDOAIO
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Apr 2008 20:08:14 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:47202 "EHLO
+	id S1757347AbYDOAL3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Apr 2008 20:11:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757212AbYDOAL3
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Apr 2008 20:11:29 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:47510 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762056AbYDOAIN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Apr 2008 20:08:13 -0400
+	with ESMTP id S1754662AbYDOAL2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Apr 2008 20:11:28 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id B825E3FA1;
-	Mon, 14 Apr 2008 20:08:11 -0400 (EDT)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 0EC573FCF;
+	Mon, 14 Apr 2008 20:11:27 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
  certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 8D7633FA0; Mon, 14 Apr 2008 20:08:06 -0400 (EDT)
-In-Reply-To: <20080412195754.GA15091@zakalwe.fi> (Heikki Orsila's message of
- "Sat, 12 Apr 2008 22:57:54 +0300")
+ ESMTP id 252FB3FC2; Mon, 14 Apr 2008 20:11:19 -0400 (EDT)
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79544>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79545>
 
-Heikki Orsila <heikki.orsila@iki.fi> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> diff --git a/builtin-init-db.c b/builtin-init-db.c
-> index 2854868..8c63295 100644
-> --- a/builtin-init-db.c
-> +++ b/builtin-init-db.c
-> @@ -400,9 +400,9 @@ int cmd_init_db(int argc, const char **argv, const char *prefix)
->  		char buf[10];
->  		/* We do not spell "group" and such, so that
->  		 * the configuration can be read by older version
-> -		 * of git.
-> +		 * of git. Note, we use octal numbers.
->  		 */
-> -		sprintf(buf, "%d", shared_repository);
-> +		sprintf(buf, "0%o", shared_repository);
+> I would like it much better, if there was something like
+>
+> pick 5cc8f37 (init: show "Reinit" message even in ...)
+> pick 18d077c (quiltimport: fix misquoting of parse...)
+> merge 9876543:5cc8f37,18d077c (Merge blub)
+> reset 5cc8f37
+> ...
+>
+> I.e. like with filter-branch, and like with rebase -i -p in its current 
+> form, we take the _original_ names as keys as to which commits to merge, 
+> or where to reset to.
 
-Unconditionally doing this makes the resulting repository unusable by git
-1.5.5 and older, even when the user wanted to use the bog standard "git
-init --shared".  You can limit the extent of damage if you continue
-writing PERM_GROUP and PERM_EVERYBODY out as 1 and 2, and use the new
-octal notation only when the user used the settings allowed only with new
-git.
+While the need probably would not be felt strongly if we design this only
+for rebase -i, I suspect that you would want to have two kinds of reset if
+you go that route.  There might be some other insn that may have similar
+issues.
 
-> @@ -438,11 +440,46 @@ int git_config_perm(const char *var, const char *value)
->  		    !strcmp(value, "world") ||
->  		    !strcmp(value, "everybody"))
->  			return PERM_EVERYBODY;
-> +
-> +		/* Parse octal numbers */
-> +		i = strtol(value, &endptr, 8);
-> +		if (*endptr != 0) {
-> +			/* Not an octal number. Maybe true/false? */
-> +			if (git_config_bool(var, value))
-> +				return PERM_GROUP;
-> +			else
-> +				return PERM_UMASK;
-> +		}
-> +
-> +		/* Handle compatibility cases */
-> +		switch (i) {
-> +		case PERM_UMASK:               /* 0 */
-> +			return PERM_UMASK;
-> +		case OLD_PERM_GROUP:           /* 1 */
-> +			return PERM_GROUP;
-> +		case OLD_PERM_EVERYBODY:       /* 2 */
-> +			return PERM_EVERYBODY;
-> +		}
+For example, imagine a case where you want to create a merge with a
+recontructed side branch.  First you grow the branch you would merge into,
+with a sequence:
 
-This is valid only because forcing "chmod 0", "chmod 1", nor "chmod 2"
-would not make any sense.  We might want to explain that in comment.
+	pick A
+        pick B
+        pick C
 
-> +		/* A filemode value was given: 0xxx */
-> +
-> +		if ((i & 0600) != 0600)
-> +			die("Problem with core.sharedRepository filemode value"
-> +			    " (0%.3o).\nThe owner of files must always have "
-> +			    "read and write permissions.", i);
-> +
-> +		if (i & 0002)
-> +			warning("core.sharedRepository filemode (0%.3o) is a "
-> +				"security threat.\nMasking off write "
-> +				"permission for others\n", i);
+Then in order to reconstruct a side branch that begins from a known point,
+say the tip of "master", you would want to reset to a commit that is
+outside of the scope of this rewriting.  And then you rebuild that side
+branch:
 
-I am not sure about this.
+	reset master
+        pick D
+        pick E
 
-If the user explicitly asked for world-writable, I think we should allow
-it.  "is a" is too strong a statement to make without knowing how the
-access to the repository is arranged.  In a setting where there is nothing
-but a restricted access over ssh, and "update-paranoid" hook in place, it
-may not be a threat at all, and you are forbidding hosting services to use
-such an access control model.
+And finally (and this step shows the beauty of your approach), come back
+to the other tip and make the merge:
 
-> +		/*
-> +                 * Mask filemode value. Others can not get write permission.
-> +		 * x flags for directories are handled separately.
-> +                 */
-Whitespace breakages.
+	reset C
+        merge E
 
-> +		return i & 0664;
-
->  	}
-> -	return git_config_bool(var, value);
-> +	return PERM_GROUP;
-
-At this point we know value is NULL so always returning PERM_GROUP
-probably makes sense.  But if you did
-
-	if (!value)
-	        return PERM_GROUP
-
-upfront, you can lose one level of indentation from the major parts
-of this function (this is 70% style and 30% readability comment).
+Two resets above would have different semantics.  The former resets to
+unwritten, and the latter rewritten.
