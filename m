@@ -1,63 +1,80 @@
-From: Miles Bader <miles.bader@necel.com>
-Subject: Re: [PATCH] When a remote is added but not fetched, tell the user.
-Date: Tue, 15 Apr 2008 12:15:06 +0900
-Message-ID: <buoabjvrepx.fsf@dhapc248.dev.necel.com>
-References: <20080409101428.GA2637@elte.hu>
-	<1207869946-17013-1-git-send-email-g2p.code@gmail.com>
-	<alpine.DEB.1.00.0804111621080.31025@eeepc-johanness>
-	<20080411203501.7095b866@localhost> <20080411190816.GA17277@mithlond>
-Reply-To: Miles Bader <miles@gnu.org>
+From: Anand Kumria <wildfire@progsoc.org>
+Subject: Re: RFC: Website redesign
+Date: Tue, 15 Apr 2008 03:24:50 +0000 (UTC)
+Message-ID: <pan.2008.04.15.03.25.00@progsoc.org>
+References: <3175605f-ff32-4fd6-bed3-7ae596ecbcde@q1g2000prf.googlegroups.com>
+	<2c6b72b30804140656g14c24d8cwae016d62fe12f4a7@mail.gmail.com>
+	<56e37551-4b8f-4164-a71d-79dba8635b7d@l28g2000prd.googlegroups.com>
+	<96F7571C-1D9D-4F0A-99F1-A2307DAB0374@wincent.com>
+	<bd6139dc0804141129h25c829e2i320f227594763d71@mail.gmail.com>
+	<pan.2008.04.14.20.39.10@progsoc.org>
+	<20080414213339.GB10300@dpotapov.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Gabriel <g2p.code@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Teemu Likonen <tlikonen@iki.fi>
-X-From: git-owner@vger.kernel.org Tue Apr 15 05:16:18 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 15 05:25:59 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JlbeY-0002WE-6e
-	for gcvg-git-2@gmane.org; Tue, 15 Apr 2008 05:16:14 +0200
+	id 1Jlbnq-0004uy-VN
+	for gcvg-git-2@gmane.org; Tue, 15 Apr 2008 05:25:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764275AbYDODPb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Apr 2008 23:15:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764265AbYDODPb
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Apr 2008 23:15:31 -0400
-Received: from TYO201.gate.nec.co.jp ([202.32.8.193]:62474 "EHLO
-	tyo201.gate.nec.co.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761823AbYDODPa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Apr 2008 23:15:30 -0400
-Received: from relay31.aps.necel.com ([10.29.19.54])
-	by tyo201.gate.nec.co.jp (8.13.8/8.13.4) with ESMTP id m3F3F5bS027321;
-	Tue, 15 Apr 2008 12:15:07 +0900 (JST)
-Received: from relay21.aps.necel.com ([10.29.19.24] [10.29.19.24]) by relay31.aps.necel.com with ESMTP; Tue, 15 Apr 2008 12:15:07 +0900
-Received: from dhapc248.dev.necel.com ([10.114.112.215] [10.114.112.215]) by relay21.aps.necel.com with ESMTP; Tue, 15 Apr 2008 12:15:07 +0900
-Received: by dhapc248.dev.necel.com (Postfix, from userid 31295)
-	id D172E4D9; Tue, 15 Apr 2008 12:15:06 +0900 (JST)
-System-Type: i686-pc-linux-gnu
-Blat: Foop
-In-Reply-To: <20080411190816.GA17277@mithlond> (Teemu Likonen's message of
-	"Fri, 11 Apr 2008 22:08:16 +0300")
+	id S1762355AbYDODZE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Apr 2008 23:25:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762409AbYDODZE
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Apr 2008 23:25:04 -0400
+Received: from main.gmane.org ([80.91.229.2]:52835 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1762263AbYDODZD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Apr 2008 23:25:03 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Jlbn1-0002cv-MA
+	for git@vger.kernel.org; Tue, 15 Apr 2008 03:24:59 +0000
+Received: from 62-31-42-82.cable.ubr03.dals.blueyonder.co.uk ([62.31.42.82])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 15 Apr 2008 03:24:59 +0000
+Received: from wildfire by 62-31-42-82.cable.ubr03.dals.blueyonder.co.uk with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 15 Apr 2008 03:24:59 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 62-31-42-82.cable.ubr03.dals.blueyonder.co.uk
+User-Agent: Pan/0.132 (Waxed in Black)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79562>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79563>
 
-Teemu Likonen <tlikonen@iki.fi> writes:
-> Hmm, I'm quite newbie but I have never expected "git remote add" to
-> fetch anything. I wouldn't want it to do it automatically.
+On Tue, 15 Apr 2008 01:33:39 +0400, Dmitry Potapov wrote:
 
-I agree.
+> On Mon, Apr 14, 2008 at 08:39:00PM +0000, Anand Kumria wrote:
+>> 
+>> That is basically the current "Web 2.0 style".
+>> 
+>> <http://www.webdesignfromscratch.com/current-style.cfm>
+>> 
+>> One of the "hotties" is a software project, and Free Software at that.
+>> 
+>> I think the designs are a good first starting point.
+> 
+> And here is what validator.w3.org says about this page:
 
-An automatic fetch would be ... surprising.
+I'm sure you had some useful information to add, but it hasn't come 
+across. I've indicated that 'this; page notes current design style and 
+that it calls out a particular free software project (mozilla) for its 
+excellence.
 
--Miles
+But let's continue your, rather pointless, exercise:
 
--- 
-"Don't just question authority,
-Don't forget to question me."
--- Jello Biafra
+http://git.or.cz/ - invalid, 9 errors
+
+http://mozilla.org/ - valid, 1 warning
+
+So well designed, and valid markup are possible.
+
+Anand
