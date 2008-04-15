@@ -1,353 +1,134 @@
-From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
-Subject: [StGit PATCH] New command: stg reset
-Date: Tue, 15 Apr 2008 02:01:35 +0200
-Message-ID: <20080414235941.12803.40939.stgit@yoghurt>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Make core.sharedRepository more generic (version 2)
+Date: Mon, 14 Apr 2008 17:08:03 -0700
+Message-ID: <7v3apo7zfg.fsf@gitster.siamese.dyndns.org>
+References: <20080412195754.GA15091@zakalwe.fi>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 15 02:02:43 2008
+To: Heikki Orsila <heikki.orsila@iki.fi>
+X-From: git-owner@vger.kernel.org Tue Apr 15 02:09:34 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JlYdG-0001Mw-45
-	for gcvg-git-2@gmane.org; Tue, 15 Apr 2008 02:02:42 +0200
+	id 1JlYjW-0003Oo-38
+	for gcvg-git-2@gmane.org; Tue, 15 Apr 2008 02:09:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756805AbYDOABn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Apr 2008 20:01:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752286AbYDOABn
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Apr 2008 20:01:43 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4760 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754511AbYDOABm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Apr 2008 20:01:42 -0400
-Received: from localhost ([127.0.0.1] helo=[127.0.1.1])
-	by diana.vm.bytemark.co.uk with esmtp (Exim 3.36 #1 (Debian))
-	id 1JlYcB-0006Cx-00; Tue, 15 Apr 2008 01:01:35 +0100
-User-Agent: StGIT/0.14.2
+	id S1760013AbYDOAIP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Apr 2008 20:08:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757212AbYDOAIO
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Apr 2008 20:08:14 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:47202 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762056AbYDOAIN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Apr 2008 20:08:13 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id B825E3FA1;
+	Mon, 14 Apr 2008 20:08:11 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 8D7633FA0; Mon, 14 Apr 2008 20:08:06 -0400 (EDT)
+In-Reply-To: <20080412195754.GA15091@zakalwe.fi> (Heikki Orsila's message of
+ "Sat, 12 Apr 2008 22:57:54 +0300")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79543>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79544>
 
-Given a commit object from the log, resets the stack (or just the
-named patches) to the state given by that log entry.
+Heikki Orsila <heikki.orsila@iki.fi> writes:
 
-Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
+> diff --git a/builtin-init-db.c b/builtin-init-db.c
+> index 2854868..8c63295 100644
+> --- a/builtin-init-db.c
+> +++ b/builtin-init-db.c
+> @@ -400,9 +400,9 @@ int cmd_init_db(int argc, const char **argv, const char *prefix)
+>  		char buf[10];
+>  		/* We do not spell "group" and such, so that
+>  		 * the configuration can be read by older version
+> -		 * of git.
+> +		 * of git. Note, we use octal numbers.
+>  		 */
+> -		sprintf(buf, "%d", shared_repository);
+> +		sprintf(buf, "0%o", shared_repository);
 
----
+Unconditionally doing this makes the resulting repository unusable by git
+1.5.5 and older, even when the user wanted to use the bog standard "git
+init --shared".  You can limit the extent of damage if you continue
+writing PERM_GROUP and PERM_EVERYBODY out as 1 and 2, and use the new
+octal notation only when the user used the settings allowed only with new
+git.
 
-New and updated version that can optionally reset only a given subset
-of the patches. Plus, it comes with a test script!
+> @@ -438,11 +440,46 @@ int git_config_perm(const char *var, const char *value)
+>  		    !strcmp(value, "world") ||
+>  		    !strcmp(value, "everybody"))
+>  			return PERM_EVERYBODY;
+> +
+> +		/* Parse octal numbers */
+> +		i = strtol(value, &endptr, 8);
+> +		if (*endptr != 0) {
+> +			/* Not an octal number. Maybe true/false? */
+> +			if (git_config_bool(var, value))
+> +				return PERM_GROUP;
+> +			else
+> +				return PERM_UMASK;
+> +		}
+> +
+> +		/* Handle compatibility cases */
+> +		switch (i) {
+> +		case PERM_UMASK:               /* 0 */
+> +			return PERM_UMASK;
+> +		case OLD_PERM_GROUP:           /* 1 */
+> +			return PERM_GROUP;
+> +		case OLD_PERM_EVERYBODY:       /* 2 */
+> +			return PERM_EVERYBODY;
+> +		}
 
- stgit/commands/reset.py |  111 +++++++++++++++++++++++++++++++++++
- stgit/main.py           |    2 +
- t/t3100-reset.sh        |  151 +++++++++++++++++++++++++++++++++++++++=
-++++++++
- 3 files changed, 264 insertions(+), 0 deletions(-)
- create mode 100644 stgit/commands/reset.py
- create mode 100755 t/t3100-reset.sh
+This is valid only because forcing "chmod 0", "chmod 1", nor "chmod 2"
+would not make any sense.  We might want to explain that in comment.
 
+> +		/* A filemode value was given: 0xxx */
+> +
+> +		if ((i & 0600) != 0600)
+> +			die("Problem with core.sharedRepository filemode value"
+> +			    " (0%.3o).\nThe owner of files must always have "
+> +			    "read and write permissions.", i);
+> +
+> +		if (i & 0002)
+> +			warning("core.sharedRepository filemode (0%.3o) is a "
+> +				"security threat.\nMasking off write "
+> +				"permission for others\n", i);
 
-diff --git a/stgit/commands/reset.py b/stgit/commands/reset.py
-new file mode 100644
-index 0000000..b29d122
---- /dev/null
-+++ b/stgit/commands/reset.py
-@@ -0,0 +1,111 @@
-+# -*- coding: utf-8 -*-
-+
-+__copyright__ =3D """
-+Copyright (C) 2008, Karl Hasselstr=C3=B6m <kha@treskal.com>
-+
-+This program is free software; you can redistribute it and/or modify
-+it under the terms of the GNU General Public License version 2 as
-+published by the Free Software Foundation.
-+
-+This program is distributed in the hope that it will be useful,
-+but WITHOUT ANY WARRANTY; without even the implied warranty of
-+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+GNU General Public License for more details.
-+
-+You should have received a copy of the GNU General Public License
-+along with this program; if not, write to the Free Software
-+Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 US=
-A
-+"""
-+
-+from stgit.commands import common
-+from stgit.lib import git, log, transaction
-+from stgit.out import out
-+
-+help =3D 'reset the patch stack to an earlier state'
-+usage =3D """%prog <state> [<patchnames>]
-+
-+Reset the patch stack to an earlier state. The state is specified with
-+a commit from a stack log; for a branch foo, StGit stores the stack
-+log in foo.stgit^. So to undo the last N StGit commands, you would say
-+
-+  stg reset foo.stgit^~N
-+
-+or, if you are not sure how many steps to undo, you can view the log
-+with "git log" or gitk
-+
-+  gitk foo.stgit^
-+
-+and then reset to any sha1 you see in the log.
-+
-+If one or more patch names are given, reset only those patches, and
-+leave the rest alone."""
-+
-+directory =3D common.DirectoryHasRepositoryLib()
-+options =3D []
-+
-+def reset_stack(stack, iw, state, only_patches):
-+    only_patches =3D set(only_patches)
-+    def mask(s):
-+        if only_patches:
-+            return s & only_patches
-+        else:
-+            return s
-+    patches_to_reset =3D mask(set(state.applied + state.unapplied))
-+    existing_patches =3D set(stack.patchorder.all)
-+    to_delete =3D mask(existing_patches - patches_to_reset)
-+    trans =3D transaction.StackTransaction(stack, 'stg reset')
-+
-+    # If we have to change the stack base, we need to pop all patches
-+    # first.
-+    if not only_patches and trans.base !=3D state.base:
-+        trans.pop_patches(lambda pn: True)
-+        out.info('Setting stack base to %s' % state.base.sha1)
-+        trans.base =3D state.base
-+
-+    # In one go, do all the popping we have to in order to pop the
-+    # patches we're going to delete or modify.
-+    def mod(pn):
-+        if only_patches and not pn in only_patches:
-+            return False
-+        if pn in to_delete:
-+            return True
-+        if stack.patches.get(pn).commit !=3D state.patches.get(pn, Non=
-e):
-+            return True
-+        return False
-+    trans.pop_patches(mod)
-+
-+    # Delete and modify/create patches. We've previously popped all
-+    # patches that we touch in this step.
-+    trans.delete_patches(lambda pn: pn in to_delete)
-+    for pn in patches_to_reset:
-+        if pn in existing_patches:
-+            out.info('Resetting %s' % pn)
-+        else:
-+            trans.unapplied.append(pn)
-+            out.info('Resurrecting %s' % pn)
-+        trans.patches[pn] =3D state.patches[pn]
-+
-+    # Push/pop patches as necessary.
-+    try:
-+        if only_patches:
-+            # Push all the patches that we've popped, if they still
-+            # exist.
-+            pushable =3D set(trans.unapplied)
-+            for pn in stack.patchorder.applied:
-+                if pn in pushable:
-+                    trans.push_patch(pn, iw)
-+        else:
-+            # Recreate the exact order specified by the goal state.
-+            trans.reorder_patches(state.applied, state.unapplied, iw)
-+    except transaction.TransactionHalted:
-+        pass
-+    return trans.run(iw)
-+
-+def func(parser, options, args):
-+    stack =3D directory.repository.current_stack
-+    if len(args) >=3D 1:
-+        ref, patches =3D args[0], args[1:]
-+        state =3D log.Log(stack.repository, ref, stack.repository.rev_=
-parse(ref))
-+    else:
-+        raise common.CmdException('Wrong number of arguments')
-+    return reset_stack(stack, stack.repository.default_iw, state, patc=
-hes)
-diff --git a/stgit/main.py b/stgit/main.py
-index 663fdec..6cf344e 100644
---- a/stgit/main.py
-+++ b/stgit/main.py
-@@ -89,6 +89,7 @@ commands =3D Commands({
-     'refresh':          'refresh',
-     'rename':           'rename',
-     'repair':           'repair',
-+    'reset':            'reset',
-     'resolved':         'resolved',
-     'series':           'series',
-     'show':             'show',
-@@ -122,6 +123,7 @@ stackcommands =3D (
-     'push',
-     'rebase',
-     'repair',
-+    'reset',
-     'series',
-     'sink',
-     'top',
-diff --git a/t/t3100-reset.sh b/t/t3100-reset.sh
-new file mode 100755
-index 0000000..1ad95fa
---- /dev/null
-+++ b/t/t3100-reset.sh
-@@ -0,0 +1,151 @@
-+#!/bin/sh
-+
-+test_description=3D'Simple test cases for "stg reset"'
-+
-+. ./test-lib.sh
-+
-+# Ignore our own output files.
-+cat > .git/info/exclude <<EOF
-+/expected.txt
-+EOF
-+
-+test_expect_success 'Initialize StGit stack with three patches' '
-+    stg init &&
-+    echo 000 >> a &&
-+    git add a &&
-+    git commit -m a &&
-+    echo 111 >> a &&
-+    git commit -a -m p1 &&
-+    echo 222 >> a &&
-+    git commit -a -m p2 &&
-+    echo 333 >> a &&
-+    git commit -a -m p3 &&
-+    stg uncommit -n 3 &&
-+    stg pop
-+'
-+
-+cat > expected.txt <<EOF
-+000
-+111
-+EOF
-+test_expect_success 'Pop one patch ...' '
-+    stg pop &&
-+    test "$(echo $(stg applied))" =3D "p1" &&
-+    test "$(echo $(stg unapplied))" =3D "p2 p3" &&
-+    diff -u expected.txt a
-+'
-+
-+cat > expected.txt <<EOF
-+000
-+111
-+222
-+EOF
-+test_expect_success '... and undo it' '
-+    stg reset master.stgit^~1 &&
-+    test "$(echo $(stg applied))" =3D "p1 p2" &&
-+    test "$(echo $(stg unapplied))" =3D "p3" &&
-+    diff -u expected.txt a
-+'
-+
-+cat > expected.txt <<EOF
-+000
-+111
-+222
-+333
-+EOF
-+test_expect_success 'Push one patch ...' '
-+    stg push &&
-+    test "$(echo $(stg applied))" =3D "p1 p2 p3" &&
-+    test "$(echo $(stg unapplied))" =3D "" &&
-+    diff -u expected.txt a
-+'
-+
-+cat > expected.txt <<EOF
-+000
-+111
-+222
-+EOF
-+test_expect_success '... and undo it' '
-+    stg reset master.stgit^~1 &&
-+    test "$(echo $(stg applied))" =3D "p1 p2" &&
-+    test "$(echo $(stg unapplied))" =3D "p3" &&
-+    diff -u expected.txt a
-+'
-+
-+test_expect_success 'Commit one patch ...' '
-+    stg commit &&
-+    test "$(echo $(stg applied))" =3D "p2" &&
-+    test "$(echo $(stg unapplied))" =3D "p3"
-+'
-+
-+test_expect_success '... and undo it' '
-+    stg reset master.stgit^~1 &&
-+    test "$(echo $(stg applied))" =3D "p1 p2" &&
-+    test "$(echo $(stg unapplied))" =3D "p3"
-+'
-+
-+cat > expected.txt <<EOF
-+000
-+111
-+EOF
-+test_expect_success 'Delete two patches ...' '
-+    stg delete p2 p3 &&
-+    test "$(echo $(stg applied))" =3D "p1" &&
-+    test "$(echo $(stg unapplied))" =3D "" &&
-+    diff -u expected.txt a
-+'
-+
-+test_expect_success '... and undo one of the deletions ...' '
-+    stg reset master.stgit^~1 p3 &&
-+    test "$(echo $(stg applied))" =3D "p1" &&
-+    test "$(echo $(stg unapplied))" =3D "p3" &&
-+    diff -u expected.txt a
-+'
-+
-+test_expect_success '... then undo the first undo ...' '
-+    stg reset master.stgit^~1 &&
-+    test "$(echo $(stg applied))" =3D "p1" &&
-+    test "$(echo $(stg unapplied))" =3D "" &&
-+    diff -u expected.txt a
-+'
-+
-+cat > expected.txt <<EOF
-+000
-+111
-+222
-+EOF
-+test_expect_success '... and undo the other deletion' '
-+    stg reset master.stgit^~3 p2 &&
-+    stg push p2 &&
-+    test "$(echo $(stg applied))" =3D "p1 p2" &&
-+    test "$(echo $(stg unapplied))" =3D "" &&
-+    diff -u expected.txt a
-+'
-+
-+cat > expected.txt <<EOF
-+000
-+111
-+222
-+ggg
-+EOF
-+test_expect_success 'Refresh a patch ...' '
-+    echo ggg >> a &&
-+    stg refresh &&
-+    test "$(echo $(stg applied))" =3D "p1 p2" &&
-+    test "$(echo $(stg unapplied))" =3D "" &&
-+    diff -u expected.txt a
-+'
-+
-+cat > expected.txt <<EOF
-+000
-+111
-+222
-+EOF
-+test_expect_success '... and undo the refresh' '
-+    stg reset master.stgit^~1 &&
-+    test "$(echo $(stg applied))" =3D "p1 p2" &&
-+    test "$(echo $(stg unapplied))" =3D "" &&
-+    diff -u expected.txt a
-+'
-+
-+test_done
+I am not sure about this.
+
+If the user explicitly asked for world-writable, I think we should allow
+it.  "is a" is too strong a statement to make without knowing how the
+access to the repository is arranged.  In a setting where there is nothing
+but a restricted access over ssh, and "update-paranoid" hook in place, it
+may not be a threat at all, and you are forbidding hosting services to use
+such an access control model.
+
+> +		/*
+> +                 * Mask filemode value. Others can not get write permission.
+> +		 * x flags for directories are handled separately.
+> +                 */
+Whitespace breakages.
+
+> +		return i & 0664;
+
+>  	}
+> -	return git_config_bool(var, value);
+> +	return PERM_GROUP;
+
+At this point we know value is NULL so always returning PERM_GROUP
+probably makes sense.  But if you did
+
+	if (!value)
+	        return PERM_GROUP
+
+upfront, you can lose one level of indentation from the major parts
+of this function (this is 70% style and 30% readability comment).
