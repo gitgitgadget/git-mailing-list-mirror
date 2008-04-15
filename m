@@ -1,77 +1,70 @@
-From: Stephan Hennig <mailing_list@arcor.de>
-Subject: [ANNOUNCE] vc bundle v0.41 -- version control for TeX and friends
-Date: Tue, 15 Apr 2008 19:52:39 +0200
-Message-ID: <fu2q46$bm3$1@ger.gmane.org>
+From: "Steve Hoelzer" <shoelzer@gmail.com>
+Subject: Re: Git Homepge Update
+Date: Tue, 15 Apr 2008 12:57:59 -0500
+Message-ID: <588192970804151057pc87b73fvee9eb8a47b1d4e78@mail.gmail.com>
+References: <2c6b72b30804140656g14c24d8cwae016d62fe12f4a7@mail.gmail.com>
+	 <96F7571C-1D9D-4F0A-99F1-A2307DAB0374@wincent.com>
+	 <bd6139dc0804141129h25c829e2i320f227594763d71@mail.gmail.com>
+	 <pan.2008.04.14.20.39.10@progsoc.org>
+	 <20080414213339.GB10300@dpotapov.dyndns.org>
+	 <pan.2008.04.15.03.25.00@progsoc.org>
+	 <8607f754-92c8-49ca-9bc9-11e58b66ef40@q1g2000prf.googlegroups.com>
+	 <acfbfe5b-f3a1-4c22-a873-ed329552d1bb@b5g2000pri.googlegroups.com>
+	 <20080415115741.GB26302@machine.or.cz>
+	 <20080415162008.GD26302@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 15 20:10:22 2008
+To: "Petr Baudis" <pasky@suse.cz>, Dill <sarpulhu@gmail.com>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 15 20:12:29 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JlpNE-0002fD-Is
-	for gcvg-git-2@gmane.org; Tue, 15 Apr 2008 19:55:17 +0200
+	id 1JlpQf-000412-DR
+	for gcvg-git-2@gmane.org; Tue, 15 Apr 2008 19:58:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751459AbYDORye (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Apr 2008 13:54:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751456AbYDORy3
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Apr 2008 13:54:29 -0400
-Received: from main.gmane.org ([80.91.229.2]:48123 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751444AbYDORy0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Apr 2008 13:54:26 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1JlpMN-0003Le-SW
-	for git@vger.kernel.org; Tue, 15 Apr 2008 17:54:24 +0000
-Received: from dialin-212-144-219-146.pools.arcor-ip.net ([212.144.219.146])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 15 Apr 2008 17:54:23 +0000
-Received: from mailing_list by dialin-212-144-219-146.pools.arcor-ip.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 15 Apr 2008 17:54:23 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: dialin-212-144-219-146.pools.arcor-ip.net
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.8.1.12) Gecko/20080213 Thunderbird/2.0.0.12 Mnenhy/0.7.5.0
+	id S1751726AbYDOR6D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Apr 2008 13:58:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751745AbYDOR6D
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Apr 2008 13:58:03 -0400
+Received: from fg-out-1718.google.com ([72.14.220.155]:7429 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751726AbYDOR6B (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Apr 2008 13:58:01 -0400
+Received: by fg-out-1718.google.com with SMTP id l27so2079803fgb.17
+        for <git@vger.kernel.org>; Tue, 15 Apr 2008 10:57:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=r3H9Qwk97yKNBIsdCDfrhuiPXx7ggGbOz1JqaE/Lnuk=;
+        b=pXXcfOrH1n3PBfEHbUhgJB9gS8OqVxKZ36CUgIkhI2+5IUiWJ/tQ8tLpA1jktLbgY6PI/pgLmDmkROawk1GPN3AwRicYLds7r5xsN4nGkWGDdsXUXrolOpQLes6fS/W6Ojhieqow8S9GVHDj7shOCtMa23X17tPDySt+8eAl4YI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=X/ynhv+yirUgul6taIbYMpGdI4CdxOjVlLyRkGZeuw8jXAMDboFM8QSgh50RHnva3tFCh/aj51asdIMG7DhHyMY7wDvw6s0eVq25J4GuBFGmpQ9M+I97yoeNr8FpgedmMGbgXYdID+C/kWDi+w1EhFPYfKiI+DOYIZOtD5nCo2c=
+Received: by 10.86.59.2 with SMTP id h2mr16516406fga.63.1208282279612;
+        Tue, 15 Apr 2008 10:57:59 -0700 (PDT)
+Received: by 10.86.62.15 with HTTP; Tue, 15 Apr 2008 10:57:59 -0700 (PDT)
+In-Reply-To: <20080415162008.GD26302@machine.or.cz>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79610>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79611>
 
-The vc bundle
------------------------------------
-This is a script based approach to version control for TeX
-documents.  It works more reliably than keyword substitution
-based approaches, since it tracks all files in a working
-copy, not only .tex files.
+On Tue, Apr 15, 2008 at 11:20 AM, Petr Baudis <pasky@suse.cz> wrote:
+>   I'm wondering whether perhaps the page is still too wide now - one
+>  idea would be to move the header, the two link boxes and possibly some
+>  of the contact information to a sidebar - the link boxes always looked a
+>  bit strange to me. I'm not sure how much would it help, though.
 
-The vc bundle works with LaTeX and plain TeX.  Currently,
-Bazaar, Git and Subversion are supported.
+Yes, a bit wide, I think. A sidebar is one option, or just keep the
+page as-is and limit width via CSS.
 
+    body { max-width: 50em; margin: 0.4em auto; }
 
-What's special about the vc bundle?
------------------------------------
-* Common version control packages for LaTeX use keyword
-  substitution to access revision information.  That
-  approach doesn't work reliably in the presence of
-  non-.tex files, e.g., graphics or graphic sources that
-  are processed by an external tool.
-* The author is unaware of any alternative version control
-  packages for plain TeX.
-* The author is unaware of any alternative (La)TeX version
-  control packages that support Bazaar or Git.
-
-
-Getting the software
------------------------------------
-The latest version of the vc bundle can be found at CTAN:support/vc.
-
-<URL:http://www.ctan.org>
-
-Happy TeXing!
-Stephan Hennig
+Steve
