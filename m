@@ -1,93 +1,62 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Make core.sharedRepository more generic (version 3)
-Date: Mon, 14 Apr 2008 18:28:44 -0700
-Message-ID: <7v7iez7voz.fsf@gitster.siamese.dyndns.org>
-References: <20080415004246.GA13178@zakalwe.fi>
+From: Mark Levedahl <mlevedahl@gmail.com>
+Subject: Re: [PATCH] git-submodule - possibly use remote branch to describe
+ a module
+Date: Mon, 14 Apr 2008 21:55:37 -0400
+Message-ID: <48040B19.5030800@gmail.com>
+References: <1208217154-992-1-git-send-email-mlevedahl@gmail.com> <7viqyk6je7.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Heikki Orsila <heikki.orsila@iki.fi>
-X-From: git-owner@vger.kernel.org Tue Apr 15 03:29:36 2008
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 15 03:56:36 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JlZzM-0007HM-Ec
-	for gcvg-git-2@gmane.org; Tue, 15 Apr 2008 03:29:36 +0200
+	id 1JlaPT-0006CU-T0
+	for gcvg-git-2@gmane.org; Tue, 15 Apr 2008 03:56:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757940AbYDOB2w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Apr 2008 21:28:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758136AbYDOB2w
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Apr 2008 21:28:52 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:55467 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757713AbYDOB2v (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Apr 2008 21:28:51 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 62C5337CE;
-	Mon, 14 Apr 2008 21:28:50 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 90DA837CD; Mon, 14 Apr 2008 21:28:47 -0400 (EDT)
-In-Reply-To: <20080415004246.GA13178@zakalwe.fi> (Heikki Orsila's message of
- "Tue, 15 Apr 2008 03:42:46 +0300")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1759233AbYDOBzl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Apr 2008 21:55:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759257AbYDOBzl
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Apr 2008 21:55:41 -0400
+Received: from an-out-0708.google.com ([209.85.132.247]:10588 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759233AbYDOBzk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Apr 2008 21:55:40 -0400
+Received: by an-out-0708.google.com with SMTP id d31so482912and.103
+        for <git@vger.kernel.org>; Mon, 14 Apr 2008 18:55:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        bh=WYSX6EuCMpTdfIlU73m/pBoamRD2P1rIdRh4fNTBBuc=;
+        b=ugNNsry7bp/fKjXrJ+AhCDfZCvodEtURuDd4zF7xRGGOavGUjyE8Th5rtpd8u8SbbAQtS86iw8sqL6KsYPwz/ADARe/K2KOsiMjKl1trKjdRObwAve34C23ufyfPp8c9lApe8ovOn5cG573i+3QnEo0/tLGhzhjdP6vTu8vZrRc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=wdHP2aG8JF+WfAkjpM78zJO9HExgwBb+ZSwHlBQoenxLTt00lggbcVazre8Xrmw6mlQNoYNIzRaKINuszGwqOZwPD1b61IGvnXG/E8MtfCX1GuV6dzTtxftljg96vpdKc+cxsOSpeDHNDqh7cNmb+fYvh6zOVU2LU5elZUPUN9M=
+Received: by 10.100.33.13 with SMTP id g13mr13609679ang.96.1208224539214;
+        Mon, 14 Apr 2008 18:55:39 -0700 (PDT)
+Received: from ?192.168.1.117? ( [71.163.252.223])
+        by mx.google.com with ESMTPS id 3sm16525601wrs.22.2008.04.14.18.55.37
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 14 Apr 2008 18:55:38 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.12 (Windows/20080213)
+In-Reply-To: <7viqyk6je7.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79556>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79557>
 
-Heikki Orsila <heikki.orsila@iki.fi> writes:
-
-> Version 2 handles the directory x flags better than version 1.
+Junio C Hamano wrote:
 >
-> Version 3 removes a warning for the o+w case, fixes a compatibility
-> problem with older Git's, and corrects some style issues.
+> I think the new fallback sequence makes sense, but your explanation made
+> sense for me only after reading it two and half times.
+>
+>   
+So, would you like for me to attempt a better log message?
 
-These four lines should come after "---", as you will have only one commit
-in the history for this topic, and the original and the version 2 won't be
-there.
-
-> diff --git a/builtin-init-db.c b/builtin-init-db.c
-> index 2854868..f49fea0 100644
-> --- a/builtin-init-db.c
-> +++ b/builtin-init-db.c
-> @@ -400,9 +400,12 @@ int cmd_init_db(int argc, const char **argv, const char *prefix)
->  		char buf[10];
->  		/* We do not spell "group" and such, so that
->  		 * the configuration can be read by older version
-> -		 * of git.
-> +		 * of git. Note, we use octal numbers for new share modes.
->  		 */
-> -		sprintf(buf, "%d", shared_repository);
-> +		if (shared_repository <= 2)
-> +			sprintf(buf, "%d", shared_repository);
-> +		else
-> +			sprintf(buf, "0%o", shared_repository);
-
-Hmmmm.  shared_repostiory variable is assigned the return value of
-git_config_perm() and that function does not return OLD_* variants (which
-is a good thing to do), so I do not think if it can ever be "<= 2".
-
-When running "git init" without "--shared" or "--shared=<something>" in an
-repository already initialized with git 1.5.5 or order as "shared", I
-think you rewrite .git/config to use 0660.  You would need something like
-this instead:
-
-	if (shared_repository == PERM_GROUP)
-        	strcpy(buf, "1");
-	else if (shared_repository == PERM_EVERYBODY))
-        	strcpy(buf, "2");
-	else ...
-
-> +	/*
-> +	 * Mask filemode value. Others can not get write permission.
-> +	 * x flags for directories are handled separately.
-> +	 */
-> +	return i & 0664;
-
-You are still dropping o+w even when the user explicitly asks for it, and
-you are not telling that you are disobeying the user anymore.
+Mark
