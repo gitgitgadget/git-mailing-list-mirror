@@ -1,111 +1,81 @@
-From: Scott Collins <scc@ScottCollins.net>
-Subject: [PATCH] Clarify documentation of git-cvsserver, particularly in relation to git-shell
-Date: Tue, 15 Apr 2008 17:03:35 -0400
-Message-ID: <1208293415-19212-1-git-send-email-scc@ScottCollins.net>
-References: <39292ba40804151233k2dd9300as5611e65ab6fcd81d@mail.gmail.com>
-Cc: Scott Collins <scc@ScottCollins.net>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Apr 15 23:05:10 2008
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: Re: branch description
+Date: Tue, 15 Apr 2008 17:04:02 -0400
+Message-ID: <C4EC2200-59E0-4FBE-AA5F-4A05DAF4A427@silverinsanity.com>
+References: <9b3e2dc20804150951scf8b3c7x26f3a56eab1f9840@mail.gmail.com> <f9d2a5e10804151031o1d09c1f9od0ad78dcf9b746c5@mail.gmail.com> <C55CA6EB-D427-4CF5-923E-DE0071D2F870@silverinsanity.com> <7vej97x78v.fsf@gitster.siamese.dyndns.org> <9b3e2dc20804151353p2622ab19i2a04f5da9a6417ca@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v919.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <gitster@pobox.com>,
+	"Russ Dill" <russ.dill@gmail.com>, git@vger.kernel.org
+To: Stephen Sinclair <radarsat1@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 15 23:06:01 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JlsKd-0005Ka-C1
-	for gcvg-git-2@gmane.org; Tue, 15 Apr 2008 23:04:47 +0200
+	id 1JlsKt-0005PE-Gj
+	for gcvg-git-2@gmane.org; Tue, 15 Apr 2008 23:05:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754490AbYDOVEA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Apr 2008 17:04:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753121AbYDOVEA
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Apr 2008 17:04:00 -0400
-Received: from mx-2.vasoftware.com ([208.48.95.24]:42636 "EHLO
-	mx-2.vasoftware.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752652AbYDOVD7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Apr 2008 17:03:59 -0400
-Received: from ip199-194.digitalrealm.net ([216.144.199.194] helo=localhost.localdomain)
-	by mx-2.vasoftware.com with esmtpa 
-	(Exim 4.64)
-	id 1JlsJn-0003yB-5z by VAAuthID scollins with plain; Tue, 15 Apr 2008 14:03:55 -0700
-X-Mailer: git-send-email 1.5.5.49.gf43e2
-In-Reply-To: <39292ba40804151233k2dd9300as5611e65ab6fcd81d@mail.gmail.com>
+	id S1757157AbYDOVEN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Apr 2008 17:04:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754965AbYDOVEL
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Apr 2008 17:04:11 -0400
+Received: from vs072.rosehosting.com ([216.114.78.72]:48138 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753121AbYDOVEK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Apr 2008 17:04:10 -0400
+Received: from [192.168.1.4] (cpe-69-205-115-17.rochester.res.rr.com [69.205.115.17])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTP id 6DCCD1FFC257;
+	Tue, 15 Apr 2008 21:04:06 +0000 (UTC)
+In-Reply-To: <9b3e2dc20804151353p2622ab19i2a04f5da9a6417ca@mail.gmail.com>
+X-Mailer: Apple Mail (2.919.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79630>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79631>
 
-Currently, for SSH clients restricted to git-shell, CVS_SERVER should
-not be changed: git-shell understands the default value of 'cvs' to mean
-git-cvsserver and actually _doesn't_ understand the command
-'git-cvsserver'. This makes it totally transparent to CVS users, but the
-original wording here perhaps less so to the person setting-up CVS
-access.  Previous wording mentioning GIT_AUTHOR, GIT_COMMITTER variables
-may not have made clear we really meant GIT_AUTHOR_(NAME|EMAIL), etc.
-Add a bit of text to differentiate cvs -d (setting CVSROOT) from cvs co
--d (setting the name of the newly checked out directory).  Removed an
-extra 'Example:' string.
 
-Signed-off-by: Scott Collins <scc@ScottCollins.net>
----
- Documentation/git-cvsserver.txt |   27 +++++++++++++++------------
- 1 files changed, 15 insertions(+), 12 deletions(-)
+On Apr 15, 2008, at 4:53 PM, Stephen Sinclair wrote:
 
-diff --git a/Documentation/git-cvsserver.txt b/Documentation/git-cvsserver.txt
-index 9cec802..44734e8 100644
---- a/Documentation/git-cvsserver.txt
-+++ b/Documentation/git-cvsserver.txt
-@@ -106,11 +106,13 @@ Note: Newer CVS versions (>= 1.12.11) also support specifying
- CVS_SERVER directly in CVSROOT like
- 
- ------
--cvs -d ":ext;CVS_SERVER=git-cvsserver:user@server/path/repo.git" co <HEAD_name>
-+cvs -d ":ext;CVS_SERVER=git-cvsserver:user@server/path/repo.git" co <HEAD_name> -d <dir_name>
- ------
- This has the advantage that it will be saved in your 'CVS/Root' files and
- you don't need to worry about always setting the correct environment
--variable.
-+variable.  SSH users restricted to git-shell don't need to override the default
-+with CVS_SERVER (and probably shouldn't) as git-shell understands 'cvs' to mean
-+git-cvsserver.
- --
- 2. For each repo that you want accessible from CVS you need to edit config in
-    the repo and add the following section.
-@@ -141,25 +143,26 @@ allowing access over SSH.
-         enabled=1
- ------
- --
--3. On the client machine you need to set the following variables.
--   CVSROOT should be set as per normal, but the directory should point at the
--   appropriate git repo. For example:
-+3. If you didn't specify the CVSROOT/CVS_SERVER directly in the checkout command,
-+   automatically saving it in your 'CVS/Root' files, then you need to set them
-+   explicitly in your environment.  CVSROOT should be set as per normal, but the
-+   directory should point at the appropriate git repo.  As above, for SSH clients
-+   _not_ restricted to git-shell, CVS_SERVER should be set to git-cvsserver.
- +
- --
--For SSH access, CVS_SERVER should be set to git-cvsserver
--
--Example:
--
- ------
-      export CVSROOT=:ext:user@server:/var/git/project.git
-      export CVS_SERVER=git-cvsserver
- ------
- --
--4. For SSH clients that will make commits, make sure their .bashrc file
--   sets the GIT_AUTHOR and GIT_COMMITTER variables.
-+4. For SSH clients that will make commits, make sure their (server-side) .bashrc
-+   files export GIT_AUTHOR_NAME, GIT_AUTHOR_EMAIL, GIT_COMMITTER_NAME, and
-+   GIT_COMMITTER_EMAIL.
- 
- 5. Clients should now be able to check out the project. Use the CVS 'module'
--   name to indicate what GIT 'head' you want to check out. Example:
-+   name to indicate what GIT 'head' you want to check out.  This also sets the
-+   name of your newly checked-out directory, unless you tell it otherwise with
-+   `-d <dir_name>`.  Example:
- +
- ------
-      cvs co -d project-master master
--- 
-1.5.5.49.gf43e2
+> On Tue, Apr 15, 2008 at 3:12 PM, Junio C Hamano <gitster@pobox.com>  
+> wrote:
+>>
+>> Not complicated at all.  Put that description in-tree in a known  
+>> location
+>> (say, "help-branch") in-tree and your propagation problem is solved.
+>>
+>> And have a scriptlet in $HOME/bin/git-help-branch to grep from that  
+>> file.
+>
+> Hm, I wasn't sure if an in-tree solution would be appropriate.
+> It's possible, but I didn't really want this branch description to be
+> something I have to deal with when merging..
+> Ideally though this information _should_ be propagated through a
+> clone, so something in-tree might make sense.
+>
+> When I posted I thought perhaps there was already a way to do this
+> that I hadn't encountered.
+> Perhaps there could be an in-tree file .gitbranch that is simply a
+> name:description pair, "git-branch --info" (or whatever) could be made
+> to know how to parse that file if it exists.
+>
+> However I was hoping that the branch description could be made when
+> creating the branch, instead of having to associate it with an actual
+> commit.
+
+A random thought:
+
+refs/info/heads/help is a pointer to a blob that is full of name- 
+description pairs.  Instead of a full ref name it simply keeps the  
+portion for a given subdirectory.  On a pull, you can add refs/info/ 
+heads/help:refs/info/remote/origin/help.  Each subdirectory of refs  
+gets it's own help blob.  You may need to deal with merging on pull,  
+but it keeps the information separate from the commits and still pull/ 
+pushable.
+
+~~ Brian
