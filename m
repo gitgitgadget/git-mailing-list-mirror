@@ -1,70 +1,92 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: RFC: Website redesign
-Date: Tue, 15 Apr 2008 13:57:41 +0200
-Message-ID: <20080415115741.GB26302@machine.or.cz>
-References: <3175605f-ff32-4fd6-bed3-7ae596ecbcde@q1g2000prf.googlegroups.com> <2c6b72b30804140656g14c24d8cwae016d62fe12f4a7@mail.gmail.com> <56e37551-4b8f-4164-a71d-79dba8635b7d@l28g2000prd.googlegroups.com> <96F7571C-1D9D-4F0A-99F1-A2307DAB0374@wincent.com> <bd6139dc0804141129h25c829e2i320f227594763d71@mail.gmail.com> <pan.2008.04.14.20.39.10@progsoc.org> <20080414213339.GB10300@dpotapov.dyndns.org> <pan.2008.04.15.03.25.00@progsoc.org> <8607f754-92c8-49ca-9bc9-11e58b66ef40@q1g2000prf.googlegroups.com> <acfbfe5b-f3a1-4c22-a873-ed329552d1bb@b5g2000pri.googlegroups.com>
+From: Nico -telmich- Schottelius <nico-git-20080415@schottelius.org>
+Subject: Re: [new tool] git-project-version.sh
+Date: Tue, 15 Apr 2008 14:02:12 +0200
+Message-ID: <20080415120212.GB17459@denkbrett.schottelius.org>
+References: <20080415113629.GA17459@denkbrett.schottelius.org> <20080415115529.GA3595@atjola.homenet>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Dill <sarpulhu@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 15 13:58:30 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="uZ3hkaAS1mZxFaxD"
+Cc: Nico -telmich- Schottelius <nico-git-20080415@schottelius.org>,
+	git@vger.kernel.org
+To: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Apr 15 14:01:32 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jljnw-0003Cw-Hr
-	for gcvg-git-2@gmane.org; Tue, 15 Apr 2008 13:58:28 +0200
+	id 1Jljqg-0004FR-3d
+	for gcvg-git-2@gmane.org; Tue, 15 Apr 2008 14:01:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754113AbYDOL5o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Apr 2008 07:57:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761549AbYDOL5o
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Apr 2008 07:57:44 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:58463 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751625AbYDOL5n (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Apr 2008 07:57:43 -0400
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id 826653939B47; Tue, 15 Apr 2008 13:57:41 +0200 (CEST)
+	id S1764777AbYDOMAc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Apr 2008 08:00:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758696AbYDOMAc
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Apr 2008 08:00:32 -0400
+Received: from [62.65.138.77] ([62.65.138.77]:38646 "EHLO mx2.schottelius.org"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1764774AbYDOMAa (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Apr 2008 08:00:30 -0400
+Received: from denkbrett.schottelius.org (natgw.netstream.ch [62.65.128.28])
+	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mx2.schottelius.org (Postfix) with ESMTPSA id CCAE534D205;
+	Tue, 15 Apr 2008 14:00:25 +0200 (CEST)
+Received: by denkbrett.schottelius.org (Postfix, from userid 1000)
+	id BC4871D0F1; Tue, 15 Apr 2008 14:02:12 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <acfbfe5b-f3a1-4c22-a873-ed329552d1bb@b5g2000pri.googlegroups.com>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+In-Reply-To: <20080415115529.GA3595@atjola.homenet>
+User-Agent: echo $message | gpg -e $sender  -s | netcat mailhost 25
+X-Unix-Info: http://unix.schottelius.org/
+X-Netzseite: http://nico.schottelius.org/
+X-System-Info: denkbrett running Linux 2.6.24.3-denkbrett on x86_64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79591>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79592>
 
-  Hi,
 
-On Mon, Apr 14, 2008 at 11:48:21PM -0700, Dill wrote:
-> Perhaps we should just make the home page a wiki! It would work really
-> good! If we use a theme like they do at wiki.ubuntu.com or somewhere
-> else we could make it look really nice for a home page. Then once it's
-> set up, no one has to manage the page, worry about commits, who's
-> doing what, etc, and just have the pages edited and worked on by the
-> community at large who register at the site to edit. (Unlike the wiki
-> in use now something would have to be done to stop the spam, like
-> having those boxes at registration where you have pick the letters
-> out) Once set up it would simplify things. Do I dare say that Hg uses
-> the wiki idea. Works but their theme really looks horrible. Of course
-> git would do it better. ;) Ours would be way more pretty! Anyone else
-> think a wiki would work for home page? If we could get some work done
-> on the theme on moinmoin and get it upgraded and completely set up we
-> could do a mockup of what it could look like and if people like it
-> just get rid of the old and have the wiki page be the start page. It
-> would also solve the news problem as I'm willing and I'm sure others
-> would too edit to make sure it's up to date.
+--uZ3hkaAS1mZxFaxD
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-  let's keep two things separate here: design and content. Design-wise,
-it does not matter if it is wiki or not, it is a completely different
-issue. And making the wiki look good would be non-trivial amount of work
-and the benefits seem unclear to me - so far, we aren't exactly drowning
-in patches for the website either (though I admit that some of them
-might have been lost anyway if the contributor was unlucky and not
-persistent enough ;-).
+Bj=F6rn Steinbrink [Tue, Apr 15, 2008 at 01:55:29PM +0200]:
+> > [...git-project-version.sh...]
+> >=20
+>=20
+> Hm, except for the three trailing dots that you get with
+> --abbrev-commit, you can get the same results with rev-parse
+>=20
+> $ git rev-parse  HEAD
+> 8a18e8fe4e0e64222de6b063a976d0fe24955ddb
+>=20
+> $ git rev-parse --short HEAD
+> 8a18e8f
 
--- 
-				Petr "Pasky" Baudis
-Whatever you can do, or dream you can, begin it.
-Boldness has genius, power, and magic in it.	-- J. W. von Goethe
+Should have known that before... thank you for the hint!
+
+So just forget my previous post :-)
+
+Nico
+
+--=20
+Think about Free and Open Source Software (FOSS).
+http://nico.schottelius.org/documentations/foss/the-term-foss/
+
+PGP: BFE4 C736 ABE5 406F 8F42  F7CF B8BE F92A 9885 188C
+
+--uZ3hkaAS1mZxFaxD
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFIBJlEuL75KpiFGIwRAvpdAKCemm09KNGHSNQuaCsFYupy1UplawCfRNz6
+pEVMk00C2ep4f45yGC6AFM4=
+=0hB+
+-----END PGP SIGNATURE-----
+
+--uZ3hkaAS1mZxFaxD--
