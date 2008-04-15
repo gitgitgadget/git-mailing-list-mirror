@@ -1,86 +1,56 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC 01/10] Teach rebase interactive the mark command
-Date: Mon, 14 Apr 2008 17:11:15 -0700
-Message-ID: <7vve2k6kpo.fsf@gitster.siamese.dyndns.org>
-References: <69a88a530804131351n7d9f8188vf2bbb0174ade3ca0@mail.gmail.com>
- <alpine.DEB.1.00.0804141506270.28504@racer>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: StGit: kha/{stable,safe,experimental} updated
+Date: Tue, 15 Apr 2008 02:26:13 +0200
+Message-ID: <20080415002613.GA24093@diana.vm.bytemark.co.uk>
+References: <20080413191140.GA1912@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Paul Fredrickson <paul.fredrickson@gmail.com>, git@vger.kernel.org,
-	joerg@alea.gnuu.de
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Apr 15 02:12:28 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 15 02:27:23 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JlYmU-0004Yl-B0
-	for gcvg-git-2@gmane.org; Tue, 15 Apr 2008 02:12:14 +0200
+	id 1JlZ16-0000Mz-HQ
+	for gcvg-git-2@gmane.org; Tue, 15 Apr 2008 02:27:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757347AbYDOAL3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Apr 2008 20:11:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757212AbYDOAL3
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Apr 2008 20:11:29 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:47510 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754662AbYDOAL2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Apr 2008 20:11:28 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 0EC573FCF;
-	Mon, 14 Apr 2008 20:11:27 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 252FB3FC2; Mon, 14 Apr 2008 20:11:19 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1757101AbYDOA0V convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Apr 2008 20:26:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756496AbYDOA0V
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Apr 2008 20:26:21 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3815 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753475AbYDOA0V (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Apr 2008 20:26:21 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1JlZ01-0006IE-00; Tue, 15 Apr 2008 01:26:13 +0100
+Content-Disposition: inline
+In-Reply-To: <20080413191140.GA1912@diana.vm.bytemark.co.uk>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79545>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79546>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On 2008-04-13 21:11:40 +0200, Karl Hasselstr=F6m wrote:
 
-> I would like it much better, if there was something like
->
-> pick 5cc8f37 (init: show "Reinit" message even in ...)
-> pick 18d077c (quiltimport: fix misquoting of parse...)
-> merge 9876543:5cc8f37,18d077c (Merge blub)
-> reset 5cc8f37
-> ...
->
-> I.e. like with filter-branch, and like with rebase -i -p in its current 
-> form, we take the _original_ names as keys as to which commits to merge, 
-> or where to reset to.
+> I've rebased my branches on top of Catalin's latest master and
+> stable. They include all the patches I've sent to the list recently.
 
-While the need probably would not be felt strongly if we design this only
-for rebase -i, I suspect that you would want to have two kinds of reset if
-you go that route.  There might be some other insn that may have similar
-issues.
+Updated again with the newest stuff. No shortlog since it's hardly
+changed since last post. Get it here:
 
-For example, imagine a case where you want to create a merge with a
-recontructed side branch.  First you grow the branch you would merge into,
-with a sequence:
+  git://repo.or.cz/stgit/kha.git stable
+  git://repo.or.cz/stgit/kha.git safe
+  git://repo.or.cz/stgit/kha.git experimental
 
-	pick A
-        pick B
-        pick C
+And this time I made _sure_ to run the test suite.
 
-Then in order to reconstruct a side branch that begins from a known point,
-say the tip of "master", you would want to reset to a commit that is
-outside of the scope of this rewriting.  And then you rebuild that side
-branch:
-
-	reset master
-        pick D
-        pick E
-
-And finally (and this step shows the beauty of your approach), come back
-to the other tip and make the merge:
-
-	reset C
-        merge E
-
-Two resets above would have different semantics.  The former resets to
-unwritten, and the latter rewritten.
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
