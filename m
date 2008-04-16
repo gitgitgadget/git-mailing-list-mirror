@@ -1,92 +1,74 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH] bisect: squelch "fatal: ref HEAD not a symref" misleading
- message
-Date: Wed, 16 Apr 2008 04:09:49 +0200
-Message-ID: <20080416040949.26623e13.chriscool@tuxfamily.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Friendly refspecs
+Date: Tue, 15 Apr 2008 21:41:17 -0700
+Message-ID: <7vabjuv2c2.fsf@gitster.siamese.dyndns.org>
+References: <20080409101428.GA2637@elte.hu>
+ <20080409145758.GB20874@sigill.intra.peff.net>
+ <20080409200836.GA19248@mithlond>
+ <20080409203453.GA10370@sigill.intra.peff.net>
+ <20080409222500.GB19248@mithlond>
+ <20080409225112.GB12103@sigill.intra.peff.net>
+ <20080413093102.GC12107@mithlond.arda.local>
+ <20080416034823.GA11727@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio Hamano <junkio@cox.net>, Ingo Molnar <mingo@elte.hu>
-X-From: git-owner@vger.kernel.org Wed Apr 16 07:48:45 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Teemu Likonen <tlikonen@iki.fi>,
+	Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Apr 16 07:49:24 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jlx1y-0001dH-SI
-	for gcvg-git-2@gmane.org; Wed, 16 Apr 2008 04:05:51 +0200
+	id 1JlzTM-0003Ma-FR
+	for gcvg-git-2@gmane.org; Wed, 16 Apr 2008 06:42:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753746AbYDPCEf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Apr 2008 22:04:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753728AbYDPCEf
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Apr 2008 22:04:35 -0400
-Received: from smtp1-g19.free.fr ([212.27.42.27]:50206 "EHLO smtp1-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753667AbYDPCEe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Apr 2008 22:04:34 -0400
-Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 14D5C1AB2B9;
-	Wed, 16 Apr 2008 04:04:33 +0200 (CEST)
-Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp1-g19.free.fr (Postfix) with SMTP id B0A461AB2B8;
-	Wed, 16 Apr 2008 04:04:32 +0200 (CEST)
-X-Mailer: Sylpheed 2.5.0beta1 (GTK+ 2.12.9; i486-pc-linux-gnu)
+	id S1750962AbYDPElb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Apr 2008 00:41:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750937AbYDPElb
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Apr 2008 00:41:31 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:42810 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750931AbYDPEla (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Apr 2008 00:41:30 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 803E62F6B;
+	Wed, 16 Apr 2008 00:41:29 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id BE9DC2F69; Wed, 16 Apr 2008 00:41:24 -0400 (EDT)
+In-Reply-To: <20080416034823.GA11727@sigill.intra.peff.net> (Jeff King's
+ message of "Tue, 15 Apr 2008 23:48:23 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79667>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79668>
 
-To get the current HEAD when we start bisecting using for example
-"git bisect start", we first try "git symbolic-ref HEAD" to get a
-nice name, and if it fails, we fall back to "git rev-parse
---verify HEAD".
+Jeff King <peff@peff.net> writes:
 
-The problem is that when "git symbolic-ref HEAD" fails, it
-displays "fatal: ref HEAD not a symref", so it looks like "git
-bisect start" failed and does not accept detached HEAD, even if
-in fact it worked fine.
+> On Sun, Apr 13, 2008 at 12:31:02PM +0300, Teemu Likonen wrote:
+>
+>> There is still one thing (at least) that I don't quite understand. It's
+>> about "git push". When I do
+>> 
+>>   $ git push <remote> <branch>
+>> 
+>> the refs/heads/<branch> is updated or created on the remote side. But if
+>> I do
+>> 
+>>   $ git push <remote> <branch1>:<branch2>
+>> 
+>> the refs/heads/<branch2> is not automatically created.
 
-This patch adds "-q" option to the "git symbolic-ref" call to
-get rid of the misleading error message.
+Eh, there is no way unless you force an assumption of a particular
+workflow to everybody else.
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- git-bisect.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-	Junio C Hamano wrote:
-	> Ingo Molnar <mingo@elte.hu> writes:
-	> >  dione:~/linux-tmp4> git-bisect start
-	> >  fatal: ref HEAD is not a symbolic ref
-	> >  won't bisect on seeked tree
-	> >
-	> >  #
-	> >  # Hm. It's not a symbolic ref, and git-bisect just wont do it.
-	>
-	> Enough people were unhappy with this historical wart and we stopped
-	> refusing to "bisect on seeked tree" since b577bb9 (Eliminate confusing
-	> "won't bisect on seeked tree" failure, 2008-02-23); you should find it as
-	> part of the 1.5.5 release.
-	>
-	> The disturbing "fatal: ref HEAD not a symref" is still there even though
-	> it should be harmless.  The message should be squelched.
-
-	Here is a patch to do that.
-
-diff --git a/git-bisect.sh b/git-bisect.sh
-index 408775a..a36778d 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -66,7 +66,7 @@ bisect_start() {
- 	# Verify HEAD. If we were bisecting before this, reset to the
- 	# top-of-line master first!
- 	#
--	head=$(GIT_DIR="$GIT_DIR" git symbolic-ref HEAD) ||
-+	head=$(GIT_DIR="$GIT_DIR" git symbolic-ref -q HEAD) ||
- 	head=$(GIT_DIR="$GIT_DIR" git rev-parse --verify HEAD) ||
- 	die "Bad HEAD - I need a HEAD"
- 	case "$head" in
--- 
-1.5.5.52.g4aa8
+What you would say on the second command is not literally "<branch2>" but
+something like "work-in-progress", or "crap".  Even an AI would not be
+able to guess if you wanted to create a branch on the other side, or
+wanted to put a lightweight tag to let people know where you are (possibly
+with the intention of removing it once you are done), and git is not an AI.
