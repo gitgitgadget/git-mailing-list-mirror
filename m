@@ -1,116 +1,100 @@
-From: apenwarr@gmail.com
-Subject: [PATCH 2/3] git-svn: Add --add-author-from option.
-Date: Tue, 15 Apr 2008 21:04:17 -0400
-Message-ID: <1208307858-31039-2-git-send-email-apenwarr@gmail.com>
-References: <1208307858-31039-1-git-send-email-apenwarr@gmail.com>
-Cc: Avery Pennarun <apenwarr@versabanq.com>,
-	Avery Pennarun <apenwarr@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 16 07:26:06 2008
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [PATCH] format-patch: Make sure the subject is always a one-liner
+Date: Wed, 16 Apr 2008 03:06:05 +0200
+Message-ID: <20080416010605.GG8387@genesis.frugalware.org>
+References: <20080415172333.GA29489@linux-sh.org> <alpine.LFD.1.00.0804151048060.2879@woody.linux-foundation.org> <m3ej97rmc0.fsf@localhost.localdomain> <20080416003725.GF8387@genesis.frugalware.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Jakub Narebski <jnareb@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 16 07:31:18 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JlwJx-0000IV-Pj
-	for gcvg-git-2@gmane.org; Wed, 16 Apr 2008 03:20:22 +0200
+	id 1Jlw6z-0008L2-7b
+	for gcvg-git-2@gmane.org; Wed, 16 Apr 2008 03:06:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753605AbYDPBTh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Apr 2008 21:19:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753286AbYDPBTg
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Apr 2008 21:19:36 -0400
-Received: from static-216-18-85-234.gtcust.grouptelecom.net ([216.18.85.234]:38871
-	"EHLO mailhost.pwcorp.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1752919AbYDPBTe (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 15 Apr 2008 21:19:34 -0400
-X-Greylist: delayed 910 seconds by postgrey-1.27 at vger.kernel.org; Tue, 15 Apr 2008 21:19:33 EDT
-Received: from weaver.open.versabanq.com ([10.65.1.2]) by mailhost.pwcorp.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Tue, 15 Apr 2008 21:04:22 -0400
-Received: (qmail 30604 invoked from network); 16 Apr 2008 01:04:21 -0000
-Received: from unknown (HELO weaver.open.versabanq.com) (10.65.1.2)
-  by weaver.open.versabanq.com with SMTP; 16 Apr 2008 01:04:21 -0000
-Received: (qmail 30597 invoked from network); 16 Apr 2008 01:04:21 -0000
-Received: from unknown (HELO weaver.open.versabanq.com) (10.65.1.2)
-  by weaver.open.versabanq.com with SMTP; 16 Apr 2008 01:04:21 -0000
-Received: (qmail 30580 invoked from network); 16 Apr 2008 01:04:20 -0000
-Received: from unknown (HELO weaver.open.versabanq.com) (10.65.1.2)
-  by weaver.open.versabanq.com with SMTP; 16 Apr 2008 01:04:20 -0000
-Received: (qmail 30550 invoked from network); 16 Apr 2008 01:04:18 -0000
-Received: from unknown (HELO averyp-server.pwcorp.com) (10.65.1.129)
-  by weaver.open.versabanq.com with SMTP; 16 Apr 2008 01:04:18 -0000
-Received: by averyp-server.pwcorp.com (Postfix, from userid 1000)
-	id 4BD7B8C066; Tue, 15 Apr 2008 21:04:18 -0400 (EDT)
-X-Mailer: git-send-email 1.5.4.3
-In-Reply-To: <1208307858-31039-1-git-send-email-apenwarr@gmail.com>
-X-OriginalArrivalTime: 16 Apr 2008 01:04:22.0082 (UTC) FILETIME=[CE3B3220:01C89F5D]
+	id S1752044AbYDPBGL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Apr 2008 21:06:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752119AbYDPBGK
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Apr 2008 21:06:10 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:34591 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751932AbYDPBGJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Apr 2008 21:06:09 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 111D21B24F0;
+	Wed, 16 Apr 2008 03:06:08 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 36D1B44659;
+	Wed, 16 Apr 2008 03:02:40 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id C4AF511904E0; Wed, 16 Apr 2008 03:06:05 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20080416003725.GF8387@genesis.frugalware.org>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79662>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79663>
 
-From: Avery Pennarun <apenwarr@versabanq.com>
+If the commit message has no empty line after the first line, we need to
+insert a newline after the first, so that the newlines won't be removed
+from the commit message for example when they are applied using git-am.
 
-This adds a From: line (based on the commit's author information) when
-sending to svn.  It doesn't add if a From: or Signed-off-by: header already
-exists for that commit.
-
-This, combined with --use-log-author, can retain the author field of commits
-through a round trip from git to svn and back.
-Signed-off-by: Avery Pennarun <apenwarr@gmail.com>
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
 ---
- git-svn.perl |   14 +++++++++++++-
- 1 files changed, 13 insertions(+), 1 deletions(-)
 
-diff --git a/git-svn.perl b/git-svn.perl
-index b864b54..b7ad898 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -82,6 +82,7 @@ my %fc_opts = ( 'follow-parent|follow!' => \$Git::SVN::_follow_parent,
- 		'repack-flags|repack-args|repack-opts=s' =>
- 		   \$Git::SVN::_repack_flags,
- 		'use-log-author' => \$Git::SVN::_use_log_author,
-+		'add-author-from' => \$Git::SVN::_add_author_from,
- 		%remote_opts );
+On Wed, Apr 16, 2008 at 02:37:25AM +0200, Miklos Vajna <vmiklos@frugalware.org> wrote:
+> If we are at it, I had a similar bugreport: If one doesn't use an
+> empty
+> line after the first line in the commit message, a git-format-patch +
+> git-am combo will strip newlines from the commit message:
+>
+> http://article.gmane.org/gmane.comp.version-control.git/73755
+>
+> There, you suggested to modify git-format-patch, but I haven't come up
+> with such a patch nor anybody else.
+>
+> Actually I recently tried to make one but I got lost in pretty.c and
+> log-tree.c. :-)
+
+Ok, here is a try. It does the trick for me, but this it the first time
+I touch pretty.c so feel free to point out if I did something wrong ;-)
+
+Thanks.
+
+ pretty.c |    6 +++++-
+ 1 files changed, 5 insertions(+), 1 deletions(-)
+
+diff --git a/pretty.c b/pretty.c
+index 6c04176..45a5679 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -653,6 +653,7 @@ void pp_title_line(enum cmit_fmt fmt,
  
- my ($_trunk, $_tags, $_branches, $_stdlayout);
-@@ -1009,17 +1010,28 @@ sub get_commit_entry {
- 		my ($msg_fh, $ctx) = command_output_pipe('cat-file',
- 		                                         $type, $treeish);
- 		my $in_msg = 0;
-+		my $author;
-+		my $saw_from = 0;
- 		while (<$msg_fh>) {
- 			if (!$in_msg) {
- 				$in_msg = 1 if (/^\s*$/);
-+				$author = $1 if (/^author (.*>)/);
- 			} elsif (/^git-svn-id: /) {
- 				# skip this for now, we regenerate the
- 				# correct one on re-fetch anyways
- 				# TODO: set *:merge properties or like...
- 			} else {
-+				if (/^From:/ || /^Signed-off-by:/) {
-+					$saw_from = 1;
-+				}
- 				print $log_fh $_ or croak $!;
+ 	strbuf_init(&title, 80);
+ 
++	int check_empty = 1;
+ 	for (;;) {
+ 		const char *line = *msg_p;
+ 		int linelen = get_one_line(line);
+@@ -666,7 +667,10 @@ void pp_title_line(enum cmit_fmt fmt,
+ 			if (fmt == CMIT_FMT_EMAIL) {
+ 				strbuf_addch(&title, '\n');
  			}
+-			strbuf_addch(&title, ' ');
++			if (check_empty && strcmp(line, "\n")) {
++				check_empty = 0;
++				strbuf_addch(&title, '\n');
++			}
  		}
-+		if ($Git::SVN::_add_author_from && defined($author)
-+		    && !$saw_from) {
-+			print $log_fh "\nFrom: $author\n"
-+			      or croak $!;
-+		}
- 		command_close_pipe($msg_fh, $ctx);
+ 		strbuf_add(&title, line, linelen);
  	}
- 	close $log_fh or croak $!;
-@@ -1246,7 +1258,7 @@ use constant rev_map_fmt => 'NH40';
- use vars qw/$default_repo_id $default_ref_id $_no_metadata $_follow_parent
-             $_repack $_repack_flags $_use_svm_props $_head
-             $_use_svnsync_props $no_reuse_existing $_minimize_url
--	    $_use_log_author/;
-+	    $_use_log_author $_add_author_from/;
- use Carp qw/croak/;
- use File::Path qw/mkpath/;
- use File::Copy qw/copy/;
 -- 
-1.5.4.3
+1.5.5
