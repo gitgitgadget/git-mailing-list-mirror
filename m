@@ -1,89 +1,148 @@
-From: "Nigel Magnay" <nigel.magnay@gmail.com>
-Subject: Re: crlf with git-svn driving me nuts...
-Date: Thu, 17 Apr 2008 00:07:27 +0100
-Message-ID: <320075ff0804161607p3f9e983ehb75aae4e0bfe8837@mail.gmail.com>
-References: <320075ff0804161210m46f3e83bpf7bf9d1d5816d914@mail.gmail.com>
-	 <20080416200107.GG3133@dpotapov.dyndns.org>
-	 <32541b130804161320w42c68bc2p9d838dc127a57027@mail.gmail.com>
-	 <20080416203923.GH3133@dpotapov.dyndns.org>
-	 <320075ff0804161447u25dfbb2bmcd36ea507224d835@mail.gmail.com>
-	 <20080416223739.GJ3133@dpotapov.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: "Dmitry Potapov" <dpotapov@gmail.com>, git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Apr 17 01:08:42 2008
+From: Jon Loeliger <jdl@jdl.com>
+Subject: [PATCH v2] Clarify and fix English in git-rm documentation.
+Date: Wed, 16 Apr 2008 18:41:27 -0500
+Message-ID: <E1JmHFn-0006WE-UE@jdl.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 17 01:42:35 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JmGjo-0002af-C2
-	for gcvg-git-2@gmane.org; Thu, 17 Apr 2008 01:08:24 +0200
+	id 1JmHGq-0003XV-A7
+	for gcvg-git-2@gmane.org; Thu, 17 Apr 2008 01:42:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752599AbYDPXHa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Apr 2008 19:07:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752596AbYDPXHa
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Apr 2008 19:07:30 -0400
-Received: from fk-out-0910.google.com ([209.85.128.187]:62525 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752591AbYDPXH3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Apr 2008 19:07:29 -0400
-Received: by fk-out-0910.google.com with SMTP id 19so3029133fkr.5
-        for <git@vger.kernel.org>; Wed, 16 Apr 2008 16:07:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=61cPqFHzbJrNmKCJ+t2P4LvwNhTIokLB01XtwLHfp3M=;
-        b=X3UuFc3OR8fvm+V6M2zF9uRJD0FxCaSmr+mBZxDPhF49G7LM9WDZGdgAH+NMbmUJAt1MsPE/ukL85omp2mBRAHaKpUcAKtO6JD51Qy/5wZDNEBf89XQRFUv1TJQ703L6FiPDdk0b54IXbL4+u1fLButZht8K/2g87TFDcGIdt9g=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=ug+Frxl/ek3ZaxJUWfhVDnaF5JEaF1Hzyb9ls+Zvxpr9KaL/EFqWD2PigMlE/0cicvKQxbjAElhsnydv1uhLU04RCNdtfzTrZhv/zeDfWi8XPHKgDZUlSiHpUwuXPaEW8u+hVjlGcGSFyjwLbM0Qs8T76mWSjYNgVzzlk8xLbxg=
-Received: by 10.82.150.20 with SMTP id x20mr906813bud.85.1208387247932;
-        Wed, 16 Apr 2008 16:07:27 -0700 (PDT)
-Received: by 10.82.168.20 with HTTP; Wed, 16 Apr 2008 16:07:27 -0700 (PDT)
-In-Reply-To: <20080416223739.GJ3133@dpotapov.dyndns.org>
-Content-Disposition: inline
+	id S1752584AbYDPXlg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Apr 2008 19:41:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752552AbYDPXlg
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Apr 2008 19:41:36 -0400
+Received: from jdl.com ([208.123.74.7]:56926 "EHLO jdl.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751171AbYDPXlf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Apr 2008 19:41:35 -0400
+Received: from jdl (helo=jdl.com)
+	by jdl.com with local-esmtp (Exim 4.63)
+	(envelope-from <jdl@jdl.com>)
+	id 1JmHFn-0006WE-UE
+	for git@vger.kernel.org; Wed, 16 Apr 2008 18:41:34 -0500
+X-Spam-Score: -102.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79761>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79762>
 
->  > The bit I really don't understand is why git thinks a file that has
->  > just been touched has chnaged when it hasn't,
->
->  Actually, it did change in the sense that if you try to commit this
->  file now into the repository, you will have a different file in Git!
->  So, it is more correct to say that Git did not notice this change until
->  you touch this file, because this change is indirect (autocrlf causes
->  a different interpretation of the file).
->
 
-Okay - at the very least this behaviour is really, really confusing.
-And I think there's actually a bug (it should *always* report that the
-file is different), not magically after it's been touched.
+Do some verb-noun agreement changes
+Clarify some file globbing cases
+Fixed a wrong statement in an example.
 
-But fixing that minor bug still leads to badness for the user. Doing
-(on a core.autocrlf=true machine) a checkout of any revision
-containing a file that is (currently) CRLF in the repository, and your
-WC is *immediately* dirty. However technically correct that is, it
-doesn't fit most people's user model of an SCM, because they haven't
-made any modification. And if 1 person makes a change along with their
-conversion, and the other 'just' does a CRLF->LF conversion, their
-revisions will conflict at merge time. Blech. And because the svn is
-mastered crlf (well, strictly speaking, it's ignorant of line endings)
-this is gonna happen a lot.
+Signed-off-by: Jon Loeliger <jdl@jdl.com>
+---
 
-Can't git be taught that if the WC is byte-identical to the revision
-in the repository (regardless of autocrlf) then that ought not to be
-regarded as a change?
-Is there a way I can persuade the diff / merge mechanisms to normalise
-before they operate? (e.g if core.autocrlf does lf->crlf/crlf->lf,
-then an equivalent that does crlf->lf/crlf->lf before doing the merge
-)?
+Version 2 here incorporates suggestions from Junio.
 
-In a perfect world I'd be able to switch all files int he repo to LF,
-but that's not going to happen any time soon because of the majority
-of developers, still on svn, still on windows.
+ Documentation/git-rm.txt |   52 ++++++++++++++++++++++++++++-----------------
+ 1 files changed, 32 insertions(+), 20 deletions(-)
+
+diff --git a/Documentation/git-rm.txt b/Documentation/git-rm.txt
+index dc36c66..9c81b72 100644
+--- a/Documentation/git-rm.txt
++++ b/Documentation/git-rm.txt
+@@ -11,28 +11,37 @@ SYNOPSIS
+ 
+ DESCRIPTION
+ -----------
+-Remove files from the working tree and from the index.  The
+-files have to be identical to the tip of the branch, and no
+-updates to its contents must have been placed in the staging
+-area (aka index).  When --cached is given, the staged content has to
+-match either the tip of the branch *or* the file on disk.
++Remove files from the index, or from the working tree and the index.
++`git rm` will not remove a file from just your working directory.
++(There is no option to remove a file only from the work tree
++and yet keep it in the index; use `/bin/rm` if you want to do that.)
++The files being removed have to be identical to the tip of the branch,
++and no updates to their contents can be staged in the index,
++though that default behavior can be overridden with the `-f` option.
++When '--cached' is given, the staged content has to
++match either the tip of the branch or the file on disk,
++allowing the file to be removed from just the index.
+ 
+ 
+ OPTIONS
+ -------
+ <file>...::
+ 	Files to remove.  Fileglobs (e.g. `*.c`) can be given to
+-	remove all matching files.  Also a leading directory name
+-	(e.g. `dir` to add `dir/file1` and `dir/file2`) can be
+-	given to remove all files in the directory, recursively,
+-	but this requires `-r` option to be given for safety.
++	remove all matching files.  If you want git to expand
++	file glob characters, you may need to shell-escape them.
++	A leading directory name
++	(e.g. `dir` to remove `dir/file1` and `dir/file2`) can be
++	given to remove all files in the directory, and recursively
++	all sub-directories,
++	but this requires the `-r` option to be explicitly given.
+ 
+ -f::
+ 	Override the up-to-date check.
+ 
+ -n, \--dry-run::
+-        Don't actually remove the file(s), just show if they exist in
+-        the index.
++	Don't actually remove any file(s).  Instead, just show
++	if they exist in the index and would otherwise be removed
++	by the command.
+ 
+ -r::
+         Allow recursive removal when a leading directory name is
+@@ -44,9 +53,9 @@ OPTIONS
+ 	for command-line options).
+ 
+ \--cached::
+-	This option can be used to tell the command to remove
+-	the paths only from the index, leaving working tree
+-	files.
++	Use this option to unstage and remove paths only from the index.
++	Working tree files, whether modified or not, will be
++	left alone.
+ 
+ \--ignore-unmatch::
+ 	Exit with a zero status even if no files matched.
+@@ -59,11 +68,15 @@ OPTIONS
+ DISCUSSION
+ ----------
+ 
+-The list of <file> given to the command can be exact pathnames,
+-file glob patterns, or leading directory name.  The command
+-removes only the paths that is known to git.  Giving the name of
++The <file> list given to the command can be exact pathnames,
++file glob patterns, or leading directory names.  The command
++removes only the paths that are known to git.  Giving the name of
+ a file that you have not told git about does not remove that file.
+ 
++File globbing matches across directory boundaries.  Thus, given
++two directories `d` and `d2`, there is a difference between
++using `git rm \'d\*\'` and `git rm \'d/\*\'`, as the former will
++also remove all of directory `d2`.
+ 
+ EXAMPLES
+ --------
+@@ -72,11 +85,10 @@ git-rm Documentation/\\*.txt::
+ 	`Documentation` directory and any of its subdirectories.
+ +
+ Note that the asterisk `\*` is quoted from the shell in this
+-example; this lets the command include the files from
+-subdirectories of `Documentation/` directory.
++example; this lets git, and not the shell, expand the pathnames
++of files and subdirectories under the `Documentation/` directory.
+ 
+ git-rm -f git-*.sh::
+-	Remove all git-*.sh scripts that are in the index.
+ 	Because this example lets the shell expand the asterisk
+ 	(i.e. you are listing the files explicitly), it
+ 	does not remove `subdir/git-foo.sh`.
+-- 
+1.5.5.50.g71060
