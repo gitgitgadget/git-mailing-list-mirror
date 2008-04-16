@@ -1,108 +1,116 @@
-From: "Sverre Rabbelier" <alturin@gmail.com>
+From: Stephen Clark <sclark46@earthlink.net>
 Subject: Re: Reporting bugs and bisection
-Date: Wed, 16 Apr 2008 14:15:22 +0200
-Message-ID: <bd6139dc0804160515s64a36748v49556c56d475dda4@mail.gmail.com>
-References: <47FEADCB.7070104@rtr.ca> <20080413205406.GA9190@2ka.mipt.ru>
-	 <48028830.6020703@earthlink.net>
-	 <alpine.DEB.1.10.0804131546370.9318@asgard>
-	 <20080414043939.GA6862@1wt.eu>
-	 <20080414053943.GU9785@ZenIV.linux.org.uk>
-	 <20080413232441.e216a02c.akpm@linux-foundation.org>
-	 <20080414072328.GW9785@ZenIV.linux.org.uk>
-	 <Xine.LNX.4.64.0804150131300.4160@us.intercode.com.au>
-	 <4804765B.2070300@davidnewall.com>
-Reply-To: sverre@rabbelier.nl
+Date: Wed, 16 Apr 2008 08:41:38 -0400
+Message-ID: <4805F402.1020603@earthlink.net>
+References: <47FEADCB.7070104@rtr.ca> <517f3f820804150254w491cdf85s28f1d15696db8d96@mail.gmail.com> <4804B5D5.4090404@davidnewall.com> <200804152251.51308.rjw@sisk.pl> <480565D3.6000100@davidnewall.com> <alpine.DEB.1.10.0804152042320.15483@asgard>
+Reply-To: sclark46@earthlink.net
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "James Morris" <jmorris@namei.org>,
-	"Al Viro" <viro@zeniv.linux.org.uk>,
-	"Andrew Morton" <akpm@linux-foundation.org>,
-	"Willy Tarreau" <w@1wt.eu>, david@lang.hm,
-	"Stephen Clark" <sclark46@earthlink.net>,
-	"Evgeniy Polyakov" <johnpol@2ka.mipt.ru>,
+Cc: David Newall <davidn@davidnewall.com>,
 	"Rafael J. Wysocki" <rjw@sisk.pl>,
-	"Tilman Schmidt" <tilman@imap.cc>, Valdis.Kletnieks@vt.edu,
-	"Mark Lord" <lkml@rtr.ca>, "David Miller" <davem@davemloft.net>,
+	Michael Kerrisk <mtk.manpages@gmail.com>,
+	James Morris <jmorris@namei.org>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Willy Tarreau <w@1wt.eu>,
+	Evgeniy Polyakov <johnpol@2ka.mipt.ru>,
+	Tilman Schmidt <tilman@imap.cc>, Valdis.Kletnieks@vt.edu,
+	Mark Lord <lkml@rtr.ca>, David Miller <davem@davemloft.net>,
 	jesper.juhl@gmail.com, yoshfuji@linux-ipv6.org, jeff@garzik.org,
-	netdev@vger.kernel.org, "David Newall" <davidn@davidnewall.com>
-To: git@vger.kernel.org, linux-kernel <linux-kernel@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Apr 16 14:16:44 2008
+	linux-kernel <linux-kernel@vger.kernel.org>, git@vger.kernel.org,
+	netdev@vger.kernel.org
+To: david@lang.hm
+X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1762870AbYDPMmq@vger.kernel.org Wed Apr 16 14:43:51 2008
 connect(): Connection refused
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
+Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1762870AbYDPMmq@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jm6Z2-0005SJ-Co
-	for gcvg-git-2@gmane.org; Wed, 16 Apr 2008 14:16:36 +0200
+	id 1Jm6z8-0004Er-W0
+	for glk-linux-kernel-3@gmane.org; Wed, 16 Apr 2008 14:43:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760456AbYDPMPv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Apr 2008 08:15:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760652AbYDPMPv
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Apr 2008 08:15:51 -0400
-Received: from yw-out-2324.google.com ([74.125.46.28]:49637 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760312AbYDPMPt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Apr 2008 08:15:49 -0400
-Received: by yw-out-2324.google.com with SMTP id 5so1263749ywb.1
-        for <git@vger.kernel.org>; Wed, 16 Apr 2008 05:15:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=qaRU8DfAiopSw5RvCBVKj5msT3LyRrbMtd3cazOVGco=;
-        b=vgDWPz13E0pMzIfNDqjGwKeoeRNo3a+aJ0AAgxd+NMcjFtMbEr5Mo3r17DFI9Fa7e7lv1A2AdEkNx6mjeS+Ze3LlFlKDK84/ANvcNFmVK2mNcInpnxVDiF4tA3gs/ATJ9XueKunDjVexDHqyhzUOKQMGIAZo2I9zGvf1i9huuqo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Ksgf9JCAMNmL8NyP2JvL+L8KwMnPxQJsEyWrrJHq9otY9q/VgxK4C8sKT2kchpdh8XRzlvuppXYCBZmbvxuRNxhzPigMGPJsxCiOj0CPHNaRbuonmTZn4mIKdKt9bTX8USNvBYJcMCEAg8ybEM7mpNm9dVtirH7k0kbUAgDdntY=
-Received: by 10.151.82.3 with SMTP id j3mr9062176ybl.57.1208348122905;
-        Wed, 16 Apr 2008 05:15:22 -0700 (PDT)
-Received: by 10.150.192.1 with HTTP; Wed, 16 Apr 2008 05:15:22 -0700 (PDT)
-In-Reply-To: <4804765B.2070300@davidnewall.com>
-Content-Disposition: inline
-Sender: git-owner@vger.kernel.org
+	id S1762870AbYDPMmq (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Wed, 16 Apr 2008 08:42:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757708AbYDPMmg
+	(ORCPT <rfc822;linux-kernel-outgoing>);
+	Wed, 16 Apr 2008 08:42:36 -0400
+Received: from elasmtp-junco.atl.sa.earthlink.net ([209.86.89.63]:46537 "EHLO
+	elasmtp-junco.atl.sa.earthlink.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755678AbYDPMmf (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Wed, 16 Apr 2008 08:42:35 -0400
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=dk20050327; d=earthlink.net;
+  b=nrsN4sZoGNm0h0isHuYHvoFPzA4/77uOw7SMTa27uISrhrW7rUsSZ8rdCEJbOYWe;
+  h=Received:Message-ID:Date:From:Reply-To:User-Agent:MIME-Version:To:CC:Subject:References:In-Reply-To:Content-Type:Content-Transfer-Encoding:X-ELNK-Trace:X-Originating-IP;
+Received: from [24.144.77.185] (helo=joker.seclark.com)
+	by elasmtp-junco.atl.sa.earthlink.net with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.67)
+	(envelope-from <sclark46@earthlink.net>)
+	id 1Jm6xJ-0004w3-4m; Wed, 16 Apr 2008 08:41:41 -0400
+User-Agent: Thunderbird 2.0.0.12 (X11/20080226)
+In-Reply-To: <alpine.DEB.1.10.0804152042320.15483@asgard>
+X-ELNK-Trace: a437fbc6971e80f61aa676d7e74259b7b3291a7d08dfec79cb627b4d525c59a20cfef712fb0894c2350badd9bab72f9c350badd9bab72f9c350badd9bab72f9c
+X-Originating-IP: 24.144.77.185
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79696>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79697>
 
-I'm not subscribed to the kernel mailing list, so please include me in
-the cc if you don't reply to the git list (which I am subscribed to).
+david@lang.hm wrote:
+> On Wed, 16 Apr 2008, David Newall wrote:
+> 
+>> Rafael J. Wysocki wrote:
+>>> Well, even if someone introduces bugs relatively frequently, but then 
+>>> also
+>>> works with the reporters and fixes the bugs timely, it's about okay IMO.
+>>>
+>> This really is not okay.  Even if bugs are fixed a version or two later,
+>> the impact those bugs have on users makes the system look bad and drives
+>> them away.  We do not, I believe, want Linux to top the list for "most
+>> bugs".  It's unprofessional, unreliable and quite undesirable.
+> 
+> timely frequently means the code was merged in -rc1/2 and was fixed 
+> before the final release of the same version.
+> 
+> given the huge variety of hardware and workloads, it's just too easy for 
+> there to be cases where any trade-off you make (code size, performance, 
+> memory usage, common case definitions) can turn around and bite you. In 
+> addition frequently hardware doesn't work quite the way the design specs 
+> say that it should (completely ignoring the fact that many drivers are 
+> reverse engineered). what's most important is that when a case shows up 
+> it gets addressed promptly
+> 
+> I'd rather have a developer/maintainer who introduces and fixed 100 bug, 
+> but fixes them promptly, as opposed to one who only introduces one bug, 
+> but refuses to consider fixing the code 'because they don't make 
+> mistakes like that' (usadly a common attitude from people who produce 
+> very good code much of the time)
+> 
+> best of all is a developer/maintainer who writes very good code and is 
+> willing to accept the fact that they make mistakes and fixes the code 
+> promptly, but those people are extremely rare, and usually they emerge 
+> from the pool of people who make more mistakes and fix them promptly, 
+> which is an added reason I'm more tolerant of that group.
+> 
+> David Lang
+> 
+Having been a Linux user since the late 90's the problem I see is that
+developers decide to re-design stuff that is already working and then things
+that used to work don't work anymore.
 
-Git is participating in Google Summer of Code this year and I've
-proposed to write a 'git statistics' command. This command would allow
-the user to gather data about a repository, ranging from "how active
-is dev x" to "what did x work on in the last 3 weeks". It's main
-feature however, would be an algorithm that ranks commits as being
-either 'buggy', 'bugfix' or 'enhancement'. (There are several clues
-that can aid in determining this, a commit msg along the lines of
-"fixes ..." being the most obvious.)
-In the light of this recent discussion, especially the part on
-"keeping count of the number of errors introduced by
-author and reviewer?", I thought it might for the kernel mailing list
-to be aware of this. Also mentioned in this thread was that reviewers
-don't get enough credits. As long as patches are signed with, say,
-'reviewed-by:', 'acked-by:' or 'signed-off-by:' the command I suggest
-to implement would be able to give more accurate statistics on who
-"works on the kernel". This way reviewers get the credit they deserve.
-The knife cuts on both sides of course, if someone reviews a patch
-that is later determined to introduce a bug, they can be recorded to
-have acked a buggy commit. This is especially interesting in
-determining who are the good reviewers, but also in determining who
-are the good contributors. A distinction could be made between parts
-of the source, say, a maintainer might excel in patches related to
-driver foo, but when they submit a patch for driver bar it usually
-contains bugs . Armed with these statistics reviewers might decide to
-be more careful before acking a patch from that maintainer if it's on
-driver bar, but when that same maintainer sends in a patch from driver
-bar it is probably ok and needs less attention.
-My application, and a more extended description, can be found here:
-http://alturin.googlepages.com/gsoc2008
+Libata is a good example. I had an older laptop that eventually got working
+again - but the old ide stuff wasn't studied enough to find out what had to be
+brought forward and supported in libata.
 
-I'm interested to know if the community is indeed as interested in my
-proposal as I hope and if I oversaw any obvious features that would
-make it an even better command.
+Regards,
+Steve
+-- 
 
-Cheers,
+"They that give up essential liberty to obtain temporary safety,
+deserve neither liberty nor safety."  (Ben Franklin)
 
-Sverre Rabbelier
+"The course of history shows that as a government grows, liberty
+decreases."  (Thomas Jefferson)
