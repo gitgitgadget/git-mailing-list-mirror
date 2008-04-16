@@ -1,134 +1,124 @@
 From: =?utf-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-Subject: [PATCH v2 07/12] merge,
-	pull: mark '--(no-)summary' options as deprecated
-Date: Wed, 16 Apr 2008 02:39:06 +0200
-Message-ID: <1208306351-20922-8-git-send-email-szeder@ira.uka.de>
+Subject: [PATCH v2 04/12] t6200-fmt-merge-msg: put expected messages into
+	different files
+Date: Wed, 16 Apr 2008 02:39:03 +0200
+Message-ID: <1208306351-20922-5-git-send-email-szeder@ira.uka.de>
 References: <7vzls7so8m.fsf@gitster.siamese.dyndns.org>
 	<1208306351-20922-1-git-send-email-szeder@ira.uka.de>
 	<1208306351-20922-2-git-send-email-szeder@ira.uka.de>
 	<1208306351-20922-3-git-send-email-szeder@ira.uka.de>
 	<1208306351-20922-4-git-send-email-szeder@ira.uka.de>
-	<1208306351-20922-5-git-send-email-szeder@ira.uka.de>
-	<1208306351-20922-6-git-send-email-szeder@ira.uka.de>
-	<1208306351-20922-7-git-send-email-szeder@ira.uka.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org,
 	=?utf-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 16 06:27:30 2008
+X-From: git-owner@vger.kernel.org Wed Apr 16 06:27:39 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jlvhu-0007aE-AI
-	for gcvg-git-2@gmane.org; Wed, 16 Apr 2008 02:41:02 +0200
+	id 1Jlvhs-0007aE-Vx
+	for gcvg-git-2@gmane.org; Wed, 16 Apr 2008 02:41:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756565AbYDPAjk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Apr 2008 20:39:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756720AbYDPAjj
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Apr 2008 20:39:39 -0400
-Received: from moutng.kundenserver.de ([212.227.126.177]:61919 "EHLO
+	id S1756376AbYDPAje convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Apr 2008 20:39:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755172AbYDPAjb
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Apr 2008 20:39:31 -0400
+Received: from moutng.kundenserver.de ([212.227.126.186]:50573 "EHLO
 	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756482AbYDPAjh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Apr 2008 20:39:37 -0400
+	with ESMTP id S1755339AbYDPAj3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Apr 2008 20:39:29 -0400
 Received: from [127.0.1.1] (p5B13305D.dip0.t-ipconnect.de [91.19.48.93])
-	by mrelayeu.kundenserver.de (node=mrelayeu5) with ESMTP (Nemesis)
-	id 0ML25U-1JlvgE2YB4-0001SK; Wed, 16 Apr 2008 02:39:18 +0200
+	by mrelayeu.kundenserver.de (node=mrelayeu7) with ESMTP (Nemesis)
+	id 0ML2xA-1JlvgC0M76-0003gY; Wed, 16 Apr 2008 02:39:16 +0200
 X-Mailer: git-send-email 1.5.5.76.g546c
-In-Reply-To: <1208306351-20922-7-git-send-email-szeder@ira.uka.de>
-X-Provags-ID: V01U2FsdGVkX18ua1g1hR4KQI3CEpoJWY5sS3gfQ400tgO+Siv
- JBVYLAaR3m7hYiNeFfK/385CXvzDVvq3Hqz8YUXFolkfkQjAyU
- t1ECFoNYDgsjOCIekiSGA==
+In-Reply-To: <1208306351-20922-4-git-send-email-szeder@ira.uka.de>
+X-Provags-ID: V01U2FsdGVkX18nQCuW57PQO2QAA/fw/TVF6BDFIhUF8ae/8gm
+ Y6PHU0Gsy8UT6NN/18+mp5Y1doWXTKuGfK/fA47UwofZ9yPR8B
+ V5V8N9CF3i9CaFsBnRWWA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79641>
-
-Also remove them from bash completion.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79642>
 
 Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
 ---
- Documentation/git-merge.txt            |    4 ++--
- Documentation/merge-options.txt        |   10 ++++++++--
- contrib/completion/git-completion.bash |    2 +-
- git-merge.sh                           |    4 ++--
- 4 files changed, 13 insertions(+), 7 deletions(-)
+ t/t6200-fmt-merge-msg.sh |   18 +++++++++---------
+ 1 files changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
-index c514e3b..2f9edd8 100644
---- a/Documentation/git-merge.txt
-+++ b/Documentation/git-merge.txt
-@@ -9,8 +9,8 @@ git-merge - Join two or more development histories toge=
-ther
- SYNOPSIS
- --------
- [verse]
--'git-merge' [-n | --no-stat | --no-summary] [--stat | --summary] [--no=
--commit]
--	[--squash] [-s <strategy>]... [-m <msg>] <remote> <remote>...
-+'git-merge' [-n | --no-stat] [--stat] [--no-commit] [--squash]
-+	[-s <strategy>]... [-m <msg>] <remote> <remote>...
- 'git-merge' <msg> HEAD <remote>...
+diff --git a/t/t6200-fmt-merge-msg.sh b/t/t6200-fmt-merge-msg.sh
+index 526d7d1..1af3ab2 100755
+--- a/t/t6200-fmt-merge-msg.sh
++++ b/t/t6200-fmt-merge-msg.sh
+@@ -69,7 +69,7 @@ test_expect_success setup '
+ 	git show-branch
+ '
 =20
- DESCRIPTION
-diff --git a/Documentation/merge-options.txt b/Documentation/merge-opti=
-ons.txt
-index 41ef152..d0a2ac9 100644
---- a/Documentation/merge-options.txt
-+++ b/Documentation/merge-options.txt
-@@ -1,11 +1,17 @@
----stat, \--summary::
-+--stat::
- 	Show a diffstat at the end of the merge. The diffstat is also
- 	controlled by the configuration option merge.stat (and the
- 	equivalent merge.diffstat).
+-cat >expected <<\EOF
++cat >msg.left.nolog <<\EOF
+ Merge branch 'left'
+ EOF
 =20
---n, \--no-stat, \--no-summary::
-+-n, \--no-stat::
- 	Do not show diffstat at the end of the merge.
+@@ -79,10 +79,10 @@ test_expect_success 'merge-msg test #1' '
+ 	git fetch . left &&
 =20
-+--summary::
-+	Deprecated equivalent of --stat.
-+
-+--no-summary::
-+	Deprecated equivalent of --no-stat.
-+
- --log::
- 	In addition to branch names, populate the log message with
- 	one-line descriptions from the actual commits that are being
-diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
-n/git-completion.bash
-index ef7bf44..adc1a75 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -779,7 +779,7 @@ _git_merge ()
- 		;;
- 	--*)
- 		__gitcomp "
--			--no-commit --no-stat --no-summary --log --no-log
-+			--no-commit --no-stat --log --no-log
- 			--squash --strategy
- 			"
- 		return
-diff --git a/git-merge.sh b/git-merge.sh
-index 4cda3ec..f0b764f 100755
---- a/git-merge.sh
-+++ b/git-merge.sh
-@@ -10,8 +10,8 @@ git-merge [options] <msg> HEAD <remote>
- --
- stat                 show a diffstat at the end of the merge
- n,no-stat            don't show a diffstat at the end of the merge
--summary              equivalent to --stat
--no-summary           equivalent to --no-stat
-+summary              deprecated equivalent of --stat
-+no-summary           deprecated equivalent of --no-stat
- log                  add list of one-line log to merge commit message
- no-log               don't add list of one-line log to merge commit me=
-ssage
- squash               create a single commit instead of doing a merge
+ 	git fmt-merge-msg <.git/FETCH_HEAD >actual &&
+-	git diff actual expected
++	git diff actual msg.left.nolog
+ '
+=20
+-cat >expected <<\EOF
++cat >msg.left_trash <<\EOF
+ Merge branch 'left' of ../trash
+ EOF
+=20
+@@ -92,10 +92,10 @@ test_expect_success 'merge-msg test #2' '
+ 	git fetch ../trash left &&
+=20
+ 	git fmt-merge-msg <.git/FETCH_HEAD >actual &&
+-	git diff actual expected
++	git diff actual msg.left_trash
+ '
+=20
+-cat >expected <<\EOF
++cat >msg.left.log <<\EOF
+ Merge branch 'left'
+=20
+ * left:
+@@ -115,10 +115,10 @@ test_expect_success 'merge-msg test #3' '
+ 	git fetch . left &&
+=20
+ 	git fmt-merge-msg <.git/FETCH_HEAD >actual &&
+-	git diff actual expected
++	git diff actual msg.left.log
+ '
+=20
+-cat >expected <<\EOF
++cat >msg.left_right.log <<\EOF
+ Merge branches 'left' and 'right'
+=20
+ * left:
+@@ -145,7 +145,7 @@ test_expect_success 'merge-msg test #4' '
+ 	git fetch . left right &&
+=20
+ 	git fmt-merge-msg <.git/FETCH_HEAD >actual &&
+-	git diff actual expected
++	git diff actual msg.left_right.log
+ '
+=20
+ test_expect_success 'merge-msg test #5' '
+@@ -157,7 +157,7 @@ test_expect_success 'merge-msg test #5' '
+ 	git fetch . left right &&
+=20
+ 	git fmt-merge-msg <.git/FETCH_HEAD >actual &&
+-	git diff actual expected
++	git diff actual msg.left_right.log
+ '
+=20
+ test_done
 --=20
 1.5.5.76.g546c
