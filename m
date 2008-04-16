@@ -1,83 +1,153 @@
-From: Bob Cotton <bob.cotton@gmail.com>
-Subject: git-push: "error: pack-objects died with strange error"
-Date: Wed, 16 Apr 2008 12:55:59 -0600
-Message-ID: <m11w55wrwg.fsf@boblaptop.clubcotton.homeip.net>
+From: "Nigel Magnay" <nigel.magnay@gmail.com>
+Subject: crlf with git-svn driving me nuts...
+Date: Wed, 16 Apr 2008 20:10:26 +0100
+Message-ID: <320075ff0804161210m46f3e83bpf7bf9d1d5816d914@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 16 21:15:05 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Apr 16 21:25:13 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JmCof-0006a5-FF
-	for gcvg-git-2@gmane.org; Wed, 16 Apr 2008 20:57:09 +0200
+	id 1JmD2L-00029K-Ox
+	for gcvg-git-2@gmane.org; Wed, 16 Apr 2008 21:11:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751248AbYDPS4L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Apr 2008 14:56:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751308AbYDPS4K
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Apr 2008 14:56:10 -0400
-Received: from py-out-1112.google.com ([64.233.166.176]:52584 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751234AbYDPS4J (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Apr 2008 14:56:09 -0400
-Received: by py-out-1112.google.com with SMTP id u52so3518342pyb.10
-        for <git@vger.kernel.org>; Wed, 16 Apr 2008 11:56:08 -0700 (PDT)
+	id S1751365AbYDPTKc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Apr 2008 15:10:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751341AbYDPTKc
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Apr 2008 15:10:32 -0400
+Received: from fk-out-0910.google.com ([209.85.128.186]:35191 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751298AbYDPTKb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Apr 2008 15:10:31 -0400
+Received: by fk-out-0910.google.com with SMTP id 19so2926463fkr.5
+        for <git@vger.kernel.org>; Wed, 16 Apr 2008 12:10:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date:message-id:user-agent:mime-version:content-type;
-        bh=wrj54eYDkp8EUzbqdvLPkge6OljrwyhnnYR8u2a1CC4=;
-        b=R8JKIVBRfEP4bG3vG6wID7qz+ZBgKXBxl0CbJJRym4wMBX3ab2TNgu8hxZugnWprjnXLGzhnEzzMlMyaoRRIObzHYWJO64q+pfXY539wZLCOSQ5tELFAY+rFFMzedUE6Zifh1KARukRwa6S2sBgL+V87guTaZURnS9rljwLlce0=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=aDofjsfTsssb8q2Ta/1adv1MHUMsD5LeSwZhEHp9wc8=;
+        b=PguC/ml3cW9LWpnYPIlTSgbPgJf8xR1swNrQW33OEj8Cb+Stg3bChq3xxHb2Hz9Fcc2ci0AWRUtgtMDN/+eXsTMsRLZ/ow1Dbrdzdc/00xR2zmP4gd0KFxiVvji8AsVAwi3zOJa2HyGE2Gwd/26fgOsiVP8rBCYfCOc/djVB6lw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:message-id:user-agent:mime-version:content-type;
-        b=pNQAMexbk5dvmT0/geT1UJIJmm+Q+54+brMY4PFDR611ufAFOnAfO4mxCREtG6dQL3++Tro5ce7shlSQEs1SuDh1Tu9IWqFTR+LSwLjLrHZl6zrKW+bPeQnz37lTx+PW7mAEHMYMdFDn5RBVkHIlBLH0oTGzVZicSJn4OW0eAc0=
-Received: by 10.35.44.16 with SMTP id w16mr569660pyj.36.1208372167169;
-        Wed, 16 Apr 2008 11:56:07 -0700 (PDT)
-Received: from boblaptop.clubcotton.homeip.net.rallydevelopment.com ( [67.88.103.130])
-        by mx.google.com with ESMTPS id a22sm12159273pye.33.2008.04.16.11.56.04
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 16 Apr 2008 11:56:05 -0700 (PDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/22.1.91 (darwin)
+        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=d0v9vwPjiF7gqT3fJIA5fy7I6916J/zHIqyzphF2Ug3ZLbbVQgQrzdAV15VRG8cZUrAO3xSFu4vyi6xb9XIKiqVa94U+yZqZdBWAA5Fse6vb5rs7t9MqKDu7rpiT7ICPk6nxcdEzDGMc/JU0eEbF5XKS6oyjppvNAlzYj4cxhVo=
+Received: by 10.82.121.20 with SMTP id t20mr584703buc.20.1208373026933;
+        Wed, 16 Apr 2008 12:10:26 -0700 (PDT)
+Received: by 10.82.168.20 with HTTP; Wed, 16 Apr 2008 12:10:26 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79725>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79726>
 
+We've got projects with a mixed userbase of windows / *nix; I'm trying
+to migrate some users onto git, whilst everyone else stays happy in
+their SVN repo.
 
-So I've got this repo managed by git-svn. I have a topic branch that's
-not going into svn, but I wanted a backup.
+However, there's one issue that has been driving me slowly insane.
+This is best illustrated thusly (on windows) :
 
-In a directory managed by git-daemon:
+  $ git init
+  $ git config core.autocrlf false
 
-        server          = /usr/bin/git-daemon
-        server_args     = --inetd --export-all --base-path=/export/git
+-->Create a file with some text content on a few lines
+  $ notepad file.txt
 
-I created an empty repo:
+  $ git add file.txt
+  $ git commit -m "initial checkin"
 
-  mkdir bcotton.git
-  cd bcotton.git
-  git --bare init --shared 
-  git config daemon.receivepack true
+  $ git status
+# On branch master
+nothing to commit (working directory clean)
+--> Yarp, what I wanted
 
-Then from my repo, I tried to push my work into it:
+  $ git config core.autocrlf true
+  $ git status
 
-  git remote add backup git://git/bcotton.git
-  git remote update backup
-  
-  git push backup <topic>
+# On branch master
+nothing to commit (working directory clean)
+--> Yarp, still all good
 
-  Counting objects: 108733, done.
-  Compressing objects: 100% (39375/39375), done.
-  error: pack-objects died with strange error
-  error: failed to push some refs to 'git://git.f4tech.com/bcotton.git'
+--> Simulate non-change happened by an editor opening file...
+  $ touch file.txt
+  $ git status
+# On branch master
+# Changed but not updated:
+#   (use "git add <file>..." to update what will be committed)
+#
+#       modified:   file.txt
+#
+no changes added to commit (use "git add" and/or "git commit -a")
 
-git fsck --full is clean.
+--> Oh Noes! I wonder what it could be
+  $ git diff file.txt
+diff --git a/file.txt b/file.txt
+index 7a2051f..31ca3a0 100644
+--- a/file.txt
++++ b/file.txt
+@@ -1,3 +1,3 @@
+-<xml>
+-       wooot
+-</xml>
++<xml>
++       wooot
++</xml>
 
-There is nothing from git-daemon in syslog
+--> Huh? ...
+  $ git diff -b file.txt
+diff --git a/file.txt b/file.txt
+index 7a2051f..31ca3a0 100644
 
-Ideas?
+--> Bah... don't care! get me back to the start...
+  $ git reset --hard
 
- -Bob
+HEAD is now at 4762c31... initial checkin
+
+  $ git status
+# On branch master
+# Changed but not updated:
+#   (use "git add <file>..." to update what will be committed)
+#
+#       modified:   file.txt
+#
+no changes added to commit (use "git add" and/or "git commit -a")
+
+--> ARGH!
+  $ git config core.autocrlf false
+  $ git status
+# On branch master
+nothing to commit (working directory clean)
+
+  $ git config core.autocrlf true
+  $ git status
+# On branch master
+nothing to commit (working directory clean)
+
+--> WtF?
+
+Why does it think in this instance that there is a change? It's CRLF
+in the repo, it's CRLF in the working tree, and the checkout in either
+mode ought to be identical ??
+
+Now this is further compounded by the fact that users then typically
+tend to do a 'CRLF->LF conversion' checkin - *BUT* this will cause
+merge conflicts if another user actually made a genuine change (I.E.
+the removal of CR and the change are both treated as significant).
+
+Additional fun is caused because some editors 'touching' files that
+they actually haven't modified, leading to all these 'null' changes.
+
+This is a bigger deal for us than it ought to be, because we're
+pulling changes from a windows-based svn repo, which is always CRLF.
+Should I set core.autocrlf=input when doing 'git svn fetch' (and would
+it pay any attention)? Also is it possible to tell the diff / merge
+machinery that it ought to just ignore text file line endings when
+merging ?
+
+Sorry if some of this is stupid-user territory, but there's probably a
+few people out there also looking at trying to migrate away from
+Windows+SVN that are likely to hit the same things...
