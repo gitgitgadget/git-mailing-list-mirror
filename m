@@ -1,108 +1,278 @@
 From: Ping Yin <pkufranky@gmail.com>
-Subject: [PATCH 0/7] submodule: fallback to .gitmodules and multiple level module definition
-Date: Wed, 16 Apr 2008 22:19:30 +0800
-Message-ID: <1208355577-8734-1-git-send-email-pkufranky@gmail.com>
-Cc: gitster@pobox.com
+Subject: [PATCH 5/7] git-submodule: multi-level module definition
+Date: Wed, 16 Apr 2008 22:19:35 +0800
+Message-ID: <1208355577-8734-6-git-send-email-pkufranky@gmail.com>
+References: <1208355577-8734-1-git-send-email-pkufranky@gmail.com>
+ <1208355577-8734-2-git-send-email-pkufranky@gmail.com>
+ <1208355577-8734-3-git-send-email-pkufranky@gmail.com>
+ <1208355577-8734-4-git-send-email-pkufranky@gmail.com>
+ <1208355577-8734-5-git-send-email-pkufranky@gmail.com>
+Cc: gitster@pobox.com, Ping Yin <pkufranky@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 16 16:30:48 2008
+X-From: git-owner@vger.kernel.org Wed Apr 16 16:30:39 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jm8VL-00050Q-Nv
-	for gcvg-git-2@gmane.org; Wed, 16 Apr 2008 16:20:56 +0200
+	id 1Jm8VO-00050Q-QX
+	for gcvg-git-2@gmane.org; Wed, 16 Apr 2008 16:20:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755966AbYDPOUB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Apr 2008 10:20:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754858AbYDPOTp
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Apr 2008 10:19:45 -0400
-Received: from mail.qikoo.org ([60.28.205.235]:52417 "EHLO mail.qikoo.org"
+	id S1754117AbYDPOUL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Apr 2008 10:20:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756782AbYDPOUI
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Apr 2008 10:20:08 -0400
+Received: from mail.qikoo.org ([60.28.205.235]:52425 "EHLO mail.qikoo.org"
 	rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752101AbYDPOTm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Apr 2008 10:19:42 -0400
+	id S1756001AbYDPOTo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Apr 2008 10:19:44 -0400
 Received: by mail.qikoo.org (Postfix, from userid 1029)
-	id A9FB6470AE; Wed, 16 Apr 2008 22:19:37 +0800 (CST)
+	id 704DE470B2; Wed, 16 Apr 2008 22:19:37 +0800 (CST)
 X-Mailer: git-send-email 1.5.5.70.gd68a
+In-Reply-To: <1208355577-8734-5-git-send-email-pkufranky@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79702>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79703>
 
-This is a resend of the RFC patches some days ago, with only minor
-code modification and log refinement. Also swap the order of the last
-two patches.
+This patch introduces multi-level module definition and '--module-name'
+option to designate submodules by logical names instead of path filters.
+Then the init/update/status/add subcommand is enhanced combined with
+this option.
 
-Since there is less feedback these days, i don't know much what you
-guys think of this patch series. However, i have use this series for a
-long time and think personally it is useful when having many submodules. 
+The multi-level module definition in .gitmodules was first suggested by
+Linus and etc. in mails "Let .git/config specify the url for submodules"
+(http://article.gmane.org/gmane.comp.version-control.git/48939).
 
-So i resend it, and look forward to its acceptance.
+Following shows an example of such a .gitmodules which finally comes
+from the group notation of 'git remote' which is suggested by Johannes
+Schindelin.
 
-This patch series has following functional improvements for submodule
+.gitmodules with multiple level of indirection
+------------------------------------------------------
+[submodules]
+	service = crawler search
+	crawler = util imcrawter
+	search = util imsearch
+[submodule "util"]
+	url = git://xyzzy/util.git
+[submodule "imsearch"]
+	path = search/imsearch
+	url = git://xyzzy/imsearch.git
+[submodule "imcrawler"]
+	path = crawler/imcrawter
+	url = git://xyzzy/imcrawter.git
+------------------------------------------------------
 
- - Fall back on .gitmodules if info not found in $GIT_DIR/config
- - multi-level module definition
- - Don't die when subcommand fails for one module
+By adding the 'submodules' section, we can define multi-level modules
+in an infinite levels of indirection.
 
- Actually, they seems three independent improvements. But the first two
- improvements are both dependent on the first two refactoring patches
- and the 3rd improvement is dependent on the implementation of the
- first two improvements. So i have to send them in batch.
+The "-m|--module-name" option is introduced with which submodules are
+designated by logical names instead of real paths as following shows.
 
-Patches 1,2,4 is mainly code refactor but the second one also
-has some semantic change.
+Identical commands forms with/without "--module-name"
+---------------------------------------------------
+$ git submodule XXX util imcrawler              (1)
+$ git submodule XXX -m crawler                  (2)
+$ git submodule XXX util imcrawler imsearch     (3)
+$ git submodule XXX -m service                  (4)
+$ git submodule XXX -m crawler search           (5)
+---------------------------------------------------
+* XXX represents status, update or init, but not add
+* (1) and (2) are identical conditionally (explained below)
+* (3), (4) and (5) are identical conditionally
 
-The other patches do the real functional changes.
+There are still minor difference between these two forms.
 
-Ping Yin (7):
-      git-submodule: Extract functions module_info and module_url
-      git-submodule: Extract absolute_url & move absolute url logic to module_clone
-      git-submodule: Fall back on .gitmodules if info not found in $GIT_DIR/config
-      git-submodule: Extract module_add from cmd_add
-      git-submodule: multi-level module definition
-      git-submodule: "update --force" to enforce cloning non-submodule
-      git-submodule: Don't die when command fails for one submodule
+In the no "--module-name" form, the path parameter may be not the real
+submodule path, and it just acts as the filter for real submodule paths.
+While in the "--module-name" form, the name parameter must be the logical
+name, and the real paths corresponding to the logical name may be neither
+a submodule path nor even existent.
 
- git-submodule.sh           |  325 ++++++++++++++++++++++++++++++++------------
- t/t7400-submodule-basic.sh |   31 ++++-
- 2 files changed, 266 insertions(+), 90 deletions(-)
+This patch handles such a path for different subcommands as follows.
 
+ - status: Output 0{40} as the sha1. Doing this can remind the user to
+   add the path as submodule or delete the path from .gitmodules.
+ - update: Skip that path and issue a "Not a submodule" warning
+ - init: Also init for that path
 
-Following is the diff with former RFC patch series
+So in the example above, commands (1) and (2) are identical only when
+util and imcrawler are already submodules.
+
+The add subcommand is also enhanced.
+
+The former workflow to add submodules is adding one by one with
+"git submodule add url path" which then modifies .gitmodules. However,
+sometimes it is more convenient to work in the reverse way: edit
+.gitmodules first and then add submodules in batch.
+
+Now "git submodule add --module-name modulename" can help us to do that.
+It will find all submodules corresponding to the logical name and add them
+in batch by using the paths and urls from .gitmodules. Of course, it will
+skip the paths which have already been submodules.
+
+Signed-off-by: Ping Yin <pkufranky@gmail.com>
+---
+ git-submodule.sh |   86 ++++++++++++++++++++++++++++++++++++++++++++++++++---
+ 1 files changed, 81 insertions(+), 5 deletions(-)
 
 diff --git a/git-submodule.sh b/git-submodule.sh
-index 8bea97a..0ecc4ff 100755
+index f3a1213..87d84fa 100755
 --- a/git-submodule.sh
 +++ b/git-submodule.sh
-@@ -354,7 +354,7 @@ cmd_init()
- 		exit_status=1 &&
- 		continue
- 		# Skip already registered paths
--		git config submodule.$name.url && continue
-+		test -z "$(git config submodule.$name.url)" || continue
+@@ -4,7 +4,7 @@
+ #
+ # Copyright (c) 2007 Lars Hjemli
  
- 		url=$(absolute_url "$url")
- 		git config submodule."$name".url "$url" ||
-@@ -442,7 +442,6 @@ cmd_update()
- 			}
- 		fi
+-USAGE="[--quiet] [--cached] \
++USAGE="[--quiet] [--cached] [--module-name] \
+ [add <repo> [-b branch]|status|init|update|summary [-n|--summary-limit <n>] [<commit>]] \
+ [--] [<path>...]"
+ OPTIONS_SPEC=
+@@ -15,6 +15,7 @@ command=
+ branch=
+ quiet=
+ cached=
++use_module_name=
  
--
- 		if test "$subsha1" != "$sha1"
+ #
+ # print stuff on stdout unless -q was specified
+@@ -97,12 +98,23 @@ module_name()
+        echo "$name"
+ }
+ 
++module_path() {
++	git config submodule.$1.path ||
++	GIT_CONFIG=.gitmodules git config submodule.$1.path ||
++	echo "$1"
++}
++
+ module_url() {
+ 	git config submodule.$1.url ||
+ 	GIT_CONFIG=.gitmodules git config submodule.$1.url
+ }
+ 
+ module_info() {
++	if test -n "$use_module_name"
++	then
++		module_info_by_name "$@"
++		return
++	fi
+ 	git ls-files --stage -- "$@" | grep -e '^160000 ' |
+ 	while read mode sha1 stage path
+ 	do
+@@ -118,6 +130,50 @@ module_info() {
+ }
+ 
+ #
++# List all submodule info line by line by given names as follows
++# sha1<tab>path<tab>name<tab>url
++#
++# Here we assume that module names and paths don't contain space
++# characters
++#
++# $@ = module names
++# When names is not given, list all module info
++#
++module_info_by_name() {
++	if test $# = 0
++	then
++		names=$(
++		{
++			git config --get-regexp 'submodule.*.url'
++			git config -f .gitmodules --get-regexp 'submodule.*.url'
++		} | sed 's/submodule.\(.*\).url .*$/\1/' 2>/dev/null
++		)
++	else
++		names=$(module_children_names "$@")
++	fi
++	for name in $names
++	do
++		url=$(module_url "$name") || continue
++		path=$(module_path "$name")
++		sha1=$(git ls-files --stage "$path" |
++			grep "$path$" | grep '^160000' | awk '{print $2}')
++		test -z "$sha1" && sha1=0000000000000000000000000000000000000000
++		echo "$sha1	$path	$name	$url"
++	done
++}
++
++module_children_names() {
++	for name
++	do
++		echo "$name"
++		module_children_names $(
++			git config "submodules.$name"
++			git config -f .gitmodules "submodules.$name"
++		)
++	done | sort -u
++}
++
++#
+ # Clone a submodule
+ #
+ # Prior to calling, cmd_update checks that a possibly existing
+@@ -233,7 +289,17 @@ cmd_add()
+ 		shift
+ 	done
+ 
+-	module_add "$1" "$2"
++	if test -n "$use_module_name"
++	then
++		module_info "$@" |
++		while read sha1 path name url
++		do
++			module_add "$url" "$path"
++		done
++	else
++		module_add "$1" "$2"
++	fi
++
+ }
+ 
+ #
+@@ -313,7 +379,11 @@ cmd_update()
+ 	while read sha1 path name url
+ 	do
+ 		test -n "$name" || exit
+-		if test -z "$url"
++		if test $sha1 = 0000000000000000000000000000000000000000
++		then
++			say "Not a submodule: $name @ $path"
++			continue
++		elif test -z "$url"
  		then
- 			(unset GIT_DIR; cd "$path" && git-fetch &&
-diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-index d9b48f7..8b35ff8 100755
---- a/t/t7400-submodule-basic.sh
-+++ b/t/t7400-submodule-basic.sh
-@@ -187,7 +187,7 @@ test_expect_success 'status should be "modified" after submodule reset --hard HE
- 	git-submodule status | grep "^+$rev2"
- '
- 
--test_expect_success 'update should checkout rev1 when fall back' '
-+test_expect_success 'update should checkout rev1 with falling back' '
- 	git-config --unset submodule.example.url &&
- 	GIT_CONFIG=.gitmodules git config submodule.example.url .subrepo &&
- 	git-submodule update init &&
+ 			# Only mention uninitialized submodules when its
+ 			# path have been specified
+@@ -559,12 +629,15 @@ cmd_status()
+ 		esac
+ 		shift
+ 	done
+-
+ 	module_info "$@" |
+ 	while read sha1 path name url
+ 	do
+ 		test -n "$name" || exit
+-		if test -z "$url" || ! test -d "$path"/.git
++		if test $sha1 = 0000000000000000000000000000000000000000
++		then
++			say "*$sha1 $path"
++			continue
++		elif test -z "$url" || ! test -d "$path"/.git
+ 		then
+ 			say "-$sha1 $path"
+ 			continue;
+@@ -610,6 +683,9 @@ do
+ 	--cached)
+ 		cached="$1"
+ 		;;
++	-m|--module-name)
++		use_module_name=1
++		;;
+ 	--)
+ 		break
+ 		;;
+-- 
+1.5.5.70.gd68a
