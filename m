@@ -1,81 +1,95 @@
-From: =?ISO-8859-1?Q?Love_H=F6rnquist_=C5strand?= <lha@kth.se>
-Subject: [ANNOUNCE] git2svn 0.1
-Date: Wed, 16 Apr 2008 08:23:21 +0200
-Message-ID: <940364D7-2A3E-414F-8FB6-2B866974F178@kth.se>
-Mime-Version: 1.0 (Apple Message framework v919.2)
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Apr 16 08:52:22 2008
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] git-fast-import: note 1M limit of mark number
+Date: Wed, 16 Apr 2008 02:54:26 -0400
+Message-ID: <20080416065425.GC29771@spearce.org>
+References: <20080415125222.C55C121CE8F@mail.utsl.gen.nz> <4804CECE.2040205@alum.mit.edu> <48051882.8000201@vilain.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org
+To: Sam Vilain <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Wed Apr 16 08:56:41 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jm1RH-0001Nc-2I
-	for gcvg-git-2@gmane.org; Wed, 16 Apr 2008 08:48:15 +0200
+	id 1Jm1Y4-0003MF-Kj
+	for gcvg-git-2@gmane.org; Wed, 16 Apr 2008 08:55:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751576AbYDPGra (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Apr 2008 02:47:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751800AbYDPGra
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Apr 2008 02:47:30 -0400
-Received: from smtp-2.sys.kth.se ([130.237.32.160]:60224 "EHLO
-	smtp-2.sys.kth.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751570AbYDPGra (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Apr 2008 02:47:30 -0400
-X-Greylist: delayed 1441 seconds by postgrey-1.27 at vger.kernel.org; Wed, 16 Apr 2008 02:47:30 EDT
-Received: from localhost (localhost [127.0.0.1])
-	by smtp-2.sys.kth.se (Postfix) with ESMTP id C531314D842
-	for <git@vger.kernel.org>; Wed, 16 Apr 2008 08:23:26 +0200 (CEST)
-X-Virus-Scanned: by amavisd-new at kth.se
-Received: from smtp-2.sys.kth.se ([127.0.0.1])
-	by localhost (smtp-2.sys.kth.se [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id iavFb0by28h2 for <git@vger.kernel.org>;
-	Wed, 16 Apr 2008 08:23:22 +0200 (CEST)
-Received: from [192.168.1.3] (c80-216-47-167.bredband.comhem.se [80.216.47.167])
-	by smtp-2.sys.kth.se (Postfix) with ESMTP id 9C55714D7D5
-	for <git@vger.kernel.org>; Wed, 16 Apr 2008 08:23:22 +0200 (CEST)
-X-Mailer: Apple Mail (2.919.2)
+	id S1751875AbYDPGya (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Apr 2008 02:54:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751950AbYDPGya
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Apr 2008 02:54:30 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:58202 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751570AbYDPGya (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Apr 2008 02:54:30 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1Jm1XH-0003b4-2S; Wed, 16 Apr 2008 02:54:27 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 3632520FBAE; Wed, 16 Apr 2008 02:54:26 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <48051882.8000201@vilain.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79680>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79681>
 
-Hello,
+Sam Vilain <sam@vilain.net> wrote:
+> Michael Haggerty wrote:
+> >> ++
+> >> +Note that due to current internal limitations, you may not make marks
+> >> +with a higher number than 1048575 (2^20-1).
+> >>  
+> >>  * A complete 40 byte or abbreviated commit SHA-1 in hex.
+> > 
+> > Oh.  Um.  That is an awkwardly small number nowadays.
+> > 
+> > cvs2svn has been used for repositories with O(2^20) distinct file
+> > revisions (KDE, Mozilla, NetBSD, ...).  So this limit will likely be too
+> > small for some users.
+> 
+> Right.  But, if you're not making the importer you write for a
+> conversion of that size restartable, you're insane.  So, marking more
+> than 1Mi *marks* in a single gfi session might not be so vital.
+> 
+> It only tripped me up because I was using a database sequence to
+> generate the marks, which meant I hit the ceiling.
 
-So you want to convert to git from svn but have an anonymous userbase
-pulling from svn and/or tools that uses svn that you can't convert.
+Uhm.  Wow.  gfi has a bug then; mark numbers are supposed to
+be whatever uintmax_t is on your platform; for any systems that
+support a 64 bit off_t (and most do these days) that should be a
+64 bit integer value, which we all know easily exceeds 2^20-1.
 
-Use git2svn to convert the "git fast-export" dump into a svn dump
-and load it into a new fresh svn repository. git2svn also supports
-incremental updates.
+I'd rather see the bug fixed than a documentation patch.  But I'm
+too whacked out from heavy travel in the past two days flying
+coast-to-coast and back to attempt debugging gfi and writing such
+a fix patch tonight.  Maybe someone else will find it before I
+can look at it later.  ;-)
+ 
+> > While I'm at it, let me also renew my suggestion that git-fast-import
+> > use separate namespaces ("markspaces", so to speak) for file content
+> > marks and for commit marks.  There is no reason for these distinct types
+> > of marks to be located in a shared space of integers.
+> 
+> There is a reason, it's because they're both just object IDs.  Is it
+> really that much of a drag?  I know what you mean though, it meant for
+> my code I had to keep track of which type each mark was.
 
-git2svn was tested on heimdal/master and samba/v3-2-test during the
-development so it should work on semi large repositories.
+Yea.  I think I had pointed out the same point to Michael earlier
+when he asked about it.  I didn't want create two different tables
+of marks because then we either need to extend the language to say
+which table, or we have to infer it based on position.  But either
+way its just object IDs.
 
-              http://repo.or.cz/w/git2svn.git
-
-Please send any bug reports and comments to lha@kth.se
-
-README:
-
-     This program will convert a git branch to a svn ditto, it also
-     support incremental updates.
-
-     git2svn takes a git fast-export dump and converts it into a svn
-     dump that is feed into svnadmin load.
-
-     git2svn assumes its the only process that writes into the svn
-     repository. This is because of the race between getting the to svn
-     Revsion number from the svn, creating the dump with correct
-     Revsions, and do the svnadmin load.
-
-     git2svn also support incremental updates from a git branch to a
-     svn reprositry. Its does this by setting a git tag
-     (git2svn-syncpoint-branchname) where the last update was pulled
-     from.
-
-
-
-Love
+-- 
+Shawn.
