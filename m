@@ -1,73 +1,101 @@
-From: "Nigel Magnay" <nigel.magnay@gmail.com>
-Subject: Re: crlf with git-svn driving me nuts...
-Date: Wed, 16 Apr 2008 22:56:54 +0100
-Message-ID: <320075ff0804161456h1a6fd4e8qdd185f4540a1259a@mail.gmail.com>
-References: <320075ff0804161210m46f3e83bpf7bf9d1d5816d914@mail.gmail.com>
-	 <20080416200107.GG3133@dpotapov.dyndns.org>
-	 <32541b130804161320w42c68bc2p9d838dc127a57027@mail.gmail.com>
-	 <20080416203923.GH3133@dpotapov.dyndns.org>
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: [PATCH 2/3] git-svn: Add --add-author-from option.
+Date: Thu, 17 Apr 2008 10:24:03 +1200
+Message-ID: <48067C83.4020209@vilain.net>
+References: <1208307858-31039-1-git-send-email-apenwarr@gmail.com> <1208307858-31039-2-git-send-email-apenwarr@gmail.com> <7vej96v2pk.fsf@gitster.siamese.dyndns.org> <32541b130804160946s343d53d2l271b9391d89a7953@mail.gmail.com> <7v3aplsl3p.fsf@gitster.siamese.dyndns.org> <20080416192312.GF3133@dpotapov.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Transfer-Encoding: 7bit
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Apr 16 23:57:56 2008
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Avery Pennarun <apenwarr@gmail.com>,
+	Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org,
+	Avery Pennarun <apenwarr@versabanq.com>
+To: Dmitry Potapov <dpotapov@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 17 00:26:06 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JmFdP-0001DB-9J
-	for gcvg-git-2@gmane.org; Wed, 16 Apr 2008 23:57:43 +0200
+	id 1JmG3o-0008Si-1M
+	for gcvg-git-2@gmane.org; Thu, 17 Apr 2008 00:25:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754147AbYDPV44 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Apr 2008 17:56:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754529AbYDPV44
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Apr 2008 17:56:56 -0400
-Received: from fk-out-0910.google.com ([209.85.128.191]:42367 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753834AbYDPV4z (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Apr 2008 17:56:55 -0400
-Received: by fk-out-0910.google.com with SMTP id 19so2999807fkr.5
-        for <git@vger.kernel.org>; Wed, 16 Apr 2008 14:56:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=QMG87ZjQKD6fo/RK7+cXjT7IJbses5b3d0Ii4D3Ejf4=;
-        b=SN3g+ejbjIt+lBVLiYdSrrttv01GX+qZmvSOyKp5T3657U2NcCO+w+au8eeQS8d1IOu97m1t+1oQB388rQW+9IsaXOXt+pfcsjMVW3Qag8MiRpcYaUYPRbxrvqPfcRNV+638bQJzCrk7mSydiqmlsbkwsRh1P0qEd6OQYryYeXE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=AuoHu/6NKrmnxwuA7fLLey2r0VGyHur/3uGsf+u2LqOgaKrOrrVI6aj9I0kpLS70CMSoXXuym+6IQapGlzXdJi2MczPqdWvfrEmXyCm4cqV1p0TAFdrE19dj+5hnLpTPgLmJ7tayj3QM7K8kfSZ8NNKnOtSrNuZvZyxVEqVcG6Q=
-Received: by 10.82.146.10 with SMTP id t10mr789012bud.87.1208383014340;
-        Wed, 16 Apr 2008 14:56:54 -0700 (PDT)
-Received: by 10.82.168.20 with HTTP; Wed, 16 Apr 2008 14:56:54 -0700 (PDT)
-In-Reply-To: <20080416203923.GH3133@dpotapov.dyndns.org>
-Content-Disposition: inline
+	id S1754471AbYDPWYO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Apr 2008 18:24:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753701AbYDPWYO
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Apr 2008 18:24:14 -0400
+Received: from watts.utsl.gen.nz ([202.78.240.73]:60065 "EHLO mail.utsl.gen.nz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751803AbYDPWYO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Apr 2008 18:24:14 -0400
+Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
+	id 56CA221CEFA; Thu, 17 Apr 2008 10:24:11 +1200 (NZST)
+X-Spam-Checker-Version: SpamAssassin 3.1.7-deb (2006-10-05) on 
+	mail.musashi.utsl.gen.nz
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.0 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00 
+	autolearn=ham version=3.1.7-deb
+Received: from [192.168.69.179] (203-97-235-49.cable.telstraclear.net [203.97.235.49])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.utsl.gen.nz (Postfix) with ESMTP id 7381021CEEE;
+	Thu, 17 Apr 2008 10:24:04 +1200 (NZST)
+User-Agent: Thunderbird 2.0.0.12 (X11/20080227)
+In-Reply-To: <20080416192312.GF3133@dpotapov.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79758>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79759>
 
->  > Nigel's example showed a few situations where git *thought* the file
->  > had changed when it hadn't, and yet is incapable of checking in the
->  > changes.
+Dmitry Potapov wrote:
+> On Wed, Apr 16, 2008 at 11:36:26AM -0700, Junio C Hamano wrote:
+>   
+>> It makes me wonder if there is a better way.
+>>
+>> For example, CVS honors LOGNAME to allow you to "lie" who the author of a
+>> change was, which is the behaviour inherited from RCS.  I have to wonder
+>> if SVN has a similar mechanism to tell it "Excuse me, but I am just a
+>> secretary recording changes for my boss."
+>>     
 >
->  Incapable of checking in? I have not found a single example in
->  his mail where it was impossible. The only quirk with autocrlf
->  is that you need to re-checkout your work tree after changing
->  it. There is no other problems with it as far as I know.
+> Yes, there is such a mechanism:
+> ====
+> Revision Property (revprop)
 >
+> Just as files can have properties, so can each revision in the
+> repository. Some special revprops are added automatically when the
+> revision is created, namely: svn:date svn:author svn:log which represent
+> the commit date/time, the committer and the log message respectively.
+> These properties can be edited, but they are not versioned, so any
+> change is permanent and cannot be undone. 
+> ====
+>
+> So, it is possible not only set the real author but also date/time.
+> Unfortunately, there is one problem with this approach -- by default,
+> these properties are disabled from modification for security reasons.
+> To enable modification of these properties, the administrator is
+> required to change some hooks. Personally, I have never observed any
+> SVN repository where anyone was granted the right to change them. So,
+> while it is possible, it is impractical.
 
-My (initial) setting of core.autocrlf to false was because that's what
-it was on all the windows clients (I know the default has now changed)
-and to make the later parts of the script obvious that the file in the
-repo had a CRLF ending, rather than have being converted to LF. That's
-the situation we have, because they've all come from SVN.
+Yes, and in fact with most shared SVN hosting services the users are 
+left with no option to do this.
 
-The bit I really don't understand is why git thinks a file that has
-just been touched has chnaged when it hasn't, and doing a 'git reset
---hard' actually doesn't help at all (but, bizzarely, git config
-core.autocrlf false & git config core.autocrlf true *does* !). The
-repo copy is CRLF, the working copy is CRLF, but git thinks it's
-changed...
+While there doesn't seem to be a command-line way to do this, it's 
+possible that a commit "editor" making a new commit can create revision 
+properties without being necessarily subject to those restrictions. 
+Possible, but I guess unlikely as it would then be inconsistent.
+
+The usual thing is to dump the extra information in the commit message. 
+Some projects, like Perl, were quite systematic about this and a lot of 
+useful author information is available. In fact, it was saved in the 
+proposed form.
+
+While not the main thrust of this thread, the usual convention for 
+mapping svn committers to names is a project AUTHORS file. This made me 
+wonder whether allowing git-svn to take its author map from the 
+repository, such as from a revision property or a directory property of 
+the root or project would be a good idea.
+
+Sam
