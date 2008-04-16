@@ -1,87 +1,80 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Git Homepge Update
-Date: Tue, 15 Apr 2008 18:36:29 -0700 (PDT)
-Message-ID: <m363uishr7.fsf@localhost.localdomain>
-References: <2c6b72b30804140656g14c24d8cwae016d62fe12f4a7@mail.gmail.com>
-	<56e37551-4b8f-4164-a71d-79dba8635b7d@l28g2000prd.googlegroups.com>
-	<96F7571C-1D9D-4F0A-99F1-A2307DAB0374@wincent.com>
-	<bd6139dc0804141129h25c829e2i320f227594763d71@mail.gmail.com>
-	<pan.2008.04.14.20.39.10@progsoc.org>
-	<20080414213339.GB10300@dpotapov.dyndns.org>
-	<pan.2008.04.15.03.25.00@progsoc.org>
-	<8607f754-92c8-49ca-9bc9-11e58b66ef40@q1g2000prf.googlegroups.com>
-	<acfbfe5b-f3a1-4c22-a873-ed329552d1bb@b5g2000pri.googlegroups.com>
-	<20080415115741.GB26302@machine.or.cz>
-	<20080415162008.GD26302@machine.or.cz>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] builtin-apply: Show a more descriptive error on failure
+ when opening a patch
+Date: Tue, 15 Apr 2008 22:20:28 -0700
+Message-ID: <7vy77etlyb.fsf@gitster.siamese.dyndns.org>
+References: <alpine.DEB.1.00.0804141532390.28504@racer>
+ <1208187027-29198-1-git-send-email-albertito@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Dill <sarpulhu@gmail.com>, git@vger.kernel.org
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Wed Apr 16 07:59:47 2008
+Cc: Johannes.Schindelin@gmx.de, git@vger.kernel.org, gitster@pobox.com
+To: Alberto Bertogli <albertito@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 16 08:02:09 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JlwaL-0000kV-3P
-	for gcvg-git-2@gmane.org; Wed, 16 Apr 2008 03:37:17 +0200
+	id 1Jm05H-0007XL-RY
+	for gcvg-git-2@gmane.org; Wed, 16 Apr 2008 07:21:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752960AbYDPBgc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Apr 2008 21:36:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753165AbYDPBgc
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Apr 2008 21:36:32 -0400
-Received: from ug-out-1314.google.com ([66.249.92.172]:12805 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752919AbYDPBgb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Apr 2008 21:36:31 -0400
-Received: by ug-out-1314.google.com with SMTP id z38so824368ugc.16
-        for <git@vger.kernel.org>; Tue, 15 Apr 2008 18:36:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
-        bh=0hKzOf7EvYAJxgh1a5jV8a8fAL0GYjwrQp10DqXawsE=;
-        b=ZS+qD2YeWRCAe3wikfCRdwCFGY7mBEK/M0rSDlCs8GZQD9if86H/t9KZ7DLaZYBvI79FVqTuPKNaxXiHF0vgpU9eB/g+knb2JdLVKHo1dOqa7CjTF2F+djPW754pShul/x6YuQvdtpXDnjyTChSISnyoP1FIsOTvN3Y3buHipXQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
-        b=S5Pt3v+tDrHbSFCnJO7V9RyJc6/xE4IyDvFoA8GsQ1leJxPfZ0oD53vIz0AbKwZEG06stcuRKhCkGPXZx/B2Js2XMOLb7+q7J7r7QxMlycW/UhXbRGLZNkWVivl2PolrLAU0mXFqmo+1LcIlWjYQQ3J9rPwAC9ST9wbJQrsOCBA=
-Received: by 10.67.116.19 with SMTP id t19mr6185187ugm.47.1208309790215;
-        Tue, 15 Apr 2008 18:36:30 -0700 (PDT)
-Received: from localhost.localdomain ( [83.8.244.53])
-        by mx.google.com with ESMTPS id 6sm3164016ugc.60.2008.04.15.18.36.27
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 15 Apr 2008 18:36:29 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m3G1aUkm023911;
-	Wed, 16 Apr 2008 03:36:30 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m3G1aS8g023908;
-	Wed, 16 Apr 2008 03:36:28 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <20080415162008.GD26302@machine.or.cz>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1751525AbYDPFUm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Apr 2008 01:20:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751453AbYDPFUm
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Apr 2008 01:20:42 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:46855 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751406AbYDPFUm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Apr 2008 01:20:42 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id CCCBD2C7A;
+	Wed, 16 Apr 2008 01:20:40 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id CFCDD2C79; Wed, 16 Apr 2008 01:20:30 -0400 (EDT)
+In-Reply-To: <1208187027-29198-1-git-send-email-albertito@gmail.com> (Alberto
+ Bertogli's message of "Mon, 14 Apr 2008 12:30:27 -0300")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79673>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79674>
 
-Petr Baudis <pasky@suse.cz> writes:
+Alberto Bertogli <albertito@gmail.com> writes:
 
->   By the way, I have read through the homepage again after some time and
-> tweaked the text a bit for clarity and perhaps grammar (hope I didn't
-> make it worse than it was). I have also reorganized the Related Tools
-> section and rewrote the initial paragraph.
-> 
->   Design-wise, I have added some extra spacing at many places, turned
-> the Related Tools section to a 2x2 grid to take less vertical space
+> When a patch can't be opened (it doesn't exist, there are permission
+> problems, etc.) we get the usage text, which is not a proper indication of
+> failure.
+>
+> This patch fixes that by calling error() instead.
+>
+> Signed-off-by: Alberto Bertogli <albertito@gmail.com>
+> ---
+>
+> On Mon, Apr 14, 2008 at 03:33:54PM +0100, Johannes Schindelin wrote:
+>> On Mon, 14 Apr 2008, Alberto Bertogli wrote:
+>> 
+>> > +           if (fd < 0) {
+>> > +                   error("can't open patch '%s': %s", arg,
+>> > +                                   strerror(errno));
+>> > +                   return 1;
+>> > +           }
+>> 
+>> Do you absolutely want to retain the curly braces, and have two 
+>> statements?   I would prefer "return error(...)", and if you absolutely 
+>> insist on a return 1: "return !!error(...)".
+>
+> No, I'm not insisting on any version, I just thought returning 1 would be
+> better since it will become the script exit status; Now that I think a bit
+> more about it, maybe I should just use die() instead.
+>
+> Anyway, here's the version returning directly from error(); if you prefer it
+> some other way just let me know.
 
-IMHO it is not a good idea.  First, because it decreases page height
-by a unsignificant amount; we still need scrollbar.  Second, more
-important imho that this 2x2 grid contains _unrelated_ information
-which belong in _different_ sections, namely 3 subsections of git
-related tools, and one completely unrelated on git _hosting_.
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+I would apply this while changing "return error()" to "die()", as the
+original usage() call would have exited here and we do not have a good
+reason to change it.
+
+Thanks.
