@@ -1,151 +1,95 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: crlf with git-svn driving me nuts...
-Date: Thu, 17 Apr 2008 00:01:07 +0400
-Message-ID: <20080416200107.GG3133@dpotapov.dyndns.org>
-References: <320075ff0804161210m46f3e83bpf7bf9d1d5816d914@mail.gmail.com>
+From: Adrian Bunk <bunk@kernel.org>
+Subject: Re: Reporting bugs and bisection
+Date: Wed, 16 Apr 2008 23:16:06 +0300
+Message-ID: <20080416201606.GS1677@cs181133002.pp.htv.fi>
+References: <alpine.DEB.1.10.0804131546370.9318@asgard> <20080414043939.GA6862@1wt.eu> <20080414053943.GU9785@ZenIV.linux.org.uk> <20080413232441.e216a02c.akpm@linux-foundation.org> <20080414072328.GW9785@ZenIV.linux.org.uk> <Xine.LNX.4.64.0804150131300.4160@us.intercode.com.au> <4804765B.2070300@davidnewall.com> <bd6139dc0804160515s64a36748v49556c56d475dda4@mail.gmail.com> <20080416132634.GA545@cs181133002.pp.htv.fi> <bd6139dc0804161239h17e79c70ta5e938619e5743c9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>
-To: Nigel Magnay <nigel.magnay@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 16 22:20:48 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, linux-kernel <linux-kernel@vger.kernel.org>,
+	James Morris <jmorris@namei.org>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Willy Tarreau <w@1wt.eu>, david@lang.hm,
+	Stephen Clark <sclark46@earthlink.net>,
+	Evgeniy Polyakov <johnpol@2ka.mipt.ru>,
+	"Rafael J. Wysocki" <rjw@sisk.pl>, Tilman Schmidt <tilman@imap.cc>,
+	Valdis.Kletnieks@vt.edu, Mark Lord <lkml@rtr.ca>,
+	David Miller <davem@davemloft.net>, jesper.juhl@gmail.com,
+	yoshfuji@linux-ipv6.org, jeff@garzik.org, netdev@vger.kernel.org,
+	David Newall <davidn@davidnewall.com>
+To: sverre@rabbelier.nl
+X-From: git-owner@vger.kernel.org Wed Apr 16 22:21:26 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JmDxE-0002Hf-A7
-	for gcvg-git-2@gmane.org; Wed, 16 Apr 2008 22:10:04 +0200
+	id 1JmE42-0004XW-Qn
+	for gcvg-git-2@gmane.org; Wed, 16 Apr 2008 22:17:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752793AbYDPUJT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Apr 2008 16:09:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752783AbYDPUJT
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Apr 2008 16:09:19 -0400
-Received: from nf-out-0910.google.com ([64.233.182.191]:29235 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752637AbYDPUJS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Apr 2008 16:09:18 -0400
-Received: by nf-out-0910.google.com with SMTP id g13so799486nfb.21
-        for <git@vger.kernel.org>; Wed, 16 Apr 2008 13:08:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
-        bh=vydC5ZyTd23iP46dZeR/elossLmH+BqM+rI413LRUpU=;
-        b=k3bFcDuyRzPIigqe4vlqZIrYzeqLLmE/SXtgpF2zr6k87JspjkJqiB3a92KM2wvX7wMlepcL5i0lD06m7/NeGZ2te++gBDwlFITayb2EW1eazu5QHrugXiXieJcuFkCNjeICrw0VYgKHLr2kIInLajMbtOl1zw1yevFt/QPzVXs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
-        b=PjnPFvh/FeWAhoE/rHObtCkb7nEtC4gGl4efY6xWhX35qgzc1KcR9Y9ZDGKc4TuEaWsvT0ukfS/zpO4IYcVFe2sPiU/p7oKKXSMMqZ2gVAt4zI2Rcxkhob1lSwdkTcYqcWClxca0W4ew+8vTuEdE21vWA/HBk4mXISvzYCXeUMU=
-Received: by 10.78.183.20 with SMTP id g20mr758281huf.31.1208376075256;
-        Wed, 16 Apr 2008 13:01:15 -0700 (PDT)
-Received: from localhost ( [85.141.188.158])
-        by mx.google.com with ESMTPS id b35sm12999325ugd.33.2008.04.16.13.01.13
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 16 Apr 2008 13:01:14 -0700 (PDT)
+	id S1758305AbYDPUQS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Apr 2008 16:16:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752212AbYDPUQR
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Apr 2008 16:16:17 -0400
+Received: from smtp5.pp.htv.fi ([213.243.153.39]:38303 "EHLO smtp5.pp.htv.fi"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756779AbYDPUQM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Apr 2008 16:16:12 -0400
+Received: from cs181133002.pp.htv.fi (cs181133002.pp.htv.fi [82.181.133.2])
+	by smtp5.pp.htv.fi (Postfix) with ESMTP id 1DA805BC06C;
+	Wed, 16 Apr 2008 23:16:11 +0300 (EEST)
 Content-Disposition: inline
-In-Reply-To: <320075ff0804161210m46f3e83bpf7bf9d1d5816d914@mail.gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <bd6139dc0804161239h17e79c70ta5e938619e5743c9@mail.gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79740>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79741>
 
-On Wed, Apr 16, 2008 at 08:10:26PM +0100, Nigel Magnay wrote:
-> We've got projects with a mixed userbase of windows / *nix; I'm trying
-> to migrate some users onto git, whilst everyone else stays happy in
-> their SVN repo.
+On Wed, Apr 16, 2008 at 09:39:41PM +0200, Sverre Rabbelier wrote:
+> On Wed, Apr 16, 2008 at 3:26 PM, Adrian Bunk <bunk@kernel.org> wrote:
+>...
+> >  E.g. if you look at commit f743d04dcfbeda7439b78802d35305781999aa11
+> >  (ide/legacy/q40ide.c: add MODULE_LICENSE), how could you determine
+> >  automatically that it is a bugfix, and the commit that introduced
+> >  the bug?
 > 
-> However, there's one issue that has been driving me slowly insane.
-> This is best illustrated thusly (on windows) :
+> Well, a dead giveaway would be:
+> "http://bugzilla.kernel.org/show_bug.cgi?id=10124"
+
+Which could be "There is no driver for my TV card in the kernel."
+
+> >  You can always get some data, but if you want to get usable statistics
+> >  you need explicit tags in the commits, not some algorithm that tries
+> >  to guess.
 > 
->   $ git init
->   $ git config core.autocrlf false
-
-core.autocrlf=false is a bad choice for Windows.
-
+> As said above, I don't agree, you can 'guess' very reliably on a large
+> dataset. Also, most commits are already 'tagged' in some way or
+> another. The trick is to find the pattern in this tagging and use it.
 > 
-> -->Create a file with some text content on a few lines
->   $ notepad file.txt
+> I hope this clears things up a bit,
+
+I hope you are aware of the non-technical implications if the results 
+don't match reality?
+
+E.g. I am proud that my commits do virtually never introduce bugs, so 
+any results someone publishes about what I do should better be right
+or my first thoughts are somewhere between "fist" and "lawyer". [1]
+
+> Cheers,
 > 
->   $ git add file.txt
->   $ git commit -m "initial checkin"
+> Sverre Rabbelier
 
-You added a file with the CRLF ending in the repository!
-You are going to have problems now...
+cu
+Adrian
 
-> 
->   $ git status
-> # On branch master
-> nothing to commit (working directory clean)
-> --> Yarp, what I wanted
-> 
->   $ git config core.autocrlf true
->   $ git status
+[1] my actual reaction might only be an angry email, but I hope you
+    get the point that wrong results can really piss off people
 
-You should not change core.autocrlf during your work, or you
-are going to have some funny problems. If you really need to
-change it, it should be followed by "git reset --hard".
+-- 
 
-In this case, you already have a file with the wrong ending,
-so file.txt will be shown as changed now, because if you commit
-it again then it will be commited with <LF>, which should have
-been done in the first place.
-
-> 
-> # On branch master
-> nothing to commit (working directory clean)
-> --> Yarp, still all good
-> 
-> --> Simulate non-change happened by an editor opening file...
->   $ touch file.txt
->   $ git status
-> # On branch master
-> # Changed but not updated:
-> #   (use "git add <file>..." to update what will be committed)
-> #
-> #       modified:   file.txt
-> #
-> no changes added to commit (use "git add" and/or "git commit -a")
-> 
-> --> Oh Noes! I wonder what it could be
->   $ git diff file.txt
-> diff --git a/file.txt b/file.txt
-> index 7a2051f..31ca3a0 100644
-> --- a/file.txt
-> +++ b/file.txt
-> @@ -1,3 +1,3 @@
-> -<xml>
-> -       wooot
-> -</xml>
-> +<xml>
-> +       wooot
-> +</xml>
-> 
-> --> Huh? ...
-
-Actually, it is
-
-@@ -1,3 +1,3 @@
--<xml>^M
--       wooot^M
--</xml>^M
-+<xml>
-+       wooot
-+</xml>
-
-where ^M is <CR>
-
-> 
-> --> WtF?
-> 
-> Why does it think in this instance that there is a change? It's CRLF
-> in the repo, it's CRLF in the working tree, and the checkout in either
-> mode ought to be identical ??
-
-If you do not want problems, you should use core.autocrlf=true
-on Windows. Then all text files will be stored in the repository
-with <LF>, but they will have <CR><LF> in your work tree.
-Users on *nix should set core.autocrlf=input or false, so they
-will have <LF> in their work tree.
-
-Dmitry
+       "Is there not promise of rain?" Ling Tan asked suddenly out
+        of the darkness. There had been need of rain for many days.
+       "Only a promise," Lao Er said.
+                                       Pearl S. Buck - Dragon Seed
