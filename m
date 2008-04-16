@@ -1,83 +1,79 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: fsck --full is Ok, but clones are not, "missing commits"?!
-Date: Wed, 16 Apr 2008 17:22:22 +0200
-Message-ID: <480619AE.8010506@viscovery.net>
-References: <200804161626.44174.brian.foster@innova-card.com> <a537dd660804160804t252d2900j33e30a01dc58979c@mail.gmail.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: Friendly refspecs
+Date: Wed, 16 Apr 2008 11:42:42 -0400 (EDT)
+Message-ID: <alpine.LNX.1.00.0804161126280.19665@iabervon.org>
+References: <20080409101428.GA2637@elte.hu> <20080409145758.GB20874@sigill.intra.peff.net> <20080409200836.GA19248@mithlond> <20080409203453.GA10370@sigill.intra.peff.net> <20080409222500.GB19248@mithlond> <20080409225112.GB12103@sigill.intra.peff.net>
+ <20080413093102.GC12107@mithlond.arda.local> <20080416034823.GA11727@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Dmitry Potapov <dpotapov@gmail.com>
-To: Brian Foster <brian.foster@innova-card.com>
-X-From: git-owner@vger.kernel.org Wed Apr 16 17:36:03 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Teemu Likonen <tlikonen@iki.fi>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Apr 16 18:01:20 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jm9Tf-0004wv-SM
-	for gcvg-git-2@gmane.org; Wed, 16 Apr 2008 17:23:16 +0200
+	id 1Jm9nL-0001uP-DE
+	for gcvg-git-2@gmane.org; Wed, 16 Apr 2008 17:43:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757211AbYDPPW0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Apr 2008 11:22:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757645AbYDPPWZ
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Apr 2008 11:22:25 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:43114 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754901AbYDPPWZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Apr 2008 11:22:25 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1Jm9Sp-0005Ka-9p; Wed, 16 Apr 2008 17:22:23 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 143076C4; Wed, 16 Apr 2008 17:22:23 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <a537dd660804160804t252d2900j33e30a01dc58979c@mail.gmail.com>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: 2.2 (++)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5, PLING_QUERY=0.514
+	id S1759132AbYDPPmu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Apr 2008 11:42:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759569AbYDPPmt
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Apr 2008 11:42:49 -0400
+Received: from iabervon.org ([66.92.72.58]:55430 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759132AbYDPPmt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Apr 2008 11:42:49 -0400
+Received: (qmail 10433 invoked by uid 1000); 16 Apr 2008 15:42:42 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 16 Apr 2008 15:42:42 -0000
+In-Reply-To: <20080416034823.GA11727@sigill.intra.peff.net>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79713>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79714>
 
-Brian Foster schrieb:
->  at toplevel of a (not-bare) clone, with  info/grafts  in-place,
->  and a happy `fsck -full' (same machine so same git version):
+On Tue, 15 Apr 2008, Jeff King wrote:
+
+> On Sun, Apr 13, 2008 at 12:31:02PM +0300, Teemu Likonen wrote:
 > 
-> 	$ git filter-branch --tag-name-filter cat -- --all  # at not-bare toplevel
-> 	Rewrite 7df30811617517bc4d5ec7c190a435667228320c (168/168)
-> 	Ref 'refs/heads/master' was rewritten
-> 	Ref 'refs/remotes/origin/HEAD' was rewritten
-> 	WARNING: Ref 'refs/remotes/origin/master' is unchanged
-> 	Ref 'refs/tags/linux-2.6.15' was rewritten
-> 	error: Ref refs/tags/linux-2.6.15 is at \
-> 		26a33413c95dfda6c70ca4a83da49cddb7b236b9 but expected \
-> 		2dcaaf2decd31ac9a21d616604c0a7c1fa65d5a4
-> 	fatal: refs/tags/linux-2.6.15: cannot lock the ref
-> 	Could not rewrite refs/tags/linux-2.6.15
-> 	$
-
-Actually, I don't know how to overcome this situation; maybe forget about
-the tags and remove the '--tag-name-filter cat' part. They wouldn't have
-been rewritten correctly anyway (annotated tags loose the message and
-become unannotated).
-
->  as such, is there some way of adding them back to the bare
->  repository (if that even makes sense?), or whatever?  (i.e.,
->  that have not been lost, is it possible to take advantage
->  of that fact?)
+> > There is still one thing (at least) that I don't quite understand. It's
+> > about "git push". When I do
+> > 
+> >   $ git push <remote> <branch>
+> > 
+> > the refs/heads/<branch> is updated or created on the remote side. But if
+> > I do
+> > 
+> >   $ git push <remote> <branch1>:<branch2>
+> > 
+> > the refs/heads/<branch2> is not automatically created. Why there is need
+> > to say "<branch1>:refs/heads/<branch2>" to make it work if <branch2>
+> > does not exist? The 'git push' manual says something vague about branch
+> > not matching (?). What does it mean?
 > 
->  also (sorry!), does anyone recognise the development process
->  that apparently was used?  (the one pre-existing clone has
->  few-to-no clews, since it was used for some fairly trivial
->  local development, not for the "merging" (if I can call it
->  that) with linux-mips repository.)
+> This happens because "git push <remote> <branch>" is expanded locally to
+> "git push <remote> <branch>:<branch>", but <branch> is first expanded
+> into refs/heads/<branch>.
+> 
+> The latter uses the explicit refspec <branch2> which doesn't get
+> expanded, since it doesn't exist at all, and so we can't deduce the type
+> (e.g., refs/heads versus refs/tags).
+> 
+> ISTR some discussion in the past few months about using the type of
+> <branch1> to guess the type of <branch2>, but it seems not to have gone
+> anywhere.
+> 
+> Daniel, were you working on this?
 
-In this case you might be able to salvage missing objects by cloning
-linux-mips. Just copy the objects/pack/* from that clone into your
-objects/pack, remove info/grafts, and maybe things "just work"?
+I was only working on making "HEAD" expand to HEAD:<current branch>. I 
+think that the matching type is only most likely what you want, not 
+certainly enough to just do it. I'd say that push should suggest it, but 
+not actually do it automatically, or possibly require -f to do it without 
+the full name.
 
--- Hannes
+	-Daniel
+*This .sig left intentionally blank*
