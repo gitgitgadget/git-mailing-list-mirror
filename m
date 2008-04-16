@@ -1,85 +1,71 @@
-From: david@lang.hm
-Subject: Re: Reporting bugs and bisection
-Date: Tue, 15 Apr 2008 20:53:27 -0700 (PDT)
-Message-ID: <alpine.DEB.1.10.0804152042320.15483@asgard>
-References: <47FEADCB.7070104@rtr.ca> <517f3f820804150254w491cdf85s28f1d15696db8d96@mail.gmail.com> <4804B5D5.4090404@davidnewall.com> <200804152251.51308.rjw@sisk.pl> <480565D3.6000100@davidnewall.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Friendly refspecs
+Date: Tue, 15 Apr 2008 23:48:23 -0400
+Message-ID: <20080416034823.GA11727@sigill.intra.peff.net>
+References: <20080409101428.GA2637@elte.hu> <20080409145758.GB20874@sigill.intra.peff.net> <20080409200836.GA19248@mithlond> <20080409203453.GA10370@sigill.intra.peff.net> <20080409222500.GB19248@mithlond> <20080409225112.GB12103@sigill.intra.peff.net> <20080413093102.GC12107@mithlond.arda.local>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: "Rafael J. Wysocki" <rjw@sisk.pl>,
-	Michael Kerrisk <mtk.manpages@gmail.com>,
-	James Morris <jmorris@namei.org>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Willy Tarreau <w@1wt.eu>,
-	Stephen Clark <sclark46@earthlink.net>,
-	Evgeniy Polyakov <johnpol@2ka.mipt.ru>,
-	Tilman Schmidt <tilman@imap.cc>, Valdis.Kletnieks@vt.edu,
-	Mark Lord <lkml@rtr.ca>, David Miller <davem@davemloft.net>,
-	jesper.juhl@gmail.com, yoshfuji@linux-ipv6.org, jeff@garzik.org,
-	linux-kernel <linux-kernel@vger.kernel.org>, git@vger.kernel.org,
-	netdev@vger.kernel.org
-To: David Newall <davidn@davidnewall.com>
-X-From: netdev-owner@vger.kernel.org Wed Apr 16 06:31:03 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
+To: Teemu Likonen <tlikonen@iki.fi>
+X-From: git-owner@vger.kernel.org Wed Apr 16 06:32:11 2008
 connect(): Connection refused
-Return-path: <netdev-owner@vger.kernel.org>
-Envelope-to: linux-netdev-2@gmane.org
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jlyez-0004Z3-5f
-	for linux-netdev-2@gmane.org; Wed, 16 Apr 2008 05:50:13 +0200
+	id 1Jlydy-0004XQ-AE
+	for gcvg-git-2@gmane.org; Wed, 16 Apr 2008 05:49:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754345AbYDPDs5 (ORCPT <rfc822;linux-netdev-2@m.gmane.org>);
-	Tue, 15 Apr 2008 23:48:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754441AbYDPDs5
-	(ORCPT <rfc822;netdev-outgoing>); Tue, 15 Apr 2008 23:48:57 -0400
-Received: from mail.lang.hm ([64.81.33.126]:49333 "EHLO bifrost.lang.hm"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754435AbYDPDs4 (ORCPT <rfc822;netdev@vger.kernel.org>);
-	Tue, 15 Apr 2008 23:48:56 -0400
-Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
-	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id m3G3lTj8021912;
-	Tue, 15 Apr 2008 20:47:30 -0700
-X-X-Sender: dlang@asgard
-In-Reply-To: <480565D3.6000100@davidnewall.com>
-User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
-Sender: netdev-owner@vger.kernel.org
+	id S1754405AbYDPDs0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Apr 2008 23:48:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754501AbYDPDsZ
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Apr 2008 23:48:25 -0400
+Received: from [208.65.91.99] ([208.65.91.99]:4076 "EHLO peff.net"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1754384AbYDPDsZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Apr 2008 23:48:25 -0400
+Received: (qmail 8728 invoked by uid 111); 16 Apr 2008 03:48:24 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Tue, 15 Apr 2008 23:48:24 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 15 Apr 2008 23:48:23 -0400
+Content-Disposition: inline
+In-Reply-To: <20080413093102.GC12107@mithlond.arda.local>
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <netdev.vger.kernel.org>
-X-Mailing-List: netdev@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79649>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79650>
 
-On Wed, 16 Apr 2008, David Newall wrote:
+On Sun, Apr 13, 2008 at 12:31:02PM +0300, Teemu Likonen wrote:
 
-> Rafael J. Wysocki wrote:
->> Well, even if someone introduces bugs relatively frequently, but then also
->> works with the reporters and fixes the bugs timely, it's about okay IMO.
->>
-> This really is not okay.  Even if bugs are fixed a version or two later,
-> the impact those bugs have on users makes the system look bad and drives
-> them away.  We do not, I believe, want Linux to top the list for "most
-> bugs".  It's unprofessional, unreliable and quite undesirable.
+> There is still one thing (at least) that I don't quite understand. It's
+> about "git push". When I do
+> 
+>   $ git push <remote> <branch>
+> 
+> the refs/heads/<branch> is updated or created on the remote side. But if
+> I do
+> 
+>   $ git push <remote> <branch1>:<branch2>
+> 
+> the refs/heads/<branch2> is not automatically created. Why there is need
+> to say "<branch1>:refs/heads/<branch2>" to make it work if <branch2>
+> does not exist? The 'git push' manual says something vague about branch
+> not matching (?). What does it mean?
 
-timely frequently means the code was merged in -rc1/2 and was fixed before 
-the final release of the same version.
+This happens because "git push <remote> <branch>" is expanded locally to
+"git push <remote> <branch>:<branch>", but <branch> is first expanded
+into refs/heads/<branch>.
 
-given the huge variety of hardware and workloads, it's just too easy for 
-there to be cases where any trade-off you make (code size, performance, 
-memory usage, common case definitions) can turn around and bite you. In 
-addition frequently hardware doesn't work quite the way the design specs 
-say that it should (completely ignoring the fact that many drivers are 
-reverse engineered). what's most important is that when a case shows up it 
-gets addressed promptly
+The latter uses the explicit refspec <branch2> which doesn't get
+expanded, since it doesn't exist at all, and so we can't deduce the type
+(e.g., refs/heads versus refs/tags).
 
-I'd rather have a developer/maintainer who introduces and fixed 100 bug, 
-but fixes them promptly, as opposed to one who only introduces one bug, 
-but refuses to consider fixing the code 'because they don't make mistakes 
-like that' (usadly a common attitude from people who produce very 
-good code much of the time)
+ISTR some discussion in the past few months about using the type of
+<branch1> to guess the type of <branch2>, but it seems not to have gone
+anywhere.
 
-best of all is a developer/maintainer who writes very good code and is 
-willing to accept the fact that they make mistakes and fixes the code 
-promptly, but those people are extremely rare, and usually they emerge 
-from the pool of people who make more mistakes and fix them promptly, 
-which is an added reason I'm more tolerant of that group.
+Daniel, were you working on this?
 
-David Lang
+-Peff
