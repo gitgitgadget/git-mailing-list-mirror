@@ -1,80 +1,212 @@
-From: Adrian Bunk <bunk@kernel.org>
-Subject: Re: Reporting bugs and bisection
-Date: Wed, 16 Apr 2008 23:53:33 +0300
-Message-ID: <20080416205333.GT1677@cs181133002.pp.htv.fi>
-References: <20080414043939.GA6862@1wt.eu> <20080414053943.GU9785@ZenIV.linux.org.uk> <20080413232441.e216a02c.akpm@linux-foundation.org> <20080414072328.GW9785@ZenIV.linux.org.uk> <Xine.LNX.4.64.0804150131300.4160@us.intercode.com.au> <4804765B.2070300@davidnewall.com> <bd6139dc0804160515s64a36748v49556c56d475dda4@mail.gmail.com> <20080416132634.GA545@cs181133002.pp.htv.fi> <bd6139dc0804161239h17e79c70ta5e938619e5743c9@mail.gmail.com> <20080416201606.GS1677@cs181133002.pp.htv.fi>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [RFH] cleaning up "add across symlinks"
+Date: Wed, 16 Apr 2008 13:53:47 -0700
+Message-ID: <7vd4oppllw.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, linux-kernel <linux-kernel@vger.kernel.org>,
-	James Morris <jmorris@namei.org>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Willy Tarreau <w@1wt.eu>, david@lang.hm,
-	Stephen Clark <sclark46@earthlink.net>,
-	Evgeniy Polyakov <johnpol@2ka.mipt.ru>,
-	"Rafael J. Wysocki" <rjw@sisk.pl>, Tilman Schmidt <tilman@imap.cc>,
-	Valdis.Kletnieks@vt.edu, Mark Lord <lkml@rtr.ca>,
-	David Miller <davem@davemloft.net>, jesper.juhl@gmail.com,
-	yoshfuji@linux-ipv6.org, jeff@garzik.org, netdev@vger.kernel.org,
-	David Newall <davidn@davidnewall.com>
-To: sverre@rabbelier.nl
-X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S932437AbYDPUyB@vger.kernel.org Wed Apr 16 23:04:05 2008
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 16 23:04:07 2008
 connect(): Connection refused
-Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S932437AbYDPUyB@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@gmane.org
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JmEeV-00088b-A5
-	for glk-linux-kernel-3@gmane.org; Wed, 16 Apr 2008 22:54:47 +0200
+	id 1JmEeU-00088b-Jz
+	for gcvg-git-2@gmane.org; Wed, 16 Apr 2008 22:54:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932437AbYDPUyB (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Wed, 16 Apr 2008 16:54:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756531AbYDPUxl
-	(ORCPT <rfc822;linux-kernel-outgoing>);
-	Wed, 16 Apr 2008 16:53:41 -0400
-Received: from smtp4.pp.htv.fi ([213.243.153.38]:35216 "EHLO smtp4.pp.htv.fi"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753274AbYDPUxj (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
-	Wed, 16 Apr 2008 16:53:39 -0400
-Received: from cs181133002.pp.htv.fi (cs181133002.pp.htv.fi [82.181.133.2])
-	by smtp4.pp.htv.fi (Postfix) with ESMTP id 6D2E85BC044;
-	Wed, 16 Apr 2008 23:53:38 +0300 (EEST)
-Content-Disposition: inline
-In-Reply-To: <20080416201606.GS1677@cs181133002.pp.htv.fi>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-Sender: linux-kernel-owner@vger.kernel.org
+	id S932406AbYDPUx4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Apr 2008 16:53:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932401AbYDPUx4
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Apr 2008 16:53:56 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:44087 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932397AbYDPUxz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Apr 2008 16:53:55 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 670352DF2;
+	Wed, 16 Apr 2008 16:53:53 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 3FAE32DF1; Wed, 16 Apr 2008 16:53:49 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79748>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79749>
 
-On Wed, Apr 16, 2008 at 11:16:06PM +0300, Adrian Bunk wrote:
->...
-> E.g. I am proud that my commits do virtually never introduce bugs, so 
-> any results someone publishes about what I do should better be right
-> or my first thoughts are somewhere between "fist" and "lawyer". [1]
->...
+If you have this structure in your work tree:
 
-To avoid any misunderstandings:
+	lrwxrwxrwx a -> c
+	drwxrwxrwx c
+	-rw-rw-rw- c/b
 
-This is not in any way meant against you personally.
+and let million monkeys give random paths to "git-update-index --add" or
+"git add", you should end up with the index with two entries, a symlink
+"a" and file "c/b".
 
-But saying things like " X% of your commits introduced bugs" is not a
-friendly thing, and wrong data could be quite hurting.
+Not so.  If an unfortunate monkey says "git add a/b", we happily add it to
+the index, because we notice lstat("a/b") succeeds and assume that there
+is such a path.  There isn't, as far as git is concerned, because we track
+symbolic links.
 
-Especially in the open source world where much motivation comes from
-people being proud of their work.
+The attached is still rough, in that while I think the commands prevent
+such bogosities from entering the index, their reporting of the failure is
+suboptimal.
 
-Even correct data can do harm.
+For example, if you run the new test script added with this commit, the
+error message from "update-index" would say "a/b does not exist", while it
+might be true from the point of view of git, it is not from the end user's
+point of view (IOW, the message may need to be reworded to read "not
+adding a/b because leading path component a is a symlink --- add a itself,
+or not add anything at all").  Similarly, the "git add a/b" should report
+that it did not add a/b, but it doesn't.
 
-And bad data can have really bad effects.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ builtin-update-index.c            |   10 ++++++
+ dir.c                             |    5 +++
+ symlinks.c                        |    4 +-
+ t/t2210-add-not-across-symlink.sh |   64 +++++++++++++++++++++++++++++++++++++
+ 4 files changed, 81 insertions(+), 2 deletions(-)
+ create mode 100755 t/t2210-add-not-across-symlink.sh
 
-cu
-Adrian
-
+diff --git a/builtin-update-index.c b/builtin-update-index.c
+index a8795d3..24f3180 100644
+--- a/builtin-update-index.c
++++ b/builtin-update-index.c
+@@ -27,6 +27,8 @@ static int mark_valid_only;
+ #define MARK_VALID 1
+ #define UNMARK_VALID 2
+ 
++static char last_symlink_cache[PATH_MAX];
++
+ static void report(const char *fmt, ...)
+ {
+ 	va_list vp;
+@@ -201,6 +203,14 @@ static int process_path(const char *path)
+ 	if (lstat(path, &st) < 0)
+ 		return process_lstat_error(path, errno);
+ 
++	/*
++	 * If "a" is a symlink and the caller gives "a/b", that is
++	 * a nonsense.  As far as git is concerned, there is no such
++	 * file in the work tree.
++	 */
++	if (has_symlink_leading_path(path, last_symlink_cache))
++		return process_lstat_error(path, ENOENT);
++
+ 	len = strlen(path);
+ 	if (S_ISDIR(st.st_mode))
+ 		return process_directory(path, len, &st);
+diff --git a/dir.c b/dir.c
+index d79762c..e91fed6 100644
+--- a/dir.c
++++ b/dir.c
+@@ -49,6 +49,11 @@ int common_prefix(const char **pathspec)
+ 			break;
+ 		}
+ 	}
++	if (prefix) {
++		int sym = has_symlink_leading_path(path, NULL);
++		if (sym && sym < prefix)
++			return sym;
++	}
+ 	return prefix;
+ }
+ 
+diff --git a/symlinks.c b/symlinks.c
+index be9ace6..9d9116e 100644
+--- a/symlinks.c
++++ b/symlinks.c
+@@ -15,7 +15,7 @@ int has_symlink_leading_path(const char *name, char *last_symlink)
+ 		if (last_len < len &&
+ 		    !strncmp(name, last_symlink, last_len) &&
+ 		    name[last_len] == '/')
+-			return 1;
++			return last_len;
+ 		*last_symlink = '\0';
+ 	}
+ 
+@@ -37,7 +37,7 @@ int has_symlink_leading_path(const char *name, char *last_symlink)
+ 		if (S_ISLNK(st.st_mode)) {
+ 			if (last_symlink)
+ 				strcpy(last_symlink, path);
+-			return 1;
++			return len;
+ 		}
+ 
+ 		dp[len++] = '/';
+diff --git a/t/t2210-add-not-across-symlink.sh b/t/t2210-add-not-across-symlink.sh
+new file mode 100755
+index 0000000..102d407
+--- /dev/null
++++ b/t/t2210-add-not-across-symlink.sh
+@@ -0,0 +1,64 @@
++#!/bin/sh
++
++test_description='index not getting confused by intermediate symlinks'
++
++. ./test-lib.sh
++
++test_expect_success setup '
++	( echo a; echo c/b ) >expect &&
++	mkdir c &&
++	>c/b &&
++	ln -s c a &&
++	git update-index --add a c/b &&
++
++	git ls-files >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'update-index confusion (1)' '
++	test_must_fail git update-index --add a/b &&
++
++	git ls-files >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'update-index confusion (2)' '
++	test_must_fail git update-index --add a/b &&
++
++	git ls-files >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'add confusion (0)' '
++
++	git add a/b c
++
++	git ls-files >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'add confusion (1)' '
++
++	git add a/b
++
++	git ls-files >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'add confusion (2)' '
++
++	git add a
++
++	git ls-files >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'add confusion (3)' '
++
++	test_must_fail git add "a/*" &&
++
++	git ls-files >actual &&
++	test_cmp expect actual
++'
++
++test_done
 -- 
-
-       "Is there not promise of rain?" Ling Tan asked suddenly out
-        of the darkness. There had been need of rain for many days.
-       "Only a promise," Lao Er said.
-                                       Pearl S. Buck - Dragon Seed
+1.5.5.120.gea9a0
