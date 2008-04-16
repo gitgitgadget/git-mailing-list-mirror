@@ -1,146 +1,106 @@
-From: =?utf-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-Subject: [PATCH v2 00/12] merge summary and diffstat options cleanup
-Date: Wed, 16 Apr 2008 02:38:59 +0200
-Message-ID: <1208306351-20922-1-git-send-email-szeder@ira.uka.de>
-References: <7vzls7so8m.fsf@gitster.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: branch description
+Date: Tue, 15 Apr 2008 18:33:48 -0700 (PDT)
+Message-ID: <m3abjushvs.fsf@localhost.localdomain>
+References: <9b3e2dc20804150951scf8b3c7x26f3a56eab1f9840@mail.gmail.com>
+	<f9d2a5e10804151031o1d09c1f9od0ad78dcf9b746c5@mail.gmail.com>
+	<C55CA6EB-D427-4CF5-923E-DE0071D2F870@silverinsanity.com>
+	<7vej97x78v.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?utf-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+Content-Type: text/plain; charset=us-ascii
+Cc: Brian Gernhardt <benji@silverinsanity.com>,
+	Russ Dill <russ.dill@gmail.com>,
+	"Stephen Sinclair" <radarsat1@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 16 07:04:49 2008
+X-From: git-owner@vger.kernel.org Wed Apr 16 07:22:23 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jlvgw-0007Zm-4U
-	for gcvg-git-2@gmane.org; Wed, 16 Apr 2008 02:40:02 +0200
+	id 1JlwXm-0000hE-LO
+	for gcvg-git-2@gmane.org; Wed, 16 Apr 2008 03:34:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754421AbYDPAjP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Apr 2008 20:39:15 -0400
-X-Warning: Original message contained 8-bit characters, however during
-	   the SMTP transport session the receiving system did not announce
-	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
-	   message does not have MIME headers (RFC 2045-2049) to enable
-	   encoding change, we had very little choice.
-X-Warning: We ASSUME it is less harmful to add the MIME headers, and
-	   convert the text to Quoted-Printable, than not to do so,
-	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
-X-Warning: We don't know what character set the user used, thus we had to
-	   write these MIME-headers with our local system default value.
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753042AbYDPAjO
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Apr 2008 20:39:14 -0400
-Received: from moutng.kundenserver.de ([212.227.126.183]:54592 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752436AbYDPAjO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Apr 2008 20:39:14 -0400
-Received: from [127.0.1.1] (p5B13305D.dip0.t-ipconnect.de [91.19.48.93])
-	by mrelayeu.kundenserver.de (node=mrelayeu3) with ESMTP (Nemesis)
-	id 0MKxQS-1Jlvg70tOr-0003ul; Wed, 16 Apr 2008 02:39:12 +0200
-X-Mailer: git-send-email 1.5.5.76.g546c
-In-Reply-To: <7vzls7so8m.fsf@gitster.siamese.dyndns.org>
-X-Provags-ID: V01U2FsdGVkX18X9rowsrwcVIeRB1Na+oOz2o9FSMmjh6fJJXt
- jjuFx5Q7P8Fw4pKbmpsuNcuK6eWQ6IIrYrHdIXn5U/KR1qBx2J
- /1JxE40UxOWXGjeQJdA1g==
+	id S1753102AbYDPBdx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Apr 2008 21:33:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752591AbYDPBdx
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Apr 2008 21:33:53 -0400
+Received: from ug-out-1314.google.com ([66.249.92.168]:9157 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752818AbYDPBdw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Apr 2008 21:33:52 -0400
+Received: by ug-out-1314.google.com with SMTP id z38so823992ugc.16
+        for <git@vger.kernel.org>; Tue, 15 Apr 2008 18:33:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
+        bh=WvN10fUeCY5GJ13GaazIXmKIKjCFJsJnvM01ESe/ftI=;
+        b=SLJkw4QzpvKAIso3zhiO6DuF9umvI60ffL4l0pDazBRwfqMr263QYFdlEatfkVIca8l3E2/tYnwdgdR2PemBqNAGAsoadvQKJFCNIqJ+So3R3sBZ1MQ0rsJ1hJS60xHxMEeVgZ0kEINo2SWGliKBFUigxs/Nq/LGRRyj6H5TCbc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
+        b=bHAwJFlevkZJ50xf7t71O6CEVVLlY8lqQIK/48osLu20Wzlp4egOt5cnylrkK8dGciNHQmauMp5SbSijn3DAbPG7iwFGIW66x8HdpmQQWKMHJtlz2EH+rv3foTYdhYehTu93vlAKK5BvPGOaDDq9w/bQOVEsAcXtk8GRRANugFQ=
+Received: by 10.67.20.11 with SMTP id x11mr6202097ugi.29.1208309630892;
+        Tue, 15 Apr 2008 18:33:50 -0700 (PDT)
+Received: from localhost.localdomain ( [83.8.244.53])
+        by mx.google.com with ESMTPS id 5sm3148009ugc.25.2008.04.15.18.33.47
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 15 Apr 2008 18:33:48 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m3G1Xjqv023894;
+	Wed, 16 Apr 2008 03:33:46 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m3G1XhSM023891;
+	Wed, 16 Apr 2008 03:33:43 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <7vej97x78v.fsf@gitster.siamese.dyndns.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79658>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79659>
 
-On Sat, Apr 05, 2008 at 07:36:57PM -0700, Junio C Hamano wrote:
-> ...this hunk removes the original options from OPTIONS_SPEC, I suspec=
-t you
-> would get "unknown option 'stat'" from underlying "git rev-parse --pa=
-rseopt".
->=20
-> You probably haven't noticed the breakage because you replaced all
-> existing --summary with --stat in the tests, though.  Oops.
-It was not clear to me that this OPTIONS_SPEC is used for parsing,
-too.  This series fixes the problem.
+Junio C Hamano <gitster@pobox.com> writes:
 
-> We would want to take a three-stage approach where we (1) start accep=
-ting
-> both forms without changing the official names shown to the users, (2=
-)
-> deprecate the old names and make the new ones official, and then (3)
-> finally remove the old ones.  Your 2 thru 5 roll (1) and (2) into one
-> step.
->=20
-> I would not have major problem with this "hasty deprecation" in "usag=
-e"
-> strings, but I find it somewhat problematic to stop mentioning the ol=
-d
-> names in the documentation and bash completion from day one.  People =
-learn
-> old names elsewhere (e.g. in somebody's blog entry) and then try to f=
-ind
-> the description in their manual and they are already removed from you=
-r
-> copy.  Oops.
-Yeah, you are right that deprecated options should not be removed from
-the documentation.
+> Brian Gernhardt <benji@silverinsanity.com> writes:
+> 
+>> On Apr 15, 2008, at 1:31 PM, Russ Dill wrote:
+>>
+>>> The problem is that a branch is just a floating name for a line of
+>>> development. Its not really a "thing" in the repository like a tag or
+>>> a commit. You'd need to make some sort of special tag that describes
+>>> the branch or somesuch.
+>>
+>> No special tags needed.  A simple file that I'll call .git/info/
+>> ref_names could be a set of lines that have "<ref>\t<description>",
+>> like the following:
+>>
+>> refs/heads/master	Collection point for all my work
+>> refs/heads/ref_names	Add descriptions for branches
+>> refs/heads/segfault	Trying to fix bug #12345
+[...]
+>> Now if you want to propagate these descriptions when you push and
+>> pull, things get a lot more complicated.
+> 
+> Not complicated at all.  Put that description in-tree in a known location
+> (say, "help-branch") in-tree and your propagation problem is solved.
+> 
+> And have a scriptlet in $HOME/bin/git-help-branch to grep from that file.
 
-However, I think that rolling (1) and (2) into one step is better than
-having them separate.  If we have the two steps separate will also
-cause confusion, as users learning merge & co. between (1) and (2)=20
-might wonder, why are there two options for the same thing and which
-one should they prefer.  They might even suspect that one of the=20
-options will be deprecated in the future, but they will not be able to
-tell which without looking at e.g. the mailing list archives.  I would
-also prefer to remove the deprecated options and config variables from
-bash completion, because their users will then notice earlier that the
-options are deprecated.
+Please, let's don't repeat Mercurial mistake of placing unversioned
+information (such as branch names in case of Mercurial, or branches
+descriptions in this case) in-tree, i.e. version it.  Think of what
+would happen if you reset to the state (or checkout to some branch
+with the state) which is before some branch was created, or before
+some branch got description.  Mercurial deals with this using
+"special" not lika in-tree treatment of such a file... I don't think
+it is a good idea.
 
-But anyway, in this patch series steps (1) and (2) are split into
-separate set of patches, so you can decide to have steps (1) and (2)
-separately or not.
+I think it wouldb be better to put branches descriptions somewhere
+outside object repository, be it .git/info/ref_names of .git/config.
 
-The first six patches are adding the new options and config variables
-to merge, pull, and fmt-merge-msg, but are not deprecating the old
-ones.  They are also updating documentation, tests, and bash
-completion accordingly.  (Patches 1 and 4 are independent cleanups
-that could be merged regardless of the other patches, but the others
-are depending on them.)
-
-Patches 7-9 are marking the old options and config variables as
-deprecated.
-
-And finally, patches 10-12 are removing all the deprecated stuff, but
-they are there only for illustration purposes at the moment, to see
-how things will look like after the deprecation period.
-
-
-SZEDER G=C3=A1bor (12):
-  doc: moved merge.* config variables into separate merge-config.txt
-  merge, pull: introduce '--(no-)stat' options
-  add 'merge.stat' config variable
-  t6200-fmt-merge-msg: put expected messages into different files
-  fmt-merge-msg: add '--(no-)log' options and 'merge.log' config
-    variable
-  merge, pull: add '--(no-)log' command line option
-  merge, pull: mark '--(no-)summary' options as deprecated
-  merge, pull: mark the config variable 'merge.diffstat' as deprecated
-  fmt-merge-msg: mark summary-related option and config variable as
-    deprecated
-  merge, pull: remove deprecated '--(no-)summary' options
-  merge, pull: remove deprecated 'merge.diffstat' config variable
-  fmt-merge-msg: remove deprecated summary-related options and config
-    variable
-
- Documentation/config.txt               |   32 +------------------
- Documentation/git-fmt-merge-msg.txt    |   10 +++---
- Documentation/git-merge.txt            |   17 ++--------
- Documentation/merge-config.txt         |   35 ++++++++++++++++++++
- Documentation/merge-options.txt        |   15 +++++++--
- builtin-fmt-merge-msg.c                |    8 ++--
- contrib/completion/git-completion.bash |    6 ++-
- git-merge.sh                           |   18 ++++++----
- git-pull.sh                            |   20 ++++++------
- t/t6200-fmt-merge-msg.sh               |   54 ++++++++++++++++++++++++=
--------
- t/t7600-merge.sh                       |   24 +++++++++++---
- 11 files changed, 146 insertions(+), 93 deletions(-)
- create mode 100644 Documentation/merge-config.txt
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
