@@ -1,66 +1,99 @@
-From: "Richard Quirk" <richard.quirk@gmail.com>
-Subject: Re: [PATCH 2/3] git-svn: Add --add-author-from option.
-Date: Wed, 16 Apr 2008 21:11:56 +0200
-Message-ID: <cac9e4380804161211h1f49dc0bg810cfa9c0d47af5d@mail.gmail.com>
-References: <1208307858-31039-1-git-send-email-apenwarr@gmail.com>
-	 <1208307858-31039-2-git-send-email-apenwarr@gmail.com>
-	 <7vej96v2pk.fsf@gitster.siamese.dyndns.org>
-	 <32541b130804160946s343d53d2l271b9391d89a7953@mail.gmail.com>
-	 <7v3aplsl3p.fsf@gitster.siamese.dyndns.org>
+From: Andrew Morton <akpm@linux-foundation.org>
+Subject: Re: Reporting bugs and bisection
+Date: Wed, 16 Apr 2008 12:02:47 -0700
+Message-ID: <20080416120247.c665859c.akpm@linux-foundation.org>
+References: <20080413205406.GA9190@2ka.mipt.ru>
+	<48028830.6020703@earthlink.net>
+	<alpine.DEB.1.10.0804131546370.9318@asgard>
+	<20080414043939.GA6862@1wt.eu>
+	<20080414053943.GU9785@ZenIV.linux.org.uk>
+	<20080413232441.e216a02c.akpm@linux-foundation.org>
+	<20080414072328.GW9785@ZenIV.linux.org.uk>
+	<Xine.LNX.4.64.0804150131300.4160@us.intercode.com.au>
+	<4804765B.2070300@davidnewall.com>
+	<bd6139dc0804160515s64a36748v49556c56d475dda4@mail.gmail.com>
+	<20080416132634.GA545@cs181133002.pp.htv.fi>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: "Avery Pennarun" <apenwarr@gmail.com>,
-	"Eric Wong" <normalperson@yhbt.net>, "Sam Vilain" <sam@vilain.net>,
-	git@vger.kernel.org, "Avery Pennarun" <apenwarr@versabanq.com>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 16 21:26:27 2008
+Cc: sverre@rabbelier.nl, git@vger.kernel.org,
+	linux-kernel@vger.kernel.org, jmorris@namei.org,
+	viro@zeniv.linux.org.uk, w@1wt.eu, david@lang.hm,
+	sclark46@earthlink.net, johnpol@2ka.mipt.ru, rjw@sisk.pl,
+	tilman@imap.cc, Valdis.Kletnieks@vt.edu, lkml@rtr.ca,
+	davem@davemloft.net, jesper.juhl@gmail.com,
+	yoshfuji@linux-ipv6.org, jeff@garzik.org, netdev@vger.kernel.org,
+	davidn@davidnewall.com
+To: Adrian Bunk <bunk@kernel.org>
+X-From: netdev-owner@vger.kernel.org Wed Apr 16 21:33:27 2008
 connect(): Connection refused
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
+Return-path: <netdev-owner@vger.kernel.org>
+Envelope-to: linux-netdev-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JmD3l-0002Vg-Jw
-	for gcvg-git-2@gmane.org; Wed, 16 Apr 2008 21:12:46 +0200
+	id 1JmDDw-0005bA-VR
+	for linux-netdev-2@gmane.org; Wed, 16 Apr 2008 21:23:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751536AbYDPTMA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Apr 2008 15:12:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751459AbYDPTL7
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Apr 2008 15:11:59 -0400
-Received: from el-out-1112.google.com ([209.85.162.182]:9539 "EHLO
-	el-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751341AbYDPTL7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Apr 2008 15:11:59 -0400
-Received: by el-out-1112.google.com with SMTP id n30so475097elf.21
-        for <git@vger.kernel.org>; Wed, 16 Apr 2008 12:11:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=Fz+pbZpbxkFc3AkPTSjAhualZY6jdWgTVJI/uNMu8/o=;
-        b=KpFeO8syqC2/2U9iJF49tRSqxOA4KYvYqGDJCS+PVK71OXojL15Fvd4BPJsd3PwsMNr5LzVUv5sonpV98pzSE61ckqM754z/0vLyfEMQaB3JkVNJohvi11n7JVRgNFzU7hK55gxZzaSCGISrXViUS0jcc+Em5SEatUKfPAuWl4Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=KMo5K5JaItFr1UTgZjkJpXDhO0lA2/m8hngflMzqOX8qe+1u9KW7BiBvowRFP028R/eGcbf/P6ofwaIlD9BellKIPt809LShIM2R1b2VZxDJ6OKRzQTyXwODevIg6YNgXoMkuDdVHBdH2ApoUiaEyelc+KjBWTS4+cb6y4uQFTo=
-Received: by 10.115.18.1 with SMTP id v1mr571432wai.15.1208373116798;
-        Wed, 16 Apr 2008 12:11:56 -0700 (PDT)
-Received: by 10.70.52.19 with HTTP; Wed, 16 Apr 2008 12:11:56 -0700 (PDT)
-In-Reply-To: <7v3aplsl3p.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
-Sender: git-owner@vger.kernel.org
+	id S1751828AbYDPTVy (ORCPT <rfc822;linux-netdev-2@m.gmane.org>);
+	Wed, 16 Apr 2008 15:21:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751584AbYDPTVy
+	(ORCPT <rfc822;netdev-outgoing>); Wed, 16 Apr 2008 15:21:54 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:49540 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751320AbYDPTVw (ORCPT
+	<rfc822;netdev@vger.kernel.org>); Wed, 16 Apr 2008 15:21:52 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m3GJ2ppF022206
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 16 Apr 2008 12:02:52 -0700
+Received: from akpm.corp.google.com (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with SMTP id m3GJ2lvv001652;
+	Wed, 16 Apr 2008 12:02:47 -0700
+In-Reply-To: <20080416132634.GA545@cs181133002.pp.htv.fi>
+X-Mailer: Sylpheed version 2.2.4 (GTK+ 2.8.20; i486-pc-linux-gnu)
+X-Spam-Status: No, hits=-2.764 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+Sender: netdev-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79727>
+List-ID: <netdev.vger.kernel.org>
+X-Mailing-List: netdev@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79728>
 
-On Wed, Apr 16, 2008 at 8:36 PM, Junio C Hamano <gitster@pobox.com> wrote:
+On Wed, 16 Apr 2008 16:26:34 +0300
+Adrian Bunk <bunk@kernel.org> wrote:
 
->  For example, CVS honors LOGNAME to allow you to "lie" who the author of a
->  change was, which is the behaviour inherited from RCS.  I have to wonder
->  if SVN has a similar mechanism to tell it "Excuse me, but I am just a
->  secretary recording changes for my boss."
+> On Wed, Apr 16, 2008 at 02:15:22PM +0200, Sverre Rabbelier wrote:
+> > I'm not subscribed to the kernel mailing list, so please include me in
+> > the cc if you don't reply to the git list (which I am subscribed to).
+> > 
+> > Git is participating in Google Summer of Code this year and I've
+> > proposed to write a 'git statistics' command. This command would allow
+> > the user to gather data about a repository, ranging from "how active
+> > is dev x" to "what did x work on in the last 3 weeks". It's main
+> > feature however, would be an algorithm that ranks commits as being
+> > either 'buggy', 'bugfix' or 'enhancement'. (There are several clues
+> > that can aid in determining this, a commit msg along the lines of
+> > "fixes ..." being the most obvious.)
+> >...
 
-The author is stored as a property of the commit, so you can set alter
-it with something like `svn propset --revprop -r N svn:author NAME
-REPO_URL` providing you have server-side revision property changes
-enabled.
+Sounds like an interesting project.
+
+> At least with the data we have currently in git it's impossible to 
+> figure that out automatically.
+> 
+> E.g. if you look at commit f743d04dcfbeda7439b78802d35305781999aa11 
+> (ide/legacy/q40ide.c: add MODULE_LICENSE), how could you determine 
+> automatically that it is a bugfix, and the commit that introduced
+> the bug?
+> 
+> You can always get some data, but if you want to get usable statistics 
+> you need explicit tags in the commits, not some algorithm that tries 
+> to guess.
+
+Well yes.  One outcome of the project would be to tell us what changes we'd
+need to make to our processes to make such data gathering more effective.
+
+Of course, we may not actually implement such changes.  That would depend
+upon how useful the output is to us.
