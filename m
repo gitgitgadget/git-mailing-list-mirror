@@ -1,95 +1,78 @@
-From: "Brian Foster" <brian.foster@innova-card.com>
-Subject: Re: Re: Re: fsck --full is Ok, but clones are not, "missing commits"?!
-Date: Wed, 16 Apr 2008 13:48:13 +0200
-Message-ID: <a537dd660804160448w5ba28f13m8c081ebc2a71db91@mail.gmail.com>
-References: <200804161334.17748.brian.foster@innova-card.com>
+From: "Rafael J. Wysocki" <rjw@sisk.pl>
+Subject: Re: Reporting bugs and bisection
+Date: Wed, 16 Apr 2008 14:13:04 +0200
+Message-ID: <200804161413.05869.rjw@sisk.pl>
+References: <47FEADCB.7070104@rtr.ca> <480565D3.6000100@davidnewall.com> <20080416042920.GB25188@1wt.eu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Dmitry Potapov" <dpotapov@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 16 13:49:06 2008
+Cc: Michael Kerrisk <mtk.manpages@gmail.com>,
+	James Morris <jmorris@namei.org>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Andrew Morton <akpm@linux-foundation.org>, david@lang.hm,
+	Stephen Clark <sclark46@earthlink.net>,
+	Evgeniy Polyakov <johnpol@2ka.mipt.ru>,
+	Tilman Schmidt <tilman@imap.cc>, Valdis.Kletnieks@vt.edu,
+	Mark Lord <lkml@rtr.ca>, David Miller <davem@davemloft.net>,
+	jesper.juhl@gmail.com, yoshfuji@linux-ipv6.org, jeff@garzik.org,
+	linux-kernel <linux-kernel@vger.kernel.org>, git@vger.kernel.org,
+	netdev@vger.kernel.org, Andi Kleen <andi@firstfloor.org>
+To: Willy Tarreau <w@1wt.eu>, David Newall <davidn@davidnewall.com>
+X-From: netdev-owner@vger.kernel.org Wed Apr 16 14:13:46 2008
 connect(): Connection refused
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
+Return-path: <netdev-owner@vger.kernel.org>
+Envelope-to: linux-netdev-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jm68M-0006NU-8e
-	for gcvg-git-2@gmane.org; Wed, 16 Apr 2008 13:49:02 +0200
+	id 1Jm6WF-0004gx-Uz
+	for linux-netdev-2@gmane.org; Wed, 16 Apr 2008 14:13:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758296AbYDPLsR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Apr 2008 07:48:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758246AbYDPLsQ
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Apr 2008 07:48:16 -0400
-Received: from wx-out-0506.google.com ([66.249.82.235]:46912 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758155AbYDPLsP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Apr 2008 07:48:15 -0400
-Received: by wx-out-0506.google.com with SMTP id h31so1790119wxd.4
-        for <git@vger.kernel.org>; Wed, 16 Apr 2008 04:48:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        bh=//NTsYGwGfaKlTuws63M+aBv+PYEvbw93QxJH61XcTQ=;
-        b=H3taA6ke33bwHcpzsUnXy44nuOYaJf2KkqisifdGOnP5nvQTzp1fZrIdqQ4IEBo7HX4kR/6p2GErqBTwn0SqjkeNpY5N44MsjbGmp0Z/VI3+DR3cxAC1WGi8jBBVH/+BGeuTUm7soi4jXpQIZ94leATque1AJfZBliJzrzieWiw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=bAWEBGqN1toBv7pMm6hvgZJIKclp/lQRtODio36Q1NuHjZ402taczQ2DwZo8bRCDvT73Dv0MGkxHEI7+7P2iI/sZ5JUpj3dqG5rv40qi8EwCKkdCzm6w5WmBt045MkAlfF0z5v95CePTCsIJ+RWwV0dVFxIC3ojLz5RmXT8iqNk=
-Received: by 10.140.203.9 with SMTP id a9mr5124417rvg.203.1208346493988;
-        Wed, 16 Apr 2008 04:48:13 -0700 (PDT)
-Received: by 10.141.123.21 with HTTP; Wed, 16 Apr 2008 04:48:13 -0700 (PDT)
-In-Reply-To: <200804161334.17748.brian.foster@innova-card.com>
+	id S1760207AbYDPMMy (ORCPT <rfc822;linux-netdev-2@m.gmane.org>);
+	Wed, 16 Apr 2008 08:12:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758934AbYDPMMy
+	(ORCPT <rfc822;netdev-outgoing>); Wed, 16 Apr 2008 08:12:54 -0400
+Received: from ogre.sisk.pl ([217.79.144.158]:56031 "EHLO ogre.sisk.pl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758246AbYDPMMx (ORCPT <rfc822;netdev@vger.kernel.org>);
+	Wed, 16 Apr 2008 08:12:53 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by ogre.sisk.pl (Postfix) with ESMTP id 18D7FA5D5E;
+	Wed, 16 Apr 2008 13:24:04 +0200 (CEST)
+Received: from ogre.sisk.pl ([127.0.0.1])
+ by localhost (ogre.sisk.pl [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 03203-08; Wed, 16 Apr 2008 13:23:51 +0200 (CEST)
+Received: from [192.168.2.194] (konf.jasnier.pl [195.117.242.103])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by ogre.sisk.pl (Postfix) with ESMTP id 1F3B767FC1;
+	Wed, 16 Apr 2008 13:23:51 +0200 (CEST)
+User-Agent: KMail/1.9.6 (enterprise 20070904.708012)
+In-Reply-To: <20080416042920.GB25188@1wt.eu>
 Content-Disposition: inline
-X-Google-Sender-Auth: 3e0ad7118fe1d30e
-Sender: git-owner@vger.kernel.org
+X-Virus-Scanned: amavisd-new at ogre.sisk.pl using MkS_Vir for Linux
+Sender: netdev-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79693>
+List-ID: <netdev.vger.kernel.org>
+X-Mailing-List: netdev@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79694>
 
-Dmitry Potapov <dpotapov@gmail.com> correctly deduced:
->  On Wed, Apr 16, 2008 at 11:45:39AM +0200, Brian Foster wrote:
->  >  Brian Foster <brian.foster@innova-card.com> writes:
->  >  >  I've recently inherited a bare git repository,
->  >  >  which, as far as I can tell (I'm something of a
->  >  >  newbie with git), seems Ok [ but clones are not ].
->
->  I suspect your original git repository has info/grafts
+On Wednesday, 16 of April 2008, Willy Tarreau wrote:
+> On Wed, Apr 16, 2008 at 12:04:59PM +0930, David Newall wrote:
+> > Rafael J. Wysocki wrote:
+> > > Well, even if someone introduces bugs relatively frequently, but then also
+> > > works with the reporters and fixes the bugs timely, it's about okay IMO.
+> > >   
+> > This really is not okay.  Even if bugs are fixed a version or two later,
+> > the impact those bugs have on users makes the system look bad and drives
+> > them away.  We do not, I believe, want Linux to top the list for "most
+> > bugs".  It's unprofessional, unreliable and quite undesirable.
+> 
+> that's what -rc are for, and it's unprofessional to use them in production :-)
 
-hi Dmitry,
+Exactly.
 
- bingo!  YES, it does:
+And BTW, by saying "timely" I meant "in -rc" or "before the next major release".
 
-	$ cat info/grafts
-	8700854c41a40d333e90104971c3abbbcf082e57
-34757f56bd7cb007bbb48ce064a2cd7e67c32428
-	c87c46fe892211f8aa4fd363ccff4f667a9aaf7d
-d560b7a27640cdf9ff1e6a30ae161dc6144618bd
-	dd3f3c0636cfd50719c706b030db5473b0270add
-e6cfa744e0434f9b700cd8a3780dcf9235ed10e3
-	e5a60f1636cceac33777bb8098a0b7a4a136a56c
-b38536a9a67b8d6b94e51860195529481703286b
-	0ff75b3afff6fb306bef221bf1823ccf5ffc568b
-01d4f94e5e5e65058234256241c01a6caf1c5feb
-	fb5967688f7b464421cff28f266b64ad2a313a9e
-00fe1cce8a053ecf9d8ba160991f28574fb11f63
-	2dcaaf2decd31ac9a21d616604c0a7c1fa65d5a4
-	$
-
- now, showing that I am indeed essentially a git newbie,
- WTF is a "graft"?  I don't recall running into the term.
- I shall, of course, immediately start trying to find some
- info blah blah ..., but pointers/explanations would help.
-
- the goal is to put things into a sane state so any new
- clones are healthy.  there's only one(?) existing clone,
- which may or may not be(? become?) an issue.
-
-cheers!
-	-blf-
--- 
-"How many surrealists does it take to    |  Brian Foster
- change a lightbulb?  Three.  One calms  |  somewhere in south of France
- the warthog, and two fill the bathtub   |     Stop E$$o (ExxonMobil)!
- with brightly-coloured machine tools."  |       http://www.stopesso.com
+Thanks,
+Rafael
