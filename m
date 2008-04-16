@@ -1,116 +1,92 @@
-From: =?utf-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-Subject: [PATCH v2 03/12] add 'merge.stat' config variable
-Date: Wed, 16 Apr 2008 02:39:02 +0200
-Message-ID: <1208306351-20922-4-git-send-email-szeder@ira.uka.de>
-References: <7vzls7so8m.fsf@gitster.siamese.dyndns.org>
-	<1208306351-20922-1-git-send-email-szeder@ira.uka.de>
-	<1208306351-20922-2-git-send-email-szeder@ira.uka.de>
-	<1208306351-20922-3-git-send-email-szeder@ira.uka.de>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH] bisect: squelch "fatal: ref HEAD not a symref" misleading
+ message
+Date: Wed, 16 Apr 2008 04:09:49 +0200
+Message-ID: <20080416040949.26623e13.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?utf-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 16 07:45:52 2008
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio Hamano <junkio@cox.net>, Ingo Molnar <mingo@elte.hu>
+X-From: git-owner@vger.kernel.org Wed Apr 16 07:48:45 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jlvhp-0007aE-MS
-	for gcvg-git-2@gmane.org; Wed, 16 Apr 2008 02:40:58 +0200
+	id 1Jlx1y-0001dH-SI
+	for gcvg-git-2@gmane.org; Wed, 16 Apr 2008 04:05:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755219AbYDPAjX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Apr 2008 20:39:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754667AbYDPAjV
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Apr 2008 20:39:21 -0400
-Received: from moutng.kundenserver.de ([212.227.126.171]:52370 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754460AbYDPAjS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Apr 2008 20:39:18 -0400
-Received: from [127.0.1.1] (p5B13305D.dip0.t-ipconnect.de [91.19.48.93])
-	by mrelayeu.kundenserver.de (node=mrelayeu5) with ESMTP (Nemesis)
-	id 0ML25U-1JlvgB14Fe-0001WP; Wed, 16 Apr 2008 02:39:15 +0200
-X-Mailer: git-send-email 1.5.5.76.g546c
-In-Reply-To: <1208306351-20922-3-git-send-email-szeder@ira.uka.de>
-X-Provags-ID: V01U2FsdGVkX1/aqeKLpAJENcchp9OTPNY5O9S/NvGHraPOH/e
- xkQFmVIuxxlBLi3hjdxFz7nqid4t9nfhnKb4OkU/kyAXBbsOeZ
- 1Ye9cGsGYAdFfPKcMyRaw==
+	id S1753746AbYDPCEf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Apr 2008 22:04:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753728AbYDPCEf
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Apr 2008 22:04:35 -0400
+Received: from smtp1-g19.free.fr ([212.27.42.27]:50206 "EHLO smtp1-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753667AbYDPCEe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Apr 2008 22:04:34 -0400
+Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 14D5C1AB2B9;
+	Wed, 16 Apr 2008 04:04:33 +0200 (CEST)
+Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with SMTP id B0A461AB2B8;
+	Wed, 16 Apr 2008 04:04:32 +0200 (CEST)
+X-Mailer: Sylpheed 2.5.0beta1 (GTK+ 2.12.9; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79666>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79667>
 
-This config variable has the same effect as the current
-'merge.diffstat', but its name is consistent with the related command
-line option.
+To get the current HEAD when we start bisecting using for example
+"git bisect start", we first try "git symbolic-ref HEAD" to get a
+nice name, and if it fails, we fall back to "git rev-parse
+--verify HEAD".
 
-Update documentation and bash completion accordingly.
+The problem is that when "git symbolic-ref HEAD" fails, it
+displays "fatal: ref HEAD not a symref", so it looks like "git
+bisect start" failed and does not accept detached HEAD, even if
+in fact it worked fine.
 
-Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
+This patch adds "-q" option to the "git symbolic-ref" call to
+get rid of the misleading error message.
+
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- Documentation/merge-config.txt         |    5 +++++
- Documentation/merge-options.txt        |    3 ++-
- contrib/completion/git-completion.bash |    1 +
- git-merge.sh                           |    1 +
- 4 files changed, 9 insertions(+), 1 deletions(-)
+ git-bisect.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-diff --git a/Documentation/merge-config.txt b/Documentation/merge-confi=
-g.txt
-index cc815cc..15efc0d 100644
---- a/Documentation/merge-config.txt
-+++ b/Documentation/merge-config.txt
-@@ -1,3 +1,8 @@
-+merge.stat::
-+merge.diffstat::
-+	Whether to print the diffstat berween ORIG_HEAD and merge result
-+	at the end of the merge.  True by default.
-+
- merge.summary::
- 	Whether to include summaries of merged commits in newly created
- 	merge commit messages. False by default.
-diff --git a/Documentation/merge-options.txt b/Documentation/merge-opti=
-ons.txt
-index c82bc7e..9c46dcb 100644
---- a/Documentation/merge-options.txt
-+++ b/Documentation/merge-options.txt
-@@ -1,6 +1,7 @@
- --stat, \--summary::
- 	Show a diffstat at the end of the merge. The diffstat is also
--	controlled by the configuration option merge.diffstat.
-+	controlled by the configuration option merge.stat (and the
-+	equivalent merge.diffstat).
-=20
- -n, \--no-stat, \--no-summary::
- 	Do not show diffstat at the end of the merge.
-diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
-n/git-completion.bash
-index 5221a1a..4caff8d 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1022,6 +1022,7 @@ _git_config ()
- 		i18n.logOutputEncoding
- 		log.showroot
- 		merge.tool
-+		merge.stat
- 		merge.summary
- 		merge.verbosity
- 		pack.window
-diff --git a/git-merge.sh b/git-merge.sh
-index cda78de..a29a7ec 100755
---- a/git-merge.sh
-+++ b/git-merge.sh
-@@ -212,6 +212,7 @@ while test $args_left -lt $#; do shift; done
-=20
- if test -z "$show_diffstat"; then
-     test "$(git config --bool merge.diffstat)" =3D false && show_diffs=
-tat=3Dfalse
-+    test "$(git config --bool merge.stat)" =3D false && show_diffstat=3D=
-false
-     test -z "$show_diffstat" && show_diffstat=3Dt
- fi
-=20
---=20
-1.5.5.76.g546c
+	Junio C Hamano wrote:
+	> Ingo Molnar <mingo@elte.hu> writes:
+	> >  dione:~/linux-tmp4> git-bisect start
+	> >  fatal: ref HEAD is not a symbolic ref
+	> >  won't bisect on seeked tree
+	> >
+	> >  #
+	> >  # Hm. It's not a symbolic ref, and git-bisect just wont do it.
+	>
+	> Enough people were unhappy with this historical wart and we stopped
+	> refusing to "bisect on seeked tree" since b577bb9 (Eliminate confusing
+	> "won't bisect on seeked tree" failure, 2008-02-23); you should find it as
+	> part of the 1.5.5 release.
+	>
+	> The disturbing "fatal: ref HEAD not a symref" is still there even though
+	> it should be harmless.  The message should be squelched.
+
+	Here is a patch to do that.
+
+diff --git a/git-bisect.sh b/git-bisect.sh
+index 408775a..a36778d 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -66,7 +66,7 @@ bisect_start() {
+ 	# Verify HEAD. If we were bisecting before this, reset to the
+ 	# top-of-line master first!
+ 	#
+-	head=$(GIT_DIR="$GIT_DIR" git symbolic-ref HEAD) ||
++	head=$(GIT_DIR="$GIT_DIR" git symbolic-ref -q HEAD) ||
+ 	head=$(GIT_DIR="$GIT_DIR" git rev-parse --verify HEAD) ||
+ 	die "Bad HEAD - I need a HEAD"
+ 	case "$head" in
+-- 
+1.5.5.52.g4aa8
