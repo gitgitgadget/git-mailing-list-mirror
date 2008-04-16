@@ -1,101 +1,69 @@
-From: Sam Vilain <sam@vilain.net>
+From: "Avery Pennarun" <apenwarr@gmail.com>
 Subject: Re: [PATCH 2/3] git-svn: Add --add-author-from option.
-Date: Thu, 17 Apr 2008 10:24:03 +1200
-Message-ID: <48067C83.4020209@vilain.net>
-References: <1208307858-31039-1-git-send-email-apenwarr@gmail.com> <1208307858-31039-2-git-send-email-apenwarr@gmail.com> <7vej96v2pk.fsf@gitster.siamese.dyndns.org> <32541b130804160946s343d53d2l271b9391d89a7953@mail.gmail.com> <7v3aplsl3p.fsf@gitster.siamese.dyndns.org> <20080416192312.GF3133@dpotapov.dyndns.org>
+Date: Wed, 16 Apr 2008 18:34:12 -0400
+Message-ID: <32541b130804161534y33ac9b74jfa2ab81af5ee961c@mail.gmail.com>
+References: <1208307858-31039-1-git-send-email-apenwarr@gmail.com>
+	 <1208307858-31039-2-git-send-email-apenwarr@gmail.com>
+	 <7vej96v2pk.fsf@gitster.siamese.dyndns.org>
+	 <32541b130804160946s343d53d2l271b9391d89a7953@mail.gmail.com>
+	 <7v3aplsl3p.fsf@gitster.siamese.dyndns.org>
+	 <20080416192312.GF3133@dpotapov.dyndns.org>
+	 <48067C83.4020209@vilain.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Avery Pennarun <apenwarr@gmail.com>,
-	Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org,
-	Avery Pennarun <apenwarr@versabanq.com>
-To: Dmitry Potapov <dpotapov@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 17 00:26:06 2008
+Cc: "Dmitry Potapov" <dpotapov@gmail.com>,
+	"Junio C Hamano" <gitster@pobox.com>,
+	"Eric Wong" <normalperson@yhbt.net>, git@vger.kernel.org,
+	"Avery Pennarun" <apenwarr@versabanq.com>
+To: "Sam Vilain" <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Thu Apr 17 00:35:01 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JmG3o-0008Si-1M
-	for gcvg-git-2@gmane.org; Thu, 17 Apr 2008 00:25:00 +0200
+	id 1JmGDU-0002e3-I5
+	for gcvg-git-2@gmane.org; Thu, 17 Apr 2008 00:35:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754471AbYDPWYO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Apr 2008 18:24:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753701AbYDPWYO
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Apr 2008 18:24:14 -0400
-Received: from watts.utsl.gen.nz ([202.78.240.73]:60065 "EHLO mail.utsl.gen.nz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751803AbYDPWYO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Apr 2008 18:24:14 -0400
-Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
-	id 56CA221CEFA; Thu, 17 Apr 2008 10:24:11 +1200 (NZST)
-X-Spam-Checker-Version: SpamAssassin 3.1.7-deb (2006-10-05) on 
-	mail.musashi.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.0 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00 
-	autolearn=ham version=3.1.7-deb
-Received: from [192.168.69.179] (203-97-235-49.cable.telstraclear.net [203.97.235.49])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.utsl.gen.nz (Postfix) with ESMTP id 7381021CEEE;
-	Thu, 17 Apr 2008 10:24:04 +1200 (NZST)
-User-Agent: Thunderbird 2.0.0.12 (X11/20080227)
-In-Reply-To: <20080416192312.GF3133@dpotapov.dyndns.org>
+	id S1752211AbYDPWeQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Apr 2008 18:34:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751677AbYDPWeP
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Apr 2008 18:34:15 -0400
+Received: from fk-out-0910.google.com ([209.85.128.187]:23074 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751388AbYDPWeP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Apr 2008 18:34:15 -0400
+Received: by fk-out-0910.google.com with SMTP id 19so3015666fkr.5
+        for <git@vger.kernel.org>; Wed, 16 Apr 2008 15:34:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=g0gxD+KaloS3wDuc59x2EvIDC1CC/2m5F/dprcP6ibg=;
+        b=B2tdX7laFrmtILy59DKHr7j4FMxBIe4hvR1fx1pmyWO9E+N3+r4OkBSdr8Ps7uIyDFz6RYb9ONwRssPxZtarTGApZ5Jyw7EDF0bmLg9uIWG6O9vLjwFYSpF5KtuxsCSujQXKn2Ea9jUHRnO2fYWHr6jr0q4t9bIGl+VZBkbDMpA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=sflBn/D9VOL3gICPT4wOcEe1CcQ0sI6S/uDhFyMvxG32o7+iU0u25rTbSTcfT5uRVeqXfiS4wgI9MckghayCL5TwOw2f9i+9t0UfZvm1nvpQH5b3+Vvn6729p3qpDKQyDX/E7isiz2HbhglLFgJHFdhtg0jKVFo/yQ16STUBed4=
+Received: by 10.82.156.12 with SMTP id d12mr864292bue.78.1208385252619;
+        Wed, 16 Apr 2008 15:34:12 -0700 (PDT)
+Received: by 10.82.166.12 with HTTP; Wed, 16 Apr 2008 15:34:12 -0700 (PDT)
+In-Reply-To: <48067C83.4020209@vilain.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79759>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79760>
 
-Dmitry Potapov wrote:
-> On Wed, Apr 16, 2008 at 11:36:26AM -0700, Junio C Hamano wrote:
->   
->> It makes me wonder if there is a better way.
->>
->> For example, CVS honors LOGNAME to allow you to "lie" who the author of a
->> change was, which is the behaviour inherited from RCS.  I have to wonder
->> if SVN has a similar mechanism to tell it "Excuse me, but I am just a
->> secretary recording changes for my boss."
->>     
->
-> Yes, there is such a mechanism:
-> ====
-> Revision Property (revprop)
->
-> Just as files can have properties, so can each revision in the
-> repository. Some special revprops are added automatically when the
-> revision is created, namely: svn:date svn:author svn:log which represent
-> the commit date/time, the committer and the log message respectively.
-> These properties can be edited, but they are not versioned, so any
-> change is permanent and cannot be undone. 
-> ====
->
-> So, it is possible not only set the real author but also date/time.
-> Unfortunately, there is one problem with this approach -- by default,
-> these properties are disabled from modification for security reasons.
-> To enable modification of these properties, the administrator is
-> required to change some hooks. Personally, I have never observed any
-> SVN repository where anyone was granted the right to change them. So,
-> while it is possible, it is impractical.
+On 4/16/08, Sam Vilain <sam@vilain.net> wrote:
+> The usual thing is to dump the extra information in the commit message.
+> Some projects, like Perl, were quite systematic about this and a lot of
+> useful author information is available. In fact, it was saved in the
+> proposed form.
 
-Yes, and in fact with most shared SVN hosting services the users are 
-left with no option to do this.
+So can we say that you have no objections to my patch? :)
 
-While there doesn't seem to be a command-line way to do this, it's 
-possible that a commit "editor" making a new commit can create revision 
-properties without being necessarily subject to those restrictions. 
-Possible, but I guess unlikely as it would then be inconsistent.
+Thanks,
 
-The usual thing is to dump the extra information in the commit message. 
-Some projects, like Perl, were quite systematic about this and a lot of 
-useful author information is available. In fact, it was saved in the 
-proposed form.
-
-While not the main thrust of this thread, the usual convention for 
-mapping svn committers to names is a project AUTHORS file. This made me 
-wonder whether allowing git-svn to take its author map from the 
-repository, such as from a revision property or a directory property of 
-the root or project would be a good idea.
-
-Sam
+Avery
