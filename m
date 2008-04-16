@@ -1,153 +1,66 @@
-From: "Nigel Magnay" <nigel.magnay@gmail.com>
-Subject: crlf with git-svn driving me nuts...
-Date: Wed, 16 Apr 2008 20:10:26 +0100
-Message-ID: <320075ff0804161210m46f3e83bpf7bf9d1d5816d914@mail.gmail.com>
+From: "Richard Quirk" <richard.quirk@gmail.com>
+Subject: Re: [PATCH 2/3] git-svn: Add --add-author-from option.
+Date: Wed, 16 Apr 2008 21:11:56 +0200
+Message-ID: <cac9e4380804161211h1f49dc0bg810cfa9c0d47af5d@mail.gmail.com>
+References: <1208307858-31039-1-git-send-email-apenwarr@gmail.com>
+	 <1208307858-31039-2-git-send-email-apenwarr@gmail.com>
+	 <7vej96v2pk.fsf@gitster.siamese.dyndns.org>
+	 <32541b130804160946s343d53d2l271b9391d89a7953@mail.gmail.com>
+	 <7v3aplsl3p.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Apr 16 21:25:13 2008
+Cc: "Avery Pennarun" <apenwarr@gmail.com>,
+	"Eric Wong" <normalperson@yhbt.net>, "Sam Vilain" <sam@vilain.net>,
+	git@vger.kernel.org, "Avery Pennarun" <apenwarr@versabanq.com>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 16 21:26:27 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JmD2L-00029K-Ox
-	for gcvg-git-2@gmane.org; Wed, 16 Apr 2008 21:11:18 +0200
+	id 1JmD3l-0002Vg-Jw
+	for gcvg-git-2@gmane.org; Wed, 16 Apr 2008 21:12:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751365AbYDPTKc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Apr 2008 15:10:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751341AbYDPTKc
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Apr 2008 15:10:32 -0400
-Received: from fk-out-0910.google.com ([209.85.128.186]:35191 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751298AbYDPTKb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Apr 2008 15:10:31 -0400
-Received: by fk-out-0910.google.com with SMTP id 19so2926463fkr.5
-        for <git@vger.kernel.org>; Wed, 16 Apr 2008 12:10:27 -0700 (PDT)
+	id S1751536AbYDPTMA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Apr 2008 15:12:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751459AbYDPTL7
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Apr 2008 15:11:59 -0400
+Received: from el-out-1112.google.com ([209.85.162.182]:9539 "EHLO
+	el-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751341AbYDPTL7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Apr 2008 15:11:59 -0400
+Received: by el-out-1112.google.com with SMTP id n30so475097elf.21
+        for <git@vger.kernel.org>; Wed, 16 Apr 2008 12:11:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=aDofjsfTsssb8q2Ta/1adv1MHUMsD5LeSwZhEHp9wc8=;
-        b=PguC/ml3cW9LWpnYPIlTSgbPgJf8xR1swNrQW33OEj8Cb+Stg3bChq3xxHb2Hz9Fcc2ci0AWRUtgtMDN/+eXsTMsRLZ/ow1Dbrdzdc/00xR2zmP4gd0KFxiVvji8AsVAwi3zOJa2HyGE2Gwd/26fgOsiVP8rBCYfCOc/djVB6lw=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=Fz+pbZpbxkFc3AkPTSjAhualZY6jdWgTVJI/uNMu8/o=;
+        b=KpFeO8syqC2/2U9iJF49tRSqxOA4KYvYqGDJCS+PVK71OXojL15Fvd4BPJsd3PwsMNr5LzVUv5sonpV98pzSE61ckqM754z/0vLyfEMQaB3JkVNJohvi11n7JVRgNFzU7hK55gxZzaSCGISrXViUS0jcc+Em5SEatUKfPAuWl4Y=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=d0v9vwPjiF7gqT3fJIA5fy7I6916J/zHIqyzphF2Ug3ZLbbVQgQrzdAV15VRG8cZUrAO3xSFu4vyi6xb9XIKiqVa94U+yZqZdBWAA5Fse6vb5rs7t9MqKDu7rpiT7ICPk6nxcdEzDGMc/JU0eEbF5XKS6oyjppvNAlzYj4cxhVo=
-Received: by 10.82.121.20 with SMTP id t20mr584703buc.20.1208373026933;
-        Wed, 16 Apr 2008 12:10:26 -0700 (PDT)
-Received: by 10.82.168.20 with HTTP; Wed, 16 Apr 2008 12:10:26 -0700 (PDT)
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=KMo5K5JaItFr1UTgZjkJpXDhO0lA2/m8hngflMzqOX8qe+1u9KW7BiBvowRFP028R/eGcbf/P6ofwaIlD9BellKIPt809LShIM2R1b2VZxDJ6OKRzQTyXwODevIg6YNgXoMkuDdVHBdH2ApoUiaEyelc+KjBWTS4+cb6y4uQFTo=
+Received: by 10.115.18.1 with SMTP id v1mr571432wai.15.1208373116798;
+        Wed, 16 Apr 2008 12:11:56 -0700 (PDT)
+Received: by 10.70.52.19 with HTTP; Wed, 16 Apr 2008 12:11:56 -0700 (PDT)
+In-Reply-To: <7v3aplsl3p.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79726>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79727>
 
-We've got projects with a mixed userbase of windows / *nix; I'm trying
-to migrate some users onto git, whilst everyone else stays happy in
-their SVN repo.
+On Wed, Apr 16, 2008 at 8:36 PM, Junio C Hamano <gitster@pobox.com> wrote:
 
-However, there's one issue that has been driving me slowly insane.
-This is best illustrated thusly (on windows) :
+>  For example, CVS honors LOGNAME to allow you to "lie" who the author of a
+>  change was, which is the behaviour inherited from RCS.  I have to wonder
+>  if SVN has a similar mechanism to tell it "Excuse me, but I am just a
+>  secretary recording changes for my boss."
 
-  $ git init
-  $ git config core.autocrlf false
-
--->Create a file with some text content on a few lines
-  $ notepad file.txt
-
-  $ git add file.txt
-  $ git commit -m "initial checkin"
-
-  $ git status
-# On branch master
-nothing to commit (working directory clean)
---> Yarp, what I wanted
-
-  $ git config core.autocrlf true
-  $ git status
-
-# On branch master
-nothing to commit (working directory clean)
---> Yarp, still all good
-
---> Simulate non-change happened by an editor opening file...
-  $ touch file.txt
-  $ git status
-# On branch master
-# Changed but not updated:
-#   (use "git add <file>..." to update what will be committed)
-#
-#       modified:   file.txt
-#
-no changes added to commit (use "git add" and/or "git commit -a")
-
---> Oh Noes! I wonder what it could be
-  $ git diff file.txt
-diff --git a/file.txt b/file.txt
-index 7a2051f..31ca3a0 100644
---- a/file.txt
-+++ b/file.txt
-@@ -1,3 +1,3 @@
--<xml>
--       wooot
--</xml>
-+<xml>
-+       wooot
-+</xml>
-
---> Huh? ...
-  $ git diff -b file.txt
-diff --git a/file.txt b/file.txt
-index 7a2051f..31ca3a0 100644
-
---> Bah... don't care! get me back to the start...
-  $ git reset --hard
-
-HEAD is now at 4762c31... initial checkin
-
-  $ git status
-# On branch master
-# Changed but not updated:
-#   (use "git add <file>..." to update what will be committed)
-#
-#       modified:   file.txt
-#
-no changes added to commit (use "git add" and/or "git commit -a")
-
---> ARGH!
-  $ git config core.autocrlf false
-  $ git status
-# On branch master
-nothing to commit (working directory clean)
-
-  $ git config core.autocrlf true
-  $ git status
-# On branch master
-nothing to commit (working directory clean)
-
---> WtF?
-
-Why does it think in this instance that there is a change? It's CRLF
-in the repo, it's CRLF in the working tree, and the checkout in either
-mode ought to be identical ??
-
-Now this is further compounded by the fact that users then typically
-tend to do a 'CRLF->LF conversion' checkin - *BUT* this will cause
-merge conflicts if another user actually made a genuine change (I.E.
-the removal of CR and the change are both treated as significant).
-
-Additional fun is caused because some editors 'touching' files that
-they actually haven't modified, leading to all these 'null' changes.
-
-This is a bigger deal for us than it ought to be, because we're
-pulling changes from a windows-based svn repo, which is always CRLF.
-Should I set core.autocrlf=input when doing 'git svn fetch' (and would
-it pay any attention)? Also is it possible to tell the diff / merge
-machinery that it ought to just ignore text file line endings when
-merging ?
-
-Sorry if some of this is stupid-user territory, but there's probably a
-few people out there also looking at trying to migrate away from
-Windows+SVN that are likely to hit the same things...
+The author is stored as a property of the commit, so you can set alter
+it with something like `svn propset --revprop -r N svn:author NAME
+REPO_URL` providing you have server-side revision property changes
+enabled.
