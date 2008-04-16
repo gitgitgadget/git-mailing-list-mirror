@@ -1,104 +1,82 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Re* [GIT PULL] sh updates for 2.6.25
-Date: Wed, 16 Apr 2008 22:22:18 +0200
-Message-ID: <200804162222.18827.jnareb@gmail.com>
-References: <20080415172333.GA29489@linux-sh.org> <20080416084435.GJ8387@genesis.frugalware.org> <7v3aplr2pt.fsf_-_@gitster.siamese.dyndns.org>
+From: "Avery Pennarun" <apenwarr@gmail.com>
+Subject: Re: crlf with git-svn driving me nuts...
+Date: Wed, 16 Apr 2008 16:20:27 -0400
+Message-ID: <32541b130804161320w42c68bc2p9d838dc127a57027@mail.gmail.com>
+References: <320075ff0804161210m46f3e83bpf7bf9d1d5816d914@mail.gmail.com>
+	 <20080416200107.GG3133@dpotapov.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Miklos Vajna <vmiklos@frugalware.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 16 22:32:38 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Nigel Magnay" <nigel.magnay@gmail.com>, git <git@vger.kernel.org>
+To: "Dmitry Potapov" <dpotapov@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 16 22:32:53 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JmE9s-0006QZ-6f
-	for gcvg-git-2@gmane.org; Wed, 16 Apr 2008 22:23:08 +0200
+	id 1JmE83-0005l0-8P
+	for gcvg-git-2@gmane.org; Wed, 16 Apr 2008 22:21:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753453AbYDPUWX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Apr 2008 16:22:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753106AbYDPUWX
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Apr 2008 16:22:23 -0400
-Received: from fg-out-1718.google.com ([72.14.220.159]:43765 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753428AbYDPUWW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Apr 2008 16:22:22 -0400
-Received: by fg-out-1718.google.com with SMTP id l27so2548893fgb.17
-        for <git@vger.kernel.org>; Wed, 16 Apr 2008 13:22:21 -0700 (PDT)
+	id S1752495AbYDPUUa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Apr 2008 16:20:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752726AbYDPUUa
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Apr 2008 16:20:30 -0400
+Received: from mu-out-0910.google.com ([209.85.134.188]:49918 "EHLO
+	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752360AbYDPUU3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Apr 2008 16:20:29 -0400
+Received: by mu-out-0910.google.com with SMTP id w8so1764224mue.1
+        for <git@vger.kernel.org>; Wed, 16 Apr 2008 13:20:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=9GreUIm/uyEnQcZ0oLSb2EX4iE9t3x/r6RlSNgTB7Wg=;
-        b=SrjoTrF8E9POE5XPqFfQKbKjRN/Wu91Kkb6k7ja8ru3APClLsPR5vh0l4lIuH6Li8emFHqTfza/NuX7pk0AVtCOW2NO1ynA0CnqNUu6aYPqnsBg90rMaOIfYOejyYmUZnW7SrDKhl4DMiidLrcoXyy10XRnIN9Cs+yXdMX/FY8M=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=Fzgf54haCHdRQEyQ4iqWbmt6DXRjqmQXxo1KepJVGB4=;
+        b=Zet6oZfEqr9lbFYQic7s+IoKfxoTE5FwYvM4en8Xo/nwtj6SdyXH8JuooZ2AfuT+pznOjKzh9ShB6f2JEaJ6P39UT19saiMDczU2dqgEMzx9UHRbgZZ2Fztf017Z4MQ1x4XX7/wNUzVZDZOJ1zcVZxu3tR4c6G5j9ARxS94QjYM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=lA9ocHiur7z42C5qSouTdu1ARFkZmuvv0zdWp0WclbCIRAfKbzw/K7iXFLKc8HyaOVtDugm/j7Obh1x3dTjlleK16MToVvzrRobuvjBCZIY9VrRs8Fu/af9S4ujjmLm+AWA5eYEEFhE1NUkhaQH20dBJImNR3IVbpTLsBVO+t+M=
-Received: by 10.86.4.2 with SMTP id 2mr839815fgd.49.1208377341224;
-        Wed, 16 Apr 2008 13:22:21 -0700 (PDT)
-Received: from ?192.168.1.11? ( [83.8.234.183])
-        by mx.google.com with ESMTPS id z33sm13839998ikz.0.2008.04.16.13.22.17
-        (version=SSLv3 cipher=OTHER);
-        Wed, 16 Apr 2008 13:22:18 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <7v3aplr2pt.fsf_-_@gitster.siamese.dyndns.org>
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=e9sh6Jzx9V9371NJFTorzYb2i+NNOuRix0Rl0P0CoOSJaa6QvZX+0reDxvXDbFvJMDulVOF3+9M/2/IznHFFT1O6LVD33XdCxxPOTDP8ASXpO5wR7BYu9yd8ovCXqCEwSPP3OwEf3v++mTxjSQ9isHyyNjE1221fkMk7prZ14lQ=
+Received: by 10.82.177.5 with SMTP id z5mr647649bue.68.1208377227862;
+        Wed, 16 Apr 2008 13:20:27 -0700 (PDT)
+Received: by 10.82.166.12 with HTTP; Wed, 16 Apr 2008 13:20:27 -0700 (PDT)
+In-Reply-To: <20080416200107.GG3133@dpotapov.dyndns.org>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79744>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79745>
 
-Junio C Hamano wrote:
-[cut]
+On 4/16/08, Dmitry Potapov <dpotapov@gmail.com> wrote:
+>  In this case, you already have a file with the wrong ending,
+>  so file.txt will be shown as changed now, because if you commit
+>  it again then it will be commited with <LF>, which should have
+>  been done in the first place.
+[...]
+> If you do not want problems, you should use core.autocrlf=true
+>  on Windows. Then all text files will be stored in the repository
+>  with <LF>, but they will have <CR><LF> in your work tree.
+>  Users on *nix should set core.autocrlf=input or false, so they
+>  will have <LF> in their work tree.
 
-> So in short, when you use "am", it by design unfolds the "Subject: " =
-line
-> and there is no bug there. =A0"rebase" being implemented in terms of
-> "format-patch piped to am" does mangle the message because of this, b=
-ut
-> if anything that is a bug in rebase, and not "am".
->=20
-> And this is a potential fix to the issue, which was made possible onl=
-y
-> because recently "rebase" started passing an extra option to "am".
->=20
-> -- >8 --
-> From: Junio C Hamano <gitster@pobox.com>
-> Date: Wed, 16 Apr 2008 12:50:48 -0700
-> Subject: [PATCH] rebase: do not munge commit log message
->=20
-> Traditionally git-rebase was implemented in terms of "format-patch" p=
-iped
-> to "am -3", to strike balance between speed (because it avoids a rath=
-er
-> expensive read-tree/merge-recursive machinery most of the time) and
-> flexibility (the magic "-3" allows it to fall back to 3-way merge as
-> necessary). =A0However, this combination has one flaw when dealing wi=
-th a
-> nonstandard commit log message format that has more than one lines in=
- the
-> first paragraph, because such a "first line" is formatted as logicall=
-y a
-> single line, and unfolded at the applying end.
->=20
-> This teaches "git am --rebasing" to take advantage of the fact that t=
-he
-> mbox message "git rebase" prepares for it records the original commit
-> object name, and that such a commit _is_ available locally. =A0It rea=
-ds the
-> log message from the original commit object instead.
+Alas, the subject of this thread involves git-svn, and the typical
+git-svn user is someone who has no way of rewriting the existing
+history in their svn repositories.  Thus, files *will* be in the
+repository that have the wrong line endings, and (as you noted) git
+just gets totally confused in that case.
 
-IIRC there was alternate patch which made git-format-patch to add extra
-email header meant for git-am to "obey the (encoded) commit message
-formatting."
+Nigel's example showed a few situations where git *thought* the file
+had changed when it hadn't, and yet is incapable of checking in the
+changes.
 
-But this solution is simpler, and I think better.
+If all I had to do was checkout (thus converting everything to LF),
+and then "git commit -a" to check in all the corrected files, then
+git-svn would make one giant, very rude checkin to svn, and my
+problems would be largely solved.  However, this does not seem to be
+possible due to the problems you noted ("you are going to have
+problems now").
 
---=20
-Jakub Narebski
-Poland
+Have fun,
+
+Avery
