@@ -1,99 +1,85 @@
-From: Andrew Morton <akpm@linux-foundation.org>
-Subject: Re: Reporting bugs and bisection
-Date: Wed, 16 Apr 2008 12:02:47 -0700
-Message-ID: <20080416120247.c665859c.akpm@linux-foundation.org>
-References: <20080413205406.GA9190@2ka.mipt.ru>
-	<48028830.6020703@earthlink.net>
-	<alpine.DEB.1.10.0804131546370.9318@asgard>
-	<20080414043939.GA6862@1wt.eu>
-	<20080414053943.GU9785@ZenIV.linux.org.uk>
-	<20080413232441.e216a02c.akpm@linux-foundation.org>
-	<20080414072328.GW9785@ZenIV.linux.org.uk>
-	<Xine.LNX.4.64.0804150131300.4160@us.intercode.com.au>
-	<4804765B.2070300@davidnewall.com>
-	<bd6139dc0804160515s64a36748v49556c56d475dda4@mail.gmail.com>
-	<20080416132634.GA545@cs181133002.pp.htv.fi>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: [PATCH 2/3] git-svn: Add --add-author-from option.
+Date: Wed, 16 Apr 2008 23:23:12 +0400
+Message-ID: <20080416192312.GF3133@dpotapov.dyndns.org>
+References: <1208307858-31039-1-git-send-email-apenwarr@gmail.com> <1208307858-31039-2-git-send-email-apenwarr@gmail.com> <7vej96v2pk.fsf@gitster.siamese.dyndns.org> <32541b130804160946s343d53d2l271b9391d89a7953@mail.gmail.com> <7v3aplsl3p.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: sverre@rabbelier.nl, git@vger.kernel.org,
-	linux-kernel@vger.kernel.org, jmorris@namei.org,
-	viro@zeniv.linux.org.uk, w@1wt.eu, david@lang.hm,
-	sclark46@earthlink.net, johnpol@2ka.mipt.ru, rjw@sisk.pl,
-	tilman@imap.cc, Valdis.Kletnieks@vt.edu, lkml@rtr.ca,
-	davem@davemloft.net, jesper.juhl@gmail.com,
-	yoshfuji@linux-ipv6.org, jeff@garzik.org, netdev@vger.kernel.org,
-	davidn@davidnewall.com
-To: Adrian Bunk <bunk@kernel.org>
-X-From: netdev-owner@vger.kernel.org Wed Apr 16 21:33:27 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Avery Pennarun <apenwarr@gmail.com>,
+	Eric Wong <normalperson@yhbt.net>, Sam Vilain <sam@vilain.net>,
+	git@vger.kernel.org, Avery Pennarun <apenwarr@versabanq.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 16 21:34:26 2008
 connect(): Connection refused
-Return-path: <netdev-owner@vger.kernel.org>
-Envelope-to: linux-netdev-2@gmane.org
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JmDDw-0005bA-VR
-	for linux-netdev-2@gmane.org; Wed, 16 Apr 2008 21:23:17 +0200
+	id 1JmDEt-0005tO-Cw
+	for gcvg-git-2@gmane.org; Wed, 16 Apr 2008 21:24:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751828AbYDPTVy (ORCPT <rfc822;linux-netdev-2@m.gmane.org>);
-	Wed, 16 Apr 2008 15:21:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751584AbYDPTVy
-	(ORCPT <rfc822;netdev-outgoing>); Wed, 16 Apr 2008 15:21:54 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:49540 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751320AbYDPTVw (ORCPT
-	<rfc822;netdev@vger.kernel.org>); Wed, 16 Apr 2008 15:21:52 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m3GJ2ppF022206
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 16 Apr 2008 12:02:52 -0700
-Received: from akpm.corp.google.com (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with SMTP id m3GJ2lvv001652;
-	Wed, 16 Apr 2008 12:02:47 -0700
-In-Reply-To: <20080416132634.GA545@cs181133002.pp.htv.fi>
-X-Mailer: Sylpheed version 2.2.4 (GTK+ 2.8.20; i486-pc-linux-gnu)
-X-Spam-Status: No, hits=-2.764 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
-Sender: netdev-owner@vger.kernel.org
+	id S1765972AbYDPTXV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Apr 2008 15:23:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765955AbYDPTXV
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Apr 2008 15:23:21 -0400
+Received: from fk-out-0910.google.com ([209.85.128.186]:50696 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1765920AbYDPTXT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Apr 2008 15:23:19 -0400
+Received: by fk-out-0910.google.com with SMTP id 19so2932141fkr.5
+        for <git@vger.kernel.org>; Wed, 16 Apr 2008 12:23:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
+        bh=fVhAtf8ufqpGxnFv/a/Peks016uuK1rAku7oatxV4mQ=;
+        b=TeH5qIqMoc20ntkruQhtG+3HmkOzC3GVRoL5w+9RJjDffM8gCxemWizBihcX3t3MEe/pJFBB6dBNMeJ+Vi0h6TUOOtXMUBR5KGEd+4XuXgIK42xaLnJC597FGVpR8tMl+onUtSEU49DGFdtIxWX69Eturdj+WAbV/Om1OcKPMhI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
+        b=VLSBJ+8w6hLdQwppk8ubOqpU7j42K9r+gyV4CQ+KnlG+cqGsXsDY23MC34W4wL7Ot0ATtvyfowE7UGO2VWqHgiowwajn4Ciye+L/phwQY4M9fElr31yfK0ibejhwnE98/k4PF12EhsZH+Ge09CrE27Qrb9KfTAXcDS4qSVfdTeI=
+Received: by 10.82.159.2 with SMTP id h2mr557138bue.61.1208373798260;
+        Wed, 16 Apr 2008 12:23:18 -0700 (PDT)
+Received: from localhost ( [85.141.188.158])
+        by mx.google.com with ESMTPS id f4sm13025901nfh.26.2008.04.16.12.23.15
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 16 Apr 2008 12:23:17 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7v3aplsl3p.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <netdev.vger.kernel.org>
-X-Mailing-List: netdev@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79728>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79729>
 
-On Wed, 16 Apr 2008 16:26:34 +0300
-Adrian Bunk <bunk@kernel.org> wrote:
-
-> On Wed, Apr 16, 2008 at 02:15:22PM +0200, Sverre Rabbelier wrote:
-> > I'm not subscribed to the kernel mailing list, so please include me in
-> > the cc if you don't reply to the git list (which I am subscribed to).
-> > 
-> > Git is participating in Google Summer of Code this year and I've
-> > proposed to write a 'git statistics' command. This command would allow
-> > the user to gather data about a repository, ranging from "how active
-> > is dev x" to "what did x work on in the last 3 weeks". It's main
-> > feature however, would be an algorithm that ranks commits as being
-> > either 'buggy', 'bugfix' or 'enhancement'. (There are several clues
-> > that can aid in determining this, a commit msg along the lines of
-> > "fixes ..." being the most obvious.)
-> >...
-
-Sounds like an interesting project.
-
-> At least with the data we have currently in git it's impossible to 
-> figure that out automatically.
+On Wed, Apr 16, 2008 at 11:36:26AM -0700, Junio C Hamano wrote:
 > 
-> E.g. if you look at commit f743d04dcfbeda7439b78802d35305781999aa11 
-> (ide/legacy/q40ide.c: add MODULE_LICENSE), how could you determine 
-> automatically that it is a bugfix, and the commit that introduced
-> the bug?
+> It makes me wonder if there is a better way.
 > 
-> You can always get some data, but if you want to get usable statistics 
-> you need explicit tags in the commits, not some algorithm that tries 
-> to guess.
+> For example, CVS honors LOGNAME to allow you to "lie" who the author of a
+> change was, which is the behaviour inherited from RCS.  I have to wonder
+> if SVN has a similar mechanism to tell it "Excuse me, but I am just a
+> secretary recording changes for my boss."
 
-Well yes.  One outcome of the project would be to tell us what changes we'd
-need to make to our processes to make such data gathering more effective.
+Yes, there is such a mechanism:
+====
+Revision Property (revprop)
 
-Of course, we may not actually implement such changes.  That would depend
-upon how useful the output is to us.
+Just as files can have properties, so can each revision in the
+repository. Some special revprops are added automatically when the
+revision is created, namely: svn:date svn:author svn:log which represent
+the commit date/time, the committer and the log message respectively.
+These properties can be edited, but they are not versioned, so any
+change is permanent and cannot be undone. 
+====
+
+So, it is possible not only set the real author but also date/time.
+Unfortunately, there is one problem with this approach -- by default,
+these properties are disabled from modification for security reasons.
+To enable modification of these properties, the administrator is
+required to change some hooks. Personally, I have never observed any
+SVN repository where anyone was granted the right to change them. So,
+while it is possible, it is impractical.
+
+
+Dmitry
