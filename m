@@ -1,74 +1,58 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Friendly refspecs
-Date: Tue, 15 Apr 2008 21:41:17 -0700
-Message-ID: <7vabjuv2c2.fsf@gitster.siamese.dyndns.org>
-References: <20080409101428.GA2637@elte.hu>
- <20080409145758.GB20874@sigill.intra.peff.net>
- <20080409200836.GA19248@mithlond>
- <20080409203453.GA10370@sigill.intra.peff.net>
- <20080409222500.GB19248@mithlond>
- <20080409225112.GB12103@sigill.intra.peff.net>
- <20080413093102.GC12107@mithlond.arda.local>
- <20080416034823.GA11727@sigill.intra.peff.net>
+From: Willy Tarreau <w@1wt.eu>
+Subject: Re: Reporting bugs and bisection
+Date: Wed, 16 Apr 2008 06:29:20 +0200
+Message-ID: <20080416042920.GB25188@1wt.eu>
+References: <47FEADCB.7070104@rtr.ca> <517f3f820804150254w491cdf85s28f1d15696db8d96@mail.gmail.com> <4804B5D5.4090404@davidnewall.com> <200804152251.51308.rjw@sisk.pl> <480565D3.6000100@davidnewall.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Teemu Likonen <tlikonen@iki.fi>,
-	Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Apr 16 07:49:24 2008
+Cc: "Rafael J. Wysocki" <rjw@sisk.pl>,
+	Michael Kerrisk <mtk.manpages@gmail.com>,
+	James Morris <jmorris@namei.org>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Andrew Morton <akpm@linux-foundation.org>, david@lang.hm,
+	Stephen Clark <sclark46@earthlink.net>,
+	Evgeniy Polyakov <johnpol@2ka.mipt.ru>,
+	Tilman Schmidt <tilman@imap.cc>, Valdis.Kletnieks@vt.edu,
+	Mark Lord <lkml@rtr.ca>, David Miller <davem@davemloft.net>,
+	jesper.juhl@gmail.com, yoshfuji@linux-ipv6.org, jeff@garzik.org,
+	linux-kernel <linux-kernel@vger.kernel.org>, git@vger.kernel.org,
+	netdev@vger.kernel.org
+To: David Newall <davidn@davidnewall.com>
+X-From: netdev-owner@vger.kernel.org Wed Apr 16 07:50:10 2008
 connect(): Connection refused
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
+Return-path: <netdev-owner@vger.kernel.org>
+Envelope-to: linux-netdev-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JlzTM-0003Ma-FR
-	for gcvg-git-2@gmane.org; Wed, 16 Apr 2008 06:42:16 +0200
+	id 1JlzWU-0004Fs-5k
+	for linux-netdev-2@gmane.org; Wed, 16 Apr 2008 06:45:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750962AbYDPElb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Apr 2008 00:41:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750937AbYDPElb
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Apr 2008 00:41:31 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:42810 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750931AbYDPEla (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Apr 2008 00:41:30 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 803E62F6B;
-	Wed, 16 Apr 2008 00:41:29 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id BE9DC2F69; Wed, 16 Apr 2008 00:41:24 -0400 (EDT)
-In-Reply-To: <20080416034823.GA11727@sigill.intra.peff.net> (Jeff King's
- message of "Tue, 15 Apr 2008 23:48:23 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-Sender: git-owner@vger.kernel.org
+	id S1751048AbYDPEoq (ORCPT <rfc822;linux-netdev-2@m.gmane.org>);
+	Wed, 16 Apr 2008 00:44:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750932AbYDPEop
+	(ORCPT <rfc822;netdev-outgoing>); Wed, 16 Apr 2008 00:44:45 -0400
+Received: from 1wt.eu ([62.212.114.60]:3139 "EHLO 1wt.eu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750850AbYDPEop (ORCPT <rfc822;netdev@vger.kernel.org>);
+	Wed, 16 Apr 2008 00:44:45 -0400
+Content-Disposition: inline
+In-Reply-To: <480565D3.6000100@davidnewall.com>
+User-Agent: Mutt/1.5.11
+Sender: netdev-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79668>
+List-ID: <netdev.vger.kernel.org>
+X-Mailing-List: netdev@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79669>
 
-Jeff King <peff@peff.net> writes:
+On Wed, Apr 16, 2008 at 12:04:59PM +0930, David Newall wrote:
+> Rafael J. Wysocki wrote:
+> > Well, even if someone introduces bugs relatively frequently, but then also
+> > works with the reporters and fixes the bugs timely, it's about okay IMO.
+> >   
+> This really is not okay.  Even if bugs are fixed a version or two later,
+> the impact those bugs have on users makes the system look bad and drives
+> them away.  We do not, I believe, want Linux to top the list for "most
+> bugs".  It's unprofessional, unreliable and quite undesirable.
 
-> On Sun, Apr 13, 2008 at 12:31:02PM +0300, Teemu Likonen wrote:
->
->> There is still one thing (at least) that I don't quite understand. It's
->> about "git push". When I do
->> 
->>   $ git push <remote> <branch>
->> 
->> the refs/heads/<branch> is updated or created on the remote side. But if
->> I do
->> 
->>   $ git push <remote> <branch1>:<branch2>
->> 
->> the refs/heads/<branch2> is not automatically created.
+that's what -rc are for, and it's unprofessional to use them in production :-)
 
-Eh, there is no way unless you force an assumption of a particular
-workflow to everybody else.
-
-What you would say on the second command is not literally "<branch2>" but
-something like "work-in-progress", or "crap".  Even an AI would not be
-able to guess if you wanted to create a branch on the other side, or
-wanted to put a lightweight tag to let people know where you are (possibly
-with the intention of removing it once you are done), and git is not an AI.
