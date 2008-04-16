@@ -1,98 +1,92 @@
-From: Adrian Bunk <bunk@kernel.org>
-Subject: Re: Reporting bugs and bisection
-Date: Thu, 17 Apr 2008 00:25:54 +0300
-Message-ID: <20080416212554.GV1677@cs181133002.pp.htv.fi>
-References: <20080413232441.e216a02c.akpm@linux-foundation.org> <20080414072328.GW9785@ZenIV.linux.org.uk> <Xine.LNX.4.64.0804150131300.4160@us.intercode.com.au> <4804765B.2070300@davidnewall.com> <bd6139dc0804160515s64a36748v49556c56d475dda4@mail.gmail.com> <20080416132634.GA545@cs181133002.pp.htv.fi> <bd6139dc0804161239h17e79c70ta5e938619e5743c9@mail.gmail.com> <20080416201606.GS1677@cs181133002.pp.htv.fi> <20080416205333.GT1677@cs181133002.pp.htv.fi> <bd6139dc0804161405j28470914u488568b565b68a0b@mail.gmail.com>
+From: Tarmigan <tarmigan+git@gmail.com>
+Subject: Re: [RFH] cleaning up "add across symlinks"
+Date: Wed, 16 Apr 2008 14:26:41 -0700
+Message-ID: <905315640804161426l442c2812k3c36c1bafe484157@mail.gmail.com>
+References: <7vd4oppllw.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, linux-kernel <linux-kernel@vger.kernel.org>,
-	James Morris <jmorris@namei.org>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Willy Tarreau <w@1wt.eu>, david@lang.hm,
-	Stephen Clark <sclark46@earthlink.net>,
-	Evgeniy Polyakov <johnpol@2ka.mipt.ru>,
-	"Rafael J. Wysocki" <rjw@sisk.pl>, Tilman Schmidt <tilman@imap.cc>,
-	Valdis.Kletnieks@vt.edu, Mark Lord <lkml@rtr.ca>,
-	David Miller <davem@davemloft.net>, jesper.juhl@gmail.com,
-	yoshfuji@linux-ipv6.org, jeff@garzik.org, netdev@vger.kernel.org,
-	David Newall <davidn@davidnewall.com>
-To: sverre@rabbelier.nl
-X-From: netdev-owner@vger.kernel.org Wed Apr 16 23:27:27 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 16 23:28:44 2008
 connect(): Connection refused
-Return-path: <netdev-owner@vger.kernel.org>
-Envelope-to: linux-netdev-2@gmane.org
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JmF9Z-0000Zy-5B
-	for linux-netdev-2@gmane.org; Wed, 16 Apr 2008 23:26:53 +0200
+	id 1JmFAF-0000pf-T1
+	for gcvg-git-2@gmane.org; Wed, 16 Apr 2008 23:27:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753521AbYDPV0E (ORCPT <rfc822;linux-netdev-2@m.gmane.org>);
-	Wed, 16 Apr 2008 17:26:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752816AbYDPV0D
-	(ORCPT <rfc822;netdev-outgoing>); Wed, 16 Apr 2008 17:26:03 -0400
-Received: from smtp4.pp.htv.fi ([213.243.153.38]:36858 "EHLO smtp4.pp.htv.fi"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752591AbYDPV0B (ORCPT <rfc822;netdev@vger.kernel.org>);
-	Wed, 16 Apr 2008 17:26:01 -0400
-Received: from cs181133002.pp.htv.fi (cs181133002.pp.htv.fi [82.181.133.2])
-	by smtp4.pp.htv.fi (Postfix) with ESMTP id 0C6775BC01E;
-	Thu, 17 Apr 2008 00:26:00 +0300 (EEST)
+	id S1753584AbYDPV0s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Apr 2008 17:26:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752362AbYDPV0s
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Apr 2008 17:26:48 -0400
+Received: from mu-out-0910.google.com ([209.85.134.190]:30154 "EHLO
+	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752726AbYDPV0s (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Apr 2008 17:26:48 -0400
+Received: by mu-out-0910.google.com with SMTP id w8so1788934mue.1
+        for <git@vger.kernel.org>; Wed, 16 Apr 2008 14:26:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        bh=QcwD4pBC67g0q5NvTLuraypBI1Pu45saI2TukGg+4mE=;
+        b=lHDnD/0hSLx0eYMqQLGxDDgCv71CzrJSS3VgNhS09Ynd7t/GYL7HVDiwzMm8ZnPeFE5nv9jdE9rcRHy8G1Qn8eEL4Isj9IuHy6dnqyq9NnkcNo9nDQpvYMOkB/G2OLBvYPSitkEPNiRsa2npykdDN/JPbRIGEyyT913e+KDbvAM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=I+PDU2Tj0rk6D2YRFlWHmC59OGKknGYW4XECWbWRrnhelDZ0JKOYcSJ0xVJTQvlgMXLYfLkiT85d63I0qj0ZW83YL0PXj8iz3BblH+PvJkA/KJ3eNX4v9RFYrV27zNRK0nGO0eDd4EUdxaW90jhmUD2CHjqPW0lWPwqwkHx6FAo=
+Received: by 10.82.181.7 with SMTP id d7mr779631buf.53.1208381201585;
+        Wed, 16 Apr 2008 14:26:41 -0700 (PDT)
+Received: by 10.82.175.8 with HTTP; Wed, 16 Apr 2008 14:26:41 -0700 (PDT)
+In-Reply-To: <7vd4oppllw.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
-In-Reply-To: <bd6139dc0804161405j28470914u488568b565b68a0b@mail.gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-Sender: netdev-owner@vger.kernel.org
+X-Google-Sender-Auth: 9079ffbbae34d009
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <netdev.vger.kernel.org>
-X-Mailing-List: netdev@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79756>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79757>
 
-On Wed, Apr 16, 2008 at 11:05:17PM +0200, Sverre Rabbelier wrote:
-> On Wed, Apr 16, 2008 at 10:53 PM, Adrian Bunk <bunk@kernel.org> wrote:
-> >  To avoid any misunderstandings:
-> >
-> >  This is not in any way meant against you personally.
-> 
-> Thanks for pointing it out, I wasn't quite sure, but assumed that :).
+On Wed, Apr 16, 2008 at 1:53 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> If you have this structure in your work tree:
+>
+>         lrwxrwxrwx a -> c
+>         drwxrwxrwx c
+>         -rw-rw-rw- c/b
+>
+>  and let million monkeys give random paths to "git-update-index --add" or
+>  "git add", you should end up with the index with two entries, a symlink
+>  "a" and file "c/b".
+>
+>  Not so.  If an unfortunate monkey says "git add a/b", we happily add it to
+>  the index, because we notice lstat("a/b") succeeds and assume that there
+>  is such a path.  There isn't, as far as git is concerned, because we track
+>  symbolic links.
 
-Sorry, I was a bit overreacting since I see too often people putting 
-some data into some statistics or graph and drawing conclusins without 
-paying attention to whether their data allows these conclusions at all.
+Thanks Junio, I'll try to do some testing with it later.
 
-> >  But saying things like " X% of your commits introduced bugs" is not a
-> >  friendly thing, and wrong data could be quite hurting.
-> 
-> Yes, it could be, and I agree that conclusions shouldn't be based on
-> the details, but on the bigger picture. Also, I think it should (at
-> first) be used mainly as an indicator, of where attention might be
-> required. I mean, if it points out that one contributor almost always
-> commits buggy code,
+>  +test_expect_success 'add confusion (3)' '
+>  +
+>  +       test_must_fail git add "a/*" &&
+>  +
+>  +       git ls-files >actual &&
+>  +       test_cmp expect actual
+>  +'
+>  +
+>  +test_done
 
-I would assume that in all projects the main maintainers already have an 
-impression of how good the quality of the patches of each main 
-contributor is.
+That's almost the case I used.  The exact test to add to these,
+without the '*' after a/, would be something like this (warning: cut
+and paste):
 
-In much more complex ways than a number could express.
++test_expect_success 'add confusion (4)' '
++
++       test_must_fail git add "a/" &&
++
++       git ls-files >actual &&
++       test_cmp expect actual
++'
 
-> you don't have to present them with those
-> statistics right away. Instead you can ask the program where it bases
-> it's conclusions on, and research them yourself.
-
-Sooner or later someone will run the program for the Linux kernel, 
-write a paper about the results, and publish his research somewhere.
-
->...
-> Cheers,
-> 
-> Sverre Rabbelier
-
-cu
-Adrian
-
--- 
-
-       "Is there not promise of rain?" Ling Tan asked suddenly out
-        of the darkness. There had been need of rain for many days.
-       "Only a promise," Lao Er said.
-                                       Pearl S. Buck - Dragon Seed
-
+Thanks,
+Tarmigan
