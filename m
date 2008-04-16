@@ -1,79 +1,98 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: crlf with git-svn driving me nuts...
-Date: Thu, 17 Apr 2008 01:17:23 +0400
-Message-ID: <20080416211723.GI3133@dpotapov.dyndns.org>
-References: <320075ff0804161210m46f3e83bpf7bf9d1d5816d914@mail.gmail.com> <20080416200107.GG3133@dpotapov.dyndns.org> <46a038f90804161356o7518ec72j3bfb4e9fe4e48852@mail.gmail.com>
+From: Adrian Bunk <bunk@kernel.org>
+Subject: Re: Reporting bugs and bisection
+Date: Thu, 17 Apr 2008 00:25:54 +0300
+Message-ID: <20080416212554.GV1677@cs181133002.pp.htv.fi>
+References: <20080413232441.e216a02c.akpm@linux-foundation.org> <20080414072328.GW9785@ZenIV.linux.org.uk> <Xine.LNX.4.64.0804150131300.4160@us.intercode.com.au> <4804765B.2070300@davidnewall.com> <bd6139dc0804160515s64a36748v49556c56d475dda4@mail.gmail.com> <20080416132634.GA545@cs181133002.pp.htv.fi> <bd6139dc0804161239h17e79c70ta5e938619e5743c9@mail.gmail.com> <20080416201606.GS1677@cs181133002.pp.htv.fi> <20080416205333.GT1677@cs181133002.pp.htv.fi> <bd6139dc0804161405j28470914u488568b565b68a0b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nigel Magnay <nigel.magnay@gmail.com>, git <git@vger.kernel.org>
-To: Martin Langhoff <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 16 23:26:48 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, linux-kernel <linux-kernel@vger.kernel.org>,
+	James Morris <jmorris@namei.org>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Willy Tarreau <w@1wt.eu>, david@lang.hm,
+	Stephen Clark <sclark46@earthlink.net>,
+	Evgeniy Polyakov <johnpol@2ka.mipt.ru>,
+	"Rafael J. Wysocki" <rjw@sisk.pl>, Tilman Schmidt <tilman@imap.cc>,
+	Valdis.Kletnieks@vt.edu, Mark Lord <lkml@rtr.ca>,
+	David Miller <davem@davemloft.net>, jesper.juhl@gmail.com,
+	yoshfuji@linux-ipv6.org, jeff@garzik.org, netdev@vger.kernel.org,
+	David Newall <davidn@davidnewall.com>
+To: sverre@rabbelier.nl
+X-From: netdev-owner@vger.kernel.org Wed Apr 16 23:27:27 2008
 connect(): Connection refused
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
+Return-path: <netdev-owner@vger.kernel.org>
+Envelope-to: linux-netdev-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JmF81-0000AF-3s
-	for gcvg-git-2@gmane.org; Wed, 16 Apr 2008 23:25:17 +0200
+	id 1JmF9Z-0000Zy-5B
+	for linux-netdev-2@gmane.org; Wed, 16 Apr 2008 23:26:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752598AbYDPVYc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Apr 2008 17:24:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751677AbYDPVYc
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Apr 2008 17:24:32 -0400
-Received: from fk-out-0910.google.com ([209.85.128.191]:3937 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753122AbYDPVYb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Apr 2008 17:24:31 -0400
-Received: by fk-out-0910.google.com with SMTP id 19so2986058fkr.5
-        for <git@vger.kernel.org>; Wed, 16 Apr 2008 14:24:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
-        bh=SIhaSdoRfIomy8YoFHCyLjQWNVQAx3SWBBoDxgLxDqE=;
-        b=P7rpG4VG6Al03W7LFTCYa5OhuDXdQlbfzYR148foCDzOXpawlcpn4N5jf8AGfBwY7TfN0BJjG3bDCY1FQcNVKjmHIZgmsksdB+Q7ad+jfSVOAzV/C+qntFj9Ep1Zv7Nun2MPI1Sx/yBiqfO9NZKl33ocvgMwgpZHA238EwsPCeo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
-        b=PzO7WcfrpyYQKDZ+M0MMXTGK7Q9PHE03OXn8lQf+lvYNbZu7xJak7weaUAOsyxYADZpAYYTMI2jvTALu1xI/VVxtT1t+JRNfq/jKVqehzKnJEdLiK3T28Ys9rWxLM+54QdwZivoMiOHJ2cxnGTMWQPMqaezknyHTZ+XCsWUJs+0=
-Received: by 10.82.127.15 with SMTP id z15mr808039buc.14.1208380647777;
-        Wed, 16 Apr 2008 14:17:27 -0700 (PDT)
-Received: from localhost ( [85.141.188.158])
-        by mx.google.com with ESMTPS id k9sm2303982nfh.35.2008.04.16.14.17.25
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 16 Apr 2008 14:17:27 -0700 (PDT)
+	id S1753521AbYDPV0E (ORCPT <rfc822;linux-netdev-2@m.gmane.org>);
+	Wed, 16 Apr 2008 17:26:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752816AbYDPV0D
+	(ORCPT <rfc822;netdev-outgoing>); Wed, 16 Apr 2008 17:26:03 -0400
+Received: from smtp4.pp.htv.fi ([213.243.153.38]:36858 "EHLO smtp4.pp.htv.fi"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752591AbYDPV0B (ORCPT <rfc822;netdev@vger.kernel.org>);
+	Wed, 16 Apr 2008 17:26:01 -0400
+Received: from cs181133002.pp.htv.fi (cs181133002.pp.htv.fi [82.181.133.2])
+	by smtp4.pp.htv.fi (Postfix) with ESMTP id 0C6775BC01E;
+	Thu, 17 Apr 2008 00:26:00 +0300 (EEST)
 Content-Disposition: inline
-In-Reply-To: <46a038f90804161356o7518ec72j3bfb4e9fe4e48852@mail.gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-Sender: git-owner@vger.kernel.org
+In-Reply-To: <bd6139dc0804161405j28470914u488568b565b68a0b@mail.gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+Sender: netdev-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79755>
+List-ID: <netdev.vger.kernel.org>
+X-Mailing-List: netdev@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79756>
 
-On Wed, Apr 16, 2008 at 03:56:18PM -0500, Martin Langhoff wrote:
-> On Wed, Apr 16, 2008 at 3:01 PM, Dmitry Potapov <dpotapov@gmail.com> wrote:
-> >  core.autocrlf=false is a bad choice for Windows.
-> ...
-> >  If you do not want problems, you should use core.autocrlf=true
-> >  on Windows.
+On Wed, Apr 16, 2008 at 11:05:17PM +0200, Sverre Rabbelier wrote:
+> On Wed, Apr 16, 2008 at 10:53 PM, Adrian Bunk <bunk@kernel.org> wrote:
+> >  To avoid any misunderstandings:
+> >
+> >  This is not in any way meant against you personally.
 > 
-> If you are making the above statements in generally about git, I
-> disagree.
+> Thanks for pointing it out, I wasn't quite sure, but assumed that :).
 
-I stand corrected. It should be either core.autocrlf=true is you
-like DOS ending or core.autocrlf=input if you prefer unix-newlines.
-In both cases, your Git repository will have only LF, which is the
-Right Thing. The only argument for core.autocrlf=false was that
-automatic heuristic may incorrectly detect some binary as text and
-then your tile will be corrupted. So, core.safecrlf option was
-introduced to warn a user if a irreversable change happens. In fact,
-there are two possibilities of irreversable changes -- mixed line-ending
-in text file, in this normalization is desirable, so this warning can be
-ignored, or (very unlikely) that Git incorrectly detected your binary
-file as text. Then you need to use attributes to tell Git that this file
-is binary.
+Sorry, I was a bit overreacting since I see too often people putting 
+some data into some statistics or graph and drawing conclusins without 
+paying attention to whether their data allows these conclusions at all.
 
-I have not used git-svn on Windows for some time now, because now I have
-a mirror running on Linux, so I clone directly from it.
+> >  But saying things like " X% of your commits introduced bugs" is not a
+> >  friendly thing, and wrong data could be quite hurting.
+> 
+> Yes, it could be, and I agree that conclusions shouldn't be based on
+> the details, but on the bigger picture. Also, I think it should (at
+> first) be used mainly as an indicator, of where attention might be
+> required. I mean, if it points out that one contributor almost always
+> commits buggy code,
 
-Dmitry
+I would assume that in all projects the main maintainers already have an 
+impression of how good the quality of the patches of each main 
+contributor is.
+
+In much more complex ways than a number could express.
+
+> you don't have to present them with those
+> statistics right away. Instead you can ask the program where it bases
+> it's conclusions on, and research them yourself.
+
+Sooner or later someone will run the program for the Linux kernel, 
+write a paper about the results, and publish his research somewhere.
+
+>...
+> Cheers,
+> 
+> Sverre Rabbelier
+
+cu
+Adrian
+
+-- 
+
+       "Is there not promise of rain?" Ling Tan asked suddenly out
+        of the darkness. There had been need of rain for many days.
+       "Only a promise," Lao Er said.
+                                       Pearl S. Buck - Dragon Seed
+
