@@ -1,92 +1,73 @@
-From: Tarmigan <tarmigan+git@gmail.com>
-Subject: Re: [RFH] cleaning up "add across symlinks"
-Date: Wed, 16 Apr 2008 14:26:41 -0700
-Message-ID: <905315640804161426l442c2812k3c36c1bafe484157@mail.gmail.com>
-References: <7vd4oppllw.fsf@gitster.siamese.dyndns.org>
+From: "Nigel Magnay" <nigel.magnay@gmail.com>
+Subject: Re: crlf with git-svn driving me nuts...
+Date: Wed, 16 Apr 2008 22:56:54 +0100
+Message-ID: <320075ff0804161456h1a6fd4e8qdd185f4540a1259a@mail.gmail.com>
+References: <320075ff0804161210m46f3e83bpf7bf9d1d5816d914@mail.gmail.com>
+	 <20080416200107.GG3133@dpotapov.dyndns.org>
+	 <32541b130804161320w42c68bc2p9d838dc127a57027@mail.gmail.com>
+	 <20080416203923.GH3133@dpotapov.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 16 23:28:44 2008
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Apr 16 23:57:56 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JmFAF-0000pf-T1
-	for gcvg-git-2@gmane.org; Wed, 16 Apr 2008 23:27:36 +0200
+	id 1JmFdP-0001DB-9J
+	for gcvg-git-2@gmane.org; Wed, 16 Apr 2008 23:57:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753584AbYDPV0s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Apr 2008 17:26:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752362AbYDPV0s
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Apr 2008 17:26:48 -0400
-Received: from mu-out-0910.google.com ([209.85.134.190]:30154 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752726AbYDPV0s (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Apr 2008 17:26:48 -0400
-Received: by mu-out-0910.google.com with SMTP id w8so1788934mue.1
-        for <git@vger.kernel.org>; Wed, 16 Apr 2008 14:26:42 -0700 (PDT)
+	id S1754147AbYDPV44 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Apr 2008 17:56:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754529AbYDPV44
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Apr 2008 17:56:56 -0400
+Received: from fk-out-0910.google.com ([209.85.128.191]:42367 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753834AbYDPV4z (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Apr 2008 17:56:55 -0400
+Received: by fk-out-0910.google.com with SMTP id 19so2999807fkr.5
+        for <git@vger.kernel.org>; Wed, 16 Apr 2008 14:56:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        bh=QcwD4pBC67g0q5NvTLuraypBI1Pu45saI2TukGg+4mE=;
-        b=lHDnD/0hSLx0eYMqQLGxDDgCv71CzrJSS3VgNhS09Ynd7t/GYL7HVDiwzMm8ZnPeFE5nv9jdE9rcRHy8G1Qn8eEL4Isj9IuHy6dnqyq9NnkcNo9nDQpvYMOkB/G2OLBvYPSitkEPNiRsa2npykdDN/JPbRIGEyyT913e+KDbvAM=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=QMG87ZjQKD6fo/RK7+cXjT7IJbses5b3d0Ii4D3Ejf4=;
+        b=SN3g+ejbjIt+lBVLiYdSrrttv01GX+qZmvSOyKp5T3657U2NcCO+w+au8eeQS8d1IOu97m1t+1oQB388rQW+9IsaXOXt+pfcsjMVW3Qag8MiRpcYaUYPRbxrvqPfcRNV+638bQJzCrk7mSydiqmlsbkwsRh1P0qEd6OQYryYeXE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=I+PDU2Tj0rk6D2YRFlWHmC59OGKknGYW4XECWbWRrnhelDZ0JKOYcSJ0xVJTQvlgMXLYfLkiT85d63I0qj0ZW83YL0PXj8iz3BblH+PvJkA/KJ3eNX4v9RFYrV27zNRK0nGO0eDd4EUdxaW90jhmUD2CHjqPW0lWPwqwkHx6FAo=
-Received: by 10.82.181.7 with SMTP id d7mr779631buf.53.1208381201585;
-        Wed, 16 Apr 2008 14:26:41 -0700 (PDT)
-Received: by 10.82.175.8 with HTTP; Wed, 16 Apr 2008 14:26:41 -0700 (PDT)
-In-Reply-To: <7vd4oppllw.fsf@gitster.siamese.dyndns.org>
+        h=message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=AuoHu/6NKrmnxwuA7fLLey2r0VGyHur/3uGsf+u2LqOgaKrOrrVI6aj9I0kpLS70CMSoXXuym+6IQapGlzXdJi2MczPqdWvfrEmXyCm4cqV1p0TAFdrE19dj+5hnLpTPgLmJ7tayj3QM7K8kfSZ8NNKnOtSrNuZvZyxVEqVcG6Q=
+Received: by 10.82.146.10 with SMTP id t10mr789012bud.87.1208383014340;
+        Wed, 16 Apr 2008 14:56:54 -0700 (PDT)
+Received: by 10.82.168.20 with HTTP; Wed, 16 Apr 2008 14:56:54 -0700 (PDT)
+In-Reply-To: <20080416203923.GH3133@dpotapov.dyndns.org>
 Content-Disposition: inline
-X-Google-Sender-Auth: 9079ffbbae34d009
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79757>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79758>
 
-On Wed, Apr 16, 2008 at 1:53 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> If you have this structure in your work tree:
+>  > Nigel's example showed a few situations where git *thought* the file
+>  > had changed when it hadn't, and yet is incapable of checking in the
+>  > changes.
 >
->         lrwxrwxrwx a -> c
->         drwxrwxrwx c
->         -rw-rw-rw- c/b
+>  Incapable of checking in? I have not found a single example in
+>  his mail where it was impossible. The only quirk with autocrlf
+>  is that you need to re-checkout your work tree after changing
+>  it. There is no other problems with it as far as I know.
 >
->  and let million monkeys give random paths to "git-update-index --add" or
->  "git add", you should end up with the index with two entries, a symlink
->  "a" and file "c/b".
->
->  Not so.  If an unfortunate monkey says "git add a/b", we happily add it to
->  the index, because we notice lstat("a/b") succeeds and assume that there
->  is such a path.  There isn't, as far as git is concerned, because we track
->  symbolic links.
 
-Thanks Junio, I'll try to do some testing with it later.
+My (initial) setting of core.autocrlf to false was because that's what
+it was on all the windows clients (I know the default has now changed)
+and to make the later parts of the script obvious that the file in the
+repo had a CRLF ending, rather than have being converted to LF. That's
+the situation we have, because they've all come from SVN.
 
->  +test_expect_success 'add confusion (3)' '
->  +
->  +       test_must_fail git add "a/*" &&
->  +
->  +       git ls-files >actual &&
->  +       test_cmp expect actual
->  +'
->  +
->  +test_done
-
-That's almost the case I used.  The exact test to add to these,
-without the '*' after a/, would be something like this (warning: cut
-and paste):
-
-+test_expect_success 'add confusion (4)' '
-+
-+       test_must_fail git add "a/" &&
-+
-+       git ls-files >actual &&
-+       test_cmp expect actual
-+'
-
-Thanks,
-Tarmigan
+The bit I really don't understand is why git thinks a file that has
+just been touched has chnaged when it hasn't, and doing a 'git reset
+--hard' actually doesn't help at all (but, bizzarely, git config
+core.autocrlf false & git config core.autocrlf true *does* !). The
+repo copy is CRLF, the working copy is CRLF, but git thinks it's
+changed...
