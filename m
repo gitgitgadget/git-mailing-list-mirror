@@ -1,83 +1,107 @@
-From: "Avery Pennarun" <apenwarr@gmail.com>
-Subject: Re: crlf with git-svn driving me nuts...
-Date: Wed, 16 Apr 2008 16:03:34 -0400
-Message-ID: <32541b130804161303i74a4dd3bw5ef72105ebf5485b@mail.gmail.com>
-References: <320075ff0804161210m46f3e83bpf7bf9d1d5816d914@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: branch description
+Date: Wed, 16 Apr 2008 21:56:26 +0200
+Message-ID: <200804162156.27435.jnareb@gmail.com>
+References: <9b3e2dc20804150951scf8b3c7x26f3a56eab1f9840@mail.gmail.com> <m3abjushvs.fsf@localhost.localdomain> <7vfxtmtlm0.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-To: "Nigel Magnay" <nigel.magnay@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 16 22:18:38 2008
+Cc: Brian Gernhardt <benji@silverinsanity.com>,
+	Russ Dill <russ.dill@gmail.com>,
+	"Stephen Sinclair" <radarsat1@gmail.com>, git@vger.kernel.org,
+	mercurial@selenic.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 16 22:19:06 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JmDrz-0000nG-H0
-	for gcvg-git-2@gmane.org; Wed, 16 Apr 2008 22:04:39 +0200
+	id 1JmDuX-0001UG-5z
+	for gcvg-git-2@gmane.org; Wed, 16 Apr 2008 22:07:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752951AbYDPUDi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Apr 2008 16:03:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753149AbYDPUDh
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Apr 2008 16:03:37 -0400
-Received: from fk-out-0910.google.com ([209.85.128.186]:35631 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752612AbYDPUDg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Apr 2008 16:03:36 -0400
-Received: by fk-out-0910.google.com with SMTP id 19so2949929fkr.5
-        for <git@vger.kernel.org>; Wed, 16 Apr 2008 13:03:35 -0700 (PDT)
+	id S1752535AbYDPUGb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Apr 2008 16:06:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752540AbYDPUGb
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Apr 2008 16:06:31 -0400
+Received: from ik-out-1112.google.com ([66.249.90.183]:36424 "EHLO
+	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752535AbYDPUGa (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Apr 2008 16:06:30 -0400
+Received: by ik-out-1112.google.com with SMTP id c28so618230ika.5
+        for <git@vger.kernel.org>; Wed, 16 Apr 2008 13:06:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=OQdqy9Pc7pmtsOlVLwYdlLuq30sRJJDIlAHDcN7V4g4=;
-        b=cHUqyCmh4mluKdIcWpUNIyB8ASV8K3/ICQKaKQ8UBYuILAi9q15/I/k5/uPwPFMVTe/0pQe3TurdtdSPvFgNuduuAsxB6jQQnsPKh1zczKE5TqwKwEN03IsaELrNBbPiRJC9v34cIeUbG4NG/AqRrHPjOdx83vhvdauwRA6FtaM=
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        bh=wcwPGxT1Ph354JIGs9Tij2P69Az7bCg8K4xZQs/kTvU=;
+        b=EcitmmbuhH3CKcUklyWeDZnreeap8Hh17Cao+Uf6l/jCY3uZ1eKg/f+4tW53Ixw1s8YeOEYEfHCJ/e/ryJgmDVH9WkFC8ro/VYZbNhT4BQrXYZXf7HYhDvjg3uw+XHU7HnLCTc7cvYEaRz5plp45RjQ71uH0s/9HT7SrKpI5PvA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=FBBCv1p1mUHWoTyH+Mr8YKoPltpPG+3OJvB9TKP4MQA9jtfnq4snjUQWvtjK44HE5kHzE9RYEgNpBI/wIbyna/CW8GUezL8l4UNe5DXGRIbvU1pGaUvs6oUa5W/HZT4zmMNmbZOcW+bzy29OKYd7XhJqt9+QTm+cXM93B/ZhKb0=
-Received: by 10.82.188.15 with SMTP id l15mr657026buf.34.1208376214449;
-        Wed, 16 Apr 2008 13:03:34 -0700 (PDT)
-Received: by 10.82.166.12 with HTTP; Wed, 16 Apr 2008 13:03:34 -0700 (PDT)
-In-Reply-To: <320075ff0804161210m46f3e83bpf7bf9d1d5816d914@mail.gmail.com>
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=QvzRWLq1Vx04yKjQk07u8f8G6AA0ym7CpanN7J5hxmz4WAuNYhhxJUF7W5qlouXwAGziefO7l71kW52UGzk4aOefzWJvYW97VRT4SU0ViyfIqxMMD/i1sbdhlymHHXAll/kMYaK/EK/LDDH+uCJ0a+PV6UTedXbDXrbMcoQ9d6Y=
+Received: by 10.78.161.4 with SMTP id j4mr750032hue.35.1208375785388;
+        Wed, 16 Apr 2008 12:56:25 -0700 (PDT)
+Received: from ?192.168.1.11? ( [83.8.234.183])
+        by mx.google.com with ESMTPS id d26sm16635098nfh.22.2008.04.16.12.56.20
+        (version=SSLv3 cipher=OTHER);
+        Wed, 16 Apr 2008 12:56:23 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vfxtmtlm0.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79738>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79739>
 
-On 4/16/08, Nigel Magnay <nigel.magnay@gmail.com> wrote:
->  Why does it think in this instance that there is a change? It's CRLF
->  in the repo, it's CRLF in the working tree, and the checkout in either
->  mode ought to be identical ??
+On Wed, 16 April 2008, Junio C Hamano <gitster@pobox.com> wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
+> 
+> > Please, let's don't repeat Mercurial mistake of placing unversioned
+> > information (such as branch names in case of Mercurial, or branches
+> > descriptions in this case) in-tree, i.e. version it.
 
-We got quite confused by this here too.  I'm pretty sure git's
-autocrlf feature is buggy, as you've noticed.  Combined with that, svn
-has its *own* kind of autocrlf feature (svn:eol-style property on each
-file) that acts completely differently.
+I'm sorry, I meant here "tags" not "branch names"... I think...
 
-As an added bonus, I don't know if you've run into this yet, but
-cygwin's "patch" command seems to unconditionally strip CR from
-patches *before* trying to apply them at all, *even if* the target
-file is CRLF, so patches just never apply to CRLF files ever.  Ha ha!
+> Is it really a "mistake" in Mercurial's context?
 
-I managed to make the two systems stop stomping on each other, in our
-case, by using svn:eol-style of "native" (which means when git-svn
-checks out the file, it gets only LF, since it seems to always claim
-to be Unix) and not using git's autocrlf at all.  However, this isn't
-optimal since then Windows git users end up with LF instead of CRLF in
-their files, which confuses them.
+If we are talking about tags support in Mercurial, I think it is
+mistake or at least bad design decision.  Tags are, and should be,
+unversioned (or at least versioned separately) but propagated (or
+rather propagatable).  Mercurial offers either in-tree .hgtags,
+which are always automatically propagated (not merely propagatable);
+but this mechanism is by default versioned, and Mercurial does
+complicated dance to get reasonable tags semantic.  And there is
+[theoretical] problem of merging .hgtags file; perhaps solved by
+specialized merge strategy for this file.
 
-On the other hand, the conflicts and the random-newline-changing diffs
-go away, as svn fixes things up at checkin time no matter how badly
-they got mangled by the windows user (most commonly, they run a
-program that resaves the whole file as CRLF).
+Alternatively Mercurial offers so called local tags, which are not
+versioned, but not propagated (and AFAIK non propagatable).
 
-Obviously a working git autocrlf feature would be better, but I
-haven't looked into it closely enough to say where the problem
-actually lies.
+So yes, it is a bad design in my opinion.
 
-Have fun,
+> I thought that their named branches do have defined "starting point", and
+> it is not a mistake at all for them to version "from this point on, this
+> lineage of history is associated with this symbolic name (which is a
+> branch)".
 
-Avery
+What happens if there is branching point _after_ such "branch naming tag"?
+Unless branch names are purely local and non-propagatable, and Mercurial
+can use local revision numbers or something  like this...
+
+I find this CVS legacy to branching (doesn't Subversion use also
+something like that) to be stupid.
+
+> It probably does not make sense in the context of git where a branch is
+> defined to be "illusion" (at least currently).
+
+BTW. another tool that has yet another idea of what "branch" is
+is Monotone, which AFAIK understands branch in reflog sense, via
+Monotone's signature signatures ;-)
+
+P.S. Cc-ed mercurial mailing list, to give them chance to respond
+to those "accusations"... if it is not subscribe only...
+-- 
+Jakub Narebski
+Poland
