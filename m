@@ -1,71 +1,97 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Friendly refspecs
-Date: Tue, 15 Apr 2008 23:48:23 -0400
-Message-ID: <20080416034823.GA11727@sigill.intra.peff.net>
-References: <20080409101428.GA2637@elte.hu> <20080409145758.GB20874@sigill.intra.peff.net> <20080409200836.GA19248@mithlond> <20080409203453.GA10370@sigill.intra.peff.net> <20080409222500.GB19248@mithlond> <20080409225112.GB12103@sigill.intra.peff.net> <20080413093102.GC12107@mithlond.arda.local>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: [GIT PULL] sh updates for 2.6.25
+Date: Wed, 16 Apr 2008 02:37:25 +0200
+Message-ID: <20080416003725.GF8387@genesis.frugalware.org>
+References: <20080415172333.GA29489@linux-sh.org> <alpine.LFD.1.00.0804151048060.2879@woody.linux-foundation.org> <m3ej97rmc0.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
-To: Teemu Likonen <tlikonen@iki.fi>
-X-From: git-owner@vger.kernel.org Wed Apr 16 06:32:11 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="VUDLurXRWRKrGuMn"
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 16 06:33:43 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jlydy-0004XQ-AE
-	for gcvg-git-2@gmane.org; Wed, 16 Apr 2008 05:49:10 +0200
+	id 1JlvfI-0007Yn-B6
+	for gcvg-git-2@gmane.org; Wed, 16 Apr 2008 02:38:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754405AbYDPDs0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Apr 2008 23:48:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754501AbYDPDsZ
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Apr 2008 23:48:25 -0400
-Received: from [208.65.91.99] ([208.65.91.99]:4076 "EHLO peff.net"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1754384AbYDPDsZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Apr 2008 23:48:25 -0400
-Received: (qmail 8728 invoked by uid 111); 16 Apr 2008 03:48:24 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Tue, 15 Apr 2008 23:48:24 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 15 Apr 2008 23:48:23 -0400
+	id S1756782AbYDPAhc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Apr 2008 20:37:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760577AbYDPAha
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Apr 2008 20:37:30 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:34528 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1760532AbYDPAh3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Apr 2008 20:37:29 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 625821B24F0;
+	Wed, 16 Apr 2008 02:37:26 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id E0F4844659;
+	Wed, 16 Apr 2008 02:33:59 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 71FA511904CE; Wed, 16 Apr 2008 02:37:25 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <20080413093102.GC12107@mithlond.arda.local>
+In-Reply-To: <m3ej97rmc0.fsf@localhost.localdomain>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79650>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79651>
 
-On Sun, Apr 13, 2008 at 12:31:02PM +0300, Teemu Likonen wrote:
 
-> There is still one thing (at least) that I don't quite understand. It's
-> about "git push". When I do
-> 
->   $ git push <remote> <branch>
-> 
-> the refs/heads/<branch> is updated or created on the remote side. But if
-> I do
-> 
->   $ git push <remote> <branch1>:<branch2>
-> 
-> the refs/heads/<branch2> is not automatically created. Why there is need
-> to say "<branch1>:refs/heads/<branch2>" to make it work if <branch2>
-> does not exist? The 'git push' manual says something vague about branch
-> not matching (?). What does it mean?
+--VUDLurXRWRKrGuMn
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-This happens because "git push <remote> <branch>" is expanded locally to
-"git push <remote> <branch>:<branch>", but <branch> is first expanded
-into refs/heads/<branch>.
+On Tue, Apr 15, 2008 at 11:43:24AM -0700, Jakub Narebski <jnareb@gmail.com> wrote:
+> I seem to remember (but I might be mistaken) that this issue was
+> corrected by some patch on git mailing list already...
 
-The latter uses the explicit refspec <branch2> which doesn't get
-expanded, since it doesn't exist at all, and so we can't deduce the type
-(e.g., refs/heads versus refs/tags).
+If we are at it, I had a similar bugreport: If one doesn't use an empty
+line after the first line in the commit message, a git-format-patch +
+git-am combo will strip newlines from the commit message:
 
-ISTR some discussion in the past few months about using the type of
-<branch1> to guess the type of <branch2>, but it seems not to have gone
-anywhere.
+http://article.gmane.org/gmane.comp.version-control.git/73755
 
-Daniel, were you working on this?
+There, you suggested to modify git-format-patch, but I haven't come up
+with such a patch nor anybody else.
 
--Peff
+Actually I recently tried to make one but I got lost in pretty.c and
+log-tree.c. :-)
+
+What I would like to do is just to change the current:
+
+----
+line1
+ line2
+ line3
+----
+
+output to:
+
+----
+line1
+
+line2
+line3
+----
+
+--VUDLurXRWRKrGuMn
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.8 (GNU/Linux)
+
+iEYEARECAAYFAkgFSkUACgkQe81tAgORUJb9CQCfU0EYtgYzCXmJJjfXyZ9BT0hH
+Ku8An1hW3+y++DlWBUPTPQSmriBSkdlw
+=sBD3
+-----END PGP SIGNATURE-----
+
+--VUDLurXRWRKrGuMn--
