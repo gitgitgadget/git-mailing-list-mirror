@@ -1,70 +1,95 @@
-From: Jon Loeliger <jdl@jdl.com>
-Subject: Re: [PATCH] Clarify and fix English in git-rm documentation.
-Date: Wed, 16 Apr 2008 08:29:33 -0500
-Message-ID: <E1Jm7hd-0005R1-AL@jdl.com>
-References: <E1Jl91r-0000yT-8T@jdl.com> <7vve2is2gv.fsf@gitster.siamese.dyndns.org>
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junio@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 16 15:36:26 2008
+From: Ping Yin <pkufranky@gmail.com>
+Subject: [PATCH 6/7] git-submodule: "update --force" to enforce cloning non-submodule
+Date: Wed, 16 Apr 2008 22:19:36 +0800
+Message-ID: <1208355577-8734-7-git-send-email-pkufranky@gmail.com>
+References: <1208355577-8734-1-git-send-email-pkufranky@gmail.com>
+ <1208355577-8734-2-git-send-email-pkufranky@gmail.com>
+ <1208355577-8734-3-git-send-email-pkufranky@gmail.com>
+ <1208355577-8734-4-git-send-email-pkufranky@gmail.com>
+ <1208355577-8734-5-git-send-email-pkufranky@gmail.com>
+ <1208355577-8734-6-git-send-email-pkufranky@gmail.com>
+Cc: gitster@pobox.com, Ping Yin <pkufranky@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 16 16:30:46 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jm7iO-0000UM-LL
-	for gcvg-git-2@gmane.org; Wed, 16 Apr 2008 15:30:21 +0200
+	id 1Jm8VO-00050Q-4U
+	for gcvg-git-2@gmane.org; Wed, 16 Apr 2008 16:20:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758681AbYDPN3f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Apr 2008 09:29:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755252AbYDPN3f
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Apr 2008 09:29:35 -0400
-Received: from jdl.com ([208.123.74.7]:44909 "EHLO jdl.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754713AbYDPN3f (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Apr 2008 09:29:35 -0400
-Received: from jdl (helo=jdl.com)
-	by jdl.com with local-esmtp (Exim 4.63)
-	(envelope-from <jdl@jdl.com>)
-	id 1Jm7hd-0005R1-AL; Wed, 16 Apr 2008 08:29:33 -0500
-In-reply-to: <7vve2is2gv.fsf@gitster.siamese.dyndns.org> 
-Comments: In-reply-to Junio C Hamano <junio@pobox.com>
-   message dated "Wed, 16 Apr 2008 00:06:40 -0700."
-X-Spam-Score: -102.6
+	id S1757215AbYDPOUI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Apr 2008 10:20:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757432AbYDPOUE
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Apr 2008 10:20:04 -0400
+Received: from mail.qikoo.org ([60.28.205.235]:52426 "EHLO mail.qikoo.org"
+	rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1756412AbYDPOTo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Apr 2008 10:19:44 -0400
+Received: by mail.qikoo.org (Postfix, from userid 1029)
+	id 75829470B5; Wed, 16 Apr 2008 22:19:38 +0800 (CST)
+X-Mailer: git-send-email 1.5.5.70.gd68a
+In-Reply-To: <1208355577-8734-6-git-send-email-pkufranky@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79700>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79701>
 
-> Jon Loeliger <jdl@jdl.com> writes:
-> 
-> > --- a/Documentation/git-rm.txt
-> > +++ b/Documentation/git-rm.txt
-> > @@ -11,28 +11,34 @@ SYNOPSIS
-> >  
-> >  DESCRIPTION
-> >  -----------
-> > +Remove files from the index, or from the working tree and the index.
-> > +`git rm` will not remove a file from just your working directory.
-> 
-> The last sentence made me stop reading and read the paragraph twice and
-> half.  Perhaps it would make it easier to read if we make it
-> 
-> 	(there is no option to remove a file only from work tree and keep
-> 	it in the index; use regular "/bin/rm" if you want to do that).
-> 
-> a parenthesized note as the tail part of the previous sentence?
+If the update subcommand combines with --force, instead of
+issuing a "Not a submodule" warning for non-submodules, non-submodules
+(i.e. modules existing in .gitmodules or $GIT_DIR/config but not added
+to the super module) will also be cloned and the master branch will be
+checked out.
 
-Yeah, I thought about adding that as well, so let's do it.
+However, if a non-submodule has already been cloned before, the update
+will be rejected since we don't know what the update means.
 
-> > +The files being removed have to be identical to the tip of the branch,
-> > +and no updates to their contents can be staged in the index.
-> 
-> Perhaps add "This can be overridden with the `-f` option" here?
+Signed-off-by: Ping Yin <pkufranky@gmail.com>
+---
+ git-submodule.sh |   13 ++++++++++++-
+ 1 files changed, 12 insertions(+), 1 deletions(-)
 
-Good idea.
-
-I'll respin it this evening.
-
-Thanks,
-jdl
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 87d84fa..ed6f698 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -361,6 +361,9 @@ cmd_update()
+ 		-q|--quiet)
+ 			quiet=1
+ 			;;
++		-f | --force)
++			force="$1"
++			;;
+ 		--)
+ 			shift
+ 			break
+@@ -381,7 +384,8 @@ cmd_update()
+ 		test -n "$name" || exit
+ 		if test $sha1 = 0000000000000000000000000000000000000000
+ 		then
+-			say "Not a submodule: $name @ $path"
++			test -z "$force" &&
++			say "Not a submodule: $name @ $path" &&
+ 			continue
+ 		elif test -z "$url"
+ 		then
+@@ -395,8 +399,15 @@ cmd_update()
+ 		if ! test -d "$path"/.git
+ 		then
+ 			module_clone "$path" "$url" || exit
++			test "$sha1" = 0000000000000000000000000000000000000000 &&
++			(unset GIT_DIR; cd "$path" && git checkout -q master) &&
++			say "non-submodule cloned and master checked out: $name @ $path" &&
++			continue
+ 			subsha1=
+ 		else
++			test "$sha1" = 0000000000000000000000000000000000000000 &&
++			say "non-submodule already cloned: $name @ $path" &&
++			continue
+ 			subsha1=$(unset GIT_DIR; cd "$path" &&
+ 				git rev-parse --verify HEAD) ||
+ 			die "Unable to find current revision in submodule path '$path'"
+-- 
+1.5.5.70.gd68a
