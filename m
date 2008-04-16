@@ -1,107 +1,151 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: branch description
-Date: Wed, 16 Apr 2008 21:56:26 +0200
-Message-ID: <200804162156.27435.jnareb@gmail.com>
-References: <9b3e2dc20804150951scf8b3c7x26f3a56eab1f9840@mail.gmail.com> <m3abjushvs.fsf@localhost.localdomain> <7vfxtmtlm0.fsf@gitster.siamese.dyndns.org>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: crlf with git-svn driving me nuts...
+Date: Thu, 17 Apr 2008 00:01:07 +0400
+Message-ID: <20080416200107.GG3133@dpotapov.dyndns.org>
+References: <320075ff0804161210m46f3e83bpf7bf9d1d5816d914@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Brian Gernhardt <benji@silverinsanity.com>,
-	Russ Dill <russ.dill@gmail.com>,
-	"Stephen Sinclair" <radarsat1@gmail.com>, git@vger.kernel.org,
-	mercurial@selenic.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 16 22:19:06 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git <git@vger.kernel.org>
+To: Nigel Magnay <nigel.magnay@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 16 22:20:48 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JmDuX-0001UG-5z
-	for gcvg-git-2@gmane.org; Wed, 16 Apr 2008 22:07:17 +0200
+	id 1JmDxE-0002Hf-A7
+	for gcvg-git-2@gmane.org; Wed, 16 Apr 2008 22:10:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752535AbYDPUGb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Apr 2008 16:06:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752540AbYDPUGb
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Apr 2008 16:06:31 -0400
-Received: from ik-out-1112.google.com ([66.249.90.183]:36424 "EHLO
-	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752535AbYDPUGa (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Apr 2008 16:06:30 -0400
-Received: by ik-out-1112.google.com with SMTP id c28so618230ika.5
-        for <git@vger.kernel.org>; Wed, 16 Apr 2008 13:06:25 -0700 (PDT)
+	id S1752793AbYDPUJT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Apr 2008 16:09:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752783AbYDPUJT
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Apr 2008 16:09:19 -0400
+Received: from nf-out-0910.google.com ([64.233.182.191]:29235 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752637AbYDPUJS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Apr 2008 16:09:18 -0400
+Received: by nf-out-0910.google.com with SMTP id g13so799486nfb.21
+        for <git@vger.kernel.org>; Wed, 16 Apr 2008 13:08:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=wcwPGxT1Ph354JIGs9Tij2P69Az7bCg8K4xZQs/kTvU=;
-        b=EcitmmbuhH3CKcUklyWeDZnreeap8Hh17Cao+Uf6l/jCY3uZ1eKg/f+4tW53Ixw1s8YeOEYEfHCJ/e/ryJgmDVH9WkFC8ro/VYZbNhT4BQrXYZXf7HYhDvjg3uw+XHU7HnLCTc7cvYEaRz5plp45RjQ71uH0s/9HT7SrKpI5PvA=
+        h=domainkey-signature:received:received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
+        bh=vydC5ZyTd23iP46dZeR/elossLmH+BqM+rI413LRUpU=;
+        b=k3bFcDuyRzPIigqe4vlqZIrYzeqLLmE/SXtgpF2zr6k87JspjkJqiB3a92KM2wvX7wMlepcL5i0lD06m7/NeGZ2te++gBDwlFITayb2EW1eazu5QHrugXiXieJcuFkCNjeICrw0VYgKHLr2kIInLajMbtOl1zw1yevFt/QPzVXs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=QvzRWLq1Vx04yKjQk07u8f8G6AA0ym7CpanN7J5hxmz4WAuNYhhxJUF7W5qlouXwAGziefO7l71kW52UGzk4aOefzWJvYW97VRT4SU0ViyfIqxMMD/i1sbdhlymHHXAll/kMYaK/EK/LDDH+uCJ0a+PV6UTedXbDXrbMcoQ9d6Y=
-Received: by 10.78.161.4 with SMTP id j4mr750032hue.35.1208375785388;
-        Wed, 16 Apr 2008 12:56:25 -0700 (PDT)
-Received: from ?192.168.1.11? ( [83.8.234.183])
-        by mx.google.com with ESMTPS id d26sm16635098nfh.22.2008.04.16.12.56.20
-        (version=SSLv3 cipher=OTHER);
-        Wed, 16 Apr 2008 12:56:23 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <7vfxtmtlm0.fsf@gitster.siamese.dyndns.org>
+        h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
+        b=PjnPFvh/FeWAhoE/rHObtCkb7nEtC4gGl4efY6xWhX35qgzc1KcR9Y9ZDGKc4TuEaWsvT0ukfS/zpO4IYcVFe2sPiU/p7oKKXSMMqZ2gVAt4zI2Rcxkhob1lSwdkTcYqcWClxca0W4ew+8vTuEdE21vWA/HBk4mXISvzYCXeUMU=
+Received: by 10.78.183.20 with SMTP id g20mr758281huf.31.1208376075256;
+        Wed, 16 Apr 2008 13:01:15 -0700 (PDT)
+Received: from localhost ( [85.141.188.158])
+        by mx.google.com with ESMTPS id b35sm12999325ugd.33.2008.04.16.13.01.13
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 16 Apr 2008 13:01:14 -0700 (PDT)
 Content-Disposition: inline
+In-Reply-To: <320075ff0804161210m46f3e83bpf7bf9d1d5816d914@mail.gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79740>
 
-On Wed, 16 April 2008, Junio C Hamano <gitster@pobox.com> wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
+On Wed, Apr 16, 2008 at 08:10:26PM +0100, Nigel Magnay wrote:
+> We've got projects with a mixed userbase of windows / *nix; I'm trying
+> to migrate some users onto git, whilst everyone else stays happy in
+> their SVN repo.
 > 
-> > Please, let's don't repeat Mercurial mistake of placing unversioned
-> > information (such as branch names in case of Mercurial, or branches
-> > descriptions in this case) in-tree, i.e. version it.
+> However, there's one issue that has been driving me slowly insane.
+> This is best illustrated thusly (on windows) :
+> 
+>   $ git init
+>   $ git config core.autocrlf false
 
-I'm sorry, I meant here "tags" not "branch names"... I think...
+core.autocrlf=false is a bad choice for Windows.
 
-> Is it really a "mistake" in Mercurial's context?
+> 
+> -->Create a file with some text content on a few lines
+>   $ notepad file.txt
+> 
+>   $ git add file.txt
+>   $ git commit -m "initial checkin"
 
-If we are talking about tags support in Mercurial, I think it is
-mistake or at least bad design decision.  Tags are, and should be,
-unversioned (or at least versioned separately) but propagated (or
-rather propagatable).  Mercurial offers either in-tree .hgtags,
-which are always automatically propagated (not merely propagatable);
-but this mechanism is by default versioned, and Mercurial does
-complicated dance to get reasonable tags semantic.  And there is
-[theoretical] problem of merging .hgtags file; perhaps solved by
-specialized merge strategy for this file.
+You added a file with the CRLF ending in the repository!
+You are going to have problems now...
 
-Alternatively Mercurial offers so called local tags, which are not
-versioned, but not propagated (and AFAIK non propagatable).
+> 
+>   $ git status
+> # On branch master
+> nothing to commit (working directory clean)
+> --> Yarp, what I wanted
+> 
+>   $ git config core.autocrlf true
+>   $ git status
 
-So yes, it is a bad design in my opinion.
+You should not change core.autocrlf during your work, or you
+are going to have some funny problems. If you really need to
+change it, it should be followed by "git reset --hard".
 
-> I thought that their named branches do have defined "starting point", and
-> it is not a mistake at all for them to version "from this point on, this
-> lineage of history is associated with this symbolic name (which is a
-> branch)".
+In this case, you already have a file with the wrong ending,
+so file.txt will be shown as changed now, because if you commit
+it again then it will be commited with <LF>, which should have
+been done in the first place.
 
-What happens if there is branching point _after_ such "branch naming tag"?
-Unless branch names are purely local and non-propagatable, and Mercurial
-can use local revision numbers or something  like this...
+> 
+> # On branch master
+> nothing to commit (working directory clean)
+> --> Yarp, still all good
+> 
+> --> Simulate non-change happened by an editor opening file...
+>   $ touch file.txt
+>   $ git status
+> # On branch master
+> # Changed but not updated:
+> #   (use "git add <file>..." to update what will be committed)
+> #
+> #       modified:   file.txt
+> #
+> no changes added to commit (use "git add" and/or "git commit -a")
+> 
+> --> Oh Noes! I wonder what it could be
+>   $ git diff file.txt
+> diff --git a/file.txt b/file.txt
+> index 7a2051f..31ca3a0 100644
+> --- a/file.txt
+> +++ b/file.txt
+> @@ -1,3 +1,3 @@
+> -<xml>
+> -       wooot
+> -</xml>
+> +<xml>
+> +       wooot
+> +</xml>
+> 
+> --> Huh? ...
 
-I find this CVS legacy to branching (doesn't Subversion use also
-something like that) to be stupid.
+Actually, it is
 
-> It probably does not make sense in the context of git where a branch is
-> defined to be "illusion" (at least currently).
+@@ -1,3 +1,3 @@
+-<xml>^M
+-       wooot^M
+-</xml>^M
++<xml>
++       wooot
++</xml>
 
-BTW. another tool that has yet another idea of what "branch" is
-is Monotone, which AFAIK understands branch in reflog sense, via
-Monotone's signature signatures ;-)
+where ^M is <CR>
 
-P.S. Cc-ed mercurial mailing list, to give them chance to respond
-to those "accusations"... if it is not subscribe only...
--- 
-Jakub Narebski
-Poland
+> 
+> --> WtF?
+> 
+> Why does it think in this instance that there is a change? It's CRLF
+> in the repo, it's CRLF in the working tree, and the checkout in either
+> mode ought to be identical ??
+
+If you do not want problems, you should use core.autocrlf=true
+on Windows. Then all text files will be stored in the repository
+with <LF>, but they will have <CR><LF> in your work tree.
+Users on *nix should set core.autocrlf=input or false, so they
+will have <LF> in their work tree.
+
+Dmitry
