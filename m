@@ -1,114 +1,87 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Friendly refspecs
-Date: Wed, 16 Apr 2008 00:25:14 -0400
-Message-ID: <20080416042514.GA22179@sigill.intra.peff.net>
-References: <20080409101428.GA2637@elte.hu> <20080409145758.GB20874@sigill.intra.peff.net> <20080409200836.GA19248@mithlond> <20080409203453.GA10370@sigill.intra.peff.net> <20080409222500.GB19248@mithlond> <20080409225112.GB12103@sigill.intra.peff.net> <20080413093102.GC12107@mithlond.arda.local> <20080416034823.GA11727@sigill.intra.peff.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Git Homepge Update
+Date: Tue, 15 Apr 2008 18:36:29 -0700 (PDT)
+Message-ID: <m363uishr7.fsf@localhost.localdomain>
+References: <2c6b72b30804140656g14c24d8cwae016d62fe12f4a7@mail.gmail.com>
+	<56e37551-4b8f-4164-a71d-79dba8635b7d@l28g2000prd.googlegroups.com>
+	<96F7571C-1D9D-4F0A-99F1-A2307DAB0374@wincent.com>
+	<bd6139dc0804141129h25c829e2i320f227594763d71@mail.gmail.com>
+	<pan.2008.04.14.20.39.10@progsoc.org>
+	<20080414213339.GB10300@dpotapov.dyndns.org>
+	<pan.2008.04.15.03.25.00@progsoc.org>
+	<8607f754-92c8-49ca-9bc9-11e58b66ef40@q1g2000prf.googlegroups.com>
+	<acfbfe5b-f3a1-4c22-a873-ed329552d1bb@b5g2000pri.googlegroups.com>
+	<20080415115741.GB26302@machine.or.cz>
+	<20080415162008.GD26302@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Teemu Likonen <tlikonen@iki.fi>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Wed Apr 16 07:53:23 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Dill <sarpulhu@gmail.com>, git@vger.kernel.org
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Wed Apr 16 07:59:47 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JlzDe-0005i5-TZ
-	for gcvg-git-2@gmane.org; Wed, 16 Apr 2008 06:26:03 +0200
+	id 1JlwaL-0000kV-3P
+	for gcvg-git-2@gmane.org; Wed, 16 Apr 2008 03:37:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750802AbYDPEZS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Apr 2008 00:25:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750724AbYDPEZR
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Apr 2008 00:25:17 -0400
-Received: from [208.65.91.99] ([208.65.91.99]:3419 "EHLO peff.net"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1750799AbYDPEZQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Apr 2008 00:25:16 -0400
-Received: (qmail 10990 invoked by uid 111); 16 Apr 2008 04:25:15 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Wed, 16 Apr 2008 00:25:15 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 16 Apr 2008 00:25:14 -0400
-Content-Disposition: inline
-In-Reply-To: <20080416034823.GA11727@sigill.intra.peff.net>
+	id S1752960AbYDPBgc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Apr 2008 21:36:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753165AbYDPBgc
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Apr 2008 21:36:32 -0400
+Received: from ug-out-1314.google.com ([66.249.92.172]:12805 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752919AbYDPBgb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Apr 2008 21:36:31 -0400
+Received: by ug-out-1314.google.com with SMTP id z38so824368ugc.16
+        for <git@vger.kernel.org>; Tue, 15 Apr 2008 18:36:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
+        bh=0hKzOf7EvYAJxgh1a5jV8a8fAL0GYjwrQp10DqXawsE=;
+        b=ZS+qD2YeWRCAe3wikfCRdwCFGY7mBEK/M0rSDlCs8GZQD9if86H/t9KZ7DLaZYBvI79FVqTuPKNaxXiHF0vgpU9eB/g+knb2JdLVKHo1dOqa7CjTF2F+djPW754pShul/x6YuQvdtpXDnjyTChSISnyoP1FIsOTvN3Y3buHipXQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
+        b=S5Pt3v+tDrHbSFCnJO7V9RyJc6/xE4IyDvFoA8GsQ1leJxPfZ0oD53vIz0AbKwZEG06stcuRKhCkGPXZx/B2Js2XMOLb7+q7J7r7QxMlycW/UhXbRGLZNkWVivl2PolrLAU0mXFqmo+1LcIlWjYQQ3J9rPwAC9ST9wbJQrsOCBA=
+Received: by 10.67.116.19 with SMTP id t19mr6185187ugm.47.1208309790215;
+        Tue, 15 Apr 2008 18:36:30 -0700 (PDT)
+Received: from localhost.localdomain ( [83.8.244.53])
+        by mx.google.com with ESMTPS id 6sm3164016ugc.60.2008.04.15.18.36.27
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 15 Apr 2008 18:36:29 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m3G1aUkm023911;
+	Wed, 16 Apr 2008 03:36:30 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m3G1aS8g023908;
+	Wed, 16 Apr 2008 03:36:28 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <20080415162008.GD26302@machine.or.cz>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79672>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79673>
 
-On Tue, Apr 15, 2008 at 11:48:23PM -0400, Jeff King wrote:
+Petr Baudis <pasky@suse.cz> writes:
 
-> ISTR some discussion in the past few months about using the type of
-> <branch1> to guess the type of <branch2>, but it seems not to have gone
-> anywhere.
+>   By the way, I have read through the homepage again after some time and
+> tweaked the text a bit for clarity and perhaps grammar (hope I didn't
+> make it worse than it was). I have also reorganized the Related Tools
+> section and rewrote the initial paragraph.
 > 
-> Daniel, were you working on this?
+>   Design-wise, I have added some extra spacing at many places, turned
+> the Related Tools section to a 2x2 grid to take less vertical space
 
-Hmm. Here is a quick patch I worked up, but it causes t5516:14 (push
-with ambiguity) to fail. However, I'm not sure the test is right: it
-looks like it's trying to find ambiguity between remotes/origin/master
-and remotes/frotz/master, but in fact matches _neither_ of them. So it
-was failing before as we expected, but for the wrong reason.
-
----
- remote.c              |   23 +++++++++++++++++++----
- t/t5516-fetch-push.sh |    8 ++++++++
- 2 files changed, 27 insertions(+), 4 deletions(-)
-
-diff --git a/remote.c b/remote.c
-index 08af7f9..2f5d062 100644
---- a/remote.c
-+++ b/remote.c
-@@ -851,10 +851,25 @@ static int match_explicit(struct ref *src, struct ref *dst,
- 	case 0:
- 		if (!memcmp(dst_value, "refs/", 5))
- 			matched_dst = make_linked_ref(dst_value, dst_tail);
--		else
--			error("dst refspec %s does not match any "
--			      "existing ref on the remote and does "
--			      "not start with refs/.", dst_value);
-+		else {
-+			/*
-+			 * We don't have a full ref name for the dst and
-+			 * it doesn't exist, so let's assume it's the same
-+			 * type as our src.
-+			 */
-+			struct strbuf tmp = STRBUF_INIT;
-+			const char *c;
-+			int slashes;
-+			for (c = matched_src->name, slashes = 0;
-+					*c && slashes < 2; c++) {
-+				strbuf_addch(&tmp, *c);
-+				if (*c == '/')
-+					slashes++;
-+			}
-+			strbuf_addstr(&tmp, dst_value);
-+			dst_value = strbuf_detach(&tmp, NULL);
-+			matched_dst = make_linked_ref(dst_value, dst_tail);
-+		}
- 		break;
- 	default:
- 		matched_dst = NULL;
-diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-index 793ffc6..370f79a 100755
---- a/t/t5516-fetch-push.sh
-+++ b/t/t5516-fetch-push.sh
-@@ -285,6 +285,14 @@ test_expect_success 'push with colon-less refspec (4)' '
- 
- '
- 
-+test_expect_success 'push with non-existant, incomplete dest' '
-+
-+	mk_test &&
-+	git push testrepo master:brandnewbranch &&
-+	check_push_result $the_commit heads/brandnewbranch
-+
-+'
-+
- test_expect_success 'push with HEAD' '
- 
- 	mk_test heads/master &&
+IMHO it is not a good idea.  First, because it decreases page height
+by a unsignificant amount; we still need scrollbar.  Second, more
+important imho that this 2x2 grid contains _unrelated_ information
+which belong in _different_ sections, namely 3 subsections of git
+related tools, and one completely unrelated on git _hosting_.
 -- 
-1.5.5.64.geecd2.dirty
+Jakub Narebski
+Poland
+ShadeHawk on #git
