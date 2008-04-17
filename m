@@ -1,130 +1,92 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: Re* [GIT PULL] sh updates for 2.6.25
-Date: Thu, 17 Apr 2008 23:38:01 +0200
-Message-ID: <20080417213801.GL23696@genesis.frugalware.org>
-References: <20080415172333.GA29489@linux-sh.org> <alpine.LFD.1.00.0804151048060.2879@woody.linux-foundation.org> <m3ej97rmc0.fsf@localhost.localdomain> <20080416003725.GF8387@genesis.frugalware.org> <7vd4oqwkev.fsf@gitster.siamese.dyndns.org> <20080416084435.GJ8387@genesis.frugalware.org> <7v3aplr2pt.fsf_-_@gitster.siamese.dyndns.org>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: Intricacies of submodules
+Date: Thu, 17 Apr 2008 18:31:53 -0300
+Message-ID: <46a038f90804171431q51215be8od41792293712ca9@mail.gmail.com>
+References: <47F15094.5050808@et.gatech.edu>
+	 <7vd4or7wdt.fsf@gitster.siamese.dyndns.org>
+	 <1208317795.26863.91.camel@goose.sun.com>
+	 <87lk3c4ali.fsf@jeremyms.com>
+	 <1208461808.26863.129.camel@goose.sun.com>
+	 <46a038f90804171306t22491685p87d7445d44f00879@mail.gmail.com>
+	 <7vabjsnrda.fsf@gitster.siamese.dyndns.org>
+	 <bd6139dc0804171400x515b3c8br3cb1501cca8a6d0a@mail.gmail.com>
+	 <46a038f90804171425q1cc4cff4m6b783252040a3b26@mail.gmail.com>
+	 <bd6139dc0804171427i6bf2813at719c8dec13bc225c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="WuT04sMzYDXq8et0"
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 17 23:44:25 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <gitster@pobox.com>,
+	"Roman V. Shaposhnik" <rvs@sun.com>,
+	"Jeremy Maitin-Shepard" <jbms@cmu.edu>,
+	"Ping Yin" <pkufranky@gmail.com>,
+	"Avery Pennarun" <apenwarr@gmail.com>,
+	stuart.freeman@et.gatech.edu, git@vger.kernel.org
+To: sverre@rabbelier.nl
+X-From: git-owner@vger.kernel.org Thu Apr 17 23:45:24 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jmbol-0004uO-3V
-	for gcvg-git-2@gmane.org; Thu, 17 Apr 2008 23:38:55 +0200
+	id 1Jmbii-0002r7-Si
+	for gcvg-git-2@gmane.org; Thu, 17 Apr 2008 23:32:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752750AbYDQViJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Apr 2008 17:38:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752476AbYDQViI
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Apr 2008 17:38:08 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:39688 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752088AbYDQViH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Apr 2008 17:38:07 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id E88421B2510;
-	Thu, 17 Apr 2008 23:38:03 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 9798E44659;
-	Thu, 17 Apr 2008 23:34:33 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 3A9851190ABD; Thu, 17 Apr 2008 23:38:01 +0200 (CEST)
+	id S1752920AbYDQVb4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Apr 2008 17:31:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752881AbYDQVbz
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Apr 2008 17:31:55 -0400
+Received: from ug-out-1314.google.com ([66.249.92.173]:29601 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752476AbYDQVbz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Apr 2008 17:31:55 -0400
+Received: by ug-out-1314.google.com with SMTP id z38so1249272ugc.16
+        for <git@vger.kernel.org>; Thu, 17 Apr 2008 14:31:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=0QniL30er/3wm8pOWMZek4TPlKWBzcG1oeO1ggGKBcc=;
+        b=sjfE91T3eUXYIHISaO6fhOEbz8GQ2XCpHmSQIdeCJycqU6DwKPYVJRyzFAALK3R+vgYA/MOvcJFrmyIFGc8/nDKENm5dfnQCdYPSUxWa2p2O2+zGbCuwkk59NqsMGMrjaIyHA7GnpVUNLwPleyqksBFUzQjrVOomOJhhL7BSiCQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=rFrAWE6TzB61zebnhFb8akBfDQ2QFrWGJ7+qot38Sr6KdptVlqaVF0zfh+5zIx2bbzv2yct1UnI3fo1z9WVmD3tGOXXRoj0gysVOHrJZxesf96KC4rhB39ZNfqVxQNqXLXUkme44yT+nIczQc0Lq7H/irSAsIz2zuHQqbQvCfzk=
+Received: by 10.67.115.9 with SMTP id s9mr8952678ugm.81.1208467913306;
+        Thu, 17 Apr 2008 14:31:53 -0700 (PDT)
+Received: by 10.66.252.2 with HTTP; Thu, 17 Apr 2008 14:31:53 -0700 (PDT)
+In-Reply-To: <bd6139dc0804171427i6bf2813at719c8dec13bc225c@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <7v3aplr2pt.fsf_-_@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79836>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79837>
+
+On Thu, Apr 17, 2008 at 6:27 PM, Sverre Rabbelier <alturin@gmail.com> wrote:
+>  >  >  Because of that an in-tree '.gitconfig' would have no security risks
+>  >  >  as long as it is not 'used' until after the clone.
+>  >
+>  >  This is not true. A pre-commit hook or pre-checkout hook could be destructive.
+>
+>  But, those won't be executed till after the review, so everything
+>  would be good still, wouldn't it?
+
+No. A local review can be quite "active", involving changing branches,
+moving patches around, and fixing sh*t up. The hooks available offer
+plenty of danger if the repo can set them and make them active:
+
+$ ls .git/hooks/
+applypatch-msg  post-commit   post-update     pre-commit  update
+commit-msg      post-receive  pre-applypatch  pre-rebase
+
+cheers,
 
 
---WuT04sMzYDXq8et0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Wed, Apr 16, 2008 at 12:58:54PM -0700, Junio C Hamano <gitster@pobox.com=
-> wrote:
-> When one adopts the notion of "a single line at the top summarizes what
-> the commit is about", it is very natural to call that a "title", and
-> having a blank line between the title and the body to separate them also
-> becomes natural, and it matches how a patch is presented in email, as a
-> bonus, so it matches people's expectation.
->=20
-> So this format is merely a convention when viewed at the "plumbing" level,
-> but it is more important than just a convention if you are living at the
-> "Porcelain" level; if you deviate from that, "Porcelain" would not work
-> very well for you.
 
-I understand this, my only problem is that some project does not use an
-empty line after the "title". Consider a commit message like:
-
-----
-Change foo to bar
-- this patch changes foo to bar becase of baz
-- ok devel1@, devel2@
-----
-
-Given that a project uses such a commit message style, the newlines are
-removed when applying with git am, but the commit still has a title.
-
-> People who are used to other systems without a good history summarization
-> tools can and do write such log messages.  People who make commits on such
-> systems whose commits are imported to git (perhaps even without them
-> knowing about it) do not have an incentive to use a short-and-clear single
-> line summary in each of their commits, as their system may not give a good
-> way to make use of the result of such a practice.
-
-That makes sense, but those commits are unlikely transferred using
-format-patch+am. :)
-
-> These days, format-patch was taught to use "the first paragraph" as the
-> summarizing first line to avoid chomping a sentence in the middle.  This
-> change did not hurt people who use git "Porcelain", as the commit log
-> message for them is always "a single line summary, a blank line, and the
-> body".  The first paragraph is the same as the first line for them.  But
-> for commits that have a multi-line paragraph at the beginning, information
-> lossage is avoided this way.  Now the first chunk of the message, even if
-> it is splattered over two physical lines, is used as the summary.
-
-I see. If I'm right, then basically the old behaviour is what I want. At
-least after a
-
-git reset --hard 4234a76167b12a7669dae0e6386c62e712b9dcf5^
-
-I get the behaviour I wished. :)
-
-(Well, almost. It inserts a newline after the first line but that's far
-better than stripping all the newlines.)
-
-Would you accept a patch that would make this configurable?
-
-> So in short, when you use "am", it by design unfolds the "Subject: " line
-> and there is no bug there.  "rebase" being implemented in terms of
-> "format-patch piped to am" does mangle the message because of this, but
-> if anything that is a bug in rebase, and not "am".
-
-Yes, that's an other issue.
-
-Thanks.
-
---WuT04sMzYDXq8et0
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.8 (GNU/Linux)
-
-iEYEARECAAYFAkgHwzkACgkQe81tAgORUJZDJQCbBa6G2hI1Gr3atodBAE90gQXV
-hPkAn24zDwLU3e7G1QjhAEre88SHQAPz
-=BJDS
------END PGP SIGNATURE-----
-
---WuT04sMzYDXq8et0--
+m
+-- 
+ martin.langhoff@gmail.com
+ martin@laptop.org -- School Server Architect
+ - ask interesting questions
+ - don't get distracted with shiny stuff - working code first
+ - http://wiki.laptop.org/go/User:Martinlanghoff
