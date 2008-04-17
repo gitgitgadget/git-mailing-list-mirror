@@ -1,75 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Intricacies of submodules
-Date: Thu, 17 Apr 2008 13:44:33 -0700
-Message-ID: <7vabjsnrda.fsf@gitster.siamese.dyndns.org>
-References: <47F15094.5050808@et.gatech.edu>
- <46dff0320804110904w531035f4w79c1889bc90c09ee@mail.gmail.com>
- <7vmyo0owep.fsf@gitster.siamese.dyndns.org> <1207970038.10408.8.camel@ginkgo>
- <7vlk3jlkrr.fsf@gitster.siamese.dyndns.org>
- <1208202740.25663.69.camel@work.sfbay.sun.com>
- <7vd4or7wdt.fsf@gitster.siamese.dyndns.org>
- <1208317795.26863.91.camel@goose.sun.com> <87lk3c4ali.fsf@jeremyms.com>
- <1208461808.26863.129.camel@goose.sun.com>
- <46a038f90804171306t22491685p87d7445d44f00879@mail.gmail.com>
+From: Al Viro <viro@ZenIV.linux.org.uk>
+Subject: Re: Reporting bugs and bisection
+Date: Thu, 17 Apr 2008 21:53:01 +0100
+Message-ID: <20080417205301.GG27459@ZenIV.linux.org.uk>
+References: <47FEADCB.7070104@rtr.ca> <9a8748490804161417n4ad6c1den54ccd302831a66c6@mail.gmail.com> <48078323.4010109@davidnewall.com> <200804172109.35027.rjw@sisk.pl> <2c0942db0804171235o49238b99u6cdbd3e5c8d6ebb7@mail.gmail.com> <20080417201657.GF27459@ZenIV.linux.org.uk> <2c0942db0804171338p7bc7d9f2u8079c2f8c8998e76@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Roman V. Shaposhnik" <rvs@sun.com>,
-	"Jeremy Maitin-Shepard" <jbms@cmu.edu>,
-	"Junio C Hamano" <gitster@pobox.com>,
-	"Ping Yin" <pkufranky@gmail.com>,
-	"Avery Pennarun" <apenwarr@gmail.com>,
-	stuart.freeman@et.gatech.edu, git@vger.kernel.org
-To: "Martin Langhoff" <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 17 23:02:07 2008
+Cc: "Rafael J. Wysocki" <rjw@sisk.pl>,
+	David Newall <davidn@davidnewall.com>,
+	Jesper Juhl <jesper.juhl@gmail.com>, sverre@rabbelier.nl,
+	git@vger.kernel.org, linux-kernel <linux-kernel@vger.kernel.org>,
+	James Morris <jmorris@namei.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Willy Tarreau <w@1wt.eu>, david@lang.hm,
+	Stephen Clark <sclark46@earthlink.net>,
+	Evgeniy Polyakov <johnpol@2ka.mipt.ru>,
+	Tilman Schmidt <tilman@imap.cc>, Valdis.Kletnieks@vt.edu,
+	Mark Lord <lkml@rtr.ca>, David Miller <davem@davemloft.net>,
+	yoshfuji@linux-ipv6.org, jeff@garzik.org, netdev@vger.kernel.org
+To: Ray Lee <ray-lk@madrabbit.org>
+X-From: netdev-owner@vger.kernel.org Thu Apr 17 23:10:08 2008
 connect(): Connection refused
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
+Return-path: <netdev-owner@vger.kernel.org>
+Envelope-to: linux-netdev-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JmazG-0005WD-06
-	for gcvg-git-2@gmane.org; Thu, 17 Apr 2008 22:45:42 +0200
+	id 1Jmb7e-0007qr-4p
+	for linux-netdev-2@gmane.org; Thu, 17 Apr 2008 22:54:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753363AbYDQUox (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Apr 2008 16:44:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753291AbYDQUox
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Apr 2008 16:44:53 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:54035 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751175AbYDQUox (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Apr 2008 16:44:53 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 8E5783E90;
-	Thu, 17 Apr 2008 16:44:49 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 9D1BB3E8F; Thu, 17 Apr 2008 16:44:40 -0400 (EDT)
-In-Reply-To: <46a038f90804171306t22491685p87d7445d44f00879@mail.gmail.com>
- (Martin Langhoff's message of "Thu, 17 Apr 2008 17:06:27 -0300")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-Sender: git-owner@vger.kernel.org
+	id S1753477AbYDQUxM (ORCPT <rfc822;linux-netdev-2@m.gmane.org>);
+	Thu, 17 Apr 2008 16:53:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752558AbYDQUxK
+	(ORCPT <rfc822;netdev-outgoing>); Thu, 17 Apr 2008 16:53:10 -0400
+Received: from zeniv.linux.org.uk ([195.92.253.2]:48716 "EHLO
+	ZenIV.linux.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752676AbYDQUxJ (ORCPT
+	<rfc822;netdev@vger.kernel.org>); Thu, 17 Apr 2008 16:53:09 -0400
+Received: from viro by ZenIV.linux.org.uk with local (Exim 4.68 #1 (Red Hat Linux))
+	id 1Jmb6M-0007y8-0o; Thu, 17 Apr 2008 21:53:02 +0100
+Content-Disposition: inline
+In-Reply-To: <2c0942db0804171338p7bc7d9f2u8079c2f8c8998e76@mail.gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Sender: netdev-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79822>
+List-ID: <netdev.vger.kernel.org>
+X-Mailing-List: netdev@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79823>
 
-"Martin Langhoff" <martin.langhoff@gmail.com> writes:
+On Thu, Apr 17, 2008 at 01:38:18PM -0700, Ray Lee wrote:
+> >         And frankly, that's the only thing that matters anyway; I suspect
+> >  I'd do rather well by proposed criteria, but you know what?  I don't give
+> >  a flying f*ck through the rolling doughnut for self-appointed PHBs and
+> >  their idea of performance reviews.
+> 
+> (Geez, conflate the issue much?) No one is saying you should. But
+> also, I haven't seen anyone saying it'd be used for performance
+> reviews other than you.
 
-> On Thu, Apr 17, 2008 at 4:50 PM, Roman V. Shaposhnik <rvs@sun.com> wrote:
->>  There are two things at play: first of all, I usually *do* trust the
->>  content of the repository. Call it matter of personal preference,
->
-> I think most people here split the trust into "before or after
-> compilation". I must trust that I can clone/checkout code safely so I
-> can review it.
+|| If there are individuals at whom a finger needs to be pointed, this  
+|| system will highlight them, and fingers will (and should) be pointed.
+|| Contributors of poor-quality code need to be weeded-out.
 
-I think that summarizes the arguments so far pretty well.
+in this thread (From: David Newall).
 
-Having said that, the current "clone" implementation may happen to ignore
-in-tree anything, e.g. ident filter defined in .gitattributes may not be
-applied due to chicken-and-egg issue of not having .gitattributes
-initially in the work tree when you check everything out to an empty work
-tree for the first time.
+> <shrug> Shame and Guilt, two major motivators of human behavior, it's
+> true. But, one last time, *you're* the one saying the stats would be
+> used for finger pointing at people.
 
-But I consider that is not by design, but is a limitation of the current
-implementation that can be improved.
+Not really.  Unless you are trying to imply that David is my sock puppet, that
+is...
