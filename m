@@ -1,85 +1,141 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: Intricacies of submodules
-Date: Thu, 17 Apr 2008 17:06:27 -0300
-Message-ID: <46a038f90804171306t22491685p87d7445d44f00879@mail.gmail.com>
-References: <47F15094.5050808@et.gatech.edu>
-	 <46dff0320804110904w531035f4w79c1889bc90c09ee@mail.gmail.com>
-	 <7vmyo0owep.fsf@gitster.siamese.dyndns.org>
-	 <1207970038.10408.8.camel@ginkgo>
-	 <7vlk3jlkrr.fsf@gitster.siamese.dyndns.org>
-	 <1208202740.25663.69.camel@work.sfbay.sun.com>
-	 <7vd4or7wdt.fsf@gitster.siamese.dyndns.org>
-	 <1208317795.26863.91.camel@goose.sun.com>
-	 <87lk3c4ali.fsf@jeremyms.com>
-	 <1208461808.26863.129.camel@goose.sun.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Jeremy Maitin-Shepard" <jbms@cmu.edu>,
-	"Junio C Hamano" <gitster@pobox.com>,
-	"Ping Yin" <pkufranky@gmail.com>,
-	"Avery Pennarun" <apenwarr@gmail.com>,
-	stuart.freeman@et.gatech.edu, git@vger.kernel.org
-To: "Roman V. Shaposhnik" <rvs@sun.com>
-X-From: git-owner@vger.kernel.org Thu Apr 17 22:30:35 2008
+From: Lars Hjemli <hjemli@gmail.com>
+Subject: [PATCH v3] git-branch: add support for --merged and --no-merged
+Date: Thu, 17 Apr 2008 22:24:50 +0200
+Message-ID: <1208463890-2870-1-git-send-email-hjemli@gmail.com>
+References: <7vr6d4nvkm.fsf@gitster.siamese.dyndns.org>
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 17 22:40:10 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JmaO6-0002Wf-2T
-	for gcvg-git-2@gmane.org; Thu, 17 Apr 2008 22:07:18 +0200
+	id 1Jmaew-0007kU-Lk
+	for gcvg-git-2@gmane.org; Thu, 17 Apr 2008 22:24:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753036AbYDQUGb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Apr 2008 16:06:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753030AbYDQUGb
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Apr 2008 16:06:31 -0400
-Received: from ug-out-1314.google.com ([66.249.92.175]:1716 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753022AbYDQUGa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Apr 2008 16:06:30 -0400
-Received: by ug-out-1314.google.com with SMTP id z38so1234297ugc.16
-        for <git@vger.kernel.org>; Thu, 17 Apr 2008 13:06:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=oKdreK+DGIZ9/iM44ADTxi1+/SHGWwpk0YqKivHvuSY=;
-        b=aIoIbqiY8AUa17DiLJIpPTI2BbRDf/I1v6FTigjxa3hVtknENwoxx/vKCSilDVFmX4EVUufb2SmK9BY1biq8eFxBd7mzYSX+0ILZPbSLDIBzJBDBjeA/lWcQU8VIwvatTdIVu1n4pDNIzPo7sDvrjiqN37otbMlDod5WRljDSXk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=pSTQjMRrTDplAL1SNW5dlbnbSb21y4+ZNnBI6EACFXuVi9ZlL28MxwFKS4JwIPsA2me1r4UCE1JzTiUioL1OXuROsF/HKloRzyDaC01plF6wOvHX032Ar7/tGmJUslAuete3mtDHvz5ViHrGT/eN/d67JfbtsZREotygTPeCm3M=
-Received: by 10.66.242.5 with SMTP id p5mr8866249ugh.87.1208462787644;
-        Thu, 17 Apr 2008 13:06:27 -0700 (PDT)
-Received: by 10.66.252.2 with HTTP; Thu, 17 Apr 2008 13:06:27 -0700 (PDT)
-In-Reply-To: <1208461808.26863.129.camel@goose.sun.com>
-Content-Disposition: inline
+	id S1753494AbYDQUX5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Apr 2008 16:23:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753291AbYDQUX5
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Apr 2008 16:23:57 -0400
+Received: from mail48.e.nsc.no ([193.213.115.48]:56130 "EHLO mail48.e.nsc.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753494AbYDQUX4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Apr 2008 16:23:56 -0400
+Received: from localhost.localdomain (ti0025a380-0176.bb.online.no [88.89.68.176])
+	by mail48.nsc.no (8.13.8/8.13.5) with ESMTP id m3HKNhNR023177;
+	Thu, 17 Apr 2008 22:23:43 +0200 (MEST)
+X-Mailer: git-send-email 1.5.5.64.gb1a99
+In-Reply-To: <7vr6d4nvkm.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79818>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79819>
 
-On Thu, Apr 17, 2008 at 4:50 PM, Roman V. Shaposhnik <rvs@sun.com> wrote:
->  There are two things at play: first of all, I usually *do* trust the
->  content of the repository. Call it matter of personal preference,
+These options filter the output from git branch to only include branches
+whose tip is either merged or not merged into HEAD.
 
-I think most people here split the trust into "before or after
-compilation". I must trust that I can clone/checkout code safely so I
-can review it.
+The use-case for these options is when working with integration of branches
+from many remotes: `git branch --no-merged -a` will show a nice list of merge
+candidates while `git branch --merged -a` will show the progress of your
+integration work.
 
-Running the code contained in the repo we are discussing a completely
-different matter.  Even before compilation, Makefiles and configure
-scripts may shoot you in the foot or in the face. But you had at least
-a chance to review it.
+Also, a plain `git branch --merged` is a quick way to find local branches
+which you might want to delete.
 
-cheers,
+Signed-off-by: Lars Hjemli <hjemli@gmail.com>
+---
+
+Junio C Hamano wrote:
+> If the existing --contains implemenation can be extended to allow negative
+> selection, we do not have to introduce yet another mechanism that is very
+> similar.
+
+Very true, so here's an updated version which reuses has_commit(). Thanks
+for the feedback.
 
 
-n
+ Documentation/git-branch.txt |    4 +++-
+ builtin-branch.c             |   16 +++++++++++++++-
+ 2 files changed, 18 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
+index 6f07a17..95e9d0d 100644
+--- a/Documentation/git-branch.txt
++++ b/Documentation/git-branch.txt
+@@ -8,7 +8,7 @@ git-branch - List, create, or delete branches
+ SYNOPSIS
+ --------
+ [verse]
+-'git-branch' [--color | --no-color] [-r | -a]
++'git-branch' [--color | --no-color] [-r | -a] [--merged | --no-merged]
+ 	   [-v [--abbrev=<length> | --no-abbrev]]
+ 	   [--contains <commit>]
+ 'git-branch' [--track | --no-track] [-l] [-f] <branchname> [<start-point>]
+@@ -24,6 +24,8 @@ and option `-a` shows both.
+ With `--contains <commit>`, shows only the branches that
+ contains the named commit (in other words, the branches whose
+ tip commits are descendant of the named commit).
++With `--merged`, only branches merged into HEAD will be listed, and
++with `--no-merged` only branches not merged into HEAD will be listed.
+ 
+ In its second form, a new branch named <branchname> will be created.
+ It will start out with a head equal to the one given as <start-point>.
+diff --git a/builtin-branch.c b/builtin-branch.c
+index 5bc4526..eecbcf2 100644
+--- a/builtin-branch.c
++++ b/builtin-branch.c
+@@ -15,7 +15,7 @@
+ #include "branch.h"
+ 
+ static const char * const builtin_branch_usage[] = {
+-	"git-branch [options] [-r | -a]",
++	"git-branch [options] [-r | -a] [--merged | --no-merged]",
+ 	"git-branch [options] [-l] [-f] <branchname> [<start-point>]",
+ 	"git-branch [options] [-r] (-d | -D) <branchname>",
+ 	"git-branch [options] (-m | -M) [<oldbranch>] <newbranch>",
+@@ -46,6 +46,8 @@ enum color_branch {
+ 	COLOR_BRANCH_CURRENT = 4,
+ };
+ 
++static int mergefilter = -1;
++
+ static int parse_branch_color_slot(const char *var, int ofs)
+ {
+ 	if (!strcasecmp(var+ofs, "plain"))
+@@ -210,6 +212,7 @@ static int append_ref(const char *refname, const unsigned char *sha1, int flags,
+ 	struct ref_item *newitem;
+ 	int kind = REF_UNKNOWN_TYPE;
+ 	int len;
++	static struct commit_list branch;
+ 
+ 	/* Detect kind */
+ 	if (!prefixcmp(refname, "refs/heads/")) {
+@@ -231,6 +234,16 @@ static int append_ref(const char *refname, const unsigned char *sha1, int flags,
+ 	if ((kind & ref_list->kinds) == 0)
+ 		return 0;
+ 
++	if (mergefilter > -1) {
++		branch.item = lookup_commit_reference_gently(sha1, 1);
++		if (!branch.item)
++			die("Unable to lookup HEAD of branch %s", refname);
++		if (mergefilter == 0 && has_commit(head_sha1, &branch))
++			return 0;
++		if (mergefilter == 1 && !has_commit(head_sha1, &branch))
++			return 0;
++	}
++
+ 	/* Resize buffer */
+ 	if (ref_list->index >= ref_list->alloc) {
+ 		ref_list->alloc = alloc_nr(ref_list->alloc);
+@@ -444,6 +457,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 		OPT_BIT('M', NULL, &rename, "move/rename a branch, even if target exists", 2),
+ 		OPT_BOOLEAN('l', NULL, &reflog, "create the branch's reflog"),
+ 		OPT_BOOLEAN('f', NULL, &force_create, "force creation (when already exists)"),
++		OPT_SET_INT(0, "merged", &mergefilter, "list only merged branches", 1),
+ 		OPT_END(),
+ 	};
+ 
 -- 
- martin.langhoff@gmail.com
- martin@laptop.org -- School Server Architect
- - ask interesting questions
- - don't get distracted with shiny stuff - working code first
- - http://wiki.laptop.org/go/User:Martinlanghoff
+1.5.5.64.gb1a99
