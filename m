@@ -1,105 +1,85 @@
-From: "Sverre Rabbelier" <alturin@gmail.com>
-Subject: Re: Reporting bugs and bisection
-Date: Thu, 17 Apr 2008 21:57:06 +0200
-Message-ID: <bd6139dc0804171257l5f875694yb57105ba40170789@mail.gmail.com>
-References: <47FEADCB.7070104@rtr.ca>
-	 <9a8748490804161417n4ad6c1den54ccd302831a66c6@mail.gmail.com>
-	 <48078323.4010109@davidnewall.com> <200804172109.35027.rjw@sisk.pl>
-	 <2c0942db0804171235o49238b99u6cdbd3e5c8d6ebb7@mail.gmail.com>
-Reply-To: sverre@rabbelier.nl
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: Intricacies of submodules
+Date: Thu, 17 Apr 2008 17:06:27 -0300
+Message-ID: <46a038f90804171306t22491685p87d7445d44f00879@mail.gmail.com>
+References: <47F15094.5050808@et.gatech.edu>
+	 <46dff0320804110904w531035f4w79c1889bc90c09ee@mail.gmail.com>
+	 <7vmyo0owep.fsf@gitster.siamese.dyndns.org>
+	 <1207970038.10408.8.camel@ginkgo>
+	 <7vlk3jlkrr.fsf@gitster.siamese.dyndns.org>
+	 <1208202740.25663.69.camel@work.sfbay.sun.com>
+	 <7vd4or7wdt.fsf@gitster.siamese.dyndns.org>
+	 <1208317795.26863.91.camel@goose.sun.com>
+	 <87lk3c4ali.fsf@jeremyms.com>
+	 <1208461808.26863.129.camel@goose.sun.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "Rafael J. Wysocki" <rjw@sisk.pl>,
-	"David Newall" <davidn@davidnewall.com>,
-	"Jesper Juhl" <jesper.juhl@gmail.com>, git@vger.kernel.org,
-	linux-kernel <linux-kernel@vger.kernel.org>,
-	"James Morris" <jmorris@namei.org>,
-	"Al Viro" <viro@zeniv.linux.org.uk>,
-	"Andrew Morton" <akpm@linux-foundation.org>,
-	"Willy Tarreau" <w@1wt.eu>, david@lang.hm,
-	"Stephen Clark" <sclark46@earthlink.net>,
-	"Evgeniy Polyakov" <johnpol@2ka.mipt.ru>,
-	"Tilman Schmidt" <tilman@imap.cc>, Valdis.Kletnieks@vt.edu,
-	"Mark Lord" <lkml@rtr.ca>, "David Miller" <davem@davemloft.net>,
-	yoshfuji@linux-ipv6.org, jeff@garzik.org, netdev@vger.kernel.org
-To: "Ray Lee" <ray-lk@madrabbit.org>
-X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1753931AbYDQT5k@vger.kernel.org Thu Apr 17 22:21:13 2008
+Cc: "Jeremy Maitin-Shepard" <jbms@cmu.edu>,
+	"Junio C Hamano" <gitster@pobox.com>,
+	"Ping Yin" <pkufranky@gmail.com>,
+	"Avery Pennarun" <apenwarr@gmail.com>,
+	stuart.freeman@et.gatech.edu, git@vger.kernel.org
+To: "Roman V. Shaposhnik" <rvs@sun.com>
+X-From: git-owner@vger.kernel.org Thu Apr 17 22:30:35 2008
 connect(): Connection refused
-Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1753931AbYDQT5k@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@gmane.org
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JmaFQ-00007S-QQ
-	for glk-linux-kernel-3@gmane.org; Thu, 17 Apr 2008 21:58:21 +0200
+	id 1JmaO6-0002Wf-2T
+	for gcvg-git-2@gmane.org; Thu, 17 Apr 2008 22:07:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753931AbYDQT5k (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Thu, 17 Apr 2008 15:57:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752686AbYDQT5K
-	(ORCPT <rfc822;linux-kernel-outgoing>);
-	Thu, 17 Apr 2008 15:57:10 -0400
-Received: from wf-out-1314.google.com ([209.85.200.169]:62701 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752644AbYDQT5H (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Thu, 17 Apr 2008 15:57:07 -0400
-Received: by wf-out-1314.google.com with SMTP id 28so155788wff.4
-        for <linux-kernel@vger.kernel.org>; Thu, 17 Apr 2008 12:57:07 -0700 (PDT)
+	id S1753036AbYDQUGb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Apr 2008 16:06:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753030AbYDQUGb
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Apr 2008 16:06:31 -0400
+Received: from ug-out-1314.google.com ([66.249.92.175]:1716 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753022AbYDQUGa (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Apr 2008 16:06:30 -0400
+Received: by ug-out-1314.google.com with SMTP id z38so1234297ugc.16
+        for <git@vger.kernel.org>; Thu, 17 Apr 2008 13:06:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=/cDWvXgm+JORvCRAZ771BKy0YjQid7+H8XVPN924gvI=;
-        b=GcX4y+h/r9F9g1PqJA9gWHv/GtYP3K735DicPTCJOGgj4+Zttn3dE9eOVWW+mzFqb+Sg0fUdXaV4KltlbXHpUsZBoPYd1VTZNazUWu4edMOx/iqL4rZSyGIJPbjpnX64XQ82CEBDD77sJh1BiP5y+9kSTEuDFcHq10UPxTLtOKw=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=oKdreK+DGIZ9/iM44ADTxi1+/SHGWwpk0YqKivHvuSY=;
+        b=aIoIbqiY8AUa17DiLJIpPTI2BbRDf/I1v6FTigjxa3hVtknENwoxx/vKCSilDVFmX4EVUufb2SmK9BY1biq8eFxBd7mzYSX+0ILZPbSLDIBzJBDBjeA/lWcQU8VIwvatTdIVu1n4pDNIzPo7sDvrjiqN37otbMlDod5WRljDSXk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=weFurQfAl/FBVlkSJ4BxlUj/oF73u5vxAr/jHpxbla9yA8UrkwxIwDP/AQ9kxVe1b5965Q4qrreqOP6rM6zhSXf/1wWZta94wePTi29ZLQIfNOgQqvPzC5D8Vk/gi/oII4B0nWSD12aYiOVWxtDMojKPR8DcdrTmIQzAiKucdlk=
-Received: by 10.142.203.13 with SMTP id a13mr517906wfg.224.1208462227111;
-        Thu, 17 Apr 2008 12:57:07 -0700 (PDT)
-Received: by 10.143.33.6 with HTTP; Thu, 17 Apr 2008 12:57:06 -0700 (PDT)
-In-Reply-To: <2c0942db0804171235o49238b99u6cdbd3e5c8d6ebb7@mail.gmail.com>
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=pSTQjMRrTDplAL1SNW5dlbnbSb21y4+ZNnBI6EACFXuVi9ZlL28MxwFKS4JwIPsA2me1r4UCE1JzTiUioL1OXuROsF/HKloRzyDaC01plF6wOvHX032Ar7/tGmJUslAuete3mtDHvz5ViHrGT/eN/d67JfbtsZREotygTPeCm3M=
+Received: by 10.66.242.5 with SMTP id p5mr8866249ugh.87.1208462787644;
+        Thu, 17 Apr 2008 13:06:27 -0700 (PDT)
+Received: by 10.66.252.2 with HTTP; Thu, 17 Apr 2008 13:06:27 -0700 (PDT)
+In-Reply-To: <1208461808.26863.129.camel@goose.sun.com>
 Content-Disposition: inline
-Sender: linux-kernel-owner@vger.kernel.org
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79817>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79818>
 
-On Thu, Apr 17, 2008 at 9:35 PM, Ray Lee <ray-lk@madrabbit.org> wrote:
-> On Thu, Apr 17, 2008 at 12:09 PM, Rafael J. Wysocki <rjw@sisk.pl> wrote:
->  >  > Finger-pointing, in these extreme cases, gives incentive to improve
->  >  > quality.  It's a positive thing.
->  >
->  >  Sorry, but I have to disagree.  Negative finger-pointing is never a good thing.
->
->  Correct, but let's be careful here. The original suggestion was,
->  effectively, to get better metrics on the quality of contributions.
->  Those metrics *could* be used for finger pointing, or (my preference)
->  they could be used to direct and allocate our scarce resources: code
->  reviews and mentoring.
+On Thu, Apr 17, 2008 at 4:50 PM, Roman V. Shaposhnik <rvs@sun.com> wrote:
+>  There are two things at play: first of all, I usually *do* trust the
+>  content of the repository. Call it matter of personal preference,
 
-Exactly!
+I think most people here split the trust into "before or after
+compilation". I must trust that I can clone/checkout code safely so I
+can review it.
 
->  There's no way to know what the metrics will tell us until we have
->  them. Arguing against metrics because they *may* be used to point
->  fingers at people is a silly argument; anything can be subverted to do
->  that.
+Running the code contained in the repo we are discussing a completely
+different matter.  Even before compilation, Makefiles and configure
+scripts may shoot you in the foot or in the face. But you had at least
+a chance to review it.
 
-Thank you, that should have been said before, you worded it perfectly.
+cheers,
 
->  Let's get some measurements and see what they say. In the meantime,
->  try to believe that they could be put to good purposes, such as
->  identifying code areas that are tricky for contributors to get right
->  (independent of contributor), or contributors that could benefit from
->  code reviews, etc.
 
-This especially is an area that I plan to focus on and should be very
-reliable when finished. As can be read in my application, I plan to
-look at how often a piece of code is changed, in what timespan and by
-how many different authors.
-
-Thanks for the reply!
-
-Cheers,
-
-Sverre
+n
+-- 
+ martin.langhoff@gmail.com
+ martin@laptop.org -- School Server Architect
+ - ask interesting questions
+ - don't get distracted with shiny stuff - working code first
+ - http://wiki.laptop.org/go/User:Martinlanghoff
