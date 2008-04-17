@@ -1,141 +1,75 @@
-From: Lars Hjemli <hjemli@gmail.com>
-Subject: [PATCH v3] git-branch: add support for --merged and --no-merged
-Date: Thu, 17 Apr 2008 22:24:50 +0200
-Message-ID: <1208463890-2870-1-git-send-email-hjemli@gmail.com>
-References: <7vr6d4nvkm.fsf@gitster.siamese.dyndns.org>
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 17 22:40:10 2008
+From: Al Viro <viro@ZenIV.linux.org.uk>
+Subject: Re: Reporting bugs and bisection
+Date: Thu, 17 Apr 2008 21:16:57 +0100
+Message-ID: <20080417201657.GF27459@ZenIV.linux.org.uk>
+References: <47FEADCB.7070104@rtr.ca> <9a8748490804161417n4ad6c1den54ccd302831a66c6@mail.gmail.com> <48078323.4010109@davidnewall.com> <200804172109.35027.rjw@sisk.pl> <2c0942db0804171235o49238b99u6cdbd3e5c8d6ebb7@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: "Rafael J. Wysocki" <rjw@sisk.pl>,
+	David Newall <davidn@davidnewall.com>,
+	Jesper Juhl <jesper.juhl@gmail.com>, sverre@rabbelier.nl,
+	git@vger.kernel.org, linux-kernel <linux-kernel@vger.kernel.org>,
+	James Morris <jmorris@namei.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Willy Tarreau <w@1wt.eu>, david@lang.hm,
+	Stephen Clark <sclark46@earthlink.net>,
+	Evgeniy Polyakov <johnpol@2ka.mipt.ru>,
+	Tilman Schmidt <tilman@imap.cc>, Valdis.Kletnieks@vt.edu,
+	Mark Lord <lkml@rtr.ca>, David Miller <davem@davemloft.net>,
+	yoshfuji@linux-ipv6.org, jeff@garzik.org, netdev@vger.kernel.org
+To: Ray Lee <ray-lk@madrabbit.org>
+X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1755642AbYDQUR2@vger.kernel.org Thu Apr 17 22:41:21 2008
 connect(): Connection refused
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
+Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1755642AbYDQUR2@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jmaew-0007kU-Lk
-	for gcvg-git-2@gmane.org; Thu, 17 Apr 2008 22:24:43 +0200
+	id 1JmaYe-0005xV-7v
+	for glk-linux-kernel-3@gmane.org; Thu, 17 Apr 2008 22:18:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753494AbYDQUX5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Apr 2008 16:23:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753291AbYDQUX5
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Apr 2008 16:23:57 -0400
-Received: from mail48.e.nsc.no ([193.213.115.48]:56130 "EHLO mail48.e.nsc.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753494AbYDQUX4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Apr 2008 16:23:56 -0400
-Received: from localhost.localdomain (ti0025a380-0176.bb.online.no [88.89.68.176])
-	by mail48.nsc.no (8.13.8/8.13.5) with ESMTP id m3HKNhNR023177;
-	Thu, 17 Apr 2008 22:23:43 +0200 (MEST)
-X-Mailer: git-send-email 1.5.5.64.gb1a99
-In-Reply-To: <7vr6d4nvkm.fsf@gitster.siamese.dyndns.org>
-Sender: git-owner@vger.kernel.org
+	id S1755642AbYDQUR2 (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Thu, 17 Apr 2008 16:17:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755268AbYDQURM
+	(ORCPT <rfc822;linux-kernel-outgoing>);
+	Thu, 17 Apr 2008 16:17:12 -0400
+Received: from zeniv.linux.org.uk ([195.92.253.2]:54736 "EHLO
+	ZenIV.linux.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753208AbYDQURK (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Thu, 17 Apr 2008 16:17:10 -0400
+Received: from viro by ZenIV.linux.org.uk with local (Exim 4.68 #1 (Red Hat Linux))
+	id 1JmaXR-0005ks-Ap; Thu, 17 Apr 2008 21:16:57 +0100
+Content-Disposition: inline
+In-Reply-To: <2c0942db0804171235o49238b99u6cdbd3e5c8d6ebb7@mail.gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79819>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79820>
 
-These options filter the output from git branch to only include branches
-whose tip is either merged or not merged into HEAD.
+On Thu, Apr 17, 2008 at 12:35:12PM -0700, Ray Lee wrote:
+> On Thu, Apr 17, 2008 at 12:09 PM, Rafael J. Wysocki <rjw@sisk.pl> wrote:
+> >  > Finger-pointing, in these extreme cases, gives incentive to improve
+> >  > quality.  It's a positive thing.
+> >
+> >  Sorry, but I have to disagree.  Negative finger-pointing is never a good thing.
+> 
+> Correct, but let's be careful here. The original suggestion was,
+> effectively, to get better metrics on the quality of contributions.
 
-The use-case for these options is when working with integration of branches
-from many remotes: `git branch --no-merged -a` will show a nice list of merge
-candidates while `git branch --merged -a` will show the progress of your
-integration work.
+	There already is one: reputation with people working on the tree,
+be it actively modifying/reviewing/bug hunting/etc.  _We_ _already_ _know_;
+generally one gets a decent idea of what to expect pretty soon.
 
-Also, a plain `git branch --merged` is a quick way to find local branches
-which you might want to delete.
+	And frankly, that's the only thing that matters anyway; I suspect
+I'd do rather well by proposed criteria, but you know what?  I don't give
+a flying f*ck through the rolling doughnut for self-appointed PHBs and
+their idea of performance reviews.
 
-Signed-off-by: Lars Hjemli <hjemli@gmail.com>
----
+	Think of it as a modified Turing test: convince me that you are
+not a script piped through an Eng.Lit. wanker or an MBA, then I might care
+for your opinion.
 
-Junio C Hamano wrote:
-> If the existing --contains implemenation can be extended to allow negative
-> selection, we do not have to introduce yet another mechanism that is very
-> similar.
-
-Very true, so here's an updated version which reuses has_commit(). Thanks
-for the feedback.
-
-
- Documentation/git-branch.txt |    4 +++-
- builtin-branch.c             |   16 +++++++++++++++-
- 2 files changed, 18 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
-index 6f07a17..95e9d0d 100644
---- a/Documentation/git-branch.txt
-+++ b/Documentation/git-branch.txt
-@@ -8,7 +8,7 @@ git-branch - List, create, or delete branches
- SYNOPSIS
- --------
- [verse]
--'git-branch' [--color | --no-color] [-r | -a]
-+'git-branch' [--color | --no-color] [-r | -a] [--merged | --no-merged]
- 	   [-v [--abbrev=<length> | --no-abbrev]]
- 	   [--contains <commit>]
- 'git-branch' [--track | --no-track] [-l] [-f] <branchname> [<start-point>]
-@@ -24,6 +24,8 @@ and option `-a` shows both.
- With `--contains <commit>`, shows only the branches that
- contains the named commit (in other words, the branches whose
- tip commits are descendant of the named commit).
-+With `--merged`, only branches merged into HEAD will be listed, and
-+with `--no-merged` only branches not merged into HEAD will be listed.
- 
- In its second form, a new branch named <branchname> will be created.
- It will start out with a head equal to the one given as <start-point>.
-diff --git a/builtin-branch.c b/builtin-branch.c
-index 5bc4526..eecbcf2 100644
---- a/builtin-branch.c
-+++ b/builtin-branch.c
-@@ -15,7 +15,7 @@
- #include "branch.h"
- 
- static const char * const builtin_branch_usage[] = {
--	"git-branch [options] [-r | -a]",
-+	"git-branch [options] [-r | -a] [--merged | --no-merged]",
- 	"git-branch [options] [-l] [-f] <branchname> [<start-point>]",
- 	"git-branch [options] [-r] (-d | -D) <branchname>",
- 	"git-branch [options] (-m | -M) [<oldbranch>] <newbranch>",
-@@ -46,6 +46,8 @@ enum color_branch {
- 	COLOR_BRANCH_CURRENT = 4,
- };
- 
-+static int mergefilter = -1;
-+
- static int parse_branch_color_slot(const char *var, int ofs)
- {
- 	if (!strcasecmp(var+ofs, "plain"))
-@@ -210,6 +212,7 @@ static int append_ref(const char *refname, const unsigned char *sha1, int flags,
- 	struct ref_item *newitem;
- 	int kind = REF_UNKNOWN_TYPE;
- 	int len;
-+	static struct commit_list branch;
- 
- 	/* Detect kind */
- 	if (!prefixcmp(refname, "refs/heads/")) {
-@@ -231,6 +234,16 @@ static int append_ref(const char *refname, const unsigned char *sha1, int flags,
- 	if ((kind & ref_list->kinds) == 0)
- 		return 0;
- 
-+	if (mergefilter > -1) {
-+		branch.item = lookup_commit_reference_gently(sha1, 1);
-+		if (!branch.item)
-+			die("Unable to lookup HEAD of branch %s", refname);
-+		if (mergefilter == 0 && has_commit(head_sha1, &branch))
-+			return 0;
-+		if (mergefilter == 1 && !has_commit(head_sha1, &branch))
-+			return 0;
-+	}
-+
- 	/* Resize buffer */
- 	if (ref_list->index >= ref_list->alloc) {
- 		ref_list->alloc = alloc_nr(ref_list->alloc);
-@@ -444,6 +457,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 		OPT_BIT('M', NULL, &rename, "move/rename a branch, even if target exists", 2),
- 		OPT_BOOLEAN('l', NULL, &reflog, "create the branch's reflog"),
- 		OPT_BOOLEAN('f', NULL, &force_create, "force creation (when already exists)"),
-+		OPT_SET_INT(0, "merged", &mergefilter, "list only merged branches", 1),
- 		OPT_END(),
- 	};
- 
--- 
-1.5.5.64.gb1a99
+	Al, who never had problems with pointing fingers and laughing, but
+likes an informed human brain to be the source of it...
