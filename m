@@ -1,128 +1,102 @@
-From: Jeremy Maitin-Shepard <jbms@cmu.edu>
-Subject: Re: Intricacies of submodules
-Date: Thu, 17 Apr 2008 14:09:29 -0400
-Message-ID: <87lk3c4ali.fsf@jeremyms.com>
-References: <47F15094.5050808@et.gatech.edu>
-	<8FE3B7A7-4C2D-4202-A5FC-EBC4F4670273@sun.com>
-	<32541b130804082033q55c795b5ieaa4e120956ff030@mail.gmail.com>
-	<49E9DCEC-8A9E-4AD7-BA58-5A40F475F2EA@sun.com>
-	<32541b130804082334s604b62b0j82b510c331f48213@mail.gmail.com>
-	<7vhcebcyty.fsf@gitster.siamese.dyndns.org>
-	<6CFA8EC2-FEE0-4746-A4F6-45082734FEEC@sun.com>
-	<7v63uqz265.fsf@gitster.siamese.dyndns.org>
-	<1207859579.13123.306.camel@work.sfbay.sun.com>
-	<7vd4oxufwf.fsf@gitster.siamese.dyndns.org>
-	<46dff0320804110904w531035f4w79c1889bc90c09ee@mail.gmail.com>
-	<7vmyo0owep.fsf@gitster.siamese.dyndns.org>
-	<1207970038.10408.8.camel@ginkgo>
-	<7vlk3jlkrr.fsf@gitster.siamese.dyndns.org>
-	<1208202740.25663.69.camel@work.sfbay.sun.com>
-	<7vd4or7wdt.fsf@gitster.siamese.dyndns.org>
-	<1208317795.26863.91.camel@goose.sun.com>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: crlf with git-svn driving me nuts...
+Date: Thu, 17 Apr 2008 22:53:57 +0400
+Message-ID: <20080417185357.GO3133@dpotapov.dyndns.org>
+References: <20080416200107.GG3133@dpotapov.dyndns.org> <32541b130804161320w42c68bc2p9d838dc127a57027@mail.gmail.com> <20080416203923.GH3133@dpotapov.dyndns.org> <320075ff0804161447u25dfbb2bmcd36ea507224d835@mail.gmail.com> <20080416223739.GJ3133@dpotapov.dyndns.org> <320075ff0804161607p3f9e983ehb75aae4e0bfe8837@mail.gmail.com> <20080417004645.GK3133@dpotapov.dyndns.org> <320075ff0804170007k5171eb72n68882679f62fa238@mail.gmail.com> <20080417094342.GM3133@dpotapov.dyndns.org> <320075ff0804170309h4232463fk984f362e6cf0a259@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>, Ping Yin <pkufranky@gmail.com>,
-	Avery Pennarun <apenwarr@gmail.com>,
-	stuart.freeman@et.gatech.edu, git@vger.kernel.org
-To: "Roman V. Shaposhnik" <rvs@sun.com>
-X-From: git-owner@vger.kernel.org Thu Apr 17 20:42:48 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git <git@vger.kernel.org>
+To: Nigel Magnay <nigel.magnay@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 17 21:18:32 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JmYZ7-0001JL-M3
-	for gcvg-git-2@gmane.org; Thu, 17 Apr 2008 20:10:34 +0200
+	id 1JmZG0-00068f-Vn
+	for gcvg-git-2@gmane.org; Thu, 17 Apr 2008 20:54:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763713AbYDQSJr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Apr 2008 14:09:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763494AbYDQSJr
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Apr 2008 14:09:47 -0400
-Received: from deleuze.hcoop.net ([69.90.123.67]:34729 "EHLO deleuze.hcoop.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1763221AbYDQSJp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Apr 2008 14:09:45 -0400
-Received: from c-67-165-107-197.hsd1.pa.comcast.net ([67.165.107.197] helo=localhost)
-	by deleuze.hcoop.net with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.63)
-	(envelope-from <jbms@cmu.edu>)
-	id 1JmYY6-0005LW-Pf; Thu, 17 Apr 2008 14:09:30 -0400
-X-Habeas-SWE-9: mark in spam to <http://www.habeas.com/report/>.
-X-Habeas-SWE-8: Message (HCM) and not spam. Please report use of this
-X-Habeas-SWE-7: warrant mark warrants that this is a Habeas Compliant
-X-Habeas-SWE-6: email in exchange for a license for this Habeas
-X-Habeas-SWE-5: Sender Warranted Email (SWE) (tm). The sender of this
-X-Habeas-SWE-4: Copyright 2002 Habeas (tm)
-X-Habeas-SWE-3: like Habeas SWE (tm)
-X-Habeas-SWE-2: brightly anticipated
-X-Habeas-SWE-1: winter into spring
-In-Reply-To: <1208317795.26863.91.camel@goose.sun.com> (Roman V. Shaposhnik's
-	message of "Tue, 15 Apr 2008 20:49:55 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.60 (gnu/linux)
+	id S1752242AbYDQSyH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Apr 2008 14:54:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752569AbYDQSyG
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Apr 2008 14:54:06 -0400
+Received: from nf-out-0910.google.com ([64.233.182.186]:55013 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751603AbYDQSyF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Apr 2008 14:54:05 -0400
+Received: by nf-out-0910.google.com with SMTP id g13so125984nfb.21
+        for <git@vger.kernel.org>; Thu, 17 Apr 2008 11:54:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
+        bh=z2m2P3owWjTC5QZ/EUd//8eT2XItFGjP2QUVPddeelU=;
+        b=eIpvgiqp+bqnqQ5mPTGQqTSckiqgTdXGXCc+A6Hq9b6Pc4NF+KuFGwD+DyvmIQF+GVWhuuEh601g0wF2+UOS/QKkCdvytfLD2OfZ0CVhbJHKhIv9UVKI7ZrIPvCsoX0mVqvEkLrSWH5RFaIxqppEbXoHItnqMebPZPmvW1byiOA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
+        b=OlPnN8BLsh/YFvCNPJNMxrCDWsS06OUi0sUV0YSrg0QF2K5jt0a4HlHUTxxH8ixoHtvsH/9cEpT1eSvBmtRQG1ji8XhB+yUxd5sCoPPUM2lfvflLmFOQiT9gdjBRDBUWbF2CHhg8WdDHatQlIDqFaLXlWjeuP1luDvs5n4YcqMs=
+Received: by 10.82.107.3 with SMTP id f3mr2919661buc.0.1208458442113;
+        Thu, 17 Apr 2008 11:54:02 -0700 (PDT)
+Received: from localhost ( [85.141.148.116])
+        by mx.google.com with ESMTPS id z40sm15786841ikz.4.2008.04.17.11.54.00
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 17 Apr 2008 11:54:01 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <320075ff0804170309h4232463fk984f362e6cf0a259@mail.gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79808>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79809>
 
-"Roman V. Shaposhnik" <rvs@sun.com> writes:
+On Thu, Apr 17, 2008 at 11:09:12AM +0100, Nigel Magnay wrote:
+>
+> Maybe it isn't so bad - all
+> svn projects probably *ought* to be using eol=native, but it isn't
+> default; 
 
-[snip]
+If you want to have native EOL for each platform then you have to do
+this conversion, but it should be applied to only to text files.  So,
+the question is how can a VCS know what file is text and what is not.
+CVS considers everything what you check-in as text by default. If you
+want to put a binary file, you have to use -kb flag, otherwise your file
+may be damaged. People tend to be forgetful and some lose their data in
+this way. So team SVN team decided to stay on the safe side and put
+everything as is, because if you forget to set eol=native, you do not
+lose anything and you can set eol=native later. Unfortunately, now SVN
+users forget to set eol=native a way too often. So, IMHO, Git approach
+based on heuristic is much better when most of stored files are text.
 
-> I'm sorry, but I don't buy this argument. If you have a malicious user
-> gaining access to the repository all bets are off. To single out 
-> in-tree .gitconfig as the only place which could be hacked seems to
-> be a bit shortsighted and unfair. Any "executable" portion of your
-> project that rarely gets eyeballed (such as Makefile infrastrucutre)
-> could be used. In fact, under your scenario in-tree .gitconfig is
-> likely to be the least of your worries. 
+> so maybe it's just easier to coax those projects into fixing
+> their svn repos (but of course it's not really an issue for them, so
+> it might be a bit of a hard sell).
 
-> And here's one more thing: in-tree .gitconfig and in-tree 
-> update-my-git-settings.sh are absolutely identical as far
-> as their security ramifications are concerned. If you really paranoid
-> you have to eyeball either of them.
+If they care about support different platforms then it _is_ issue
+for them too. On the other hand, if everyone uses Windows with CRLF,
+you can do that with Git too just by setting autocrlf=false.
 
-There is a huge difference: if you allow in-tree .gitconfig by default,
-then git clone <some-repository> becomes an unsafe operation.  I can't
-even inspect some arbitrary repository to _see_ if I like the code and
-think it is safe very easily, since I'd normally do that by cloning the
-repository.
+> 
+> Yes, in the sense that git is primarily a *nix tool, so it treats LF
+> as canon
 
-Obviously actually executing untrusted code is unsafe regardless of
-whether you type "git clone" or "make" to do it, but not everyone
-intends to type "make" after checking out an unknown repository, and the
-user is explicitly invoking make with the knowledge that it is running
-whatever code is in the repository.  Similarly, if the user explicitly
-calls some shell script in order to set things up, he is conscious that
-he is performing a potentially unsafe operation.
+and perhaps even more important, it is written in C and where LF has
+always been considered as EOL since the first Hello-World program was
+written in C:
 
-As a silly analogy, it is currently perfectly safe to clone a repository
-that has a text document containing instructions about committing
-suicide, because there is the assumption that the instructions are not
-automatically executed simply because they are on the user's hard drive.
+   printf("Hello world!\n");
+-----------------------^^
 
-[snip]
+So, naturally LF is considered as EOL inside of Git. Actually, CVS does
+so, and even SVN does if you set eol=native.
 
-> Why? I'm really confused here. Unless I'm given a clear example of at
-> least one setting that somehow becomes dangerous when stored inside
-> in-tree .gitconfig, I really do consider such an enforcement to be
-> as meaningful as enforcing that Git MUST manage source code and nothing
-> else. You seemed to mention the trust issue. Well, why don't you trust
-> the user to place whatever he wants in in-tree .gitconfig? And yes,
-> we are talking about trustworthy users here and repositories that
-> haven't been compromised.
+> and CRLF as somehow 'stupid' (I.E you could make an equally
+> valid argument for the reverse position, it just depends on your
+> perspective ;-)) ;
 
-Obviously any configuration option that specifies a shell command to run
-is unsafe to specify in an in-tree .gitconfig.  As Junio noted,
-smudge/clean commands are especially unsafe because they will be
-executed even if the user only uses the clone command.
+There is no good technical reason to have two symbols as the end-of-line
+marker instead of one. Most programs on Windows just remove CR when read
+from a file and then adding it back before LF when writing it back. So,
+CR is clearly redundant.
 
-You actually seem to be the one assuming that a Git repository must
-store source code (in particular source code that is then blindly
-executed by anyone that clones the repository), as that is the only case
-in which an in-tree .gitconfig can introduce no additional security
-risk, since your security is then already completely dependent on
-trusting the contents of the repository.
-
--- 
-Jeremy Maitin-Shepard
+Dmitry
