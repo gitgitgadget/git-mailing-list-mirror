@@ -1,59 +1,45 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: crlf with git-svn driving me nuts...
-Date: Thu, 17 Apr 2008 07:43:49 +0200
-Message-ID: <A9C84864-8F7C-4B0D-A304-A95399559149@zib.de>
-References: <320075ff0804161210m46f3e83bpf7bf9d1d5816d914@mail.gmail.com> <20080416200107.GG3133@dpotapov.dyndns.org> <32541b130804161320w42c68bc2p9d838dc127a57027@mail.gmail.com> <20080416203923.GH3133@dpotapov.dyndns.org> <320075ff0804161447u25dfbb2bmcd36ea507224d835@mail.gmail.com> <20080416223739.GJ3133@dpotapov.dyndns.org> <320075ff0804161607p3f9e983ehb75aae4e0bfe8837@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v919.2)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+From: Dill <sarpulhu@gmail.com>
+Subject: Git GUI bug?
+Date: Wed, 16 Apr 2008 22:52:56 -0700 (PDT)
+Message-ID: <7e6dd49b-133d-4b71-96bd-d1ca0357aa15@b1g2000hsg.googlegroups.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "Dmitry Potapov" <dpotapov@gmail.com>, git <git@vger.kernel.org>
-To: Nigel Magnay <nigel.magnay@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 17 07:44:09 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 17 07:53:44 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JmMum-0002vV-Md
-	for gcvg-git-2@gmane.org; Thu, 17 Apr 2008 07:44:09 +0200
+	id 1JmN43-0005Up-2n
+	for gcvg-git-2@gmane.org; Thu, 17 Apr 2008 07:53:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751668AbYDQFnK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Apr 2008 01:43:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751639AbYDQFnJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Apr 2008 01:43:09 -0400
-Received: from mailer.zib.de ([130.73.108.11]:35746 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751599AbYDQFnI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Apr 2008 01:43:08 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.14.2/8.14.2) with ESMTP id m3H5h3c7003838;
-	Thu, 17 Apr 2008 07:43:04 +0200 (CEST)
-Received: from [192.168.178.21] (brln-4db97598.pool.einsundeins.de [77.185.117.152])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m3H5h2HT021810
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Thu, 17 Apr 2008 07:43:03 +0200 (MEST)
-In-Reply-To: <320075ff0804161607p3f9e983ehb75aae4e0bfe8837@mail.gmail.com>
-X-Mailer: Apple Mail (2.919.2)
+	id S1751799AbYDQFw6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Apr 2008 01:52:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751800AbYDQFw6
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Apr 2008 01:52:58 -0400
+Received: from ag-out-0910.google.com ([72.14.246.185]:55899 "EHLO
+	ag-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751666AbYDQFw6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Apr 2008 01:52:58 -0400
+Received: by ag-out-0910.google.com with SMTP id 40so5821836agd.1
+        for <git@vger.kernel.org>; Wed, 16 Apr 2008 22:52:56 -0700 (PDT)
+Received: by 10.100.206.11 with SMTP id d11mr48156ang.23.1208411576753; Wed, 
+	16 Apr 2008 22:52:56 -0700 (PDT)
+X-IP: 161.184.182.37
+User-Agent: G2/1.0
+X-HTTP-UserAgent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.14) 
+	Gecko/20080404 Firefox/2.0.0.14,gzip(gfe),gzip(gfe)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79767>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79768>
 
-
-On Apr 17, 2008, at 1:07 AM, Nigel Magnay wrote:
-
-> In a perfect world I'd be able to switch all files int the repo to LF,
-> but that's not going to happen any time soon because of the majority
-> of developers, still on svn, still on windows.
-
-
-If you want Git's autocrlf to convert to the native line endings on  
-Windows and Unix, you need to convert everything to LF in the repo.   
-This is what we did and now everything runs smoothly.
-
-I have no recommendation, though, how to use svn and git together.  I  
-do not use git-svn.
-
-	Steffen
+When trying to push a repo using git gui to Github it opens a new
+window saying pushing branch and working....please wait...Push works
+if I do it by command line and I think the bug may be related to
+public/private keys? Git GUI never asks for a password for when I
+upload the repo. Am I doing something wrong? (When I click sign off in
+Git gui it shows the correct name). I'm using msysGit 1.5.5. Thanks.
