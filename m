@@ -1,88 +1,83 @@
-From: Brian Foster <brian.foster@innova-card.com>
-Subject: Re: fsck --full is Ok, but clones are not, "missing commits"?!
-Date: Thu, 17 Apr 2008 20:44:04 +0200
-Message-ID: <20080417184404.2541227DD@blf.utvinternet.co.uk>
-References: <200804171756.39911.brian.foster@innova-card.com>
-Reply-To: git@vger.kernel.org
+From: "Rafael J. Wysocki" <rjw@sisk.pl>
+Subject: Re: Reporting bugs and bisection
+Date: Thu, 17 Apr 2008 21:09:33 +0200
+Message-ID: <200804172109.35027.rjw@sisk.pl>
+References: <47FEADCB.7070104@rtr.ca> <9a8748490804161417n4ad6c1den54ccd302831a66c6@mail.gmail.com> <48078323.4010109@davidnewall.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Dmitry Potapov <dpotapov@gmail.com>,
-	Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Thu Apr 17 21:21:29 2008
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Jesper Juhl <jesper.juhl@gmail.com>, sverre@rabbelier.nl,
+	git@vger.kernel.org, linux-kernel <linux-kernel@vger.kernel.org>,
+	James Morris <jmorris@namei.org>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Willy Tarreau <w@1wt.eu>, david@lang.hm,
+	Stephen Clark <sclark46@earthlink.net>,
+	Evgeniy Polyakov <johnpol@2ka.mipt.ru>,
+	Tilman Schmidt <tilman@imap.cc>, Valdis.Kletnieks@vt.edu,
+	Mark Lord <lkml@rtr.ca>, David Miller <davem@davemloft.net>,
+	yoshfuji@linux-ipv6.org, jeff@garzik.org, netdev@vger.kernel.org
+To: David Newall <davidn@davidnewall.com>
+X-From: netdev-owner@vger.kernel.org Thu Apr 17 21:32:08 2008
 connect(): Connection refused
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
+Return-path: <netdev-owner@vger.kernel.org>
+Envelope-to: linux-netdev-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JmZ7C-0003WU-Sk
-	for gcvg-git-2@gmane.org; Thu, 17 Apr 2008 20:45:47 +0200
+	id 1JmZUx-0002BD-Ph
+	for linux-netdev-2@gmane.org; Thu, 17 Apr 2008 21:10:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751489AbYDQSpB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Apr 2008 14:45:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751432AbYDQSpA
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Apr 2008 14:45:00 -0400
-Received: from mail-pc.visp.tiscali.fr ([213.36.240.240]:41841 "EHLO
-	mail.visp.tiscali.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751424AbYDQSpA convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 17 Apr 2008 14:45:00 -0400
-Received: from blf.utvinternet.co.uk (213.36.236.163) by mail.visp.tiscali.fr (7.3.117.3)
-        id 47A04684007CD2E9; Thu, 17 Apr 2008 20:44:15 +0200
-Received: from blf.utvinternet.ie (localhost [127.0.0.1])
-	by blf.utvinternet.co.uk (Postfix) with ESMTP id 2541227DD;
-	Thu, 17 Apr 2008 20:44:04 +0200 (CEST)
-In-reply-to: <200804171756.39911.brian.foster@innova-card.com>
-Comments: In-reply-to Brian Foster <brian.foster@innova-card.com>
-   message dated "Thu, 17 Apr 2008 17:56:39 +0200".
-X-Mailer: [nmh-1.1-RC1] MH.6.8, SUSE Linux 9.1
-X-URL: http://www.blf.utvinternet.ie
-Content-ID: <21308.1208457844.1@blf.utvinternet.ie>
-Sender: git-owner@vger.kernel.org
+	id S1753679AbYDQTJ3 (ORCPT <rfc822;linux-netdev-2@m.gmane.org>);
+	Thu, 17 Apr 2008 15:09:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753477AbYDQTJ3
+	(ORCPT <rfc822;netdev-outgoing>); Thu, 17 Apr 2008 15:09:29 -0400
+Received: from ogre.sisk.pl ([217.79.144.158]:38531 "EHLO ogre.sisk.pl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753043AbYDQTJ2 (ORCPT <rfc822;netdev@vger.kernel.org>);
+	Thu, 17 Apr 2008 15:09:28 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by ogre.sisk.pl (Postfix) with ESMTP id 8C0D3A446E;
+	Thu, 17 Apr 2008 20:20:10 +0200 (CEST)
+Received: from ogre.sisk.pl ([127.0.0.1])
+ by localhost (ogre.sisk.pl [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 24000-03; Thu, 17 Apr 2008 20:20:01 +0200 (CEST)
+Received: from [192.168.100.119] (nat-be3.aster.pl [212.76.37.200])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by ogre.sisk.pl (Postfix) with ESMTP id 0FED49BBA6;
+	Thu, 17 Apr 2008 20:20:01 +0200 (CEST)
+User-Agent: KMail/1.9.6 (enterprise 20070904.708012)
+In-Reply-To: <48078323.4010109@davidnewall.com>
+Content-Disposition: inline
+X-Virus-Scanned: amavisd-new at ogre.sisk.pl using MkS_Vir for Linux
+Sender: netdev-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79810>
+List-ID: <netdev.vger.kernel.org>
+X-Mailing-List: netdev@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79811>
 
-Brandon Casey <casey@nrlssc.navy.mil> justifiably complains:
-> p.s. It's more polite to keep the people you are responding
->      to in the cc list.  Take a look at how Hannes did it
->      (the email to which this one is replying).  Usually
->      it's enough to select 'Reply All'.
+On Thursday, 17 of April 2008, David Newall wrote:
+> Jesper Juhl wrote:
+> > Interresting. Just be careful results are produced for the big picture
+> > and not used to point fingers at individuals.
+> >   
+> 
+> If there are individuals at whom a finger needs to be pointed, this
+> system will highlight them, and fingers will (and should) be pointed. 
+> Contributors of poor-quality code need to be weeded-out.
 
-Brandon et al.,
+Define poor quality.
+ 
+> Finger-pointing, in these extreme cases, gives incentive to improve
+> quality.  It's a positive thing.
 
- oops!  sorry, my bad.  apologies.  I'm well aware of
- this point.  if you look at my _other_ replies, you
- should see that they are Ok.
+Sorry, but I have to disagree.  Negative finger-pointing is never a good thing.
+Also, it doesn't give any incentive to anyone.  It only makes people feel bad
+and finally discourages them from contributing anything.
 
- the problem is the MTA at work insists on adding HTML
- "if you read this you are a criminal" b*s* attachments
- (at least 3 bads!).  the posts are (rightly) binned by
- majordomo.  so I've been posting from my gmail account
- (mostly), which is not intended for my work.  that's
- my private life, @&*%$(^!   so the posts go to my work
- account, and hence I must manually transfer data such
- as the CC's:
+If you want to give poeple incentives, reward them for doing things you'd like
+them to do.
 
-	list/cc ---> work --(fwd/reply, no cc)--> \
-	   gmail --(compose reply, add cc)--> list+cc
-
- this is also why the threading is (probably) broken,
- and may be the reason for the "Re: Re: ..." nonsense
- (albeit I'm not sure just how that happens?), and/or
- sometimes replying to the "wrong" e-address.   ;-(
-
- I simply forgot.  sorry!  (this reply's from home,
- so I don't have at-hand the data you asked for.
- tomorrow.)  and yes, I know this reply is OT & long.
-
-cheers!
-	-blf-
---=20
-=E2=80=9CHow many surrealists does it take to    |  Brian Foster
- change a lightbulb?  Three.  One calms  |  somewhere in south of Franc=
-e
- the warthog, and two fill the bathtub   |     Stop E$$o (ExxonMobil)!
- with brightly-coloured machine tools.=E2=80=9D  |       http://www.sto=
-pesso.com
+Thanks,
+Rafael
