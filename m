@@ -1,75 +1,98 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [BUGS] test failure in t4014-format-patch.sh with master
-Date: Thu, 17 Apr 2008 08:44:07 -0700 (PDT)
-Message-ID: <alpine.LFD.1.00.0804170841270.2879@woody.linux-foundation.org>
-References: <87od88eslq.dlv@maison.homelinux.org> <alpine.LFD.1.00.0804170806430.2879@woody.linux-foundation.org> <20080417153421.GA13117@atjola.homenet>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: fsck --full is Ok, but clones are not, "missing commits"?!
+Date: Thu, 17 Apr 2008 10:41:08 -0500
+Message-ID: <48076F94.7030206@nrlssc.navy.mil>
+References: <200804161626.44174.brian.foster@innova-card.com>	 <a537dd660804160804t252d2900j33e30a01dc58979c@mail.gmail.com>	 <480619AE.8010506@viscovery.net>	 <200804171643.15504.brian.foster@innova-card.com> <a537dd660804170753i4dcfd189m45a9581294ce5091@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Remi Vanicat <vanicat@debian.org>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: =?ISO-8859-15?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Apr 17 17:57:20 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Brian Foster <brian.foster@innova-card.com>
+X-From: git-owner@vger.kernel.org Thu Apr 17 17:58:41 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JmWJh-0002LL-GU
-	for gcvg-git-2@gmane.org; Thu, 17 Apr 2008 17:46:29 +0200
+	id 1JmWFN-00019Q-I6
+	for gcvg-git-2@gmane.org; Thu, 17 Apr 2008 17:42:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755620AbYDQPpo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Apr 2008 11:45:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754951AbYDQPpn
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Apr 2008 11:45:43 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:46929 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754739AbYDQPpm (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 17 Apr 2008 11:45:42 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m3HFi82O003693
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 17 Apr 2008 08:44:09 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m3HFi7JM015563;
-	Thu, 17 Apr 2008 08:44:07 -0700
-In-Reply-To: <20080417153421.GA13117@atjola.homenet>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
-X-Spam-Status: No, hits=-3.977 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1762212AbYDQPlP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Apr 2008 11:41:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761815AbYDQPlP
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Apr 2008 11:41:15 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:42069 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760565AbYDQPlO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Apr 2008 11:41:14 -0400
+Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
+	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id m3HFf9OZ017671;
+	Thu, 17 Apr 2008 10:41:09 -0500
+Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
+	 Thu, 17 Apr 2008 10:41:09 -0500
+User-Agent: Thunderbird 2.0.0.9 (X11/20071031)
+In-Reply-To: <a537dd660804170753i4dcfd189m45a9581294ce5091@mail.gmail.com>
+X-OriginalArrivalTime: 17 Apr 2008 15:41:09.0081 (UTC) FILETIME=[74DBF490:01C8A0A1]
+X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-5.0.0.1023-15848003
+X-TM-AS-Result: : Yes--5.068000-0-31-1
+X-TM-AS-Category-Info: : 31:0.000000
+X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNTY3LTE1MDY2OC03MDA5?=
+	=?us-ascii?B?NzQtNzAwMDc1LTEzOTAxMC03MDgyNTctNzA3NzUwLTcwMTQ1NS03?=
+	=?us-ascii?B?MDIwNDQtNzA3MzYxLTcwOTU4NC03MTE5NTMtNzAyMTg3LTcwMjAy?=
+	=?us-ascii?B?MC03MDA2MTgtNzA3MTE5LTcwMDA1Ny03MDE1OTAtNzAxNzQ2LTcw?=
+	=?us-ascii?B?NzQ1MS03MTAyMjQtNzAyNjA5LTcxMTg2My03MDA3MjYtNzAxNDUw?=
+	=?us-ascii?B?LTcwMTA0NS03MDEwMTktNzA1NjA4LTE0ODAzOS0yMDA0MA==?=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79796>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79797>
+
+Brian Foster wrote:
+
+>  before trying the copying suggestion, I played some
+>  more with `filter-branch'.  I had no success at all.
+>  as one example, with `--branches' instead of `--all'
+>  (one of Brandon's suggestions) produced:
+> 
+> 	$ git filter-branch --tag-name-filter cat -- --branches
+> 	Which ref do you want to rewrite?
+> 	$
+
+That's strange. Are there any branches in this repository? Yes, looking at
+your earlier email:
+
+  at toplevel of a (not-bare) clone, with  info/grafts  in-place,
+  and a happy `fsck -full' (same machine so same git version):
+
+	$ git filter-branch --tag-name-filter cat -- --all  # at not-bare toplevel
+	Rewrite 7df30811617517bc4d5ec7c190a435667228320c (168/168)
+	Ref 'refs/heads/master' was rewritten
+	Ref 'refs/remotes/origin/HEAD' was rewritten
+  [snip]
+
+Looks like there is a single branch named 'master'.
 
 
+The command within git-filter-branch.sh that is being called is
 
-On Thu, 17 Apr 2008, Bj=F6rn Steinbrink wrote:
->=20
-> Debian has its own dash which is supposed to be a lightweight
-> alternative to bash and "for checking POSIX compliance of scripts"
-> (quote from the packages description). I don't happen to know off-han=
-d
-> whether POSIX says that echo should default to -e, but dash seems to =
-do
-> that:
->=20
-> $ dash
-> $ a=3D"hello\nhi"
-> $ echo $a
-> hello
-> hi
+   git rev-parse --no-flags --revs-only --symbolic-full-name --default HEAD --branches
 
-Ahh. So that "echo" should just be replaced with a 'printf "%s\n"'=20
-instead?=20
+In a trim git repository for example this command returns:
 
-We have a _lot_ of "echo"s though. I suspect the only ones we'd ever ca=
-tch=20
-are the ones explicitly tested for. I suspect that the dash echo is jus=
-t=20
-broken.
+   refs/heads/master
+   refs/heads/next
 
-		Linus
+Referring to two branches 'master' and 'next'. These are the references
+that exist in .git/refs/heads/*.
+
+I'd be interested to see what this command returns in your repo. You can compare
+this output to the output you get using --all and also relate that to the
+directory structure beneath .git/refs/
+
+-brandon
+
+
+p.s. It's more polite to keep the people you are responding to in the cc list.
+     Take a look at how Hannes did it (the email to which this one is replying).
+     Usually it's enough to select 'Reply All'.
