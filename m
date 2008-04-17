@@ -1,143 +1,108 @@
-From: Lars Hjemli <hjemli@gmail.com>
-Subject: [PATCH] git-branch: add support for --merged and --unmerged
-Date: Thu, 17 Apr 2008 11:37:03 +0200
-Message-ID: <12084250231245-git-send-email-hjemli@gmail.com>
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 17 11:21:16 2008
+From: martin f krafft <madduck@madduck.net>
+Subject: gitweb: pathinfo feature breaks commitdiff/raw links
+Date: Thu, 17 Apr 2008 11:23:39 +0200
+Message-ID: <20080417092339.GA17016@piper.oerlikon.madduck.net>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="oyUTqETQ0mS9luUI"
+To: git discussion list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Apr 17 11:27:04 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JmQCs-0007s1-NB
-	for gcvg-git-2@gmane.org; Thu, 17 Apr 2008 11:15:03 +0200
+	id 1JmQMK-0002FR-Ax
+	for gcvg-git-2@gmane.org; Thu, 17 Apr 2008 11:24:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1765056AbYDQJOA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Apr 2008 05:14:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765042AbYDQJN7
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Apr 2008 05:13:59 -0400
-Received: from mail43.e.nsc.no ([193.213.115.43]:47237 "EHLO mail43.e.nsc.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1764802AbYDQJNz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Apr 2008 05:13:55 -0400
-X-Greylist: delayed 1884 seconds by postgrey-1.27 at vger.kernel.org; Thu, 17 Apr 2008 05:13:55 EDT
-Received: from localhost.localdomain (ti0025a380-0176.bb.online.no [88.89.68.176])
-	by mail43.nsc.no (8.13.8/8.13.5) with ESMTP id m3H8gHHX027151;
-	Thu, 17 Apr 2008 10:42:20 +0200 (MEST)
-X-Mailer: git-send-email 1.5.3.1.1.g1e61
+	id S933356AbYDQJXu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Apr 2008 05:23:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933266AbYDQJXt
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Apr 2008 05:23:49 -0400
+Received: from clegg.madduck.net ([82.197.162.59]:40910 "EHLO
+	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933356AbYDQJXq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Apr 2008 05:23:46 -0400
+Received: from wall.oerlikon.madduck.net (84-75-148-163.dclient.hispeed.ch [84.75.148.163])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "wall.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
+	by clegg.madduck.net (postfix) with ESMTP id 339DBA86A2
+	for <git@vger.kernel.org>; Thu, 17 Apr 2008 11:23:40 +0200 (CEST)
+Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [192.168.14.3])
+	by wall.oerlikon.madduck.net (Postfix) with ESMTP id 944189F18E
+	for <git@vger.kernel.org>; Thu, 17 Apr 2008 11:23:39 +0200 (CEST)
+Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
+	id 56B14C16EF; Thu, 17 Apr 2008 11:23:39 +0200 (CEST)
+Content-Disposition: inline
+X-Motto: Keep the good times rollin'
+X-OS: Debian GNU/Linux lenny/sid kernel 2.6.24-1-amd64 x86_64
+X-Spamtrap: madduck.bogus@madduck.net
+X-Subliminal-Message: debian/rules!
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+X-Virus-Scanned: ClamAV 0.91.2/6808/Thu Apr 17 10:40:10 2008 on clegg.madduck.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79777>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79778>
 
-These options filter the output from git branch to only include branches
-whose tip is either merged or not merged into HEAD.
 
-The use-case for these options is when working with integration of branches
-from many remotes: `git branch --unmerged -a` will show a nice list of merge
-candidates while `git branch --merged -a` will show the progress of your
-integration work.
+--oyUTqETQ0mS9luUI
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Also, a plain `git branch --merged` is a quick way to find local branches
-which you might want to delete.
+Hello,
 
-Signed-off-by: Lars Hjemli <hjemli@gmail.com>
----
- Documentation/git-branch.txt |    4 +++-
- builtin-branch.c             |   29 ++++++++++++++++++++++++++++-
- 2 files changed, 31 insertions(+), 2 deletions(-)
+as per suggestion in gitweb.cgi, I put the following into my
+gitweb.conf:
 
-diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
-index 6f07a17..2693519 100644
---- a/Documentation/git-branch.txt
-+++ b/Documentation/git-branch.txt
-@@ -8,7 +8,7 @@ git-branch - List, create, or delete branches
- SYNOPSIS
- --------
- [verse]
--'git-branch' [--color | --no-color] [-r | -a]
-+'git-branch' [--color | --no-color] [-r | -a] [--merged | --unmerged]
- 	   [-v [--abbrev=<length> | --no-abbrev]]
- 	   [--contains <commit>]
- 'git-branch' [--track | --no-track] [-l] [-f] <branchname> [<start-point>]
-@@ -24,6 +24,8 @@ and option `-a` shows both.
- With `--contains <commit>`, shows only the branches that
- contains the named commit (in other words, the branches whose
- tip commits are descendant of the named commit).
-+With `--merged`, only branches merged into HEAD will be listed,
-+and with `--unmerged` only branches not merged into HEAD will be listed.
- 
- In its second form, a new branch named <branchname> will be created.
- It will start out with a head equal to the one given as <start-point>.
-diff --git a/builtin-branch.c b/builtin-branch.c
-index 5bc4526..7c91ff0 100644
---- a/builtin-branch.c
-+++ b/builtin-branch.c
-@@ -15,7 +15,7 @@
- #include "branch.h"
- 
- static const char * const builtin_branch_usage[] = {
--	"git-branch [options] [-r | -a]",
-+	"git-branch [options] [-r | -a] [--merged | --unmerged]",
- 	"git-branch [options] [-l] [-f] <branchname> [<start-point>]",
- 	"git-branch [options] [-r] (-d | -D) <branchname>",
- 	"git-branch [options] (-m | -M) [<oldbranch>] <newbranch>",
-@@ -30,6 +30,8 @@ static const char * const builtin_branch_usage[] = {
- static const char *head;
- static unsigned char head_sha1[20];
- 
-+static int merged, unmerged;
-+
- static int branch_use_color = -1;
- static char branch_colors[][COLOR_MAXLEN] = {
- 	"\033[m",	/* reset */
-@@ -204,6 +206,22 @@ static int has_commit(const unsigned char *sha1, struct commit_list *with_commit
- 	return 0;
- }
- 
-+static int is_merged(const unsigned char *sha1, const char *refname)
-+{
-+	static struct commit *head_commit;
-+	struct commit *branch;
-+
-+	if (!head_commit) {
-+		head_commit = lookup_commit_reference(head_sha1);
-+		if (!head_commit)
-+			die("Unable to lookup HEAD");
-+	}
-+	branch = lookup_commit_reference(sha1);
-+	if (!branch)
-+		die("Unable to lookup branch %s", refname);
-+	return in_merge_bases(branch, &head_commit, 1);
-+}
-+
- static int append_ref(const char *refname, const unsigned char *sha1, int flags, void *cb_data)
- {
- 	struct ref_list *ref_list = (struct ref_list*)(cb_data);
-@@ -231,6 +249,12 @@ static int append_ref(const char *refname, const unsigned char *sha1, int flags,
- 	if ((kind & ref_list->kinds) == 0)
- 		return 0;
- 
-+	if (unmerged == 1 && is_merged(sha1, refname))
-+		return 0;
-+
-+	if (merged == 1 && !is_merged(sha1, refname))
-+		return 0;
-+
- 	/* Resize buffer */
- 	if (ref_list->index >= ref_list->alloc) {
- 		ref_list->alloc = alloc_nr(ref_list->alloc);
-@@ -444,6 +468,9 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 		OPT_BIT('M', NULL, &rename, "move/rename a branch, even if target exists", 2),
- 		OPT_BOOLEAN('l', NULL, &reflog, "create the branch's reflog"),
- 		OPT_BOOLEAN('f', NULL, &force_create, "force creation (when already exists)"),
-+		OPT_BIT(0, "unmerged", &unmerged, "list only unmerged branches", 1),
-+		OPT_BIT(0, "merged", &merged, "list only merged branches", 1),
-+
- 		OPT_END(),
- 	};
- 
--- 
-1.5.3.1.1.g1e61
+  $feature{'pathinfo'}{'default'} =3D [1];
+
+This mostly works, but James Vega recently found a corner case where
+this is broken: the raw link of a commitdiff page, such as
+
+  http://git.madduck.net/v/code/mailplate.git?a=3Dcommitdiff;h=3Df7d2365ee0=
+ab439217083dd613daa4757a4e3d6e
+
+suddenly becomes
+
+  http://git.madduck.net/v/ARRAY(0xbc3b70)?a=3Dcommitdiff_plain;h=3Df7d2365=
+ee0ab439217083dd613daa4757a4e3d6e
+                           ^^^^^^^^^^^^^^^
+when the feature is turned on. It works when it's off.
+
+I discussed this a bit on IRC, with the following bottom line:
+
+  < jengelh> if you see ARRAY... in the url, and [1] in the source
+  the wise Perl person says "ah, of course"
+
+Unfortunately, I am neither wise nor a Perl person, so I resort to
+just pointing this out to you and can offer to test any patches on
+this live server.
+
+Cheers,
+
+--=20
+martin | http://madduck.net/ | http://two.sentenc.es/
+=20
+"it is only the modern that ever becomes old-fashioned."=20
+                                                        -- oscar wilde
+=20
+spamtraps: madduck.bogus@madduck.net
+
+--oyUTqETQ0mS9luUI
+Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
+Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFIBxcbIgvIgzMMSnURAt47AJ0ZA4iZRrI+gRnOYnU+yFpwj8qoswCgk64I
+ZYgV8UsmJGt7KlBAX3bSPmk=
+=H2Ic
+-----END PGP SIGNATURE-----
+
+--oyUTqETQ0mS9luUI--
