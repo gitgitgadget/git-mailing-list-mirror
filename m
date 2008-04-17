@@ -1,327 +1,63 @@
-From: Rafael Garcia-Suarez <rgarciasuarez@gmail.com>
-Subject: [PATCH] Spelling fixes in the gitweb documentation
-Date: Thu, 17 Apr 2008 13:45:52 +0200
-Message-ID: <1208432752-24620-1-git-send-email-rgarciasuarez@gmail.com>
-Cc: Rafael Garcia-Suarez <rgarciasuarez@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 17 13:46:39 2008
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: Problem with tar while installing git
+Date: Thu, 17 Apr 2008 13:46:24 +0200
+Message-ID: <48073890.8060405@viscovery.net>
+References: <4c610e240804170435p7a628e4bo84c92f4eb4bb7a34@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Miguel Vaz <hepaminondas@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 17 13:47:41 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JmSZP-0007hj-2V
-	for gcvg-git-2@gmane.org; Thu, 17 Apr 2008 13:46:27 +0200
+	id 1JmSaF-0007vP-WF
+	for gcvg-git-2@gmane.org; Thu, 17 Apr 2008 13:47:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753313AbYDQLp2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Apr 2008 07:45:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751625AbYDQLp2
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Apr 2008 07:45:28 -0400
-Received: from smtp6-g19.free.fr ([212.27.42.36]:52088 "EHLO smtp6-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751308AbYDQLp1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Apr 2008 07:45:27 -0400
-Received: from smtp6-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp6-g19.free.fr (Postfix) with ESMTP id 1AED35FE5C;
-	Thu, 17 Apr 2008 13:45:25 +0200 (CEST)
-Received: from localhost.localdomain (inv75-3-82-241-119-67.fbx.proxad.net [82.241.119.67])
-	by smtp6-g19.free.fr (Postfix) with ESMTP id D7EF65FE5E;
-	Thu, 17 Apr 2008 13:45:24 +0200 (CEST)
-X-Mailer: git-send-email 1.5.5.68.g1c00
+	id S1751308AbYDQLqf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Apr 2008 07:46:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752153AbYDQLqf
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Apr 2008 07:46:35 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:45016 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751308AbYDQLqe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Apr 2008 07:46:34 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1JmSZT-00034m-8i; Thu, 17 Apr 2008 13:46:31 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 8EE7B6D9; Thu, 17 Apr 2008 13:46:24 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <4c610e240804170435p7a628e4bo84c92f4eb4bb7a34@mail.gmail.com>
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79787>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79788>
 
-Mostly spelling and grammar nits.
+Miguel Vaz schrieb:
+> make[1]: Entering directory `/home/mvaz/git-1.5.5/templates'
+> install -d -m 755 '/home/mvaz/local/share/git-core/templates/'
+> (cd blt && tar cf - .) | \
+> (cd '/home/mvaz/local/share/git-core/templates/' && umask 022 && tar xf -)
+> tar: This does not look like a tar archive
+> tar: Skipping to next header
+> tar: Archive contains obsolescent base-64 headers
+> tar: Error exit delayed from previous errors
+> make[1]: *** [install] Error 2
+> make[1]: Leaving directory `/home/mvaz/git-1.5.5/templates'
+> make: *** [install] Error 2
+> 
+> Any thoughts?
 
-Signed-off-by: Rafael Garcia-Suarez <rgarciasuarez@gmail.com>
----
- gitweb/INSTALL |   79 ++++++++++++++++++++++++++++---------------------------
- gitweb/README  |   50 +++++++++++++++++-----------------
- 2 files changed, 65 insertions(+), 64 deletions(-)
+If you type 'cd templates && cd blt', does the shell echo something back
+to you? Yes? Does 'unexport CDPATH' make a difference?
 
-diff --git a/gitweb/INSTALL b/gitweb/INSTALL
-index 743f2d4..f7194db 100644
---- a/gitweb/INSTALL
-+++ b/gitweb/INSTALL
-@@ -29,40 +29,40 @@ Build time configuration
- See also "How to configure gitweb for your local system" in README
- file for gitweb (in gitweb/README).
- 
--- There are many configuration variables which affects building of
-+- There are many configuration variables which affect building of
-   gitweb.cgi; see "default configuration for gitweb" section in main
-   (top dir) Makefile, and instructions for building gitweb/gitweb.cgi
-   target.
- 
--  One of most important is where to find git wrapper binary. Gitweb
--  tries to find git wrapper at $(bindir)/git, so you have to set $bindir
-+  One of the most important is where to find the git wrapper binary. Gitweb
-+  tries to find the git wrapper at $(bindir)/git, so you have to set $bindir
-   when building gitweb.cgi, or $prefix from which $bindir is derived. If
--  you build and install gitweb together with the rest of git suite,
-+  you build and install gitweb together with the rest of the git suite,
-   there should be no problems. Otherwise, if git was for example
-   installed from a binary package, you have to set $prefix (or $bindir)
-   accordingly.
- 
- - Another important issue is where are git repositories you want to make
--  available to gitweb. By default gitweb search for repositories under
-+  available to gitweb. By default gitweb searches for repositories under
-   /pub/git; if you want to have projects somewhere else, like /home/git,
-   use GITWEB_PROJECTROOT build configuration variable.
- 
-   By default all git repositories under projectroot are visible and
--  available to gitweb. List of projects is generated by default by
-+  available to gitweb. The list of projects is generated by default by
-   scanning the projectroot directory for git repositories. This can be
-   changed (configured) as described in "Gitweb repositories" section
-   below.
- 
--  Note that gitweb deals directly with object database, and does not
--  need working directory; the name of the project is the name of its
-+  Note that gitweb deals directly with the object database, and does not
-+  need a working directory; the name of the project is the name of its
-   repository object database, usually projectname.git for bare
-   repositories. If you want to provide gitweb access to non-bare (live)
--  repository, you can make projectname.git symbolic link under
-+  repositories, you can make projectname.git a symbolic link under
-   projectroot linking to projectname/.git (but it is just
-   a suggestion).
- 
- - You can control where gitweb tries to find its main CSS style file,
--  its favicon and logo with GITWEB_CSS, GITWEB_FAVICON and GITWEB_LOGO
-+  its favicon and logo with the GITWEB_CSS, GITWEB_FAVICON and GITWEB_LOGO
-   build configuration variables. By default gitweb tries to find them
-   in the same directory as gitweb.cgi script.
- 
-@@ -91,17 +91,17 @@ Gitweb config file
- See also "Runtime gitweb configuration" section in README file
- for gitweb (in gitweb/README).
- 
--- You can configure gitweb further using gitweb configuration file;
--  by default it is file named gitweb_config.perl in the same place as
--  gitweb.cgi script. You can control default place for config file
--  using GITWEB_CONFIG build configuration variable, and you can set it
--  using GITWEB_CONFIG environmental variable. If this file does not
-+- You can configure gitweb further using the gitweb configuration file;
-+  by default this is a file named gitweb_config.perl in the same place as
-+  gitweb.cgi script. You can control the default place for the config file
-+  using the GITWEB_CONFIG build configuration variable, and you can set it
-+  using the GITWEB_CONFIG environment variable. If this file does not
-   exist, gitweb looks for a system-wide configuration file, normally
-   /etc/gitweb.conf. You can change the default using the
-   GITWEB_CONFIG_SYSTEM build configuration variable, and override it
--  through GITWEB_CONFIG_SYSTEM environmental variable.
-+  through the GITWEB_CONFIG_SYSTEM environment variable.
- 
--- Gitweb config file is [fragment] of perl code. You can set variables
-+- The gitweb config file is a fragment of perl code. You can set variables
-   using "our $variable = value"; text from "#" character until the end
-   of a line is ignored. See perlsyn(1) for details.
- 
-@@ -128,36 +128,37 @@ Gitweb repositories
- -------------------
- 
- - By default all git repositories under projectroot are visible and
--  available to gitweb. List of projects is generated by default by
-+  available to gitweb. The list of projects is generated by default by
-   scanning the projectroot directory for git repositories (for object
-   databases to be more exact).
- 
--  You can provide pre-generated list of [visible] repositories,
-+  You can provide a pre-generated list of [visible] repositories,
-   together with information about their owners (the project ownership
--  is taken from owner of repository directory otherwise), by setting
--  GITWEB_LIST build configuration variable (or $projects_list variable
--  in gitweb config file) to point to a plain file.
--
--  Each line of projects list file should consist of url-encoded path
--  to project repository database (relative to projectroot) separated
--  by space from url-encoded project owner; spaces in both project path
--  and project owner have to be encoded as either '%20' or '+'.
--
--  You can generate projects list index file using project_index action
--  (the 'TXT' link on projects list page) directly from gitweb.
--
--- By default even if project is not visible on projects list page, you
--  can view it nevertheless by hand-crafting gitweb URL. You can set
--  GITWEB_STRICT_EXPORT build configuration variable (or $strict_export
--  variable in gitweb config file) to only allow viewing of
-+  defaults to the owner of the repository directory otherwise), by setting
-+  the GITWEB_LIST build configuration variable (or the $projects_list
-+  variable in the gitweb config file) to point to a plain file.
-+
-+  Each line of the projects list file should consist of the url-encoded path
-+  to the project repository database (relative to projectroot), followed
-+  by the url-encoded project owner on the same line (separated by a space).
-+  Spaces in both project path and project owner have to be encoded as either
-+  '%20' or '+'.
-+
-+  You can generate the projects list index file using the project_index
-+  action (the 'TXT' link on projects list page) directly from gitweb.
-+
-+- By default, even if a project is not visible on projects list page, you
-+  can view it nevertheless by hand-crafting a gitweb URL. You can set the
-+  GITWEB_STRICT_EXPORT build configuration variable (or the $strict_export
-+  variable in the gitweb config file) to only allow viewing of
-   repositories also shown on the overview page.
- 
- - Alternatively, you can configure gitweb to only list and allow
--  viewing of the explicitly exported repositories, via
--  GITWEB_EXPORT_OK build configuration variable (or $export_ok
-+  viewing of the explicitly exported repositories, via the
-+  GITWEB_EXPORT_OK build configuration variable (or the $export_ok
-   variable in gitweb config file). If it evaluates to true, gitweb
--  show repository only if this file exists in its object database
--  (if directory has the magic file $export_ok).
-+  shows repositories only if this file exists in its object database
-+  (if directory has the magic file named $export_ok).
- 
- Generating projects list using gitweb
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-diff --git a/gitweb/README b/gitweb/README
-index 8dfe335..8f7ea36 100644
---- a/gitweb/README
-+++ b/gitweb/README
-@@ -2,7 +2,7 @@ GIT web Interface
- =================
- 
- The one working on:
--  http://www.kernel.org/git/
-+  http://git.kernel.org/
- 
- From the git version 1.4.0 gitweb is bundled with git.
- 
-@@ -10,13 +10,13 @@ From the git version 1.4.0 gitweb is bundled with git.
- How to configure gitweb for your local system
- ---------------------------------------------
- 
--See also "Build time configuration" section in INSTALL
-+See also the "Build time configuration" section in the INSTALL
- file for gitweb (in gitweb/INSTALL).
- 
- You can specify the following configuration variables when building GIT:
-  * GIT_BINDIR
--   Points out where to find git executable.  You should set up it to
--   the place where git binary was installed (usually /usr/bin) if you
-+   Points where to find the git executable.  You should set it up to
-+   the place where the git binary was installed (usually /usr/bin) if you
-    don't install git from sources together with gitweb.  [Default: $(bindir)]
-  * GITWEB_SITENAME
-    Shown in the title of all generated pages, defaults to the server name
-@@ -24,13 +24,13 @@ You can specify the following configuration variables when building GIT:
-  * GITWEB_PROJECTROOT
-    The root directory for all projects shown by gitweb. Must be set
-    correctly for gitweb to find repositories to display.  See also
--   "Gitweb repositories" in INSTALL file for gitweb.  [Default: /pub/git]
-+   "Gitweb repositories" in the INSTALL file for gitweb.  [Default: /pub/git]
-  * GITWEB_PROJECT_MAXDEPTH
--   The filesystem traversing limit for getting projects list; the number
-+   The filesystem traversing limit for getting the project list; the number
-    is taken as depth relative to the projectroot.  It is used when
-    GITWEB_LIST is a directory (or is not set; then project root is used).
-    Is is meant to speed up project listing on large work trees by limiting
--   find depth.  [Default: 2007]
-+   search depth.  [Default: 2007]
-  * GITWEB_LIST
-    Points to a directory to scan for projects (defaults to project root
-    if not set / if empty) or to a file with explicit listing of projects
-@@ -72,15 +72,15 @@ You can specify the following configuration variables when building GIT:
-    Git base URLs used for URL to where fetch project from, i.e. full
-    URL is "$git_base_url/$project".  Shown on projects summary page.
-    Repository URL for project can be also configured per repository; this
--   takes precendence over URL composed from base URL and project name.
-+   takes precedence over URLs composed from base URL and a project name.
-    Note that you can setup multiple base URLs (for example one for
--   git:// protocol access, one for http:// access) from gitweb config
--   file.  [No default]
-+   git:// protocol access, another for http:// access) from the gitweb
-+   config file.  [No default]
-  * GITWEB_CSS
-    Points to the location where you put gitweb.css on your web server
--   (or to be more generic URI of gitweb stylesheet).  Relative to base
--   URI of gitweb.  Note that you can setup multiple stylesheets from
--   gitweb config file.  [Default: gitweb.css]
-+   (or to be more generic, the URI of gitweb stylesheet).  Relative to the
-+   base URI of gitweb.  Note that you can setup multiple stylesheets from
-+   the gitweb config file.  [Default: gitweb.css]
-  * GITWEB_LOGO
-    Points to the location where you put git-logo.png on your web server
-    (or to be more generic URI of logo, 72x27 size, displayed in top right
-@@ -121,15 +121,15 @@ Ultimate description on how to reconfigure the default features setting
- in your `GITWEB_CONFIG` or per-project in `project.git/config` can be found
- as comments inside 'gitweb.cgi'.
- 
--See also "Gitweb config file" (with example of gitweb config file), and
--"Gitweb repositories" sections in INSTALL file for gitweb.
-+See also the "Gitweb config file" (with an example of config file), and
-+the "Gitweb repositories" sections in INSTALL file for gitweb.
- 
- 
--Gitweb config file is [fragment] of perl code. You can set variables
-+The gitweb config file is a fragment of perl code. You can set variables
- using "our $variable = value"; text from "#" character until the end
- of a line is ignored. See perlsyn(1) man page for details.
- 
--Below there is list of vaiables which you might want to set in gitweb config.
-+Below is the list of variables which you might want to set in gitweb config.
- See the top of 'gitweb.cgi' for the full list of variables and their
- descriptions.
- 
-@@ -140,7 +140,7 @@ You can set, among others, the following variables in gitweb config files
- (with the exception of $projectroot and $projects_list this list does
- not include variables usually directly set during build):
-  * $GIT
--   Cure git executable to use.  By default set to "$GIT_BINDIR/git", which
-+   Core git executable to use.  By default set to "$GIT_BINDIR/git", which
-    in turn is by default set to "$(bindir)/git".  If you use git from binary
-    package, set this to "/usr/bin/git".  This can just be "git" if your
-    webserver has a sensible PATH.  If you have multiple git versions
-@@ -176,7 +176,7 @@ not include variables usually directly set during build):
-    to make it easier to upgrade gitweb. You can add 'site' stylesheet
-    for example by using
-       push @stylesheets, "gitweb-site.css";
--   in gitweb config file.
-+   in the gitweb config file.
-  * $logo_url, $logo_label
-    URI and label (title) of GIT logo link (or your site logo, if you choose
-    to use different logo image). By default they point to git homepage;
-@@ -198,12 +198,12 @@ not include variables usually directly set during build):
-    Default mimetype for blob_plain (raw) view, if mimetype checking
-    doesn't result in some other type; by default 'text/plain'.
-  * $default_text_plain_charset
--   Default charset for text files. If not set, web serwer configuration
-+   Default charset for text files. If not set, web server configuration
-    would be used.
-  * $mimetypes_file
-    File to use for (filename extension based) guessing of MIME types before
--   trying /etc/mime.types. Path, if relative, is taken currently as taken
--   relative to current git repositoy.
-+   trying /etc/mime.types. Path, if relative, is taken currently as
-+   relative to the current git repository.
-  * $fallback_encoding
-    Gitweb assumes this charset if line contains non-UTF-8 characters.
-    Fallback decoding is used without error checking, so it can be even
-@@ -232,14 +232,14 @@ You can use the following files in repository:
-    single line description of a project (of a repository). Plain text file;
-    HTML will be escaped. By default set to
-      Unnamed repository; edit this file to name it for gitweb.
--   from the template during creating repository. You can use
-+   from the template during repository creation. You can use the
-    gitweb.description repo configuration variable, but the file takes
--   precendence.
-+   precedence.
-  * cloneurl (or multiple-valued gitweb.url)
-    File with repository URL (used for clone and fetch), one per line.
-    Displayed in the project summary page. You can use multiple-valued
-    gitweb.url repository configuration variable for that, but the file
--   takes precendence.
-+   takes precedence.
-  * gitweb.owner
-    You can use the gitweb.owner repository configuration variable to set
-    repository's owner. It is displayed in the project list and summary
--- 
-1.5.5.68.g1c00
+-- Hannes
