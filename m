@@ -1,83 +1,74 @@
-From: "Rafael J. Wysocki" <rjw@sisk.pl>
-Subject: Re: Reporting bugs and bisection
-Date: Thu, 17 Apr 2008 21:09:33 +0200
-Message-ID: <200804172109.35027.rjw@sisk.pl>
-References: <47FEADCB.7070104@rtr.ca> <9a8748490804161417n4ad6c1den54ccd302831a66c6@mail.gmail.com> <48078323.4010109@davidnewall.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Intricacies of submodules
+Date: Thu, 17 Apr 2008 12:06:06 -0700 (PDT)
+Message-ID: <alpine.LFD.1.00.0804171158360.2879@woody.linux-foundation.org>
+References: <47F15094.5050808@et.gatech.edu> <8FE3B7A7-4C2D-4202-A5FC-EBC4F4670273@sun.com> <32541b130804082033q55c795b5ieaa4e120956ff030@mail.gmail.com> <49E9DCEC-8A9E-4AD7-BA58-5A40F475F2EA@sun.com> <32541b130804082334s604b62b0j82b510c331f48213@mail.gmail.com>
+ <7vhcebcyty.fsf@gitster.siamese.dyndns.org> <6CFA8EC2-FEE0-4746-A4F6-45082734FEEC@sun.com> <7v63uqz265.fsf@gitster.siamese.dyndns.org> <1207859579.13123.306.camel@work.sfbay.sun.com> <7vd4oxufwf.fsf@gitster.siamese.dyndns.org>
+ <46dff0320804110904w531035f4w79c1889bc90c09ee@mail.gmail.com> <7vmyo0owep.fsf@gitster.siamese.dyndns.org> <1207970038.10408.8.camel@ginkgo> <7vlk3jlkrr.fsf@gitster.siamese.dyndns.org> <1208202740.25663.69.camel@work.sfbay.sun.com> <7vd4or7wdt.fsf@gitster.siamese.dyndns.org>
+ <1208317795.26863.91.camel@goose.sun.com> <87lk3c4ali.fsf@jeremyms.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Jesper Juhl <jesper.juhl@gmail.com>, sverre@rabbelier.nl,
-	git@vger.kernel.org, linux-kernel <linux-kernel@vger.kernel.org>,
-	James Morris <jmorris@namei.org>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Willy Tarreau <w@1wt.eu>, david@lang.hm,
-	Stephen Clark <sclark46@earthlink.net>,
-	Evgeniy Polyakov <johnpol@2ka.mipt.ru>,
-	Tilman Schmidt <tilman@imap.cc>, Valdis.Kletnieks@vt.edu,
-	Mark Lord <lkml@rtr.ca>, David Miller <davem@davemloft.net>,
-	yoshfuji@linux-ipv6.org, jeff@garzik.org, netdev@vger.kernel.org
-To: David Newall <davidn@davidnewall.com>
-X-From: netdev-owner@vger.kernel.org Thu Apr 17 21:32:08 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "Roman V. Shaposhnik" <rvs@sun.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Ping Yin <pkufranky@gmail.com>,
+	Avery Pennarun <apenwarr@gmail.com>,
+	stuart.freeman@et.gatech.edu, git@vger.kernel.org
+To: Jeremy Maitin-Shepard <jbms@cmu.edu>
+X-From: git-owner@vger.kernel.org Thu Apr 17 21:31:53 2008
 connect(): Connection refused
-Return-path: <netdev-owner@vger.kernel.org>
-Envelope-to: linux-netdev-2@gmane.org
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JmZUx-0002BD-Ph
-	for linux-netdev-2@gmane.org; Thu, 17 Apr 2008 21:10:20 +0200
+	id 1JmZSD-0001O9-FF
+	for gcvg-git-2@gmane.org; Thu, 17 Apr 2008 21:07:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753679AbYDQTJ3 (ORCPT <rfc822;linux-netdev-2@m.gmane.org>);
-	Thu, 17 Apr 2008 15:09:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753477AbYDQTJ3
-	(ORCPT <rfc822;netdev-outgoing>); Thu, 17 Apr 2008 15:09:29 -0400
-Received: from ogre.sisk.pl ([217.79.144.158]:38531 "EHLO ogre.sisk.pl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753043AbYDQTJ2 (ORCPT <rfc822;netdev@vger.kernel.org>);
-	Thu, 17 Apr 2008 15:09:28 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by ogre.sisk.pl (Postfix) with ESMTP id 8C0D3A446E;
-	Thu, 17 Apr 2008 20:20:10 +0200 (CEST)
-Received: from ogre.sisk.pl ([127.0.0.1])
- by localhost (ogre.sisk.pl [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 24000-03; Thu, 17 Apr 2008 20:20:01 +0200 (CEST)
-Received: from [192.168.100.119] (nat-be3.aster.pl [212.76.37.200])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by ogre.sisk.pl (Postfix) with ESMTP id 0FED49BBA6;
-	Thu, 17 Apr 2008 20:20:01 +0200 (CEST)
-User-Agent: KMail/1.9.6 (enterprise 20070904.708012)
-In-Reply-To: <48078323.4010109@davidnewall.com>
-Content-Disposition: inline
-X-Virus-Scanned: amavisd-new at ogre.sisk.pl using MkS_Vir for Linux
-Sender: netdev-owner@vger.kernel.org
+	id S1753317AbYDQTGf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Apr 2008 15:06:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753139AbYDQTGe
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Apr 2008 15:06:34 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:53255 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752859AbYDQTGe (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 17 Apr 2008 15:06:34 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m3HJ682A021042
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 17 Apr 2008 12:06:10 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m3HJ66jA023365;
+	Thu, 17 Apr 2008 12:06:07 -0700
+In-Reply-To: <87lk3c4ali.fsf@jeremyms.com>
+User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+X-Spam-Status: No, hits=-3.47 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <netdev.vger.kernel.org>
-X-Mailing-List: netdev@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79811>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79812>
 
-On Thursday, 17 of April 2008, David Newall wrote:
-> Jesper Juhl wrote:
-> > Interresting. Just be careful results are produced for the big picture
-> > and not used to point fingers at individuals.
-> >   
+
+
+On Thu, 17 Apr 2008, Jeremy Maitin-Shepard wrote:
 > 
-> If there are individuals at whom a finger needs to be pointed, this
-> system will highlight them, and fingers will (and should) be pointed. 
-> Contributors of poor-quality code need to be weeded-out.
+> There is a huge difference: if you allow in-tree .gitconfig by default,
+> then git clone <some-repository> becomes an unsafe operation.
 
-Define poor quality.
- 
-> Finger-pointing, in these extreme cases, gives incentive to improve
-> quality.  It's a positive thing.
+I have to agree.
 
-Sorry, but I have to disagree.  Negative finger-pointing is never a good thing.
-Also, it doesn't give any incentive to anyone.  It only makes people feel bad
-and finally discourages them from contributing anything.
+The git config file is rather powerful, with things like aliases etc that 
+can be used to run external programs (and with the external diff 
+functionality that includes it for very basic and default operations), and 
+ways of subtly (and not so subtly) rewriting repository information etc 
+etc.
 
-If you want to give poeple incentives, reward them for doing things you'd like
-them to do.
+So if we do end up doing a "tracked config file", I'd personally very much 
+prefer it be limited in some way. For example, we obviously track the 
+.gitignore and .gitattributes files, but they are much more limited in 
+their effects. Maybe we could have a "limited config file" that allows for 
+*some* config options to be set?
 
-Thanks,
-Rafael
+		Linus
