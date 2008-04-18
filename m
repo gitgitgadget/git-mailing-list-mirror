@@ -1,60 +1,75 @@
-From: "Clifford Caoile" <piyo@users.sourceforge.net>
-Subject: Re: [PATCH] Docs gitk: Explicitly mention -d, --date-order option
-Date: Fri, 18 Apr 2008 22:16:40 +0900
-Message-ID: <1f748ec60804180616i311571eftbabcd3133ff83302@mail.gmail.com>
-Reply-To: piyo@users.sourceforge.net
+From: "Matt Graham" <mdg149@gmail.com>
+Subject: Re: git branch diagram
+Date: Fri, 18 Apr 2008 09:07:55 -0400
+Message-ID: <1c5969370804180607q675eb528na431ecdce99c49fd@mail.gmail.com>
+References: <911589C97062424796D53B625CEC0025E460C3@USCOBRMFA-SE-70.northamerica.cexp.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>,
-	"Git Maintainer" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Apr 19 14:54:47 2008
+Cc: git@vger.kernel.org
+To: Patrick.Higgins@cexp.com
+X-From: git-owner@vger.kernel.org Sat Apr 19 15:02:03 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JmqT2-0003Ee-Um
-	for gcvg-git-2@gmane.org; Fri, 18 Apr 2008 15:17:29 +0200
+	id 1JmqKc-0002si-1C
+	for gcvg-git-2@gmane.org; Fri, 18 Apr 2008 15:08:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753809AbYDRNQm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Apr 2008 09:16:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753928AbYDRNQm
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Apr 2008 09:16:42 -0400
-Received: from hs-out-0708.google.com ([64.233.178.246]:33138 "EHLO
-	hs-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752901AbYDRNQm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Apr 2008 09:16:42 -0400
-Received: by hs-out-0708.google.com with SMTP id 4so354968hsl.5
-        for <git@vger.kernel.org>; Fri, 18 Apr 2008 06:16:41 -0700 (PDT)
+	id S1751743AbYDRNH7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Apr 2008 09:07:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750920AbYDRNH7
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Apr 2008 09:07:59 -0400
+Received: from wr-out-0506.google.com ([64.233.184.232]:34775 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750778AbYDRNH7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Apr 2008 09:07:59 -0400
+Received: by wr-out-0506.google.com with SMTP id c48so322726wra.1
+        for <git@vger.kernel.org>; Fri, 18 Apr 2008 06:07:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:reply-to:sender:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition:x-google-sender-auth;
-        bh=du9r3swUslRiiR8EFKN44iXIgC1NYTlrpzr+xTaSn0g=;
-        b=C4qB5wDj+uf4TpzxQCu6fBPW7yxisiNZw0E/gX+kYJHlg8czAcDMOcroxvJmGRXInxBd+5PjZ42tmmDYdjHF+Zvk0WsN38cNxnBakBqiBbVdLy1NocCI1+YRf+RH7PALMXak0Kx4xhvp6uj4JUzETFy1BwdYdkwCJorzas62DUE=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=CztxLvViWEXbxoIJ/aAZ7EEusejKz/zeKUmXBGci9wc=;
+        b=eQ5GNTLwf5h96Vk7sD3xhkd2SQahXdmcWthPfcfGI5nw4DQsybmQDzsxSEc99Lg5NTQs0b9knmdRyrLLrDuXDWnxj9Cr/HYdY3Vaz8ZL5yMjwYmJnJo8N/CI+u0iTGg0S59uFvnaVfnt15Wb+BQfOcRsMtjTwsurnAEJPdD/T9k=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:reply-to:sender:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition:x-google-sender-auth;
-        b=EgmNFoZeh9pUBvK0LHwemQscEsvUYa5PMsihP2vlqFdB93JaXhiGVZqEyisXL9Ovv92I6yjmfDWIsjUn/SkBbzzXfL3XqVoa53iJ46XYgkloH74KIN+x4HOugo8P6PnkKh8bpnqs2NCOIT9aR9EW52WyzvltfzPc4L26+4e0Sis=
-Received: by 10.100.33.13 with SMTP id g13mr5186064ang.33.1208524600835;
-        Fri, 18 Apr 2008 06:16:40 -0700 (PDT)
-Received: by 10.101.1.16 with HTTP; Fri, 18 Apr 2008 06:16:40 -0700 (PDT)
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=ckiAtmYlvO3Nd30hTxsOFJ4J6Om4m8PioV2kKYWIVx57rkSpYPEXPgdnx8fdPW73rJld706N20py+QxQWjJel62ks3gitFueOlYcfs+AVg17agXPRUH3wTlPG3EK9FnYol6H2V7fHhebu/mSicNzqvHieF+uLsKDm9DVkHarREM=
+Received: by 10.142.140.14 with SMTP id n14mr636002wfd.192.1208524075688;
+        Fri, 18 Apr 2008 06:07:55 -0700 (PDT)
+Received: by 10.142.179.14 with HTTP; Fri, 18 Apr 2008 06:07:55 -0700 (PDT)
+In-Reply-To: <911589C97062424796D53B625CEC0025E460C3@USCOBRMFA-SE-70.northamerica.cexp.com>
 Content-Disposition: inline
-X-Google-Sender-Auth: 6da6720d034ebe7f
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79884>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79885>
 
-Git Mailing List, Git Maintainer:
+Full disclosure: I'm a git newbie.
 
-Regarding the documentation patch "[PATCH] Docs gitk: Explicitly
-mention -d, --date-order option" [1] (2008-04-12), it has not been
-accepted. Is there problem with this patch?
 
-References:
-[1] http://marc.info/?l=git&m=120799377618677&w=2
+On Thu, Apr 17, 2008 at 1:00 PM,  <Patrick.Higgins@cexp.com> wrote:
+> I am trying to get my employer to start using git and have found the distributed model and git's branching to be one of the hardest parts to explain and understand. I put together the attached diagram (done with graphviz so some things are not in the most logical place) to help explain things to my coworkers.
+>
 
-Best regards,
-Clifford Caoile
+A worthy goal.  It seems like a good corporate work flow for git is
+either yet to be devised or yet to be documented.
+
+
+>  In my diagram, I am assuming that most developers work in master, and make branches for their own long-lived projects and experimental things.
+>
+>  Does my diagram make sense? Are there any suggestions or corrections?
+
+It feels more complicated than it needs to be.  My reaction is that
+there should be a simpler way to represent it.
+
+In the dev repos, do the remote branches and local branches have to be
+in separate boxes?  It seems these could be put into a single box.
+
+It's not clear who's doing the pulls into the project repository or
+who is doing the integration.  My expectation would be that pushes
+would be involved at some point, is it not necessary?
+
+matt
