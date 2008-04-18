@@ -1,125 +1,60 @@
-From: Tordek <kedrot@gmail.com>
-Subject: [PATCH] http.c: use 'git_config_string' on configuration options.
-Date: Fri, 18 Apr 2008 10:17:30 -0300
-Message-ID: <48089F6A.3040102@tordek.com.ar>
+From: "Clifford Caoile" <piyo@users.sourceforge.net>
+Subject: Re: [PATCH] Docs gitk: Explicitly mention -d, --date-order option
+Date: Fri, 18 Apr 2008 22:16:40 +0900
+Message-ID: <1f748ec60804180616i311571eftbabcd3133ff83302@mail.gmail.com>
+Reply-To: piyo@users.sourceforge.net
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 19 14:54:16 2008
+To: "Git Mailing List" <git@vger.kernel.org>,
+	"Git Maintainer" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Apr 19 14:54:47 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JmqTt-0003Gn-MG
-	for gcvg-git-2@gmane.org; Fri, 18 Apr 2008 15:18:22 +0200
+	id 1JmqT2-0003Ee-Um
+	for gcvg-git-2@gmane.org; Fri, 18 Apr 2008 15:17:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754193AbYDRNRf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Apr 2008 09:17:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754157AbYDRNRf
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Apr 2008 09:17:35 -0400
-Received: from wr-out-0506.google.com ([64.233.184.233]:42485 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754045AbYDRNRe (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Apr 2008 09:17:34 -0400
-Received: by wr-out-0506.google.com with SMTP id c48so327029wra.1
-        for <git@vger.kernel.org>; Fri, 18 Apr 2008 06:17:33 -0700 (PDT)
+	id S1753809AbYDRNQm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Apr 2008 09:16:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753928AbYDRNQm
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Apr 2008 09:16:42 -0400
+Received: from hs-out-0708.google.com ([64.233.178.246]:33138 "EHLO
+	hs-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752901AbYDRNQm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Apr 2008 09:16:42 -0400
+Received: by hs-out-0708.google.com with SMTP id 4so354968hsl.5
+        for <git@vger.kernel.org>; Fri, 18 Apr 2008 06:16:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:user-agent:mime-version:to:subject:content-type:content-transfer-encoding:from;
-        bh=IPfJKNN6upqc3U9UyYjn1eFaQqcjhbcPus06aQ13nwk=;
-        b=xCyi+KXPJG4EwX1Ptv4wsDm7lvalVj4uEyRCYNkXdrQ5cIK2DjAmH26mhucUpN+7PaOWMd8UjMyemfPrSEoEca1Q/WlV2cq9Uu52OyfThbeuOw7ZE9Fomqwjrt7hawoD+8+4qU/Ccu6AD0wDsXCjCw/ir//OYqwC9bjveneFY7Q=
+        h=domainkey-signature:received:received:message-id:date:from:reply-to:sender:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition:x-google-sender-auth;
+        bh=du9r3swUslRiiR8EFKN44iXIgC1NYTlrpzr+xTaSn0g=;
+        b=C4qB5wDj+uf4TpzxQCu6fBPW7yxisiNZw0E/gX+kYJHlg8czAcDMOcroxvJmGRXInxBd+5PjZ42tmmDYdjHF+Zvk0WsN38cNxnBakBqiBbVdLy1NocCI1+YRf+RH7PALMXak0Kx4xhvp6uj4JUzETFy1BwdYdkwCJorzas62DUE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:user-agent:mime-version:to:subject:content-type:content-transfer-encoding:from;
-        b=a1YIoDCCS9r+qwM2Oy17BFlLWiTJP1n8YfQeEuBY1GsIOhs1BGkUOKAo7DbBl0zuI36eJojbdZs7WeTe4om+5j1UZ6YnMPfFe9SnM/eqEUBf2H1kRQJkLynOTdEcZGKuKeI4yUNpdzSKezIqPlYC2wADDirmYnZCT50KbNikrtc=
-Received: by 10.114.106.13 with SMTP id e13mr2441027wac.157.1208524652824;
-        Fri, 18 Apr 2008 06:17:32 -0700 (PDT)
-Received: from ?192.168.0.101? ( [190.137.195.23])
-        by mx.google.com with ESMTPS id 7sm21166887ywo.1.2008.04.18.06.17.30
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 18 Apr 2008 06:17:31 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.12 (X11/20080213)
+        h=message-id:date:from:reply-to:sender:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition:x-google-sender-auth;
+        b=EgmNFoZeh9pUBvK0LHwemQscEsvUYa5PMsihP2vlqFdB93JaXhiGVZqEyisXL9Ovv92I6yjmfDWIsjUn/SkBbzzXfL3XqVoa53iJ46XYgkloH74KIN+x4HOugo8P6PnkKh8bpnqs2NCOIT9aR9EW52WyzvltfzPc4L26+4e0Sis=
+Received: by 10.100.33.13 with SMTP id g13mr5186064ang.33.1208524600835;
+        Fri, 18 Apr 2008 06:16:40 -0700 (PDT)
+Received: by 10.101.1.16 with HTTP; Fri, 18 Apr 2008 06:16:40 -0700 (PDT)
+Content-Disposition: inline
+X-Google-Sender-Auth: 6da6720d034ebe7f
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79883>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79884>
 
-Signed-off-by: Guillermo O. Freschi <tordek@tordek.com.ar>
----
- http.c |   35 ++++++++++-------------------------
- 1 files changed, 10 insertions(+), 25 deletions(-)
+Git Mailing List, Git Maintainer:
 
-diff --git a/http.c b/http.c
-index 256a5f1..cadc1bf 100644
---- a/http.c
-+++ b/http.c
-@@ -100,39 +100,27 @@ static int http_options(const char *var, const
-char *value)
-        }
+Regarding the documentation patch "[PATCH] Docs gitk: Explicitly
+mention -d, --date-order option" [1] (2008-04-12), it has not been
+accepted. Is there problem with this patch?
 
-        if (!strcmp("http.sslcert", var)) {
--               if (ssl_cert == NULL) {
--                       if (!value)
--                               return config_error_nonbool(var);
--                       ssl_cert = xstrdup(value);
--               }
-+               if (ssl_cert == NULL)
-+                       return git_config_string(&ssl_cert, var, value);
-                return 0;
-        }
- #if LIBCURL_VERSION_NUM >= 0x070902
-        if (!strcmp("http.sslkey", var)) {
--               if (ssl_key == NULL) {
--                       if (!value)
--                               return config_error_nonbool(var);
--                       ssl_key = xstrdup(value);
--               }
-+               if (ssl_key == NULL)
-+                       return git_config_string(&ssl_key, var, value);
-                return 0;
-        }
- #endif
- #if LIBCURL_VERSION_NUM >= 0x070908
-        if (!strcmp("http.sslcapath", var)) {
--               if (ssl_capath == NULL) {
--                       if (!value)
--                               return config_error_nonbool(var);
--                       ssl_capath = xstrdup(value);
--               }
-+               if (ssl_capath == NULL)
-+                       return git_config_string(&ssl_capath, var, value);
-                return 0;
-        }
- #endif
-        if (!strcmp("http.sslcainfo", var)) {
--               if (ssl_cainfo == NULL) {
--                       if (!value)
--                               return config_error_nonbool(var);
--                       ssl_cainfo = xstrdup(value);
--               }
-+               if (ssl_cainfo == NULL)
-+                       return git_config_string(&ssl_cainfo, var, value);
-                return 0;
-        }
+References:
+[1] http://marc.info/?l=git&m=120799377618677&w=2
 
-@@ -160,11 +148,8 @@ static int http_options(const char *var, const char
-*value)
-                return 0;
-        }
-        if (!strcmp("http.proxy", var)) {
--               if (curl_http_proxy == NULL) {
--                       if (!value)
--                               return config_error_nonbool(var);
--                       curl_http_proxy = xstrdup(value);
--               }
-+               if (curl_http_proxy == NULL)
-+                       return git_config_string(&curl_http_proxy, var,
-value);
-                return 0;
-        }
-
---
-1.5.2.2
+Best regards,
+Clifford Caoile
