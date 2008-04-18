@@ -1,81 +1,81 @@
-From: "Brian Foster" <blf.ireland@gmail.com>
-Subject: Re: fsck --full is Ok, but clones are not, "missing commits"?!
-Date: Fri, 18 Apr 2008 11:29:23 +0200
-Message-ID: <a537dd660804180229i263fea0cxb7f7ac9e8f4780@mail.gmail.com>
-References: <200804161626.44174.brian.foster@innova-card.com>
-	 <a537dd660804180141h25b7f8e2yf7283f63d49521e6@mail.gmail.com>
-	 <48086200.5020600@viscovery.net>
-	 <200804181114.47067.brian.foster@innova-card.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+From: Pieter de Bie <pdebie@ai.rug.nl>
+Subject: Re: [PATCH] Document option --only of git commit
+Date: Fri, 18 Apr 2008 11:28:54 +0200
+Message-ID: <9CE1A95F-941C-474F-9F18-1B01B73113B2@ai.rug.nl>
+References: <1207827189-7509-1-git-send-email-johannes.sixt@telecom.at> <1207827189-7509-2-git-send-email-johannes.sixt@telecom.at>
+Mime-Version: 1.0 (Apple Message framework v919.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
-Cc: "Brandon Casey" <casey@nrlssc.navy.mil>,
-	"Dmitry Potapov" <dpotapov@gmail.com>, git@vger.kernel.org
-To: "Johannes Sixt" <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Sat Apr 19 02:30:47 2008
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Sixt <johannes.sixt@telecom.at>
+X-From: git-owner@vger.kernel.org Sat Apr 19 02:40:37 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JmmvU-0003ks-Fc
+	id 1JmmvT-0003ks-Qq
 	for gcvg-git-2@gmane.org; Fri, 18 Apr 2008 11:30:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755705AbYDRJ3d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Apr 2008 05:29:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756502AbYDRJ3d
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Apr 2008 05:29:33 -0400
-Received: from rv-out-0708.google.com ([209.85.198.251]:63505 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753193AbYDRJ3b (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Apr 2008 05:29:31 -0400
-Received: by rv-out-0506.google.com with SMTP id k29so264902rvb.1
-        for <git@vger.kernel.org>; Fri, 18 Apr 2008 02:29:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=b8gzB5DjHxnfNuC7sbD3bPjivlw4lmilRt1axF5yIn4=;
-        b=TfHMI+taN/p8u0VotsOMs7mvf6/vfEuPD6ZQUqHEFXOPLZITIZXBCYAxtLarhI1MSIFFBokL+2vdcW5I5pPJCmtPqnan/HN9ylTwoNnBX7oLF/OmDUPdt3rOI8wsHsT+zu//gjERwfWOc+aghwa3tZ4UsWqKBw1pO4ASHEhfHSU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Cikgs+DbauwXTel0fDvc9ZetVRaKQDrrWaTvKfSixozPO3b2YAGlGbv+eguQA6ZEyMTYIuRTWE0zHQkgcYQKv0xIFvWkKgni1HkAtzdMcUY2ro4XG5BXBjs6+EHZMv310nc9rjJw8lo7L8rsTtXtyKNU6Uii2mGVEpF8qfa4RPQ=
-Received: by 10.141.20.7 with SMTP id x7mr1381357rvi.82.1208510963858;
-        Fri, 18 Apr 2008 02:29:23 -0700 (PDT)
-Received: by 10.141.123.21 with HTTP; Fri, 18 Apr 2008 02:29:23 -0700 (PDT)
-In-Reply-To: <200804181114.47067.brian.foster@innova-card.com>
-Content-Disposition: inline
+	id S1753138AbYDRJ31 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Apr 2008 05:29:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756044AbYDRJ3R
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Apr 2008 05:29:17 -0400
+Received: from smtp-4.orange.nl ([193.252.22.249]:22079 "EHLO smtp-4.orange.nl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754450AbYDRJ3J (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Apr 2008 05:29:09 -0400
+Received: from me-wanadoo.net (localhost [127.0.0.1])
+	by mwinf6312.orange.nl (SMTP Server) with ESMTP id DC42E1C000A1;
+	Fri, 18 Apr 2008 11:29:03 +0200 (CEST)
+Received: from [192.168.1.11] (s5591931c.adsl.wanadoo.nl [85.145.147.28])
+	by mwinf6312.orange.nl (SMTP Server) with ESMTP id 806251C00098;
+	Fri, 18 Apr 2008 11:28:55 +0200 (CEST)
+X-ME-UUID: 20080418092901525.806251C00098@mwinf6312.orange.nl
+In-Reply-To: <1207827189-7509-2-git-send-email-johannes.sixt@telecom.at>
+X-Mailer: Apple Mail (2.919.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79869>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79870>
 
-Johannes Sixt <j.sixt@viscovery.net> asked:
-> One of the changes since v.1.5.3 was to get rid of this bogus grep
-> [ in `check-ref-format' ].  Can you install a newer git?
+Hi,
 
-Hannes,
+On 10 apr 2008, at 13:33, Johannes Sixt wrote:
+> Its documentation was removed by  
+> 6c96753df9db7f790a2ac4d95ec2a868394cd5ff,
+> even though it is referenced from a few places, including builtin- 
+> commit.c
+> (as part of the commentary in the commit message template).
+>
+> Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
 
- yes!  about 10 minutes ago I was handed the keys to a
- brand new VM which is to be the company's git server.
- a very important point is it will be backed-up (unlike
- the former repository!).  git on the VM is "my" problem,
- and one of the first things I must do is install it.
+> +-o|--only::
+> +	Make a commit only from the paths specified on the
+> +	command line, disregarding any contents that have been
+> +	staged so far. This is the default mode of operation of
+> +	'git commit' if any paths are given on the command line,
+> +	in which case this option can be omitted.
+> +	If this option is specified together with '--amend', then
+> +	no paths need be specified, which can be used to amend
+> +	the last commit without committing changes that have
+> +	already been staged.
+> +
 
- the VM is running "CentOS release 5 (Final)".  all things
- being equal, I'd prefer to install a reliable/stable
- pre-built package (RPM, I assume, since CentOS is based
- on Redhat).  I confess I do not know (have not looked)
- where to find suitable RPMs of git.
+I find this addition to the manpage very confusing. If -o commits  
+paths only from the command line, and it is also the default operation  
+when run with paths, why is this text at the -o option? This behaviour  
+is already documented in the description of git-commit:
 
- suggestions are most welcome!
+        3. by listing files as arguments to the commit command, in  
+which case the commit will
+           ignore changes staged in the index, and instead record the  
+current content of the
+           listed files;
 
-cheers!
-	-blf-
+I'd suggest only using the second part (about --amend), or optionally  
+adding something about what happens if you specify -o without --amend  
+and without paths.
 
--- 
-"How many surrealists does it take to    |  Brian Foster
- change a lightbulb?  Three.  One calms  |  somewhere in south of France
- the warthog, and two fill the bathtub   |     Stop E$$o (ExxonMobil)!
- with brightly-coloured machine tools."  |       http://www.stopesso.com
+- Pieter
