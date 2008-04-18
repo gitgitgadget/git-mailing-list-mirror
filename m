@@ -1,76 +1,81 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH] http.c: use 'git_config_string' on configuration options.
-Date: Sat, 19 Apr 2008 07:16:55 +0200
-Message-ID: <200804190716.55490.chriscool@tuxfamily.org>
-References: <48089F6A.3040102@tordek.com.ar>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Intricacies of submodules
+Date: Fri, 18 Apr 2008 16:02:31 +0200
+Organization: At home
+Message-ID: <fua9lm$qts$1@ger.gmane.org>
+References: <47F15094.5050808@et.gatech.edu> <8FE3B7A7-4C2D-4202-A5FC-EBC4F4670273@sun.com> <32541b130804082033q55c795b5ieaa4e120956ff030@mail.gmail.com> <49E9DCEC-8A9E-4AD7-BA58-5A40F475F2EA@sun.com> <32541b130804082334s604b62b0j82b510c331f48213@mail.gmail.com> <7vhcebcyty.fsf@gitster.siamese.dyndns.org> <6CFA8EC2-FEE0-4746-A4F6-45082734FEEC@sun.com> <7v63uqz265.fsf@gitster.siamese.dyndns.org> <1207859579.13123.306.camel@work.sfbay.sun.com> <7vd4oxufwf.fsf@gitster.siamese.dyndns.org> <46dff0320804110904w531035f4w79c1889bc90c09ee@mail.gmail.com> <7vmyo0owep.fsf@gitster.siamese.dyndns.org> <1207970038.10408.8.camel@ginkgo> <7vlk3jlkrr.fsf@gitster.siamese.dyndns.org> <1208202740.25663.69.camel@work.sfbay.sun.com> <7vd4or7wdt.fsf@gitster.siamese.dyndns.org> <1208317795.26863.91.camel@goose.s
+ un.com> <87lk3c4ali.fsf@jeremyms.com> <1208461808.26863.129.camel@goose.sun.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Tordek <kedrot@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Apr 19 16:34:43 2008
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 19 17:33:04 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jn5NY-0005KF-1t
-	for gcvg-git-2@gmane.org; Sat, 19 Apr 2008 07:12:48 +0200
+	id 1JmrBW-0004t8-TX
+	for gcvg-git-2@gmane.org; Fri, 18 Apr 2008 16:03:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751132AbYDSFLo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Apr 2008 01:11:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750999AbYDSFLo
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 Apr 2008 01:11:44 -0400
-Received: from smtp1-g19.free.fr ([212.27.42.27]:60923 "EHLO smtp1-g19.free.fr"
+	id S1751083AbYDROCl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Apr 2008 10:02:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750969AbYDROCl
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Apr 2008 10:02:41 -0400
+Received: from main.gmane.org ([80.91.229.2]:49080 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751112AbYDSFLn convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 19 Apr 2008 01:11:43 -0400
-Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 63C031AB2B3;
-	Sat, 19 Apr 2008 07:11:41 +0200 (CEST)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 45F961AB2C8;
-	Sat, 19 Apr 2008 07:11:41 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <48089F6A.3040102@tordek.com.ar>
-Content-Disposition: inline
+	id S1750922AbYDROCk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Apr 2008 10:02:40 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1JmrAl-0004xP-NG
+	for git@vger.kernel.org; Fri, 18 Apr 2008 14:02:39 +0000
+Received: from abvk125.neoplus.adsl.tpnet.pl ([83.8.208.125])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 18 Apr 2008 14:02:39 +0000
+Received: from jnareb by abvk125.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 18 Apr 2008 14:02:39 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: abvk125.neoplus.adsl.tpnet.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79890>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79891>
 
-Le vendredi 18 avril 2008, Tordek a =E9crit :
-> Signed-off-by: Guillermo O. Freschi <tordek@tordek.com.ar>
-> ---
->  http.c |   35 ++++++++++-------------------------
->  1 files changed, 10 insertions(+), 25 deletions(-)
->
-> diff --git a/http.c b/http.c
-> index 256a5f1..cadc1bf 100644
-> --- a/http.c
-> +++ b/http.c
-> @@ -100,39 +100,27 @@ static int http_options(const char *var, const
-> char *value)
->         }
->
->         if (!strcmp("http.sslcert", var)) {
-> -               if (ssl_cert =3D=3D NULL) {
-> -                       if (!value)
-> -                               return config_error_nonbool(var);
-> -                       ssl_cert =3D xstrdup(value);
-> -               }
-> +               if (ssl_cert =3D=3D NULL)
-> +                       return git_config_string(&ssl_cert, var, valu=
-e);
->                 return 0;
->         }
+Roman V. Shaposhnik wrote:
+> On Thu, 2008-04-17 at 14:09 -0400, Jeremy Maitin-Shepard wrote:
 
-Did you check that there is no compile warnings resulting from this ?
-Did you read the last sentences of http://git.or.cz/gitwiki/Janitor ?
+>>> And here's one more thing: in-tree .gitconfig and in-tree 
+>>> update-my-git-settings.sh are absolutely identical as far
+>>> as their security ramifications are concerned. If you really paranoid
+>>> you have to eyeball either of them.
+>> 
+>> There is a huge difference: if you allow in-tree .gitconfig by default,
+>> then git clone <some-repository> becomes an unsafe operation.  I can't
+>> even inspect some arbitrary repository to _see_ if I like the code and
+>> think it is safe very easily, since I'd normally do that by cloning the
+>> repository.
 
-By the way it seems that your patch has spaces instead of tabs everywhe=
-re.
+[...]
+>> Obviously any configuration option that specifies a shell command to run
+>> is unsafe to specify in an in-tree .gitconfig.  As Junio noted,
+>> smudge/clean commands are especially unsafe because they will be
+>> executed even if the user only uses the clone command.
+> 
+> Are you saying that a *remote* in-tree .gitconfig would be capable of
+> affecting *local* system before the end of the clone operation?
 
-Thanks,
-Christian.
+At the end of clone operation you usually do a checkout. clean/smudge
+commands could wipe out your disk at the end of clone.  And one usually
+does checkout to view contents of repository (alternative is to use
+plumbing git-cat-file, which does not use .gitattributes).
+
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
