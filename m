@@ -1,97 +1,108 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: [PATCH 2/8] Add a lockfile function to append to a file
-Date: Thu, 17 Apr 2008 20:02:31 -0400 (EDT)
-Message-ID: <alpine.LNX.1.00.0804171950140.19665@iabervon.org>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCH 0/8] builtin-clone
+Date: Fri, 18 Apr 2008 02:50:48 +0200
+Message-ID: <200804180250.48544.johan@herland.net>
+References: <alpine.LNX.1.00.0804171923040.19665@iabervon.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org,
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 18 02:03:31 2008
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Fri Apr 18 02:52:10 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jme4f-0003DR-Qt
-	for gcvg-git-2@gmane.org; Fri, 18 Apr 2008 02:03:30 +0200
+	id 1Jmepi-0007LI-Pb
+	for gcvg-git-2@gmane.org; Fri, 18 Apr 2008 02:52:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755494AbYDRACi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Apr 2008 20:02:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755493AbYDRACi
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Apr 2008 20:02:38 -0400
-Received: from iabervon.org ([66.92.72.58]:49927 "EHLO iabervon.org"
+	id S1756110AbYDRAvU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Apr 2008 20:51:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756106AbYDRAvU
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Apr 2008 20:51:20 -0400
+Received: from smtp.getmail.no ([84.208.20.33]:39010 "EHLO smtp.getmail.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755462AbYDRACh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Apr 2008 20:02:37 -0400
-Received: (qmail 7367 invoked by uid 1000); 18 Apr 2008 00:02:31 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 18 Apr 2008 00:02:31 -0000
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1756104AbYDRAvT convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 17 Apr 2008 20:51:19 -0400
+Received: from pmxchannel-daemon.no-osl-m323-srv-009-z2.isp.get.no by
+ no-osl-m323-srv-009-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ id <0JZH0030VX15OY00@no-osl-m323-srv-009-z2.isp.get.no> for
+ git@vger.kernel.org; Fri, 18 Apr 2008 02:51:05 +0200 (CEST)
+Received: from smtp.getmail.no ([10.5.16.1])
+ by no-osl-m323-srv-009-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JZH005MAX0O7Q20@no-osl-m323-srv-009-z2.isp.get.no> for
+ git@vger.kernel.org; Fri, 18 Apr 2008 02:50:48 +0200 (CEST)
+Received: from alpha.herland ([84.215.102.95])
+ by no-osl-m323-srv-009-z1.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JZH00ETMX0OK590@no-osl-m323-srv-009-z1.isp.get.no> for
+ git@vger.kernel.org; Fri, 18 Apr 2008 02:50:48 +0200 (CEST)
+In-reply-to: <alpine.LNX.1.00.0804171923040.19665@iabervon.org>
+Content-disposition: inline
+User-Agent: KMail/1.9.9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79855>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79856>
 
-This takes care of copying the original contents into the replacement
-file after the lock is held, so that concurrent additions can't miss
-each other's changes.
+On Friday 18 April 2008, Daniel Barkalow wrote:
+> This is my latest version, rebased approximately on current master (o=
+r=20
+> recent maint, I guess). It's missing all of Johan's stuff, which is t=
+ests=20
+> for stuff I've fixed
 
-Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
----
-How about this? Also doesn't leak a fd and catches trying to append to a 
-file you can't read. Should I worry about mmap failing after the open?
+Does this mean you no longer need the tests, or that you want me to res=
+end?
 
- cache.h    |    1 +
- lockfile.c |   23 +++++++++++++++++++++++
- 2 files changed, 24 insertions(+), 0 deletions(-)
+> and (after this series) a series to make the clone generate packed re=
+fs.
 
-diff --git a/cache.h b/cache.h
-index 50b28fa..8d066bf 100644
---- a/cache.h
-+++ b/cache.h
-@@ -391,6 +391,7 @@ struct lock_file {
- 	char filename[PATH_MAX];
- };
- extern int hold_lock_file_for_update(struct lock_file *, const char *path, int);
-+extern int hold_lock_file_for_append(struct lock_file *, const char *path, int);
- extern int commit_lock_file(struct lock_file *);
- 
- extern int hold_locked_index(struct lock_file *, int);
-diff --git a/lockfile.c b/lockfile.c
-index 663f18f..f1b5416 100644
---- a/lockfile.c
-+++ b/lockfile.c
-@@ -160,6 +160,29 @@ int hold_lock_file_for_update(struct lock_file *lk, const char *path, int die_on
- 	return fd;
- }
- 
-+int hold_lock_file_for_append(struct lock_file *lk, const char *path, int die_on_error)
-+{
-+	int fd = lock_file(lk, path);
-+	struct stat st;
-+	if (fd < 0) {
-+		if (die_on_error)
-+			die("unable to create '%s.lock': %s",
-+			    path, strerror(errno));
-+	} else if (!stat(path, &st)) {
-+		int orig_fd = open(path, O_RDONLY);
-+		size_t mmap_size = xsize_t(st.st_size);
-+		void *mmap;
-+		if (orig_fd < 0)
-+			die("unable to read %s to append to it", path);
-+		mmap = xmmap(NULL, mmap_size, PROT_READ, MAP_PRIVATE,
-+				   orig_fd, 0);
-+		write_or_die(fd, mmap, mmap_size);
-+		munmap(mmap, mmap_size);
-+		close(orig_fd);
-+	}
-+	return fd;
-+}
-+
- int close_lock_file(struct lock_file *lk)
- {
- 	int fd = lk->fd;
--- 
-1.5.4.3.610.gea6cd
+I'll resend the series once your work has settled down and landed in "n=
+ext".
+
+BTW, I noticed in your repo (at iabervon.org) that you put "if (0)" aro=
+und
+the code generating packed-refs (using the old one instead), and added =
+the
+following note to the commit message:
+
+  I made this compile-time configurable because I'm not sure we want to
+  pack unconditionally.
+
+We should probably figure out the right thing to do here. AFAICS,
+compile-time configurability is only a temporary measure, and we basica=
+lly
+have to choose between:
+
+1. Add a command-line option (and config variable?) for controlling
+   whether "git clone" generates packed refs.
+
+2. Make "git clone" unconditionally generate packed refs.
+
+Currently, I'm leaning towards (2), since I don't think there's enough
+drawbacks with generating packed-refs to justify adding a command-line
+option. AFAICS, the only drawback is that reflogs aren't
+created/initialized on clone, but I got the feeling that this was not
+particularly important. Quoting Junio from an earlier thread:
+
+  Not writing reflogs is a _different_ behaviour from the previous, but=
+ I
+  suspect it might even be an improvement. =A0When you have 1000 remote
+  branches, probably most of them are not even active.
+
+If there are good arguments for going with (1), I'd love to hear them.
+
+
+Have fun, and thanks a lot for your hard work!
+
+=2E..Johan
+
+--=20
+Johan Herland, <johan@herland.net>
+www.herland.net
