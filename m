@@ -1,103 +1,91 @@
-From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
-Subject: Re: Q. regarding subtree merge
-Date: Fri, 18 Apr 2008 12:02:58 +0200
-Message-ID: <8aa486160804180302m43a7c942la93954401741b264@mail.gmail.com>
-References: <loom.20080418T091729-407@post.gmane.org>
+From: Fedor Sergeev <Fedor.Sergeev@Sun.COM>
+Subject: Re: git branch diagram
+Date: Fri, 18 Apr 2008 12:39:52 +0400 (Russian Standard Time)
+Message-ID: <alpine.WNT.1.10.0804181219420.1528@theodor>
+References: <911589C97062424796D53B625CEC0025E460C3@USCOBRMFA-SE-70.northamerica.cexp.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-To: "=?ISO-8859-1?Q?Stefan_N=E4we?=" <stefan.naewe+git@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 18 17:23:29 2008
+To: Patrick.Higgins@cexp.com
+X-From: git-owner@vger.kernel.org Fri Apr 18 17:53:21 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JmnRr-00058V-VN
-	for gcvg-git-2@gmane.org; Fri, 18 Apr 2008 12:04:04 +0200
+	id 1JmmaE-000348-UC
+	for gcvg-git-2@gmane.org; Fri, 18 Apr 2008 11:08:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754380AbYDRKDK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Apr 2008 06:03:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754379AbYDRKDJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Apr 2008 06:03:09 -0400
-Received: from yw-out-2324.google.com ([74.125.46.29]:5678 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754324AbYDRKDH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 18 Apr 2008 06:03:07 -0400
-Received: by yw-out-2324.google.com with SMTP id 5so322022ywb.1
-        for <git@vger.kernel.org>; Fri, 18 Apr 2008 03:03:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=2GEGmPO4r+i8HcGTh1Uv/3BKfxTrugFStQiAR24pWko=;
-        b=kcrQaI4JfcQBQMkDeMBuDgTUdkZ6VuOha60fRwljZ/GO2YsXNLQ0mb9/4Js8ZPNcezex08t6Qtz34Kp8SJ4WCxMIcRffskQeEYbFFts+e8Q47KX/oWiRViTlYqUQfBy6xEjNw/+cKKC8NIvu++JDIFa8zTLq/dVsNucZJ62a4qw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=iW/e5rH0LdVWa/Dfw5WHXttqhzojLPjiFOR5bGqLqrQKWeeGH4PHFdUDmw+zxA8ULyB89npsFuXkjbkATKwdccJOksa26++gQDo25l65wKS3yxcN7fCZhVNwslL6DrlT1qktRKgIfAw0kmwewhEIUM51levFNN4OHj2FcGzjmxU=
-Received: by 10.150.137.8 with SMTP id k8mr3364222ybd.61.1208512983653;
-        Fri, 18 Apr 2008 03:03:03 -0700 (PDT)
-Received: by 10.151.14.14 with HTTP; Fri, 18 Apr 2008 03:02:58 -0700 (PDT)
-In-Reply-To: <loom.20080418T091729-407@post.gmane.org>
-Content-Disposition: inline
+	id S1754192AbYDRJHy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Apr 2008 05:07:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754169AbYDRJHy
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Apr 2008 05:07:54 -0400
+Received: from brmea-mail-3.Sun.COM ([192.18.98.34]:48398 "EHLO
+	brmea-mail-3.sun.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754146AbYDRJHw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Apr 2008 05:07:52 -0400
+X-Greylist: delayed 1609 seconds by postgrey-1.27 at vger.kernel.org; Fri, 18 Apr 2008 05:07:52 EDT
+Received: from fe-amer-09.sun.com ([192.18.109.79])
+	by brmea-mail-3.sun.com (8.13.6+Sun/8.12.9) with ESMTP id m3I8f2EF028724
+	for <git@vger.kernel.org>; Fri, 18 Apr 2008 08:41:03 GMT
+Received: from conversion-daemon.mail-amer.sun.com by mail-amer.sun.com
+ (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
+ id <0JZI00501IR49200@mail-amer.sun.com>
+ (original mail from Fedor.Sergeev@Sun.COM) for git@vger.kernel.org; Fri,
+ 18 Apr 2008 02:41:02 -0600 (MDT)
+Received: from localhost ([92.255.85.22])
+ by mail-amer.sun.com (Sun Java System Messaging Server 6.2-8.04 (built Feb 28
+ 2007)) with ESMTPSA id <0JZI002UWIS35XA0@mail-amer.sun.com>; Fri,
+ 18 Apr 2008 02:41:02 -0600 (MDT)
+In-reply-to: <911589C97062424796D53B625CEC0025E460C3@USCOBRMFA-SE-70.northamerica.cexp.com>
+X-X-Sender: fs77888@mail-amer.sun.com
+User-Agent: Alpine 1.10 (WNT 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79865>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79866>
 
-On Fri, Apr 18, 2008 at 11:36 AM, Stefan N=E4we
-<stefan.naewe+git@gmail.com> wrote:
-> Hi all.
->
->  I tried the scenario described in
->  $GIT_DIR/Documentation/howto/using-merge-subtree.txt and have some p=
-roblems
->  with it.
->
->  My setup:
->
->  I use git to track my changes in three different "project directorie=
-s", lets
->  say:
->
->  ...../src_root/libfoo
->  ...../src_root/appbar
->  ...../bin_root/installed
->
->  All three git repositories contain a topic branch (lets say 'current=
--work')
->  that I want to track.
->
->  Now I want to setup one git repository containing only the three dir=
-ectories
->  'libfoo', 'appbar', and 'installed' that others can clone easily. Re=
-ading the
->  above howto document, I think this should be possible.
->
->  I do:
->
->   $ mkdir super-prj
->   $ cd super-prj
->   $ git init
->   $ git add remote -f libfoo ../path/to/src_root/libfoo
->
->  OK. No problem.
->
->  The problem arises after the second step of the howto:
->
->   $ git merge -s ours --no-commit libfoo/current-work
->
->  Now, all files of 'libfoo' are in the current directory. This is not=
- what I
->  want.
->
->  Could someone please tell me what I'm doing wrong?
+On Thu, 17 Apr 2008, Patrick.Higgins@cexp.com wrote:
+> I am trying to get my employer to start using git and have found the distributed model
+> and git's branching to be one of the hardest parts to explain and understand.
+> I put together the attached diagram (done with graphviz so some things
+> are not in the most logical place) to help explain things to my coworkers.
 
-You are trying to merge libfoo with an empty project, so the merge
-just "fast-forward" to the other commit as you do not have an "ours".
+One bit of advice - make at least two or three versions of this diagram,
+with varying levels of complexity (say, complex one for integrators and 
+simple one for developers).
+Full diagram might appear to be very intimidating to newcomers :)
 
-Simply skip the merge step.
+Depending on their background your coworkers might not like the whole idea
+of branching (because of prior bad experience with branches and merges).
+In my case the very word "branch" was not always accepted nicely.
 
-Santi
+My own experience in a similar situation (which has not yet been fully resolved,
+so take my words with a grain of salt) shows that for the initial acceptance
+it is better to devise a scheme that does not involve branching.
+
+People will learn branching and will appreciate git's flexible branching 
+in future, but for starters it might appear to be better to restrict amount of branches
+to master + origin/master.
+
+>
+> Unfortunately, I don't understand things well enough myself to know if the diagram is correct or not.
+> I read in the stgit docs that developing directly in the master branch
+> is discouraged by convention, but I don't really understand why.
+> The git tutorial shows work happening directly in master, so I wasn't
+> sure if that's a convention that only makes sense for stgit or for plain git, too.
+
+That is really up to your policies and your trust to the developers.
+It is harder to screw up a master in Git than it is, say, in TeamWare.
+
+But I would not let everybody in my project to freely go and do stuff in 
+master. And I definitely would not make it a development requirement, as 
+TeamWare background makes my coworkers shudder and sweat of a very thought
+of touching master.
+
+Your milage might definitely vary.
+
+regards,
+   Fedor.
