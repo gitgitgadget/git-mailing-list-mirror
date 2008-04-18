@@ -1,82 +1,95 @@
-From: Gerrit Pape <pape@smarden.org>
-Subject: Re: [PATCH (try 2)] git-svn: fix "Malformed network data" with
-	svn:// servers
-Date: Fri, 18 Apr 2008 13:25:54 +0000
-Message-ID: <20080418132554.3548.qmail@3605a0899cbb1f.315fe32.mid.smarden.org>
-References: <20080208162433.25929.qmail@dd8a37fc58824d.315fe32.mid.smarden.org>
+From: Michael Weber <michaelw@foldr.org>
+Subject: [PATCH] svn-git: Use binmode for reading/writing binary rev maps
+Date: Fri, 18 Apr 2008 15:12:04 +0200
+Organization: foldr.org, Folding Right since 1996
+Message-ID: <20080418131204.GA53634@roadkill.foldr.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Sat Apr 19 14:42:59 2008
+Content-Type: text/plain; charset=utf-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 19 14:47:02 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JmqiR-0003oq-Kd
-	for gcvg-git-2@gmane.org; Fri, 18 Apr 2008 15:33:24 +0200
+	id 1JmqcU-0003bX-Oj
+	for gcvg-git-2@gmane.org; Fri, 18 Apr 2008 15:27:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754099AbYDRNch (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Apr 2008 09:32:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753585AbYDRNch
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Apr 2008 09:32:37 -0400
-Received: from a.ns.smarden.org ([212.42.242.37]:58721 "HELO a.mx.smarden.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752784AbYDRNcg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Apr 2008 09:32:36 -0400
-X-Greylist: delayed 398 seconds by postgrey-1.27 at vger.kernel.org; Fri, 18 Apr 2008 09:32:35 EDT
-Received: (qmail 3549 invoked by uid 1000); 18 Apr 2008 13:25:54 -0000
+	id S1754045AbYDRN03 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Apr 2008 09:26:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752901AbYDRN03
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Apr 2008 09:26:29 -0400
+Received: from lambda.foldr.org ([88.198.49.16]:53722 "EHLO mail.foldr.org"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1750724AbYDRN02 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Apr 2008 09:26:28 -0400
+X-Greylist: delayed 858 seconds by postgrey-1.27 at vger.kernel.org; Fri, 18 Apr 2008 09:26:27 EDT
+Received: from roadkill.foldr.org (zilver015187.mobiel.utwente.nl [130.89.15.187])
+	by mail.foldr.org (8.14.2/8.14.2/Debian-3) with ESMTP id m3IDC4xC015060
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Fri, 18 Apr 2008 15:12:06 +0200
+Received: by roadkill.foldr.org (Postfix, from userid 501)
+	id DB45A801997; Fri, 18 Apr 2008 15:12:04 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <20080208162433.25929.qmail@dd8a37fc58824d.315fe32.mid.smarden.org>
+User-Agent: Mutt/1.4.2.2i
+X-GPG-Fingerprint: 1024D/F65C68CD: BF52 F4F7 5CAF 5349 1F47  A989 EA4A CD5C F65C 68CD
+X-Accept-Language: en de
+X-Scanned-By: milter-spamc/1.12.383 .383 (mail.foldr.org [88.198.102.118]); Fri, 18 Apr 2008 15:12:07 +0200
+X-Spam-Status: NO, hits=-1.40 required=5.00
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79881>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79882>
 
-On Fri, Feb 08, 2008 at 04:24:33PM +0000, Gerrit Pape wrote:
-> On Fri, Sep 07, 2007 at 04:00:40AM -0700, Eric Wong wrote:
-> > We have a workaround for the reparent function not working
-> > correctly on the SVN native protocol servers.  This workaround
-> > opens a new connection (SVN::Ra object) to the new
-> > URL/directory.
-> 
-> Hi, this problem popped up again, please see
->  http://bugs.debian.org/464713
->  
-> I can reproduce it with v1.5.4 through
-> 
->  $ git svn clone svn://svn.debian.org/chinese/packages/lunar-applet
->  [...]
->  r159 = 010d0b481753bd32ce0255ce433d63e14114d3b6 (git-svn@159)
->  Found branch parent: (git-svn) 010d0b481753bd32ce0255ce433d63e14114d3b6
->  Following parent with do_switch
->  Malformed network data: Malformed network data at /usr/bin/git-svn line
->  2251
+Otherwise, there is a possible interaction with UTF-8 locales in
+combination with PERL_UNICODE, resulting in "inconsistent size: 40" or
+"read:"-type errors.
 
-Hi, the problem seems to persist, this is 1.5.5:
+See also:
+perldoc -f binmode
+<http://perldoc.perl.org/perl581delta.html#UTF-8-no-longer-default-under-UTF-8-locales>
 
-$ rm -rf lunar-applet && rm -rf lunar-applet &&
-  git version &&
-  git svn clone svn://svn.debian.org/chinese/packages/lunar-applet 2>&1 |
-    tail -n 14
-git version 1.5.5
-r155 = e99aaa44f7c306d631501b949a0b35be162c1447 (git-svn@159)
-        M       debian/copyright
-r156 = d94a736d4b89e3f54ca36b0fc827929050a48a5c (git-svn@159)
-        M       debian/doc-base
-r157 = bf2661df6d35a88ff40a6aea9829fbbc94a5c06b (git-svn@159)
-        M       debian/changelog
-r158 = 1107cff6309c979751e0841d40b9e2e471694b26 (git-svn@159)
-        M       debian/changelog
-        M       debian/rules
-r159 = 010d0b481753bd32ce0255ce433d63e14114d3b6 (git-svn@159)
-Found branch parent: (git-svn) 010d0b481753bd32ce0255ce433d63e14114d3b6
-Following parent with do_switch
-Malformed network data: Malformed network data at /usr/bin/git-svn line 2270
+Signed-off-by: Michael Weber <michaelw@foldr.org>
+---
+ git-svn.perl |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
 
-
-I can't to suggest a fix, sorry.
-
-Thanks, Gerrit.
+diff --git a/git-svn.perl b/git-svn.perl
+index b864b54..3d80b23 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -2519,6 +2519,7 @@ sub rebuild_from_rev_db {
+ 	my ($self, $path) = @_;
+ 	my $r = -1;
+ 	open my $fh, '<', $path or croak "open: $!";
++	binmode $fh or croak "binmode: $!";
+ 	while (<$fh>) {
+ 		length($_) == 41 or croak "inconsistent size in ($_) != 41";
+ 		chomp($_);
+@@ -2616,6 +2617,7 @@ sub rebuild {
+ sub _rev_map_set {
+ 	my ($fh, $rev, $commit) = @_;
+ 
++	binmode $fh or croak "binmode: $!";
+ 	my $size = (stat($fh))[7];
+ 	($size % 24) == 0 or croak "inconsistent size: $size";
+ 
+@@ -2719,6 +2721,7 @@ sub rev_map_max {
+ 	my $map_path = $self->map_path;
+ 	stat $map_path or return $want_commit ? (0, undef) : 0;
+ 	sysopen(my $fh, $map_path, O_RDONLY) or croak "open: $!";
++	binmode $fh or croak "binmode: $!";
+ 	my $size = (stat($fh))[7];
+ 	($size % 24) == 0 or croak "inconsistent size: $size";
+ 
+@@ -2751,6 +2754,7 @@ sub rev_map_get {
+ 	return undef unless -e $map_path;
+ 
+ 	sysopen(my $fh, $map_path, O_RDONLY) or croak "open: $!";
++	binmode $fh or croak "binmode: $!";
+ 	my $size = (stat($fh))[7];
+ 	($size % 24) == 0 or croak "inconsistent size: $size";
+ 
+-- 
+1.5.5.69.ga0a105
