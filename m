@@ -1,115 +1,80 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Clarify documentation of git-cvsserver, particularly in
- relation to git-shell
-Date: Sat, 19 Apr 2008 16:43:24 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0804191620380.20708@eeepc-johanness>
-References: <39292ba40804151233k2dd9300as5611e65ab6fcd81d@mail.gmail.com> <1208293415-19212-1-git-send-email-scc@ScottCollins.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: branch description
+Date: Sat, 19 Apr 2008 10:43:14 -0700
+Message-ID: <7v1w51g2q5.fsf@gitster.siamese.dyndns.org>
+References: <9b3e2dc20804150951scf8b3c7x26f3a56eab1f9840@mail.gmail.com>
+ <200804161029.18601.johan@herland.net> <200804182358.31041.jnareb@gmail.com>
+ <200804191118.50105.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Scott Collins <scc@ScottCollins.net>
-X-From: git-owner@vger.kernel.org Sat Apr 19 20:29:07 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
+	Matt Graham <mdg149@gmail.com>,
+	Brian Gernhardt <benji@silverinsanity.com>,
+	Russ Dill <russ.dill@gmail.com>,
+	Stephen Sinclair <radarsat1@gmail.com>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Sat Apr 19 20:32:07 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JnFEQ-0005NP-CM
-	for gcvg-git-2@gmane.org; Sat, 19 Apr 2008 17:44:02 +0200
+	id 1JnH72-0007kx-Ta
+	for gcvg-git-2@gmane.org; Sat, 19 Apr 2008 19:44:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751958AbYDSPnN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Apr 2008 11:43:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751150AbYDSPnM
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 Apr 2008 11:43:12 -0400
-Received: from mail.gmx.net ([213.165.64.20]:37653 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751958AbYDSPnK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Apr 2008 11:43:10 -0400
-Received: (qmail invoked by alias); 19 Apr 2008 15:43:07 -0000
-Received: from R2c2d.r.pppool.de (EHLO eeepc-johanness.st-andrews.ac.uk) [89.54.44.45]
-  by mail.gmx.net (mp035) with SMTP; 19 Apr 2008 17:43:07 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19+oJk5prJ+yGN+RH1VyFPPGTa9Rn+X7LHwh7hfd3
-	AecnCi9susJKuS
-X-X-Sender: user@eeepc-johanness
-In-Reply-To: <1208293415-19212-1-git-send-email-scc@ScottCollins.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1755495AbYDSRnu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Apr 2008 13:43:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755436AbYDSRnu
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 Apr 2008 13:43:50 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:47676 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755343AbYDSRns (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Apr 2008 13:43:48 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 218FD250B;
+	Sat, 19 Apr 2008 13:43:45 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 5B857250A; Sat, 19 Apr 2008 13:43:35 -0400 (EDT)
+In-Reply-To: <200804191118.50105.johan@herland.net> (Johan Herland's message
+ of "Sat, 19 Apr 2008 11:18:49 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79911>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79912>
 
-Hi,
+Johan Herland <johan@herland.net> writes:
 
-On Tue, 15 Apr 2008, Scott Collins wrote:
+> The problem with (3) vs. (4) is that in (3) we must make sure that whenever
+> a branch is moved/renamed (e.g. "git clone", "git branch -m", probably more
+> as well), the corresponding description is moved/renamed as well. This is
+> elegantly solved in (4).
 
-> Currently, for SSH clients restricted to git-shell, CVS_SERVER should
-> not be changed: git-shell understands the default value of 'cvs' to mean
-> git-cvsserver and actually _doesn't_ understand the command
-> 'git-cvsserver'.
+If your "elegently solved" is coming from an assumption that it is enough
+for "git mv" (for example) to just copy whatever is in .git/refs/heads/foo
+to .git/refs/heads/bar without understanding what is contained in it, that
+assumption unfortunately does not hold.
 
-How about a new paragraph here?
+You must support packed refs, so you need to teach the refs infrastructure
+what per-branch attributes there are other than the commit object name it
+points at anyway.
 
-> This makes it totally transparent to CVS users, but the
-> original wording here perhaps less so to the person setting-up CVS
-> access.  Previous wording mentioning GIT_AUTHOR, GIT_COMMITTER variables
-> may not have made clear we really meant GIT_AUTHOR_(NAME|EMAIL), etc.
+And we already do -- when you do "branch -m foo bar", corresponding config
+entries are also renamed.  We also move reflogs.
 
-Likewise here.
+A possible approach that would work, which contains elements from (4), is
+to change implementations of loose ref to have this extra info in loose
+ref files (that is what (4) is), *and* introduce another separate
+mechanism to store corresponding information for packed refs elsewhere.
+Propagation needs to deal with both representations, renaming needs to
+deal with both representations, looking up needs to deal with both
+representations, everybody needs to deal with both representations.
 
-> Add a bit of text to differentiate cvs -d (setting CVSROOT) from cvs co
-> -d (setting the name of the newly checked out directory).  Removed an
-> extra 'Example:' string.
-> 
-> Signed-off-by: Scott Collins <scc@ScottCollins.net>
-> ---
->  Documentation/git-cvsserver.txt |   27 +++++++++++++++------------
->  1 files changed, 15 insertions(+), 12 deletions(-)
-> 
-> diff --git a/Documentation/git-cvsserver.txt b/Documentation/git-cvsserver.txt
-> index 9cec802..44734e8 100644
-> --- a/Documentation/git-cvsserver.txt
-> +++ b/Documentation/git-cvsserver.txt
-> @@ -106,11 +106,13 @@ Note: Newer CVS versions (>= 1.12.11) also support specifying
->  CVS_SERVER directly in CVSROOT like
->  
->  ------
-> -cvs -d ":ext;CVS_SERVER=git-cvsserver:user@server/path/repo.git" co <HEAD_name>
-> +cvs -d ":ext;CVS_SERVER=git-cvsserver:user@server/path/repo.git" co <HEAD_name> -d <dir_name>
-
-I am not really sure.  Normal usage AFAIAC is without -d.
-
->  ------
->  This has the advantage that it will be saved in your 'CVS/Root' files and
->  you don't need to worry about always setting the correct environment
-> -variable.
-> +variable.  SSH users restricted to git-shell don't need to override the default
-> +with CVS_SERVER (and probably shouldn't) as git-shell understands 'cvs' to mean
-> +git-cvsserver.
-
-Please make these lines shorter.
-
-> @@ -141,25 +143,26 @@ allowing access over SSH.
->          enabled=1
->  ------
->  --
-> -3. On the client machine you need to set the following variables.
-> -   CVSROOT should be set as per normal, but the directory should point at the
-> -   appropriate git repo. For example:
-> +3. If you didn't specify the CVSROOT/CVS_SERVER directly in the checkout command,
-> +   automatically saving it in your 'CVS/Root' files, then you need to set them
-> +   explicitly in your environment.  CVSROOT should be set as per normal, but the
-> +   directory should point at the appropriate git repo.  As above, for SSH clients
-> +   _not_ restricted to git-shell, CVS_SERVER should be set to git-cvsserver.
-
-Please make the lines shorter.
-
-Also, I seem to recall that "didn't" is considered colloquial speech, 
-while you should write "did not" in written documentation.
-
-Another thing: "CVSROOT should be set as per normal" strikes me as a 
-little short on concrete, helpful details.
-
-Thanks, Dscho
+If you are going to invent "another separate mechanism" to support packed
+refs anyway, why not use that same mechanism to record information for
+loose ones as well?  That is the approach suggested by (3).  In either way
+we need to teach relevant parts of the code for propagation, renaming,
+looking up etc about the new mechanism.
