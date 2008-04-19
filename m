@@ -1,77 +1,76 @@
-From: Thomas Koch <thomas@koch.ro>
-Subject: git svn should refuse to checkin .svn directories
-Date: Fri, 18 Apr 2008 13:46:50 +0200
-Message-ID: <200804181346.50755.thomas@koch.ro>
-Reply-To: thomas@koch.ro
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH] http.c: use 'git_config_string' on configuration options.
+Date: Sat, 19 Apr 2008 07:16:55 +0200
+Message-ID: <200804190716.55490.chriscool@tuxfamily.org>
+References: <48089F6A.3040102@tordek.com.ar>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Apr 19 15:45:14 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Tordek <kedrot@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 19 16:34:43 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jmp4Y-0000Co-K8
-	for gcvg-git-2@gmane.org; Fri, 18 Apr 2008 13:48:07 +0200
+	id 1Jn5NY-0005KF-1t
+	for gcvg-git-2@gmane.org; Sat, 19 Apr 2008 07:12:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752546AbYDRLrR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Apr 2008 07:47:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752493AbYDRLrP
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Apr 2008 07:47:15 -0400
-Received: from koch.ro ([195.34.83.107]:52367 "EHLO
-	ve825703057.providerbox.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1752588AbYDRLrO (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 18 Apr 2008 07:47:14 -0400
-Received: from 217-162-251-183.dclient.hispeed.ch ([217.162.251.183] helo=localhost)
-	by ve825703057.providerbox.net with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <thomas@koch.ro>)
-	id 1Jmp3L-0006om-Iu
-	for git@vger.kernel.org; Fri, 18 Apr 2008 13:46:55 +0200
+	id S1751132AbYDSFLo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Apr 2008 01:11:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750999AbYDSFLo
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 Apr 2008 01:11:44 -0400
+Received: from smtp1-g19.free.fr ([212.27.42.27]:60923 "EHLO smtp1-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751112AbYDSFLn convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 19 Apr 2008 01:11:43 -0400
+Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 63C031AB2B3;
+	Sat, 19 Apr 2008 07:11:41 +0200 (CEST)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 45F961AB2C8;
+	Sat, 19 Apr 2008 07:11:41 +0200 (CEST)
 User-Agent: KMail/1.9.9
+In-Reply-To: <48089F6A.3040102@tordek.com.ar>
 Content-Disposition: inline
-X-Spam_score: -1.4
-X-Spam_score_int: -13
-X-Spam_bar: -
-X-Spam_report: Spam detection software, running on the system "ve825703057.providerbox.net", has
-	identified this incoming email as possible spam.  The original message
-	has been attached to this so you can view it (if it isn't spam) or label
-	similar future email.  If you have any questions, see
-	the administrator of that system for details.
-	Content preview:  As you might guess I just annoyed my collegues by (temporarily)
-	destroying our svn repo. Nobody could checkout anymore, because I accidently
-	checked in a .svn directory with git svn. I'm lucky that I'm still allowed
-	to use git svn to work on our svn repo... [...] 
-	Content analysis details:   (-1.4 points, 5.0 required)
-	pts rule name              description
-	---- ---------------------- --------------------------------------------------
-	-1.8 ALL_TRUSTED            Passed through trusted hosts only via SMTP
-	1.9 TVD_RCVD_IP    
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79889>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79890>
 
-As you might guess I just annoyed my collegues by (temporarily) destroying our 
-svn repo. Nobody could checkout anymore, because I accidently checked in 
-a .svn directory with git svn.
+Le vendredi 18 avril 2008, Tordek a =E9crit :
+> Signed-off-by: Guillermo O. Freschi <tordek@tordek.com.ar>
+> ---
+>  http.c |   35 ++++++++++-------------------------
+>  1 files changed, 10 insertions(+), 25 deletions(-)
+>
+> diff --git a/http.c b/http.c
+> index 256a5f1..cadc1bf 100644
+> --- a/http.c
+> +++ b/http.c
+> @@ -100,39 +100,27 @@ static int http_options(const char *var, const
+> char *value)
+>         }
+>
+>         if (!strcmp("http.sslcert", var)) {
+> -               if (ssl_cert =3D=3D NULL) {
+> -                       if (!value)
+> -                               return config_error_nonbool(var);
+> -                       ssl_cert =3D xstrdup(value);
+> -               }
+> +               if (ssl_cert =3D=3D NULL)
+> +                       return git_config_string(&ssl_cert, var, valu=
+e);
+>                 return 0;
+>         }
 
-I'm lucky that I'm still allowed to use git svn to work on our svn repo...
+Did you check that there is no compile warnings resulting from this ?
+Did you read the last sentences of http://git.or.cz/gitwiki/Janitor ?
 
-Maybe you could add a warning or something else to avoid .svn directories to 
-be ever checked in via git svn.
+By the way it seems that your patch has spaces instead of tabs everywhe=
+re.
 
-I'm sure that there is also a config option somewhere to get .svn directories 
-ignored (also subdirs when adding the parent dir?). But this check should 
-really be a default setting to avoid other newcommers to get into trouble 
-because they gave git svn a try.
-
-
-Cheers,
--- 
-Thomas Koch, Software Developer
-http://www.koch.ro
+Thanks,
+Christian.
