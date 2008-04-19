@@ -1,61 +1,62 @@
 From: Pieter de Bie <pdebie@ai.rug.nl>
 Subject: Re: Git performance on OS X
-Date: Sun, 20 Apr 2008 00:00:58 +0200
-Message-ID: <FEFAB19F-742A-452E-87C1-CD55AD0996DB@ai.rug.nl>
-References: <1208633300-74603-1-git-send-email-pdebie@ai.rug.nl> <alpine.LFD.1.10.0804191443550.2779@woody.linux-foundation.org>
+Date: Sun, 20 Apr 2008 00:08:15 +0200
+Message-ID: <A80AA52C-4254-4580-83AA-1B3134B74430@ai.rug.nl>
+References: <1208633300-74603-1-git-send-email-pdebie@ai.rug.nl> <alpine.LFD.1.10.0804191341210.2779@woody.linux-foundation.org> <alpine.LFD.1.10.0804191422480.2779@woody.linux-foundation.org>
 Mime-Version: 1.0 (Apple Message framework v919.2)
 Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
 To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sun Apr 20 00:01:49 2008
+X-From: git-owner@vger.kernel.org Sun Apr 20 00:09:10 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JnL81-0006RM-7A
-	for gcvg-git-2@gmane.org; Sun, 20 Apr 2008 00:01:49 +0200
+	id 1JnLF3-00014F-AH
+	for gcvg-git-2@gmane.org; Sun, 20 Apr 2008 00:09:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755005AbYDSWBD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Apr 2008 18:01:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753415AbYDSWBD
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 Apr 2008 18:01:03 -0400
-Received: from smtp-4.orange.nl ([193.252.22.249]:8518 "EHLO smtp-4.orange.nl"
+	id S1752785AbYDSWIR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Apr 2008 18:08:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752645AbYDSWIR
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 Apr 2008 18:08:17 -0400
+Received: from smtp-4.orange.nl ([193.252.22.249]:20230 "EHLO smtp-4.orange.nl"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751904AbYDSWBB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Apr 2008 18:01:01 -0400
+	id S1751449AbYDSWIQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Apr 2008 18:08:16 -0400
 Received: from me-wanadoo.net (localhost [127.0.0.1])
-	by mwinf6302.orange.nl (SMTP Server) with ESMTP id 79D8370000A0;
-	Sun, 20 Apr 2008 00:00:59 +0200 (CEST)
+	by mwinf6302.orange.nl (SMTP Server) with ESMTP id D60047000086;
+	Sun, 20 Apr 2008 00:08:15 +0200 (CEST)
 Received: from [192.168.1.11] (s5591931c.adsl.wanadoo.nl [85.145.147.28])
-	by mwinf6302.orange.nl (SMTP Server) with ESMTP id 561F87000086;
-	Sun, 20 Apr 2008 00:00:58 +0200 (CEST)
-X-ME-UUID: 20080419220059352.561F87000086@mwinf6302.orange.nl
-In-Reply-To: <alpine.LFD.1.10.0804191443550.2779@woody.linux-foundation.org>
+	by mwinf6302.orange.nl (SMTP Server) with ESMTP id B17267000081;
+	Sun, 20 Apr 2008 00:08:15 +0200 (CEST)
+X-ME-UUID: 20080419220815726.B17267000081@mwinf6302.orange.nl
+In-Reply-To: <alpine.LFD.1.10.0804191422480.2779@woody.linux-foundation.org>
 X-Mailer: Apple Mail (2.919.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79924>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79925>
 
 
-On 19 apr 2008, at 23:54, Linus Torvalds wrote:
+On 19 apr 2008, at 23:29, Linus Torvalds wrote:
+> Side note: on the kenrel tree, it makes the (insane!) operation
 >
+> 	git add $(git ls-files)
 >
-> Btw, the "git status" issue is totally different.
->
+> go from 49 seconds down to 17 sec. So it does make a huge difference  
+> for
+> me, but I also want to point out that this really isn't a sane  
+> operation
+> to do (I also think that 17 sec is totally unacceptable, but I  
+> cannot find
+> it in me to care, since I don't think this is an operation that  
+> anybody
+> should ever do!)
 
-Yes, I was aware of that, but still found it interesting to test.
->
-> And yes, most of the time in "git status ." is going to be the lstat()
-> calls. Which are expensive on OS X. And yes, we do too many of them.  
-> I'll
-> look at seeing if we can avoid some.
-
-I just tested this. "git status ." does 428815 (400k!) lstats, almost  
-10x as many as there are files in the repository. I'd agree that this  
-is the reason it's slow on OS X :).
+Yes, using the patch decreases the time for my from ~40 seconds to  
+just about 4 seconds.
 
 - Pieter
