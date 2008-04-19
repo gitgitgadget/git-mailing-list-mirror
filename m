@@ -1,108 +1,98 @@
-From: skillzero@gmail.com
-Subject: Re: Best way to re-do a CVS repository with git?
-Date: Sat, 19 Apr 2008 12:47:31 -0700
-Message-ID: <2729632a0804191247t4458067etfc1627a533a84376@mail.gmail.com>
-References: <2729632a0804161937w168aba8ahee742e182e50b4e7@mail.gmail.com>
-	 <m3wsmuqmmp.fsf@localhost.localdomain>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: branch description
+Date: Sat, 19 Apr 2008 23:05:35 +0200
+Message-ID: <200804192305.36780.jnareb@gmail.com>
+References: <9b3e2dc20804150951scf8b3c7x26f3a56eab1f9840@mail.gmail.com> <200804182358.31041.jnareb@gmail.com> <200804191118.50105.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="utf-8"
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 19 21:48:28 2008
+Cc: git@vger.kernel.org, Matt Graham <mdg149@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Brian Gernhardt <benji@silverinsanity.com>,
+	Russ Dill <russ.dill@gmail.com>,
+	Stephen Sinclair <radarsat1@gmail.com>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Sat Apr 19 23:06:45 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JnJ2x-0005pG-Fk
-	for gcvg-git-2@gmane.org; Sat, 19 Apr 2008 21:48:27 +0200
+	id 1JnKGe-00079x-9r
+	for gcvg-git-2@gmane.org; Sat, 19 Apr 2008 23:06:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754031AbYDSTrd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Apr 2008 15:47:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754769AbYDSTrd
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 Apr 2008 15:47:33 -0400
-Received: from wa-out-1112.google.com ([209.85.146.181]:46847 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752964AbYDSTrc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Apr 2008 15:47:32 -0400
-Received: by wa-out-1112.google.com with SMTP id m16so1830911waf.23
-        for <git@vger.kernel.org>; Sat, 19 Apr 2008 12:47:32 -0700 (PDT)
+	id S1762382AbYDSVFm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Apr 2008 17:05:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762355AbYDSVFm
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 Apr 2008 17:05:42 -0400
+Received: from fg-out-1718.google.com ([72.14.220.156]:12978 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756515AbYDSVFl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Apr 2008 17:05:41 -0400
+Received: by fg-out-1718.google.com with SMTP id l27so1107481fgb.17
+        for <git@vger.kernel.org>; Sat, 19 Apr 2008 14:05:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=LmbI7uz6vwya2IUL01KN+EVQDEg7Mnw7DSk0zwc6PjA=;
-        b=PD8WOyFRteP/yBjeSRTL8acteGU+/vzVp7ZoNjT2ev6HZlCX7NxV4GbqwjVoOadzCGqrQTDrh5kNWJ9f1LzHQYD6Rdsn1xserHZGz5v6Xq4goDhf9yXDkc9vFz9P9lER51eKJ+Yp87T3Q5Fv3rYvh1TbeNJUcShXl+BdZmcmWB4=
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        bh=U+B1F/GErEbO2EugfvF5n/Ip+/+ZsHUkoNMCcSnXf+g=;
+        b=a9OSbP2CWGxzED7AFd2RjETtwvtBpqGVFodQZoE9WwXnND76qLDQ3gSTGTlEn0EyFYVAfZm58Z5+CfDtmOb53G35R/cgXxcs1+COIujQ6wWNcFz6qeYCdcY/ZSGOAKrvJW84VsTfG9jtfvI1Es38TXhKY6/HTfDKBykqeKGFfDk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=X7uBDIpEHSvqJzFygAPsTAk2Gr5awYm0x+kVlTmQKORE8qz79UPzlSoR/BPXNHAju43tPFgQavDHSJVsVkCYR16L948IM36vLSMolRVtmayk3V3CLfRb1OEflvS+bhfhdZQeB4Dq/CSkmQKgxMtL1yR3oVltPkYV126wb8pRn8Y=
-Received: by 10.114.191.1 with SMTP id o1mr4120137waf.117.1208634451921;
-        Sat, 19 Apr 2008 12:47:31 -0700 (PDT)
-Received: by 10.114.193.9 with HTTP; Sat, 19 Apr 2008 12:47:31 -0700 (PDT)
-In-Reply-To: <m3wsmuqmmp.fsf@localhost.localdomain>
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=dCSafY7Gn5yU2VaWbTTk+unFv187kfXhJmhE0SiKAj02NEmSn7FVUaCifD6o+JLC1TJBXZ0WtIqMTxM3uCpOTSwym2sdt6R47+vLBv7XW7VY8mSvCuIKMX7w4slALLPO2wePcl7Xh15wsRvfJXBtASrZkLI3WZDxrDKddr33+gg=
+Received: by 10.86.84.5 with SMTP id h5mr8765599fgb.55.1208639139734;
+        Sat, 19 Apr 2008 14:05:39 -0700 (PDT)
+Received: from ?192.168.1.11? ( [83.8.225.130])
+        by mx.google.com with ESMTPS id p10sm3246841gvf.8.2008.04.19.14.05.36
+        (version=SSLv3 cipher=OTHER);
+        Sat, 19 Apr 2008 14:05:38 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <200804191118.50105.johan@herland.net>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79919>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79920>
 
-On Sat, Apr 19, 2008 at 1:23 AM, Jakub Narebski <jnareb@gmail.com> wrote:
-> I think that such setup would be best managed by creating Git
-> repository for each piece, and "integration" repositories, one for
-> apps people, and one for firmware people, using submodule support in
-> Git.
+On Sat, 19 April 2008, Johan Herland wrote:
+> On Friday 18 April 2008, Jakub Narebski wrote:
 
-> Tagging entire release would be tagging in "integration" repository,
-> the one using submodules.
+>> Let me sum up here proposals where to put branch description:
+[...]
+>> 3. Put them in GIT_DIR/info/refs_description, in some format.  It makes
+>>    it very easy to add support for propagation for dumb transports.
+>>    Native transport probably would need some extension.  Should not
+>>    interfere with the rest of git code.
+>> 4. Store description after sha1 in the ref file itself.  Automatic
+>>    propagation for dumb transport (whether we want it or not).  Native
+>>    transport as above.  Very high probabily of interfering with the rest
+>>    of code, especially shell part of Git.  Need to find a place for
+>>    descriptions in pack-refs.
+[...]
+>> 
+>> I think that the best proposal is (3), not (4) as you say.
+> 
+> The problem with (3) vs. (4) is that in (3) we must make sure that whenever
+> a branch is moved/renamed (e.g. "git clone", "git branch -m", probably more
+> as well), the corresponding description is moved/renamed as well. This is
+> elegantly solved in (4). But as you say, (4) may have implementation
+> difficulties of its own. I guess the first acceptable implementation will
+> win.
 
-Thanks for the info. git submodules seem like the right direction. But
-unless I'm misreading the tutorial, using submodules would require
-each user to know about and maintain every super module that might use
-each submodule. For example, if you had:
+First, git already has move corresponding reflog and per-branch
+configuration when renaming a branch, so it is nothing new for (3).
 
-moduleA
-	fileA.txt
-moduleB
-	fileB.txt
-moduleC
-	fileC.txt
+Second, implementation difficulties of (4) might be made stronger by
+the fact that repository with branches with descriptions should be
+fetchable and clonable using both native and dumb protocols by older
+versions of git, and shouldn't cause troubles after fetching.  (Assume
+that git is new enough to understand packed refs).  Backward
+compatibility might kill this solution; but it might not.
 
-super1
-	moduleA
-	moduleC
-
-super2
-	moduleB
-	moduleC
-
-super3
-	moduleA
-	moduleC
-
-I commit a change in fileA.txt (in moduleA). I now have to commit
-moduleA to super1 and then commit moduleA to super3. Otherwise, super1
-and super3 would still refer to the previous commit of moduleA. That's
-a good amount of extra work (I can imagine there may being dozens of
-super projects referring to a certain submodule).
-
-But there's a more serious problem in my case because not all users
-have access to all repositories. For example, if I have access to
-super1, but not super3 (I may not even know super3 exists), I won't be
-able to update super3. Now super3 is in a weird state: it has moduleA
-as a submodule, but it refers to an older revision of moduleA.
-Somebody with access to super3 has to know that moduleA has changes
-that haven't been included in super3 and manually pull them.
-
-Or am I just misunderstand how submodules work? It seems to me that
-the super module could use a more abstract link: the super repository
-would refer to a branch name (e.g. master). Then when I do a git pull
-from super1, it would see it contains moduleA on branch "master" and
-would pull down the latest "master" branch from moduleA without ever
-having to commit moduleA to super1 or super3.
-
-This is probably harder than it sounds, but it would seem to eliminate
-the need to know anything about super modules (except initially when
-the super repository is created). I just commit to moduleA and the
-next time somebody pulls from super1 or super3, they get the change
-automatically.
+BTW. I have added line with description to loose ref, and a few
+commands I tried didn't return (cause) any errors... so...
+-- 
+Jakub Narebski
+Poland
