@@ -1,58 +1,60 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Pieter de Bie <pdebie@ai.rug.nl>
 Subject: Re: Git performance on OS X
-Date: Sat, 19 Apr 2008 16:04:19 -0700 (PDT)
-Message-ID: <alpine.LFD.1.10.0804191603020.2779@woody.linux-foundation.org>
-References: <1208633300-74603-1-git-send-email-pdebie@ai.rug.nl> <alpine.LFD.1.10.0804191443550.2779@woody.linux-foundation.org> <FEFAB19F-742A-452E-87C1-CD55AD0996DB@ai.rug.nl> <m3od85qxcl.fsf@localhost.localdomain>
- <alpine.LFD.1.10.0804191547320.2779@woody.linux-foundation.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Pieter de Bie <pdebie@ai.rug.nl>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 20 01:06:02 2008
+Date: Sun, 20 Apr 2008 01:10:55 +0200
+Message-ID: <0BE9BBE3-EA9D-4A66-A086-A2A1B289B0DD@ai.rug.nl>
+References: <1208633300-74603-1-git-send-email-pdebie@ai.rug.nl> <alpine.LFD.1.10.0804191443550.2779@woody.linux-foundation.org> <FEFAB19F-742A-452E-87C1-CD55AD0996DB@ai.rug.nl> <m3od85qxcl.fsf@localhost.localdomain> <alpine.LFD.1.10.0804191547320.2779@woody.linux-foundation.org> <alpine.LFD.1.10.0804191551540.2779@woody.linux-foundation.org>
+Mime-Version: 1.0 (Apple Message framework v919.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sun Apr 20 01:12:06 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JnM7Z-000836-8p
-	for gcvg-git-2@gmane.org; Sun, 20 Apr 2008 01:05:52 +0200
+	id 1JnMDz-0002Ag-M3
+	for gcvg-git-2@gmane.org; Sun, 20 Apr 2008 01:12:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753177AbYDSXE0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Apr 2008 19:04:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752828AbYDSXE0
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 Apr 2008 19:04:26 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:56783 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751816AbYDSXEZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 19 Apr 2008 19:04:25 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m3JN4KFZ032492
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 19 Apr 2008 16:04:21 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m3JN4JmA004244;
-	Sat, 19 Apr 2008 16:04:19 -0700
-In-Reply-To: <alpine.LFD.1.10.0804191547320.2779@woody.linux-foundation.org>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
-X-Spam-Status: No, hits=-3.439 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1753466AbYDSXLC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Apr 2008 19:11:02 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752828AbYDSXLB
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 Apr 2008 19:11:01 -0400
+Received: from smtp-2.orange.nl ([193.252.22.242]:63975 "EHLO smtp-2.orange.nl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751904AbYDSXLA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Apr 2008 19:11:00 -0400
+Received: from me-wanadoo.net (localhost [127.0.0.1])
+	by mwinf6101.orange.nl (SMTP Server) with ESMTP id B7D8E1C00083;
+	Sun, 20 Apr 2008 01:10:56 +0200 (CEST)
+Received: from [192.168.1.11] (s5591931c.adsl.wanadoo.nl [85.145.147.28])
+	by mwinf6101.orange.nl (SMTP Server) with ESMTP id 77CE91C00082;
+	Sun, 20 Apr 2008 01:10:56 +0200 (CEST)
+X-ME-UUID: 20080419231056490.77CE91C00082@mwinf6101.orange.nl
+In-Reply-To: <alpine.LFD.1.10.0804191551540.2779@woody.linux-foundation.org>
+X-Mailer: Apple Mail (2.919.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79933>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79934>
 
 
+On 20 apr 2008, at 00:54, Linus Torvalds wrote:
+> Pieter? Assuming the lstat() cost is the dominant one, it should cut  
+> down
+> your "git status ." cost by about 15-20% or so. Can you confirm?
 
-On Sat, 19 Apr 2008, Linus Torvalds wrote:
-> 
-> If you do "git status ." it still does a _lot_ of unnecessary commits.
-                                                                ^^^^^^^
+The number of lstats are cut down by your patch: 428761 vs. 338091.  
+Funnily enough, there is no significant difference in run-time:
 
-I meant 'lstat()'s, of course.
+Command                                            Mean     Std
+git status .                                       13.970  1.298
+/Users/pieter/projects/External/git/git-status .   13.759  0.321
 
-I think I need to take my alzheimer medication now.
 
-			Linus
+System times are also approximately the same (10.79s vs 10.43s).
+
+- Pieter
