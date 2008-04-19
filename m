@@ -1,71 +1,115 @@
-From: Paolo Bonzini <bonzini@gnu.org>
-Subject: Re: [PATCH] Add a remote.<foo>.mirror configuration option
-Date: Sat, 19 Apr 2008 19:53:43 +0200
-Message-ID: <480A31A7.10000@gnu.org>
-References: <S1755276AbYDQLcT/20080417113219Z+797@vger.kernel.org> <alpine.DEB.1.00.0804191832080.20708@eeepc-johanness>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Clarify documentation of git-cvsserver, particularly in
+ relation to git-shell
+Date: Sat, 19 Apr 2008 16:43:24 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0804191620380.20708@eeepc-johanness>
+References: <39292ba40804151233k2dd9300as5611e65ab6fcd81d@mail.gmail.com> <1208293415-19212-1-git-send-email-scc@ScottCollins.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Apr 19 20:27:17 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Scott Collins <scc@ScottCollins.net>
+X-From: git-owner@vger.kernel.org Sat Apr 19 20:29:07 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JnHGj-00009C-In
-	for gcvg-git-2@gmane.org; Sat, 19 Apr 2008 19:54:34 +0200
+	id 1JnFEQ-0005NP-CM
+	for gcvg-git-2@gmane.org; Sat, 19 Apr 2008 17:44:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755333AbYDSRxs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Apr 2008 13:53:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755435AbYDSRxr
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 Apr 2008 13:53:47 -0400
-Received: from hu-out-0506.google.com ([72.14.214.225]:16486 "EHLO
-	hu-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755054AbYDSRxr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Apr 2008 13:53:47 -0400
-Received: by hu-out-0506.google.com with SMTP id 19so376954hue.21
-        for <git@vger.kernel.org>; Sat, 19 Apr 2008 10:53:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:x-enigmail-version:content-type:content-transfer-encoding:sender;
-        bh=+FSIOmmBQLEJsTE2Njy5d1oJHN8mwRnucscJ+DOdcl0=;
-        b=AznCJWzbrgaNAetSL4j8zcfy+vMEcIU4UFhkEmfzr17MkP4whsEcHaxvb6cHAws3LPYQxMwGMS4t8oysjLnRQCIaEw4gIPevYps3nt7V5bQWlP/gs8OZOU/kCV3lB5/vqoYMLa7zIhVT7KuWuZNO6opbILIHCwGzfGwha52JPGc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:x-enigmail-version:content-type:content-transfer-encoding:sender;
-        b=GeBDL01So3vJl1H2NRFlUSp57yitzwEwfyJKDxVQIWf/Qjz2cwfK7pL2Krm2Dluspq3cI2vEgiJX83YTYfjtVt05dLM5RvcLXdetMe9TlITB4or3Y2V2sDkR5fvFXgrTZey9PbHadX2tTYolk2FYvmhVo76xOc1NOrOZQFRFhUU=
-Received: by 10.86.60.15 with SMTP id i15mr8441781fga.36.1208627623232;
-        Sat, 19 Apr 2008 10:53:43 -0700 (PDT)
-Received: from scientist-2.lan ( [213.140.22.65])
-        by mx.google.com with ESMTPS id e11sm1096531fga.5.2008.04.19.10.53.42
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 19 Apr 2008 10:53:42 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.12 (Macintosh/20080213)
-In-Reply-To: <alpine.DEB.1.00.0804191832080.20708@eeepc-johanness>
-X-Enigmail-Version: 0.95.6
+	id S1751958AbYDSPnN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Apr 2008 11:43:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751150AbYDSPnM
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 Apr 2008 11:43:12 -0400
+Received: from mail.gmx.net ([213.165.64.20]:37653 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751958AbYDSPnK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Apr 2008 11:43:10 -0400
+Received: (qmail invoked by alias); 19 Apr 2008 15:43:07 -0000
+Received: from R2c2d.r.pppool.de (EHLO eeepc-johanness.st-andrews.ac.uk) [89.54.44.45]
+  by mail.gmx.net (mp035) with SMTP; 19 Apr 2008 17:43:07 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19+oJk5prJ+yGN+RH1VyFPPGTa9Rn+X7LHwh7hfd3
+	AecnCi9susJKuS
+X-X-Sender: user@eeepc-johanness
+In-Reply-To: <1208293415-19212-1-git-send-email-scc@ScottCollins.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79910>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79911>
 
-Johannes Schindelin wrote:
-> Hi,
-> 
-> On Thu, 17 Apr 2008, Paolo Bonzini wrote:
-> 
->> This patch adds a remote.<foo>.mirror configuration option that,
->> when set, automatically puts git-push in --mirror mode for that
->> remote.
-> 
-> Would it not be more logical to have remote.<nick>.pushOptions? (This 
-> would be in line with the branch.<name>.mergeOptions config setting...
+Hi,
 
-Maybe, but I wanted to have (later) "git push" push also to all mirror 
-branches, so it made sense to "special case" --mirror.  --force can 
-already be specified with +, and there are not many other options, so 
-remote.<nick>.mirror was the easiest to design and implement.
+On Tue, 15 Apr 2008, Scott Collins wrote:
 
-Paolo
+> Currently, for SSH clients restricted to git-shell, CVS_SERVER should
+> not be changed: git-shell understands the default value of 'cvs' to mean
+> git-cvsserver and actually _doesn't_ understand the command
+> 'git-cvsserver'.
+
+How about a new paragraph here?
+
+> This makes it totally transparent to CVS users, but the
+> original wording here perhaps less so to the person setting-up CVS
+> access.  Previous wording mentioning GIT_AUTHOR, GIT_COMMITTER variables
+> may not have made clear we really meant GIT_AUTHOR_(NAME|EMAIL), etc.
+
+Likewise here.
+
+> Add a bit of text to differentiate cvs -d (setting CVSROOT) from cvs co
+> -d (setting the name of the newly checked out directory).  Removed an
+> extra 'Example:' string.
+> 
+> Signed-off-by: Scott Collins <scc@ScottCollins.net>
+> ---
+>  Documentation/git-cvsserver.txt |   27 +++++++++++++++------------
+>  1 files changed, 15 insertions(+), 12 deletions(-)
+> 
+> diff --git a/Documentation/git-cvsserver.txt b/Documentation/git-cvsserver.txt
+> index 9cec802..44734e8 100644
+> --- a/Documentation/git-cvsserver.txt
+> +++ b/Documentation/git-cvsserver.txt
+> @@ -106,11 +106,13 @@ Note: Newer CVS versions (>= 1.12.11) also support specifying
+>  CVS_SERVER directly in CVSROOT like
+>  
+>  ------
+> -cvs -d ":ext;CVS_SERVER=git-cvsserver:user@server/path/repo.git" co <HEAD_name>
+> +cvs -d ":ext;CVS_SERVER=git-cvsserver:user@server/path/repo.git" co <HEAD_name> -d <dir_name>
+
+I am not really sure.  Normal usage AFAIAC is without -d.
+
+>  ------
+>  This has the advantage that it will be saved in your 'CVS/Root' files and
+>  you don't need to worry about always setting the correct environment
+> -variable.
+> +variable.  SSH users restricted to git-shell don't need to override the default
+> +with CVS_SERVER (and probably shouldn't) as git-shell understands 'cvs' to mean
+> +git-cvsserver.
+
+Please make these lines shorter.
+
+> @@ -141,25 +143,26 @@ allowing access over SSH.
+>          enabled=1
+>  ------
+>  --
+> -3. On the client machine you need to set the following variables.
+> -   CVSROOT should be set as per normal, but the directory should point at the
+> -   appropriate git repo. For example:
+> +3. If you didn't specify the CVSROOT/CVS_SERVER directly in the checkout command,
+> +   automatically saving it in your 'CVS/Root' files, then you need to set them
+> +   explicitly in your environment.  CVSROOT should be set as per normal, but the
+> +   directory should point at the appropriate git repo.  As above, for SSH clients
+> +   _not_ restricted to git-shell, CVS_SERVER should be set to git-cvsserver.
+
+Please make the lines shorter.
+
+Also, I seem to recall that "didn't" is considered colloquial speech, 
+while you should write "did not" in written documentation.
+
+Another thing: "CVSROOT should be set as per normal" strikes me as a 
+little short on concrete, helpful details.
+
+Thanks, Dscho
