@@ -1,112 +1,282 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: branch description
-Date: Sat, 19 Apr 2008 11:18:49 +0200
-Message-ID: <200804191118.50105.johan@herland.net>
-References: <9b3e2dc20804150951scf8b3c7x26f3a56eab1f9840@mail.gmail.com>
- <200804161029.18601.johan@herland.net> <200804182358.31041.jnareb@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: What's cooking in git.git (topics)
+Date: Sat, 19 Apr 2008 01:19:09 -0700
+Message-ID: <7vhcdyfe9u.fsf@gitster.siamese.dyndns.org>
+References: <7vlk4snpj3.fsf@gitster.siamese.dyndns.org>
+ <7vwso85qkf.fsf@gitster.siamese.dyndns.org>
+ <7vwso5r87q.fsf@gitster.siamese.dyndns.org>
+ <7v8x0992hy.fsf@gitster.siamese.dyndns.org>
+ <7vd4pf7h9y.fsf@gitster.siamese.dyndns.org>
+ <7vwsnjl21c.fsf@gitster.siamese.dyndns.org>
+ <7vhcehzdeg.fsf@gitster.siamese.dyndns.org>
+ <7vbq4j748l.fsf@gitster.siamese.dyndns.org>
+ <7vr6d8apjx.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, Matt Graham <mdg149@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Brian Gernhardt <benji@silverinsanity.com>,
-	Russ Dill <russ.dill@gmail.com>,
-	Stephen Sinclair <radarsat1@gmail.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Apr 19 18:11:13 2008
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 19 18:26:45 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jn9F5-00056l-1W
-	for gcvg-git-2@gmane.org; Sat, 19 Apr 2008 11:20:19 +0200
+	id 1Jn8Iw-0001kr-MI
+	for gcvg-git-2@gmane.org; Sat, 19 Apr 2008 10:20:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753285AbYDSJTd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Apr 2008 05:19:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753263AbYDSJTd
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 Apr 2008 05:19:33 -0400
-Received: from smtp.getmail.no ([84.208.20.33]:35068 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753252AbYDSJTc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Apr 2008 05:19:32 -0400
-Received: from pmxchannel-daemon.no-osl-m323-srv-004-z2.isp.get.no by
- no-osl-m323-srv-004-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- id <0JZK00K0BF88GY00@no-osl-m323-srv-004-z2.isp.get.no> for
- git@vger.kernel.org; Sat, 19 Apr 2008 11:19:20 +0200 (CEST)
-Received: from smtp.getmail.no ([10.5.16.1])
- by no-osl-m323-srv-004-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JZK00301F7EU9B0@no-osl-m323-srv-004-z2.isp.get.no> for
- git@vger.kernel.org; Sat, 19 Apr 2008 11:18:50 +0200 (CEST)
-Received: from alpha.herland ([84.215.102.95])
- by no-osl-m323-srv-009-z1.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JZK00J6SF7EJBD0@no-osl-m323-srv-009-z1.isp.get.no> for
- git@vger.kernel.org; Sat, 19 Apr 2008 11:18:50 +0200 (CEST)
-In-reply-to: <200804182358.31041.jnareb@gmail.com>
-Content-disposition: inline
-User-Agent: KMail/1.9.9
+	id S1752351AbYDSIT0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Apr 2008 04:19:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752100AbYDSIT0
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 Apr 2008 04:19:26 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:55861 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753227AbYDSITW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Apr 2008 04:19:22 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 8AA9136E7;
+	Sat, 19 Apr 2008 04:19:21 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 8505236E6; Sat, 19 Apr 2008 04:19:17 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79901>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79902>
 
-On Friday 18 April 2008, Jakub Narebski wrote:
-> On Wed, 16 April 2008, Johan Herland wrote:
-> > So far, the best proposal I've seen, is Hommey's suggestion of storing
-> > the description after the sha1 in the ref file itself. 
-> > Of course, git would have to be taught (a) to handle ref files with
-> > descriptions, and (b) to propagate descriptions along with refs.
-> 
-> (c) find a place for branch descriptions in packed refs.
+Here are the topics that have been cooking.  Commits prefixed
+with '-' are only in 'pu' while commits prefixed with '+' are
+in 'next'.
 
-This shouldn't be too hard. Today, we already have one kind of "special"
-lines in the packed-refs format: "peeled", which uses lines starting with
-"^". I think we could add another special kind of line called "description"
-which uses lines starting with "#". Multiline descriptions (if we want to
-support such) would just have "#" prepended to each line, and the parser
-would associate all "#"-lines with the most recently parsed ref (like it
-does for the "^"-line today).
+The topics list the commits in reverse chronological order.
 
-> Let me sum up here proposals where to put branch description:
-> 1. Put them in branch.<name>.description in repository config. Not easily
->    (automatically) propagated for dumb transports.
-> 2. Put them in-tree, which is a bad idea because branches are
->    un-versioned (or versioned separately), so branches description
->    should also be un-versioned.
-> 3. Put them in GIT_DIR/info/refs_description, in some format.  It makes
->    it very easy to add support for propagation for dumb transports.
->    Native transport probably would need some extension.  Should not
->    interfere with the rest of git code.
-> 4. Store description after sha1 in the ref file itself.  Automatic
->    propagation for dumb transport (whether we want it or not).  Native
->    transport as above.  Very high probabily of interfering with the rest
->    of code, especially shell part of Git.  Need to find a place for
->    descriptions in pack-refs.
-> 5. Store them as value of 'refs/heads/<branch>' file in a tree for
->    a commit for a special '<description>' separate special branch; at
->    least if I understand this proposal correctly.  Something like IIRC
->    the 'notes' / 'annotations' idea was implemented (on git mailing list;
->    it never got into mainline).
-> 
-> 
-> I think that the best proposal is (3), not (4) as you say.
+Caution. "next" has been rebuilt with the remaining topics on top of
+"master".
 
-The problem with (3) vs. (4) is that in (3) we must make sure that whenever
-a branch is moved/renamed (e.g. "git clone", "git branch -m", probably more
-as well), the corresponding description is moved/renamed as well. This is
-elegantly solved in (4). But as you say, (4) may have implementation
-difficulties of its own. I guess the first acceptable implementation will
-win.
+A rough timeline from now on.
 
+ * 1.5.5.1 this Sunday, with what's in 'maint' tonight.
 
-Have fun!
+ * Discussion and review on new feature and enhancement patch series
+   begins.  Please resubmit things that you were cooking in your head
+   during 1.5.5-rc period after cleaning up and retesting.
 
-...Johan
+ * 1.5.6 merge window closes (2008-05-14).
 
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+ * Fixes of 'master' continues; 1.5.6-rc0 gets tagged (2008-05-21).
+
+ * 1.5.6 Final (2008-06-08).
+
+----------------------------------------------------------------
+[New Topics]
+
+* ho/shared (Wed Apr 16 11:34:24 2008 +0300) 1 commit
+ + Make core.sharedRepository more generic
+
+Looked Ok, and will start cooking soon.
+
+* pb/remote-mirror-config (Thu Apr 17 13:17:20 2008 +0200) 1 commit
+ - Add a remote.*.mirror configuration option
+
+I haven't gave this very careful review yet.
+
+* ap/svn (Tue Apr 15 21:04:18 2008 -0400) 3 commits
+ - git-svn: add documentation for --add-author-from option.
+ - git-svn: Add --add-author-from option.
+ - git-svn: add documentation for --use-log-author option.
+
+Eric requested a new set of tests for this series.
+
+* lh/branch-merged (Fri Apr 18 18:30:15 2008 +0200) 3 commits
+ - Add tests for `branch --[no-]merged`
+ - git-branch.txt: compare --contains, --merged and --no-merged
+ - git-branch: add support for --merged and --no-merged
+
+Looked Ok, and will start cooking soon.
+
+* py/submodule-2 (Wed Apr 16 22:19:31 2008 +0800) 1 commit
+ - git-submodule: Extract functions module_info and module_url
+
+I am a bit slow reviewing this series; only managed to queue the first one
+so far.
+
+----------------------------------------------------------------
+[Graduated to "master"]
+
+----------------------------------------------------------------
+[Actively Cooking]
+
+* mk/color (Wed Apr 9 21:32:06 2008 +0200) 1 commit
+ + Use color.ui variable in scripts too
+
+* jk/remote-default-show (Wed Apr 9 11:15:51 2008 -0400) 1 commit
+ + git-remote: show all remotes with "git remote show"
+
+* jc/terminator-separator (Mon Apr 7 17:11:34 2008 -0700) 1 commit
+ + log: teach "terminator" vs "separator" mode to "--pretty=format"
+
+* jk/fetch-status (Wed Apr 9 20:11:52 2008 -0400) 1 commit
+ + git-fetch: always show status of non-tracking-ref fetches
+
+* py/submodule (Sat Apr 12 23:05:33 2008 +0800) 3 commits
+ + builtin-status: Add tests for submodule summary
+ + builtin-status: submodule summary support
+ + git-submodule summary: --for-status option
+
+* sg/merge-options (Sun Apr 6 03:23:47 2008 +0200) 6 commits
+ - merge: remove deprecated summary and diffstat options and config
+   variables
+ + merge, pull: add '--(no-)log' command line option
+ + fmt-merge-msg: add '--(no-)log' options and 'merge.log' config
+   variable
+ + add 'merge.stat' config variable
+ + merge, pull: introduce '--(no-)stat' option
+ + doc: moved merge.* config variables into separate merge-config.txt
+
+I fixed its too-eager deprecation.  The last one needs to be held back, as
+it actually removes the support for features that the main part of the
+series deprecates, until 1.6.0 or later.
+
+* jc/blame (Wed Apr 2 22:17:53 2008 -0700) 5 commits
+ + git-blame --reverse
+ + builtin-blame.c: allow more than 16 parents
+ + builtin-blame.c: move prepare_final() into a separate function.
+ + rev-list --children
+ + revision traversal: --children option
+
+The blame that finds where each line in the original lines moved to.
+
+* jc/lstat (Sun Mar 30 12:39:25 2008 -0700) 2 commits
+ + diff-files: mark an index entry we know is up-to-date as such
+ + write_index(): optimize ce_smudge_racily_clean_entry() calls with
+   CE_UPTODATE
+
+Further reduce redundant lstat(2) calls during "git status" and other
+common operations.
+
+* mv/defer-gc (Wed Apr 2 21:35:11 2008 +0200) 3 commits
+ + contrib/hooks: add an example pre-auto-gc hook
+ + Documentation/hooks: add pre-auto-gc hook
+ + git-gc --auto: add pre-auto-gc hook
+
+A new hook to stop "git gc --auto" from running.
+
+* jc/send-pack-tell-me-more (Thu Mar 20 00:44:11 2008 -0700) 1 commit
+ + "git push": tellme-more protocol extension
+
+Allows common ancestor negotiation for git-push to help people with shared
+repository workflow in certain minority situations.  The lack of protocol
+support has been bugging me for quite some time, and that was the reason I
+did this.  There recently was a problem report that had a scent of this
+issue which turned out to be a false alarm (it was about http-push which
+does not do the native pack protocol optimization and the reporter was
+pushing into an empty repository which needs full transfer anyway).
+
+* jc/dirstat (Tue Feb 12 17:06:58 2008 -0800) 1 commit
+ + diff: make --dirstat binary-file safe
+
+The current "dirstat" does totally wrong thing when the set of files
+changed includes a binary one.  This uses the same similarity evaluation
+code as rename heuristics uses to treat text and binary the same way.
+
+* lt/case-insensitive (Sat Mar 22 14:22:44 2008 -0700) 9 commits
+ + Make git-add behave more sensibly in a case-insensitive
+   environment
+ + When adding files to the index, add support for case-independent
+   matches
+ + Make unpack-tree update removed files before any updated files
+ + Make branch merging aware of underlying case-insensitive
+   filsystems
+ + Add 'core.ignorecase' option
+ + Make hash_name_lookup able to do case-independent lookups
+ + Make "index_name_exists()" return the cache_entry it found
+ + Move name hashing functions into a file of its own
+ + Make unpack_trees_options bit flags actual bitfields
+
+The beginning of case insensitive filesystem support, currently
+ASCII-only.
+
+* lh/git-file (Wed Feb 20 23:13:16 2008 +0100) 4 commits
+ + Teach GIT-VERSION-GEN about the .git file
+ + Teach git-submodule.sh about the .git file
+ + Teach resolve_gitlink_ref() about the .git file
+ + Add platform-independent .git "symlink"
+
+The idea and the implementation seem Ok, but this leaves
+distinct feeling that it is a solution still waiting for a user
+(e.g. "git submodule" enhancements to take advantage of this
+facility to preserve the subrepository while switching between a
+revision with a submodule and another before the submodule was
+bound to the superproject).
+
+* jc/sha1-lookup (Sun Dec 30 03:13:27 2007 -0800) 2 commits
+ + sha1-lookup: make selection of 'middle' less aggressive
+ + sha1-lookup: more memory efficient search in sorted list of SHA-1
+
+Micro-optimization whose real world benefit is not proven, so let's prove
+it or revert it by giving it a bit more exposure.
+
+----------------------------------------------------------------
+[On Hold]
+
+* js/decorate (Mon Apr 7 14:41:12 2008 +0100) 2 commits
+ - pretty=format: Add %d to show decoration
+ - decorate: use "const struct object"
+
+This has stalled, after a petered-out discussion.
+
+* bc/filter-branch (Wed Mar 26 10:47:09 2008 -0500) 1 commit
+ - filter-branch.sh: support nearly proper tag name filtering
+
+Instead of discarding signed tags, this demotes them to simply annotated,
+which is technically not that different from signed tags.  There was an
+objection if what this claims to do is the right thing to do to begin
+with.  Also I haven't verified if it does what it claims to do.
+
+Comments?
+
+* jc/test (Thu Feb 21 21:17:54 2008 -0800) 2 commits
+ - tests: convert "cmp" and "cmp -s" to test_cmp
+ - tests: test_cmp helper function
+
+This one may be more elaborate, but Jeff's patch is much simpler.
+
+* jc/rename-file-table (Fri Mar 7 14:03:19 2008 -0800) 1 commit
+ - diffcore-rename: make file_table available outside exact rename
+   detection
+
+* nd/dashless (Wed Nov 28 23:21:57 2007 +0700) 1 commit
+ - Move all dashed-form commands to libexecdir
+
+Scheduled for 1.6.0.
+
+* jc/dashless (Sat Dec 1 22:09:22 2007 -0800) 2 commits
+ - Prepare execv_git_cmd() for removal of builtins from the
+   filesystem
+ - git-shell: accept "git foo" form
+
+We do not plan to remove git-foo form completely from the filesystem at
+this point, but git-shell may need to be updated.
+
+* jc/cherry-pick (Wed Feb 20 23:17:06 2008 -0800) 3 commits
+ - WIP: rethink replay merge
+ - Start using replay-tree merge in cherry-pick
+ - revert/cherry-pick: start refactoring call to merge_recursive
+
+This is meant to improve cherry-pick's behaviour by not using
+merge-recursive, but unfortunately has stalled for some time now.
+
+* jc/lstat-debug (Thu Mar 27 16:56:53 2008 -0700) 3 commits
+ - lstat: introduce a wrapper xlstat
+
+* jc/stripspace (Sun Mar 9 00:30:35 2008 -0800) 6 commits
+ - git-am --forge: add Signed-off-by: line for the author
+ - git-am: clean-up Signed-off-by: lines
+ - stripspace: add --log-clean option to clean up signed-off-by:
+   lines
+ - stripspace: use parse_options()
+ - Add "git am -s" test
+ - git-am: refactor code to add signed-off-by line for the committer
+
+Just my toy at this moment.
