@@ -1,82 +1,112 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Confused about "ident" filter
-Date: Sat, 19 Apr 2008 01:27:30 -0700 (PDT)
-Message-ID: <m3skxiqmfr.fsf@localhost.localdomain>
-References: <Pine.LNX.4.64.0804170812230.7970@ds9.cixit.se>
-	<48076059.4040503@gnu.org>
+From: Johan Herland <johan@herland.net>
+Subject: Re: branch description
+Date: Sat, 19 Apr 2008 11:18:49 +0200
+Message-ID: <200804191118.50105.johan@herland.net>
+References: <9b3e2dc20804150951scf8b3c7x26f3a56eab1f9840@mail.gmail.com>
+ <200804161029.18601.johan@herland.net> <200804182358.31041.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Peter Karlsson <peter@softwolves.pp.se>,
-	Git Mailing List <git@vger.kernel.org>
-To: Paolo Bonzini <bonzini@gnu.org>
-X-From: git-owner@vger.kernel.org Sat Apr 19 18:01:57 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, Matt Graham <mdg149@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Brian Gernhardt <benji@silverinsanity.com>,
+	Russ Dill <russ.dill@gmail.com>,
+	Stephen Sinclair <radarsat1@gmail.com>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 19 18:11:13 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jn8Qm-0004Om-UY
-	for gcvg-git-2@gmane.org; Sat, 19 Apr 2008 10:28:21 +0200
+	id 1Jn9F5-00056l-1W
+	for gcvg-git-2@gmane.org; Sat, 19 Apr 2008 11:20:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752790AbYDSI1g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Apr 2008 04:27:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752774AbYDSI1e
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 Apr 2008 04:27:34 -0400
-Received: from fg-out-1718.google.com ([72.14.220.159]:28070 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751911AbYDSI1d (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Apr 2008 04:27:33 -0400
-Received: by fg-out-1718.google.com with SMTP id l27so861195fgb.17
-        for <git@vger.kernel.org>; Sat, 19 Apr 2008 01:27:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
-        bh=kBgLzcq85JTlKgkkSCNoYFCOXDJHGjxT3ZYqAuSYBfc=;
-        b=PMmiXt6LwcGvMFA/quDPXkDVFS2UB7VNJUBt9zb//zqP2KD3Z7IqUbyg1LK6NmeeK773f6yDM85WVlbVz8+O3tF+sMpyp8UhfwrjBTI//UebS3dXlgJOvye7GVQ+vgHGg9qjcBw8t9WZVZ2hWUEnBm7iuC50OMirCrprRI481wI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
-        b=eioe3ghxawy5wn8nQrWz6peiEEesizjN+WoTRsA4salVsGKKb1dSB6S0UMNdtjYIRINhhNvgX585NKRAPC6/j8j1WKKxBtc0UJ4fKQuBH9xYoH7BBjb8zMJcJwgrp3qWtaH6117tjWdYPe1rMQlsfsV4SBHxF1hGoVijhen0JVM=
-Received: by 10.82.127.15 with SMTP id z15mr6345600buc.41.1208593651783;
-        Sat, 19 Apr 2008 01:27:31 -0700 (PDT)
-Received: from localhost.localdomain ( [83.8.208.125])
-        by mx.google.com with ESMTPS id d27sm1404692nfh.2.2008.04.19.01.27.29
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 19 Apr 2008 01:27:30 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m3J8ROiF011454;
-	Sat, 19 Apr 2008 10:27:25 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m3J8RKWs011451;
-	Sat, 19 Apr 2008 10:27:20 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <48076059.4040503@gnu.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1753285AbYDSJTd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Apr 2008 05:19:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753263AbYDSJTd
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 Apr 2008 05:19:33 -0400
+Received: from smtp.getmail.no ([84.208.20.33]:35068 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753252AbYDSJTc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Apr 2008 05:19:32 -0400
+Received: from pmxchannel-daemon.no-osl-m323-srv-004-z2.isp.get.no by
+ no-osl-m323-srv-004-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ id <0JZK00K0BF88GY00@no-osl-m323-srv-004-z2.isp.get.no> for
+ git@vger.kernel.org; Sat, 19 Apr 2008 11:19:20 +0200 (CEST)
+Received: from smtp.getmail.no ([10.5.16.1])
+ by no-osl-m323-srv-004-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JZK00301F7EU9B0@no-osl-m323-srv-004-z2.isp.get.no> for
+ git@vger.kernel.org; Sat, 19 Apr 2008 11:18:50 +0200 (CEST)
+Received: from alpha.herland ([84.215.102.95])
+ by no-osl-m323-srv-009-z1.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JZK00J6SF7EJBD0@no-osl-m323-srv-009-z1.isp.get.no> for
+ git@vger.kernel.org; Sat, 19 Apr 2008 11:18:50 +0200 (CEST)
+In-reply-to: <200804182358.31041.jnareb@gmail.com>
+Content-disposition: inline
+User-Agent: KMail/1.9.9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79900>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79901>
 
-Paolo Bonzini <bonzini@gnu.org> writes:
-
-> Peter Karlsson wrote:
-> > I tried doing "git checkout test.perl", I tried "git clone" to get a new
-> > copy of the repository, but still it showed only "$Id$".
+On Friday 18 April 2008, Jakub Narebski wrote:
+> On Wed, 16 April 2008, Johan Herland wrote:
+> > So far, the best proposal I've seen, is Hommey's suggestion of storing
+> > the description after the sha1 in the ref file itself. 
+> > Of course, git would have to be taught (a) to handle ref files with
+> > descriptions, and (b) to propagate descriptions along with refs.
 > 
-> In fact I'm a little confused too.  The only way I found to expand
-> "$Id$" consistently was "rm test.perl; git checkout test.perl", or "rm
-> test.perl; git reset --hard HEAD".
+> (c) find a place for branch descriptions in packed refs.
 
-I think that "git checkout -f test.perl" should work, forcing git to
-replace existing file.
+This shouldn't be too hard. Today, we already have one kind of "special"
+lines in the packed-refs format: "peeled", which uses lines starting with
+"^". I think we could add another special kind of line called "description"
+which uses lines starting with "#". Multiline descriptions (if we want to
+support such) would just have "#" prepended to each line, and the parser
+would associate all "#"-lines with the most recently parsed ref (like it
+does for the "^"-line today).
 
-As to clone problem: it might be chicken and egg problem, with `ident`
-filter needing .gitattribites in working directory during checkout
-phase (currently there is no way to use gitattributes from a tree in
-repository), and checkout writing this file.
+> Let me sum up here proposals where to put branch description:
+> 1. Put them in branch.<name>.description in repository config. Not easily
+>    (automatically) propagated for dumb transports.
+> 2. Put them in-tree, which is a bad idea because branches are
+>    un-versioned (or versioned separately), so branches description
+>    should also be un-versioned.
+> 3. Put them in GIT_DIR/info/refs_description, in some format.  It makes
+>    it very easy to add support for propagation for dumb transports.
+>    Native transport probably would need some extension.  Should not
+>    interfere with the rest of git code.
+> 4. Store description after sha1 in the ref file itself.  Automatic
+>    propagation for dumb transport (whether we want it or not).  Native
+>    transport as above.  Very high probabily of interfering with the rest
+>    of code, especially shell part of Git.  Need to find a place for
+>    descriptions in pack-refs.
+> 5. Store them as value of 'refs/heads/<branch>' file in a tree for
+>    a commit for a special '<description>' separate special branch; at
+>    least if I understand this proposal correctly.  Something like IIRC
+>    the 'notes' / 'annotations' idea was implemented (on git mailing list;
+>    it never got into mainline).
+> 
+> 
+> I think that the best proposal is (3), not (4) as you say.
+
+The problem with (3) vs. (4) is that in (3) we must make sure that whenever
+a branch is moved/renamed (e.g. "git clone", "git branch -m", probably more
+as well), the corresponding description is moved/renamed as well. This is
+elegantly solved in (4). But as you say, (4) may have implementation
+difficulties of its own. I guess the first acceptable implementation will
+win.
+
+
+Have fun!
+
+...Johan
 
 -- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Johan Herland, <johan@herland.net>
+www.herland.net
