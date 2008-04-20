@@ -1,46 +1,89 @@
-From: Peter Eisentraut <peter_e@gmx.net>
-Subject: Context diffs
-Date: Sun, 20 Apr 2008 22:52:09 +0200
-Message-ID: <200804202252.10394.peter_e@gmx.net>
+From: martin f krafft <madduck@debian.org>
+Subject: Re: Bug#476076: gitweb fails with pathinfo and project with ++ in
+	the name
+Date: Sun, 20 Apr 2008 23:03:20 +0200
+Message-ID: <20080420210320.GA22732@piper.oerlikon.madduck.net>
+References: <20080420144654.GA11479@piper.oerlikon.madduck.net> <20080420155318.GV6024@mail-vs.djpig.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 20 22:53:00 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="CE+1k2dSO48ffgeK"
+Cc: 476076@bugs.debian.org
+To: git discussion list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Apr 20 23:04:22 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JngWx-0001eD-E4
-	for gcvg-git-2@gmane.org; Sun, 20 Apr 2008 22:52:59 +0200
+	id 1Jnghu-0004lB-Gk
+	for gcvg-git-2@gmane.org; Sun, 20 Apr 2008 23:04:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751042AbYDTUwO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Apr 2008 16:52:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751099AbYDTUwO
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Apr 2008 16:52:14 -0400
-Received: from mail.gmx.net ([213.165.64.20]:55364 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750997AbYDTUwN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Apr 2008 16:52:13 -0400
-Received: (qmail invoked by alias); 20 Apr 2008 20:52:11 -0000
-Received: from xdsl-213-196-202-104.netcologne.de (EHLO colt.local) [213.196.202.104]
-  by mail.gmx.net (mp053) with SMTP; 20 Apr 2008 22:52:11 +0200
-X-Authenticated: #495269
-X-Provags-ID: V01U2FsdGVkX1/cLP4MVsncIHqKLIHwbihQwPe9FbnxnYZAgNxjln
-	ouUb9JWkFzA9NA
-User-Agent: KMail/1.9.9
+	id S1751434AbYDTVDd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Apr 2008 17:03:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751257AbYDTVDc
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Apr 2008 17:03:32 -0400
+Received: from clegg.madduck.net ([82.197.162.59]:47334 "EHLO
+	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751214AbYDTVDc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Apr 2008 17:03:32 -0400
+Received: from wall.oerlikon.madduck.net (84-75-148-163.dclient.hispeed.ch [84.75.148.163])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "wall.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
+	by clegg.madduck.net (postfix) with ESMTP id E7BD6A80FF;
+	Sun, 20 Apr 2008 23:03:21 +0200 (CEST)
+Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [192.168.14.3])
+	by wall.oerlikon.madduck.net (Postfix) with ESMTP id 2E8939F18E;
+	Sun, 20 Apr 2008 23:03:21 +0200 (CEST)
+Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
+	id 01B6BC1757; Sun, 20 Apr 2008 23:03:20 +0200 (CEST)
 Content-Disposition: inline
-X-Y-GMX-Trusted: 0
+In-Reply-To: <20080420155318.GV6024@mail-vs.djpig.de>
+X-Debbugs-No-Ack: please spare me
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+X-Virus-Scanned: ClamAV 0.91.2/6850/Sun Apr 20 19:05:45 2008 on clegg.madduck.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79984>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79985>
 
-Would it be possible to support context diffs (like diff -c) in git-diff?  In 
-many cases these are easier to interpret than the unified diff format.
 
-I know I can do this via an external diff wrapper, but it'd be nicer if this 
-were built in, considering that it is a very common format.
+--CE+1k2dSO48ffgeK
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+reassign 476076 perl-modules
+forcemerge 411735 476076
+thanks
+
+also sprach Frank Lichtenheld <djpig@debian.org> [2008.04.20.1753 +0200]:
+> CGI->path_info in etch's version is broken, you need either use a newer
+> CGI.pm or $ENV{PATH_INFO} directly.
+
+Fwiw: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=3D411735
+
+Fixing it exposed a similar bug in gitweb.perl; the patch will
+follow in a few minutes.
+
+--=20
+ .''`.   martin f. krafft <madduck@debian.org>
+: :'  :  proud Debian developer, author, administrator, and user
+`. `'`   http://people.debian.org/~madduck - http://debiansystem.info
+  `-  Debian - when you have better things to do than fixing systems
+
+--CE+1k2dSO48ffgeK
+Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
+Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFIC6+YIgvIgzMMSnURAvbCAJ0Rzvb+c8OshXp1eszoGqVf7p+7ugCeMow+
+WOzgJswoB6pJmVIqnFMfrb4=
+=9vpa
+-----END PGP SIGNATURE-----
+
+--CE+1k2dSO48ffgeK--
