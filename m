@@ -1,110 +1,121 @@
-From: Luciano Rocha <luciano@eurotux.com>
-Subject: Re: [PATCH 01/02/RFC] implement a stat cache
-Date: Sun, 20 Apr 2008 23:04:02 +0100
-Message-ID: <20080420215700.GA18626@bit.office.eurotux.com>
-References: <1208633300-74603-1-git-send-email-pdebie@ai.rug.nl> <alpine.LFD.1.10.0804191443550.2779@woody.linux-foundation.org> <FEFAB19F-742A-452E-87C1-CD55AD0996DB@ai.rug.nl> <alpine.LFD.1.10.0804191515120.2779@woody.linux-foundation.org> <20080420111346.GA13411@bit.office.eurotux.com> <alpine.LFD.1.10.0804200836310.2779@woody.linux-foundation.org>
+From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
+Subject: [StGit PATCH 00/10] Updated "stg reset" series
+Date: Mon, 21 Apr 2008 00:10:20 +0200
+Message-ID: <20080420215625.5837.82896.stgit@yoghurt>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="vni90+aGYgRvsTuO"
-Cc: Pieter de Bie <pdebie@ai.rug.nl>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Mon Apr 21 00:06:14 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 21 00:11:19 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jnhen-0006B8-1u
-	for gcvg-git-2@gmane.org; Mon, 21 Apr 2008 00:05:51 +0200
+	id 1Jnhki-0007p9-64
+	for gcvg-git-2@gmane.org; Mon, 21 Apr 2008 00:11:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750956AbYDTWEN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Apr 2008 18:04:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750885AbYDTWEN
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Apr 2008 18:04:13 -0400
-Received: from os.eurotux.com ([216.75.63.6]:42600 "EHLO os.eurotux.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750738AbYDTWEM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Apr 2008 18:04:12 -0400
-Received: (qmail 7388 invoked from network); 20 Apr 2008 22:04:10 -0000
-Received: from nc.eurotux.com (HELO bit.office.eurotux.com) (luciano@81.84.255.161)
-  by os.eurotux.com with AES256-SHA encrypted SMTP; 20 Apr 2008 22:04:10 -0000
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.1.10.0804200836310.2779@woody.linux-foundation.org>
-User-Agent: Mutt/1.5.14 (2007-03-31)
+	id S1751273AbYDTWKa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 20 Apr 2008 18:10:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751380AbYDTWKa
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Apr 2008 18:10:30 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3177 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751273AbYDTWK3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Apr 2008 18:10:29 -0400
+Received: from localhost ([127.0.0.1] helo=[127.0.1.1])
+	by diana.vm.bytemark.co.uk with esmtp (Exim 3.36 #1 (Debian))
+	id 1Jnhjn-00081K-00; Sun, 20 Apr 2008 23:10:19 +0100
+User-Agent: StGIT/0.14.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79988>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79989>
+
+The patch stack log / stg reset series has matured over the weekend.
+The major highlights are
+
+  1. When a command fails to push a patch due to conflicts, it will
+     log two entries -- one for the part of the command that
+     succeeded, and one just for the conflicting push. This makes it
+     possible to undo just the last part, and not the whole command.
+
+  2. I've tightened the checks so that conflicts will prevent most
+     commands from working unless they actively claim to make sense in
+     the face of conflicts. Basically, only commands that don't touch
+     the topmost patch should be able to run when there are conflicts.
+
+  3. stg reset now understands --hard, which makes it zonk any local
+     changes, including conflicts.
+
+(1) and (3) means that
+
+  $ stg reset --hard <branchname>.stgit^~1
+
+can be used instead of stg push --undo when you want to undo a
+conflicting push. Now I just have to make that available as
+
+  $ stg undo
+
+so that it actually becomes usable ...
+
+These patches are available at
+
+  git://repo.or.cz/stgit/kha.git experimental
+
+---
+
+Karl Hasselstr=C3=B6m (10):
+      Don't write a log entry if there were no changes
+      Add a --hard flag to stg reset
+      Log conflicts separately for all commands
+      Log conflicts separately
+      New command: stg reset
+      Add utility function for reordering patches
+      Write to a stack log when stack is modified
+      Library functions for tree and blob manipulation
+      Add property with a list of all patch names
+      Prevent most commands from running when there are conflicts
 
 
---vni90+aGYgRvsTuO
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Sun, Apr 20, 2008 at 09:03:13AM -0700, Linus Torvalds wrote:
->=20
->=20
-> On Sun, 20 Apr 2008, Luciano Rocha wrote:
-> >=20
-> > That's a lot. Why not use a stat cache?
->=20
-> Well, the thing is, the OS _does_ a stat cache for us, and the one that=
-=20
-> the OS maintains is a lot better, in that it works across processes and i=
-s=20
-> coherent with other processes changing things.
-
-Sure. I am even unsure if the cache didn't break any sanity check (did a
-file change after ...? Did someone chdir(2)?).
-
-> And the thing is, your stat cache makes the *common* cases slower. I=20
-> didn't do a whole lot of testing, but on my machine, doing just a "git=20
-> status" with and without your stat cache shows
-<snip>
-
-Well, it can be improved. The memcpy can be avoided by using the stored
-data directly, and a _or_die can be added for the common case.
-
-> Now, admittedly, I also do think that we should generally optimize the=20
-> slow cases more than we should care about things that are already very=20
-> fast, so I do not think that it's wrong to say "ok, let's make the really=
-=20
-> fast case a bit slower, in order to not be so slow in the bad case", so i=
-n=20
-> that sense I do not think the slowdown is disastrous.
->=20
-> BUT.=20
->=20
-> I really dislike adding a cache that is there just because we do somethin=
-g=20
-> stupid. We can fix the over-abundance of lstat() calls by just being=20
-> smarter. And the smarter we are, the less the cache will help, and the=20
-> more it will hurt. Which is the real reason why I think the cache is a=20
-> really really bad idea: it optimizes for the wrong kind of behavior.
-
-I agree completly. If we can reduce the number of (l)stat calls to a
-single one per file, then we'll all be happier. But that kind of change
-is beyond my current understanding of git internals. ;)
-
-Regards,
-Luciano Rocha
+ stgit/commands/branch.py   |   20 ++++-
+ stgit/commands/clean.py    |    3 +
+ stgit/commands/coalesce.py |    6 +-
+ stgit/commands/commit.py   |   13 ++--
+ stgit/commands/common.py   |    8 ++
+ stgit/commands/delete.py   |   14 +++-
+ stgit/commands/diff.py     |    2 -
+ stgit/commands/edit.py     |    3 +
+ stgit/commands/export.py   |    2 -
+ stgit/commands/files.py    |    2 -
+ stgit/commands/id.py       |    2 -
+ stgit/commands/log.py      |    2 -
+ stgit/commands/mail.py     |    2 -
+ stgit/commands/patches.py  |    2 -
+ stgit/commands/reset.py    |  118 ++++++++++++++++++++++++++++++++
+ stgit/commands/series.py   |    2 -
+ stgit/commands/show.py     |    2 -
+ stgit/commands/status.py   |    3 +
+ stgit/commands/top.py      |    2 -
+ stgit/commands/uncommit.py |    5 +
+ stgit/lib/git.py           |  143 +++++++++++++++++++++++++++++++++---=
+---
+ stgit/lib/log.py           |  161 ++++++++++++++++++++++++++++++++++++=
+++++++++
+ stgit/lib/stack.py         |    8 ++
+ stgit/lib/transaction.py   |   92 ++++++++++++++++++++-----
+ stgit/main.py              |    4 +
+ t/t3100-reset.sh           |  151 ++++++++++++++++++++++++++++++++++++=
++++++
+ t/t3101-reset-hard.sh      |   56 +++++++++++++++
+ 27 files changed, 754 insertions(+), 74 deletions(-)
+ create mode 100644 stgit/commands/reset.py
+ create mode 100644 stgit/lib/log.py
+ create mode 100755 t/t3100-reset.sh
+ create mode 100755 t/t3101-reset-hard.sh
 
 --=20
-Luciano Rocha <luciano@eurotux.com>
-Eurotux Inform=E1tica, S.A. <http://www.eurotux.com/>
-
---vni90+aGYgRvsTuO
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (GNU/Linux)
-
-iD8DBQFIC73SinSul6a7oB8RAl8MAJ9z7LRL54ndM30XaklgoPxNsZ5hogCfeHU2
-78wnYdEazMwH6vL2kZVF3w0=
-=vxbI
------END PGP SIGNATURE-----
-
---vni90+aGYgRvsTuO--
+Karl Hasselstr=C3=B6m, kha@treskal.com
+      www.treskal.com/kalle
