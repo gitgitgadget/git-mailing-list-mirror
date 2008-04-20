@@ -1,64 +1,86 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/8] Add a lockfile function to append to a file
-Date: Sun, 20 Apr 2008 17:14:36 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0804201714230.5084@eeepc-johanness>
-References: <alpine.LNX.1.00.0804171950140.19665@iabervon.org> <7vtzhxce9g.fsf@gitster.siamese.dyndns.org>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: Git performance on OS X
+Date: Sun, 20 Apr 2008 18:17:50 +0200
+Message-ID: <85tzhwv6tt.fsf@lola.goethe.zz>
+References: <1208633300-74603-1-git-send-email-pdebie@ai.rug.nl>
+	<alpine.LFD.1.10.0804191341210.2779@woody.linux-foundation.org>
+	<alpine.LFD.1.10.0804191422480.2779@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Apr 20 18:15:07 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Pieter de Bie <pdebie@ai.rug.nl>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sun Apr 20 18:18:52 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JncC2-00087k-Gl
-	for gcvg-git-2@gmane.org; Sun, 20 Apr 2008 18:15:06 +0200
+	id 1JncFf-0000uM-M3
+	for gcvg-git-2@gmane.org; Sun, 20 Apr 2008 18:18:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751333AbYDTQOU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Apr 2008 12:14:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751012AbYDTQOU
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Apr 2008 12:14:20 -0400
-Received: from mail.gmx.net ([213.165.64.20]:45832 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750765AbYDTQOT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Apr 2008 12:14:19 -0400
-Received: (qmail invoked by alias); 20 Apr 2008 16:14:17 -0000
-Received: from R16f8.r.pppool.de (EHLO eeepc-johanness.st-andrews.ac.uk) [89.54.22.248]
-  by mail.gmx.net (mp006) with SMTP; 20 Apr 2008 18:14:17 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18/9/IoTMQ/I9z3A/DnFUEHO2mkacKiiv8Q2qqmbp
-	9Le0hXIFcTh+Pm
-X-X-Sender: user@eeepc-johanness
-In-Reply-To: <7vtzhxce9g.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1753284AbYDTQSF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Apr 2008 12:18:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753075AbYDTQSD
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Apr 2008 12:18:03 -0400
+Received: from mail-in-12.arcor-online.net ([151.189.21.52]:44292 "EHLO
+	mail-in-12.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752340AbYDTQSB (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 20 Apr 2008 12:18:01 -0400
+Received: from mail-in-18-z2.arcor-online.net (mail-in-18-z2.arcor-online.net [151.189.8.35])
+	by mail-in-12.arcor-online.net (Postfix) with ESMTP id 7DC7284458;
+	Sun, 20 Apr 2008 18:18:00 +0200 (CEST)
+Received: from mail-in-13.arcor-online.net (mail-in-13.arcor-online.net [151.189.21.53])
+	by mail-in-18-z2.arcor-online.net (Postfix) with ESMTP id 6563D51081C;
+	Sun, 20 Apr 2008 18:18:00 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-002-239.pools.arcor-ip.net [84.61.2.239])
+	by mail-in-13.arcor-online.net (Postfix) with ESMTP id 2B1E531D8E9;
+	Sun, 20 Apr 2008 18:18:00 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id C39D91C39587; Sun, 20 Apr 2008 18:17:51 +0200 (CEST)
+In-Reply-To: <alpine.LFD.1.10.0804191422480.2779@woody.linux-foundation.org>
+	(Linus Torvalds's message of "Sat, 19 Apr 2008 14:29:56 -0700 (PDT)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.60 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.92.1/6848/Sun Apr 20 16:54:16 2008 on mail-in-13.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79962>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79963>
 
-Hi,
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-On Sat, 19 Apr 2008, Junio C Hamano wrote:
+> On Sat, 19 Apr 2008, Linus Torvalds wrote:
+>> 
+>> Notice how this patch doesn' actually change the fundamental O(n^2) 
+>> behaviour, but it makes it much cheaper by generally avoiding the 
+>> expensive 'fnmatch' and 'strlen/strncmp' when they are obviously not 
+>> needed.
+>
+> Side note: on the kenrel tree, it makes the (insane!) operation 
+>
+> 	git add $(git ls-files)
+>
+> go from 49 seconds down to 17 sec. So it does make a huge difference
+> for me, but I also want to point out that this really isn't a sane
+> operation to do (I also think that 17 sec is totally unacceptable, but
+> I cannot find it in me to care, since I don't think this is an
+> operation that anybody should ever do!)
 
-> Daniel Barkalow <barkalow@iabervon.org> writes:
-> 
-> > This takes care of copying the original contents into the replacement
-> > file after the lock is held, so that concurrent additions can't miss
-> > each other's changes.
-> >
-> > Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
-> > ---
-> > How about this? Also doesn't leak a fd and catches trying to append to a 
-> > file you can't read. Should I worry about mmap failing after the open?
-> 
-> We have copy.c to copy small existing files, while detecting failure to
-> copy properly.  How about doing something like this instead?
+It is my opinion that git should likely presort the patterns (not just
+here), and should traverse the trees alphabetically.  In that case, a
+merge-like algorithm will pretty much do the trick in O(n), with O(n lg
+n) preprocessing cost.
 
-I like it.
+Presorting can only be done approximately in the case of wildcards: for
+those, we have two relevant points in the sort order: one where it can
+start matching, one where it can't match anymore.
 
-Ciao,
-Dscho
+The easiest way to make this more efficient would be to retain the
+O(n*m) algorithm, but presort the patterns and let them trickle
+head-first into the O(m) pattern list only when they start having a
+chance of matching, and remove them from the O(m) list once a non-match
+has passed them alphabetically for good.
+
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
