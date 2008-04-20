@@ -1,130 +1,68 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: [PATCH] Allow cherry-pick (and revert) to add signoff line
-Date: Sun, 20 Apr 2008 20:28:57 +0200
-Message-ID: <20080420182857.GA15277@atjola.homenet>
-References: <1208714585-4053-1-git-send-email-dpmcgee@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: [PATCH] completion: remove use of dashed git commands
+Date: Sun, 20 Apr 2008 20:53:33 +0200
+Message-ID: <vpqwsmstl1u.fsf@bauges.imag.fr>
+References: <1208712525-1747-1-git-send-email-dpmcgee@gmail.com>
+	<alpine.DEB.1.00.0804201841570.5084@eeepc-johanness>
+	<449c10960804201049o1c8f0be4m36dc5ce2afec2de6@mail.gmail.com>
+	<alpine.DEB.1.00.0804201853150.5084@eeepc-johanness>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Dan McGee <dpmcgee@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 20 20:29:48 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Dan McGee <dpmcgee@gmail.com>, spearce@spearce.org,
+	git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Apr 20 20:55:16 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JneIN-00069l-FH
-	for gcvg-git-2@gmane.org; Sun, 20 Apr 2008 20:29:47 +0200
+	id 1Jneh1-0007jE-0B
+	for gcvg-git-2@gmane.org; Sun, 20 Apr 2008 20:55:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754469AbYDTS3B convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 20 Apr 2008 14:29:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753966AbYDTS3B
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Apr 2008 14:29:01 -0400
-Received: from mail.gmx.net ([213.165.64.20]:36380 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753225AbYDTS3A (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Apr 2008 14:29:00 -0400
-Received: (qmail invoked by alias); 20 Apr 2008 18:28:58 -0000
-Received: from i577ADBD9.versanet.de (EHLO atjola.local) [87.122.219.217]
-  by mail.gmx.net (mp017) with SMTP; 20 Apr 2008 20:28:58 +0200
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX19RKA520ZFRJIfpnliONOcr68QMa/CfHrv+nUJmGi
-	xiP0Vb1yIWM28c
-Content-Disposition: inline
-In-Reply-To: <1208714585-4053-1-git-send-email-dpmcgee@gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-X-Y-GMX-Trusted: 0
+	id S1755588AbYDTSy2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Apr 2008 14:54:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755449AbYDTSy1
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Apr 2008 14:54:27 -0400
+Received: from imag.imag.fr ([129.88.30.1]:48741 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755564AbYDTSy1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Apr 2008 14:54:27 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id m3KIrccl027157
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Sun, 20 Apr 2008 20:53:38 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1JnefO-0005mw-0J; Sun, 20 Apr 2008 20:53:34 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1JnefN-0002Nv-Tq; Sun, 20 Apr 2008 20:53:33 +0200
+In-Reply-To: <alpine.DEB.1.00.0804201853150.5084@eeepc-johanness> (Johannes Schindelin's message of "Sun\, 20 Apr 2008 18\:54\:06 +0100 \(BST\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Sun, 20 Apr 2008 20:53:39 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79975>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79976>
 
-On 2008.04.20 13:03:05 -0500, Dan McGee wrote:
-> I often find myself pulling patches off of other peoples trees using
-> cherry-pick, and following it with an immediate 'git commit --amend -=
-s'
-> command. Eliminate the need for a double commit by allowing signoff o=
-n a
-> cherry-pick or revert.
->=20
-> Signed-off-by: Dan McGee <dpmcgee@gmail.com>
-> ---
->=20
-> This is something I have done in my workflow for a long time, and it =
-seems
-> like a weird omission to me. Signoffs can be done on git-am without h=
-aving
-> a second commit, and I often have a workflow where I am picking patch=
-es from
-> other users' topic branches and have reviewed the patch and would lik=
-e to
-> signoff when I pull it into my tree.
->=20
-> I'm not particularly happy about the 4 case if statement at the end, =
-so I'd
-> be happy to clean that up if anyone has suggestions.
->=20
->  builtin-revert.c |   11 ++++++++---
->  1 files changed, 8 insertions(+), 3 deletions(-)
->=20
-> diff --git a/builtin-revert.c b/builtin-revert.c
-> index 607a2f0..433d0dd 100644
-> --- a/builtin-revert.c
-> +++ b/builtin-revert.c
-> @@ -33,7 +33,7 @@ static const char * const cherry_pick_usage[] =3D {
->  	NULL
->  };
-> =20
-> -static int edit, no_replay, no_commit, mainline;
-> +static int edit, no_replay, no_commit, mainline, signoff;
->  static enum { REVERT, CHERRY_PICK } action;
->  static struct commit *commit;
-> =20
-> @@ -53,6 +53,7 @@ static void parse_args(int argc, const char **argv)
->  		OPT_BOOLEAN('e', "edit", &edit, "edit the commit message"),
->  		OPT_BOOLEAN('x', NULL, &no_replay, "append commit name when cherry=
--picking"),
->  		OPT_BOOLEAN('r', NULL, &noop, "no-op (backward compatibility)"),
-> +		OPT_BOOLEAN('s', "signoff", &signoff, "add Signed-off-by: header")=
-,
->  		OPT_INTEGER('m', "mainline", &mainline, "parent number"),
->  		OPT_END(),
->  	};
-> @@ -404,10 +405,14 @@ static int revert_or_cherry_pick(int argc, cons=
-t char **argv)
->  	 */
-> =20
->  	if (!no_commit) {
-> -		if (edit)
-> +		if (edit && !signoff)
->  			return execl_git_cmd("commit", "-n", NULL);
-> -		else
-> +		else if (edit)
-> +			return execl_git_cmd("commit", "-n", "-s", NULL);
-> +		else if (!signoff)
->  			return execl_git_cmd("commit", "-n", "-F", defmsg, NULL);
-> +		else
-> +			return execl_git_cmd("commit", "-n", "-s", "-F", defmsg, NULL);
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-maybe like this?
+> Oh, I must have missed that.  Nevertheless, I think it should be 
+> synchronised with when the dashed commands vanish from the default 
+> installation.
 
-	if (!no_commit) {
-		char **argv[6] =3D { "commit", "-n" };
-		int argc =3D 2;
-		if (signoff)
-			argv[argc++] =3D "-s";
-		if (!edit) {
-			argv[argc++] =3D "-F";
-			argv[argc++] =3D defmsg;
-		}
-		argv[argc] =3D NULL;
-		execv_git_command(argv);
-	}
+I think you missed the point of the patch.
 
-It duplicates what execl_git_cmd does, but other places already work
-similar (eg. cmd_describe, when --contains is given), and IMHO it's
-nicer than the if-else chain.
+It removes _uses_ of dashed-form in the completion script, but doesn't
+remove completion for dashed forms. That could be made clear in the
+commit message to avoid confusion.
 
-Bj=F6rn
+-- 
+Matthieu
