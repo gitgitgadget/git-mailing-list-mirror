@@ -1,86 +1,79 @@
 From: David Kastrup <dak@gnu.org>
 Subject: Re: Git performance on OS X
-Date: Sun, 20 Apr 2008 18:17:50 +0200
-Message-ID: <85tzhwv6tt.fsf@lola.goethe.zz>
+Date: Sun, 20 Apr 2008 18:22:59 +0200
+Message-ID: <85prskv6l8.fsf@lola.goethe.zz>
 References: <1208633300-74603-1-git-send-email-pdebie@ai.rug.nl>
-	<alpine.LFD.1.10.0804191341210.2779@woody.linux-foundation.org>
-	<alpine.LFD.1.10.0804191422480.2779@woody.linux-foundation.org>
+	<alpine.LFD.1.10.0804191443550.2779@woody.linux-foundation.org>
+	<FEFAB19F-742A-452E-87C1-CD55AD0996DB@ai.rug.nl>
+	<m3od85qxcl.fsf@localhost.localdomain>
+	<alpine.LFD.1.10.0804191547320.2779@woody.linux-foundation.org>
+	<alpine.LFD.1.10.0804191551540.2779@woody.linux-foundation.org>
+	<0BE9BBE3-EA9D-4A66-A086-A2A1B289B0DD@ai.rug.nl>
+	<alpine.LFD.1.10.0804191619240.2779@woody.linux-foundation.org>
+	<2F8F3BF2-66F9-473C-BE82-8F784E1FF9A4@ai.rug.nl>
+	<alpine.LFD.1.10.0804191727270.2779@woody.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Pieter de Bie <pdebie@ai.rug.nl>, git@vger.kernel.org
+Cc: Pieter de Bie <pdebie@ai.rug.nl>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
 To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sun Apr 20 18:18:52 2008
+X-From: git-owner@vger.kernel.org Sun Apr 20 18:24:00 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JncFf-0000uM-M3
-	for gcvg-git-2@gmane.org; Sun, 20 Apr 2008 18:18:52 +0200
+	id 1JncKa-0002ai-VJ
+	for gcvg-git-2@gmane.org; Sun, 20 Apr 2008 18:23:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753284AbYDTQSF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Apr 2008 12:18:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753075AbYDTQSD
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Apr 2008 12:18:03 -0400
-Received: from mail-in-12.arcor-online.net ([151.189.21.52]:44292 "EHLO
-	mail-in-12.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752340AbYDTQSB (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 20 Apr 2008 12:18:01 -0400
-Received: from mail-in-18-z2.arcor-online.net (mail-in-18-z2.arcor-online.net [151.189.8.35])
-	by mail-in-12.arcor-online.net (Postfix) with ESMTP id 7DC7284458;
-	Sun, 20 Apr 2008 18:18:00 +0200 (CEST)
-Received: from mail-in-13.arcor-online.net (mail-in-13.arcor-online.net [151.189.21.53])
-	by mail-in-18-z2.arcor-online.net (Postfix) with ESMTP id 6563D51081C;
-	Sun, 20 Apr 2008 18:18:00 +0200 (CEST)
+	id S1753566AbYDTQXL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Apr 2008 12:23:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752270AbYDTQXK
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Apr 2008 12:23:10 -0400
+Received: from mail-in-13.arcor-online.net ([151.189.21.53]:57125 "EHLO
+	mail-in-13.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751768AbYDTQXJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 20 Apr 2008 12:23:09 -0400
+Received: from mail-in-16-z2.arcor-online.net (mail-in-16-z2.arcor-online.net [151.189.8.33])
+	by mail-in-13.arcor-online.net (Postfix) with ESMTP id 5C0821E51E6;
+	Sun, 20 Apr 2008 18:23:07 +0200 (CEST)
+Received: from mail-in-12.arcor-online.net (mail-in-12.arcor-online.net [151.189.21.52])
+	by mail-in-16-z2.arcor-online.net (Postfix) with ESMTP id 4601F25411B;
+	Sun, 20 Apr 2008 18:23:07 +0200 (CEST)
 Received: from lola.goethe.zz (dslb-084-061-002-239.pools.arcor-ip.net [84.61.2.239])
-	by mail-in-13.arcor-online.net (Postfix) with ESMTP id 2B1E531D8E9;
-	Sun, 20 Apr 2008 18:18:00 +0200 (CEST)
+	by mail-in-12.arcor-online.net (Postfix) with ESMTP id 09064285428;
+	Sun, 20 Apr 2008 18:23:07 +0200 (CEST)
 Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id C39D91C39587; Sun, 20 Apr 2008 18:17:51 +0200 (CEST)
-In-Reply-To: <alpine.LFD.1.10.0804191422480.2779@woody.linux-foundation.org>
-	(Linus Torvalds's message of "Sat, 19 Apr 2008 14:29:56 -0700 (PDT)")
+	id 5B97E1C39587; Sun, 20 Apr 2008 18:22:59 +0200 (CEST)
+In-Reply-To: <alpine.LFD.1.10.0804191727270.2779@woody.linux-foundation.org>
+	(Linus Torvalds's message of "Sat, 19 Apr 2008 17:31:41 -0700 (PDT)")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.60 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.92.1/6848/Sun Apr 20 16:54:16 2008 on mail-in-13.arcor-online.net
+X-Virus-Scanned: ClamAV 0.92.1/6848/Sun Apr 20 16:54:16 2008 on mail-in-12.arcor-online.net
 X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79963>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79964>
 
 Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> On Sat, 19 Apr 2008, Linus Torvalds wrote:
->> 
->> Notice how this patch doesn' actually change the fundamental O(n^2) 
->> behaviour, but it makes it much cheaper by generally avoiding the 
->> expensive 'fnmatch' and 'strlen/strncmp' when they are obviously not 
->> needed.
+> Taking three seconds for the warm-cache case for just 50,000 files is 
+> ludicrous. That's about an order-and-a-half slower than what I see.
 >
-> Side note: on the kenrel tree, it makes the (insane!) operation 
+> Maybe my CPU is faster too (2.66GHz Core 2), but the thing is, Linux 
+> really does tend to outperform others at a lot of these kinds of loads. 
+> System calls are fast to begin with, and the Linux directory cache kicks 
+> ass, if I do say so myself.
 >
-> 	git add $(git ls-files)
->
-> go from 49 seconds down to 17 sec. So it does make a huge difference
-> for me, but I also want to point out that this really isn't a sane
-> operation to do (I also think that 17 sec is totally unacceptable, but
-> I cannot find it in me to care, since I don't think this is an
-> operation that anybody should ever do!)
+> OS X doth suck. 
 
-It is my opinion that git should likely presort the patterns (not just
-here), and should traverse the trees alphabetically.  In that case, a
-merge-like algorithm will pretty much do the trick in O(n), with O(n lg
-n) preprocessing cost.
+Oh, but OS X does utf8 unification and case folding: so it is actually
+doing quite a bit more than Linux.
 
-Presorting can only be done approximately in the case of wildcards: for
-those, we have two relevant points in the sort order: one where it can
-start matching, one where it can't match anymore.
-
-The easiest way to make this more efficient would be to retain the
-O(n*m) algorithm, but presort the patterns and let them trickle
-head-first into the O(m) pattern list only when they start having a
-chance of matching, and remove them from the O(m) list once a non-match
-has passed them alphabetically for good.
+Of course, doing that sucks for even more reasons, but it is not an
+accident.  It is intentional brain damage.
 
 -- 
 David Kastrup, Kriemhildstr. 15, 44793 Bochum
