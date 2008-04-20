@@ -1,88 +1,107 @@
-From: "Dan McGee" <dpmcgee@gmail.com>
-Subject: Re: [PATCH] completion: remove use of dashed git commands
-Date: Sun, 20 Apr 2008 12:58:35 -0500
-Message-ID: <449c10960804201058h7322590eg9864be2c652b0091@mail.gmail.com>
-References: <1208712525-1747-1-git-send-email-dpmcgee@gmail.com>
-	 <alpine.DEB.1.00.0804201841570.5084@eeepc-johanness>
-	 <449c10960804201049o1c8f0be4m36dc5ce2afec2de6@mail.gmail.com>
-	 <alpine.DEB.1.00.0804201853150.5084@eeepc-johanness>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: spearce@spearce.org, git@vger.kernel.org
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Apr 20 19:59:24 2008
+From: Dan McGee <dpmcgee@gmail.com>
+Subject: [PATCH] Allow cherry-pick (and revert) to add signoff line
+Date: Sun, 20 Apr 2008 13:03:05 -0500
+Message-ID: <1208714585-4053-1-git-send-email-dpmcgee@gmail.com>
+Cc: Dan McGee <dpmcgee@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 20 20:03:58 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jndox-0003Xe-M0
-	for gcvg-git-2@gmane.org; Sun, 20 Apr 2008 19:59:24 +0200
+	id 1JndtM-00052w-2J
+	for gcvg-git-2@gmane.org; Sun, 20 Apr 2008 20:03:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755042AbYDTR6i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Apr 2008 13:58:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755095AbYDTR6i
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Apr 2008 13:58:38 -0400
-Received: from py-out-1112.google.com ([64.233.166.180]:29616 "EHLO
+	id S1753187AbYDTSDL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Apr 2008 14:03:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753225AbYDTSDK
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Apr 2008 14:03:10 -0400
+Received: from py-out-1112.google.com ([64.233.166.180]:37464 "EHLO
 	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755023AbYDTR6h (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Apr 2008 13:58:37 -0400
-Received: by py-out-1112.google.com with SMTP id u52so2084307pyb.10
-        for <git@vger.kernel.org>; Sun, 20 Apr 2008 10:58:36 -0700 (PDT)
+	with ESMTP id S1750931AbYDTSDJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Apr 2008 14:03:09 -0400
+Received: by py-out-1112.google.com with SMTP id u52so2086387pyb.10
+        for <git@vger.kernel.org>; Sun, 20 Apr 2008 11:03:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=rQ6sQOhLA94Td2nYMXh7b+drO4r09TZjqEMnuwY7XCc=;
-        b=HfCHSOLhOUa4QPQ1DAnMj+VT9gVd4Nflt/R1kqedcuasf5E3cVcbparv3ohKVxFk9Le65X1a7vVfCNau9GykaGpjoosaIAM3jveR1YEEzYM2VHoi51bvjnPT4n62mopss5dqeVGT2SVu1ayGDY5MmsoO7FXZ6tPeBpTG9EgQVPE=
+        h=domainkey-signature:received:received:from:to:cc:subject:date:message-id:x-mailer;
+        bh=a9YH1aAv3Qypo259c+icco9k74+Ncp8atYj0IFyxZh4=;
+        b=qIKsxU6yrKprFfHGFAC6V4xg2Hw8yayceWyq/0kIrSaepoZaHf08pWLMvR0oaCf6cTeK8q0c7O3hPSzh902gRoA1y05Toum5wiQLR83vka3/Y+Yg3Nuw6Rcu+4DLBk1Wlx3PDTNjZ7/fw+/gxrBDzmBoImtjZDISikV5a1AaXdU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=CKs+fZxWn2LB2GQepQaMpKfxmPe4BKcHMGJMxM7/UTP+5IP7zWbREA8Ze4/FECH6nis1Ent5pSv+d/6oF58o8w+KtEwATmH06+5FsGGDVLaVUQrLOsHbkLSwyL+qza75Wuto98qAfwWY1g1zB7nZbgJ2dBmlxxOQgrcbAwJ9wFI=
-Received: by 10.141.122.20 with SMTP id z20mr2772508rvm.93.1208714315837;
-        Sun, 20 Apr 2008 10:58:35 -0700 (PDT)
-Received: by 10.141.212.3 with HTTP; Sun, 20 Apr 2008 10:58:35 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.0804201853150.5084@eeepc-johanness>
-Content-Disposition: inline
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=k+C89LjQ8IJw7I9Zee3FKYRKOlU4W1zqrYbzvANt1CzI4lHaFz13HlW2usVlwsQq//0DeaRKSRr5xnJf+V3GH7okSEAJKHYJJx02UUq7Nf5vpkWZU/KSGuxfGVJ9gH/9v4J9v8ZI6FIeunRZeGtuTiPRtYCVTUbw4cUr2Ya2xAc=
+Received: by 10.35.70.17 with SMTP id x17mr8951704pyk.12.1208714588421;
+        Sun, 20 Apr 2008 11:03:08 -0700 (PDT)
+Received: from localhost ( [76.193.177.245])
+        by mx.google.com with ESMTPS id n44sm7866994pyh.26.2008.04.20.11.03.06
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 20 Apr 2008 11:03:07 -0700 (PDT)
+X-Mailer: git-send-email 1.5.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79973>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79974>
 
-On Sun, Apr 20, 2008 at 12:54 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi,
->
->  On Sun, 20 Apr 2008, Dan McGee wrote:
->
->  > On Sun, Apr 20, 2008 at 12:43 PM, Johannes Schindelin
->  > <Johannes.Schindelin@gmx.de> wrote:
->  >
->
-> > >  On Sun, 20 Apr 2008, Dan McGee wrote:
->  > >
->  > >  > [no commit message]
->  > >
->  > >  I would like to deprecate dashed form _officially_ first (as in
->  > >  ReleaseNotes), before doing something that could lead to quite some
->  > >  surprised users.
->  >
->  > Now you've confused me. From Documentation/RelNotes-1.5.4.txt, it
->  > seems fairly clear that dashed command forms are deprecated.
->
->  Oh, I must have missed that.  Nevertheless, I think it should be
->  synchronised with when the dashed commands vanish from the default
->  installation.
+I often find myself pulling patches off of other peoples trees using
+cherry-pick, and following it with an immediate 'git commit --amend -s'
+command. Eliminate the need for a double commit by allowing signoff on a
+cherry-pick or revert.
 
->From the RelNotes:
-   Users are strongly encouraged to adjust their habits and scripts now
-   to prepare for this change.
+Signed-off-by: Dan McGee <dpmcgee@gmail.com>
+---
 
-It seems like setting a good example would be prudent, so I attempted
-to do that here. If adding a commit message referencing the
-documentation would have helped, then I'm sorry for that, but I've
-submitted patches like this in the past (22fa97) without near as much
-hassle as I'm getting for this small change.
+This is something I have done in my workflow for a long time, and it seems
+like a weird omission to me. Signoffs can be done on git-am without having
+a second commit, and I often have a workflow where I am picking patches from
+other users' topic branches and have reviewed the patch and would like to
+signoff when I pull it into my tree.
 
--Dan
+I'm not particularly happy about the 4 case if statement at the end, so I'd
+be happy to clean that up if anyone has suggestions.
+
+ builtin-revert.c |   11 ++++++++---
+ 1 files changed, 8 insertions(+), 3 deletions(-)
+
+diff --git a/builtin-revert.c b/builtin-revert.c
+index 607a2f0..433d0dd 100644
+--- a/builtin-revert.c
++++ b/builtin-revert.c
+@@ -33,7 +33,7 @@ static const char * const cherry_pick_usage[] = {
+ 	NULL
+ };
+ 
+-static int edit, no_replay, no_commit, mainline;
++static int edit, no_replay, no_commit, mainline, signoff;
+ static enum { REVERT, CHERRY_PICK } action;
+ static struct commit *commit;
+ 
+@@ -53,6 +53,7 @@ static void parse_args(int argc, const char **argv)
+ 		OPT_BOOLEAN('e', "edit", &edit, "edit the commit message"),
+ 		OPT_BOOLEAN('x', NULL, &no_replay, "append commit name when cherry-picking"),
+ 		OPT_BOOLEAN('r', NULL, &noop, "no-op (backward compatibility)"),
++		OPT_BOOLEAN('s', "signoff", &signoff, "add Signed-off-by: header"),
+ 		OPT_INTEGER('m', "mainline", &mainline, "parent number"),
+ 		OPT_END(),
+ 	};
+@@ -404,10 +405,14 @@ static int revert_or_cherry_pick(int argc, const char **argv)
+ 	 */
+ 
+ 	if (!no_commit) {
+-		if (edit)
++		if (edit && !signoff)
+ 			return execl_git_cmd("commit", "-n", NULL);
+-		else
++		else if (edit)
++			return execl_git_cmd("commit", "-n", "-s", NULL);
++		else if (!signoff)
+ 			return execl_git_cmd("commit", "-n", "-F", defmsg, NULL);
++		else
++			return execl_git_cmd("commit", "-n", "-s", "-F", defmsg, NULL);
+ 	}
+ 	free(reencoded_message);
+ 
+-- 
+1.5.5
