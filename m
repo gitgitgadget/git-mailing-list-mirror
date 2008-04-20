@@ -1,54 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH (try 3)] http.c: 'use_git_config_string' on configuration
- options.
-Date: Sat, 19 Apr 2008 20:30:59 -0700
-Message-ID: <7vwsmtdwy4.fsf@gitster.siamese.dyndns.org>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH (try 3)] http.c: 'use_git_config_string' on
+ configuration options.
+Date: Sun, 20 Apr 2008 06:06:29 +0200
+Message-ID: <20080420060629.38407fe1.chriscool@tuxfamily.org>
 References: <480A7499.1040705@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, gitster@pobox.com
 To: Tordek <kedrot@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 20 05:32:00 2008
+X-From: git-owner@vger.kernel.org Sun Apr 20 06:02:22 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JnQHX-0006ik-N9
-	for gcvg-git-2@gmane.org; Sun, 20 Apr 2008 05:32:00 +0200
+	id 1JnQks-0002GF-Ni
+	for gcvg-git-2@gmane.org; Sun, 20 Apr 2008 06:02:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751370AbYDTDbO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Apr 2008 23:31:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751323AbYDTDbO
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 Apr 2008 23:31:14 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:47363 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751192AbYDTDbN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Apr 2008 23:31:13 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 2D0016225;
-	Sat, 19 Apr 2008 23:31:12 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 8CC0C6222; Sat, 19 Apr 2008 23:31:07 -0400 (EDT)
-In-Reply-To: <480A7499.1040705@gmail.com> (kedrot@gmail.com's message of
- "Sat, 19 Apr 2008 19:39:21 -0300")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1750726AbYDTEBT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Apr 2008 00:01:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750706AbYDTEBT
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Apr 2008 00:01:19 -0400
+Received: from smtp1-g19.free.fr ([212.27.42.27]:34582 "EHLO smtp1-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750705AbYDTEBS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Apr 2008 00:01:18 -0400
+Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 85B8E1AB2BD;
+	Sun, 20 Apr 2008 06:01:17 +0200 (CEST)
+Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with SMTP id 2FDE21AB2C0;
+	Sun, 20 Apr 2008 06:01:17 +0200 (CEST)
+In-Reply-To: <480A7499.1040705@gmail.com>
+X-Mailer: Sylpheed 2.5.0beta1 (GTK+ 2.12.9; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79946>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79947>
 
-Tordek <kedrot@gmail.com> writes:
+On Sat, 19 Apr 2008 19:39:21 -0300
+Tordek <kedrot@gmail.com> wrote:
 
 > Signed-off-by: Guillermo O. Freschi <tordek@tordek.com.ar>
 > ---
 > My apologies, I had made a mistake on the previous attempt.
+>
+>   http.c |   36 ++++++++++++------------------------
+>   1 files changed, 12 insertions(+), 24 deletions(-)
+>
+> diff --git a/http.c b/http.c
+> index 256a5f1..8ae6432 100644
+> --- a/http.c
+> +++ b/http.c
+> @@ -13,14 +13,14 @@ static CURL *curl_default;
+>   char curl_errorstr[CURL_ERROR_SIZE];
+   ^
+There is one spurious whitespace before "char" in the above line.
 
-Heh, Christian, doesn't this patch look _suspiciously_ familiar ;-)?
+>   static int curl_ssl_verify = -1;
+   ^
+In the above line too.
 
-cf.
+> -static char *ssl_cert = NULL;
+> +static const char *ssl_cert = NULL;
 
- $gmane/79392 aka Message-Id: <7vskxqe0db.fsf@gitster.siamese.dyndns.org>
+These 2 lines above are fine.
+
+>   #if LIBCURL_VERSION_NUM >= 0x070902
+   ^
+Here again there is one spurious whitespace.
+
+[...]
+
+>   static long curl_low_speed_time = -1;
+>   static int curl_ftp_no_epsv = 0;
+> @@ -100,39 +100,27 @@ static int http_options(const char *var, const 
+> char *value)
+
+"char *value)" should have stayed on the same line as "http_options(const char *var, const ".
+
+Please try to send yourself your own patch and try to apply it using "git am", before you send it to the list. 
+
+Thanks,
+Christian.
