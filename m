@@ -1,105 +1,76 @@
-From: Thomas Guyot-Sionnest <dermoth@aei.ca>
-Subject: git-svn but with blank commits and author file
-Date: Sat, 19 Apr 2008 20:44:24 -0400
-Message-ID: <480A91E8.1090907@aei.ca>
+From: "Sverre Hvammen Johansen" <hvammen@gmail.com>
+Subject: [PATCH] Fast forward strategies allow, never, and only
+Date: Sat, 19 Apr 2008 18:06:00 -0700
+Message-ID: <402c10cd0804191806h5460eb82y2442517343734b8e@mail.gmail.com>
+References: <402c10cd0803101959q619efa86pbd501e5e2cc018c2@mail.gmail.com>
+	 <402c10cd0803172127u480276c9s4f9d716b4912ad5e@mail.gmail.com>
+	 <7vskym310l.fsf@gitster.siamese.dyndns.org>
+	 <402c10cd0803192347q7b4a3fb0s35737f361d53a86a@mail.gmail.com>
+	 <7vbq56ilnj.fsf@gitster.siamese.dyndns.org>
+	 <402c10cd0803252050u582111cag18674e0257ac2884@mail.gmail.com>
+	 <402c10cd0803302119r251b3a43te69ce2a52e121ba5@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------030102060702010501000004"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 20 02:52:10 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Apr 20 03:07:09 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JnNmr-0008Ue-Pi
-	for gcvg-git-2@gmane.org; Sun, 20 Apr 2008 02:52:10 +0200
+	id 1JnO1K-0006C8-IK
+	for gcvg-git-2@gmane.org; Sun, 20 Apr 2008 03:07:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753015AbYDTAvL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Apr 2008 20:51:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752453AbYDTAvK
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 Apr 2008 20:51:10 -0400
-Received: from mail001.aei.ca ([206.123.6.130]:55191 "EHLO mail001.aei.ca"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750863AbYDTAvJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Apr 2008 20:51:09 -0400
-X-Greylist: delayed 399 seconds by postgrey-1.27 at vger.kernel.org; Sat, 19 Apr 2008 20:51:08 EDT
-Received: (qmail 674 invoked by uid 89); 20 Apr 2008 00:44:25 -0000
-Received: by simscan 1.2.0 ppid: 671, pid: 672, t: 0.0023s
-         scanners: regex: 1.2.0 attach: 1.2.0
-Received: from mail002.aei.ca (HELO mail002.contact.net) (206.123.6.132)
-  by 0 with (DHE-RSA-AES256-SHA encrypted) SMTP; 20 Apr 2008 00:44:25 -0000
-Received: (qmail 7167 invoked by uid 89); 20 Apr 2008 00:44:25 -0000
-Received: by simscan 1.2.0 ppid: 7152, pid: 7157, t: 0.6496s
-         scanners: regex: 1.2.0 attach: 1.2.0 clamav: 0.92.1/m: spam: 3.2.4
-X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01)
-X-Spam-Level: 
-X-Spam-Status: No, hits=-3.8 required=5.0 tests=ALL_TRUSTED,BAYES_00
-	autolearn=ham version=3.2.4
-Received: from dsl-141-185.aei.ca (HELO ?192.168.1.116?) (66.36.141.185)
-  by mail.aei.ca with SMTP; 20 Apr 2008 00:44:24 -0000
-User-Agent: Thunderbird 2.0.0.12 (X11/20080227)
-X-Enigmail-Version: 0.95.0
-OpenPGP: id=DE417216;
-	url=http://pgpkeys.mit.edu:11371/pks/lookup?op=get&search=0xDE417216
+	id S1752776AbYDTBGF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Apr 2008 21:06:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752566AbYDTBGE
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 Apr 2008 21:06:04 -0400
+Received: from fg-out-1718.google.com ([72.14.220.156]:52850 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751365AbYDTBGC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Apr 2008 21:06:02 -0400
+Received: by fg-out-1718.google.com with SMTP id l27so1178385fgb.17
+        for <git@vger.kernel.org>; Sat, 19 Apr 2008 18:06:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=CKDNBxRdUXg6/2gb45NIeC0u6VlEtcqTilnVbrRcgAE=;
+        b=pZxEJEvZrMEPg00FsZOQcwT3dpNwnOs4ZTwj3bP6ERNczCUnqXWiHfevPs+UQwSVR7J9hH0k1YGfTVfhDQq47c4yxacNiU+hlby9d6fckPvkiZb1zoqTzZ0Zw8A5YM7PcQLizPdEwsjvmPX/sIo0Jwd1TEjuFM6SVv5XLioHals=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=nXZ5kqCkIX6MMqMbfph+2+5B/rZCt1m0pkDkCL95qUxasr2h+nj7zRK71A8gAVI6IqNBE6s+bAH1jjb/IZbohOdCYBDfXG8oB3cjSLLWxND1b/dLmCuhuz5XITDS6JGOm+69RcFdx8Ojj8lhsRRlTL84RbgucrTBVMktu2hHxLM=
+Received: by 10.82.127.14 with SMTP id z14mr5698879buc.33.1208653560323;
+        Sat, 19 Apr 2008 18:06:00 -0700 (PDT)
+Received: by 10.82.156.16 with HTTP; Sat, 19 Apr 2008 18:06:00 -0700 (PDT)
+In-Reply-To: <402c10cd0803302119r251b3a43te69ce2a52e121ba5@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79942>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/79943>
 
-This is a multi-part message in MIME format.
---------------030102060702010501000004
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+On Sun, Mar 30, 2008 at 9:19 PM, Sverre Hvammen Johansen
+<hvammen@gmail.com> wrote:
+> I have attached a new set of patches to this email (to avoid
+>
+> line-wrapping issues if someone needs them for testing).  They are
+>  also posted inlined for comments.
+>
+>  The patch series consists of the following five patches:
+>
+>    0001-New-merge-tests.patch
+>    0002-Introduce-ff-fast-forward-option.patch
+>    0003-Restructure-git-merge.sh.patch
+>    0004-Head-reduction-before-selecting-merge-strategy.patch
+>    0005-Introduce-fast-forward-option-only.patch
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+I consider myself finished with this and as far as I am concerned it
+can be applied to git.git.  I am currently using this on top of 1.5.5
+in production and assume it to be good.  All tests passes.
 
-When trying to import from svn using an author file, git-svn bails out
-if it encounters a blank author. The attached patch breaks this behavior
-and allow using the author file with blanks authors.
-
-I came across this bug while importing from a cvs2svn repo where the
-initial revision (1) has a blank author. This doesn't break the behavior
- of bailing out when an unknown author is encountered.
-
-The patch was made this morning against Git's HEAD.
-
-If you reply please make sure to cc me as I'm not subscribed to the list.
-
-Thanks,
-
-- --
-Thomas Guyot
-dermoth@aei.ca
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
-
-iD8DBQFICpHo6dZ+Kt5BchYRAltpAJ4mPuN+uhucMpvDbXVKLfb2IzBIXQCghnf6
-NoPN55yRj0eIhDowvWTQ0r4=
-=48zw
------END PGP SIGNATURE-----
-
---------------030102060702010501000004
-Content-Type: text/plain;
- name="git-svn.perl-no_author.patch"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline;
- filename="git-svn.perl-no_author.patch"
-
---- git-svn.perl.orig	2008-04-19 05:58:10.000000000 -0400
-+++ git-svn.perl	2008-04-19 19:50:40.000000000 -0400
-@@ -2375,8 +2375,7 @@
- 	my ($author) = @_;
- 	if (!defined $author || length $author == 0) {
- 		$author = '(no author)';
--	}
--	if (defined $::_authors && ! defined $::users{$author}) {
-+	} elsif (defined $::_authors && ! defined $::users{$author}) {
- 		die "Author: $author not defined in $::_authors file\n";
- 	}
- 	$author;
-
---------------030102060702010501000004--
+-- 
+Sverre Hvammen Johansen
