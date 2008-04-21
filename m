@@ -1,61 +1,58 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Git on Windows, CRLF issues
-Date: Mon, 21 Apr 2008 21:07:43 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0804212104560.2298@eeepc-johanness>
-References: <alpine.DEB.1.00.0804212145570.21181@perkele.intern.softwolves.pp.se>
+From: "Benjamin Collins" <aggieben@gmail.com>
+Subject: Re: git-gui hangs on read
+Date: Mon, 21 Apr 2008 16:05:20 -0500
+Message-ID: <b3889dff0804211405r6f477f3w3216670c91c4fb9a@mail.gmail.com>
+References: <b3889dff0804210723s620363fdscba43c79dbb62d55@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Peter Karlsson <peter@softwolves.pp.se>
-X-From: git-owner@vger.kernel.org Mon Apr 21 22:09:04 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 21 23:07:05 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jo2Ji-0003U6-RR
-	for gcvg-git-2@gmane.org; Mon, 21 Apr 2008 22:08:47 +0200
+	id 1Jo3DL-0001oz-1h
+	for gcvg-git-2@gmane.org; Mon, 21 Apr 2008 23:06:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757834AbYDUUHX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Apr 2008 16:07:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759664AbYDUUHW
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Apr 2008 16:07:22 -0400
-Received: from mail.gmx.net ([213.165.64.20]:48093 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1762313AbYDUUHU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Apr 2008 16:07:20 -0400
-Received: (qmail invoked by alias); 21 Apr 2008 20:07:18 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO eeepc-johanness.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp022) with SMTP; 21 Apr 2008 22:07:18 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19zatZhzUxzOt/yHmK2/XET5/sM5j2da7Bs/ViEbw
-	0KomWErlTBE3Wy
-X-X-Sender: user@eeepc-johanness
-In-Reply-To: <alpine.DEB.1.00.0804212145570.21181@perkele.intern.softwolves.pp.se>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1751273AbYDUVF1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Apr 2008 17:05:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751310AbYDUVF0
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Apr 2008 17:05:26 -0400
+Received: from el-out-1112.google.com ([209.85.162.180]:44504 "EHLO
+	el-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751014AbYDUVF0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Apr 2008 17:05:26 -0400
+Received: by el-out-1112.google.com with SMTP id n30so535815elf.21
+        for <git@vger.kernel.org>; Mon, 21 Apr 2008 14:05:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=N7A3Hjv+z4gGLLim7Tt5P26yOa02L3UKscN4KF+utR8=;
+        b=URxir2SMEosJDA2H9nlOCTMcFJSfHfk15bt3pL3HwHwEKd0RL+ORv5HX2ArJU9EKxBh0RcnVh2eiefa6oFQ5einQ/5urmfPnfqHYNz0RBTOLjUmcve4q3/DAJJjpoJLhDD6n+q/5/aDKizAZzbaECdEhxYBkzB+yqnTScPGqnaM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Gw1iyX0Q/BHLBkz2/kI5wTX9usg0sci1VyovOzNWDuN+pPnAsVlZjLG/BCWxmvemlRmNZce6K4RzhaZP+/hUYr+cGzIXIbRuf2Q7Ep9SNPyObxy8gbNVOP1IN91zOr0NBQeLAcH5xHnEXkEn4wjc/bfOJdz6UucVbbHvtbQJgM0=
+Received: by 10.141.29.14 with SMTP id g14mr3583863rvj.241.1208811920610;
+        Mon, 21 Apr 2008 14:05:20 -0700 (PDT)
+Received: by 10.141.75.14 with HTTP; Mon, 21 Apr 2008 14:05:20 -0700 (PDT)
+In-Reply-To: <b3889dff0804210723s620363fdscba43c79dbb62d55@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80038>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80039>
 
-Hi,
+On Mon, Apr 21, 2008 at 9:23 AM, Benjamin Collins <ben.collins@acm.org> wrote:
+> I just upgraded a few machines (RHEL 4.4) to the latest stable, and
+>  git-gui stopped working.  It just hangs forever if it's in a git
+>  repository.
 
-On Mon, 21 Apr 2008, Peter Karlsson wrote:
+Still don't know what the deal is (no time to investigate, yet), but
+1.5.4 doesn't have this issue.
 
-> Now the latests msysgit comes along and (finally!) sets core.autocrlf to 
-> true by default.
-
-It is actually nice to hear at least _somebody_ not insulting us for this 
-decision.  Thank you!
-
-> How do I handle this without having everyone breaking check-ins? I can't 
-> require everyone to do unset core.autocrlf globally. Can I do that with 
-> gitattributes?
-
-I think that the only solution to this is (sorry!) to have one single big 
-checkin which converts all CR/LF to LF line endings...
-
-Desole,
-Dscho
+-- 
+Benjamin A. Collins <aggieben@gmail.com>
