@@ -1,88 +1,81 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: [PATCH] Don't force imap.host to be set when imap.tunnel is set
-Date: Mon, 21 Apr 2008 14:59:07 +0100
-Message-ID: <200804211459.07527.andyparkins@gmail.com>
+From: "Benjamin Collins" <ben.collins@acm.org>
+Subject: git-gui hangs on read
+Date: Mon, 21 Apr 2008 09:23:03 -0500
+Message-ID: <b3889dff0804210723s620363fdscba43c79dbb62d55@mail.gmail.com>
 Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 21 16:00:43 2008
+X-From: git-owner@vger.kernel.org Mon Apr 21 16:24:13 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JnwYx-0002g5-WC
-	for gcvg-git-2@gmane.org; Mon, 21 Apr 2008 16:00:08 +0200
+	id 1Jnwvz-0004Jh-Db
+	for gcvg-git-2@gmane.org; Mon, 21 Apr 2008 16:23:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754990AbYDUN7U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Apr 2008 09:59:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754915AbYDUN7U
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Apr 2008 09:59:20 -0400
-Received: from wx-out-0506.google.com ([66.249.82.239]:62157 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754769AbYDUN7T (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Apr 2008 09:59:19 -0400
-Received: by wx-out-0506.google.com with SMTP id h31so1338433wxd.4
-        for <git@vger.kernel.org>; Mon, 21 Apr 2008 06:59:18 -0700 (PDT)
+	id S1757742AbYDUOXH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Apr 2008 10:23:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757963AbYDUOXG
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Apr 2008 10:23:06 -0400
+Received: from rv-out-0708.google.com ([209.85.198.248]:46698 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1757742AbYDUOXE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Apr 2008 10:23:04 -0400
+Received: by rv-out-0506.google.com with SMTP id k29so1024363rvb.1
+        for <git@vger.kernel.org>; Mon, 21 Apr 2008 07:23:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:date:subject:to:x-tuid:x-uid:x-length:mime-version:content-transfer-encoding:content-disposition:message-id;
-        bh=Mx4mrClqdAd8d5IfKk4dS4+KrclSoS2YXVOGAtuNSbU=;
-        b=Sv4ggGUCLaFDCGIrIEbykioeV9BZbcdLsNlPGW6d177hR9WZz0AdVopOMakfUgh5hHOj4f4Li7OZd97oM7FqC4dWv4HD/uVyHD+IObPhM+vyxU9EQqdGSwTQ9Ui2W0og/dqVsyD8ShuUi0mSxGocbb6GoAwgDMob6BTpakXcSuI=
+        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition:x-google-sender-auth;
+        bh=84PeYJvo3kwsk47hviIlBmhfwwezRNXxju939wHXxQ8=;
+        b=iloXjdBGrFIE4+E+gQ58SkgJOBprw7eYxhwSZI35L3E+oWnTGH62/hSTTzEzVm64YkAdPSflDo3kPii9jW+tjgMCNqE01N95pj40IAUGOThTxPCfv3s6vdHkdiY2ehBp7jhE6pmvaKUbMhtley+r72r+b8rQ3VDHf3ALXXk57RY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:date:subject:to:x-tuid:x-uid:x-length:mime-version:content-transfer-encoding:content-disposition:message-id;
-        b=uHOTzQmQUDmBrUeVfkgvbW+u6rQr/0VPOnC0rsg06UeFuByPhTvKhphpwAQr2SngZNZIBf+0tK6G782SlWuM0jU4BO0LLhB3ViEB9EmRBfR3tA9SJ1ATGq4fY8uQeEmalNMQQttd5s/D2RDiS8i8D06SLhSTbY9eLnjldk3ImlE=
-Received: by 10.70.78.1 with SMTP id a1mr8129353wxb.11.1208786358408;
-        Mon, 21 Apr 2008 06:59:18 -0700 (PDT)
-Received: from dvr.360vision.com ( [194.70.53.227])
-        by mx.google.com with ESMTPS id h36sm15337000wxd.29.2008.04.21.06.59.09
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 21 Apr 2008 06:59:10 -0700 (PDT)
-X-TUID: c02d8a085af893a6
-X-UID: 8
-X-Length: 1293
+        h=message-id:date:from:sender:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition:x-google-sender-auth;
+        b=U1MGAihphK/9431ND6GUpWpY4PJPm54yKXSLVoQUag4W8fgC9jWHaYwdctjFc42JSsZdY1GWsW/Tm5+yyKAwAkSu2hxhXN1Qk5tZg9a+K0x7GDg8u/+xYau0TSNyRvO0X+/nvvlf6YA5YL9fMMSf9LQehynoOP027tDyTptg12Q=
+Received: by 10.141.164.13 with SMTP id r13mr3279394rvo.65.1208787783425;
+        Mon, 21 Apr 2008 07:23:03 -0700 (PDT)
+Received: by 10.141.75.14 with HTTP; Mon, 21 Apr 2008 07:23:03 -0700 (PDT)
 Content-Disposition: inline
+X-Google-Sender-Auth: e072e560aedac3a7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80026>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80027>
 
-The documentation for git-imap-send suggests a tunnel setting such as
+I just upgraded a few machines (RHEL 4.4) to the latest stable, and
+git-gui stopped working.  It just hangs forever if it's in a git
+repository.  If it's not in a repository, it will open up the dialog
+that lets you create or open a repository.  I'm not sure what's going
+on, but here's the tail end of the strace -f:
 
-  Tunnel = "ssh -q user@server.com /usr/bin/imapd ./Maildir 2> /dev/null"
+[pid 16903] open("/usr/share/aspell/standard.kbd", O_RDONLY) = 3
+[pid 16903] fstat(3, {st_mode=S_IFREG|0644, st_size=100, ...}) = 0
+[pid 16903] mmap(NULL, 4096, PROT_READ|PROT_WRITE,
+MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x2a983ce000
+[pid 16903] read(3, "# Standard keyboard data file\n\nq"..., 4096) = 100
+[pid 16903] read(3, "", 4096)           = 0
+[pid 16903] close(3)                    = 0
+[pid 16903] munmap(0x2a983ce000, 4096)  = 0
+[pid 16903] fstat(1, {st_mode=S_IFIFO|0600, st_size=0, ...}) = 0
+[pid 16903] mmap(NULL, 4096, PROT_READ|PROT_WRITE,
+MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x2a983ce000
+[pid 16903] write(1, "@(#) International Ispell Versio"..., 68 <unfinished ...>
+[pid 16897] <... read resumed> "@(#) International Ispell Versio"..., 4096) = 68
+[pid 16903] <... write resumed> )       = 68
+[pid 16903] fstat(0, {st_mode=S_IFIFO|0600, st_size=0, ...}) = 0
+[pid 16903] mmap(NULL, 4096, PROT_READ|PROT_WRITE,
+MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x2a983cf000
+[pid 16903] read(0,  <unfinished ...>
+[pid 16897] write(5, "!\n$$cr master\n", 14) = 14
+[pid 16903] <... read resumed> "!\n$$cr master\n", 4096) = 14
+[pid 16897] read(6,  <unfinished ...>
+[pid 16903] read(0,
 
-which works wonderfully and doesn't require a username, password or port
-setting.
+Has anyone seen this before?  I wanted to get some other eyeballs on
+this before I dive into this rabbit hole.
 
-However, git-imap-send currently requires that the imap.host variable be
-set in the config even when it was unused.  This led me to have to put
-the following in my .gitconfig.
-
- [imap]
-   host = dummy
-
-This patch changes imap-send to only require that the imap.host setting
-is set if imap.tunnel is _not_ set.
-
-Signed-off-by: Andy Parkins <andyparkins@gmail.com>
----
- imap-send.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/imap-send.c b/imap-send.c
-index 04afbc4..e15df1e 100644
---- a/imap-send.c
-+++ b/imap-send.c
-@@ -1302,7 +1302,7 @@ main(int argc, char **argv)
- 		fprintf( stderr, "no imap store specified\n" );
- 		return 1;
- 	}
--	if (!server.host) {
-+	if (!server.host && !server.tunnel) {
- 		fprintf( stderr, "no imap host specified\n" );
- 		return 1;
- 	}
 -- 
-1.5.5.1.57.g5909c
+Benjamin A. Collins <ben.collins@acm.org>
