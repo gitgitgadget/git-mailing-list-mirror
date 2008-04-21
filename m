@@ -1,97 +1,101 @@
-From: Sam Vilain <sam.vilain@catalyst.net.nz>
-Subject: [PATCH] Amend git-push refspec documentation
-Date: Mon, 21 Apr 2008 15:31:24 +1200
-Message-ID: <1208748684-28253-1-git-send-email-sam.vilain@catalyst.net.nz>
-Cc: guillaume@catalyst.net.nz, git@vger.kernel.org,
-	Sam Vilain <sam.vilain@catalyst.net.nz>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Apr 21 05:56:34 2008
+From: =?iso-8859-1?Q?J=F6rg?= Sommer <joerg@alea.gnuu.de>
+Subject: Re: [PATCH v2 02/13] Don't append default merge message to -m
+	message
+Date: Mon, 21 Apr 2008 02:17:26 +0200
+Message-ID: <20080421001726.GA13639@alea.gnuu.de>
+References: <7vabkoufzq.fsf@gitster.siamese.dyndns.org> <1208132469-26471-1-git-send-email-joerg@alea.gnuu.de> <1208132469-26471-2-git-send-email-joerg@alea.gnuu.de> <7v7iescvu7.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="liOOAslEiF7prFVr"
+Cc: git@vger.kernel.org, Johannes.Schindelin@gmx.de
+To: Junio C Hamano <junio@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Apr 21 10:04:27 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jnn8s-0001Ov-AO
-	for gcvg-git-2@gmane.org; Mon, 21 Apr 2008 05:56:34 +0200
+	id 1Jnr0j-00026W-V8
+	for gcvg-git-2@gmane.org; Mon, 21 Apr 2008 10:04:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754317AbYDUDze (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Apr 2008 23:55:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754377AbYDUDze
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Apr 2008 23:55:34 -0400
-Received: from godel.catalyst.net.nz ([202.78.240.40]:56804 "EHLO
-	mail1.catalyst.net.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753624AbYDUDzd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Apr 2008 23:55:33 -0400
-X-Greylist: delayed 1431 seconds by postgrey-1.27 at vger.kernel.org; Sun, 20 Apr 2008 23:55:33 EDT
-Received: from leibniz.catalyst.net.nz ([202.78.240.7] helo=wilber.wgtn.cat-it.co.nz)
-	by mail1.catalyst.net.nz with esmtp (Exim 4.63)
-	(envelope-from <samv@wilber.wgtn.cat-it.co.nz>)
-	id 1JnmkX-0006TD-7L; Mon, 21 Apr 2008 15:31:25 +1200
-Received: by wilber.wgtn.cat-it.co.nz (Postfix, from userid 1000)
-	id 15ED3200F5; Mon, 21 Apr 2008 15:31:25 +1200 (NZST)
-X-Mailer: git-send-email 1.5.5.1.50.g1d36.dirty
+	id S1753232AbYDUIDh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Apr 2008 04:03:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754849AbYDUIDf
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Apr 2008 04:03:35 -0400
+Received: from banki.eumelnet.de ([83.246.114.63]:4358 "EHLO uucp.gnuu.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754282AbYDUID2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Apr 2008 04:03:28 -0400
+Received: by uucp.gnuu.de (Postfix, from userid 10)
+	id E782A4880A6; Mon, 21 Apr 2008 10:03:21 +0200 (CEST)
+Received: from ibook.localnet ([192.168.0.5] helo=alea.gnuu.de)
+	by alea.gnuu.de with esmtp (Exim 4.63)
+	(envelope-from <joerg@alea.gnuu.de>)
+	id 1Jnjip-00077U-A3; Mon, 21 Apr 2008 02:17:27 +0200
+Received: from joerg by alea.gnuu.de with local (Exim 4.69)
+	(envelope-from <joerg@alea.gnuu.de>)
+	id 1Jnjio-0003Yf-P9; Mon, 21 Apr 2008 02:17:26 +0200
+Content-Disposition: inline
+In-Reply-To: <7v7iescvu7.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80012>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80013>
 
-These paragraphs are a little confusing.  Also, make it clearer when
-you have to specify the full name for <dst>
 
-Signed-off-by: Sam Vilain <sam.vilain@catalyst.net.nz>
----
- Documentation/git-push.txt |   22 ++++++++++++----------
- 1 files changed, 12 insertions(+), 10 deletions(-)
+--liOOAslEiF7prFVr
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-index 3128170..b3d164e 100644
---- a/Documentation/git-push.txt
-+++ b/Documentation/git-push.txt
-@@ -35,14 +35,14 @@ OPTIONS
- 	by the source ref, followed by a colon `:`, followed by
- 	the destination ref.
- +
--The <src> side can be an
--arbitrary "SHA1 expression" that can be used as an
--argument to `git-cat-file -t`.  E.g. `master~4` (push
--four parents before the current master head).
-+The <src> side represents the source branch (or arbitrary
-+"SHA1 expression"; see linkgit:git-rev-parse[1]) that you want to
-+push.  The <dst> side represents the destination location.
- +
- The local ref that matches <src> is used
--to fast forward the remote ref that matches <dst>.  If
--the optional plus `+` is used, the remote ref is updated
-+to fast forward the remote ref that matches <dst> (or, if no <dst> was
-+specified, the same ref that <src> referred to locally).  If
-+the optional leading plus `+` is used, the remote ref is updated
- even if it does not result in a fast forward update.
- +
- Note: If no explicit refspec is found, (that is neither
-@@ -165,7 +165,8 @@ git push origin master::
- 	Find a ref that matches `master` in the source repository
- 	(most likely, it would find `refs/heads/master`), and update
- 	the same ref (e.g. `refs/heads/master`) in `origin` repository
--	with it.
-+	with it.  If `master` did not exist remotely, it would be
-+	created.
- 
- git push origin :experimental::
- 	Find a ref that matches `experimental` in the `origin` repository
-@@ -179,9 +180,10 @@ git push origin master:satellite/master::
- 
- git push origin master:refs/heads/experimental::
- 	Create the branch `experimental` in the `origin` repository
--	by copying the current `master` branch.  This form is usually
--	needed to create a new branch in the remote repository as
--	there is no `experimental` branch to match.
-+	by copying the current `master` branch.  This form is only
-+	needed to create a new branch in the remote repository when
-+	the local name and the remote name are different; otherwise,
-+	the branch name on its own will work.
- 
- Author
- ------
--- 
-1.5.5.1.50.g1d36.dirty
+Hello Junio,
+
+Junio C Hamano schrieb am Sun 20. Apr, 09:52 (-0700):
+> J=F6rg Sommer <joerg@alea.gnuu.de> writes:
+>=20
+> > From: gitster@pobox.com (Junio C Hamano)
+> > Date: Sun, 23 Mar 2008 22:17:09 -0700
+> >
+> > Signed-off-by: J=F6rg Sommer <joerg@alea.gnuu.de>
+>=20
+> I'd admit that this was taken from my "You could do this" patch, and I am
+> inclined to think that the users would probably want this behaviour of
+> dropping the default merge summary when giving their own message with -m,
+> but I am not absolutely convinced that doing this unconditionally is the
+> right thing to do (iow, some people might have relied on the current
+> behaviour).
+>=20
+> List, any objections?
+
+What about a new option -M? But I doubt someone expects this behaviour
+because the manpage says:
+
+  The second syntax (<msg> HEAD <remote>) is supported for historical
+  reasons. Do not use it from the command line or in new scripts. It is
+  the same as git merge -m <msg> <remote>.
+      ^^^^              ^^
+
+Currently, it's not the same, but someone might expect it.
+
+Bye, J=F6rg.
+--=20
+Die Erde ist das einzigste Irrenhaus, das von seinen eigenen Insassen
+verwaltet wird.
+                                                (U. Schmidt)
+
+--liOOAslEiF7prFVr
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature http://en.wikipedia.org/wiki/OpenPGP
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFIC90Wwe0mZwH1VIARAh95AKCEOa4wSgDsSFH240KewkUFRElICwCfWiT0
+XbJKGaLiI398YGRMIdIa6M8=
+=nu0D
+-----END PGP SIGNATURE-----
+
+--liOOAslEiF7prFVr--
