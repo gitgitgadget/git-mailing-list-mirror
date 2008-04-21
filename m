@@ -1,98 +1,104 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: mark parsing in fast-import
-Date: Sun, 20 Apr 2008 20:26:27 -0400
-Message-ID: <20080421002626.GJ29771@spearce.org>
-References: <1208132469-26471-3-git-send-email-joerg@alea.gnuu.de> <1208169584-15931-1-git-send-email-joerg@alea.gnuu.de> <20080414232958.GE20979@spearce.org> <20080420234438.GC12865@alea.gnuu.de>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: git branch diagram
+Date: Sun, 20 Apr 2008 17:30:21 -0700 (PDT)
+Message-ID: <m3fxtgqcbr.fsf@localhost.localdomain>
+References: <911589C97062424796D53B625CEC0025E460C3@USCOBRMFA-SE-70.northamerica.cexp.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: =?utf-8?B?SsO2cmc=?= Sommer <joerg@alea.gnuu.de>
-X-From: git-owner@vger.kernel.org Mon Apr 21 02:27:22 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: <git@vger.kernel.org>
+To: <Patrick.Higgins@cexp.com>
+X-From: git-owner@vger.kernel.org Mon Apr 21 02:31:11 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JnjsO-0002lb-HY
-	for gcvg-git-2@gmane.org; Mon, 21 Apr 2008 02:27:20 +0200
+	id 1Jnjw6-0003gm-Tq
+	for gcvg-git-2@gmane.org; Mon, 21 Apr 2008 02:31:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753225AbYDUA0d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Apr 2008 20:26:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753392AbYDUA0d
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Apr 2008 20:26:33 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:53796 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752402AbYDUA0c (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Apr 2008 20:26:32 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1JnjrO-0002au-Ra; Sun, 20 Apr 2008 20:26:18 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 9133320FBAE; Sun, 20 Apr 2008 20:26:27 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <20080420234438.GC12865@alea.gnuu.de>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1753678AbYDUAaZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Apr 2008 20:30:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753624AbYDUAaZ
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Apr 2008 20:30:25 -0400
+Received: from fg-out-1718.google.com ([72.14.220.153]:51889 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753550AbYDUAaY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Apr 2008 20:30:24 -0400
+Received: by fg-out-1718.google.com with SMTP id l27so1555640fgb.17
+        for <git@vger.kernel.org>; Sun, 20 Apr 2008 17:30:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
+        bh=WEm8vxNwFZSicGioEzDQXvAZjqsOweK7aX6QQhGV4E4=;
+        b=aqV/H/XyQaY39+Af0fWqiPn67vRPO1lqPn24sFQOQtYISuTynloUttXYg9dgRTR4lSvS4y14KTWGqMZPTzlGslzGxFaKqNWtMYwLn5/a/oG9ITcvZ58ehAPAVz5kEEsSqboSDqFxoa9vZPvqxkRqmz64dBHz0ZIL9SjEGPs73gw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
+        b=fuutGwge6g8S/UL4Nmn/L+uI23d1qZipNFe4F2IjPMWkPmohTU852iHJT97whJwvseLQtiKu71nxQhfNSuJuZBKuzs1cMXv89AmisG+91cUryO0mY8MQyhM20+95XCzqF7lhZ+Ljb/yhPv3gLsmHVsy69Tyw7u6fRQ9FGpwkztk=
+Received: by 10.86.4.2 with SMTP id 2mr11779690fgd.27.1208737822500;
+        Sun, 20 Apr 2008 17:30:22 -0700 (PDT)
+Received: from localhost.localdomain ( [83.8.192.60])
+        by mx.google.com with ESMTPS id z40sm5671599ikz.4.2008.04.20.17.30.19
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 20 Apr 2008 17:30:21 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m3L0UIYf024792;
+	Mon, 21 Apr 2008 02:30:19 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m3L0UHAM024788;
+	Mon, 21 Apr 2008 02:30:17 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <911589C97062424796D53B625CEC0025E460C3@USCOBRMFA-SE-70.northamerica.cexp.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80006>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80007>
 
-Jrg Sommer <joerg@alea.gnuu.de> wrote:
-> > 
-> > Uh, that's a bug in fast-import.  ":4abc" is _not_ a mark if you
-> > read the language specification.  Only ":4" is a mark.  So we are
-> > accepting crap and reading it in odd ways.  Not good.
+<Patrick.Higgins@cexp.com> writes:
+
+> I am trying to get my employer to start using git and have found the
+> distributed model and git's branching to be one of the hardest parts
+> to explain and understand. 
+
+Take a look at description of version control and distributed version
+control at BetterExplained, and slides from presentations / seminars
+which you can find in GitLinks page at git wiki.
+
+> I put together the attached diagram (done with graphviz so some
+> things are not in the most logical place) to help explain things to
+> my coworkers.
 > 
-> What about this:
+> Unfortunately, I don't understand things well enough myself to know
+> if the diagram is correct or not. I read in the stgit docs that
+> developing directly in the master branch is discouraged by
+> convention, but I don't really understand why. The git tutorial
+> shows work happening directly in master, so I wasn't sure if that's
+> a convention that only makes sense for stgit or for plain git, too.
 > 
-> diff --git a/fast-import.c b/fast-import.c
-> index 73e5439..f60e4ab 100644
-> --- a/fast-import.c
-> +++ b/fast-import.c
-> @@ -1690,10 +1690,31 @@ static void skip_optional_lf(void)
->  		ungetc(term_char, stdin);
->  }
->  
-> +static inline int parse_mark(const const char *str, uintmax_t* mark,
-> +	char **after_mark)
-> +{
-> +	if (!str || str[0] != ':' || !isdigit(str[1]))
-> +		return 1;
-> +
-> +	char *am;
+> Does my diagram make sense? Are there any suggestions or corrections?
 
-Although we conform to mostly C99 style, variables should be
-declared at the top of the scope and not after a statement.
+It is much too complicated. IMHO it would be better to explain the
+idea of remote branches first (separate diagram), then simplify
+diagram by showing only relationships between repositories:
+relationship between branches is impled.
 
-> +	const uintmax_t m = strtoumax(&str[1], &am, 10);
-> +	if (errno == 0) {
-> +		*mark = m;
-> +		*after_mark = am;
-> +		return 0;
-> +	}
-> +	return 1;
-> +}
-> +
->  static void cmd_mark(void)
->  {
-> -	if (!prefixcmp(command_buf.buf, "mark :")) {
-> -		next_mark = strtoumax(command_buf.buf + 6, NULL, 10);
-> +	uintmax_t mark = 0;
-> +	char *after_mark = NULL;
-> +
-> +	if (!prefixcmp(command_buf.buf, "mark ") &&
-> +		parse_mark(&command_buf.buf[5], &mark, &after_mark) &&
+Perhaps adding what branches are supposed to be found at given
+repository...
 
-Hmm.  Shouldn't this be ! parse_mark given that it returns 0
-on success and 1 on failure?
+BTW. do all transfer is pull (or fetch) only, or are there pushes and
+exchanging patches via email?
 
+> In my diagram, I am assuming that most developers work in master,
+> and make branches for their own long-lived projects and experimental
+> things.
+
+For example git itself, as a project, uses three long-lived branches:
+'maint', 'master' and 'next', uses 'pu' (proposed updates) branch as
+propagation / review mechanism for short-lived tipic branches.
 
 -- 
-Shawn.
+Jakub Narebski
+Poland
+ShadeHawk on #git
