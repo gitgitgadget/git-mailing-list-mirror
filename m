@@ -1,81 +1,65 @@
-From: "Benjamin Collins" <ben.collins@acm.org>
-Subject: git-gui hangs on read
-Date: Mon, 21 Apr 2008 09:23:03 -0500
-Message-ID: <b3889dff0804210723s620363fdscba43c79dbb62d55@mail.gmail.com>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: What's cooking in git.git (topics)
+Date: Mon, 21 Apr 2008 11:10:30 -0500
+Message-ID: <480CBC76.7020303@nrlssc.navy.mil>
+References: <7vlk4snpj3.fsf@gitster.siamese.dyndns.org> <7vwso85qkf.fsf@gitster.siamese.dyndns.org> <7vwso5r87q.fsf@gitster.siamese.dyndns.org> <7v8x0992hy.fsf@gitster.siamese.dyndns.org> <7vd4pf7h9y.fsf@gitster.siamese.dyndns.org> <7vwsnjl21c.fsf@gitster.siamese.dyndns.org> <7vhcehzdeg.fsf@gitster.siamese.dyndns.org> <7vbq4j748l.fsf@gitster.siamese.dyndns.org> <7vr6d8apjx.fsf@gitster.siamese.dyndns.org> <7vhcdyfe9u.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 21 16:24:13 2008
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Apr 21 18:12:16 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jnwvz-0004Jh-Db
-	for gcvg-git-2@gmane.org; Mon, 21 Apr 2008 16:23:55 +0200
+	id 1Jnycc-0005ZT-E6
+	for gcvg-git-2@gmane.org; Mon, 21 Apr 2008 18:12:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757742AbYDUOXH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Apr 2008 10:23:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757963AbYDUOXG
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Apr 2008 10:23:06 -0400
-Received: from rv-out-0708.google.com ([209.85.198.248]:46698 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1757742AbYDUOXE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Apr 2008 10:23:04 -0400
-Received: by rv-out-0506.google.com with SMTP id k29so1024363rvb.1
-        for <git@vger.kernel.org>; Mon, 21 Apr 2008 07:23:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition:x-google-sender-auth;
-        bh=84PeYJvo3kwsk47hviIlBmhfwwezRNXxju939wHXxQ8=;
-        b=iloXjdBGrFIE4+E+gQ58SkgJOBprw7eYxhwSZI35L3E+oWnTGH62/hSTTzEzVm64YkAdPSflDo3kPii9jW+tjgMCNqE01N95pj40IAUGOThTxPCfv3s6vdHkdiY2ehBp7jhE6pmvaKUbMhtley+r72r+b8rQ3VDHf3ALXXk57RY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition:x-google-sender-auth;
-        b=U1MGAihphK/9431ND6GUpWpY4PJPm54yKXSLVoQUag4W8fgC9jWHaYwdctjFc42JSsZdY1GWsW/Tm5+yyKAwAkSu2hxhXN1Qk5tZg9a+K0x7GDg8u/+xYau0TSNyRvO0X+/nvvlf6YA5YL9fMMSf9LQehynoOP027tDyTptg12Q=
-Received: by 10.141.164.13 with SMTP id r13mr3279394rvo.65.1208787783425;
-        Mon, 21 Apr 2008 07:23:03 -0700 (PDT)
-Received: by 10.141.75.14 with HTTP; Mon, 21 Apr 2008 07:23:03 -0700 (PDT)
-Content-Disposition: inline
-X-Google-Sender-Auth: e072e560aedac3a7
+	id S1759950AbYDUQLN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Apr 2008 12:11:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759940AbYDUQLM
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Apr 2008 12:11:12 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:44326 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759866AbYDUQLL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Apr 2008 12:11:11 -0400
+Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
+	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id m3LGAcwQ015242;
+	Mon, 21 Apr 2008 11:10:38 -0500
+Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 21 Apr 2008 11:10:30 -0500
+User-Agent: Thunderbird 2.0.0.12 (X11/20080213)
+In-Reply-To: <7vhcdyfe9u.fsf@gitster.siamese.dyndns.org>
+X-OriginalArrivalTime: 21 Apr 2008 16:10:30.0923 (UTC) FILETIME=[38A6B5B0:01C8A3CA]
+X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-5.0.0.1023-15862003
+X-TM-AS-Result: : Yes--3.857500-0-31-1
+X-TM-AS-Category-Info: : 31:0.000000
+X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNTY3LTgzMzUxOC03MDAw?=
+	=?us-ascii?B?NzUtMTM5MDEwLTcwMDYzMC03MDIwNDQtNzA1OTAxLTcxMTYxMi03?=
+	=?us-ascii?B?MTE4NjMtNzA1NDUwLTcwMzc4OC03MDEyMjAtNzAwMzk4LTE0ODAz?=
+	=?us-ascii?B?OS0xNDgwNTEtMjAwNDA=?=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80027>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80028>
 
-I just upgraded a few machines (RHEL 4.4) to the latest stable, and
-git-gui stopped working.  It just hangs forever if it's in a git
-repository.  If it's not in a repository, it will open up the dialog
-that lets you create or open a repository.  I'm not sure what's going
-on, but here's the tail end of the strace -f:
+Junio C Hamano wrote:
 
-[pid 16903] open("/usr/share/aspell/standard.kbd", O_RDONLY) = 3
-[pid 16903] fstat(3, {st_mode=S_IFREG|0644, st_size=100, ...}) = 0
-[pid 16903] mmap(NULL, 4096, PROT_READ|PROT_WRITE,
-MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x2a983ce000
-[pid 16903] read(3, "# Standard keyboard data file\n\nq"..., 4096) = 100
-[pid 16903] read(3, "", 4096)           = 0
-[pid 16903] close(3)                    = 0
-[pid 16903] munmap(0x2a983ce000, 4096)  = 0
-[pid 16903] fstat(1, {st_mode=S_IFIFO|0600, st_size=0, ...}) = 0
-[pid 16903] mmap(NULL, 4096, PROT_READ|PROT_WRITE,
-MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x2a983ce000
-[pid 16903] write(1, "@(#) International Ispell Versio"..., 68 <unfinished ...>
-[pid 16897] <... read resumed> "@(#) International Ispell Versio"..., 4096) = 68
-[pid 16903] <... write resumed> )       = 68
-[pid 16903] fstat(0, {st_mode=S_IFIFO|0600, st_size=0, ...}) = 0
-[pid 16903] mmap(NULL, 4096, PROT_READ|PROT_WRITE,
-MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x2a983cf000
-[pid 16903] read(0,  <unfinished ...>
-[pid 16897] write(5, "!\n$$cr master\n", 14) = 14
-[pid 16903] <... read resumed> "!\n$$cr master\n", 4096) = 14
-[pid 16897] read(6,  <unfinished ...>
-[pid 16903] read(0,
+> * bc/filter-branch (Wed Mar 26 10:47:09 2008 -0500) 1 commit
+>  - filter-branch.sh: support nearly proper tag name filtering
+> 
+> Instead of discarding signed tags, this demotes them to simply annotated,
+> which is technically not that different from signed tags.
 
-Has anyone seen this before?  I wanted to get some other eyeballs on
-this before I dive into this rabbit hole.
+I just want to point out that this patch is not exclusively about signed
+tags.
 
--- 
-Benjamin A. Collins <ben.collins@acm.org>
+The patch is about retaining annotated tags rather than demoting them to
+light-weight tag references as is done currently for _all_ annotated tags,
+signed and unsigned. When rewriting signed tags, the signature is stripped
+so that we don't write a tag with a bogus signature.
+
+-brandon
