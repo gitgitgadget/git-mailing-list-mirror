@@ -1,107 +1,81 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCH 01/02/RFC] implement a stat cache
-Date: Mon, 21 Apr 2008 10:41:41 +0200
-Message-ID: <200804211041.41760.johan@herland.net>
-References: <1208633300-74603-1-git-send-email-pdebie@ai.rug.nl>
- <alpine.LFD.1.10.0804201556290.2779@woody.linux-foundation.org>
- <20080421005340.GA2631@dpotapov.dyndns.org>
+From: Mark Hills <mark@pogo.org.uk>
+Subject: git-clone file permissions and cpio
+Date: Mon, 21 Apr 2008 09:45:18 +0100 (BST)
+Message-ID: <alpine.BSO.1.10.0804210911170.21918@zrgural.vwaro.pbz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7BIT
-Cc: Dmitry Potapov <dpotapov@gmail.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Luciano Rocha <luciano@eurotux.com>,
-	Pieter de Bie <pdebie@ai.rug.nl>,
-	Junio C Hamano <gitster@pobox.com>
+Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 21 10:43:23 2008
+X-From: git-owner@vger.kernel.org Mon Apr 21 11:20:55 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JnrcD-0006uP-TD
-	for gcvg-git-2@gmane.org; Mon, 21 Apr 2008 10:43:10 +0200
+	id 1JnsCl-0002xu-0t
+	for gcvg-git-2@gmane.org; Mon, 21 Apr 2008 11:20:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753935AbYDUImW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Apr 2008 04:42:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753834AbYDUImV
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Apr 2008 04:42:21 -0400
-Received: from smtp.getmail.no ([84.208.20.33]:58011 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753423AbYDUImV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Apr 2008 04:42:21 -0400
-Received: from pmxchannel-daemon.no-osl-m323-srv-004-z2.isp.get.no by
- no-osl-m323-srv-004-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- id <0JZO0063G2UHU500@no-osl-m323-srv-004-z2.isp.get.no> for
- git@vger.kernel.org; Mon, 21 Apr 2008 10:42:17 +0200 (CEST)
-Received: from smtp.getmail.no ([10.5.16.1])
- by no-osl-m323-srv-004-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JZO00FDW2TIHQC0@no-osl-m323-srv-004-z2.isp.get.no> for
- git@vger.kernel.org; Mon, 21 Apr 2008 10:41:42 +0200 (CEST)
-Received: from alpha.herland ([84.215.102.95])
- by no-osl-m323-srv-009-z1.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JZO00IAL2TH08C0@no-osl-m323-srv-009-z1.isp.get.no> for
- git@vger.kernel.org; Mon, 21 Apr 2008 10:41:42 +0200 (CEST)
-In-reply-to: <20080421005340.GA2631@dpotapov.dyndns.org>
-Content-disposition: inline
-User-Agent: KMail/1.9.9
+	id S1755021AbYDUJUI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Apr 2008 05:20:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753730AbYDUJUI
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Apr 2008 05:20:08 -0400
+Received: from mailout.ijneb.com ([212.13.201.26]:8376 "EHLO metheny.ijneb.com"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1755041AbYDUJUH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Apr 2008 05:20:07 -0400
+X-Greylist: delayed 2087 seconds by postgrey-1.27 at vger.kernel.org; Mon, 21 Apr 2008 05:20:06 EDT
+Received: from localhost ([127.0.0.1] ident=mark)
+	by metheny.ijneb.com with esmtp (Exim 4.69)
+	(envelope-from <mark@pogo.org.uk>)
+	id 1JnreI-0001Ce-Np; Mon, 21 Apr 2008 09:45:18 +0100
+X-SA-Exim-Connect-IP: 127.0.0.1
+X-SA-Exim-Mail-From: mark@pogo.org.uk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80014>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80015>
 
-On Monday 21 April 2008, Dmitry Potapov wrote:
-> On Sun, Apr 20, 2008 at 04:07:35PM -0700, Linus Torvalds wrote:
-> > Junio, what was the logic for that whole "has_symlink_leading_path()"
-> > thing? I forget. Whatever, it's broken.
-> 
-> ===
-> commit f859c846e90b385c7ef873df22403529208ade50
-> Author: Junio C Hamano <junkio@cox.net>
-> Date:   Fri May 11 22:11:07 2007 -0700
-> 
-[snip snip]
-> ===
-> 
-> And there are some cases where stat() on path is desirable:
-> http://www.spinics.net/lists/git/msg63988.html
-> 
-> So while stat information for regular files is cached in the index,
-> stat information for directories is not cached, and that appears to
-> be wrong. Maybe, Lucano's cache makes sense if it stores only stat
-> information for directories.
-> 
-> IIRC, some time ago, an otherwise reasonable patch for .gitignore was
-> rejected just because it would drive the number calls to lstat() up as
-> these calls on directories are not cached in the index.
+I persuaded my employer to test Git -- with good results so far. But we 
+have a problem with file permissions.
 
-Pardon me for butting in (and I'm honestly NOT trying to start a flamewar),
-but I'm wondering if this could be solved by tracking directories in the
-index. AFAICS it would:
+We use the setuid bit on much of our central file hierarchy to ensure that 
+anyone in a certain unix group of trusted users can push.
 
-- Help bring the number of lstat() calls down (since we can cache the
-  lstat() results for directories like we currently do for regular files)
+I noticed that the .git/objects directory was losing this setuid bit.
 
-- More easily detect complicated cases like "add across symlinks" (see
-  Junio's email at the spinics.net link above)
+This creates problems later, when subdirectories of .git/objects are 
+created by one user, and another user does a checkin which requires write 
+to that subdirectory:
 
-- (less important) When discussing empty directory support several months
-  ago, ISTR one of the biggest hurdles being that directories were not
-  tracked in the index
+drwxrwx--- 2 mhills trust 51 Apr 18 09:39 eb
+drwxrwx--- 2 mhills user   6 Apr 18 09:40 f4
+drwxrwx--- 2 mhills trust  6 Apr 18 09:39 info
+drwxrwx--- 2 mhills trust  6 Apr 18 09:39 pack
+
+The offending operation is a cpio-based file copy in git-clone.sh. I 
+updated to the latest Git source and cpio, with the same issue.
+
+I got some kind of working behaviour with the diff below, which stops cpio 
+'fixing' the file permissions (only on the directories). But it seems the 
+underlying cause is cpio trying to copy file permissions which it would be 
+better off not doing in this case (and which there isn't a flag to 
+disable).
+
+Is this a known problem? How can we fix this properly?
+
+Mark
 
 
-I don't know much about how the index is implemented (few do, I think), so
-if there is a glaringly obvious reason why tracking directories in the
-index is a bad idea, please enlighten me.
-
-
-...Johan
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+diff --git a/git-clone.sh b/git-clone.sh
+index 2636159..3b8280b 100755
+--- a/git-clone.sh
++++ b/git-clone.sh
+@@ -333,7 +333,7 @@ yes)
+                         fi
+                 fi &&
+                 cd "$repo" &&
+-               find objects -depth -print | cpio $cpio_quiet_flag -pumd$l "$GIT_DIR/" || \
++               find objects -depth ! -type d -print | cpio $cpio_quiet_flag -pumd$l "$GIT_DIR/" || \
+                         exit 1
+         fi
+         git-ls-remote "$repo" >"$GIT_DIR/CLONE_HEAD" || exit 1
