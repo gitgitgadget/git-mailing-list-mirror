@@ -1,68 +1,145 @@
-From: "Avery Pennarun" <apenwarr@gmail.com>
-Subject: Re: Git on Windows, CRLF issues
-Date: Mon, 21 Apr 2008 17:53:34 -0400
-Message-ID: <32541b130804211453x77f3fd49hef645a417a9919ca@mail.gmail.com>
-References: <alpine.DEB.1.00.0804212145570.21181@perkele.intern.softwolves.pp.se>
-	 <alpine.DEB.1.00.0804212104560.2298@eeepc-johanness>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [ANNOUNCE] GIT 1.5.5.1
+Date: Mon, 21 Apr 2008 15:48:59 -0700
+Message-ID: <7vej8yako4.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Peter Karlsson" <peter@softwolves.pp.se>, git@vger.kernel.org
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Apr 21 23:54:25 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: linux-kernel@vger.kernel.org
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 22 00:50:05 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jo3xw-0002WW-Vd
-	for gcvg-git-2@gmane.org; Mon, 21 Apr 2008 23:54:25 +0200
+	id 1Jo4pm-0000p5-Km
+	for gcvg-git-2@gmane.org; Tue, 22 Apr 2008 00:50:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752830AbYDUVxi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Apr 2008 17:53:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752458AbYDUVxi
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Apr 2008 17:53:38 -0400
-Received: from fg-out-1718.google.com ([72.14.220.152]:36471 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752814AbYDUVxh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Apr 2008 17:53:37 -0400
-Received: by fg-out-1718.google.com with SMTP id l27so1911976fgb.17
-        for <git@vger.kernel.org>; Mon, 21 Apr 2008 14:53:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=cJWFnGby8abK5rwzJb0BqAisL3xCpfexihm0elvP3lk=;
-        b=azgdSpmpqgvNE2gBho4+2GUXE9VcCR/4yPCgE7A0VTtEz5D4VhzksnfAd/Ibk8gPH7BacTHwzTVkStrLAONtAA9lzKvSMVruEPg6Nu7STN0ToHjJbFuH3fQeFw1Bd04OH1EBFqyIU78/mffta14b+4/Q4XT128IhhmVpF92fARI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=iyWWHDMiUBld554tXEJVLClkqT2o7Yy82rEEZvXMNdOEusDgigfuIRXNXBNxS2sIDBCvTOQ4FRSKVPhHe2j4ATCCQErmqGG9r28Hm9sasOap9tTrMgexi4aZcixx48xq/7KJeVU3WYMp18Z/I6Einn50FrDA4BiTu8L9PyCxSmQ=
-Received: by 10.82.156.10 with SMTP id d10mr11806324bue.31.1208814814930;
-        Mon, 21 Apr 2008 14:53:34 -0700 (PDT)
-Received: by 10.82.166.12 with HTTP; Mon, 21 Apr 2008 14:53:34 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.0804212104560.2298@eeepc-johanness>
-Content-Disposition: inline
+	id S1754418AbYDUWtP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 Apr 2008 18:49:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753814AbYDUWtP
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Apr 2008 18:49:15 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:57336 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753809AbYDUWtO convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 21 Apr 2008 18:49:14 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 6125F3F2A;
+	Mon, 21 Apr 2008 18:49:12 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 40E013F29; Mon, 21 Apr 2008 18:49:07 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80041>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80042>
 
-On 4/21/08, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> I think that the only solution to this is (sorry!) to have one single big
->  checkin which converts all CR/LF to LF line endings...
+The latest maintenance release GIT 1.5.5.1 is available at the
+usual places:
 
-If it were me (and I hope it will be, soon, if we can entirely shut
-down svn internally), I would prefer to use git-filter-branch to go
-through *all* my checkins and fix up the CRLFs in all of them.  That
-way the history will be clean and diffs/annotates/merges will go more
-smoothly.
+  http://www.kernel.org/pub/software/scm/git/
 
-Does anyone know the most efficient way to do this with
-git-filter-branch, when there are already thousands of files in the
-repo with CRLF in them?  Running dos2unix on all the files for every
-single revision could take a *very* long time.
+  git-1.5.5.1.tar.{gz,bz2}			(tarball)
+  git-htmldocs-1.5.5.1.tar.{gz,bz2}		(preformatted docs)
+  git-manpages-1.5.5.1.tar.{gz,bz2}		(preformatted docs)
+  RPMS/$arch/git-*-1.5.5.1-1.$arch.rpm	(RPM)
 
-Have fun,
+=46ortunately there weren't many brown paper bag breakages we needed to=
+ fix
+immediately after releasing 1.5.5, but there do exist some usability an=
+d
+documentation fixes accumulated on the maintenance branch.  This releas=
+e
+delibers them.
 
-Avery
+----------------------------------------------------------------
+
+Changes since v1.5.5 are as follows:
+
+Alberto Bertogli (1):
+      builtin-apply: Show a more descriptive error on failure when open=
+ing a patch
+
+Bj=C3=B6rn Steinbrink (1):
+      Fix section about backdating tags in the git-tag docs
+
+Carlos Rica (2):
+      Fix documentation syntax of optional arguments in short options.
+      core-tutorial.txt: Fix showing the current behaviour.
+
+Christian Couder (4):
+      bisect: fix bad rev checking in "git bisect good"
+      bisect: report bad rev better
+      bisect: squelch "fatal: ref HEAD not a symref" misleading message
+      git-bisect: make "start", "good" and "skip" succeed or fail atomi=
+cally
+
+Clifford Caoile (1):
+      Docs gitk: Explicitly mention the files that gitk uses (~/.gitk)
+
+Daniel Barkalow (1):
+      Fix config key miscount in url.*.insteadOf
+
+Dirk Suesserott (1):
+      Documentation/git-request-pull: Fixed a typo ("send" -> "end")
+
+Jakub Narebski (1):
+      gitweb: Fix 'history' view for deleted files with history
+
+Jeff King (1):
+      git-fetch: fix status output when not storing tracking ref
+
+Johannes Sixt (1):
+      Document option --only of git commit
+
+Jon Loeliger (1):
+      Clarify and fix English in "git-rm" documentation
+
+Jonas Fonseca (1):
+      git-remote: reject adding remotes with invalid names
+
+Junio C Hamano (7):
+      Document -w option to shortlog
+      Documentation/git-submodule: typofix
+      t7401: squelch garbage output
+      rebase: do not munge commit log message
+      git-am: minor cleanup
+      am: POSIX portability fix
+      GIT 1.5.5.1
+
+Linus Torvalds (2):
+      Ignore leading empty lines while summarizing merges
+      git-am: cope better with an empty Subject: line
+
+Mark Levedahl (1):
+      git-submodule - possibly use branch name to describe a module
+
+Matthieu Moy (1):
+      Document that WebDAV doesn't need git on the server, and works ov=
+er SSL
+
+Michele Ballabio (1):
+      revision.c: make --date-order overriddable
+
+Pedro Melo (1):
+      Force the medium pretty format on calls to git log
+
+Ping Yin (1):
+      git-submodule: Avoid 'fatal: cannot describe' message
+
+Ren=C3=A9 Scharfe (1):
+      git-archive: ignore prefix when checking file attribute
+
+Scott Collins (1):
+      Clarify documentation of git-cvsserver, particularly in relation =
+to git-shell
+
+Shawn Bohrer (2):
+      git clean: Don't automatically remove directories when run within=
+ subdirectory
+      git clean: Add test to verify directories aren't removed with a p=
+refix
