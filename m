@@ -1,107 +1,64 @@
-From: "Ping Yin" <pkufranky@gmail.com>
-Subject: Re: [regression?] "git status -a" reports modified for empty submodule directory
-Date: Tue, 22 Apr 2008 20:39:56 +0800
-Message-ID: <46dff0320804220539y51c02dedoe181a0eed8599902@mail.gmail.com>
-References: <46dff0320804220401h26d2f2ebg1748a4a310acc0f5@mail.gmail.com>
-	 <480DD6D8.9040900@viscovery.net>
+From: Teemu Likonen <tlikonen@iki.fi>
+Subject: Re: git remote update -> rejected
+Date: Tue, 22 Apr 2008 15:41:18 +0300
+Message-ID: <20080422124118.GA3098@mithlond.arda.local>
+References: <1208857733.4695.37.camel@marge.simson.net> <20080422103458.GA14751@sigio.intra.peff.net> <1208861703.18689.2.camel@marge.simson.net> <20080422111113.GB11238@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Johannes Sixt" <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Tue Apr 22 14:41:19 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Mike Galbraith <efault@gmx.de>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Apr 22 14:42:54 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JoHno-0005mN-FM
-	for gcvg-git-2@gmane.org; Tue, 22 Apr 2008 14:40:52 +0200
+	id 1JoHpi-0006T7-94
+	for gcvg-git-2@gmane.org; Tue, 22 Apr 2008 14:42:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752998AbYDVMkC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Apr 2008 08:40:02 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753030AbYDVMkC
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Apr 2008 08:40:02 -0400
-Received: from wx-out-0506.google.com ([66.249.82.230]:22462 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752989AbYDVMkA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Apr 2008 08:40:00 -0400
-Received: by wx-out-0506.google.com with SMTP id h31so1773446wxd.4
-        for <git@vger.kernel.org>; Tue, 22 Apr 2008 05:39:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=5vn/3bdMG2olA69pk1oIwBadQipHiBFJZ6IPmOGjpbU=;
-        b=GYjGLZmTzcIjxb39KTB7S3LyPz4A1e+MbzlPWAFLJSyl5HjMPIuLPSJgDxIQPf6vDXBVF2PvF6GuPbruO2ppPRYLlYoCzd9xLszRM0QFQb1NPeT+v4kjZeSyX8mJkA5XoPt+iVUQeR/VmpLNd4RIJuyYzfQW+a2N+PXTfaoPBDA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=XBJE2oy+HmBhRk8lm7e5/jzSsT2K6mZeoR6wlUucrdiFZbCrtjYRB5SyU0eLPu5XVxR/G+d4k89gEpXVCSxP1Au+hpj9UL+Od0tCtsjdEPARJMPfPeoFvrsLrE80+pfbaEJztlEqeGfWA5gkA6xUatUTye7SpX7qSrYREJ4a6Nk=
-Received: by 10.100.41.16 with SMTP id o16mr234272ano.132.1208867996346;
-        Tue, 22 Apr 2008 05:39:56 -0700 (PDT)
-Received: by 10.100.32.10 with HTTP; Tue, 22 Apr 2008 05:39:56 -0700 (PDT)
-In-Reply-To: <480DD6D8.9040900@viscovery.net>
+	id S1753165AbYDVMmA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Apr 2008 08:42:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753156AbYDVMmA
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Apr 2008 08:42:00 -0400
+Received: from pne-smtpout3-sn2.hy.skanova.net ([81.228.8.111]:60206 "EHLO
+	pne-smtpout3-sn2.hy.skanova.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751944AbYDVMl7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 22 Apr 2008 08:41:59 -0400
+Received: from mithlond.arda.local (80.220.180.181) by pne-smtpout3-sn2.hy.skanova.net (7.3.129)
+        id 478BDB9600599B44; Tue, 22 Apr 2008 14:41:21 +0200
+Received: from dtw by mithlond.arda.local with local (Exim 4.63)
+	(envelope-from <tlikonen@iki.fi>)
+	id 1JoHoE-000253-T0; Tue, 22 Apr 2008 15:41:18 +0300
 Content-Disposition: inline
+In-Reply-To: <20080422111113.GB11238@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80107>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80108>
 
-On Tue, Apr 22, 2008 at 8:15 PM, Johannes Sixt <j.sixt@viscovery.net> wrote:
-> Ping Yin schrieb:
->
-> > # create a super project super
->  > $ mkdir super && cd super && git init
->  > $ touch foo && git add foo && git commit -m "add foo"
->  >
->  > # create a sub project sub
->  > $ mkdir sub && cd sub && git init
->  > $ touch bar && git add bar && git commit -m "add bar"
->  >
->  > # add sub project to super project
->  > $ cd ..
->  > $ git add sub && git commit -m 'add sub'
->  >
->  > # remote contents of subproject
->  > $ rm -rf sub/* sub/.git
->  >
->  > # git status -a regression
->  > $ git status
->  > # On branch master
->  > nothing to commit (working directory clean)
->
->  This should have reported:
->
->  # On branch master
->  # Changed but not updated:
->  #   (use "git add/rm <file>..." to update what will be committed)
->  #
->  #       deleted:    sub
->  no changes added to commit (use "git add" and/or "git commit -a")
->
->  Right?
->
->
->  > $ git status -a
->  > # On branch master
->  > # Changes to be committed:
->  > #   (use "git reset HEAD <file>..." to unstage)
->  > #
->  > #       deleted:    sub
->  > #
->
->  There's nothing wrong with this.
->
->  -- Hannes
+Jeff King wrote (2008-04-22 07:11 -0400):
 
-It seems that in 1.5.4, both 'git status' and 'git status -a' report
-"no changes added to commit". And i think this is the right behaviour.
-Because when a super project is cloned, all submodule directories are
-empty in the beginning. In this case 'git status' and 'git status -a'
-should report " no changes added to commit".
+> remote: create fetch config lines with '+'
+> 
+> Since git-remote always uses remote tracking branches, it
+> should be safe to always force updates of those branches.
+> I.e., we should generate
+> 
+>   fetch = +refs/heads/*:refs/remotes/$remote/*
+> 
+> instead of
+> 
+>   fetch = refs/heads/*:refs/remotes/$remote/*
+> 
+> This was the behavior of the perl version, which seems to
+> have been lost in the C rewrite.
 
-
-
--- 
-Ping Yin
+I agree, the "+" should be there. I see remote tracking branches as,
+well, branches that track remote repository - no matter what happens
+there. Local branches are under user's personal control, so if user
+wants to save/keep the information of remote branches he can create
+local ones out of them: git branch localcopy $remote/$branch
