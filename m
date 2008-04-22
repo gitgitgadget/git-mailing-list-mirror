@@ -1,77 +1,76 @@
-From: "Roman V. Shaposhnik" <rvs@sun.com>
-Subject: Questions on patch lifecycle
-Date: Mon, 21 Apr 2008 21:11:21 -0700
-Message-ID: <1208837481.26863.374.camel@goose.sun.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: Questions on patch lifecycle
+Date: Tue, 22 Apr 2008 00:43:36 -0400
+Message-ID: <20080422044336.GA29771@spearce.org>
+References: <1208837481.26863.374.camel@goose.sun.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7BIT
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Apr 22 06:02:08 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git <git@vger.kernel.org>
+To: "Roman V. Shaposhnik" <rvs@sun.com>
+X-From: git-owner@vger.kernel.org Tue Apr 22 06:44:42 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jo9hh-0005Fh-P3
-	for gcvg-git-2@gmane.org; Tue, 22 Apr 2008 06:02:02 +0200
+	id 1JoAMz-0005n8-LX
+	for gcvg-git-2@gmane.org; Tue, 22 Apr 2008 06:44:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750770AbYDVEBA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Apr 2008 00:01:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750764AbYDVEBA
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Apr 2008 00:01:00 -0400
-Received: from sca-es-mail-2.Sun.COM ([192.18.43.133]:46472 "EHLO
-	sca-es-mail-2.sun.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750709AbYDVEA7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Apr 2008 00:00:59 -0400
-Received: from fe-sfbay-09.sun.com ([192.18.43.129])
-	by sca-es-mail-2.sun.com (8.13.7+Sun/8.12.9) with ESMTP id m3M40xII005599
-	for <git@vger.kernel.org>; Mon, 21 Apr 2008 21:00:59 -0700 (PDT)
-Received: from conversion-daemon.fe-sfbay-09.sun.com by fe-sfbay-09.sun.com
- (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
- id <0JZP00901KDZIL00@fe-sfbay-09.sun.com> (original mail from rvs@sun.com)
- for git@vger.kernel.org; Mon, 21 Apr 2008 21:00:59 -0700 (PDT)
-Received: from [192.168.0.103] ([76.21.110.21])
- by fe-sfbay-09.sun.com (Sun Java System Messaging Server 6.2-8.04 (built Feb
- 28 2007)) with ESMTPSA id <0JZP00HW2KHM26D0@fe-sfbay-09.sun.com> for
- git@vger.kernel.org; Mon, 21 Apr 2008 21:00:58 -0700 (PDT)
-X-Mailer: Evolution 2.12.0
+	id S1751427AbYDVEnl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Apr 2008 00:43:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751313AbYDVEnk
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Apr 2008 00:43:40 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:59783 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751338AbYDVEnj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Apr 2008 00:43:39 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1JoALy-0007mD-4Y; Tue, 22 Apr 2008 00:43:38 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id A539D20FBAE; Tue, 22 Apr 2008 00:43:36 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <1208837481.26863.374.camel@goose.sun.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80056>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80057>
 
-I'm a bit confused by the etiquette around submitting
-proposals for patches in Git and I would like to
-understand this process better. Especially since the
-only way to get closure on .gitconfig issue seems to
-be to show the code ;-)
+"Roman V. Shaposhnik" <rvs@sun.com> wrote:
+>    0. Junio, are you the only Git maintainer or are there
+>       others responsible for particular subsystems of Git?
 
-Anyway, here are the questions:
+There are a number of subsystem maintainers, but most stuff
+does go through Junio, yes.
+   
+>    1. What's the official way of submitting a patch?
+>       Is git-send-email(1) to this mailing list
+>       good enough? Does a submitter have to have
+>       a public tree that maintainer(s) can pull from?
 
-   0. Junio, are you the only Git maintainer or are there
-      others responsible for particular subsystems of Git?
-  
-   1. What's the official way of submitting a patch?
-      Is git-send-email(1) to this mailing list
-      good enough? Does a submitter have to have
-      a public tree that maintainer(s) can pull from?
+Docmentation/SubmittingPatches
 
-   2. Once the patch is submitted how does the author
-      get notified whether it is accepted, rejected
-      or needs additional work.
+>    2. Once the patch is submitted how does the author
+>       get notified whether it is accepted, rejected
+>       or needs additional work.
 
-Now, #2 is especially important for me, simply because
-the project I come from (FFmpeg) has a bit of different 
-policy around the status of each submitted patch. 
-Pretty much within a 48 hour window a submitter gets 
-notified whether the patch was accepted, rejected, needs 
-more work or the maintainer of a particular subsystem needs 
-more time in order to review the changes. What's confusing to 
-me with Git, are the examples like some patches from Ping Yin 
-not receiving any public acknowledgment at all and some of the 
-patches from other submitters (Dmitry Potapov) getting sort of 
-lost.
+Rejections get emailed to the author, and generally also to the list.
 
-Thanks,
-Roman.
+Acceptance needs to be watched for by the author by fetching Junio's
+nightly updates, and seeing if your patch made it into next, or into
+pu, or not at all.
+
+If it isn't there after a couple of days and if you have also not
+received a rejection notice indicating why it was not applied,
+it probably got dropped.  A polite reminder would then be OK.
+
+-- 
+Shawn.
