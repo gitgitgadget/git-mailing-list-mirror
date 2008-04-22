@@ -1,85 +1,81 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <Uwe.Kleine-Koenig@digi.com>
-Subject: bash completion only provides revs, not paths
-Date: Tue, 22 Apr 2008 13:21:29 +0200
-Message-ID: <20080422112129.GA30923@digi.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git remote update -> rejected
+Date: Tue, 22 Apr 2008 12:58:07 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0804221250010.4460@eeepc-johanness>
+References: <1208857733.4695.37.camel@marge.simson.net> <20080422103458.GA14751@sigio.intra.peff.net> <1208861703.18689.2.camel@marge.simson.net> <20080422111113.GB11238@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Shawn O. Pearce" <spearce@spearce.org>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Apr 22 13:22:43 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Mike Galbraith <efault@gmx.de>, Junio C Hamano <gitster@pobox.com>,
+	git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Apr 22 13:58:31 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JoGZx-0004Od-1I
-	for gcvg-git-2@gmane.org; Tue, 22 Apr 2008 13:22:29 +0200
+	id 1JoH8o-00088k-8u
+	for gcvg-git-2@gmane.org; Tue, 22 Apr 2008 13:58:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753232AbYDVLVi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Apr 2008 07:21:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752937AbYDVLVi
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Apr 2008 07:21:38 -0400
-Received: from mail164.messagelabs.com ([216.82.253.131]:64171 "EHLO
-	mail164.messagelabs.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752329AbYDVLVh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Apr 2008 07:21:37 -0400
-X-VirusChecked: Checked
-X-Env-Sender: Uwe.Kleine-Koenig@digi.com
-X-Msg-Ref: server-5.tower-164.messagelabs.com!1208863293!12815472!1
-X-StarScan-Version: 5.5.12.14.2; banners=-,-,-
-X-Originating-IP: [66.77.174.14]
-Received: (qmail 11004 invoked from network); 22 Apr 2008 11:21:34 -0000
-Received: from mail.mx2.digi.com (HELO mcl-sms-ns2.DIGI.COM) (66.77.174.14)
-  by server-5.tower-164.messagelabs.com with RC4-SHA encrypted SMTP; 22 Apr 2008 11:21:34 -0000
-Received: from mcl-sms-exch01.digi.com (10.5.8.50) by mail.mx2.digi.com
- (172.16.1.14) with Microsoft SMTP Server (TLS) id 8.1.263.0; Tue, 22 Apr 2008
- 06:20:38 -0500
-Received: from mtk-sms-mail01.digi.com (10.10.8.120) by
- mcl-sms-exch01.digi.com (10.5.8.50) with Microsoft SMTP Server id 8.1.263.0;
- Tue, 22 Apr 2008 06:21:32 -0500
-Received: from dor-sms-mail1.digi.com ([10.49.1.105]) by
- mtk-sms-mail01.digi.com with Microsoft SMTPSVC(6.0.3790.3959);	 Tue, 22 Apr
- 2008 06:21:32 -0500
-Received: from zentaur.digi.com ([10.100.10.144]) by dor-sms-mail1.digi.com
- with Microsoft SMTPSVC(6.0.3790.3959);	 Tue, 22 Apr 2008 13:21:29 +0200
-Received: by zentaur.digi.com (Postfix, from userid 1080)	id 4E1F22AB07; Tue,
- 22 Apr 2008 13:21:29 +0200 (CEST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-OriginalArrivalTime: 22 Apr 2008 11:21:29.0808 (UTC) FILETIME=[02F44D00:01C8A46B]
-X-TM-AS-Product-Ver: SMEX-8.0.0.1181-5.500.1026-15864.006
-X-TM-AS-Result: No--4.602000-8.000000-31
-X-TM-AS-User-Approved-Sender: No
-X-TM-AS-User-Blocked-Sender: No
+	id S1752115AbYDVL5n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Apr 2008 07:57:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752082AbYDVL5n
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Apr 2008 07:57:43 -0400
+Received: from mail.gmx.net ([213.165.64.20]:51605 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752045AbYDVL5m (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Apr 2008 07:57:42 -0400
+Received: (qmail invoked by alias); 22 Apr 2008 11:57:40 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO eeepc-johanness.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp038) with SMTP; 22 Apr 2008 13:57:40 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19qvdB0I1FqoYRHS7uK5sfCzZRdyJ4yGzRY2xWEv/
+	sG63HlSOaEObA4
+X-X-Sender: user@eeepc-johanness
+In-Reply-To: <20080422111113.GB11238@sigill.intra.peff.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80103>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80104>
 
-Hello,
+Hi Peff,
 
-currently autocompletion in=20
+On Tue, 22 Apr 2008, Jeff King wrote:
 
-	ukleinek@zentaur:~/gsrc/linux-2.6 git log ar<tab>
+> On Tue, Apr 22, 2008 at 12:55:03PM +0200, Mike Galbraith wrote:
+> 
+> > >   [remote "x86"]
+> > >     url = ...
+> > >     fetch = +refs/heads/*:refs/remotes/x86/*
+> > > 
+> > > See 'git help fetch' for details.
+> > 
+> > Thanks a bunch.  I'll try it.  I notice that origin and linux-next
+> > already had + prefix.  Presumably that came from the home repo.
+> 
+> Cloning creates an origin with '+' in the fetch line, but "git remote
+> add" doesn't seem to. Hrm, it looks like this is a regression from the
+> recent rewrite in C.
 
-only yields "armltd/" (i.e. the prefix of some remote tracking branches=
-)
-but most of the time I want it to complete to "arch/".
+Thanks for working on this: I missed this thread (had too many mails to 
+catch up with).
 
-I don't understand that autocompletion stuff, but probably to fix that
-several __git_complete_revlist should be replaced by a
-__git_complete_revlist_or_path.  The harder part is to implement the
-latter function.  An optimal implementation would only give back paths
-if there is a "--" somewhere before the cursor.
+> Dscho, is this a bug, or was there a conscious decision that I missed?
 
-Best regards
-Uwe
+It was a concious decision, but maybe it was wrong.
 
---=20
-Uwe Kleine-K=F6nig, Software Engineer
-Digi International GmbH Branch Breisach, K=FCferstrasse 8, 79206 Breisa=
-ch, Germany
-Tax: 315/5781/0242 / VAT: DE153662976 / Reg. Amtsgericht Dortmund HRB 1=
-3962
+My rationale was this: if I mirror another person's repository, I want all 
+the history.  And I do want to keep it, even if the other person decides 
+to clean the original repository out.
+
+(In this case, the reflogs would not help, since I do not have a HEAD 
+reflog for all the deleted branches, and deleting the refs deletes their 
+reflogs, too.)
+
+But as I said, my rationale may very well be wrong.
+
+Ciao,
+Dscho
