@@ -1,85 +1,89 @@
-From: Michael Weber <michaelw@foldr.org>
-Subject: [BUG] git-svn: does not work with tilde in repo URL
-Date: Tue, 22 Apr 2008 11:52:36 +0200
-Message-ID: <05652775-37F4-4B5C-8DE1-2BA439814C83@foldr.org>
-Mime-Version: 1.0 (Apple Message framework v919.2)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 22 11:53:28 2008
+From: =?iso-8859-1?Q?J=F6rg?= Sommer <joerg@alea.gnuu.de>
+Subject: Re: mark parsing in fast-import
+Date: Tue, 22 Apr 2008 11:39:42 +0200
+Message-ID: <20080422093942.GA3752@alea.gnuu.de>
+References: <1208132469-26471-3-git-send-email-joerg@alea.gnuu.de> <1208169584-15931-1-git-send-email-joerg@alea.gnuu.de> <20080414232958.GE20979@spearce.org> <20080420234438.GC12865@alea.gnuu.de> <20080421002626.GJ29771@spearce.org> <20080421084151.GA31344@alea.gnuu.de> <20080421235940.GQ29771@spearce.org>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="SUOF0GtieIMvvwua"
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Apr 22 12:03:09 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JoFBm-00020R-Nc
-	for gcvg-git-2@gmane.org; Tue, 22 Apr 2008 11:53:27 +0200
+	id 1JoFL1-0004lF-Bk
+	for gcvg-git-2@gmane.org; Tue, 22 Apr 2008 12:02:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755318AbYDVJwl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Apr 2008 05:52:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755549AbYDVJwl
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Apr 2008 05:52:41 -0400
-Received: from lambda.foldr.org ([88.198.49.16]:41549 "EHLO mail.foldr.org"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751672AbYDVJwk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Apr 2008 05:52:40 -0400
-Received: from zilver015088.mobiel.utwente.nl (zilver015088.mobiel.utwente.nl [130.89.15.88])
-	(authenticated bits=0)
-	by mail.foldr.org (8.14.2/8.14.2/Debian-3) with ESMTP id m3M9qaK8005986
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO)
-	for <git@vger.kernel.org>; Tue, 22 Apr 2008 11:52:38 +0200
-X-Mailer: Apple Mail (2.919.2)
+	id S1758888AbYDVKCM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Apr 2008 06:02:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758868AbYDVKCM
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Apr 2008 06:02:12 -0400
+Received: from banki.eumelnet.de ([83.246.114.63]:2403 "EHLO uucp.gnuu.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758290AbYDVKCL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Apr 2008 06:02:11 -0400
+Received: by uucp.gnuu.de (Postfix, from userid 10)
+	id ACD82488024; Tue, 22 Apr 2008 12:02:07 +0200 (CEST)
+Received: from ibook.localnet ([192.168.0.5] helo=alea.gnuu.de)
+	by alea.gnuu.de with esmtp (Exim 4.63)
+	(envelope-from <joerg@alea.gnuu.de>)
+	id 1JoEyV-0007mv-6s; Tue, 22 Apr 2008 11:39:43 +0200
+Received: from joerg by alea.gnuu.de with local (Exim 4.69)
+	(envelope-from <joerg@alea.gnuu.de>)
+	id 1JoEyU-000104-V6; Tue, 22 Apr 2008 11:39:42 +0200
+Content-Disposition: inline
+In-Reply-To: <20080421235940.GQ29771@spearce.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80090>
-
-git svn does not work for me when tilde (~ or %7E) is present in a svn  
-repository URL.  Everything works as expected when I export the same  
-repository on a URL without ~.
-
-Test case 1:
-% git svn clone -s --username michaelw http://svn.example.com/~michaelw/project/
-Initialized empty Git repository in .git/
-Using higher level of URL: http://svn.example.com/~michaelw/project => http://svn.example.com/%7Emichaelw/project
-W: Ignoring error from SVN, path probably does not exist: (175002): RA  
-layer request failed: REPORT request failed on '/~michaelw/project/! 
-svn/bc/32': REPORT of '/~michaelw/project/!svn/bc/32': 200 OK (http://svn.example.com 
-)
-W: Do not be alarmed at the above message git-svn is just searching  
-aggressively for old history.
-This may take a while on large repositories
-Path 'http:' was probably deleted:
-RA layer request failed: REPORT request failed on '/~michaelw/project/! 
-svn/bc/32': REPORT of '/~michaelw/project/!svn/bc/32': 200 OK (http://svn.example.com 
-)
-Will attempt to follow revisions r0 .. r32 committed before the deletion
-
-Two things to note:
-* In this case the svn-remote section in .git/config looks wrong, too:
-[svn-remote "svn"]
-	url = http://svn.example.com/%7Emichaelw/project
-	fetch = http://svn.example.com/~michaelw/project/trunk:refs/remotes/trunk
-	branches = http:/svn.example.com/~michaelw/project/branches/*:refs/ 
-remotes/*
-	tags = http:/svn.example.com/~michaelw/project/tags/*:refs/remotes/ 
-tags/*
-
-* The line "Path 'http:' was probably deleted:" apparently comes from  
-the "http:" prefix in the URL.
-
-Test case 2:
-% git svn clone -s --username michaelw http://svn.example.com/%7Emichaelw/project/
-Initialized empty Git repository in .git/
-Apache got a malformed URI: REPORT request failed on '/~michaelw/ 
-project/!svn/vcc/default': Unusable URI: it does not refer to this  
-repository at /Users/michaelw/sys/i686-apple-darwin9/bin/git-svn line  
-3837
-
-(Both tests are with the patch from <20080418131204.GA53634@roadkill.foldr.org 
- > applied, so git-svn line numbers might be different.)
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80091>
 
 
-Cheers,
-Michael
+--SUOF0GtieIMvvwua
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+Hallo Shawn,
+
+Shawn O. Pearce schrieb am Mon 21. Apr, 19:59 (-0400):
+> Jrg Sommer <joerg@alea.gnuu.de> wrote:
+> > Yes, you're right. I've checked some other functions and found this
+> > behaviour. Can I use a different behabiour, i.e. return 0 on failure and
+> > !0 on success?
+>=20
+> I wasn't objected to the return values as written, but more to the
+> fact that it seemed like a logic error to me.  We use both patterns
+> in Git.  Perhaps the best example to follow is get_sha1_hex();
+> it returns -1 on error and 0 on success.  So a common pattern is
+> "!get_sha1_hex()" to ensure a successful conversion of a hex string
+> to an unsigned char array.
+
+Thanks for this explanation. This was what I was looking for.
+
+Another question: Is :0 a valid mark? In import_marks() is a check for
+!mark, but I haven't seen it anywhere else.
+
+Bye, J=C3=B6rg.
+--=20
+Du hast keine Chance =E2=80=93 also nutze sie.
+
+--SUOF0GtieIMvvwua
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature http://en.wikipedia.org/wiki/OpenPGP
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFIDbJewe0mZwH1VIARAjPmAKCLYwpqC0IfRFmBK+BWsXNuDztQjQCfZFUu
++OWdbHW2bPyEi51pQQuHIck=
+=MFnZ
+-----END PGP SIGNATURE-----
+
+--SUOF0GtieIMvvwua--
