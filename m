@@ -1,79 +1,94 @@
-From: Sam Vilain <sam.vilain@catalyst.net.nz>
-Subject: Re: [PATCH] Amend git-push refspec documentation
-Date: Tue, 22 Apr 2008 20:27:13 +1200
-Organization: Catalyst IT (NZ) Ltd
-Message-ID: <480DA161.3070107@catalyst.net.nz>
-References: <1208748684-28253-1-git-send-email-sam.vilain@catalyst.net.nz> <7vk5iq5tj2.fsf@gitster.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2 04/13] Teach rebase interactive the mark command
+Date: Tue, 22 Apr 2008 09:52:41 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0804220949590.4460@eeepc-johanness>
+References: <7vabkoufzq.fsf@gitster.siamese.dyndns.org> <1208132469-26471-1-git-send-email-joerg@alea.gnuu.de> <1208132469-26471-2-git-send-email-joerg@alea.gnuu.de> <1208132469-26471-3-git-send-email-joerg@alea.gnuu.de> <1208132469-26471-4-git-send-email-joerg@alea.gnuu.de>
+ <7vabjm78v2.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 22 10:48:20 2008
+Content-Type: MULTIPART/MIXED; BOUNDARY="658432-973574921-1208854362=:4460"
+Cc: =?ISO-8859-15?Q?J=F6rg_Sommer?= <joerg@alea.gnuu.de>,
+	git@vger.kernel.org, gitster@pobox.com
+To: Junio C Hamano <junio@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 22 10:53:13 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JoEAj-00086n-Vu
-	for gcvg-git-2@gmane.org; Tue, 22 Apr 2008 10:48:18 +0200
+	id 1JoEFV-00015G-05
+	for gcvg-git-2@gmane.org; Tue, 22 Apr 2008 10:53:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757059AbYDVIrc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Apr 2008 04:47:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756977AbYDVIrc
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Apr 2008 04:47:32 -0400
-Received: from godel.catalyst.net.nz ([202.78.240.40]:44503 "EHLO
-	mail1.catalyst.net.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754798AbYDVIrb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Apr 2008 04:47:31 -0400
-X-Greylist: delayed 1206 seconds by postgrey-1.27 at vger.kernel.org; Tue, 22 Apr 2008 04:47:31 EDT
-Received: from [2404:130:0:1000:240:c7ff:fe97:5623]
-	by mail1.catalyst.net.nz with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <sam.vilain@catalyst.net.nz>)
-	id 1JoDqM-00018T-CR; Tue, 22 Apr 2008 20:27:14 +1200
-User-Agent: Icedove 1.5.0.12 (X11/20070606)
-In-Reply-To: <7vk5iq5tj2.fsf@gitster.siamese.dyndns.org>
-X-Enigmail-Version: 0.94.2.0
+	id S1757115AbYDVIwS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Apr 2008 04:52:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757098AbYDVIwS
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Apr 2008 04:52:18 -0400
+Received: from mail.gmx.net ([213.165.64.20]:42072 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1757097AbYDVIwR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Apr 2008 04:52:17 -0400
+Received: (qmail invoked by alias); 22 Apr 2008 08:52:15 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO eeepc-johanness.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp022) with SMTP; 22 Apr 2008 10:52:15 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19Avf8HaqtAyar3Y/E8w7Ugrt6oWpDUa8Moy8WD13
+	IzRIng80QVeVW8
+X-X-Sender: user@eeepc-johanness
+In-Reply-To: <7vabjm78v2.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80081>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80082>
 
-Junio C Hamano wrote:
->> -The <src> side can be an
->> -arbitrary "SHA1 expression" that can be used as an
->> -argument to `git-cat-file -t`.  E.g. `master~4` (push
->> -four parents before the current master head).
->> +The <src> side represents the source branch (or arbitrary
->> +"SHA1 expression"; see linkgit:git-rev-parse[1]) that you want to
->> +push.  The <dst> side represents the destination location.
->>  +
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--658432-973574921-1208854362=:4460
+Content-Type: TEXT/PLAIN; charset=utf-8
+Content-Transfer-Encoding: 8BIT
+
+Hi,
+
+On Mon, 21 Apr 2008, Junio C Hamano wrote:
+
+> Jörg Sommer <joerg@alea.gnuu.de> writes:
 > 
-> Hmm.  We lost an example but refer to a more authoritative information,
-> which is probably Ok.
-
-Well, the example I think was quite confusing to people who have never
-seen `master~4` before.
-
->> @@ -179,9 +180,10 @@ git push origin master:satellite/master::
->>  
->>  git push origin master:refs/heads/experimental::
->>  	Create the branch `experimental` in the `origin` repository
->> -	by copying the current `master` branch.  This form is usually
->> -	needed to create a new branch in the remote repository as
->> -	there is no `experimental` branch to match.
->> +	by copying the current `master` branch.  This form is only
->> +	needed to create a new branch in the remote repository when
->> +	the local name and the remote name are different; otherwise,
->> +	the branch name on its own will work.
+> > @@ -244,6 +252,19 @@ peek_next_command () {
+> >  	sed -n "1s/ .*$//p" < "$TODO"
+> >  }
+> >  
+> > +mark_to_ref () {
+> > +	case "$1" in
+> > +	:[!/]*)
+> > +		# :/SOMETHING is a reference for the last commit whose
+> > +                # message starts with SOMETHING
+> > +		echo "$mark_prefix${1#:}"
+> > +		;;
 > 
-> Note that writing "refs/tags/xprm" instead would allow you to create a
-> lightweight tag over there.
+> What was the conclusion of the mark-syntax discussion?
 
-True.  You could probably replace 'branch' with 'ref' in the two places
-it occurs in the last sentence to encompass that meaning, too.
+Well, I will probably work on something that is not as intrusive and 
+syntax-changing this week.
 
-Cheers,
-Sam.
+> While I know the bang in ":[!negated]" is POSIX, I wonder if everybody's
+> shell we care about groks it.
+
+The common way to do that in the git sources is
+
+	switch "$x" in
+	/*)
+		# do nothing
+		;;
+	*)
+		<bla>
+		;;
+	esac
+
+and frankly, I do not see a reason to move away from that practice.  
+Especially since consistency in source code is better than inconsistency.
+
+Ciao,
+Dscho
+--658432-973574921-1208854362=:4460--
