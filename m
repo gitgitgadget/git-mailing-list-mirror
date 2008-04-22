@@ -1,73 +1,116 @@
-From: "Ping Yin" <pkufranky@gmail.com>
-Subject: Re: [regression?] "git status -a" reports modified for empty submodule directory
-Date: Tue, 22 Apr 2008 19:04:05 +0800
-Message-ID: <46dff0320804220404u40dd3351tefacf775d4da19ef@mail.gmail.com>
-References: <46dff0320804220401h26d2f2ebg1748a4a310acc0f5@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: git remote update -> rejected
+Date: Tue, 22 Apr 2008 07:11:13 -0400
+Message-ID: <20080422111113.GB11238@sigill.intra.peff.net>
+References: <1208857733.4695.37.camel@marge.simson.net> <20080422103458.GA14751@sigio.intra.peff.net> <1208861703.18689.2.camel@marge.simson.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Apr 22 13:04:57 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+To: Mike Galbraith <efault@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Apr 22 13:12:31 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JoGIx-0007cu-Ii
-	for gcvg-git-2@gmane.org; Tue, 22 Apr 2008 13:04:56 +0200
+	id 1JoGQI-0001P5-7U
+	for gcvg-git-2@gmane.org; Tue, 22 Apr 2008 13:12:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759657AbYDVLEJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Apr 2008 07:04:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758915AbYDVLEI
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Apr 2008 07:04:08 -0400
-Received: from an-out-0708.google.com ([209.85.132.240]:24971 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756683AbYDVLEH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Apr 2008 07:04:07 -0400
-Received: by an-out-0708.google.com with SMTP id d31so587193and.103
-        for <git@vger.kernel.org>; Tue, 22 Apr 2008 04:04:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=2naMo9nCwZ6QA831vuz9dvbhSbfQ4rI0EOfRamOePnw=;
-        b=LEmKS+Zr4gMJqTS9a4pGFI3p3XuQORygQTtzsWSZnobwljp3dsf/qHp7Xjv9fGXXKHNUBVTkbpX/5BvPAqSMSO0L+/kTbWabZFsO/EM2svKk0tTYLaSNF2fh5OxwWmL1FXBn6xpAbJrhbEaAGsCs4AGQxxumvQQ7KBWflUYVmV8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=J3NNkO5ksosQiBBMHD1NQUwJXlCSynqGwugAQYqzxoqgq81iKL7U3f7saAsPnYTk1aDcxBCVdSLmXrV7aM+LBV1xeJaHDj2ATgMhx2F/r3sAMsiSRthxzSiO86T2G8ANxUEUb0Exhrjh6HaHuRKdpCPZe9q/a8YVZ8kBzIslc4Q=
-Received: by 10.100.91.17 with SMTP id o17mr87642anb.90.1208862246321;
-        Tue, 22 Apr 2008 04:04:06 -0700 (PDT)
-Received: by 10.100.32.10 with HTTP; Tue, 22 Apr 2008 04:04:05 -0700 (PDT)
-In-Reply-To: <46dff0320804220401h26d2f2ebg1748a4a310acc0f5@mail.gmail.com>
+	id S1762985AbYDVLLV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Apr 2008 07:11:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762853AbYDVLLR
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Apr 2008 07:11:17 -0400
+Received: from peff.net ([208.65.91.99]:1062 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1762691AbYDVLLP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Apr 2008 07:11:15 -0400
+Received: (qmail 12867 invoked by uid 111); 22 Apr 2008 11:11:14 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Tue, 22 Apr 2008 07:11:14 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 22 Apr 2008 07:11:13 -0400
 Content-Disposition: inline
+In-Reply-To: <1208861703.18689.2.camel@marge.simson.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80101>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80102>
 
-On Tue, Apr 22, 2008 at 7:01 PM, Ping Yin <pkufranky@gmail.com> wrote:
-> # create a super project super
->  $ mkdir super && cd super && git init
->  $ touch foo && git add foo && git commit -m "add foo"
->
->  # create a sub project sub
->  $ mkdir sub && cd sub && git init
->  $ touch bar && git add bar && git commit -m "add bar"
->
->  # add sub project to super project
->  $ cd ..
->  $ git add sub && git commit -m 'add sub'
->
->  # remote contents of subproject
+On Tue, Apr 22, 2008 at 12:55:03PM +0200, Mike Galbraith wrote:
 
-s/remote/remove/
+> >   [remote "x86"]
+> >     url = ...
+> >     fetch = +refs/heads/*:refs/remotes/x86/*
+> > 
+> > See 'git help fetch' for details.
+> 
+> Thanks a bunch.  I'll try it.  I notice that origin and linux-next
+> already had + prefix.  Presumably that came from the home repo.
 
->  --
->  Ping Yin
->
+Cloning creates an origin with '+' in the fetch line, but "git remote
+add" doesn't seem to. Hrm, it looks like this is a regression from the
+recent rewrite in C.
 
+Dscho, is this a bug, or was there a conscious decision that I missed?
 
+If a bug, the fix is below.
 
+-- >8 --
+remote: create fetch config lines with '+'
+
+Since git-remote always uses remote tracking branches, it
+should be safe to always force updates of those branches.
+I.e., we should generate
+
+  fetch = +refs/heads/*:refs/remotes/$remote/*
+
+instead of
+
+  fetch = refs/heads/*:refs/remotes/$remote/*
+
+This was the behavior of the perl version, which seems to
+have been lost in the C rewrite.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ builtin-remote.c  |    1 +
+ t/t5505-remote.sh |   10 ++++++++++
+ 2 files changed, 11 insertions(+), 0 deletions(-)
+
+diff --git a/builtin-remote.c b/builtin-remote.c
+index 9d4432b..8b63619 100644
+--- a/builtin-remote.c
++++ b/builtin-remote.c
+@@ -107,6 +107,7 @@ static int add(int argc, const char **argv)
+ 		struct path_list_item *item = track.items + i;
+ 
+ 		strbuf_reset(&buf2);
++		strbuf_addch(&buf2, '+');
+ 		if (mirror)
+ 			strbuf_addf(&buf2, "refs/%s:refs/%s",
+ 					item->path, item->path);
+diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+index af2d077..48ff2d4 100755
+--- a/t/t5505-remote.sh
++++ b/t/t5505-remote.sh
+@@ -77,6 +77,16 @@ test_expect_success 'add another remote' '
+ )
+ '
+ 
++test_expect_success 'remote forces tracking branches' '
++(
++	cd test &&
++	case `git config remote.second.fetch` in
++	+*) true ;;
++	 *) false ;;
++	esac
++)
++'
++
+ test_expect_success 'remove remote' '
+ (
+ 	cd test &&
 -- 
-Ping Yin
+1.5.5.1.116.g0023.dirty
