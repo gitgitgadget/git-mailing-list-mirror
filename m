@@ -1,69 +1,67 @@
-From: Toby Corkindale <toby.corkindale@rea-group.com>
-Subject: Re: Maintaining commit.template config through clones
-Date: Tue, 22 Apr 2008 14:45:32 +1000
-Organization: REA Group
-Message-ID: <480D6D6C.7040708@rea-group.com>
-References: <48070EA4.2050503@rea-group.com> <48072458.70005@viscovery.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 02/13] Don't append default merge message to -m message
+Date: Mon, 21 Apr 2008 22:27:32 -0700
+Message-ID: <7vej8y792z.fsf@gitster.siamese.dyndns.org>
+References: <7vabkoufzq.fsf@gitster.siamese.dyndns.org>
+ <1208132469-26471-1-git-send-email-joerg@alea.gnuu.de>
+ <1208132469-26471-2-git-send-email-joerg@alea.gnuu.de>
+ <7v7iescvu7.fsf@gitster.siamese.dyndns.org>
+ <20080421001726.GA13639@alea.gnuu.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Tue Apr 22 06:46:44 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Johannes.Schindelin@gmx.de
+To: =?utf-8?Q?J=C3=B6rg?= Sommer <joerg@alea.gnuu.de>
+X-From: git-owner@vger.kernel.org Tue Apr 22 07:28:43 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JoAOx-00069r-Il
-	for gcvg-git-2@gmane.org; Tue, 22 Apr 2008 06:46:44 +0200
+	id 1JoB3Y-000644-62
+	for gcvg-git-2@gmane.org; Tue, 22 Apr 2008 07:28:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751338AbYDVEp5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Apr 2008 00:45:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751337AbYDVEp5
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Apr 2008 00:45:57 -0400
-Received: from mel-nat68.realestate.com.au ([210.50.192.68]:39433 "EHLO
-	mel-nat68.realestate.com.au" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751266AbYDVEp4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 22 Apr 2008 00:45:56 -0400
-Received: from [192.168.53.6] ([192.168.53.6]) by mel-nat68.realestate.com.au with Microsoft SMTPSVC(6.0.3790.1830);
-	 Tue, 22 Apr 2008 14:45:32 +1000
-User-Agent: Thunderbird 2.0.0.12 (X11/20080227)
-In-Reply-To: <48072458.70005@viscovery.net>
-X-OriginalArrivalTime: 22 Apr 2008 04:45:32.0843 (UTC) FILETIME=[B2B31FB0:01C8A433]
+	id S1752031AbYDVF1v convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Apr 2008 01:27:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752015AbYDVF1v
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Apr 2008 01:27:51 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:38067 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752012AbYDVF1v convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 22 Apr 2008 01:27:51 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 4AB8529ED;
+	Tue, 22 Apr 2008 01:27:48 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 824E329E5; Tue, 22 Apr 2008 01:27:44 -0400 (EDT)
+In-Reply-To: <20080421001726.GA13639@alea.gnuu.de> (=?utf-8?Q?J=C3=B6rg?=
+ Sommer's message of "Mon, 21 Apr 2008 02:17:26 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80058>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80059>
 
-Johannes Sixt wrote:
-> Toby Corkindale schrieb:
->> I'm attempting to implement Git at our company, and we currently use a
->> commit template for CVS. I can convert this to a Git-formatted template,
->> and set it for use with git-config commit.template ....
->>
->> However, once the repository is cloned, this configuration option
->> vanishes from .git/config
->>
->> Is there a way to make configuration options sticky?
-> 
-> Create or edit $prefix/share/git-core/templates/config.
+J=C3=B6rg Sommer <joerg@alea.gnuu.de> writes:
 
-Thanks.
-Will that keep the commit-template propagated even when the repo is 
-cloned from another machine? (ie. using git: or ssh: methods)
+> ... But I doubt someone expects this behaviour
+> because the manpage says:
+>
+>   The second syntax (<msg> HEAD <remote>) is supported for historical
+>   reasons. Do not use it from the command line or in new scripts. It =
+is
+>   the same as git merge -m <msg> <remote>.
+>       ^^^^              ^^
+>
+> Currently, it's not the same, but someone might expect it.
 
-tjc.
-
--- 
-Toby Corkindale
-Software developer
-w: www.rea-group.com
-REA Group refers to realestate.com.au Ltd (ASX:REA)
-
-Warning - This e-mail transmission may contain confidential information.
-If you have received this transmission in error, please notify us
-immediately on (61 3) 9897 1121 or by reply email to the sender. You
-must destroy the e-mail immediately and not use, copy, distribute or
-disclose the contents.
+Yeah, the manpage is loosely written and does not reflect the reality. =
+ I
+am _VERY_ tempted to apply your change as-is and see if anybody screams=
+=2E
+Because git is designed to be very scriptable, people who want the curr=
+ent
+behaviour can still call fmt-merge-msg themselves.
