@@ -1,71 +1,82 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: [PATCH] post-receive-email: add --dirstat output to update_branch summary section
-Date: Tue, 22 Apr 2008 10:30:31 +0100
-Message-ID: <200804221030.31805.andyparkins@gmail.com>
+From: Mike Galbraith <efault@gmx.de>
+Subject: git remote update -> rejected
+Date: Tue, 22 Apr 2008 11:48:53 +0200
+Message-ID: <1208857733.4695.37.camel@marge.simson.net>
 Mime-Version: 1.0
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 22 11:31:43 2008
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Apr 22 11:49:48 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JoEqb-0003s2-Op
-	for gcvg-git-2@gmane.org; Tue, 22 Apr 2008 11:31:34 +0200
+	id 1JoF8B-0000qf-Im
+	for gcvg-git-2@gmane.org; Tue, 22 Apr 2008 11:49:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757244AbYDVJar (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Apr 2008 05:30:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757057AbYDVJar
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Apr 2008 05:30:47 -0400
-Received: from an-out-0708.google.com ([209.85.132.241]:56580 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756832AbYDVJaq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Apr 2008 05:30:46 -0400
-Received: by an-out-0708.google.com with SMTP id d31so580957and.103
-        for <git@vger.kernel.org>; Tue, 22 Apr 2008 02:30:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:date:subject:to:x-tuid:x-uid:x-length:mime-version:content-transfer-encoding:content-disposition:message-id;
-        bh=+Fr/aeF1TEFju6VFgw0SXZ7CHSlOZxxwCTauHZlyjik=;
-        b=pZLi0W+tr4tDSM0mTvU1spceiOQPjgL7yuEk/PTmsNQvGfgBpAMEE/6EQpt8PoavD5bh6DWYCt8MrtYje3ZTtwUvs+wI+tFNVxLhWtvIw7C8pegAw3GAHwX77ya4MiCr3O1lUVXrei74LLqySw9ztFwOHnjORFUEznNVLkLPkeo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:date:subject:to:x-tuid:x-uid:x-length:mime-version:content-transfer-encoding:content-disposition:message-id;
-        b=aBfX3plj3+0akR8NbIL+zDI62P2xDELyFwcwPjmXrkcrOGMR1GtFbshP2PAzVbbiGGklQ0HaoAIh30V9qEDcspoXulrgU5wShovvhMbtSMC+YuJSMpbvMhYcO/jJYlFcf+VDmQ2542BG7/R8T0mEr4SRTWOlSWEUhax8Wzqusy0=
-Received: by 10.100.110.15 with SMTP id i15mr7397342anc.97.1208856645998;
-        Tue, 22 Apr 2008 02:30:45 -0700 (PDT)
-Received: from dvr.360vision.com ( [194.70.53.227])
-        by mx.google.com with ESMTPS id c53sm2711450wrc.28.2008.04.22.02.30.34
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 22 Apr 2008 02:30:37 -0700 (PDT)
-X-TUID: 1fcb3f618c4220db
-X-UID: 9
-X-Length: 857
-Content-Disposition: inline
+	id S1757849AbYDVJs5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Apr 2008 05:48:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758062AbYDVJs5
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Apr 2008 05:48:57 -0400
+Received: from mail.gmx.net ([213.165.64.20]:54480 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1757830AbYDVJs4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Apr 2008 05:48:56 -0400
+Received: (qmail invoked by alias); 22 Apr 2008 09:48:54 -0000
+Received: from p54B5AFAD.dip0.t-ipconnect.de (EHLO [192.168.178.27]) [84.181.175.173]
+  by mail.gmx.net (mp030) with SMTP; 22 Apr 2008 11:48:54 +0200
+X-Authenticated: #14349625
+X-Provags-ID: V01U2FsdGVkX1+1fqMHnTK1zqe7MAsS+bm8VBg7/JjM7aapnt75C4
+	25wvPQG7GVNHtg
+X-Mailer: Evolution 2.12.0 
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80087>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80088>
 
+Greetings,
 
-Signed-off-by: Andy Parkins <andyparkins@gmail.com>
----
- contrib/hooks/post-receive-email |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+Does anyone know what could lead to this?  git doesn't have any trouble
+(well, hasn't had any yet) with any trees other than x86 and
+sched-devel. Nobody but little old me seems to be having this trouble...
 
-diff --git a/contrib/hooks/post-receive-email b/contrib/hooks/post-receive-email
-index 62a740c..2e706b3 100644
---- a/contrib/hooks/post-receive-email
-+++ b/contrib/hooks/post-receive-email
-@@ -410,6 +410,8 @@ generate_update_branch_email()
- 	# non-fast forward updates.
- 	echo ""
- 	echo "Summary of changes:"
-+	git diff --dirstat $oldrev..$newrev
- 	git diff-tree --stat --summary --find-copies-harder $oldrev..$newrev
- }
- 
--- 
-1.5.5.1.57.g5909c
+git is pulled nearly every day, but checking out older versions doesn't
+make any difference (unless i go too far back of course).
+
+marge:..git/linux-2.6 # git remote update
+Updating origin
+Updating linux-next
+Updating stable
+Updating x86
+>From git://git.kernel.org/pub/scm/linux/kernel/git/x86/linux-2.6-x86
+ ! [rejected]        latest     -> x86/latest  (non fast forward)
+ ! [rejected]        master     -> x86/master  (non fast forward)
+ ! [rejected]        testing    -> x86/testing  (non fast forward)
+Updating sched-devel
+>From git://git.kernel.org/pub/scm/linux/kernel/git/mingo/linux-2.6-sched-devel
+ ! [rejected]        for-akpm   -> sched-devel/for-akpm  (non fast forward)
+ ! [rejected]        latest     -> sched-devel/latest  (non fast forward)
+ ! [rejected]        master     -> sched-devel/master  (non fast forward)
+
+If I rm/add the remote back, all goes fine... until it says rejected.
+
+marge:..git/linux-2.6 # git remote rm x86
+marge:..git/linux-2.6 # git remote add x86 git://git.kernel.org/pub/scm/linux/kernel/git/x86/linux-2.6-x86.git
+marge:..git/linux-2.6 # git remote update
+Updating origin
+Updating linux-next
+Updating stable
+Updating sched-devel
+Updating x86
+>From git://git.kernel.org/pub/scm/linux/kernel/git/x86/linux-2.6-x86
+ * [new branch]      base       -> x86/base
+ * [new branch]      for-akpm   -> x86/for-akpm
+ * [new branch]      for-linus  -> x86/for-linus
+ * [new branch]      latest     -> x86/latest
+ * [new branch]      master     -> x86/master
+ * [new branch]      origin     -> x86/origin
+ * [new branch]      testing    -> x86/testing
+marge:..git/linux-2.6 #
