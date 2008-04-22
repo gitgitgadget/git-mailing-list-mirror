@@ -1,76 +1,69 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Questions on patch lifecycle
-Date: Tue, 22 Apr 2008 00:43:36 -0400
-Message-ID: <20080422044336.GA29771@spearce.org>
-References: <1208837481.26863.374.camel@goose.sun.com>
+From: Toby Corkindale <toby.corkindale@rea-group.com>
+Subject: Re: Maintaining commit.template config through clones
+Date: Tue, 22 Apr 2008 14:45:32 +1000
+Organization: REA Group
+Message-ID: <480D6D6C.7040708@rea-group.com>
+References: <48070EA4.2050503@rea-group.com> <48072458.70005@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git <git@vger.kernel.org>
-To: "Roman V. Shaposhnik" <rvs@sun.com>
-X-From: git-owner@vger.kernel.org Tue Apr 22 06:44:42 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Tue Apr 22 06:46:44 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JoAMz-0005n8-LX
-	for gcvg-git-2@gmane.org; Tue, 22 Apr 2008 06:44:42 +0200
+	id 1JoAOx-00069r-Il
+	for gcvg-git-2@gmane.org; Tue, 22 Apr 2008 06:46:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751427AbYDVEnl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Apr 2008 00:43:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751313AbYDVEnk
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Apr 2008 00:43:40 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:59783 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751338AbYDVEnj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Apr 2008 00:43:39 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1JoALy-0007mD-4Y; Tue, 22 Apr 2008 00:43:38 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id A539D20FBAE; Tue, 22 Apr 2008 00:43:36 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <1208837481.26863.374.camel@goose.sun.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1751338AbYDVEp5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Apr 2008 00:45:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751337AbYDVEp5
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Apr 2008 00:45:57 -0400
+Received: from mel-nat68.realestate.com.au ([210.50.192.68]:39433 "EHLO
+	mel-nat68.realestate.com.au" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751266AbYDVEp4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 22 Apr 2008 00:45:56 -0400
+Received: from [192.168.53.6] ([192.168.53.6]) by mel-nat68.realestate.com.au with Microsoft SMTPSVC(6.0.3790.1830);
+	 Tue, 22 Apr 2008 14:45:32 +1000
+User-Agent: Thunderbird 2.0.0.12 (X11/20080227)
+In-Reply-To: <48072458.70005@viscovery.net>
+X-OriginalArrivalTime: 22 Apr 2008 04:45:32.0843 (UTC) FILETIME=[B2B31FB0:01C8A433]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80057>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80058>
 
-"Roman V. Shaposhnik" <rvs@sun.com> wrote:
->    0. Junio, are you the only Git maintainer or are there
->       others responsible for particular subsystems of Git?
+Johannes Sixt wrote:
+> Toby Corkindale schrieb:
+>> I'm attempting to implement Git at our company, and we currently use a
+>> commit template for CVS. I can convert this to a Git-formatted template,
+>> and set it for use with git-config commit.template ....
+>>
+>> However, once the repository is cloned, this configuration option
+>> vanishes from .git/config
+>>
+>> Is there a way to make configuration options sticky?
+> 
+> Create or edit $prefix/share/git-core/templates/config.
 
-There are a number of subsystem maintainers, but most stuff
-does go through Junio, yes.
-   
->    1. What's the official way of submitting a patch?
->       Is git-send-email(1) to this mailing list
->       good enough? Does a submitter have to have
->       a public tree that maintainer(s) can pull from?
+Thanks.
+Will that keep the commit-template propagated even when the repo is 
+cloned from another machine? (ie. using git: or ssh: methods)
 
-Docmentation/SubmittingPatches
-
->    2. Once the patch is submitted how does the author
->       get notified whether it is accepted, rejected
->       or needs additional work.
-
-Rejections get emailed to the author, and generally also to the list.
-
-Acceptance needs to be watched for by the author by fetching Junio's
-nightly updates, and seeing if your patch made it into next, or into
-pu, or not at all.
-
-If it isn't there after a couple of days and if you have also not
-received a rejection notice indicating why it was not applied,
-it probably got dropped.  A polite reminder would then be OK.
+tjc.
 
 -- 
-Shawn.
+Toby Corkindale
+Software developer
+w: www.rea-group.com
+REA Group refers to realestate.com.au Ltd (ASX:REA)
+
+Warning - This e-mail transmission may contain confidential information.
+If you have received this transmission in error, please notify us
+immediately on (61 3) 9897 1121 or by reply email to the sender. You
+must destroy the e-mail immediately and not use, copy, distribute or
+disclose the contents.
