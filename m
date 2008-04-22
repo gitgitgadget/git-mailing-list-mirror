@@ -1,67 +1,75 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Paolo Bonzini <bonzini@gnu.org>
 Subject: Re: git remote update -> rejected
-Date: Tue, 22 Apr 2008 14:49:57 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0804221449240.4460@eeepc-johanness>
-References: <1208857733.4695.37.camel@marge.simson.net> <20080422103458.GA14751@sigio.intra.peff.net> <1208861703.18689.2.camel@marge.simson.net> <20080422111113.GB11238@sigill.intra.peff.net> <20080422124118.GA3098@mithlond.arda.local>
- <alpine.DEB.1.00.0804221354180.4460@eeepc-johanness> <20080422133926.GB3098@mithlond.arda.local>
+Date: Tue, 22 Apr 2008 15:53:16 +0200
+Message-ID: <480DEDCC.8020809@gnu.org>
+References: <1208857733.4695.37.camel@marge.simson.net> <20080422103458.GA14751@sigio.intra.peff.net> <1208861703.18689.2.camel@marge.simson.net> <20080422111113.GB11238@sigill.intra.peff.net> <20080422124118.GA3098@mithlond.arda.local> <alpine.DEB.1.00.0804221354180.4460@eeepc-johanness> <20080422130122.GB27577@sigill.intra.peff.net> <alpine.DEB.1.00.0804221404360.4460@eeepc-johanness>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jeff King <peff@peff.net>, Mike Galbraith <efault@gmx.de>,
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, Teemu Likonen <tlikonen@iki.fi>,
+	Mike Galbraith <efault@gmx.de>,
 	Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-To: Teemu Likonen <tlikonen@iki.fi>
-X-From: git-owner@vger.kernel.org Tue Apr 22 15:51:05 2008
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Apr 22 15:54:46 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JoItV-0006kb-7K
-	for gcvg-git-2@gmane.org; Tue, 22 Apr 2008 15:50:49 +0200
+	id 1JoIx4-00089B-Op
+	for gcvg-git-2@gmane.org; Tue, 22 Apr 2008 15:54:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756645AbYDVNtf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Apr 2008 09:49:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753313AbYDVNtf
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Apr 2008 09:49:35 -0400
-Received: from mail.gmx.net ([213.165.64.20]:49784 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756507AbYDVNte (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Apr 2008 09:49:34 -0400
-Received: (qmail invoked by alias); 22 Apr 2008 13:49:33 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO eeepc-johanness.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp041) with SMTP; 22 Apr 2008 15:49:33 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+TSsgGcLeTAqKoNuQ01WnMCvI5rOYDXS0Jis89x3
-	rPvkWmoxiKdKae
-X-X-Sender: user@eeepc-johanness
-In-Reply-To: <20080422133926.GB3098@mithlond.arda.local>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1759000AbYDVNxd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Apr 2008 09:53:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763274AbYDVNxd
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Apr 2008 09:53:33 -0400
+Received: from fg-out-1718.google.com ([72.14.220.155]:25304 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759000AbYDVNxc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Apr 2008 09:53:32 -0400
+Received: by fg-out-1718.google.com with SMTP id l27so2196029fgb.17
+        for <git@vger.kernel.org>; Tue, 22 Apr 2008 06:53:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:sender;
+        bh=IuuZiZdvhAcuHm5hCkfLXUoIed1UH02eYJGBzpxpV4Q=;
+        b=L7oz00pKgAjkSJ1BtOeayACn+l/ZxQ3u2Tb6kOg5YQ1+O/H4yqTNiNZCCT9cJiPJAv17wdGByTn9upY+/ivmzoWMgiCGXtZkwzc8do5+IDaPzcBXInB4qjju824frYyAbDD+7LlEMRuaqbrT06V5plhxpDQytcC/FGOhy3gWHKE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:sender;
+        b=HER1G8MxPnKCYZJor5csZlwWZkiOKireVRBi3C0iaKVWSud7K8Vha4FiT2Jy51nSL5PO+hup7pgx1gywjm+fRNXMWeO1q3CSI5sKk2RWZVT5M2rNTlOzBinN6jds4AdkSqtGxGA5JQdJtFGDeu1Ru/8HBRwJ/bs/zjKqnuayNXc=
+Received: by 10.86.98.18 with SMTP id v18mr563740fgb.56.1208872397828;
+        Tue, 22 Apr 2008 06:53:17 -0700 (PDT)
+Received: from scientist-2.mobile.usilu.net ( [195.176.176.226])
+        by mx.google.com with ESMTPS id 4sm4390956fge.3.2008.04.22.06.53.16
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 22 Apr 2008 06:53:16 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.12 (Macintosh/20080213)
+In-Reply-To: <alpine.DEB.1.00.0804221404360.4460@eeepc-johanness>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80119>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80120>
 
-Hi,
-
-On Tue, 22 Apr 2008, Teemu Likonen wrote:
-
-> Johannes Schindelin wrote (2008-04-22 13:56 +0100):
+Johannes Schindelin wrote:
+> Hi,
 > 
-> > With the --mirror mode, you can no longer discern clearly between
-> > local and remote branches.  This is basically what we had in the
-> > beginning, before the "separate remotes layout".
+> On Tue, 22 Apr 2008, Jeff King wrote:
 > 
-> Hmm, to me it looks like --mirror is for mirroring remote repository and 
-> hence the "+" makes sense in here too. It's like "I want to make my 
-> repository a copy of that remote repository" hence the name 'mirror'. 
-> It'll possibly overwrite local branches but in my way of thinking 
-> mirroring implies that possibility. The 'git remote' manual says that 
-> --mirror "only makes sense in bare repositories", so the manual seems to 
-> guide towards not having local working directory nor changes.
+>> OTOH, if you are using non-separate-remote layout, I think it makes
+>> sense to _not_ have the "+". OTOOH, when you call the option --mirror,
+>> it makes me think of "push --mirror" which implies "+".
+> 
+> I am glad somebody else than me finds this to be a dilemma.
 
-Okay, how about this: take Peff's patch, but add a warning if --mirror is 
-used on a non-bare repository?
+Pushing to a mirror implies a "+".  But pulling from a mirror had better 
+not imply a "+", as Dscho pointed out in this thread and implemented in 
+his patch.
 
-Ciao,
-Dscho
+Non-fast-forward pulls from a non-mirror are safe, so they can imply a "+".
+
+Maybe, "git remote add --mirror" should add a "push" line instead of a 
+"fetch" line, and should not allow -f or -t options.
+
+Paolo
