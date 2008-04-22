@@ -1,73 +1,101 @@
-From: Mike Galbraith <efault@gmx.de>
-Subject: Re: git remote update -> rejected
-Date: Tue, 22 Apr 2008 12:55:03 +0200
-Message-ID: <1208861703.18689.2.camel@marge.simson.net>
-References: <1208857733.4695.37.camel@marge.simson.net>
-	 <20080422103458.GA14751@sigio.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: Friendly refspecs
+Date: Tue, 22 Apr 2008 06:56:58 -0400
+Message-ID: <20080422105658.GA11238@sigill.intra.peff.net>
+References: <20080409101428.GA2637@elte.hu> <20080409145758.GB20874@sigill.intra.peff.net> <20080409200836.GA19248@mithlond> <20080409203453.GA10370@sigill.intra.peff.net> <20080409222500.GB19248@mithlond> <20080409225112.GB12103@sigill.intra.peff.net> <20080413093102.GC12107@mithlond.arda.local> <20080416034823.GA11727@sigill.intra.peff.net> <alpine.LNX.1.00.0804161126280.19665@iabervon.org> <7vod89pnxx.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Apr 22 12:56:17 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Daniel Barkalow <barkalow@iabervon.org>,
+	Teemu Likonen <tlikonen@iki.fi>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 22 12:57:56 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JoGAY-00059w-H5
-	for gcvg-git-2@gmane.org; Tue, 22 Apr 2008 12:56:14 +0200
+	id 1JoGC6-0005Z1-Jq
+	for gcvg-git-2@gmane.org; Tue, 22 Apr 2008 12:57:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755084AbYDVKzI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Apr 2008 06:55:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756765AbYDVKzI
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Apr 2008 06:55:08 -0400
-Received: from mail.gmx.net ([213.165.64.20]:54340 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755084AbYDVKzH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Apr 2008 06:55:07 -0400
-Received: (qmail invoked by alias); 22 Apr 2008 10:55:04 -0000
-Received: from p54B5AFAD.dip0.t-ipconnect.de (EHLO [192.168.178.27]) [84.181.175.173]
-  by mail.gmx.net (mp049) with SMTP; 22 Apr 2008 12:55:04 +0200
-X-Authenticated: #14349625
-X-Provags-ID: V01U2FsdGVkX1+d+Hlch6GdbB0nzGflrnYigsy/9+mqRe9doRZb++
-	Tk+u93U0Kkw8n1
-In-Reply-To: <20080422103458.GA14751@sigio.intra.peff.net>
-X-Mailer: Evolution 2.12.0 
-X-Y-GMX-Trusted: 0
+	id S1759635AbYDVK5D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Apr 2008 06:57:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752866AbYDVK5C
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Apr 2008 06:57:02 -0400
+Received: from peff.net ([208.65.91.99]:2411 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751843AbYDVK5A (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Apr 2008 06:57:00 -0400
+Received: (qmail 11731 invoked by uid 111); 22 Apr 2008 10:56:59 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Tue, 22 Apr 2008 06:56:59 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 22 Apr 2008 06:56:58 -0400
+Content-Disposition: inline
+In-Reply-To: <7vod89pnxx.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80098>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80099>
 
+On Wed, Apr 16, 2008 at 01:03:22PM -0700, Junio C Hamano wrote:
 
-On Tue, 2008-04-22 at 06:34 -0400, Jeff King wrote:
-> On Tue, Apr 22, 2008 at 11:48:53AM +0200, Mike Galbraith wrote:
+> > I was only working on making "HEAD" expand to HEAD:<current branch>. I 
+> > think that the matching type is only most likely what you want, not 
+> > certainly enough to just do it. I'd say that push should suggest it, but 
+> > not actually do it automatically, or possibly require -f to do it without 
+> > the full name.
 > 
-> > marge:..git/linux-2.6 # git remote update
-> > Updating origin
-> > Updating linux-next
-> > Updating stable
-> > Updating x86
-> > >From git://git.kernel.org/pub/scm/linux/kernel/git/x86/linux-2.6-x86
-> >  ! [rejected]        latest     -> x86/latest  (non fast forward)
-> >  ! [rejected]        master     -> x86/master  (non fast forward)
-> >  ! [rejected]        testing    -> x86/testing  (non fast forward)
-> 
-> The x86 tree was presumably rewound or rebased, which means that
-> fetching their new position would overwrite your old. This is probably
-> OK, since it looks like you have x86/* as tracking branches, and only
-> they would get overwritten. So it is probably safe to put a '+' in front
-> of the 'fetch' line in your config file. E.g.,
-> 
->   [remote "x86"]
->     url = ...
->     fetch = +refs/heads/*:refs/remotes/x86/*
-> 
-> See 'git help fetch' for details.
+> Hmm.  `-f` means "I know there are the ones that do not fast forward but I
+> want them updated", which is quite a different thing.  I'd say either we
+> should just do it, or we don't, and keep `-f` orthogonal to the ref
+> dwimming.
 
-Thanks a bunch.  I'll try it.  I notice that origin and linux-next
-already had + prefix.  Presumably that came from the home repo.
+Hmm. I was kind of hoping other people would chime in with opinions on
+the dwimmery, but clearly they didn't.
 
-	-Mike
+I agree that "-f" is a terrible idea here. Not only is it overloading
+what "-f" does, but it's totally unnecessary. If we want to send a
+message to the user to retry with different parameters, we can already
+say: "try again with refs/heads/$foo".
+
+The "refs/heads/" dwimmery makes sense to me, because:
+
+  1. it changes a behavior which is currently an error condition, so
+     we're not hurting anyone's existing workflow
+
+  2. In my usage, pushing a branch to a tag (or vice versa) is the
+     exception, so I don't mind favoring pushing like types to like
+     types.
+
+But I recognize that (2) is based on my own workflow, so if people
+disagree, I guess it isn't so for everyone.
+
+We should probably at least improve the message. Something like this is
+perhaps a bit better, or it could even customize the suggestion based
+on the source ref's type (i.e., implement the dwimmery, but don't
+surprise anyone by doing it automatically).
+
+-Peff
+
+---
+diff --git a/remote.c b/remote.c
+index 06ad156..2151829 100644
+--- a/remote.c
++++ b/remote.c
+@@ -867,9 +867,12 @@ static int match_explicit(struct ref *src, struct ref *dst,
+ 		if (!memcmp(dst_value, "refs/", 5))
+ 			matched_dst = make_linked_ref(dst_value, dst_tail);
+ 		else
+-			error("dst refspec %s does not match any "
+-			      "existing ref on the remote and does "
+-			      "not start with refs/.", dst_value);
++			error("The destination refspec does not match any "
++			      "existing ref on the remote,\n"
++			      "and it does not specify a full refname; "
++			      "did you mean one of:\n"
++			      "    refs/heads/%s\n"
++			      "    refs/tags/%s\n", dst_value, dst_value);
+ 		break;
+ 	default:
+ 		matched_dst = NULL;
