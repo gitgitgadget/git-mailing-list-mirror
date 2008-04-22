@@ -1,95 +1,91 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Git on Windows, CRLF issues
-Date: Mon, 21 Apr 2008 22:39:18 -0400
-Message-ID: <20080422023918.GA5402@sigill.intra.peff.net>
-References: <alpine.DEB.1.00.0804212145570.21181@perkele.intern.softwolves.pp.se> <alpine.DEB.1.00.0804212104560.2298@eeepc-johanness> <32541b130804211453x77f3fd49hef645a417a9919ca@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] log-tree.c: Make log_tree_diff_flush() honor
+ line_termination.
+Date: Mon, 21 Apr 2008 19:58:27 -0700
+Message-ID: <7vskxe8ujw.fsf@gitster.siamese.dyndns.org>
+References: <5d46db230804211918u1444a80cwe1e977d37c2eb257@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Peter Karlsson <peter@softwolves.pp.se>, git@vger.kernel.org
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 22 04:40:12 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Govind Salinas" <govind@sophiasuchtig.com>
+X-From: git-owner@vger.kernel.org Tue Apr 22 04:59:24 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jo8QU-0006Dd-28
-	for gcvg-git-2@gmane.org; Tue, 22 Apr 2008 04:40:10 +0200
+	id 1Jo8j5-0001Cd-56
+	for gcvg-git-2@gmane.org; Tue, 22 Apr 2008 04:59:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757671AbYDVCjW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Apr 2008 22:39:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758026AbYDVCjW
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Apr 2008 22:39:22 -0400
-Received: from peff.net ([208.65.91.99]:2204 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756926AbYDVCjW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Apr 2008 22:39:22 -0400
-Received: (qmail 10777 invoked by uid 111); 22 Apr 2008 02:39:19 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Mon, 21 Apr 2008 22:39:19 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 21 Apr 2008 22:39:18 -0400
-Content-Disposition: inline
-In-Reply-To: <32541b130804211453x77f3fd49hef645a417a9919ca@mail.gmail.com>
+	id S1756286AbYDVC6g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Apr 2008 22:58:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756766AbYDVC6g
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Apr 2008 22:58:36 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:54855 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756257AbYDVC6f (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Apr 2008 22:58:35 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id E198015A9;
+	Mon, 21 Apr 2008 22:58:33 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 11E3515A8; Mon, 21 Apr 2008 22:58:29 -0400 (EDT)
+In-Reply-To: <5d46db230804211918u1444a80cwe1e977d37c2eb257@mail.gmail.com>
+ (Govind Salinas's message of "Mon, 21 Apr 2008 21:18:48 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80053>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80054>
 
-On Mon, Apr 21, 2008 at 05:53:34PM -0400, Avery Pennarun wrote:
+"Govind Salinas" <govind@sophiasuchtig.com> writes:
 
-> Does anyone know the most efficient way to do this with
-> git-filter-branch, when there are already thousands of files in the
-> repo with CRLF in them?  Running dos2unix on all the files for every
-> single revision could take a *very* long time.
+[no justification here]
 
-Yes, a tree filter would probably be quite slow due to checking out, and
-then munging all of the files.
+> Signed-off-by: Govind Salinas <blix@sophiasuchtig.com>
 
-You could maybe do an index filter that gets the blob SHA1 of each file
-that is new, and just munges those. But I think it is even simpler to
-just keep a cache of original blob hashes mapping to munged blob hashes.
+> diff --git a/log-tree.c b/log-tree.c
+> index 5b29639..374b277 100644
+> --- a/log-tree.c
+> +++ b/log-tree.c
+> @@ -347,7 +347,7 @@ int log_tree_diff_flush(struct rev_info *opt)
+>  			int pch = DIFF_FORMAT_DIFFSTAT | DIFF_FORMAT_PATCH;
+>  			if ((pch & opt->diffopt.output_format) == pch)
+>  				printf("---");
+> -			putchar('\n');
+> +			putchar(opt->diffopt.line_termination);
+>  		}
+>  	}
+>  	diff_flush(&opt->diffopt);
 
-Something like:
+What this "\n" separates are the commit log message (potentially followed
+by the three-dash marker to signal "the patch follows") and the textual
+diff (potentially with diffstat, which also is textual).
 
-  git filter-branch --index-filter '
-    git ls-files --stage |
-    perl /path/to/caching-munger |
-    git update-index --index-info
-  '
+Lines in the textual diff part is always separated with "\n".  The patch
+is line oriented by definition, and it does not make it any easier for the
+tools to grok even if you made it NUL terminated.  The log message when
+given by log-tree is typically indented by four spaces, so the beginning
+of diff/patch part which is not indented can be detected easily without
+the help fro NUL termination.  In other words, I do not think the tool
+downstream you are writing is helped much with this change.  While I can
+understand why you wanted to do it (i.e. "being consistent"), I do not
+think the consistency buys us much in this particular case.
 
-where your caching munger looks something like:
+However, the tool downstream other people have already written to read
+from the log-tree output already knows that there will be LF at this place
+even if they drive log-tree with a "-z" option, as that has been the way
+from the beginning.  I have a suspicion that tools like qgit may start
+barfing with this change if they read from "-z" output.
 
--- >8 --
-#!/usr/bin/perl
+Which makes the purist in me feel somewhat sad, but the pragmatist in me
+is not convinced until he is shown how this will help the downstream tools
+that read from the output from log-tree, which you didn't do with zero
+line of a proposed commit log message.
 
-use strict;
-use DB_File;
-use Fcntl;
-tie my %cache, 'DB_File', "$ENV{HOME}/filter-cache", O_RDWR|O_CREAT, 0666
-  or die "unable to open db: $!";
-
-while(<>) {
-  my ($mode, $hash, $path) = /^(\d+) ([0-9a-f]{40}) \d\t(.*)/
-    or die "bad ls-files line: $_";
-  $cache{$hash} = munge($hash)
-    unless exists $cache{$hash};
-  print "$mode $cache{$hash}\t$path\n";
-}
-
-sub munge {
-  my $h = shift;
-  my $r = scalar `git show $h | sed 's/\$/\\r/' | git hash-object -w --stdin`;
-  chomp $r;
-  return $r;
-}
--- 8< --
-
-so we keep a dbm of the hash mapping, and do no work if we have already
-seen this blob. If we don't, then we actually do the expensive 'show |
-munge | hash-object'. And here our munge adds a CR, but you should be
-able to do an arbitrary transformation.
-
--Peff
+A possible defense for this patch is that it _could_ make the output
+easier to parse in the presense of a commit log message with a line that
+begins with "diff --git" when log-tree is driven with --pretty=raw.
