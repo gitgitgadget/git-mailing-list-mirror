@@ -1,85 +1,63 @@
-From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-Subject: Re: What's cooking in git.git (topics)
-Date: Tue, 22 Apr 2008 16:55:11 +0200
-Message-ID: <200804221655.11914.Josef.Weidendorfer@gmx.de>
-References: <7vlk4snpj3.fsf@gitster.siamese.dyndns.org> <7vabjm1a0q.fsf@gitster.siamese.dyndns.org> <46dff0320804220659j66dea3fehc2a9bdcdc0371025@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git remote update -> rejected
+Date: Tue, 22 Apr 2008 16:08:11 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0804221607190.4460@eeepc-johanness>
+References: <1208857733.4695.37.camel@marge.simson.net> <20080422103458.GA14751@sigio.intra.peff.net> <1208861703.18689.2.camel@marge.simson.net> <20080422111113.GB11238@sigill.intra.peff.net> <20080422124118.GA3098@mithlond.arda.local>
+ <alpine.DEB.1.00.0804221354180.4460@eeepc-johanness> <20080422133926.GB3098@mithlond.arda.local> <alpine.DEB.1.00.0804221449240.4460@eeepc-johanness> <20080422140440.GC3098@mithlond.arda.local> <480DF1E7.5040900@gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-To: "Ping Yin" <pkufranky@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 22 17:04:25 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Mike Galbraith <efault@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>
+To: Paolo Bonzini <bonzini@gnu.org>
+X-From: git-owner@vger.kernel.org Tue Apr 22 17:11:15 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JoK1A-0000Pu-54
-	for gcvg-git-2@gmane.org; Tue, 22 Apr 2008 17:02:48 +0200
+	id 1JoK6s-0002fb-6b
+	for gcvg-git-2@gmane.org; Tue, 22 Apr 2008 17:08:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764576AbYDVPB4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Apr 2008 11:01:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764620AbYDVPB4
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Apr 2008 11:01:56 -0400
-Received: from mailout1.informatik.tu-muenchen.de ([131.159.0.12]:46400 "EHLO
-	mailout1.informatik.tu-muenchen.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1758459AbYDVPBz convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Apr 2008 11:01:55 -0400
-X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Tue, 22 Apr 2008 11:01:54 EDT
-Received: from dhcp-3s-59.lrr.in.tum.de (unknown [131.159.35.59])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.in.tum.de (Postfix) with ESMTP id 490896969;
-	Tue, 22 Apr 2008 16:55:13 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <46dff0320804220659j66dea3fehc2a9bdcdc0371025@mail.gmail.com>
-Content-Disposition: inline
-X-Virus-Scanned: ClamAV using ClamSMTP
+	id S1758840AbYDVPHr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Apr 2008 11:07:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757513AbYDVPHr
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Apr 2008 11:07:47 -0400
+Received: from mail.gmx.net ([213.165.64.20]:43162 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755168AbYDVPHr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Apr 2008 11:07:47 -0400
+Received: (qmail invoked by alias); 22 Apr 2008 15:07:44 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO eeepc-johanness.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp019) with SMTP; 22 Apr 2008 17:07:44 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+cmr5TH6CcguCYbiEiVlg3kWKrU0ajv3XnO56wO/
+	ffSxV76mCid/Uk
+X-X-Sender: user@eeepc-johanness
+In-Reply-To: <480DF1E7.5040900@gnu.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80127>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80128>
 
-On Tuesday 22 April 2008, Ping Yin wrote:
-> On Tue, Apr 22, 2008 at 6:03 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> >  It does not help motivating me reviewing the series that the overall tone
-> >  of it is to ignore .git/config more and make .gitmodules take more active
-> >  role, either.  I have already said number of times why that is not a good
-> >  idea and why it is against the overall submodule design.
+Hi,
+
+On Tue, 22 Apr 2008, Paolo Bonzini wrote:
+
+> > > Okay, how about this: take Peff's patch, but add a warning if 
+> > > --mirror is used on a non-bare repository?
+> > 
+> > Sounds good to me. Indeed, giving a warning is _very_ good idea as 
+> > --mirror is potentially, even likely, destructive with local changes 
+> > and working directory.
 > 
-> I summarize junio's points that says $GIT_DIR/config is authoritative.
->
-> [...]
-> 
-> Any others?
+> What about changing --mirror to add a push line instead of a fetch line?
 
-A reason you did not mention is security:
-You never want your .git/config to be changed behind your back, which
-effectivly is the case when using the versioned .gitmodules information
-(similar problem as with a .gitconfig in-tree).
+I would not expect --mirror to add a push line when "git-remote add" 
+without --mirror does not a push line either.
 
-Another one:
-From a design point of view, submodule URLs are project meta information
-unrelated to source history. So, actually, I think it was wrong to put
-submodule URLs (even hints only) into the versioned .gitmodules files (*).
-
-The main reason for .gitmodules is to store submodule information which
-has to be in sync with commits, such as a submodule name related to some
-path where the submodule happens to be checked out in a given commit, and
-also related to some config entry holding the URL to allow for fetch/pull.
-The idea is that submodules have an identity in the supermodule (in contrast
-to files in git), such that related configuration keeps valid when moving
-submodules around. This needs simultanous adjusting the path attribute in
-.gitmodules when a submodule is moved.
-
-Josef
-
-(*) IMHO, it would be far better if such project meta/policy information could
-be in its own history (e.g. branch "gitconfig" to allow for easy propagation
-at clone/fetch time). However, any such configuration should need
-explicit interaction by the user to take over project config into the
-local git config (e.g. via a "git config merge gitconfig:config" after
-inspecting via "git show gitconfig:config").
+Ciao,
+Dscho
