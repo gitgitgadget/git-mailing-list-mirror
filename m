@@ -1,82 +1,71 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git remote update -> rejected
-Date: Tue, 22 Apr 2008 17:42:25 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0804221741570.4460@eeepc-johanness>
-References: <1208857733.4695.37.camel@marge.simson.net> <20080422103458.GA14751@sigio.intra.peff.net> <1208861703.18689.2.camel@marge.simson.net> <20080422111113.GB11238@sigill.intra.peff.net> <20080422124118.GA3098@mithlond.arda.local>
- <alpine.DEB.1.00.0804221354180.4460@eeepc-johanness> <20080422133926.GB3098@mithlond.arda.local> <alpine.DEB.1.00.0804221449240.4460@eeepc-johanness> <20080422140440.GC3098@mithlond.arda.local> <480DF1E7.5040900@gnu.org> <alpine.DEB.1.00.0804221607190.4460@eeepc-johanness>
- <480E03A9.3040401@gnu.org> <480E1108.5090701@gnu.org>
+From: "Avery Pennarun" <apenwarr@gmail.com>
+Subject: Re: Git on Windows, CRLF issues
+Date: Tue, 22 Apr 2008 12:51:14 -0400
+Message-ID: <32541b130804220951p224c9be7ya4e8de5056481fd1@mail.gmail.com>
+References: <alpine.DEB.1.00.0804212145570.21181@perkele.intern.softwolves.pp.se>
+	 <alpine.DEB.1.00.0804212104560.2298@eeepc-johanness>
+	 <32541b130804211453x77f3fd49hef645a417a9919ca@mail.gmail.com>
+	 <20080422023918.GA5402@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Mike Galbraith <efault@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>
-To: Paolo Bonzini <bonzini@gnu.org>
-X-From: git-owner@vger.kernel.org Tue Apr 22 18:43:17 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Peter Karlsson" <peter@softwolves.pp.se>, git@vger.kernel.org
+To: "Jeff King" <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Apr 22 18:53:07 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JoLaI-0000b2-It
-	for gcvg-git-2@gmane.org; Tue, 22 Apr 2008 18:43:11 +0200
+	id 1JoLjB-0004df-6g
+	for gcvg-git-2@gmane.org; Tue, 22 Apr 2008 18:52:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756549AbYDVQmE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Apr 2008 12:42:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757380AbYDVQmD
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Apr 2008 12:42:03 -0400
-Received: from mail.gmx.net ([213.165.64.20]:43704 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756549AbYDVQmA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Apr 2008 12:42:00 -0400
-Received: (qmail invoked by alias); 22 Apr 2008 16:41:58 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO eeepc-johanness.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp039) with SMTP; 22 Apr 2008 18:41:58 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+ikztwrWWiW7WIUM+KgoxArJ4ppF1Ix1Cz8H/KRu
-	QZK0rWULJ0ImB1
-X-X-Sender: user@eeepc-johanness
-In-Reply-To: <480E1108.5090701@gnu.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1755005AbYDVQvS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Apr 2008 12:51:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754944AbYDVQvS
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Apr 2008 12:51:18 -0400
+Received: from fk-out-0910.google.com ([209.85.128.185]:40435 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754246AbYDVQvQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Apr 2008 12:51:16 -0400
+Received: by fk-out-0910.google.com with SMTP id 19so3215829fkr.5
+        for <git@vger.kernel.org>; Tue, 22 Apr 2008 09:51:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=xyVj9iadIko5zFBkP2WejqQxf3fbCGnVkOdTPs7lFpA=;
+        b=fZ/BhbN9T48Zmq27eTXz0eRKqo3Oj0vCQeSZx+tbE2RlrRXZGf44O+YTXehLdmUzSoSE9h3yb0pz0a+7eN0uIqqkJimtJTdwxkAm1doSHQ8/NhpmtwZ5vmBBE5/nOHAY5/JthEwkJ9L+U9LSQjqbHxHvPxvdKKUyqjuTPMDozX8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=jujhSX9JzyXaQsMIO7IPIWqmPUaKpA4FWlf3hCTjlZm4grZrBzEhoratPpPhVpzU2EiQYkyDm1BHNNU9lzjvSPUze3011SEARM+4wPVpuzxeAi4OzDYy+cFfS7e06bZPurCcjgtzL8m1Ay0zIiJ8b41OlSf7qZ6ORwOgY8Vqv/4=
+Received: by 10.82.185.3 with SMTP id i3mr69816buf.15.1208883074146;
+        Tue, 22 Apr 2008 09:51:14 -0700 (PDT)
+Received: by 10.82.166.12 with HTTP; Tue, 22 Apr 2008 09:51:14 -0700 (PDT)
+In-Reply-To: <20080422023918.GA5402@sigill.intra.peff.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80133>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80134>
 
-Hi,
+On 4/21/08, Jeff King <peff@peff.net> wrote:
+>  You could maybe do an index filter that gets the blob SHA1 of each file
+>  that is new, and just munges those. But I think it is even simpler to
+>  just keep a cache of original blob hashes mapping to munged blob hashes.
+> [...]
 
-On Tue, 22 Apr 2008, Paolo Bonzini wrote:
+Thanks, this is really cool.  I'll try it next time I'm messing with
+our repositories (this week is unfortunately a bit too busy).
 
-> > > > What about changing --mirror to add a push line instead of a fetch 
-> > > > line?
-> > >
-> > > I would not expect --mirror to add a push line when "git-remote add" 
-> > > without --mirror does not a push line either.
-> > 
-> > Let me reverse the question.  When does it make sense to use 
-> > "git-remote add --mirror" with the current implementation?
-> > 
-> > It's not a rhetoric question.  I know when it would make sense to have push
-> > refspecs on a remote for which you plan to use "git push --mirror" (and in
-> > "next", that is the case if you create the remote with "git-remote add
-> > --mirror").  But I'm a total newbie for things that do not fit my workflows,
-> > so I don't know when it would make sense to pull from that kind of remote.
-> 
-> And actually, I just realized that what I expected from --mirror is this:
-> 
-> [remote "mirror"]
->         url = blah
->         fetch = +refs/heads/*:refs/remotes/mirror/*
->         push = +refs/heads/*:refs/heads/*
->         mirror
-> 
-> ... so that I can check the state of the mirror with "git log -1
-> mirror/master", and still the push refspec is there so that my local remotes
-> are not entirely mirrored.
+Do you think git would benefit from having a generalized version of
+this script?  Basically, the user provides a "munge" script on the
+command line, and there's a git-filter-branch mode for auto-munging
+(with a cache) every file in every checkin.  Even if it's *only* ever
+used for CRLF, I can imagine this being useful to a lot of people.
 
-AFAICT this contradicts everything in the original thread resulting in the 
---mirror patch.
+Thanks,
 
-Ciao,
-Dscho
+Avery
