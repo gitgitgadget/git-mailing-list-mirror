@@ -1,52 +1,75 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Always copy template files (no symlinking)
-Date: Tue, 22 Apr 2008 10:05:01 -0700
-Message-ID: <7vprshyg5e.fsf@gitster.siamese.dyndns.org>
-References: <20080422140359.GA9590@roadkill.foldr.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] git_blame2: fix rendering on Firefox 3.0b5
+Date: Tue, 22 Apr 2008 19:05:40 +0200
+Message-ID: <200804221905.41963.jnareb@gmail.com>
+References: <1208821391-7895-1-git-send-email-stevenrwalter@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 22 19:06:37 2008
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Steven Walter <stevenrwalter@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 22 19:07:34 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JoLwS-0001mI-2w
-	for gcvg-git-2@gmane.org; Tue, 22 Apr 2008 19:06:04 +0200
+	id 1JoLx5-00024O-FE
+	for gcvg-git-2@gmane.org; Tue, 22 Apr 2008 19:06:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755851AbYDVRFJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Apr 2008 13:05:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755778AbYDVRFI
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Apr 2008 13:05:08 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:61275 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755812AbYDVRFH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Apr 2008 13:05:07 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 2C17D1950;
-	Tue, 22 Apr 2008 13:05:06 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 96ECD194F; Tue, 22 Apr 2008 13:05:04 -0400 (EDT)
-In-Reply-To: <20080422140359.GA9590@roadkill.foldr.org> (Michael Weber's
- message of "Tue, 22 Apr 2008 16:03:59 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1755778AbYDVRF4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Apr 2008 13:05:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755817AbYDVRF4
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Apr 2008 13:05:56 -0400
+Received: from ug-out-1314.google.com ([66.249.92.175]:23401 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755750AbYDVRFz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Apr 2008 13:05:55 -0400
+Received: by ug-out-1314.google.com with SMTP id z38so189300ugc.16
+        for <git@vger.kernel.org>; Tue, 22 Apr 2008 10:05:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        bh=k0zuCTmBvBamL51XzeMLFIjUbj9c4MXw6EuuS8LuY48=;
+        b=QycN9m9P92zuyeEaatAKLcB1mortalERqjKT/GChmJC+Oic83jXBpBETOY3TFVUsJAD1nO8YiUPJVuz9ACLB2oqwC16EF/WiGejZLzTWe1hT5AXyWZvF2a6XQDT7W9FQbXMuN4l7GIUpscqGEtpkwSTSypSgxgEloLOBriVJNIw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=EVh58J7eKPoYJsMQUdrQMGv0fGT0CrL14dq7u7PEUdPyU1TsjEU7m1hz0qQyOHvq+T3+nCfYdCMbONSUJjIsI87d8QfdALj00YIPmOKWEMw2c+s148Vd7EPLH2ksv/2bbo5mMISke90q1neReUVFX5AMNfuXO1LzaYetm+PsqWc=
+Received: by 10.66.255.7 with SMTP id c7mr7146359ugi.43.1208883953935;
+        Tue, 22 Apr 2008 10:05:53 -0700 (PDT)
+Received: from ?192.168.1.11? ( [83.8.223.207])
+        by mx.google.com with ESMTPS id s8sm101105uge.3.2008.04.22.10.05.45
+        (version=SSLv3 cipher=OTHER);
+        Tue, 22 Apr 2008 10:05:46 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <1208821391-7895-1-git-send-email-stevenrwalter@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80140>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80141>
 
-Michael Weber <michaelw@foldr.org> writes:
+On Tue, 22 April 2008, stevenrwalter@gmail.com wrote:
+> From: Steven Walter <stevenrwalter@gmail.com>
+> 
+> Using variably-sized rows and rowspan does not render correctly with
+> Firefox 3.0b5.  Instead, make each row have the same number of cells.
 
-> Previously, git would readlink(2) template files that are symlinks,
-> and then symlink(2) the result into .git/.  This does not work for
-> relative symlinks (as produced by, e.g., encap), and is probably not a
-> good idea either: it is an irrelevant detail that a file in the
-> template directory is symlinked.
+Beta version of Firefox doesn't correctly render perfectly valid HTML;
+more, the way rowspan was meanto to be used, see example in
 
-This was very deliberately done to allow a relative symlink that points at
-e.g. ../../hooks/pre-commit with .git/hooks/pre-commit.  IOW, "use what
-the project suggests".
+  http://www.w3.org/TR/html401/struct/tables.html#h-11.2.6.1
+  (subsection "Cells that span several rows or columns" in HTML 4.01)
+
+and you want gitweb to generate invalid HTML?
+
+Firefox 3.0b5 doesn't render, for a beta version, is not a valid
+reason for me.
+
+P.S. I don't know / remember who wrote the code in question...
+-- 
+Jakub Narebski
+Poland
