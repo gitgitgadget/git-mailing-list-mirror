@@ -1,94 +1,87 @@
 From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] svn-git: Use binmode for reading/writing binary rev maps
-Date: Tue, 22 Apr 2008 16:21:51 -0700
-Message-ID: <20080422232151.GA3532@hand.yhbt.net>
-References: <20080418131204.GA53634@roadkill.foldr.org>
+Subject: Re: [PATCH] git-svn bug with blank commits and author file
+Date: Tue, 22 Apr 2008 16:23:39 -0700
+Message-ID: <20080422232339.GB3532@hand.yhbt.net>
+References: <480DB8F3.5080000@aei.ca>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Michael Weber <michaelw@foldr.org>
-X-From: git-owner@vger.kernel.org Wed Apr 23 01:22:44 2008
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Thomas Guyot-Sionnest <dermoth@aei.ca>
+X-From: git-owner@vger.kernel.org Wed Apr 23 01:24:29 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JoRow-0002Zg-US
-	for gcvg-git-2@gmane.org; Wed, 23 Apr 2008 01:22:43 +0200
+	id 1JoRqc-0002uZ-Gz
+	for gcvg-git-2@gmane.org; Wed, 23 Apr 2008 01:24:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751673AbYDVXVz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Apr 2008 19:21:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751567AbYDVXVy
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Apr 2008 19:21:54 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:59790 "EHLO hand.yhbt.net"
+	id S1751651AbYDVXXk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Apr 2008 19:23:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751602AbYDVXXk
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Apr 2008 19:23:40 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:59807 "EHLO hand.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751365AbYDVXVx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Apr 2008 19:21:53 -0400
+	id S1751246AbYDVXXk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Apr 2008 19:23:40 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id 5E2FE2DC08B;
-	Tue, 22 Apr 2008 16:21:52 -0700 (PDT)
+	by hand.yhbt.net (Postfix) with ESMTP id 731172DC08C;
+	Tue, 22 Apr 2008 16:23:39 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20080418131204.GA53634@roadkill.foldr.org>
+In-Reply-To: <480DB8F3.5080000@aei.ca>
 User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80172>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80173>
 
-Michael Weber <michaelw@foldr.org> wrote:
-> Otherwise, there is a possible interaction with UTF-8 locales in
-> combination with PERL_UNICODE, resulting in "inconsistent size: 40" or
-> "read:"-type errors.
+Thomas Guyot-Sionnest <dermoth@aei.ca> wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
 > 
-> See also:
-> perldoc -f binmode
-> <http://perldoc.perl.org/perl581delta.html#UTF-8-no-longer-default-under-UTF-8-locales>
+> * Sorry for resending; added a patch tag and corrected typo in subject *
 > 
-> Signed-off-by: Michael Weber <michaelw@foldr.org>
+> When trying to import from svn using an author file, git-svn bails out
+> if it encounters a blank author. The attached patch changes this
+> behavior and allow using the author file with blanks authors.
+> 
+> I came across this bug while importing from a cvs2svn repo where the
+> initial revision (1) has a blank author. This doesn't break the behavior
+> of bailing out when an unknown author is encountered.
+> 
+> The patch was made against Git's HEAD.
+> 
+> If you reply please make sure to cc me as I'm not subscribed to the list.
 
-Thanks, sorry for the latency.
+Thank you Thomas,
+
+Sorry for the latency, I've been overloaded
 
 Acked-by: Eric Wong <normalperson@yhbt.net>
 
-> ---
->  git-svn.perl |    4 ++++
->  1 files changed, 4 insertions(+), 0 deletions(-)
+> - --
+> Thomas Guyot
+> dermoth@aei.ca
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.6 (GNU/Linux)
+> Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
 > 
-> diff --git a/git-svn.perl b/git-svn.perl
-> index b864b54..3d80b23 100755
-> --- a/git-svn.perl
-> +++ b/git-svn.perl
-> @@ -2519,6 +2519,7 @@ sub rebuild_from_rev_db {
->  	my ($self, $path) = @_;
->  	my $r = -1;
->  	open my $fh, '<', $path or croak "open: $!";
-> +	binmode $fh or croak "binmode: $!";
->  	while (<$fh>) {
->  		length($_) == 41 or croak "inconsistent size in ($_) != 41";
->  		chomp($_);
-> @@ -2616,6 +2617,7 @@ sub rebuild {
->  sub _rev_map_set {
->  	my ($fh, $rev, $commit) = @_;
->  
-> +	binmode $fh or croak "binmode: $!";
->  	my $size = (stat($fh))[7];
->  	($size % 24) == 0 or croak "inconsistent size: $size";
->  
-> @@ -2719,6 +2721,7 @@ sub rev_map_max {
->  	my $map_path = $self->map_path;
->  	stat $map_path or return $want_commit ? (0, undef) : 0;
->  	sysopen(my $fh, $map_path, O_RDONLY) or croak "open: $!";
-> +	binmode $fh or croak "binmode: $!";
->  	my $size = (stat($fh))[7];
->  	($size % 24) == 0 or croak "inconsistent size: $size";
->  
-> @@ -2751,6 +2754,7 @@ sub rev_map_get {
->  	return undef unless -e $map_path;
->  
->  	sysopen(my $fh, $map_path, O_RDONLY) or croak "open: $!";
-> +	binmode $fh or croak "binmode: $!";
->  	my $size = (stat($fh))[7];
->  	($size % 24) == 0 or croak "inconsistent size: $size";
->  
-> -- 
+> iD8DBQFIDbjz6dZ+Kt5BchYRAjdFAJ0WA9TiIJ6tefjaPkd40Y2Tjv6NPACbBwmB
+> a6eFU84MpJ9MW1nErxDiqHY=
+> =k3jA
+> -----END PGP SIGNATURE-----
+
+> --- git-svn.perl.orig	2008-04-19 05:58:10.000000000 -0400
+> +++ git-svn.perl	2008-04-19 19:50:40.000000000 -0400
+> @@ -2375,8 +2375,7 @@
+>  	my ($author) = @_;
+>  	if (!defined $author || length $author == 0) {
+>  		$author = '(no author)';
+> -	}
+> -	if (defined $::_authors && ! defined $::users{$author}) {
+> +	} elsif (defined $::_authors && ! defined $::users{$author}) {
+>  		die "Author: $author not defined in $::_authors file\n";
+>  	}
+>  	$author;
+> 
