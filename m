@@ -1,96 +1,79 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] builtin-remote: resurrect forced updates to tracked
- branches
-Date: Tue, 22 Apr 2008 14:26:46 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0804221425310.4460@eeepc-johanness>
-References: <1208857733.4695.37.camel@marge.simson.net> <20080422103458.GA14751@sigio.intra.peff.net> <1208861703.18689.2.camel@marge.simson.net> <20080422111113.GB11238@sigill.intra.peff.net> <alpine.DEB.1.00.0804221250010.4460@eeepc-johanness>
- <20080422125618.GA27577@sigill.intra.peff.net> <alpine.DEB.1.00.0804221357420.4460@eeepc-johanness> <20080422130918.GB27878@sigill.intra.peff.net>
+From: "Benjamin Collins" <ben.collins@acm.org>
+Subject: Re: git-gui hangs on read
+Date: Tue, 22 Apr 2008 08:34:31 -0500
+Message-ID: <b3889dff0804220634u58a5ed21yf8a4f369471c6534@mail.gmail.com>
+References: <b3889dff0804210723s620363fdscba43c79dbb62d55@mail.gmail.com>
+	 <20080422001311.GS29771@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Mike Galbraith <efault@gmx.de>, Junio C Hamano <gitster@pobox.com>,
-	git <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Apr 22 15:27:36 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 22 15:36:39 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JoIWc-0005r7-CO
-	for gcvg-git-2@gmane.org; Tue, 22 Apr 2008 15:27:10 +0200
+	id 1JoIfJ-0000v2-0m
+	for gcvg-git-2@gmane.org; Tue, 22 Apr 2008 15:36:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754735AbYDVN0W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Apr 2008 09:26:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754573AbYDVN0W
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Apr 2008 09:26:22 -0400
-Received: from mail.gmx.net ([213.165.64.20]:60303 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754543AbYDVN0V (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Apr 2008 09:26:21 -0400
-Received: (qmail invoked by alias); 22 Apr 2008 13:26:19 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO eeepc-johanness.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp058) with SMTP; 22 Apr 2008 15:26:19 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/mmVJp1iXmVUfCguc7/YvprFebaJUSC6z0zh5w+P
-	nzcAyE12hEPCro
-X-X-Sender: user@eeepc-johanness
-In-Reply-To: <20080422130918.GB27878@sigill.intra.peff.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1754479AbYDVNeh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Apr 2008 09:34:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763151AbYDVNef
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Apr 2008 09:34:35 -0400
+Received: from el-out-1112.google.com ([209.85.162.180]:50192 "EHLO
+	el-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756057AbYDVNee (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Apr 2008 09:34:34 -0400
+Received: by el-out-1112.google.com with SMTP id n30so696638elf.21
+        for <git@vger.kernel.org>; Tue, 22 Apr 2008 06:34:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        bh=YL0hbSR2Q5u/7QibY27hEABDK9EjVNcBajKxX+/R22A=;
+        b=TNutANggeEMPPoWT7Fon861w2e26YFsUry2nH2zhQk6b2ptEGh+ceAEgYTjmSEUp7C11AojCHCaGebAvRZxvP6w7NZTkVmroM0xZ2/6hcdwkqmRtfXwn8zTcz4zwumx6ccamAHGj5BTLYtkQLIgii6vUjIYOLj6GwaBXUqRLKgU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:sender:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=l1kST+0zX6jT4/h0orWCx2wTpErwtC/fl19r9SyRAgL7l6dsPwASRHiqyl0VZeJ+4/HUGMeNMH4KAlEEu3c334oiEHYb/LzO5sPDhJ2ShDzutvTHtSEsRwRdb/+q2Bwf+yEXJ2tc2QfD0+Fx1jT+WvElhkgX2f5/uOvEKi0r/Vs=
+Received: by 10.140.88.11 with SMTP id l11mr104786rvb.74.1208871272090;
+        Tue, 22 Apr 2008 06:34:32 -0700 (PDT)
+Received: by 10.141.75.14 with HTTP; Tue, 22 Apr 2008 06:34:31 -0700 (PDT)
+In-Reply-To: <20080422001311.GS29771@spearce.org>
+Content-Disposition: inline
+X-Google-Sender-Auth: 8741987cb360164c
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80116>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80117>
+
+On Mon, Apr 21, 2008 at 7:13 PM, Shawn O. Pearce <spearce@spearce.org> wrote:
+>  From the strace it looks like your aspell is not giving us a
+>  reply to the "$$cr master" command.  What does this give you?
+>
+>         aspell --mode=none --encoding=UTF-8 pipe <<EOF
+>         !
+>         $$cr master
+>         EOF
+>
+>  --
+>  Shawn.
+
+Response:
+
+$ aspell --mode=none --encoding=UTF-8 pipe <<EOF
+> !
+> $$cr master
+> EOF
+@(#) International Ispell Version 3.1.20 (but really Aspell 0.50.5)
+& cr 70 5: Cr, cry, RC, CPR, CRT, Car, car, ctr, cur, CT, Ct, ct, C, R, c, r, Ce
+, cir, Gr, Jr, Kr, gr, qr, NCR, OCR, VCR, CA, CO, Ca, Co, Cu, RR, ca, cc, ck, co
+, cu, cw, yr, BR, Br, CB, CD, CF, CV, CZ, Cb, Cd, Cf, Cl, Cm, Cs, Dr, Fr, HR, Lr
+, Mr, PR, Pr, Sr, Zr, cf, cg, cl, cm, cs, fr, hr, pr, tr
+
+$
 
 
-During the rewrite of git-remote as a builtin, the ability to force
-updating the tracked branches (i.e. forcing non-fast-forwards) was
-lost.
-
-This patch fixes that.
-
-Noticed by Mike Galbraith, analyzed by Jeff King.
-
-Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-
----
-
-	On Tue, 22 Apr 2008, Jeff King wrote:
-
-	> On Tue, Apr 22, 2008 at 02:03:43PM +0100, Johannes Schindelin wrote:
-	> 
-	> > Oh, that's right: only "git remote prune" will delete stale refs only.
-	> > 
-	> > But my other point about possibly interfering with local 
-	> > branches still holds true.
-	> 
-	> In that case, I think that the '+' should come only without 
-	> --mirror, and my complaint is then that "--mirror" is a horrible name 
-	> for that option. Though when I saw it, I really expected it to do 
-	> something about the _push_ line, since that is the only other place we 
-	> have a --mirror option. It would make sense to me for it to set up 
-	> remote.$x.mirror (which is newly added in next). But then, git-remote 
-	> doesn't seem to be geared towards pushing at all.
-
-	I still think that the --mirror option has merit, but I missed 
-	that your patch did fix the behviour _without_ --mirror.
-
-	This is my attempt.
-
- builtin-remote.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/builtin-remote.c b/builtin-remote.c
-index d4f2132..117ff60 100644
---- a/builtin-remote.c
-+++ b/builtin-remote.c
-@@ -114,7 +114,7 @@ static int add(int argc, const char **argv)
- 			strbuf_addf(&buf2, "refs/%s:refs/%s",
- 					item->path, item->path);
- 		else
--			strbuf_addf(&buf2, "refs/heads/%s:refs/remotes/%s/%s",
-+			strbuf_addf(&buf2, "+refs/heads/%s:refs/remotes/%s/%s",
- 					item->path, name, item->path);
- 		if (git_config_set_multivar(buf.buf, buf2.buf, "^$", 0))
- 			return 1;
+-- 
+Benjamin A. Collins <ben.collins@acm.org>
