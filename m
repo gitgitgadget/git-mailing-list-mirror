@@ -1,75 +1,67 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] git_blame2: fix rendering on Firefox 3.0b5
-Date: Tue, 22 Apr 2008 19:05:40 +0200
-Message-ID: <200804221905.41963.jnareb@gmail.com>
-References: <1208821391-7895-1-git-send-email-stevenrwalter@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2 04/13] Teach rebase interactive the mark command
+Date: Tue, 22 Apr 2008 18:12:00 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0804221810180.4460@eeepc-johanness>
+References: <7vabkoufzq.fsf@gitster.siamese.dyndns.org> <1208132469-26471-1-git-send-email-joerg@alea.gnuu.de> <1208132469-26471-2-git-send-email-joerg@alea.gnuu.de> <1208132469-26471-3-git-send-email-joerg@alea.gnuu.de> <1208132469-26471-4-git-send-email-joerg@alea.gnuu.de>
+ <7vabjm78v2.fsf@gitster.siamese.dyndns.org> <20080422095549.GB3752@alea.gnuu.de> <alpine.DEB.1.00.0804221127360.4460@eeepc-johanness> <7vy775ygjm.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Steven Walter <stevenrwalter@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 22 19:07:34 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: =?ISO-8859-15?Q?J=F6rg_Sommer?= <joerg@alea.gnuu.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 22 19:12:35 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JoLx5-00024O-FE
-	for gcvg-git-2@gmane.org; Tue, 22 Apr 2008 19:06:43 +0200
+	id 1JoM2b-0004Sb-JW
+	for gcvg-git-2@gmane.org; Tue, 22 Apr 2008 19:12:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755778AbYDVRF4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Apr 2008 13:05:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755817AbYDVRF4
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Apr 2008 13:05:56 -0400
-Received: from ug-out-1314.google.com ([66.249.92.175]:23401 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755750AbYDVRFz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Apr 2008 13:05:55 -0400
-Received: by ug-out-1314.google.com with SMTP id z38so189300ugc.16
-        for <git@vger.kernel.org>; Tue, 22 Apr 2008 10:05:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=k0zuCTmBvBamL51XzeMLFIjUbj9c4MXw6EuuS8LuY48=;
-        b=QycN9m9P92zuyeEaatAKLcB1mortalERqjKT/GChmJC+Oic83jXBpBETOY3TFVUsJAD1nO8YiUPJVuz9ACLB2oqwC16EF/WiGejZLzTWe1hT5AXyWZvF2a6XQDT7W9FQbXMuN4l7GIUpscqGEtpkwSTSypSgxgEloLOBriVJNIw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=EVh58J7eKPoYJsMQUdrQMGv0fGT0CrL14dq7u7PEUdPyU1TsjEU7m1hz0qQyOHvq+T3+nCfYdCMbONSUJjIsI87d8QfdALj00YIPmOKWEMw2c+s148Vd7EPLH2ksv/2bbo5mMISke90q1neReUVFX5AMNfuXO1LzaYetm+PsqWc=
-Received: by 10.66.255.7 with SMTP id c7mr7146359ugi.43.1208883953935;
-        Tue, 22 Apr 2008 10:05:53 -0700 (PDT)
-Received: from ?192.168.1.11? ( [83.8.223.207])
-        by mx.google.com with ESMTPS id s8sm101105uge.3.2008.04.22.10.05.45
-        (version=SSLv3 cipher=OTHER);
-        Tue, 22 Apr 2008 10:05:46 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <1208821391-7895-1-git-send-email-stevenrwalter@gmail.com>
-Content-Disposition: inline
+	id S1755588AbYDVRLj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Apr 2008 13:11:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753763AbYDVRLj
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Apr 2008 13:11:39 -0400
+Received: from mail.gmx.net ([213.165.64.20]:40027 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753167AbYDVRLi (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Apr 2008 13:11:38 -0400
+Received: (qmail invoked by alias); 22 Apr 2008 17:11:36 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO eeepc-johanness.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp029) with SMTP; 22 Apr 2008 19:11:36 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/r5AAlxwbrxG87F7G911t+iXRgEMoPcj6sFF6kQG
+	zgDCXoIXQy/B+Z
+X-X-Sender: user@eeepc-johanness
+In-Reply-To: <7vy775ygjm.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80141>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80142>
 
-On Tue, 22 April 2008, stevenrwalter@gmail.com wrote:
-> From: Steven Walter <stevenrwalter@gmail.com>
+Hi,
+
+On Tue, 22 Apr 2008, Junio C Hamano wrote:
+
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> Using variably-sized rows and rowspan does not render correctly with
-> Firefox 3.0b5.  Instead, make each row have the same number of cells.
+> > So I really hate the idea of introducing yet other marks when we already 
+> > have unique identifiers: the (abbreviated) commit names.
+> 
+> Didn't I give you an example why commit object names are _not_ unique
+> identifiers already?
 
-Beta version of Firefox doesn't correctly render perfectly valid HTML;
-more, the way rowspan was meanto to be used, see example in
+By that reasoning, rebase -i cannot work anyway: it relies on the 
+abbreviated identifiers, not on anything else, for the "pick" command.
 
-  http://www.w3.org/TR/html401/struct/tables.html#h-11.2.6.1
-  (subsection "Cells that span several rows or columns" in HTML 4.01)
+> I also do not understand why you think 'mark' is ugly.
 
-and you want gitweb to generate invalid HTML?
+Is that not obvious?  You _already_ have identifiers.  And there you add 
+other ones.  Only because the original idea of the -p implementation was 
+ignored.
 
-Firefox 3.0b5 doesn't render, for a beta version, is not a valid
-reason for me.
-
-P.S. I don't know / remember who wrote the code in question...
--- 
-Jakub Narebski
-Poland
+Ciao,
+Dscho
