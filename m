@@ -1,116 +1,203 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: [ANNOUNCE] GIT 1.5.5.1
-Date: Tue, 22 Apr 2008 04:55:56 +0400
-Message-ID: <20080422005556.GC2631@dpotapov.dyndns.org>
-References: <7vej8yako4.fsf@gitster.siamese.dyndns.org> <20080421235610.GB2631@dpotapov.dyndns.org> <480D2FEE.3010904@nrlssc.navy.mil>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Welcome to Git's GSoC 2008!
+Date: Mon, 21 Apr 2008 21:32:01 -0400
+Message-ID: <20080422013201.GA4828@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Tue Apr 22 02:57:02 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Sam Vilain <sam.vilain@catalyst.net.nz>,
+	David Symonds <dsymonds@gmail.com>,
+	"J.H." <warthog19@eaglescrag.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Joshua Roys <roysjosh@gmail.com>,
+	Sverre Rabbelier <alturin@gmail.com>,
+	Lea Wiemann <LeWiemann@gmail.com>,
+	Marek Zawirski <Marek.Zawirski@gmail.com>,
+	Miklos Vajna <vmiklos@frugalware
+X-From: git-owner@vger.kernel.org Tue Apr 22 03:33:24 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jo6oY-0006Ag-RJ
-	for gcvg-git-2@gmane.org; Tue, 22 Apr 2008 02:56:55 +0200
+	id 1Jo7Nj-0007VK-8C
+	for gcvg-git-2@gmane.org; Tue, 22 Apr 2008 03:33:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761155AbYDVA4F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Apr 2008 20:56:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761221AbYDVA4F
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Apr 2008 20:56:05 -0400
-Received: from fg-out-1718.google.com ([72.14.220.157]:38763 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761155AbYDVA4D (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Apr 2008 20:56:03 -0400
-Received: by fg-out-1718.google.com with SMTP id l27so1972207fgb.17
-        for <git@vger.kernel.org>; Mon, 21 Apr 2008 17:56:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
-        bh=9TLE9dEFN/Bngg3Ez+g7G0rKTjz8wM6xn3jNw0QTM8k=;
-        b=Ub/ANLBKhOlx0T3IyfxK3w0vvHGV/w+Ujar1yegEhs9BNoZdgk7iIEbkLRhJ0bTA0sJA9qiMY6DhUwtp4Rou3Z3cQgzGeYmdPbVgJDEIHTOwXr2JIPJmz/Un+UddhpNAcqCyJ6IjEViUQuB9OFNVWI3AsQ+POADo4rtICnmX8Ag=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
-        b=CSGjU1JGrFd9r73qFIdmJG8eomlak2c2l+KNrnuZBMpsxOxeiQleZVCJ43JlyVlQap5i0O0qGIVXjy+mJjiRRz3b5BXWSCh6yYfysuz/hCrEErUcJ9jHNGKIQ2lTNaCfLNlo09zNm9GOtmLo/qHgnb6pCRnOYsR/+HN+WOeOUE8=
-Received: by 10.82.165.5 with SMTP id n5mr12084028bue.39.1208825760854;
-        Mon, 21 Apr 2008 17:56:00 -0700 (PDT)
-Received: from localhost ( [85.140.171.25])
-        by mx.google.com with ESMTPS id i3sm6632261nfh.28.2008.04.21.17.55.58
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 21 Apr 2008 17:55:59 -0700 (PDT)
+	id S1761876AbYDVBc1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Apr 2008 21:32:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753624AbYDVBc0
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Apr 2008 21:32:26 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:52968 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932760AbYDVBcZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Apr 2008 21:32:25 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1Jo7MO-00041A-JM; Mon, 21 Apr 2008 21:31:52 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 4C59E20FBAE; Mon, 21 Apr 2008 21:32:02 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <480D2FEE.3010904@nrlssc.navy.mil>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80049>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80050>
 
-On Mon, Apr 21, 2008 at 07:23:10PM -0500, Brandon Casey wrote:
-> Dmitry Potapov wrote:
-> 
-> > Johannes' patch removed this option, which IMHO was a significant user
-> > interface improvement.
-> 
-> Unless I missed something, this option has not been removed. The original
-> purpose for its existence (which was to cause git-gc to call git-prune)
-> has been removed. The call to git-prune within git-gc will remove _loose_
-> unreferenced objects, but _packed_ unreferenced objects are removed by
-> repack. The --prune option to git-gc is still used to adjust the call to
-> git-repack so that packed unreferenced objects are discarded.
+Congratulations, and welcome to the Git community!
 
-I thought that it had no effect any more, because it had been removed
-from the git-gc man page. Now I have looked at the code now, and it seems
-the difference between running git gc with and without the prune option
-is that with this option the git repack is called with '-a' option while
-without it with '-A'. Unfortunately, the '-A' option in the git-repack
-is also undocumented, but based on the reading git-repack.sh, you are
-right. So, now I wonder wether removing the --prune option from the man
-page was the right thing to do.
+By now I hope you are aware that your project proposal has been
+selected by the Git community, and will be funded thanks to the
+extremely generous folks at Google.
 
-> 
-> > diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-> > index 9758243..c1bf814 100644
-> > --- a/Documentation/git-clone.txt
-> > +++ b/Documentation/git-clone.txt
-> > @@ -65,10 +65,12 @@ OPTIONS
-> >  +
-> >  *NOTE*: this is a possibly dangerous operation; do *not* use
-> >  it unless you understand what it does. If you clone your
-> > -repository using this option, then delete branches in the
-> > -source repository and then run linkgit:git-gc[1] using the
-> > -'--prune' option in the source repository, it may remove
-> > -objects which are referenced by the cloned repository.
-> > +repository using this option and then delete a branch or use
-> > +any other git command that makes any previous existing commit
-> > +unreachable, then after some time linkgit:git-gc[1] may remove
-> > +unreachable objects, and this will break the cloned repository.
-> > +Because some git commands may run git-gc, it may happen at any
-> > +time after gc.pruneExpire time since commits became unreachable.
-> 
-> I agree that something should be said here about shared repositories,
-> but I think this wording is a little complicated (disclosure: I also
-> submitted some text for this a few weeks ago :). Of course something
-> is better than nothing.
-> 
-> Here's the blurb I submitted if you're interested:
-> +repository using this option and then delete branches in the
-> +source repository, some objects may become unreferenced (or dangling).
-> +These objects may be removed by normal git operations (such as git-commit[1])
-> +which automatically call git-gc[1]. If these objects are removed and
-> +were referenced by the cloned repository, then the cloned repository
-> +will become corrupt.
+This year Git was fortunate enough to receive funding for 6 students,
+and we are looking forward to the successful completion of the
+following interesting projects:
 
-I like your wording better though I still prefer to mention that
-deleting branches is just one of many possible commands that may
-create unreferenced commits, i.e. something like that:
+  GitTorrent
+      Student: Joshua Roys
+      Mentor:  Sam Vilain
 
- ... repository using this option and then delete branches (or use any
- other git command that makes any existing commit unreferenced) ...
+      Josh and Sam will be working to implement native git object
+      transport via a peer-to-peer system, potentially allowing
+      popular projects such as the linux kernel to be available
+      via more servers than just git.kernel.org.
+
+  git-statistics
+      Student: Sverre Rabbelier
+      Mentor:  David Symonds
+
+      Sverre and David are looking to mine the commit history of
+      a project and identify "good" changes from "bad" changes.
+      Such information may help maintainers to better judge the
+      risk associated with new changes, and help new contributers
+      to more quickly locate individuals who are experienced in
+      a particular section of code (e.g. automatically identify
+      module maintainers).
+    
+  Gitweb caching
+      Student: Lea Wiemann
+      Mentor:  John 'warthog' Hawley
+
+      Lea and John will be working to port the caching gitweb fork
+      that runs on kernel.org back into the main tree, as well as
+      implementing even more improved caching for really large sites
+      like kernel.org, repo.or.cz, or anyone else using gitweb for
+      a large number of repositories and users.
+    
+  Eclipse plugin push support
+      Student: Marek Zawirski
+      Mentor:  Shawn O. Pearce
+
+      Marek and myself will be working to implement pack generation
+      in jgit, allowing the 100% native Java implementation of Git
+      to create pack files locally, as well as upload pack files to
+      a remote repository over the native Git transport.  Marek is
+      also looking forward to improving some of the user interface
+      aspects of the Eclipse Git team provider plugin.
+    
+  git-merge builtin
+      Student: Miklos Vajna
+      Mentor:  Johannes Schindelin
+
+      Miklos and Dscho will be porting the git-merge shell script
+      to C, permitting it to make use of builtin functions like
+      merge base computation, and making the program overall more
+      portable to non-POSIX systems.  Porting some of the popular
+      merge strategies (e.g. git-merge-ours) will also be done as
+      time permits.
+    
+  git-sequencer
+      Student: Stephan Beyer
+      Mentor:  Christian Couder, Daniel Barkalow
+
+      Stephan, Christian and Daniel will be working to port the
+      current "git rebase --interactive" to C, as well as create
+      a general "commit sequencer" that can be used as the backing
+      implementation for "git-am", all three forms of "git-rebase",
+      and possibly implement an "interactive rebase GUI" within
+      git-gui and/or gitk.
 
 
-Dmitry
+Student projects will be worked on roughly full time (~40 hours/week)
+between May 26th and August 18th.
+
+Right now you should spend some time talking to your mentor(s),
+so you can both get to know each other better.  Here's a rough
+idea of some of the things you should be trying to work on with
+your mentor over the next several weeks:
+
+ - Get a copy of Git installed, and become familiar enough with
+   it that you can make changes and commit them.
+
+ - Clone the project you will be working to improve.
+
+   - Can you compile it?
+   - Can you run your compiled version?
+   - Can you make a silly modification (make it say "hello world!")
+     and see that modification when you test it?
+
+ - Discuss where you will be publishing your work.  Publish the
+   base (unmodified) code to make sure you can publish your own
+   work later.
+
+   I highly recommend creating a repository on repo.or.cz.  It is
+   free, and for many of you the upstream project (git.git or
+   egit.git) is already hosted there, so you just create a fork
+   from it.
+
+ - Start dicussing with your mentor your timeline and goals.
+
+   Yes, you covered this in your proposal.  But now that its actually
+   something you will be working on this summer it will really help
+   both you and your mentor if you can work out a more detailed
+   plan of the tasks ahead of you.
+
+ - Discuss your personal schedule(s) with your mentor(s)/student(s).
+
+   Will you be planning to be offline for any period of time?
+   Taking a summer vacation/holiday for a week?  Now would be a
+   good time to share this information, so everyone knows what to
+   expect this summer.
+
+ - Consider reviewing the GPL if you have not read it.
+
+   Nearly all Git related code is covered by the GNU Public License.
+   Individual authors (that's you) retain the copyright on works
+   they create.  (egit/jgit is a special case, I'll take it up with
+   Marek on another thread.)
+
+ - Ask you mentor to introduce you around.
+
+   You and your mentor are not working in a vacuum.  Hundreds of
+   people have contributed to Git over the years and there is
+   a wealth of knowledge in the community that you can leverage
+   to your benefit.  Work with your mentor to develop additional
+   contacts with other contributors who are knowledgable in the
+   area of your project.  Don't hesistate to ask these folks for
+   help when you get stuck, especially if your mentor is unable to
+   answer you immediately.
+
+We realize you are still taking classes, and have project deadlines,
+homework and exams to still worry about.  But now that you are
+accepted into GSoC its also time to start setting aside a few
+hours a week to plan out your summer, so you can make the most of
+this opportunity.
+
+We are excited to have you join us, and are really looking forward
+to these projects!
+
+Final note: I am your friendly organization administrator.  If you
+have any questions that your mentor can't answer, etc., please
+email me.  I'm here to help both the student and the mentor make
+the most of this summer.
+
+-- 
+Shawn.
