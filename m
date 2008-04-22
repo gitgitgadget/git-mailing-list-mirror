@@ -1,37 +1,37 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: mark parsing in fast-import
-Date: Mon, 21 Apr 2008 19:59:40 -0400
-Message-ID: <20080421235940.GQ29771@spearce.org>
-References: <1208132469-26471-3-git-send-email-joerg@alea.gnuu.de> <1208169584-15931-1-git-send-email-joerg@alea.gnuu.de> <20080414232958.GE20979@spearce.org> <20080420234438.GC12865@alea.gnuu.de> <20080421002626.GJ29771@spearce.org> <20080421084151.GA31344@alea.gnuu.de>
+Subject: Re: [PATCH] bash: Add completion for git diff --base --ours --theirs
+Date: Mon, 21 Apr 2008 20:04:26 -0400
+Message-ID: <20080422000426.GR29771@spearce.org>
+References: <20080420193247.GA21023@mithlond.arda.local>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: =?utf-8?B?SsO2cmc=?= Sommer <joerg@alea.gnuu.de>
-X-From: git-owner@vger.kernel.org Tue Apr 22 02:00:35 2008
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Teemu Likonen <tlikonen@iki.fi>
+X-From: git-owner@vger.kernel.org Tue Apr 22 02:06:17 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jo5w2-0007xx-DP
-	for gcvg-git-2@gmane.org; Tue, 22 Apr 2008 02:00:34 +0200
+	id 1Jo61C-0000H3-3W
+	for gcvg-git-2@gmane.org; Tue, 22 Apr 2008 02:05:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754796AbYDUX7q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Apr 2008 19:59:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754769AbYDUX7p
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Apr 2008 19:59:45 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:59401 "EHLO
+	id S1756515AbYDVAEc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Apr 2008 20:04:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756579AbYDVAEb
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Apr 2008 20:04:31 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:60413 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754745AbYDUX7o (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Apr 2008 19:59:44 -0400
+	with ESMTP id S1756515AbYDVAEa (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Apr 2008 20:04:30 -0400
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.68)
 	(envelope-from <spearce@spearce.org>)
-	id 1Jo5v1-0004tT-7u; Mon, 21 Apr 2008 19:59:31 -0400
+	id 1Jo5zd-0005M6-1Q; Mon, 21 Apr 2008 20:04:17 -0400
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 4016D20FBAE; Mon, 21 Apr 2008 19:59:40 -0400 (EDT)
+	id 18DBA20FBAE; Mon, 21 Apr 2008 20:04:26 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <20080421084151.GA31344@alea.gnuu.de>
+In-Reply-To: <20080420193247.GA21023@mithlond.arda.local>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -42,41 +42,33 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80044>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80045>
 
-Jrg Sommer <joerg@alea.gnuu.de> wrote:
-> Shawn O. Pearce schrieb am Sun 20. Apr, 20:26 (-0400):
-> > Jrg Sommer <joerg@alea.gnuu.de> wrote:
-> > > +static inline int parse_mark(const const char *str, uintmax_t* mark,
-> 
-> Is inline okay?
+Teemu Likonen <tlikonen@iki.fi> wrote:
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> index 4d81963..6949cac 100755
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -641,6 +641,7 @@ _git_diff ()
+>  			--ignore-all-space --exit-code --quiet --ext-diff
+>  			--no-ext-diff
+>  			--no-prefix --src-prefix= --dst-prefix=
+> +			--base --ours --theirs
+>  			"
+>  		return
+>  		;;
 
-Yea, inline is fine.  We use "static inline" often in Git when it
-is a good idea.
- 
-> > >  static void cmd_mark(void)
-> > >  {
-> > > -	if (!prefixcmp(command_buf.buf, "mark :")) {
-> > > -		next_mark = strtoumax(command_buf.buf + 6, NULL, 10);
-> > > +	uintmax_t mark = 0;
-> > > +	char *after_mark = NULL;
-> > > +
-> > > +	if (!prefixcmp(command_buf.buf, "mark ") &&
-> > > +		parse_mark(&command_buf.buf[5], &mark, &after_mark) &&
-> > 
-> > Hmm.  Shouldn't this be ! parse_mark given that it returns 0
-> > on success and 1 on failure?
-> 
-> Yes, you're right. I've checked some other functions and found this
-> behaviour. Can I use a different behabiour, i.e. return 0 on failure and
-> !0 on success?
+Hmmph.  I must not be paying enough attention to the mailing list.
+I didn't know these were supported on git-diff.  Oh, wow, Linus
+added these, and he never documents things.  No wonder they are
+undocumented.  :)
 
-I wasn't objected to the return values as written, but more to the
-fact that it seemed like a logic error to me.  We use both patterns
-in Git.  Perhaps the best example to follow is get_sha1_hex();
-it returns -1 on error and 0 on success.  So a common pattern is
-"!get_sha1_hex()" to ensure a successful conversion of a hex string
-to an unsigned char array.
+Anyway.  Acked-by: Shawn O. Pearce <spearce@spearce.org>
+
+But documentation would be nice too.  However I can see why you
+wouldn't want to contribute that; its easy enough to insert these
+flags into the completion, but its another matter to explain what
+they are actually doing for you.
 
 -- 
 Shawn.
