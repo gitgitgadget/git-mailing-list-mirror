@@ -1,87 +1,98 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: git-gui hangs on read
-Date: Mon, 21 Apr 2008 20:13:11 -0400
-Message-ID: <20080422001311.GS29771@spearce.org>
-References: <b3889dff0804210723s620363fdscba43c79dbb62d55@mail.gmail.com>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: [ANNOUNCE] GIT 1.5.5.1
+Date: Mon, 21 Apr 2008 19:23:10 -0500
+Message-ID: <480D2FEE.3010904@nrlssc.navy.mil>
+References: <7vej8yako4.fsf@gitster.siamese.dyndns.org> <20080421235610.GB2631@dpotapov.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Benjamin Collins <ben.collins@acm.org>
-X-From: git-owner@vger.kernel.org Tue Apr 22 02:14:03 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Dmitry Potapov <dpotapov@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 22 02:24:15 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jo693-0003Iw-Px
-	for gcvg-git-2@gmane.org; Tue, 22 Apr 2008 02:14:02 +0200
+	id 1Jo6Is-0005kl-G8
+	for gcvg-git-2@gmane.org; Tue, 22 Apr 2008 02:24:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758111AbYDVANP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Apr 2008 20:13:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758079AbYDVANO
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Apr 2008 20:13:14 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:34063 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758062AbYDVANO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Apr 2008 20:13:14 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1Jo686-00060T-2Z; Mon, 21 Apr 2008 20:13:02 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 3DF3820FBAE; Mon, 21 Apr 2008 20:13:11 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <b3889dff0804210723s620363fdscba43c79dbb62d55@mail.gmail.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1757606AbYDVAXW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Apr 2008 20:23:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756896AbYDVAXW
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Apr 2008 20:23:22 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:43614 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756545AbYDVAXV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Apr 2008 20:23:21 -0400
+Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
+	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id m3M0NBax022751;
+	Mon, 21 Apr 2008 19:23:11 -0500
+Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 21 Apr 2008 19:23:11 -0500
+User-Agent: Thunderbird 2.0.0.12 (X11/20080213)
+In-Reply-To: <20080421235610.GB2631@dpotapov.dyndns.org>
+X-OriginalArrivalTime: 22 Apr 2008 00:23:11.0681 (UTC) FILETIME=[0C3C6B10:01C8A40F]
+X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-5.0.0.1023-15862003
+X-TM-AS-Result: : Yes--7.937000-0-31-1
+X-TM-AS-Category-Info: : 31:0.000000
+X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNTY3LTcwMDA3NS0xMzkw?=
+	=?us-ascii?B?MTAtMTA2NDIwLTcwNTEwMi03MDMzOTMtNzAwNzU2LTcwMTYxOS03?=
+	=?us-ascii?B?MDkyOTEtNzAxNjE4LTcwMzQ2OC03MDA2OTMtNzA0OTI3LTcwODU1?=
+	=?us-ascii?B?OC03MDI5MjAtNzAyNzM3LTcwNDQxMC03MDcxMTktMTg4MDE5LTE4?=
+	=?us-ascii?B?ODE5OC03MDA4NDktNzAyMzU4LTcwMTQ1NS03MTE0MzItNzAyMDIw?=
+	=?us-ascii?B?LTcxMTk1My03MDQ0OTYtNzA2MjQ5LTcwNjE1MC03MDc0NTEtNzA2?=
+	=?us-ascii?B?NzM3LTcwNDA0OS0xMDU3MDAtNzAxNzE5LTcwNTU4NC03MDkxMzct?=
+	=?us-ascii?B?NzAwNDgxLTcwNzIyNS03MDE0NTAtNzA4MzI4LTcwNzMyNS0xNDgw?=
+	=?us-ascii?B?MzktMTQ4MDUxLTIwMDQy?=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80047>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80048>
 
-Benjamin Collins <ben.collins@acm.org> wrote:
-> I just upgraded a few machines (RHEL 4.4) to the latest stable, and
-> git-gui stopped working.  It just hangs forever if it's in a git
-> repository.
-...
-> [pid 16903] write(1, "@(#) International Ispell Versio"..., 68 <unfinished ...>
-> [pid 16897] <... read resumed> "@(#) International Ispell Versio"..., 4096) = 68
-> [pid 16903] <... write resumed> )       = 68
-> [pid 16903] fstat(0, {st_mode=S_IFIFO|0600, st_size=0, ...}) = 0
-> [pid 16903] mmap(NULL, 4096, PROT_READ|PROT_WRITE,
-> MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x2a983cf000
-> [pid 16903] read(0,  <unfinished ...>
-> [pid 16897] write(5, "!\n$$cr master\n", 14) = 14
-> [pid 16903] <... read resumed> "!\n$$cr master\n", 4096) = 14
-> [pid 16897] read(6,  <unfinished ...>
-> [pid 16903] read(0,
-> 
-> Has anyone seen this before?
+Dmitry Potapov wrote:
 
-Nope.  This was a new feature of git-gui 0.10; we now launch an
-aspell session in the background via a bi-directional pipe and
-use it to spell check the commit message area on the fly.  The
-reason Git 1.5.4 doesn't have this problem is because it ships
-with git-gui 0.9.x, which doesn't have this spell check.
+> Johannes' patch removed this option, which IMHO was a significant user
+> interface improvement.
 
-I'm not sure why your system is hanging.  I've used git-gui 0.10
-on Mac OS 10.4, 10.5 and Windows without any issues for many weeks
-prior to the 1.5.5 release.  Doesn't mean there isn't possibly
-something wrong here, I just had thought this was pretty stable
-code at this point.
+Unless I missed something, this option has not been removed. The original
+purpose for its existence (which was to cause git-gc to call git-prune)
+has been removed. The call to git-prune within git-gc will remove _loose_
+unreferenced objects, but _packed_ unreferenced objects are removed by
+repack. The --prune option to git-gc is still used to adjust the call to
+git-repack so that packed unreferenced objects are discarded.
 
->From the strace it looks like your aspell is not giving us a
-reply to the "$$cr master" command.  What does this give you?
+> diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+> index 9758243..c1bf814 100644
+> --- a/Documentation/git-clone.txt
+> +++ b/Documentation/git-clone.txt
+> @@ -65,10 +65,12 @@ OPTIONS
+>  +
+>  *NOTE*: this is a possibly dangerous operation; do *not* use
+>  it unless you understand what it does. If you clone your
+> -repository using this option, then delete branches in the
+> -source repository and then run linkgit:git-gc[1] using the
+> -'--prune' option in the source repository, it may remove
+> -objects which are referenced by the cloned repository.
+> +repository using this option and then delete a branch or use
+> +any other git command that makes any previous existing commit
+> +unreachable, then after some time linkgit:git-gc[1] may remove
+> +unreachable objects, and this will break the cloned repository.
+> +Because some git commands may run git-gc, it may happen at any
+> +time after gc.pruneExpire time since commits became unreachable.
 
-	aspell --mode=none --encoding=UTF-8 pipe <<EOF
-	!
-	$$cr master
-	EOF
+I agree that something should be said here about shared repositories,
+but I think this wording is a little complicated (disclosure: I also
+submitted some text for this a few weeks ago :). Of course something
+is better than nothing.
 
--- 
-Shawn.
+Here's the blurb I submitted if you're interested:
++repository using this option and then delete branches in the
++source repository, some objects may become unreferenced (or dangling).
++These objects may be removed by normal git operations (such as git-commit[1])
++which automatically call git-gc[1]. If these objects are removed and
++were referenced by the cloned repository, then the cloned repository
++will become corrupt.
+
+-brandon
