@@ -1,160 +1,143 @@
 From: Adam Roben <aroben@apple.com>
-Subject: [PATCH 01/11] Add tests for git cat-file
-Date: Wed, 23 Apr 2008 15:17:43 -0400
-Message-ID: <1208978273-98146-2-git-send-email-aroben@apple.com>
+Subject: [PATCH 09/11] Git.pm: Add command_bidi_pipe and command_close_bidi_pipe
+Date: Wed, 23 Apr 2008 15:17:51 -0400
+Message-ID: <1208978273-98146-10-git-send-email-aroben@apple.com>
 References: <1208978273-98146-1-git-send-email-aroben@apple.com>
-Cc: Adam Roben <aroben@apple.com>, Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j.sixt@viscovery.net>
+ <1208978273-98146-2-git-send-email-aroben@apple.com>
+ <1208978273-98146-3-git-send-email-aroben@apple.com>
+ <1208978273-98146-4-git-send-email-aroben@apple.com>
+ <1208978273-98146-5-git-send-email-aroben@apple.com>
+ <1208978273-98146-6-git-send-email-aroben@apple.com>
+ <1208978273-98146-7-git-send-email-aroben@apple.com>
+ <1208978273-98146-8-git-send-email-aroben@apple.com>
+ <1208978273-98146-9-git-send-email-aroben@apple.com>
+Cc: Adam Roben <aroben@apple.com>, Eric Wong <normalperson@yhbt.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 23 21:20:04 2008
+X-From: git-owner@vger.kernel.org Wed Apr 23 21:20:10 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JokUP-0004sm-0X
-	for gcvg-git-2@gmane.org; Wed, 23 Apr 2008 21:18:45 +0200
+	id 1JokUx-00058u-98
+	for gcvg-git-2@gmane.org; Wed, 23 Apr 2008 21:19:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753947AbYDWTSA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Apr 2008 15:18:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753925AbYDWTR7
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Apr 2008 15:17:59 -0400
-Received: from mail-out4.apple.com ([17.254.13.23]:50289 "EHLO
-	mail-out4.apple.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753563AbYDWTR5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Apr 2008 15:17:57 -0400
+	id S1755205AbYDWTSN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Apr 2008 15:18:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755090AbYDWTSK
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Apr 2008 15:18:10 -0400
+Received: from mail-out3.apple.com ([17.254.13.22]:49425 "EHLO
+	mail-out3.apple.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754325AbYDWTSF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Apr 2008 15:18:05 -0400
 Received: from relay13.apple.com (relay13.apple.com [17.128.113.29])
-	by mail-out4.apple.com (Postfix) with ESMTP id 80CFC2A6A251;
-	Wed, 23 Apr 2008 12:17:57 -0700 (PDT)
+	by mail-out3.apple.com (Postfix) with ESMTP id F1184293B00F;
+	Wed, 23 Apr 2008 12:18:04 -0700 (PDT)
 Received: from relay13.apple.com (unknown [127.0.0.1])
-	by relay13.apple.com (Symantec Mail Security) with ESMTP id 5E14B28094;
-	Wed, 23 Apr 2008 12:17:57 -0700 (PDT)
-X-AuditID: 1180711d-a9b93bb000000ed7-18-480f8b642211
+	by relay13.apple.com (Symantec Mail Security) with ESMTP id D7AC828042;
+	Wed, 23 Apr 2008 12:18:04 -0700 (PDT)
+X-AuditID: 1180711d-aa394bb000000ed7-41-480f8b6ccdee
 Received: from localhost.localdomain (unknown [17.151.126.45])
-	by relay13.apple.com (Apple SCV relay) with ESMTP id 6D9EC28085;
-	Wed, 23 Apr 2008 12:17:56 -0700 (PDT)
+	by relay13.apple.com (Apple SCV relay) with ESMTP id 22D3C2807F;
+	Wed, 23 Apr 2008 12:18:04 -0700 (PDT)
 X-Mailer: git-send-email 1.5.5.1.152.g9aeb7
-In-Reply-To: <1208978273-98146-1-git-send-email-aroben@apple.com>
+In-Reply-To: <1208978273-98146-9-git-send-email-aroben@apple.com>
 X-Brightmail-Tracker: AAAAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80237>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80238>
 
+command_bidi_pipe hands back the stdin and stdout file handles from the
+executed command. command_close_bidi_pipe closes these handles and terminates
+the process.
 
 Signed-off-by: Adam Roben <aroben@apple.com>
 ---
- t/t1006-cat-file.sh |  101 +++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 101 insertions(+), 0 deletions(-)
- create mode 100755 t/t1006-cat-file.sh
+ perl/Git.pm |   56 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 56 insertions(+), 0 deletions(-)
 
-diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
-new file mode 100755
-index 0000000..15741d9
---- /dev/null
-+++ b/t/t1006-cat-file.sh
-@@ -0,0 +1,101 @@
-+#!/bin/sh
+diff --git a/perl/Git.pm b/perl/Git.pm
+index 2e7f896..d766974 100644
+--- a/perl/Git.pm
++++ b/perl/Git.pm
+@@ -51,6 +51,7 @@ require Exporter;
+ # Methods which can be called as standalone functions as well:
+ @EXPORT_OK = qw(command command_oneline command_noisy
+                 command_output_pipe command_input_pipe command_close_pipe
++                command_bidi_pipe command_close_bidi_pipe
+                 version exec_path hash_object git_cmd_try);
+ 
+ 
+@@ -92,6 +93,7 @@ increate nonwithstanding).
+ use Carp qw(carp croak); # but croak is bad - throw instead
+ use Error qw(:try);
+ use Cwd qw(abs_path);
++use IPC::Open2 qw(open2);
+ 
+ }
+ 
+@@ -375,6 +377,60 @@ sub command_close_pipe {
+ 	_cmd_close($fh, $ctx);
+ }
+ 
++=item command_bidi_pipe ( COMMAND [, ARGUMENTS... ] )
 +
-+test_description='git cat-file'
++Execute the given C<COMMAND> in the same way as command_output_pipe()
++does but return both an input pipe filehandle and an output pipe filehandle.
 +
-+. ./test-lib.sh
++The function will return return C<($pid, $pipe_in, $pipe_out, $ctx)>.
++See C<command_close_bidi_pipe()> for details.
 +
-+function echo_without_newline()
-+{
-+    echo "$@\c"
++=cut
++
++sub command_bidi_pipe {
++	my ($pid, $in, $out);
++	$pid = open2($in, $out, 'git', @_);
++	return ($pid, $in, $out, join(' ', @_));
 +}
 +
-+function strlen()
-+{
-+    echo_without_newline "$1" | wc -c | sed -e 's/^ *//'
++=item command_close_bidi_pipe ( PID, PIPE_IN, PIPE_OUT [, CTX] )
++
++Close the C<PIPE_IN> and C<PIPE_OUT> as returned from C<command_bidi_pipe()>,
++checking whether the command finished successfully. The optional C<CTX>
++argument is required if you want to see the command name in the error message,
++and it is the fourth value returned by C<command_bidi_pipe()>.  The call idiom
++is:
++
++	my ($pid, $in, $out, $ctx) = $r->command_bidi_pipe('cat-file --batch-check');
++	print "000000000\n" $out;
++	while (<$in>) { ... }
++	$r->command_close_bidi_pipe($pid, $in, $out, $ctx);
++
++Note that you should not rely on whatever actually is in C<CTX>;
++currently it is simply the command name but in future the context might
++have more complicated structure.
++
++=cut
++
++sub command_close_bidi_pipe {
++	my ($pid, $in, $out, $ctx) = @_;
++	foreach my $fh ($in, $out) {
++		unless (close $fh) {
++			if ($!) {
++				carp "error closing pipe: $!";
++			} elsif ($? >> 8) {
++				throw Git::Error::Command($ctx, $? >>8);
++			}
++		}
++	}
++
++	waitpid $pid, 0;
++
++	if ($? >> 8) {
++		throw Git::Error::Command($ctx, $? >>8);
++	}
 +}
 +
-+function maybe_remove_timestamp()
-+{
-+    if test -z "$2"; then
-+        echo_without_newline "$1"
-+    else
-+        echo_without_newline "$1" | sed -e 's/ [0-9]\{10\} [+-][0-9]\{4\}$//'
-+    fi
-+}
-+
-+function run_tests()
-+{
-+    type=$1
-+    sha1=$2
-+    size=$3
-+    content=$4
-+    pretty_content=$5
-+    no_timestamp=$6
-+
-+    test_expect_success \
-+        "$type exists" \
-+        "git cat-file -e $sha1"
-+    test_expect_success \
-+        "Type of $type is correct" \
-+        "test $type = \"\$(git cat-file -t $sha1)\""
-+    test_expect_success \
-+        "Size of $type is correct" \
-+        "test $size = \"\$(git cat-file -s $sha1)\""
-+    test -z "$content" || test_expect_success \
-+        "Content of $type is correct" \
-+        "test \"\$(maybe_remove_timestamp '$content' $no_timestamp)\" = \"\$(maybe_remove_timestamp \"\$(git cat-file $type $sha1)\" $no_timestamp)\""
-+    test_expect_success \
-+        "Pretty content of $type is correct" \
-+        "test \"\$(maybe_remove_timestamp '$pretty_content' $no_timestamp)\" = \"\$(maybe_remove_timestamp \"\$(git cat-file -p $sha1)\" $no_timestamp)\""
-+}
-+
-+hello_content="Hello World"
-+hello_size=$(strlen "$hello_content")
-+hello_sha1=$(echo_without_newline "$hello_content" | git hash-object --stdin)
-+
-+test_expect_success \
-+    "setup" \
-+    "echo_without_newline \"$hello_content\" > hello &&
-+     git update-index --add hello"
-+
-+run_tests 'blob' $hello_sha1 $hello_size "$hello_content" "$hello_content"
-+
-+tree_sha1=$(git write-tree)
-+tree_size=33
-+tree_pretty_content="100644 blob $hello_sha1	hello"
-+
-+run_tests 'tree' $tree_sha1 $tree_size "" "$tree_pretty_content"
-+
-+commit_message="Intial commit"
-+commit_sha1=$(echo_without_newline "$commit_message" | git commit-tree $tree_sha1)
-+commit_size=176
-+commit_content="tree $tree_sha1
-+author $GIT_AUTHOR_NAME <$GIT_AUTHOR_EMAIL> 0000000000 +0000
-+committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 0000000000 +0000
-+
-+$commit_message"
-+
-+run_tests 'commit' $commit_sha1 $commit_size "$commit_content" "$commit_content" 1
-+
-+tag_header_without_timestamp="object $hello_sha1
-+type blob
-+tag hellotag
-+tagger $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>"
-+tag_description="This is a tag"
-+tag_content="$tag_header_without_timestamp 0000000000 +0000
-+
-+$tag_description"
-+tag_pretty_content="$tag_header_without_timestamp Thu Jan 1 00:00:00 1970 +0000
-+
-+$tag_description"
-+
-+tag_sha1=$(echo_without_newline "$tag_content" | git mktag)
-+tag_size=$(strlen "$tag_content")
-+
-+run_tests 'tag' $tag_sha1 $tag_size "$tag_content" "$tag_pretty_content" 1
-+
-+test_expect_success \
-+    "Reach a blob from a tag pointing to it" \
-+    "test '$hello_content' = \"\$(git cat-file blob $tag_sha1)\""
-+
-+test_done
+ 
+ =item command_noisy ( COMMAND [, ARGUMENTS... ] )
+ 
 -- 
 1.5.5.1.152.g9aeb7
