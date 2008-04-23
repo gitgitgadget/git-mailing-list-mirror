@@ -1,153 +1,100 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <Uwe.Kleine-Koenig@digi.com>
-Subject: Re: showing conflicting merges
-Date: Wed, 23 Apr 2008 08:17:15 +0200
-Message-ID: <20080423061715.GB25446@digi.com>
-References: <20080422091233.GA12091@digi.com> <8aa486160804220249y55677f63o892643775960880f@mail.gmail.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Friendly refspecs
+Date: Wed, 23 Apr 2008 08:24:13 +0200
+Message-ID: <480ED60D.7050708@op5.se>
+References: <20080409222500.GB19248@mithlond> <20080409225112.GB12103@sigill.intra.peff.net> <20080413093102.GC12107@mithlond.arda.local> <20080416034823.GA11727@sigill.intra.peff.net> <alpine.LNX.1.00.0804161126280.19665@iabervon.org> <7vod89pnxx.fsf@gitster.siamese.dyndns.org> <20080422105658.GA11238@sigill.intra.peff.net> <7v63u9zva9.fsf@gitster.siamese.dyndns.org> <20080422200550.GB29313@sigill.intra.peff.net> <7vd4ohy5ym.fsf@gitster.siamese.dyndns.org> <20080423042433.GA3291@mithlond.arda.local> <7v1w4xuni1.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: <git@vger.kernel.org>
-To: Santi =?iso-8859-1?Q?B=E9jar?= <sbejar@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 23 08:18:25 2008
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Teemu Likonen <tlikonen@iki.fi>, Jeff King <peff@peff.net>,
+	Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 23 08:43:13 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JoYJC-0002iz-Hi
-	for gcvg-git-2@gmane.org; Wed, 23 Apr 2008 08:18:22 +0200
+	id 1JoYhE-0000I0-Kj
+	for gcvg-git-2@gmane.org; Wed, 23 Apr 2008 08:43:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752285AbYDWGRg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Apr 2008 02:17:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752357AbYDWGRg
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Apr 2008 02:17:36 -0400
-Received: from mail29.messagelabs.com ([216.82.249.147]:17671 "HELO
-	mail29.messagelabs.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1752567AbYDWGRf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Apr 2008 02:17:35 -0400
-X-VirusChecked: Checked
-X-Env-Sender: Uwe.Kleine-Koenig@digi.com
-X-Msg-Ref: server-14.tower-29.messagelabs.com!1208931454!11857524!1
-X-StarScan-Version: 5.5.12.14.2; banners=-,-,-
-X-Originating-IP: [66.77.174.14]
-Received: (qmail 3832 invoked from network); 23 Apr 2008 06:17:35 -0000
-Received: from mail.mx2.digi.com (HELO mcl-sms-ns2.DIGI.COM) (66.77.174.14)
-  by server-14.tower-29.messagelabs.com with RC4-SHA encrypted SMTP; 23 Apr 2008 06:17:35 -0000
-Received: from mcl-sms-exch01.digi.com (10.5.8.50) by mail.mx2.digi.com
- (172.16.1.14) with Microsoft SMTP Server (TLS) id 8.1.263.0; Wed, 23 Apr 2008
- 01:16:39 -0500
-Received: from mtk-sms-mail01.digi.com (10.10.8.120) by
- mcl-sms-exch01.digi.com (10.5.8.50) with Microsoft SMTP Server id 8.1.263.0;
- Wed, 23 Apr 2008 01:17:33 -0500
-Received: from dor-sms-mail1.digi.com ([10.49.1.105]) by
- mtk-sms-mail01.digi.com with Microsoft SMTPSVC(6.0.3790.3959);	 Wed, 23 Apr
- 2008 01:17:18 -0500
-Received: from zentaur.digi.com ([10.100.10.144]) by dor-sms-mail1.digi.com
- with Microsoft SMTPSVC(6.0.3790.3959);	 Wed, 23 Apr 2008 08:17:15 +0200
-Received: by zentaur.digi.com (Postfix, from userid 1080)	id 7C3C62AB12; Wed,
- 23 Apr 2008 08:17:15 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <8aa486160804220249y55677f63o892643775960880f@mail.gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-OriginalArrivalTime: 23 Apr 2008 06:17:15.0875 (UTC) FILETIME=[AD2CEB30:01C8A509]
-X-TM-AS-Product-Ver: SMEX-8.0.0.1181-5.500.1026-15866.005
-X-TM-AS-Result: No--34.664100-8.000000-31
-X-TM-AS-User-Approved-Sender: No
-X-TM-AS-User-Blocked-Sender: No
+	id S1750751AbYDWGm0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Apr 2008 02:42:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750747AbYDWGm0
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Apr 2008 02:42:26 -0400
+Received: from mail.op5.se ([193.201.96.20]:54926 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750738AbYDWGmZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Apr 2008 02:42:25 -0400
+X-Greylist: delayed 1089 seconds by postgrey-1.27 at vger.kernel.org; Wed, 23 Apr 2008 02:42:25 EDT
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id EDEF81F080AD;
+	Wed, 23 Apr 2008 08:23:39 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.499
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
+	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id yARZhzvX74EC; Wed, 23 Apr 2008 08:23:39 +0200 (CEST)
+Received: from clix.int.op5.se (unknown [172.27.78.26])
+	by mail.op5.se (Postfix) with ESMTP id A4A651F08071;
+	Wed, 23 Apr 2008 08:23:38 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.12 (X11/20080226)
+In-Reply-To: <7v1w4xuni1.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80190>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80191>
 
-Hello Santi,
+Junio C Hamano wrote:
+> Teemu Likonen <tlikonen@iki.fi> writes:
+> 
+>> Junio C Hamano wrote (2008-04-22 13:45 -0700):
+>>
+>>> I thought the original poster's example was
+>>>
+>>> 	git push $there $commit:branch2
+>>>
+>>> where $commit happened to be "branch1".  Would we dwim
+>>>
+>>> 	git push $there branch1~4:this_is_known_ok
+>>>
+>>> to refs/heads/?
+>> I guess this is what I meant. My original question was about
+>> inconsistent user interface: "git push $there branch1" creates branch1
+>> on the remote side (if it does not exist) but "git push $there
+>> branch1:branch2" gives an error if branch2 does not exist
+>> (branch1:refs/heads/branch2 is required).
+>>
+>> The case has become much more complicated since, so I just speak aloud
+>> my hope that need for refs/ paths in common situations would be reduced
+>> to minimum.
+> 
+> I think everybody involved in this discussion understands _that_.  The
+> issue is that you would not have said "branch2" in real life, but used
+> some word that is _not_ "branch" to name the thing, and there is no way
+> for git to guess correctly if you meant to create a branch or a
+> light-weight tag.
+> 
 
-Santi B=E9jar wrote:
-> On Tue, Apr 22, 2008 at 11:12 AM, Uwe Kleine-K=F6nig
-> <Uwe.Kleine-Koenig@digi.com> wrote:
-> > Hello,
-> >
-> >  There is a thread on the linux-arm-kernel ML that discusses handli=
-ng of
-> >  merge conflicts with git.[1]
-> >
-> >  I played around a bit with that and wondered about a few things:
-> >
-> >         ukleinek@zentaur:~/gsrc/linux-2.6$ git checkout -b test adf=
-6d34e460387ee3e8f1e1875d
-> >         Switched to a new branch "test"
-> >
-> >         ukleinek@zentaur:~/gsrc/linux-2.6$ git merge v2.6.25
-> >         Auto-merged MAINTAINERS
-> >         CONFLICT (delete/modify): drivers/leds/leds-tosa.c deleted =
-in HEAD and modified in v2.6.25. Version v2.6.25 of drivers/leds/leds-t=
-osa.c left in tree.
-> >         Auto-merged drivers/serial/imx.c
-> >         Automatic merge failed; fix conflicts and then commit the r=
-esult.
-> >
-> >  Now "git diff --merge" shows:
-> >
-> >         diff --cc drivers/leds/leds-tosa.c
-> >         index 7ebecc4,0000000..9e0a188
-> >         ...
-> >
-> >  Shouldn't that better be reversed, i.e. 9e0a188..7ebecc4,0000000?
->=20
-> It compares the versions in conflict with the version in the working =
-copy.
+If the src ref is not a commit sha1, the user will almost certainly want
+to create the same *type* of ref on the remote side, so
 
-I have not checked in the source code, but the output of=20
+git tag foo
+git branch boo
+git push $there foo:wip
+git push $there boo:wip-2008-04-24
 
-	strace -f -e open git diff --merge 2>&1 >/dev/null | grep leds-tosa
+would, on the remote side, create the branch "wip" and the tag "wip-2008-04-24"
 
-seems to contradict that (i.e. there is no output).
+I for one would certainly like that, and I don't think very many will be
+surprised at that behaviour.
 
-	7ebecc4 =3D v2.6.25:drivers/leds/leds-tosa.c
-	9e0a188 =3D $(git merge-base test v2.6.25):drivers/leds/leds-tosa.c
-
-(Ah, I just see, that's another hint that diff --merge doesn't look in
-the working copy.  The wc has 7ebecc4 which is in the LHS together with
-000000 (i.e. the deleted file from HEAD).
-
-Maybe the combined diff format cannot have more than one rev on the RHS=
-?
-
-> >  The resolution was to delete drivers/leds/leds-tosa.c:
-> >
-> >         ukleinek@zentaur:~/gsrc/linux-2.6$ git rm drivers/leds/leds=
--tosa.c
-> >         rm 'drivers/leds/leds-tosa.c'
-> >         rm 'drivers/leds/leds-tosa.c'
-> >
-> >         ukleinek@zentaur:~/gsrc/linux-2.6$ git commit
-> >         Created commit 99a64ab: Merge commit 'v2.6.25' into test
-> >
-> >  Now "git show" doesn't show the conflict resolution as it does for=
- other
-> >  conflicting merges.
-> >  Adding -p and/or --cc didn't help either.  Looking at the source I=
- think
-> >  the problem is that diff_tree_combined only shows diffs for paths =
-that
-> >  are touched by every parent.  I'm not sure how I want to have the =
-diff
-> >  shown, but showing nothing seems wrong.  Ideas?
->=20
-> The combined diff does not show conflicts, it only shows the merged
-> results that are different to all the parents. In this case the merge
-> resolution is to delete one file as in HEAD, so it won't be shown.
->=20
-> If you want to see the conflict resolution you have to recreate the
-> merge and compare with the original merge.
-An option to show would be great ...
-
-Best regards
-Uwe
-
---=20
-Uwe Kleine-K=F6nig, Software Engineer
-Digi International GmbH Branch Breisach, K=FCferstrasse 8, 79206 Breisa=
-ch, Germany
-Tax: 315/5781/0242 / VAT: DE153662976 / Reg. Amtsgericht Dortmund HRB 1=
-3962
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
