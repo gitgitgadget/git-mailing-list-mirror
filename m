@@ -1,59 +1,86 @@
-From: Teemu Likonen <tlikonen@iki.fi>
-Subject: Re: Friendly refspecs
-Date: Wed, 23 Apr 2008 14:15:56 +0300
-Message-ID: <20080423111556.GB3291@mithlond.arda.local>
-References: <alpine.LNX.1.00.0804161126280.19665@iabervon.org> <7vod89pnxx.fsf@gitster.siamese.dyndns.org> <20080422105658.GA11238@sigill.intra.peff.net> <7v63u9zva9.fsf@gitster.siamese.dyndns.org> <20080422200550.GB29313@sigill.intra.peff.net> <7vd4ohy5ym.fsf@gitster.siamese.dyndns.org> <20080423042433.GA3291@mithlond.arda.local> <7v1w4xuni1.fsf@gitster.siamese.dyndns.org> <20080423091606.GC11935@sigill.intra.peff.net> <20080423092144.GA11368@sigill.intra.peff.net>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: Git on Windows, CRLF issues
+Date: Wed, 23 Apr 2008 13:46:20 +0200
+Message-ID: <480F218C.3060703@viscovery.net>
+References: <alpine.DEB.1.00.0804212145570.21181@perkele.intern.softwolves.pp.se> <alpine.DEB.1.00.0804212104560.2298@eeepc-johanness> <32541b130804211453x77f3fd49hef645a417a9919ca@mail.gmail.com> <20080422023918.GA5402@sigill.intra.peff.net> <32541b130804220951p224c9be7ya4e8de5056481fd1@mail.gmail.com> <20080423080826.GA11935@sigill.intra.peff.net> <480F1671.2060602@viscovery.net> <20080423110402.GA27437@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Avery Pennarun <apenwarr@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Peter Karlsson <peter@softwolves.pp.se>, git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Apr 23 13:17:16 2008
+X-From: git-owner@vger.kernel.org Wed Apr 23 13:47:35 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JocyJ-0003zj-Va
-	for gcvg-git-2@gmane.org; Wed, 23 Apr 2008 13:17:08 +0200
+	id 1JodRP-00067V-AH
+	for gcvg-git-2@gmane.org; Wed, 23 Apr 2008 13:47:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750983AbYDWLQV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Apr 2008 07:16:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750976AbYDWLQV
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Apr 2008 07:16:21 -0400
-Received: from pne-smtpout3-sn1.fre.skanova.net ([81.228.11.120]:44550 "EHLO
-	pne-smtpout3-sn1.fre.skanova.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750920AbYDWLQU (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 Apr 2008 07:16:20 -0400
-Received: from mithlond.arda.local (80.220.180.181) by pne-smtpout3-sn1.fre.skanova.net (7.3.129)
-        id 47A7885700489FD3; Wed, 23 Apr 2008 13:15:59 +0200
-Received: from dtw by mithlond.arda.local with local (Exim 4.63)
-	(envelope-from <tlikonen@iki.fi>)
-	id 1JocxA-0003Nd-NL; Wed, 23 Apr 2008 14:15:56 +0300
-Content-Disposition: inline
-In-Reply-To: <20080423092144.GA11368@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1751936AbYDWLqY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Apr 2008 07:46:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751604AbYDWLqY
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Apr 2008 07:46:24 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:21683 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751364AbYDWLqX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Apr 2008 07:46:23 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1JodQa-0006GL-K3; Wed, 23 Apr 2008 13:46:21 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 5B4EC6D9; Wed, 23 Apr 2008 13:46:20 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <20080423110402.GA27437@sigill.intra.peff.net>
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80211>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80212>
 
-Jeff King wrote (2008-04-23 05:21 -0400):
-
-> On Wed, Apr 23, 2008 at 05:16:06AM -0400, Jeff King wrote:
+Jeff King schrieb:
+> On Wed, Apr 23, 2008 at 12:58:57PM +0200, Johannes Sixt wrote:
 > 
-> > > Historically we did not favor one way or another for the general
-> > > purpose syntax.  I think Jeff's proposed heuristics to favor
-> > > branch if a branch tip is pushed and tag if a tag is pushed makes
-> > > sense.
-> > 
-> > OK, here is a cleaned up patch with tests.
+>> In practice, this is not sufficient. The blob filter must have an
+>> opportunity to decide what it wants to do, not just blindly munge every
+>> blob. The minimum is a path name, e.g. in $1:
+>>
+>> 	new=$(git cat-file blob $sha1 |
+>> 		$SHELL_PATH -c "$filter_blob" ignored "$path" |
+>> 		git hash-object -w --stdin)
 > 
-> Oops, I forgot to mention: there is a broken test in t5516 that is
-> revealed by this change. The patch below should be applied before the
-> DWIM one.
+> I intentionally left that out, because:
+> 
+>   - I assumed if you were going to do trickery with pathnames, you
+>     should just be doing an index filter
+> 
+>   - it violates the cache assumption, which is that blob $X is always
+>     transformed the same way
+> 
+> I assume you are wanting to do something like:
+> 
+>   git filter-branch --blob-filter '
+>     case "$1" in
+>       *.jpg) cat ;;
+>           *) tr a-z A-Z ;;
+>     esac
+>   '
+> 
+> Obviously it is unlikely to get the same blob sha1 as "foo.jpg" and
+> "foo.txt", but it just feels a little wrong.
 
-I did some testing and your patches seem to work. I think push refspecs
-are frendlier now. :) It's great to see you guys taking users seriously
-and working on possible problems. Thanks!
+Yes, that's how I intended it to work. What's wrong here? The fact that a
+user might name a JPEG foo.txt instead of foo.jpg? Or that the same blob
+might appear with entirely different names, including different suffixes?
+Well, tough luck. Use an index filter. But without any sort of hint what
+the blob is about, your original --blob-filter is useless except for the
+most simplistic repositories.
+
+-- Hannes
