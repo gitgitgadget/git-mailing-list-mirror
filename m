@@ -1,92 +1,117 @@
-From: "Ping Yin" <pkufranky@gmail.com>
-Subject: Re: What's cooking in git.git (topics)
-Date: Wed, 23 Apr 2008 10:03:16 +0800
-Message-ID: <46dff0320804221903u6d5a3b51q171a89e8b920183a@mail.gmail.com>
-References: <7vlk4snpj3.fsf@gitster.siamese.dyndns.org>
-	 <7vabjm1a0q.fsf@gitster.siamese.dyndns.org>
-	 <46dff0320804220659j66dea3fehc2a9bdcdc0371025@mail.gmail.com>
-	 <200804221655.11914.Josef.Weidendorfer@gmx.de>
-	 <46dff0320804221013m2ff0320am31b7f8beb5f26f1b@mail.gmail.com>
-	 <alpine.DEB.1.00.0804221827330.4460@eeepc-johanness>
-	 <46dff0320804221827g6579919fid69d581256de90e1@mail.gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: GSoC 2008 application summary
+Date: Wed, 23 Apr 2008 00:21:22 -0400
+Message-ID: <20080423042122.GL29771@spearce.org>
+References: <20080422013201.GA4828@spearce.org> <20080422015933.GB4828@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Josef Weidendorfer" <Josef.Weidendorfer@gmx.de>,
-	"Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Apr 23 04:04:04 2008
+Content-Type: text/plain; charset=utf-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 23 06:22:20 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JoUL6-0005PW-DH
-	for gcvg-git-2@gmane.org; Wed, 23 Apr 2008 04:04:04 +0200
+	id 1JoWUs-0000LH-Km
+	for gcvg-git-2@gmane.org; Wed, 23 Apr 2008 06:22:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759606AbYDWCDS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Apr 2008 22:03:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756568AbYDWCDS
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Apr 2008 22:03:18 -0400
-Received: from an-out-0708.google.com ([209.85.132.248]:55451 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755829AbYDWCDR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Apr 2008 22:03:17 -0400
-Received: by an-out-0708.google.com with SMTP id d31so655355and.103
-        for <git@vger.kernel.org>; Tue, 22 Apr 2008 19:03:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=uwyZe3oo0pfuiH2SB4o7UrKUKzliqOWqkEtpvl7URTc=;
-        b=t6PIPOrapijx3L+GavWsvtn3Pe3u+m2bmVqgF+D5XwGOEFF0K2nUC/3+Sha2l01osI718OZXHlF4orHBgEAPI4h8sbOYSlzo6kHv5h8nzUqTWN1X0Iz283yMx58Kg+zLrgH8QZrp1UicgYenQOFNddw2YIeGEhlsqFHeT64L8zo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=YdphHspDevJLs+vULpiLTuFKZpR1yLxdrW0tzpinNf9iw8LscoL4q6sKYhnV52BRgU6tyFYNS50xgbynK0ADsTTxXDWCJavRt1shw8/ljtpvNOU8ulJuQ0oYI1v53RfSbpMyFV0FHOmDPSfAfaD4mTkHyUncSbBv4X1wNQH2yqc=
-Received: by 10.100.227.6 with SMTP id z6mr1731830ang.41.1208916196803;
-        Tue, 22 Apr 2008 19:03:16 -0700 (PDT)
-Received: by 10.100.32.10 with HTTP; Tue, 22 Apr 2008 19:03:16 -0700 (PDT)
-In-Reply-To: <46dff0320804221827g6579919fid69d581256de90e1@mail.gmail.com>
+	id S1754817AbYDWEV1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Apr 2008 00:21:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754770AbYDWEV0
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Apr 2008 00:21:26 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:58630 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753934AbYDWEVZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Apr 2008 00:21:25 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1JoWU0-00036N-4C
+	for git@vger.kernel.org; Wed, 23 Apr 2008 00:21:24 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 1F85420FBAE; Wed, 23 Apr 2008 00:21:22 -0400 (EDT)
 Content-Disposition: inline
+In-Reply-To: <20080422015933.GB4828@spearce.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80183>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80184>
 
-On Wed, Apr 23, 2008 at 9:27 AM, Ping Yin <pkufranky@gmail.com> wrote:
->
-> On Wed, Apr 23, 2008 at 1:28 AM, Johannes Schindelin
->  <Johannes.Schindelin@gmx.de> wrote:
->  > Hi,
->  >
->  >
->  >  On Wed, 23 Apr 2008, Ping Yin wrote:
->  >
->  >  > If we go back to a old HEAD or switch to another branch with changed
->  >  > path for a submodule, what should 'git submodule update' do? I think
->  >  > entries in .gitmodules should take precedence.
->  >
->  >  Literally the most common reason for a _different_ .gitmodules in an older
->  >  revision is that the repository was moved to another machine.
->  >
->  >  In this case, your suggestion is actively wrong.
->  >
->  Another common reason is the adjustment of repository directory in the
->  central environment
+"Shawn O. Pearce" <spearce@spearce.org> wrote:
+> 
+> If you are a student who wasn't selected, you should be receiving
+> a more detailed message from me in the next few days regarding
+> your proposal.  I really want to let everyone know what happened
+> with their proposal, including the general reasoning behind why
+> the project wasn't selected.
 
-I'm wrong, this is the case that  *url* changes.
+These notes have now all been individually emailed to students.
 
->  so i said *path*, not *url*. I agree what Josef said in the the
->  following reply: "It makes no sense to have submodule path
->  configuration in .git/config, as it has to be in sync with the current
->  commit". So it should be bettter to store path info only in
->  .gitmodules instead of $GIT_DIR/config
->
+As GSoC applications are considered private unless accepted into
+the program I have specifically avoided CC'ing these messages to the
+mailing list.  Every message obviously contained the student's email
+address, but each also addressed specific parts of the student's
+non-public project proposal.
 
-The case that *path* changes is the submodule is moved to a new path
-in some commit. But it is a very rare case.
+The way we selected our 6 students was driven by a number of factors:
 
+ - availability of mentors
+
+   As org admin I was trying to balance one student per mentor,
+   so that each individual mentor could focus their available time
+   to a single student's benefit.  Most mentors were willing to
+   mentor only 1 or 2 specific project ideas.  To maximize our
+   accepted students we had to accept a diverse range of projects.
+
+ - limited slots
+
+   With only 6 slots available to us in the end we had to make
+   some tough decisions about which projects should be selected,
+   and which wouldn't.  It would be nice if there were more slots
+   then students (and we could take them all), but that is not the
+   way such things work.
+
+ - community interest
+
+   We tried to select projects that will have a visible impact on
+   the overall Git user community.
+
+ - proposal quality
+
+   We looked for well defined proposals that had measurable criteria
+   for success, and a clear direction for reaching that goal within
+   the time allotted by the GSoC calendar.
+
+ - community interaction and student enthusiasm
+
+   We looked for applications where the student was active on our
+   IRC channel, or discussed their project on the mailing list, or
+   significantly via private email with a potential mentor.
+
+   In all such cases the students showed enthusiasm for the project
+   idea and a genuine interest in making Git even better for everone.
+   This was not required, but it certainly made the mentors feel
+   that the student was more likely to be successful this summer.
+
+If anyone has any questions, or would like further information
+about our selection process this year, please feel free to ask.
+
+
+Oh, and last but not least, I _really_ want to thank our crew of
+2008 mentors for helping with the evaluation process.  They spent
+some pretty considerable time over the last few weeks talking to
+prospective students on IRC, this mailing list, and private email,
+as well as reviewing applications through the official GSoC web
+application portal thingy (which as it turns out is a lot less
+cool of a web application than it sounds).  Their efforts were very
+much appreciated.
 
 -- 
-Ping Yin
+Shawn.
