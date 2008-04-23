@@ -1,90 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] Moving "git remote add --mirror blah" functionality to
- "git clone --bare --origin=blah"
-Date: Wed, 23 Apr 2008 09:07:28 -0700
-Message-ID: <7vhcdstv0f.fsf@gitster.siamese.dyndns.org>
-References: <480EF334.1090907@gnu.org>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: Wrong help text on git status -h ?
+Date: Wed, 23 Apr 2008 18:00:47 +0200
+Message-ID: <vpqfxtc36j4.fsf@bauges.imag.fr>
+References: <loom.20080423T125136-135@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Paolo Bonzini <bonzini@gnu.org>
-X-From: git-owner@vger.kernel.org Wed Apr 23 18:08:46 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Stefan =?iso-8859-1?Q?N=E4we?= <stefan.naewe+git@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 23 18:17:21 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JohWN-0001bh-W3
-	for gcvg-git-2@gmane.org; Wed, 23 Apr 2008 18:08:36 +0200
+	id 1Johek-0004vn-NA
+	for gcvg-git-2@gmane.org; Wed, 23 Apr 2008 18:17:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752939AbYDWQHn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Apr 2008 12:07:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753120AbYDWQHn
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Apr 2008 12:07:43 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:33260 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752815AbYDWQHm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Apr 2008 12:07:42 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id A0B7D35E6;
-	Wed, 23 Apr 2008 12:07:39 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id BCE0F35E2; Wed, 23 Apr 2008 12:07:35 -0400 (EDT)
-In-Reply-To: <480EF334.1090907@gnu.org> (Paolo Bonzini's message of "Wed, 23
- Apr 2008 10:28:36 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751033AbYDWQQX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Apr 2008 12:16:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751147AbYDWQQX
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Apr 2008 12:16:23 -0400
+Received: from harmonie.imag.fr ([147.171.130.40]:48964 "EHLO harmonie.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750963AbYDWQQW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Apr 2008 12:16:22 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by harmonie.imag.fr (8.13.8/8.13.8) with ESMTP id m3NGFNe1012992;
+	Wed, 23 Apr 2008 18:15:27 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1JohOp-0002mc-HW; Wed, 23 Apr 2008 18:00:47 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1JohOp-0002l8-Es; Wed, 23 Apr 2008 18:00:47 +0200
+In-Reply-To: <loom.20080423T125136-135@post.gmane.org> ("Stefan
+ =?iso-8859-1?Q?N=E4we=22's?= message of "Wed\, 23 Apr 2008 12\:54\:51 +0000
+ \(UTC\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (harmonie.imag.fr [147.171.130.40]); Wed, 23 Apr 2008 18:15:27 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80226>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80227>
 
-Paolo Bonzini <bonzini@gnu.org> writes:
+Stefan N=E4we <stefan.naewe+git@gmail.com> writes:
 
-> In the thread "git remote update -> rejected" Junio and Johannes came
-> to the conclusion that "--mirror means that you do not have local
-> branches", because "you give control away to the other end on the ref
-> namespace".  Furthermore, it was agreed that --mirror currently makes
-> sense mostly (or only?) on a bare repository.
->
-> From here I gather that if you have "git remote add --mirror", most
-> likely the mirrored repository will be the only remote you have.
-> There is in general no point in having other remotes in a bare
-> repository. And so there is no loss of generality if this remote is
-> the "origin" remote.
->
-> Hence, my proposal is:
->
-> 1) Add an option to "git clone", to be used with --bare, to create a
-> mirror.  --bare already leaves the original refs in place, without
-> moving them under refs/remotes/origin, so it makes sense to optionally
-> create the remote.
+> Getting help for commit on 'git status -h' can't be right, can it ?
+> Or am I missing something?
 
-I actually had a slightly different vision.  A mid-term goal should be to
-reimplement "clone" that has a lot of code duplication with "fetch" and
-"remote" in terms of "init + remote + fetch + checkout" [*1*].  For that
-to happen, I suspect that "remote" needs to learn a few more tricks than
-it currently knows (e.g. "figuring out the HEAD").
+I'd say: both.
 
-I would agree that it is useful for "clone" to create a bare repository in
-a mode that can be used for further cloning by other repositories (perhaps
-the former sits at the firewall boundary that it is cumbersome to cross by
-the latter).  As you described above, we already have that (iow, "--bare").
+git status could have been spelled "git commit --dry-run", they're
+actually the same command, but "git status" stops before launching the
+editor and doing the actual commit. So, they take the exact same set
+of options.
 
-And "remote add --mirror" would be an implementation detail to produce
-such a clone.  It is mostly about fetching.
+That said, in an ideal world, "git status -h" would mention that the
+commit message options are ignored with "git status".
 
-An option to add a back-up repository that you can maintain an exact
-mirror of your working repository would be useful, but that is different
-from what "remote add --mirror" is about.
-
-[Footnote]
-
-*1* In that sense, a more sensible order than rewriting "clone" in C in
-its current form would be to make necessary enhancements to the components
-in this sequence that need to implement clone, figure out how they should
-fit together and first make "clone" a four-liner shell script. Then
-rewriting the result in C may become more trivial.
+--=20
+Matthieu
