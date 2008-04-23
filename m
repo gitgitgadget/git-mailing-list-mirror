@@ -1,74 +1,56 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: Git on Windows, CRLF issues
-Date: Wed, 23 Apr 2008 16:24:09 +0200
-Message-ID: <200804231624.09465.johan@herland.net>
-References: <alpine.DEB.1.00.0804212145570.21181@perkele.intern.softwolves.pp.se> <20080423081025.GB11935@sigill.intra.peff.net> <Pine.LNX.4.64.0804231445550.18401@ds9.cixit.se>
+From: Gustaf Hendeby <hendeby@isy.liu.se>
+Subject: Re: git-gui hangs on read
+Date: Wed, 23 Apr 2008 16:49:18 +0200
+Message-ID: <480F4C6E.9070400@isy.liu.se>
+References: <b3889dff0804210723s620363fdscba43c79dbb62d55@mail.gmail.com>	 <20080422001311.GS29771@spearce.org>	 <b3889dff0804220634u58a5ed21yf8a4f369471c6534@mail.gmail.com>	 <20080422232530.GK29771@spearce.org> <480EF84A.4020308@isy.liu.se> <b3889dff0804230716n1b5dde1ctb7b0c1dd83f2d1ff@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Avery Pennarun <apenwarr@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Peter Karlsson <peter@softwolves.pp.se>
-X-From: git-owner@vger.kernel.org Wed Apr 23 16:26:18 2008
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Benjamin Collins <ben.collins@acm.org>
+X-From: git-owner@vger.kernel.org Wed Apr 23 16:50:42 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JofuW-0000bJ-61
-	for gcvg-git-2@gmane.org; Wed, 23 Apr 2008 16:25:24 +0200
+	id 1JogIT-0001qX-Do
+	for gcvg-git-2@gmane.org; Wed, 23 Apr 2008 16:50:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754174AbYDWOYh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Apr 2008 10:24:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753962AbYDWOYh
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Apr 2008 10:24:37 -0400
-Received: from sam.opera.com ([213.236.208.81]:47260 "EHLO smtp.opera.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753715AbYDWOYg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Apr 2008 10:24:36 -0400
-Received: from pc107.coreteam.oslo.opera.com (pat-tdc.opera.com [213.236.208.22])
-	by smtp.opera.com (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id m3NEO9Kg021926
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 23 Apr 2008 14:24:10 GMT
-User-Agent: KMail/1.9.9
-In-Reply-To: <Pine.LNX.4.64.0804231445550.18401@ds9.cixit.se>
-Content-Disposition: inline
-X-Virus-Scanned: ClamAV 0.92.1/6902/Wed Apr 23 09:30:49 2008 on smtp.opera.com
-X-Virus-Status: Clean
+	id S1751196AbYDWOtV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Apr 2008 10:49:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750776AbYDWOtV
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Apr 2008 10:49:21 -0400
+Received: from bogotron.isy.liu.se ([130.236.48.26]:45359 "EHLO
+	bogotron.isy.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750927AbYDWOtV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Apr 2008 10:49:21 -0400
+Received: from spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19])
+	by bogotron.isy.liu.se (Postfix) with ESMTP id 99F13259AC;
+	Wed, 23 Apr 2008 16:49:19 +0200 (MEST)
+Received: from bogotron.isy.liu.se ([130.236.48.26])
+ by spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19]) (amavisd-new, port 10022)
+ with ESMTP id 13288-01; Wed, 23 Apr 2008 16:49:18 +0200 (MEST)
+Received: from pluring.isy.liu.se (pluring.isy.liu.se [130.236.56.134])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by bogotron.isy.liu.se (Postfix) with ESMTP id DADF12594F;
+	Wed, 23 Apr 2008 16:49:18 +0200 (MEST)
+User-Agent: Thunderbird 2.0.0.12 (X11/20080213)
+In-Reply-To: <b3889dff0804230716n1b5dde1ctb7b0c1dd83f2d1ff@mail.gmail.com>
+X-Enigmail-Version: 0.95.6
+X-Virus-Scanned: by amavisd-new at isy.liu.se
+X-Spam-Checker-Version: SpamAssassin 2.63-isy (2004-01-11) on spamotron.isy.liu.se
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80221>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80222>
 
-On Wednesday 23 April 2008, Peter Karlsson wrote:
-> Jeff King:
-> > Sure, but that is quite slow on a larger tree, since it has to do a
-> > full checkout for each commit.
->
-> Indeed. That's why I would welcome a script such as the one you
-> mentioned :-) Fortunately, the repositories I worked on were small
-> enough to not suffer too much (even when using Git on Windows, which
-> is a bit slower than on Linux).
->
-> [Not seeing any unreachable objects]
->
-> > Did you remove refs/original/ ?
->
-> That, and cloned the repository to a new location after the
-> conversion, and removing the references to "origin" there. It does
-> seem that the objects are still there, but I can't see them with
-> "gitk --all".
+On 04/23/2008 04:16 PM, Benjamin Collins wrote:
+> What I have done for now is to comment out the line in gui-gui that
+> does the lappend on spell_cmd, near the end.
 
-Maybe they are kept alive by reflogs?
+Thanks!
 
-
-Have fun! :)
-
-...Johan
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+/Gustaf
