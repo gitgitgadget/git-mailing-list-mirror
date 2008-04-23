@@ -1,84 +1,56 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] Have tests and programs understand paths containing spaces
-Date: Wed, 23 Apr 2008 09:13:04 +0200
-Message-ID: <480EE180.1050202@viscovery.net>
-References: <20080422212801.GB20417@regex.yaph.org>
+From: Michele Ballabio <barra_cuda@katamail.com>
+Subject: Re: What's cooking in git.git (topics)
+Date: Wed, 23 Apr 2008 09:36:55 +0200
+Message-ID: <200804230936.55539.barra_cuda@katamail.com>
+References: <7vlk4snpj3.fsf@gitster.siamese.dyndns.org> <200804222251.04559.barra_cuda@katamail.com> <7vd4ohwhcj.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Arjen Laarhoven <arjen@yaph.org>
-X-From: git-owner@vger.kernel.org Wed Apr 23 09:14:00 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 23 09:36:28 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JoZB1-0000yZ-EC
-	for gcvg-git-2@gmane.org; Wed, 23 Apr 2008 09:13:59 +0200
+	id 1JoZVt-0000IX-PD
+	for gcvg-git-2@gmane.org; Wed, 23 Apr 2008 09:35:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751049AbYDWHNN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Apr 2008 03:13:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751058AbYDWHNN
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Apr 2008 03:13:13 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:65044 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750944AbYDWHNM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Apr 2008 03:13:12 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1JoZA9-00041i-7d; Wed, 23 Apr 2008 09:13:08 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id DE5EA6D9; Wed, 23 Apr 2008 09:13:04 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <20080422212801.GB20417@regex.yaph.org>
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1750987AbYDWHer convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Apr 2008 03:34:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751144AbYDWHer
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Apr 2008 03:34:47 -0400
+Received: from smtp.katamail.com ([62.149.157.154]:50090 "HELO
+	smtp1.pc.aruba.it" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with SMTP id S1750856AbYDWHer convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 Apr 2008 03:34:47 -0400
+Received: (qmail 9298 invoked by uid 89); 23 Apr 2008 07:31:35 -0000
+X-Spam-Checker-Version: SpamAssassin 3.2.3 (2007-08-08) on smtp1-pc
+X-Spam-Level: 
+X-Spam-Status: No, score=0.1 required=5.0 tests=BAYES_50,RDNS_NONE
+	autolearn=no version=3.2.3
+Received: from unknown (HELO host15-57-static.104-80-b.business.telecomitalia.it) (barra?cuda@katamail.com@80.104.57.15)
+  by smtp1-pc with SMTP; 23 Apr 2008 07:31:33 -0000
+User-Agent: KMail/1.9.7
+In-Reply-To: <7vd4ohwhcj.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80193>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80194>
 
-Arjen Laarhoven schrieb:
-> A lot of tests and some core programs didn't work when used in a path
-> containing whitespace.  Correct the quoting of all affected programs to
-> fix this.
+On Wednesday 23 April 2008, Junio C Hamano wrote:
+> In the thread, addition of an extra hook to "gc --auto" wasdiscussed.=
+ =C2=A0It
+> was judged conditionally Ok as long as nobody assumes "gc --auto" is
+> ultra-cheap. =C2=A0We used to have a "gc --auto" at the end of git-co=
+mmit which
+> violated that condition, but we do not have that anymore.
+>=20
+> The patch resurrects the behaviour that makes the extra hook possibly
+> unacceptable again, dosn't it?
 
-Please separate fixes of core programs/scripts from fixes of the tests
-(because the former have a much higher chance of being accepted).
-
-But see these threads first:
-
-http://thread.gmane.org/gmane.comp.version-control.git/60544
-http://thread.gmane.org/gmane.comp.version-control.git/79057
-
-
-Here a few comments:
-
-> +GIT_DIR="$PWD/.git"
-> +GIT_SVN_DIR="$GIT_DIR/svn/git-svn"
-> +SVN_TREE="$GIT_SVN_DIR/svn-tree"
-> +svnrepo="$PWD/svnrepo"
-
-These are unnecessary: RHS of an assignment does not undergo word splitting.
-
-> -test_expect_success "checkout from svn" "svn co $svnrepo '$SVN_TREE'"
-> +test_expect_success "checkout from svn" "svn co '$svnrepo' '$SVN_TREE'"
-
-> -	git diff help $SVN_TREE/exec-2.sh"
-> +	git diff help '$SVN_TREE'/exec-2.sh"
-
-These changes protect *only* against space-in-name, but not
-random-special-character-in-name. The proper fix is to change the quoting from
-
-  test_expect_success "..." "... $svnrepo ..."
-
-to
-
-  test_expect_success '...' '... "$svnrepo" ...'
-
--- Hannes
+Yes. I thought there was an unwanted change in behavior in git-commit.
+Sorry for the noise.
