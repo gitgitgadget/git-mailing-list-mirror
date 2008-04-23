@@ -1,72 +1,60 @@
-From: Peter Karlsson <peter@softwolves.pp.se>
-Subject: Re: Git on Windows, CRLF issues
-Date: Wed, 23 Apr 2008 14:47:34 +0100 (CET)
-Organization: /universe/earth/europe/norway/oslo
-Message-ID: <Pine.LNX.4.64.0804231445550.18401@ds9.cixit.se>
-References: <alpine.DEB.1.00.0804212145570.21181@perkele.intern.softwolves.pp.se>
- <alpine.DEB.1.00.0804212104560.2298@eeepc-johanness>
- <32541b130804211453x77f3fd49hef645a417a9919ca@mail.gmail.com>
- <20080422023918.GA5402@sigill.intra.peff.net>
- <32541b130804220951p224c9be7ya4e8de5056481fd1@mail.gmail.com>
- <Pine.LNX.4.64.0804230806220.18401@ds9.cixit.se> <20080423081025.GB11935@sigill.intra.peff.net>
+From: Teemu Likonen <tlikonen@iki.fi>
+Subject: Re: history of a renamed file
+Date: Wed, 23 Apr 2008 17:05:26 +0300
+Message-ID: <20080423140526.GC3291@mithlond.arda.local>
+References: <480F3369.5080203@melosgmbh.de> <m3y774putc.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Avery Pennarun <apenwarr@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Apr 23 15:48:55 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Christoph Duelli <duelli@melosgmbh.de>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 23 16:06:49 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JofKw-0001qT-F4
-	for gcvg-git-2@gmane.org; Wed, 23 Apr 2008 15:48:38 +0200
+	id 1Jofc2-0000IQ-Dz
+	for gcvg-git-2@gmane.org; Wed, 23 Apr 2008 16:06:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752896AbYDWNrv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Apr 2008 09:47:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753495AbYDWNrv
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Apr 2008 09:47:51 -0400
-Received: from ds9.cixit.se ([193.15.169.228]:56152 "EHLO ds9.cixit.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753429AbYDWNru (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Apr 2008 09:47:50 -0400
-Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
-	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id m3NDlZBs029699
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 23 Apr 2008 15:47:35 +0200
-Received: from localhost (peter@localhost)
-	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id m3NDlY0g029693;
-	Wed, 23 Apr 2008 15:47:35 +0200
-X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
-In-Reply-To: <20080423081025.GB11935@sigill.intra.peff.net>
-Accept: text/plain
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (ds9.cixit.se [127.0.0.1]); Wed, 23 Apr 2008 15:47:35 +0200 (CEST)
+	id S1753379AbYDWOFb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Apr 2008 10:05:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753343AbYDWOFa
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Apr 2008 10:05:30 -0400
+Received: from pne-smtpout3-sn2.hy.skanova.net ([81.228.8.111]:60597 "EHLO
+	pne-smtpout3-sn2.hy.skanova.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753340AbYDWOFa (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 Apr 2008 10:05:30 -0400
+Received: from mithlond.arda.local (80.220.180.181) by pne-smtpout3-sn2.hy.skanova.net (7.3.129)
+        id 478BDB96005B116D; Wed, 23 Apr 2008 16:05:27 +0200
+Received: from dtw by mithlond.arda.local with local (Exim 4.63)
+	(envelope-from <tlikonen@iki.fi>)
+	id 1JofbC-0003mw-HX; Wed, 23 Apr 2008 17:05:26 +0300
+Content-Disposition: inline
+In-Reply-To: <m3y774putc.fsf@localhost.localdomain>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80218>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80219>
 
-Jeff King:
+Jakub Narebski wrote (2008-04-23 06:25 -0700):
 
-> Sure, but that is quite slow on a larger tree, since it has to do a
-> full checkout for each commit.
+> Christoph Duelli <duelli@melosgmbh.de> writes:
+> 
+> > Is it possible (ideally with gitk) to view the complete history of
+> > what is now new/location/x.c *including* the history of changes that
+> > occurred when it stil was some/path/x.c?
 
-Indeed. That's why I would welcome a script such as the one you
-mentioned :-) Fortunately, the repositories I worked on were small
-enough to not suffer too much (even when using Git on Windows, which is
-a bit slower than on Linux).
+> Try --follow option, see git-log(1), although I'm not sure if gitk
+> supports it (it should).
 
-[Not seeing any unreachable objects]
-> Did you remove refs/original/ ?
+gitk certainly accepts '--follow' but the option does not work as
+expected. For example try
 
-That, and cloned the repository to a new location after the conversion,
-and removing the references to "origin" there. It does seem that the
-objects are still there, but I can't see them with "gitk --all".
+  gitk --follow -- utf8.c
 
--- 
-\\// Peter - http://www.softwolves.pp.se/
+in the Git repository and get surprised. :-)
+
+I noticed the problem two weeks ago and Adam Simpkins elaborated it
+a bit. See http://thread.gmane.org/gmane.comp.version-control.git/79008
