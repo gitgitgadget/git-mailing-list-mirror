@@ -1,100 +1,85 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Friendly refspecs
-Date: Wed, 23 Apr 2008 08:24:13 +0200
-Message-ID: <480ED60D.7050708@op5.se>
-References: <20080409222500.GB19248@mithlond> <20080409225112.GB12103@sigill.intra.peff.net> <20080413093102.GC12107@mithlond.arda.local> <20080416034823.GA11727@sigill.intra.peff.net> <alpine.LNX.1.00.0804161126280.19665@iabervon.org> <7vod89pnxx.fsf@gitster.siamese.dyndns.org> <20080422105658.GA11238@sigill.intra.peff.net> <7v63u9zva9.fsf@gitster.siamese.dyndns.org> <20080422200550.GB29313@sigill.intra.peff.net> <7vd4ohy5ym.fsf@gitster.siamese.dyndns.org> <20080423042433.GA3291@mithlond.arda.local> <7v1w4xuni1.fsf@gitster.siamese.dyndns.org>
+From: Peter Karlsson <peter@softwolves.pp.se>
+Subject: Re: Git on Windows, CRLF issues
+Date: Wed, 23 Apr 2008 08:11:49 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <Pine.LNX.4.64.0804230806220.18401@ds9.cixit.se>
+References: <alpine.DEB.1.00.0804212145570.21181@perkele.intern.softwolves.pp.se>
+  <alpine.DEB.1.00.0804212104560.2298@eeepc-johanness> 
+ <32541b130804211453x77f3fd49hef645a417a9919ca@mail.gmail.com> 
+ <20080422023918.GA5402@sigill.intra.peff.net>
+ <32541b130804220951p224c9be7ya4e8de5056481fd1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Teemu Likonen <tlikonen@iki.fi>, Jeff King <peff@peff.net>,
-	Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 23 08:43:13 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jeff King <peff@peff.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 23 09:12:55 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JoYhE-0000I0-Kj
-	for gcvg-git-2@gmane.org; Wed, 23 Apr 2008 08:43:13 +0200
+	id 1JoZ9y-0000f9-Jy
+	for gcvg-git-2@gmane.org; Wed, 23 Apr 2008 09:12:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750751AbYDWGm0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Apr 2008 02:42:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750747AbYDWGm0
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Apr 2008 02:42:26 -0400
-Received: from mail.op5.se ([193.201.96.20]:54926 "EHLO mail.op5.se"
+	id S1751040AbYDWHMI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Apr 2008 03:12:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750931AbYDWHMG
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Apr 2008 03:12:06 -0400
+Received: from ds9.cixit.se ([193.15.169.228]:60106 "EHLO ds9.cixit.se"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750738AbYDWGmZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Apr 2008 02:42:25 -0400
-X-Greylist: delayed 1089 seconds by postgrey-1.27 at vger.kernel.org; Wed, 23 Apr 2008 02:42:25 EDT
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id EDEF81F080AD;
-	Wed, 23 Apr 2008 08:23:39 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -2.499
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
-	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id yARZhzvX74EC; Wed, 23 Apr 2008 08:23:39 +0200 (CEST)
-Received: from clix.int.op5.se (unknown [172.27.78.26])
-	by mail.op5.se (Postfix) with ESMTP id A4A651F08071;
-	Wed, 23 Apr 2008 08:23:38 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.12 (X11/20080226)
-In-Reply-To: <7v1w4xuni1.fsf@gitster.siamese.dyndns.org>
+	id S1750883AbYDWHMF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Apr 2008 03:12:05 -0400
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id m3N7BnBs020820
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 23 Apr 2008 09:11:50 +0200
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id m3N7BntB020815;
+	Wed, 23 Apr 2008 09:11:49 +0200
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+In-Reply-To: <32541b130804220951p224c9be7ya4e8de5056481fd1@mail.gmail.com>
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (ds9.cixit.se [127.0.0.1]); Wed, 23 Apr 2008 09:11:50 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80191>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80192>
 
-Junio C Hamano wrote:
-> Teemu Likonen <tlikonen@iki.fi> writes:
-> 
->> Junio C Hamano wrote (2008-04-22 13:45 -0700):
->>
->>> I thought the original poster's example was
->>>
->>> 	git push $there $commit:branch2
->>>
->>> where $commit happened to be "branch1".  Would we dwim
->>>
->>> 	git push $there branch1~4:this_is_known_ok
->>>
->>> to refs/heads/?
->> I guess this is what I meant. My original question was about
->> inconsistent user interface: "git push $there branch1" creates branch1
->> on the remote side (if it does not exist) but "git push $there
->> branch1:branch2" gives an error if branch2 does not exist
->> (branch1:refs/heads/branch2 is required).
->>
->> The case has become much more complicated since, so I just speak aloud
->> my hope that need for refs/ paths in common situations would be reduced
->> to minimum.
-> 
-> I think everybody involved in this discussion understands _that_.  The
-> issue is that you would not have said "branch2" in real life, but used
-> some word that is _not_ "branch" to name the thing, and there is no way
-> for git to guess correctly if you meant to create a branch or a
-> light-weight tag.
-> 
+Avery Pennarun:
 
-If the src ref is not a commit sha1, the user will almost certainly want
-to create the same *type* of ref on the remote side, so
+> Do you think git would benefit from having a generalized version of
+> this script?
 
-git tag foo
-git branch boo
-git push $there foo:wip
-git push $there boo:wip-2008-04-24
+Definitely. Also, something that would work with a) several branches
+(i.e traverse all the branches; keeping the points at which they
+diverge), and b) submodules (i.e apply the same changes to the
+submodules and updating the submodule index accordingly).
 
-would, on the remote side, create the branch "wip" and the tag "wip-2008-04-24"
+I ended up doing CRLF conversion for most of the repositories I had
+converted. Fortunately, most of them had a single branch, so after
+having created a small script that did CRLF->LF for the text files, I
+could do a
 
-I for one would certainly like that, and I don't think very many will be
-surprised at that behaviour.
+  git filter-branch --tree-filter 'c:/temp/crlf2lf.sh' \
+                    --tag-name-filter 'cat' HEAD
+
+on each repository and get everything converted during my lunch break.
+
+
+What I couldn't figure out is why, after converting everything,
+removing all references to the repositories I cloned from, and removing
+references to the old objects in the reflogs, why
+
+ git fsck --unreachable
+
+did not report any unreachable objects? I would have guessed the entire
+old history and its objects would now be invalidated and could be
+killed off.
 
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+\\// Peter - http://www.softwolves.pp.se/
