@@ -1,70 +1,73 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: [PATCH] Linked glossary from cvs-migration page
-Date: Wed, 23 Apr 2008 12:50:11 -0400
-Message-ID: <20080423165011.GE31576@fieldses.org>
-References: <1208956431-1955-1-git-send-email-mdg149@gmail.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [RFC] Moving "git remote add --mirror blah" functionality to
+ "git clone --bare --origin=blah"
+Date: Wed, 23 Apr 2008 12:56:41 -0400 (EDT)
+Message-ID: <alpine.LNX.1.00.0804231210000.19665@iabervon.org>
+References: <480EF334.1090907@gnu.org> <7vhcdstv0f.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: Matt Graham <mdg149@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 23 18:51:12 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Paolo Bonzini <bonzini@gnu.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 23 18:57:41 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JoiBV-0000r2-14
-	for gcvg-git-2@gmane.org; Wed, 23 Apr 2008 18:51:05 +0200
+	id 1JoiHl-0003ZK-OQ
+	for gcvg-git-2@gmane.org; Wed, 23 Apr 2008 18:57:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751866AbYDWQuS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Apr 2008 12:50:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751322AbYDWQuS
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Apr 2008 12:50:18 -0400
-Received: from mail.fieldses.org ([66.93.2.214]:44804 "EHLO fieldses.org"
+	id S1752230AbYDWQ4r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Apr 2008 12:56:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752239AbYDWQ4r
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Apr 2008 12:56:47 -0400
+Received: from iabervon.org ([66.92.72.58]:46252 "EHLO iabervon.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751852AbYDWQuR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Apr 2008 12:50:17 -0400
-Received: from bfields by fieldses.org with local (Exim 4.69)
-	(envelope-from <bfields@fieldses.org>)
-	id 1JoiAd-0000qX-9J; Wed, 23 Apr 2008 12:50:11 -0400
-Content-Disposition: inline
-In-Reply-To: <1208956431-1955-1-git-send-email-mdg149@gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1752223AbYDWQ4q (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Apr 2008 12:56:46 -0400
+Received: (qmail 5162 invoked by uid 1000); 23 Apr 2008 16:56:41 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 23 Apr 2008 16:56:41 -0000
+In-Reply-To: <7vhcdstv0f.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80229>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80230>
 
-On Wed, Apr 23, 2008 at 09:13:51AM -0400, Matt Graham wrote:
-> Coming from CVS, I found the git glossary vital to learning git and learning
-> how terms in git correlate to the cvs terminology with which I am familiar.
-> 
-> This patch links the glossary from the cvs-migration page so cvs users will
-> be able to fine the glossary as soon as they start looking at git documents.
-> 
-> Signed-off-by: Matt Graham <mdg149@gmail.com>
+On Wed, 23 Apr 2008, Junio C Hamano wrote:
 
-Fine by me.--b.
+> *1* In that sense, a more sensible order than rewriting "clone" in C in
+> its current form would be to make necessary enhancements to the components
+> in this sequence that need to implement clone, figure out how they should
+> fit together and first make "clone" a four-liner shell script. Then
+> rewriting the result in C may become more trivial.
 
-> ---
->  Documentation/cvs-migration.txt |    3 ++-
->  1 files changed, 2 insertions(+), 1 deletions(-)
-> 
-> diff --git a/Documentation/cvs-migration.txt b/Documentation/cvs-migration.txt
-> index ea98900..00f2e36 100644
-> --- a/Documentation/cvs-migration.txt
-> +++ b/Documentation/cvs-migration.txt
-> @@ -8,7 +8,8 @@ designating a single shared repository which people can synchronize with;
->  this document explains how to do that.
->  
->  Some basic familiarity with git is required.  This
-> -link:tutorial.html[tutorial introduction to git] should be sufficient.
-> +link:tutorial.html[tutorial introduction to git] and the
-> +link:glossary.html[git glossary] should be sufficient.
->  
->  Developing against a shared repository
->  --------------------------------------
-> -- 
-> 1.5.5.49.gf43e2
-> 
+clone can't be a four-liner shell script, because it has to come up with 
+the name of the working directory for a non-bare clone, which doesn't make 
+sense for any other program. Currently, a local clone is special in that 
+it duplicates all of the objects without checking whether the destination 
+already has them (because it can't have anything) or whether they're 
+actually needed; fetch could do some similar stuff, but couldn't do quite 
+that much optimization, because it's not likely the same special case.
+
+Something needs to get the code to figure out the remote HEAD, and it 
+shouldn't be "remote" for clone's use, because then clone would take an 
+extra connection, since "fetch" obviously has to connect and "remote" 
+would run before it and in a separate process.
+
+It also needs to support --reference (list another repository's refs as 
+your refs, because you have that repository as an alternate but don't have 
+your own refs that use its objects), which is sort of plausible for fetch 
+but much less useful.
+
+Aside from that, it's obviously got quite a few lines of option parsing to 
+get the right arguments to the things it calls, as well as determining 
+whether to check out a branch (depending on what we did with the origin) 
+and such.
+
+	-Daniel
+*This .sig left intentionally blank*
