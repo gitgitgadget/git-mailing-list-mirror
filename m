@@ -1,103 +1,74 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/3] Add --blob-filter option to filter-branch.
-Date: Wed, 23 Apr 2008 21:05:19 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0804232104160.20267@eeepc-johanness>
-References: <> <1208979757-30860-1-git-send-email-apenwarr@gmail.com>
+From: Paolo Bonzini <bonzini@gnu.org>
+Subject: Re: [RFC] Moving "git remote add --mirror blah" functionality to
+ "git clone --bare --origin=blah"
+Date: Wed, 23 Apr 2008 22:06:00 +0200
+Message-ID: <480F96A8.6020304@gnu.org>
+References: <480EF334.1090907@gnu.org> <7vhcdstv0f.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 23 22:06:43 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 23 22:07:50 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JolEJ-00069E-5r
-	for gcvg-git-2@gmane.org; Wed, 23 Apr 2008 22:06:11 +0200
+	id 1JolFn-0006xC-JS
+	for gcvg-git-2@gmane.org; Wed, 23 Apr 2008 22:07:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753647AbYDWUFZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Apr 2008 16:05:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753241AbYDWUFZ
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Apr 2008 16:05:25 -0400
-Received: from mail.gmx.net ([213.165.64.20]:45641 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752762AbYDWUFY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Apr 2008 16:05:24 -0400
-Received: (qmail invoked by alias); 23 Apr 2008 20:05:22 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO eeepc-johanness.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp016) with SMTP; 23 Apr 2008 22:05:22 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18LPqQQyQkLioyIQCqV84hxckefuiA8Vw1r5GAnHw
-	hwytLMlOUzT/FP
-X-X-Sender: user@eeepc-johanness
-In-Reply-To: <1208979757-30860-1-git-send-email-apenwarr@gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1753815AbYDWUG5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Apr 2008 16:06:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753928AbYDWUG5
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Apr 2008 16:06:57 -0400
+Received: from fg-out-1718.google.com ([72.14.220.152]:12847 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753110AbYDWUG4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Apr 2008 16:06:56 -0400
+Received: by fg-out-1718.google.com with SMTP id l27so2742043fgb.17
+        for <git@vger.kernel.org>; Wed, 23 Apr 2008 13:06:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:x-enigmail-version:content-type:content-transfer-encoding:sender;
+        bh=StCipyCOS5rPh24jOsem/10PduJwt3S1SQeeL5+zyC4=;
+        b=KppUuDHhEGi67RhfsieP2G5KmrAF3XJG828uDPzNi2GjxPI/2ZoD6Zv1xUgh3sp/+t3zQQi3Lc8F69fhLmkjp+QK6UG8y0Pg4xJu/DPD6CQrd+5s6beM+xH7mVBnng5YVp/jU8qVG+d+WWFUpf41UNYPgm3dbGucSF3uI3yEjXw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:x-enigmail-version:content-type:content-transfer-encoding:sender;
+        b=JS4sDtaWMeaual5xjql08vaoiiHjDHXo1+t5Nrcv/Ph5x0EP1RuyohiMwJTbceTfjMzqwhwGLx5NeKFsXbItYN38OAdbMWWqoU+La/WPavOvyf7trxXoax/iU4dIXNCtxS9m3HK2BwWgThhWJIkRjsGM832ZNFr8Z2V3kqb+j+o=
+Received: by 10.86.36.11 with SMTP id j11mr3994130fgj.5.1208981161001;
+        Wed, 23 Apr 2008 13:06:01 -0700 (PDT)
+Received: from scientist-2.lan ( [213.140.22.65])
+        by mx.google.com with ESMTPS id d6sm592618fga.9.2008.04.23.13.05.57
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 23 Apr 2008 13:05:58 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.12 (Macintosh/20080213)
+In-Reply-To: <7vhcdstv0f.fsf@gitster.siamese.dyndns.org>
+X-Enigmail-Version: 0.95.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80254>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80255>
 
-Hi,
 
-On Wed, 23 Apr 2008, Avery Pennarun wrote:
+> *1* In that sense, a more sensible order than rewriting "clone" in C in
+> its current form would be to make necessary enhancements to the components
+> in this sequence that need to implement clone, figure out how they should
+> fit together and first make "clone" a four-liner shell script. Then
+> rewriting the result in C may become more trivial.
 
-> From: Jeff King <peff@peff.net>
-> 
-> On Tue, Apr 22, 2008 at 12:51:14PM -0400, Avery Pennarun wrote:
-> 
-> > Do you think git would benefit from having a generalized version of
-> > this script?  Basically, the user provides a "munge" script on the
-> > command line, and there's a git-filter-branch mode for auto-munging
-> > (with a cache) every file in every checkin.  Even if it's *only* ever
-> > used for CRLF, I can imagine this being useful to a lot of people.
-> 
-> It was easy enough to work up the patch below, which allows
-> 
->   git filter-branch --blob-filter 'tr a-z A-Z'
-> 
-> However, it's _still_ horribly slow. Shell script is nice and flexible,
-> but running a tight loop like this is just painful. I suspect
-> filter-branch in something like perl would be a lot faster and just as
-> flexible (you could even do it in C, but you'd probably have to invent a
-> little domain-specific scripting language).
-> 
-> It is still much better performance than a tree filter, though:
-> 
->   $ cd git && time git filter-branch --tree-filter '
->       find . -type f | while read f; do
->         tr a-z A-Z <"$f" >tmp
->         mv tmp "$f"
->       done
->     ' HEAD~10..HEAD
-> 
->   real    4m38.626s
->   user    1m32.726s
->   sys     2m51.163s
-> 
->   $ cd git && git filter-branch --blob-filter 'tr a-z A-Z' HEAD~10..HEAD
->   real    1m40.809s
->   user    0m36.822s
->   sys     1m14.273s
-> 
-> Lots of system time in both. I'm sure we spend a fair bit of time
-> hitting our very large map and blob-cache directories, which would be
-> much more nicely implemented as associative arrays in memory (if we were
-> using a more featureful language).
-> 
-> Anyway, here is the patch. I don't know if it is even worth applying,
-> since it is still painfully slow.
+On the other hand, a C version may have the necessary APIs available to 
+support this kind of enhancement, but the APIs may not be there for a 
+shell script.
 
-Not all of this belongs in the commit messaage.
+It seems useless to have an option in "git remote add" just because it 
+might be necessary in a future refactoring of "git clone", but without a 
+good use case beside that one -- because right now "git remote add 
+--mirror" is close to useless: anyone who needs it 99% of the time knows 
+how to hack the config, unlike people who just want a quick way to 
+remotely backup of their repository.
 
-> Acked-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-
-This does.
-
-A good general rule is: if you think it would be funny/strange to read 
-this message in the output of "git log", it should be changed.
-
-Ciao,
-Dscho
+Paolo
