@@ -1,75 +1,72 @@
-From: Christoph Duelli <duelli@melosgmbh.de>
-Subject: Re: history of a renamed file
-Date: Wed, 23 Apr 2008 15:45:07 +0200
-Message-ID: <480F3D63.1040809@melosgmbh.de>
-References: <480F3369.5080203@melosgmbh.de> <m3y774putc.fsf@localhost.localdomain>
+From: Peter Karlsson <peter@softwolves.pp.se>
+Subject: Re: Git on Windows, CRLF issues
+Date: Wed, 23 Apr 2008 14:47:34 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <Pine.LNX.4.64.0804231445550.18401@ds9.cixit.se>
+References: <alpine.DEB.1.00.0804212145570.21181@perkele.intern.softwolves.pp.se>
+ <alpine.DEB.1.00.0804212104560.2298@eeepc-johanness>
+ <32541b130804211453x77f3fd49hef645a417a9919ca@mail.gmail.com>
+ <20080422023918.GA5402@sigill.intra.peff.net>
+ <32541b130804220951p224c9be7ya4e8de5056481fd1@mail.gmail.com>
+ <Pine.LNX.4.64.0804230806220.18401@ds9.cixit.se> <20080423081025.GB11935@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 23 15:47:49 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Avery Pennarun <apenwarr@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Apr 23 15:48:55 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JofJz-0001Tc-Bi
-	for gcvg-git-2@gmane.org; Wed, 23 Apr 2008 15:47:39 +0200
+	id 1JofKw-0001qT-F4
+	for gcvg-git-2@gmane.org; Wed, 23 Apr 2008 15:48:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753342AbYDWNqx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Apr 2008 09:46:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753340AbYDWNqx
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Apr 2008 09:46:53 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.189]:44705 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751204AbYDWNqw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Apr 2008 09:46:52 -0400
-X-RZG-CLASS-ID: mo07
-X-RZG-AUTH: hvKqOO6Ph79JHUJJIwMxXgzUdNi1LqfccsoS0yxp1bU6IJpbRdTLsu3mhpkbx1G98iOfud8=
-Received: from mail.melosgmbh.de
-	(p5B07A59E.dip0.t-ipconnect.de [91.7.165.158])
-	by post.webmailer.de (klopstock mo14) (RZmta 16.27)
-	with ESMTP id d06319k3NCfeUd ; Wed, 23 Apr 2008 15:46:50 +0200 (MEST)
-	(envelope-from: <duelli@melosgmbh.de>)
-X-Spam-Status: No, hits=0.0 required=4.0
-	tests=AWL: 0.035,BAYES_00: -1.665,TOTAL_SCORE: -1.630
-X-Spam-Level: 
-Received: from [172.27.1.229] ([172.27.1.229])
-	(authenticated user duelli@melosgmbh.de)
-	by mail.melosgmbh.de (Kerio MailServer 6.4.1 patch 1);
-	Wed, 23 Apr 2008 15:46:48 +0200
-User-Agent: Thunderbird 2.0.0.12 (X11/20080213)
-In-Reply-To: <m3y774putc.fsf@localhost.localdomain>
+	id S1752896AbYDWNrv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Apr 2008 09:47:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753495AbYDWNrv
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Apr 2008 09:47:51 -0400
+Received: from ds9.cixit.se ([193.15.169.228]:56152 "EHLO ds9.cixit.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753429AbYDWNru (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Apr 2008 09:47:50 -0400
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id m3NDlZBs029699
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 23 Apr 2008 15:47:35 +0200
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id m3NDlY0g029693;
+	Wed, 23 Apr 2008 15:47:35 +0200
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+In-Reply-To: <20080423081025.GB11935@sigill.intra.peff.net>
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (ds9.cixit.se [127.0.0.1]); Wed, 23 Apr 2008 15:47:35 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80217>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80218>
 
-Jakub Narebski schrieb:
-> Christoph Duelli <duelli@melosgmbh.de> writes:
-> 
->> Given a repo that contains a file x.c
->> that got renamed from
->>   some/path/x.c
->> to
->>   new/location/x.c
->>
->> Is it possible (ideally with gitk) to view the complete history of
->> what is now new/location/x.c *including* the history of changes that
->> occurred when it stil was some/path/x.c?
->> When I say "gitk new/location/x.c" I get just the changes made
->> starting with the rename.
->> When I call "gitk" and look for the changeset, the rename is detected,
->> though. Therefore I hope that it is somehow possible to obtain the
->> complete file-specific history without truncation at renames.
->>
->> Any ideas?
-> 
-> Try --follow option, see git-log(1), although I'm not sure if gitk
-> supports it (it should).
-Works, thank you!
+Jeff King:
+
+> Sure, but that is quite slow on a larger tree, since it has to do a
+> full checkout for each commit.
+
+Indeed. That's why I would welcome a script such as the one you
+mentioned :-) Fortunately, the repositories I worked on were small
+enough to not suffer too much (even when using Git on Windows, which is
+a bit slower than on Linux).
+
+[Not seeing any unreachable objects]
+> Did you remove refs/original/ ?
+
+That, and cloned the repository to a new location after the conversion,
+and removing the references to "origin" there. It does seem that the
+objects are still there, but I can't see them with "gitk --all".
 
 -- 
-Christoph Duelli
+\\// Peter - http://www.softwolves.pp.se/
