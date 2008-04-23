@@ -1,69 +1,74 @@
-From: "Benjamin Collins" <ben.collins@acm.org>
-Subject: Re: git-gui hangs on read
-Date: Wed, 23 Apr 2008 09:16:39 -0500
-Message-ID: <b3889dff0804230716n1b5dde1ctb7b0c1dd83f2d1ff@mail.gmail.com>
-References: <b3889dff0804210723s620363fdscba43c79dbb62d55@mail.gmail.com>
-	 <20080422001311.GS29771@spearce.org>
-	 <b3889dff0804220634u58a5ed21yf8a4f369471c6534@mail.gmail.com>
-	 <20080422232530.GK29771@spearce.org> <480EF84A.4020308@isy.liu.se>
+From: Johan Herland <johan@herland.net>
+Subject: Re: Git on Windows, CRLF issues
+Date: Wed, 23 Apr 2008 16:24:09 +0200
+Message-ID: <200804231624.09465.johan@herland.net>
+References: <alpine.DEB.1.00.0804212145570.21181@perkele.intern.softwolves.pp.se> <20080423081025.GB11935@sigill.intra.peff.net> <Pine.LNX.4.64.0804231445550.18401@ds9.cixit.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: "Gustaf Hendeby" <hendeby@isy.liu.se>
-X-From: git-owner@vger.kernel.org Wed Apr 23 16:17:32 2008
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Avery Pennarun <apenwarr@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Peter Karlsson <peter@softwolves.pp.se>
+X-From: git-owner@vger.kernel.org Wed Apr 23 16:26:18 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jofmp-0005V6-RU
-	for gcvg-git-2@gmane.org; Wed, 23 Apr 2008 16:17:28 +0200
+	id 1JofuW-0000bJ-61
+	for gcvg-git-2@gmane.org; Wed, 23 Apr 2008 16:25:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753553AbYDWOQl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Apr 2008 10:16:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753497AbYDWOQl
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Apr 2008 10:16:41 -0400
-Received: from py-out-1112.google.com ([64.233.166.176]:2121 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753518AbYDWOQk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Apr 2008 10:16:40 -0400
-Received: by py-out-1112.google.com with SMTP id u52so4226335pyb.10
-        for <git@vger.kernel.org>; Wed, 23 Apr 2008 07:16:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        bh=8aHJOt6gLWshoBWKluHbjCJkAHiDSireybOonF1H7Po=;
-        b=Dq/kGj8iZoaBo1Zjc8dUh8gSN1Z3t3m8Lc3qxU9HUJAqTEMvvzJqVfv6ueYFXIqMTPtw340wteOupM3wMiOHMvYhcNxZZws4/lGZ9Cqg3C0qNB9C3Zo13XdAFsTxAy6VXQ8laqYjYDNC8GvA26k/ZhhC4Q2zUT4h6kKX5+4BvQQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=iwmUnf2Vh20pUqFzOFOy0CNultD+wf/VabejhNtWfIRXNhlvwiksjvz4ZWIx6q+STvsr2ftExSeMzz3BDRIjm+MidHH1YqLZKdXk8AUDt0FaBOZn/PJvyagOyu8h/gXs9VBcHHuXnSXPfgXiv/iFINzbLj6y23vnSA7A/pwqt9Q=
-Received: by 10.141.122.20 with SMTP id z20mr550233rvm.160.1208960199484;
-        Wed, 23 Apr 2008 07:16:39 -0700 (PDT)
-Received: by 10.141.75.14 with HTTP; Wed, 23 Apr 2008 07:16:39 -0700 (PDT)
-In-Reply-To: <480EF84A.4020308@isy.liu.se>
+	id S1754174AbYDWOYh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Apr 2008 10:24:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753962AbYDWOYh
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Apr 2008 10:24:37 -0400
+Received: from sam.opera.com ([213.236.208.81]:47260 "EHLO smtp.opera.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753715AbYDWOYg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Apr 2008 10:24:36 -0400
+Received: from pc107.coreteam.oslo.opera.com (pat-tdc.opera.com [213.236.208.22])
+	by smtp.opera.com (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id m3NEO9Kg021926
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 23 Apr 2008 14:24:10 GMT
+User-Agent: KMail/1.9.9
+In-Reply-To: <Pine.LNX.4.64.0804231445550.18401@ds9.cixit.se>
 Content-Disposition: inline
-X-Google-Sender-Auth: dff4f3afb86ea77d
+X-Virus-Scanned: ClamAV 0.92.1/6902/Wed Apr 23 09:30:49 2008 on smtp.opera.com
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80220>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80221>
 
-On Wed, Apr 23, 2008 at 3:50 AM, Gustaf Hendeby <hendeby@isy.liu.se> wrote:
-
->  I have aspell 0.50.3 alpha installed on my laptop, and that seems to be
-> basically up to date for the Windows port of aspell.  Is there any way to
-> get around this problem?
+On Wednesday 23 April 2008, Peter Karlsson wrote:
+> Jeff King:
+> > Sure, but that is quite slow on a larger tree, since it has to do a
+> > full checkout for each commit.
 >
->  /Gustaf
+> Indeed. That's why I would welcome a script such as the one you
+> mentioned :-) Fortunately, the repositories I worked on were small
+> enough to not suffer too much (even when using Git on Windows, which
+> is a bit slower than on Linux).
 >
+> [Not seeing any unreachable objects]
+>
+> > Did you remove refs/original/ ?
+>
+> That, and cloned the repository to a new location after the
+> conversion, and removing the references to "origin" there. It does
+> seem that the objects are still there, but I can't see them with
+> "gitk --all".
 
-What I have done for now is to comment out the line in gui-gui that
-does the lappend on spell_cmd, near the end.
+Maybe they are kept alive by reflogs?
 
-Sorry for the dupe.
+
+Have fun! :)
+
+...Johan
 
 -- 
-Benjamin A. Collins <ben.collins@acm.org>
+Johan Herland, <johan@herland.net>
+www.herland.net
