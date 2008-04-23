@@ -1,13 +1,16 @@
 From: Adam Roben <aroben@apple.com>
-Subject: [PATCH 04/11] git-cat-file: Add --batch-check option
-Date: Wed, 23 Apr 2008 15:17:46 -0400
-Message-ID: <1208978273-98146-5-git-send-email-aroben@apple.com>
+Subject: [PATCH 08/11] git-hash-object: Add --stdin-paths option
+Date: Wed, 23 Apr 2008 15:17:50 -0400
+Message-ID: <1208978273-98146-9-git-send-email-aroben@apple.com>
 References: <1208978273-98146-1-git-send-email-aroben@apple.com>
  <1208978273-98146-2-git-send-email-aroben@apple.com>
  <1208978273-98146-3-git-send-email-aroben@apple.com>
  <1208978273-98146-4-git-send-email-aroben@apple.com>
-Cc: Adam Roben <aroben@apple.com>, Junio C Hamano <gitster@pobox.com>,
-	Brian Downing <bdowning@lavos.net>
+ <1208978273-98146-5-git-send-email-aroben@apple.com>
+ <1208978273-98146-6-git-send-email-aroben@apple.com>
+ <1208978273-98146-7-git-send-email-aroben@apple.com>
+ <1208978273-98146-8-git-send-email-aroben@apple.com>
+Cc: Adam Roben <aroben@apple.com>, Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Wed Apr 23 21:20:20 2008
 connect(): Connection refused
@@ -15,322 +18,206 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JokV2-00058u-Lr
-	for gcvg-git-2@gmane.org; Wed, 23 Apr 2008 21:19:25 +0200
+	id 1JokUw-00058u-Ki
+	for gcvg-git-2@gmane.org; Wed, 23 Apr 2008 21:19:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754766AbYDWTSj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Apr 2008 15:18:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753617AbYDWTSh
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Apr 2008 15:18:37 -0400
-Received: from mail-out3.apple.com ([17.254.13.22]:49410 "EHLO
+	id S1755127AbYDWTSK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Apr 2008 15:18:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754861AbYDWTSJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Apr 2008 15:18:09 -0400
+Received: from mail-out3.apple.com ([17.254.13.22]:49422 "EHLO
 	mail-out3.apple.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753967AbYDWTSA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Apr 2008 15:18:00 -0400
+	with ESMTP id S1754112AbYDWTSE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Apr 2008 15:18:04 -0400
 Received: from relay13.apple.com (relay13.apple.com [17.128.113.29])
-	by mail-out3.apple.com (Postfix) with ESMTP id 5E72E293B005;
-	Wed, 23 Apr 2008 12:18:00 -0700 (PDT)
+	by mail-out3.apple.com (Postfix) with ESMTP id 22A39293B00E;
+	Wed, 23 Apr 2008 12:18:04 -0700 (PDT)
 Received: from relay13.apple.com (unknown [127.0.0.1])
-	by relay13.apple.com (Symantec Mail Security) with ESMTP id 4558928042;
-	Wed, 23 Apr 2008 12:18:00 -0700 (PDT)
-X-AuditID: 1180711d-ac398bb000000ed7-2e-480f8b6744cd
+	by relay13.apple.com (Symantec Mail Security) with ESMTP id 0A23228042;
+	Wed, 23 Apr 2008 12:18:04 -0700 (PDT)
+X-AuditID: 1180711d-ae39cbb000000ed7-3d-480f8b6be4ed
 Received: from localhost.localdomain (unknown [17.151.126.45])
-	by relay13.apple.com (Apple SCV relay) with ESMTP id 4181628085;
-	Wed, 23 Apr 2008 12:17:59 -0700 (PDT)
+	by relay13.apple.com (Apple SCV relay) with ESMTP id 3319D28050;
+	Wed, 23 Apr 2008 12:18:03 -0700 (PDT)
 X-Mailer: git-send-email 1.5.5.1.152.g9aeb7
-In-Reply-To: <1208978273-98146-4-git-send-email-aroben@apple.com>
+In-Reply-To: <1208978273-98146-8-git-send-email-aroben@apple.com>
 X-Brightmail-Tracker: AAAAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80243>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80244>
 
-This new option allows multiple objects to be specified on stdin. For each
-object specified, a line of the following form is printed:
-
-<sha1> SP <type> SP <size> LF
-
-If the object does not exist in the repository, a line of the following form is
-printed:
-
-<object> SP missing LF
+This allows multiple paths to be specified on stdin.
 
 Signed-off-by: Adam Roben <aroben@apple.com>
 ---
-Junio C Hamano <gitster@pobox.com> wrote:
-> Here is an alternative suggestion.
-> 
->    Two new options, --batch and --batch-check, are introduced.
->    These options are incompatible with -[tsep] or an object type
->    given as the first parameter to git-cat-file.
-> 
->    * git-cat-file --batch-check <list-of-sha1
-> 
->      outputs a record of this form
-> 
->           <sha1> SP <type> SP <size> LF
-> 
->      for each of the input lines.
-> 
->    * git-cat-file --batch <list-of-sha1
-> 
->      outputs a record of this form
-> 
->           <sha1> SP <type> SP <size> LF <contents> LF
-> 
->      for each of the input lines.
-> 
->   For a missing object, either option gives a record of form:
-> 
->           <sha1> SP missing LF
+ Documentation/git-hash-object.txt |    5 +++-
+ hash-object.c                     |   44 ++++++++++++++++++++++++++++++++++++-
+ t/t1007-hash-object.sh            |   32 ++++++++++++++++++++++++++
+ 3 files changed, 79 insertions(+), 2 deletions(-)
 
-This patch introduces --batch-check as described above. The next patch introduces --batch.
-
- Documentation/git-cat-file.txt |   31 ++++++++++++++---
- builtin-cat-file.c             |   74 ++++++++++++++++++++++++++++++++++++++-
- t/t1006-cat-file.sh            |   52 ++++++++++++++++++++++++++++
- 3 files changed, 150 insertions(+), 7 deletions(-)
-
-diff --git a/Documentation/git-cat-file.txt b/Documentation/git-cat-file.txt
-index df42cb1..d5821af 100644
---- a/Documentation/git-cat-file.txt
-+++ b/Documentation/git-cat-file.txt
-@@ -9,12 +9,16 @@ git-cat-file - Provide content or type/size information for repository objects
+diff --git a/Documentation/git-hash-object.txt b/Documentation/git-hash-object.txt
+index 33030c0..99a2143 100644
+--- a/Documentation/git-hash-object.txt
++++ b/Documentation/git-hash-object.txt
+@@ -8,7 +8,7 @@ git-hash-object - Compute object ID and optionally creates a blob from a file
+ 
  SYNOPSIS
  --------
- 'git-cat-file' [-t | -s | -e | -p | <type>] <object>
-+'git-cat-file' --batch-check < <list-of-objects>
+-'git-hash-object' [-t <type>] [-w] [--stdin] [--] <file>...
++'git-hash-object' [-t <type>] [-w] [--stdin | --stdin-paths] [--] <file>...
  
  DESCRIPTION
  -----------
--Provides content or type of objects in the repository. The type
--is required unless '-t' or '-p' is used to find the object type,
--or '-s' is used to find the object size.
-+In the first form, provides content or type of objects in the repository. The
-+type is required unless '-t' or '-p' is used to find the object type, or '-s'
-+is used to find the object size.
+@@ -32,6 +32,9 @@ OPTIONS
+ --stdin::
+ 	Read the object from standard input instead of from a file.
+ 
++--stdin-paths::
++	Read file names from stdin instead of from the command-line.
 +
-+In the second form, a list of object (separated by LFs) is provided on stdin,
-+and the SHA1, type, and size of each object is printed on stdout.
- 
- OPTIONS
- -------
-@@ -46,6 +50,10 @@ OPTIONS
- 	or to ask for a "blob" with <object> being a tag object that
- 	points at it.
- 
-+--batch-check::
-+	Print the SHA1, type, and size of each object provided on stdin. May not be
-+	combined with any other options or arguments.
-+
- OUTPUT
- ------
- If '-t' is specified, one of the <type>.
-@@ -56,9 +64,22 @@ If '-e' is specified, no output.
- 
- If '-p' is specified, the contents of <object> are pretty-printed.
- 
--Otherwise the raw (though uncompressed) contents of the <object> will
--be returned.
-+If <type> is specified, the raw (though uncompressed) contents of the <object>
-+will be returned.
-+
-+If '--batch-check' is specified, output of the following form is printed for
-+each object specified fon stdin:
-+
-+------------
-+<sha1> SP <type> SP <size> LF
-+------------
-+
-+Additionally, output of the following form is printed for each object specified
-+on stdin that does not exist in the repository:
- 
-+------------
-+<object> SP missing LF
-+------------
- 
  Author
  ------
-diff --git a/builtin-cat-file.c b/builtin-cat-file.c
-index a76bb16..832cfd1 100644
---- a/builtin-cat-file.c
-+++ b/builtin-cat-file.c
-@@ -143,11 +143,48 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name)
- 	return 0;
+ Written by Junio C Hamano <junkio@cox.net>
+diff --git a/hash-object.c b/hash-object.c
+index 61e7160..1b39162 100644
+--- a/hash-object.c
++++ b/hash-object.c
+@@ -20,6 +20,7 @@ static void hash_object(const char *path, enum object_type type, int write_objec
+ 		    ? "Unable to add %s to database"
+ 		    : "Unable to hash %s", path);
+ 	printf("%s\n", sha1_to_hex(sha1));
++	maybe_flush_or_die(stdout, "hash to stdout");
  }
  
--static const char cat_file_usage[] = "git-cat-file [-t|-s|-e|-p|<type>] <sha1>";
-+static int batch_one_object(const char *obj_name)
+ static void hash_stdin(const char *type, int write_object)
+@@ -30,8 +31,27 @@ static void hash_stdin(const char *type, int write_object)
+ 	printf("%s\n", sha1_to_hex(sha1));
+ }
+ 
++static int hash_stdin_paths(const char *type, int write_objects)
 +{
-+	unsigned char sha1[20];
-+	enum object_type type;
-+	unsigned long size;
-+
-+	if (!obj_name)
-+	   return 1;
-+
-+	if (get_sha1(obj_name, sha1)) {
-+		printf("%s missing\n", obj_name);
-+		return 0;
-+	}
-+
-+	type = sha1_object_info(sha1, &size);
-+	if (type <= 0)
-+		return 1;
-+
-+	printf("%s %s %lu\n", sha1_to_hex(sha1), typename(type), size);
-+
-+	return 0;
-+}
-+
-+static int batch_objects(void)
-+{
-+	struct strbuf buf;
++	struct strbuf buf, nbuf;
 +
 +	strbuf_init(&buf, 0);
++	strbuf_init(&nbuf, 0);
 +	while (strbuf_getline(&buf, stdin, '\n') != EOF) {
-+		int error = batch_one_object(buf.buf);
-+		if (error)
-+			return error;
++		if (buf.buf[0] == '"') {
++			strbuf_reset(&nbuf);
++			if (unquote_c_style(&nbuf, buf.buf, NULL))
++				die("line is badly quoted");
++			strbuf_swap(&buf, &nbuf);
++		}
++		hash_object(buf.buf, type_from_string(type), write_objects);
 +	}
-+
-+	return 0;
++	strbuf_release(&buf);
++	strbuf_release(&nbuf);
 +}
 +
-+static const char cat_file_usage[] = "git-cat-file [ [-t|-s|-e|-p|<type>] <sha1> | --batch-check < <list_of_sha1s> ]";
+ static const char hash_object_usage[] =
+-"git-hash-object [-t <type>] [-w] [--stdin] <file>...";
++"git-hash-object [ [-t <type>] [-w] [--stdin] <file>... | --stdin-paths < <list-of-paths> ]";
  
- int cmd_cat_file(int argc, const char **argv, const char *prefix)
+ int main(int argc, char **argv)
  {
--	int i, opt = 0;
-+	int i, opt = 0, batch_check = 0;
- 	const char *exp_type = NULL, *obj_name = NULL;
+@@ -42,6 +62,7 @@ int main(int argc, char **argv)
+ 	int prefix_length = -1;
+ 	int no_more_flags = 0;
+ 	int hashstdin = 0;
++	int stdin_paths = 0;
  
  	git_config(git_default_config);
-@@ -155,7 +192,28 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
- 	for (i = 1; i < argc; ++i) {
- 		const char *arg = argv[i];
  
-+		if (!strcmp(arg, "--batch-check")) {
-+			if (opt) {
-+				error("git-cat-file: Can't use --batch-check with -%c", opt);
-+				usage(cat_file_usage);
-+			} else if (exp_type) {
-+				error("git-cat-file: Can't use --batch-check when a type (\"%s\") is specified", exp_type);
-+				usage(cat_file_usage);
-+			} else if (obj_name) {
-+				error("git-cat-file: Can't use --batch-check when an object (\"%s\") is specified", obj_name);
-+				usage(cat_file_usage);
+@@ -65,7 +86,19 @@ int main(int argc, char **argv)
+ 			}
+ 			else if (!strcmp(argv[i], "--help"))
+ 				usage(hash_object_usage);
++			else if (!strcmp(argv[i], "--stdin-paths")) {
++				if (hashstdin) {
++					error("Can't use --stdin-paths with --stdin");
++					usage(hash_object_usage);
++				}
++				stdin_paths = 1;
++
 +			}
-+
-+			batch_check = 1;
-+			continue;
-+		}
-+
- 		if (!strcmp(arg, "-t") || !strcmp(arg, "-s") || !strcmp(arg, "-e") || !strcmp(arg, "-p")) {
-+			if (batch_check) {
-+				error("git-cat-file: Can't use %s with --batch-check", arg);
-+				usage(cat_file_usage);
-+			}
-+
- 			exp_type = arg;
- 			opt = exp_type[1];
- 			continue;
-@@ -165,6 +223,11 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
- 			usage(cat_file_usage);
+ 			else if (!strcmp(argv[i], "--stdin")) {
++				if (stdin_paths) {
++					error("Can't use %s with --stdin-paths", argv[i]);
++					usage(hash_object_usage);
++				}
+ 				if (hashstdin)
+ 					die("Multiple --stdin arguments are not supported");
+ 				hashstdin = 1;
+@@ -76,6 +109,11 @@ int main(int argc, char **argv)
+ 		else {
+ 			const char *arg = argv[i];
  
- 		if (!exp_type) {
-+			if (batch_check) {
-+				error("git-cat-file: Can't specify a type (\"%s\") with --batch-check", arg);
-+				usage(cat_file_usage);
++			if (stdin_paths) {
++				error("Can't specify files (such as \"%s\") with --stdin-paths", arg);
++				usage(hash_object_usage);
 +			}
 +
- 			exp_type = arg;
- 			continue;
+ 			if (hashstdin) {
+ 				hash_stdin(type, write_object);
+ 				hashstdin = 0;
+@@ -87,6 +125,10 @@ int main(int argc, char **argv)
+ 			no_more_flags = 1;
  		}
-@@ -172,10 +235,17 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
- 		if (obj_name)
- 			usage(cat_file_usage);
- 
-+		// We should have hit one of the earlier if (batch_check) cases before
-+		// getting here.
-+		assert(!batch_check);
-+
- 		obj_name = arg;
- 		break;
  	}
- 
-+	if (batch_check)
-+		return batch_objects();
 +
- 	if (!exp_type || !obj_name)
- 		usage(cat_file_usage);
- 
-diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
-index 15741d9..46b0f54 100755
---- a/t/t1006-cat-file.sh
-+++ b/t/t1006-cat-file.sh
-@@ -47,6 +47,9 @@ function run_tests()
-     test_expect_success \
-         "Pretty content of $type is correct" \
-         "test \"\$(maybe_remove_timestamp '$pretty_content' $no_timestamp)\" = \"\$(maybe_remove_timestamp \"\$(git cat-file -p $sha1)\" $no_timestamp)\""
-+    test_expect_success \
-+        "--batch-check output of $type is correct" \
-+        "test \"$sha1 $type $size\" = \"\$(echo_without_newline $sha1 | git cat-file --batch-check)\""
- }
- 
- hello_content="Hello World"
-@@ -98,4 +101,53 @@ test_expect_success \
-     "Reach a blob from a tag pointing to it" \
-     "test '$hello_content' = \"\$(git cat-file blob $tag_sha1)\""
- 
-+for opt in t s e p; do
-+    test_expect_success \
-+        "Passing -$opt with --batch-check fails" \
-+        "test_must_fail git cat-file --batch-check -$opt $hello_sha1"
++	if (stdin_paths)
++		return hash_stdin_paths(type, write_object);
 +
-+    test_expect_success \
-+        "Passing --batch-check with -$opt fails" \
-+        "test_must_fail git cat-file -$opt --batch-check $hello_sha1"
+ 	if (hashstdin)
+ 		hash_stdin(type, write_object);
+ 	return 0;
+diff --git a/t/t1007-hash-object.sh b/t/t1007-hash-object.sh
+index eb54f1f..dbb4129 100755
+--- a/t/t1007-hash-object.sh
++++ b/t/t1007-hash-object.sh
+@@ -58,6 +58,15 @@ test_expect_success \
+     "multiple '--stdin's are rejected" \
+     "test_must_fail git hash-object --stdin --stdin < example"
+ 
++test_expect_success \
++    "Can't use --stdin and --stdin-paths together" \
++    "test_must_fail git hash-object --stdin --stdin-paths &&
++     test_must_fail git hash-object --stdin-paths --stdin"
++
++test_expect_success \
++    "Can't pass filenames as arguments with --stdin-paths" \
++    "test_must_fail git hash-object --stdin-paths hello < example"
++
+ # Behavior
+ 
+ push_repo
+@@ -104,4 +113,27 @@ for args in "-w --stdin" "--stdin -w"; do
+     pop_repo
+ done
+ 
++filenames="hello
++example"
++
++sha1s="$hello_sha1
++$example_sha1"
++
++test_expect_success \
++    "hash two files with names on stdin" \
++    "test \"$sha1s\" = \"\$(echo_without_newline \"$filenames\" | git hash-object --stdin-paths)\""
++
++for args in "-w --stdin-paths" "--stdin-paths -w"; do
++    push_repo
++
++        test_expect_success \
++            "hash two files with names on stdin and write to database ($args)" \
++            "test \"$sha1s\" = \"\$(echo_without_newline \"$filenames\" | git hash-object $args)\""
++
++        test_blob_exists $hello_sha1
++        test_blob_exists $example_sha1
++
++    pop_repo
 +done
-+
-+test_expect_success \
-+    "Passing <type> with --batch-check fails" \
-+    "test_must_fail git cat-file --batch-check blob $hello_sha1"
-+
-+test_expect_success \
-+    "Passing --batch-check with <type> fails" \
-+    "test_must_fail git cat-file blob --batch-check $hello_sha1"
-+
-+test_expect_success \
-+    "Passing sha1 with --batch-check fails" \
-+    "test_must_fail git cat-file --batch-check $hello_sha1"
-+
-+test_expect_success \
-+    "--batch-check for a non-existent object" \
-+    "test \"deadbeef missing\" = \"\$(echo_without_newline deadbeef | git cat-file --batch-check)\""
-+
-+test_expect_success \
-+    "--batch-check for an emtpy line" \
-+    "test \" missing\" = \"\$(printf \"\\\\n\" | git cat-file --batch-check)\""
-+
-+batch_check_input="$hello_sha1
-+$tree_sha1
-+$commit_sha1
-+$tag_sha1
-+deadbeef
-+
-+"
-+
-+batch_check_output="$hello_sha1 blob $hello_size
-+$tree_sha1 tree $tree_size
-+$commit_sha1 commit $commit_size
-+$tag_sha1 tag $tag_size
-+deadbeef missing
-+ missing"
-+
-+test_expect_success \
-+    "--batch-check with multiple sha1s gives correct format" \
-+    "test \"$batch_check_output\" = \"\$(echo_without_newline \"$batch_check_input\" | git cat-file --batch-check)\""
 +
  test_done
 -- 
