@@ -1,81 +1,100 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: [PATCH] git checkout: add -t alias for --track
-Date: Thu, 24 Apr 2008 01:04:48 +0200
-Message-ID: <20080423230448.GL4012@genesis.frugalware.org>
+From: Haakon Riiser <haakon.riiser@fys.uio.no>
+Subject: Cleaning the .git directory with gc
+Date: Thu, 24 Apr 2008 01:13:59 +0200
+Message-ID: <20080423231359.GA30913@fox>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 24 01:06:19 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 24 01:14:51 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Joo2G-0007iR-UX
-	for gcvg-git-2@gmane.org; Thu, 24 Apr 2008 01:05:57 +0200
+	id 1JooAs-0001mC-2O
+	for gcvg-git-2@gmane.org; Thu, 24 Apr 2008 01:14:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752899AbYDWXEw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Apr 2008 19:04:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753002AbYDWXEw
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Apr 2008 19:04:52 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:34129 "EHLO virgo.iok.hu"
+	id S1752857AbYDWXOE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Apr 2008 19:14:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752831AbYDWXOC
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Apr 2008 19:14:02 -0400
+Received: from pat.uio.no ([129.240.10.15]:54289 "EHLO pat.uio.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752899AbYDWXEu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Apr 2008 19:04:50 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 1A9811B250A;
-	Thu, 24 Apr 2008 01:04:49 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 4947E44659;
-	Thu, 24 Apr 2008 01:01:14 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 8F1E21190AC5; Thu, 24 Apr 2008 01:04:48 +0200 (CEST)
+	id S1752700AbYDWXOA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Apr 2008 19:14:00 -0400
+Received: from mail-mx1.uio.no ([129.240.10.29])
+	by pat.uio.no with esmtp (Exim 4.67)
+	(envelope-from <haakon.riiser@fys.uio.no>)
+	id 1JooA3-0003me-KF
+	for git@vger.kernel.org; Thu, 24 Apr 2008 01:13:59 +0200
+Received: from smtp.uio.no ([129.240.10.9] helo=mail-mx1.uio.no)
+	by mail-mx1.uio.no with esmtp (Exim 4.69)
+	(envelope-from <haakon.riiser@fys.uio.no>)
+	id 1JooA3-0005cY-Es
+	for git@vger.kernel.org; Thu, 24 Apr 2008 01:13:59 +0200
+Received: from c85-196-100-202.static.sdsl.no ([85.196.100.202] helo=bigboss.venod.com)
+	by mail-mx1.uio.no with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.69)
+	(envelope-from <haakon.riiser@fys.uio.no>)
+	id 1JooA3-0005cT-CT
+	for git@vger.kernel.org; Thu, 24 Apr 2008 01:13:59 +0200
+Received: from fox.venod.com ([10.0.0.4])
+	by bigboss.venod.com with esmtps (TLSv1:AES256-SHA:256)
+	(Exim 4.62)
+	(envelope-from <haakon.riiser@fys.uio.no>)
+	id 1JooA3-0001r7-3q
+	for git@vger.kernel.org; Thu, 24 Apr 2008 01:13:59 +0200
+Received: from hakonrk by fox.venod.com with local (Exim 4.67)
+	(envelope-from <haakon.riiser@fys.uio.no>)
+	id 1JooA3-00085W-1F
+	for git@vger.kernel.org; Thu, 24 Apr 2008 01:13:59 +0200
 Content-Disposition: inline
 User-Agent: Mutt/1.5.17 (2007-11-01)
+X-UiO-Resend: resent
+X-UiO-Spam-info: not spam, SpamAssassin (score=-5.0, required=5.0, autolearn=disabled, UIO_MAIL_IS_INTERNAL=-5)
+X-UiO-Scanned: 6A95ABDA3D0E9E642EB8F38C1CC7A9A724C325D9
+X-UiO-SR-test: 15A167923C05834E1F11A4AFEA448742E4D5D836
+X-UiO-SPAM-Test: remote_host: 129.240.10.9 spam_score: -49 maxlevel 200 minaction 2 bait 0 mail/h: 69 total 8053236 max/h 8345 blacklist 0 greylist 0 ratelimit 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80272>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80273>
 
-Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
----
+I've recently started using git, and while experimenting with
+git commit --amend, I noticed that git gc does not do what I
+expected.  Example:
 
-Just like 'git checkout -q' is an alias for 'git checkout --quiet', I
-often type 'git checkout -t -b newname master', then realize I need
-'--track', but in fact '-t' is not used for anything else, so it can be
-just a short name for --track.
+  $ mkdir foo && cd foo
+  $ git init
+  $ dd if=/dev/urandom bs=1k count=1000 of=rand.dat
+  $ git add .
+  $ git commit -a -m 'first rev'
+  $ du -s .git
+  1100    .git
 
- Documentation/git-checkout.txt |    2 +-
- builtin-checkout.c             |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+1 MB file checked in, 1 MB repository.  So far, so good.
 
-diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
-index e11cddb..a644173 100644
---- a/Documentation/git-checkout.txt
-+++ b/Documentation/git-checkout.txt
-@@ -47,7 +47,7 @@ OPTIONS
- 	by linkgit:git-check-ref-format[1].  Some of these checks
- 	may restrict the characters allowed in a branch name.
- 
----track::
-+-t, --track::
- 	When creating a new branch, set up configuration so that git-pull
- 	will automatically retrieve data from the start point, which must be
- 	a branch. Use this if you always pull from the same upstream branch
-diff --git a/builtin-checkout.c b/builtin-checkout.c
-index 7deb504..1a93d13 100644
---- a/builtin-checkout.c
-+++ b/builtin-checkout.c
-@@ -504,7 +504,7 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
- 		OPT__QUIET(&opts.quiet),
- 		OPT_STRING('b', NULL, &opts.new_branch, "new branch", "branch"),
- 		OPT_BOOLEAN('l', NULL, &opts.new_branch_log, "log for new branch"),
--		OPT_SET_INT( 0 , "track",  &opts.track, "track",
-+		OPT_SET_INT('t', "track",  &opts.track, "track",
- 			BRANCH_TRACK_EXPLICIT),
- 		OPT_BOOLEAN('f', NULL, &opts.force, "force"),
- 		OPT_BOOLEAN('m', NULL, &opts.merge, "merge"),
+  $ dd if=/dev/urandom bs=1k count=1000 of=rand.dat
+  $ git commit -a -m 'replaced first rev' --amend
+  $ du -s .git
+  2120    .git
+
+At this point, I expected the --amend command to notice that
+the amended commit contains a replacement for the old file,
+and thus that the repository didn't grow.  I then figured that
+if --amend doesn't do that by itself, git gc surely will:
+
+  $ git gc
+  $ du -s .git
+  2104    .git
+
+So, why doesn't gc remove the data from the first commit?  Is it
+still accessible, even though the log doesn't show it?
+
+Is it possible to actually replace the commit, i.e., to make it
+exactly like the first commit never happend at all?  (Without
+modifying the repository by hand.)
+
 -- 
-1.5.5
+ Haakon
