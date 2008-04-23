@@ -1,91 +1,81 @@
-From: =?UTF-8?Q?J=C3=B6rg?= Sommer <joerg@alea.gnuu.de>
-Subject: Re: How to fetch missing pack
-Date: Wed, 23 Apr 2008 20:55:03 +0000 (UTC)
-Message-ID: <slrng0v8h8.ujv.joerg@alea.gnuu.de>
-References: <slrng019fg.nd8.joerg@alea.gnuu.de>
- <20080413094131.GA9437@xp.machine.xx>
+From: Jeff King <peff@peff.net>
+Subject: Re: Git on Windows, CRLF issues
+Date: Wed, 23 Apr 2008 17:47:45 -0400
+Message-ID: <20080423214745.GA30057@sigill.intra.peff.net>
+References: <alpine.DEB.1.00.0804212145570.21181@perkele.intern.softwolves.pp.se> <alpine.DEB.1.00.0804212104560.2298@eeepc-johanness> <32541b130804211453x77f3fd49hef645a417a9919ca@mail.gmail.com> <20080422023918.GA5402@sigill.intra.peff.net> <32541b130804220951p224c9be7ya4e8de5056481fd1@mail.gmail.com> <20080423080826.GA11935@sigill.intra.peff.net> <480F1671.2060602@viscovery.net> <20080423110402.GA27437@sigill.intra.peff.net> <480F218C.3060703@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 23 23:20:50 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Avery Pennarun <apenwarr@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Peter Karlsson <peter@softwolves.pp.se>, git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Wed Apr 23 23:48:35 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JomOS-0001US-NL
-	for gcvg-git-2@gmane.org; Wed, 23 Apr 2008 23:20:45 +0200
+	id 1JompO-0002mn-UB
+	for gcvg-git-2@gmane.org; Wed, 23 Apr 2008 23:48:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751002AbYDWVT6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Apr 2008 17:19:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751114AbYDWVT6
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Apr 2008 17:19:58 -0400
-Received: from banki.eumelnet.de ([83.246.114.63]:2753 "EHLO uucp.gnuu.de"
+	id S1752937AbYDWVrq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Apr 2008 17:47:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752517AbYDWVrq
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Apr 2008 17:47:46 -0400
+Received: from peff.net ([208.65.91.99]:3205 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750902AbYDWVT5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Apr 2008 17:19:57 -0400
-Received: by uucp.gnuu.de (Postfix, from userid 10)
-	id 418B548802E; Wed, 23 Apr 2008 23:19:55 +0200 (CEST)
-Received: from news by alea.gnuu.de with local (Exim 4.63)
-	(envelope-from <news@alea.gnuu.de>)
-	id 1Jolzb-0004QE-SQ
-	for git@vger.kernel.org; Wed, 23 Apr 2008 22:55:04 +0200
-Path: not-for-mail
-Newsgroups: local.mailinglist.git
-X-Trace: alea.gnuu.de 1208984103 16931 192.168.0.5 (23 Apr 2008 20:55:03 GMT)
-X-Complaints-To: usenet@alea.gnuu.de
-User-Agent: slrn/pre0.9.9-102 (Debian)
+	id S1751860AbYDWVro (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Apr 2008 17:47:44 -0400
+Received: (qmail 30159 invoked by uid 111); 23 Apr 2008 21:47:42 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Wed, 23 Apr 2008 17:47:42 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 23 Apr 2008 17:47:45 -0400
+Content-Disposition: inline
+In-Reply-To: <480F218C.3060703@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80261>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80262>
 
-Hi Peter,
+On Wed, Apr 23, 2008 at 01:46:20PM +0200, Johannes Sixt wrote:
 
-Peter Baumann <waste.manager@gmx.de> wrote:
-> On Sat, Apr 12, 2008 at 12:07:12PM +0000, J=C3=B6rg Sommer wrote:
->> I'm missing a pack. My history of the git repository is broken:
->> % git show --pretty=3Draw e0fda6ab|head -7
->> commit e0fda6abd11c567b72f29ec0ee06c541404a9cb7
->> tree 77a7e4a849bbec646d88ae863f80ea3f519e26bd
->> parent 1ab58e8d6f728cdde0057f7ee88daab3a1c2d06f
->> author Wincent Colaiuta <win@wincent.com> 1196066088 +0100
->> committer Junio C Hamano <gitster@pobox.com> 1196109124 -0800
->>=20
->>     Fix typo in draft 1.5.4 release notes
->> % git log --pretty=3Doneline e0fda6ab | wc -l
->> 1
->> % git show e0fda6ab~1|cat
->> fatal: ambiguous argument 'e0fda6ab~1': unknown revision or path not=
- in the working tree.
->> Use '--' to separate paths from revisions
->>=20
->> Can I somehow tell git fetch to check the whole history for holes an=
-d
->> fetch missing packs?
->>=20
->> Bye, J=C3=B6rg.
->
-> Try using git fsck --full to check you repo. If you are missing some
-> objects, you could just grab them from another valid repo which still=
- has
-> them.
+> > I assume you are wanting to do something like:
+> > 
+> >   git filter-branch --blob-filter '
+> >     case "$1" in
+> >       *.jpg) cat ;;
+> >           *) tr a-z A-Z ;;
+> >     esac
+> >   '
+> > 
+> > Obviously it is unlikely to get the same blob sha1 as "foo.jpg" and
+> > "foo.txt", but it just feels a little wrong.
+> 
+> Yes, that's how I intended it to work. What's wrong here? The fact that a
+> user might name a JPEG foo.txt instead of foo.jpg? Or that the same blob
+> might appear with entirely different names, including different suffixes?
+> Well, tough luck. Use an index filter. But without any sort of hint what
+> the blob is about, your original --blob-filter is useless except for the
+> most simplistic repositories.
 
-How can I exctract single objects from a pack?
+Yes, the script produces incorrect results if you have the same blob
+with different names. IOW, if I accidentally add a JPEG as 'foo', and
+then later rename it to 'foo.jpg', it will munge the blob the first time
+it sees it, and then use the munged value for 'foo.jpg', since we never
+even run the case statement. Yes, this is not terribly likely, but it
+does seem like an awful (and hard to diagnose!) bug to have hiding in
+the script.
 
-> (e.g. copy all packs/objects from the other repo into yours and then =
-do
-> a git-repack -a -d -f)
+The correct fix is either:
 
-This didn't work. I've cloned my git repo and copied the pack into
-packs/objects without the .keep file and removed objects/info/packs.
-After that I ran repack -a -d -f, but nothing changed. I still can't
-access the parent of e0fda6ab. What else can I do?
+  - the blob cache needs to take into account sha1 _and_ path
 
-Bye, J=C3=B6rg.
---=20
-The social dynamics of the net are a direct consequence of the fact
-that nobody has yet developed a Remote Strangulation Protocol.
-            (Larry Wall)
+  - the cache lookup needs to be _inside_ the path filter. In that case
+    you would either have to support it in the script (e.g.,
+    --blob-ignore jpg), or you could make the caching an optional part
+    of the blob filter (the way you can call 'map' explicitly from your
+    filters).
+
+-Peff
