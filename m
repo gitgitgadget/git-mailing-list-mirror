@@ -1,81 +1,159 @@
-From: Fedor Sergeev <Fedor.Sergeev@Sun.COM>
-Subject: Re: What's cooking in git.git (topics)
-Date: Wed, 23 Apr 2008 11:47:57 +0400 (Russian Standard Time)
-Message-ID: <alpine.WNT.1.10.0804231124270.2728@theodor>
-References: <7vlk4snpj3.fsf@gitster.siamese.dyndns.org>
- <200804221655.11914.Josef.Weidendorfer@gmx.de>
- <46dff0320804221013m2ff0320am31b7f8beb5f26f1b@mail.gmail.com>
- <200804222007.03439.Josef.Weidendorfer@gmx.de>
- <46dff0320804221859x7641144fua34df89fcc686aa2@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Git on Windows, CRLF issues
+Date: Wed, 23 Apr 2008 04:08:26 -0400
+Message-ID: <20080423080826.GA11935@sigill.intra.peff.net>
+References: <alpine.DEB.1.00.0804212145570.21181@perkele.intern.softwolves.pp.se> <alpine.DEB.1.00.0804212104560.2298@eeepc-johanness> <32541b130804211453x77f3fd49hef645a417a9919ca@mail.gmail.com> <20080422023918.GA5402@sigill.intra.peff.net> <32541b130804220951p224c9be7ya4e8de5056481fd1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Content-Transfer-Encoding: 7BIT
-Cc: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Ping Yin <pkufranky@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 23 09:50:18 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Peter Karlsson <peter@softwolves.pp.se>, git@vger.kernel.org
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 23 10:09:42 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JoZk2-0005RP-5o
-	for gcvg-git-2@gmane.org; Wed, 23 Apr 2008 09:50:10 +0200
+	id 1Joa2t-0002cp-K3
+	for gcvg-git-2@gmane.org; Wed, 23 Apr 2008 10:09:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751447AbYDWHtX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Apr 2008 03:49:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751326AbYDWHtX
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Apr 2008 03:49:23 -0400
-Received: from brmea-mail-1.Sun.COM ([192.18.98.31]:36080 "EHLO
-	brmea-mail-1.sun.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751286AbYDWHtW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Apr 2008 03:49:22 -0400
-Received: from fe-amer-09.sun.com ([192.18.109.79])
-	by brmea-mail-1.sun.com (8.13.6+Sun/8.12.9) with ESMTP id m3N7nLxK026791
-	for <git@vger.kernel.org>; Wed, 23 Apr 2008 07:49:21 GMT
-Received: from conversion-daemon.mail-amer.sun.com by mail-amer.sun.com
- (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
- id <0JZR00L01PKFEK00@mail-amer.sun.com>
- (original mail from Fedor.Sergeev@Sun.COM) for git@vger.kernel.org; Wed,
- 23 Apr 2008 01:49:21 -0600 (MDT)
-Received: from localhost ([92.255.85.22])
- by mail-amer.sun.com (Sun Java System Messaging Server 6.2-8.04 (built Feb 28
- 2007)) with ESMTPSA id <0JZR00E8IPPX84D0@mail-amer.sun.com>; Wed,
- 23 Apr 2008 01:49:21 -0600 (MDT)
-In-reply-to: <46dff0320804221859x7641144fua34df89fcc686aa2@mail.gmail.com>
-X-X-Sender: fs77888@mail-amer.sun.com
-User-Agent: Alpine 1.10 (WNT 962 2008-03-14)
+	id S1751999AbYDWIIc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Apr 2008 04:08:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753128AbYDWIIc
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Apr 2008 04:08:32 -0400
+Received: from peff.net ([208.65.91.99]:2033 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751944AbYDWII2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Apr 2008 04:08:28 -0400
+Received: (qmail 32718 invoked by uid 111); 23 Apr 2008 08:08:26 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Wed, 23 Apr 2008 04:08:26 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 23 Apr 2008 04:08:26 -0400
+Content-Disposition: inline
+In-Reply-To: <32541b130804220951p224c9be7ya4e8de5056481fd1@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80195>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80196>
 
-On Wed, 23 Apr 2008, Ping Yin wrote:
-> On Wed, Apr 23, 2008 at 2:07 AM, Josef Weidendorfer
->>  Hmm... At least, it can be very annoying when git fetches data from repositories
->>  you did not expect, only because submodule URLs change via this
->>  fallback mechanism. Perhaps it is a little far reached, but suppose a project
->>  changes its URL, and the old one becomes occupied by a malicious person.
->>  The problem is that the URL with the now malicious repository is bound in the
->>  history of the project.
->
-> It is always bound now without the fallback patch :)
->
->>  For sure, you do not want to fetch from that old repository
->>  by accident, after you did a checkout of an old commit. And there would be no
->>  way to protect other people from this malicious repository other than rewriting
->>  the whole history.
->
-> I wonder how the *malicious* repository can hurt us since only the
-> commit recorded in commit of the super project will be checked out.
+On Tue, Apr 22, 2008 at 12:51:14PM -0400, Avery Pennarun wrote:
 
-If one manages to hack on repository one can modify it enormous amount of 
-ways, including spoofing on SHA (providing wrong contents for it - does 
-git verify that when getting a pack?), utilizing bugs in git etc...
+> Do you think git would benefit from having a generalized version of
+> this script?  Basically, the user provides a "munge" script on the
+> command line, and there's a git-filter-branch mode for auto-munging
+> (with a cache) every file in every checkin.  Even if it's *only* ever
+> used for CRLF, I can imagine this being useful to a lot of people.
 
-I doubt somebody would spend that much of an effort but you know,
-you can not be paranoid *enough* :)
+It was easy enough to work up the patch below, which allows
 
-regards,
-   Fedor.
+  git filter-branch --blob-filter 'tr a-z A-Z'
+
+However, it's _still_ horribly slow. Shell script is nice and flexible,
+but running a tight loop like this is just painful. I suspect
+filter-branch in something like perl would be a lot faster and just as
+flexible (you could even do it in C, but you'd probably have to invent a
+little domain-specific scripting language).
+
+It is still much better performance than a tree filter, though:
+
+  $ cd git && time git filter-branch --tree-filter '
+      find . -type f | while read f; do
+        tr a-z A-Z <"$f" >tmp
+        mv tmp "$f"
+      done
+    ' HEAD~10..HEAD
+
+  real    4m38.626s
+  user    1m32.726s
+  sys     2m51.163s
+
+  $ cd git && git filter-branch --blob-filter 'tr a-z A-Z' HEAD~10..HEAD
+  real    1m40.809s
+  user    0m36.822s
+  sys     1m14.273s
+
+Lots of system time in both. I'm sure we spend a fair bit of time
+hitting our very large map and blob-cache directories, which would be
+much more nicely implemented as associative arrays in memory (if we were
+using a more featureful language).
+
+Anyway, here is the patch. I don't know if it is even worth applying,
+since it is still painfully slow.
+
+---
+ git-filter-branch.sh |   30 ++++++++++++++++++++++++++++++
+ 1 files changed, 30 insertions(+), 0 deletions(-)
+
+diff --git a/git-filter-branch.sh b/git-filter-branch.sh
+index 333f6a8..0602b25 100755
+--- a/git-filter-branch.sh
++++ b/git-filter-branch.sh
+@@ -54,6 +54,23 @@ EOF
+ 
+ eval "$functions"
+ 
++munge_blobs() {
++	while read mode sha1 stage path
++	do
++		if ! test -r "$workdir/../blob-cache/$sha1"
++		then
++			new=`git cat-file blob $sha1 |
++			     eval "$filter_blob" |
++			     git hash-object -w --stdin`
++			printf $new >$workdir/../blob-cache/$sha1
++		fi
++		printf "%s %s\t%s\n" \
++			"$mode" \
++			$(cat "$workdir/../blob-cache/$sha1") \
++			"$path"
++	done
++}
++
+ # When piped a commit, output a script to set the ident of either
+ # "author" or "committer
+ 
+@@ -105,6 +122,7 @@ tempdir=.git-rewrite
+ filter_env=
+ filter_tree=
+ filter_index=
++filter_blob=
+ filter_parent=
+ filter_msg=cat
+ filter_commit='git commit-tree "$@"'
+@@ -150,6 +168,9 @@ do
+ 	--index-filter)
+ 		filter_index="$OPTARG"
+ 		;;
++	--blob-filter)
++		filter_blob="$OPTARG"
++		;;
+ 	--parent-filter)
+ 		filter_parent="$OPTARG"
+ 		;;
+@@ -227,6 +248,9 @@ ret=0
+ # map old->new commit ids for rewriting parents
+ mkdir ../map || die "Could not create map/ directory"
+ 
++# cache rewritten blobs for blob filter
++mkdir ../blob-cache || die "Could not create blob-cache/ directory"
++
+ case "$filter_subdir" in
+ "")
+ 	git rev-list --reverse --topo-order --default HEAD \
+@@ -295,6 +319,12 @@ while read commit parents; do
+ 	eval "$filter_index" < /dev/null ||
+ 		die "index filter failed: $filter_index"
+ 
++	if test -n "$filter_blob"; then
++		git ls-files --stage |
++		munge_blobs |
++		git update-index --index-info
++	fi
++
+ 	parentstr=
+ 	for parent in $parents; do
+ 		for reparent in $(map "$parent"); do
+-- 
+1.5.5.1.144.g4c416.dirty
